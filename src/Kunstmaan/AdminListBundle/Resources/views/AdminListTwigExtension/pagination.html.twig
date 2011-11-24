@@ -1,0 +1,31 @@
+{% if pagination.numpages > 1 %}
+    <div class="pagination" style="float:right">
+        <ul>
+            {% if pagination.currentpage == 1 %}
+            <li class="prev disabled"><a class="previous" href="#">&larr; Previous</a>
+                {% else %}
+            <li class="prev"><a class="previous" href="{{ path(basepath, { 'page': pagination.currentpage-1 }) }}">&larr; Previous</a>
+                {% endif %}
+                {% for i in 1..pagination.numpages%}
+                {% if pagination.range.0 > 2 and i == pagination.range.0 %}
+            <li class="disabled"><a href="#">…</a></li>
+            {% endif %}
+            {% if(i==1 or i==pagination.numpages or i in pagination.range) %}
+            {% if i==pagination.currentpage %}
+            <li class="active"><a href="{{ path(basepath, { 'page': i })}}">{{i}}</a></li>
+            {% else %}
+            <li><a href="{{ path(basepath, { 'page': i }) }}"> {{i}}</a></li>
+            {% endif %}
+            {% endif %}
+            {% if pagination.range[pagination.midrange -1] < pagination.numpages -1 and i == pagination.range[pagination.midrange-1] %}
+            <li class="disabled"><a href="#">…</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if pagination.currentpage == pagination.numpages %}
+            <li class="next disabled"><a href="#">Next &rarr;</a></li>
+            {% else %}
+            <li class="next {% if pagination.currentpage == pagination.numpages %} disabled {% endif %}"><a href="{{ path(basepath, { 'page': pagination.currentpage+1 }) }}">Next &rarr;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}

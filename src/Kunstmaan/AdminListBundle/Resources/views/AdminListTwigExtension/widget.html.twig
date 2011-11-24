@@ -1,0 +1,25 @@
+
+    {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
+
+    <table class="bordered-table zebra-striped">
+        <thead>
+        <tr>
+            {% for columnName in adminlist.columns%}
+                <th>{{columnName}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in adminlist.items%}
+            <tr>
+                {% for columnName in adminlist.columns%}
+                    <td>{{adminlist.getFrom(item, columnName)}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
+
+    <div style="clear:both">&nbsp;</div>
