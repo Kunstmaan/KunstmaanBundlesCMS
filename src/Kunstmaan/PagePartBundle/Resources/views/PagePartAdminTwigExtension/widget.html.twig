@@ -1,0 +1,93 @@
+<div class="pagepartscontainer">
+    {% for pagepartref in pagepartadmin.pagepartrefs %}
+    {% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
+    <div id="{{pagepartref.id}}_container" class="pagepartcontainer">
+        <script>
+            function delete_{{pagepartref.id}}(){
+                document.getElementById('{{pagepartref.id}}_deleted').value = 'true';
+                jQuery('#{{pagepartref.id}}_container').slideUp(function(){
+                    jQuery('#pagepartsdeletedcontainer').append(jQuery('#{{pagepartref.id}}_container'));
+                });
+                return false;
+            }
+            function moveUp_{{pagepartref.id}}(){
+                var $parent = jQuery('#{{pagepartref.id}}_container');
+                var $parentprev = $parent.prev();
+                $parent.swap({
+                    target: $parent.prev().attr('id'),
+                    opacity: "0.5",
+                    speed: 1000,
+                    callback: function() {
+                        $parent.insertBefore($parentprev);
+                        $parent.css("top", "auto").css("left", "auto");
+                        $parentprev.css("top", "auto").css("left", "auto");
+                    }
+                });
+                return false;
+            }
+            function moveDown_{{pagepartref.id}}(){
+                var $parent = jQuery('#{{pagepartref.id}}_container');
+                var $parentnext = $parent.next();
+                $parent.swap({
+                    target: $parent.next().attr('id'),
+                    opacity: "0.5",
+                    speed: 1000,
+                    callback: function() {
+                        $parent.insertAfter($parentnext);
+                        $parent.css("top", "auto").css("left", "auto");
+                        $parentnext.css("top", "auto").css("left", "auto");
+                    }
+                });
+                return false;
+            }
+            function edit_{{pagepartref.id}}(){
+                document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
+                document.getElementById('{{pagepartref.id}}_edit').style.display = '';
+                return false;
+            }
+        </script>
+        <input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
+        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
+        <section>
+            <div class="row">
+                <div class="span5">
+                    <h3>{{pagepartadmin.getType(pagepart)}}</h3>
+                    <div class="well">
+                        <a class="btn small primary" href="#" onclick="return edit_{{pagepartref.id}}()">Edit</a>
+                        <a class="btn small" href="#" onclick="return moveUp_{{pagepartref.id}}()">Up</a>
+                        <a class="btn small" href="#" onclick="return moveDown_{{pagepartref.id}}()">Down</a>
+                        <a class="btn small" href="#" onclick="return delete_{{pagepartref.id}}()">Delete</a>
+                    </div>
+                </div>
+                <div class="span11" id="{{pagepartref.id}}_view">
+                    {% include pagepart.defaultview with {'resource': pagepart} %}
+                </div>
+                <div class="span11" id="{{pagepartref.id}}_edit" style="display:none">
+                    {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
+                    {{ form_widget(form['pagepartadmin'~pagepartref.id]) }}
+                </div>
+            </div>
+        </section>
+        <hr />
+    </div>
+    {% endfor %}
+</div>
+<div class="clearfix">
+    <script type="text/javascript">
+        function doAddpagepart_{{pagepartadmin.context}}(){
+            jQuery('form')[0].submit();
+            return false;
+        }
+    </script>
+    {#<label for="addpagepart_{{pagepartadmin.context}}">Add new pagepart:</label>#}
+    <select id="addpagepart_{{pagepartadmin.context}}" name="addpagepart_{{pagepartadmin.context}}">
+        <option value="">Add a pagepart</option>
+        {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+            <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+        {% endfor %}
+    </select>
+    <a onclick="return doAddpagepart_{{pagepartadmin.context}}()" href="#" class="btn small primary">Add</a>
+</div>
+<div id="pagepartsdeletedcontainer">
+
+</div>

@@ -1,0 +1,14 @@
+parameters:
+#    kunstmaan_k_page_part.example.class: Kunstmaan\PagePartBundle\Example
+
+services:
+#    kunstmaan_k_page_part.example:
+#        class: %kunstmaan_k_page_part.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    pagepartadmin.factory:
+        class: Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory
+
+    pagepartadmin.twig.extension:
+        class: Kunstmaan\PagePartBundle\Twig\Extension\PagePartAdminTwigExtension
+        tags:
+            -  { name: twig.extension }
