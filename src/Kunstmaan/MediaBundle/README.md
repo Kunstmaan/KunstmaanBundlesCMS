@@ -60,7 +60,7 @@ $loader->registerNamespaces(array(
 
 ```bash
 imports:
-   KunstmaanKMediaBundle:
+   KunstmaanMediaBundle:
         resource: @KunstmaanMediaBundle/Resources/config/config.yml
 
 orm:
@@ -69,7 +69,25 @@ orm:
             mappings:
                 ...
                 KunstmaanMediaBundle: ~
-```       
+```    
+
+## Add to routing.yml:
+
+```bash
+KunstmaanMediaBundle:
+    resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"
+    prefix:   /
+```    
+
+## Add to parameters.ini:
+
+```bash
+[parameters]
+    ...
+    cdnpath="http://example.com/"
+
+```    
+
        
 [KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
 [kunstmaan]: http://www.kunstmaan.be "Kunstmaan"                
