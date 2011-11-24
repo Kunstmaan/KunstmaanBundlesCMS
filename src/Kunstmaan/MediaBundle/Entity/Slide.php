@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Kunstmaan\KMediaBundle\Entity\Slide
+ * Kunstmaan\MediaBundle\Entity\Slide
  * Class that defines a slide in the system
  *
  * @author Kristof Van Cauwenbergh
@@ -65,7 +65,7 @@ class Slide extends Media
     protected $metadata;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Gallery
+     * @var Kunstmaan\MediaBundle\Entity\Gallery
      */
     protected $gallery;
 

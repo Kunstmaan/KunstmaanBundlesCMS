@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Kunstmaan\KMediaBundle\Entity\Image
+ * Kunstmaan\MediaBundle\Entity\Image
  * Class that defines a picture in the system
  *
  * @author Kristof Van Cauwenbergh
@@ -68,7 +68,7 @@ class Image extends Media
     protected $content;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Gallery
+     * @var Kunstmaan\MediaBundle\Entity\Gallery
      */
     protected $gallery;
 
@@ -86,7 +86,7 @@ class Image extends Media
     /**
      * Set original
      *
-     * @param Kunstmaan\KMediaBundle\Entity\Image $original
+     * @param Kunstmaan\MediaBundle\Entity\Image $original
      */
     public function setOriginal(Image $original)
     {
@@ -96,7 +96,7 @@ class Image extends Media
     /**
      * Get original
      *
-     * @return Kunstmaan\KMediaBundle\Entity\Image
+     * @return Kunstmaan\MediaBundle\Entity\Image
      */
     public function getOriginal()
     {
@@ -106,7 +106,7 @@ class Image extends Media
     /**
      * Add edits
      *
-     * @param Kunstmaan\KMediaBundle\Entity\Image $edits
+     * @param Kunstmaan\MediaBundle\Entity\Image $edits
      */
     public function addEdits(Image $edits)
     {
@@ -156,9 +156,9 @@ class Image extends Media
     /**
      * Add edits
      *
-     * @param Kunstmaan\KMediaBundle\Entity\Image $edits
+     * @param Kunstmaan\MediaBundle\Entity\Image $edits
      */
-    public function addImage(\Kunstmaan\KMediaBundle\Entity\Image $edits)
+    public function addImage(\Kunstmaan\MediaBundle\Entity\Image $edits)
     {
         $this->edits[] = $edits;
     }

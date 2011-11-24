@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Provider;
+namespace Kunstmaan\MediaBundle\Helper\Provider;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
-use Kunstmaan\KMediaBundle\Helper\Manipulator\ImageManipulatorInterface;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\Manipulator\ImageManipulatorInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use Kunstmaan\KMediaBundle\Helper\Generator\ExtensionGuesser;
+use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
 class ImageProvider extends FileProvider
 {

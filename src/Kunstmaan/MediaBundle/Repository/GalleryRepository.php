@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Repository;
+namespace Kunstmaan\MediaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper;
+namespace Kunstmaan\MediaBundle\Helper;
 
 /**
  * Comment controller.
@@ -19,12 +19,12 @@ class ImageGalleryStrategy implements GalleryStrategyInterface{
 
     public function getNewGallery()
     {
-        return new \Kunstmaan\KMediaBundle\Entity\ImageGallery();
+        return new \Kunstmaan\MediaBundle\Entity\ImageGallery();
     }
 
     public function getGalleryClassName()
     {
-        return 'Kunstmaan\KMediaBundle\Entity\ImageGallery';
+        return 'Kunstmaan\MediaBundle\Entity\ImageGallery';
     }
 }
 

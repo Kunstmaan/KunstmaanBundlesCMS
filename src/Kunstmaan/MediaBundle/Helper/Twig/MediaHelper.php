@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Twig;
+namespace Kunstmaan\MediaBundle\Helper\Twig;
 
 use Symfony\Component\Templating\Helper\Helper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Kunstmaan\KMediaBundle\Helper\MediaManager;
-use Kunstmaan\KMediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 class MediaHelper extends Helper
 {

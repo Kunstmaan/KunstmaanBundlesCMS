@@ -1,16 +1,16 @@
 <?php
 
-namespace  Kunstmaan\KMediaBundle\Entity;
+namespace  Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\KMediaBundle\Helper\SlideGalleryStrategy;
+use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
 
 /**
  * Class that defines a Media object from the AnoBundle in the database
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\KMediaBundle\Repository\SlideGalleryRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\SlideGalleryRepository")
  * @ORM\Table(name="slide_gallery")
  * @ORM\HasLifecycleCallbacks
  */
@@ -44,17 +44,17 @@ class SlideGallery extends Gallery{
     protected $updated;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Gallery
+     * @var Kunstmaan\MediaBundle\Entity\Gallery
      */
     protected $parent;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Gallery
+     * @var Kunstmaan\MediaBundle\Entity\Gallery
      */
     protected $children;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Media
+     * @var Kunstmaan\MediaBundle\Entity\Media
      */
     protected $files;
 
@@ -91,7 +91,7 @@ class SlideGallery extends Gallery{
     /**
      * Add images
      *
-     * @param Kunstmaan\KMediaBundle\Entity\File $images
+     * @param Kunstmaan\MediaBundle\Entity\File $images
      */
     public function addSlides(Slide $images)
     {

@@ -1,11 +1,11 @@
 <?php
 // src/Blogger/BlogBundle/Controller/CommentController.php
 
-namespace Kunstmaan\KMediaBundle\Controller;
+namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\KMediaBundle\Form\GalleryType;
-use Kunstmaan\KMediaBundle\Form\SubGalleryType;
+use Kunstmaan\MediaBundle\Form\GalleryType;
+use Kunstmaan\MediaBundle\Form\SubGalleryType;
 
 /**
  * imagegallery controller.
@@ -21,10 +21,10 @@ abstract class GalleryController extends Controller
         $form = $this->createForm($gallery->getFormType(), $gallery);
 
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:'.$gallery->getStrategy()->getName())
+        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                                ->getAllGalleries();
 
-        return $this->render('KunstmaanKMediaBundle:Gallery:create.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Gallery:create.html.twig', array(
             'gallery' => $gallery,
             'form'   => $form->createView(),
             'galleries'     => $galleries
@@ -39,10 +39,10 @@ abstract class GalleryController extends Controller
            $form = $this->createForm(new SubGalleryType(), $gallery);
 
            $em = $this->getDoctrine()->getEntityManager();
-           $galleries = $em->getRepository('KunstmaanKMediaBundle:'.$gallery->getStrategy()->getName())
+           $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                                   ->getAllGalleries();
 
-           return $this->render('KunstmaanKMediaBundle:Gallery:subcreate.html.twig', array(
+           return $this->render('KunstmaanMediaBundle:Gallery:subcreate.html.twig', array(
                'form'   => $form->createView(),
                'galleries'     => $galleries,
                'parent' => $parent
@@ -60,10 +60,10 @@ abstract class GalleryController extends Controller
                 $em->persist($gallery);
                 $em->flush();
 
-                $galleries = $em->getRepository('KunstmaanKMediaBundle:'.$gallery->getStrategy()->getName())
+                $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                                                ->getAllGalleries();
 
-                return $this->render('KunstmaanKMediaBundle:Gallery:show.html.twig', array(
+                return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
                           'gallery' => $gallery,
                           'galleries'     => $galleries,
                 ));
@@ -71,10 +71,10 @@ abstract class GalleryController extends Controller
         }
 
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:'.$gallery->getStrategy()->getName())
+        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                                        ->getAllGalleries();
 
-        return $this->render('KunstmaanKMediaBundle:Gallery:create.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Gallery:create.html.twig', array(
             'gallery' => $gallery,
             'form' => $form->createView(),
             'galleries'     => $galleries
@@ -97,10 +97,10 @@ abstract class GalleryController extends Controller
                     $em->persist($gallery);
                     $em->flush();
 
-                    $galleries = $em->getRepository('KunstmaanKMediaBundle:'.$gallery->getStrategy()->getName())
+                    $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                                                    ->getAllGalleries();
 
-                    return $this->render('KunstmaanKMediaBundle:Gallery:show.html.twig', array(
+                    return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
                               'gallery' => $gallery,
                               'galleries'     => $galleries,
                     ));
@@ -108,10 +108,10 @@ abstract class GalleryController extends Controller
             }
 
             $em = $this->getDoctrine()->getEntityManager();
-            $galleries = $em->getRepository('KunstmaanKMediaBundle:'.$gallery->getStrategy()->getName())
+            $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                                            ->getAllGalleries();
 
-            return $this->render('KunstmaanKMediaBundle:Gallery:subcreate.html.twig', array(
+            return $this->render('KunstmaanMediaBundle:Gallery:subcreate.html.twig', array(
                 'form' => $form->createView(),
                 'galleries'     => $galleries,
                 'parent' => $parent

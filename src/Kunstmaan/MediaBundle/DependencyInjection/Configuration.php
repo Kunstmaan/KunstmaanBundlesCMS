@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\DependencyInjection;
+namespace Kunstmaan\MediaBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kunstmaan_k_media');
+        $rootNode = $treeBuilder->root('kunstmaan_media');
 
         $this->addCdnSection($rootNode);
         $this->addProviderSection($rootNode);
@@ -52,7 +52,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->beforeNormalization()
                             ->ifTrue(function($v) { return !is_array($v); })
-                            ->thenInvalid('The kunstmaan_k_media.cdn config "%s" must be an array.')
+                            ->thenInvalid('The kunstmaan_media.cdn config "%s" must be an array.')
                         ->end()
                         ->addDefaultsIfNotSet()
                         ->children()
@@ -67,7 +67,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array(
                         'local' => array(
                             'default' => true,
-                            'id' => 'kunstmaan_k_media.cdn.remote_server',
+                            'id' => 'kunstmaan_media.cdn.remote_server',
                             'options' => array(
                                 'base_url' => '/media'
                             )
@@ -101,7 +101,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->beforeNormalization()
                             ->ifTrue(function($v) { return !is_array($v); })
-                            ->thenInvalid('The kunstmaan_k_media.provider config "%s" must be an array.')
+                            ->thenInvalid('The kunstmaan_media.provider config "%s" must be an array.')
                         ->end()
                         ->addDefaultsIfNotSet()
                         ->children()
@@ -143,7 +143,7 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                                 ->beforeNormalization()
                                     ->ifTrue(function($v) { return !is_array($v); })
-                                    ->thenInvalid('The kunstmaan_k_media.generator.path config "%s" must be an array.')
+                                    ->thenInvalid('The kunstmaan_media.generator.path config "%s" must be an array.')
                                 ->end()
                                 ->addDefaultsIfNotSet()
                                 ->children()
@@ -154,7 +154,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(array(
                                 'default' => array(
                                     'default' => true,
-                                    'id' => 'kunstmaan_k_media.generator.path.default',
+                                    'id' => 'kunstmaan_media.generator.path.default',
                                 )
                             ))
                         ->end()
@@ -163,7 +163,7 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                                 ->beforeNormalization()
                                     ->ifTrue(function($v) { return !is_array($v); })
-                                    ->thenInvalid('The kunstmaan_k_media.generator.uuid config "%s" must be an array.')
+                                    ->thenInvalid('The kunstmaan_media.generator.uuid config "%s" must be an array.')
                                 ->end()
                                 ->addDefaultsIfNotSet()
                                 ->children()
@@ -174,7 +174,7 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(array(
                                 'default' => array(
                                     'default' => true,
-                                    'id' => 'kunstmaan_k_media.generator.uuid.default',
+                                    'id' => 'kunstmaan_media.generator.uuid.default',
                                 )
                             ))
                         ->end()
@@ -205,7 +205,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->beforeNormalization()
                             ->ifTrue(function($v) { return !is_array($v); })
-                            ->thenInvalid('The kunstmaan_k_media.manipulator config "%s" must be an array.')
+                            ->thenInvalid('The kunstmaan_media.manipulator config "%s" must be an array.')
                         ->end()
                         ->addDefaultsIfNotSet()
                         ->children()
@@ -216,7 +216,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array(
                         'imagine' => array(
                             'default' => true,
-                            'id' => 'kunstmaan_k_media.util.image.manipulator.imagine',
+                            'id' => 'kunstmaan_media.util.image.manipulator.imagine',
                         )
                     ))
                 ->end()
@@ -248,7 +248,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->beforeNormalization()
                             ->ifTrue(function($v) { return !is_array($v); })
-                            ->thenInvalid('The kunstmaan_k_media.filesystem config "%s" must be an array.')
+                            ->thenInvalid('The kunstmaan_media.filesystem config "%s" must be an array.')
                         ->end()
                         ->addDefaultsIfNotSet()
                         ->children()
@@ -263,7 +263,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array(
                         'local' => array(
                             'default' => true,
-                            'id' => 'kunstmaan_k_media.filesystem.local',
+                            'id' => 'kunstmaan_media.filesystem.local',
                             'options' => array(
                                 'base_path' => '%kernel.root_dir%/../web/media',
                                 'create' => true
@@ -302,7 +302,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->beforeNormalization()
                             ->ifTrue(function($v) { return !is_array($v); })
-                            ->thenInvalid('The kunstmaan_k_media.contexts config "%s" must be an array.')
+                            ->thenInvalid('The kunstmaan_media.contexts config "%s" must be an array.')
                         ->end()
                         ->children()
                             ->scalarNode('provider')->end()

@@ -14,7 +14,7 @@
             {% for media in gallery.files %}
                 <tr>
                     <td>{{ media.id }}</td>
-                    <td><a href="{{ path('KunstmaanKMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">{{ media.name }}</a></td>
+                    <td><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">{{ media.name }}</a></td>
                     <td>{{ media.contenttype }}</td>
                     <td>{{ media.createdat|date|escape }}</td>
                     <td>{{ media.updatedat|date|escape }}</td>

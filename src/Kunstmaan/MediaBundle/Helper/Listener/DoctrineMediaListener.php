@@ -1,9 +1,9 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Listener;
+namespace Kunstmaan\MediaBundle\Helper\Listener;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
-use Kunstmaan\KMediaBundle\Helper\MediaManager;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kunstmaan\KMediaBundle\Entity;
+namespace  Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -228,7 +228,7 @@ abstract class Media{
     /**
      * Set gallery
      *
-     * @param Kunstmaan\KMediaBundle\Entity\Gallery $gallery
+     * @param Kunstmaan\MediaBundle\Entity\Gallery $gallery
      */
     public function setGallery(Gallery $gallery)
     {
@@ -238,7 +238,7 @@ abstract class Media{
     /**
      * Get gallery
      *
-     * @return Kunstmaan\KMediaBundle\Entity\Gallery 
+     * @return Kunstmaan\MediaBundle\Entity\Gallery 
      */
     public function getGallery()
     {
@@ -262,7 +262,7 @@ abstract class Media{
         if(isset($format)){
             $path = $path."_".$format;
         }
-        $path = $path.".".\Kunstmaan\KMediaBundle\Helper\Generator\ExtensionGuesser::guess($this->getContentType());
+        $path = $path.".".\Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser::guess($this->getContentType());
         return $path;
     }
 

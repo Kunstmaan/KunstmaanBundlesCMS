@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kunstmaan\KMediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\KMediaBundle\Repository\FileGalleryRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FileGalleryRepository")
  * @ORM\Table(name="file_gallery")
  * @ORM\HasLifecycleCallbacks
  */
@@ -43,17 +43,17 @@ class FileGallery extends Gallery{
     protected $updated;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Gallery
+     * @var Kunstmaan\MediaBundle\Entity\Gallery
      */
     protected $parent;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Gallery
+     * @var Kunstmaan\MediaBundle\Entity\Gallery
      */
     protected $children;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Media
+     * @var Kunstmaan\MediaBundle\Entity\Media
      */
     protected $files;
 
@@ -90,7 +90,7 @@ class FileGallery extends Gallery{
     /**
      * Add images
      *
-     * @param Kunstmaan\KMediaBundle\Entity\File $images
+     * @param Kunstmaan\MediaBundle\Entity\File $images
      */
     public function addFiles(File $images)
     {
@@ -98,7 +98,7 @@ class FileGallery extends Gallery{
     }
 
     public function getStrategy(){
-        return new \Kunstmaan\KMediaBundle\Helper\FileGalleryStrategy();
+        return new \Kunstmaan\MediaBundle\Helper\FileGalleryStrategy();
     }
     /**
      * @var string $content

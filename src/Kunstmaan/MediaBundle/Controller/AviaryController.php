@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Controller;
+namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\KMediaBundle\Entity\Image;
-use Kunstmaan\KMediaBundle\Helper\MediaHelper;
+use Kunstmaan\MediaBundle\Entity\Image;
+use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Symfony\Component\HttpFoundation\File\File;
 
 class AviaryController extends Controller
@@ -48,12 +48,12 @@ class AviaryController extends Controller
             $em->flush();
 
             $em = $this->getDoctrine()->getEntityManager();
-                    $galleries = $em->getRepository('KunstmaanKMediaBundle:ImageGallery')
+                    $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
                                      ->getAllGalleries();
             unlink($path);
 
                            //$picturehelp = $this->getPicture($picture->getId());
-            return $this->render('KunstmaanKMediaBundle:Gallery:show.html.twig', array(
+            return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
                          'gallery' => $gallery,
                          'galleries' => $galleries
             ));
@@ -61,13 +61,13 @@ class AviaryController extends Controller
 
         unlink($path);
 
-        return $this->render('KunstmaanKMediaBundle:Amazon:index.html.twig');
+        return $this->render('KunstmaanMediaBundle:Amazon:index.html.twig');
     }
 
     protected function getPicture($picture_id){
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $picture = $em->getRepository('KunstmaanKMediaBundle:Image')->find($picture_id);
+        $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($picture_id);
 
         if (!$picture) {
             throw $this->createNotFoundException('Unable to find picture.');
@@ -80,7 +80,7 @@ class AviaryController extends Controller
     {
         $em = $this->getDoctrine()
                     ->getEntityManager();
-        $imagegallery = $em->getRepository('KunstmaanKMediaBundle:ImageGallery')->find($gallery_id);
+        $imagegallery = $em->getRepository('KunstmaanMediaBundle:ImageGallery')->find($gallery_id);
 
         if (!$imagegallery) {
             throw $this->createNotFoundException('Unable to find image gallery.');

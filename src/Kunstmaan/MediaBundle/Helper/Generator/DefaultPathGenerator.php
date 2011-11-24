@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Generator;
+namespace Kunstmaan\MediaBundle\Helper\Generator;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 class DefaultPathGenerator implements PathGeneratorInterface
 {

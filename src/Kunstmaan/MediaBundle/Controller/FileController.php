@@ -1,12 +1,12 @@
 <?php
 // src/Kunstmaan/KAdminBundle/controller/PictureController.php
 
-namespace Kunstmaan\KMediaBundle\Controller;
+namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\KMediaBundle\Helper\MediaHelper;
-use Kunstmaan\KMediaBundle\Form\MediaType;
-use Kunstmaan\KMediaBundle\Entity\File;
+use Kunstmaan\MediaBundle\Helper\MediaHelper;
+use Kunstmaan\MediaBundle\Form\MediaType;
+use Kunstmaan\MediaBundle\Entity\File;
 
 /**
  * picture controller.
@@ -19,15 +19,15 @@ class FileController extends Controller
     public function showAction($media_id, $format = null, array $options = array())
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $media = $em->find('\Kunstmaan\KMediaBundle\Entity\File', $media_id);
+        $media = $em->find('\Kunstmaan\MediaBundle\Entity\File', $media_id);
         $gallery = $media->getGallery();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:FileGallery')
+        $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
                                 ->getAllGalleries();
 
         $picturehelper = new MediaHelper();
         $form = $this->createForm(new MediaType(), $picturehelper);
 
-        return $this->render('KunstmaanKMediaBundle:File:show.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:File:show.html.twig', array(
                     'form' => $form->createView(),
                     'media' => $media,
                     'format' => $format,
@@ -41,13 +41,13 @@ class FileController extends Controller
         $gallery = $this->getFileGallery($gallery_id);
 
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:FileGallery')
+        $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
                         ->getAllGalleries();
 
         $picturehelper = new MediaHelper();
         $form = $this->createForm(new MediaType(), $picturehelper);
 
-        return $this->render('KunstmaanKMediaBundle:File:create.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:File:create.html.twig', array(
             'form'   => $form->createView(),
             'gallery' => $gallery,
             'galleries' => $galleries
@@ -59,7 +59,7 @@ class FileController extends Controller
         $gallery = $this->getFileGallery($gallery_id);
 
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:FileGallery')
+        $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
                          ->getAllGalleries();
 
         $request = $this->getRequest();
@@ -80,7 +80,7 @@ class FileController extends Controller
                     $em->flush();
 
                     //$picturehelp = $this->getPicture($picture->getId());
-                    return $this->render('KunstmaanKMediaBundle:Gallery:show.html.twig', array(
+                    return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
                                    'gallery' => $gallery,
                                    'galleries' => $galleries
                                    // 'picture' => $picturehelp
@@ -88,7 +88,7 @@ class FileController extends Controller
                 }
             }
         }
-        return $this->render('KunstmaanKMediaBundle:File:create.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:File:create.html.twig', array(
             'form' => $form->createView(),
             'gallery' => $gallery,
             'galleries' => $galleries
@@ -98,7 +98,7 @@ class FileController extends Controller
     protected function getFile($picture_id){
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $picture = $em->getRepository('KunstmaanKMediaBundle:File')->find($picture_id);
+        $picture = $em->getRepository('KunstmaanMediaBundle:File')->find($picture_id);
 
         if (!$picture) {
             throw $this->createNotFoundException('Unable to find file.');
@@ -111,7 +111,7 @@ class FileController extends Controller
     {
         $em = $this->getDoctrine()
                     ->getEntityManager();
-        $imagegallery = $em->getRepository('KunstmaanKMediaBundle:FileGallery')->find($gallery_id);
+        $imagegallery = $em->getRepository('KunstmaanMediaBundle:FileGallery')->find($gallery_id);
 
         if (!$imagegallery) {
             throw $this->createNotFoundException('Unable to find file gallery.');

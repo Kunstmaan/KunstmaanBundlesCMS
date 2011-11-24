@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Provider;
+namespace Kunstmaan\MediaBundle\Helper\Provider;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
-use Kunstmaan\KMediaBundle\Helper\Generator\ExtensionGuesser;
-use Kunstmaan\KMediaBundle\Helper\Provider\AbstractVideoProvider;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
+use Kunstmaan\MediaBundle\Helper\Provider\AbstractVideoProvider;
 
 class SpeakerdeckProvider extends AbstractVideoProvider
 {

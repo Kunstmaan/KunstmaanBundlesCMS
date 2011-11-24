@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\KMediaBundle\Helper\Twig;
 
-use Kunstmaan\KMediaBundle\Helper\ExtensionHelper;
-use Kunstmaan\KMediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\ExtensionHelper;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * @author Benjamin Dulau <benjamin.dulau@anonymation.com>

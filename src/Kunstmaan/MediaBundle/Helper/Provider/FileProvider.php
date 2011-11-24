@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Provider;
+namespace Kunstmaan\MediaBundle\Helper\Provider;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use Kunstmaan\KMediaBundle\Helper\Generator\ExtensionGuesser;
+use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
 class FileProvider extends AbstractProvider
 {

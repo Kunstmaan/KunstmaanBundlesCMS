@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kunstmaan\KMediaBundle\Entity;
+namespace  Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\KMediaBundle\Repository\GalleryRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\GalleryRepository")
  * @ORM\Table(name="gallery")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
@@ -174,7 +174,7 @@ abstract class Gallery{
     /**
      * Set parent
      *
-     * @param Kunstmaan\KMediaBundle\Entity\Gallery $parent
+     * @param Kunstmaan\MediaBundle\Entity\Gallery $parent
      */
     public function setParent(Gallery $parent)
     {
@@ -184,7 +184,7 @@ abstract class Gallery{
     /**
      * Get parent
      *
-     * @return Kunstmaan\KMediaBundle\Entity\Gallery 
+     * @return Kunstmaan\MediaBundle\Entity\Gallery 
      */
     public function getParent()
     {
@@ -205,7 +205,7 @@ abstract class Gallery{
     /**
      * Add children
      *
-     * @param Kunstmaan\KMediaBundle\Entity\Gallery $children
+     * @param Kunstmaan\MediaBundle\Entity\Gallery $children
      */
     public function addGallery(Gallery $children)
     {
@@ -215,7 +215,7 @@ abstract class Gallery{
      /**
       * Add children
       *
-      * @param \Kunstmaan\KMediaBundle\Entity\ImageGallery $children
+      * @param \Kunstmaan\MediaBundle\Entity\ImageGallery $children
       */
      public function addChild(FileGallery $child)
      {
@@ -244,7 +244,7 @@ abstract class Gallery{
     /**
      * Add files
      *
-     * @param Kunstmaan\KMediaBundle\Entity\Media $files
+     * @param Kunstmaan\MediaBundle\Entity\Media $files
      */
     public function addMedia(Media $files)
     {
@@ -280,7 +280,7 @@ abstract class Gallery{
 
     public function getFormType()
     {
-        return new \Kunstmaan\KMediaBundle\Form\GalleryType($this->getStrategy()->getGalleryClassName());
+        return new \Kunstmaan\MediaBundle\Form\GalleryType($this->getStrategy()->getGalleryClassName());
     }
 
     public function getType()

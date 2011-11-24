@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Manipulator;
+namespace Kunstmaan\MediaBundle\Helper\Manipulator;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Gaufrette\File;
 
 interface ImageManipulatorInterface

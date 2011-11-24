@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
-use Kunstmaan\KMediaBundle\Helper\Provider\ProviderInterface;
+use Kunstmaan\MediaBundle\Helper\Provider\ProviderInterface;
 
 class MediaContext
 {

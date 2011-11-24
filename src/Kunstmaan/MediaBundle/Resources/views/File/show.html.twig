@@ -1,15 +1,15 @@
-{% extends 'KunstmaanKMediaBundle:Default:layout.html.twig' %}
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block subsidebar %}
-    {% include 'KunstmaanKMediaBundle:Gallery:sidebar.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Gallery:sidebar.html.twig' %}
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanKMediaBundle_media_files') }}">Files</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">Files</a> <span class="divider">/</span></li>
         {% for parent in gallery.parents %}
-            <li><a href="{{ path('KunstmaanKMediaBundle_filegallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
+            <li><a href="{{ path('KunstmaanMediaBundle_filegallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
         {% endfor %}
-    <li><a href="{{ path('KunstmaanKMediaBundle_filegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_filegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
     <li class="active">{{ media.name }}</li>
 {% endblock %}
 
@@ -25,7 +25,7 @@
     {{ media.id }}
     {{ media.name }}
     {{ media.contentType }}
-    <a href="{{ path('KunstmaanKMediaBundle_uploads') }}{{ media.show() }}">open file</a>
+    <a href="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show() }}">open file</a>
     <ul>
         {% for item in media.metadata %}
             <li>{{ item }}</li>

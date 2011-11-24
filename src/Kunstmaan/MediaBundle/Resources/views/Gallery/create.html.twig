@@ -1,11 +1,11 @@
-{% extends 'KunstmaanKMediaBundle:Default:layout.html.twig' %}
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block subsidebar %}
-    {% include 'KunstmaanKMediaBundle:Gallery:sidebar.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Gallery:sidebar.html.twig' %}
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanKMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallery.type }}s</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallery.type }}s</a> <span class="divider">/</span></li>
 	<li class="active">create new {{ gallery.type }} gallery</li>
 {% endblock %}
 
@@ -14,5 +14,5 @@
 <div class="page-header">
     <h1>Create a new {{ gallery.type }} gallery</h1>
   </div>
-   {% include 'KunstmaanKMediaBundle:Gallery:form.html.twig' with { 'form': form } %}
+   {% include 'KunstmaanMediaBundle:Gallery:form.html.twig' with { 'form': form } %}
 {% endblock %}

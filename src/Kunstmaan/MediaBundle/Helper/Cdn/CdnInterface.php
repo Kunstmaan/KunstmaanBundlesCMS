@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Cdn;
+namespace Kunstmaan\MediaBundle\Helper\Cdn;
 
 interface CdnInterface
 {

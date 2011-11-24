@@ -1,12 +1,12 @@
 <?php
 // src/Blogger/BlogBundle/Controller/CommentController.php
 
-namespace Kunstmaan\KMediaBundle\Controller;
+namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\KMediaBundle\Form\GalleryType;
-use Kunstmaan\KMediaBundle\Entity\ImageGallery;
-use Kunstmaan\KMediaBundle\Form\SubGalleryType;
+use Kunstmaan\MediaBundle\Form\GalleryType;
+use Kunstmaan\MediaBundle\Entity\ImageGallery;
+use Kunstmaan\MediaBundle\Form\SubGalleryType;
 
 /**
  * imagegallery controller.
@@ -19,15 +19,15 @@ class ImageGalleryController extends GalleryController
     public function showAction($id, $slug)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanKMediaBundle:ImageGallery')->find($id);
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:ImageGallery')
+        $gallery = $em->getRepository('KunstmaanMediaBundle:ImageGallery')->find($id);
+        $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
                         ->getAllGalleries();
 
         if (!$gallery) {
             throw $this->createNotFoundException('Unable to find image gallery.');
         }
 
-        return $this->render('KunstmaanKMediaBundle:Gallery:show.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
             'gallery'       => $gallery,
             'galleries'     => $galleries
          ));
@@ -55,10 +55,10 @@ class ImageGalleryController extends GalleryController
 
     public function ckeditorAction(){
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:ImageGallery')
+        $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
                         ->getAllGalleries();
 
-        return $this->render('KunstmaanKMediaBundle:ImageGallery:ckeditor.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:ImageGallery:ckeditor.html.twig', array(
             'galleries'     => $galleries
         ));
     }

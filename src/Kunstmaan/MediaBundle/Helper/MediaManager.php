@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper;
+namespace Kunstmaan\MediaBundle\Helper;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
-use Kunstmaan\KMediaBundle\Entity\MediaContext;
-use Kunstmaan\KMediaBundle\Helper\Cdn\CdnInterface;
-use Kunstmaan\KMediaBundle\Helper\Provider\ProviderInterface;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Entity\MediaContext;
+use Kunstmaan\MediaBundle\Helper\Cdn\CdnInterface;
+use Kunstmaan\MediaBundle\Helper\Provider\ProviderInterface;
 use Gaufrette\Filesystem;
 
 class MediaManager

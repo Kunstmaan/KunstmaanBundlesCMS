@@ -1,9 +1,9 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Manipulator;
+namespace Kunstmaan\MediaBundle\Helper\Manipulator;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
-use Kunstmaan\KMediaBundle\Helper\Generator\ExtensionGuesser;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
 use Imagine\Image\ImagineInterface,
     Imagine\Image\ImageInterface,

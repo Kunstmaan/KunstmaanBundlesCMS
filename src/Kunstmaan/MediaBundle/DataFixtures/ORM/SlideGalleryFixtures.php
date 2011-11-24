@@ -1,11 +1,11 @@
 <?php
 // src/Kunstmaan/KAdminBundle/DataFixtures/ORM/BlogFixtures.php
 
-namespace Kunstmaan\KMediaBundle\DataFixtures\ORM;
+namespace Kunstmaan\MediaBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Kunstmaan\KMediaBundle\Entity\SlideGallery;
+use Kunstmaan\MediaBundle\Entity\SlideGallery;
 
 class SlideGalleryFixtures extends AbstractFixture implements OrderedFixtureInterface
 {

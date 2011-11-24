@@ -1,4 +1,4 @@
-<form action="{{ path('KunstmaanKMediaBundle_' ~ gallery.type ~ 'gallery_subcreate', { 'id' : parent.id }  ) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subcreate', { 'id' : parent.id }  ) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
         <div class="clearfix">
             {{ form_errors(form) }}
@@ -10,7 +10,7 @@
         {{ form_rest(form) }}
         <div class="actions">
             <input class="btn primary type" type="submit" value="Create gallery">
-            <input onclick="window.location = '{{ path('KunstmaanKMediaBundle_media_' ~ gallery.type ~ 's' ) }}'" type="reset" class="btn" value="cancel" />
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's' ) }}'" type="reset" class="btn" value="cancel" />
         </div>
     </fieldset>
 </form>

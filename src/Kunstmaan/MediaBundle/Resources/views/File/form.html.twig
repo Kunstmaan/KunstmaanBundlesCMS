@@ -1,4 +1,4 @@
-<form action="{{ path('KunstmaanKMediaBundle_file_create', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('KunstmaanMediaBundle_file_create', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
         <div class="clearfix">
             {{ form_errors(form) }}
@@ -10,7 +10,7 @@
         </div>
         <div class="actions">
             <input class="btn primary type" type="submit" value="add new file">
-            <input onclick="window.location = '{{ path('KunstmaanKMediaBundle_filegallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="cancel" />
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_filegallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="cancel" />
         </div>
     </fieldset>
 </form>

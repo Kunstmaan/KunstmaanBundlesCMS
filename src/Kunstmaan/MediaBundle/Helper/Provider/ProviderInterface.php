@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Provider;
+namespace Kunstmaan\MediaBundle\Helper\Provider;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 
 interface ProviderInterface

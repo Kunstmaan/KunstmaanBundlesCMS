@@ -5,11 +5,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="kunstmaan_k_media.manager.class">Kunstmaan\KMediaBundle\Helper\MediaManager</parameter>
+        <parameter key="kunstmaan_media.manager.class">Kunstmaan\MediaBundle\Helper\MediaManager</parameter>
     </parameters>
 
     <services>
-        <service id="kunstmaan_k_media.manager" class="%kunstmaan_k_media.manager.class%" />
+        <service id="kunstmaan_media.manager" class="%kunstmaan_media.manager.class%" />
     </services>
 
 </container>

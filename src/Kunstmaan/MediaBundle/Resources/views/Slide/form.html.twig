@@ -1,4 +1,4 @@
-<form action="{{ path('KunstmaanKMediaBundle_slide_create', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('KunstmaanMediaBundle_slide_create', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
         {{ form_errors(form) }}
         <div class="clearfix">
@@ -24,7 +24,7 @@
         {{ form_rest(form) }}
         <div class="actions">
             <input class="btn primary type" type="submit" value="add new slide">
-            <input onclick="window.location = '{{ path('KunstmaanKMediaBundle_slidegallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="cancel" />
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_slidegallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="cancel" />
         </div>
     </fieldset>
 </form>

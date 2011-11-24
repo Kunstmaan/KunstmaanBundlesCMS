@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\DependencyInjection;
+namespace Kunstmaan\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -17,7 +17,7 @@ use Kunstmaan\KMediaBundle\Entity\MediaContext;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class KunstmaanKMediaExtension extends Extension
+class KunstmaanMediaExtension extends Extension
 {
     protected $defaultCdn;
     protected $defaultFilesystem;
@@ -46,7 +46,7 @@ class KunstmaanKMediaExtension extends Extension
             $loader->load(sprintf('%s.xml', $basename));
         }
 
-        $manager = $container->getDefinition('kunstmaan_k_media.manager');
+        $manager = $container->getDefinition('kunstmaan_media.manager');
 
         // Order matters !!
         $this->initCdns($config, $manager, $container);
@@ -213,7 +213,7 @@ class KunstmaanKMediaExtension extends Extension
     {
         $contextList = $config['contexts'];
         foreach($contextList as $name => $options) {
-            $context = new Definition('Kunstmaan\KMediaBundle\Entity\MediaContext');
+            $context = new Definition('Kunstmaan\MediaBundle\Entity\MediaContext');
             $context->addArgument($name);
 
             // Provider
@@ -240,6 +240,6 @@ class KunstmaanKMediaExtension extends Extension
 
     public function getAlias()
     {
-        return 'kunstmaan_k_media';
+        return 'kunstmaan_media';
     }
 }

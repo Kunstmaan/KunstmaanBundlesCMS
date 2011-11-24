@@ -1,12 +1,12 @@
 <?php
 // src/Blogger/BlogBundle/Controller/CommentController.php
 
-namespace Kunstmaan\KMediaBundle\Controller;
+namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\KMediaBundle\Form\GalleryType;
-use Kunstmaan\KMediaBundle\Entity\FileGallery;
-use Kunstmaan\KMediaBundle\Form\SubGalleryType;
+use Kunstmaan\MediaBundle\Form\GalleryType;
+use Kunstmaan\MediaBundle\Entity\FileGallery;
+use Kunstmaan\MediaBundle\Form\SubGalleryType;
 
 /**
  * imagegallery controller.
@@ -19,15 +19,15 @@ class FileGalleryController extends GalleryController
     public function showAction($id, $slug)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanKMediaBundle:FileGallery')->find($id);
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:FileGallery')
+        $gallery = $em->getRepository('KunstmaanMediaBundle:FileGallery')->find($id);
+        $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
                         ->getAllGalleries();
 
         if (!$gallery) {
             throw $this->createNotFoundException('Unable to find file gallery.');
         }
 
-        return $this->render('KunstmaanKMediaBundle:Gallery:show.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
             'gallery'       => $gallery,
             'galleries'     => $galleries
          ));

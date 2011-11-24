@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper;
+namespace Kunstmaan\MediaBundle\Helper;
 
 /**
  * Comment controller.

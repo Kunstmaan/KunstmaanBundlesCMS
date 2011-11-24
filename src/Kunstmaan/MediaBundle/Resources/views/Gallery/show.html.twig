@@ -1,13 +1,13 @@
-{% extends 'KunstmaanKMediaBundle:Default:layout.html.twig' %}
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block subsidebar %}
-    {% include 'KunstmaanKMediaBundle:Gallery:sidebar.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Gallery:sidebar.html.twig' %}
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanKMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallery.type|capitalize }}s</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallery.type|capitalize }}s</a> <span class="divider">/</span></li>
         {% for parent in gallery.parents %}
-            <li><a href="{{ path('KunstmaanKMediaBundle_' ~ gallery.type ~ 'gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
+            <li><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
         {% endfor %}
 	<li class="active">{{ gallery.name }}</li>
 {% endblock %}
@@ -16,22 +16,22 @@
     <div class="page-header">
         <h1>{{ gallery.type|capitalize }} Gallery <small>{{ gallery.name }}
         {% if gallery.parent %}
-            | in <a href="{{ path('KunstmaanKMediaBundle_' ~ gallery.type ~ 'gallery_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name}}</a>
+            | in <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name}}</a>
         {% endif %}
         </small></h1>
     </div>
     <div>
-        <p><a href="{{ path('KunstmaanKMediaBundle_' ~ gallery.type ~ '_new', { 'gallery_id' : gallery.id }) }}">add {{ gallery.type }} to this gallery</a> | <a href="{{ path('KunstmaanKMediaBundle_' ~ gallery.type ~ 'gallery_subnew', { 'id' : gallery.id }) }}">add a {{ gallery.type }} gallery to this gallery</a></p>
+        <p><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_new', { 'gallery_id' : gallery.id }) }}">add {{ gallery.type }} to this gallery</a> | <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subnew', { 'id' : gallery.id }) }}">add a {{ gallery.type }} gallery to this gallery</a></p>
     </div>
     <div>
         <ul>
         {% for child in gallery.children %}
-            <li>{% include 'KunstmaanKMediaBundle:Gallery:showgallery.html.twig' %}</li>
+            <li>{% include 'KunstmaanMediaBundle:Gallery:showgallery.html.twig' %}</li>
         {% endfor %}
         </ul>
     </div>
     <div>
         <h2>{{ gallery.type|capitalize }}s in {{ gallery.name }}</h2>
-       {% include 'KunstmaanKMediaBundle:' ~ gallery.type|capitalize ~ ':tableview.html.twig' %}
+       {% include 'KunstmaanMediaBundle:' ~ gallery.type|capitalize ~ ':tableview.html.twig' %}
     </div>
 {% endblock %}

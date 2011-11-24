@@ -1,13 +1,13 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Provider;
+namespace Kunstmaan\MediaBundle\Helper\Provider;
 
 use Gaufrette\Filesystem;
-use Kunstmaan\KMediaBundle\Entity\Media;
-use Kunstmaan\KMediaBundle\Helper\Cdn\CdnInterface;
-use Kunstmaan\KMediaBundle\Helper\Generator\PathGeneratorInterface;
-use Kunstmaan\KMediaBundle\Helper\Generator\UuidGeneratorInterface;
-use Kunstmaan\KMediaBundle\Helper\Generator\ExtensionGuesser;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\Cdn\CdnInterface;
+use Kunstmaan\MediaBundle\Helper\Generator\PathGeneratorInterface;
+use Kunstmaan\MediaBundle\Helper\Generator\UuidGeneratorInterface;
+use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
 
 abstract class AbstractProvider implements ProviderInterface

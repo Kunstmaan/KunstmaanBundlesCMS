@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Kunstmaan\KMediaBundle\Entity\Image
+ * Kunstmaan\MediaBundle\Entity\Image
  * Class that defines a picture in the system
  *
  * @author Kristof Van Cauwenbergh
@@ -62,7 +62,7 @@ class File extends Media
     protected $metadata;
 
     /**
-     * @var Kunstmaan\KMediaBundle\Entity\Gallery
+     * @var Kunstmaan\MediaBundle\Entity\Gallery
      */
     protected $gallery;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Form;
+namespace Kunstmaan\MediaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
@@ -28,7 +28,7 @@ class GalleryType extends AbstractType
 
     public function getName()
     {
-        return 'kunstmaan_kmediabundle_imagegallerytype';
+        return 'kunstmaan_mediabundle_imagegallerytype';
     }
 
     public function getEntityName()

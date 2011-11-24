@@ -4,10 +4,10 @@
 <div class="sidebar">
     <ul>
         <li class="header">Media</li>
-        <li><a href="{{ path('KunstmaanKMediaBundle_media_images') }}">Images</a></li>
-        <li><a href="{{ path('KunstmaanKMediaBundle_media_videos') }}">Videos</a></li>
-        <li><a href="{{ path('KunstmaanKMediaBundle_media_slides') }}">Slides</a></li>
-        <li><a href="{{ path('KunstmaanKMediaBundle_media_files') }}">Files</a></li>
+        <li><a href="{{ path('KunstmaanMediaBundle_media_images') }}">Images</a></li>
+        <li><a href="{{ path('KunstmaanMediaBundle_media_videos') }}">Videos</a></li>
+        <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">Slides</a></li>
+        <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">Files</a></li>
     </ul>
     {% block subsidebar %}
 
@@ -18,7 +18,7 @@
 {% block breadcrumb %}
 	<ul class="breadcrumb">
 		<li><a href="{{ path('KunstmaanKAdminBundle_homepage') }}">Home</a> <span class="divider">/</span></li>
-        <li><a href="{{ path('KunstmaanKMediaBundle_media') }}">Media</a> <span class="divider">/</span></li>
+        <li><a href="{{ path('KunstmaanMediaBundle_media') }}">Media</a> <span class="divider">/</span></li>
         {% block subbreadcrumb %}
 
         {% endblock %}

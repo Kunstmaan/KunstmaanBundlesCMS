@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Repository;
+namespace Kunstmaan\MediaBundle\Repository;
 
-use Kunstmaan\KMediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Doctrine\ORM\EntityManager;
 
 class DoctrineMediaRepository

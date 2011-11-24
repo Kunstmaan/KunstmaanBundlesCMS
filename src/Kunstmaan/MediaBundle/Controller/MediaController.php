@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Controller;
+namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\KMediaBundle\Entity\ImageGallery;
-use Kunstmaan\KMediaBundle\Entity\FileGallery;
-use Kunstmaan\KMediaBundle\Entity\SlideGallery;
+use Kunstmaan\MediaBundle\Entity\ImageGallery;
+use Kunstmaan\MediaBundle\Entity\FileGallery;
+use Kunstmaan\MediaBundle\Entity\SlideGallery;
 
 
 class MediaController extends Controller
@@ -13,17 +13,17 @@ class MediaController extends Controller
     
     public function indexAction()
     {
-        return $this->render('KunstmaanKMediaBundle:Media:index.html.twig', array());
+        return $this->render('KunstmaanMediaBundle:Media:index.html.twig', array());
     }
 
     public function imagesAction()
     {
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:ImageGallery')
+        $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
                         ->getAllGalleries();
         $gallery = new ImageGallery();
-        return $this->render('KunstmaanKMediaBundle:Media:images.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Media:images.html.twig', array(
             'gallery' => $gallery,
             'galleries' => $galleries
         ));
@@ -31,18 +31,18 @@ class MediaController extends Controller
 
     public function videosAction()
     {
-        return $this->render('KunstmaanKMediaBundle:Media:videos.html.twig', array());
+        return $this->render('KunstmaanMediaBundle:Media:videos.html.twig', array());
     }
 
     public function slidesAction()
     {
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:SlideGallery')
+        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
                         ->getAllGalleries();
         $gallery = new SlideGallery();
 
-        return $this->render('KunstmaanKMediaBundle:Media:images.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Media:images.html.twig', array(
             'gallery' => $gallery,
             'galleries' => $galleries
         ));
@@ -52,11 +52,11 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                            ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanKMediaBundle:FileGallery')
+        $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
                                 ->getAllGalleries();
         $gallery = new FileGallery();
 
-        return $this->render('KunstmaanKMediaBundle:Media:files.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Media:files.html.twig', array(
             'gallery' => $gallery,
             'galleries' => $galleries
         ));

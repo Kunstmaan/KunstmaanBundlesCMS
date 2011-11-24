@@ -1,11 +1,11 @@
-{% extends 'KunstmaanKAdminBundle:Default:layout.html.twig' %}
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block sidebar %}
-    {% include 'KunstmaanKMediaBundle:ImageGallery:sidebar.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Gallery:sidebar.html.twig' %}
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanKMediaBundle_media_images') }}">Images</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_images') }}">Images</a> <span class="divider">/</span></li>
 {% endblock %}
 
 {% block content %}

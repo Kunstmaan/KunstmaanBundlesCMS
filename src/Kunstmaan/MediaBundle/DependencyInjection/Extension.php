@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kunstmaan\KMediaBundle\DependencyInjection;
+namespace Kunstmaan\MediaBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension as BaseExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
