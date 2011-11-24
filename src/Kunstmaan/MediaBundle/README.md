@@ -1,17 +1,20 @@
 # Introducing [KunstmaanMediaBundle][KunstmaanMediaBundle]
 
-[][kdeploy] is the hosting platform used at [Kunstmaan][kunstmaan] to reliably host, deploy, backup and develop our projects. There are no restrictions on what type of projects are hosted and we are using it to host projects based on Java in a Tomcat container, Play! with the builtin container, PHP using mod_apache and PHP-FPM and a Ruby On Rails application.
+De [KunstmaanMediaBundle][KunstmaanMediaBundle] is a symfony2 bundle used at [Kunstmaan][kunstmaan] to handle media, and media galleries. It has objects to handle files, slides, videos and images and keeps them organised in galleries.
 
-# Installing [kDeploy][kdeploy]
+# Installing [KunstmaanMediaBundle][KunstmaanMediaBundle]
 
-## Voeg toe aan deps:
+## Add to your deps file:
 
+```bash
 [KunstmaanMediaBundle]
     git=git@github.com:Kunstmaan/KunstmaanMediaBundle.git
     target=bundles/Kunstmaan/MediaBundle
+```
 
-Dependencies:
+## Dependencies:
 
+```bash
 [KunstmaanAdminBundle]
     git=
     target=
@@ -31,9 +34,9 @@ Dependencies:
 [KnpGaufretteBundle]
     git=http://github.com/knplabs/KnpGaufretteBundle.git
     target=/bundles/Knp/GaufretteBundle
+```
 
-
-Voeg toe aan appkernel.php:
+## Add to appkernel.php:
 
 ```bash
 $bundles = array(
@@ -43,17 +46,19 @@ $bundles = array(
         );
 ```
 
-Voeg toe aan autoload.php:
+## Add to autoload.php:
 
+```bash
 $loader->registerNamespaces(array(
     ...
     'Kunstmaan'        => __DIR__.'/../vendor/bundles',
     ...
 ));
+```
 
+## Add to config.yml:
 
-Voeg toe aan config.yml:
-
+```bash
 imports:
    KunstmaanKMediaBundle:
         resource: @KunstmaanMediaBundle/Resources/config/config.yml
@@ -64,3 +69,7 @@ orm:
             mappings:
                 ...
                 KunstmaanMediaBundle: ~
+```       
+       
+[KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
+[kunstmaan]: http://www.kunstmaan.be "Kunstmaan"                
