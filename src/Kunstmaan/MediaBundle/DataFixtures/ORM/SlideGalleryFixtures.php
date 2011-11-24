@@ -40,7 +40,7 @@ class SlideGalleryFixtures extends AbstractFixture implements OrderedFixtureInte
         $manager->persist($gal2);
         $manager->flush();
 
-        $slide = new \Kunstmaan\KMediaBundle\Entity\Slide();
+        $slide = new \Kunstmaan\MediaBundle\Entity\Slide();
         $slide->setName('Optimizing for happiness');
         $slide->setContent('4ebaea7763912f032300cbe8');
         $slide->setSlidetype('speakerdeck');
@@ -48,7 +48,7 @@ class SlideGalleryFixtures extends AbstractFixture implements OrderedFixtureInte
         $manager->persist($slide);
         $manager->flush();
 
-        $slide = new \Kunstmaan\KMediaBundle\Entity\Slide();
+        $slide = new \Kunstmaan\MediaBundle\Entity\Slide();
         $slide->setName('Introduction to Speakerdeck');
         $slide->setContent('4d0bcd025753086fc2000002');
         $slide->setSlidetype('speakerdeck');
@@ -56,7 +56,7 @@ class SlideGalleryFixtures extends AbstractFixture implements OrderedFixtureInte
         $manager->persist($slide);
         $manager->flush();
 
-        $slide = new \Kunstmaan\KMediaBundle\Entity\Slide();
+        $slide = new \Kunstmaan\MediaBundle\Entity\Slide();
         $slide->setName('Why social media is shit');
         $slide->setContent('10285826');
         $slide->setSlidetype('slideshare');
