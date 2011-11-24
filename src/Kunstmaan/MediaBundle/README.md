@@ -1,4 +1,10 @@
-Voeg toe aan deps:
+# Introducing [KunstmaanMediaBundle][KunstmaanMediaBundle]
+
+[][kdeploy] is the hosting platform used at [Kunstmaan][kunstmaan] to reliably host, deploy, backup and develop our projects. There are no restrictions on what type of projects are hosted and we are using it to host projects based on Java in a Tomcat container, Play! with the builtin container, PHP using mod_apache and PHP-FPM and a Ruby On Rails application.
+
+# Installing [kDeploy][kdeploy]
+
+## Voeg toe aan deps:
 
 [KunstmaanMediaBundle]
     git=git@github.com:Kunstmaan/KunstmaanMediaBundle.git
@@ -29,12 +35,13 @@ Dependencies:
 
 Voeg toe aan appkernel.php:
 
+```bash
 $bundles = array(
             ...
             new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
             ...
         );
-
+```
 
 Voeg toe aan autoload.php:
 
