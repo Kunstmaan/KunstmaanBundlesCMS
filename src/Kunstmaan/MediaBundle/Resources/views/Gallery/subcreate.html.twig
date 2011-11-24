@@ -1,0 +1,18 @@
+{% extends 'KunstmaanKMediaBundle:Default:layout.html.twig' %}
+
+{% block subsidebar %}
+    {% include 'KunstmaanKMediaBundle:Gallery:sidebar.html.twig' %}
+{% endblock %}
+
+{% block subbreadcrumb %}
+    <li><a href="{{ path('KunstmaanKMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallery.type }}</a> <span class="divider">/</span></li>
+	<li class="active">create new {{ gallery.type }} gallery in {{ parent.name }}</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Create a new {{ gallery.type }} gallery in {{ parent.name }}</h1>
+  </div>
+   {% include 'KunstmaanKMediaBundle:Gallery:subform.html.twig' with { 'form': form, 'id' : parent.id } %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'KunstmaanKMediaBundle:Default:layout.html.twig' %}
+
+{% block subsidebar %}
+    {% include 'KunstmaanKMediaBundle:Gallery:sidebar.html.twig' %}
+{% endblock %}
+
+{% block subbreadcrumb %}
+    <li><a href="{{ path('KunstmaanKMediaBundle_media_slides') }}">Slide Galleries</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanKMediaBundle_slidegallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
+	<li class="active">Add new slide to "{{ gallery.name }}"</li>
+{% endblock %}
+
+{% block title %}New Slide{% endblock%}
+
+{% block content %}
+    <h1>Add new slide <small>to "{{ gallery.name }}"</small></h1>
+    {% include 'KunstmaanKMediaBundle:Slide:form.html.twig' with { 'form': form } %}
+{% endblock %}

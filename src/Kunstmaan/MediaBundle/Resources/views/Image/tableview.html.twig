@@ -1,0 +1,11 @@
+<ul class="media-grid">
+        {% for media in gallery.files %}
+            <li>
+                <a href="{{ path('KunstmaanKMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">
+                    <img class="thumbnail" src="{{ path('KunstmaanKMediaBundle_uploads') }}{{ media.show('medium') }}" alt="{{ media.name }}" />
+                </a>
+             </li>
+        {% else %}
+            <ul><li>No images in this gallery yet.</li></ul>
+        {% endfor %}
+        </ul>

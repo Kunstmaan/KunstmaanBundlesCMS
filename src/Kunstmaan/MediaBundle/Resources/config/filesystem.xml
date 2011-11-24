@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="kunstmaan_k_media.filesystem.adapter.local" class="Gaufrette\Adapter\Local">
+            <argument>%kunstmaan_k_media.filesystem.local.base_path%</argument>
+            <argument>%kunstmaan_k_media.filesystem.local.create%</argument>
+        </service>
+        <service id="kunstmaan_k_media.filesystem.adapter.ftp" class="Gaufrette\Adapter\Ftp" />
+
+        <service id="kunstmaan_k_media.filesystem.local" class="Gaufrette\Filesystem">
+            <argument type="service" id="kunstmaan_k_media.filesystem.adapter.local" />
+        </service>
+
+        <service id="kunstmaan_k_media.filesystem.ftp" class="Gaufrette\Filesystem">
+            <argument type="service" id="kunstmaan_k_media.filesystem.adapter.ftp" />
+        </service>
+    </services>
+
+</container>

@@ -1,0 +1,206 @@
+KunstmaanKMediaBundle_media:
+    pattern:  /admin/media
+    defaults: { _controller: KunstmaanKMediaBundle:Media:index }
+
+KunstmaanKMediaBundle_media_images:
+    pattern:  /admin/media/images
+    defaults: { _controller: KunstmaanKMediaBundle:Media:images }
+
+KunstmaanKMediaBundle_image_show:
+    pattern:  /admin/media/images/{media_id}
+    defaults: { _controller: KunstmaanKMediaBundle:Image:show }
+    requirements:
+        _method: GET
+        media_id: \d+
+
+KunstmaanKMediaBundle_image_new:
+    pattern:  /admin/media/images/add/{gallery_id}
+    defaults: { _controller: KunstmaanKMediaBundle:Image:new }
+    requirements:
+        _method: GET
+        gallery_id: \d+
+
+KunstmaanKMediaBundle_image_create:
+    pattern:  /admin/media/images/create/{gallery_id}
+    defaults: { _controller: KunstmaanKMediaBundle:Image:create }
+    requirements:
+        _method: POST
+        gallery_id: \d+
+
+KunstmaanKMediaBundle_imagegallery_new:
+    pattern:  /admin/media/images/gallery
+    defaults: { _controller: KunstmaanKMediaBundle:ImageGallery:new }
+    requirements:
+        _method:  GET
+
+KunstmaanKMediaBundle_imagegallery_create:
+    pattern:  /admin/media/images/gallery/create
+    defaults: { _controller: KunstmaanKMediaBundle:ImageGallery:create }
+    requirements:
+        _method: POST
+
+KunstmaanKMediaBundle_imagegallery_subnew:
+    pattern:  /admin/media/images/gallery/sub/{id}
+    defaults: { _controller: KunstmaanKMediaBundle:ImageGallery:subnew }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanKMediaBundle_imagegallery_subcreate:
+    pattern:  /admin/media/images/gallery/sub/create/{id}
+    defaults: { _controller: KunstmaanKMediaBundle:ImageGallery:subcreate }
+    requirements:
+        _method: POST
+        id: \d+
+
+KunstmaanKMediaBundle_imagegallery_show:
+    pattern:  /admin/media/images/gallery/{id}/{slug}
+    defaults: { _controller: KunstmaanKMediaBundle:ImageGallery:show }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanKMediaBundle_imagegallery_ckeditor:
+    pattern:  /admin/media/images/ckeditor
+    defaults: { _controller: KunstmaanKMediaBundle:ImageGallery:ckeditor }
+    requirements:
+        _method:  GET
+
+KunstmaanKMediaBundle_media_videos:
+    pattern:  /admin/media/videos
+    defaults: { _controller: KunstmaanKMediaBundle:Media:videos }
+
+KunstmaanKMediaBundle_media_slides:
+    pattern:  /admin/media/slides
+    defaults: { _controller: KunstmaanKMediaBundle:Media:slides }
+
+KunstmaanKMediaBundle_slide_show:
+    pattern:  /admin/media/slides/{media_id}
+    defaults: { _controller: KunstmaanKMediaBundle:Slide:show }
+    requirements:
+        _method: GET
+        media_id: \d+
+
+KunstmaanKMediaBundle_slide_new:
+    pattern:  /admin/media/slides/add/{gallery_id}
+    defaults: { _controller: KunstmaanKMediaBundle:Slide:new }
+    requirements:
+        _method: GET
+        gallery_id: \d+
+
+KunstmaanKMediaBundle_slide_create:
+    pattern:  /admin/media/slides/create/{gallery_id}
+    defaults: { _controller: KunstmaanKMediaBundle:Slide:create }
+    requirements:
+        _method: POST
+        gallery_id: \d+
+
+
+KunstmaanKMediaBundle_slidegallery_new:
+    pattern:  /admin/media/slides/gallery
+    defaults: { _controller: KunstmaanKMediaBundle:SlideGallery:new }
+    requirements:
+        _method:  GET
+
+KunstmaanKMediaBundle_slidegallery_create:
+    pattern:  /admin/media/slides/gallery/create
+    defaults: { _controller: KunstmaanKMediaBundle:SlideGallery:create }
+    requirements:
+        _method: POST
+
+KunstmaanKMediaBundle_slidegallery_subnew:
+    pattern:  /admin/media/slides/gallery/sub/{id}
+    defaults: { _controller: KunstmaanKMediaBundle:SlideGallery:subnew }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanKMediaBundle_slidegallery_subcreate:
+    pattern:  /admin/media/slides/gallery/sub/create/{id}
+    defaults: { _controller: KunstmaanKMediaBundle:SlideGallery:subcreate }
+    requirements:
+        _method: POST
+        id: \d+
+
+KunstmaanKMediaBundle_slidegallery_show:
+    pattern:  /admin/media/slides/gallery/{id}/{slug}
+    defaults: { _controller: KunstmaanKMediaBundle:SlideGallery:show }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanKMediaBundle_slidegallery_ckeditor:
+    pattern:  /admin/media/slides/ckeditor
+    defaults: { _controller: KunstmaanKMediaBundle:SlideGallery:ckeditor }
+    requirements:
+        _method:  GET
+
+KunstmaanKMediaBundle_media_files:
+    pattern:  /admin/media/files
+    defaults: { _controller: KunstmaanKMediaBundle:Media:files }
+
+KunstmaanKMediaBundle_file_show:
+    pattern:  /admin/media/files/{media_id}
+    defaults: { _controller: KunstmaanKMediaBundle:File:show }
+    requirements:
+        _method: GET
+        media_id: \d+
+
+KunstmaanKMediaBundle_file_new:
+    pattern:  /admin/media/files/add/{gallery_id}
+    defaults: { _controller: KunstmaanKMediaBundle:File:new }
+    requirements:
+        _method: GET
+        gallery_id: \d+
+
+KunstmaanKMediaBundle_file_create:
+    pattern:  /admin/media/files/create/{gallery_id}
+    defaults: { _controller: KunstmaanKMediaBundle:File:create }
+    requirements:
+        _method: POST
+        gallery_id: \d+
+
+KunstmaanKMediaBundle_filegallery_new:
+    pattern:  /admin/media/files/gallery
+    defaults: { _controller: KunstmaanKMediaBundle:FileGallery:new }
+    requirements:
+        _method:  GET
+
+KunstmaanKMediaBundle_filegallery_create:
+    pattern:  /admin/media/files/gallery/create
+    defaults: { _controller: KunstmaanKMediaBundle:FileGallery:create }
+    requirements:
+        _method: POST
+
+KunstmaanKMediaBundle_filegallery_subnew:
+    pattern:  /admin/media/files/gallery/sub/{id}
+    defaults: { _controller: KunstmaanKMediaBundle:FileGallery:subnew }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanKMediaBundle_filegallery_subcreate:
+    pattern:  /admin/media/files/gallery/sub/create/{id}
+    defaults: { _controller: KunstmaanKMediaBundle:FileGallery:subcreate }
+    requirements:
+        _method: POST
+        id: \d+
+
+KunstmaanKMediaBundle_filegallery_show:
+    pattern:  /admin/media/files/gallery/{id}/{slug}
+    defaults: { _controller: KunstmaanKMediaBundle:FileGallery:show }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanKMediaBundle_aviary:
+    pattern:  /aviary/{gallery_id}/{image_id}
+    defaults: { _controller: KunstmaanKMediaBundle:Aviary:index }
+    requirements:
+        _method:  GET|POST
+        image_id: \d+
+        gallery_id: \d+
+
+KunstmaanKMediaBundle_uploads:
+    pattern: ../uploads/media/
+    defaults:  { _controller: KunstmaanKMediaBundle:Media:index }

@@ -1,0 +1,54 @@
+parameters:
+    kunstmaan_k_media.provider.speakerdeck.class: Kunstmaan\KMediaBundle\Helper\Provider\SpeakerdeckProvider
+
+#services:
+#    kunstmaan.provider.speakerdeck:
+ #       class: %kunstmaan_k_media.provider.speakerdeck.class%
+  #      parent: kunstmaan_k_media.provider.abstract
+
+kunstmaan_k_media:
+    cdn:
+        local:
+            default: true
+            id: kunstmaan_k_media.cdn.remote_server
+            options:
+                base_url: %cdnpath% # instellen in parameters.ini?
+
+    provider:
+        image:  # So we need the image provider here
+            default: true
+            id: kunstmaan_k_media.provider.image
+        file:  # So we need the file provider here
+            default: false
+            id: kunstmaan_k_media.provider.file
+        dailymotion:
+            default: false
+            id: kunstmaan_k_media.provider.dailymotion
+        slide:
+            default: false
+            id: kunstmaan_k_media.provider.speakerdeck
+
+    filesystem:
+            local:
+                default: true
+                id: kunstmaan_k_media.filesystem.local
+                options:
+                    base_path: %kernel.root_dir%/../web/uploads/media
+                    create: true  #creates the directory if it doesn't exist yet
+
+    contexts:
+        omnext_picture:
+            provider: image
+            formats:
+                small: { width: 90, height: 90 }
+                medium: { width: 210, height: 150 }
+                large: { width: 330, height: 230 }
+
+        omnext_file:
+            provider: file
+
+        omnext_video:
+            provider: dailymotion
+
+        omnext_slide:
+            provider: slide

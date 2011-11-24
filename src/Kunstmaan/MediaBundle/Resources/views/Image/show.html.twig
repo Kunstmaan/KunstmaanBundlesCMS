@@ -1,0 +1,106 @@
+{% extends 'KunstmaanKMediaBundle:Default:layout.html.twig' %}
+
+{% block subsidebar %}
+    {% include 'KunstmaanKMediaBundle:Gallery:sidebar.html.twig' %}
+{% endblock %}
+
+{% block subbreadcrumb %}
+    <li><a href="{{ path('KunstmaanKMediaBundle_media_images') }}">Images</a> <span class="divider">/</span></li>
+        {% for parent in gallery.parents %}
+            <li><a href="{{ path('KunstmaanKMediaBundle_imagegallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
+        {% endfor %}
+        <li><a href="{{ path('KunstmaanKMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
+        <li class="active">{{ media.name }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Image <small>{{ media.name }}
+        </small></h1>
+    </div>
+    <div>
+
+<ul>
+    <li>
+    {{ media.id }}
+    {{ media.contentType }}
+    <ul>
+        {% for item in media.metadata %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+     </li>
+</ul>
+
+        <ul class="media-grid"><ul>
+            <li>
+                <img id="editimage" class="thumbnail" src="{{ '/uploads/media/' }}{{ media.show() }}" alt="{{ media.name }}" />
+            </li>
+            <li>
+                <img class="thumbnail" src="{{ path('KunstmaanKMediaBundle_uploads') }}{{ media.show('large') }}" alt="{{ media.name }}" />
+            </li>
+            <li>
+                <img class="thumbnail" src="{{ path('KunstmaanKMediaBundle_uploads') }}{{ media.show('medium') }}" alt="{{ media.name }}" />
+            </li>
+            <li>
+                <img class="thumbnail" src="{{ path('KunstmaanKMediaBundle_uploads') }}{{ media.show('small') }}" alt="{{ media.name }}" />
+            </li>
+        </ul></ul>
+
+        <!-- Load Feather code -->
+        <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
+
+        <!-- Instantiate Feather -->
+        <script type="text/javascript">
+            var featherEditor = new Aviary.Feather({
+                apiKey: '5f257cbef',
+                openType: 'lightbox',
+                theme: 'black',
+                tools: 'all',
+                onSave: function(imageID, newURL) {
+                    var img = document.getElementById(imageID);
+                    img.src = newURL;
+
+                   window.location = '{{ url('KunstmaanKMediaBundle_aviary', { 'gallery_id' : gallery.id, 'image_id' : media.id }) }}?url='+newURL;
+
+                    //this.close;
+                }
+
+            });
+
+            function launchEditor(id, src) {
+                featherEditor.launch({
+                    image: id,
+                    url: src
+                });
+                return false;
+            }
+
+
+        </script>
+
+        <div id="injection_site"></div>
+
+        <form action="{{ path('KunstmaanKMediaBundle_image_show',  { 'media_id' : media.id }) }}" method="post" {{ form_enctype(form) }}>
+       <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
+            <input name="picture" type="hidden" value="" />
+            <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ url('KunstmaanKMediaBundle_uploads') }}{{ media.show() }}');" />
+                <input onclick="window.location = '{{ path('KunstmaanKMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
+            </div>
+        </form>
+
+        <h2>Edits</h2>
+                <ul class="media-grid">
+                {% for image in media.edits %}
+                    <li>
+                        <a href="{{ path('KunstmaanKMediaBundle_image_show',  { 'media_id' : image.id }) }}">
+                            <img class="thumbnail" src="{{ path('KunstmaanKMediaBundle_uploads') }}{{ image.show('medium') }}" alt="{{ image.name }}" />
+                        </a>
+                     </li>
+                {% else %}
+                    <ul><li>No edits for this image yet.</li></ul>
+                {% endfor %}
+                </ul>
+
+        </div>
+{% endblock %}

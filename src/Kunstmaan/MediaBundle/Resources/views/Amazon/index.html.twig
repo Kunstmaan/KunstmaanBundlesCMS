@@ -1,0 +1,18 @@
+{% extends 'KunstmaanKAdminBundle:Default:layout.html.twig' %}
+
+{% block sidebar %}
+    {% include 'KunstmaanKMediaBundle:ImageGallery:sidebar.html.twig' %}
+{% endblock %}
+
+{% block subbreadcrumb %}
+    <li><a href="{{ path('KunstmaanKMediaBundle_media_images') }}">Images</a> <span class="divider">/</span></li>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Aviary</h1>
+    </div>
+    <div>
+        <p>Nothing to see here</p>
+    </div>
+{% endblock %}

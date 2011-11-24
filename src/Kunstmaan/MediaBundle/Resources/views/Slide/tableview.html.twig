@@ -1,0 +1,32 @@
+
+<table class="bordered-table zebra-striped">
+            <thead>
+              <tr>
+                <th class="header">#</th>
+                <th class="header ">Name</th>
+                <th class="header ">Type</th>
+                <th class="header ">Created At</th>
+                <th class="header">Updated At</th>
+              </tr>
+            </thead>
+
+            <tbody>
+            {% for media in gallery.files %}
+                <tr>
+                    <td>{{ media.id }}</td>
+                    <td><a href="{{ path('KunstmaanKMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">{{ media.name }}</a></td>
+                    <td>{{ media.slidetype }}</td>
+                    <td>{{ media.createdat|date|escape }}</td>
+                    <td>{{ media.updatedat|date|escape }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>0</td>
+                    <td>No files yet.</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+</table>

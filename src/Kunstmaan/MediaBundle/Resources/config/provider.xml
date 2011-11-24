@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="kunstmaan_k_media.provider.abstract.class">Kunstmaan\KMediaBundle\Helper\Provider\AbstractProvider</parameter>
+        <parameter key="kunstmaan_k_media.provider.file.class">Kunstmaan\KMediaBundle\Helper\Provider\FileProvider</parameter>
+        <parameter key="kunstmaan_k_media.provider.image.class">Kunstmaan\KMediaBundle\Helper\Provider\ImageProvider</parameter>
+        <parameter key="kunstmaan_k_media.provider.dailymotion.class">Kunstmaan\KMediaBundle\Helper\Provider\DailymotionProvider</parameter>
+        <parameter key="kunstmaan_k_media.provider.speakerdeck.class">Kunstmaan\KMediaBundle\Helper\Provider\SpeakerdeckProvider</parameter>
+    </parameters>
+
+    <services>
+        <service id="kunstmaan_k_media.provider.abstract" class="%kunstmaan_k_media.provider.abstract.class%" abstract="true">
+            <argument>kunstmaan_k_media.provider.abstract</argument>
+            <argument />
+            <argument />
+            <argument />
+            <argument />
+        </service>
+
+        <service id="kunstmaan_k_media.provider.image" class="%kunstmaan_k_media.provider.image.class%" parent="kunstmaan_k_media.provider.abstract">
+            <call method="setImageManipulator">
+                <argument />
+            </call>
+        </service>
+
+        <service id="kunstmaan_k_media.provider.file" class="%kunstmaan_k_media.provider.file.class%" parent="kunstmaan_k_media.provider.abstract" />
+
+        <service id="kunstmaan_k_media.provider.dailymotion" class="%kunstmaan_k_media.provider.dailymotion.class%" parent="kunstmaan_k_media.provider.abstract" />
+
+        <service id="kunstmaan_k_media.provider.speakerdeck" class="%kunstmaan_k_media.provider.speakerdeck.class%" parent="kunstmaan_k_media.provider.abstract" />
+    </services>
+
+</container>

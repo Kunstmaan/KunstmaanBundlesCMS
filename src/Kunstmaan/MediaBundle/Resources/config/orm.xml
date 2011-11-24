@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="kunstmaan_k_media.listener.doctrine.class">Kunstmaan\KMediaBundle\Helper\Listener\DoctrineMediaListener</parameter>
+        <parameter key="kunstmaan_k_media.repository.media.class">Kunstmaan\KMediaBundle\Repository\DoctrineMediaRepository</parameter>
+    </parameters>
+
+    <services>
+        <service id="kunstmaan_k_media.listener.doctrine" class="%kunstmaan_k_media.listener.doctrine.class%">
+            <tag name="doctrine.event_listener" event="prePersist" />
+            <tag name="doctrine.event_listener" event="preUpdate" />
+            <tag name="doctrine.event_listener" event="postPersist" />
+            <tag name="doctrine.event_listener" event="postUpdate" />
+            <tag name="doctrine.event_listener" event="preRemove" />
+            <argument type="service" id="kunstmaan_k_media.manager" />
+        </service>
+
+        <service id="kunstmaan_k_media.repository.media" class="%kunstmaan_k_media.repository.media.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+    </services>
+
+</container>
