@@ -41,6 +41,7 @@ De [KunstmaanMediaBundle][KunstmaanMediaBundle] is a symfony2 bundle used at [Ku
 ```bash
 $bundles = array(
             ...
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
             ...
         );
@@ -51,6 +52,9 @@ $bundles = array(
 ```bash
 $loader->registerNamespaces(array(
     ...
+    'Imagine'          => __DIR__.'/../vendor/Imagine/lib',
+    'Avalanche'        => __DIR__.'/../vendor/bundles',
+    'Gaufrette'        => __DIR__.'/../vendor/gaufrette/src',
     'Kunstmaan'        => __DIR__.'/../vendor/bundles',
     ...
 ));
