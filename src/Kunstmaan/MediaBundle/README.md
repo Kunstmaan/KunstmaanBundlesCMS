@@ -81,6 +81,10 @@ orm:
 KunstmaanMediaBundle:
     resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"
     prefix:   /
+    
+_imagine:
+    resource: .
+    type:     imagine    
 ```    
 
 ## Add to parameters.ini:
