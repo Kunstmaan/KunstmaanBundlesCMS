@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Helper\Twig;
+namespace Kunstmaan\MediaBundle\Helper\Twig;
 
 use Kunstmaan\MediaBundle\Helper\ExtensionHelper;
 use Kunstmaan\MediaBundle\Entity\Media;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\KMediaBundle\Tests\Controller;
+namespace Kunstmaan\MediaBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

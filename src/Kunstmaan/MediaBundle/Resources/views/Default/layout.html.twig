@@ -1,4 +1,4 @@
-{% extends 'KunstmaanKAdminBundle:Default:layout.html.twig' %}
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
 {% block sidebar %}
 <div class="sidebar">
@@ -17,7 +17,7 @@
 
 {% block breadcrumb %}
 	<ul class="breadcrumb">
-		<li><a href="{{ path('KunstmaanKAdminBundle_homepage') }}">Home</a> <span class="divider">/</span></li>
+		<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">Home</a> <span class="divider">/</span></li>
         <li><a href="{{ path('KunstmaanMediaBundle_media') }}">Media</a> <span class="divider">/</span></li>
         {% block subbreadcrumb %}
 

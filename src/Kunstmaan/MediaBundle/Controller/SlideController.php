@@ -1,5 +1,5 @@
 <?php
-// src/Kunstmaan/KAdminBundle/controller/PictureController.php
+// src/Kunstmaan/AdminBundle/controller/PictureController.php
 
 namespace Kunstmaan\MediaBundle\Controller;
 

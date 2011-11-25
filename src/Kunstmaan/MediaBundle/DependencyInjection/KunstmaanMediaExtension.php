@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 
-use Kunstmaan\KMediaBundle\Entity\MediaContext;
+use Kunstmaan\MediaBundle\Entity\MediaContext;
 
 /**
  * This is the class that loads and manages your bundle configuration
