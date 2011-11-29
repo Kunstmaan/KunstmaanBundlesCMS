@@ -48,7 +48,7 @@ kunstmaan_media:
             provider: file
 
         omnext_video:
-            provider: dailymotion
+            provider: slide
 
         omnext_slide:
             provider: slide

@@ -74,6 +74,61 @@ KunstmaanMediaBundle_media_slides:
     pattern:  /admin/media/slides
     defaults: { _controller: KunstmaanMediaBundle:Media:slides }
 
+KunstmaanMediaBundle_video_show:
+    pattern:  /admin/media/videos/{media_id}
+    defaults: { _controller: KunstmaanMediaBundle:Video:show }
+    requirements:
+        _method: GET
+        media_id: \d+
+
+KunstmaanMediaBundle_video_new:
+    pattern:  /admin/media/videos/add/{gallery_id}
+    defaults: { _controller: KunstmaanMediaBundle:Video:new }
+    requirements:
+        _method: GET
+        gallery_id: \d+
+
+KunstmaanMediaBundle_video_create:
+    pattern:  /admin/media/videos/create/{gallery_id}
+    defaults: { _controller: KunstmaanMediaBundle:Video:create }
+    requirements:
+        _method: POST
+        gallery_id: \d+
+
+
+KunstmaanMediaBundle_videogallery_new:
+    pattern:  /admin/media/videos/gallery
+    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:new }
+    requirements:
+        _method:  GET
+
+KunstmaanMediaBundle_videogallery_create:
+    pattern:  /admin/media/videos/gallery/create
+    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:create }
+    requirements:
+        _method: POST
+
+KunstmaanMediaBundle_videogallery_subnew:
+    pattern:  /admin/media/videos/gallery/sub/{id}
+    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:subnew }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanMediaBundle_videogallery_subcreate:
+    pattern:  /admin/media/videos/gallery/sub/create/{id}
+    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:subcreate }
+    requirements:
+        _method: POST
+        id: \d+
+
+KunstmaanMediaBundle_videogallery_show:
+    pattern:  /admin/media/videos/gallery/{id}/{slug}
+    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:show }
+    requirements:
+        _method:  GET
+        id: \d+
+
 KunstmaanMediaBundle_slide_show:
     pattern:  /admin/media/slides/{media_id}
     defaults: { _controller: KunstmaanMediaBundle:Slide:show }
@@ -128,12 +183,6 @@ KunstmaanMediaBundle_slidegallery_show:
     requirements:
         _method:  GET
         id: \d+
-
-KunstmaanMediaBundle_slidegallery_ckeditor:
-    pattern:  /admin/media/slides/ckeditor
-    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:ckeditor }
-    requirements:
-        _method:  GET
 
 KunstmaanMediaBundle_media_files:
     pattern:  /admin/media/files

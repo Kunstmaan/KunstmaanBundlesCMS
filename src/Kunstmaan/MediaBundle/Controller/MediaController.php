@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
 use Kunstmaan\MediaBundle\Entity\SlideGallery;
+use Kunstmaan\MediaBundle\Entity\VideoGallery;
 
 
 class MediaController extends Controller
@@ -31,7 +32,16 @@ class MediaController extends Controller
 
     public function videosAction()
     {
-        return $this->render('KunstmaanMediaBundle:Media:videos.html.twig', array());
+        $em = $this->getDoctrine()
+                   ->getEntityManager();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:VideoGallery')
+                        ->getAllGalleries();
+        $gallery = new VideoGallery();
+
+        return $this->render('KunstmaanMediaBundle:Media:videos.html.twig', array(
+            'gallery' => $gallery,
+            'galleries' => $galleries
+        ));
     }
 
     public function slidesAction()
@@ -42,7 +52,7 @@ class MediaController extends Controller
                         ->getAllGalleries();
         $gallery = new SlideGallery();
 
-        return $this->render('KunstmaanMediaBundle:Media:images.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Media:slides.html.twig', array(
             'gallery' => $gallery,
             'galleries' => $galleries
         ));
