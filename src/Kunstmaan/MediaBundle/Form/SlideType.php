@@ -16,7 +16,7 @@ class SlideType extends AbstractType
         $builder
             ->add('name', 'text')
             ->add('content', 'text')
-            ->add('slidetype', 'choice', array(
+            ->add('type', 'choice', array(
                 'choices'   => array('speakerdeck' => 'speakerdeck', 'slideshare' => 'slideshare')))
         ;
     }

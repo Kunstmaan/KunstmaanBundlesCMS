@@ -48,14 +48,23 @@ class AviaryController extends Controller
             $em->flush();
 
             $em = $this->getDoctrine()->getEntityManager();
-                    $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
-                                     ->getAllGalleries();
+            $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
+                            ->getAllGalleries();
             unlink($path);
+
+            $picturehelper = new MediaHelper();
+                            $form = $this->createForm(new \Kunstmaan\MediaBundle\Form\MediaType(), $picturehelper);
+
+                            $sub = new \Kunstmaan\MediaBundle\Entity\ImageGallery();
+                            $sub->setParent($gallery);
+                            $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
 
                            //$picturehelp = $this->getPicture($picture->getId());
             return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
                          'gallery' => $gallery,
-                         'galleries' => $galleries
+                         'galleries' => $galleries,
+                'form' => $form->createView(),
+                                            'subform' => $subform->createView()
             ));
         }
 

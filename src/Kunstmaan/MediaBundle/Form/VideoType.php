@@ -16,7 +16,7 @@ class VideoType extends AbstractType
         $builder
             ->add('name', 'text')
             ->add('content', 'text')
-            ->add('videotype', 'choice', array(
+            ->add('type', 'choice', array(
                 'choices'   => array('youtube' => 'youtube', 'vimeo' => 'vimeo', 'dailymotion' => 'dailymotion')))
         ;
     }

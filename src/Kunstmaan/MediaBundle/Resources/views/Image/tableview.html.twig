@@ -1,5 +1,7 @@
 <ul class="media-grid">
         {% for media in gallery.files %}
+            {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+
             <li>
                 <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">
                     <img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('medium') }}" alt="{{ media.name }}" />

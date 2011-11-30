@@ -6,7 +6,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 use Kunstmaan\MediaBundle\Helper\Provider\AbstractVideoProvider;
 
-class SpeakerdeckProvider extends AbstractVideoProvider
+class CodeProvider extends AbstractVideoProvider
 {
     /* @var string */
     protected $template = '';

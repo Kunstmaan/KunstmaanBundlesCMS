@@ -8,8 +8,7 @@
         <parameter key="kunstmaan_media.provider.abstract.class">Kunstmaan\MediaBundle\Helper\Provider\AbstractProvider</parameter>
         <parameter key="kunstmaan_media.provider.file.class">Kunstmaan\MediaBundle\Helper\Provider\FileProvider</parameter>
         <parameter key="kunstmaan_media.provider.image.class">Kunstmaan\MediaBundle\Helper\Provider\ImageProvider</parameter>
-        <parameter key="kunstmaan_media.provider.dailymotion.class">Kunstmaan\MediaBundle\Helper\Provider\DailymotionProvider</parameter>
-        <parameter key="kunstmaan_media.provider.speakerdeck.class">Kunstmaan\MediaBundle\Helper\Provider\SpeakerdeckProvider</parameter>
+        <parameter key="kunstmaan_media.provider.code.class">Kunstmaan\MediaBundle\Helper\Provider\CodeProvider</parameter>
     </parameters>
 
     <services>
@@ -29,9 +28,7 @@
 
         <service id="kunstmaan_media.provider.file" class="%kunstmaan_media.provider.file.class%" parent="kunstmaan_media.provider.abstract" />
 
-        <service id="kunstmaan_media.provider.dailymotion" class="%kunstmaan_media.provider.dailymotion.class%" parent="kunstmaan_media.provider.abstract" />
-
-        <service id="kunstmaan_media.provider.speakerdeck" class="%kunstmaan_media.provider.speakerdeck.class%" parent="kunstmaan_media.provider.abstract" />
+        <service id="kunstmaan_media.provider.code" class="%kunstmaan_media.provider.code.class%" parent="kunstmaan_media.provider.abstract" />
     </services>
 
 </container>

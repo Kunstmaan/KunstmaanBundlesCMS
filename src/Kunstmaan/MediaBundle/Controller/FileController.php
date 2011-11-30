@@ -16,7 +16,7 @@ use Kunstmaan\MediaBundle\Entity\File;
 class FileController extends Controller
 {
 
-    public function showAction($media_id, $format = null, array $options = array())
+    public function showAction($media_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $media = $em->find('\Kunstmaan\MediaBundle\Entity\File', $media_id);
@@ -25,16 +25,45 @@ class FileController extends Controller
                                 ->getAllGalleries();
 
         $picturehelper = new MediaHelper();
-        $form = $this->createForm(new MediaType(), $picturehelper);
+                            $form = $this->createForm(new MediaType(), $picturehelper);
 
-        return $this->render('KunstmaanMediaBundle:File:show.html.twig', array(
-                    'form' => $form->createView(),
+                            $sub = new \Kunstmaan\MediaBundle\Entity\FileGallery();
+                            $sub->setParent($gallery);
+                            $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
+
+       return $this->render('KunstmaanMediaBundle:File:show.html.twig', array(
                     'media' => $media,
-                    'format' => $format,
                     'gallery' => $gallery,
-                    'galleries' => $galleries
+                    'galleries' => $galleries,
+                    'form' => $form->createView(),
+                    'subform' => $subform->createView()
                 ));
     }
+
+    public function deleteAction($media_id)
+    {
+            $em = $this->getDoctrine()->getEntityManager();
+            $media = $em->find('\Kunstmaan\MediaBundle\Entity\File', $media_id);
+            $gallery = $media->getGallery();
+            $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
+                                    ->getAllGalleries();
+            $em->remove($media);
+            $em->flush();
+
+            $picturehelper = new MediaHelper();
+            $form = $this->createForm(new MediaType(), $picturehelper);
+
+            $sub = new \Kunstmaan\MediaBundle\Entity\FileGallery();
+            $sub->setParent($gallery);
+            $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
+
+            return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
+                        'gallery' => $gallery,
+                        'galleries' => $galleries,
+                        'form' => $form->createView(),
+                        'subform' => $subform->createView()
+                    ));
+     }
 
     public function newAction($gallery_id)
     {
@@ -79,10 +108,19 @@ class FileController extends Controller
                     $em->persist($picture);
                     $em->flush();
 
+                    $picturehelper = new MediaHelper();
+                    $form = $this->createForm(new MediaType(), $picturehelper);
+
+                    $sub = new \Kunstmaan\MediaBundle\Entity\FileGallery();
+                    $sub->setParent($gallery);
+                    $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
+
                     //$picturehelp = $this->getPicture($picture->getId());
                     return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
                                    'gallery' => $gallery,
-                                   'galleries' => $galleries
+                                   'galleries' => $galleries,
+                                   'form' => $form->createView(),
+                                   'subform' => $subform->createView()
                                    // 'picture' => $picturehelp
                     ));
                 }
