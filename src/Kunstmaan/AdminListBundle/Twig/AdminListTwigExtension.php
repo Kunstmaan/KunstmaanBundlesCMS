@@ -57,6 +57,7 @@ class AdminListTwigExtension extends \Twig_Extension {
         $template = $this->environment->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
         return $template->render(array_merge($parameters, array(
             'pagination' => $view->getPaginationBean(),
+            'filter' =>$view->getAdminListFilter(),
             'basepath' => $basepath,
             'adminlist' => $view
         )));
