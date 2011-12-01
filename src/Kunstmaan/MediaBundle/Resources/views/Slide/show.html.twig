@@ -20,17 +20,23 @@
     </div>
     <div>
 
-<ul>
-    <li>
-    {{ media.id }}
-    {{ media.name }}
-    {{ media.contentType }}
-    </li>
-</ul>
-     {% if media.slidetype=='slideshare' %}
-         {% include 'KunstmaanMediaBundle:Slide:slideshare.html.twig' %}
-     {% else %}
-        {% include 'KunstmaanMediaBundle:Slide:speakerdeck.html.twig' %}
-     {% endif %}
+        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+
+         <div class="actions">
+                     <a href="#" class="btn">edit</a>
+                     <a href="{{ path('KunstmaanMediaBundle_slide_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+                 </div>
+ <ul>
+     <li>Name: {{ media.name }} </li>
+     <li>Content-type: {{ media.contentType }}</li>
+     <li>Type: {{ media.type }}</li>
+     <li>Added; {{ media.createdat|date|escape }}</li>
+     <li>Updated: {{ media.updatedat|date|escape }}</li>
+ </ul>
+        {% include 'KunstmaanMediaBundle:Slide:'~ media.type ~'.html.twig' %}
+         <div class="actions">
+             <a href="#" class="btn">edit</a>
+             <a href="{{ path('KunstmaanMediaBundle_slide_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+         </div>
      </div>
 {% endblock %}

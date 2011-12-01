@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilder;
  * class to define the form to upload a picture
  *
  */
-class SlideType extends AbstractType
+class VideoType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
@@ -17,13 +17,13 @@ class SlideType extends AbstractType
             ->add('name', 'text')
             ->add('content', 'text')
             ->add('type', 'choice', array(
-                'choices'   => array('speakerdeck' => 'speakerdeck', 'slideshare' => 'slideshare')))
+                'choices'   => array('youtube' => 'youtube', 'vimeo' => 'vimeo', 'dailymotion' => 'dailymotion')))
         ;
     }
 
     public function getName()
     {
-        return 'kunstmaan_mediabundle_slidetype';
+        return 'kunstmaan_mediabundle_videotype';
     }
 }
 

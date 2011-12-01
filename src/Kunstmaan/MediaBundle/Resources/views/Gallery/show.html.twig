@@ -20,18 +20,39 @@
         {% endif %}
         </small></h1>
     </div>
+
     <div>
-        <p><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_new', { 'gallery_id' : gallery.id }) }}">add {{ gallery.type }} to this gallery</a> | <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subnew', { 'id' : gallery.id }) }}">add a {{ gallery.type }} gallery to this gallery</a></p>
-    </div>
-    <div>
-        <ul>
-        {% for child in gallery.children %}
-            <li>{% include 'KunstmaanMediaBundle:Gallery:showgallery.html.twig' %}</li>
-        {% endfor %}
-        </ul>
+        {% include 'KunstmaanMediaBundle:Gallery:addmedia-modal.html.twig' %}
+        {% include 'KunstmaanMediaBundle:Gallery:addsub-modal.html.twig' %}
+        {% include 'KunstmaanMediaBundle:Gallery:delete-modal.html.twig' %}
+
+        <div class="actions">
+             <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_new', { 'gallery_id' : gallery.id }) }}" data-controls-modal="addmedia-modal" data-backdrop="true" data keyboard="true" class="btn">add {{ gallery.type }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subnew', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">add subgallery</a>
+             <a href="#" class="btn">edit</a>
+             <a href="{{ path('KunstmaanMediaBundle_gallery_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete this gallery</a>
+        </div>
     </div>
     <div>
         <h2>{{ gallery.type|capitalize }}s in {{ gallery.name }}</h2>
        {% include 'KunstmaanMediaBundle:' ~ gallery.type|capitalize ~ ':tableview.html.twig' %}
     </div>
+
+    <div>
+        <h2>Subgalleries in {{ gallery.name }}</h2>
+       <ul>
+       {% for child in gallery.children %}
+           <li>{% include 'KunstmaanMediaBundle:Gallery:showgallery.html.twig' %}</li>
+       {% else %}
+           <li>No subgalleries in this gallery yet.</li>
+       {% endfor %}
+       </ul>
+   </div>
+
+   <div class="actions">
+       <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_new', { 'gallery_id' : gallery.id }) }}" data-controls-modal="addfile-modal" data-backdrop="true" data keyboard="true" class="btn">add {{ gallery.type }}</a>
+       <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subnew', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">add subgallery</a>
+       <a href="#" class="btn">edit</a>
+       <a href="{{ path('KunstmaanMediaBundle_gallery_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete this gallery</a>
+   </div>
 {% endblock %}

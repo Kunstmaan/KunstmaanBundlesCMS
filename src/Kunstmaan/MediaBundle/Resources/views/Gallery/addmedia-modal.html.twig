@@ -1,0 +1,20 @@
+<div id="addmedia-modal" class="modal hide fade">
+    <form action="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_create', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
+        <div class="modal-header">
+            <a href="#" class="close">&times;</a>
+            <h3>Which {{ gallery.type }} do you want to add?</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                <fieldset>
+                    {% include 'KunstmaanMediaBundle:' ~ gallery.type|capitalize ~ ':formfields.html.twig' %}
+                </fieldset>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <input class="btn primary type" type="submit" value="add new {{ gallery.type }}">
+            <a onclick="$('#addmedia-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+

@@ -3,18 +3,18 @@
 namespace  Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
+use Kunstmaan\MediaBundle\Helper\VideoGalleryStrategy;
 
 /**
  * Class that defines a Media object from the AnoBundle in the database
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\SlideGalleryRepository")
- * @ORM\Table(name="slide_gallery")
+ * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\VideoGalleryRepository")
+ * @ORM\Table(name="video_gallery")
  * @ORM\HasLifecycleCallbacks
  */
-class SlideGallery extends Gallery{
+class VideoGallery extends Gallery{
 
     /**
      * @ORM\Id
@@ -77,6 +77,6 @@ class SlideGallery extends Gallery{
     }
 
     public function getStrategy(){
-        return new SlideGalleryStrategy();
+        return new VideoGalleryStrategy();
     }
 }

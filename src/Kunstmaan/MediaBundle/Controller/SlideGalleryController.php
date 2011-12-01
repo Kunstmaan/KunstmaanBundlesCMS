@@ -18,19 +18,8 @@ class SlideGalleryController extends GalleryController
 
     public function showAction($id, $slug)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:SlideGallery')->find($id);
-        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
-                        ->getAllGalleries();
+        return $this->parentshowAction($id, $slug, new \Kunstmaan\MediaBundle\Entity\Slide(), new \Kunstmaan\MediaBundle\Form\SlideType(), new SlideGallery());
 
-        if (!$gallery) {
-            throw $this->createNotFoundException('Unable to find slide gallery.');
-        }
-
-        return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
-            'gallery'       => $gallery,
-            'galleries'     => $galleries
-         ));
     }
 
     public function newAction(){
@@ -45,12 +34,12 @@ class SlideGalleryController extends GalleryController
 
     public function createAction(){
         $gallery = new SlideGallery();
-        return $this->parentcreateAction($gallery);
+        return $this->parentcreateAction($gallery, new \Kunstmaan\MediaBundle\Entity\Slide(), new \Kunstmaan\MediaBundle\Form\SlideType());
     }
 
     public function subcreateAction($id){
         $gallery = new SlideGallery();
-        return $this->parentsubcreateAction($gallery,$id);
+        return $this->parentsubcreateAction($gallery,$id, new \Kunstmaan\MediaBundle\Entity\Slide(), new \Kunstmaan\MediaBundle\Form\SlideType());
     }
 
 }

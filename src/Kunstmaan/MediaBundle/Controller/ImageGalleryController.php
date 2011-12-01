@@ -18,19 +18,8 @@ class ImageGalleryController extends GalleryController
 
     public function showAction($id, $slug)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:ImageGallery')->find($id);
-        $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
-                        ->getAllGalleries();
+        return $this->parentshowAction($id, $slug, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType(), new ImageGallery());
 
-        if (!$gallery) {
-            throw $this->createNotFoundException('Unable to find image gallery.');
-        }
-
-        return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
-            'gallery'       => $gallery,
-            'galleries'     => $galleries
-         ));
     }
 
     public function newAction(){
@@ -45,12 +34,12 @@ class ImageGalleryController extends GalleryController
 
     public function createAction(){
         $gallery = new ImageGallery();
-        return $this->parentcreateAction($gallery);
+        return $this->parentcreateAction($gallery, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType());
     }
 
     public function subcreateAction($id){
         $gallery = new ImageGallery();
-        return $this->parentsubcreateAction($gallery,$id);
+        return $this->parentsubcreateAction($gallery,$id, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType());
     }
 
     public function ckeditorAction(){

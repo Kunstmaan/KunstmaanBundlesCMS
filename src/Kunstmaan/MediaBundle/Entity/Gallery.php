@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="gallery")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({ "gallery" = "Gallery" , "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" })
+ * @ORM\DiscriminatorMap({ "gallery" = "Gallery" , "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
  * @ORM\HasLifecycleCallbacks
  */
 abstract class Gallery{
@@ -60,11 +60,6 @@ abstract class Gallery{
      * @ORM\Column(type="datetime")
      */
     protected $updated;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $content;
 
     public function __construct()
     {
@@ -305,22 +300,10 @@ abstract class Gallery{
     }
 
     /**
-     * Set content
-     *
-     * @param string $content
+     * @ORM\PreRemove
      */
-    public function setContent($content)
+    public function preRemove()
     {
-        $this->content = $content;
-    }
 
-    /**
-     * Get content
-     *
-     * @return string 
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 }

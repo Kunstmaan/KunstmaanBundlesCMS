@@ -21,12 +21,9 @@ kunstmaan_media:
         file:  # So we need the file provider here
             default: false
             id: kunstmaan_media.provider.file
-        dailymotion:
+        code:
             default: false
-            id: kunstmaan_media.provider.dailymotion
-        slide:
-            default: false
-            id: kunstmaan_media.provider.speakerdeck
+            id: kunstmaan_media.provider.code
 
     filesystem:
             local:
@@ -47,8 +44,6 @@ kunstmaan_media:
         omnext_file:
             provider: file
 
-        omnext_video:
-            provider: dailymotion
+        omnext_code:
+            provider: code
 
-        omnext_slide:
-            provider: slide

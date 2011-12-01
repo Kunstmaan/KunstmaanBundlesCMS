@@ -1,0 +1,41 @@
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+
+{% block subsidebar %}
+    {% include 'KunstmaanMediaBundle:Gallery:sidebar.html.twig' %}
+{% endblock %}
+
+{% block subbreadcrumb %}
+    <li><a href="{{ path('KunstmaanMediaBundle_media_videos') }}">Videos</a> <span class="divider">/</span></li>
+        {% for parent in gallery.parents %}
+            <li><a href="{{ path('KunstmaanMediaBundle_videogallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
+        {% endfor %}
+    <li><a href="{{ path('KunstmaanMediaBundle_videogallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
+    <li class="active">{{ media.name }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Video <small>{{ media.name }}
+        </small></h1>
+    </div>
+    <div>
+
+        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+        <div class="actions">
+                     <a href="#" class="btn">edit</a>
+                     <a href="{{ path('KunstmaanMediaBundle_video_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+                 </div>
+ <ul>
+     <li>Name: {{ media.name }} </li>
+     <li>Content-type: {{ media.contentType }}</li>
+     <li>Type: {{ media.type }}</li>
+     <li>Added; {{ media.createdat|date|escape }}</li>
+     <li>Updated: {{ media.updatedat|date|escape }}</li>
+ </ul>
+        {% include 'KunstmaanMediaBundle:Video:'~ media.type ~'.html.twig' %}
+         <div class="actions">
+             <a href="#" class="btn">edit</a>
+             <a href="{{ path('KunstmaanMediaBundle_video_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+         </div>
+     </div>
+{% endblock %}

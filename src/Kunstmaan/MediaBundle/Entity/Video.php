@@ -5,15 +5,15 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Kunstmaan\MediaBundle\Entity\Slide
- * Class that defines a slide in the system
+ * Kunstmaan\MediaBundle\Entity\Video
+ * Class that defines a video in the system
  *
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Table("slide")
  * @ORM\Entity
  */
-class Slide extends Media
+class Video extends Media
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -111,7 +111,7 @@ class Slide extends Media
 
     public function show($format=null, $options = array())
     {
-        return '<script src="http://speakerdeck.com/embed/'. $this->metadata['uuid'] .'.js"></script>';
+        return '';
     }
 
     public function getCode(){
@@ -123,9 +123,9 @@ class Slide extends Media
      *
      * @param string $slidetype
      */
-    public function setType($slidetype)
+    public function setType($type)
     {
-        $this->type = $slidetype;
+        $this->type = $type;
     }
 
     /**
