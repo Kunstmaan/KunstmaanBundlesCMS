@@ -1,17 +1,40 @@
 
+    {% set extraparams = filter.currentparameters %}
+
+    {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
+
     {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
 
     <table class="bordered-table zebra-striped">
         <thead>
         <tr>
+            <th>Actions</th>
             {% for columnName in adminlist.columns%}
-                <th>{{columnName}}</th>
+                {% set orderDirection = "DESC" %}
+                {% set extraHeaderClass = "" %}
+                {% if ( columnName == adminlist.orderBy )%}
+                    {% if adminlist.orderDirection == "DESC" %}
+                        {% set orderDirection = "ASC" %}
+                        {% set extraHeaderClass = "headerSortDown" %}
+                    {% else %}
+                        {% set extraHeaderClass = "headerSortUp" %}
+                    {% endif %}
+                {% endif %}
+                <th {% if adminlist.hasSort(columnName) %} class="header {{extraHeaderClass}}" onclick="window.location = '{{ path(basepath, extraparams|merge({ 'orderBy': columnName, "orderDirection": orderDirection }))}}'"{% endif %}>{{columnName}}</th>
             {% endfor %}
         </tr>
         </thead>
         <tbody>
         {% for item in adminlist.items%}
             <tr>
+                <td>
+                    {%if adminlist.canEdit(item) %}
+                        <a href="{{ adminlist.getEditUrlFor(item) }}"><img src="{{ asset('images/general/edit.png') }}" alt="Edit"/></a>
+                    {% endif %}
+                    {%if adminlist.canDelete(item) %}
+                        <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}"><img src="{{ asset('images/general/delete.png') }}" alt="Delete"/></a>
+                    {% endif %}
+                </td>
                 {% for columnName in adminlist.columns%}
                     <td>{{adminlist.getFrom(item, columnName)}}</td>
                 {% endfor %}
@@ -22,4 +45,4 @@
 
     {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
 
-    <div style="clear:both">&nbsp;</div>
+

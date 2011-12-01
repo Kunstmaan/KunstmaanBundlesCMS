@@ -11,7 +11,21 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 
 abstract class AbstractAdminListConfigurator {
 
-    abstract function configureListFields($array);
+    public function buildFilters(AdminListFilter $builder){
+
+    }
+
+    abstract function getSortFields();
+
+    abstract function configureListFields(&$array);
+
+    abstract function canEdit($item);
+
+    abstract function getEditUrlFor($item);
+
+    abstract function canDelete($item);
+
+    abstract function getRepositoryName();
 
     function adaptQueryBuilder($querybuilder){
 
