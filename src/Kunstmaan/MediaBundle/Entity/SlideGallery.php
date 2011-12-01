@@ -58,6 +58,11 @@ class SlideGallery extends Gallery{
      */
     protected $files;
 
+    /**
+     * @var string $content
+     */
+    protected $content;
+
     public function setId($id){
         $this->id = $id;
     }
@@ -71,60 +76,7 @@ class SlideGallery extends Gallery{
         parent::__construct();
     }
 
-    public function addSlide(Slide $child)
-    {
-        $this->files[] = $child;
-        $child->setGallery($this);
-    }
-
-
-    public function getSlides()
-    {
-        return $this->files;
-    }
-
-    public function setSlides($children)
-    {
-        $this->files = $children;
-    }
-
-    /**
-     * Add images
-     *
-     * @param Kunstmaan\MediaBundle\Entity\File $images
-     */
-    public function addSlides(Slide $images)
-    {
-        $this->files[] = $images;
-    }
-
     public function getStrategy(){
         return new SlideGalleryStrategy();
-    }
-
-    /**
-     * @var string $content
-     */
-    protected $content;
-
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string 
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 }

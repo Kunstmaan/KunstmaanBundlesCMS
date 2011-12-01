@@ -16,7 +16,7 @@ use Kunstmaan\MediaBundle\Entity\Slide;
 class SlideController extends Controller
 {
 
-    public function showAction($media_id, $format = null, array $options = array())
+    public function showAction($media_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $media = $em->find('\Kunstmaan\MediaBundle\Entity\Slide', $media_id);
@@ -24,17 +24,37 @@ class SlideController extends Controller
         $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
                                 ->getAllGalleries();
 
-        $picturehelper = new Slide();
-        $form = $this->createForm(new SlideType(), $picturehelper);
-
         return $this->render('KunstmaanMediaBundle:Slide:show.html.twig', array(
-                    'form' => $form->createView(),
                     'media' => $media,
-                    'format' => $format,
                     'gallery' => $gallery,
                     'galleries' => $galleries
                 ));
     }
+
+    public function deleteAction($media_id)
+        {
+                $em = $this->getDoctrine()->getEntityManager();
+                $media = $em->find('\Kunstmaan\MediaBundle\Entity\Media', $media_id);
+                $gallery = $media->getGallery();
+                $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
+                                        ->getAllGalleries();
+                $em->remove($media);
+                $em->flush();
+
+                $picturehelper = new Slide();
+                $form = $this->createForm(new SlideType(), $picturehelper);
+
+                $sub = new \Kunstmaan\MediaBundle\Entity\SlideGallery();
+                $sub->setParent($gallery);
+                $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
+
+                return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
+                            'gallery' => $gallery,
+                            'galleries' => $galleries,
+                            'form' => $form->createView(),
+                            'subform' => $subform->createView()
+                        ));
+         }
 
     public function newAction($gallery_id)
     {
@@ -74,8 +94,18 @@ class SlideController extends Controller
                     $em->persist($slide);
                     $em->flush();
 
+                $slide = new Slide();
+                        $slide->setGallery($gallery);
+                        $form = $this->createForm(new SlideType(), $slide);
+
+                $sub = new \Kunstmaan\MediaBundle\Entity\SlideGallery();
+                                    $sub->setParent($gallery);
+                                    $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
+
                     //$picturehelp = $this->getPicture($picture->getId());
                     return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
+                            'form' => $form->createView(),
+                            'subform' => $subform->createView(),
                                    'gallery' => $gallery,
                                    'galleries' => $galleries
                     ));

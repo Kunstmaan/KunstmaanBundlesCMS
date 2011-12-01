@@ -20,32 +20,28 @@
     </div>
     <div>
 
+        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+
+        <form action="{{ path('KunstmaanMediaBundle_image_show',  { 'media_id' : media.id }) }}" method="post" {{ form_enctype(form) }}>
+               <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
+                    <input name="picture" type="hidden" value="" />
+                    <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ url('KunstmaanMediaBundle_uploads') }}{{ media.show() }}');" />
+                        <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
+                        <input onclick="window.location = '{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
+                    </div>
+                </form>
+
 <ul>
-    <li>
-    {{ media.id }}
-    {{ media.contentType }}
-    <ul>
-        {% for item in media.metadata %}
-            <li>{{ item }}</li>
-        {% endfor %}
-    </ul>
-     </li>
+    <li>Name: {{ media.name }} </li>
+    <li>Content-type: {{ media.contentType }}</li>
+    <li>Added; {{ media.createdat|date|escape }}</li>
+    <li>Updated: {{ media.updatedat|date|escape }}</li>
 </ul>
 
-        <ul class="media-grid"><ul>
-            <li>
-                <img id="editimage" class="thumbnail" src="{{ '/uploads/media/' }}{{ media.show() }}" alt="{{ media.name }}" />
-            </li>
-            <li>
-                <img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('large') }}" alt="{{ media.name }}" />
-            </li>
-            <li>
-                <img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('medium') }}" alt="{{ media.name }}" />
-            </li>
-            <li>
-                <img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('small') }}" alt="{{ media.name }}" />
-            </li>
-        </ul></ul>
+        <p>Original: <br/><img id="editimage" class="thumbnail" src="{{ '/uploads/media/' }}{{ media.show() }}" alt="{{ media.name }}" /></p>
+        <p>Large: <br/><img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('large') }}" alt="{{ media.name }}" /></p>
+        <p>Medium: <br/><img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('medium') }}" alt="{{ media.name }}" /></p>
+        <p>Small: <br/><img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('small') }}" alt="{{ media.name }}" /></p>
 
         <!-- Load Feather code -->
         <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
@@ -81,10 +77,13 @@
 
         <div id="injection_site"></div>
 
+
+
         <form action="{{ path('KunstmaanMediaBundle_image_show',  { 'media_id' : media.id }) }}" method="post" {{ form_enctype(form) }}>
        <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
             <input name="picture" type="hidden" value="" />
             <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ url('KunstmaanMediaBundle_uploads') }}{{ media.show() }}');" />
+                <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
                 <input onclick="window.location = '{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
             </div>
         </form>

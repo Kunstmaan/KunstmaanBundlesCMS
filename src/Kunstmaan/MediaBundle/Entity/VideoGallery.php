@@ -58,6 +58,11 @@ class VideoGallery extends Gallery{
      */
     protected $files;
 
+    /**
+     * @var string $content
+     */
+    protected $content;
+
     public function setId($id){
         $this->id = $id;
     }
@@ -71,60 +76,7 @@ class VideoGallery extends Gallery{
         parent::__construct();
     }
 
-    public function addVideo(Video $child)
-    {
-        $this->files[] = $child;
-        $child->setGallery($this);
-    }
-
-
-    public function getVideos()
-    {
-        return $this->files;
-    }
-
-    public function setVideos($children)
-    {
-        $this->files = $children;
-    }
-
-    /**
-     * Add images
-     *
-     * @param Kunstmaan\MediaBundle\Entity\File $images
-     */
-    public function addVideos(Slide $images)
-    {
-        $this->files[] = $images;
-    }
-
     public function getStrategy(){
         return new VideoGalleryStrategy();
-    }
-
-    /**
-     * @var string $content
-     */
-    protected $content;
-
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string 
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 }

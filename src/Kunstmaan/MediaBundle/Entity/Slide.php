@@ -32,7 +32,7 @@ class Slide extends Media
      * @var string $context
      *
      */
-    protected $context = "omnext_slide";
+    protected $context = "omnext_code";
 
     /**
      * @var string $name
@@ -72,7 +72,7 @@ class Slide extends Media
     /**
      * @ORM\Column(type="string")
      */
-    protected $slidetype;
+    protected $type;
 
     public function __construct()
     {
@@ -123,9 +123,9 @@ class Slide extends Media
      *
      * @param string $slidetype
      */
-    public function setSlidetype($slidetype)
+    public function setType($slidetype)
     {
-        $this->slidetype = $slidetype;
+        $this->type = $slidetype;
     }
 
     /**
@@ -133,8 +133,8 @@ class Slide extends Media
      *
      * @return string 
      */
-    public function getSlidetype()
+    public function getType()
     {
-        return $this->slidetype;
+        return $this->type;
     }
 }

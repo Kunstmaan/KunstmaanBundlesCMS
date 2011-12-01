@@ -61,11 +61,6 @@ abstract class Gallery{
      */
     protected $updated;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $content;
-
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
@@ -305,22 +300,10 @@ abstract class Gallery{
     }
 
     /**
-     * Set content
-     *
-     * @param string $content
+     * @ORM\PreRemove
      */
-    public function setContent($content)
+    public function preRemove()
     {
-        $this->content = $content;
-    }
 
-    /**
-     * Get content
-     *
-     * @return string 
-     */
-    public function getContent()
-    {
-        return $this->content;
     }
 }

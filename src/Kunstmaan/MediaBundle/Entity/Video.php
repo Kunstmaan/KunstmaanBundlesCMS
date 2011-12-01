@@ -32,7 +32,7 @@ class Video extends Media
      * @var string $context
      *
      */
-    protected $context = "omnext_video";
+    protected $context = "omnext_code";
 
     /**
      * @var string $name
@@ -72,7 +72,7 @@ class Video extends Media
     /**
      * @ORM\Column(type="string")
      */
-    protected $videotype;
+    protected $type;
 
     public function __construct()
     {
@@ -123,9 +123,9 @@ class Video extends Media
      *
      * @param string $slidetype
      */
-    public function setVideotype($slidetype)
+    public function setType($type)
     {
-        $this->videotype = $slidetype;
+        $this->type = $type;
     }
 
     /**
@@ -133,8 +133,8 @@ class Video extends Media
      *
      * @return string 
      */
-    public function getVideotype()
+    public function getType()
     {
-        return $this->videotype;
+        return $this->type;
     }
 }

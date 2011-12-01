@@ -20,18 +20,21 @@
     </div>
     <div>
 
+        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+
+        <div class="actions">
+                    <a href="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show() }}" class="btn primary">open file</a>
+                    <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+                </div>
 <ul>
-    <li>
-    {{ media.id }}
-    {{ media.name }}
-    {{ media.contentType }}
-    <a href="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show() }}">open file</a>
-    <ul>
-        {% for item in media.metadata %}
-            <li>{{ item }}</li>
-        {% endfor %}
-    </ul>
-     </li>
+    <li>Name: {{ media.name }} </li>
+    <li>Content-type: {{ media.contentType }}</li>
+    <li>Added; {{ media.createdat|date|escape }}</li>
+    <li>Updated: {{ media.updatedat|date|escape }}</li>
 </ul>
+        <div class="actions">
+            <a href="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show() }}" class="btn primary">open file</a>
+            <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+        </div>
         </div>
 {% endblock %}

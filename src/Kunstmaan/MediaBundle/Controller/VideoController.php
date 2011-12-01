@@ -36,6 +36,31 @@ class VideoController extends Controller
                 ));
     }
 
+    public function deleteAction($media_id)
+          {
+                  $em = $this->getDoctrine()->getEntityManager();
+                  $media = $em->find('\Kunstmaan\MediaBundle\Entity\Media', $media_id);
+                  $gallery = $media->getGallery();
+                  $galleries = $em->getRepository('KunstmaanMediaBundle:VideoGallery')
+                                          ->getAllGalleries();
+                  $em->remove($media);
+                  $em->flush();
+
+                  $picturehelper = new Video();
+                  $form = $this->createForm(new VideoType(), $picturehelper);
+
+                  $sub = new \Kunstmaan\MediaBundle\Entity\VideoGallery();
+                  $sub->setParent($gallery);
+                  $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
+
+                  return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
+                              'gallery' => $gallery,
+                              'galleries' => $galleries,
+                              'form' => $form->createView(),
+                              'subform' => $subform->createView()
+                          ));
+           }
+
     public function newAction($gallery_id)
     {
         $gallery = $this->getVideoGallery($gallery_id);
@@ -74,9 +99,19 @@ class VideoController extends Controller
                     $em->persist($Video);
                     $em->flush();
 
+                $Video = new Video();
+                        $Video->setGallery($gallery);
+                        $form = $this->createForm(new VideoType(), $Video);
+
+                $sub = new \Kunstmaan\MediaBundle\Entity\VideoGallery();
+                                    $sub->setParent($gallery);
+                                    $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
+
                     //$picturehelp = $this->getPicture($picture->getId());
                     return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
-                                   'gallery' => $gallery,
+                        'form' => $form->createView(),
+                        'subform' => $subform->createView(),
+                        'gallery' => $gallery,
                                    'galleries' => $galleries
                     ));
                 }

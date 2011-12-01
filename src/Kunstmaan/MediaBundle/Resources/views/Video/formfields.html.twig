@@ -1,6 +1,4 @@
-<form action="{{ path('KunstmaanMediaBundle_video_create', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
-    <fieldset>
-        {{ form_errors(form) }}
+{{ form_errors(form) }}
         <div class="clearfix">
             <label for="xlInput3">Name</label>
             <div class="input">
@@ -22,9 +20,3 @@
             </div>
         </div>
         {{ form_rest(form) }}
-        <div class="actions">
-            <input class="btn primary type" type="submit" value="add new video">
-            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_videogallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="cancel" />
-        </div>
-    </fieldset>
-</form>

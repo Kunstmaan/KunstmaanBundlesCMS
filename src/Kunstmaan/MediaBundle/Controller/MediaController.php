@@ -71,4 +71,23 @@ class MediaController extends Controller
             'galleries' => $galleries
         ));
     }
+
+    public function parentShowAction($media_id){
+        $em = $this->getDoctrine()->getEntityManager();
+        $media = $em->find('\Kunstmaan\MediaBundle\Entity\Image', $media_id);
+        $gallery = $media->getGallery();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
+                        ->getAllGalleries();
+
+        $picturehelper = new MediaHelper();
+        $form = $this->createForm(new MediaType(), $picturehelper);
+
+        return $this->render('KunstmaanMediaBundle:Image:show.html.twig', array(
+            'form' => $form->createView(),
+            'media' => $media,
+            'format' => $format,
+            'gallery' => $gallery,
+            'galleries' => $galleries
+        ));
+    }
 }

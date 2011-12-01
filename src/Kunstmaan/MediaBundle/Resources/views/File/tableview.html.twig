@@ -2,7 +2,7 @@
 <table class="bordered-table zebra-striped">
             <thead>
               <tr>
-                <th class="header">#</th>
+                <th class="header">Actions</th>
                 <th class="header ">Name</th>
                 <th class="header ">Content type</th>
                 <th class="header ">Created At</th>
@@ -12,8 +12,13 @@
 
             <tbody>
             {% for media in gallery.files %}
+                {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+
                 <tr>
-                    <td>{{ media.id }}</td>
+                    <td>
+                        <a href="#"><img src="{{ asset('images/general/edit.png') }}" alt="edit" /></a>
+                        <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('images/general/delete.png') }}" alt="delete" /></a>
+                    </td>
                     <td><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">{{ media.name }}</a></td>
                     <td>{{ media.contenttype }}</td>
                     <td>{{ media.createdat|date|escape }}</td>
@@ -21,7 +26,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>0</td>
+                    <td></td>
                     <td>No files yet.</td>
                     <td></td>
                     <td></td>

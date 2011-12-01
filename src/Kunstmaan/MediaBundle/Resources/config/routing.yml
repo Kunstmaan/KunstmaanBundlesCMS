@@ -2,6 +2,13 @@ KunstmaanMediaBundle_media:
     pattern:  /admin/media
     defaults: { _controller: KunstmaanMediaBundle:Media:index }
 
+KunstmaanMediaBundle_gallery_delete:
+    pattern:  /admin/media/gallery/delete/{gallery_id}
+    defaults: { _controller: KunstmaanMediaBundle:Gallery:delete }
+    requirements:
+        _method:  GET
+        gallery_id: \d+
+
 KunstmaanMediaBundle_media_images:
     pattern:  /admin/media/images
     defaults: { _controller: KunstmaanMediaBundle:Media:images }
@@ -9,6 +16,13 @@ KunstmaanMediaBundle_media_images:
 KunstmaanMediaBundle_image_show:
     pattern:  /admin/media/images/{media_id}
     defaults: { _controller: KunstmaanMediaBundle:Image:show }
+    requirements:
+        _method: GET
+        media_id: \d+
+
+KunstmaanMediaBundle_image_delete:
+    pattern:  /admin/media/images/delete/{media_id}
+    defaults: { _controller: KunstmaanMediaBundle:Image:delete }
     requirements:
         _method: GET
         media_id: \d+
@@ -70,13 +84,16 @@ KunstmaanMediaBundle_media_videos:
     pattern:  /admin/media/videos
     defaults: { _controller: KunstmaanMediaBundle:Media:videos }
 
-KunstmaanMediaBundle_media_slides:
-    pattern:  /admin/media/slides
-    defaults: { _controller: KunstmaanMediaBundle:Media:slides }
-
 KunstmaanMediaBundle_video_show:
     pattern:  /admin/media/videos/{media_id}
     defaults: { _controller: KunstmaanMediaBundle:Video:show }
+    requirements:
+        _method: GET
+        media_id: \d+
+
+KunstmaanMediaBundle_video_delete:
+    pattern:  /admin/media/videos/delete/{media_id}
+    defaults: { _controller: KunstmaanMediaBundle:Video:delete }
     requirements:
         _method: GET
         media_id: \d+
@@ -129,9 +146,20 @@ KunstmaanMediaBundle_videogallery_show:
         _method:  GET
         id: \d+
 
+KunstmaanMediaBundle_media_slides:
+    pattern:  /admin/media/slides
+    defaults: { _controller: KunstmaanMediaBundle:Media:slides }
+
 KunstmaanMediaBundle_slide_show:
     pattern:  /admin/media/slides/{media_id}
     defaults: { _controller: KunstmaanMediaBundle:Slide:show }
+    requirements:
+        _method: GET
+        media_id: \d+
+
+KunstmaanMediaBundle_slide_delete:
+    pattern:  /admin/media/slides/delete/{media_id}
+    defaults: { _controller: KunstmaanMediaBundle:Slide:delete }
     requirements:
         _method: GET
         media_id: \d+
@@ -191,6 +219,13 @@ KunstmaanMediaBundle_media_files:
 KunstmaanMediaBundle_file_show:
     pattern:  /admin/media/files/{media_id}
     defaults: { _controller: KunstmaanMediaBundle:File:show }
+    requirements:
+        _method: GET
+        media_id: \d+
+
+KunstmaanMediaBundle_file_delete:
+    pattern:  /admin/media/files/delete/{media_id}
+    defaults: { _controller: KunstmaanMediaBundle:File:delete }
     requirements:
         _method: GET
         media_id: \d+
