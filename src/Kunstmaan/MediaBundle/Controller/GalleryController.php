@@ -4,6 +4,10 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Kunstmaan\MediaBundle\Entity\ImageGallery;
+use Kunstmaan\MediaBundle\Entity\SlideGallery;
+use Kunstmaan\MediaBundle\Entity\VideoGallery;
+use Kunstmaan\MediaBundle\Entity\FileGallery;
 use Kunstmaan\MediaBundle\Form\GalleryType;
 use Kunstmaan\MediaBundle\Form\SubGalleryType;
 
@@ -54,6 +58,56 @@ class GalleryController extends Controller
                     'galleries' => $galleries
                 ));
     }
+
+    public function parenteditAction($gallery){
+            $em = $this->getDoctrine()->getEntityManager();
+            $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
+                            ->getAllGalleries();
+            $form = $this->createForm(new GalleryType($gallery->getStrategy()->getGalleryClassName()), $gallery);
+
+            return $this->render('KunstmaanMediaBundle:Gallery:edit.html.twig', array(
+                        'form' => $form->createView(),
+                        'gallery' => $gallery,
+                        'galleries' => $galleries,
+                        'parent' => $gallery->getParent()
+                    ));
+        }
+
+    public function parentupdateAction($gallery,$formf, $type){
+            $request = $this->getRequest();
+            $form = $this->createForm($gallery->getFormType(), $gallery);
+
+            if ('POST' == $request->getMethod()) {
+                $form->bindRequest($request);
+                if ($form->isValid()){
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->persist($gallery);
+                    $em->flush();
+
+                    $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
+                                                   ->getAllGalleries();
+
+                    $mediaform = $this->createForm($type, $formf);
+
+                    return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
+                              'form' => $mediaform->createView(),
+                              'subform' => $form->createView(),
+                              'gallery' => $gallery,
+                              'galleries'     => $galleries,
+                    ));
+                }
+            }
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
+                                           ->getAllGalleries();
+
+            return $this->render('KunstmaanMediaBundle:Gallery:edit.html.twig', array(
+                'gallery' => $gallery,
+                'form' => $form->createView(),
+                'galleries'     => $galleries
+            ));
+        }
 
     public function deleteFiles(\Kunstmaan\MediaBundle\Entity\Gallery $gallery, \Doctrine\ORM\EntityManager $em){
         foreach($gallery->getFiles() as $file){

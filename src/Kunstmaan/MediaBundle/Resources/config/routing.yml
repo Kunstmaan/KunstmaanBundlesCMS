@@ -53,6 +53,20 @@ KunstmaanMediaBundle_imagegallery_create:
     requirements:
         _method: POST
 
+KunstmaanMediaBundle_imagegallery_edit:
+    pattern:  /admin/media/images/gallery/edit/{id}
+    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:edit }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanMediaBundle_imagegallery_update:
+    pattern:  /admin/media/images/gallery/update/{id}
+    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:update }
+    requirements:
+        id: \d+
+        _method: POST
+
 KunstmaanMediaBundle_imagegallery_subnew:
     pattern:  /admin/media/images/gallery/sub/{id}
     defaults: { _controller: KunstmaanMediaBundle:ImageGallery:subnew }
@@ -146,6 +160,20 @@ KunstmaanMediaBundle_videogallery_show:
         _method:  GET
         id: \d+
 
+KunstmaanMediaBundle_videogallery_edit:
+    pattern:  /admin/media/videos/gallery/edit/{id}
+    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:edit }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanMediaBundle_videogallery_update:
+    pattern:  /admin/media/videos/gallery/update/{id}
+    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:update }
+    requirements:
+        id: \d+
+        _method: POST
+
 KunstmaanMediaBundle_media_slides:
     pattern:  /admin/media/slides
     defaults: { _controller: KunstmaanMediaBundle:Media:slides }
@@ -212,6 +240,20 @@ KunstmaanMediaBundle_slidegallery_show:
         _method:  GET
         id: \d+
 
+KunstmaanMediaBundle_slidegallery_edit:
+    pattern:  /admin/media/slides/gallery/edit/{id}
+    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:edit }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanMediaBundle_slidegallery_update:
+    pattern:  /admin/media/slides/gallery/update/{id}
+    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:update }
+    requirements:
+        id: \d+
+        _method: POST
+
 KunstmaanMediaBundle_media_files:
     pattern:  /admin/media/files
     defaults: { _controller: KunstmaanMediaBundle:Media:files }
@@ -276,6 +318,20 @@ KunstmaanMediaBundle_filegallery_show:
     requirements:
         _method:  GET
         id: \d+
+
+KunstmaanMediaBundle_filegallery_edit:
+    pattern:  /admin/media/files/gallery/edit/{id}
+    defaults: { _controller: KunstmaanMediaBundle:FileGallery:edit }
+    requirements:
+        _method:  GET
+        id: \d+
+
+KunstmaanMediaBundle_filegallery_update:
+    pattern:  /admin/media/files/gallery/update/{id}
+    defaults: { _controller: KunstmaanMediaBundle:FileGallery:update }
+    requirements:
+        id: \d+
+        _method: POST
 
 KunstmaanMediaBundle_aviary:
     pattern:  /aviary/{gallery_id}/{image_id}

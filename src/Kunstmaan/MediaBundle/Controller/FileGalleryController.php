@@ -21,6 +21,19 @@ class FileGalleryController extends GalleryController
         return $this->parentshowAction($id, $slug, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType(), new FileGallery());
     }
 
+    public function editAction($id){
+            $em = $this->getDoctrine()->getEntityManager();
+            $gallery = $em->find('Kunstmaan\MediaBundle\Entity\FileGallery', $id);
+
+            return $this->parenteditAction($gallery);
+        }
+
+        public function updateAction($id){
+            $em = $this->getDoctrine()->getEntityManager();
+                    $gallery = $em->find('Kunstmaan\MediaBundle\Entity\FileGallery', $id);
+              return $this->parentcreateAction($gallery, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType());
+        }
+
     public function newAction(){
         $gallery = new FileGallery();
         return $this->parentnewAction($gallery);

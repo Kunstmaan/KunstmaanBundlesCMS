@@ -29,7 +29,7 @@
         <div class="actions">
              <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_new', { 'gallery_id' : gallery.id }) }}" data-controls-modal="addmedia-modal" data-backdrop="true" data keyboard="true" class="btn">add {{ gallery.type }}</a>
             <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subnew', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">add subgallery</a>
-             <a href="#" class="btn">edit</a>
+            <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_edit', { 'id' : gallery.id }) }}" class="btn">edit</a>
              <a href="{{ path('KunstmaanMediaBundle_gallery_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete this gallery</a>
         </div>
     </div>

@@ -22,6 +22,19 @@ class VideoGalleryController extends GalleryController
 
     }
 
+    public function editAction($id){
+            $em = $this->getDoctrine()->getEntityManager();
+            $gallery = $em->find('Kunstmaan\MediaBundle\Entity\VideoGallery', $id);
+
+            return $this->parenteditAction($gallery);
+        }
+
+        public function updateAction($id){
+            $em = $this->getDoctrine()->getEntityManager();
+                    $gallery = $em->find('Kunstmaan\MediaBundle\Entity\VideoGallery', $id);
+              return $this->parentcreateAction($gallery, new \Kunstmaan\MediaBundle\Entity\Video(), new \Kunstmaan\MediaBundle\Form\VideoType());
+        }
+
     public function newAction(){
         $gallery = new VideoGallery();
         return $this->parentnewAction($gallery);
