@@ -6,7 +6,7 @@
 
 {% block subbreadcrumb %}
     <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">File Galleries</a> <span class="divider">/</span></li>
-    <li><a href="{{ path('KunstmaanMediaBundle_filegallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
 	<li class="active">Add new picture to "{{ gallery.name }}"</li>
 {% endblock %}
 

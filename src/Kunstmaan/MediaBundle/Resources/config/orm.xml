@@ -6,7 +6,6 @@
 
     <parameters>
         <parameter key="kunstmaan_media.listener.doctrine.class">Kunstmaan\MediaBundle\Helper\Listener\DoctrineMediaListener</parameter>
-        <parameter key="kunstmaan_media.repository.media.class">Kunstmaan\MediaBundle\Repository\DoctrineMediaRepository</parameter>
     </parameters>
 
     <services>
@@ -17,10 +16,6 @@
             <tag name="doctrine.event_listener" event="postUpdate" />
             <tag name="doctrine.event_listener" event="preRemove" />
             <argument type="service" id="kunstmaan_media.manager" />
-        </service>
-
-        <service id="kunstmaan_media.repository.media" class="%kunstmaan_media.repository.media.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
     </services>
 

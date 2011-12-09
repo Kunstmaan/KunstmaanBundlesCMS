@@ -13,4 +13,8 @@ interface GalleryStrategyInterface
 
     function getType();
 
+    function getFormType();
+
+    function getFormHelper();
+
 }

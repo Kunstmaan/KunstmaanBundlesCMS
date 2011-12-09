@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Form\GalleryType;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
 use Kunstmaan\MediaBundle\Form\SubGalleryType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * imagegallery controller.
@@ -16,39 +19,35 @@ use Kunstmaan\MediaBundle\Form\SubGalleryType;
 class FileGalleryController extends GalleryController
 {
 
-    public function showAction($id, $slug)
-    {
-        return $this->parentshowAction($id, $slug, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType(), new FileGallery());
-    }
-
-    public function editAction($id){
-            $em = $this->getDoctrine()->getEntityManager();
-            $gallery = $em->find('Kunstmaan\MediaBundle\Entity\FileGallery', $id);
-
-            return $this->parenteditAction($gallery);
-        }
-
-        public function updateAction($id){
-            $em = $this->getDoctrine()->getEntityManager();
-                    $gallery = $em->find('Kunstmaan\MediaBundle\Entity\FileGallery', $id);
-              return $this->parentcreateAction($gallery, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType());
-        }
-
+    /**
+     * @Route("/", name="KunstmaanMediaBundle_filegallery_new")
+     */
     public function newAction(){
         $gallery = new FileGallery();
         return $this->parentnewAction($gallery);
     }
 
+    /**
+     * @Route("/sub/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filegallery_subnew")
+     */
     public function subnewAction($id){
         $gallery = new FileGallery();
         return $this->parentsubnewAction($gallery,$id);
     }
 
+    /**
+     * @Route("/create", name="KunstmaanMediaBundle_filegallery_create")
+     * @Method({"POST"})
+     */
     public function createAction(){
         $gallery = new FileGallery();
         return $this->parentcreateAction($gallery, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType());
     }
 
+    /**
+     * @Route("/sub/create/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filegallery_subcreate")
+     * @Method({"POST"})
+     */
     public function subcreateAction($id){
         $gallery = new FileGallery();
         return $this->parentsubcreateAction($gallery,$id, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType());

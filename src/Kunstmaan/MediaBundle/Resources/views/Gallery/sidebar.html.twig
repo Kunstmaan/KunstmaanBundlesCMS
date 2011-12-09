@@ -3,12 +3,12 @@
         <li class="header">{{ gallery.type }} Galleries</li>
         {% for gallery in galleries %}
             <li>
-                <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{gallery.name }}</a>
+                <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{gallery.name }}</a>
              </li>
 
             {% for child in gallery.children %}
                     <li>
-                        <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_show', { 'id': child.id, 'slug': child.slug }) }}">{{child.name }}</a>
+                        <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': child.id, 'slug': child.slug }) }}">{{child.name }}</a>
                     </li>
             {% endfor %}
         {% else %}

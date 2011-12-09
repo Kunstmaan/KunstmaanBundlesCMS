@@ -7,15 +7,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Kunstmaan\MediaBundle\Form\MediaType;
 use Kunstmaan\MediaBundle\Entity\File;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * picture controller.
+ * file controller.
  *
  * @author Kristof Van Cauwenbergh
  */
 class FileController extends Controller
 {
 
+    /**
+     * @Route("/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_file_show")
+     * @Template()
+     */
     public function showAction($media_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
@@ -25,46 +32,38 @@ class FileController extends Controller
                                 ->getAllGalleries();
 
         $picturehelper = new MediaHelper();
-                            $form = $this->createForm(new MediaType(), $picturehelper);
+        $form = $this->createForm(new MediaType(), $picturehelper);
 
-                            $sub = new \Kunstmaan\MediaBundle\Entity\FileGallery();
-                            $sub->setParent($gallery);
-                            $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
+        $sub = new \Kunstmaan\MediaBundle\Entity\FileGallery();
+        $sub->setParent($gallery);
+        $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
 
-       return $this->render('KunstmaanMediaBundle:File:show.html.twig', array(
-                    'media' => $media,
-                    'gallery' => $gallery,
-                    'galleries' => $galleries,
-                    'form' => $form->createView(),
-                    'subform' => $subform->createView()
-                ));
+        return array(
+            'media' => $media,
+            'gallery' => $gallery,
+            'galleries' => $galleries,
+            'form' => $form->createView(),
+            'subform' => $subform->createView()
+       );
     }
 
+    /**
+     * @Route("/delete/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_file_delete")
+     */
     public function deleteAction($media_id)
     {
-            $em = $this->getDoctrine()->getEntityManager();
-            $media = $em->find('\Kunstmaan\MediaBundle\Entity\File', $media_id);
-            $gallery = $media->getGallery();
-            $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
-                                    ->getAllGalleries();
-            $em->remove($media);
-            $em->flush();
+        $em = $this->getDoctrine()->getEntityManager();
+        $media = $em->find('\Kunstmaan\MediaBundle\Entity\File', $media_id);
+        $gallery = $media->getGallery();
+        $em->remove($media);
+        $em->flush();
 
-            $picturehelper = new MediaHelper();
-            $form = $this->createForm(new MediaType(), $picturehelper);
+        return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+    }
 
-            $sub = new \Kunstmaan\MediaBundle\Entity\FileGallery();
-            $sub->setParent($gallery);
-            $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
-
-            return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
-                        'gallery' => $gallery,
-                        'galleries' => $galleries,
-                        'form' => $form->createView(),
-                        'subform' => $subform->createView()
-                    ));
-     }
-
+    /**
+     * @Route("/{gallery_id}/new", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_file_new")
+     */
     public function newAction($gallery_id)
     {
         $gallery = $this->getFileGallery($gallery_id);
@@ -83,6 +82,10 @@ class FileController extends Controller
         ));
     }
 
+    /**
+     * @Route("/{gallery_id}/create", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_file_create")
+     * @Method({"POST"})
+     */
     public function createAction($gallery_id)
     {
         $gallery = $this->getFileGallery($gallery_id);

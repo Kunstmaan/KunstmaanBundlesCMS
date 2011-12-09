@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Kunstmaan\MediaBundle\Form\VideoType;
 use Kunstmaan\MediaBundle\Entity\Video;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * picture controller.
@@ -15,7 +18,10 @@ use Kunstmaan\MediaBundle\Entity\Video;
  */
 class VideoController extends Controller
 {
-
+    /**
+     * @Route("/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_video_show")
+     * @Template()
+     */
     public function showAction($media_id, $format = null, array $options = array())
     {
         $em = $this->getDoctrine()->getEntityManager();
@@ -27,15 +33,18 @@ class VideoController extends Controller
         $picturehelper = new Video();
         $form = $this->createForm(new VideoType(), $picturehelper);
 
-        return $this->render('KunstmaanMediaBundle:Video:show.html.twig', array(
+        return array(
                     'form' => $form->createView(),
                     'media' => $media,
                     'format' => $format,
                     'gallery' => $gallery,
                     'galleries' => $galleries
-                ));
+               );
     }
 
+    /**
+     * @Route("/delete/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_video_delete")
+     */
     public function deleteAction($media_id)
           {
                   $em = $this->getDoctrine()->getEntityManager();
@@ -46,21 +55,13 @@ class VideoController extends Controller
                   $em->remove($media);
                   $em->flush();
 
-                  $picturehelper = new Video();
-                  $form = $this->createForm(new VideoType(), $picturehelper);
 
-                  $sub = new \Kunstmaan\MediaBundle\Entity\VideoGallery();
-                  $sub->setParent($gallery);
-                  $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
-
-                  return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
-                              'gallery' => $gallery,
-                              'galleries' => $galleries,
-                              'form' => $form->createView(),
-                              'subform' => $subform->createView()
-                          ));
+                      return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
            }
 
+    /**
+     * @Route("/{gallery_id}/new", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_video_new")
+     */
     public function newAction($gallery_id)
     {
         $gallery = $this->getVideoGallery($gallery_id);
@@ -79,6 +80,10 @@ class VideoController extends Controller
         ));
     }
 
+    /**
+     * @Route("/{gallery_id}/create", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_video_create")
+     * @Method({"POST"})
+     */
     public function createAction($gallery_id)
     {
         $gallery = $this->getVideoGallery($gallery_id);

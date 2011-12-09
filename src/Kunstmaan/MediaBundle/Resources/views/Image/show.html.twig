@@ -7,9 +7,9 @@
 {% block subbreadcrumb %}
     <li><a href="{{ path('KunstmaanMediaBundle_media_images') }}">Images</a> <span class="divider">/</span></li>
         {% for parent in gallery.parents %}
-            <li><a href="{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
+            <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
         {% endfor %}
-        <li><a href="{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
+        <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
         <li class="active">{{ media.name }}</li>
 {% endblock %}
 
@@ -26,8 +26,8 @@
                <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
                     <input name="picture" type="hidden" value="" />
                     <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ url('KunstmaanMediaBundle_uploads') }}{{ media.show() }}');" />
-                        <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
-                        <input onclick="window.location = '{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
+                        <a href="{{ path('KunstmaanMediaBundle_image_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
+                        <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
                     </div>
                 </form>
 
@@ -83,8 +83,8 @@
        <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
             <input name="picture" type="hidden" value="" />
             <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ url('KunstmaanMediaBundle_uploads') }}{{ media.show() }}');" />
-                <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
-                <input onclick="window.location = '{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
+                <a href="{{ path('KunstmaanMediaBundle_image_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
+                <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
             </div>
         </form>
 

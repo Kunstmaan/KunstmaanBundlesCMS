@@ -63,7 +63,7 @@ abstract class Media{
     protected $gallery;
 
     protected $content;
-    protected $context = "omnext_media";
+    protected $context;
 
     public function __construct($context = null)
     {
@@ -255,6 +255,16 @@ abstract class Media{
         return $this->context;
     }
 
+    /**
+     * Set context
+     *
+     * @param string $context
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+    }
+
     public function show($format=null, $options = array())
     {
         $path = $this->getContext()."/";
@@ -271,6 +281,6 @@ abstract class Media{
      */
     public function preUpdate()
     {
-        $this->setUpdated(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
     }
 }

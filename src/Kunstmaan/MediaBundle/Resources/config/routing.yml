@@ -1,345 +1,58 @@
 KunstmaanMediaBundle_media:
-    pattern:  /admin/media
-    defaults: { _controller: KunstmaanMediaBundle:Media:index }
-
-KunstmaanMediaBundle_gallery_delete:
-    pattern:  /admin/media/gallery/delete/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:Gallery:delete }
-    requirements:
-        _method:  GET
-        gallery_id: \d+
-
-KunstmaanMediaBundle_media_images:
-    pattern:  /admin/media/images
-    defaults: { _controller: KunstmaanMediaBundle:Media:images }
-
-KunstmaanMediaBundle_image_show:
-    pattern:  /admin/media/images/{media_id}
-    defaults: { _controller: KunstmaanMediaBundle:Image:show }
-    requirements:
-        _method: GET
-        media_id: \d+
-
-KunstmaanMediaBundle_image_delete:
-    pattern:  /admin/media/images/delete/{media_id}
-    defaults: { _controller: KunstmaanMediaBundle:Image:delete }
-    requirements:
-        _method: GET
-        media_id: \d+
-
-KunstmaanMediaBundle_image_new:
-    pattern:  /admin/media/images/add/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:Image:new }
-    requirements:
-        _method: GET
-        gallery_id: \d+
-
-KunstmaanMediaBundle_image_create:
-    pattern:  /admin/media/images/create/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:Image:create }
-    requirements:
-        _method: POST
-        gallery_id: \d+
-
-KunstmaanMediaBundle_imagegallery_new:
-    pattern:  /admin/media/images/gallery
-    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:new }
-    requirements:
-        _method:  GET
-
-KunstmaanMediaBundle_imagegallery_create:
-    pattern:  /admin/media/images/gallery/create
-    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:create }
-    requirements:
-        _method: POST
-
-KunstmaanMediaBundle_imagegallery_edit:
-    pattern:  /admin/media/images/gallery/edit/{id}
-    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:edit }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_imagegallery_update:
-    pattern:  /admin/media/images/gallery/update/{id}
-    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:update }
-    requirements:
-        id: \d+
-        _method: POST
-
-KunstmaanMediaBundle_imagegallery_subnew:
-    pattern:  /admin/media/images/gallery/sub/{id}
-    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:subnew }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_imagegallery_subcreate:
-    pattern:  /admin/media/images/gallery/sub/create/{id}
-    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:subcreate }
-    requirements:
-        _method: POST
-        id: \d+
-
-KunstmaanMediaBundle_imagegallery_show:
-    pattern:  /admin/media/images/gallery/{id}/{slug}
-    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:show }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_imagegallery_ckeditor:
-    pattern:  /admin/media/images/ckeditor
-    defaults: { _controller: KunstmaanMediaBundle:ImageGallery:ckeditor }
-    requirements:
-        _method:  GET
-
-KunstmaanMediaBundle_media_videos:
-    pattern:  /admin/media/videos
-    defaults: { _controller: KunstmaanMediaBundle:Media:videos }
-
-KunstmaanMediaBundle_video_show:
-    pattern:  /admin/media/videos/{media_id}
-    defaults: { _controller: KunstmaanMediaBundle:Video:show }
-    requirements:
-        _method: GET
-        media_id: \d+
-
-KunstmaanMediaBundle_video_delete:
-    pattern:  /admin/media/videos/delete/{media_id}
-    defaults: { _controller: KunstmaanMediaBundle:Video:delete }
-    requirements:
-        _method: GET
-        media_id: \d+
-
-KunstmaanMediaBundle_video_new:
-    pattern:  /admin/media/videos/add/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:Video:new }
-    requirements:
-        _method: GET
-        gallery_id: \d+
-
-KunstmaanMediaBundle_video_create:
-    pattern:  /admin/media/videos/create/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:Video:create }
-    requirements:
-        _method: POST
-        gallery_id: \d+
-
-
-KunstmaanMediaBundle_videogallery_new:
-    pattern:  /admin/media/videos/gallery
-    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:new }
-    requirements:
-        _method:  GET
-
-KunstmaanMediaBundle_videogallery_create:
-    pattern:  /admin/media/videos/gallery/create
-    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:create }
-    requirements:
-        _method: POST
-
-KunstmaanMediaBundle_videogallery_subnew:
-    pattern:  /admin/media/videos/gallery/sub/{id}
-    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:subnew }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_videogallery_subcreate:
-    pattern:  /admin/media/videos/gallery/sub/create/{id}
-    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:subcreate }
-    requirements:
-        _method: POST
-        id: \d+
-
-KunstmaanMediaBundle_videogallery_show:
-    pattern:  /admin/media/videos/gallery/{id}/{slug}
-    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:show }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_videogallery_edit:
-    pattern:  /admin/media/videos/gallery/edit/{id}
-    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:edit }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_videogallery_update:
-    pattern:  /admin/media/videos/gallery/update/{id}
-    defaults: { _controller: KunstmaanMediaBundle:VideoGallery:update }
-    requirements:
-        id: \d+
-        _method: POST
-
-KunstmaanMediaBundle_media_slides:
-    pattern:  /admin/media/slides
-    defaults: { _controller: KunstmaanMediaBundle:Media:slides }
-
-KunstmaanMediaBundle_slide_show:
-    pattern:  /admin/media/slides/{media_id}
-    defaults: { _controller: KunstmaanMediaBundle:Slide:show }
-    requirements:
-        _method: GET
-        media_id: \d+
-
-KunstmaanMediaBundle_slide_delete:
-    pattern:  /admin/media/slides/delete/{media_id}
-    defaults: { _controller: KunstmaanMediaBundle:Slide:delete }
-    requirements:
-        _method: GET
-        media_id: \d+
-
-KunstmaanMediaBundle_slide_new:
-    pattern:  /admin/media/slides/add/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:Slide:new }
-    requirements:
-        _method: GET
-        gallery_id: \d+
-
-KunstmaanMediaBundle_slide_create:
-    pattern:  /admin/media/slides/create/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:Slide:create }
-    requirements:
-        _method: POST
-        gallery_id: \d+
-
-
-KunstmaanMediaBundle_slidegallery_new:
-    pattern:  /admin/media/slides/gallery
-    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:new }
-    requirements:
-        _method:  GET
-
-KunstmaanMediaBundle_slidegallery_create:
-    pattern:  /admin/media/slides/gallery/create
-    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:create }
-    requirements:
-        _method: POST
-
-KunstmaanMediaBundle_slidegallery_subnew:
-    pattern:  /admin/media/slides/gallery/sub/{id}
-    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:subnew }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_slidegallery_subcreate:
-    pattern:  /admin/media/slides/gallery/sub/create/{id}
-    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:subcreate }
-    requirements:
-        _method: POST
-        id: \d+
-
-KunstmaanMediaBundle_slidegallery_show:
-    pattern:  /admin/media/slides/gallery/{id}/{slug}
-    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:show }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_slidegallery_edit:
-    pattern:  /admin/media/slides/gallery/edit/{id}
-    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:edit }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_slidegallery_update:
-    pattern:  /admin/media/slides/gallery/update/{id}
-    defaults: { _controller: KunstmaanMediaBundle:SlideGallery:update }
-    requirements:
-        id: \d+
-        _method: POST
-
-KunstmaanMediaBundle_media_files:
-    pattern:  /admin/media/files
-    defaults: { _controller: KunstmaanMediaBundle:Media:files }
-
-KunstmaanMediaBundle_file_show:
-    pattern:  /admin/media/files/{media_id}
-    defaults: { _controller: KunstmaanMediaBundle:File:show }
-    requirements:
-        _method: GET
-        media_id: \d+
-
-KunstmaanMediaBundle_file_delete:
-    pattern:  /admin/media/files/delete/{media_id}
-    defaults: { _controller: KunstmaanMediaBundle:File:delete }
-    requirements:
-        _method: GET
-        media_id: \d+
-
-KunstmaanMediaBundle_file_new:
-    pattern:  /admin/media/files/add/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:File:new }
-    requirements:
-        _method: GET
-        gallery_id: \d+
-
-KunstmaanMediaBundle_file_create:
-    pattern:  /admin/media/files/create/{gallery_id}
-    defaults: { _controller: KunstmaanMediaBundle:File:create }
-    requirements:
-        _method: POST
-        gallery_id: \d+
-
-KunstmaanMediaBundle_filegallery_new:
-    pattern:  /admin/media/files/gallery
-    defaults: { _controller: KunstmaanMediaBundle:FileGallery:new }
-    requirements:
-        _method:  GET
-
-KunstmaanMediaBundle_filegallery_create:
-    pattern:  /admin/media/files/gallery/create
-    defaults: { _controller: KunstmaanMediaBundle:FileGallery:create }
-    requirements:
-        _method: POST
-
-KunstmaanMediaBundle_filegallery_subnew:
-    pattern:  /admin/media/files/gallery/sub/{id}
-    defaults: { _controller: KunstmaanMediaBundle:FileGallery:subnew }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_filegallery_subcreate:
-    pattern:  /admin/media/files/gallery/sub/create/{id}
-    defaults: { _controller: KunstmaanMediaBundle:FileGallery:subcreate }
-    requirements:
-        _method: POST
-        id: \d+
-
-KunstmaanMediaBundle_filegallery_show:
-    pattern:  /admin/media/files/gallery/{id}/{slug}
-    defaults: { _controller: KunstmaanMediaBundle:FileGallery:show }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_filegallery_edit:
-    pattern:  /admin/media/files/gallery/edit/{id}
-    defaults: { _controller: KunstmaanMediaBundle:FileGallery:edit }
-    requirements:
-        _method:  GET
-        id: \d+
-
-KunstmaanMediaBundle_filegallery_update:
-    pattern:  /admin/media/files/gallery/update/{id}
-    defaults: { _controller: KunstmaanMediaBundle:FileGallery:update }
-    requirements:
-        id: \d+
-        _method: POST
+    resource: "@KunstmaanMediaBundle/Controller/MediaController.php"
+    type:     annotation
+    prefix:   /admin/media
 
 KunstmaanMediaBundle_aviary:
-    pattern:  /aviary/{gallery_id}/{image_id}
-    defaults: { _controller: KunstmaanMediaBundle:Aviary:index }
-    requirements:
-        _method:  GET|POST
-        image_id: \d+
-        gallery_id: \d+
+    resource: "@KunstmaanMediaBundle/Controller/AviaryController.php"
+    type:     annotation
+
+KunstmaanMediaBundle_media_imagegallery:
+    resource: "@KunstmaanMediaBundle/Controller/ImageGalleryController.php"
+    type:     annotation
+    prefix:   /admin/media/imagegallery/
+
+KunstmaanMediaBundle_media_videogallery:
+    resource: "@KunstmaanMediaBundle/Controller/VideoGalleryController.php"
+    type:     annotation
+    prefix:   /admin/media/videogallery
+
+KunstmaanMediaBundle_media_filegallery:
+    resource: "@KunstmaanMediaBundle/Controller/FileGalleryController.php"
+    type:     annotation
+    prefix:   /admin/media/filegallery
+
+KunstmaanMediaBundle_media_slidegallery:
+    resource: "@KunstmaanMediaBundle/Controller/SlideGalleryController.php"
+    type:     annotation
+    prefix:   /admin/media/slidegallery
+
+KunstmaanMediaBundle_media_gallery:
+    resource: "@KunstmaanMediaBundle/Controller/GalleryController.php"
+    type:     annotation
+    prefix:   /admin/media/gallery
+
+KunstmaanMediaBundle_image:
+    resource: "@KunstmaanMediaBundle/Controller/ImageController.php"
+    type:     annotation
+    prefix:   /admin/media/image
+
+KunstmaanMediaBundle_video:
+    resource: "@KunstmaanMediaBundle/Controller/VideoController.php"
+    type:     annotation
+    prefix:   /admin/media/video
+
+KunstmaanMediaBundle_file:
+    resource: "@KunstmaanMediaBundle/Controller/FileController.php"
+    type:     annotation
+    prefix:   /admin/media/file
+
+KunstmaanMediaBundle_slide:
+    resource: "@KunstmaanMediaBundle/Controller/SlideController.php"
+    type:     annotation
+    prefix:   /admin/media/slide
+
+
 
 KunstmaanMediaBundle_uploads:
     pattern: ../uploads/media/

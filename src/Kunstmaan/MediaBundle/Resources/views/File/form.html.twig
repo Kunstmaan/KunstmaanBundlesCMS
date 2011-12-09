@@ -10,7 +10,7 @@
         </div>
         <div class="actions">
             <input class="btn primary type" type="submit" value="add new file">
-            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_filegallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="cancel" />
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="cancel" />
         </div>
     </fieldset>
 </form>
