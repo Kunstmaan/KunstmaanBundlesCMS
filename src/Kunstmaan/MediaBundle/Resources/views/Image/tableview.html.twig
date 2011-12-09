@@ -4,7 +4,7 @@
 
             <li>
                 <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">
-                    <img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('medium') }}" alt="{{ media.name }}" />
+                    <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
                 </a>
              </li>
         {% else %}

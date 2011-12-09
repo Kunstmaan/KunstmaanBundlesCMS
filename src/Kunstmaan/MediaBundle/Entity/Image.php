@@ -30,12 +30,12 @@ class Image extends Media
 
     /**
      * @ORM\ManyToOne(targetEntity="Image", inversedBy="edits")
-     * @ORM\JoinColumn(name="original", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="original", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $original;
 
     /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="original")
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="original", cascade={"persist"})
      */
     protected $edits;
 

@@ -51,9 +51,3 @@ KunstmaanMediaBundle_slide:
     resource: "@KunstmaanMediaBundle/Controller/SlideController.php"
     type:     annotation
     prefix:   /admin/media/slide
-
-
-
-KunstmaanMediaBundle_uploads:
-    pattern: ../uploads/media/
-    defaults:  { _controller: KunstmaanMediaBundle:Media:index }
