@@ -89,26 +89,6 @@ class GalleryController extends Controller
      }
 
     /**
-     * @Route("/edit/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_gallery_edit")
-     * @Template()
-     */
-    /*public function editAction($gallery_id){
-        $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->find('Kunstmaan\MediaBundle\Entity\Gallery', $gallery_id);
-
-        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                            ->getAllGalleries();
-        $form = $this->createForm(new GalleryType($gallery->getStrategy()->getGalleryClassName()), $gallery);
-
-        return array(
-            'form' => $form->createView(),
-            'gallery' => $gallery,
-            'galleries' => $galleries,
-            'parent' => $gallery->getParent()
-        );
-    }*/
-
-    /**
      * @Route("/update/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_gallery_edit")
      * @Method({"GET", "POST"})
      * @Template()
