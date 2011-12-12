@@ -19,24 +19,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class SlideGalleryController extends GalleryController
 {
     /**
-     * @Route("/", name="KunstmaanMediaBundle_slidegallery_new")
-     */
-    public function newAction(){
-        $gallery = new SlideGallery();
-        return $this->parentnewAction($gallery);
-    }
-
-    /**
-     * @Route("/sub/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_slidegallery_subnew")
-     */
-    public function subnewAction($id){
-        $gallery = new SlideGallery();
-        return $this->parentsubnewAction($gallery,$id);
-    }
-
-    /**
      * @Route("/create", name="KunstmaanMediaBundle_slidegallery_create")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
      */
     public function createAction(){
         $gallery = new SlideGallery();
@@ -45,7 +29,7 @@ class SlideGalleryController extends GalleryController
 
     /**
      * @Route("/sub/create/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_slidegallery_subcreate")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
      */
     public function subcreateAction($id){
         $gallery = new SlideGallery();

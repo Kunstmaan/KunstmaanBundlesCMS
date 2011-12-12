@@ -69,61 +69,8 @@ class GalleryController extends Controller
         $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                         ->getAllGalleries();
 
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_'.$gallery->getStrategy()->getType().'s', array(
-            'gallery' => $gallery,
-            'galleries' => $galleries
-        )));
+        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_'.$gallery->getStrategy()->getType().'s'));
     }
-
-    /**
-     * @Route("/edit/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_gallery_edit")
-     * @Template()
-     */
-    public function editAction($gallery_id){
-        $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->find('Kunstmaan\MediaBundle\Entity\Gallery', $gallery_id);
-
-        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                            ->getAllGalleries();
-        $form = $this->createForm(new GalleryType($gallery->getStrategy()->getGalleryClassName()), $gallery);
-
-        return array(
-            'form' => $form->createView(),
-            'gallery' => $gallery,
-            'galleries' => $galleries,
-            'parent' => $gallery->getParent()
-        );
-    }
-
-    /**
-     * @Route("/update/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_gallery_update")
-     * @Method({"POST"})
-     */
-    public function updateAction($id){
-            $em = $this->getDoctrine()->getEntityManager();
-            $gallery = $em->find('Kunstmaan\MediaBundle\Entity\Gallery', $id);
-            $request = $this->getRequest();
-            $form = $this->createForm($gallery->getFormType(), $gallery);
-
-            if ('POST' == $request->getMethod()) {
-                $form->bindRequest($request);
-                if ($form->isValid()){
-                    $em->persist($gallery);
-                    $em->flush();
-
-                    return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-                }
-            }
-
-            $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                                           ->getAllGalleries();
-
-            return $this->render('KunstmaanMediaBundle:Gallery:edit.html.twig', array(
-                'gallery' => $gallery,
-                'form' => $form->createView(),
-                'galleries'     => $galleries
-            ));
-        }
 
     public function deleteFiles(\Kunstmaan\MediaBundle\Entity\Gallery $gallery, \Doctrine\ORM\EntityManager $em){
         foreach($gallery->getFiles() as $file){
@@ -141,40 +88,60 @@ class GalleryController extends Controller
         }
      }
 
-    public function parentnewAction($gallery){
+    /**
+     * @Route("/edit/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_gallery_edit")
+     * @Template()
+     */
+    /*public function editAction($gallery_id){
+        $em = $this->getDoctrine()->getEntityManager();
+        $gallery = $em->find('Kunstmaan\MediaBundle\Entity\Gallery', $gallery_id);
+
+        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
+                            ->getAllGalleries();
+        $form = $this->createForm(new GalleryType($gallery->getStrategy()->getGalleryClassName()), $gallery);
+
+        return array(
+            'form' => $form->createView(),
+            'gallery' => $gallery,
+            'galleries' => $galleries,
+            'parent' => $gallery->getParent()
+        );
+    }*/
+
+    /**
+     * @Route("/update/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_gallery_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function editAction($gallery_id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $gallery = $em->find('Kunstmaan\MediaBundle\Entity\Gallery', $gallery_id);
+        $request = $this->getRequest();
         $form = $this->createForm($gallery->getFormType(), $gallery);
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                               ->getAllGalleries();
+            if ('POST' == $request->getMethod()) {
+                $form->bindRequest($request);
+                if ($form->isValid()){
+                    $em->persist($gallery);
+                    $em->flush();
 
-        return $this->render('KunstmaanMediaBundle:Gallery:create.html.twig', array(
-            'gallery' => $gallery,
-            'form'   => $form->createView(),
-            'galleries'     => $galleries
-        ));
-    }
+                    return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+                }
+            }
 
-    public function parentsubnewAction($gallery, $id){
-            $em = $this->getDoctrine()->getEntityManager();
-           $parent = $em->find($gallery->getStrategy()->getGalleryClassName(), $id);
+            $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
+                                           ->getAllGalleries();
 
-           $gallery->setParent($parent);
-           $form = $this->createForm(new SubGalleryType(), $gallery);
+            return array(
+                'gallery' => $gallery,
+                'form' => $form->createView(),
+                'galleries'     => $galleries
+            );
+     }
 
-           $em = $this->getDoctrine()->getEntityManager();
-           $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                                  ->getAllGalleries();
-
-           return $this->render('KunstmaanMediaBundle:Gallery:subcreate.html.twig', array(
-               'subform'   => $form->createView(),
-               'galleries'     => $galleries,
-               'gallery' => $gallery,
-               'parent' => $parent
-           ));
-       }
-
-    public function parentcreateAction($gallery,$formf, $type){
+    public function parentcreateAction($gallery)
+    {
         $request = $this->getRequest();
         $form = $this->createForm($gallery->getFormType(), $gallery);
 
@@ -200,7 +167,8 @@ class GalleryController extends Controller
         ));
     }
 
-    public function parentsubcreateAction($gallery,$id, $formf, $type){
+    public function parentsubcreateAction($gallery,$id)
+    {
             $request = $this->getRequest();
 
             $em = $this->getDoctrine()->getEntityManager();
@@ -230,5 +198,5 @@ class GalleryController extends Controller
                 'gallery' => $gallery,
                 'parent' => $parent
             ));
-        }
+    }
 }

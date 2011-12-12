@@ -1,4 +1,4 @@
-<form action="{{ path('KunstmaanMediaBundle_gallery_update', { 'id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('KunstmaanMediaBundle_gallery_edit', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
         <div class="clearfix">
             {{ form_errors(form) }}

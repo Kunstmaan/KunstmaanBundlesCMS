@@ -41,23 +41,21 @@ class SlideController extends Controller
      * @Route("/delete/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_slide_delete")
      */
     public function deleteAction($media_id)
-        {
-                $em = $this->getDoctrine()->getEntityManager();
-                $media = $em->find('\Kunstmaan\MediaBundle\Entity\Media', $media_id);
-                $gallery = $media->getGallery();
-                $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
-                                        ->getAllGalleries();
-                $em->remove($media);
-                $em->flush();
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $media = $em->find('\Kunstmaan\MediaBundle\Entity\Media', $media_id);
+        $gallery = $media->getGallery();
 
+        $em->remove($media);
+        $em->flush();
 
-                    return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-         }
+        return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+    }
 
     /**
      * @Route("/{gallery_id}/new", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_slide_new")
      */
-    public function newAction($gallery_id)
+   /* public function newAction($gallery_id)
     {
         $gallery = $this->getSlideGallery($gallery_id);
 
@@ -73,19 +71,18 @@ class SlideController extends Controller
             'gallery' => $gallery,
             'galleries' => $galleries
         ));
-    }
+    }*/
 
     /**
      * @Route("/{gallery_id}/create", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_slide_create")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
+     * @Template()
      */
     public function createAction($gallery_id)
     {
-        $gallery = $this->getSlideGallery($gallery_id);
-
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
-                         ->getAllGalleries();
+
+        $gallery = $this->getSlideGallery($gallery_id, $em);
 
         $request = $this->getRequest();
         $slide = new Slide();
@@ -95,51 +92,25 @@ class SlideController extends Controller
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
             if ($form->isValid()){
-                    $em = $this->getDoctrine()->getEntityManager();
-                    $em->persist($slide);
-                    $em->flush();
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($slide);
+                $em->flush();
 
-                $slide = new Slide();
-                        $slide->setGallery($gallery);
-                        $form = $this->createForm(new SlideType(), $slide);
-
-                $sub = new \Kunstmaan\MediaBundle\Entity\SlideGallery();
-                                    $sub->setParent($gallery);
-                                    $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
-
-                    //$picturehelp = $this->getPicture($picture->getId());
-                    return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
-                            'form' => $form->createView(),
-                            'subform' => $subform->createView(),
-                                   'gallery' => $gallery,
-                                   'galleries' => $galleries
-                    ));
-                }
+                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
             }
+        }
 
-        return $this->render('KunstmaanMediaBundle:Slide:create.html.twig', array(
+        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
+                        ->getAllGalleries();
+        return array(
             'form' => $form->createView(),
             'gallery' => $gallery,
             'galleries' => $galleries
-        ));
+        );
     }
 
-    protected function getSlide($picture_id){
-        $em = $this->getDoctrine()
-                   ->getEntityManager();
-        $picture = $em->getRepository('KunstmaanMediaBundle:Slide')->find($picture_id);
-
-        if (!$picture) {
-            throw $this->createNotFoundException('Unable to find slides.');
-        }
-
-        return $picture;
-    }
-
-    protected function getSlideGallery($gallery_id)
+    protected function getSlideGallery($gallery_id, \Doctrine\ORM\EntityManager $em)
     {
-        $em = $this->getDoctrine()
-                    ->getEntityManager();
         $imagegallery = $em->getRepository('KunstmaanMediaBundle:SlideGallery')->find($gallery_id);
 
         if (!$imagegallery) {

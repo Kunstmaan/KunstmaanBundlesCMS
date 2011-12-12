@@ -19,37 +19,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class VideoGalleryController extends GalleryController
 {
     /**
-     * @Route("/", name="KunstmaanMediaBundle_videogallery_new")
-     */
-    public function newAction(){
-        $gallery = new VideoGallery();
-        return $this->parentnewAction($gallery);
-    }
-
-    /**
-     * @Route("/sub/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_videogallery_subnew")
-     */
-    public function subnewAction($id){
-        $gallery = new VideoGallery();
-        return $this->parentsubnewAction($gallery,$id);
-    }
-
-    /**
      * @Route("/create", name="KunstmaanMediaBundle_videogallery_create")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
      */
     public function createAction(){
         $gallery = new VideoGallery();
-        return $this->parentcreateAction($gallery, new \Kunstmaan\MediaBundle\Entity\Video(), new \Kunstmaan\MediaBundle\Form\VideoType());
+        return $this->parentcreateAction($gallery);
     }
 
     /**
      * @Route("/sub/create/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_videogallery_subcreate")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
      */
     public function subcreateAction($id){
         $gallery = new VideoGallery();
-        return $this->parentsubcreateAction($gallery,$id, new \Kunstmaan\MediaBundle\Entity\Video(), new \Kunstmaan\MediaBundle\Form\VideoType());
+        return $this->parentsubcreateAction($gallery,$id);
     }
 
 }

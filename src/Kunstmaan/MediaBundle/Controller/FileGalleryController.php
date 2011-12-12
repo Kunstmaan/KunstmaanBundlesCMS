@@ -20,24 +20,8 @@ class FileGalleryController extends GalleryController
 {
 
     /**
-     * @Route("/", name="KunstmaanMediaBundle_filegallery_new")
-     */
-    public function newAction(){
-        $gallery = new FileGallery();
-        return $this->parentnewAction($gallery);
-    }
-
-    /**
-     * @Route("/sub/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filegallery_subnew")
-     */
-    public function subnewAction($id){
-        $gallery = new FileGallery();
-        return $this->parentsubnewAction($gallery,$id);
-    }
-
-    /**
      * @Route("/create", name="KunstmaanMediaBundle_filegallery_create")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
      */
     public function createAction(){
         $gallery = new FileGallery();
@@ -46,7 +30,7 @@ class FileGalleryController extends GalleryController
 
     /**
      * @Route("/sub/create/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filegallery_subcreate")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
      */
     public function subcreateAction($id){
         $gallery = new FileGallery();

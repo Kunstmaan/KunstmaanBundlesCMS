@@ -23,7 +23,7 @@
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
         <div class="actions">
-                    <a href="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show() }}" class="btn primary">open file</a>
+                    <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">open file</a>
                     <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
                 </div>
 <ul>
@@ -33,7 +33,7 @@
     <li>Updated: {{ media.updatedat|date|escape }}</li>
 </ul>
         <div class="actions">
-            <a href="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show() }}" class="btn primary">open file</a>
+            <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">open file</a>
             <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
         </div>
         </div>

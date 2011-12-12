@@ -22,12 +22,14 @@ class AviaryController extends Controller
      */
     public function indexAction($gallery_id, $image_id)
     {
-        $gallery = $this->getImageGallery($gallery_id);
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $gallery = $this->getImageGallery($gallery_id, $em);
 
         $helper = new MediaHelper();
         $helper->getMediaFromUrl($this->getRequest()->get('url'));
 
-        $hulp = $this->getPicture($image_id);
+        $hulp = $this->getMedia($image_id, $em);
         $picture = new Image();
         $picture->setOriginal($hulp);
         $picture->setName($hulp->getName()."-edited");
@@ -35,46 +37,26 @@ class AviaryController extends Controller
 
         $picture->setGallery($gallery);
 
-        $em = $this->getDoctrine()->getEntityManager();
         $em->persist($picture);
         $em->flush();
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
-                        ->getAllGalleries();
-
-        $picturehelper = new MediaHelper();
-        $form = $this->createForm(new \Kunstmaan\MediaBundle\Form\MediaType(), $picturehelper);
-
-        $sub = new \Kunstmaan\MediaBundle\Entity\ImageGallery();
-        $sub->setParent($gallery);
-        $subform = $this->createForm(new \Kunstmaan\MediaBundle\Form\SubGalleryType(), $sub);
-
-        return $this->render('KunstmaanMediaBundle:Gallery:show.html.twig', array(
-            'gallery' => $gallery,
-            'galleries' => $galleries,
-            'form' => $form->createView(),
-            'subform' => $subform->createView()
-        ));
+        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
 
     }
 
-    protected function getPicture($picture_id){
-        $em = $this->getDoctrine()
-                   ->getEntityManager();
-        $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($picture_id);
+    protected function getMedia($media_id, \Doctrine\ORM\EntityManager $em)
+    {
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->find($media_id);
 
-        if (!$picture) {
+        if (!$media) {
             throw $this->createNotFoundException('Unable to find picture.');
         }
 
-        return $picture;
+        return $media;
     }
 
-    protected function getImageGallery($gallery_id)
+    protected function getImageGallery($gallery_id, \Doctrine\ORM\EntityManager $em)
     {
-        $em = $this->getDoctrine()
-                    ->getEntityManager();
         $imagegallery = $em->getRepository('KunstmaanMediaBundle:ImageGallery')->find($gallery_id);
 
         if (!$imagegallery) {
