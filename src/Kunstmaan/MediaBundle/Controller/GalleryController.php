@@ -32,6 +32,9 @@ class GalleryController extends Controller
         $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                                 ->getAllGalleries();
 
+        $adminlist = $this->get("adminlist.factory")->createList(new \Kunstmaan\MediaBundle\Helper\MediaList\FileListConfigurator(), $em);
+        $adminlist->bindRequest($this->getRequest());
+
         if (!$gallery) {
             throw $this->createNotFoundException('Unable to find file gallery.');
         }
@@ -45,7 +48,8 @@ class GalleryController extends Controller
             'form'          => $form->createView(),
             'subform'       => $subform->createView(),
             'gallery'       => $gallery,
-            'galleries'     => $galleries
+            'galleries'     => $galleries,
+            'filelist'      => $adminlist
         );
     }
 
