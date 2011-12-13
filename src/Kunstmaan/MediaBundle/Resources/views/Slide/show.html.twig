@@ -23,7 +23,7 @@
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
          <div class="actions">
-                     <a href="#" class="btn">edit</a>
+                     <a href="{{ path('KunstmaanMediaBundle_slide_edit', { 'media_id': media.id }) }}" class="btn">edit</a>
                      <a href="{{ path('KunstmaanMediaBundle_slide_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
                  </div>
  <ul>
@@ -35,7 +35,7 @@
  </ul>
         {% include 'KunstmaanMediaBundle:Slide:'~ media.type ~'.html.twig' %}
          <div class="actions">
-             <a href="#" class="btn">edit</a>
+             <a href="{{ path('KunstmaanMediaBundle_slide_edit', { 'media_id': media.id }) }}" class="btn">edit</a>
              <a href="{{ path('KunstmaanMediaBundle_slide_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
          </div>
      </div>

@@ -7,10 +7,10 @@
 {% block subbreadcrumb %}
     <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">Slide Galleries</a> <span class="divider">/</span></li>
     <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
-	<li class="active">Edit slide"</li>
+	<li class="active">Edit slide</li>
 {% endblock %}
 
-{% block title %}New Slide{% endblock%}
+{% block title %}Edit Slide{% endblock%}
 
 {% block content %}
     <h1>Edit slide</h1>

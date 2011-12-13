@@ -58,27 +58,6 @@ class VideoController extends Controller
     }
 
     /**
-     * @Route("/{gallery_id}/new", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_video_new")
-     */
-    /*public function newAction($gallery_id)
-    {
-        $gallery = $this->getVideoGallery($gallery_id);
-
-        $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:VideoGallery')
-                        ->getAllGalleries();
-
-        $picturehelper = new Video();
-        $form = $this->createForm(new VideoType(), $picturehelper);
-
-        return $this->render('KunstmaanMediaBundle:Video:create.html.twig', array(
-            'form'   => $form->createView(),
-            'gallery' => $gallery,
-            'galleries' => $galleries
-        ));
-    }*/
-
-    /**
      * @Route("/{gallery_id}/create", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_video_create")
      * @Method({"GET", "POST"})
      * @Template()
@@ -110,6 +89,42 @@ class VideoController extends Controller
         return array(
             'form' => $form->createView(),
             'gallery' => $gallery,
+            'galleries' => $galleries
+        );
+    }
+
+    /**
+     * @Route("/{media_id}/edit", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_video_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function editAction($media_id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $slide = $em->getRepository('KunstmaanMediaBundle:Media')->find($media_id);
+        $slide->setContent($slide->getUuid());
+        $request = $this->getRequest();
+        $form = $this->createForm(new VideoType(), $slide);
+
+        if ('POST' == $request->getMethod()) {
+            $form->bindRequest($request);
+            if ($form->isValid()){
+                $slide->setUuid($slide->getContent());
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($slide);
+                $em->flush();
+
+                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_video_show', array( 'media_id' => $slide->getId() )));
+            }
+        }
+
+        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
+                        ->getAllGalleries();
+        return array(
+            'form' => $form->createView(),
+            'media' => $slide,
+            'gallery' => $slide->getGallery(),
             'galleries' => $galleries
         );
     }
