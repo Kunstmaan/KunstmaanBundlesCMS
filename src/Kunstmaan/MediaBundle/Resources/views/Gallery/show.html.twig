@@ -25,11 +25,12 @@
         {% include 'KunstmaanMediaBundle:Gallery:addmedia-modal.html.twig' %}
         {% include 'KunstmaanMediaBundle:Gallery:addsub-modal.html.twig' %}
         {% include 'KunstmaanMediaBundle:Gallery:delete-modal.html.twig' %}
+        {% include 'KunstmaanMediaBundle:Gallery:edit-modal.html.twig' %}
 
         <div class="actions">
              <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_create', { 'gallery_id' : gallery.id }) }}" data-controls-modal="addmedia-modal" data-backdrop="true" data keyboard="true" class="btn">add {{ gallery.type }}</a>
             <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">add subgallery</a>
-            <a href="{{ path('KunstmaanMediaBundle_gallery_edit', { 'gallery_id' : gallery.id }) }}" class="btn">edit</a>
+            <a href="{{ path('KunstmaanMediaBundle_gallery_edit', { 'gallery_id' : gallery.id }) }}" data-controls-modal="edit-modal" data-backdrop="true" data keyboard="true" class="btn">edit</a>
              <a href="{{ path('KunstmaanMediaBundle_gallery_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete this gallery</a>
         </div>
     </div>
@@ -52,7 +53,7 @@
    <div class="actions">
        <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_create', { 'gallery_id' : gallery.id }) }}" data-controls-modal="addmedia-modal" data-backdrop="true" data keyboard="true" class="btn">add {{ gallery.type }}</a>
        <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">add subgallery</a>
-       <a href="{{ path('KunstmaanMediaBundle_gallery_edit', { 'gallery_id' : gallery.id }) }}" class="btn">edit</a>
+       <a href="{{ path('KunstmaanMediaBundle_gallery_edit', { 'gallery_id' : gallery.id }) }}" data-controls-modal="edit-modal" data-backdrop="true" data keyboard="true" class="btn">edit</a>
        <a href="{{ path('KunstmaanMediaBundle_gallery_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete this gallery</a>
    </div>
 {% endblock %}

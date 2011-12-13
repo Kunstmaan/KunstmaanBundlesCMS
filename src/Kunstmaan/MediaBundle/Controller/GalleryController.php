@@ -44,9 +44,12 @@ class GalleryController extends Controller
         $sub->setParent($gallery);
         $subform = $this->createForm(new SubGalleryType(), $sub);
 
+        $editform = $this->createForm($gallery->getFormType($gallery), $gallery);
+
         return array(
             'form'          => $form->createView(),
             'subform'       => $subform->createView(),
+            'editform'      => $editform->createView(),
             'gallery'       => $gallery,
             'galleries'     => $galleries,
             'filelist'      => $adminlist
@@ -98,7 +101,7 @@ class GalleryController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $gallery = $em->find('Kunstmaan\MediaBundle\Entity\Gallery', $gallery_id);
         $request = $this->getRequest();
-        $form = $this->createForm($gallery->getFormType(), $gallery);
+        $form = $this->createForm($gallery->getFormType($gallery->getId()), $gallery);
 
             if ('POST' == $request->getMethod()) {
                 $form->bindRequest($request);
