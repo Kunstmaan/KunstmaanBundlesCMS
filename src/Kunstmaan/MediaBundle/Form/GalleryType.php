@@ -14,7 +14,7 @@ class GalleryType extends AbstractType
     protected $entityname;
     public $gallery;
 
-    public function __construct($name, $gallery)
+    public function __construct($name, $gallery = null)
     {
         $this->entityname = $name;
         $this->gallery = $gallery;
@@ -28,19 +28,13 @@ class GalleryType extends AbstractType
             ->add('name')
             ->add('parent', 'entity', array( 'class' => $this->getEntityName(), 'required' => false,
                               'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use($gallery, $type) {
-                                  $ids = "gallery.id != ". $gallery->getId();
-                                  $ids .= $type->addChildren($gallery);
-
-
                                   $qb = $er->createQueryBuilder('gallery');
-                                    $qb->where($ids);
-                                    //$qb->setParameter('id', $gallery->getId());
-                                    $int = 1;
-                                    /*foreach($gallery->getChildren() as $child){
-                                        $qb->where('gallery.id != :childid'.$int);
-                                        $qb->setParameter('childid'.$int, $child->getId());
-                                        $int++;
-                                    }*/
+
+                                  if($gallery != null){
+                                      $ids = "gallery.id != ". $gallery->getId();
+                                      $ids .= $type->addChildren($gallery);
+                                      $qb->where($ids);
+                                    }
                                     return $qb;
                               }
         ));

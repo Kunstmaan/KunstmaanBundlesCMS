@@ -171,7 +171,7 @@ abstract class Gallery{
      *
      * @param Kunstmaan\MediaBundle\Entity\Gallery $parent
      */
-    public function setParent(Gallery $parent)
+    public function setParent($parent)
     {
         $this->parent = $parent;
     }

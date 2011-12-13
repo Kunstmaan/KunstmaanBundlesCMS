@@ -101,7 +101,7 @@ class GalleryController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $gallery = $em->find('Kunstmaan\MediaBundle\Entity\Gallery', $gallery_id);
         $request = $this->getRequest();
-        $form = $this->createForm($gallery->getFormType($gallery->getId()), $gallery);
+        $form = $this->createForm($gallery->getFormType($gallery), $gallery);
 
             if ('POST' == $request->getMethod()) {
                 $form->bindRequest($request);
