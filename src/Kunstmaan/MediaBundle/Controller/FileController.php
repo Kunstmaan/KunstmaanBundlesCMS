@@ -104,6 +104,50 @@ class FileController extends Controller
         );
     }
 
+    /**
+     * @Route("/{media_id}/edit", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_file_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function editAction($media_id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $file = $em->getRepository('KunstmaanMediaBundle:Media')->find($media_id);
+
+        $request = $this->getRequest();
+        $picturehelper = new MediaHelper();
+        $form = $this->createForm(new MediaType(), $picturehelper);
+
+        $gallery = $file->getGallery();
+
+        if ('POST' == $request->getMethod()) {
+            $form->bindRequest($request);
+            if ($form->isValid()){
+                if ($picturehelper->getMedia()!=null) {
+                    $file->setName($picturehelper->getMedia()->getClientOriginalName());
+                    $file->setContent($picturehelper->getMedia());
+                    $file->setGallery($gallery);
+
+                    $em->persist($file);
+                    $em->flush();
+
+                    return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+                }
+            }
+        }
+
+        $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
+                        ->getAllGalleries();
+
+        return array(
+            'media' => $file,
+            'form' => $form->createView(),
+            'gallery' => $gallery,
+            'galleries' => $galleries
+        );
+    }
+
     protected function getFileGallery($gallery_id, \Doctrine\ORM\EntityManager $em)
     {
         $imagegallery = $em->getRepository('KunstmaanMediaBundle:FileGallery')->find($gallery_id);

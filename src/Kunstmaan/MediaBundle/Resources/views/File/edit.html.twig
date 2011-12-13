@@ -7,12 +7,12 @@
 {% block subbreadcrumb %}
     <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">File Galleries</a> <span class="divider">/</span></li>
     <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
-	<li class="active">Add new file to "{{ gallery.name }}"</li>
+	<li class="active">Edit file</li>
 {% endblock %}
 
-{% block title %}New file{% endblock%}
+{% block title %}edit file{% endblock%}
 
 {% block content %}
-    <h1>Add new file <small>to "{{ gallery.name }}"</small></h1>
-    {% include 'KunstmaanMediaBundle:File:form.html.twig' with { 'form': form } %}
+    <h1>edit file</small></h1>
+    {% include 'KunstmaanMediaBundle:File:editform.html.twig' with { 'form': form } %}
 {% endblock %}

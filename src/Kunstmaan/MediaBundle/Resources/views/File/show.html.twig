@@ -29,8 +29,7 @@
 <ul>
     <li>Name: {{ media.name }} </li>
     <li>Content-type: {{ media.contentType }}</li>
-    <li>Added; {{ media.createdat|date|escape }}</li>
-    <li>Updated: {{ media.updatedat|date|escape }}</li>
+    <li>Added: {{ media.createdat|date|escape }}</li>
 </ul>
         <div class="actions">
             <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">open file</a>

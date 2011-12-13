@@ -1,0 +1,16 @@
+<form action="{{ path('KunstmaanMediaBundle_file_edit', { 'media_id' : media.id } ) }}" method="post" {{ form_enctype(form) }}>
+    <fieldset>
+        <div class="clearfix">
+            {{ form_errors(form) }}
+            <label for="xlInput3">File</label>
+            <div class="input">
+                {{ form_widget(form.media) }}
+            </div>
+            {{ form_rest(form) }}
+        </div>
+        <div class="actions">
+            <input class="btn primary type" type="submit" value="edit file">
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="cancel" />
+        </div>
+    </fieldset>
+</form>

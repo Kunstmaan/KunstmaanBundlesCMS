@@ -6,6 +6,7 @@
                 <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">
                     <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
                 </a>
+                <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
              </li>
         {% else %}
             <ul><li>No images in this gallery yet.</li></ul>
