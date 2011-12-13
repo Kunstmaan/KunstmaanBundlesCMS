@@ -1,5 +1,5 @@
-
-<ul>
+{#
+    <ul>
         <li class="header">{{ gallery.type }} Galleries</li>
         {% for gallery in galleries %}
             <li>
@@ -14,5 +14,15 @@
         {% else %}
             <li>No {{ gallery.type }} galleries</li>
         {% endfor %}
+
+    </ul>
+#}  <ul>
         <li class="header"><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_create') }}">create new {{ gallery.type }} gallery</a></li>
     </ul>
+    <div id="tree">
+    	<ul>
+            {% for child in galleries %}
+                {% include 'KunstmaanMediaBundle:Gallery:shownode.html.twig' %}
+            {% endfor %}
+        </ul>
+    </div>

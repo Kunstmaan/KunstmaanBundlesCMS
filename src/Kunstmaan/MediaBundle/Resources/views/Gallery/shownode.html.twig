@@ -1,0 +1,7 @@
+
+                           <li> <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': child.id, 'slug': child.slug }) }}">{{child.name }}</a>
+                            <ul>
+                                {% for child in child.children %}
+                                    {% include 'KunstmaanMediaBundle:Gallery:shownode.html.twig' %}
+                                {% endfor %}
+                            </ul></li>
