@@ -24,7 +24,7 @@
 
         <div class="actions">
                     <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">open file</a>
-                    <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
                 </div>
 <ul>
     <li>Name: {{ media.name }} </li>
@@ -33,7 +33,7 @@
 </ul>
         <div class="actions">
             <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">open file</a>
-            <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
         </div>
         </div>
 {% endblock %}

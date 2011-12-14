@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * controllerclass which Aviary can use to upload the edited image and add it to the database
+ */
 class AviaryController extends Controller
 {
 
@@ -24,12 +27,12 @@ class AviaryController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $gallery = $this->getImageGallery($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:ImageGallery')->getImageGallery($gallery_id, $em);
 
         $helper = new MediaHelper();
         $helper->getMediaFromUrl($this->getRequest()->get('url'));
 
-        $hulp = $this->getMedia($image_id, $em);
+        $hulp = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($image_id, $em);
         $picture = new Image();
         $picture->setOriginal($hulp);
         $picture->setName($hulp->getName()."-edited");
@@ -43,27 +46,4 @@ class AviaryController extends Controller
         return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
 
     }
-
-    protected function getMedia($media_id, \Doctrine\ORM\EntityManager $em)
-    {
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->find($media_id);
-
-        if (!$media) {
-            throw $this->createNotFoundException('Unable to find picture.');
-        }
-
-        return $media;
-    }
-
-    protected function getImageGallery($gallery_id, \Doctrine\ORM\EntityManager $em)
-    {
-        $imagegallery = $em->getRepository('KunstmaanMediaBundle:ImageGallery')->find($gallery_id);
-
-        if (!$imagegallery) {
-            throw $this->createNotFoundException('Unable to find image gallery.');
-        }
-
-        return $imagegallery;
-    }
-
 }

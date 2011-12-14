@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\MediaRepository")
  * @ORM\Table(name="media")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")

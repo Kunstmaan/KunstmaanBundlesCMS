@@ -43,7 +43,7 @@ class Image extends Media
      * @var string $context
      *
      */
-    protected $context = "omnext_picture";
+    protected $context = "kunstmaan_media_image";
 
     /**
      * @var string $name

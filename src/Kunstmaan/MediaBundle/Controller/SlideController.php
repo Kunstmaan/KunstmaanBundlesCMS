@@ -19,40 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class SlideController extends Controller
 {
     /**
-     * @Route("/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_slide_show")
-     * @Template()
-     */
-    public function showAction($media_id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $media = $em->find('\Kunstmaan\MediaBundle\Entity\Slide', $media_id);
-        $gallery = $media->getGallery();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
-                                ->getAllGalleries();
-
-        return array(
-                    'media' => $media,
-                    'gallery' => $gallery,
-                    'galleries' => $galleries
-                );
-    }
-
-    /**
-     * @Route("/delete/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_slide_delete")
-     */
-    public function deleteAction($media_id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $media = $em->find('\Kunstmaan\MediaBundle\Entity\Media', $media_id);
-        $gallery = $media->getGallery();
-
-        $em->remove($media);
-        $em->flush();
-
-        return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-    }
-
-    /**
      * @Route("/{gallery_id}/create", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_slide_create")
      * @Method({"GET", "POST"})
      * @Template()
@@ -61,7 +27,7 @@ class SlideController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $gallery = $this->getSlideGallery($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Gallery')->getGallery($gallery_id, $em);
 
         $request = $this->getRequest();
         $slide = new Slide();
@@ -71,9 +37,7 @@ class SlideController extends Controller
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
             if ($form->isValid()){
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($slide);
-                $em->flush();
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
             }
@@ -97,7 +61,7 @@ class SlideController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $slide = $em->getRepository('KunstmaanMediaBundle:Media')->find($media_id);
+        $slide = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
         $slide->setContent($slide->getUuid());
         $request = $this->getRequest();
         $form = $this->createForm(new SlideType(), $slide);
@@ -106,11 +70,9 @@ class SlideController extends Controller
             $form->bindRequest($request);
             if ($form->isValid()){
                 $slide->setUuid($slide->getContent());
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($slide);
-                $em->flush();
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
 
-                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_slide_show', array( 'media_id' => $slide->getId() )));
+                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $slide->getId() )));
             }
         }
 
@@ -123,18 +85,4 @@ class SlideController extends Controller
             'galleries' => $galleries
         );
     }
-
-    protected function getSlideGallery($gallery_id, \Doctrine\ORM\EntityManager $em)
-    {
-        $imagegallery = $em->getRepository('KunstmaanMediaBundle:SlideGallery')->find($gallery_id);
-
-        if (!$imagegallery) {
-            throw $this->createNotFoundException('Unable to find slide gallery.');
-        }
-
-        return $imagegallery;
-    }
-
-
-
 }

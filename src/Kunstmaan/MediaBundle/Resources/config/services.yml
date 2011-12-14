@@ -1,7 +1,0 @@
-parameters:
-#    kunstmaan_media.example.class: Kunstmaan\MediaBundle\Example
-
-services:
-#    kunstmaan_media.example:
-#        class: %kunstmaan_media.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
