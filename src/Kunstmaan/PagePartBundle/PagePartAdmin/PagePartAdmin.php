@@ -85,7 +85,6 @@ class PagePartAdmin {
     }
 
     public function getPagePartRefs(){
-        error_log($this->context);
         $queryBuilder = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->createQueryBuilder('b');
         //set page and pageentityname
         $query = $queryBuilder
