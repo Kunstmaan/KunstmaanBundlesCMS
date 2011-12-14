@@ -36,6 +36,10 @@ class ImageGalleryStrategy implements GalleryStrategyInterface{
     {
         return new MediaHelper();
     }
+
+    function getListConfigurator(){
+        return null;
+    }
 }
 
 ?>

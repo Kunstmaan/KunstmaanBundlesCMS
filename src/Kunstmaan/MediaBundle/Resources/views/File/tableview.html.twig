@@ -1,6 +1,6 @@
-{# adminlist_widget(filelist, "KunstmaanMediaBundle_media_images") #}
+{{ adminlist_widget(itemlist, "KunstmaanMediaBundle_gallery_show", { 'id': gallery.id, 'slug': gallery.slug }) }}
 
-
+<!--
 <table class="bordered-table zebra-striped">
             <thead>
               <tr>
@@ -12,18 +12,18 @@
             </thead>
 
             <tbody>
-            {% for media in gallery.files %}
-                {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+            {# for media in gallery.files %}
+                {# include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
                 <tr>
                     <td>
-                        <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('images/general/delete.png') }}" alt="delete" /></a>
+                        <a href="{# path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('images/general/delete.png') }}" alt="delete" /></a>
                     </td>
-                    <td><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">{{ media.name }}</a></td>
-                    <td>{{ media.contenttype }}</td>
-                    <td>{{ media.createdat|date|escape }}</td>
+                    <td><a href="{# path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">{{ media.name }}</a></td>
+                    <td>{# media.contenttype }}</td>
+                    <td>{# media.createdat|date|escape }}</td>
                 </tr>
-            {% else %}
+            {# else #}
                 <tr>
                     <td></td>
                     <td>No files yet.</td>
@@ -31,6 +31,7 @@
                     <td></td>
                     <td></td>
                 </tr>
-            {% endfor %}
+            {# endfor #}
             </tbody>
 </table>
+-->

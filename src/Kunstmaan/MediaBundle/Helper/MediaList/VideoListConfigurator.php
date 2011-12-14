@@ -14,7 +14,7 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 
-class SlideListConfigurator extends AbstractAdminListConfigurator{
+class VideoListConfigurator extends AbstractAdminListConfigurator{
 
     public function buildFilters(AdminListFilter $builder){
         $builder->add('name', new StringFilterType("name"));
@@ -43,7 +43,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator{
     }
 
     public function getEditUrlFor($item) {
-        return "/app_dev.php/admin/media/slide/".$item->getId();
+        return "/app_dev.php/admin/media/video/".$item->getId();
     }
 
     public function canDelete($item) {
@@ -51,7 +51,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator{
     }
 
     public function getRepositoryName(){
-        return 'KunstmaanMediaBundle:Slide';
+        return 'KunstmaanMediaBundle:Video';
     }
 
     function adaptQueryBuilder($querybuilder){

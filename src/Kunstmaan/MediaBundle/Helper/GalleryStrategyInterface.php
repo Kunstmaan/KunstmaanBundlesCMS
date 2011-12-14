@@ -17,4 +17,6 @@ interface GalleryStrategyInterface
 
     function getFormHelper();
 
+    function getListConfigurator();
+
 }

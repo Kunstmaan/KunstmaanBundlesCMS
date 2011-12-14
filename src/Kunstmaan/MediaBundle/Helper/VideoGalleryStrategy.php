@@ -36,6 +36,10 @@ class VideoGalleryStrategy implements GalleryStrategyInterface{
     {
         return new \Kunstmaan\MediaBundle\Entity\Video();
     }
+
+    function getListConfigurator(){
+        return new \Kunstmaan\MediaBundle\Helper\MediaList\VideoListConfigurator();
+    }
 }
 
 ?>

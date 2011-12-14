@@ -18,13 +18,15 @@ class FileListConfigurator extends AbstractAdminListConfigurator{
 
     public function buildFilters(AdminListFilter $builder){
         $builder->add('name', new StringFilterType("name"));
-        $builder->add('contentType', new BooleanFilterType("contentType"));
+        $builder->add('contentType', new StringFilterType("contentType"));
     }
 
     public function getSortFields() {
         $array = array();
         $array[] = "name";
         $array[] = "contentType";
+        $array[] = "createdAt";
+        $array[] = "updatedAt";
         return $array;
     }
 
@@ -41,7 +43,7 @@ class FileListConfigurator extends AbstractAdminListConfigurator{
     }
 
     public function getEditUrlFor($item) {
-        return "";
+        return "/app_dev.php/admin/media/file/".$item->getId();
     }
 
     public function canDelete($item) {
