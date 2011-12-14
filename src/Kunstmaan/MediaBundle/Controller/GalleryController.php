@@ -32,6 +32,7 @@ class GalleryController extends Controller
         $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
                                 ->getAllGalleries();
 
+        $itemlist = "";
         $listconfigurator = $gallery->getStrategy()->getListConfigurator();
         if(isset($listconfigurator) && $listconfigurator != null){
             $itemlist = $this->get("adminlist.factory")->createList($listconfigurator, $em);
