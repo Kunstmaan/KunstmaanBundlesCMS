@@ -26,7 +26,7 @@
         </thead>
         <tbody>
         {% for item in adminlist.items%}
-            {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+            {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
             <tr>
                 <td>
                     {%if adminlist.canEdit(item) %}
