@@ -17,7 +17,7 @@ kunstmaan_media:
             default: true
             id: kunstmaan_media.cdn.remote_server
             options:
-                base_url: %cdnpath% # instellen in parameters.ini?
+                base_url: %cdnpath% # instellen in parameters.ini
 
     provider:
         image:  # So we need the image provider here
@@ -39,16 +39,16 @@ kunstmaan_media:
                     create: true  #creates the directory if it doesn't exist yet
 
     contexts:
-        omnext_picture:
+        kunstmaan_media_image:
             provider: image
             formats:
                 small: { width: 90, height: 90 }
                 medium: { width: 210, height: 150 }
                 large: { width: 330, height: 230 }
 
-        omnext_file:
+        kunstmaan_media_file:
             provider: file
 
-        omnext_code:
+        kunstmaan_media_code:
             provider: code
 

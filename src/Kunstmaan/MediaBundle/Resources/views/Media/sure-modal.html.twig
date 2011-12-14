@@ -5,7 +5,7 @@
     </div>
 
     <div class="modal-footer">
-        <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_delete', { 'media_id': media.id }) }}" class="btn danger">Delete</a>
+        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" class="btn danger">Delete</a>
         <a onclick="javascript:$('#sure-modal-{{ media.id }}').modal('hide')" href="#" class="btn secondary">Cancel</a>
     </div>
 </div>

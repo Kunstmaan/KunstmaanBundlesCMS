@@ -22,11 +22,11 @@
 
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
-        <form action="{{ path('KunstmaanMediaBundle_image_show',  { 'media_id' : media.id }) }}" method="post" {{ form_enctype(form) }}>
+        <form action="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}" method="post" enctype="multipart/form-data">
                <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
                     <input name="picture" type="hidden" value="" />
                     <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
-                        <a href="{{ path('KunstmaanMediaBundle_image_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
+                        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
                         <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
                     </div>
                 </form>
@@ -79,11 +79,11 @@
 
 
 
-        <form action="{{ path('KunstmaanMediaBundle_image_show',  { 'media_id' : media.id }) }}" method="post" {{ form_enctype(form) }}>
+        <form action="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}" method="post" enctype="multipart/form-data">
        <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
             <input name="picture" type="hidden" value="" />
             <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
-                <a href="{{ path('KunstmaanMediaBundle_image_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
+                <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
                 <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
             </div>
         </form>
@@ -92,7 +92,7 @@
                 <ul class="media-grid">
                 {% for image in media.edits %}
                     <li>
-                        <a href="{{ path('KunstmaanMediaBundle_image_show',  { 'media_id' : image.id }) }}">
+                        <a href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : image.id }) }}">
                             <img class="thumbnail" src="{{ asset(upload_dir~image.show('medium')) }}" alt="{{ image.name }}" />
                         </a>
                      </li>

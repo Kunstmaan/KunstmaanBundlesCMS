@@ -32,7 +32,7 @@ class Slide extends Media
      * @var string $context
      *
      */
-    protected $context = "omnext_code";
+    protected $context = "kunstmaan_media_code";
 
     /**
      * @var string $name

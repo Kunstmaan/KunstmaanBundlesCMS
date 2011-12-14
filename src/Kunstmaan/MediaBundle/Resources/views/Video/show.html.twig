@@ -23,7 +23,7 @@
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
         <div class="actions">
                      <a href="{{ path('KunstmaanMediaBundle_video_edit', { 'media_id': media.id }) }}" class="btn">edit</a>
-                     <a href="{{ path('KunstmaanMediaBundle_video_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+                     <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
                  </div>
  <ul>
      <li>Name: {{ media.name }} </li>
@@ -35,7 +35,7 @@
         {% include 'KunstmaanMediaBundle:Video:'~ media.type ~'.html.twig' %}
          <div class="actions">
              <a href="{{ path('KunstmaanMediaBundle_video_edit', { 'media_id': media.id }) }}" class="btn">edit</a>
-             <a href="{{ path('KunstmaanMediaBundle_video_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+             <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
          </div>
      </div>
 {% endblock %}

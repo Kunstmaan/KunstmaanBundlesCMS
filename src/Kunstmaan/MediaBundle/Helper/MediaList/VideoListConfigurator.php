@@ -43,7 +43,7 @@ class VideoListConfigurator extends AbstractAdminListConfigurator{
     }
 
     public function getEditUrlFor($item) {
-        return "/app_dev.php/admin/media/video/".$item->getId();
+        return "/app_dev.php/admin/media/".$item->getId();
     }
 
     public function canDelete($item) {

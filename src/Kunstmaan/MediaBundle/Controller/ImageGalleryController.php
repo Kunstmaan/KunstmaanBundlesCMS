@@ -38,15 +38,16 @@ class ImageGalleryController extends GalleryController
 
     /**
      * @Route("/ckeditor", name="KunstmaanMediaBundle_imagegallery_ckeditor")
+     * @Template()
      */
     public function ckeditorAction(){
         $em = $this->getDoctrine()->getEntityManager();
         $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
                         ->getAllGalleries();
 
-        return $this->render('KunstmaanMediaBundle:ImageGallery:ckeditor.html.twig', array(
+        return array(
             'galleries'     => $galleries
-        ));
+        );
     }
 
 }
