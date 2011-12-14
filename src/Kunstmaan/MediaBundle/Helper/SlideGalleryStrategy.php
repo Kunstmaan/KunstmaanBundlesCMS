@@ -26,6 +26,20 @@ class SlideGalleryStrategy implements GalleryStrategyInterface{
     {
         return 'Kunstmaan\MediaBundle\Entity\SlideGallery';
     }
+
+    function getFormType()
+    {
+       return new \Kunstmaan\MediaBundle\Form\SlideType();
+    }
+
+    function getFormHelper()
+    {
+        return new \Kunstmaan\MediaBundle\Entity\Slide();
+    }
+
+    function getListConfigurator(){
+        return new \Kunstmaan\MediaBundle\Helper\MediaList\SlideListConfigurator();
+    }
 }
 
 ?>

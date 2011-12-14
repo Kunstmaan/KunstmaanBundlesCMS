@@ -7,9 +7,9 @@
 {% block subbreadcrumb %}
     <li><a href="{{ path('KunstmaanMediaBundle_media_videos') }}">Videos</a> <span class="divider">/</span></li>
         {% for parent in gallery.parents %}
-            <li><a href="{{ path('KunstmaanMediaBundle_videogallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
+            <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
         {% endfor %}
-    <li><a href="{{ path('KunstmaanMediaBundle_videogallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
     <li class="active">{{ media.name }}</li>
 {% endblock %}
 
@@ -22,7 +22,7 @@
 
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
         <div class="actions">
-                     <a href="#" class="btn">edit</a>
+                     <a href="{{ path('KunstmaanMediaBundle_video_edit', { 'media_id': media.id }) }}" class="btn">edit</a>
                      <a href="{{ path('KunstmaanMediaBundle_video_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
                  </div>
  <ul>
@@ -34,7 +34,7 @@
  </ul>
         {% include 'KunstmaanMediaBundle:Video:'~ media.type ~'.html.twig' %}
          <div class="actions">
-             <a href="#" class="btn">edit</a>
+             <a href="{{ path('KunstmaanMediaBundle_video_edit', { 'media_id': media.id }) }}" class="btn">edit</a>
              <a href="{{ path('KunstmaanMediaBundle_video_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
          </div>
      </div>

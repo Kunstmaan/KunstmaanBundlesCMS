@@ -26,6 +26,20 @@ class FileGalleryStrategy implements GalleryStrategyInterface{
     {
         return 'Kunstmaan\MediaBundle\Entity\FileGallery';
     }
+
+    function getFormType()
+    {
+        return new \Kunstmaan\MediaBundle\Form\MediaType();
+    }
+
+    function getFormHelper()
+    {
+        return new MediaHelper();
+    }
+
+    function getListConfigurator(){
+        return new \Kunstmaan\MediaBundle\Helper\MediaList\FileListConfigurator();
+    }
 }
 
 ?>

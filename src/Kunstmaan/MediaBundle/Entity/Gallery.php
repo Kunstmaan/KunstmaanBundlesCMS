@@ -171,7 +171,7 @@ abstract class Gallery{
      *
      * @param Kunstmaan\MediaBundle\Entity\Gallery $parent
      */
-    public function setParent(Gallery $parent)
+    public function setParent($parent)
     {
         $this->parent = $parent;
     }
@@ -273,9 +273,9 @@ abstract class Gallery{
 
     abstract function getStrategy();
 
-    public function getFormType()
+    public function getFormType($gallery = null)
     {
-        return new \Kunstmaan\MediaBundle\Form\GalleryType($this->getStrategy()->getGalleryClassName());
+        return new \Kunstmaan\MediaBundle\Form\GalleryType($this->getStrategy()->getGalleryClassName(), $gallery);
     }
 
     public function getType()

@@ -1,5 +1,5 @@
 <div>
-   <h3>Subgallery: <a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name }}</a></h3>
+   <h3>Subgallery: <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name }}</a></h3>
 
    <ul>
         {% for image in child.files %}

@@ -7,9 +7,9 @@
 {% block subbreadcrumb %}
     <li><a href="{{ path('KunstmaanMediaBundle_media_images') }}">Images</a> <span class="divider">/</span></li>
         {% for parent in gallery.parents %}
-            <li><a href="{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
+            <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
         {% endfor %}
-        <li><a href="{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
+        <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a><span class="divider">/</span></li>
         <li class="active">{{ media.name }}</li>
 {% endblock %}
 
@@ -25,9 +25,9 @@
         <form action="{{ path('KunstmaanMediaBundle_image_show',  { 'media_id' : media.id }) }}" method="post" {{ form_enctype(form) }}>
                <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
                     <input name="picture" type="hidden" value="" />
-                    <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ url('KunstmaanMediaBundle_uploads') }}{{ media.show() }}');" />
-                        <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
-                        <input onclick="window.location = '{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
+                    <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
+                        <a href="{{ path('KunstmaanMediaBundle_image_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
+                        <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
                     </div>
                 </form>
 
@@ -38,10 +38,10 @@
     <li>Updated: {{ media.updatedat|date|escape }}</li>
 </ul>
 
-        <p>Original: <br/><img id="editimage" class="thumbnail" src="{{ '/uploads/media/' }}{{ media.show() }}" alt="{{ media.name }}" /></p>
-        <p>Large: <br/><img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('large') }}" alt="{{ media.name }}" /></p>
-        <p>Medium: <br/><img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('medium') }}" alt="{{ media.name }}" /></p>
-        <p>Small: <br/><img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ media.show('small') }}" alt="{{ media.name }}" /></p>
+        <p>Original: <br/><img id="editimage" class="thumbnail" src="{{ asset(upload_dir~media.show()) }}" alt="{{ media.name }}" /></p>
+        <p>Large: <br/><img class="thumbnail" src="{{ asset(upload_dir~media.show('large')) }}" alt="{{ media.name }}" /></p>
+        <p>Medium: <br/><img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" /></p>
+        <p>Small: <br/><img class="thumbnail" src="{{ asset(upload_dir~media.show('small')) }}" alt="{{ media.name }}" /></p>
 
         <!-- Load Feather code -->
         <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
@@ -82,9 +82,9 @@
         <form action="{{ path('KunstmaanMediaBundle_image_show',  { 'media_id' : media.id }) }}" method="post" {{ form_enctype(form) }}>
        <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
             <input name="picture" type="hidden" value="" />
-            <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ url('KunstmaanMediaBundle_uploads') }}{{ media.show() }}');" />
-                <a href="{{ path('KunstmaanMediaBundle_file_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
-                <input onclick="window.location = '{{ path('KunstmaanMediaBundle_imagegallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
+            <div class="actions"><input type="image" class="btn primary type" value="Edit image" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
+                <a href="{{ path('KunstmaanMediaBundle_image_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete image</a>
+                <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="cancel" />
             </div>
         </form>
 
@@ -93,7 +93,7 @@
                 {% for image in media.edits %}
                     <li>
                         <a href="{{ path('KunstmaanMediaBundle_image_show',  { 'media_id' : image.id }) }}">
-                            <img class="thumbnail" src="{{ path('KunstmaanMediaBundle_uploads') }}{{ image.show('medium') }}" alt="{{ image.name }}" />
+                            <img class="thumbnail" src="{{ asset(upload_dir~image.show('medium')) }}" alt="{{ image.name }}" />
                         </a>
                      </li>
                 {% else %}

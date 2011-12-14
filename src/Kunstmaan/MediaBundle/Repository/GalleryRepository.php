@@ -15,10 +15,9 @@ class GalleryRepository extends EntityRepository
 
     public function getAllGalleries($limit = null)
     {
-            $qb = $this->createQueryBuilder('imagegallery')
-                       ->select('imagegallery')
-                       ->where('imagegallery.parent is null');
-
+            $qb = $this->createQueryBuilder('gallery')
+                       ->select('gallery')
+                       ->where('gallery.parent is null');
             if (false === is_null($limit))
                 $qb->setMaxResults($limit);
 

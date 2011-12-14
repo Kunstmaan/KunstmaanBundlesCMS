@@ -1,5 +1,10 @@
 parameters:
     kunstmaan_media.provider.speakerdeck.class: Kunstmaan\MediaBundle\Helper\Provider\SpeakerdeckProvider
+    kunstmaan_media.upload_dir: /uploads/media/
+
+twig:
+    globals:
+        upload_dir: "%kunstmaan_media.upload_dir%"
 
 #services:
 #    kunstmaan.provider.speakerdeck:
@@ -30,7 +35,7 @@ kunstmaan_media:
                 default: true
                 id: kunstmaan_media.filesystem.local
                 options:
-                    base_path: %kernel.root_dir%/../web/uploads/media
+                    base_path: %kernel.root_dir%/../web%kunstmaan_media.upload_dir%
                     create: true  #creates the directory if it doesn't exist yet
 
     contexts:

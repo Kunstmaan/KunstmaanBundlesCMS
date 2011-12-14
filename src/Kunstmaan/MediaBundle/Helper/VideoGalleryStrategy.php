@@ -26,6 +26,20 @@ class VideoGalleryStrategy implements GalleryStrategyInterface{
     {
         return 'Kunstmaan\MediaBundle\Entity\VideoGallery';
     }
+
+    function getFormType()
+    {
+        return new \Kunstmaan\MediaBundle\Form\VideoType();
+    }
+
+    function getFormHelper()
+    {
+        return new \Kunstmaan\MediaBundle\Entity\Video();
+    }
+
+    function getListConfigurator(){
+        return new \Kunstmaan\MediaBundle\Helper\MediaList\VideoListConfigurator();
+    }
 }
 
 ?>
