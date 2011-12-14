@@ -1,5 +1,5 @@
 {% if filter.filterdefinitions|length > 0 %}
-    <form action="{{ path(basepath) }}">
+    <form action="{{ path(basepath, extraparams) }}">
         <div id="filtermap">
             <div class="filterline" id="addline" {% if filter.currentfilters|length >0 %} style="display:none" {% endif %}>
                 <select class="filterselect" id="addfilter" onchange="createFilter(this, true)">

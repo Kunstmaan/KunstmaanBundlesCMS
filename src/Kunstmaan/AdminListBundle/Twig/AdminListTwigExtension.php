@@ -52,15 +52,17 @@ class AdminListTwigExtension extends \Twig_Extension {
      *
      * @return string The html markup
      */
-    public function renderWidget( $view, $basepath, array $parameters = array())
+    public function renderWidget( $view, $basepath, array $urlparams = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
-        return $template->render(array_merge($parameters, array(
+        return $template->render(array(
             'pagination' => $view->getPaginationBean(),
             'filter' =>$view->getAdminListFilter(),
             'basepath' => $basepath,
+
+            'extraparams' => $urlparams,
             'adminlist' => $view
-        )));
+        ));
     }
 
     public function getName()

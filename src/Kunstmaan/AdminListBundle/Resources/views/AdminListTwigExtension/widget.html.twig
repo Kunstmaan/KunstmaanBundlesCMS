@@ -1,5 +1,5 @@
 
-    {% set extraparams = filter.currentparameters %}
+    {% set extraparams = extraparams|merge(filter.currentparameters) %}
 
     {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
 
@@ -26,13 +26,14 @@
         </thead>
         <tbody>
         {% for item in adminlist.items%}
+            {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
             <tr>
                 <td>
                     {%if adminlist.canEdit(item) %}
                         <a href="{{ adminlist.getEditUrlFor(item) }}"><img src="{{ asset('images/general/edit.png') }}" alt="Edit"/></a>
                     {% endif %}
                     {%if adminlist.canDelete(item) %}
-                        <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}"><img src="{{ asset('images/general/delete.png') }}" alt="Delete"/></a>
+                        <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}" data-controls-modal="sure-modal-{{ item.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('images/general/delete.png') }}" alt="Delete"/></a>
                     {% endif %}
                 </td>
                 {% for columnName in adminlist.columns%}
