@@ -17,7 +17,8 @@
 
     </ul>
 #}  <ul>
-        <li class="header"><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_create') }}">create new {{ gallery.type }} gallery</a></li>
+		{% set newmediagallery = "media."~gallery.type~".gallery.new" %}
+        <li class="header"><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_create') }}">{{ newmediagallery |trans }}</a></li>
     </ul>
     <div id="tree">
     	<ul>

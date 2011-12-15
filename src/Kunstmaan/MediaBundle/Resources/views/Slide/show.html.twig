@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">Slides</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">{{ 'media.menu.slides'|trans }}</a> <span class="divider">/</span></li>
         {% for parent in gallery.parents %}
             <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
         {% endfor %}
@@ -15,7 +15,7 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>Slide <small>{{ media.name }}
+        <h1>{{ 'media.slide.slide'|trans }} <small>{{ media.name }}
         </small></h1>
     </div>
     <div>
@@ -23,8 +23,8 @@
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
          <div class="actions">
-                     <a href="{{ path('KunstmaanMediaBundle_slide_edit', { 'media_id': media.id }) }}" class="btn">edit</a>
-                     <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+                     <a href="{{ path('KunstmaanMediaBundle_slide_edit', { 'media_id': media.id }) }}" class="btn">{{ 'form.edit' |trans }}</a>
+                     <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete' |trans }}</a>
                  </div>
  <ul>
      <li>Name: {{ media.name }} </li>
@@ -35,8 +35,8 @@
  </ul>
         {% include 'KunstmaanMediaBundle:Slide:'~ media.type ~'.html.twig' %}
          <div class="actions">
-             <a href="{{ path('KunstmaanMediaBundle_slide_edit', { 'media_id': media.id }) }}" class="btn">edit</a>
-             <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+             <a href="{{ path('KunstmaanMediaBundle_slide_edit', { 'media_id': media.id }) }}" class="btn">{{ 'form.edit' |trans }}</a>
+             <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete' |trans }}</a>
          </div>
      </div>
 {% endblock %}

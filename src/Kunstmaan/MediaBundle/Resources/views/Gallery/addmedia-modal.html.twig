@@ -2,7 +2,8 @@
     <form action="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_create', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
         <div class="modal-header">
             <a href="#" class="close">&times;</a>
-            <h3>Which {{ gallery.type }} do you want to add?</h3>
+            {% set media = 'media.'~ gallery.type ~'.add' %}
+            <h3>{{ media | trans }}</h3>
         </div>
         <div class="modal-body">
             <p>
@@ -12,8 +13,8 @@
             </p>
         </div>
         <div class="modal-footer">
-            <input class="btn primary type" type="submit" value="add new {{ gallery.type }}">
-            <a onclick="$('#addmedia-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
+            <input class="btn primary type" type="submit" value="{{ media | trans }}">
+            <a onclick="$('#addmedia-modal').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' | trans }}</a>
         </div>
     </form>
 </div>

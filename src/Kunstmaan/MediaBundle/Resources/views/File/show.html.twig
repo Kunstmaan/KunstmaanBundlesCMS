@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">Files</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">{{ 'media.menu.files'|trans }}</a> <span class="divider">/</span></li>
         {% for parent in gallery.parents %}
             <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
         {% endfor %}
@@ -15,7 +15,7 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>File <small>{{ media.name }}
+        <h1>{{ 'media.file.file'|trans }} <small>{{ media.name }}
         </small></h1>
     </div>
     <div>
@@ -23,17 +23,17 @@
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
         <div class="actions">
-                    <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">open file</a>
-                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
-                </div>
-<ul>
-    <li>Name: {{ media.name }} </li>
-    <li>Content-type: {{ media.contentType }}</li>
-    <li>Added: {{ media.createdat|date|escape }}</li>
-</ul>
+                    <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">{{ 'media.file.open'|trans }}</a>
+                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
+        </div>
+		<ul>
+		    <li>Name: {{ media.name }} </li>
+		    <li>Content-type: {{ media.contentType }}</li>
+		    <li>Added: {{ media.createdat|date|escape }}</li>
+		</ul>
         <div class="actions">
-            <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">open file</a>
-            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">delete</a>
+            <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">{{ 'media.file.open'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
         </div>
-        </div>
+    </div>
 {% endblock %}

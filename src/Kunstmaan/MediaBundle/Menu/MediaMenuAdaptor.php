@@ -10,18 +10,18 @@ class MediaMenuAdaptor implements \Kunstmaan\AdminBundle\Menu\MenuAdaptorInterfa
 {
     public function adaptMenu(KnpMenu $menu)
     {
-        $menu->addChild('Media', array('route' => 'KunstmaanMediaBundle_media'));
-        $menu['Media']->setUri('#');
-        $menu['Media']->setLinkAttribute('class', 'dropdown-toggle');
-        $menu['Media']->setAttribute('class', 'dropdown');
-        $menu['Media']->setChildrenAttribute('class', 'dropdown-menu');
+        $menu->addChild('media.menu.media', array('route' => 'KunstmaanMediaBundle_media'));
+        $menu['media.menu.media']->setUri('#');
+        $menu['media.menu.media']->setLinkAttribute('class', 'dropdown-toggle');
+        $menu['media.menu.media']->setAttribute('class', 'dropdown');
+        $menu['media.menu.media']->setChildrenAttribute('class', 'dropdown-menu');
 
-        $menu['Media']->moveToPosition(1);
+        $menu['media.menu.media']->moveToPosition(1);
 
-            $menu['Media']->addChild('Images', array('route' => 'KunstmaanMediaBundle_media_images'));
-            $menu['Media']->addChild('Videos', array('route' => 'KunstmaanMediaBundle_media_videos'));
-            $menu['Media']->addChild('Slides', array('route' => 'KunstmaanMediaBundle_media_slides'));
-            $menu['Media']->addChild('Files', array('route' => 'KunstmaanMediaBundle_media_files'));
+            $menu['media.menu.media']->addChild('media.menu.images', array('route' => 'KunstmaanMediaBundle_media_images'));
+            $menu['media.menu.media']->addChild('media.menu.videos', array('route' => 'KunstmaanMediaBundle_media_videos'));
+            $menu['media.menu.media']->addChild('media.menu.slides', array('route' => 'KunstmaanMediaBundle_media_slides'));
+            $menu['media.menu.media']->addChild('media.menu.les', array('route' => 'KunstmaanMediaBundle_media_files'));
     }
 
 }

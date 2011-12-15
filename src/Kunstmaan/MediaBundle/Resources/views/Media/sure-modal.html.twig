@@ -1,11 +1,12 @@
 <div id="sure-modal-{{ media.id }}" class="modal hide fade">
     <div class="modal-header">
         <a href="#" class="close">&times;</a>
-        <h3>Are you sure you want to delete this {{ gallery.type }}?</h3>
+        {% set mediadeletesure = 'media.'~gallery.type~'.sure' %}
+        <h3>{{ mediadeletesure | trans }}</h3>
     </div>
 
     <div class="modal-footer">
-        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" class="btn danger">Delete</a>
-        <a onclick="javascript:$('#sure-modal-{{ media.id }}').modal('hide')" href="#" class="btn secondary">Cancel</a>
+        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" class="btn danger">{{ 'form.delete' | trans }}</a>
+        <a onclick="javascript:$('#sure-modal-{{ media.id }}').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' | trans }}</a>
     </div>
 </div>
