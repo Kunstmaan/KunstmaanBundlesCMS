@@ -1,10 +1,4 @@
-form:
-  cancel: Cancel
-  delete: Delete
-  edit: Edit
-  name: Name
-  type: Type
-
+# Media
 media: 
   menu:
     home: Home
@@ -51,8 +45,8 @@ media:
     sure: Are you sure you want to delete this image?  
   
   slide: 
-    slides: presentaties
-    slide: Presentatie
+    slides: slides
+    slide: Slide
     addto: Add a new slide to <small>"%gallery%"</small>
     new: New slide
     add: Add new slide to
