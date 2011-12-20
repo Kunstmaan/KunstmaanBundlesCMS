@@ -9,7 +9,7 @@
         <thead>
         <tr>
             <th>Actions</th>
-            {% for columnName in adminlist.columns%}
+            {% for columnkey,columnName in adminlist.columns%}
                 {% set orderDirection = "DESC" %}
                 {% set extraHeaderClass = "" %}
                 {% if ( columnName == adminlist.orderBy )%}
@@ -20,7 +20,7 @@
                         {% set extraHeaderClass = "headerSortUp" %}
                     {% endif %}
                 {% endif %}
-                <th {% if adminlist.hasSort(columnName) %} class="header {{extraHeaderClass}}" onclick="window.location = '{{ path(basepath, extraparams|merge({ 'orderBy': columnName, "orderDirection": orderDirection }))}}'"{% endif %}>{{columnName}}</th>
+                <th {% if adminlist.hasSort(columnName) %} class="header {{extraHeaderClass}}" onclick="window.location = '{{ path(basepath, extraparams|merge({ 'orderBy': columnName, "orderDirection": orderDirection }))}}'"{% endif %}>{{ columnkey | trans }}</th>
             {% endfor %}
         </tr>
         </thead>
@@ -30,7 +30,7 @@
             <tr>
                 <td>
                     {%if adminlist.canEdit(item) %}
-                        <a href="{{ adminlist.getEditUrlFor(item) }}"><img src="{{ asset('images/general/edit.png') }}" alt="Edit"/></a>
+                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><img src="{{ asset('images/general/edit.png') }}" alt="Edit"/></a>
                     {% endif %}
                     {%if adminlist.canDelete(item) %}
                         <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}" data-controls-modal="sure-modal-{{ item.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('images/general/delete.png') }}" alt="Delete"/></a>
@@ -41,6 +41,10 @@
                 {% endfor %}
             </tr>
         {% endfor %}
+       
+        {% if adminlist.canAdd() %}
+        	<tr><td colspan="{{ adminlist.columns|length + 1}}"><a href="{{ path(adminlist.getAddUrlFor(), addparams) }}"><img src="{{ asset('images/general/add.png') }}" alt="Add"/></a></td></tr>
+        {% endif %}	
         </tbody>
     </table>
 

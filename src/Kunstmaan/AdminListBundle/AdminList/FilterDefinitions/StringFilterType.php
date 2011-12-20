@@ -29,10 +29,18 @@ class StringFilterType {
                     $expressions[] = $querybuilder->expr()->eq("b.".$this->columnname, "?".$uniqueid);
                     $querybuilder->setParameter($uniqueid, $data['value']);
                     break;
+                case "notequals" :
+                  	$expressions[] = $querybuilder->expr()->neq("b.".$this->columnname, "?".$uniqueid);
+                   	$querybuilder->setParameter($uniqueid, $data['value']);
+                   	break;                    
                 case "contains" :
                     $expressions[] = $querybuilder->expr()->like("b.".$this->columnname, "?".$uniqueid);
                     $querybuilder->setParameter($uniqueid, '%'.$data['value'].'%');
                     break;
+                case "doesntcontain" :
+                  	$expressions[] = $querybuilder->expr()->not($querybuilder->expr()->like("b.".$this->columnname, "?".$uniqueid));
+                   	$querybuilder->setParameter($uniqueid, '%'.$data['value'].'%');
+                   	break;
                 case "startswith" :
                     $expressions[] = $querybuilder->expr()->like("b.".$this->columnname, "?".$uniqueid);
                     $querybuilder->setParameter($uniqueid, $data['value'].'%');

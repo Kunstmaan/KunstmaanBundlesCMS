@@ -67,6 +67,7 @@ class AdminList {
 
     public function getColumns(){
         $result = array();
+        $this->configurator->buildFields();
         $this->configurator->configureListFields($result);
         return $result;
     }
@@ -97,12 +98,20 @@ class AdminList {
         return in_array($columnName, $this->configurator->getSortFields());
     }
 
-    public function canEdit($item){
-        return $this->configurator->canEdit($item);
+    public function canEdit(){
+        return $this->configurator->canEdit();
+    }
+    
+    public function canAdd(){
+    	return $this->configurator->canAdd();
     }
 
     public function getEditUrlFor($item){
         return $this->configurator->getEditUrlFor($item);
+    }
+    
+    public function getAddUrlFor(){
+    	return $this->configurator->getAddUrlFor();
     }
 
     public function canDelete($item){
