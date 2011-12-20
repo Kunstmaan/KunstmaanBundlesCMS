@@ -1,0 +1,105 @@
+#media
+media: 
+  menu:
+    home: Startpagina
+    media: Media
+    images: Foto's
+    files: Bestanden
+    videos: Video
+    slides: Presentaties
+  
+  aviary:
+    title: Aviary
+    nothing: Hier is niets te zien.
+  
+  file:
+    files: bestanden
+    file: Bestand
+    addto: Voeg een nieuw bestand aan <small>"%gallery%"</small> toe
+    new: Nieuw bestand
+    add: Voeg nieuw bestand toe
+    edit: Pas bestand aan
+    open: Open bestand
+    delete: De onderstaande bestanden worden ook verwijderd
+    list: Bestanden in "%gallery%"
+    no: Nog geen bestanden in deze galerij.
+    gallery:
+      new: Maak een nieuwe galerij met bestanden
+      subnew: Maak een nieuwe galerij met bestanden in %gallery%
+    sure: Ben je zeker dat je dit bestand wil verwijderen?  
+  
+  image: 
+    images: foto's
+    image: Foto
+    addto: Voeg een nieuwe foto aan <small>"%gallery%"</small> toe
+    new: Nieuwe foto
+    add: Voeg nieuwe foto toe
+    edit: Pas foto aan
+    open: Open foto
+    delete: De onderstaande foto's worden ook verwijderd
+    list: Foto's in "%gallery%"
+    no: Nog geen foto's in deze galerij.
+    gallery:
+      new: Maak een nieuwe galerij met foto's
+      subnew: Maak een nieuwe galerij met foto's in "%gallery%"    
+    edits: Aangepaste versies van deze foto
+    noedits: Nog geen aangepaste versies van deze foto.
+    sure: Ben je zeker dat je deze foto wil verwijderen? 
+  
+  slide: 
+    slides: presentaties
+    slide: Presentatie
+    addto: Voeg een nieuwe presentatie aan <small>"%gallery%"</small> toe
+    new: Nieuwe presentatie
+    add: Voeg nieuwe presentatie toe
+    edit: Pas presentatie aan
+    open: Open presentatie
+    delete: De onderstaande presentaties worden ook verwijderd
+    list: Presentaties in "%gallery%"
+    no: Nog geen presentaties in deze galerij.
+    gallery:
+      new: Maak een nieuwe galerij met presentaties
+      subnew: Maak een nieuwe galerij met presentaties in "%gallery%"
+    sure: Ben je zeker dat je deze presentatie wil verwijderen?   
+    code: Code van de presentatie
+  
+  video: 
+    videos: video
+    video: Video
+    addto: Voeg een nieuwe video aan <small>"%gallery%"</small> toe
+    new: Nieuwe video
+    add: Voeg nieuwe video toe
+    edit: Pas video aan
+    open: Open video
+    delete: De onderstaande video worden ook verwijderd
+    list: Video in "%gallery%"
+    no: Nog geen video in deze galerij.
+    gallery:
+      new: Maak een nieuwe galerij met video
+      subnew: Maak een nieuwe galerij met video in %gallery%     
+    sure: Ben je zeker dat je deze video wil verwijderen?  
+    code: Code van de video     
+  
+  gallery:
+    galleries: galerijen
+    gallery: Galerij
+    sub:
+      sub: Subgalerij
+      addshort: Voeg nieuwe galerij toe
+      belongsto: De galerij waar deze galerij bij hoort
+      list: De galerijen die bij "%gallery%" horen
+      add: Voeg nieuwe galerij toe aan deze galerij
+      no: Nog geen galerijen toegevoegd aan deze galerij.
+      delete: De onderstaande galerijen worden ook verwijdert
+    create: Maak een nieuwe galerij aan voor 
+    new: Maak galerij
+    belongsto: De galerij waar deze galerij aan wordt toegevoegd
+    notrequired: Een galerij hoeft niet toegevoegd te worden aan een bestaande galerij.
+    deletesure: Ben je zeker dat je de galerij "%gallery%" wil verwijderen? 
+    delete: Verwijder deze galerij
+    deletemedia: De volgende %type% worden ook verwijdert
+    edit: Pas deze galerij aan
+    
+    
+    
+    

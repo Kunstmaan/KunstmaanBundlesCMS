@@ -32,7 +32,7 @@ class File extends Media
      * @var string $context
      *
      */
-    protected $context = "omnext_file";
+    protected $context = "kunstmaan_media_file";
 
     /**
      * @var string $name

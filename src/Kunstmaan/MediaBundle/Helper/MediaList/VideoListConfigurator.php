@@ -21,31 +21,30 @@ class VideoListConfigurator extends AbstractAdminListConfigurator{
         $builder->add('type', new StringFilterType("type"));
     }
 
-    public function getSortFields() {
-        $array = array();
-        $array[] = "name";
-        $array[] = "type";
-        $array[] = "createdAt";
-        $array[] = "updatedAt";
-        return $array;
-    }
-
-    public function configureListFields(&$array)
+    public function buildFields()
     {
-        $array[] = "name";
-        $array[] = "type";
-        $array[] = "createdAt";
-        $array[] = "updatedAt";
+    	$this->addField("name", "Name", true);
+    	$this->addField("type", "Type", true);
+    	$this->addField("createdAt", "Created At", true);
+    	$this->addField("updatedAt", "Updated At", true); 	
     }
 
-    public function canEdit($item) {
+    public function canAdd() {
         return true;
     }
 
-    public function getEditUrlFor($item) {
-        return "/app_dev.php/admin/media/video/".$item->getId();
+    public function getAddUrlFor() {
+    	return "KunstmaanMediaBundle_video_create";
     }
 
+    public function canEdit() {
+    	return true;
+    }
+    
+    public function getEditUrlFor($item) {
+    	return array('path' => 'KunstmaanMediaBundle_video_edit', 'params' => array( 'media_id' => $item->getId()));
+    }
+    
     public function canDelete($item) {
         return true;
     }

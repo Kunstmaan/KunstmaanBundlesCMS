@@ -1,5 +1,5 @@
 <div>
-   <h3>Subgallery: <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name }}</a></h3>
+   <h3>{{ 'media.gallery.sub.sub' |trans }}: <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name }}</a></h3>
 
    <ul>
         {% for image in child.files %}
@@ -9,7 +9,8 @@
                 {{ image.contentType }}
             </li>
         {% else %}
-            <li>No {{ gallery.type }}s in this gallery yet.</li>
+            {% set nomedia = "media."~gallery.type~".no" %}
+            <li>{{ nomedia | trans }}</li>
         {% endfor %}
    </ul>
     <ul>

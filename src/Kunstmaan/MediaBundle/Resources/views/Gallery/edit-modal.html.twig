@@ -2,23 +2,23 @@
     <form action="{{ path('KunstmaanMediaBundle_gallery_edit', { 'gallery_id' : gallery.id }  ) }}" method="post" {{ form_enctype(editform) }}>
         <div class="modal-header">
             <a href="#" class="close">&times;</a>
-            <h3>Edit gallery</h3>
+            <h3>{{ 'media.gallery.edit' | trans }}</h3>
         </div>
         <div class="modal-body">
             <p>
                 <fieldset>
                     <div class="clearfix">
                         {{ form_errors(editform) }}
-                        <label for="xlInput3">Name</label>
+                        <label for="xlInput3">{{ 'form.name' | trans }}</label>
                         <div class="input">
                             {{ form_widget(editform.name) }}
                         </div>
                     </div>
                     <div class="clearfix">
-                        <label for="xlInput3">The {{ gallery.type }} gallery this gallery belongs to</label>
+                        <label for="xlInput3">{{ 'media.gallery.sub.belongsto' | trans }}</label>
                         <div class="input">
                             {{ form_widget(editform.parent) }}
-                            <span class="help-block">You don't need to select a gallery if you don't want to.</span>
+                            <span class="help-block">{{ 'media.gallery.notrequired' | trans }}</span>
                         </div>
                         {{ form_rest(editform) }}
                     </div>
@@ -26,8 +26,8 @@
             </p>
         </div>
         <div class="modal-footer">
-            <input class="btn primary type" type="submit" value="edit gallery">
-            <a onclick="$('#edit-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
+            <input class="btn primary type" type="submit" value="{{ 'media.gallery.edit' | trans }}">
+            <a onclick="$('#edit-modal').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' | trans }}</a>
         </div>
     </form>
 </div>

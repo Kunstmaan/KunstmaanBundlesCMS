@@ -1,0 +1,19 @@
+Model Folder
+*.pyc
+web/bundles/
+app/bootstrap*
+app/cache/*
+app/logs/*
+vendor/
+app/config/parameters.ini
+.idea
+.DS_Store
+build/code-browser
+build/logs
+build/api
+build/pdepend
+build/coverage
+web/uploads/*
+web/bundles/*
+*.php~
+

@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Repository;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -25,4 +27,16 @@ class FileGalleryRepository extends EntityRepository
             return $qb->getQuery()
                       ->getResult();
     }
+	
+    public function getFileGallery($gallery_id, \Doctrine\ORM\EntityManager $em)
+    {
+    	$imagegallery = $em->getRepository('KunstmaanMediaBundle:FileGallery')->find($gallery_id);
+    
+    	if (!$imagegallery) {
+    		throw new NotFoundHttpException('Unable to find file gallery.');
+    	}
+    
+    	return $imagegallery;
+    }
+
 }

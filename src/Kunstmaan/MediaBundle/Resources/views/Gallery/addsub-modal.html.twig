@@ -2,7 +2,7 @@
     <form action="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subcreate', { 'id' : gallery.id }  ) }}" method="post" {{ form_enctype(subform) }}>
         <div class="modal-header">
             <a href="#" class="close">&times;</a>
-            <h3>Add subgallery</h3>
+            <h3>{{ 'media.gallery.sub.add' | trans }}</h3>
         </div>
         <div class="modal-body">
             <p>
@@ -19,8 +19,8 @@
             </p>
         </div>
         <div class="modal-footer">
-            <input class="btn primary type" type="submit" value="add new subgallery">
-            <a onclick="$('#addsub-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
+            <input class="btn primary type" type="submit" value="{{ 'media.gallery.sub.add' | trans }}">
+            <a onclick="$('#addsub-modal').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' | trans }}</a>
         </div>
     </form>
 </div>

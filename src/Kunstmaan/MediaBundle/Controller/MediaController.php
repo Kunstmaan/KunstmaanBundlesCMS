@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
@@ -92,5 +94,37 @@ class MediaController extends Controller
             'galleries' => $galleries
         );
     }
+    
+    /**
+     * @Route("/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_media_show")
+     */
+    public function showAction($media_id)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    
+    	$media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
+    	$gallery = $media->getGallery();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
+    	->getAllGalleries();
+    
+    	return $this->render('KunstmaanMediaBundle:'.ucfirst($gallery->getStrategy()->getType()).':show.html.twig', array(
+    			'media' => $media,
+    			'gallery' => $gallery,
+    			'galleries' => $galleries
+    	));
+    }
+    
+    /**
+     * @Route("/delete/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_media_delete")
+     */
+    public function deleteAction($media_id)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
+    	$gallery = $media->getGallery();
+    	$em->getRepository('KunstmaanMediaBundle:Media')->delete($media, $em);
+    
+    	return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+    }    
 
 }

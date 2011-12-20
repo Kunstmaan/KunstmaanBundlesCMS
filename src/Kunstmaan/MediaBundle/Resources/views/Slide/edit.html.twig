@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">Slide Galleries</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">{{ 'media.menu.slides' | trans }}</a> <span class="divider">/</span></li>
     <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
-	<li class="active">Edit slide</li>
+	<li class="active">{{ 'media.slide.edit' | trans }}</li>
 {% endblock %}
 
-{% block title %}Edit Slide{% endblock%}
+{% block title %}{{ 'media.slide.edit' | trans }}{% endblock%}
 
 {% block content %}
-    <h1>Edit slide</h1>
+    <h1>{{ 'media.slide.edit' | trans }}</h1>
     {% include 'KunstmaanMediaBundle:Slide:editform.html.twig' with { 'form': form } %}
 {% endblock %}

@@ -1,11 +1,12 @@
 <div id="delete-modal" class="modal hide fade">
     <div class="modal-header">
         <a href="#" class="close">&times;</a>
-        <h3>Are you sure you want to delete {{ gallery.name }}?</h3>
+        <h3>{{ 'media.gallery.deletesure'| trans({'%gallery%': gallery.name }) | raw }}</h3>
     </div>
     <div class="modal-body">
         <p>
-            The following {{ gallery.type }}s will be deleted:
+        	{% set mediadelete = "media."~gallery.type~".delete" %}
+        	{{ mediadelete | trans({'%gallery%': gallery.name }) | raw }}:
             <ul>
                 {% for image in gallery.files %}
                     <li>
@@ -14,21 +15,22 @@
                         {{ image.contentType }}
                     </li>
                 {% else %}
-                    <li>No {{ gallery.type }}s in this gallery yet.</li>
+                	{% set nomedia = "media."~gallery.type~".no" %}
+                    <li>{{ nomedia | trans }}</li>
                 {% endfor %}
             </ul>
-            When you delete this gallery, the following galleries will also be deleted:
+            {{ 'media.gallery.sub.delete' | trans }}:
             <ul>
                 {% for child in gallery.children %}
                     <li>{% include 'KunstmaanMediaBundle:Gallery:showgallery.html.twig' %}</li>
                 {% else %}
-                    <li>No subgalleries in this gallery yet.</li>
+                    <li>{{ 'media.gallery.sub.no' | trans }}</li>
                 {% endfor %}
             </ul>
         </p>
     </div>
     <div class="modal-footer">
-        <a href="{{ path('KunstmaanMediaBundle_gallery_delete', { 'gallery_id' : gallery.id }) }}" class="btn danger">Delete</a>
-        <a onclick="javascript:$('#delete-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
+        <a href="{{ path('KunstmaanMediaBundle_gallery_delete', { 'gallery_id' : gallery.id }) }}" class="btn danger">{{ 'form.delete' |trans }}</a>
+        <a onclick="javascript:$('#delete-modal').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' |trans  }}</a>
     </div>
 </div>

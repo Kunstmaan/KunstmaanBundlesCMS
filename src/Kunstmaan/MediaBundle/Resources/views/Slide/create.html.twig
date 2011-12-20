@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">Slide Galleries</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">{{ 'media.menu.slides' | trans }}</a> <span class="divider">/</span></li>
     <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
-	<li class="active">Add new slide to "{{ gallery.name }}"</li>
+	<li class="active">{{ 'media.slide.addto'| trans({'%gallery%': gallery.name }) | raw }}</li>
 {% endblock %}
 
-{% block title %}New Slide{% endblock%}
+{% block title %}{{ 'media.slide.new' | trans }}{% endblock%}
 
 {% block content %}
-    <h1>Add new slide <small>to "{{ gallery.name }}"</small></h1>
+    <h1>{{ 'media.slide.addto'| trans({'%gallery%': gallery.name }) | raw }}</h1>
     {% include 'KunstmaanMediaBundle:Slide:form.html.twig' with { 'form': form } %}
 {% endblock %}
