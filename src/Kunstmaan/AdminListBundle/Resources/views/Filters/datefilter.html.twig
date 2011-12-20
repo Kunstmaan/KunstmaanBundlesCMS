@@ -1,42 +1,10 @@
-<script>
-function toggleDisplay(vis) {
-	  var divwithoutdate2 = document.getElementById("spanwithout2date");
-	  var divwithdate2 = document.getElementById("spanwith2date");
-	  if(vis=="true"){
-		  divwithdate2.style.display = "block";
-		  divwithoutdate2.style.display = "none";
-	  } 
-	  else{
-		  divwithdate2.style.display = "none";
-		  divwithoutdate2.style.display = "block";
-	  }
-}
-</script>
-<span id="spanwithout2date" {% if data.comparator is defined and data.comparator == "between" %} style="display:none" {% endif %}>
+
 <select name="{{nameprefix}}comparator{{namesuffix}}">
-    <option onClick="toggleDisplay('false')" value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
-    <option onClick="toggleDisplay('false')" value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
-	<option onClick="toggleDisplay('true')" value="between" {% if data.comparator is defined and data.comparator == "between" %} selected="selected" {% endif %}>between</option>	
+    <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
+    <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
 </select>
-<input type="text" name="{{nameprefix}}value{{namesuffix}}"
+<input  class="date-pick" name="{{nameprefix}}value{{namesuffix}}"
     {% if data.value is defined %}
     	value="{{data.value}}"
 	{% endif %}
 />
-</span>
-<span id="spanwith2date" {% if data.comparator is not defined or data.comparator != "between" %} style="display:none" {% endif %}>
-<select name="{{nameprefix}}comparator{{namesuffix}}">
-    <option onClick="toggleDisplay('false')" value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
-    <option onClick="toggleDisplay('false')" value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
-	<option onClick="toggleDisplay('true')" value="between" {% if data.comparator is defined and data.comparator == "between" %} selected="selected" {% endif %}>between</option>	
-</select>
-<input type="text" name="{{nameprefix}}value{{namesuffix}}"
-    {% if data.value is defined %}
-    	value="{{data.value}}"
-	{% endif %}
-/> and 
-<input type="text" name="{{nameprefix}}value2{{namesuffix}}"
-    {% if data.value2 is defined %}
-    	value="{{data.value2}}"
-	{% endif %}
-</span>

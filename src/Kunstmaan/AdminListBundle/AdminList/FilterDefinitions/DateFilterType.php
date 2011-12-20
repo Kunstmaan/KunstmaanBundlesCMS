@@ -36,13 +36,6 @@ class DateFilterType {
                   	$expressions[] = $querybuilder->expr()->gt("b.".$this->columnname, "?".$uniqueid);
                    	$querybuilder->setParameter($uniqueid, $data['value']);
                    	break;  
-                case "between" :
-                	if(isset($data['value2'])){
-	                	$expressions[] = $querybuilder->expr()->between("b.".$this->columnname, "?".$uniqueid, "?2".$uniqueid);
-	                	$querybuilder->setParameter($uniqueid, $data['value']);
-	                	$querybuilder->setParameter("2".$uniqueid, $data['value2']);
-                	}
-                	break;
             }
         }
     }
