@@ -3,6 +3,8 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Kunstmaan\MediaBundle\Form\MediaType;
