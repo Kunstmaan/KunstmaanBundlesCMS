@@ -12,16 +12,42 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 abstract class AbstractAdminListConfigurator {
 
     public function buildFilters(AdminListFilter $builder){
-
+    	
     }
 
-    abstract function getSortFields();
+	function getSortFields() {
+        $array = array();
+        foreach($this->getFields() as $field){
+        	if($field->isSortable()) $array[] = $field->getFieldname();
+        }
+        return $array;
+    }
 
-    abstract function configureListFields(&$array);
+    private $fields;
+    
+    function getFields(){
+    	return $this->fields;
+    }
+    
+    abstract function buildFields();
+    
+    function addField($fieldname, $fieldheader, $sort){
+    	$this->fields[] = new Field($fieldname, $fieldheader, $sort);
+    }
+    
+   function configureListFields(&$array){
+   		foreach($this->getFields() as $field){
+   			$array[$field->getFieldheader()] = $field->getFieldname();
+   		}
+   }
 
-    abstract function canEdit($item);
+    abstract function canEdit();
 
     abstract function getEditUrlFor($item);
+    
+    abstract function canAdd();
+    
+    abstract function getAddUrlFor();
 
     abstract function canDelete($item);
 
