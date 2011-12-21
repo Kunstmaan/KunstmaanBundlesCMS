@@ -9,6 +9,6 @@
                 <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
              </li>
         {% else %}
-            <ul><li>No images in this gallery yet.</li></ul>
+            <ul><li>{{ 'media.image.no' | trans }}</li></ul>
         {% endfor %}
         </ul>
