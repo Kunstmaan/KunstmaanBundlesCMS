@@ -21,7 +21,7 @@
                                 {% set namesuffix %}_{{value.uniqueid}}{%endset%}
                                 {% include value.type.template with {'filtertype': value.type, 'data': value.data, 'nameprefix':'filter_', 'namesuffix': namesuffix} %}
                             </span>
-                <a href="#" class="removefilterbutton" onclick="return removeFilter(this, false)"><img src="{{ asset('images/general/delete.png') }}"/></a> <a href="#" onclick="return createFilter(this, false)"><img src="{{ asset('images/general/add.png') }}"/></a>
+                <a href="#" class="removefilterbutton" onclick="return removeFilter(this, false)"><img src="{{ asset('bundles/kunstmaanadmin/img/general/delete.png') }}" alt="delete" /></a> <a href="#" onclick="return createFilter(this, false)"><img src="{{ asset('bundles/kunstmaanadmin/img/general/add.png') }}" alt="add"/></a>
             </div>
             {% endfor %}
         </div>
