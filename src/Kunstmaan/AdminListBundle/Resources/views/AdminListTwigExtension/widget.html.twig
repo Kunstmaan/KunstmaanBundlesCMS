@@ -30,10 +30,10 @@
             <tr>
                 <td>
                     {%if adminlist.canEdit(item) %}
-                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><img src="{{ asset('images/general/edit.png') }}" alt="Edit"/></a>
+                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/edit.png') }}" alt="Edit"/></a>
                     {% endif %}
                     {%if adminlist.canDelete(item) %}
-                        <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}" data-controls-modal="sure-modal-{{ item.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('images/general/delete.png') }}" alt="Delete"/></a>
+                        <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}" data-controls-modal="sure-modal-{{ item.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('bundles/kunstmaanadmin/img/general/delete.png') }}" alt="Delete"/></a>
                     {% endif %}
                 </td>
                 {% for columnName in adminlist.columns%}
@@ -43,7 +43,7 @@
         {% endfor %}
        
         {% if adminlist.canAdd() %}
-        	<tr><td colspan="{{ adminlist.columns|length + 1}}"><a href="{{ path(adminlist.getAddUrlFor(), addparams) }}"><img src="{{ asset('images/general/add.png') }}" alt="Add"/></a></td></tr>
+        	<tr><td colspan="{{ adminlist.columns|length + 1}}"><a href="{{ path(adminlist.getAddUrlFor(), addparams) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/add.png') }}" alt="Add"/></a></td></tr>
         {% endif %}	
         </tbody>
     </table>
