@@ -43,8 +43,8 @@ class SlideController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
-                        ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                        ->getAllGalleriesByType();
         return array(
             'form' => $form->createView(),
             'gallery' => $gallery,
@@ -76,8 +76,8 @@ class SlideController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
-                        ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                        ->getAllGalleriesByType();
         return array(
             'form' => $form->createView(),
             'media' => $slide,

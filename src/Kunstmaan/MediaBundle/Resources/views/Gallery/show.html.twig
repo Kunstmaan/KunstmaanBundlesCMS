@@ -6,9 +6,9 @@
 
 {% block subbreadcrumb %}
 	{%  set galstype = 'media.'~gallery.type~'.'~gallery.type~'s' %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ galstype|trans|capitalize }}</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ galstype|trans|capitalize }}</a></li>
         {% for parent in gallery.parents %}
-            <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a><span class="divider">/</span></li>
+            <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a></li>
         {% endfor %}
 	<li class="active">{{ gallery.name }}</li>
 {% endblock %}

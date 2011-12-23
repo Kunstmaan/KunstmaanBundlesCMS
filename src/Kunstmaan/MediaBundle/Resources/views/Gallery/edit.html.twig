@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallery.type }}s</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallery.type }}s</a></li>
 	<li class="active">{{ 'media.gallery.edit' |trans }}: {{ gallery.name }}</li>
 {% endblock %}
 

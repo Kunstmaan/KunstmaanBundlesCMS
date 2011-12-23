@@ -29,8 +29,8 @@ class GalleryController extends Controller
     function showAction($id){
         $em = $this->getDoctrine()->getEntityManager();
         $gallery = $em->getRepository('KunstmaanMediaBundle:Gallery')->getGallery($id, $em);
-        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                                ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                                ->getAllGalleriesByType();
 
         $itemlist = "";
         $listconfigurator = $gallery->getStrategy()->getListConfigurator();
@@ -65,8 +65,8 @@ class GalleryController extends Controller
         
         $em->getRepository('KunstmaanMediaBundle:Gallery')->delete($gallery, $em);
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                        ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                        ->getAllGalleriesByType();
 
         return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_'.$gallery->getStrategy()->getType().'s'));
     }
@@ -93,8 +93,8 @@ class GalleryController extends Controller
                 }
             }
 
-            $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                                           ->getAllGalleries();
+            $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                                           ->getAllGalleriesByType();
 
             return array(
                 'gallery' => $gallery,
@@ -119,8 +119,8 @@ class GalleryController extends Controller
         }
 
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                                       ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                                       ->getAllGalleriesByType();
 
         return $this->render('KunstmaanMediaBundle:Gallery:create.html.twig', array(
             'gallery' => $gallery,
@@ -149,8 +149,8 @@ class GalleryController extends Controller
                 }
             }
 
-            $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                                           ->getAllGalleries();
+            $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                                           ->getAllGalleriesByType();
 
             return $this->render('KunstmaanMediaBundle:Gallery:subcreate.html.twig', array(
                 'subform' => $form->createView(),

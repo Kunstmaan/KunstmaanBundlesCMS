@@ -2,13 +2,13 @@
 
 {% block sidebar %}
 <div class="sidebar">
-    <ul>
+    {#<ul>
         <li class="header">{{ 'media.menu.media'|trans }}</li>
         <li><a href="{{ path('KunstmaanMediaBundle_media_images') }}">{{ 'media.menu.images'|trans }}</a></li>
         <li><a href="{{ path('KunstmaanMediaBundle_media_videos') }}">{{ 'media.menu.videos'|trans }}</a></li>
         <li><a href="{{ path('KunstmaanMediaBundle_media_slides') }}">{{ 'media.menu.slides'|trans }}</a></li>
         <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">{{ 'media.menu.files'|trans }}</a></li>
-    </ul>
+    </ul>#}
     {% block subsidebar %}
 
     {% endblock %}
@@ -17,8 +17,8 @@
 
 {% block breadcrumb %}
 	<ul class="breadcrumb">
-		<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'media.menu.home'|trans }}</a> <span class="divider">/</span></li>
-        <li><a href="{{ path('KunstmaanMediaBundle_media') }}">{{ 'media.menu.media'|trans }}</a> <span class="divider">/</span></li>
+		<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'media.menu.home'|trans }}</a> </li>
+        <li><a href="{{ path('KunstmaanMediaBundle_media') }}">{{ 'media.menu.media'|trans }}</a> </li>
         {% block subbreadcrumb %}
 			
         {% endblock %}

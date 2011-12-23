@@ -54,6 +54,16 @@ class GalleryRepository extends EntityRepository
                       ->getResult();
     }
     
+    public function getAllGalleriesByType($limit = null)
+    {
+    	$all = $this->getAllGalleries($limit);
+    	$bytype=array();
+    	foreach($all as $gal){
+    		if(!isset($bytype[$gal->getStrategy()->getType()])) $bytype[$gal->getStrategy()->getType()] = array();
+    		$bytype[$gal->getStrategy()->getType()][] = $gal;
+    	}
+    	return $bytype;
+    }
     
     public function getGallery($gallery_id, EntityManager $em)
     {

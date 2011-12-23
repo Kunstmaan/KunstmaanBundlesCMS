@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">{{ 'media.menu.files' | trans }}</a> <span class="divider">/</span></li>
-    <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">{{ 'media.menu.files' | trans }}</a></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a></li>
 	<li class="active">{{ 'media.file.edit' | trans }}</li>
 {% endblock %}
 

@@ -49,7 +49,7 @@ class ImageController extends Controller
         }
 
         $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                         ->getAllGalleries();
+                         ->getAllGalleriesByType();
         
         return array(
             'form' => $form->createView(),
@@ -89,7 +89,7 @@ class ImageController extends Controller
     	}
     	*/
     	$galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-    	->getAllGalleries();
+    					->getAllGalleriesByType();
     	
     	return array(
     			'gallery' => $gallery,
