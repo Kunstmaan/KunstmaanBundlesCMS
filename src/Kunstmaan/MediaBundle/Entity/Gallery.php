@@ -306,4 +306,14 @@ abstract class Gallery{
     {
 
     }
+
+	public function hasActive($id){
+		$bool = false;
+		foreach($this->getChildren() as $child){
+			$bool = $child->hasActive($id);
+			if($bool == true) return true;
+			if($child->getId()==$id) return true;	
+		}
+		return false;
+	}
 }

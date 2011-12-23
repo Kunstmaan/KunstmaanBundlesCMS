@@ -1,14 +1,34 @@
-<ul class="media-grid">
+{#<script>
+	$(function () {
+	    $('#drop-area').fileupload({
+	        dataType: 'json',
+	        url: '{{ path("KunstmaanMediaBundle_image_dragupload", { "gallery_id" : gallery.id }) }}',
+	        sequentialUploads: true,
+	        done: function (e, data) {
+	            $.each(data.result, function (index, file) {
+	                $('<p/>').text(file.name).appendTo(document.body);
+	            });
+	        }
+	    });
+	});
+</script>#}
+
+<div id="my-tab-content" class="tab-content"> 
+<div class="tab-pane active" id="imagegallery"> 
+    					<section> 
+		<ul class="media-grid" id="file-list">
         {% for media in gallery.files %}
             {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
             <li>
-                <a href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+                <a class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
                     <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
                 </a>
-                <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
+                <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
+             	<span class="helper">Click to edit</span>
              </li>
-        {% else %}
-            <ul><li>No images in this gallery yet.</li></ul>
         {% endfor %}
+        	<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_create', { 'gallery_id' : gallery.id }) }}" id="droplabel" data-controls-modal="addmedia-modal" data-backdrop="true" data-keyboard="true">{{ 'form.add' | trans }}</a></li>
         </ul>
+</section>
+</div></div>

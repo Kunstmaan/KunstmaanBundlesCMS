@@ -52,8 +52,8 @@ class FileController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
-                        ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                       ->getAllGalleriesByType();
 
         return array(
             'form' => $form->createView(),

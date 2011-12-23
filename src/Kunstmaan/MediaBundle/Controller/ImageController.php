@@ -49,12 +49,51 @@ class ImageController extends Controller
         }
 
         $galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-                         ->getAllGalleries();
+                         ->getAllGalleriesByType();
         
         return array(
             'form' => $form->createView(),
             'gallery' => $gallery,
             'galleries' => $galleries
         );
+    }
+    
+    /**
+     * @Route("/{gallery_id}/dragupload", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_image_dragupload")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function draguploadAction($gallery_id)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Gallery')->getGallery($gallery_id, $em);
+    	/*
+    	$request = $this->getRequest();
+    	$picturehelper = new MediaHelper();
+    	$form = $this->createForm(new MediaType(), $picturehelper);
+    
+    	if ('POST' == $request->getMethod()) {
+    		$form->bindRequest($request);
+    		if ($form->isValid()){
+    			if ($picturehelper->getMedia()!=null) {
+    				$picture = new Image();
+    				$picture->setName($picturehelper->getMedia()->getClientOriginalName());
+    				$picture->setContent($picturehelper->getMedia());
+    				$picture->setGallery($gallery);
+    
+    				$em->getRepository('KunstmaanMediaBundle:Media')->save($picture, $em);
+    
+    				return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+    			}
+    		}
+    	}
+    	*/
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
+    					->getAllGalleriesByType();
+    	
+    	return array(
+    			'gallery' => $gallery,
+    			'galleries' => $galleries
+    	);
     }
 }

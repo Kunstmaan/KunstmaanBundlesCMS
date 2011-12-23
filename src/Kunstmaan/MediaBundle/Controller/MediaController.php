@@ -31,8 +31,8 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
-                        ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                        ->getAllGalleriesByType();
         $gallery = new ImageGallery();
 
         return array(
@@ -49,8 +49,8 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:VideoGallery')
-                        ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                        ->getAllGalleriesByType();
         $gallery = new VideoGallery();
 
         return array(
@@ -67,8 +67,8 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:SlideGallery')
-                        ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                        ->getAllGalleriesByType();
         $gallery = new SlideGallery();
 
         return array(
@@ -85,8 +85,8 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                            ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:FileGallery')
-                                ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+                                ->getAllGalleriesByType();
         $gallery = new FileGallery();
 
         return array(
@@ -104,8 +104,8 @@ class MediaController extends Controller
     
     	$media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
     	$gallery = $media->getGallery();
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:'.$gallery->getStrategy()->getName())
-    	->getAllGalleries();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+    	->getAllGalleriesByType();
     
     	return $this->render('KunstmaanMediaBundle:'.ucfirst($gallery->getStrategy()->getType()).':show.html.twig', array(
     			'media' => $media,

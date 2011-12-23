@@ -7,7 +7,7 @@
 {% set gallerytype = 'media.'~gallery.type~'.'~gallery.type~'s' %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallerytype | trans | capitalize }}</a> <span class="divider">/</span></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallerytype | trans | capitalize }}</a></li>
 	<li class="active">{{ 'media.gallery.create' | trans }} {{ gallerytype |trans }}</li>
 {% endblock %}
 
