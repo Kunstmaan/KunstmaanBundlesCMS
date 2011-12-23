@@ -7,6 +7,7 @@ media:
     files: Bestanden
     videos: Video
     slides: Presentaties
+    folders: Evenementen
   
   aviary:
     title: Aviary

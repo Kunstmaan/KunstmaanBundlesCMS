@@ -1,5 +1,5 @@
 <div id="addsub-modal" class="modal hide fade">
-    <form action="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subcreate', { 'id' : gallery.id }  ) }}" method="post" {{ form_enctype(subform) }}>
+    <form action="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }  ) }}" method="post" {{ form_enctype(subform) }}>
         <div class="modal-header">
             <a href="#" class="close">&times;</a>
             <h3>{{ 'media.gallery.sub.add' | trans }}</h3>
@@ -9,7 +9,7 @@
                 <fieldset>
                     <div class="clearfix">
                         {{ form_errors(subform) }}
-                        <label for="xlInput3">{{ 'form.name' | trans }}</label>
+                        <label for="xlInput3">Name</label>
                         <div class="input">
                             {{ form_widget(subform.name) }}
                         </div>

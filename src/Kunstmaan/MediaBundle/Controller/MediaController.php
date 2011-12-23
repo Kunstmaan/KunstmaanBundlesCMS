@@ -94,6 +94,24 @@ class MediaController extends Controller
             'galleries' => $galleries
         );
     }
+    /**
+     * @Route("/folders", name="KunstmaanMediaBundle_media_folders")
+     * @Template()
+     */    
+    public function foldersAction()
+    {
+    	$em = $this->getDoctrine()
+    	->getEntityManager();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
+    					->getAllGalleriesByType();
+    	$folders = $em->getRepository('KunstmaanMediaBundle:Folder')
+    					->getAllFolders();
+    
+    	return array(
+    			'galleries' => $galleries,
+    			'folders' => $folders
+    	);
+    }
     
     /**
      * @Route("/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_media_show")

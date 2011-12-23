@@ -43,6 +43,13 @@ KunstmaanMediaBundle_media_gallery:
     prefix:   /{_locale}/admin/media/gallery
     requirements:
         _locale: en|nl|fr
+        
+KunstmaanMediaBundle_media_folder:
+    resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
+    type:     annotation
+    prefix:   /{_locale}/admin/media/folder
+    requirements:
+        _locale: en|nl|fr        
 
 KunstmaanMediaBundle_image:
     resource: "@KunstmaanMediaBundle/Controller/ImageController.php"

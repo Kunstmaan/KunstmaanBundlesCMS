@@ -24,6 +24,7 @@ class MediaMenuAdaptor implements \Kunstmaan\AdminBundle\Menu\MenuAdaptorInterfa
             $menu[$translator->trans('media.menu.media')]->addChild($translator->trans('media.menu.videos'), array('route' => 'KunstmaanMediaBundle_media_videos'));
             $menu[$translator->trans('media.menu.media')]->addChild($translator->trans('media.menu.slides'), array('route' => 'KunstmaanMediaBundle_media_slides'));
             $menu[$translator->trans('media.menu.media')]->addChild($translator->trans('media.menu.files'), array('route' => 'KunstmaanMediaBundle_media_files'));
+            $menu[$translator->trans('media.menu.media')]->addChild($translator->trans('media.menu.folders'), array('route' => 'KunstmaanMediaBundle_media_folders'));
     }
 
 }

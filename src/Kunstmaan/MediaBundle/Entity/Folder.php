@@ -7,18 +7,15 @@ use Kunstmaan\MediaBundle\Helper\FolderStrategy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class that defines a Media object from the AnoBundle in the database
+ * Class that defines a folder from the MediaBundle in the database
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\GalleryRepository")
- * @ORM\Table(name="media_gallery")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({ "gallery" = "Gallery" , "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
+ * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
+ * @ORM\Table(name="media_folder")
  * @ORM\HasLifecycleCallbacks
  */
-abstract class Gallery{
+class Folder{
 
     /**
      * @ORM\Id
@@ -38,13 +35,13 @@ abstract class Gallery{
     protected $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Gallery", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children")
      * @ORM\JoinColumn(name="parent", referencedColumnName="id", nullable=true)
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Gallery", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent")
      */
     protected $children;
 
@@ -171,9 +168,9 @@ abstract class Gallery{
     /**
      * Set parent
      *
-     * @param Kunstmaan\MediaBundle\Entity\Gallery $parent
+     * @param Kunstmaan\MediaBundle\Entity\Folder $parent
      */
-    public function setParent($parent)
+    public function setParent(Folder $parent)
     {
         $this->parent = $parent;
     }
@@ -181,7 +178,7 @@ abstract class Gallery{
     /**
      * Get parent
      *
-     * @return Kunstmaan\MediaBundle\Entity\Gallery 
+     * @return Kunstmaan\MediaBundle\Entity\Folder 
      */
     public function getParent()
     {
@@ -204,7 +201,7 @@ abstract class Gallery{
      *
      * @param Kunstmaan\MediaBundle\Entity\Gallery $children
      */
-    public function addGallery(Gallery $children)
+    public function addGallery(Folder $children)
     {
         $this->children[] = $children;
     }
@@ -214,7 +211,7 @@ abstract class Gallery{
       *
       * @param \Kunstmaan\MediaBundle\Entity\ImageGallery $children
       */
-     public function addChild(Gallery $child)
+     public function addChild(Folder $child)
      {
          $this->children[] = $child;
          $child->setParent($this);
@@ -248,16 +245,6 @@ abstract class Gallery{
         $this->files[] = $files;
     }
 
-    /**
-     * Get files
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getMedia()
-    {
-        return $this->files;
-    }
-
     public function __toString()
     {
         return $this->getName();
@@ -271,18 +258,6 @@ abstract class Gallery{
     public function getFiles()
     {
         return $this->files;
-    }
-
-    abstract function getStrategy();
-
-    public function getFormType($gallery = null)
-    {
-        return new \Kunstmaan\MediaBundle\Form\GalleryType($this->getStrategy()->getGalleryClassName(), $gallery);
-    }
-
-    public function getType()
-    {
-    	return $this->getStrategy()->getType();
     }
 
     /**
