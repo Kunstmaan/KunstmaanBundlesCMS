@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Table("image")
+ * @ORM\Table("media_image")
  * @ORM\Entity
  */
 class Image extends Media

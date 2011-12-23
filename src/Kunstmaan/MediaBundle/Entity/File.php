@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Table("file")
+ * @ORM\Table("media_file")
  * @ORM\Entity
  */
 class File extends Media

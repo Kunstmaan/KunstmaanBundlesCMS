@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Table("slide")
+ * @ORM\Table("media_slide")
  * @ORM\Entity
  */
 class Slide extends Media

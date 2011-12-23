@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FileGalleryRepository")
- * @ORM\Table(name="file_gallery")
+ * @ORM\Table(name="media_gallery_file")
  * @ORM\HasLifecycleCallbacks
  */
 class FileGallery extends Gallery{

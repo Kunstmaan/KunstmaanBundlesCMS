@@ -11,7 +11,7 @@ use Kunstmaan\MediaBundle\Helper\VideoGalleryStrategy;
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\VideoGalleryRepository")
- * @ORM\Table(name="video_gallery")
+ * @ORM\Table(name="media_gallery_video")
  * @ORM\HasLifecycleCallbacks
  */
 class VideoGallery extends Gallery{

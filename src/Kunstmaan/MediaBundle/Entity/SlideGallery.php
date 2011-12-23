@@ -11,7 +11,7 @@ use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\SlideGalleryRepository")
- * @ORM\Table(name="slide_gallery")
+ * @ORM\Table(name="media_gallery_slide")
  * @ORM\HasLifecycleCallbacks
  */
 class SlideGallery extends Gallery{

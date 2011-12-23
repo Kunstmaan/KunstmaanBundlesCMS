@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\GalleryRepository")
- * @ORM\Table(name="gallery")
+ * @ORM\Table(name="media_gallery")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({ "gallery" = "Gallery" , "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})

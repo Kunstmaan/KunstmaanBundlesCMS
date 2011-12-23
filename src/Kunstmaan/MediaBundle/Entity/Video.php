@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Table("slide")
+ * @ORM\Table("media_video")
  * @ORM\Entity
  */
 class Video extends Media
