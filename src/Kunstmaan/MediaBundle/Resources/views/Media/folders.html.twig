@@ -7,3 +7,7 @@
 {% block subbreadcrumb %}
      <li class="active">{{ 'media.menu.folders' | trans | capitalize }}</li>
 {% endblock %}
+
+{% block content %}
+	<a href="{{ path('KunstmaanMediaBundle_folder_create', {'type': 'folder'}) }}">add folder</a>
+{% endblock %}

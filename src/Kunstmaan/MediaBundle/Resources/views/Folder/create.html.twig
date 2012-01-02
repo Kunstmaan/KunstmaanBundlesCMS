@@ -1,7 +1,7 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block subsidebar %}
-    {% include 'KunstmaanMediaBundle:Gallery:sidebar.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Folder:sidebar.html.twig' %}
 {% endblock %}
 
 {% set gallerytype = 'media.'~gallery.type~'.'~gallery.type~'s' %}
@@ -16,5 +16,5 @@
 <div class="page-header">
     <h1>{{ 'media.gallery.create' | trans }} {{ gallerytype |trans }}</h1>
   </div>
-   {% include 'KunstmaanMediaBundle:Gallery:form.html.twig' with { 'form': form } %}
+   {% include 'KunstmaanMediaBundle:Folder:form.html.twig' with { 'form': form } %}
 {% endblock %}

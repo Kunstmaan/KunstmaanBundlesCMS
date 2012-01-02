@@ -3,6 +3,8 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\MediaBundle\Helper\FolderFactory;
+
 use Kunstmaan\MediaBundle\Form\VideoType;
 
 use Kunstmaan\MediaBundle\Entity\Video;
@@ -130,8 +132,10 @@ class FolderController extends Controller
      */
     public function createAction($type)
     {
+    	$gallery = FolderFactory::getTypeFolder($type);
+    	
         $request = $this->getRequest();
-        $form = $this->createForm(new GalleryType($type), new Folder());
+        $form = $this->createForm(new GalleryType($gallery->getStrategy()->getGalleryClassName()), $gallery);
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
