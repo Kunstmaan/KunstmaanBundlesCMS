@@ -26,18 +26,21 @@ class AdminList {
     protected $orderBy = null;
 
     protected $orderDirection = null;
-
-    function __construct(AbstractAdminListConfigurator $configurator, $em)
+ 
+    protected $queryparams = array();
+    
+    function __construct(AbstractAdminListConfigurator $configurator, $em, $queryparams = array())
     {
         $this->configurator = $configurator;
         $this->em = $em;
         $adminlistfilter = new AdminListFilter();
         $this->configurator->buildFilters($adminlistfilter);
         $this->adminlistfilter = $adminlistfilter;
+        $this->queryparams = $queryparams;
     }
 
     public function getPaginationBean(){
-        return new PaginationBean($this->getCount(), $this->page, $this->configurator->getLimit());
+        return new PaginationBean($this->getCount($this->queryparams), $this->page, $this->configurator->getLimit());
     }
 
     public function getAdminListFilter(){
