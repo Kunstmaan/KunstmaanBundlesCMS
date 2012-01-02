@@ -9,6 +9,8 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Doctrine\DBAL\Query\QueryBuilder;
+
 class AdminList {
 
     protected $request = null;
@@ -72,17 +74,23 @@ class AdminList {
         return $result;
     }
 
-    public function getCount(){
+    public function getCount($params = array()){
         $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
         $queryBuilder = $queryBuilder->select("count(b.id)");
+        foreach($params as $key => $param){
+        	$queryBuilder->where($queryBuilder->expr()->eq("b.".$key, $param));
+        }
         $this->configurator->adaptQueryBuilder($queryBuilder);
         $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
         $query = $queryBuilder->getQuery();
         return $query->getSingleScalarResult();
     }
 
-    public function getItems(){
+    public function getItems($params = array()){
         $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
+        foreach($params as $key => $param){
+        	$queryBuilder->where($queryBuilder->expr()->eq("b.".$key, $param));
+        }
         $queryBuilder->setFirstResult( ($this->page-1) * $this->configurator->getLimit() );
         $queryBuilder->setMaxResults( $this->configurator->getLimit() );
         $this->configurator->adaptQueryBuilder($queryBuilder);
