@@ -22,7 +22,7 @@
             {{ 'media.gallery.sub.delete' | trans }}:
             <ul>
                 {% for child in gallery.children %}
-                    <li>{% include 'KunstmaanMediaBundle:Gallery:showgallery.html.twig' %}</li>
+                    <li>{% include 'KunstmaanMediaBundle:Folder:showgallery.html.twig' %}</li>
                 {% else %}
                     <li>{{ 'media.gallery.sub.no' | trans }}</li>
                 {% endfor %}
@@ -30,7 +30,7 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="{{ path('KunstmaanMediaBundle_gallery_delete', { 'gallery_id' : gallery.id }) }}" class="btn danger">{{ 'form.delete' |trans }}</a>
+        <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" class="btn danger">{{ 'form.delete' |trans }}</a>
         <a onclick="javascript:$('#delete-modal').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' |trans  }}</a>
     </div>
 </div>

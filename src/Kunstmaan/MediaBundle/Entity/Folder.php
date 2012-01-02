@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
  * @ORM\Table(name="media_folder")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({ "folder"="Folder", "gallery" = "Gallery", "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
  * @ORM\HasLifecycleCallbacks
  */
 class Folder{
@@ -292,5 +295,19 @@ class Folder{
 			if($child->getId()==$id) return true;	
 		}
 		return false;
+	}
+	
+	public function getStrategy(){
+		return new FolderStrategy();
+	}
+	
+	public function getFormType($gallery = null)
+	{
+		return new \Kunstmaan\MediaBundle\Form\GalleryType($this->getStrategy()->getGalleryClassName(), $gallery);
+	}
+	
+	public function getType()
+	{
+		return $this->getStrategy()->getType();
 	}
 }

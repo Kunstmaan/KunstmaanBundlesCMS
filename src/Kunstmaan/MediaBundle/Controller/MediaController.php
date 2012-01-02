@@ -31,8 +31,8 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
-                        ->getAllGalleriesByType();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
+                        ->getAllFoldersByType();
         $gallery = new ImageGallery();
 
         return array(
@@ -49,8 +49,8 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
-                        ->getAllGalleriesByType();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
+                        ->getAllFoldersByType();
         $gallery = new VideoGallery();
 
         return array(
@@ -67,8 +67,8 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                    ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
-                        ->getAllGalleriesByType();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
+                        ->getAllFoldersByType();
         $gallery = new SlideGallery();
 
         return array(
@@ -85,8 +85,8 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()
                            ->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
-                                ->getAllGalleriesByType();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
+                                ->getAllFoldersByType();
         $gallery = new FileGallery();
 
         return array(
@@ -102,8 +102,8 @@ class MediaController extends Controller
     {
     	$em = $this->getDoctrine()
     	->getEntityManager();
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
-    					->getAllGalleriesByType();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
+    					->getAllFoldersByType();
     	$folders = $em->getRepository('KunstmaanMediaBundle:Folder')
     					->getAllFolders();
     
@@ -122,8 +122,8 @@ class MediaController extends Controller
     
     	$media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
     	$gallery = $media->getGallery();
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
-    	->getAllGalleriesByType();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
+    	->getAllFoldersByType();
     
     	return $this->render('KunstmaanMediaBundle:'.ucfirst($gallery->getStrategy()->getType()).':show.html.twig', array(
     			'media' => $media,
@@ -142,7 +142,7 @@ class MediaController extends Controller
     	$gallery = $media->getGallery();
     	$em->getRepository('KunstmaanMediaBundle:Media')->delete($media, $em);
     
-    	return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+    	return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
     }    
 
 }

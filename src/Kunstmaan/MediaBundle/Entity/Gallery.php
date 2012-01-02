@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorMap({ "gallery" = "Gallery" , "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
  * @ORM\HasLifecycleCallbacks
  */
-abstract class Gallery{
+abstract class Gallery extends Folder{
 
     /**
      * @ORM\Id
@@ -26,50 +26,6 @@ abstract class Gallery{
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $name;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $slug;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Gallery", inversedBy="children")
-     * @ORM\JoinColumn(name="parent", referencedColumnName="id", nullable=true)
-     */
-    protected $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Gallery", mappedBy="parent")
-     */
-    protected $children;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="gallery")
-     */
-    protected $files;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $created;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $updated;
-
-    public function __construct()
-    {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setCreated(new \DateTime());
-        $this->setUpdated(new \DateTime());
-    }
 
     public function setId($id){
         $this->id = $id;
@@ -171,9 +127,9 @@ abstract class Gallery{
     /**
      * Set parent
      *
-     * @param Kunstmaan\MediaBundle\Entity\Gallery $parent
+     * @param Kunstmaan\MediaBundle\Entity\Folder $parent
      */
-    public function setParent($parent)
+    public function setParent(Folder $parent)
     {
         $this->parent = $parent;
     }
@@ -181,7 +137,7 @@ abstract class Gallery{
     /**
      * Get parent
      *
-     * @return Kunstmaan\MediaBundle\Entity\Gallery 
+     * @return Kunstmaan\MediaBundle\Entity\Folder
      */
     public function getParent()
     {
@@ -204,7 +160,7 @@ abstract class Gallery{
      *
      * @param Kunstmaan\MediaBundle\Entity\Gallery $children
      */
-    public function addGallery(Gallery $children)
+    public function addGallery(Folder $children)
     {
         $this->children[] = $children;
     }
@@ -214,7 +170,7 @@ abstract class Gallery{
       *
       * @param \Kunstmaan\MediaBundle\Entity\ImageGallery $children
       */
-     public function addChild(Gallery $child)
+     public function addChild(Folder $child)
      {
          $this->children[] = $child;
          $child->setParent($this);
@@ -273,7 +229,9 @@ abstract class Gallery{
         return $this->files;
     }
 
-    abstract function getStrategy();
+    public function getStrategy(){
+    	return null;
+    }
 
     public function getFormType($gallery = null)
     {

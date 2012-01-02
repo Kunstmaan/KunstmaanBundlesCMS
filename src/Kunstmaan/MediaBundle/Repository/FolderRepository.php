@@ -53,6 +53,17 @@ class FolderRepository extends EntityRepository
             return $qb->getQuery()
                       ->getResult();
     }
+    
+    public function getAllFoldersByType($limit = null)
+    {
+    	$all = $this->getAllFolders($limit);
+    	$bytype=array();
+    	foreach($all as $gal){
+    		if(!isset($bytype[$gal->getStrategy()->getType()])) $bytype[$gal->getStrategy()->getType()] = array();
+    		$bytype[$gal->getStrategy()->getType()][] = $gal;
+    	}
+    	return $bytype;
+    }
 
     public function getFolder($folder_id, EntityManager $em)
     {

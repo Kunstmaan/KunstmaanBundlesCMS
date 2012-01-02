@@ -38,26 +38,14 @@
     			rel="{{ key }}"><a href="{{ path('KunstmaanMediaBundle_media_'~key~'s') }}">{{ ('media.menu.'~key~'s') | trans }}</a>
 	            <ul>
 	    			{% for child in gals %}
-		                {% include 'KunstmaanMediaBundle:Gallery:shownode.html.twig' %}
+		                {% include 'KunstmaanMediaBundle:Folder:shownode.html.twig' %}
 		            {% endfor %}
 		            {% set newmediagallery = "media."~key~".gallery.new" %}
         			{# <li class="jstree-leaf jstree-last">
         				<a href="{{ path('KunstmaanMediaBundle_' ~ key ~ 'gallery_create') }}">{{ newmediagallery |trans }}</a></li>#}
 	            </ul>
             </li>
-    	{%  endfor %}
-        	<li >
-        		{% if route == 'KunstmaanMediaBundle_media_folders' %} 
-    				class="active  jstree-open" 
-    			{% endif %} 
-    			
-    			rel="event"><a href="{{ path('KunstmaanMediaBundle_media_folders') }}">{{ ('media.menu.folders') | trans }}</a>
-        			<ul>
-	    			{% for child in folders %}
-		                {% include 'KunstmaanMediaBundle:Folder:shownode.html.twig' %}
-		            {% endfor %}
-		            </ul>
-		    </li>        
+    	{%  endfor %}       
   		</ul>
  
     </div>

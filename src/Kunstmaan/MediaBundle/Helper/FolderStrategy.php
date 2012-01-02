@@ -19,26 +19,26 @@ class FolderStrategy implements GalleryStrategyInterface{
 
     public function getNewGallery()
     {
-        return new \Kunstmaan\MediaBundle\Entity\Gallery();
+        return new \Kunstmaan\MediaBundle\Entity\Folder();
     }
 
     public function getGalleryClassName()
     {
-        return 'Kunstmaan\MediaBundle\Entity\Gallery';
+        return 'Kunstmaan\MediaBundle\Entity\Folder';
     }
 
     function getFormType()
     {
-        return new \Kunstmaan\MediaBundle\Form\MediaType();
+        return null;
     }
 
     function getFormHelper()
     {
-        return new MediaHelper();
+        return null;
     }
 
     function getListConfigurator(){
-        return new \Kunstmaan\MediaBundle\Helper\MediaList\FileListConfigurator();
+        return new \Kunstmaan\MediaBundle\Helper\MediaList\MediaListConfigurator();
     }
 }
 

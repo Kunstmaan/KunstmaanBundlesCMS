@@ -1,5 +1,5 @@
 <div id="edit-modal" class="modal hide fade">
-    <form action="{{ path('KunstmaanMediaBundle_gallery_edit', { 'gallery_id' : gallery.id }  ) }}" method="post" {{ form_enctype(editform) }}>
+    <form action="{{ path('KunstmaanMediaBundle_folder_edit', { 'gallery_id' : gallery.id }  ) }}" method="post" {{ form_enctype(editform) }}>
         <div class="modal-header">
             <a href="#" class="close">&times;</a>
             <h3>{{ 'media.gallery.edit' | trans }}</h3>
