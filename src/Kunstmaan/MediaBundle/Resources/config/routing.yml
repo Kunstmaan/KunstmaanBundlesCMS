@@ -16,34 +16,6 @@ KunstmaanMediaBundle_media_imagegallery:
     requirements:
         _locale: en|nl|fr
         
-KunstmaanMediaBundle_media_videogallery:
-    resource: "@KunstmaanMediaBundle/Controller/VideoGalleryController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/videogallery
-    requirements:
-        _locale: en|nl|fr
-        
-KunstmaanMediaBundle_media_filegallery:
-    resource: "@KunstmaanMediaBundle/Controller/FileGalleryController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/filegallery
-    requirements:
-        _locale: en|nl|fr
-        
-KunstmaanMediaBundle_media_slidegallery:
-    resource: "@KunstmaanMediaBundle/Controller/SlideGalleryController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/slidegallery
-    requirements:
-        _locale: en|nl|fr
-        
-KunstmaanMediaBundle_media_gallery:
-    resource: "@KunstmaanMediaBundle/Controller/GalleryController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/gallery
-    requirements:
-        _locale: en|nl|fr
-        
 KunstmaanMediaBundle_media_folder:
     resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
     type:     annotation

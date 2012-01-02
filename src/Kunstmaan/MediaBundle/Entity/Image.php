@@ -71,6 +71,8 @@ class Image extends Media
      * @var Kunstmaan\MediaBundle\Entity\Gallery
      */
     protected $gallery;
+    
+    protected $type;
 
     /**
      * @var array $metadata
@@ -81,6 +83,7 @@ class Image extends Media
     {
         parent::__construct();
         $this->edits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classtype = "Image";
     }
 
     /**

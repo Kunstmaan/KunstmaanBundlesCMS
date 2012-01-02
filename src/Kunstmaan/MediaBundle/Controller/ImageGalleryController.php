@@ -16,26 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  *
  * @author Kristof Van Cauwenbergh
  */
-class ImageGalleryController extends GalleryController
+class ImageGalleryController
 {
-    /**
-     * @Route("/create", name="KunstmaanMediaBundle_imagegallery_create")
-     * @Method({"GET", "POST"})
-     */
-    public function createAction(){
-        $gallery = new ImageGallery();
-        return $this->parentcreateAction($gallery, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType());
-    }
-
-    /**
-     * @Route("/sub/create/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_imagegallery_subcreate")
-     * @Method({"GET", "POST"})
-     */
-    public function subcreateAction($id){
-        $gallery = new ImageGallery();
-        return $this->parentsubcreateAction($gallery,$id, new \Kunstmaan\MediaBundle\Helper\MediaHelper(), new \Kunstmaan\MediaBundle\Form\MediaType());
-    }
-
     /**
      * @Route("/ckeditor", name="KunstmaanMediaBundle_imagegallery_ckeditor")
      * @Template()

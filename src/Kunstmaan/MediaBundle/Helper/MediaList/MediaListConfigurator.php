@@ -18,11 +18,13 @@ class MediaListConfigurator extends AbstractAdminListConfigurator{
 
     public function buildFilters(AdminListFilter $builder){
         $builder->add('name', new StringFilterType("name"));
+        $builder->add('classtype', new StringFilterType("classtype"));
     }
 
     public function buildFields()
     {
     	$this->addField("name", "Name", true);
+    	$this->addField("classtype", "Type", true);
     	$this->addField("createdAt", "Created At", true);
     	$this->addField("updatedAt", "Updated At", true); 	
     }

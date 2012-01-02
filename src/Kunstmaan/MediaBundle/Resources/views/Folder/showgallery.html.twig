@@ -1,5 +1,5 @@
 <div>
-   <h3>{{ 'media.gallery.sub.sub' |trans }}: <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name }}</a></h3>
+   <h3>{{ 'media.gallery.sub.sub' |trans }}: <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name }}</a></h3>
 
    <ul>
         {% for image in child.files %}
@@ -15,7 +15,7 @@
    </ul>
     <ul>
     {% for child in child.children %}
-        <li>{% include 'KunstmaanMediaBundle:Gallery:showgallery.html.twig' %}</li>
+        <li>{% include 'KunstmaanMediaBundle:Folder:showgallery.html.twig' %}</li>
     {% endfor %}
     </ul>
 </div>

@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
+
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -125,7 +127,7 @@ class MediaController extends Controller
     	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
     	->getAllFoldersByType();
     
-    	return $this->render('KunstmaanMediaBundle:'.ucfirst($gallery->getStrategy()->getType()).':show.html.twig', array(
+    	return $this->render('KunstmaanMediaBundle:'.$media->getClassType().':show.html.twig', array(
     			'media' => $media,
     			'gallery' => $gallery,
     			'galleries' => $galleries

@@ -28,7 +28,7 @@
              	<span class="helper">Click to edit</span>
              </li>
         {% endfor %}
-        	<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_create', { 'gallery_id' : gallery.id }) }}" id="droplabel" data-controls-modal="addmedia-modal" data-backdrop="true" data-keyboard="true">{{ 'form.add' | trans }}</a></li>
+        	<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" id="droplabel">{{ 'form.add' | trans }}</a></li>
         </ul>
 </section>
 </div></div>

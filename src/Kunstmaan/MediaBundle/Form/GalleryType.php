@@ -42,7 +42,7 @@ class GalleryType extends AbstractType
 
     public function getName()
     {
-        return 'kunstmaan_mediabundle_imagegallerytype';
+        return 'kunstmaan_mediabundle_gallerytype';
     }
 
     public function getEntityName()
