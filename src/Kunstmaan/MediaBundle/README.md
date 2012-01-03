@@ -1,6 +1,6 @@
 # Introducing [KunstmaanMediaBundle][KunstmaanMediaBundle]
 
-De [KunstmaanMediaBundle][KunstmaanMediaBundle] is a symfony2 bundle used at [Kunstmaan][kunstmaan] to handle media, and media galleries. It has objects to handle files, slides, videos and images and keeps them organised in galleries.
+De [KunstmaanMediaBundle][KunstmaanMediaBundle] is a symfony2 bundle used at [Kunstmaan][kunstmaan] to handle media, and media folders. It has objects to handle files, slides, videos and images and keeps them organised in folders.
 
 # Installing [KunstmaanMediaBundle][KunstmaanMediaBundle]
 
