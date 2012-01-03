@@ -10,7 +10,7 @@ use Kunstmaan\MediaBundle\Entity\File;
  * class to define the form to upload a file
  *
  */
-class GalleryType extends AbstractType
+class FolderType extends AbstractType
 {
     protected $entityname;
     public $gallery;
@@ -31,11 +31,16 @@ class GalleryType extends AbstractType
                               'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use($gallery, $type) {
                                   $qb = $er->createQueryBuilder('gallery');
 
+                                  if($type->getEntityName()=="Kunstmaan\MediaBundle\Entity\Folder"){
+                                  	$qb->where("gallery instance of 'Kunstmaan\MediaBundle\Entity\Folder'");
+                                  }
+                                  
                                   if($gallery != null){
                                       $ids = "gallery.id != ". $gallery->getId();
                                       $ids .= $type->addChildren($gallery);
-                                      $qb->where($ids);
+                                      $qb->andwhere($ids);
                                     }
+                       
                                     return $qb;
                               }
         ));
@@ -43,7 +48,7 @@ class GalleryType extends AbstractType
 
     public function getName()
     {
-        return 'kunstmaan_mediabundle_gallerytype';
+        return 'kunstmaan_mediabundle_FolderType';
     }
 
     public function getEntityName()

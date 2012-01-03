@@ -34,7 +34,7 @@ class FileListConfigurator extends AbstractAdminListConfigurator{
     }
 
     public function getAddUrlFor() {
-    	return "KunstmaanMediaBundle_file_create";
+    	return "KunstmaanMediaBundle_folder_filecreate";
     }
 
     public function canEdit() {

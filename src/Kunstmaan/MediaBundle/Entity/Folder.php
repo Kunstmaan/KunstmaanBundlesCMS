@@ -31,7 +31,7 @@ class Folder{
      * @ORM\Column(type="string")
      */
     protected $name;
-
+   
     /**
      * @ORM\Column(type="string")
      */
@@ -127,7 +127,7 @@ class Folder{
     {
         return $this->slug;
     }
-
+    
     /**
       * Set created
       *
@@ -303,7 +303,7 @@ class Folder{
 	
 	public function getFormType($gallery = null)
 	{
-		return new \Kunstmaan\MediaBundle\Form\GalleryType($this->getStrategy()->getGalleryClassName(), $gallery);
+		return new \Kunstmaan\MediaBundle\Form\FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
 	}
 	
 	public function getType()

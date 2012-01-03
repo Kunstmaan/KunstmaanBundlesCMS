@@ -235,7 +235,7 @@ abstract class Gallery extends Folder{
 
     public function getFormType($gallery = null)
     {
-        return new \Kunstmaan\MediaBundle\Form\GalleryType($this->getStrategy()->getGalleryClassName(), $gallery);
+        return new \Kunstmaan\MediaBundle\Form\FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
     }
 
     public function getType()

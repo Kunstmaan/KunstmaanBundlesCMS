@@ -4,9 +4,9 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\MediaBundle\Form\GalleryType;
+use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
-use Kunstmaan\MediaBundle\Form\SubGalleryType;
+use Kunstmaan\MediaBundle\Form\SubFolderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

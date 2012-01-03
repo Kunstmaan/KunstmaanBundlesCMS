@@ -30,8 +30,8 @@ use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Entity\SlideGallery;
 use Kunstmaan\MediaBundle\Entity\VideoGallery;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
-use Kunstmaan\MediaBundle\Form\GalleryType;
-use Kunstmaan\MediaBundle\Form\SubGalleryType;
+use Kunstmaan\MediaBundle\Form\FolderType;
+use Kunstmaan\MediaBundle\Form\SubFolderType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -64,7 +64,7 @@ class FolderController extends Controller
         //$form = $this->createForm($gallery->getStrategy()->getFormType(), $gallery->getStrategy()->getFormHelper());
         $sub = $gallery->getStrategy()->getNewGallery();
         $sub->setParent($gallery);
-        $subform = $this->createForm(new SubGalleryType(), $sub);
+        $subform = $this->createForm(new SubFolderType(), $sub);
         $editform = $this->createForm($gallery->getFormType($gallery), $gallery);
 
         return array(
@@ -135,7 +135,7 @@ class FolderController extends Controller
     	$gallery = FolderFactory::getTypeFolder($type);
     	
         $request = $this->getRequest();
-        $form = $this->createForm(new GalleryType($gallery->getStrategy()->getGalleryClassName()), $gallery);
+        $form = $this->createForm(new FolderType($gallery->getStrategy()->getGalleryClassName()), $gallery);
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
@@ -172,7 +172,7 @@ class FolderController extends Controller
 
             $gallery = $parent->getStrategy()->getNewGallery();
             $gallery->setParent($parent);
-            $form = $this->createForm(new SubGalleryType(), $gallery);
+            $form = $this->createForm(new SubFolderType(), $gallery);
 
             if ('POST' == $request->getMethod()) {
                 $form->bindRequest($request);
@@ -193,153 +193,5 @@ class FolderController extends Controller
                 'gallery' => $gallery,
                 'parent' => $parent
             ));
-    }
-    
-    /**
-     * @Route("filecreate/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_filecreate")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:File:create.html.twig")
-     */
-    public function filecreateAction($gallery_id)
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
-    
-    	$request = $this->getRequest();
-    	$helper = new MediaHelper();
-    	$form = $this->createForm(new MediaType(), $helper);
-    
-    	if ('POST' == $request->getMethod()) {
-    		$form->bindRequest($request);
-    		if ($form->isValid()){
-    			if ($helper->getMedia()!=null) {
-    				$file = new File();
-    				$file->setName($helper->getMedia()->getClientOriginalName());
-    				$file->setContent($helper->getMedia());
-    				$file->setGallery($gallery);
-    
-    				$em->getRepository('KunstmaanMediaBundle:Media')->save($file, $em);
-    
-    				return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-    			}
-    		}
-    	}
-    
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
-    	->getAllFoldersByType();
-    
-    	return array(
-    			'form' => $form->createView(),
-    			'gallery' => $gallery,
-    			'galleries' => $galleries
-    	);
-    }
-    
-    /**
-     * @Route("imagecreate/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_imagecreate")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:Image:create.html.twig")
-     */
-    public function imagecreateAction($gallery_id)
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
-    
-    	$request = $this->getRequest();
-    	$picturehelper = new MediaHelper();
-    	$form = $this->createForm(new MediaType(), $picturehelper);
-    
-    	if ('POST' == $request->getMethod()) {
-    		$form->bindRequest($request);
-    		if ($form->isValid()){
-    			if ($picturehelper->getMedia()!=null) {
-    				$picture = new Image();
-    				$picture->setName($picturehelper->getMedia()->getClientOriginalName());
-    				$picture->setContent($picturehelper->getMedia());
-    				$picture->setGallery($gallery);
-    
-    				$em->getRepository('KunstmaanMediaBundle:Media')->save($picture, $em);
-    
-    				return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-    			}
-    		}
-    	}
-    
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
-    	->getAllFoldersByType();
-    
-    	return array(
-    			'form' => $form->createView(),
-    			'gallery' => $gallery,
-    			'galleries' => $galleries
-    	);
-    }
-    
-    /**
-     * @Route("videocreate/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_videocreate")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:Video:create.html.twig")
-     */
-    public function videocreateAction($gallery_id)
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
-    
-    	$request = $this->getRequest();
-    	$Video = new Video();
-    	$Video->setGallery($gallery);
-    	$form = $this->createForm(new VideoType(), $Video);
-    
-    	if ('POST' == $request->getMethod()) {
-    		$form->bindRequest($request);
-    		if ($form->isValid()){
-    			$em->getRepository('KunstmaanMediaBundle:Media')->save($Video, $em);
-    
-    			return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-    		}
-    	}
-    
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
-    	->getAllFoldersByType();
-    
-    	return array(
-    			'form' => $form->createView(),
-    			'gallery' => $gallery,
-    			'galleries' => $galleries
-    	);
-    }
-    
-    /**
-     * @Route("slidecreate/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_slidecreate")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:Slide:create.html.twig")
-     */
-    public function slidecreateAction($gallery_id)
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
-    
-    	$request = $this->getRequest();
-    	$slide = new Slide();
-    	$slide->setGallery($gallery);
-    	$form = $this->createForm(new SlideType(), $slide);
-    
-    	if ('POST' == $request->getMethod()) {
-    		$form->bindRequest($request);
-    		if ($form->isValid()){
-    			$em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
-    
-    			return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-    		}
-    	}
-    
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
-    	->getAllFoldersByType();
-    	return array(
-    			'form' => $form->createView(),
-    			'gallery' => $gallery,
-    			'galleries' => $galleries
-    	);
     }
 }

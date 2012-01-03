@@ -14,8 +14,8 @@
 
 {% block content %}
     <div class="page-header">
-    	{%  set gallerytype = 'media.'~gallery.type~'.'~gallery.type %}
-        <h1>{{ gallerytype|trans }} {{ 'media.gallery.gallery' | trans }} <small>{{ gallery.name }}
+    	{%  set FolderType = 'media.'~gallery.type~'.'~gallery.type %}
+        <h1>{{ FolderType|trans }} {{ 'media.gallery.gallery' | trans }} <small>{{ gallery.name }}
         {% if gallery.parent %}
             | in <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name}}</a>
         {% endif %}
@@ -43,8 +43,8 @@
         </div>
     </div>
     <div>
-    	{%  set gallerytypelist = 'media.'~gallery.type~'.list' %}
-        <h2>{{ gallerytypelist | trans({'%gallery%': gallery.name}) }}</h2>
+    	{%  set FolderTypelist = 'media.'~gallery.type~'.list' %}
+        <h2>{{ FolderTypelist | trans({'%gallery%': gallery.name}) }}</h2>
        {% include 'KunstmaanMediaBundle:' ~ gallery.type|capitalize ~ ':tableview.html.twig' %}
     </div>
 

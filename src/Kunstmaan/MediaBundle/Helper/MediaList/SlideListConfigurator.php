@@ -34,7 +34,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator{
     }
 
     public function getAddUrlFor() {
-    	return "KunstmaanMediaBundle_slide_create";
+    	return "KunstmaanMediaBundle_folder_slidecreate";
     }
 
     public function canEdit() {

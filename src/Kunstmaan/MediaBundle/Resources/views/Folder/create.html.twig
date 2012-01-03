@@ -4,17 +4,17 @@
     {% include 'KunstmaanMediaBundle:Folder:sidebar.html.twig' %}
 {% endblock %}
 
-{% set gallerytype = 'media.'~gallery.type~'.'~gallery.type~'s' %}
+{% set FolderType = 'media.'~gallery.type~'.'~gallery.type~'s' %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ gallerytype | trans | capitalize }}</a></li>
-	<li class="active">{{ 'media.gallery.create' | trans }} {{ gallerytype |trans }}</li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ FolderType | trans | capitalize }}</a></li>
+	<li class="active">{{ 'media.gallery.create' | trans }} {{ FolderType |trans }}</li>
 {% endblock %}
 
 {% block content %}
 
 <div class="page-header">
-    <h1>{{ 'media.gallery.create' | trans }} {{ gallerytype |trans }}</h1>
+    <h1>{{ 'media.gallery.create' | trans }} {{ FolderType |trans }}</h1>
   </div>
    {% include 'KunstmaanMediaBundle:Folder:form.html.twig' with { 'form': form } %}
 {% endblock %}

@@ -34,7 +34,7 @@ class VideoListConfigurator extends AbstractAdminListConfigurator{
     }
 
     public function getAddUrlFor() {
-    	return "KunstmaanMediaBundle_video_create";
+    	return "KunstmaanMediaBundle_folder_videocreate";
     }
 
     public function canEdit() {
