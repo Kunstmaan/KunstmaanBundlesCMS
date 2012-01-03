@@ -5,11 +5,10 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_files') }}">{{ 'media.menu.files'|trans }}</a></li>
-        {% for parent in gallery.parents %}
-            <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a></li>
-        {% endfor %}
-    <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name}}</a></li>
+    {% for parent in gallery.parents %}
+    	<li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name| trans}}</a></li>
+    {% endfor %}
+    <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name|trans }}</a></li>
     <li class="active">{{ media.name }}</li>
 {% endblock %}
 

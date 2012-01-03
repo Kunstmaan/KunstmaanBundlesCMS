@@ -64,6 +64,11 @@ abstract class Media{
 
     protected $content;
     protected $context;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $classtype;
 
     public function __construct($context = null)
     {
@@ -275,12 +280,7 @@ abstract class Media{
         $path = $path.".".\Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser::guess($this->getContentType());
         return $path;
     }
-    
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $classtype;
-    
+
     public function getClassType(){
     	return $this->classtype;
     }

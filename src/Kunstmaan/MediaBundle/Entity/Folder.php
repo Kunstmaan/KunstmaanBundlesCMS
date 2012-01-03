@@ -2,6 +2,8 @@
 
 namespace  Kunstmaan\MediaBundle\Entity;
 
+use Kunstmaan\AdminBundle\Modules\Slugifier;
+
 use Kunstmaan\MediaBundle\Helper\FolderStrategy;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="media_folder")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({ "folder"="Folder", "gallery" = "Gallery", "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
+ * @ORM\DiscriminatorMap({ "folder"="Folder", "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
  * @ORM\HasLifecycleCallbacks
  */
 class Folder{
@@ -99,26 +101,6 @@ class Folder{
         return $this->name;
     }
 
-    public function slugify($text)
-    {
-        $text = preg_replace('#[^\\pL\d]+#u', '-', $text); // replace non letter or digits by -
-        $text = trim($text, '-'); //trim
-
-        // transliterate
-        if (function_exists('iconv')){
-            $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-        }
-
-        $text = strtolower($text); // lowercase
-        $text = preg_replace('#[^-\w]+#', '', $text); // remove unwanted characters
-
-        if (empty($text)){
-            return 'n-a';
-        }
-
-        return $text;
-    }
-
     /**
      * Set slug
      *
@@ -127,6 +109,16 @@ class Folder{
     public function setSlug($slug)
     {
         $this->slug = $slug;
+    }
+    
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+    	return $this->slug;
     }
     
     public function setCanDelete($bool){
@@ -144,17 +136,7 @@ class Folder{
     public function getRel(){
     	return $this->rel;
     }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-    
+ 
     /**
       * Set created
       *
@@ -275,11 +257,6 @@ class Folder{
         $this->files[] = $files;
     }
 
-    public function __toString()
-    {
-        return $this->getName();
-    }
-
     /**
      * Get files
      *
@@ -289,13 +266,45 @@ class Folder{
     {
         return $this->files;
     }
+    
+    public function hasActive($id){
+    	$bool = false;
+    	foreach($this->getChildren() as $child){
+    		$bool = $child->hasActive($id);
+    		if($bool == true) return true;
+    		if($child->getId()==$id) return true;
+    	}
+    	return false;
+    }
+    
+    public function getStrategy(){
+    	return new FolderStrategy();
+    }
+    
+    public function getFormType($gallery = null)
+    {
+    	return new \Kunstmaan\MediaBundle\Form\FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
+    }
+    
+    public function getType()
+    {
+    	return $this->getStrategy()->getType();
+    }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+    	return $this->getName();
+    }
+    
     /**
      * @ORM\PrePersist
      */
     public function prePersist()
     {
-        $this->setSlug($this->slugify($this->getName()));
+        $this->setSlug(Slugifier::slugify($this->getName()));
     }
 
     /**
@@ -313,28 +322,4 @@ class Folder{
     {
 
     }
-
-	public function hasActive($id){
-		$bool = false;
-		foreach($this->getChildren() as $child){
-			$bool = $child->hasActive($id);
-			if($bool == true) return true;
-			if($child->getId()==$id) return true;	
-		}
-		return false;
-	}
-	
-	public function getStrategy(){
-		return new FolderStrategy();
-	}
-	
-	public function getFormType($gallery = null)
-	{
-		return new \Kunstmaan\MediaBundle\Form\FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
-	}
-	
-	public function getType()
-	{
-		return $this->getStrategy()->getType();
-	}
 }

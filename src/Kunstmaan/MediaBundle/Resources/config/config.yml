@@ -6,7 +6,10 @@ twig:
     globals:
         upload_dir: "%kunstmaan_media.upload_dir%"
 
-#services:
+services:
+    kunstmaan_media.media_menu:
+      class: Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor
+      arguments: ["@knp_menu.factory"]
 #    kunstmaan.provider.speakerdeck:
  #       class: %kunstmaan_media.provider.speakerdeck.class%
   #      parent: kunstmaan_media.provider.abstract

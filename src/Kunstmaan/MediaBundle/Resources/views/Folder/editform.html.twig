@@ -16,8 +16,8 @@
             {{ form_rest(editform) }}
         </div>
         <div class="actions">
-            <input class="btn primary type" type="submit" value="{{ 'media.gallery.edit' |trans }}">
-            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's' ) }}'" type="reset" class="btn" value="{{ 'form.cancel' |trans }}" />
+            <input class="btn success" type="submit" value="{{ 'media.gallery.edit' |trans }}">
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id' : gallery.id, 'slug':gallery.slug } ) }}'" type="reset" class="btn" value="{{ 'form.cancel' |trans }}" />
         </div>
     </fieldset>
 </form>

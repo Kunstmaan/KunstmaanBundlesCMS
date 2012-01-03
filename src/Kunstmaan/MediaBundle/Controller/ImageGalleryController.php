@@ -24,8 +24,8 @@ class ImageGalleryController
      */
     public function ckeditorAction(){
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:ImageGallery')
-                        ->getAllGalleries();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
+                        ->getAllFolders();
 
         return array(
             'galleries'     => $galleries

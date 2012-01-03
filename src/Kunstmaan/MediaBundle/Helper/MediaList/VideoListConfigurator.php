@@ -9,6 +9,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper\MediaList;
 
+use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
+
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
@@ -19,6 +21,8 @@ class VideoListConfigurator extends AbstractAdminListConfigurator{
     public function buildFilters(AdminListFilter $builder){
         $builder->add('name', new StringFilterType("name"));
         $builder->add('type', new StringFilterType("type"));
+        $builder->add('createdAt', new DateFilterType("createdAt"));
+        $builder->add('updatedAt', new DateFilterType("updatedAt"));
     }
 
     public function buildFields()
@@ -42,7 +46,7 @@ class VideoListConfigurator extends AbstractAdminListConfigurator{
     }
     
     public function getEditUrlFor($item) {
-    	return array('path' => 'KunstmaanMediaBundle_video_edit', 'params' => array( 'media_id' => $item->getId()));
+    	return array('path' => 'KunstmaanMediaBundle_media_show', 'params' => array( 'media_id' => $item->getId()));
     }
     
     public function canDelete($item) {

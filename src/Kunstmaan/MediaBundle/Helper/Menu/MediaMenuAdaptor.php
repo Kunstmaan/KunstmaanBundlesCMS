@@ -1,6 +1,6 @@
 <?php
 // src/Acme/DemoBundle/Menu/Builder.php
-namespace Kunstmaan\MediaBundle\Menu;
+namespace Kunstmaan\MediaBundle\Helper\Menu;
 
 use Symfony\Component\Translation\Translator;
 

@@ -8,6 +8,9 @@ KunstmaanMediaBundle_media:
 KunstmaanMediaBundle_aviary:
     resource: "@KunstmaanMediaBundle/Controller/AviaryController.php"
     type:     annotation
+    prefix:   /{_locale}
+    requirements:
+        _locale: en|nl|fr
         
 KunstmaanMediaBundle_media_imagegallery:
     resource: "@KunstmaanMediaBundle/Controller/ImageGalleryController.php"

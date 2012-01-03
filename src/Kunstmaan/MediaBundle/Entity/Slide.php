@@ -33,42 +33,7 @@ class Slide extends Media
      *
      */
     protected $context = "kunstmaan_media_code";
-
-    /**
-     * @var string $name
-     */
-    protected $name;
-
-    /**
-     * @var string $contentType
-     */
-    protected $contentType;
-
-    /**
-     * @var datetime $createdAt
-     */
-    protected $createdAt;
-
-    /**
-     * @var datetime $updatedAt
-     */
-    protected $updatedAt;
-
-    /**
-     * @var string $content
-     */
-    protected $content;
-
-    /**
-     * @var array $metadata
-     */
-    protected $metadata;
-
-    /**
-     * @var Kunstmaan\MediaBundle\Entity\Gallery
-     */
-    protected $gallery;
-
+    
     /**
      * @ORM\Column(type="string")
      */
@@ -78,36 +43,6 @@ class Slide extends Media
     {
         parent::__construct();
         $this->classtype = "Slide";
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set uuid
-     *
-     * @param string $uuid
-     */
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
-    }
-
-    /**
-     * Get uuid
-     *
-     * @return string
-     */
-    public function getUuid()
-    {
-        return $this->uuid;
     }
 
     public function show($format=null, $options = array())
