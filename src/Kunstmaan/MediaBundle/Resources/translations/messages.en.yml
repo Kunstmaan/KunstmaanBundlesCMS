@@ -97,5 +97,10 @@ media:
     deletesure: Are you sure you want to delete "%gallery%"? 
     delete: Delete this gallery
     deletemedia: The following %type% are also deleted
-    edit: Edit this gallery
+    edit: Edit this folder
+    
+  folder:
+    folders: an event
+    open: open this folder
+    properties: Properties
     

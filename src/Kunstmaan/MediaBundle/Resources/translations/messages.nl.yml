@@ -101,6 +101,11 @@ media:
     deletemedia: De volgende %type% worden ook verwijdert
     edit: Pas deze galerij aan
     
+  folder:
+    folders: een evenement
+    open: open deze map
+    properties: Eigenschappen
+    
     
     
     

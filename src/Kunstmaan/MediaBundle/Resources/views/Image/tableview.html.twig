@@ -13,9 +13,7 @@
 	});
 </script>#}
 
-<div id="my-tab-content" class="tab-content"> 
-<div class="tab-pane active" id="imagegallery"> 
-    					<section> 
+<section> 
 		<ul class="media-grid" id="file-list">
         {% for media in gallery.files %}
             {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
@@ -28,7 +26,6 @@
              	<span class="helper">Click to edit</span>
              </li>
         {% endfor %}
-        	<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" id="droplabel">{{ 'form.add' | trans }}</a></li>
+        	{#<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" id="droplabel">{{ 'form.add' | trans }}</a></li>#}
         </ul>
 </section>
-</div></div>

@@ -4,10 +4,11 @@
     {% include 'KunstmaanMediaBundle:Folder:sidebar.html.twig' %}
 {% endblock %}
 
+{% set FolderMenu = 'media.menu.'~gallery.type~'s' %}
 {% set FolderType = 'media.'~gallery.type~'.'~gallery.type~'s' %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ FolderType | trans | capitalize }}</a></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ FolderMenu | trans | capitalize }}</a></li>
 	<li class="active">{{ 'media.gallery.create' | trans }} {{ FolderType |trans }}</li>
 {% endblock %}
 
