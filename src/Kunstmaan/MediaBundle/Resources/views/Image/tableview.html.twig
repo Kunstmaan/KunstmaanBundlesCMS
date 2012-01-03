@@ -25,6 +25,9 @@
                 <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
              	<span class="helper">Click to edit</span>
              </li>
+        {% else %}
+    		<li><a href="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">{{ 'media.image.no' |trans }} {{ 'media.image.add' |trans }}</a>
+    		</li>
         {% endfor %}
         	{#<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" id="droplabel">{{ 'form.add' | trans }}</a></li>#}
         </ul>

@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_videos') }}">{{ 'media.menu.videos' | trans }}</a> <span class="divider">/</span></li>
-    <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
-	<li class="active">{{ 'media.video.addto'| trans({'%gallery%': gallery.name }) | raw }}</li>
+    {% for parent in gallery.parents %}<li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>{% endfor %}
+	<li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name | trans }}</a></li>
+	<li class="active">{{ 'media.video.addto'| trans({'%gallery%': gallery.name|trans }) | raw }}</li>
 {% endblock %}
 
 {% block title %}{{ 'media.video.new' | trans }}{% endblock%}
 
 {% block content %}
-    <h1>{{ 'media.video.addto'| trans({'%gallery%': gallery.name }) | raw }}</h1>
+    <h1>{{ 'media.video.addto'| trans({'%gallery%': gallery.name|trans }) | raw }}</h1>
     {% include 'KunstmaanMediaBundle:Video:form.html.twig' with { 'form': form } %}
 {% endblock %}

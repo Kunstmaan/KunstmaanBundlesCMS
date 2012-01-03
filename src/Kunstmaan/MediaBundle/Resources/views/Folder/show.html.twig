@@ -61,7 +61,10 @@
     								<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item"><img src="{{ asset('bundles/kunstmaanmedia/img/dummy/map.jpg') }}" alt="" /></a> 
     								<span class="helper">{{ 'media.folder.open' | trans }}</span> 
     								<span class="name">{{ child.name | trans }}</span> 
-    							</li>  
+    							</li> 
+    						{% else %}
+    							<li><a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">{{ 'media.gallery.sub.no' |trans }} {{ 'media.gallery.sub.addshort' |trans }}</a>
+    							</li>
     						{% endfor %}	
     						</ul>								
     					</section>        
