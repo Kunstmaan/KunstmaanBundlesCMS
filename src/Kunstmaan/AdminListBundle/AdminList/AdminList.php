@@ -9,6 +9,8 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Doctrine\DBAL\Query\QueryBuilder;
+
 class AdminList {
 
     protected $request = null;
@@ -24,18 +26,21 @@ class AdminList {
     protected $orderBy = null;
 
     protected $orderDirection = null;
-
-    function __construct(AbstractAdminListConfigurator $configurator, $em)
+ 
+    protected $queryparams = array();
+    
+    function __construct(AbstractAdminListConfigurator $configurator, $em, $queryparams = array())
     {
         $this->configurator = $configurator;
         $this->em = $em;
         $adminlistfilter = new AdminListFilter();
         $this->configurator->buildFilters($adminlistfilter);
         $this->adminlistfilter = $adminlistfilter;
+        $this->queryparams = $queryparams;
     }
 
     public function getPaginationBean(){
-        return new PaginationBean($this->getCount(), $this->page, $this->configurator->getLimit());
+        return new PaginationBean($this->getCount($this->queryparams), $this->page, $this->configurator->getLimit());
     }
 
     public function getAdminListFilter(){
@@ -72,17 +77,23 @@ class AdminList {
         return $result;
     }
 
-    public function getCount(){
+    public function getCount($params = array()){
         $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
         $queryBuilder = $queryBuilder->select("count(b.id)");
+        foreach($params as $key => $param){
+        	$queryBuilder->where($queryBuilder->expr()->eq("b.".$key, $param));
+        }
         $this->configurator->adaptQueryBuilder($queryBuilder);
         $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
         $query = $queryBuilder->getQuery();
         return $query->getSingleScalarResult();
     }
 
-    public function getItems(){
+    public function getItems($params = array()){
         $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
+        foreach($params as $key => $param){
+        	$queryBuilder->where($queryBuilder->expr()->eq("b.".$key, $param));
+        }
         $queryBuilder->setFirstResult( ($this->page-1) * $this->configurator->getLimit() );
         $queryBuilder->setMaxResults( $this->configurator->getLimit() );
         $this->configurator->adaptQueryBuilder($queryBuilder);

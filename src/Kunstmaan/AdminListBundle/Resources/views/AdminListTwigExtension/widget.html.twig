@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for item in adminlist.items%}
+        {% for item in adminlist.items(queryparams) %}
             {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
             <tr>
                 <td>
