@@ -100,6 +100,7 @@ media:
     edit: Edit this folder
     
   folder:
+    sub: in folder
     folders: an event
     open: open this folder
     properties: Properties

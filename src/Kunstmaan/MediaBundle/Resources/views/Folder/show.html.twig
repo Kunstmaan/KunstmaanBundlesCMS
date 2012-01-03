@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block subbreadcrumb %}{%  set galstype = 'media.menu.'~gallery.type~'s' %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ galstype|trans|capitalize }}</a></li>
-        {% for parent in gallery.parents %}<li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name}}</a></li>{% endfor %}
-	<li class="active">{{ gallery.name }}</li>
+    
+        {% for parent in gallery.parents %}<li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>{% endfor %}
+	<li class="active">{{ gallery.name | trans }}</li>
 {% endblock %}
 
 {% block content %}
 <div class="page-header">
-		{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}<h1>{{ gallery.name }}{% if gallery.parent %}<small>{{ 'media.gallery.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name}}</a></small>{% endif %}</h1>
+		{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
 	</div>
 
         {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
@@ -29,7 +29,7 @@
 	        	<a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ addmediatype |trans }}</a>
             {%  endif %} 
             <a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
-            <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'media.gallery.delete' |trans }}</a>
+            {% if gallery.canDelete %}<a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'media.gallery.delete' |trans }}</a>{% endif %}
         </div>
         <div id="main_actions_top" class="main_actions top"><div class="pull-right"> 
         	{%  if gallery.type == "folder" %}
@@ -42,7 +42,7 @@
 	        	<a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ addmediatype |trans }}</a>
             {%  endif %} 
             <a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
-            <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'media.gallery.delete' |trans }}</a>
+            {% if gallery.canDelete %}<a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'media.gallery.delete' |trans }}</a>{% endif %}
         	<a class="btn up">&#9650;</a> 
         </div></div>
 
@@ -60,7 +60,7 @@
     							<li> 
     								<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item"><img src="{{ asset('bundles/kunstmaanmedia/img/dummy/map.jpg') }}" alt="" /></a> 
     								<span class="helper">{{ 'media.folder.open' | trans }}</span> 
-    								<span class="name">{{ child.name }}</span> 
+    								<span class="name">{{ child.name | trans }}</span> 
     							</li>  
     						{% endfor %}	
     						</ul>								

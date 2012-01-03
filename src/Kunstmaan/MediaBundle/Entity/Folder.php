@@ -62,13 +62,24 @@ class Folder{
      * @ORM\Column(type="datetime")
      */
     protected $updated;
-
+    
+    /**
+     * @ORM\Column(type="boolean")
+     */
+	protected $candelete;
+	
+	/**
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $rel;
+    
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->files = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
+        $this->setCanDelete(true);
     }
 
     public function setId($id){
@@ -116,6 +127,22 @@ class Folder{
     public function setSlug($slug)
     {
         $this->slug = $slug;
+    }
+    
+    public function setCanDelete($bool){
+    	$this->candelete = $bool;
+    }
+    
+    public function canDelete(){
+    	return $this->candelete;
+    }
+    
+    public function setRel($rel){
+    	$this->rel = $rel;
+    }
+    
+    public function getRel(){
+    	return $this->rel;
     }
 
     /**

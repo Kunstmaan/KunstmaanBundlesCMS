@@ -8,7 +8,6 @@
 {% set FolderType = 'media.'~gallery.type~'.'~gallery.type~'s' %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_' ~ gallery.type ~ 's') }}">{{ FolderMenu | trans | capitalize }}</a></li>
 	<li class="active">{{ 'media.gallery.create' | trans }} {{ FolderType |trans }}</li>
 {% endblock %}
 
