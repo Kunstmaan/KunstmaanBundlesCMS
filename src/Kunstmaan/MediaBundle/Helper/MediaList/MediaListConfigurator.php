@@ -23,10 +23,10 @@ class MediaListConfigurator extends AbstractAdminListConfigurator{
 
     public function buildFields()
     {
-    	$this->addField("name", "Name", true);
-    	$this->addField("classtype", "Type", true);
-    	$this->addField("createdAt", "Created At", true);
-    	$this->addField("updatedAt", "Updated At", true); 	
+    	$this->addField("name", "form.name", true);
+    	$this->addField("classtype", "form.type", true);
+    	$this->addField("createdAt", "form.createdat", true);
+    	$this->addField("updatedAt", "form.updatedat", true); 	
     }
 
 	public function canAdd() {
