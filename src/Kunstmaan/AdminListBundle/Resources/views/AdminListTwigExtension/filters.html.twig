@@ -3,9 +3,9 @@
         <div id="filtermap">
             <div class="filterline" id="addline" {% if filter.currentfilters|length >0 %} style="display:none" {% endif %}>
                 <select class="filterselect" id="addfilter" onchange="createFilter(this, true)">
-                    <option>Add filter</option>
+                    <option>{{ "form.addfilter"|trans }}</option>
                     {% for columnname, value in filter.filterdefinitions %}
-                        <option>{{columnname}}</option>
+                        <option>{{columnname|trans}}</option>
                     {% endfor %}
                 </select>
             </div>
