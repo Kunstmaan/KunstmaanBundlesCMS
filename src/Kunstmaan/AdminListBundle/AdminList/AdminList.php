@@ -80,10 +80,7 @@ class AdminList {
     public function getCount($params = array()){
         $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
         $queryBuilder = $queryBuilder->select("count(b.id)");
-        foreach($params as $key => $param){
-        	$queryBuilder->where($queryBuilder->expr()->eq("b.".$key, $param));
-        }
-        $this->configurator->adaptQueryBuilder($queryBuilder);
+        $this->configurator->adaptQueryBuilder($queryBuilder, $params);
         $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
         $query = $queryBuilder->getQuery();
         return $query->getSingleScalarResult();
@@ -91,12 +88,9 @@ class AdminList {
 
     public function getItems($params = array()){
         $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
-        foreach($params as $key => $param){
-        	$queryBuilder->where($queryBuilder->expr()->eq("b.".$key, $param));
-        }
         $queryBuilder->setFirstResult( ($this->page-1) * $this->configurator->getLimit() );
         $queryBuilder->setMaxResults( $this->configurator->getLimit() );
-        $this->configurator->adaptQueryBuilder($queryBuilder);
+        $this->configurator->adaptQueryBuilder($queryBuilder, $params);
         $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
         if(!is_null($this->orderBy)){
             $queryBuilder->orderBy('b.'.$this->orderBy, ($this->orderDirection=="DESC")?'DESC':"ASC");
@@ -121,8 +115,8 @@ class AdminList {
         return $this->configurator->getEditUrlFor($item);
     }
     
-    public function getAddUrlFor(){
-    	return $this->configurator->getAddUrlFor();
+    public function getAddUrlFor($params){
+    	return $this->configurator->getAddUrlFor($params);
     }
 
     public function canDelete($item){

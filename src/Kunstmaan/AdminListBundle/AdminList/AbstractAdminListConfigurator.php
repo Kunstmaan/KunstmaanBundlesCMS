@@ -47,13 +47,13 @@ abstract class AbstractAdminListConfigurator {
     
     abstract function canAdd();
     
-    abstract function getAddUrlFor();
+    abstract function getAddUrlFor($params=array());
 
     abstract function canDelete($item);
 
     abstract function getRepositoryName();
 
-    function adaptQueryBuilder($querybuilder){
+    function adaptQueryBuilder($querybuilder, $params=array()){
 
     }
 
