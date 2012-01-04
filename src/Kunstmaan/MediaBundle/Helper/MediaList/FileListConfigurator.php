@@ -33,8 +33,8 @@ class FileListConfigurator extends AbstractAdminListConfigurator{
         return true;
     }
 
-    public function getAddUrlFor() {
-    	return "KunstmaanMediaBundle_folder_filecreate";
+    public function getAddUrlFor($params=array()) {
+    	return array('file' => array('path' => 'KunstmaanMediaBundle_folder_filecreate', 'params' => array( 'gallery_id' => $params['gallery_id'])));
     }
 
     public function canEdit() {
@@ -53,7 +53,8 @@ class FileListConfigurator extends AbstractAdminListConfigurator{
         return 'KunstmaanMediaBundle:File';
     }
 
-    function adaptQueryBuilder($querybuilder){
-        parent::adaptQueryBuilder($querybuilder);
+    function adaptQueryBuilder($querybuilder, $params=array()){
+        parent::adaptQueryBuilder($querybuilder, $params);
+        $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
     }
 }

@@ -37,8 +37,8 @@ class VideoListConfigurator extends AbstractAdminListConfigurator{
         return true;
     }
 
-    public function getAddUrlFor() {
-    	return "KunstmaanMediaBundle_folder_videocreate";
+	public function getAddUrlFor($params=array()) {
+    	return array('video' => array('path' => 'KunstmaanMediaBundle_folder_videocreate', 'params' => array( 'gallery_id' => $params['gallery_id'])));
     }
 
     public function canEdit() {
@@ -57,7 +57,8 @@ class VideoListConfigurator extends AbstractAdminListConfigurator{
         return 'KunstmaanMediaBundle:Video';
     }
 
-    function adaptQueryBuilder($querybuilder){
+    function adaptQueryBuilder($querybuilder, $params=array()){
         parent::adaptQueryBuilder($querybuilder);
+        $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
     }
 }
