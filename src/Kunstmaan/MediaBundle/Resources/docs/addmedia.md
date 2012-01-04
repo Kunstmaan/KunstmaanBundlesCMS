@@ -62,7 +62,7 @@ If we want to make Folders able to upload pdf's, we add a method to upload a pdf
      * @Method({"GET", "POST"})
      * @Template("KunstmaanMediaBundle:Pdf:create.html.twig")
      */
-    public function filecreateAction($gallery_id)
+    public function pdfcreateAction($gallery_id)
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
@@ -98,7 +98,7 @@ If we want to make Folders able to upload pdf's, we add a method to upload a pdf
     }
 ``` 
 
-## add provider and context:
+## Add provider and context:
 
 As we can see in the codefragment above we need to define a new context for the pdf-class. We do this by adding a provider and a context to config.yml.
 
@@ -128,7 +128,7 @@ We also need to define the provider in provider.xml by adding:
 
 The id for this service is the same we added to the providersection in config.yml.
 
-## make provider-class:
+## Make provider-class:
 
 In the configuration we've added to provider.xml you can see we defined a parameter which contains a class-name. This is the new provider we have to make, and in which we can check or the file is a pdf. The following codefragment is the minimum configuration for the pdfprovider. Since a pdf is also a file, we chose to extend the FileProvider.
 
@@ -158,6 +158,10 @@ class PdfProvider extends FileProvider
 
 ?>
 ```
+
+# Further reading:
+
+In addnewfoldertype.md we will show you how to make a folder for only pdf's
 
        
 [KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
