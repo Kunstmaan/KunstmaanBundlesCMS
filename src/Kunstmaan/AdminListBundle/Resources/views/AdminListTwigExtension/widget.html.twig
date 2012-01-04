@@ -8,7 +8,7 @@
     <table class="bordered-table zebra-striped">
         <thead>
         <tr>
-            <th>Actions</th>
+            <th>{{ 'form.actions'|trans }}</th>
             {% for columnkey,columnName in adminlist.columns%}
                 {% set orderDirection = "DESC" %}
                 {% set extraHeaderClass = "" %}
@@ -43,7 +43,11 @@
         {% endfor %}
        
         {% if adminlist.canAdd() %}
-        	<tr><td colspan="{{ adminlist.columns|length + 1}}"><a href="{{ path(adminlist.getAddUrlFor(), addparams) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/add.png') }}" alt="Add"/></a></td></tr>
+        	<tr><td colspan="{{ adminlist.columns|length + 1}}">
+        	{% for key,add in adminlist.getAddUrlFor(addparams) %}
+        		<a href="{{ path(add["path"], add[("params")]) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/add.png') }}" alt="Add"/>{{ key }}</a>
+        	{% endfor %}
+        	</td></tr>
         {% endif %}	
         </tbody>
     </table>
