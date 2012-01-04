@@ -1,0 +1,42 @@
+{#
+    <ul>
+        <li class="header">{{ gallery.type }} Galleries</li>
+        {% for gallery in galleries %}
+            <li>
+                <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{gallery.name }}</a>
+             </li>
+
+            {% for child in gallery.children %}
+                    <li>
+                        <a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id': child.id, 'slug': child.slug }) }}">{{child.name }}</a>
+                    </li>
+            {% endfor %}
+        {% else %}
+            <li>No {{ gallery.type }} galleries</li>
+        {% endfor %}
+
+    </ul>
+<ul>
+		{% set newmediagallery = "media."~gallery.type~".gallery.new" %}
+        <li class="header"><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_create') }}">{{ newmediagallery |trans }}</a></li>
+    </ul> #}
+    
+<aside class="sidebar"> 
+	    	<div class="search_wrp"> 
+	    		<input type="text" id="searchVal" value="" /> 
+	    		<button id="search" class="btn search"><img src="{{ asset('bundles/kunstmaanadmin/img/icons/search.png') }}" alt="Search" /></button> 
+	    	</div>     
+    <div id="tree">
+    	{% for key,gals in galleries %}
+    		<ul>
+	    			{% for child in gals %}
+		                {% include 'KunstmaanMediaBundle:Folder:shownode.html.twig' %}
+		            {% endfor %}
+		            {% set newmediagallery = "media."~key~".gallery.new" %}
+        			{# <li class="jstree-leaf jstree-last">
+        				<a href="{{ path('KunstmaanMediaBundle_' ~ key ~ 'gallery_create') }}">{{ newmediagallery |trans }}</a></li>#}
+	         </ul>
+    	{%  endfor %} 
+ 
+    </div>
+</aside>

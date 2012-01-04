@@ -7,6 +7,7 @@ media:
     files: Bestanden
     videos: Video
     slides: Presentaties
+    folders: Evenementen
   
   aviary:
     title: Aviary
@@ -99,6 +100,11 @@ media:
     delete: Verwijder deze galerij
     deletemedia: De volgende %type% worden ook verwijdert
     edit: Pas deze galerij aan
+    
+  folder:
+    folders: een evenement
+    open: open deze map
+    properties: Eigenschappen
     
     
     

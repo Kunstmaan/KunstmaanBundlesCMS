@@ -24,7 +24,7 @@
         {{ form_rest(form) }}
         <div class="actions">
             <input class="btn primary type" type="submit" value="{{ 'media.video.edit' | trans }}">
-            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
         </div>
     </fieldset>
 </form>

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Table("file")
+ * @ORM\Table("media_file")
  * @ORM\Entity
  */
 class File extends Media
@@ -34,70 +34,9 @@ class File extends Media
      */
     protected $context = "kunstmaan_media_file";
 
-    /**
-     * @var string $name
-     */
-    protected $name;
-
-    /**
-     * @var string $contentType
-     */
-    protected $contentType;
-
-    /**
-     * @var datetime $createdAt
-     */
-    protected $createdAt;
-
-    /**
-     * @var datetime $updatedAt
-     */
-    protected $updatedAt;
-
-    protected $content;
-
-    /**
-     * @var array $metadata
-     */
-    protected $metadata;
-
-    /**
-     * @var Kunstmaan\MediaBundle\Entity\Gallery
-     */
-    protected $gallery;
-
     public function __construct()
     {
         parent::__construct();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set uuid
-     *
-     * @param string $uuid
-     */
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
-    }
-
-    /**
-     * Get uuid
-     *
-     * @return string 
-     */
-    public function getUuid()
-    {
-        return $this->uuid;
+        $this->classtype = "File";
     }
 }

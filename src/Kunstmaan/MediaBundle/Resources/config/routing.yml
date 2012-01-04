@@ -8,6 +8,9 @@ KunstmaanMediaBundle_media:
 KunstmaanMediaBundle_aviary:
     resource: "@KunstmaanMediaBundle/Controller/AviaryController.php"
     type:     annotation
+    prefix:   /{_locale}
+    requirements:
+        _locale: en|nl|fr
         
 KunstmaanMediaBundle_media_imagegallery:
     resource: "@KunstmaanMediaBundle/Controller/ImageGalleryController.php"
@@ -16,55 +19,20 @@ KunstmaanMediaBundle_media_imagegallery:
     requirements:
         _locale: en|nl|fr
         
-KunstmaanMediaBundle_media_videogallery:
-    resource: "@KunstmaanMediaBundle/Controller/VideoGalleryController.php"
+KunstmaanMediaBundle_media_folder:
+    resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/media/videogallery
+    prefix:   /{_locale}/admin/media/folder
     requirements:
-        _locale: en|nl|fr
-        
-KunstmaanMediaBundle_media_filegallery:
-    resource: "@KunstmaanMediaBundle/Controller/FileGalleryController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/filegallery
-    requirements:
-        _locale: en|nl|fr
-        
-KunstmaanMediaBundle_media_slidegallery:
-    resource: "@KunstmaanMediaBundle/Controller/SlideGalleryController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/slidegallery
-    requirements:
-        _locale: en|nl|fr
-        
-KunstmaanMediaBundle_media_gallery:
-    resource: "@KunstmaanMediaBundle/Controller/GalleryController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/gallery
-    requirements:
-        _locale: en|nl|fr
-
-KunstmaanMediaBundle_image:
-    resource: "@KunstmaanMediaBundle/Controller/ImageController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/image
-    requirements:
-        _locale: en|nl|fr
-        
+        _locale: en|nl|fr        
+   
 KunstmaanMediaBundle_video:
     resource: "@KunstmaanMediaBundle/Controller/VideoController.php"
     type:     annotation
     prefix:   /{_locale}/admin/media/video
     requirements:
         _locale: en|nl|fr
-        
-KunstmaanMediaBundle_file:
-    resource: "@KunstmaanMediaBundle/Controller/FileController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/media/file
-    requirements:
-        _locale: en|nl|fr
-        
+     
 KunstmaanMediaBundle_slide:
     resource: "@KunstmaanMediaBundle/Controller/SlideController.php"
     type:     annotation

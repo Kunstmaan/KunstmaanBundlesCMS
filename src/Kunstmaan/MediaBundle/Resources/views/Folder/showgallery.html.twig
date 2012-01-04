@@ -1,0 +1,21 @@
+<div>
+   <h3>{{ 'media.gallery.sub.sub' |trans }}: <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name }}</a></h3>
+
+   <ul>
+        {% for image in child.files %}
+            <li>
+                {{ image.id }}
+                {{ image.name }}
+                {{ image.contentType }}
+            </li>
+        {% else %}
+            {% set nomedia = "media."~gallery.type~".no" %}
+            <li>{{ nomedia | trans }}</li>
+        {% endfor %}
+   </ul>
+    <ul>
+    {% for child in child.children %}
+        <li>{% include 'KunstmaanMediaBundle:Folder:showgallery.html.twig' %}</li>
+    {% endfor %}
+    </ul>
+</div>

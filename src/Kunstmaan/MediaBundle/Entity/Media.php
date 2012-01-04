@@ -57,13 +57,18 @@ abstract class Media{
     protected $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Gallery", inversedBy="files")
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
      * @ORM\JoinColumn(name="gallery_id", referencedColumnName="id")
      */
     protected $gallery;
 
     protected $content;
     protected $context;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $classtype;
 
     public function __construct($context = null)
     {
@@ -230,7 +235,7 @@ abstract class Media{
      *
      * @param Kunstmaan\MediaBundle\Entity\Gallery $gallery
      */
-    public function setGallery(Gallery $gallery)
+    public function setGallery(Folder $gallery)
     {
         $this->gallery = $gallery;
     }
@@ -238,7 +243,7 @@ abstract class Media{
     /**
      * Get gallery
      *
-     * @return Kunstmaan\MediaBundle\Entity\Gallery 
+     * @return Kunstmaan\MediaBundle\Entity\Folder 
      */
     public function getGallery()
     {
@@ -274,6 +279,10 @@ abstract class Media{
         }
         $path = $path.".".\Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser::guess($this->getContentType());
         return $path;
+    }
+
+    public function getClassType(){
+    	return $this->classtype;
     }
 
     /**

@@ -13,9 +13,7 @@
 	});
 </script>#}
 
-<div id="my-tab-content" class="tab-content"> 
-<div class="tab-pane active" id="imagegallery"> 
-    					<section> 
+<section> 
 		<ul class="media-grid" id="file-list">
         {% for media in gallery.files %}
             {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
@@ -27,8 +25,15 @@
                 <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
              	<span class="helper">Click to edit</span>
              </li>
+        {% else %}
+    		<li><a href="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">{{ 'media.image.no' |trans }} {{ 'media.image.add' |trans }}</a>
+    		</li>
         {% endfor %}
-        	<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_create', { 'gallery_id' : gallery.id }) }}" id="droplabel" data-controls-modal="addmedia-modal" data-backdrop="true" data-keyboard="true">{{ 'form.add' | trans }}</a></li>
+        	{#<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" id="droplabel">{{ 'form.add' | trans }}</a></li>#}
         </ul>
 </section>
-</div></div>
+<script type="text/javascript"> 
+	$(document).ready(function () {
+		initDel();
+	});
+</script> 

@@ -1,12 +1,14 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block subsidebar %}
-    {% include 'KunstmaanMediaBundle:Gallery:sidebar.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Folder:sidebar.html.twig' %}
 {% endblock %}
 
 {% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanMediaBundle_media_videos') }}">{{ 'media.menu.videos' | trans }}</a> <span class="divider">/</span></li>
-    <li><a href="{{ path('KunstmaanMediaBundle_gallery_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name }}</a> <span class="divider">/</span></li>
+    {% for parent in gallery.parents %}
+        <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name| trans }}</a></li>
+    {% endfor %}
+    <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name|trans }}</a></li>
 	<li class="active">{{ 'media.video.edit' | trans }}</li>
 {% endblock %}
 

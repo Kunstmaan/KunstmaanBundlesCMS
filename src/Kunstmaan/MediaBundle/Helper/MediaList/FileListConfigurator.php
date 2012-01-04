@@ -23,18 +23,18 @@ class FileListConfigurator extends AbstractAdminListConfigurator{
 
     public function buildFields()
     {
-    	$this->addField("name", "Name", true);
-    	$this->addField("contentType", "Content Type", true);
-    	$this->addField("createdAt", "Created At", true);
-    	$this->addField("updatedAt", "Updated At", true); 	
+    	$this->addField("name", "form.name", true);
+    	$this->addField("contentType", "form.type", true);
+    	$this->addField("createdAt", "form.createdat", true);
+    	$this->addField("updatedAt", "form.updatedat", true); 
     }
 
 	public function canAdd() {
         return true;
     }
 
-    public function getAddUrlFor() {
-    	return "KunstmaanMediaBundle_file_create";
+    public function getAddUrlFor($params=array()) {
+    	return array('file' => array('path' => 'KunstmaanMediaBundle_folder_filecreate', 'params' => array( 'gallery_id' => $params['gallery_id'])));
     }
 
     public function canEdit() {
@@ -53,7 +53,8 @@ class FileListConfigurator extends AbstractAdminListConfigurator{
         return 'KunstmaanMediaBundle:File';
     }
 
-    function adaptQueryBuilder($querybuilder){
-        parent::adaptQueryBuilder($querybuilder);
+    function adaptQueryBuilder($querybuilder, $params=array()){
+        parent::adaptQueryBuilder($querybuilder, $params);
+        $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
     }
 }

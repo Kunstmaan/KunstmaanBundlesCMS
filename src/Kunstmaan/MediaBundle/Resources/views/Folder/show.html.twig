@@ -1,0 +1,82 @@
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+
+{% block subsidebar %}
+    {% include 'KunstmaanMediaBundle:Folder:sidebar.html.twig' %}
+{% endblock %}
+
+{% block subbreadcrumb %}{%  set galstype = 'media.menu.'~gallery.type~'s' %}
+    
+        {% for parent in gallery.parents %}<li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>{% endfor %}
+	<li class="active">{{ gallery.name | trans }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+		{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
+	</div>
+
+        {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
+        {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+      
+        <div class="main_actions">
+        	{%  if gallery.type == "folder" %}
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_filecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.file.add" |trans }}</a>
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.image.add" |trans }}</a>
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_slidecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.slide.add" |trans }}</a>
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_videocreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.video.add" |trans }}</a>
+	        {% else %}	
+        		{%  set addmediatype = 'media.'~gallery.type~'.add' %}
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ addmediatype |trans }}</a>
+            {%  endif %} 
+            <a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
+            {% if gallery.canDelete %}<a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'media.gallery.delete' |trans }}</a>{% endif %}
+        </div>
+        <div id="main_actions_top" class="main_actions top"><div class="pull-right"> 
+        	{%  if gallery.type == "folder" %}
+		        <a href="{{ path('KunstmaanMediaBundle_folder_filecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.file.add" |trans }}</a>
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.image.add" |trans }}</a>
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_slidecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.slide.add" |trans }}</a>
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_videocreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.video.add" |trans }}</a> 
+	     	{% else %}	
+        		{%  set addmediatype = 'media.'~gallery.type~'.add' %}
+	        	<a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ addmediatype |trans }}</a>
+            {%  endif %} 
+            <a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
+            {% if gallery.canDelete %}<a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" data-controls-modal="delete-modal" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'media.gallery.delete' |trans }}</a>{% endif %}
+        	<a class="btn up">&#9650;</a> 
+        </div></div>
+
+    <ul class="tabs" data-tabs="tabs"> 
+    			{%  set galstype = 'media.menu.'~gallery.type~'s' %}
+    				<li class="active"><a href="#imagegallery">{{ galstype|trans|capitalize }}</a></li> 
+    				<li><a href="#properties">{{ 'media.folder.properties' | trans }}</a></li>    		
+    			</ul> 
+    			<div id="my-tab-content" class="tab-content"> 
+    				<div class="tab-pane active" id="imagegallery">    
+        
+   <section id="map-list"> 
+    						<ul class="media-grid"> 
+    						{% for child in gallery.children %}
+    							<li> 
+    								<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item"><img src="{{ asset('bundles/kunstmaanmedia/img/dummy/map.jpg') }}" alt="" /></a> 
+    								<span class="helper">{{ 'media.folder.open' | trans }}</span> 
+    								<span class="name">{{ child.name | trans }}</span> 
+    							</li> 
+    						{% else %}
+    							<li><a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true" class="btn">{{ 'media.gallery.sub.no' |trans }} {{ 'media.gallery.sub.addshort' |trans }}</a>
+    							</li>
+    						{% endfor %}	
+    						</ul>								
+    					</section>        
+        
+    	{%  set FolderTypelist = 'media.'~gallery.type~'.list' %}
+       {% include 'KunstmaanMediaBundle:' ~ gallery.type|capitalize ~ ':tableview.html.twig' %}
+       
+       </div>
+       <div class="tab-pane" id="properties"> 
+    					<section> 
+							 {% include 'KunstmaanMediaBundle:Folder:editform.html.twig' %}
+    					</section> 
+    				</div> 
+    			</div>
+{% endblock %}

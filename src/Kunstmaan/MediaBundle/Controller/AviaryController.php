@@ -27,7 +27,7 @@ class AviaryController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $gallery = $em->getRepository('KunstmaanMediaBundle:ImageGallery')->getImageGallery($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
 
         $helper = new MediaHelper();
         $helper->getMediaFromUrl($this->getRequest()->get('url'));
@@ -43,7 +43,7 @@ class AviaryController extends Controller
         $em->persist($picture);
         $em->flush();
 
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
 
     }
 }

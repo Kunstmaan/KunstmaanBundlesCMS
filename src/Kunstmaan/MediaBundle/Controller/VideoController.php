@@ -19,40 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class VideoController extends Controller
 {
     /**
-     * @Route("/{gallery_id}/create", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_video_create")
-     * @Method({"GET", "POST"})
-     * @Template()
-     */
-    public function createAction($gallery_id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Gallery')->getGallery($gallery_id, $em);
-
-        $request = $this->getRequest();
-        $Video = new Video();
-        $Video->setGallery($gallery);
-        $form = $this->createForm(new VideoType(), $Video);
-
-        if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
-            if ($form->isValid()){
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($Video, $em);
-
-                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_gallery_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-            }
-        }
-
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
-                        ->getAllGalleriesByType();
-
-        return array(
-            'form' => $form->createView(),
-            'gallery' => $gallery,
-            'galleries' => $galleries
-        );
-    }
-
-    /**
      * @Route("/{media_id}/edit", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_video_edit")
      * @Method({"GET", "POST"})
      * @Template()
