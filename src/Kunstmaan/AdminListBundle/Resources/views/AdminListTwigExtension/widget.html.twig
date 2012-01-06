@@ -44,9 +44,13 @@
        
         {% if adminlist.canAdd() %}
         	<tr><td colspan="{{ adminlist.columns|length + 1}}">
-        	{% for key,add in adminlist.getAddUrlFor(addparams) %}
-        		<a href="{{ path(add["path"], add[("params")]) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/add.png') }}" alt="Add"/>{{ key }}</a>
-        	{% endfor %}
+        	<img src="{{ asset('bundles/kunstmaanadmin/img/general/add.png') }}" alt="{{ 'form.add' | trans }}"/>
+        	<select onchange="location = this.options[this.selectedIndex].value;">
+        		<option>{{ 'form.add' | trans }}</option>
+	        	{% for key,add in adminlist.getAddUrlFor(addparams) %}
+	        		<option value="{{ path(add["path"], add[("params")]) }}">{{ key }}</option>
+	        	{% endfor %}
+        	</select>
         	</td></tr>
         {% endif %}	
         </tbody>
