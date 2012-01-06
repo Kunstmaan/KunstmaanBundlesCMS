@@ -20,10 +20,13 @@
       
         <div class="main_actions">
         	{%  if gallery.type == "folder" %}
-	        	<a href="{{ path('KunstmaanMediaBundle_folder_filecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.file.add" |trans }}</a>
-	        	<a href="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.image.add" |trans }}</a>
-	        	<a href="{{ path('KunstmaanMediaBundle_folder_slidecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.slide.add" |trans }}</a>
-	        	<a href="{{ path('KunstmaanMediaBundle_folder_videocreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.video.add" |trans }}</a>
+        		<select onchange="location = this.options[this.selectedIndex].value;">
+        			<option>{{ 'form.add' | trans }}</option>
+	        		<option value="{{ path('KunstmaanMediaBundle_folder_filecreate', { 'gallery_id' : gallery.id }) }}">{{ "media.file.add" |trans }}</option>
+	        		<option value="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}">{{ "media.image.add" |trans }}</option>
+	        		<option value="{{ path('KunstmaanMediaBundle_folder_slidecreate', { 'gallery_id' : gallery.id }) }}">{{ "media.slide.add" |trans }}</option>
+	        		<option value="{{ path('KunstmaanMediaBundle_folder_videocreate', { 'gallery_id' : gallery.id }) }}">{{ "media.video.add" |trans }}</option>
+        		</select>
 	        {% else %}	
         		{%  set addmediatype = 'media.'~gallery.type~'.add' %}
 	        	<a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ addmediatype |trans }}</a>
@@ -33,11 +36,14 @@
         </div>
         <div id="main_actions_top" class="main_actions top"><div class="pull-right"> 
         	{%  if gallery.type == "folder" %}
-		        <a href="{{ path('KunstmaanMediaBundle_folder_filecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.file.add" |trans }}</a>
-	        	<a href="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.image.add" |trans }}</a>
-	        	<a href="{{ path('KunstmaanMediaBundle_folder_slidecreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.slide.add" |trans }}</a>
-	        	<a href="{{ path('KunstmaanMediaBundle_folder_videocreate', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ "media.video.add" |trans }}</a> 
-	     	{% else %}	
+		        <select onchange="location = this.options[this.selectedIndex].value;">
+        			<option>{{ 'form.add' | trans }}</option>
+	        		<option value="{{ path('KunstmaanMediaBundle_folder_filecreate', { 'gallery_id' : gallery.id }) }}">{{ "media.file.add" |trans }}</option>
+	        		<option value="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}">{{ "media.image.add" |trans }}</option>
+	        		<option value="{{ path('KunstmaanMediaBundle_folder_slidecreate', { 'gallery_id' : gallery.id }) }}">{{ "media.slide.add" |trans }}</option>
+	        		<option value="{{ path('KunstmaanMediaBundle_folder_videocreate', { 'gallery_id' : gallery.id }) }}">{{ "media.video.add" |trans }}</option>
+        		</select>
+        	{% else %}	
         		{%  set addmediatype = 'media.'~gallery.type~'.add' %}
 	        	<a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn primary">{{ addmediatype |trans }}</a>
             {%  endif %} 
