@@ -50,12 +50,16 @@ class PagePartAdmin {
         }
         $addpagepart = $this->request->request->get("addpagepart_".$this->getContext());
         if(is_string($addpagepart) && $addpagepart != ''){
+        	$addpagepartposition = $this->request->request->get($this->getContext()."_addposition");
+        	if(!is_string($addpagepartposition) || $addpagepartposition == ''){
+        		$addpagepartposition = sizeof($this->getPagePartRefs())+1;
+        	}
             $newpagepart = new $addpagepart;
             $this->em->persist($newpagepart);
             $this->em->flush();
-            $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($this->page, $newpagepart, sizeof($this->getPagePartRefs())+1);
+            $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($this->page, $newpagepart, $addpagepartposition);
         }
-        $this->em->flush();
+        //$this->em->flush();
     }
 
     public function bindRequest($request){
@@ -67,11 +71,11 @@ class PagePartAdmin {
                 $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->find($sequence);
                 if(is_object($pagepartref)){
                     $pagepartref->setSequencenumber($i+1);
-                    $this->em->persist($pagepartref);
+                    //$this->em->persist($pagepartref);
                 }
             }
         }
-        $this->em->flush();
+        //$this->em->flush();
     }
 
     public function getContext(){
