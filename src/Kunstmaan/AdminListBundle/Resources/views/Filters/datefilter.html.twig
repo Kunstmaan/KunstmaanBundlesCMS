@@ -1,10 +1,12 @@
-
 <select name="{{nameprefix}}comparator{{namesuffix}}">
     <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
     <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
-</select>
-<input {# class="date-pick" #} name="{{nameprefix}}value{{namesuffix}}"
-    {% if data.value is defined %}
-    	value="{{data.value}}"
-	{% endif %}
-/>
+</select>  
+<input class="datepick{{nameprefix}}{{namesuffix}}" id="date1" name="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %} />
+{% if nameprefix != "" and namesuffix != "" %}
+	<script>
+    	$(document).ready(function() {
+        	$(".datepick{{nameprefix}}{{namesuffix}}").datePicker();
+        });
+	</script>
+{% endif %}
