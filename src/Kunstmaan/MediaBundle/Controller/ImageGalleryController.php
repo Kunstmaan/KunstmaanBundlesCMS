@@ -1,5 +1,4 @@
 <?php
-// src/Blogger/BlogBundle/Controller/CommentController.php
 
 namespace Kunstmaan\MediaBundle\Controller;
 
@@ -16,20 +15,35 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  *
  * @author Kristof Van Cauwenbergh
  */
-class ImageGalleryController
+class ImageGalleryController extends Controller
 {
     /**
-     * @Route("/ckeditor", name="KunstmaanMediaBundle_imagegallery_ckeditor")
+     * @Route("/ckeditor/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_imagegallery_ckeditor",defaults={"id" = 1})
      * @Template()
      */
-    public function ckeditorAction(){
+    public function ckeditorAction($id){
         $em = $this->getDoctrine()->getEntityManager();
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
-                        ->getAllFolders();
-
+                                ->getAllFoldersByType();
         return array(
             'galleries'     => $galleries
         );
+    }
+    
+    /**
+     * @Route("/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
+     * @Template()
+     */
+    function showfolderAction($id){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
+    	->getAllFoldersByType();
+    
+    	return array(
+    			'gallery'       => $gallery,
+    			'galleries'     => $galleries
+    	);
     }
 
 }
