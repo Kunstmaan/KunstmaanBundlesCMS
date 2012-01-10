@@ -267,6 +267,23 @@ class Folder{
         return $this->files;
     }
     
+    /**
+     * Get images
+     *
+     * @return Doctrine\Common\Collections\images
+     */
+    public function getImages()
+    {
+    	$all = $this->files;
+    	$images = array();
+    	foreach($all as $file){
+    		if($file instanceof Image){
+    			$images[] = $file;
+    		}
+    	}
+    	return $images;
+    }
+    
     public function hasActive($id){
     	$bool = false;
     	foreach($this->getChildren() as $child){
