@@ -1,0 +1,12 @@
+<aside class="sidebar">      
+    <div id="tree">
+    	{% for key,gals in galleries %}
+    		<ul>
+	    			{% for child in gals %}
+		                {% include 'KunstmaanMediaBundle:ImageGallery:shownode.html.twig' %}
+		            {% endfor %}
+	         </ul>
+    	{%  endfor %} 
+ 
+    </div>
+</aside>
