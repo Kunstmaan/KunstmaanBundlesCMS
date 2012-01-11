@@ -1,0 +1,17 @@
+
+                           <li {% if (gallery.id is defined and (gallery.id == child.id)) %} 
+                           			class="active jstree-open" 
+                           		{% endif %} 
+                           		{% if gallery.id is defined and child.hasActive(gallery.id) %} 
+                           			class="jstree-open blub" 
+                           		{% endif %}
+                           		{%  if child.rel %}rel="{{ child.rel }}"{% else %}rel="folder"{% endif %}> 
+                           		<a href="{{ path('KunstmaanMediaBundle_ckeditor_show', { 'id': child.id, 'slug': child.slug }) }}">{{ child.name | trans }}</a>
+                            	{% if child.children is defined %}
+	                            	<ul>
+										{% for child in child.children %}
+		                                    {% include 'KunstmaanMediaBundle:ImageGallery:shownode.html.twig' %}
+		                                {% endfor %}
+	                                </ul>
+                                {% endif %}
+                            </li>

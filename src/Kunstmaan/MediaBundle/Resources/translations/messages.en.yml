@@ -16,86 +16,85 @@ media:
   file:
     files: files
     file: File
-    addto: Add a new file to <small>"%gallery%"</small>
+    addto: Add a new file to "%gallery%"
     new: New file
-    add: Add new file to
+    add: Add new file
     edit: Edit file
     open: Open file
     delete: The files shown get also deleted
     list: Files in "%gallery%"
-    no: No files in this gallery yet.
+    no: No files in this folder yet.
     gallery:
-      new: Make new file gallery
-      subnew: Make new file gallery in %gallery%
+      new: Make new file folder
+      subnew: Make new file folder in %gallery%
     sure: Are you sure you want to delete this file?  
   
   image: 
     images: images
     image: Image
-    addto: Add a new image to <small>"%gallery%"</small>
+    addto: Add a new image to "%gallery%"
     new: New image
-    add: Add new image to
+    add: Add new image
     edit: Edit image
     open: Open image
     delete: The images shown get also deleted
     list: Images in "%gallery%"
-    no: No images in this gallery yet.
+    no: No images in this folder yet.
     gallery:
-      new: Make new image gallery
-      subnew: Make new image gallery in %gallery%
+      new: Make new image folder
+      subnew: Make new image folder in %gallery%
     sure: Are you sure you want to delete this image?  
   
   slide: 
     slides: slides
     slide: Slide
-    addto: Add a new slide to <small>"%gallery%"</small>
+    addto: Add a new slide to "%gallery%"
     new: New slide
-    add: Add new slide to
+    add: Add new slide
     edit: Edit slide
     open: Open slide
     delete: The slides shown get also deleted
     list: Slides in "%gallery%"
-    no: No slides in this gallery yet.
+    no: No slides in this folder yet.
     gallery:
-      new: Make new slide gallery
-      subnew: Make new slide gallery in %gallery%
+      new: Make new slide folder
+      subnew: Make new slide folder in %gallery%
     sure: Are you sure you want to delete this slide?  
     code: Presentation code
   
   video: 
     videos: video
     video: Video
-    addto: Add a new video to <small>"%gallery%"</small>
+    addto: Add a new video to "%gallery%"
     new: New video
-    add: Add new video to
+    add: Add new video
     edit: Edit video
     open: Open video
     delete: The videos shown get also deleted
     list: Videos in "%gallery%"
-    no: No videos in this gallery yet.
+    no: No videos in this folder yet.
     gallery:
-      new: Make new video gallery
-      subnew: Make new video gallery in %gallery%
+      new: Make new video folder
+      subnew: Make new video folder in %gallery%
     sure: Are you sure you want to delete this video?  
     code: Presentation code  
   
   gallery:
-    galleries: galleries
-    gallery: Gallery
+    galleries: folders
+    gallery: Folder
     sub:
-      sub: Subgallery
-      addshort: Add new gallery
-      belongsto: The gallery this gallery belongs to
-      list: The subgalleries of "%gallery%"
-      add: Add subgallery
-      no: No subgalleries yet.
-      delete: This subgalleries also get deleted
-    create: Make new gallery for  
-    new: Make gallery
-    belongsto: The gallery this gallery is added to
-    notrequired: You don't have to choose a gallery which the new gallery belongs to.
+      sub: Subfolder
+      addshort: Add new folder
+      belongsto: The folder this folder belongs to
+      list: The subfolders of "%gallery%"
+      add: Add subfolder
+      no: No subfolders yet.
+      delete: This subfolders also get deleted
+    create: Make new folder for  
+    new: Make folder
+    belongsto: The folder this folder is added to
     deletesure: Are you sure you want to delete "%gallery%"? 
-    delete: Delete this gallery
+    delete: Delete this folder
     deletemedia: The following %type% are also deleted
     edit: Edit this folder
     
