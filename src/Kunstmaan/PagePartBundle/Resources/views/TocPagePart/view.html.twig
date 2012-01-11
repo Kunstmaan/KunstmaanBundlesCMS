@@ -1,0 +1,5 @@
+{% for pagepart in pageparts %}
+    {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
+        <a href="#{{ pagepart.getTitle|url_encode }}">{{ pagepart.getTitle }}</a>
+    {% endif %}
+{% endfor %}

@@ -25,12 +25,15 @@ class PagePartAdmin {
 
     protected $pageparts = array();
 
-    function __construct(AbstractPagePartAdminConfigurator $configurator, $em, $page, $context)
+    protected $container = null;
+
+    function __construct(AbstractPagePartAdminConfigurator $configurator, $em, $page, $context, $container)
     {
         $this->configurator = $configurator;
         $this->em = $em;
         $this->page = $page;
         $this->context = $context;
+        $this->container = $container;
     }
 
     /**
@@ -83,9 +86,7 @@ class PagePartAdmin {
     }
 
     public function getPossiblePagePartTypes(){
-        $result = array();
-        $result = $this->configurator->getPossiblePagePartTypes($result);
-        return $result;
+        return $this->container->get("kunstmaan_admin.pageparts_builder")->getPossiblePagePartTypes();
     }
 
     public function getPagePartRefs(){
