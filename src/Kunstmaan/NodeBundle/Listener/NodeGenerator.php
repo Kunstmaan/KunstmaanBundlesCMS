@@ -30,13 +30,12 @@ class NodeGenerator {
         $em = $args->getEntityManager();
         $classname = ClassLookup::getClass($entity);
         if($entity instanceof HasNode){
-            $entityrepo = $em->getRepository($classname);
+        	$entityrepo = $em->getRepository($classname);
             $node = $this->getNode($em, $entity->getId(), $classname);
             if($node==null){
                 $node = new Node();
                 $node->setRefId($entity->getId());
                 $node->setRefEntityname($classname);
-                $node->setSequencenumber(1);
             }
             $parent = $entity->getParent();
             if($parent){
@@ -46,6 +45,18 @@ class NodeGenerator {
             $node->setTitle($entity->__toString());
             $node->setSlug(strtolower(str_replace(" ", "-", $entity->__toString())));
             $node->setOnline($entity->isOnline());
+            $node->setSequencenumber(1);
+            
+            if($node->getParent()==null){
+            	$node->setSequencenumber(1);
+            	var_dump("blub ". $node->getId());
+            }else{
+            	$parent = $node->getParent();
+            	$children = $em->getRepository('KunstmaanAdminNodeBundle:Node')->findBy(array('parent' => ClassLookup::getClass($node)));
+            	$node->setSequencenumber(sizeof($children));
+            	var_dump($node->getId());
+            }
+            
             $em->persist($node);
             $em->flush();
         }

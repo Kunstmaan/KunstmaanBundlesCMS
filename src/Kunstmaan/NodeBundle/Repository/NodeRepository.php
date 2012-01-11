@@ -70,20 +70,28 @@ class NodeRepository extends EntityRepository
 		$entityrepo = $em->getRepository($classname);
 		$node = $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityname' => $classname));
 		if($node==null){
-		  $node = new Node();
-		  $node->setRefId($hasNode->getId());
-		  $node->setRefEntityname($classname);
-		  $node->setSequencenumber(1);
-		  $parent = $hasNode->getParent();
-		  if($parent){
-		  	$parentNode = $em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('refId' => $parent->getId(), 'refEntityname' => ClassLookup::getClass($parent)));
-		  	$node->setParent($parentNode);
-		  }
-		  $node->setTitle($hasNode->__toString());
-		  $node->setSlug(strtolower(str_replace(" ", "-", $hasNode->__toString())));
-		  $node->setOnline($hasNode->isOnline());
-		  $em->persist($node);
-		  $em->flush();
+			$node = new Node();
+			$node->setRefId($hasNode->getId());
+			$node->setRefEntityname($classname);
+			
+			if($hasnode->getParent()==null){
+		    	$node->setSequencenumber(100);
+		    }else{
+		    	$parent = $node->getParent();
+		    	$children = $node->getChildren();
+		    	$node->setSequencenumber(200);//sizeof($children));
+		    }
+		    			
+			$parent = $hasNode->getParent();
+			if($parent){
+				$parentNode = $em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('refId' => $parent->getId(), 'refEntityname' => ClassLookup::getClass($parent)));
+			  	$node->setParent($parentNode);
+			}
+			$node->setTitle($hasNode->__toString());
+			$node->setSlug(strtolower(str_replace(" ", "-", $hasNode->__toString())));
+			$node->setOnline($hasNode->isOnline());
+			$em->persist($node);
+			$em->flush();
 		}
 	}
 }

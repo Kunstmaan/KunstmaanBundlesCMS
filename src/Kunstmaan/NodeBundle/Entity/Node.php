@@ -78,7 +78,6 @@ class Node
      */
     protected $online;
 
-
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
