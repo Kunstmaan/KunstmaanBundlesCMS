@@ -18,17 +18,31 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ImageGalleryController extends Controller
 {
     /**
-     * @Route("/ckeditor/{id}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_imagegallery_ckeditor",defaults={"id" = 1})
+     * @Route("/ckeditor", name="KunstmaanMediaBundle_imagegallery_ckeditor")
      * @Template()
      */
-    public function ckeditorAction($id){
+    public function ckeditorAction() {
         $em = $this->getDoctrine()->getEntityManager();
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
-                                ->getAllFoldersByType();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+
         return array(
             'galleries'     => $galleries
         );
     }
+
+    /**
+     * @Route("/imagepagepart", name="KunstmaanMediaBundle_imagegallery_imagepagepart")
+     * @Template()
+     */
+    public function imagepagepartAction() {
+        $em = $this->getDoctrine()->getEntityManager();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+
+        return array(
+            'galleries'     => $galleries
+        );
+    }
+
     
     /**
      * @Route("/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
@@ -37,12 +51,11 @@ class ImageGalleryController extends Controller
     function showfolderAction($id){
     	$em = $this->getDoctrine()->getEntityManager();
     	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
-    	->getAllFoldersByType();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
     
     	return array(
-    			'gallery'       => $gallery,
-    			'galleries'     => $galleries
+            'gallery'       => $gallery,
+            'galleries'     => $galleries
     	);
     }
 

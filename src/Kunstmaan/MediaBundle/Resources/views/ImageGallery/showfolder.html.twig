@@ -1,8 +1,9 @@
 {% extends 'KunstmaanMediaBundle:ImageGallery:ckeditor.html.twig' %}
 
 {% block subbreadcrumb %}{%  set galstype = 'media.menu.'~gallery.type~'s' %}
-    
-        {% for parent in gallery.parents %}<li><a href="{{ path('KunstmaanMediaBundle_ckeditor_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>{% endfor %}
+    {% for parent in gallery.parents %}
+    <li><a href="{{ path('KunstmaanMediaBundle_ckeditor_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>
+    {% endfor %}
 	<li class="active">{{ gallery.name | trans }}</li>
 {% endblock %}
 
@@ -10,26 +11,24 @@
 <div class="page-header">
 		{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_ckeditor_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
 </div>
-<div class="tab-pane active" id="imagegallery">    
+<div class="tab-pane active" id="imagegallery">
 	<section id="map-list"> 
-    						<ul class="media-grid"> 
-    						{% for child in gallery.children %}
-    							<li> 
-    								<a href="{{ path('KunstmaanMediaBundle_ckeditor_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item"><img src="{{ asset('bundles/kunstmaanmedia/img/dummy/map.jpg') }}" alt="" /></a> 
-    								<span class="helper">{{ 'media.folder.open' | trans }}</span> 
-    								<span class="name">{{ child.name | trans }}</span> 
-    							</li> 
-    						{% endfor %}	
-    						</ul>								
-    					</section> 
-    					
+        <ul class="media-grid">
+        {% for child in gallery.children %}
+            <li>
+                <a href="{{ path('KunstmaanMediaBundle_ckeditor_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item"><img src="{{ asset('bundles/kunstmaanmedia/img/dummy/map.jpg') }}" alt="" /></a>
+                <span class="helper">{{ 'media.folder.open' | trans }}</span>
+                <span class="name">{{ child.name | trans }}</span>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
     <section> 
 		<ul class="media-grid" id="file-list">
         {% for media in gallery.getImages %}
             {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
-
             <li>
-                <a onclick="window.opener.CKEDITOR.tools.callFunction(2, '{{ asset(upload_dir~media.show()) }}'); window.close();" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+                <a onclick="window.opener.ImagegalleryImageChosenCallback[window.opener.activeEdit]('{{ asset(upload_dir~media.show()) }}', '{{media.id}}'); window.close(); return false;" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
                     <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
                 </a>
              </li>

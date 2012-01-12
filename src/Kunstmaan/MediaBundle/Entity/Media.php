@@ -3,6 +3,7 @@
 namespace  Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Assetic\Asset\FileAsset;
 
 /**
  * Class that defines a Media object from the AnoBundle in the database
@@ -269,6 +270,12 @@ abstract class Media{
     {
         $this->context = $context;
     }
+
+
+    public function getUrl() {
+        return $this->show('medium');
+    }
+
 
     public function show($format=null, $options = array())
     {
