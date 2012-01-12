@@ -32,7 +32,7 @@ class PagePartRefRepository extends EntityRepository
     }
     
     public function getPagePartRefs($page, $context = "main"){
-    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => get_class($page)), 'context' => $context, array('sequencenumber' => 'ASC'));
+    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => get_class($page), 'context' => $context), array('sequencenumber' => 'ASC'));
     }
     
     public function getPageParts($page, $context = "main"){
@@ -45,7 +45,7 @@ class PagePartRefRepository extends EntityRepository
     }
     
     public function copyPageParts($em, $frompage, $topage, $context = "main"){
-    	$frompageparts = $this->getPageParts($em, $frompage);
+    	$frompageparts = $this->getPageParts($frompage, $context);
     	$sequencenumber = 1;
     	foreach ($frompageparts as $frompagepart){
     		$toppagepart = clone $frompagepart;
