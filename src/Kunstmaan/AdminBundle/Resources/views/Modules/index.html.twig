@@ -1,0 +1,38 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <ul>
+        <li class="header">SEO</li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">Linked-In</a></li>
+        <li><a href="#">Google+</a></li>
+    </ul>
+    <ul>
+        <li class="header">Maps</li>
+        <li><a href="#">Google</a></li>
+        <li><a href="#">Nokia OVI</a></li>
+    </ul>
+    <ul>
+        <li class="header">Video</li>
+        <li><a href="#">Youtube</a></li>
+        <li><a href="#">Vimeo</a></li>
+    </ul>
+</div>
+{% endblock %} 
+                
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'omnext.home' | trans }}</a> </li>
+		<li class="active">{{ 'modules.title' | trans }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>{{ 'modules.title' | trans }}</h1>
+</div>
+    
+{% endblock %}

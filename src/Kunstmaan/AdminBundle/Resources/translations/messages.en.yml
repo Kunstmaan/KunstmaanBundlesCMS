@@ -1,0 +1,68 @@
+# Pages
+pages:
+  title: Pages
+  parts: PageParts
+  draft: Draft
+
+# Modules
+modules:
+  title: Modules
+
+# Settings
+settings:
+  title: Settings
+  maintanance: Maintenance
+  scheduled: Scheduled Jobs
+  group: Groups
+  groups:
+      name: Name
+      edit: Edit
+      add: Add group
+      roles: Roles
+  users: Users
+  user:
+      username: Username
+      password: Password
+      repeatedpassword: Repeat password
+      email: E-mail
+      enabled: Enabled
+      roles: Groups
+      add: Add User
+      edit: Edit User
+
+# Tools
+tools:
+  title: Tools
+  clear_frontend_cache: Clear frontend cache
+  clear_backend_cache: Clear backend cache
+  clear_all_caches: Clear all caches
+  shutdown: Shutdown
+
+# Forms
+form:
+  cancel: Cancel
+  delete: Delete
+  edit: Edit
+  add: Add New
+  save: Save
+  publish: Publish
+  saveasdraft: Save as draft
+  name: Name
+  type: Type
+  error: Error
+  warning: Warning
+  headsup: Heads up
+  forgot:
+    password: Forgot my password.
+  permissions: Permissions
+  properties: Properties 
+  createdat: Created At
+  updatedat: Updated At
+  actions: Actions
+  addfilter: Add filter
+    
+omnext:
+  home: Home
+  title: OpenMercury.NEXT
+  welcome: Welcome.<small> OpenMercury.NEXT application administration....</small>
+  information: <strong>Information. </strong> There are no new notifications.

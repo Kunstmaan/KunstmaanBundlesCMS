@@ -1,0 +1,30 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'omnext.home' | trans }}</a></li>
+		{% block subbreadcrumb %}
+			<li class="active">{{ 'settings.title' | trans }}</li>
+		{% endblock %}
+	</ul>
+{% endblock %}
+
+{% block sidebar %}
+<<<<<<< HEAD
+    {% include "KunstmaanAdminBundle:Settings:sidebar.html.twig" %}
+=======
+    <ul>
+        <li class="header">{{ 'settings.title' | trans }}</li>
+        <li><a href="{{ path('KunstmaanAdminBundle_settings_users') }}">{{ 'settings.users' | trans }}</a></li>
+        <li><a href="{{ path('KunstmaanAdminBundle_settings_groups') }}">{{ 'settings.group' | trans }}</a></li>
+        <li><a href="#">{{ 'settings.maintanance' | trans }}</a></li>
+        <li><a href="#">{{ 'settings.scheduled' | trans }}</a></li>
+    </ul>
+>>>>>>> feature/roles
+{% endblock %}
+
+{% block content %}
+	<div class="page-header">
+	    <h1>{{ 'settings.title' | trans }}</h1>
+	</div>
+{% endblock %}

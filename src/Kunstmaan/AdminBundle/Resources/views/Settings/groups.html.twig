@@ -1,0 +1,16 @@
+{% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
+
+{% block subbreadcrumb %}
+	<li><a href="{{ path('KunstmaanAdminBundle_settings') }}">{{ 'settings.title' | trans }}</a></li>
+	<li class="active">{{ 'settings.group' | trans }}</li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>{{ 'settings.group' | trans }}</h1>
+    </div>
+
+    {{ adminlist_widget(groupadminlist, 'KunstmaanAdminBundle_settings_groups') }}
+
+{% endblock %}

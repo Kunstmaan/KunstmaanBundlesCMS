@@ -1,0 +1,11 @@
+{% block field_row %}
+{% spaceless %}
+<div class="clearfix">
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+    <div class="input">
+        {{ form_widget(form) }}
+    </div>
+</div>
+{% endspaceless %}
+{% endblock field_row %}

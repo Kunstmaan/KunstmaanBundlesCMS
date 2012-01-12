@@ -1,0 +1,14 @@
+<div class="search_wrp"> 
+	<input type="text" id="searchVal" value="" /> 
+	<button id="search" class="btn search"><img src="/bundles/kunstmaanadmin/img/icons/search.png" alt="Search" /></button>
+</div>
+<div id="tree">
+	<ul>
+        <li class="jstree-open {% if route == 'KunstmaanAdminBundle_settings' %}active{% endif %}" rel="settings"><a href="{{ path("KunstmaanAdminBundle_settings") }}">{{ 'settings.title' | trans }}</a>
+	        <ul>
+	        	<li {% if route == 'KunstmaanAdminBundle_settings_users' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_users') }}">{{ 'settings.users' | trans }}</a></li>
+	        	<li {% if route == 'KunstmaanAdminBundle_settings_groups' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_groups') }}">{{ 'settings.group' | trans }}</a></li>
+	    	</ul>
+    	</li>
+    </ul>
+</div>

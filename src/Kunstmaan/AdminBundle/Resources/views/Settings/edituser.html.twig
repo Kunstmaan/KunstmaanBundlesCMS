@@ -1,0 +1,62 @@
+{% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
+
+{% block subbreadcrumb %}
+	<li><a href="{{ path('KunstmaanAdminBundle_settings') }}">{{ 'settings.title' | trans }}</a></li>
+    <li><a href="{{ path('KunstmaanAdminBundle_settings_users') }}">{{ 'settings.users' | trans }}</a></li>
+	<li class="active">{{ 'settings.user.edit' | trans }}</li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>{{ 'settings.user.edit' | trans }}</h1>
+    </div>
+
+    <form action="{{ path('KunstmaanAdminBundle_settings_users_edit', { 'user_id' : user.id }) }}" method="post" {{ form_enctype(form) }}>
+    <fieldset>
+    	{{ form_errors(form) }}
+        <div class="clearfix">
+            <label for="xlInput3">{{ 'settings.user.username' | trans }}</label>
+            <div class="input">
+                {{ form_widget(form.username) }}
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="xlInput3">{{ 'settings.user.password' | trans }}</label>
+            <div class="input">
+                {{ form_widget(form.plainPassword.first) }}
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="xlInput3">{{ 'settings.user.repeatedpassword' | trans }}</label>
+            <div class="input">
+                {{ form_widget(form.plainPassword.second) }}
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="xlInput3">{{ 'settings.user.email' | trans }}</label>
+            <div class="input">
+                {{ form_widget(form.email) }}
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="xlInput3">{{ 'settings.user.enabled' | trans }}</label>
+            <div class="input">
+                {{ form_widget(form.enabled) }}
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="xlInput3">{{ 'settings.user.roles' | trans }}</label>
+            <div class="input">
+                {{ form_widget(form.groups) }}
+            </div>
+        </div>
+        {{ form_rest(form) }}
+        <div class="actions">
+            <input class="btn primary type" type="submit" value="{{ 'settings.user.edit' | trans }}">
+            <input onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_users') }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+        </div>
+    </fieldset>
+</form>
+
+{% endblock %}
