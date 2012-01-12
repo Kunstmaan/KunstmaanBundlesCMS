@@ -11,6 +11,6 @@ namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
 abstract class AbstractPagePartAdminConfigurator {
 
-    abstract function getPossiblePagePartTypes($array);
+    abstract function getPossiblePagePartTypes();
 
 }

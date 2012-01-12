@@ -13,7 +13,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="headerpagepart")
  */
-class HeaderPagePart{
+class HeaderPagePart {
 
     /**
      * @ORM\Id
@@ -32,8 +32,7 @@ class HeaderPagePart{
      */
     protected $title;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
     /**
@@ -59,8 +58,7 @@ class HeaderPagePart{
      *
      * @param int $niv
      */
-    public function setNiv($niv)
-    {
+    public function setNiv($niv) {
         $this->niv = $niv;
     }
 
@@ -69,8 +67,7 @@ class HeaderPagePart{
      *
      * @return int
      */
-    public function getNiv()
-    {
+    public function getNiv() {
         return $this->niv;
     }
 
@@ -79,8 +76,7 @@ class HeaderPagePart{
      *
      * @param string $content
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
     }
 
@@ -89,8 +85,7 @@ class HeaderPagePart{
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
