@@ -1,1 +1,8 @@
+{% if pagepartref is defined %}
+<script>
+window.ImagegalleryImageChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
+    window.CKEDITOR.tools.callFunction(2, url);
+}
+</script>
+{% endif %}
 {{resource.content|raw}}

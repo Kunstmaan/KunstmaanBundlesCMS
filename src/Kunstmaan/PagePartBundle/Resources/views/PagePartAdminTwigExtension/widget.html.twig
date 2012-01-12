@@ -1,3 +1,6 @@
+<script>
+    window.ImagegalleryImageChosenCallback = new Array();
+</script>
 <div class="pagepartscontainer" id="parts">
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
@@ -43,6 +46,7 @@
 	            function edit_{{pagepartref.id}}(){
 	                document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
 	                document.getElementById('{{pagepartref.id}}_edit').style.display = '';
+                    window.activeEdit = '{{pagepartref.id}}';
 	                return false;
 	            }
 	        </script>
