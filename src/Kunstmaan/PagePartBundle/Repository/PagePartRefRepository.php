@@ -14,6 +14,13 @@ class PagePartRefRepository extends EntityRepository
 {
 
     public function addPagePart($page, $pagepart, $sequencenumber, $context = "main"){
+    	$pagepartrefs = $this->getPagePartRefs($page);
+    	foreach($pagepartrefs as $pagepartref){
+    		if($pagepartref->getSequencenumber()>=$sequencenumber){
+    			$pagepartref->setSequencenumber($pagepartref->getSequencenumber()+1);
+    			$this->getEntityManager()->persist($pagepartref);
+    		}
+    	}
         $pagepartref = new \Kunstmaan\PagePartBundle\Entity\PagePartRef();
         $pagepartref->setContext($context);
         $pagepartref->setPageEntityname(get_class($page));
@@ -24,15 +31,15 @@ class PagePartRefRepository extends EntityRepository
         $this->getEntityManager()->persist($pagepartref);
     }
     
-    public function getPagePartRefs($em, $page, $context = "main"){
-    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => get_class($page), 'context' => $context));
+    public function getPagePartRefs($page, $context = "main"){
+    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => get_class($page)), 'context' => $context, array('sequencenumber' => 'ASC'));
     }
     
-    public function getPageParts($em, $page, $context = "main"){
-    	$pagepartrefs = $this->getPagePartRefs($em, $page, $context);
+    public function getPageParts($page, $context = "main"){
+    	$pagepartrefs = $this->getPagePartRefs($page, $context);
     	$result = array();
     	foreach($pagepartrefs as $pagepartref){
-    		$result[] = $pagepartref->getPagePart($em);
+    		$result[] = $pagepartref->getPagePart($this->getEntityManager());
     	}
     	return $result;
     }
