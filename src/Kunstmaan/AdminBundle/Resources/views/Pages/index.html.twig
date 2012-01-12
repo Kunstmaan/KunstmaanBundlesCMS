@@ -5,7 +5,7 @@
 	    		<input type="text" id="searchVal" value="" /> 
 	    		<button id="search" class="btn search"><img src="{{ asset('bundles/kunstmaanadmin/img/icons/search.png') }}" alt="Search" /></button> 
 	    	</div> 
-    <div id="tree">
+    <div id="pages">
         <ul>
             {% for node in nodemenu.topnodes %}
                 {% include 'KunstmaanAdminBundle:Pages:rectreeview.html.twig' %}
