@@ -1,0 +1,13 @@
+KunstmaanViewBundle_searchpage:
+    resource: "@KunstmaanViewBundle/Controller/SearchPageController.php"
+    type:     annotation
+    prefix:   /{_locale}/
+    requirements: 
+      _locale: nl|en|fr
+
+KunstmaanViewBundle_slug:
+    resource: "@KunstmaanViewBundle/Controller/SlugController.php"
+    type:     annotation
+    prefix:   /{_locale}/
+    requirements: 
+      _locale: nl|en|fr

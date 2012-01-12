@@ -1,0 +1,13 @@
+{% extends "KunstmaanViewBundle::layout.html.twig" %}
+{% block content %}
+	You are searching for "{{ query }}"<br />
+    <hr />
+    {% if results %}
+        {% for result in results %}
+            <a href="/{{result.slug}}">{{ result.title }}</a><br />
+        {% endfor %}
+    {% else %}
+        No results available.
+    {% endif %}
+{% endblock %}
+				
