@@ -24,16 +24,29 @@ class PagePartRefRepository extends EntityRepository
         $this->getEntityManager()->persist($pagepartref);
     }
     
-    public function getPagePartRefs($em, $page){
-    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => get_class($page)));
+    public function getPagePartRefs($em, $page, $context = "main"){
+    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => get_class($page), 'context' => $context));
     }
     
-    public function getPageParts($em, $page){
-    	$pagepartrefs = $this->getPagePartRefs($em, $page);
+    public function getPageParts($em, $page, $context = "main"){
+    	$pagepartrefs = $this->getPagePartRefs($em, $page, $context);
     	$result = array();
     	foreach($pagepartrefs as $pagepartref){
     		$result[] = $pagepartref->getPagePart($em);
     	}
     	return $result;
+    }
+    
+    public function copyPageParts($em, $frompage, $topage, $context = "main"){
+    	$frompageparts = $this->getPageParts($em, $frompage);
+    	$sequencenumber = 1;
+    	foreach ($frompageparts as $frompagepart){
+    		$toppagepart = clone $frompagepart;
+    		$toppagepart->setId(null);
+    		$em->persist($toppagepart);
+    		$em->flush();
+    		$this->addPagePart($topage, $toppagepart, $sequencenumber, $context);
+    		$sequencenumber++;
+    	}
     }
 }
