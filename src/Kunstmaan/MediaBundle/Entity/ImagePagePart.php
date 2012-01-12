@@ -4,6 +4,9 @@ namespace  Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Form\ImagePagePartAdminType;
+use Assetic\AssetManager;
+use Assetic\Asset\AssetCollection;
+use Assetic\Asset\FileAsset;
 
 /**
  * @ORM\Entity
@@ -22,6 +25,21 @@ class ImagePagePart {
      * @ORM\Column(type="string", nullable=true)
      */
     protected $title;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $link;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $alttext;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Media")
+     */
+    public $media;
 
 
     public function __construct() {
@@ -46,16 +64,16 @@ class ImagePagePart {
     }
 
     /**
-     * Set content
+     * Set title
      *
-     * @param string $content
+     * @param string $title
      */
     public function setTitle($title) {
         $this->title = $title;
     }
 
     /**
-     * Get content
+     * Get title
      *
      * @return string
      */
@@ -63,10 +81,62 @@ class ImagePagePart {
         return $this->title;
     }
 
+    /**
+     * Set link
+     *
+     * @param string $link
+     */
+    public function setLink($link) {
+        $this->link = $link;
+    }
 
+    /**
+     * Get link
+     *
+     * @return string
+     */
+    public function getLink() {
+        return $this->link;
+    }
 
-    public function __toString(){
-        return "ImagePagePart ".$this->getTitle();
+    /**
+     * Set alt text
+     *
+     * @param string $alttext
+     */
+    public function setAlttext($alttext) {
+        $this->alttext = $alttext;
+    }
+
+    /**
+     * Get media
+     *
+     * @return Kunstmaan\MediaBundle\Entity\Media
+     */
+    public function getMedia() {
+        return $this->media;
+    }
+
+    /**
+     * Set media
+     *
+     * @param Kunstmaan\MediaBundle\Entity\Media $media
+     */
+    public function setMedia($media) {
+        $this->media = $media;
+    }
+
+    /**
+     * Get alt text
+     *
+     * @return string
+     */
+    public function getAlttext() {
+        return $this->alttext;
+    }
+
+    public function __toString() {
+        return $this->getMedia()->getUrl();
     }
 
     public function getDefaultView(){
