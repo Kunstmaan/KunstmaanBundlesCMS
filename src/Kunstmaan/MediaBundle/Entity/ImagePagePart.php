@@ -136,7 +136,10 @@ class ImagePagePart {
     }
 
     public function __toString() {
-        return $this->getMedia()->getUrl();
+        if($this->getMedia()) {
+            return $this->getMedia()->getUrl();
+        }
+        return "";
     }
 
     public function getDefaultView(){
