@@ -427,6 +427,7 @@ footer {
 #pageparts {
   overflow: hidden;
   width: 100%;
+  min-height: 50px;
 }
 
 /* line 413, ../sass/style.scss */
