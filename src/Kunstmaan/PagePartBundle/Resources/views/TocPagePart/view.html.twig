@@ -1,5 +1,15 @@
+{% set tocContent = '' %}
 {% for pagepart in pageparts %}
     {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
-        <a href="#{{ pagepart.getTitle|url_encode }}">{{ pagepart.getTitle }}</a>
+        {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|url_encode~'">'~pagepart.getTitle~'</a></li>' %}
     {% endif %}
 {% endfor %}
+
+
+{% if tocContent %}
+    <div class="toc">
+        <ul>
+        {{ tocContent|raw }}
+        </ul>
+    </div>
+{% endif %}
