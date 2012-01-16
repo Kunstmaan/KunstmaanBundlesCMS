@@ -11,7 +11,12 @@ namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
 class PagePartAdminFactory {
 
+<<<<<<< HEAD
+    public function createList(AbstractPagePartAdminConfigurator $configurator, $em, $page, $context = "main"){
+        return new PagePartAdmin($configurator, $em, $page, $context);
+=======
     public function createList(AbstractPagePartAdminConfigurator $configurator, $em, $page, $context, $container){
         return new PagePartAdmin($configurator, $em, $page, $context, $container);
+>>>>>>> ff046b3... feature/multiplepagepartcontexts
     }
 }

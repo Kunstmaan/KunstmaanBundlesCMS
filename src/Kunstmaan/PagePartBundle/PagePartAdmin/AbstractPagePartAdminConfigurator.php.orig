@@ -11,10 +11,14 @@ namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
 abstract class AbstractPagePartAdminConfigurator {
 
+<<<<<<< HEAD
+    abstract function getPossiblePagePartTypes($array);
+=======
     abstract function getPossiblePagePartTypes();
     
     abstract function getName();
     
     abstract function getDefaultContext();
+>>>>>>> ff046b3... feature/multiplepagepartcontexts
 
 }
