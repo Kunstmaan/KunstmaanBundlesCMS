@@ -62,7 +62,7 @@ class FolderController extends Controller
         }
 
         //$form = $this->createForm($gallery->getStrategy()->getFormType(), $gallery->getStrategy()->getFormHelper());
-        $sub = $gallery->getStrategy()->getNewGallery();
+        $sub = $gallery->getStrategy()->getNewGallery($em);
         $sub->setParent($gallery);
         $subform = $this->createForm(new SubFolderType(), $sub);
         $editform = $this->createForm($gallery->getFormType($gallery), $gallery);
@@ -170,7 +170,7 @@ class FolderController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
 
-            $gallery = $parent->getStrategy()->getNewGallery();
+            $gallery = $parent->getStrategy()->getNewGallery($em);
             $gallery->setParent($parent);
             $form = $this->createForm(new SubFolderType(), $gallery);
 
@@ -193,5 +193,47 @@ class FolderController extends Controller
                 'gallery' => $gallery,
                 'parent' => $parent
             ));
+    }
+    
+    /**
+     * @Route("/movenodes", name="KunstmaanMediaBundle_folder_movenodes")
+     * @Method({"GET", "POST"})
+     */
+    public function movenodesAction(){
+    	$request = $this->getRequest();
+    	$em = $this->getDoctrine()->getEntityManager();
+    	
+    	$parentid = $request->get('parentid');
+    	$parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($parentid, $em);
+    	
+    	$fromposition = $request->get('fromposition');
+    	$afterposition = $request->get('afterposition');
+    	
+    	foreach($parent->getChildren() as $child){
+    		if($child->getSequencenumber() == $fromposition){
+    			if($child->getSequencenumber() > $afterposition){
+    				$child->setSequencenumber($afterposition + 1);
+    				$em->persist($child);
+    			}else{
+    				$child->setSequencenumber($afterposition);
+    				$em->persist($child);
+    			}
+    		}else{
+    			if($child->getSequencenumber() > $fromposition && $child->getSequencenumber() <= $afterposition){
+    				$newpos = $child->getSequencenumber()-1;
+    				$child->setSequencenumber($newpos);
+    				$em->persist($child);
+    			}else{
+    				if($child->getSequencenumber() < $fromposition && $child->getSequencenumber() > $afterposition){
+    					$newpos = $child->getSequencenumber()+1;
+    					$child->setSequencenumber($newpos);
+    					$em->persist($child);
+    				}
+    			}
+    		}	
+    		
+    		$em->flush();
+    	}
+    	return array("success" => true);
     }
 }

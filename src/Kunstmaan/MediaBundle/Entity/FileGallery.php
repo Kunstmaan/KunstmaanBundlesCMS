@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Entity;
 
+use Doctrine\ORM\EntityManager;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,9 +24,9 @@ class FileGallery extends Folder{
      */
     protected $id;
 
-    public function __construct()
+    public function __construct(EntityManager $em)
     {
-        parent::__construct();
+        parent::__construct($em);
     }
 
     public function getStrategy(){

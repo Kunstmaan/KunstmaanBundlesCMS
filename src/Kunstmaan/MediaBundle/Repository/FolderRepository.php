@@ -46,7 +46,8 @@ class FolderRepository extends EntityRepository
     {
             $qb = $this->createQueryBuilder('folder')
                        ->select('folder')
-                       ->where('folder.parent is null');
+                       ->where('folder.parent is null')
+            		   ->orderby('folder.sequencenumber');
             if (false === is_null($limit))
                 $qb->setMaxResults($limit);
 

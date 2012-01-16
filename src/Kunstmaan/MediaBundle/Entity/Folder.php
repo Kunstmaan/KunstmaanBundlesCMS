@@ -2,6 +2,8 @@
 
 namespace  Kunstmaan\MediaBundle\Entity;
 
+use Doctrine\ORM\EntityManager;
+
 use Kunstmaan\AdminBundle\Modules\Slugifier;
 
 use Kunstmaan\MediaBundle\Helper\FolderStrategy;
@@ -40,13 +42,14 @@ class Folder{
     protected $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children", fetch="EAGER")
      * @ORM\JoinColumn(name="parent", referencedColumnName="id", nullable=true)
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="EAGER")
+     * @ORM\OrderBy({"sequencenumber" = "ASC"})
      */
     protected $children;
 
@@ -74,9 +77,17 @@ class Folder{
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $rel;
+	
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	protected $sequencenumber;
     
-    public function __construct()
+	protected $em;
+	
+    public function __construct(EntityManager $em)
     {
+    	$this->em = $em;
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->files = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setCreated(new \DateTime());
@@ -223,21 +234,36 @@ class Folder{
       *
       * @param \Kunstmaan\MediaBundle\Entity\ImageGallery $children
       */
-     public function addChild(Folder $child)
-     {
+     public function addChild(Folder $child){
          $this->children[] = $child;
          $child->setParent($this);
      }
 
 
-     public function getChildren()
-     {
+     public function getChildren(){
          return $this->children;
      }
+     
+     public function getNextSequence(){
+     	$children = $this->getChildren();
+     	$count = 0;
+     	foreach($children as $child){
+     		var_dump("blubber");
+     		$count++;
+     	}
+     	return $count + 1;
+     }
 
-     public function setChildren($children)
-     {
+     public function setChildren($children){
          $this->children = $children;
+     }
+     
+     public function getSequencenumber(){
+     	return $this->sequencenumber;
+     }
+     
+     public function setSequencenumber($sequencenumber){
+     	$this->sequencenumber = $sequencenumber;
      }
 
      public function disableChildrenLazyLoading()
@@ -338,5 +364,18 @@ class Folder{
     public function preRemove()
     {
 
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function preInsert(){
+    	if(!$this->sequencenumber){
+	    	$parent = $this->getParent();
+	    	if($parent){
+	    		$count = $parent->getChildren()->count();
+	    		$this->sequencenumber = $count+1;
+	    	}else $this->sequencenumber = 1;
+    	}
     }
 }

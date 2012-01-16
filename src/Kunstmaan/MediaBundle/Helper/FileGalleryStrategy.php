@@ -5,6 +5,8 @@ namespace Kunstmaan\MediaBundle\Helper;
 /**
  * Comment controller.
  */
+use Doctrine\ORM\EntityManager;
+
 class FileGalleryStrategy implements GalleryStrategyInterface{
 
     public function getName()
@@ -17,9 +19,9 @@ class FileGalleryStrategy implements GalleryStrategyInterface{
         return 'file';
     }
 
-    public function getNewGallery()
+    public function getNewGallery(EntityManager $em)
     {
-        return new \Kunstmaan\MediaBundle\Entity\FileGallery();
+        return new \Kunstmaan\MediaBundle\Entity\FileGallery($em);
     }
 
     public function getGalleryClassName()
