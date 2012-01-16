@@ -1,20 +1,22 @@
 <?php
-// src/Kunstmaan/DemoBundle/DataFixtures/ORM/FileGalleryFixtures.php
-
-namespace Kunstmaan\DemoBundle\DataFixtures\ORM;
+// Kunstmaan/MediaBundle/DataFixtures/ORM/FolderFixtures
+namespace Kunstmaan\MediaBundle\DataFixtures\ORM;
 
 use Kunstmaan\MediaBundle\Entity\FileGallery;
-
 use Kunstmaan\MediaBundle\Entity\SlideGallery;
-
 use Kunstmaan\MediaBundle\Entity\VideoGallery;
-
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Kunstmaan\MediaBundle\Entity\Folder;
 
+/**
+ * Fixtures that make a general media-folder for a project 
+ * and for every type of media a folder in that media-folder
+ * 
+ * @author Kristof Van Cauwenbergh
+ */
 class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load($manager)
