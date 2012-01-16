@@ -3,6 +3,9 @@ pages:
   title: Pages
   parts: PageParts
   draft: Draft
+  pagenottranslated: This page is not translated
+  copyfrom: Copy from language 
+  createemptypage: Create as an empty page
 
 # Modules
 modules:
