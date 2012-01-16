@@ -11,7 +11,6 @@ use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeRepository")
  * @ORM\Table(name="node")
- * @ORM\HasLifecycleCallbacks()
  */
 class Node
 {
@@ -35,55 +34,33 @@ class Node
 
     /**
      * @ORM\OneToMany(targetEntity="Node", mappedBy="parent")
+     * @ORM\OrderBy({"sequencenumber" = "ASC"})
      */
     protected $children;
-
+    
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\OneToMany(targetEntity="NodeTranslation", mappedBy="node")
      */
-    protected $refId;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $refEntityname;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $title;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $slug;
+    protected $nodeTranslations;
 
     /**
      * @ORM\Column(type="array", nullable=false)
      */
     protected $roles;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $created;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $updated;
-
+    
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $online;
+    protected $deleted;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $refEntityname;
 
-
-    public function __construct()
-    {
+    public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setCreated(new \DateTime());
-        $this->setUpdated(new \DateTime());
+        $this->nodeTranslations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -91,8 +68,7 @@ class Node
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -101,154 +77,65 @@ class Node
      *
      * @param string $id
      */
-    public function setId($num)
-    {
+    public function setId($num) {
         $this->id = $num;
     }
 
-    /**
-     * Get refId
-     *
-     * @return integer
-     */
-    public function getRefId()
-    {
-        return $this->refId;
-    }
-
-    /**
-     * Set refId
-     *
-     * @param string $refId
-     */
-    public function setRefId($num)
-    {
-        $this->refId = $num;
-    }
-
-    /**
-     * Set refEntityname
-     *
-     * @param string $refEntityname
-     */
-    public function setRefEntityname($refEntityname)
-    {
-        $this->refEntityname = $refEntityname;
-    }
-
-    /**
-     * Get refEntityname
-     *
-     * @return string 
-     */
-    public function getRefEntityname()
-    {
-        return $this->refEntityname;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set created
-     *
-     * @param datetime $created
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    /**
-     * Get created
-     *
-     * @return datetime 
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param datetime $updated
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return datetime 
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-    
-
-
-    /**
-     * @ORM\preUpdate
-     */
-    public function setUpdatedValue()
-    {
-       $this->setUpdated(new \DateTime());
-    }
-
-    public function __toString()
-    {
-        return $this->getTitle();
-    }
-
-    /**
-     * Add children
-     *
-     * @param \Kunstmaan\AdminNodeBundle\Entity\Node $children
-     */
-    public function addChild(Node $child)
-    {
-        $this->children[] = $child;
-
-        $child->setParent($this);
-    }
-
-
-    public function getChildren()
-    {
+    public function getChildren() {
         return $this->children;
     }
 
-    public function setChildren($children)
-    {
+    public function setChildren($children) {
         $this->children = $children;
     }
+    
+    /**
+     * Add children
+     *
+     * @param \Kunstmaan\AdminNodeBundle\Entity\Node $child
+     */
+    public function addNode(Node $child) {
+    	$this->children[] = $children;
+    	$child->setParent($this);
+    }
 
-    public function disableChildrenLazyLoading()
-    {
+    public function disableChildrenLazyLoading() {
         if (is_object($this->children)) {
             $this->children->setInitialized(true);
         }
+    }
+    
+    public function getNodeTranslations() {
+    	return $this->nodeTranslations;
+    }
+    
+    public function setNodeTranslations($nodeTranslations) {
+    	$this->nodeTranslations = $nodeTranslations;
+    }
+    
+    public function getNodeTranslation($lang){
+    	foreach($this->nodeTranslations as $nodeTranslation){
+    		if($lang == $nodeTranslation->getLang()){
+    			return $nodeTranslation;
+    		}
+    	}
+    	return null;
+    }
+    
+    /**
+     * Add nodeTranslation
+     *
+     * @param NodeTranslation $nodeTranslation
+     */
+    public function addNodeTranslation(NodeTranslation $nodeTranslation) {
+    	$this->nodeTranslations[] = $nodeTranslation;
+    	$nodeTranslation->setNode($this);
+    }
+    
+    public function disableNodeTranslationsLazyLoading() {
+    	if (is_object($this->nodeTranslations)) {
+    		$this->nodeTranslations->setInitialized(true);
+    	}
     }
 
     /**
@@ -256,8 +143,7 @@ class Node
      *
      * @param integer $parent
      */
-    public function setParent($parent)
-    {
+    public function setParent($parent) {
         $this->parent = $parent;
     }
 
@@ -289,48 +175,11 @@ class Node
     }
 
     /**
-     * Set slug
-     *
-     * @param string $slug
-     */
-    public function setSlug($slug) {
-        $this->slug = $slug;
-    }
-
-    /**
-     * Is online
-     *
-     * @return boolean
-     */
-    public function isOnline() {
-        return $this->online;
-    }
-
-    /**
-     * Set online
-     *
-     * @param boolean $online
-     */
-    public function setOnline($online) {
-        $this->online = $online;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug() {
-        return $this->slug;
-    }
-
-    /**
      * Set the roles
      *
      * @param $roles
      */
-    public function setRoles($roles)
-    {
+    public function setRoles($roles) {
         $this->roles = $roles;
     }
 
@@ -339,27 +188,50 @@ class Node
      *
      * @return mixed
      */
-    public function getRoles()
-    {
+    public function getRoles() {
         return $this->roles;
     }
 
 
+    
+    
     /**
-     * Add children
+     * Is online
      *
-     * @param Node $children
+     * @return boolean
      */
-    public function addNode(Node $children)
-    {
-        $this->children[] = $children;
-    }
-
-    public function getDefaultAdminType($container){
-        return new NodeAdminType($container);
+    public function isDeleted() {
+    	return $this->deleted;
     }
     
-    public function getRef($em) {
-    	return $em->getRepository($this->getRefEntityname())->find($this->getRefId());
+    /**
+     * Set online
+     *
+     * @param boolean $online
+     */
+    public function setDeleted($deleted) {
+    	$this->deleted = $deleted;
+    }
+    
+    /**
+     * Set refEntityname
+     *
+     * @param string $refEntityname
+     */
+    public function setRefEntityname($refEntityname) {
+    	$this->refEntityname = $refEntityname;
+    }
+    
+    /**
+     * Get refEntityname
+     *
+     * @return string
+     */
+    public function getRefEntityname() {
+    	return $this->refEntityname;
+    }
+
+    public function getDefaultAdminType($container) {
+        return new NodeAdminType($container);
     }
 }

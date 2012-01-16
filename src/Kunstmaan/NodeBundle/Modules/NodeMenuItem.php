@@ -13,6 +13,7 @@ class NodeMenuItem
 {
     private $em;
     private $node;
+    private $lang;
     private $lazyChildren = null;
     private $parent;
     private $menu;
@@ -20,10 +21,11 @@ class NodeMenuItem
     /**
      * @param FactoryInterface $factory
      */
-    public function __construct($em, $node, $parent, $menu)
+    public function __construct($em, $node, $lang, $parent, $menu)
     {
         $this->em = $em;
         $this->node = $node;
+        $this->lang = $lang;
         $this->parent = $parent;
         $this->menu = $menu;
     }
@@ -37,18 +39,29 @@ class NodeMenuItem
     }
     
     public function getTitle(){
-    	return $this->node->getTitle();
+    	$nodeTranslation = $this->node->getNodeTranslation($this->lang);
+    	if($nodeTranslation){
+    		return $nodeTranslation->getTitle();
+    	}
+    	return "Untranslated";
     }
     
     public function getSlugPart(){
-    	return $this->node->getSlug();
+    	$nodeTranslation = $this->node->getNodeTranslation($this->lang);
+    	if($nodeTranslation){
+    		return $nodeTranslation->getSlug();
+    	}
+    	return null;
     }
     
     public function getSlug(){
     	$result = $this->getSlugPart();
     	$p = $this->getParent();
     	while(!is_null($p)){
-    		$result = $p->getSlug() . "/" . $result;
+    		$nodeTranslation = $p->getNodeTranslation($this->lang);
+    		if($nodeTranslation){
+    			$result = $nodeTranslation->getSlug() . "/" . $result;
+    		}
     		$p = $p->getParent();
     	}
     	return $result;
@@ -61,9 +74,9 @@ class NodeMenuItem
     public function getChildren(){
     	if(is_null($this->lazyChildren)){
     		$this->lazyChildren = array();
-    		$children = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getChildren($this->node);
+    		$children = $this->node->getChildren();
     		foreach($children as $child){
-    			$this->lazyChildren[] = new NodeMenuItem($this->em, $child, $this, $this->menu);
+    			$this->lazyChildren[] = new NodeMenuItem($this->em, $child, $this->lang, $this->node, $this->menu);
     		}
     	}
     	return $this->lazyChildren;

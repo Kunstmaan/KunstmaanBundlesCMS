@@ -6,7 +6,7 @@ namespace Kunstmaan\AdminNodeBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class NodeAdminType extends AbstractType
+class NodeTranslationAdminType extends AbstractType
 {
     protected $container;
 
@@ -17,7 +17,7 @@ class NodeAdminType extends AbstractType
 
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('sequencenumber');
+        $builder->add('online', 'checkbox', array('required' => false));
     }
 
     public function getName()
