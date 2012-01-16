@@ -25,18 +25,14 @@ class PagePartAdmin {
 
     protected $pageparts = array();
 
+    protected $container = null;
+
     function __construct(AbstractPagePartAdminConfigurator $configurator, $em, $page, $context, $container)
     {
         $this->configurator = $configurator;
         $this->em = $em;
         $this->page = $page;
-        if($context){
-        	$this->context = $context;
-        } else if($this->configurator->getDefaultContext()){
-        	$this->context = $this->configurator->getDefaultContext();
-        } else {
-        	$this->context = "main";
-        }
+        $this->context = $context;
         $this->container = $container;
     }
 

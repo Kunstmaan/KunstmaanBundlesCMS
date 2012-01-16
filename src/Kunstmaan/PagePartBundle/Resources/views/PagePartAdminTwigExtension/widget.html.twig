@@ -1,3 +1,6 @@
+<script>
+    window.ImagegalleryImageChosenCallback = new Array();
+</script>
 <div class="pagepartscontainer" id="parts">
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
@@ -43,6 +46,7 @@
 	            function edit_{{pagepartref.id}}(){
 	                document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
 	                document.getElementById('{{pagepartref.id}}_edit').style.display = '';
+                    window.activeEdit = '{{pagepartref.id}}';
 	                return false;
 	            }
 	        </script>
@@ -50,22 +54,26 @@
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
         
             <div class="pagepart">
-            	<div class="prop_bar">
+            	<div class="prop_bar {% if not form['pagepartadmin'~pagepartref.id].count %}noedit{% endif %}">
             		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
             		{#
             		  <a class="btn small" href="#" onclick="return moveUp_{{pagepartref.id}}()">Up</a>
                       <a class="btn small" href="#" onclick="return moveDown_{{pagepartref.id}}()">Down</a>
             		#}
 					<a class="del red" data-controls-modal="delete-pagepart" data-backdrop="true" data-keyboard="true" onclick="return delete_{{pagepartref.id}}()"><span>Del</span></a>
-                    <a href="#" class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</a>
+                    {% if form['pagepartadmin'~pagepartref.id].count %}
+                        <a href="#" class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</a>
+                    {% endif %}
             	</div>
-                <div class="block" id="{{pagepartref.id}}_view">
-                    {% include pagepart.defaultview with {'resource': pagepart} %}
-                </div>
-                <div class="block" id="{{pagepartref.id}}_edit" style="display:none">
-                    {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
-                    {{ form_widget(form['pagepartadmin'~pagepartref.id]) }}
-                </div>
+                {% if form['pagepartadmin'~pagepartref.id].count %}
+                    <div class="block" id="{{pagepartref.id}}_view">
+                        {% include pagepart.defaultview with {'resource': pagepart} %}
+                    </div>
+                    <div class="block" id="{{pagepartref.id}}_edit" style="display:none">
+                        {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
+                        {{ form_widget(form['pagepartadmin'~pagepartref.id]) }}
+                    </div>
+                {% endif %}
             </div>
             <div class="new_pagepart">
               <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this)">
