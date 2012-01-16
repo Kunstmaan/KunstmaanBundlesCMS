@@ -308,6 +308,18 @@ function init_tree() {
 					"parentid": data.rslt.np.attr("id"),
 					"fromposition": data.rslt.o.attr("sequence"),
 					"afterposition" : data.rslt.cp
+				},
+				success : function (r) {
+					if(!r.status) {
+						$.jstree.rollback(data.rlbk);
+					}
+					else {
+						$(data.rslt.oc).attr("id", "node_" + r.id);
+						if(data.rslt.cy && $(data.rslt.oc).children("ul").length) {
+							data.inst.refresh(data.inst._get_parent(data.rslt.oc));
+						}
+					}
+					$("#analyze").click();
 				}
 		});
 	});
