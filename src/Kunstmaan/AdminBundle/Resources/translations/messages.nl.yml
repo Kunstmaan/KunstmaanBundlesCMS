@@ -3,6 +3,9 @@ pages:
   title: Pagina's
   parts: Delen van de pagina
   draft: Klad
+  pagenottranslated: Deze pagina is niet vertaald
+  copyfrom: Kopieren uit de taal
+  createemptypage: Een lege pagina maken
 
 # Modules
 modules:

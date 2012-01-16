@@ -69,19 +69,20 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
 
     public function getRepositoryName()
     {
-        return 'KunstmaanAdminNodeBundle:Node';
+        return 'KunstmaanAdminNodeBundle:NodeTranslation';
     }
 
     function adaptQueryBuilder($querybuilder, $params=array()){
         parent::adaptQueryBuilder($querybuilder);
 
+        /*FIXME: not going to fix it now, this list must first be converted to a version changes list
         $querybuilder->andWhere('b.id IN (
             SELECT
                 p.refId
             FROM
                 Kunstmaan\AdminBundle\Entity\Permission p
             WHERE
-                    p.refEntityname = b.refEntityname
+                    p.refEntityname = b.node.refEntityname
                 AND
                     p.permissions LIKE :permissions
                 AND
@@ -90,7 +91,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
 
         $querybuilder->setParameter('permissions', '%|'.$this->permission.':1|%');
         $querybuilder->setParameter('groups', $this->user->getGroupIds());
-
+	*/
         return $querybuilder;
     }
 }

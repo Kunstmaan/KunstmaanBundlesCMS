@@ -1,4 +1,5 @@
 {% extends 'KunstmaanAdminBundle:Pages:index.html.twig' %}
+{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
 {% block subbreadcrumb %}
 	<li><a href="{{ path('KunstmaanAdminBundle_pages') }}">{{ 'pages.title' | trans }}</a></li>
@@ -16,10 +17,10 @@
 
 {% block content %}
     <form action="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }}>
-    <h1>{{ page.title }} {% if draft %} <small>Draft version (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)</small> {% else %} <small>Public version (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)</small> {% endif %} </h1>
+    <h1>{{ page.title }} {% if draft %} <small>Draft version (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)</small> {% else %} <small>Public version {% if draftNodeVersion is not null %} (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)</small> {% endif %} {% endif %} </h1>
     <div class="sub_actions">
       {% if not draft %}
-        {% if node.online %}
+        {% if nodeTranslation.online %}
           <a href="#" data-controls-modal="unpub" data-backdrop="true" data-keyboard="true">Unpublish</a>
           <div id="unpub" class="modal hide fade">
 				<div class="modal-header">
@@ -202,18 +203,18 @@
                     <thead>
                     <tr>
                     	<th>Nr</th>
-                        <th>Action</th>
+                        <th>Type</th>
                         <th>Date</th>
                         <th>User</th>
                     </tr>
                     </thead>
                     <tbody>
-                        {% for log in logs %}
+                        {% for nodeVersion in nodeVersions %}
                             <tr>
-                            	<td><a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'version': log.version, 'subaction': subaction }) }}">{{ log.version }}</a></td>
-                                <td>{{ log.action }}</td>
-                                <td>{{ log.loggedat | date('Y-m-d H:i:s') }}</td>
-                                <td>{{ log.username }}</td>
+                            	<td><a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}">{{ nodeVersion.version }}</a></td>
+                                <td>{{ nodeVersion.type }}</td>
+                                <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
+                                <td>{{ nodeVersion.owner }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -229,3 +230,4 @@
     </form>
 
 {% endblock %}
+
