@@ -18,36 +18,29 @@ use Kunstmaan\AdminBundle\Modules\ClassLookup;
 class NodeGenerator {
 
     public function postUpdate(LifecycleEventArgs $args) {
-        $this->updateOrCreateNode($args);
+        $this->updateNode($args);
     }
 
     public function postPersist(LifecycleEventArgs $args) {
-        $this->updateOrCreateNode($args);
     }
 
-    public function updateOrCreateNode(LifecycleEventArgs $args){
+    public function updateNode(LifecycleEventArgs $args){
         $entity = $args->getEntity();
         $em = $args->getEntityManager();
         $classname = ClassLookup::getClass($entity);
         if($entity instanceof HasNode){
             $entityrepo = $em->getRepository($classname);
-            $node = $this->getNode($em, $entity->getId(), $classname);
-            if($node==null){
-                $node = new Node();
-                $node->setRefId($entity->getId());
-                $node->setRefEntityname($classname);
-                $node->setSequencenumber(1);
+            $nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($entity);
+            if($nodeVersion!=null){
+            	$nodeTranslation = $nodeVersion->getNodeTranslation();
+            	if($nodeTranslation->getPublicNodeVersion() && $nodeTranslation->getPublicNodeVersion()->getId() == $nodeVersion->getId()){
+            		$nodeTranslation->setTitle($entity->__toString());
+            		$nodeTranslation->setSlug(strtolower(str_replace(" ", "-", $entity->__toString())));
+            		$nodeTranslation->setOnline($entity->isOnline());
+            		$em->persist($nodeTranslation);
+            		$em->flush();
+            	}
             }
-            $parent = $entity->getParent();
-            if($parent){
-            	$parentNode = $em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('refId' => $parent->getId(), 'refEntityname' => ClassLookup::getClass($parent)));
-            	$node->setParent($parentNode);
-            }
-            $node->setTitle($entity->__toString());
-            $node->setSlug(strtolower(str_replace(" ", "-", $entity->__toString())));
-            $node->setOnline($entity->isOnline());
-            $em->persist($node);
-            $em->flush();
         }
     }
 
@@ -71,19 +64,21 @@ class NodeGenerator {
     	$em = $args->getEntityManager();
     	$classname = ClassLookup::getClass($entity);
     	if($entity instanceof HasNode){
-    		$node = $this->getNode($em, $entity->getId(), $classname);
-    		if($node){
+    		$nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $entity->getId(), 'refEntityname' => $classname));
+    		if($nodeVersion){
+    			$nodeTranslation = $nodeVersion->getNodeTranslation();
+    			$node = $nodeTranslation->getNode();
     			$parentNode = $node->getParent();
     			if($parentNode){
-    				$parent = $em->getRepository($parentNode->getRefEntityname())->find($parentNode->getRefId());
-    				$entity->setParent($parent);
+    				$parentNodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang());
+    				if($parentNodeTranslation){
+    					$parentNodeVersion = $parentNodeTranslation->getPublicNodeVersion();
+    					$parent = $em->getRepository($parentNode->getRefEntityname())->find($parentNodeVersion->getRefId());
+    					$entity->setParent($parent);
+    				}
     			}
     		}
     	}
     }
 
-    public function getNode($em, $id, $entityName){
-        return $em->getRepository('KunstmaanAdminNodeBundle:Node')
-            ->findOneBy(array('refId' => $id, 'refEntityname' => $entityName));
-    }
 }

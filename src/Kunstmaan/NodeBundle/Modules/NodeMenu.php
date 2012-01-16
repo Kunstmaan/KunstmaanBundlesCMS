@@ -6,8 +6,7 @@ use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Symfony\Component\Translation\Translator;
 use Knp\Menu\FactoryInterface;
 
-class NodeMenu
-{
+class NodeMenu {
     private $em;
     private $topNodeMenuItems = array();
     private $breadCrumb = array();
@@ -16,7 +15,7 @@ class NodeMenu
     /**
      * @param FactoryInterface $factory
      */
-    public function __construct($container, $currentNode, $permission = 'read')
+    public function __construct($container, $lang, Node $currentNode = null, $permission = 'read')
     {
         $this->container = $container;
         $this->em = $this->container->get('doctrine.orm.entity_manager');
@@ -30,7 +29,7 @@ class NodeMenu
         }
         $parentNode = null;
         foreach($nodeBreadCrumb as $nodeBreadCrumbItem){
-        	$this->breadCrumb[] = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $parentNode, $this);
+        	$this->breadCrumb[] = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $lang, $parentNode, $this);
         	$parentNode = $nodeBreadCrumbItem;
         }
 
@@ -45,7 +44,7 @@ class NodeMenu
         	if(sizeof($this->breadCrumb)>0 && $this->breadCrumb[0]->getNode()->getId() == $topNode->getId()){
         		$this->topNodeMenuItems[] = $this->breadCrumb[0];
         	} else {
-        		$this->topNodeMenuItems[] = new NodeMenuItem($this->em, $topNode, null, $this);
+        		$this->topNodeMenuItems[] = new NodeMenuItem($this->em, $topNode, $lang, null, $this);
         	}
         }
     }
