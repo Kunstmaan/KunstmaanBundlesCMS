@@ -25,15 +25,23 @@ class PagePartAdmin {
 
     protected $pageparts = array();
 
-    protected $container = null;
-
-    function __construct(AbstractPagePartAdminConfigurator $configurator, $em, $page, $context, $container)
+    function __construct(AbstractPagePartAdminConfigurator $configurator, $em, $page, $context)
     {
         $this->configurator = $configurator;
         $this->em = $em;
         $this->page = $page;
+<<<<<<< HEAD
         $this->context = $context;
+=======
+        if($context){
+        	$this->context = $context;
+        } else if($this->configurator->getDefaultContext()){
+        	$this->context = $this->configurator->getDefaultContext();
+        } else {
+        	$this->context = "main";
+        }
         $this->container = $container;
+>>>>>>> ff046b3... feature/multiplepagepartcontexts
     }
 
     /**
@@ -86,11 +94,17 @@ class PagePartAdmin {
     }
 
     public function getPossiblePagePartTypes(){
+<<<<<<< HEAD
+        $result = array();
+        $result = $this->configurator->getPossiblePagePartTypes($result);
+        return $result;
+=======
         return $this->configurator->getPossiblePagePartTypes();
     }
     
     public function getName(){
     	return $this->configurator->getName();
+>>>>>>> ff046b3... feature/multiplepagepartcontexts
     }
 
     public function getPagePartRefs(){

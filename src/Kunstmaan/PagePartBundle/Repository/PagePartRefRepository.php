@@ -3,6 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 /**
  * BlogRepository
@@ -23,9 +24,11 @@ class PagePartRefRepository extends EntityRepository
     	}
         $pagepartref = new \Kunstmaan\PagePartBundle\Entity\PagePartRef();
         $pagepartref->setContext($context);
-        $pagepartref->setPageEntityname(get_class($page));
+        $page_classname = ClassLookup::getClass($page);
+        $pagepartref->setPageEntityname($page_classname);
         $pagepartref->setPageId($page->getId());
-        $pagepartref->setPagePartEntityname(get_class($pagepart));
+        $pagepart_classname = ClassLookup::getClass($pagepart);
+        $pagepartref->setPagePartEntityname($pagepart_classname);
         $pagepartref->setPagePartId($pagepart->getId());
         $pagepartref->setSequencenumber($sequencenumber);
         $this->getEntityManager()->persist($pagepartref);
