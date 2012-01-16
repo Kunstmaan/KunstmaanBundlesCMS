@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\AdminBundle\Form\PageAdminType;
 use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\AdminList\PageAdminListConfigurator;
-use Kunstmaan\DemoBundle\PagePartAdmin\PagePartAdminConfigurator;
 use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
 use Kunstmaan\AdminBundle\Form\NodeInfoAdminType;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
@@ -24,8 +23,7 @@ class PagesController extends Controller
 	 * @Route("/", name="KunstmaanAdminBundle_pages")
 	 * @Template()
 	 */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
@@ -216,9 +214,13 @@ class PagesController extends Controller
         $formbuilder->setData(array('node' => $node, 'main' => $page));
 
         //handle the pagepart functions (fetching, change form to reflect all fields, assigning data, etc...)
-        $pagepartadmin = $this->get("pagepartadmin.factory")->createList(new PagePartAdminConfigurator(), $em, $page, 'main', $this->container);
-        $pagepartadmin->preBindRequest($request);
-        $pagepartadmin->adaptForm($formbuilder, $formfactory);
+        $pagepartadmins = array();
+        foreach($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration){
+        	$pagepartadmin = $this->get("pagepartadmin.factory")->createList($pagePartAdminConfiguration, $em, $page, null, $this->container);
+        	$pagepartadmin->preBindRequest($request);
+        	$pagepartadmin->adaptForm($formbuilder, $formfactory);
+        	$pagepartadmins[] = $pagepartadmin;
+        }
 
         if ($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')) {
             $permissionadmin = $this->get("kunstmaan_admin.permissionadmin");
@@ -228,7 +230,9 @@ class PagesController extends Controller
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
             $form           ->bindRequest($request);
-            $pagepartadmin  ->bindRequest($request);
+            foreach($pagepartadmins as $pagepartadmin) {
+            	$pagepartadmin  ->bindRequest($request);
+            }
 
             if ($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')) {
                 $permissionadmin->bindRequest($request);
@@ -277,7 +281,7 @@ class PagesController extends Controller
             'page'              => $page,
             'entityname'        => ClassLookup::getClass($page),
             'form'              => $form->createView(),
-            'pagepartadmin'     => $pagepartadmin,
+            'pagepartadmins'    => $pagepartadmins,
             'nodeVersions'      => $nodeVersions,
             'nodemenu'          => $nodeMenu,
             'node'              => $node,

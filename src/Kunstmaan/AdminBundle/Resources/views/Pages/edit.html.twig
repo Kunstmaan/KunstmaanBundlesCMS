@@ -138,33 +138,22 @@
       </div>
     </div>
         <ul class="tabs" data-tabs="tabs">
-            <li class="active"><a href="#pageparts">{{ 'pages.parts' | trans }}</a></li>
+        	{% for pagepartadmin in pagepartadmins %}
+	        	 <li {% if loop.first %} class="active" {% endif %}><a href="#pageparts{{ loop.index }}">{{ pagepartadmin.name }}</a></li>
+        	{% endfor %}
             <li><a href="#home">{{ 'form.properties' | trans }}</a></li>
             {% if is_granted('ROLE_PERMISSIONMANAGER') %}
             <li><a href="#permissions">{{ 'form.permissions' | trans }}</a></li>
             {% endif %}
             <li><a href="#seo">SEO</a></li>
             <li><a href="#versions">Versions</a></li>
-            {#<li><a href="#children">Children</a></li>
-            <li><a href="#slug">Slug</a></li>
-            <li class="dropdown" data-dropdown="dropdown">
-              <a href="#" class="dropdown-toggle">Versions</a>
-              <ul class="dropdown-menu">
-                <li><a href="#fat">1.9 (current)</a></li>
-                <li><a href="#mdo">1.8 (2011-10-11)</a></li>
-                <li><a href="#mdo">1.7 (2011-10-10)</a></li>
-                <li><a href="#mdo">1.6 (2011-10-10)</a></li>
-                <li><a href="#mdo">1.5 (2011-10-9)</a></li>
-                <li class="divider"></li>
-                <li><a href="#mdo">All versions</a></li>
-              </ul>
-            </li>
-            #}
         </ul>
         <div id="my-tab-content" class="tab-content">
-            <div class="active tab-pane" id="pageparts">
-                {{ pagepartadmin_widget(pagepartadmin, form) }}
-            </div>
+            {% for pagepartadmin in pagepartadmins %}
+	        	<div class="active tab-pane" id="pageparts{{ loop.index }}">
+	                {{ pagepartadmin_widget(pagepartadmin, form) }}
+	            </div>
+        	{% endfor %}
             <div class="tab-pane" id="home">
                 {{ form_widget(form.main) }}
                 {{ form_widget(form.node) }}
