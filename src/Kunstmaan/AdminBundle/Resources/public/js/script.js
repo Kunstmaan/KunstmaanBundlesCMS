@@ -85,7 +85,7 @@ function init_tree() {
 			}
 		}
 	});
-	$('#pages').jstree({
+	$('#pagestree').jstree({
 		"plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
 		"themes" : { 
 			"theme" : "OMNext",
@@ -203,6 +203,112 @@ function init_tree() {
 					$("#analyze").click();
 				}
 			});
+		});
+	});
+	$('#mediatree').jstree({
+		"plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
+		"themes" : { 
+			"theme" : "OMNext",
+			"dots" : true,
+			"icons" : true		
+		},
+		"types" : {
+			"types" : {
+				//Page
+				"page" : {
+					"icon" : {
+						"image" : $.jstree._themes + "OMNext/d.png",
+						"position" : "-57px -57px" 
+					}
+				},				
+				//Site
+				"site" : {
+					"icon" : {
+						"image" : $.jstree._themes + "OMNext/d.png",
+						"position" : "-75px -38px" 
+					}
+				},
+				//Settings
+				"settings" : {
+					"icon" : {
+						"image" : $.jstree._themes + "OMNext/d.png",
+						"position" : "-57px -37px" 
+					}
+				},
+				//Image
+				"image" : {
+					"icon" : {
+						"image" : $.jstree._themes + "OMNext/d.png",
+						"position" : "-20px -74px" 
+					}
+				},
+				//Video
+				"video" : {
+					"icon" : {
+						"image" : $.jstree._themes + "OMNext/d.png",
+						"position" : "-75px -55px" 
+					}
+				},
+				//Slideshow
+				"slideshow" : {
+					"icon" : {
+						"image" : $.jstree._themes + "OMNext/d.png",
+						"position" : "-2px -72px" 
+					}
+				},
+				//Files
+				"files" : {
+					"icon" : {
+						"image" : $.jstree._themes + "OMNext/d.png",
+						"position" : "-38px -72px" 
+					}
+				}
+			}
+		
+		
+		},
+		"crrm" : { 
+			"move" : {
+				"check_move" : function (m) { 
+					var p = this._get_parent(m.o);
+					if(!p) return false;
+					p = p == -1 ? this.get_container() : p;
+					if(p === m.np) return true;
+					if(p[0] && m.np[0] && p[0] === m.np[0]) return true;
+					return false;
+				}
+			}
+		},
+		"dnd" : {
+			"drop_target" : false,
+			"drag_target" : false
+		},
+		// Configuring the search plugin
+		"search" : {
+			"ajax" : {
+			    "url" : "", //<-- Link naar php
+			    "data" : function (str) {
+			        return {
+			            "operation" : "search",
+			            "search_str" : str
+			        };
+			    }
+			}
+		}
+	})
+	.bind("move_node.jstree", function (e, data) {
+		console.log("parentid" + data.rslt.np.attr("id"));
+		console.log("fromposition" + data.rslt.o.attr("sequence"));
+		console.log("afterposition" + data.rslt.cp);
+		$.ajax({
+				async : false,
+				type: 'POST',
+				url: "/app_dev.php/en/admin/media/folder/movenodes",
+				data : { 
+					"parentid": data.rslt.np.attr("id"),
+					"fromposition": data.rslt.o.attr("sequence"),
+					"afterposition" : data.rslt.cp
+				}
 		});
 	});
 	$("#search").click(function() {
