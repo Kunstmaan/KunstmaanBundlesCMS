@@ -19,45 +19,49 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load($manager)
     {
-        $gal = new Folder();
+        $gal = new Folder($manager);
         $gal->setName('media.menu.media');
         $gal->setCanDelete(false);
         $gal->setRel("media");
+        $gal->setSequencenumber(1);
         $manager->persist($gal);
-
-            $subgal = new ImageGallery();
+        $manager->flush();
+        
+            $subgal = new ImageGallery($manager);
             $subgal->setParent($gal);
             $subgal->setName('media.menu.images');
             $subgal->setCanDelete(false);
             $subgal->setRel("image");
+            $subgal->setSequencenumber(1);
             $manager->persist($subgal);
             $manager->flush();
             
-            $subgal = new VideoGallery();
+            $subgal = new VideoGallery($manager);
             $subgal->setParent($gal);
             $subgal->setName('media.menu.videos');
             $subgal->setCanDelete(false);
             $subgal->setRel("video");
+            $subgal->setSequencenumber(2);
             $manager->persist($subgal);
             $manager->flush();
             
-            $subgal = new SlideGallery();
+            $subgal = new SlideGallery($manager);
             $subgal->setParent($gal);
             $subgal->setName('media.menu.slides');
             $subgal->setCanDelete(false);
             $subgal->setRel("slideshow");
+            $subgal->setSequencenumber(3);
             $manager->persist($subgal);
             $manager->flush();
 
-            $subgal = new FileGallery();
+            $subgal = new FileGallery($manager);
             $subgal->setParent($gal);
             $subgal->setName('media.menu.files');
             $subgal->setCanDelete(false);
             $subgal->setRel("files");
+            $subgal->setSequencenumber(4);
             $manager->persist($subgal);
             $manager->flush();
-
-        $manager->flush();
     }
 
     public function getOrder()

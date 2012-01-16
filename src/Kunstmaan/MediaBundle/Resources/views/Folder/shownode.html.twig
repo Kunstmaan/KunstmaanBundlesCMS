@@ -1,5 +1,5 @@
 
-                           <li {% if (gallery.id is defined and (gallery.id == child.id)) %} 
+                           <li id="{{ child.id }}" sequence="{{ child.sequencenumber }}" {% if (gallery.id is defined and (gallery.id == child.id)) %} 
                            			class="active jstree-open" 
                            		{% endif %} 
                            		{% if gallery.id is defined and child.hasActive(gallery.id) %} 

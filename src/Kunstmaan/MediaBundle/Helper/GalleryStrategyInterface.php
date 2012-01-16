@@ -2,12 +2,14 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Doctrine\ORM\EntityManager;
+
 interface GalleryStrategyInterface
 {
 
     function getName();
 
-    function getNewGallery();
+    function getNewGallery(EntityManager $em);
 
     function getGalleryClassName();
 
