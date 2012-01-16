@@ -3,12 +3,11 @@
 namespace  Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Modules\Slugifier;
-
 use Kunstmaan\MediaBundle\Helper\FolderStrategy;
-
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * Class that defines a folder from the MediaBundle in the database
@@ -21,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({ "folder"="Folder", "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
  * @ORM\HasLifecycleCallbacks
+ * @Gedmo\Loggable
  */
 class Folder{
 
@@ -30,12 +30,20 @@ class Folder{
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="string")
-     */
+    
+   /**
+    * @Gedmo\Translatable
+    * @ORM\Column(type="string")
+    */
     protected $name;
-   
+    
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    protected $locale;
+    
     /**
      * @ORM\Column(type="string")
      */
@@ -110,6 +118,11 @@ class Folder{
 
     public function getName(){
         return $this->name;
+    }
+    
+    public function setTranslatableLocale($locale)
+    {
+    	$this->locale = $locale;
     }
 
     /**
