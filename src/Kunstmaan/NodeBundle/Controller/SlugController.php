@@ -20,38 +20,18 @@ class SlugController extends Controller
 	public function slugDraftAction($slug)
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeForSlug(null, $slug);
-		if($node){
-			$page = $node->getRef($em);
-			$page = $page = $em->getRepository('KunstmaanAdminBundle:DraftConnector')->getDraft($page);
-			$nodeMenu = new NodeMenu($this->container, $node);
-			//3. render page
-			$pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page);
-			return array(
-					'page' => $page,
-					'pageparts' => $pageparts,
-					'nodemenu' => $nodeMenu);
-		} else {
-			throw $this->createNotFoundException('No page found for slug ' . $slug);
-		}
-	}
-	
-    /**
-     * @Route("/{slug}", requirements={"slug" = ".+"}, name="_slug")
-     * @Template()
-     */
-    public function slugAction($slug)
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeForSlug(null, $slug);
-    	if($node){
-            $page = $node->getRef($em);
+    	$request = $this->getRequest();
+    	$locale = $request->getSession()->getLocale();
+    	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
+    	if($nodeTranslation){
+            $page = $nodeTranslation->getNodeVersion('draft')->getRef($em);
+            $node = $nodeTranslation->getNode();
     	} else {
     		throw $this->createNotFoundException('No page found for slug ' . $slug);
     	}
 
         //check if the requested node is online, else throw a 404 exception
-        if(!$node->isOnline()){
+        if(!$nodeTranslation->isOnline()){
             throw $this->createNotFoundException("The requested page is not online");
         }
 
@@ -61,7 +41,47 @@ class SlugController extends Controller
         $canViewPage = $permissionManager->hasPermision($page, $currentUser, 'read', $em);
 
         if($canViewPage) {
-            $nodeMenu = new NodeMenu($this->container, $node);
+            $nodeMenu = new NodeMenu($this->container, $locale, $node);
+
+        	//render page
+        	$pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page);
+            return array(
+                'page'      => $page,
+                'pageparts' => $pageparts,
+                'nodemenu'  => $nodeMenu);
+        }
+        throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
+	}
+	
+    /**
+     * @Route("/{slug}", requirements={"slug" = ".+"}, name="_slug")
+     * @Template()
+     */
+    public function slugAction($slug)
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$request = $this->getRequest();
+    	$locale = $request->getSession()->getLocale();
+    	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
+    	if($nodeTranslation){
+            $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
+            $node = $nodeTranslation->getNode();
+    	} else {
+    		throw $this->createNotFoundException('No page found for slug ' . $slug);
+    	}
+
+        //check if the requested node is online, else throw a 404 exception
+        if(!$nodeTranslation->isOnline()){
+            throw $this->createNotFoundException("The requested page is not online");
+        }
+
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+
+        $permissionManager = $this->get('kunstmaan_admin.permissionmanager');
+        $canViewPage = $permissionManager->hasPermision($page, $currentUser, 'read', $em);
+
+        if($canViewPage) {
+            $nodeMenu = new NodeMenu($this->container, $locale, $node);
 
         	//render page
         	$pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page);
