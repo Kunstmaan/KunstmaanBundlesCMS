@@ -1,59 +1,44 @@
 KunstmaanAdminBundle_default:
     resource: "@KunstmaanAdminBundle/Controller/DefaultController.php"
     type:     annotation
-    prefix:   /{_locale}/admin
-    requirements:
-        _locale: en|nl|fr  
+    prefix:   /admin  
 
 KunstmaanAdminBundle_pages:
     resource: "@KunstmaanAdminBundle/Controller/PagesController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/pages
-    requirements:
-        _locale: en|nl|fr 
+    prefix:   /admin/pages
 
 KunstmaanAdminBundle_modules:
     resource: "@KunstmaanAdminBundle/Controller/ModulesController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/modules
-    requirements:
-        _locale: en|nl|fr 
+    prefix:   /admin/modules
         
 KunstmaanAdminBundle_settings:
     resource: "@KunstmaanAdminBundle/Controller/SettingsController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/settings
-    requirements:
-        _locale: en|nl|fr         
+    prefix:   /admin/settings      
     
 ###########################
 ## fos_userbundle routes ##
 ###########################
 
 fos_user_security_login:
-    pattern: /{_locale}/login
+    pattern: /login
     defaults: { _controller: FOSUserBundle:Security:login }
-    requirements:
-        _locale: en|nl|fr
 
 fos_user_security_check:
     pattern: /login_check
     defaults: { _controller: FOSUserBundle:Security:check }
         
 fos_user_security_logout:
-    pattern: /{_locale}/logout
+    pattern: /logout
     defaults: { _controller: FOSUserBundle:Security:logout }
-    requirements:
-        _locale: en|nl|fr
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /{_locale}/profile
-    requirements:
-        _locale: en|nl|fr
+    prefix: /profile
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /{_locale}/resetting  
-    requirements:
-        _locale: en|nl|fr       
+    prefix: /resetting  
+         
