@@ -21,3 +21,8 @@ services:
         class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
         tags:
             -  { name: twig.extension }
+            
+    localeswitcher.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
+        tags:
+            -  { name: twig.extension }
