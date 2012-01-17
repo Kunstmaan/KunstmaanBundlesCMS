@@ -96,7 +96,7 @@
       <div class="modal-body">
         <script type="text/javascript">
 	        function doAddpage(link){
-		        link.href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" + "?addpage="+jQuery('#addpage_type').val() + "&title=" + jQuery('#addpage_title').val();
+		        link.href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" + "?addpage="+jQuery('#addpage_type').val() + "&addpagetitle=" + jQuery('#addpage_title').val();
 	            return true;
 	        }
 	    </script>
@@ -150,7 +150,7 @@
         </ul>
         <div id="my-tab-content" class="tab-content">
             {% for pagepartadmin in pagepartadmins %}
-	        	<div class="active tab-pane" id="pageparts{{ loop.index }}">
+	        	<div class="{% if loop.first %} active {% endif %} tab-pane" id="pageparts{{ loop.index }}">
 	                {{ pagepartadmin_widget(pagepartadmin, form) }}
 	            </div>
         	{% endfor %}

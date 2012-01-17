@@ -153,6 +153,7 @@ class PagesController extends Controller
         }
         
         $addpage = $request->get("addpage");
+        $addpagetitle = $request->get("addpagetitle");
         if(is_string($addpage) && $addpage != ''){
         	$newpage = new $addpage();
         	if(is_string($addpagetitle) && $addpagetitle != ''){
@@ -164,7 +165,7 @@ class PagesController extends Controller
         	$em->flush();
 
         	$nodeparent = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($page);
-            $nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($newpage);
+            $nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
             $nodenewpage->setParent($nodeparent);
 
             //get permissions of the parent and apply them on the new child
