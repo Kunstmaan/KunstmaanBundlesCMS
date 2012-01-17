@@ -32,6 +32,8 @@ class PagePartRefRepository extends EntityRepository
         $pagepartref->setPagePartId($pagepart->getId());
         $pagepartref->setSequencenumber($sequencenumber);
         $this->getEntityManager()->persist($pagepartref);
+        $this->getEntityManager()->flush();
+        return $pagepartref;
     }
     
     public function getPagePartRefs($page, $context = "main"){

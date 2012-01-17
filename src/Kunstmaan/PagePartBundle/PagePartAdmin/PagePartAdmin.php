@@ -32,7 +32,13 @@ class PagePartAdmin {
         $this->configurator = $configurator;
         $this->em = $em;
         $this->page = $page;
-        $this->context = $context;
+        if($context){
+        	$this->context = $context;
+        } else if($this->configurator->getDefaultContext()){
+        	$this->context = $this->configurator->getDefaultContext();
+        } else {
+        	$this->context = "main";
+        }
         $this->container = $container;
     }
 
@@ -60,9 +66,8 @@ class PagePartAdmin {
             $newpagepart = new $addpagepart;
             $this->em->persist($newpagepart);
             $this->em->flush();
-            $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($this->page, $newpagepart, $addpagepartposition);
+            $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($this->page, $newpagepart, $addpagepartposition, $this->context);
         }
-        //$this->em->flush();
     }
 
     public function bindRequest($request){
@@ -127,8 +132,8 @@ class PagePartAdmin {
             $pagepartref = $pagepartrefs[$i];
             $pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
             $pageparts[] = $pagepart;
-            $data['pagepartadmin'.$pagepartref->getId()] = $pagepart;
-            $formbuilder->add('pagepartadmin'.$pagepartref->getId(), $pagepart->getDefaultAdminType());
+            $data['pagepartadmin_'.$this->getContext().'_'.$pagepartref->getId()] = $pagepart;
+            $formbuilder->add('pagepartadmin_'.$this->getContext().'_'.$pagepartref->getId(), $pagepart->getDefaultAdminType());
         }
         $formbuilder->setData($data);
     }

@@ -1,7 +1,7 @@
 <script>
     window.ImagegalleryImageChosenCallback = new Array();
 </script>
-<div class="pagepartscontainer" id="parts">
+<div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
     	<section class="draggable pagepartcontainer" id="{{pagepartref.id}}_container" >
@@ -54,24 +54,24 @@
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
         
             <div class="pagepart">
-            	<div class="prop_bar {% if not form['pagepartadmin'~pagepartref.id].count %}noedit{% endif %}">
+            	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
             		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
             		{#
             		  <a class="btn small" href="#" onclick="return moveUp_{{pagepartref.id}}()">Up</a>
                       <a class="btn small" href="#" onclick="return moveDown_{{pagepartref.id}}()">Down</a>
             		#}
 					<a class="del red" data-controls-modal="delete-pagepart" data-backdrop="true" data-keyboard="true" onclick="return delete_{{pagepartref.id}}()"><span>Del</span></a>
-                    {% if form['pagepartadmin'~pagepartref.id].count %}
+                    {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
                         <a href="#" class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</a>
                     {% endif %}
             	</div>
-                {% if form['pagepartadmin'~pagepartref.id].count %}
+                {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
                     <div class="block" id="{{pagepartref.id}}_view">
                         {% include pagepart.defaultview with {'resource': pagepart} %}
                     </div>
                     <div class="block" id="{{pagepartref.id}}_edit" style="display:none">
                         {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
-                        {{ form_widget(form['pagepartadmin'~pagepartref.id]) }}
+                        {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
                     </div>
                 {% endif %}
             </div>
@@ -101,7 +101,7 @@
 <div class="clearfix">
     <script type="text/javascript">
         function doAddpagepart_{{pagepartadmin.context}}(select){
-            var position = jQuery('#parts section.draggable').index(jQuery(select).parents("section.draggable"))+1;
+            var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+1;
             if(position<0){
 				position = 0;
             }
@@ -117,6 +117,23 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function () {
-		init_DragDrop();
+		$('#parts_{{pagepartadmin.context}}').sortable({  
+		    handle: '.prop_bar',  
+		    cursor: 'move',  
+		    placeholder: 'placeholder',  
+		    forcePlaceholderSize: true, 
+			revert: 100,
+		    //opacity: 0.4
+		    opacity: 1,
+			start: function(e, ui) {
+				$('.draggable').css('opacity', ".4");
+				$('.ui-sortable-helper .new_pagepart').slideUp("fast");
+			},
+			stop: function(e, ui) {
+				$('.draggable').css('opacity', "1");
+			}
+		    //containment: 'document'
+		})  
+		.disableSelection();
 	});
 </script>
