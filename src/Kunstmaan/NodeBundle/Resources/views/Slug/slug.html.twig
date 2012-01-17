@@ -6,7 +6,7 @@
 	</div>
 {% endblock %}
 {% block content %}
-	{% for pagepart in pageparts %}
+	{% for pagepart in pageparts["main"] %}
 		{% include pagepart.defaultview with {'resource': pagepart} %}
 	{% endfor %}
 {% endblock %}

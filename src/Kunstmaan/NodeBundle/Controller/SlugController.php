@@ -84,7 +84,12 @@ class SlugController extends Controller
             $nodeMenu = new NodeMenu($this->container, $locale, $node);
 
         	//render page
-        	$pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page);
+            $pageparts = array();
+            foreach($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration){
+            	$context = $pagePartAdminConfiguration->getDefaultContext();
+            	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
+            }
+        	
             return array(
                 'page'      => $page,
                 'pageparts' => $pageparts,
