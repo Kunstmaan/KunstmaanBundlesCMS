@@ -85,9 +85,7 @@
           	{% set route = app.request.attributes.get('_route') %}
             {{ app.request.attributes.remove('_route') }}
             {% set attribs = app.request.attributes.all %}
-            <li class="dropdown language">
-          		{% include 'KunstmaanAdminBundle:Default:'~ app.request.attributes.get('_locale') ~'languagechooser.html.twig' %}
-          	</li>	
+            {{ localeswitcher_widget(requiredlocales, route) }}	
           	<li {% if route == 'KunstmaanAdminBundle_settings_users_edit' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_users_edit', { 'user_id' : app.user.id }) }}">{{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}</a></li>
           	<li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
           </ul>
