@@ -39,12 +39,12 @@ footer { background-color: #151515; background-repeat: repeat-x; background-imag
 
 .secondary-nav .dropdown.language .dropdown-menu { min-width: 64px; }
 .secondary-nav li { text-shadow: none; }
-.secondary-nav li:nth-last-child(2) a { color: #fff; border: none; padding-right: 0; }
-.secondary-nav li:nth-last-child(2) a:hover, .secondary-nav li:nth-last-child(2) a:visited, .secondary-nav li:nth-last-child(2) a:focus, .secondary-nav li:nth-last-child(2) a:active { background: none; color: #fff; }
-.secondary-nav li:last-child a { color: #3F8EDF; }
-.secondary-nav li:last-child a:visited { background: none; color: #3F8EDF; }
-.secondary-nav li:last-child a:hover, .secondary-nav li:last-child a:focus, .secondary-nav li:last-child a:active { color: #fff; background: none; }
-.secondary-nav li:first-child a { padding-left: 14px; }
+.secondary-nav > li:last-child a { color: #3F8EDF; }
+.secondary-nav > li:last-child a:visited { background: none; color: #3F8EDF; }
+.secondary-nav > li:last-child a:hover, .secondary-nav > li:last-child a:focus, .secondary-nav > li:last-child a:active { color: #fff; background: none; }
+.secondary-nav > li:nth-last-child(2) a { color: #fff; border: none; padding-right: 0; }
+.secondary-nav > li:nth-last-child(2) a:hover, .secondary-nav > li:nth-last-child(2) a:visited, .secondary-nav > li:nth-last-child(2) a:focus, .secondary-nav > li:nth-last-child(2) a:active { background: none; color: #fff; }
+.secondary-nav > li:first-child a { padding-left: 14px; }
 
 .tabs { border-color: #ECECEC; }
 .tabs li { font-weight: bold; }
