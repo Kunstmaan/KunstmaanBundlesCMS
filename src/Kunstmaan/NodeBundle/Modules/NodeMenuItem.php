@@ -83,7 +83,7 @@ class NodeMenuItem
     }
     
     public function getPage(){
-    	return $this->em->getRepository($node->getRefEntityname())->find($this->node->getRefId());
+    	return $this->node->getNodeTranslation($this->lang)->getRef($this->em);
     }
     
     public function getActive(){
