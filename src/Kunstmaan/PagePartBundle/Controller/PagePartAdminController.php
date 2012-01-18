@@ -3,7 +3,9 @@
 namespace Kunstmaan\PagePartBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 
 class PagePartAdminController extends Controller
 {
@@ -46,5 +48,23 @@ class PagePartAdminController extends Controller
             $em->persist($pagepartref);
         }
         $em->flush();
+    }
+    
+    /**
+     * @Route("/pageparts/selecturl", name="KunstmaanPagePartBundle_selecturl")
+	 * @Template()
+     */
+    public function selectlinkAction(){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$request = $this->getRequest();
+    	$locale = $request->getSession()->getLocale();
+    	$user = $this->container->get('security.context')->getToken()->getUser();
+    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'read');
+    	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read');
+    	
+    	return array(
+    			'topnodes'      => $topnodes,
+    			'nodemenu' 	    => $nodeMenu,
+    	);
     }
 }
