@@ -7,6 +7,7 @@ use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 
 class SearchPageController extends Controller
 {
@@ -19,8 +20,16 @@ class SearchPageController extends Controller
     	$query = $this->getRequest()->get("query");
         //use the elasitica service to search for results
         $finder = $this->get('foq_elastica.finder.website.page');
-        $pages = $finder->findPaginated($query);
-
-    	return array('query' => $query, 'results' => $pages);
+        $pages = $finder->find($query);
+        
+        $request = $this->getRequest();
+        $locale = $request->getSession()->getLocale();
+        $nodeMenu = new NodeMenu($this->container, $locale, null);
+        
+        return array(
+        		'query' => $query,
+        		'results' => $pages,
+        		'nodemenu' => $nodeMenu
+        );
     }
 }
