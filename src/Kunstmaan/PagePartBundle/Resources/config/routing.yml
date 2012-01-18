@@ -1,3 +1,5 @@
-KunstmaanPagePartBundle_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: KunstmaanPagePartBundle:Default:index }
+KunstmaanMediaBundle_pagepartadmin:
+    resource: "@KunstmaanPagePartBundle/Controller/PagePartAdminController.php"
+    type:     annotation
+    prefix:   /admin
+    
