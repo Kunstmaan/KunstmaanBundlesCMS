@@ -1,43 +1,36 @@
 KunstmaanMediaBundle_media:
     resource: "@KunstmaanMediaBundle/Controller/MediaController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/media
-    requirements:
-        _locale: en|nl|fr
+    prefix:   /admin/media
         
 KunstmaanMediaBundle_aviary:
     resource: "@KunstmaanMediaBundle/Controller/AviaryController.php"
     type:     annotation
-    prefix:   /{_locale}
-    requirements:
-        _locale: en|nl|fr
+    prefix:   /
         
 KunstmaanMediaBundle_media_imagegallery:
     resource: "@KunstmaanMediaBundle/Controller/ImageGalleryController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/media
-    requirements:
-        _locale: en|nl|fr
+    prefix:   /admin/media
         
 KunstmaanMediaBundle_media_folder:
     resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/media/folder
-    requirements:
-        _locale: en|nl|fr        
+    prefix:   /admin/media/folder  
    
 KunstmaanMediaBundle_video:
     resource: "@KunstmaanMediaBundle/Controller/VideoController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/media/video
-    requirements:
-        _locale: en|nl|fr
+    prefix:   /admin/media/video
      
 KunstmaanMediaBundle_slide:
     resource: "@KunstmaanMediaBundle/Controller/SlideController.php"
     type:     annotation
-    prefix:   /{_locale}/admin/media/slide
-    requirements:
-        _locale: en|nl|fr
+    prefix:   /admin/media/slide
+        
+_imagine:
+    resource: .
+    type:     imagine
+    
 
                  
