@@ -78,7 +78,9 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator{
             foreach($result as $entry) {
                 $results[] = $entry->getName();
             }
-
+            if (empty($results)) {
+                return "";
+            }
             return implode(', ', $results);
         }
 
