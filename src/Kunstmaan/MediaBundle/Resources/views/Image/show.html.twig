@@ -49,16 +49,12 @@
         <script type="text/javascript">
             var featherEditor = new Aviary.Feather({
                 apiKey: '5f257cbef',
-                openType: 'lightbox',
-                theme: 'black',
-                tools: 'all',
+                apiVersion: 2,
+                //tools: 'all',
                 onSave: function(imageID, newURL) {
                     var img = document.getElementById(imageID);
                     img.src = newURL;
-
-                   window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'gallery_id' : gallery.id, 'image_id' : media.id }) }}?url='+newURL;
-
-                    //this.close;
+                   	window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'gallery_id' : gallery.id, 'image_id' : media.id }) }}?url='+newURL;
                 }
 
             });
