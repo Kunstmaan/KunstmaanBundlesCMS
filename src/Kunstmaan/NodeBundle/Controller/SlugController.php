@@ -44,11 +44,24 @@ class SlugController extends Controller
             $nodeMenu = new NodeMenu($this->container, $locale, $node);
 
         	//render page
-        	$pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page);
-            return array(
-                'page'      => $page,
-                'pageparts' => $pageparts,
-                'nodemenu'  => $nodeMenu);
+            $pageparts = array();
+            foreach($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration){
+            	$context = $pagePartAdminConfiguration->getDefaultContext();
+            	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
+            }
+        	
+            if(method_exists($page, "getDefaultView")){
+            	return $this->render($page->getDefaultView(), array(
+            			'page'      => $page,
+            			'pageparts' => $pageparts,
+            			'nodemenu'  => $nodeMenu));
+            } else {
+            	return array(
+            			'page'      => $page,
+            			'pageparts' => $pageparts,
+            			'nodemenu'  => $nodeMenu);
+            }
+            
         }
         throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
 	}
@@ -90,10 +103,17 @@ class SlugController extends Controller
             	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
             }
         	
-            return array(
-                'page'      => $page,
-                'pageparts' => $pageparts,
-                'nodemenu'  => $nodeMenu);
+        	if(method_exists($page, "getDefaultView")){
+            	return $this->render($page->getDefaultView(), array(
+            			'page'      => $page,
+            			'pageparts' => $pageparts,
+            			'nodemenu'  => $nodeMenu));
+            } else {
+            	return array(
+            			'page'      => $page,
+            			'pageparts' => $pageparts,
+            			'nodemenu'  => $nodeMenu);
+            }
         }
         throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
     }
