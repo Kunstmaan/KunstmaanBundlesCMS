@@ -67,7 +67,7 @@
             	</div>
                 {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
                     <div class="block" id="{{pagepartref.id}}_view">
-                        {% include pagepart.defaultview with {'resource': pagepart} %}
+                        {% include pagepart.defaultview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                     </div>
                     <div class="block" id="{{pagepartref.id}}_edit" style="display:none">
                         {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
