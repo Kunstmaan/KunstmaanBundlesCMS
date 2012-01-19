@@ -60,6 +60,7 @@ class NodeMenuItem
     
     public function getSlug(){
     	$result = $this->getSlugPart();
+<<<<<<< HEAD
     	$p = $this->getParent();
     	while(!is_null($p)){
     		$nodeTranslation = $p->getNode()->getNodeTranslation($this->lang);
@@ -68,6 +69,8 @@ class NodeMenuItem
     		}
     		$p = $p->getParent();
     	}
+=======
+>>>>>>> master
     	return $result;
     }
 

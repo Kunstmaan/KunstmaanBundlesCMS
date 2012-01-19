@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminNodeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
+use Kunstmaan\SearchBundle\Entity\Indexable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 
@@ -174,9 +175,18 @@ class NodeTranslation
      *
      * @return string
      */
-    public function getSlug() {
-        return $this->slug;
+ 	public function getSlug() {
+    	$node = $this->getNode();
+    	$slug = "";
+    	if($node->getParent()!=null) $slug = $slug.$this->getParentSlug($node);
+    	$slug = $slug . $this->slug;
+        return $slug;
     }
+    
+    public function getParentSlug($node) {
+    	return $node->getParent()->getNodeTranslation($this->lang)->getSlug() . "/";
+    }
+    
 
     /**
      * Set publicNodeVersion
@@ -243,11 +253,34 @@ class NodeTranslation
     
     public function getSearchContentForNode($container, $entity, $field){
     	$page = $entity->getRef($container->get('doctrine')->getEntityManager());
-
-        if($page instanceof Indexable) {
-            return $page;
+    	if($page instanceof Indexable) {
+        	return $page;
         }
 
         return null;
+    }
+
+    /**
+     * Returns the date the first nodeversion was created
+     *
+     * @return mixed
+     */
+    public function getCreated() {
+        $versions = $this->getNodeVersions();
+        $firstVersion = $versions->first();
+
+        return $firstVersion->getCreated();
+    }
+
+    /**
+     * Returns the date the last nodeversion was updated
+     * 
+     * @return mixed
+     */
+    public function getUpdated() {
+        $versions = $this->getNodeVersions();
+        $lastVersion = $versions->last();
+
+        return $lastVersion->getUpdated();
     }
 }
