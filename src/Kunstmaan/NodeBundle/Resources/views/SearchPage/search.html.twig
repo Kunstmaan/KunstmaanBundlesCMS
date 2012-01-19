@@ -3,9 +3,15 @@
 	You are searching for "{{ query }}"<br />
     <hr />
     {% if results %}
+    	<ul>
         {% for result in results %}
-            <a href="{{ path('_slug', { 'slug': result.slug }) }}">{{ result.title }}</a><br />
+        	<li><a href="{{ path('_slug', { 'slug': result.slug }) }}">{{ result.title }}</a><br />
+        	<p>
+        		
+        	</p>
+        	</li>
         {% endfor %}
+        </ul>
     {% else %}
         No results available.
     {% endif %}
