@@ -259,4 +259,28 @@ class NodeTranslation
 
         return null;
     }
+
+    /**
+     * Returns the date the first nodeversion was created
+     *
+     * @return mixed
+     */
+    public function getCreated() {
+        $versions = $this->getNodeVersions();
+        $firstVersion = $versions->first();
+
+        return $firstVersion->getCreated();
+    }
+
+    /**
+     * Returns the date the last nodeversion was updated
+     * 
+     * @return mixed
+     */
+    public function getUpdated() {
+        $versions = $this->getNodeVersions();
+        $lastVersion = $versions->last();
+
+        return $lastVersion->getUpdated();
+    }
 }
