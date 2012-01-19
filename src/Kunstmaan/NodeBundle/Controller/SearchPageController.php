@@ -21,7 +21,17 @@ class SearchPageController extends Controller
         //use the elasitica service to search for results
         $finder = $this->get('foq_elastica.finder.website.page');
         $pages = $finder->findPaginated($query);
+
+        $pages->setMaxPerPage(5);
         
+        $rq = $this->getRequest();
+        $page = intval($rq->get('page'));
+        if(!isset($pages)){
+        	$page = 1;
+        }
+        
+        $pages->setCurrentPage($page);
+                      
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
         $nodeMenu = new NodeMenu($this->container, $locale, null);
