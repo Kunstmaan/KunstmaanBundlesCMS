@@ -175,9 +175,18 @@ class NodeTranslation
      *
      * @return string
      */
-    public function getSlug() {
-        return $this->slug;
+ 	public function getSlug() {
+    	$node = $this->getNode();
+    	$slug = "";
+    	if($node->getParent()!=null) $slug = $slug.$this->getParentSlug($node);
+    	$slug = $slug . $this->slug;
+        return $slug;
     }
+    
+    public function getParentSlug($node) {
+    	return $node->getParent()->getNodeTranslation($this->lang)->getSlug() . "/";
+    }
+    
 
     /**
      * Set publicNodeVersion

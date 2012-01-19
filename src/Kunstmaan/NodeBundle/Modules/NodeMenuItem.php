@@ -56,14 +56,6 @@ class NodeMenuItem
     
     public function getSlug(){
     	$result = $this->getSlugPart();
-    	$p = $this->getParent();
-    	while(!is_null($p)){
-    		$nodeTranslation = $p->getNodeTranslation($this->lang);
-    		if($nodeTranslation){
-    			$result = $nodeTranslation->getSlug() . "/" . $result;
-    		}
-    		$p = $p->getParent();
-    	}
     	return $result;
     }
 
