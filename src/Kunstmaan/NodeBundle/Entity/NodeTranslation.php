@@ -184,7 +184,7 @@ class NodeTranslation
     }
     
     public function getParentSlug($node) {
-    	return $node->getParent()->getNodeTranslation($this->lang)->slug . "/";
+    	return $node->getParent()->getNodeTranslation($this->lang)->getSlug() . "/";
     }
     
 
