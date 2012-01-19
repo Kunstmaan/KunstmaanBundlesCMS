@@ -38,6 +38,10 @@ class NodeMenuItem
     	return $this->node;
     }
     
+    public function getLang(){
+    	return $this->lang;
+    }
+    
     public function getTitle(){
     	$nodeTranslation = $this->node->getNodeTranslation($this->lang);
     	if($nodeTranslation){
@@ -68,7 +72,7 @@ class NodeMenuItem
     		$this->lazyChildren = array();
     		$children = $this->node->getChildren();
     		foreach($children as $child){
-    			$this->lazyChildren[] = new NodeMenuItem($this->em, $child, $this->lang, $this->node, $this->menu);
+    			$this->lazyChildren[] = new NodeMenuItem($this->em, $child, $this->lang, $this, $this->menu);
     		}
     	}
     	return $this->lazyChildren;

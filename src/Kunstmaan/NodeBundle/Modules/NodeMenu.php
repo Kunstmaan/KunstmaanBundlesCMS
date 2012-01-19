@@ -27,10 +27,11 @@ class NodeMenu {
         	array_unshift($nodeBreadCrumb, $tempNode);
         	$tempNode = $tempNode->getParent();
         }
-        $parentNode = null;
+        $parentNodeMenuItem = null;
         foreach($nodeBreadCrumb as $nodeBreadCrumbItem){
-        	$this->breadCrumb[] = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $lang, $parentNode, $this);
-        	$parentNode = $nodeBreadCrumbItem;
+        	$nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $lang, $parentNodeMenuItem, $this);
+        	$this->breadCrumb[] = $nodeMenuItem;
+        	$parentNodeMenuItem = $nodeMenuItem;
         }
 
         $permissionManager = $container->get('kunstmaan_admin.permissionmanager');
