@@ -27,12 +27,10 @@ class NodeMenu {
         	array_unshift($nodeBreadCrumb, $tempNode);
         	$tempNode = $tempNode->getParent();
         }
-        $parentNode = null;
         $parentNodeMenuItem = null;
         foreach($nodeBreadCrumb as $nodeBreadCrumbItem){
         	$nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $lang, $parentNodeMenuItem, $this);
         	$this->breadCrumb[] = $nodeMenuItem;
-        	$parentNode = $nodeBreadCrumbItem;
         	$parentNodeMenuItem = $nodeMenuItem;
         }
 
