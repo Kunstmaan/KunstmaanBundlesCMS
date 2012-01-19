@@ -1,4 +1,5 @@
 {% set tocContent = '' %}
+
 {% if pageparts.main is defined %}
 	{% for pagepart in pageparts.main %}
 	    {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
@@ -12,7 +13,6 @@
 	    {% endif %}
 	{% endfor %}
 {% endif %}
-
 
 {% if tocContent %}
     <div class="toc">
