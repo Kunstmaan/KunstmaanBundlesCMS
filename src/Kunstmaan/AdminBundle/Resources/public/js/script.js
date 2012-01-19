@@ -346,8 +346,7 @@ function init_DragDrop() {
 			$('.draggable').css('opacity', "1");
 		}
 	    //containment: 'document'
-	})  
-	.disableSelection();
+	})
 }
 
  
