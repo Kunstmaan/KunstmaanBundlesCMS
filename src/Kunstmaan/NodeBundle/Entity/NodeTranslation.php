@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminNodeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
+use Kunstmaan\SearchBundle\Entity\Indexable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 
@@ -243,9 +244,8 @@ class NodeTranslation
     
     public function getSearchContentForNode($container, $entity, $field){
     	$page = $entity->getRef($container->get('doctrine')->getEntityManager());
-
-        if($page instanceof Indexable) {
-            return $page;
+    	if($page instanceof Indexable) {
+        	return $page;
         }
 
         return null;
