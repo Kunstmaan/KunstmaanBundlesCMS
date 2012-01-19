@@ -4,7 +4,7 @@
     <hr />
     {% if results %}
         {% for result in results %}
-            <a href="/{{result.slug}}">{{ result.title }}</a><br />
+            <a href="{{ path('_slug', { 'slug': result.slug }) }}">{{ result.title }}</a><br />
         {% endfor %}
     {% else %}
         No results available.
