@@ -19,13 +19,15 @@ html, body, .container-fluid { height: 100%; }
 
 body { height: 100%; }
 
-body > .container-fluid { height: auto; min-height: 100%; }
+body > .container-fluid { height: auto; min-height: 100%; padding: 0 0 0 20px; }
 
 footer { background-color: #151515; background-repeat: repeat-x; background-image: -khtml-gradient(linear, left top, left bottom, from(#232323), to(#151515)); background-image: -moz-linear-gradient(top, #232323, #151515); background-image: -ms-linear-gradient(top, #232323, #151515); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #232323), color-stop(100%, #151515)); background-image: -webkit-linear-gradient(top, #232323, #151515); background-image: -o-linear-gradient(top, #232323, #151515); background-image: linear-gradient(top, #232323, #151515); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color1', endColorstr='$color2', GradientType=0); border: none; clear: both; margin: 0; position: relative; margin-top: -47px; width: 100%; }
 
-.container-fluid > .sidebar { float: left; position: static; left: 0; margin-bottom: 20px; padding-top: 60px; margin-bottom: 67px; }
+.container-fluid > .sidebar { width: 250px; position: static; float: left; padding-top: 60px; margin: 0 20px 67px 0; }
 
-.container-fluid > .content { min-height: 100%; height: auto; position: relative; padding-top: 60px; padding-bottom: 67px; overflow: hidden; }
+.container-fluid > .content { min-height: 100%; height: auto; overflow: hidden; margin: 0; background-color: #fff; padding: 60px 20px 67px 20px; }
+
+#tree { overflow: auto; }
 
 .nav li:first-child a { padding-left: 35px; }
 .nav li a, .nav li a:visited, .nav li .dropdown-toggle { padding: 10px 14px 11px; border-right: 1px solid #080808; color: #929292; font-weight: bold; }
@@ -54,14 +56,6 @@ footer { background-color: #151515; background-repeat: repeat-x; background-imag
 .tabs li.active a, .tabs li.active a:visited, .tabs li.active a:focus, .tabs li.active a:hover, .tabs li.active a:active { color: #333333; border-color: #ECECEC #ECECEC transparent #ECECEC; }
 
 .formBox form, .formBox fieldset { margin: 0; }
-
-.container-fluid > .sidebar { width: 250px; overflow: auto; }
-
-.container-fluid > .content { margin-left: 270px; }
-
-#tree { overflow: visible; }
-
-.content { background-color: #fff; padding: 20px; margin: 0 -20px; overflow: auto; }
 
 .breadcrumb { background: none; border: none; padding: 7px 2px; }
 .breadcrumb li { color: #999999; }
@@ -105,6 +99,7 @@ footer { background-color: #151515; background-repeat: repeat-x; background-imag
 .pagepart .prop_bar h6, .pagepart .prop_bar a span { opacity: .35; }
 .pagepart .prop_bar h6 { color: #3F3F3F; line-height: 29px; float: left; text-transform: none; }
 .pagepart .prop_bar a { float: right; padding: 0 10px; color: #B4B4B4; font-weight: bold; text-decoration: none; -webkit-transition: none; -moz-transition: none; -o-transition: none; transition: none; border-left: 1px solid #FFF; }
+.pagepart .prop_bar a:active, .pagepart .prop_bar a:focus { box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25); }
 .pagepart .prop_bar a:hover.bleu { color: #FFF; text-shadow: none; background-color: #417BCC; background-repeat: repeat-x; background-image: -khtml-gradient(linear, left top, left bottom, from(#417bcc), to(#3d6bb7)); background-image: -moz-linear-gradient(top, #417bcc, #3d6bb7); background-image: -ms-linear-gradient(top, #417bcc, #3d6bb7); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #417bcc), color-stop(100%, #3d6bb7)); background-image: -webkit-linear-gradient(top, #417bcc, #3d6bb7); background-image: -o-linear-gradient(top, #417bcc, #3d6bb7); background-image: linear-gradient(top, #417bcc, #3d6bb7); }
 .pagepart .prop_bar a:hover.red { background-color: #EE4C16; background-repeat: repeat-x; background-image: -khtml-gradient(linear, left top, left bottom, from(#ee4c16), to(#da3e19)); background-image: -moz-linear-gradient(top, #ee4c16, #da3e19); background-image: -ms-linear-gradient(top, #ee4c16, #da3e19); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee4c16), color-stop(100%, #da3e19)); background-image: -webkit-linear-gradient(top, #ee4c16, #da3e19); background-image: -o-linear-gradient(top, #ee4c16, #da3e19); background-image: linear-gradient(top, #ee4c16, #da3e19); }
 .pagepart .prop_bar .del { padding: 0 5px; border-right: 1px solid #FFF; }
