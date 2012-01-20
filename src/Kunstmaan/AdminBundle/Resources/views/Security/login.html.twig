@@ -11,20 +11,20 @@
 
 <form action="{{ path("fos_user_security_check") }}" method="post">
                <fieldset>
-                <legend>{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</legend>
+                <legend>{{ 'Login' | trans }}</legend>
                 <div class="clearfix">
-                    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                    <label for="username">{{ 'Username:' | trans }}</label>
                     <div class="input">
                          <input class="xlarge" type="text" id="username" name="_username" value="{{ last_username }}" />
                     </div>
                 </div>
 
                 <div class="clearfix">
-                    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                    <label for="password">{{ 'Password:' | trans }}</label>
                         <div class="input">
                             <input class="xlarge" type="password" id="password" name="_password" /><br />
                             <span class="help-block">
-                                <a href="{{ path('fos_user_resetting_request') }}">{{ 'form.forgot.password'|trans() }}</a>
+                                <a href="{{ path('fos_user_resetting_request') }}">{{ 'Forgot my password.' | trans }}</a>
                             </span>
                         </div>
                 </div>
@@ -34,13 +34,13 @@
                 <li>
                     <label>
                 <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                <span>{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</span></label>
+                <span>{{ 'Remember Me' | trans }}</span></label>
                 </div>
                 </div>
 
                 <div class="actions">
-                    <input class="btn primary type" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
-                    <input type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+                    <input class="btn primary type" type="submit" id="_submit" name="_submit" value="Login" />
+                    <input type="reset" class="btn" value="Cancel" />
                 </div>
                </fieldset>
             </form>

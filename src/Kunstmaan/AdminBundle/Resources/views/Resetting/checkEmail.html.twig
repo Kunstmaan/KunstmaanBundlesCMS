@@ -4,6 +4,6 @@
 <div class="alert-message warning">
         <a class="close" href="{{ path('fos_user_security_login') }}">×</a>
         <strong>{{ 'form.warning' | trans }}: </strong>
-        {{ 'resetting.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}
+        {{ 'The username or email address does not exist.' | trans }}
 </div>
 {% endblock %}
