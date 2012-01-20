@@ -1,23 +1,23 @@
 {% if invalid_username is defined %}
         <div class="alert-message error">
                 <a class="close" href="{{ path('fos_user_security_login') }}">×</a>
-                <strong>Error: </strong>
-                {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}
+                <strong>{{ 'form.error' | trans }}: </strong>
+				{{ 'The username or email address does not exist.' | trans }}
         </div>
         {% endif %}
 
 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request form-stacked">
     <fieldset>
-        <legend>{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</legend>
+        <legend>{{ 'Reset password' |trans }}</legend>
         <div class="clearfix">
             <div class="input">
-            <label for="xlInput3">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+            <label for="xlInput3">{{ 'Username or email address:' |trans }}</label>
             <input class="xlarge" type="text" id="username" name="username" />
             </div>
         </div>
         <br />
         <div class="actions">
-            <input class="btn primary type" type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+            <input class="btn primary type" type="submit" value="{{ 'Reset password' |trans }}" />
             <input onclick="window.location = '{{ path('fos_user_security_login' ) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
         </div>
     </fieldset>
