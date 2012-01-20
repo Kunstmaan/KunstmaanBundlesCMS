@@ -1,31 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>{% block title %}{{ 'omnext.title' | trans }}{% endblock %}</title>
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-        <!--[if lt IE 9]>
-<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-        <!-- Le styles -->
-    {% stylesheets
-    	'bundles/kunstmaanadmin/css/bootstrap.css'
-    	'bundles/kunstmaanadmin/css/style.css'
-        output='style.css'
-        filter='cssrewrite'
-    %}
-    <link rel="stylesheet"  media="screen" type="text/css" href="{{ asset_url }}" />
-    {% endstylesheets %}
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
-    {% javascripts
-        '@KunstmaanAdminBundle/Resources/public/js/libs/*'
-        '@KunstmaanAdminBundle/Resources/public/js/ckeditor/ckeditor.js'
-    	'@KunstmaanAdminBundle/Resources/public/js/*'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+{% block extracss %}
         <style type="text/css">
              body {
                 margin: 0;
@@ -53,18 +28,13 @@
                 margin-right: 20px;
              }
         </style>
-        <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="{{ asset('bundles/kunstmaanadmin/img/favicon.ico') }}">
-    <link rel="apple-touch-icon" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-72x72.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-114x114.png') }}">
-    </head>
-    <body>
+{% endblock %}
+{% block body %}
         <header>
         <div class="topbar" data-dropdown="dropdown">
            <div class="topbar-inner">
                <div class="container-fluid">
-                  <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'omnext.title' | trans }}</a>
+                  <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
                   <nav>
                   <ul class="nav secondary-nav"> 
 					{% set route = app.request.attributes.get('_route') %}
@@ -106,5 +76,4 @@
           <p class="pull-right"><a target="_blank" href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan.png') }}" width="83" height="16" alt="Kunstmaan" class="kunstmaan-logo" /></a></p>
         </div>
       </footer>
-    </body>
-</html>
+{% endblock %}

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ 'omnext.title' | trans }}{% endblock %}</title>
+    <title>{% block title %}{{ websitetitle | trans }}{% endblock %}</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -19,6 +19,7 @@
     %}
     <link rel="stylesheet"  media="screen" type="text/css" href="{{ asset_url }}" />
     {% endstylesheets %}
+    {% block extracss %}{% endblock %}
     {#
     {% javascripts
     	'@KunstmaanAdminBundle/Resources/public/js/libs/modernizr-2.0.6.min.js'
@@ -62,12 +63,12 @@
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-72x72.png') }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-114x114.png') }}">
   </head>
-  <body>
+  <body>{% block body %}
   <header>
     <div class="topbar" data-dropdown="dropdown">
       <div class="topbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'omnext.title' | trans }}</a>
+          <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
           <nav>
           {{ knp_menu_render('main', { 'currentClass': 'active' }) }}
           <ul class="nav secondary-nav"> 
@@ -103,5 +104,5 @@
           <p class="pull-right"><a target="_blank" href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan.png') }}" width="83" height="16" alt="Kunstmaan" class="kunstmaan-logo" /></a></p>
         </div>
       </footer>
-  </body>
+  {% endblock %}</body>
 </html>
