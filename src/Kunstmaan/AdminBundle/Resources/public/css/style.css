@@ -80,6 +80,7 @@ footer { background-color: #151515; background-repeat: repeat-x; background-imag
 .main_actions .btn { float: left; border-left: none; border-radius: 0; }
 .main_actions .btn:first-child { border-radius: 4px 0 0 4px; }
 .main_actions .btn:last-child { border-radius: 0 4px 4px 0; }
+.main_actions .btn:last-child:first-child { border-radius: 4px; }
 .main_actions.top { position: fixed; z-index: 100; top: -10px; left: 0; opacity: 1; width: 100%; background-color: #f5f5f5; background-repeat: repeat-x; background-image: -khtml-gradient(linear, left top, left bottom, from(white), to(#f5f5f5)); background-image: -moz-linear-gradient(top, white, #f5f5f5); background-image: -ms-linear-gradient(top, white, #f5f5f5); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #f5f5f5)); background-image: -webkit-linear-gradient(top, white, #f5f5f5); background-image: -o-linear-gradient(top, white, #f5f5f5); background-image: linear-gradient(top, #ffffff, #f5f5f5); -webkit-transition: all 0.5s ease-in-out; -moz-transition: all 0.5s ease-in-out; -o-transition: all 0.5s ease-in-out; -ms-transition: all 0.5s ease-in-out; transition: all 0.5s ease-in-out; padding: 10px 0; }
 .main_actions.top .pull-right { padding-right: 20px; }
 .main_actions.top.slideDown { top: 40px; }
