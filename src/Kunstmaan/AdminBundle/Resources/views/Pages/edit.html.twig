@@ -139,7 +139,7 @@
     </div>
         <ul class="tabs" data-tabs="tabs">
         	{% for pagepartadmin in pagepartadmins %}
-	        	 <li {% if loop.first %} class="active" {% endif %}><a href="#pageparts{{ loop.index }}">{{ pagepartadmin.name }}</a></li>
+        	      	 <li {% if loop.first %} class="active" {% endif %}><a href="#pageparts{{ loop.index }}">{{ pagepartadmin.name }}</a></li>
         	{% endfor %}
             {% if is_granted('ROLE_PERMISSIONMANAGER') %}
             <li><a href="#permissions">{{ 'form.permissions' | trans }}</a></li>
@@ -152,16 +152,16 @@
 	        	<div class="{% if loop.first %} active {% endif %} tab-pane" id="pageparts{{ loop.index }}">
 	        		{% if propertiesform is not defined %}
 	        			{% set propertiesform = true %}
-	        		<div id="properties">
-			    			<div id="prop_wrp">
-				    			<div class="input_prop">
-				    				{{ form_widget(form.main) }}
-				    			</div>
-				    			<div class="input_prop">
-				    				{{ form_widget(form.node) }}
-				    			</div>
-				    		</div>
-			    		</div>
+		        		<div id="properties">
+				    			<div id="prop_wrp">
+					    			<div class="input_prop">
+					    				{{ form_widget(form.main) }}
+					    			</div>
+					    			<div class="input_prop">
+					    				{{ form_widget(form.node) }}
+					    			</div>
+					    		</div>
+				    	</div>
 			    	{% endif %}
 	                {{ pagepartadmin_widget(pagepartadmin, form) }}
 	            </div>
