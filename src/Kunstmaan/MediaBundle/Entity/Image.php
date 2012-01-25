@@ -101,4 +101,8 @@ class Image extends Media
     {
         $this->edits[] = $edits;
     }
+    
+    public function __tostring(){
+    	return $this->getName();
+    }
 }

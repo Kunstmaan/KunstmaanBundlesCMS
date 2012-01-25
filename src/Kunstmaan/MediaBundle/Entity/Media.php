@@ -273,7 +273,7 @@ abstract class Media{
 
 
     public function getUrl() {
-        return $this->show('medium');
+        return $this->show();
     }
 
 

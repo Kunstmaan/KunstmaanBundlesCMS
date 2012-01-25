@@ -24,12 +24,12 @@ class ImagePagePart {
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $title;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
     protected $link;
+    
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $openinnewwindow;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -37,7 +37,7 @@ class ImagePagePart {
     protected $alttext;
 
     /**
-     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\ManyToOne(targetEntity="Media")
      */
     public $media;
 
@@ -64,23 +64,23 @@ class ImagePagePart {
     }
 
     /**
-     * Set title
+     * Get opennewwindow
      *
-     * @param string $title
+     * @return bool
      */
-    public function setTitle($title) {
-        $this->title = $title;
+    public function getOpenInNewWindow() {
+    	return $this->openinnewwindow;
     }
-
+    
     /**
-     * Get title
+     * Set openwinnewwindow
      *
-     * @return string
+     * @param bool $link
      */
-    public function getTitle() {
-        return $this->title;
+    public function setOpenInNewWindow($link) {
+    	$this->openinnewwindow = $link;
     }
-
+    
     /**
      * Set link
      *
