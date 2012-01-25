@@ -19,9 +19,9 @@ use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 class UserAdminListConfigurator extends AbstractAdminListConfigurator{
 
 	public function buildFilters(AdminListFilter $builder){
-        $builder->add('username', new StringFilterType("username"));
-        $builder->add('email', new StringFilterType("email"));
-        $builder->add('enabled', new BooleanFilterType("email"));
+        $builder->add('username', new StringFilterType("username"), "Username");
+        $builder->add('email', new StringFilterType("email"), "E-Mail");
+        $builder->add('enabled', new BooleanFilterType("enabled"), "Enabled");
     }
     
 	public function buildFields()
