@@ -19,10 +19,10 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 class SlideListConfigurator extends AbstractAdminListConfigurator{
 
     public function buildFilters(AdminListFilter $builder){
-        $builder->add('name', new StringFilterType("name"));
-        $builder->add('type', new StringFilterType("type"));
-        $builder->add('createdAt', new DateFilterType("createdAt"));
-        $builder->add('updatedAt', new DateFilterType("updatedAt"));
+        $builder->add('name', new StringFilterType("name"), "form.name");
+        $builder->add('type', new StringFilterType("type"), "form.type");
+        $builder->add('createdAt', new DateFilterType("createdAt"), "form.createdat");
+        $builder->add('updatedAt', new DateFilterType("updatedAt"), "form.updatedat");
     }
 
     public function buildFields()
