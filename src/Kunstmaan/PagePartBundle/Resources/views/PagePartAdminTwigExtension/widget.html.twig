@@ -1,5 +1,7 @@
 <script>
-    window.ImagegalleryImageChosenCallback = new Array();
+	if(typeof window.ImagegalleryImageChosenCallback == 'undefined') {
+    	window.ImagegalleryImageChosenCallback = new Array();
+	}
 </script>
 <div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
     {% for pagepartref in pagepartadmin.pagepartrefs %}
