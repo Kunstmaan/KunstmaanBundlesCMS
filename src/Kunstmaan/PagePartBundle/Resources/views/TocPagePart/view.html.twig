@@ -8,7 +8,7 @@
 	{% endfor %}
 {% else %}
 	{% for pagepart in pageparts %}
-	    {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
+	    {% if pagepart.getDefaultView is defined and pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
 	        {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|url_encode~'">'~pagepart.getTitle~'</a></li>' %}
 	    {% endif %}
 	{% endfor %}
