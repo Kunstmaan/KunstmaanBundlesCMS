@@ -30,10 +30,11 @@ class AdminListFilter {
 
     private $currentparameters = array();
 
-    public function add($colname, $type = null, array $options = array()) {
+    public function add($colname, $type = null, $filtername = null, array $options = array()) {
         $this->filterdefinitions[$colname] = array(
             'type'      => $type,
             'options'   => $options,
+        	'filtername' => $filtername
         );
         return $this;
     }

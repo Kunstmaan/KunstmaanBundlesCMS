@@ -5,7 +5,12 @@
                 <select class="filterselect" id="addfilter" onchange="createFilter(this, true)">
                     <option>{{ "form.addfilter"|trans }}</option>
                     {% for columnname, value in filter.filterdefinitions %}
-                        <option>{{columnname|trans}}</option>
+                    	{% if value['filtername'] is defined %}
+                    		{% set filtername = value['filtername'] %}
+                    	{% else %}
+                    		{% set filtername = columnname %}
+                    	{% endif %}
+                        <option>{{filtername|trans}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -13,7 +18,12 @@
             <div class="filterline">
                 <select class="filterdummy filterselect" name="filter_columnname[]" onchange="updateOptions(this)">
                     {% for defcolumnname, defvalue in filter.filterdefinitions %}
-                    <option value="{{defcolumnname}}" {% if value.columnname == defcolumnname %} selected="selected" {% endif %}>{{defcolumnname}}</option>
+                    	{% if defvalue['filtername'] is defined %}
+                    		{% set filtername = defvalue['filtername'] %}
+                    	{% else %}
+                    		{% set filtername = defcolumnname %}
+                    	{% endif %}
+                    	<option value="{{defcolumnname}}" {% if value.columnname == defcolumnname %} selected="selected" {% endif %}>{{filtername | trans}}</option>
                     {% endfor %}
                 </select>
                 <input type="hidden" name="filter_uniquefilterid[]" class="uniquefilterid" value="{{value.uniqueid}}" />
@@ -36,7 +46,12 @@
         <div id="filterdummyline" style="display:none">
             <select class="filterdummy filterselect" name="columnname[]" onchange="updateOptions(this)">
                 {% for columnname, value in filter.filterdefinitions %}
-                <option value="{{columnname}}">{{columnname}}</option>
+                {% if value['filtername'] is defined %}
+                    		{% set filtername = value['filtername'] %}
+                    	{% else %}
+                    		{% set filtername = columnname %}
+                    	{% endif %}
+                <option value="{{columnname}}">{{filtername|trans}}</option>
                 {% endfor %}
             </select>
             <input type="hidden" name="uniquefilterid[]" class="uniquefilterid" value="" />
