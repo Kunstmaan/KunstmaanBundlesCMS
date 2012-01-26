@@ -1,7 +1,12 @@
 <script>
-    window.ImagegalleryImageChosenCallback = new Array();
+	if(typeof window.ImagegalleryImageChosenCallback == 'undefined') {
+    	window.ImagegalleryImageChosenCallback = new Array();
+	}
 </script>
 <div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
+	{% if app.request.get('edit') is defined and app.request.get('edit') !="" %}
+		{% set editpagepart = app.request.get('edit') + 1 %}
+	{% endif %}
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
     	<section class="draggable pagepartcontainer" id="{{pagepartref.id}}_container" >
@@ -52,8 +57,9 @@
 	        </script>
 	        <input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
-
-            <div class="pagepart">
+        	
+        	<div class="pagepart">
+            	<a name="pagepart{{ loop.index }}" ></a>	
             	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
             		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
             		{#
@@ -65,18 +71,18 @@
                         <a href="#" class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</a>
                     {% endif %}
             	</div>
-                <div class="block" id="{{pagepartref.id}}_view">
+                <div class="block" id="{{pagepartref.id}}_view" {% if editpagepart is defined and editpagepart == loop.index %}style="display:none"{% endif %}>
                     {% include pagepart.defaultview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
                 {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
-                    <div class="block" id="{{pagepartref.id}}_edit" style="display:none">
+                    <div class="block" id="{{pagepartref.id}}_edit" {% if editpagepart is not defined or editpagepart != loop.index %}style="display:none"{% endif %}>
                         {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
                         {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
                     </div>
                 {% endif %}
             </div>
             <div class="new_pagepart">
-              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this)">
+              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{{ loop.index-1 }}')">
 	            <option value="">Add a pagepart</option>
 	            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
 	              <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
@@ -87,7 +93,7 @@
     {% else %}
     	<section class="draggable pagepartcontainer">
             <div class="new_pagepart">
-              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this)">
+              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{{ loop.index-1 }}')">
 	            <option value="">Add a pagepart</option>
 	            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
 	              <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
@@ -100,13 +106,14 @@
 <input type="hidden" id="{{pagepartadmin.context}}_addposition" name="{{pagepartadmin.context}}_addposition" value="" />
 <div class="clearfix">
     <script type="text/javascript">
-        function doAddpagepart_{{pagepartadmin.context}}(select){
+        function doAddpagepart_{{pagepartadmin.context}}(select, id){
             var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+1;
             if(position<0){
 				position = 0;
             }
             jQuery('#{{pagepartadmin.context}}_addposition').val(position);
             jQuery(select).attr('name', 'addpagepart_{{pagepartadmin.context}}');
+            jQuery('form')[0].action="?edit="+id+"#pagepart"+id;
             jQuery('form')[0].submit();
             return false;
         }
