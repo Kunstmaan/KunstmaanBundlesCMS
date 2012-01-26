@@ -1,0 +1,15 @@
+{% extends "KunstmaanViewBundle::layout.html.twig" %}
+
+{% block title %}Error: {{ status_code }}{% endblock %}
+
+{% block mainclass %}error{% endblock %}
+
+{% block content %}
+	<h1><b>Error:</b> {{ status_code }}</h1>
+
+	<p>{{ status_text }}</p>
+	<p>Something is broken. Please e-mail us at [email] and let us know
+       what you were doing when this error occurred. We will fix it as soon
+       as possible. Sorry for any inconvenience caused.
+    </p>
+{% endblock %}
