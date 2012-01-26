@@ -3,3 +3,7 @@ services:
         class: %kunstmaan_search.transformers.nodetransformerclass%
         arguments:
             - { container: @service_container }
+
+    kunstmaan_search.transformers.elasticatransformer:
+        class: %kunstmaan_search.transformers.elasticatransformerclass%
+        arguments: [@doctrine.orm.entity_manager, %kunstmaan_search.entity.website%, [identifier: id, hydrate: true]]
