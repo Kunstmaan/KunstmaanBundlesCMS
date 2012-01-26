@@ -49,23 +49,26 @@ class SlugController extends Controller
             	$context = $pagePartAdminConfiguration->getDefaultContext();
             	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
             }
-        	
-            if(method_exists($page, "getDefaultView")){
-            	return $this->render($page->getDefaultView(), array(
-            			'page'      => $page,
-            			'pageparts' => $pageparts,
-            			'nodemenu'  => $nodeMenu));
-            } else {
-            	return array(
+
+            $result = array(
             			'page'      => $page,
             			'pageparts' => $pageparts,
             			'nodemenu'  => $nodeMenu);
+
+            if(method_exists($page, "service")){
+            	$page->service($this->container, $request, $result);
             }
-            
+
+            if(method_exists($page, "getDefaultView")){
+            	return $this->render($page->getDefaultView(), $result);
+            } else {
+            	return $result;
+            }
+
         }
         throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
 	}
-	
+
     /**
      * @Route("/{slug}", requirements={"slug" = ".+"}, name="_slug")
      * @Template()
@@ -102,21 +105,24 @@ class SlugController extends Controller
             	$context = $pagePartAdminConfiguration->getDefaultContext();
             	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
             }
-        	
-        	if(method_exists($page, "getDefaultView")){
-            	return $this->render($page->getDefaultView(), array(
-            			'page'      => $page,
-            			'pageparts' => $pageparts,
-            			'nodemenu'  => $nodeMenu));
-            } else {
-            	return array(
+
+        	$result = array(
             			'page'      => $page,
             			'pageparts' => $pageparts,
             			'nodemenu'  => $nodeMenu);
+
+            if(method_exists($page, "service")){
+            	$page->service($this->container, $request, $result);
+            }
+
+            if(method_exists($page, "getDefaultView")){
+            	return $this->render($page->getDefaultView(), $result);
+            } else {
+            	return $result;
             }
         }
         throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
     }
-    
-    
+
+
 }
