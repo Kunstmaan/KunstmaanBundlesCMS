@@ -35,11 +35,11 @@ class PagePartRefRepository extends EntityRepository
         $this->getEntityManager()->flush();
         return $pagepartref;
     }
-    
+
     public function getPagePartRefs($page, $context = "main"){
-    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => get_class($page), 'context' => $context), array('sequencenumber' => 'ASC'));
+    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => ClassLookup::getClass($page), 'context' => $context), array('sequencenumber' => 'ASC'));
     }
-    
+
     public function getPageParts($page, $context = "main"){
     	$pagepartrefs = $this->getPagePartRefs($page, $context);
     	$result = array();
@@ -48,7 +48,7 @@ class PagePartRefRepository extends EntityRepository
     	}
     	return $result;
     }
-    
+
     public function copyPageParts($em, $frompage, $topage, $context = "main"){
     	$frompageparts = $this->getPageParts($frompage, $context);
     	$sequencenumber = 1;
