@@ -17,8 +17,8 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 class FileListConfigurator extends AbstractAdminListConfigurator{
 
     public function buildFilters(AdminListFilter $builder){
-        $builder->add('name', new StringFilterType("name"));
-        $builder->add('contentType', new StringFilterType("contentType"));
+        $builder->add('name', new StringFilterType("name"), "form.name");
+        $builder->add('contentType', new StringFilterType("contentType"), "form.type");
     }
 
     public function buildFields()
