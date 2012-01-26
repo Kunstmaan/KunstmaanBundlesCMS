@@ -20,7 +20,20 @@ class SearchPageController extends Controller
     	$query = $this->getRequest()->get("query");
         //use the elasitica service to search for results
         $finder = $this->get('foq_elastica.finder.website.page');
-        $pages = $finder->findPaginated($query);
+
+        $queryObj = \Elastica_Query::create($query);
+        $queryObj->setHighlight(array(
+            'pre_tags' => array('<em class="highlight">'),
+            'post_tags' => array('</em>'),
+            'fields' => array(
+                'title' => array(
+                    'fragment_size' => 200,
+                    'number_of_fragments' => 1,
+                )
+            )
+        ));
+
+        $pages = $finder->findPaginated($queryObj);
 
         $pages->setMaxPerPage(5);
         
