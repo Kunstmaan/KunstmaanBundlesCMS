@@ -29,10 +29,10 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
 
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('title', new StringFilterType("title"));
-        $builder->add('online', new BooleanFilterType("online"));
-        $builder->add('created', new DateFilterType("created"));
-        $builder->add('updated', new DateFilterType("updated"));
+        $builder->add('title', new StringFilterType("title"), "Title");
+        $builder->add('online', new BooleanFilterType("online"), "Online");
+        $builder->add('created', new DateFilterType("created"), "Created At");
+        $builder->add('updated', new DateFilterType("updated"), "Updated At");
     }
 
     public function buildFields()

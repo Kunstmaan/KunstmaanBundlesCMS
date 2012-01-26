@@ -17,7 +17,7 @@ use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
 
 	public function buildFilters(AdminListFilter $builder){
-        $builder->add('name', new StringFilterType("name"));
+        $builder->add('name', new StringFilterType("name"), "Name");
     }
     
 	public function buildFields()
