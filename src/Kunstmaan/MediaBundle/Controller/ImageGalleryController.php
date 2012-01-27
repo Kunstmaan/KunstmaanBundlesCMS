@@ -57,7 +57,7 @@ class ImageGalleryController extends Controller
     }
 
     /**
-     * @Route("/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filechooser_show")
+     * @Route("/file/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filechooser_show")
      * @Template()
      */
     function filechoosershowfolderAction($id){
@@ -72,7 +72,7 @@ class ImageGalleryController extends Controller
     }
     
     /**
-     * @Route("/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
+     * @Route("/image/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
      * @Template()
      */
     function showfolderAction($id){
