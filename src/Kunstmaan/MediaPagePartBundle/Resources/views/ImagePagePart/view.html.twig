@@ -7,7 +7,7 @@
 		    });
 		});
 		
-		window.ImagegalleryImageChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
+		window.ImageChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
 		    $('select#form_pagepartadmin_main_{{ pagepartref.id }}_media').val(id);
 		}
 	</script>
