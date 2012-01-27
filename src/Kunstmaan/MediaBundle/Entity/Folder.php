@@ -323,6 +323,18 @@ class Folder{
     	return $images;
     }
     
+    public function getFilesOnly()
+    {
+    	$all = $this->files;
+    	$files = array();
+    	foreach($all as $file){
+    		if($file instanceof File){
+    			$files[] = $file;
+    		}
+    	}
+    	return $files;
+    }
+    
     public function hasActive($id){
     	$bool = false;
     	foreach($this->getChildren() as $child){

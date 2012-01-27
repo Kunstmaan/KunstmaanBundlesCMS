@@ -29,6 +29,19 @@ class ImageGalleryController extends Controller
             'galleries'     => $galleries
         );
     }
+    
+    /**
+     * @Route("/filechooser", name="KunstmaanMediaBundle_imagegallery_filechooser")
+     * @Template()
+     */
+    public function filechooserAction() {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    
+    	return array(
+    			'galleries'     => $galleries
+    	);
+    }
 
     /**
      * @Route("/imagepagepart", name="KunstmaanMediaBundle_imagegallery_imagepagepart")
@@ -43,6 +56,20 @@ class ImageGalleryController extends Controller
         );
     }
 
+    /**
+     * @Route("/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filechooser_show")
+     * @Template()
+     */
+    function filechoosershowfolderAction($id){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    
+    	return array(
+    			'gallery'       => $gallery,
+    			'galleries'     => $galleries
+    	);
+    }
     
     /**
      * @Route("/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
