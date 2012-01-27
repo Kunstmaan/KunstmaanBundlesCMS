@@ -10,7 +10,7 @@ use Assetic\Asset\FileAsset;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="imagepagepart")
+ * @ORM\Table(name="pagepart_image")
  */
 class ImagePagePart {
 
