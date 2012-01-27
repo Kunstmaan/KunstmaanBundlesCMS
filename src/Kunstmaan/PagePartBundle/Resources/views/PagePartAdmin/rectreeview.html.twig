@@ -1,5 +1,5 @@
 <li class="{% if node.active %}jstree-open{% endif %} {% if nodemenu.current is not null and nodemenu.current.id == node.id  %}active{% endif %}" rel="page">
-    <a onclick="window.opener.ImagegalleryImageChosenCallback[window.opener.activeEdit]('{{ url('_slug', { 'slug': node.slug }) }}'); window.close(); return false;" class="item" href="#">{{ node.title }}</a>
+    <a onclick="window.opener.LinkChosenCallback[window.opener.activeEdit]('{{ url('_slug', { 'slug': node.slug }) }}'); window.close(); return false;" class="item" href="#">{{ node.title }}</a>
     <ul>
         {% for node in node.children %}
             {% include 'KunstmaanPagePartBundle:PagePartAdmin:rectreeview.html.twig' %}
