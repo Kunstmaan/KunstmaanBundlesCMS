@@ -67,6 +67,11 @@ abstract class Media{
     protected $context;
     
     /**
+     * @ORM\Column(type="integer", nullable="true")
+     */
+    protected $filesize;
+    
+    /**
      * @ORM\Column(type="string")
      */
     protected $classtype;
@@ -84,10 +89,26 @@ abstract class Media{
     {
         $this->id = $id;
     }
-
+    
     public function getId()
     {
-        return $this->id;
+    	return $this->id;
+    }
+    
+    public function getFileSize()
+    {
+    	$size = $this->filesize;
+    	if($size < 1024) return $size."b";
+    	else{
+    		$help = $size/1024;
+    		if($help<1024) return round($help,1)."kb";
+    		else return round(($help/1024), 1)."mb";
+    	}
+    }
+    
+    public function setFileSize($filesize)
+    {
+    	$this->filesize = $filesize;
     }
 
     /**

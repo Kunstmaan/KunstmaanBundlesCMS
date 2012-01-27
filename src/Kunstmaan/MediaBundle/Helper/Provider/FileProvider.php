@@ -32,11 +32,13 @@ class FileProvider extends AbstractProvider
                 throw new \RuntimeException('Invalid file');
             }
 
-            $media->setContent(new File($content));
+            $file = new File($content);
+            $media->setContent($file);
         }
 
         $metadata = array();
-
+        
+        $media->setFileSize(filesize($media->getContent()));
         $media->setMetadata($metadata);
         //$media->setName($media->getContent()->getBasename());
         $media->setContentType($media->getContent()->getMimeType());
