@@ -335,6 +335,30 @@ class Folder{
     	return $files;
     }
     
+    public function getSlidesOnly()
+    {
+    	$all = $this->files;
+    	$files = array();
+    	foreach($all as $file){
+    		if($file instanceof Slide){
+    			$files[] = $file;
+    		}
+    	}
+    	return $files;
+    }
+    
+    public function getVideosOnly()
+    {
+    	$all = $this->files;
+    	$files = array();
+    	foreach($all as $file){
+    		if($file instanceof Video){
+    			$files[] = $file;
+    		}
+    	}
+    	return $files;
+    }
+    
     public function hasActive($id){
     	$bool = false;
     	foreach($this->getChildren() as $child){
