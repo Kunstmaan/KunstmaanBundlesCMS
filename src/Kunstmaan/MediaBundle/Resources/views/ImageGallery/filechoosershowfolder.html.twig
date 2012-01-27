@@ -24,11 +24,11 @@
         </ul>
     </section>
     <section> 
-		<ul class="media-grid" id="file-list">
+		<ul>
         {% for media in gallery.getFilesOnly %}
             {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
             <li>
-                <a onclick="window.opener.ImagegalleryImageChosenCallback[window.opener.activeEdit]('{{ asset(upload_dir~media.show()) }}', '{{media.id}}'); window.close(); return false;" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+                <a onclick="window.opener.FileChosenCallback[window.opener.activeEdit]('{{ asset(upload_dir~media.show()) }}', '{{media.id}}'); window.close(); return false;" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
                     {{ media.name }}
                 </a>
              </li>
