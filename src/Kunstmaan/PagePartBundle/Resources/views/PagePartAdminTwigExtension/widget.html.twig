@@ -1,6 +1,12 @@
 <script>
-	if(typeof window.ImagegalleryImageChosenCallback == 'undefined') {
-    	window.ImagegalleryImageChosenCallback = new Array();
+	if(typeof window.ImageChosenCallback == 'undefined') {
+    	window.ImageChosenCallback = new Array();
+	}
+	if(typeof window.FileChosenCallback == 'undefined') {
+    	window.FileChosenCallback = new Array();
+	}
+	if(typeof window.LinkChosenCallback == 'undefined') {
+    	window.LinkChosenCallback = new Array();
 	}
 </script>
 <div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
