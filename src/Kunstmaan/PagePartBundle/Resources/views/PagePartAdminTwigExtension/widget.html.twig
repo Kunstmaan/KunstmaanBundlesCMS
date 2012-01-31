@@ -1,7 +1,4 @@
 <script>
-	if(typeof window.ImageChosenCallback == 'undefined') {
-    	window.ImageChosenCallback = new Array();
-	}
 	if(typeof window.FileChosenCallback == 'undefined') {
     	window.FileChosenCallback = new Array();
 	}
@@ -63,9 +60,9 @@
 	        </script>
 	        <input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
-        	
+
         	<div class="pagepart">
-            	<a name="pagepart{{ loop.index }}" ></a>	
+            	<a name="pagepart{{ loop.index }}" ></a>
             	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
             		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
             		{#
