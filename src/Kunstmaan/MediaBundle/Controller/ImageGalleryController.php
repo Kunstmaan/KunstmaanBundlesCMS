@@ -29,7 +29,7 @@ class ImageGalleryController extends Controller
             'galleries'     => $galleries
         );
     }
-    
+
     /**
      * @Route("/filechooser", name="KunstmaanMediaBundle_imagegallery_filechooser")
      * @Template()
@@ -37,7 +37,7 @@ class ImageGalleryController extends Controller
     public function filechooserAction() {
     	$em = $this->getDoctrine()->getEntityManager();
     	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-    
+
     	return array(
     			'galleries'     => $galleries
     	);
@@ -57,29 +57,29 @@ class ImageGalleryController extends Controller
     }
 
     /**
-     * @Route("/file/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filechooser_show")
+     * @Route("/filechooser/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_filechooser_show")
      * @Template()
      */
     function filechoosershowfolderAction($id){
     	$em = $this->getDoctrine()->getEntityManager();
     	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
     	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-    
+
     	return array(
     			'gallery'       => $gallery,
     			'galleries'     => $galleries
     	);
     }
-    
+
     /**
-     * @Route("/image/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
+     * @Route("/ckeditor/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
      * @Template()
      */
     function showfolderAction($id){
     	$em = $this->getDoctrine()->getEntityManager();
     	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
     	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-    
+
     	return array(
             'gallery'       => $gallery,
             'galleries'     => $galleries
