@@ -23,6 +23,12 @@ class KunstmaanMediaPagePartExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        //$loader->load('services.xml');
+
+        $container->setParameter('twig.form.resources', array_merge(
+        		$container->getParameter('twig.form.resources'),
+        		array('KunstmaanMediaPagePartBundle:Form:fields.html.twig')
+        ));
+
+        $loader->load('services.yml');
     }
 }

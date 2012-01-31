@@ -6,8 +6,8 @@
 		        window.open("{{ path('KunstmaanMediaBundle_imagegallery_ckeditor') }}", "_blank","toolbar=0,width=800,height=600");
 		    });
 		});
-		
-		window.ImagegalleryImageChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
+
+		window.FileChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
 		    $('select#form_pagepartadmin_main_{{ pagepartref.id }}_media').val(id);
 		}
 	</script>
@@ -16,5 +16,5 @@
 {% if resource.link is defined and resource.link != "" %}
 	<a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}><img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" /></a>
 {% else %}
-	<img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" />	
+	<img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" />
 {% endif %}
