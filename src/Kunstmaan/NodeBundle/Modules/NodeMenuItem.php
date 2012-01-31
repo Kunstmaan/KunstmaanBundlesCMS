@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminNodeBundle\Modules;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 use Symfony\Component\Translation\Translator;
 
@@ -21,7 +22,7 @@ class NodeMenuItem
     /**
      * @param FactoryInterface $factory
      */
-    public function __construct($em, $node, $lang, $parent, $menu)
+    public function __construct($em, Node $node, $lang, $parent, $menu)
     {
         $this->em = $em;
         $this->node = $node;
@@ -29,19 +30,23 @@ class NodeMenuItem
         $this->parent = $parent;
         $this->menu = $menu;
     }
-    
+
     public function getId(){
     	return $this->node->getId();
     }
-    
+
     public function getNode(){
     	return $this->node;
     }
-    
+
+    public function getNodeTranslation(){
+    	return $this->node->getNodeTranslation($this->getLang());
+    }
+
     public function getLang(){
     	return $this->lang;
     }
-    
+
     public function getTitle(){
     	$nodeTranslation = $this->node->getNodeTranslation($this->lang);
     	if($nodeTranslation){
@@ -49,7 +54,7 @@ class NodeMenuItem
     	}
     	return "Untranslated";
     }
-    
+
     public function getSlugPart(){
     	$nodeTranslation = $this->node->getNodeTranslation($this->lang);
     	if($nodeTranslation){
@@ -57,7 +62,7 @@ class NodeMenuItem
     	}
     	return null;
     }
-    
+
     public function getSlug(){
     	$result = $this->getSlugPart();
     	return $result;
@@ -66,7 +71,7 @@ class NodeMenuItem
     public function getParent(){
     	return $this->parent;
     }
-    
+
     public function getChildren(){
     	if(is_null($this->lazyChildren)){
     		$this->lazyChildren = array();
@@ -77,11 +82,11 @@ class NodeMenuItem
     	}
     	return $this->lazyChildren;
     }
-    
+
     public function getPage(){
     	return $this->node->getNodeTranslation($this->lang)->getRef($this->em);
     }
-    
+
     public function getActive(){
     	//TODO: change to something like in_array() but that didn't work
     	$bc = $this->menu->getBreadCrumb();
