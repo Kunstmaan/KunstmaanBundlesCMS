@@ -42,6 +42,33 @@ class ImageGalleryController extends Controller
     			'galleries'     => $galleries
     	);
     }
+    
+    /**
+     * @Route("/slidechooser", name="KunstmaanMediaBundle_imagegallery_slidechooser")
+     * @Template()
+     */
+    public function slidechooserAction() {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    
+    	return array(
+    			'galleries'     => $galleries
+    	);
+    }
+    
+    /**
+     * @Route("/videochooser", name="KunstmaanMediaBundle_imagegallery_videochooser")
+     * @Template()
+     */
+    public function videochooserAction() {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    
+    	return array(
+    			'galleries'     => $galleries
+    	);
+    }
+    
 
     /**
      * @Route("/imagepagepart", name="KunstmaanMediaBundle_imagegallery_imagepagepart")
@@ -71,6 +98,36 @@ class ImageGalleryController extends Controller
     	);
     }
 
+    /**
+     * @Route("/slide/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_slidechooser_show")
+     * @Template()
+     */
+    function slidechoosershowfolderAction($id){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    
+    	return array(
+    			'gallery'       => $gallery,
+    			'galleries'     => $galleries
+    	);
+    }
+    
+    /**
+     * @Route("/video/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_videochooser_show")
+     * @Template()
+     */
+    function videochoosershowfolderAction($id){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    
+    	return array(
+    			'gallery'       => $gallery,
+    			'galleries'     => $galleries
+    	);
+    }
+    
     /**
      * @Route("/ckeditor/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
      * @Template()
