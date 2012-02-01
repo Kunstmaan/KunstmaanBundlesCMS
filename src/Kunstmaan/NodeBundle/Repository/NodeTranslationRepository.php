@@ -19,47 +19,50 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class NodeTranslationRepository extends EntityRepository
 {
-	public function getTopNodes($user, $permission)
-	{
-	    $qb = $this->createQueryBuilder('b')
-	               ->select('b')
-                   ->where('b.parent is null')
-                   ->andWhere('b.id IN (
-                        SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = b.refEntityname AND p.permissions LIKE ?1 AND p.refGroup IN(?2)
-                   )')
-	               ->addOrderBy('b.sequencenumber', 'DESC')
-                   ->setParameter(1, '%|'.$permission.':1|%')
-                   ->setParameter(2, $user->getGroupIds());
-
-	    return $qb->getQuery()
-	              ->getResult();
-	}
-	
 	public function getChildren(Node $node){
 		return $this->findBy(array("parent"=>$node->getId()));
 	}
-	
+
 	public function getNodeFor(HasNode $hasNode) {
 		return $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityname' => ClassLookup::getClass($hasNode)));
 	}
-	
-	public function getNodeTranslationForSlug($parentNode, $slug){
+
+	public function getNodeTranslationForSlug(NodeTranslation $parentNode = null, $slug){
 		$slugparts = explode("/", $slug);
-		$result = null;
+		$result = $parentNode;
 		foreach($slugparts as $slugpart){
-			if($parentNode){
-				if($r = $this->findOneBy(array('slug' => $slugpart, 'node.parent' => $parentNode->getId()))){
-					$result = $r;
-				}
-			} else {
-				if($r = $this->findOneBy(array('slug' => $slugpart))){
-					$result = $r;
-				}
-			}
+			$result = $this->getNodeTranslationForSlugPart($result, $slugpart);
 		}
 		return $result;
 	}
-	
+
+	private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugpart) {
+		if($parentNode != null){
+			$qb = $this->createQueryBuilder('b')
+				->select('b')
+				->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+				->where('b.slug = ?1 and n.parent = ?2')
+				->addOrderBy('n.sequencenumber', 'DESC')
+				->setFirstResult( 0 )
+				->setMaxResults( 1 )
+				->setParameter(1, $slugpart)
+				->setParameter(2, $parentNode->getNode()->getId());
+			$result = $qb->getQuery()->getResult();
+			if(sizeof($result)==1){
+				return $result[0];
+			} else if (sizeof($result==0)){
+				return null;
+			} else {
+				//more then one result found
+				return $result[0];
+			}
+		} else {
+			if($r = $this->findOneBy(array('slug' => $slugpart))){
+				return $r;
+			}
+		}
+	}
+
 	public function createNodeTranslationFor(HasNode $hasNode, $lang, Node $node, $owner){
 		$em = $this->getEntityManager();
 		$classname = ClassLookup::getClass($hasNode);

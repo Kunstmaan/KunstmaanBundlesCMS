@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminNodeBundle\Modules;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Translation\Translator;
 use Knp\Menu\FactoryInterface;
 
@@ -20,7 +21,7 @@ class NodeMenu {
         $this->container = $container;
         $this->em = $this->container->get('doctrine.orm.entity_manager');
         $tempNode = $currentNode;
-        
+
         //Breadcrumb
         $nodeBreadCrumb = array();
         while($tempNode){
@@ -53,23 +54,27 @@ class NodeMenu {
     public function getTopNodes(){
         return $this->topNodeMenuItems;
     }
-    
+
     public function getCurrent(){
     	if(sizeof($this->breadCrumb)>0){
     		return $this->breadCrumb[sizeof($this->breadCrumb)-1];
     	}
     	return null;
     }
-    
+
     public function getActiveForDepth($depth){
     	if(sizeof($this->breadCrumb)>=$depth){
     		return $this->breadCrumb[$depth-1];
     	}
     	return null;
     }
-    
+
     public function getBreadCrumb(){
     	return $this->breadCrumb;
     }
-    
+
+    public function getNodeBySlug(NodeTranslation $parentNode, $slug){
+    	return $this->em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug($parentNode, $slug);
+    }
+
 }
