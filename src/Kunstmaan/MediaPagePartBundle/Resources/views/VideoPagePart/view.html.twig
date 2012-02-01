@@ -15,6 +15,6 @@
 	{# <a id="link_pagepartadmin_main_{{ pagepartref.id }}_media" href="">{{ 'Select file' | trans }}</a> #}
 {% endif %}
 
-{% if resource is defined and resource != "" %}
+{% if resource.media is defined and resource.media != "" %}
 	{% include 'KunstmaanMediaBundle:Video:'~ resource.media.type ~'.html.twig' %}
 {% endif %}
