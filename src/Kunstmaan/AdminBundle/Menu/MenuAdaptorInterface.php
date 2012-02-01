@@ -10,5 +10,6 @@ use Knp\Menu\ItemInterface as KnpMenu;
 
 interface MenuAdaptorInterface
 {
+	function setCurrent(KnpMenu $menu, Translator $translator, $request);
     function adaptMenu(KnpMenu $menu, Translator $translator);
 }
