@@ -1,4 +1,4 @@
-{% if pagepartref is defined %}	
+{% if pagepartref is defined %}
 	<script>
 		$(document).ready(function() {
 		    {# $('a#link_pagepartadmin_main_{{ pagepartref.id }}_media').on('click', function(ev) { #}
@@ -7,8 +7,8 @@
 		        window.open("{{ path('KunstmaanMediaBundle_imagegallery_filechooser') }}", "_blank","toolbar=0,width=800,height=600");
 		    });
 		});
-		
-		window.ImagegalleryImageChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
+
+		window.FileChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
 		    $('select#form_pagepartadmin_main_{{ pagepartref.id }}_media').val(id);
 		}
 	</script>

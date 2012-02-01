@@ -11,18 +11,7 @@ class ImagePagePartAdminType extends AbstractType {
         $builder->add('link', 'url', array('required' => false));
         $builder->add('openinnewwindow', 'checkbox', array('required' => false));
         $builder->add('alttext', null, array('required' => false));
-
-        $builder->add('media', 'entity', array(
-            'required'  => false,
-            'class'     => 'KunstmaanMediaBundle:Media',
-            'property'  => 'url',
-            'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('b')->where('b.classtype = ?1')->setParameter(1, 'Image');
-            },
-            'attr'    => array(
-                'class' => 'imagechooser'
-            )
-        ));
+        $builder->add('media', 'media');
     }
 
     public function getName() {
