@@ -5,6 +5,12 @@
 	if(typeof window.LinkChosenCallback == 'undefined') {
     	window.LinkChosenCallback = new Array();
 	}
+	if(typeof window.SlideChosenCallback == 'undefined') {
+    	window.SlideChosenCallback = new Array();
+	}
+	if(typeof window.VideoChosenCallback == 'undefined') {
+    	window.VideoChosenCallback = new Array();
+	}
 </script>
 <div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
 	{% if app.request.get('edit') is defined and app.request.get('edit') !="" %}
