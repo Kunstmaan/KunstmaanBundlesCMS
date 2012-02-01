@@ -49,6 +49,46 @@
     <link rel="apple-touch-icon" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon.png') }}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-72x72.png') }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-114x114.png') }}">
+    <script type="text/javascript">
+		// Close the dialog
+	    function closeme() {
+	    	window.close()
+	    }
+
+	    // Handle click of OK button
+	    function handleOK(result) {
+	    	if (window.opener) {
+	    	    window.opener.dialogWin.returnedValue = result;
+	    		window.opener.dialogWin.returnFunc()
+	    	} else {
+	    		//alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
+	    	}
+	    	window.closeme()
+	    	return false
+	    }
+
+	    // Handle click of Cancel button
+	    function handleCancel() {
+	    	window.closeme()
+	    	return false
+	    }
+
+	    function doBodyLoad() {
+	    	if (window.opener) {
+	    		if (window.opener.blockEvents) {
+	    			window.opener.blockEvents();
+	    		}
+	    	}
+	    }
+
+	    function doBodyUnload() {
+	    	if (window.opener) {
+	    		if (window.opener.unblockEvents) {
+	    			window.opener.unblockEvents();
+	    		}
+	    	}
+	    }
+    </script>
   </head>
   <body>
   <header>
@@ -62,9 +102,9 @@
     </header>
     <div class="container-fluid">
       <aside class="sidebar">
-	      {% block sidebar %} 
+	      {% block sidebar %}
 	      	{% include 'KunstmaanMediaBundle:ImageGallery:sidebar.html.twig' %}
-	      {% endblock %} 
+	      {% endblock %}
       </aside>
       <div class="content">
       	{% block breadcrumb %} {% endblock %}
