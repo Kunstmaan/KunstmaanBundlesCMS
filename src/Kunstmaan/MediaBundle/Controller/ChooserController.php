@@ -4,21 +4,21 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Form\FolderType;
-use Kunstmaan\MediaBundle\Entity\ImageGallery;
+use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\SubFolderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * imagegallery controller.
+ * chooser controller.
  *
  * @author Kristof Van Cauwenbergh
  */
-class ImageGalleryController extends Controller
+class ChooserController extends Controller
 {
     /**
-     * @Route("/ckeditor", name="KunstmaanMediaBundle_imagegallery_ckeditor")
+     * @Route("/ckeditor", name="KunstmaanMediaBundle_chooser_ckeditor")
      * @Template()
      */
     public function ckeditorAction() {
@@ -29,9 +29,22 @@ class ImageGalleryController extends Controller
             'galleries'     => $galleries
         );
     }
+    
+    /**
+     * @Route("/imagechooser", name="KunstmaanMediaBundle_chooser_imagechooser")
+     * @Template()
+     */
+    public function imagechooserAction() {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    
+    	return array(
+    			'galleries'     => $galleries
+    	);
+    }
 
     /**
-     * @Route("/filechooser", name="KunstmaanMediaBundle_imagegallery_filechooser")
+     * @Route("/filechooser", name="KunstmaanMediaBundle_chooser_filechooser")
      * @Template()
      */
     public function filechooserAction() {
@@ -44,7 +57,7 @@ class ImageGalleryController extends Controller
     }
     
     /**
-     * @Route("/slidechooser", name="KunstmaanMediaBundle_imagegallery_slidechooser")
+     * @Route("/slidechooser", name="KunstmaanMediaBundle_chooser_slidechooser")
      * @Template()
      */
     public function slidechooserAction() {
@@ -57,7 +70,7 @@ class ImageGalleryController extends Controller
     }
     
     /**
-     * @Route("/videochooser", name="KunstmaanMediaBundle_imagegallery_videochooser")
+     * @Route("/videochooser", name="KunstmaanMediaBundle_chooser_videochooser")
      * @Template()
      */
     public function videochooserAction() {
@@ -71,7 +84,7 @@ class ImageGalleryController extends Controller
     
 
     /**
-     * @Route("/imagepagepart", name="KunstmaanMediaBundle_imagegallery_imagepagepart")
+     * @Route("/imagepagepart", name="KunstmaanMediaBundle_chooser_imagepagepart")
      * @Template()
      */
     public function imagepagepartAction() {
@@ -98,6 +111,21 @@ class ImageGalleryController extends Controller
     	);
     }
 
+    /**
+     * @Route("/imagechooser/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_imagechooser_show")
+     * @Template()
+     */
+    function imagechoosershowfolderAction($id){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    
+    	return array(
+    			'gallery'       => $gallery,
+    			'galleries'     => $galleries
+    	);
+    }
+    
     /**
      * @Route("/slide/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_slidechooser_show")
      * @Template()

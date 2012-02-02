@@ -8,8 +8,8 @@ KunstmaanMediaBundle_aviary:
     type:     annotation
     prefix:   /
         
-KunstmaanMediaBundle_media_imagegallery:
-    resource: "@KunstmaanMediaBundle/Controller/ImageGalleryController.php"
+KunstmaanMediaBundle_media_chooser:
+    resource: "@KunstmaanMediaBundle/Controller/ChooserController.php"
     type:     annotation
     prefix:   /admin/media
         

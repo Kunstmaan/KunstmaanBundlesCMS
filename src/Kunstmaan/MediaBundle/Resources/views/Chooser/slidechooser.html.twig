@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}File Chooser{% endblock %}</title>
+    <title>{% block title %}Slide Chooser{% endblock %}</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -39,12 +39,12 @@
     <script src="{{ asset('bundles/kunstmaanadmin/js/script.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/kunstmaanadmin/js/upload.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="{{ asset('bundles/kunstmaanadmin/img/favicon.ico') }}">
-    <link rel="apple-touch-icon" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-72x72.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-114x114.png') }}">
-    <script type="text/javascript">
+ 	<style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+    </style>
+        <script type="text/javascript">
 		// Close the dialog
 	    function closeme() {
 	    	window.close()
@@ -84,22 +84,27 @@
 	    	}
 	    }
     </script>
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{ asset('bundles/kunstmaanadmin/img/favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-114x114.png') }}">
   </head>
   <body>
   <header>
     <div class="topbar" data-dropdown="dropdown">
       <div class="topbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'File chooser' | trans }}</a>
+          <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'Image chooser' | trans }}</a>
         </div>
       </div>
     </div>
     </header>
     <div class="container-fluid">
       <aside class="sidebar">
-	      {% block sidebar %}
-	      	{% include 'KunstmaanMediaBundle:ImageGallery:filechoosersidebar.html.twig' %}
-	      {% endblock %}
+	      {% block sidebar %} 
+	      	{% include 'KunstmaanMediaBundle:Chooser:slidechoosersidebar.html.twig' %}
+	      {% endblock %} 
       </aside>
       <div class="content">
       	{% block breadcrumb %} {% endblock %}

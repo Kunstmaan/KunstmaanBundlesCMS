@@ -38,7 +38,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * imagegallery controller.
+ * folder controller.
  *
  * @author Kristof Van Cauwenbergh
  */

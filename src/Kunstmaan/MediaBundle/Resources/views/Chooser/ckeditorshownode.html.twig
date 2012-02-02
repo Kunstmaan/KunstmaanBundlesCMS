@@ -6,11 +6,11 @@
                            			class="jstree-open blub" 
                            		{% endif %}
                            		{%  if child.rel %}rel="{{ child.rel }}"{% else %}rel="folder"{% endif %}> 
-                           		<a href="{{ path('KunstmaanMediaBundle_slidechooser_show', { 'id': child.id, 'slug': child.slug }) }}">{{ child.name | trans }}</a>
+                           		<a href="{{ path('KunstmaanMediaBundle_ckeditor_show', { 'id': child.id, 'slug': child.slug }) }}">{{ child.name | trans }}</a>
                             	{% if child.children is defined %}
 	                            	<ul>
 										{% for child in child.children %}
-		                                    {% include 'KunstmaanMediaBundle:ImageGallery:slidechoosershownode.html.twig' %}
+		                                    {% include 'KunstmaanMediaBundle:Chooser:ckeditorshownode.html.twig' %}
 		                                {% endfor %}
 	                                </ul>
                                 {% endif %}
