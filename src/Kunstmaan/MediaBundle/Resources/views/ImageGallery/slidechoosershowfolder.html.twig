@@ -28,7 +28,7 @@
         {% for media in gallery.getSlidesOnly %}
             {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
             <li>
-                <a onclick="window.opener.SlideChosenCallback[window.opener.activeEdit]('{{ asset(upload_dir~media.show()) }}', '{{media.id}}'); window.close(); return false;" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+                <a onclick="handleOK({path:'', id:'{{media.id}}'});return false;"  class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
                     {{ media.name }}
                 </a>
              </li>

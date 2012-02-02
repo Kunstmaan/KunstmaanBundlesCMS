@@ -44,6 +44,46 @@
         padding-top: 60px;
       }
     </style>
+        <script type="text/javascript">
+		// Close the dialog
+	    function closeme() {
+	    	window.close()
+	    }
+
+	    // Handle click of OK button
+	    function handleOK(result) {
+	    	if (window.opener) {
+	    	    window.opener.dialogWin.returnedValue = result;
+	    		window.opener.dialogWin.returnFunc()
+	    	} else {
+	    		//alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
+	    	}
+	    	window.closeme()
+	    	return false
+	    }
+
+	    // Handle click of Cancel button
+	    function handleCancel() {
+	    	window.closeme()
+	    	return false
+	    }
+
+	    function doBodyLoad() {
+	    	if (window.opener) {
+	    		if (window.opener.blockEvents) {
+	    			window.opener.blockEvents();
+	    		}
+	    	}
+	    }
+
+	    function doBodyUnload() {
+	    	if (window.opener) {
+	    		if (window.opener.unblockEvents) {
+	    			window.opener.unblockEvents();
+	    		}
+	    	}
+	    }
+    </script>
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="{{ asset('bundles/kunstmaanadmin/img/favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon.png') }}">
