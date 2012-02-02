@@ -10,7 +10,15 @@ use Knp\Menu\ItemInterface as KnpMenu;
 
 class MediaMenuAdaptor implements \Kunstmaan\AdminBundle\Menu\MenuAdaptorInterface
 {
-    public function adaptMenu(KnpMenu $menu, Translator $translator)
+    public function setCurrent(KnpMenu $menu, Translator $translator, $request){
+    	switch(true) {
+        	case (stripos($request->attributes->get('_route'), "KunstmaanMediaBundle") === 0):
+        		$menu[$translator->trans('media.menu.media')]->setCurrent(true);
+        		break;	
+        }    
+    }
+	
+	public function adaptMenu(KnpMenu $menu, Translator $translator)
     {
         $menu->addChild($translator->trans('media.menu.media'), array('route' => 'KunstmaanMediaBundle_folder_show', 'routeParameters' => array('id' => '1', 'slug' => 'media')));
         //$menu[$translator->trans('media.menu.media')]->setUri('#');
