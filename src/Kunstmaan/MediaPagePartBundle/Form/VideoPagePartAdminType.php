@@ -8,7 +8,8 @@ use Doctrine\ORM\EntityRepository;
 
 class VideoPagePartAdminType extends AbstractType {
     public function buildForm(FormBuilder $builder, array $options) {
-        $builder->add('media', 'entity', array(
+    	$builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_imagegallery_videochooser'));
+    	/*$builder->add('media', 'entity', array(
             'required'  => false,
             'class'     => 'KunstmaanMediaBundle:Media',
             'property'  => 'url',
@@ -16,7 +17,7 @@ class VideoPagePartAdminType extends AbstractType {
                 return $er->createQueryBuilder('b')->where('b.classtype = ?1')->setParameter(1, 'Video');
             },
             //'attr' => array('class' => 'hidden')
-        ));
+        ));*/
     }
 
     public function getName() {

@@ -16,5 +16,5 @@
 {% endif %}
 
 {% if resource.media is defined and resource.media != "" %}
-	{% include 'KunstmaanMediaBundle:Video:'~ resource.media.type ~'.html.twig' %}
+	{% include 'KunstmaanMediaBundle:Video:'~ resource.media.type ~'.html.twig' with {'media': resource.media} %}
 {% endif %}
