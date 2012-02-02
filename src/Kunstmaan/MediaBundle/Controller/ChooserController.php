@@ -160,7 +160,7 @@ class ChooserController extends Controller
      * @Route("/ckeditor/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
      * @Template()
      */
-    function showfolderAction($id){
+    function ckeditorshowfolderAction($id){
     	$em = $this->getDoctrine()->getEntityManager();
     	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
     	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
