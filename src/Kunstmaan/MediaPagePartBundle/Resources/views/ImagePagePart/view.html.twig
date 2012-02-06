@@ -3,7 +3,7 @@
 		$(document).ready(function() {
 		    $('select#form_pagepartadmin_main_{{ pagepartref.id }}_media').on('click', function(ev) {
 			   	ev.preventDefault();
-		        window.open("{{ path('KunstmaanMediaBundle_imagegallery_ckeditor') }}", "_blank","toolbar=0,width=800,height=600");
+		        window.open("{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}", "_blank","toolbar=0,width=800,height=600");
 		    });
 		});
 

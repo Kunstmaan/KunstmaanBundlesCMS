@@ -27,6 +27,7 @@ class MediaType extends AbstractType {
             'property'          => null,
             'query_builder'     => null,
             'choices'           => null,
+			'chooserpath'		=> null,
         );
 
         $options = array_replace($defaultOptions, $options);
