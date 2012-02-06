@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:ImageGallery:filechooser.html.twig' %}
+{% extends 'KunstmaanMediaBundle:Chooser:filechooser.html.twig' %}
 
 {% block subbreadcrumb %}{%  set galstype = 'media.menu.'~gallery.type~'s' %}
     {% for parent in gallery.parents %}
@@ -25,7 +25,7 @@
     </section>
     <section>
 		<ul>
-        {% for media in gallery.files %}
+        {% for media in gallery.filesonly %}
             {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
             <li>
             	<a onclick="handleOK({path:'{{ asset(upload_dir~media.show()) }}', id:'{{media.id}}'});return false;" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">

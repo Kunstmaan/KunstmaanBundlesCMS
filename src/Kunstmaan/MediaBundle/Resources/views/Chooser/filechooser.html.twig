@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}File Chooser{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Le styles -->
+    {% stylesheets
+    	'bundles/kunstmaanadmin/css/bootstrap.css'
+    	'bundles/kunstmaanadmin/css/style.css'
+    	'bundles/kunstmaanadmin/js/libs/themes/OMNext/style.css'
+        output='style.css'
+        filter='cssrewrite'
+    %}
+    <link rel="stylesheet"  media="screen" type="text/css" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/modernizr-2.0.6.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery-1.7.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery-ui-1.8.16.custom.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/bootstrap-twipsy.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/bootstrap-tabs.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/bootstrap-popover.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/bootstrap-modal.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/bootstrap-dropdown.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/bootstrap-buttons.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/bootstrap-alerts.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.easing.1.3.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.filedrop.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.fileupload.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.iframe-transport.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.jstree.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.ui.widget.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/plugins.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/script.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/upload.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{ asset('bundles/kunstmaanadmin/img/favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('bundles/kunstmaanadmin/img/apple-touch-icon-114x114.png') }}">
+    <script type="text/javascript">
+		// Close the dialog
+	    function closeme() {
+	    	window.close()
+	    }
+
+	    // Handle click of OK button
+	    function handleOK(result) {
+	    	if (window.opener) {
+	    	    window.opener.dialogWin.returnedValue = result;
+	    		window.opener.dialogWin.returnFunc()
+	    	} else {
+	    		//alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
+	    	}
+	    	window.closeme()
+	    	return false
+	    }
+
+	    // Handle click of Cancel button
+	    function handleCancel() {
+	    	window.closeme()
+	    	return false
+	    }
+
+	    function doBodyLoad() {
+	    	if (window.opener) {
+	    		if (window.opener.blockEvents) {
+	    			window.opener.blockEvents();
+	    		}
+	    	}
+	    }
+
+	    function doBodyUnload() {
+	    	if (window.opener) {
+	    		if (window.opener.unblockEvents) {
+	    			window.opener.unblockEvents();
+	    		}
+	    	}
+	    }
+    </script>
+  </head>
+  <body>
+  <header>
+    <div class="topbar" data-dropdown="dropdown">
+      <div class="topbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'File chooser' | trans }}</a>
+        </div>
+      </div>
+    </div>
+    </header>
+    <div class="container-fluid">
+      <aside class="sidebar">
+	      {% block sidebar %}
+	      	{% include 'KunstmaanMediaBundle:Chooser:filechoosersidebar.html.twig' %}
+	      {% endblock %}
+      </aside>
+      <div class="content">
+      	{% block breadcrumb %} {% endblock %}
+        {% block content %} {% endblock %}
+      </div>
+    </div>
+      <footer>
+        <div class="container-fluid">
+          <p class="pull-right"><a target="_blank" href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan.png') }}" width="83" height="16" alt="Kunstmaan" class="kunstmaan-logo" /></a></p>
+        </div>
+      </footer>
+  </body>
+</html>

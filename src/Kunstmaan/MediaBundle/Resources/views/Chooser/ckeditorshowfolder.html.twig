@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:ImageGallery:ckeditor.html.twig' %}
+{% extends 'KunstmaanMediaBundle:Chooser:ckeditor.html.twig' %}
 
 {% block subbreadcrumb %}{%  set galstype = 'media.menu.'~gallery.type~'s' %}
     {% for parent in gallery.parents %}
@@ -26,9 +26,8 @@
     <section>
 		<ul class="media-grid" id="file-list">
         {% for media in gallery.getImages %}
-            {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
             <li>
-                <a onclick="handleOK({url:'{{ asset(upload_dir~media.show()) }}', id:'{{media.id}}'});return false;" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+                <a onclick="window.opener.CKEDITOR.tools.callFunction(2, '{{ asset(upload_dir~media.show()) }}'); window.close();" class="item" href="{{ path('KunstmaanMediaBundle_media_show', { 'media_id' : media.id }) }}">
                     <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
                 </a>
              </li>
