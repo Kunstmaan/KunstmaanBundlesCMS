@@ -11,6 +11,8 @@ class MenuBuilder
 {
     private $factory;
     private $rootItem;
+    private $translator;
+    private $extra;
 
     /**
      * @param FactoryInterface $factory
@@ -18,8 +20,10 @@ class MenuBuilder
     public function __construct(FactoryInterface $factory, Translator $translator, $extra = array())
     {
         $this->factory = $factory;
+        $this->translator = $translator;
         $this->rootItem = $this->populateMenu($translator);
-
+        $this->extra = $extra;
+        
         foreach($extra as  $menuadaptor){
             $menuadaptor->adaptMenu($this->rootItem, $translator);
         }
@@ -28,6 +32,17 @@ class MenuBuilder
     public function mainMenu(\Symfony\Component\HttpFoundation\Request $request)
     {
         $this->rootItem->setCurrentUri($request->getRequestUri());
+        switch(true) {
+        	case (stripos($request->attributes->get('_route'), "KunstmaanAdminBundle_pages") === 0):
+        		$this->rootItem[$this->translator->trans('pages.title')]->setCurrent(true);
+        		break;
+        	case (stripos($request->attributes->get('_route'), "KunstmaanAdminBundle_settings") === 0):
+        		$this->rootItem[$this->translator->trans('settings.title')]->setCurrent(true);
+        		break;
+        }     
+        foreach($this->extra as  $menuadaptor){
+        	$menuadaptor->setCurrent($this->rootItem, $this->translator, $request);
+        }   
         return $this->rootItem;
     }
 
@@ -45,7 +60,7 @@ class MenuBuilder
             //$rootItem[$translator->trans('tools.title')]->addChild($translator->trans('tools.clear_all_caches'), array( 'uri' => '#'));
             //$rootItem[$translator->trans('tools.title')]->addChild('', array('attributes' => array('class' => 'divider')));
             //$rootItem[$translator->trans('tools.title')]->addChild($translator->trans('tools.shutdown'), array( 'uri' => '#'));
-
+        
         return $rootItem;
     }
 }
