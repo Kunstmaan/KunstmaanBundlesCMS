@@ -16,6 +16,6 @@ class DefaultController extends Controller
 	 */
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages"));;
+        return array();
     }   
 }
