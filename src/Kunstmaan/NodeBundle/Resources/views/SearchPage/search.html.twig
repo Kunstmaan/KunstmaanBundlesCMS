@@ -16,15 +16,15 @@
     {% if results.getNbPages() > 1 %}
         <div class="paginatie clearfix">
             {% if results.hasPreviousPage() %}
-                <p><a href="{{ path(app.request.attributes.get('_route'), { 'query': query, 'page': results.getPreviousPage() }) }}">{{ 'Vorige' | trans}}</a></p>
+                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getPreviousPage() }) }}">{{ 'Vorige' | trans}}</a></p>
             {% endif %}
                 <ul class="clearfix">
                     {% for i in 1..results.getNbPages()%}
-                        <li {% if i == results.getCurrentPage() %}class="active"{% endif %}><a href="{{ path(app.request.attributes.get('_route'), { 'query': query, 'page': i }) }}">{{ i }}</a></li>
+                        <li {% if i == results.getCurrentPage() %}class="active"{% endif %}><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': i }) }}">{{ i }}</a></li>
                     {% endfor %}
                 </ul>
             {% if results.hasNextPage() %}
-                <p><a href="{{ path(app.request.attributes.get('_route'), { 'query': query, 'page': results.getNextPage() }) }}">{{ 'Volgende' | trans}}</a></p>
+                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getNextPage() }) }}">{{ 'Volgende' | trans}}</a></p>
             {% endif %}
         </div>
     {% endif %}
