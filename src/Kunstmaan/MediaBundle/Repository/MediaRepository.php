@@ -7,6 +7,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityNotFoundException;
 
 class MediaRepository extends EntityRepository
 {
@@ -26,7 +27,7 @@ class MediaRepository extends EntityRepository
     {
         $media = $em->getRepository('KunstmaanMediaBundle:Media')->find($media_id);
         if (!$media) {
-            throw new NotFoundHttpException('The id given for the media is not valid.');
+            throw new EntityNotFoundException('The id given for the media is not valid.');
         }
         return $media;
     }
@@ -34,7 +35,7 @@ class MediaRepository extends EntityRepository
     public function getPicture($picture_id, EntityManager $em){
         $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($picture_id);
         if (!$picture){
-            throw new NotFoundHttpException('Unable to find image.');
+            throw new EntityNotFoundException('Unable to find image.');
         }
 
         return $picture;
