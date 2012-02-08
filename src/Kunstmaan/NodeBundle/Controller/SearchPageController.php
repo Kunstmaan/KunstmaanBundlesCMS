@@ -8,51 +8,47 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 class SearchPageController extends Controller
 {
     /**
-     * @Route("/search", name="_search")
+     * @Route("/{slug}/searchredirect", requirements={"slug" = ".+"}, name="_search")
      * @Template()
      */
-    public function searchAction()
+    public function searchAction($slug)
     {
     	$query = $this->getRequest()->get("query");
-        //use the elasitica service to search for results
-        $finder = $this->get('foq_elastica.finder.website.page');
-
-        $queryObj = \Elastica_Query::create($query);
-        $queryObj->setHighlight(array(
-            'pre_tags' => array('<em class="highlight">'),
-            'post_tags' => array('</em>'),
-            'fields' => array(
-                'title' => array(
-                    'fragment_size' => 200,
-                    'number_of_fragments' => 1,
-                )
-            )
-        ));
-
-        $pages = $finder->findPaginated($queryObj);
-
-        $pages->setMaxPerPage(5);
-        
-        $rq = $this->getRequest();
-        $page = intval($rq->get('page'));
-        if(!isset($pages)){
-        	$page = 1;
-        }
-        
-        $pages->setCurrentPage($page);
-                      
-        $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
-        $nodeMenu = new NodeMenu($this->container, $locale, null);
-        
-        return array(
-        		'query' => $query,
-        		'results' => $pages,
-        		'nodemenu' => $nodeMenu
-        );
+           	
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$request = $this->getRequest();
+    	$locale = $request->getSession()->getLocale();
+    	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
+    	if($nodeTranslation){
+    		$page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
+    		$node = $nodeTranslation->getNode();
+    	} else {
+    		throw $this->createNotFoundException('No page found for slug ' . $slug);
+    	}
+    	
+    	
+    	$homepage = $this->getHomepage($node);
+    	$children = $homepage->getChildren();
+   		foreach($children as $child){
+   			if(ClassLookup::getClassName($child->getNodeTranslation($request->getSession()->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
+   		}
+   		
+   		if($searchpage){
+   			return $this->redirect($this->generateUrl('_slug', array('slug' => $searchpage->getNodeTranslation($request->getSession()->getLocale())->getSlug(), 'query' => $query)));
+   		}else {
+   			throw $this->createNotFoundException('No searchpage found');
+   		}
+    }
+    
+    public function getHomepage($page){
+    	if($page->getParent()){
+    		$homepage = $this->getHomepage($page->getParent());
+    	}else $homepage = $page;
+    	return $homepage;
     }
 }

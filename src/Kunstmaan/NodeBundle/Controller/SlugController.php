@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 class SlugController extends Controller
 {
@@ -96,7 +97,7 @@ class SlugController extends Controller
         $permissionManager = $this->get('kunstmaan_admin.permissionmanager');
         $canViewPage = $permissionManager->hasPermision($page, $currentUser, 'read', $em);
 
-        if($canViewPage) {
+        if($canViewPage) {        	
             $nodeMenu = new NodeMenu($this->container, $locale, $node);
 
         	//render page
@@ -105,21 +106,16 @@ class SlugController extends Controller
             	$context = $pagePartAdminConfiguration->getDefaultContext();
             	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
             }
-
-        	$result = array(
+            
+            $result = array(
+            			'slug'      => $slug,
             			'page'      => $page,
             			'pageparts' => $pageparts,
             			'nodemenu'  => $nodeMenu);
 
-            if(method_exists($page, "service")){
-            	$page->service($this->container, $request, $result);
-            }
-
-            if(method_exists($page, "getDefaultView")){
-            	return $this->render($page->getDefaultView(), $result);
-            } else {
-            	return $result;
-            }
+            $page->service($this->container, $request, $result);
+            
+            return $this->render($page->getDefaultView(), $result);
         }
         throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
     }
