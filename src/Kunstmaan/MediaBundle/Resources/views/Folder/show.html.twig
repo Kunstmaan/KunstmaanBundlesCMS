@@ -60,7 +60,7 @@
     			<div id="my-tab-content" class="tab-content"> 
     				<div class="tab-pane active" id="imagegallery">    
         
-   <section id="map-list"> 
+  {#  <section id="map-list"> 
     						<ul class="media-grid"> 
     						{% for child in gallery.children %}
     							<li> 
@@ -73,7 +73,23 @@
     							</li>
     						{% endfor %}	
     						</ul>								
-    					</section>        
+    					</section>   #}     
+    					
+    	 <section id="map-list"> 
+    						<table>
+	    						<tbody>
+    						{% for child in gallery.children %}
+    							<tr> 
+    								<td><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item">{{ child.name }}</a></td>
+    							</tr> 
+    						{% else %}
+    							<tr> 
+    								<td><a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-controls-modal="addsub-modal" data-backdrop="true" data keyboard="true">{{ 'media.gallery.sub.no' |trans }} {{ 'media.gallery.sub.addshort' |trans }}</a>
+    							</td></tr>
+    						{% endfor %}	
+    						</tbody>
+	    					</table>							
+    					</section> 
         
     	{%  set FolderTypelist = 'media.'~gallery.type~'.list' %}
        {% include 'KunstmaanMediaBundle:' ~ gallery.type|capitalize ~ ':tableview.html.twig' %}
