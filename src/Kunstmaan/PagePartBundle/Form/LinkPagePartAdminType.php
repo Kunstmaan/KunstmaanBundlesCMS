@@ -14,7 +14,7 @@ class LinkPagePartAdminType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('url', 'url', array( 'data_class' =>'Kunstmaan\PagePartBundle\Entity\LinkPagePart', 'required' => false, 'attr' => array( 'class' => 'urlchooser' )))
+            ->add('url', 'urlchooser', array( 'data_class' =>'Kunstmaan\PagePartBundle\Entity\LinkPagePart', 'required' => false))
         ;
     }
 
