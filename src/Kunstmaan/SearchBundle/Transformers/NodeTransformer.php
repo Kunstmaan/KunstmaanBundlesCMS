@@ -7,6 +7,7 @@ use RuntimeException;
 use FOQ\ElasticaBundle\Transformer\ModelToElasticaAutoTransformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Kunstmaan\SearchBundle\Entity\Indexable;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 
 class NodeTransformer extends ModelToElasticaAutoTransformer
@@ -69,7 +70,7 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
      */
     protected function getNormalField($container, $object, $field)
     {
-        $class = get_class($object);
+        $class = ClassLookup::getClass($object);
 
         $getter = 'get'.ucfirst($field);
         if (!method_exists($class, $getter)) {
