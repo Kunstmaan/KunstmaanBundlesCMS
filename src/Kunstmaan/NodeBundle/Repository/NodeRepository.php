@@ -19,7 +19,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class NodeRepository extends EntityRepository
 {
 	public function getTopNodes($user, $permission) {
-	    $qb = $this->createQueryBuilder('b')
+	   /* $qb = $this->createQueryBuilder('b')
 	               ->select('b')
                    ->where('b.parent is null')
                    ->andWhere('b.id IN (
@@ -27,12 +27,22 @@ class NodeRepository extends EntityRepository
                    )')
 	               ->addOrderBy('b.sequencenumber', 'DESC')
                    ->setParameter(1, '%|'.$permission.':1|%')
-                   ->setParameter(2, $user->getGroupIds());
+                   ->setParameter(2, $user->getGroupIds());*/
+	    $qb = $this->createQueryBuilder('b')
+	               ->select('b')
+                   ->where('b.parent is null')
+                   ->andWhere('b.id IN (
+                        SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
+                   )')
+	               ->addOrderBy('b.sequencenumber', 'DESC')
+	               ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
+                   ->setParameter(2, '%|'.$permission.':1|%')
+                   ->setParameter(3, $user->getGroupIds());
 
 	    return $qb->getQuery()
 	              ->getResult();
 	}
-	
+
 	public function getNodeFor(HasNode $hasNode) {
 		$nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
 		if($nodeVersion){
@@ -40,7 +50,7 @@ class NodeRepository extends EntityRepository
 		}
 		return null;
 	}
-	
+
 	public function getNodeForIdAndEntityname($id, $entityName) {
 		$nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $id, 'refEntityname' => $entityName));
 		if($nodeVersion){
@@ -48,7 +58,7 @@ class NodeRepository extends EntityRepository
 		}
 		return null;
 	}
-	
+
 	public function getNodeForSlug($parentNode, $slug){
 		$slugparts = explode("/", $slug);
 		$result = null;
@@ -65,7 +75,7 @@ class NodeRepository extends EntityRepository
 		}
 		return $result;
 	}
-	
+
 	public function createNodeFor(HasNode $hasNode, $lang, $owner){
 		$em = $this->getEntityManager();
 		$classname = ClassLookup::getClass($hasNode);

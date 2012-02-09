@@ -10,6 +10,7 @@ use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Kunstmaan\AdminBundle\Modules\Slugifier;
 
 /**
  * NodeRepository
@@ -74,7 +75,7 @@ class NodeTranslationRepository extends EntityRepository
 		$nodeTranslation->setNode($node);
 		$nodeTranslation->setLang($lang);
 		$nodeTranslation->setTitle($hasNode->__toString());
-		$nodeTranslation->setSlug(strtolower(str_replace(" ", "-", $hasNode->__toString())));
+		$nodeTranslation->setSlug(Slugifier::slugify($hasNode->__toString()));
 		$nodeTranslation->setOnline($hasNode->isOnline());
 		$em->persist($nodeTranslation);
 		$em->flush();
