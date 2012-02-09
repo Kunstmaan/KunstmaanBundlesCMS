@@ -39,7 +39,7 @@ class SlugController extends Controller
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         $permissionManager = $this->get('kunstmaan_admin.permissionmanager');
-        $canViewPage = $permissionManager->hasPermision($page, $currentUser, 'read', $em);
+        $canViewPage = $permissionManager->hasPermision($node, $currentUser, 'read', $em);
 
         if($canViewPage) {
             $nodeMenu = new NodeMenu($this->container, $locale, $node);
@@ -95,9 +95,9 @@ class SlugController extends Controller
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         $permissionManager = $this->get('kunstmaan_admin.permissionmanager');
-        $canViewPage = $permissionManager->hasPermision($page, $currentUser, 'read', $em);
+        $canViewPage = $permissionManager->hasPermision($node, $currentUser, 'read', $em);
 
-        if($canViewPage) {        	
+        if($canViewPage) {
             $nodeMenu = new NodeMenu($this->container, $locale, $node);
 
         	//render page
@@ -106,7 +106,7 @@ class SlugController extends Controller
             	$context = $pagePartAdminConfiguration->getDefaultContext();
             	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
             }
-            
+
             $result = array(
             			'slug'      => $slug,
             			'page'      => $page,
@@ -114,7 +114,7 @@ class SlugController extends Controller
             			'nodemenu'  => $nodeMenu);
 
             $page->service($this->container, $request, $result);
-            
+
             return $this->render($page->getDefaultView(), $result);
         }
         throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
