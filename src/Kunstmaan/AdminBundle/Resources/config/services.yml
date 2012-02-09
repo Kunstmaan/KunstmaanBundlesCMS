@@ -26,3 +26,10 @@ services:
         class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
         tags:
             -  { name: twig.extension }
+            
+    form.type.urlchooser:
+        class: Kunstmaan\AdminBundle\Form\Type\URLChooserType
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: form.type, alias: urlchooser }

@@ -9,3 +9,24 @@
 </div>
 {% endspaceless %}
 {% endblock field_row %}
+
+{% block urlchooser_widget %}
+{% spaceless %}
+	<div id="{{ id }}_widget">
+		<input type="text" name="{{ full_name }}" value="{% if(value is defined) %}{{ value }}{% endif %}"/>
+		<button class="btn choosebutton{{ id }}">Choose</button>
+	</div>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+		    $('.choosebutton{{ id }}').on('click', function(ev) {
+		        ev.preventDefault();
+		        openDGDialog('{{ path('KunstmaanPagePartBundle_selecturl') }}', 400, 500, function(param){
+					var widget = jQuery('#{{ id }}_widget');
+					widget.find('input').val(dialogWin.returnedValue.path);
+				});
+		    });
+		});
+	</script>
+{% endspaceless %}
+{% endblock urlchooser_widget %}
