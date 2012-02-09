@@ -16,6 +16,7 @@ use Kunstmaan\AdminBundle\Entity\Permission;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Kunstmaan\AdminBundle\Modules\Slugifier;
 
 class PagesController extends Controller
 {
@@ -41,7 +42,7 @@ class PagesController extends Controller
             'pageadminlist' => $adminlist,
         );
     }
-    
+
 	/**
      * @Route("/copyfromotherlanguage/{id}/{otherlanguage}", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminBundle_pages_copyfromotherlanguage")
      * @Template()
@@ -59,7 +60,7 @@ class PagesController extends Controller
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $locale, $node, $user);
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$id)));
     }
-    
+
     /**
      * @Route("/{id}/createemptypage", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminBundle_pages_createemptypage")
      * @Template()
@@ -79,7 +80,7 @@ class PagesController extends Controller
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $locale, $node, $user);
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$id)));
     }
-    
+
 	/**
      * @Route("/{id}/publish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminBundle_pages_edit_publish")
      * @Template()
@@ -96,7 +97,7 @@ class PagesController extends Controller
     	$em->flush();
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$node->getId())));
     }
-    
+
     /**
      * @Route("/{id}/unpublish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminBundle_pages_edit_unpublish")
      * @Template()
@@ -113,7 +114,7 @@ class PagesController extends Controller
     	$em->flush();
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$node->getId())));
     }
-    
+
     /**
      * @Route("/{id}/{subaction}", requirements={"_method" = "GET|POST", "id" = "\d+"}, defaults={"subaction" = "public"}, name="KunstmaanAdminBundle_pages_edit")
      * @Template()
@@ -127,7 +128,7 @@ class PagesController extends Controller
     	$saveasdraft = $request->get("saveasdraft");
     	$saveandpublish = $request->get("saveandpublish");
     	$draft = ($subaction == "draft");
-        
+
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $nodeTranslation = $node->getNodeTranslation($locale);
         if(!$nodeTranslation){
@@ -151,7 +152,7 @@ class PagesController extends Controller
         		$subaction = "draft";
         	}
         }
-        
+
         $addpage = $request->get("addpage");
         $addpagetitle = $request->get("addpagetitle");
         if(is_string($addpage) && $addpage != ''){
@@ -260,7 +261,7 @@ class PagesController extends Controller
                 	$nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->createNodeVersionFor($newpublicpage, $nodeTranslation, $user, 'public');
                 	$nodeTranslation->setPublicNodeVersion($nodeVersion);
                 	$nodeTranslation->setTitle($newpublicpage->__toString());
-            		$nodeTranslation->setSlug(strtolower(str_replace(" ", "-", $newpublicpage->__toString())));
+            		$nodeTranslation->setSlug(Slugifier::slugify($newpublicpage->__toString()));
             		$nodeTranslation->setOnline($newpublicpage->isOnline());
                 	$em->persist($nodeTranslation);
                 	$em->flush();
@@ -296,5 +297,5 @@ class PagesController extends Controller
         }
         return $viewVariables;
     }
-	
+
 }
