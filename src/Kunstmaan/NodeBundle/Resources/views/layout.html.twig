@@ -6,9 +6,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  
+
   <title>{% block title %}{% endblock %}</title>
-  
+
   <meta name="description" content="">
 
   <meta name="author" content="">
@@ -28,13 +28,13 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  
+
   <!-- RSS -->
   <link rel="alternate" title="Nieuws" type="application/rss+xml" href="" />
 
   <!-- use a custom Modernizr build: www.modernizr.com/download/ -->
   {% stylesheets
-                    'bundles/kunstmaanview/css/style.css'
+                    'bundles/kunstmaandemo/css/style.css'
                     output='style.css'
                     filter='cssrewrite'
                 %}
@@ -83,7 +83,7 @@
 			</div>
 			<div class="col col04 search">
 				<!-- FORM WITH PLACEHOLDER -->
-				<form id="#" action="{{ path('_search') }}" method="post">
+				<form id="#" action="{{ path('_search', { 'slug': slug }) }}" method="post">
 					<input type="text" id="#" name="query" placeholder="Search here" value="" />
 				    <input type="submit" value="►" />
 				</form>
@@ -116,22 +116,22 @@
 							</div>
 							{#
 							<div class="col col02">
-								<a href="#" class="largeImg"><img src="{{ asset('bundles/kunstmaanview/img/dummy/nav-img-large.jpg') }}" width="322" height="88" alt="" /></a>
+								<a href="#" class="largeImg"><img src="{{ asset('bundles/kunstmaandemo/img/dummy/nav-img-large.jpg') }}" width="322" height="88" alt="" /></a>
 								<div class="imgText clearfix">
-									<a href="#" class="left"><img src="{{ asset('bundles/kunstmaanview/img/dummy/nav-img-small.jpg') }}" width="64" height="64" alt="" /></a>
+									<a href="#" class="left"><img src="{{ asset('bundles/kunstmaandemo/img/dummy/nav-img-small.jpg') }}" width="64" height="64" alt="" /></a>
 									<p>Ut wisi enim ad minim veniam, quis <a href="#">tation ullamcorper</a> suscipit lobortis nostrud exerci.</p>
 								</div>
 								<div class="imgText clearfix">
-									<a href="#" class="left"><img src="{{ asset('bundles/kunstmaanview/img/dummy/nav-img-small.jpg') }}" width="64" height="64" alt="" /></a>
+									<a href="#" class="left"><img src="{{ asset('bundles/kunstmaandemo/img/dummy/nav-img-small.jpg') }}" width="64" height="64" alt="" /></a>
 									<p>Ut wisi enim ad minim veniam, quis <a href="#">tation ullamcorper</a> suscipit lobortis nostrud exerci.</p>
 								</div>
 								<div class="imgText clearfix">
-									<a href="#" class="left"><img src="{{ asset('bundles/kunstmaanview/img/dummy/nav-img-small.jpg') }}" width="64" height="64" alt="" /></a>
+									<a href="#" class="left"><img src="{{ asset('bundles/kunstmaandemo/img/dummy/nav-img-small.jpg') }}" width="64" height="64" alt="" /></a>
 									<p>Ut wisi enim ad minim veniam, quis <a href="#">tation ullamcorper</a> suscipit lobortis nostrud exerci.</p>
 								</div>
 							</div>
 							#}
-							
+
 						</div><!-- end middle -->
 						{#
 						<div class="bottom">
@@ -158,10 +158,10 @@
 		</div>
 	</div>
     </header>
-    
+
     <div id="main" role="main">
     <div class="full-width intro">
-    
+
     	<div class="wrapper">
     	{% block intro %}
 	    		{% endblock %}
@@ -190,8 +190,7 @@
 	    	<div class="contentSide">
 	    		<div class="breadcrumb">
 	    			<ul class="clearfix">
-	    				<li><a href="/">Home</a></li>
-		    			{% for node in nodemenu.breadCrumb %}
+	    				{% for node in nodemenu.breadCrumb %}
 		    				<li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a></li>
 		    			{% endfor %}
 	    			</ul>
@@ -199,14 +198,14 @@
 	    		{% block content %}
 	    		{% endblock %}
 			</div><!-- end content -->
-			
+
 			<div class="aside">
-				
+
 			</div><!-- end aside -->
 		</div>
 	</div>
     </div><!-- end main -->
-    
+
     <footer>
     <div class="full-width topfooter">
     	<div class="wrapper clearfix">
@@ -225,14 +224,14 @@
     		</div>
     		<div class="col search">
     			<!-- FORM WITH PLACEHOLDER -->
-    			<form id="#" action="{{ path('_search') }}" method="post">
+    			<form id="#" action="{{ path('_search', { 'slug': slug }) }}" method="post">
 					<input type="text" id="#" name="query" placeholder="Search here" value="" />
 				    <input type="submit" value="►" />
 				</form>
     		</div>
     	</div>
     </div><!-- end topfooter -->
-    
+
 	<div class="full-width footer">
 
 		<div class="wrapper">
@@ -281,11 +280,11 @@
 					</div>
 				</section>
 				#}
-				
+
 				<section class="clearfix">
 					<div class="col">
 						<div class="imgBlock topOfCol"> <!-- ! topOfCol: when an image in the footer stands on the top of its column-->
-							<img src="{{ asset('bundles/kunstmaanview/img/dummy/img-footer.jpg') }}" width="200" height="145" alt="" />
+							<img src="{{ asset('bundles/kunstmaandemo/img/dummy/img-footer.jpg') }}" width="200" height="145" alt="" />
 						</div>
 						<h5>Titel Lorem ipsum</h5>
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ullamcorper nibh sed est tristique vitae bibendum dui vulputate. Suspendisse justo mi, congue ac euismod et, congue in risus. Pellentesque id mauris nunc. Nunc sit amet turpis sit amet sem viverra blandit at a nisi. </p>
@@ -347,7 +346,7 @@
 			</div><!-- end inner -->
 		</div>
 	</div><!-- end footer -->
-	
+
 	<div class="full-width subfooter">
 		<div class="wrapper clearfix">
 
@@ -355,7 +354,7 @@
 				<p>&copy; 2011 <a href="#">disclaimer</a> <a href="#">contact</a></p>
 			</div>
 			<div class="col right">
-				<p>Webdesign <a href="http://www.kunstmaan.be/"><img src="{{ asset('bundles/kunstmaanview/img/general/kunstmaan.png') }}" width="83" height="16" alt="Kunstmaan" class="kunstmaan-logo" /></p>
+				<p>Webdesign <a href="http://www.kunstmaan.be/"><img src="{{ asset('bundles/kunstmaandemo/img/general/kunstmaan.png') }}" width="83" height="16" alt="Kunstmaan" class="kunstmaan-logo" /></p>
 			</div>
 
 		</div>
@@ -364,10 +363,10 @@
   </div> <!-- end container -->
 
 
-  
-  
+
+
   <!-- Site Pinning IE9: http://www.pinmywebsite.com/ -->
-  
+
   <!-----------------------------------------------------------------
    TE VERVANGEN DOOR DE LAATSTE HEADER FOOTER PLUGIN VAN OPENMERCURY
    ------------------------------------------------------------------>
@@ -389,25 +388,25 @@
 
       <!-- LinkedIn -->
       <!--<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
-      
+
       <!-- Facebook --*>
-      <div id="fb-root"></div> 
-      <script type="text/javascript"> 
+      <div id="fb-root"></div>
+      <script type="text/javascript">
           (function() {
               var e = document.createElement('script'); e.async = true;
               e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
               document.getElementById('fb-root').appendChild(e);
           }());
-    
+
           window.fbAsyncInit = function() {
               FB.init({appId: 'XXXXXXXXXXXXXXX', status: true, cookie: true, xfbml: true});
               _ga.trackFacebook();
           };
-      </script> 
-      
+      </script>
+
       <!-- Twitter --*>
       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	  <script type="text/javascript"> 
+	  <script type="text/javascript">
           (function(){
               var twitterWidgets = document.createElement('script');
               twitterWidgets.type = 'text/javascript';
@@ -417,7 +416,7 @@
               document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
           })();
       </script>-->
-      
+
       <!-- Google + -->
   	  <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
   <!-- End Social Buttons -->
@@ -428,8 +427,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
     <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
   <![endif]-->
-  
+
 
 </body>
 </html>
-
