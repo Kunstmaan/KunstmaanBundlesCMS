@@ -43,10 +43,12 @@ class NodeMenu {
         //topNodes
         $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, $permission);
         foreach($topNodes as $topNode){
-        	if(sizeof($this->breadCrumb)>0 && $this->breadCrumb[0]->getNode()->getId() == $topNode->getId()){
-        		$this->topNodeMenuItems[] = $this->breadCrumb[0];
-        	} else {
-        		$this->topNodeMenuItems[] = new NodeMenuItem($this->em, $topNode, $lang, null, $this);
+        	if(!is_null($topNode->getNodeTranslation($lang))){
+	        	if(sizeof($this->breadCrumb)>0 && $this->breadCrumb[0]->getNode()->getId() == $topNode->getId()){
+	        		$this->topNodeMenuItems[] = $this->breadCrumb[0];
+	        	} else {
+	        		$this->topNodeMenuItems[] = new NodeMenuItem($this->em, $topNode, $lang, null, $this);
+	        	}
         	}
         }
     }

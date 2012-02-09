@@ -20,26 +20,10 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class NodeVersionRepository extends EntityRepository
 {
-	public function getTopNodes($user, $permission)
-	{
-	    $qb = $this->createQueryBuilder('b')
-	               ->select('b')
-                   ->where('b.parent is null')
-                   ->andWhere('b.id IN (
-                        SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = b.refEntityname AND p.permissions LIKE ?1 AND p.refGroup IN(?2)
-                   )')
-	               ->addOrderBy('b.sequencenumber', 'DESC')
-                   ->setParameter(1, '%|'.$permission.':1|%')
-                   ->setParameter(2, $user->getGroupIds());
-
-	    return $qb->getQuery()
-	              ->getResult();
-	}
-	
 	public function getNodeVersionFor(HasNode $hasNode) {
 		return $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityname' => ClassLookup::getClass($hasNode)));
 	}
-	
+
 	public function getNodeForSlug($parentNode, $slug){
 		$slugparts = explode("/", $slug);
 		$result = null;
@@ -58,7 +42,7 @@ class NodeVersionRepository extends EntityRepository
 		}
 		return $result;
 	}
-	
+
 	public function createNodeVersionFor(HasNode $hasNode, NodeTranslation $nodeTranslation, $owner, $type = "public"){
 		$em = $this->getEntityManager();
 		$classname = ClassLookup::getClass($hasNode);

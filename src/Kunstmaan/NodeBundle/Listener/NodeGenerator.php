@@ -13,6 +13,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\HasNode;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Modules\Slugifier;
 // see http://inchoo.net/tools-frameworks/symfony2-event-listeners/
 
 class NodeGenerator {
@@ -35,7 +36,7 @@ class NodeGenerator {
             	$nodeTranslation = $nodeVersion->getNodeTranslation();
             	if($nodeTranslation->getPublicNodeVersion() && $nodeTranslation->getPublicNodeVersion()->getId() == $nodeVersion->getId()){
             		$nodeTranslation->setTitle($entity->__toString());
-            		$nodeTranslation->setSlug(strtolower(str_replace(" ", "-", $entity->__toString())));
+            		$nodeTranslation->setSlug(Slugifier::slugify($entity->__toString()));
             		$nodeTranslation->setOnline($entity->isOnline());
             		$em->persist($nodeTranslation);
             		$em->flush();
@@ -47,18 +48,18 @@ class NodeGenerator {
     public function prePersist(LifecycleEventArgs $args) {
 
     }
-    
+
     public function preRemove(LifecycleEventArgs $args) {
     	/*$entity = $args->getEntity();
     	$em = $args->getEntityManager();
-    	$classname = get_class($entity);
+    	$classname = ClassLookup::getClass($entity);
     	if($entity instanceof HasNode){
     		$entityrepo = $em->getRepository($classname);
     		$node = $this->getNode($em, $entity->getId(), $classname);
     		$em->remove($node);
     	}*/
     }
-    
+
     public function postLoad(LifecycleEventArgs $args) {
     	$entity = $args->getEntity();
     	$em = $args->getEntityManager();
