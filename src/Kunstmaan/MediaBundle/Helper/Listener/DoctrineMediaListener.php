@@ -6,6 +6,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 class DoctrineMediaListener
 {
@@ -31,7 +32,7 @@ class DoctrineMediaListener
             $em = $eventArgs->getEntityManager();
             $uow = $em->getUnitOfWork();
             $uow->recomputeSingleEntityChangeSet(
-                $em->getClassMetadata(get_class($entity)),
+                $em->getClassMetadata(ClassLookup::getClass($entity)),
                 $eventArgs->getEntity()
             );
         }
@@ -53,7 +54,7 @@ class DoctrineMediaListener
         if (!$entity instanceof Media) {
             return;
         }
-        
+
         $this->mediaManager->removeMedia($entity);
     }
 
@@ -64,7 +65,7 @@ class DoctrineMediaListener
         }
 
         $this->mediaManager->prepareMedia($entity);
-        
+
         return true;
     }
 
