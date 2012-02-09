@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\Entity\User;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 class Manager
 {
@@ -23,7 +24,7 @@ class Manager
         $user = $this->getCurrentUser($user, $em);
         try {
             $result = $em->getRepository('KunstmaanAdminBundle:Permission')->getPermission(
-                get_class($entity),
+                ClassLookup::getClass($entity),
                 $entity->getId(),
                 $user->getGroupIds(),
                 $permission,
