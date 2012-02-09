@@ -19,6 +19,7 @@ foq_elastica:
                     mappings:
                         title:
                         id:
+                        lang:
                         content: { analyzer: snowball }
                     persistence:
                         driver: orm
