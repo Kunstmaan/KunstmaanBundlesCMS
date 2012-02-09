@@ -10,6 +10,7 @@
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
 use Symfony\Component\Form\FormBuilder;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 class PagePartAdmin {
 
@@ -73,7 +74,7 @@ class PagePartAdmin {
     public function bindRequest($request){
         $this->request = $request;
         { //re-order pageparts
-            $sequences = $this->request->request->get($this->context."_".$this->page->getId()."_".get_class($this->page)."_sequence");
+            $sequences = $this->request->request->get($this->context."_".$this->page->getId()."_".ClassLookup::getClass($this->page)."_sequence");
             for($i = 0; $i < sizeof($sequences); $i++) {
                 $sequence = $sequences[$i];
                 $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->find($sequence);
@@ -93,7 +94,7 @@ class PagePartAdmin {
     public function getPossiblePagePartTypes(){
         return $this->configurator->getPossiblePagePartTypes();
     }
-    
+
     public function getName(){
     	return $this->configurator->getName();
     }
@@ -104,7 +105,7 @@ class PagePartAdmin {
         $query = $queryBuilder
         ->where('b.pageId = :pageId and b.pageEntityname = :pageEntityname and b.context = :context')
         ->setParameter('pageId', $this->page->getId())
-        ->setParameter('pageEntityname', get_class($this->page))
+        ->setParameter('pageEntityname', ClassLookup::getClass($this->page))
         ->setParameter('context', $this->context)
         ->orderBy("b.sequencenumber")->getQuery();
         return $query->getResult();
@@ -118,7 +119,7 @@ class PagePartAdmin {
     public function getType($pagepart){
         $possiblePagePartTypes = $this->getPossiblePagePartTypes();
         foreach( $possiblePagePartTypes as &$pageparttype){
-            if($pageparttype['class'] == get_class($pagepart)){
+            if($pageparttype['class'] == ClassLookup::getClass($pagepart)){
                 return $pageparttype['name'];
             }
         }
