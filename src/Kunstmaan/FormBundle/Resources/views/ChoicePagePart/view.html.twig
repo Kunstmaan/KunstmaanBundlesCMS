@@ -1,0 +1,4 @@
+{% if frontendform is defined %}
+{{ form_widget(frontendform['formwidget_'~resource.uniqueId]) }}
+{{ form_error(frontendform['formwidget_'~resource.uniqueId]) }}
+{% endif %}
