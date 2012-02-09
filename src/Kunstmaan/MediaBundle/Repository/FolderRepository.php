@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Repository;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityNotFoundException;
 
 /**
  * FolderRepository
@@ -70,7 +71,7 @@ class FolderRepository extends EntityRepository
     {
     	$folder = $em->getRepository('KunstmaanMediaBundle:Folder')->find($folder_id);
     	if (!$folder) {
-    		throw $this->createNotFoundException('Unable to find folder.');
+    		throw new EntityNotFoundException('The id given for the folder is not valid.');
     	}
     	return $folder;
     }
