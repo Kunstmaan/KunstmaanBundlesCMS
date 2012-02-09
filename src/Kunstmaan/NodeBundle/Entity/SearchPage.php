@@ -117,12 +117,17 @@ class SearchPage implements PageIFace, DeepCloneableIFace {
 		$query = $request->get("query");
 		//use the elasitica service to search for results
 		$finder = $container->get('foq_elastica.finder.website.page');
-	
-		$queryObj = \Elastica_Query::create($query);
-		
-		/*if($this->getParent()){
-			$queryObj->setParam('parent', $this->getParent()->getID());
-		}*/
+
+        $boolQuery = new \Elastica_Query_Bool();
+
+        $languageQuery = new \Elastica_Query_Term(array('lang' => $request->getLocale()));
+        $searchQuery = new \Elastica_Query_QueryString($query);
+
+
+        $boolQuery->addMust($languageQuery);
+        $boolQuery->addMust($searchQuery);
+
+        $queryObj = \Elastica_Query::create($boolQuery);
 		
 		$queryObj->setHighlight(array(
 				'pre_tags' => array('<em class="highlight">'),
