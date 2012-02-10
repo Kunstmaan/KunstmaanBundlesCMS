@@ -40,7 +40,7 @@
 					{% set route = app.request.attributes.get('_route') %}
 		            {{ app.request.attributes.remove('_route') }}
 		            {% set attribs = app.request.attributes.all %}
-		            {{ localeswitcher_widget(requiredlocales, route) }}	
+		            {# {{ localeswitcher_widget(requiredlocales, route) }}	#}
             	  </ul>
           			</nav>
                </div>
