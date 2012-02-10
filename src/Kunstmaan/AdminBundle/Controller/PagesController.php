@@ -226,7 +226,7 @@ class PagesController extends Controller
 
         if ($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')) {
             $permissionadmin = $this->get("kunstmaan_admin.permissionadmin");
-            $permissionadmin->initialize($page, $em);
+            $permissionadmin->initialize($node, $em);
         }
 
         $form = $formbuilder->getForm();
