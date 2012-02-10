@@ -6,6 +6,9 @@ parameters:
         content:
             handlerclass: Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
             handlermethod: getSearchContentForNode
+        parents:
+            handlerclass: Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
+            handlermethod: getParentsForNode
 
 
 foq_elastica:
@@ -19,6 +22,8 @@ foq_elastica:
                     mappings:
                         title:
                         id:
+                        lang:
+                        parents:
                         content: { analyzer: snowball }
                     persistence:
                         driver: orm
