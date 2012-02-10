@@ -251,7 +251,7 @@ class NodeTranslation
     	return null;
     }
     
-    public function getSearchContentForNode($container, $entity, $field){
+    public function getSearchContentForNode($container, $entity, $field) {
     	$page = $entity->getRef($container->get('doctrine')->getEntityManager());
     	if($page instanceof Indexable) {
         	return $page;
@@ -259,6 +259,29 @@ class NodeTranslation
 
         return null;
     }
+
+
+    public function getParentsForNode($container, $entity, $field) {
+        $node = $entity->getNode();
+        $results = array();
+        $parents = $this->getAllParentsForNode($node, $results);
+
+        return $parents;
+    }
+
+
+    public function getAllParentsForNode($node, $results) {
+        $parentNode = $node->getParent();
+
+        if(is_object($parentNode)) {
+            $results[] = $parentNode->getId();
+
+            return $this->getAllParentsForNode($parentNode, $results);
+        } else {
+            return $results;
+        }
+    }
+
 
     /**
      * Returns the date the first nodeversion was created
