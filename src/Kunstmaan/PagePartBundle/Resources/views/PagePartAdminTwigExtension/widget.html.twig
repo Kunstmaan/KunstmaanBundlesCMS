@@ -25,7 +25,7 @@
 	                jQuery('#{{pagepartref.id}}_container').slideUp(function(){
 	                    jQuery('#pagepartsdeletedcontainer').append(jQuery('#{{pagepartref.id}}_container'));
 	                });
-	                return false;
+	                return true;
 	            }
 	            function moveUp_{{pagepartref.id}}(){
 	                var $parent = jQuery('#{{pagepartref.id}}_container');
@@ -75,7 +75,7 @@
             		  <a class="btn small" href="#" onclick="return moveUp_{{pagepartref.id}}()">Up</a>
                       <a class="btn small" href="#" onclick="return moveDown_{{pagepartref.id}}()">Down</a>
             		#}
-					<a class="del red" data-controls-modal="delete-pagepart" data-backdrop="true" data-keyboard="true" onclick="return delete_{{pagepartref.id}}()"><span>Del</span></a>
+					<a class="del red" data-controls-modal="delete-pagepart-modal{{pagepartref.id}}" data-backdrop="true" data-keyboard="true" ><span>Del</span></a>
                     {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
                         <a href="#" class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</a>
                     {% endif %}
@@ -90,6 +90,19 @@
                     </div>
                 {% endif %}
             </div>
+            <div id="delete-pagepart-modal{{pagepartref.id}}" class="modal hide fade">
+		      <div class="modal-header">
+		        <a href="#" class="close">&times;</a>
+		        <h3>Delete pagepart '{{pagepartadmin.getType(pagepart)}}'</h3>
+		      </div>
+		      <div class="modal-body">
+		        <p>This will not remove the pagepart completely, save the page to remove this pagepart permanently.</p>
+		       </div>
+		      <div class="modal-footer">
+		        <a onclick="delete_{{pagepartref.id}}(); $('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" href="#" class="btn primary">Delete</a>
+		        <a onclick="$('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" href="#" class="btn secondary">Cancel</a>
+		      </div>
+		    </div>
             <div class="new_pagepart">
               <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{{ loop.index-1 }}')">
 	            <option value="">Add a pagepart</option>
