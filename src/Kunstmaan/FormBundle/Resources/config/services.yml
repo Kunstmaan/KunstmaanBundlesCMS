@@ -1,0 +1,4 @@
+services:
+    kunstmaan_form.form_menu:
+        class: Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor
+        arguments: ["@knp_menu.factory"]

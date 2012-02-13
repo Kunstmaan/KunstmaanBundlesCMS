@@ -133,6 +133,7 @@ class ChoicePagePart implements FormAdaptorIFace {
 	public function adaptForm(FormBuilder $formBuilder, &$fields) {
 		$sfsf = new StringFormSubmissionField();
 		$sfsf->setFieldName("field_".$this->getUniqueId());
+		$sfsf->setLabel($this->getLabel());
 		$data = $formBuilder->getData();
 		$data['formwidget_'.$this->getUniqueId()] = $sfsf;
 		$label = $this->getLabel();

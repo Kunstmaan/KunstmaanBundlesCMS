@@ -30,14 +30,15 @@ class FormSubmission {
 	protected $ipAddress;
 
 	/**
-	 * @ORM\Column(type="bigint")
-	 */
-	protected $pageId;
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\AdminNodeBundle\Entity\Node")
+     * @ORM\JoinColumn(name="node", referencedColumnName="id")
+     */
+    protected $node;
 
 	/**
 	 * @ORM\Column(type="string")
 	 */
-	protected $pageEntityname;
+	protected $lang;
 
 	/**
 	 * @ORM\Column(type="datetime")
@@ -50,6 +51,7 @@ class FormSubmission {
 	protected $fields;
 
 	public function __construct() {
+		$this->fields = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->setCreated(new \DateTime());
 	}
 
@@ -91,32 +93,32 @@ class FormSubmission {
 	 *
 	 * @return integer
 	 */
-	public function getPageId() {
-		return $this->pageId;
+	public function getNode() {
+		return $this->node;
 	}
 
 	/**
 	 *
 	 * @param string $refId
 	 */
-	public function setPageId($refId) {
-		$this->pageId = $refId;
+	public function setNode($node) {
+		$this->node = $node;
 	}
 
 	/**
 	 *
 	 * @param string $refEntityname
 	 */
-	public function setPageEntityname($pageEntityname) {
-		$this->pageEntityname = $pageEntityname;
+	public function setLang($lang) {
+		$this->lang = $lang;
 	}
 
 	/**
 	 *
 	 * @return string
 	 */
-	public function getPageEntityname() {
-		return $this->pageEntityname;
+	public function getLang() {
+		return $this->lang;
 	}
 
 	/**
@@ -133,6 +135,11 @@ class FormSubmission {
 	 */
 	public function getCreated() {
 		return $this->created;
+	}
+
+
+	public function getFields() {
+		return $this->fields;
 	}
 
 	public function __toString() {
