@@ -24,8 +24,12 @@ class NodeTranslationRepository extends EntityRepository
 		return $this->findBy(array("parent"=>$node->getId()));
 	}
 
-	public function getNodeFor(HasNode $hasNode) {
-		return $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityname' => ClassLookup::getClass($hasNode)));
+	public function getNodeTranslationFor(HasNode $hasNode) {
+		$nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
+		if(!is_null($nodeVersion)){
+			return $nodeVersion->getNodeTranslation();
+		}
+		return null;
 	}
 
 	public function getNodeTranslationForSlug(NodeTranslation $parentNode = null, $slug){

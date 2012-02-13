@@ -45,8 +45,11 @@ class NodeRepository extends EntityRepository
 
 	public function getNodeFor(HasNode $hasNode) {
 		$nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
-		if($nodeVersion){
-			return $nodeVersion->getNodeTranslation()->getNode();
+		if(!is_null($nodeVersion)){
+			$nodeTranslation = $nodeVersion->getNodeTranslation();
+			if(!is_null($nodeTranslation)){
+				return $nodeTranslation->getNode();
+			}
 		}
 		return null;
 	}
