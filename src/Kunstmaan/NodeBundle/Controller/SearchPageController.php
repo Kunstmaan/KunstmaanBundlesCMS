@@ -30,12 +30,11 @@ class SearchPageController extends Controller
     	} else {
     		throw $this->createNotFoundException('No page found for slug ' . $slug);
     	}
-    	
-    	
+
     	$homepage = $this->getHomepage($node);
     	$children = $homepage->getChildren();
    		foreach($children as $child){
-   			if($child->getNodeTranslation($request->getSession()->getLocale()) && ClassLookup::getClassName($child->getNodeTranslation($request->getSession()->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
+		    if($child->getNodeTranslation($request->getSession()->getLocale()) && ClassLookup::getClassName($child->getNodeTranslation($request->getSession()->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
    		}
    		
    		if($searchpage){
