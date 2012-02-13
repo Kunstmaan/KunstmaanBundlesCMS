@@ -115,53 +115,61 @@ class SearchPage implements PageIFace, DeepCloneableIFace {
 	
 	public function service($container, Request $request, &$result){
 		$query = $request->get("query");
-		//use the elasitica service to search for results
-		$finder = $container->get('foq_elastica.finder.website.page');
-
-        $boolQuery = new \Elastica_Query_Bool();
-
-        $languageQuery = new \Elastica_Query_Term(array('lang' => $request->getLocale()));
-        $searchQuery = new \Elastica_Query_QueryString($query);
-
-
-        $boolQuery->addMust($languageQuery);
-        $boolQuery->addMust($searchQuery);
-
-        $queryObj = \Elastica_Query::create($boolQuery);
 		
-		$queryObj->setHighlight(array(
-				'pre_tags' => array('<em class="highlight">'),
-				'post_tags' => array('</em>'),
-				'fields' => array(
-						'title' => array(
-								'fragment_size' => 200,
-								'number_of_fragments' => 1,
-						)
-				)
-		));
+		if($query and $query != ""){
+			//use the elasitica service to search for results
+			$finder = $container->get('foq_elastica.finder.website.page');
 	
-		$pages = $finder->findPaginated($queryObj);
+	        $boolQuery = new \Elastica_Query_Bool();
+	
+	        $languageQuery = new \Elastica_Query_Term(array('lang' => $request->getLocale()));
+	        $searchQuery = new \Elastica_Query_QueryString($query);
+	
+	
+	        $boolQuery->addMust($languageQuery);
+	        $boolQuery->addMust($searchQuery);
+	
+	        $queryObj = \Elastica_Query::create($boolQuery);
+			
+			$queryObj->setHighlight(array(
+					'pre_tags' => array('<em class="highlight">'),
+					'post_tags' => array('</em>'),
+					'fields' => array(
+							'title' => array(
+									'fragment_size' => 200,
+									'number_of_fragments' => 1,
+							)
+					)
+			));
 		
-		$i = 0;
-		foreach($pages as $key => $help){
-			$parent = $help->getRef($container->get('doctrine')->getEntityManager())->getParent();
-			if($parent && $parent != $this->getParent()){
-				//$pages->delete($help);
-			}	
-			$i++;
+			$pages = $finder->findPaginated($queryObj);
+			
+			$i = 0;
+			foreach($pages as $key => $help){
+				$parent = $help->getRef($container->get('doctrine')->getEntityManager())->getParent();
+				if($parent && $parent != $this->getParent()){
+					//$pages->delete($help);
+				}	
+				$i++;
+			}
+		
+			$pages->setMaxPerPage(5);
+		
+			$numpage = intval($request->get('page'));
+			if(!isset($pages)){
+				$numpage = 1;
+			}
+		
+			$pages->setCurrentPage($numpage);
+			
+			$result['query'] = $query;
+			$result['results'] = $pages;
+			$result['error'] = "";
+		}else{
+			$result['error'] = "No query given";
 		}
 	
-		$pages->setMaxPerPage(5);
-	
-		$numpage = intval($request->get('page'));
-		if(!isset($pages)){
-			$numpage = 1;
-		}
-	
-		$pages->setCurrentPage($numpage);
-	
-		$result['query'] = $query;
-		$result['results'] = $pages;
+		
 	}
 
 	public function getDefaultView() {

@@ -4,45 +4,49 @@
 {% block title %}Zoek{% endblock %}
 
 {% block content %}
-	{% set count=0 %}
-	{% if results %}
-		{% set count=results.count %}
-	{% endif %}
-	 
 	<h1>{{ 'Zoekresultaten' | trans }}</h1> 
-	 
-	<h2>{{ count }} {% if count == 1 %}resultaat{% else %}resultaten{% endif %} voor <strong>{{ query }}</strong></h2>
-    
-    {% if results.getNbPages() > 1 %}
-        <div class="paginatie clearfix">
-            {% if results.hasPreviousPage() %}
-                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getPreviousPage() }) }}">{{ 'Vorige' | trans}}</a></p>
-            {% endif %}
-                <ul class="clearfix">
-                    {% for i in 1..results.getNbPages()%}
-                        <li {% if i == results.getCurrentPage() %}class="active"{% endif %}><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': i }) }}">{{ i }}</a></li>
-                    {% endfor %}
-                </ul>
-            {% if results.hasNextPage() %}
-                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getNextPage() }) }}">{{ 'Volgende' | trans}}</a></p>
-            {% endif %}
-        </div>
-    {% endif %}
-    
-    {% if results %}
-    	{% for result in results %}
-        	<h3><a href="{{ path('_slug', { 'slug': result.slug }) }}">{{ result.title }}</a></h3>
-        	<p>
-                {% if result.highlight %}
-                {% for highlight in result.highlight %}
-        		    {{ highlight.0|raw }}
-                {% endfor %}
-                {% endif %}
-        	</p>
-        	<p class="toplink"><a href="#">{{ 'Top' | trans }}</a></p>
-        {% endfor %}
-    {% else %}
-        No results available.
+	{% if error %}
+			<h2>{{ error }}</h2>
+	{% else %}
+		{% set count=0 %}
+		{% if results %}
+			{% set count=results.count %}
+		{% endif %}
+		 
+		 
+		<h2>{{ count }} {% if count == 1 %}resultaat{% else %}resultaten{% endif %} voor <strong>{{ query }}</strong></h2>
+	    
+	    {% if results.getNbPages() > 1 %}
+	        <div class="paginatie clearfix">
+	            {% if results.hasPreviousPage() %}
+	                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getPreviousPage() }) }}">{{ 'Vorige' | trans}}</a></p>
+	            {% endif %}
+	                <ul class="clearfix">
+	                    {% for i in 1..results.getNbPages()%}
+	                        <li {% if i == results.getCurrentPage() %}class="active"{% endif %}><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': i }) }}">{{ i }}</a></li>
+	                    {% endfor %}
+	                </ul>
+	            {% if results.hasNextPage() %}
+	                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getNextPage() }) }}">{{ 'Volgende' | trans}}</a></p>
+	            {% endif %}
+	        </div>
+	    {% endif %}
+	    
+	    {% if results %}
+	    	{% for result in results %}
+	        	<h3><a href="{{ path('_slug', { 'slug': result.slug }) }}">{{ result.title }}</a></h3>
+	        	<p>
+	                {% if result.highlight %}
+	                {% for highlight in result.highlight %}
+	        		    {{ highlight.0|raw }}
+	                {% endfor %}
+	                {% endif %}
+	        	</p>
+	        	<p class="toplink"><a href="#">{{ 'Top' | trans }}</a></p>
+	        {% endfor %}
+	    {% else %}
+	        No results available.
+	    {% endif %}
     {% endif %}
 {% endblock %}
 				
