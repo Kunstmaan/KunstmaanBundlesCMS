@@ -123,6 +123,7 @@ class MultiLineTextPagePart implements FormAdaptorIFace {
 	public function adaptForm(FormBuilder $formBuilder, &$fields) {
 		$sfsf = new TextFormSubmissionField();
 		$sfsf->setFieldName("field_".$this->getUniqueId());
+		$sfsf->setLabel($this->getLabel());
 		$data = $formBuilder->getData();
 		$data['formwidget_'.$this->getUniqueId()] = $sfsf;
 		$label = $this->getLabel();

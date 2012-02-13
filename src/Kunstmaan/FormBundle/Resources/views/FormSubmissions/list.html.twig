@@ -1,0 +1,22 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block subsidebar %}
+    {% include 'KunstmaanFormBundle:FormSubmissions:sidebar.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'omnext.home'|trans }}</a> </li>
+		<li class="active">{{ 'formsubmissions.list.title' | trans }} "{{ nodetranslation.title }}"</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+
+	<div class="page-header">
+		<h1>{{ 'formsubmissions.list.title' | trans }} "{{ nodetranslation.title }}"</h1>
+	</div>
+
+	{{ adminlist_widget(formsubmissionadminlist, 'KunstmaanFormBundle_formsubmissions_list', {"nodetranslationid" : nodetranslation.id}) }}
+
+{% endblock %}

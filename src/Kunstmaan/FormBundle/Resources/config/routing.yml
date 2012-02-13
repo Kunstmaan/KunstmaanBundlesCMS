@@ -1,0 +1,5 @@
+KunstmaanFormBundle_formsubmissions:
+    resource: "@KunstmaanFormBundle/Controller/FormSubmissionsController.php"
+    type:     annotation
+    prefix:   /admin/formsubmissions
+

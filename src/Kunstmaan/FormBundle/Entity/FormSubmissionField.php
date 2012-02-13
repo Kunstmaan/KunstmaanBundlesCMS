@@ -33,6 +33,11 @@ class FormSubmissionField {
 	protected $fieldName;
 
 	/**
+	 * @ORM\Column(type="string")
+	 */
+	protected $label;
+
+	/**
 	 * @ORM\ManyToOne(targetEntity="FormSubmission", inversedBy="fields")
 	 * @ORM\JoinColumn(name="formsubmission", referencedColumnName="id")
 	 */
@@ -73,6 +78,22 @@ class FormSubmissionField {
 	 */
 	public function setFieldName($fieldName) {
 		$this->fieldName = $fieldName;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getLabel() {
+		return $this->label;
+	}
+
+	/**
+	 *
+	 * @param string $refEntityname
+	 */
+	public function setLabel($label) {
+		$this->label = $label;
 	}
 
 	/**

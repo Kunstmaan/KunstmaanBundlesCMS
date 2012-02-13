@@ -1,0 +1,47 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block subsidebar %}
+    {% include 'KunstmaanFormBundle:FormSubmissions:sidebar.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'omnext.home'|trans }}</a> </li>
+		<li class="active">{{ 'formsubmissions.edit.title' | trans }} "{{ nodetranslation.title }}"</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+
+	<div class="page-header">
+		<h1>{{ 'formsubmissions.edit.title' | trans }} "{{ nodetranslation.title }}"</h1>
+	</div>
+
+	<table class="bordered-table zebra-striped">
+		<thead>
+			<th width="30%">Label</th>
+			<th width="70%">Value</th>
+		</thead>
+		<body>
+			<tr>
+				<td>Date</td>
+				<td>{{ formsubmission.created|date }}</td>
+			</tr>
+			<tr>
+				<td>Lang</td>
+				<td>{{ formsubmission.lang }}</td>
+			</tr>
+			<tr>
+				<td>ipAddress</td>
+				<td>{{ formsubmission.ipAddress }}</td>
+			</tr>
+			{% for field in formsubmission.fields  %}
+				<tr>
+					<td><strong>{{ field.label }}</strong></td>
+					<td>{{ field }}</td>
+				</tr>
+			{% endfor %}
+		</body>
+	</table>
+
+{% endblock %}
