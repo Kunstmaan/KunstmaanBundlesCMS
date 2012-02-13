@@ -103,13 +103,17 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
 
         //instanciate the class, call the method and return the output
         $class = new $mappingSettings['handlerclass']();
-        $searchable = $class->$mappingSettings['handlermethod']($container, $object, $field);
+        $searchResult = $class->$mappingSettings['handlermethod']($container, $object, $field);
 
-        //gets the output from the getContentForIndexing method, but only if it's an instance of Indexable
-        $output = '';
-        if($searchable instanceof Indexable) {
-            $output = $searchable->getContentForIndexing($container, $object);
-        }
+	if(is_object($searchResult)) {
+	    //gets the output from the getContentForIndexing method, but only if it's an instance of Indexable
+	    $output = '';
+	    if($searchResult instanceof Indexable) {
+		$output = $searchResult->getContentForIndexing($container, $object);
+	    }
+	} else {
+	    $output = $searchResult;
+	}
 
         return $output;
     }
