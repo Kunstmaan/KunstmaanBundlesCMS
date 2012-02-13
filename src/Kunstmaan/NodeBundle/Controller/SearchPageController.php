@@ -35,7 +35,7 @@ class SearchPageController extends Controller
     	$homepage = $this->getHomepage($node);
     	$children = $homepage->getChildren();
    		foreach($children as $child){
-   			if(ClassLookup::getClassName($child->getNodeTranslation($request->getSession()->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
+   			if($child->getNodeTranslation($request->getSession()->getLocale()) && ClassLookup::getClassName($child->getNodeTranslation($request->getSession()->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
    		}
    		
    		if($searchpage){
