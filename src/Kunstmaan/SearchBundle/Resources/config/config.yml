@@ -23,7 +23,7 @@ foq_elastica:
                         title:
                         id:
                         lang:
-                        parents:
+                        parents: { analyzer: whitespace }
                         content: { analyzer: snowball }
                     persistence:
                         driver: orm
