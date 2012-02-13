@@ -96,6 +96,7 @@ class NodeRepository extends EntityRepository
 		}
 		$em->persist($node);
 		$em->flush();
+		$em->refresh($node);
 		$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->createNodeTranslationFor($hasNode, $lang, $node, $owner);
 		return $node;
 	}
