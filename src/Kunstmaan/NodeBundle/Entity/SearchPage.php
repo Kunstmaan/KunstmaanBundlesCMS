@@ -136,9 +136,13 @@ class SearchPage implements PageIFace, DeepCloneableIFace {
 		'pre_tags' => array('<em class="highlight">'),
 		'post_tags' => array('</em>'),
 		'fields' => array(
-		    'title' => array(
-			'fragment_size' => 200,
-			'number_of_fragments' => 1,
+			'content' => array(
+				'fragment_size' => 200,
+				'number_of_fragments' => 1,
+			),
+			'title' => array(
+				'fragment_size' => 200,
+				'number_of_fragments' => 1,
 		    )
 		)
 	    ));
