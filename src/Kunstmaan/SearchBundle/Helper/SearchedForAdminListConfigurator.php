@@ -19,7 +19,7 @@ use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator{
 
 	public function buildFilters(AdminListFilter $builder){
-        $builder->add('query', new StringFilterType("username"), "Query");
+        $builder->add('query', new StringFilterType("query"), "Query");
         $builder->add('createdat', new DateFilterType('createdat'), "Created At");
     }
     
