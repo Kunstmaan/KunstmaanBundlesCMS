@@ -8,8 +8,7 @@ parameters:
             handlermethod: getSearchContentForNode
         parents:
             handlerclass: Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
-            handlermethod: getParentsForNode
-
+            handlermethod: getParentsAndSelfForNode
 
 foq_elastica:
     clients:
@@ -20,7 +19,7 @@ foq_elastica:
             types:
                 page:
                     mappings:
-                        title:
+                        title: { analyzer: snowball }
                         id:
                         lang:
                         parents: { analyzer: whitespace }
@@ -35,3 +34,4 @@ foq_elastica:
                             service: kunstmaan_search.transformers.elasticatransformer
                         listener:
                         finder:
+
