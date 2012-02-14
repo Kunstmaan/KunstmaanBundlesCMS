@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Controller;
 
 use Kunstmaan\AdminBundle\Form\EditUserType;
+use Kunstmaan\SearchBundle\Helper\SearchedForAdminListConfigurator;
 use Kunstmaan\AdminBundle\Form\EditGroupType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminBundle\Entity\User;
@@ -170,5 +171,21 @@ class SettingsController extends Controller
             'form' => $form->createView(),
             'group' => $helper
         );
+    }
+    
+    /**
+     * @Route("/searches", name="KunstmaanAdminBundle_settings_searches")
+     * @Template()
+     */
+    public function searchesAction() {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$request = $this->getRequest();
+    	$adminlist = $this->get("adminlist.factory")->createList(new SearchedForAdminListConfigurator(), $em);
+    	$adminlist->bindRequest($request);
+    
+    	return array(
+    			'searchedforadminlist' => $adminlist,
+    			'addparams'     => array()
+    	);
     }
 }
