@@ -26,7 +26,7 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator{
 	public function buildFields()
     {
     	$this->addField("query", "Query", true);
-    	$this->addField("searchpage", "Search Page", true);
+    	$this->addField("searchpage", "Search Page", false);
     	$this->addField("createdat", "Created At", false);
     }
 
