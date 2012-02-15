@@ -132,7 +132,6 @@ class PagesController extends Controller
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $nodeTranslation = $node->getNodeTranslation($locale);
-        $seo = $nodeTranslation->getSEO();
         if(!$nodeTranslation){
         	return $this->render('KunstmaanAdminBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write')));
         }
