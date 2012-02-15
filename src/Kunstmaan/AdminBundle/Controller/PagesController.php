@@ -166,8 +166,8 @@ class PagesController extends Controller
         	$em->flush();
 
         	$nodeparent = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($page);
+        	$newpage->setParent($page);
             $nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
-            $nodenewpage->setParent($nodeparent);
 
             //get permissions of the parent and apply them on the new child
             $parentPermissions = $em->getRepository('KunstmaanAdminBundle:Permission')->findBy(array(
@@ -296,6 +296,48 @@ class PagesController extends Controller
             $viewVariables['permissionadmin'] = $permissionadmin;
         }
         return $viewVariables;
+    }
+    
+    /**
+     * @Route("/movenodes", name="KunstmaanAdminBundle_pages_movenodes")
+     * @Method({"GET", "POST"})
+     */
+    public function movenodesAction(){
+    	$request = $this->getRequest();
+    	$em = $this->getDoctrine()->getEntityManager();
+    
+    	$parentid = $request->get('parentid');
+    	$parent = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($parentid);
+    
+    	$fromposition = $request->get('fromposition');
+    	$afterposition = $request->get('afterposition');
+    	
+    	foreach($parent->getChildren() as $child){
+    		if($child->getSequencenumber() == $fromposition){
+    			if($child->getSequencenumber() > $afterposition){
+    				$child->setSequencenumber($afterposition + 1);
+    				$em->persist($child);
+    			}else{
+    				$child->setSequencenumber($afterposition);
+    				$em->persist($child);
+    			}
+    		}else{
+    			if($child->getSequencenumber() > $fromposition && $child->getSequencenumber() <= $afterposition){
+    				$newpos = $child->getSequencenumber()-1;
+    				$child->setSequencenumber($newpos);
+    				$em->persist($child);
+    			}else{
+    				if($child->getSequencenumber() < $fromposition && $child->getSequencenumber() > $afterposition){
+    					$newpos = $child->getSequencenumber()+1;
+    					$child->setSequencenumber($newpos);
+    					$em->persist($child);
+    				}
+    			}
+    		}
+    
+    		$em->flush();
+    	}
+    	return array("success" => true);
     }
 
 }
