@@ -135,8 +135,8 @@
             }
             jQuery('#{{pagepartadmin.context}}_addposition').val(position);
             jQuery(select).attr('name', 'addpagepart_{{pagepartadmin.context}}');
-            jQuery('form')[0].action="?edit="+id+"#pagepart"+id;
-            jQuery('form')[0].submit();
+            jQuery('#pageadminform')[0].action="?edit="+id+"#pagepart"+id;
+            jQuery('#pageadminform')[0].submit();
             return false;
         }
     </script>
