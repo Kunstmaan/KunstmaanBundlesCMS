@@ -30,6 +30,7 @@ class NodeGenerator {
         $em = $args->getEntityManager();
         $classname = ClassLookup::getClass($entity);
         if($entity instanceof HasNode){
+<<<<<<< HEAD
             $entityrepo = $em->getRepository($classname);
             $nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($entity);
             if($nodeVersion!=null){
@@ -42,6 +43,37 @@ class NodeGenerator {
             		$em->flush();
             	}
             }
+=======
+        	$entityrepo = $em->getRepository($classname);
+            $node = $this->getNode($em, $entity->getId(), $classname);
+            if($node==null){
+                $node = new Node();
+                $node->setRefId($entity->getId());
+                $node->setRefEntityname($classname);
+            }
+            $parent = $entity->getParent();
+            if($parent){
+            	$parentNode = $em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('refId' => $parent->getId(), 'refEntityname' => ClassLookup::getClass($parent)));
+            	$node->setParent($parentNode);
+            }
+            $node->setTitle($entity->__toString());
+            $node->setSlug(strtolower(str_replace(" ", "-", $entity->__toString())));
+            $node->setOnline($entity->isOnline());
+            $node->setSequencenumber(1);
+            
+            if($node->getParent()==null){
+            	$node->setSequencenumber(1);
+            	var_dump("blub ". $node->getId());
+            }else{
+            	$parent = $node->getParent();
+            	$children = $em->getRepository('KunstmaanAdminNodeBundle:Node')->findBy(array('parent' => ClassLookup::getClass($node)));
+            	$node->setSequencenumber(sizeof($children));
+            	var_dump($node->getId());
+            }
+            
+            $em->persist($node);
+            $em->flush();
+>>>>>>> 562825a6c9394743a800c27ccc6b8c67d4631370
         }
     }
 
