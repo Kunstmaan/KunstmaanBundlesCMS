@@ -56,13 +56,20 @@ class NodeTranslation {
     protected $publicNodeVersion;
 
     /**
+     * @ORM\OneToOne(targetEntity="SEO", cascade={"all"})
+     * @ORM\JoinColumn(name="seo", referencedColumnName="id")
+     */
+    protected $seo;
+    
+    /**
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
      * @ORM\OrderBy({"version" = "DESC"})
      */
     protected $nodeVersions;
 
     public function __construct() {
-	$this->nodeVersions = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->nodeVersions = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->seo = new SEO();
     }
 
     /**
@@ -295,6 +302,14 @@ class NodeTranslation {
 	$lastVersion = $versions->last();
 
 	return $lastVersion->getUpdated();
+    }
+
+    public function setSEO($seo) {
+    	$this->seo = $seo;
+    }
+
+    public function getSEO() {
+    	return $this->seo;
     }
 
 }
