@@ -87,6 +87,7 @@ class NodeTranslationRepository extends EntityRepository
 		$nodeTranslation->setPublicNodeVersion($nodeVersion);
 		$em->persist($nodeTranslation);
 		$em->flush();
+		$em->refresh($nodeTranslation);
 		return $nodeTranslation;
 	}
 }
