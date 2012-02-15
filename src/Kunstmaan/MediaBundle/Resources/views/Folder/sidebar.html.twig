@@ -22,10 +22,12 @@
     </ul> #}
     
 <aside class="sidebar"> 
-	    	{#<div class="search_wrp"> 
-	    		<input type="text" id="searchVal" value="" /> 
-	    		<button id="search" class="btn search"><img src="{{ asset('bundles/kunstmaanadmin/img/icons/search.png') }}" alt="Search" /></button> 
-	    	</div>#}     
+    <div class="search_wrp">
+        <form id="mediatreeform">
+	        <input type="text" id="searchVal" value="" />
+            <button id="search" class="btn search"><img src="{{ asset('bundles/kunstmaanadmin/img/icons/search.png') }}" alt="Search" /></button>
+        </form>
+    </div>
     <div id="mediatree">
     	{% for key,gals in galleries %}
     		<ul>
