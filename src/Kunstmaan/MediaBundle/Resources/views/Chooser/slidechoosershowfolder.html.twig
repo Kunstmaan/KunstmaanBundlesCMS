@@ -12,7 +12,7 @@
 		{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_slidechooser_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
 </div>
 <div class="tab-pane active" id="imagegallery">
-	<section id="map-list"> 
+	<section id="map-list">
         <ul class="media-grid">
         {% for child in gallery.children %}
             <li>
@@ -23,18 +23,18 @@
         {% endfor %}
         </ul>
     </section>
-    <section> 
+    <section>
 		<ul>
         {% for media in gallery.getSlidesOnly %}
             {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
             <li>
-                <a onclick="handleOK({path:'', id:'{{media.id}}'});return false;"  class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+                <a onclick="handleOK({title:'{{ media.name }}', id:'{{media.id}}'});return false;"  class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
                     {{ media.name }}
                 </a>
              </li>
         {% endfor %}
         	{#<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" id="droplabel">{{ 'form.add' | trans }}</a></li>#}
         </ul>
-</section>					       
+</section>
 </div>
 {% endblock %}
