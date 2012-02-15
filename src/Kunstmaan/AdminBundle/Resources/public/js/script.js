@@ -165,18 +165,17 @@ function init_tree() {
 		}
 	})
 	.bind("move_node.jstree", function (e, data) {
-		data.rslt.obj.each(function (i) {
-			$.ajax({
+		console.log("parentid" + data.rslt.np.attr("id"));
+		console.log("fromposition" + data.rslt.o.attr("sequence"));
+		console.log("afterposition" + data.rslt.cp);
+		$.ajax({
 				async : false,
 				type: 'POST',
-				url: "/static/v.1.0pre/_demo/server.php",
+				url: "/app_dev.php/en/admin/pages/movenodes",
 				data : { 
-					"operation" : "move_node", 
-					"id" : $(this).attr("id").replace("node_",""), 
-					"ref" : data.rslt.cr === -1 ? 1 : data.rslt.np.attr("id").replace("node_",""), 
-					"position" : data.rslt.cp + i,
-					"title" : data.rslt.name,
-					"copy" : data.rslt.cy ? 1 : 0
+					"parentid": data.rslt.np.attr("id"),
+					"fromposition": data.rslt.o.attr("sequence"),
+					"afterposition" : data.rslt.cp
 				},
 				success : function (r) {
 					if(!r.status) {
@@ -184,13 +183,12 @@ function init_tree() {
 					}
 					else {
 						$(data.rslt.oc).attr("id", "node_" + r.id);
-						if(data.rslt.cy && $(data.rslt.oc).children("UL").length) {
+						if(data.rslt.cy && $(data.rslt.oc).children("ul").length) {
 							data.inst.refresh(data.inst._get_parent(data.rslt.oc));
 						}
 					}
 					$("#analyze").click();
 				}
-			});
 		});
 	});
     $("#pagestreeform").submit(function() {
