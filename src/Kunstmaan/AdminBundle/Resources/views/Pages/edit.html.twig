@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }}>
+    <form id="pageadminform" action="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }}>
     <h1>{{ page.title }} {% if draft %} <small>Draft version (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)</small> {% else %} <small>Public version {% if draftNodeVersion is not null %} (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)</small> {% endif %} {% endif %} </h1>
     <div class="sub_actions">
       {% if not draft %}
@@ -32,7 +32,7 @@
 				</div>
 				<div class="modal-footer">
 					<a href="{{ path('KunstmaanAdminBundle_pages_edit_unpublish', { 'id': node.id}) }}" class="btn danger">Unpublish</a>
-					<a href="#" class="btn cancel">Cancel</a>			
+					<a href="#" class="btn cancel">Cancel</a>
 				</div>
 			</div>
         {% else %}
@@ -47,7 +47,7 @@
 				</div>
 				<div class="modal-footer">
 					<a href="{{ path('KunstmaanAdminBundle_pages_edit_publish', { 'id': node.id}) }}" class="btn danger">Publish</a>
-					<a href="#" class="btn cancel">Cancel</a>			
+					<a href="#" class="btn cancel">Cancel</a>
 				</div>
 			</div>
         {% endif %}
@@ -87,7 +87,7 @@
         <a class="btn up">&#9650;</a>
       </div>
     </div>
-    
+
     <div id="add-subpage-modal" class="modal hide fade">
       <div class="modal-header">
         <a href="#" class="close">&times;</a>
