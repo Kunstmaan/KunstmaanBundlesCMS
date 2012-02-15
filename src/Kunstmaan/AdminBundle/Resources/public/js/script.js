@@ -69,22 +69,20 @@ function init_tree() {
 					}
 				}
 			}
-		
-		
 		},
-		// Configuring the search plugin
-		"search" : {
-			"ajax" : {
-			    "url" : "", //<-- Link naar php
-			    "data" : function (str) {
-			        return {
-			            "operation" : "search",
-			            "search_str" : str
-			        };
-			    }
-			}
-		}
+        // Configuring the search plugin
+        "search" : {
+            "show_only_matches" : true
+        }
 	});
+    $("#treeform").submit(function() {
+        $('#tree').jstree('search', $('#treeform #searchVal').val());
+        return false;
+    });
+    $('#treeform #searchVal').keyup(function() {
+        $('#tree').jstree('search', $('#treeform #searchVal').val());
+    })
+
 	$('#pagestree').jstree({
 		"plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
 		"themes" : { 
@@ -144,8 +142,6 @@ function init_tree() {
 					}
 				}
 			}
-		
-		
 		},
 		"crrm" : { 
 			"move" : {
@@ -165,15 +161,7 @@ function init_tree() {
 		},
 		// Configuring the search plugin
 		"search" : {
-			"ajax" : {
-			    "url" : "", //<-- Link naar php
-			    "data" : function (str) {
-			        return {
-			            "operation" : "search",
-			            "search_str" : str
-			        };
-			    }
-			}
+            "show_only_matches" : true
 		}
 	})
 	.bind("move_node.jstree", function (e, data) {
@@ -205,6 +193,14 @@ function init_tree() {
 			});
 		});
 	});
+    $("#pagestreeform").submit(function() {
+        $('#pagestree').jstree('search', $('#pagestreeform #searchVal').val());
+        return false;
+    });
+    $('#pagestreeform #searchVal').keyup(function() {
+        $('#pagestree').jstree('search', $('#pagestreeform #searchVal').val());
+    })
+
 	$('#mediatree').jstree({
 		"plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
 		"themes" : { 
@@ -283,23 +279,12 @@ function init_tree() {
 			"drop_target" : false,
 			"drag_target" : false
 		},
-		// Configuring the search plugin
-		"search" : {
-			"ajax" : {
-			    "url" : "", //<-- Link naar php
-			    "data" : function (str) {
-			        return {
-			            "operation" : "search",
-			            "search_str" : str
-			        };
-			    }
-			}
-		}
+        // Configuring the search plugin
+        "search" : {
+            "show_only_matches" : true
+        }
 	})
 	.bind("move_node.jstree", function (e, data) {
-		console.log("parentid" + data.rslt.np.attr("id"));
-		console.log("fromposition" + data.rslt.o.attr("sequence"));
-		console.log("afterposition" + data.rslt.cp);
 		$.ajax({
 				async : false,
 				type: 'POST',
@@ -323,9 +308,13 @@ function init_tree() {
 				}
 		});
 	});
-	$("#search").click(function() {
-		$(this).jstree("search", document.getElementById("searchVal").value);
-	});
+    $("#mediatreeform").submit(function() {
+        $('#mediatree').jstree('search', $('#mediatreeform #searchVal').val());
+        return false;
+    });
+    $('#mediatreeform #searchVal').keyup(function() {
+        $('#mediatree').jstree('search', $('#mediatreeform #searchVal').val());
+    })
 }
 
 // Drag and Drop

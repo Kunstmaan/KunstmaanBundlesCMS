@@ -1,7 +1,9 @@
-{# <div class="search_wrp"> 
-	<input type="text" id="searchVal" value="" /> 
-	<button id="search" class="btn search"><img src="/bundles/kunstmaanadmin/img/icons/search.png" alt="Search" /></button>
-</div>#}
+<div class="search_wrp">
+    <form id="treeform">
+	    <input type="text" id="searchVal" value="" />
+	    <button id="search" class="btn search"><img src="/bundles/kunstmaanadmin/img/icons/search.png" alt="Search" /></button>
+    </form>
+</div>
 <div id="tree">
 	<ul>
         <li class="jstree-open {% if route == 'KunstmaanAdminBundle_settings' %}active{% endif %}" rel="settings"><a href="{{ path("KunstmaanAdminBundle_settings") }}">{{ 'settings.title' | trans }}</a>
