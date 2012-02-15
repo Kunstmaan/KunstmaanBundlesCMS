@@ -11,11 +11,13 @@ class PermissionAdmin {
     protected $request      = null;
     protected $resource     = null;
     protected $em           = null;
+    protected $possiblePermissions = null;
 
-    function initialize($resource, $em)
+    function initialize($resource, $em, $possiblePermissions = array('read', 'write', 'delete'))
     {
         $this->em           = $em;
         $this->resource     = $resource;
+        $this->possiblePermissions = $possiblePermissions;
     }
 
 
@@ -47,7 +49,7 @@ class PermissionAdmin {
         foreach($dbPermissions as $dbPermission) {
             $group = $dbPermission->getRefGroup();
 
-            foreach($this->resource->getPossiblePermissions() as $permission){
+            foreach($this->possiblePermissions as $permission){
                 if(isset($postPermissions[$group->getId()][$permission])) {
                     $dbPermission->setPermission($permission, true);
                 } else {
