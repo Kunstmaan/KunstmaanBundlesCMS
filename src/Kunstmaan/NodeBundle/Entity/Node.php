@@ -11,6 +11,7 @@ use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeRepository")
  * @ORM\Table(name="node")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Node
 {
@@ -233,5 +234,18 @@ class Node
 
     public function getDefaultAdminType($container) {
         return new NodeAdminType($container);
+    }
+    
+    /**
+     * @ORM\PrePersist
+     */
+    public function preInsert(){
+    	if(!$this->sequencenumber){
+    		$parent = $this->getParent();
+    		if($parent){
+    			$count = $parent->getChildren()->count();
+    			$this->sequencenumber = $count+1;
+    		}else $this->sequencenumber = 1;
+    	}
     }
 }

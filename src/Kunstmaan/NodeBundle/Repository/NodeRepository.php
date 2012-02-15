@@ -34,7 +34,7 @@ class NodeRepository extends EntityRepository
                    ->andWhere('b.id IN (
                         SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
                    )')
-	               ->addOrderBy('b.sequencenumber', 'DESC')
+	               ->addOrderBy('b.sequencenumber', 'ASC')
 	               ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
                    ->setParameter(2, '%|'.$permission.':1|%')
                    ->setParameter(3, $user->getGroupIds());
@@ -87,13 +87,13 @@ class NodeRepository extends EntityRepository
 		}
 		$entityrepo = $em->getRepository($classname);
 		$node = new Node();
-		$node->setSequencenumber(1);
 		$node->setRefEntityname($classname);
 		$node->setDeleted(false);
 		$parent = $hasNode->getParent();
 		if($parent){
 			$parentNodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityname' => ClassLookup::getClass($parent)));
 			if($parentNodeVersion){
+				
 				$node->setParent($parentNodeVersion->getNodeTranslation()->getNode());
 			}
 		}

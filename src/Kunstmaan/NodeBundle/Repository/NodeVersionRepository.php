@@ -59,6 +59,7 @@ class NodeVersionRepository extends EntityRepository
 		$nodeVersion->setRefEntityname($classname);
 	    $em->persist($nodeVersion);
 		$em->flush();
+		$em->refresh($nodeVersion);
 		return $nodeVersion;
 	}
 }
