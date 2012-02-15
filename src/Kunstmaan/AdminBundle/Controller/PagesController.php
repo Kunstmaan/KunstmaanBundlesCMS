@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
+use Kunstmaan\AdminNodeBundle\Form\SEOType;
 
 class PagesController extends Controller
 {
@@ -131,6 +132,7 @@ class PagesController extends Controller
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $nodeTranslation = $node->getNodeTranslation($locale);
+        $seo = $nodeTranslation->getSEO();
         if(!$nodeTranslation){
         	return $this->render('KunstmaanAdminBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write')));
         }
@@ -229,9 +231,11 @@ class PagesController extends Controller
             $permissionadmin->initialize($node, $em, $page->getPossiblePermissions());
         }
 
+        $seoform = $this->createForm(new SEOType(), $nodeTranslation->getSEO());
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
             $form           ->bindRequest($request);
+            $seoform        ->bindRequest($request);
             foreach($pagepartadmins as $pagepartadmin) {
             	$pagepartadmin  ->bindRequest($request);
             }
@@ -277,12 +281,13 @@ class PagesController extends Controller
         }
 
         $nodeMenu = new NodeMenu($this->container, $locale, $node, 'write');
-
+        
         $viewVariables = array(
             'topnodes'          => $topnodes,
             'page'              => $page,
             'entityname'        => ClassLookup::getClass($page),
             'form'              => $form->createView(),
+        	'seoform'			=> $seoform->createView(),
             'pagepartadmins'    => $pagepartadmins,
             'nodeVersions'      => $nodeVersions,
             'nodemenu'          => $nodeMenu,
