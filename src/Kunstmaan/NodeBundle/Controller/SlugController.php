@@ -54,6 +54,7 @@ class SlugController extends Controller
             $result = array(
             			'nodetranslation' => $nodeTranslation,
             			'page'      => $page,
+            			'slug'      => $slug,
             			'pageparts' => $pageparts,
             			'nodemenu'  => $nodeMenu);
 
