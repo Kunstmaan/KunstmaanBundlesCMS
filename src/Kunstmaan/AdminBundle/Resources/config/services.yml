@@ -33,3 +33,10 @@ services:
             - @doctrine.orm.entity_manager
         tags:
             - { name: form.type, alias: urlchooser }
+            
+    kunstmaan_admin.handler.log:
+        class: Kunstmaan\AdminBundle\Modules\LogHandler
+        arguments:
+            - @service_container 
+        tags:
+            - { name: log_handler }
