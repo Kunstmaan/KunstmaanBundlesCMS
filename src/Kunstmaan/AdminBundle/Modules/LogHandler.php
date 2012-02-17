@@ -1,51 +1,5 @@
 <?php
-/*
-namespace Kunstmaan\AdminBundle\Modules;
 
-use Symfony\Component\DependencyInjection\Container;
-
-use Monolog\Logger;
-use Monolog\Handler\AbstractProcessingHandler;
-
-class LogHandler extends AbstractProcessingHandler
-{
-	private $initialized = false;
-	private $pdo;
-	private $container;
-	private $statement;
-
-	public function __construct(Container $container, $level = Logger::DEBUG, $bubble = true)
-	{
-		$this->container = $container;
-		parent::__construct($level, $bubble);
-	}
-
-	protected function write(array $record)
-	{
-		if (!$this->initialized) {
-			$this->initialize();
-		}
-
-		$this->statement->execute(array(
-				'channel' => $record['channel'],
-				'level' => $record['level'],
-				'message' => $record['formatted'],
-				'createdat' => $record['datetime']->format('U'),
-		));
-	}
-
-	private function initialize()
-	{
-		$this->pdo = DoctrineDoctrine_Manager::getInstance()->getCurrentConnection()->getDbh();
-		
-		$this->statement = $this->pdo->prepare(
-				'INSERT INTO logitem (channel, level, message, createdat) VALUES (:channel, :level, :message, :createdat)'
-		);
-
-		$this->initialized = true;
-	}
-}
-*/
 namespace Kunstmaan\AdminBundle\Modules;
 
 use Doctrine\ORM\ORMException;
@@ -97,12 +51,10 @@ class LogHandler extends AbstractProcessingHandler
 			    $em->persist($logitem);
 			    $em->flush();*/
 	        	$conn = $this->container->get('doctrine')->getEntityManager()->getConnection()->getWrappedConnection();
-	        	$prep = $conn->prepare('INSERT INTO errorlogitem (channel, level, message, createdat) VALUES (?, ?, ?, ?)');
+	        	$prep = $conn->prepare('INSERT INTO errorlogitem (channel, level, message) VALUES (?, ?, ?)');
 	        	$prep->bindParam(1, $record['channel']);
 	        	$prep->bindParam(2, $record['level']);
 	        	$prep->bindParam(3, $record['formatted']);
-	        	$datetime = $record['datetime']->format('U');
-	        	$prep->bindParam(4, $datetime);
 	        	$prep->execute();
 	        }catch(\PDOException $e){
 	        	

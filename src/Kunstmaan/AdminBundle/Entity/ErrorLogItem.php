@@ -41,7 +41,7 @@ class ErrorLogItem{
     protected $createdat;
 
     public function __construct(){
-     
+     	$this->createdat = new \DateTime();
     }
 
     /**
