@@ -48,7 +48,7 @@ class MenuBuilder
 
     public function populateMenu(Translator $translator){
         $rootItem = $this->factory->createItem('root');
-        $rootItem->getRoot()->setAttribute('class', 'nav');
+        $rootItem->getRoot()->setChildrenAttribute('class', 'nav');
 
         $rootItem->addChild($translator->trans('pages.title'), array( 'route' => 'KunstmaanAdminBundle_pages' ));
         //$rootItem->addChild($translator->trans('modules.title'), array( 'route' => 'KunstmaanAdminBundle_modules'));
