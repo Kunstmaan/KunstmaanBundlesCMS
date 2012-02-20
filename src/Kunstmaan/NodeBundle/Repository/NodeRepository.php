@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminNodeBundle\Repository;
 
 use Kunstmaan\AdminNodeBundle\Entity\HasNode;
-
+use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
@@ -79,7 +79,7 @@ class NodeRepository extends EntityRepository
 		return $result;
 	}
 
-	public function createNodeFor(HasNode $hasNode, $lang, $owner){
+	public function createNodeFor(HasNode $hasNode, $lang, Baseuser $owner){
 		$em = $this->getEntityManager();
 		$classname = ClassLookup::getClass($hasNode);
 		if(!$hasNode->getId()>0){
