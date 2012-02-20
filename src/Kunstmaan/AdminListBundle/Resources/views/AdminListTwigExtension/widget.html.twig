@@ -4,7 +4,7 @@
     {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
 
     {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
-    
+
     <table class="bordered-table zebra-striped">
         <thead>
         <tr>
@@ -26,9 +26,9 @@
         </thead>
         <tbody>
         {% for item in adminlist.items(queryparams) %}
-            {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
             <tr>
                 <td>
+                	{% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
                     {%if adminlist.canEdit(item) %}
                         <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/edit.png') }}" alt="Edit"/></a>
                     {% endif %}
@@ -41,7 +41,7 @@
                 {% endfor %}
             </tr>
         {% endfor %}
-       
+
         {% if adminlist.canAdd() %}
         	<tr><td colspan="{{ adminlist.columns|length + 1}}">
         	<img src="{{ asset('bundles/kunstmaanadmin/img/general/add.png') }}" alt="{{ 'form.add' | trans }}"/>
@@ -52,7 +52,7 @@
 	        	{% endfor %}
         	</select>
         	</td></tr>
-        {% endif %}	
+        {% endif %}
         </tbody>
     </table>
 
