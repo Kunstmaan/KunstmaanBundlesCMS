@@ -11,6 +11,7 @@ use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Kunstmaan\AdminBundle\Entity\AddCommand;
 
 /**
  * NodeRepository
@@ -57,8 +58,10 @@ class NodeVersionRepository extends EntityRepository
 		$nodeVersion->setOwner($owner);
 		$nodeVersion->setRefId($hasNode->getId());
 		$nodeVersion->setRefEntityname($classname);
-	    $em->persist($nodeVersion);
-		$em->flush();
+		
+		$addcommand = new AddCommand($em, $owner);
+		$addcommand->execute("new version for page \"". $nodeTranslation->getTitle() ."\" with locale: " . $nodeTranslation->getLang(), array('entity'=> $nodeVersion));
+		
 		$em->refresh($nodeVersion);
 		return $nodeVersion;
 	}

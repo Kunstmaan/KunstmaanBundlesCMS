@@ -11,6 +11,8 @@ use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
+use Kunstmaan\AdminBundle\Entity\AddCommand;
+use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 
 /**
  * NodeRepository
@@ -68,7 +70,7 @@ class NodeTranslationRepository extends EntityRepository
 		}
 	}
 
-	public function createNodeTranslationFor(HasNode $hasNode, $lang, Node $node, $owner){
+	public function createNodeTranslationFor(HasNode $hasNode, $lang, Node $node, Baseuser $owner){
 		$em = $this->getEntityManager();
 		$classname = ClassLookup::getClass($hasNode);
 		if(!$hasNode->getId()>0){
@@ -81,8 +83,10 @@ class NodeTranslationRepository extends EntityRepository
 		$nodeTranslation->setTitle($hasNode->__toString());
 		$nodeTranslation->setSlug(Slugifier::slugify($hasNode->__toString()));
 		$nodeTranslation->setOnline($hasNode->isOnline());
-		$em->persist($nodeTranslation);
-		$em->flush();
+		
+		$addcommand = new AddCommand($em, $owner);
+		$addcommand->execute("new translation for page \"". $nodeTranslation->getTitle() ."\" with locale: " . $lang, array('entity'=> $nodeTranslation));
+		
 		$nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->createNodeVersionFor($hasNode, $nodeTranslation, $owner);
 		$nodeTranslation->setPublicNodeVersion($nodeVersion);
 		$em->persist($nodeTranslation);
