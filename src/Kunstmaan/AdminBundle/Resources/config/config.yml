@@ -21,3 +21,15 @@ fos_user:
             handler:            fos_user.resetting.form.handler.default
             name:               fos_user_resetting_form
             validation_groups:  [ResetPassword]
+            
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+        doctrine:
+            type: service
+            id: kunstmaan_admin.handler.log
+            
+            
