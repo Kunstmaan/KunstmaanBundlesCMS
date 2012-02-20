@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
+use Kunstmaan\AdminNodeBundle\Form\SEOType;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\EditCommand;
 use Kunstmaan\AdminBundle\Entity\DeleteCommand;
@@ -178,8 +179,7 @@ class PagesController extends Controller
 
         	$nodeparent = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($page);
         	$newpage->setParent($page);
-        	var_dump($user); die;
-            $nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
+        	$nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
 
             //get permissions of the parent and apply them on the new child
             $parentPermissions = $em->getRepository('KunstmaanAdminBundle:Permission')->findBy(array(
@@ -241,9 +241,11 @@ class PagesController extends Controller
             $permissionadmin->initialize($node, $em, $page->getPossiblePermissions());
         }
 
+        $seoform = $this->createForm(new SEOType(), $nodeTranslation->getSEO());
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
             $form           ->bindRequest($request);
+            $seoform        ->bindRequest($request);
             foreach($pagepartadmins as $pagepartadmin) {
             	$pagepartadmin  ->bindRequest($request);
             }
@@ -289,12 +291,13 @@ class PagesController extends Controller
         }
 
         $nodeMenu = new NodeMenu($this->container, $locale, $node, 'write');
-
+        
         $viewVariables = array(
             'topnodes'          => $topnodes,
             'page'              => $page,
             'entityname'        => ClassLookup::getClass($page),
             'form'              => $form->createView(),
+        	'seoform'			=> $seoform->createView(),
             'pagepartadmins'    => $pagepartadmins,
             'nodeVersions'      => $nodeVersions,
             'nodemenu'          => $nodeMenu,

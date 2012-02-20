@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }}>
+    <form id="pageadminform" action="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }}>
     <h1>{{ page.title }} {% if draft %} <small>Draft version (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)</small> {% else %} <small>Public version {% if draftNodeVersion is not null %} (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)</small> {% endif %} {% endif %} </h1>
     <div class="sub_actions">
       {% if not draft %}
@@ -32,7 +32,7 @@
 				</div>
 				<div class="modal-footer">
 					<a href="{{ path('KunstmaanAdminBundle_pages_edit_unpublish', { 'id': node.id}) }}" class="btn danger">Unpublish</a>
-					<a href="#" class="btn cancel">Cancel</a>			
+					<a href="#" class="btn cancel">Cancel</a>
 				</div>
 			</div>
         {% else %}
@@ -47,7 +47,7 @@
 				</div>
 				<div class="modal-footer">
 					<a href="{{ path('KunstmaanAdminBundle_pages_edit_publish', { 'id': node.id}) }}" class="btn danger">Publish</a>
-					<a href="#" class="btn cancel">Cancel</a>			
+					<a href="#" class="btn cancel">Cancel</a>
 				</div>
 			</div>
         {% endif %}
@@ -87,7 +87,7 @@
         <a class="btn up">&#9650;</a>
       </div>
     </div>
-    
+
     <div id="add-subpage-modal" class="modal hide fade">
       <div class="modal-header">
         <a href="#" class="close">&times;</a>
@@ -218,7 +218,26 @@
                 </table>
             </div>
             <div class="tab-pane" id="seo">
-              <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
+              	<div id="properties">
+				    			<div id="prop_wrp">
+					    			<div class="input_prop">
+					    				{{ form_row(seoform.metaauthor) }}
+					    			</div>
+					    			<div class="input_prop">
+										{{ form_row(seoform.metadescription) }}
+					    			</div>
+						    		<div class="input_prop">
+											{{ form_row(seoform.metakeywords) }}
+						    		</div>
+						    		<div class="input_prop">
+											{{ form_row(seoform.metarobots) }}
+						    		</div>
+						    		<div class="input_prop">
+											{{ form_row(seoform.metarevised) }}
+						    		</div>
+					    		</div>
+				   </div>
+                   {{ form_rest(seoform) }}
             </div>
             <div class="tab-pane" id="mdo">
               <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
