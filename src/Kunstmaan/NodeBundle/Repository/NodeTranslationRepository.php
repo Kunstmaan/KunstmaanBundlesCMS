@@ -55,7 +55,7 @@ class NodeTranslationRepository extends EntityRepository
 			$result = $qb->getQuery()->getResult();
 			if(sizeof($result)==1){
 				return $result[0];
-			} else if (sizeof($result==0)){
+			} else if (sizeof($result)==0){
 				return null;
 			} else {
 				//more then one result found

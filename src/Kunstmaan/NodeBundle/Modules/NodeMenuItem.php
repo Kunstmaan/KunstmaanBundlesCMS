@@ -48,7 +48,7 @@ class NodeMenuItem
     }
 
     public function getTitle(){
-    	$nodeTranslation = $this->node->getNodeTranslation($this->lang);
+    	$nodeTranslation = $this->getNodeTranslation();
     	if($nodeTranslation){
     		return $nodeTranslation->getTitle();
     	}
@@ -56,7 +56,7 @@ class NodeMenuItem
     }
 
     public function getSlugPart(){
-    	$nodeTranslation = $this->node->getNodeTranslation($this->lang);
+    	$nodeTranslation = $this->getNodeTranslation();
     	if($nodeTranslation){
     		return $nodeTranslation->getSlug();
     	}
@@ -84,7 +84,7 @@ class NodeMenuItem
     }
 
     public function getPage(){
-    	return $this->node->getNodeTranslation($this->lang)->getRef($this->em);
+    	return $this->getNodeTranslation()->getRef($this->em);
     }
 
     public function getActive(){
