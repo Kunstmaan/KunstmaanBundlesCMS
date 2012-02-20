@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Doctrine\ORM\EntityRepository;
 
-class ErrorLogItemRepository extends EntityRepository
+class LogItemRepository extends EntityRepository
 {
     
 }

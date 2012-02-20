@@ -17,6 +17,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
+use Kunstmaan\AdminBundle\Entity\AddCommand;
+use Kunstmaan\AdminBundle\Entity\EditCommand;
+use Kunstmaan\AdminBundle\Entity\DeleteCommand;
 
 class PagesController extends Controller
 {
@@ -75,8 +78,10 @@ class PagesController extends Controller
     	$entityname = $node->getRefEntityname();
     	$myLanguagePage = new $entityname();
     	$myLanguagePage->setTitle("New page");
-    	$em->persist($myLanguagePage);
-    	$em->flush();
+    	
+    	$addcommand = new AddCommand($em, $user);
+    	$addcommand->execute("empty page added with locale: " . $locale, array('entity'=> $myLanguagePage));
+    	
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $locale, $node, $user);
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$id)));
     }
@@ -93,8 +98,11 @@ class PagesController extends Controller
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
     	$nodeTranslation = $node->getNodeTranslation($locale);
     	$nodeTranslation->setOnline(true);
-    	$em->persist($nodeTranslation);
-    	$em->flush();
+    	
+    	$user = $this->container->get('security.context')->getToken()->getUser();
+    	$editcommand = new EditCommand($em, $user);
+    	$editcommand->execute("published page \"" . $nodeTranslation->getTitle() . "\" on locale: " . $locale, array('entity'=> $nodeTranslation));
+    	
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$node->getId())));
     }
 
@@ -110,8 +118,11 @@ class PagesController extends Controller
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
     	$nodeTranslation = $node->getNodeTranslation($locale);
     	$nodeTranslation->setOnline(false);
-    	$em->persist($nodeTranslation);
-    	$em->flush();
+    	
+    	$user = $this->container->get('security.context')->getToken()->getUser();
+    	$editcommand = new EditCommand($em, $user);
+    	$editcommand->execute("unpublished page \"" . $nodeTranslation->getTitle() . "\" on locale: " . $locale, array('entity'=> $nodeTranslation));
+    	
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$node->getId())));
     }
 
@@ -162,11 +173,12 @@ class PagesController extends Controller
         	} else {
         		$newpage->setTitle('New page');
         	}
-        	$em->persist($newpage);
-        	$em->flush();
+        	$addcommand = new AddCommand($em, $user);
+        	$addcommand->execute("page \"". $newpage->getTitle() ."\" added with locale: " . $locale, array('entity'=> $newpage));
 
         	$nodeparent = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($page);
         	$newpage->setParent($page);
+        	var_dump($user); die;
             $nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
 
             //get permissions of the parent and apply them on the new child
@@ -199,8 +211,8 @@ class PagesController extends Controller
         if(is_string($delete) && $delete == 'true'){
         	//remove node and page
         	$nodeparent = $node->getParent();
-        	$em->remove($page);
-        	$em->flush();
+        	$deletecommand = new DeleteCommand($em, $user);
+        	$deletecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
         	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId())));
         }
 
@@ -253,8 +265,8 @@ class PagesController extends Controller
                 $node->setRoles($roles);
 
                 $em->persist($node);
-                $em->persist($page);
-                $em->flush();
+                $editcommand = new EditCommand($em, $user);
+    			$editcommand->execute("added pageparts to page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
 
                 if(is_string($saveandpublish) && $saveandpublish != ''){
                 	$newpublicpage = $page->deepClone($em);
@@ -263,8 +275,8 @@ class PagesController extends Controller
                 	$nodeTranslation->setTitle($newpublicpage->__toString());
             		$nodeTranslation->setSlug(Slugifier::slugify($newpublicpage->__toString()));
             		$nodeTranslation->setOnline($newpublicpage->isOnline());
-                	$em->persist($nodeTranslation);
-                	$em->flush();
+                	$addcommand = new AddCommand($em, $user);
+        			$addcommand->execute("saved and published page \"". $nodeTranslation->getTitle() ."\" added with locale: " . $locale, array('entity'=> $nodeTranslation));
                 	$draft = false;
                 	$subaction = "public";
                 }

@@ -40,3 +40,16 @@ services:
             - @service_container 
         tags:
             - { name: log_handler }
+
+    kunstmaan_login_listener:
+        class: Kunstmaan\AdminBundle\Modules\LoginListener
+        arguments: [@security.context, @doctrine]
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }
+            
+    kunstmaan_logout_listener:
+        class:  Kunstmaan\AdminBundle\Modules\LogoutListener
+        arguments:  [@security.context, @doctrine]
+        tags:
+            - { name: 'monolog.logger' channel: 'security' }
+ 

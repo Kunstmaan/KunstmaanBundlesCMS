@@ -13,7 +13,7 @@ use Kunstmaan\AdminBundle\Form\GroupType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\AdminBundle\AdminList\UserAdminListConfigurator;
 use Kunstmaan\AdminBundle\AdminList\GroupAdminListConfigurator;
-use Kunstmaan\AdminBundle\AdminList\ErrorLogAdminListConfigurator;
+use Kunstmaan\AdminBundle\AdminList\LogAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -191,13 +191,13 @@ class SettingsController extends Controller
     }
     
     /**
-     * @Route("/errorlog", name="KunstmaanAdminBundle_settings_errorlog")
+     * @Route("/log", name="KunstmaanAdminBundle_settings_log")
      * @Template()
      */
-    public function errorlogAction() {
+    public function logAction() {
     	$em = $this->getDoctrine()->getEntityManager();
     	$request = $this->getRequest();
-    	$adminlist = $this->get("adminlist.factory")->createList(new ErrorLogAdminListConfigurator(), $em);
+    	$adminlist = $this->get("adminlist.factory")->createList(new LogAdminListConfigurator(), $em);
     	$adminlist->bindRequest($request);
     
     	return array(

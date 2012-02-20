@@ -5,14 +5,14 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * omnext logitem
+ * omnext errorlogitem
  * 
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\ErrorLogItemRepository")
+ * @ORM\Entity
  * @ORM\Table(name="errorlogitem")
  */
-class ErrorLogItem{
+class ErrorLogItem extends LogItem{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -30,16 +30,6 @@ class ErrorLogItem{
      */
     protected $level;
     
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $message;
-    
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $createdat;
-
     public function __construct(){
      	$this->createdat = new \DateTime();
     }
@@ -76,21 +66,5 @@ class ErrorLogItem{
     
     public function setLevel($level){
     	$this->level = $level;
-    }
-    
-    public function getMessage(){
-    	return $this->message;
-    }
-    
-    public function setMessage($message){
-    	$this->message = $message;
-    }
-    
-    public function getCreatedAt(){
-    	return $this->createdat;
-    }
-    
-    public function setCreatedAt($createdat){
-    	$this->createdat = $createdat;
     }
 }

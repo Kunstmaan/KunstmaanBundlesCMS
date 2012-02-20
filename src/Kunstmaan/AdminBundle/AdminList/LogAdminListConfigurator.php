@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: kris
- * Date: 15/11/11
- * Time: 22:23
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
@@ -14,19 +7,19 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
-class ErrorLogAdminListConfigurator extends AbstractAdminListConfigurator{
+class LogAdminListConfigurator extends AbstractAdminListConfigurator{
 
 	public function buildFilters(AdminListFilter $builder){
-        $builder->add('channel', new StringFilterType("channel"), "Channel");
-        $builder->add('level', new StringFilterType("level"), "Level");
+		$builder->add('user', new StringFilterType("user"), "User");
+		$builder->add('status', new StringFilterType("status"), "Status");
         $builder->add('message', new StringFilterType("message"), "Message");
         $builder->add('createdat', new DateFilterType("createdat"), "Created At");
     }
     
 	public function buildFields()
     {
-    	$this->addField("channel", "Channel", true);
-    	$this->addField("level", "Level", true);
+    	$this->addField("user", "User", true);
+    	$this->addField("status", "Status", true);
     	$this->addField("message", "Message", true);
     	$this->addField("createdat", "Created At", true);
     }
@@ -56,7 +49,7 @@ class ErrorLogAdminListConfigurator extends AbstractAdminListConfigurator{
     }
 
     public function getRepositoryName() {
-        return 'KunstmaanAdminBundle:ErrorLogItem';
+        return 'KunstmaanAdminBundle:LogItem';
     }
 
     public function adaptQueryBuilder($querybuilder, $params=array()) {
