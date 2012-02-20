@@ -75,7 +75,9 @@ class NodeGenerator {
      				if($parentNodeTranslation){
      					$parentNodeVersion = $parentNodeTranslation->getPublicNodeVersion();
      					$parent = $em->getRepository($parentNode->getRefEntityname())->find($parentNodeVersion->getRefId());
-     					$entity->setParent($parent);
+     					if($parent){
+     						$entity->setParent($parent);
+     					}
      				}
      			}
      		}
