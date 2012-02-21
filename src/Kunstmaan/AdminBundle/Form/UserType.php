@@ -34,7 +34,8 @@ class UserType extends AbstractType
     	    	
         $builder->add('username');
         $builder->add('plainPassword', 'repeated', array(
-        		'type' => 'password', 
+                'type' => 'password',
+                'required' => $options['password_required'],
             	'invalid_message' => "The passwords don't match!"));
         $builder->add('email');
         $builder->add('enabled', 'checkbox', array('required' => false));
@@ -47,4 +48,21 @@ class UserType extends AbstractType
     {
         return 'user';
     }
+    
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'password_required' => false,
+        );
+    }
+    
+    public function getAllowedOptionValues(array $options)
+    {
+        return array(
+            'password_required' => array(
+                true,
+                false
+            ),
+        );
+    }    
 }

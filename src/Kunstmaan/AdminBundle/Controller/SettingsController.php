@@ -2,17 +2,18 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Kunstmaan\AdminBundle\Form\EditUserType;
 use Kunstmaan\SearchBundle\Helper\SearchedForAdminListConfigurator;
-use Kunstmaan\AdminBundle\Form\EditGroupType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\Form\UserType;
 use Kunstmaan\AdminBundle\Form\GroupType;
+use Kunstmaan\AdminBundle\Form\RoleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\AdminBundle\AdminList\UserAdminListConfigurator;
 use Kunstmaan\AdminBundle\AdminList\GroupAdminListConfigurator;
+use Kunstmaan\AdminBundle\AdminList\RoleAdminListConfigurator;
 use Kunstmaan\AdminBundle\AdminList\LogAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -62,7 +63,7 @@ class SettingsController extends Controller
     	
     	$request = $this->getRequest();
     	$helper = new User();
-    	$form = $this->createForm(new UserType($this->container), $helper);
+    	$form = $this->createForm(new UserType($this->container), $helper, array('password_required' => true));
     	
     	if ('POST' == $request->getMethod()) {
     		$form->bindRequest($request);
@@ -88,7 +89,7 @@ class SettingsController extends Controller
     
     	$request = $this->getRequest();
     	$helper = $em->getRepository('KunstmaanAdminBundle:User')->getUser($user_id, $em);
-    	$form = $this->createForm(new EditUserType($this->container), $helper);
+    	$form = $this->createForm(new UserType($this->container), $helper, array('password_required' => false));
     	
     	if ('POST' == $request->getMethod()) {
     		$form->bindRequest($request);
@@ -157,7 +158,7 @@ class SettingsController extends Controller
 
         $request = $this->getRequest();
         $helper = $em->getRepository('KunstmaanAdminBundle:Group')->find($group_id);
-        $form = $this->createForm(new EditGroupType($this->container), $helper);
+        $form = $this->createForm(new GroupType($this->container), $helper);
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
@@ -205,4 +206,73 @@ class SettingsController extends Controller
     			'addparams'     => array()
     	);
     }
+    
+    /**
+     * @Route("/roles", name="KunstmaanAdminBundle_settings_roles")
+     * @Template()
+     */
+    public function rolesAction() {
+        $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $adminlist = $this->get("adminlist.factory")->createList(new RoleAdminListConfigurator(), $em);
+        $adminlist->bindRequest($request);
+
+        return array(
+            'roleadminlist' => $adminlist,
+            'addparams'     => array()
+        );
+    }
+
+    /**
+     * @Route("/roles/add", name="KunstmaanAdminBundle_settings_roles_add")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function addroleAction() {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $request = $this->getRequest();
+        $helper = new Role('');
+        $form = $this->createForm(new RoleType($this->container), $helper);
+
+        if ('POST' == $request->getMethod()) {
+            $form->bindRequest($request);
+            if ($form->isValid()){
+                $em->persist($helper);
+                $em->flush();
+                return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
+            }
+        }
+
+        return array(
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * @Route("/roles/{role_id}/edit", requirements={"role_id" = "\d+"}, name="KunstmaanAdminBundle_settings_roles_edit")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function editroleAction($role_id) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $request = $this->getRequest();
+        $helper = $em->getRepository('KunstmaanAdminBundle:Role')->find($role_id);
+        $form = $this->createForm(new EditRoleType($this->container), $helper);
+
+        if ('POST' == $request->getMethod()) {
+            $form->bindRequest($request);
+            if ($form->isValid()){
+                $em->persist($helper);
+                $em->flush();
+                return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
+            }
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'role' => $helper
+        );
+    }    
 }

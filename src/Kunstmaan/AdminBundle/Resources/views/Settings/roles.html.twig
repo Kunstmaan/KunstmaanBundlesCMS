@@ -2,15 +2,15 @@
 
 {% block subbreadcrumb %}
 	<li><a href="{{ path('KunstmaanAdminBundle_settings') }}">{{ 'settings.title' | trans }}</a></li>
-	<li class="active">{{ 'settings.groups' | trans }}</li>
+	<li class="active">{{ 'settings.roles' | trans }}</li>
 {% endblock %}
 
 {% block content %}
 
     <div class="page-header">
-        <h1>{{ 'settings.groups' | trans }}</h1>
+        <h1>{{ 'settings.roles' | trans }}</h1>
     </div>
 
-    {{ adminlist_widget(groupadminlist, 'KunstmaanAdminBundle_settings_groups') }}
+    {{ adminlist_widget(roleadminlist, 'KunstmaanAdminBundle_settings_roles') }}
 
 {% endblock %}
