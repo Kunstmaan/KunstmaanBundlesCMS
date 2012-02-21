@@ -16,8 +16,8 @@ settings:
   title: Settings
   maintanance: Maintenance
   scheduled: Scheduled Jobs
-  group: Groups
-  groups:
+  groups: Groups
+  group:
       name: Name
       edit: Edit
       add: Add group
@@ -32,7 +32,12 @@ settings:
       roles: Groups
       add: Add User
       edit: Edit User
-
+  roles: Roles
+  role:
+      role: Role
+      add: Add Role
+      edit: Edit Role
+      
 # Tools
 tools:
   title: Tools

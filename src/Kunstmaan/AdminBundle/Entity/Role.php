@@ -22,12 +22,12 @@ class Role implements RoleInterface
      * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", name="role", unique="true", length="70")
      */
-    private $role;
+    protected $role;
 
     /**
      * Populate the role field
@@ -56,5 +56,23 @@ class Role implements RoleInterface
         return (string) $this->role;
     }
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Modify the role field.
+     * @param string $role ROLE_FOO etc
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
 }
 
