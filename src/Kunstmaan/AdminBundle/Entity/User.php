@@ -67,8 +67,9 @@ class User extends BaseUser
     {
         $groups = $this->groups ?: $this->groups = new ArrayCollection();
 
-        $groupIds = array();
+        $groupIds = null;
         if(count($groups) > 0) {
+            $groupIds = array();
             foreach($groups as $group) {
                 $groupIds[] = $group->getId();
             }
