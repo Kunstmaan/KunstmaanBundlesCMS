@@ -36,9 +36,15 @@ class NodeRepository extends EntityRepository
                    )')
 	               ->addOrderBy('b.sequencenumber', 'ASC')
 	               ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
-                   ->setParameter(2, '%|'.$permission.':1|%')
-                   ->setParameter(3, $user->getGroupIds());
-
+                   ->setParameter(2, '%|'.$permission.':1|%');
+            
+            if (!empty($user->getGroupIds())) {
+                $qb->setParameter(3, $user->getGroupIds());
+            }
+            else {
+                $qb->setParameter(3, null);
+            }
+            
 	    return $qb->getQuery()
 	              ->getResult();
 	}
