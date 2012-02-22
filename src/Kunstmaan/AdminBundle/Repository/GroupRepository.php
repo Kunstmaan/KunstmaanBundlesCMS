@@ -19,8 +19,6 @@ class GroupRepository extends EntityRepository
 
         $query = $qb->getQuery();
         $results = $query->getResult();
-        var_dump($results);die;
-
 
         $query = $this->getEntityManager()->createQuery(
             '   SELECT
