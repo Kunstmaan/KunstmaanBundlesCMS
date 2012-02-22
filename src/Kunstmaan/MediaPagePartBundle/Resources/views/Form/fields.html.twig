@@ -2,44 +2,58 @@
 {% spaceless %}
 	<div id="{{ id }}_widget">
 		<input type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}"/>
-		<div class="hasnoimage">
+		<div class="hasnomedia">
 			<div style="float:left;margin-right: 10px; border: 1px solid black; padding:5px">No media selected</div><div><button class="btn choosebutton">Choose</button></div>
 		</div>
-		<div class="hasimage">
+		<div class="hasmedia">
 			<div style="float:left;margin-right: 10px; border: 1px solid black; padding:5px">
-				{% if(value.ent is defined) %}				
+				{% if(value.ent is defined) %}
 					{% include 'KunstmaanMediaBundle:'~value.ent.classtype~':widgetview.html.twig' with {'media': value.ent} %}
+				{% else %}
+					<img src="" width="150" />
+					<h5 class="title"></h5>
 				{% endif %}
 			</div><div><button class="btn deletebutton">Delete</button></div>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript">
 		{
 			var widget = jQuery('#{{ id }}_widget');
 			if ( widget.find('input').val() == '') {
-				widget.find('.hasnoimage').show();
-				widget.find('.hasimage').hide();
+				widget.find('.hasnomedia').show();
+				widget.find('.hasmedia').hide();
 			} else {
-				widget.find('.hasnoimage').hide();
-				widget.find('.hasimage').show();
+				widget.find('.hasnomedia').hide();
+				widget.find('.hasmedia').show();
 			}
 			widget.find('.choosebutton').on('click', function(ev) {
 				ev.preventDefault();
 				openDGDialog('{{ path(pattern) }}', 800, 600, function(param){
 					var widget = jQuery('#{{ id }}_widget');
 					widget.find('input').val(dialogWin.returnedValue.id);
-					widget.find('.hasimage').find('img').attr('src', dialogWin.returnedValue.path);
-					widget.find('.hasnoimage').hide();
-					widget.find('.hasimage').show();
+					if(typeof(dialogWin.returnedValue.title)!="undefined"){
+						widget.find('.hasmedia').find('.title').html(dialogWin.returnedValue.title);
+						widget.find('.hasmedia').find('.title').show();
+					} else {
+						widget.find('.hasmedia').find('.title').hide();
+					}
+					if(typeof(dialogWin.returnedValue.imgpath)!="undefined"){
+						widget.find('.hasmedia').find('img').attr('src', dialogWin.returnedValue.imgpath);
+						widget.find('.hasmedia').find('img').show();
+					} else {
+						widget.find('.hasmedia').find('img').hide();
+					}
+					widget.find('.hasnomedia').hide();
+					widget.find('.hasmedia').show();
 				});
 			});
 			widget.find('.deletebutton').on('click', function(ev) {
 				ev.preventDefault();
 				var widget = jQuery('#{{ id }}_widget');
 				widget.find('input').val('');
-				widget.find('.hasnoimage').show();
-				widget.find('.hasimage').hide();
+				widget.find('.hasnomedia').show();
+				widget.find('.hasmedia').hide();
 			});
 		}
 	</script>
