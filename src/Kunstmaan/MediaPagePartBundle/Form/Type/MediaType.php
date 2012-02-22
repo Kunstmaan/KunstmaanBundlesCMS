@@ -13,7 +13,6 @@ class MediaType extends AbstractType {
 
 	public function __construct($objectManager) {
 		$this->objectManager = $objectManager;
-		error_log(get_class($this->objectManager));
 	}
 
 	public function buildForm(FormBuilder $builder, array $options) {
