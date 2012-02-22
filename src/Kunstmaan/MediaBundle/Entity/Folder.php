@@ -261,7 +261,6 @@ class Folder{
      	$children = $this->getChildren();
      	$count = 0;
      	foreach($children as $child){
-     		var_dump("blubber");
      		$count++;
      	}
      	return $count + 1;
