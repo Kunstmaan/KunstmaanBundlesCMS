@@ -79,6 +79,7 @@ class PagesController extends Controller
     	$entityname = $node->getRefEntityname();
     	$myLanguagePage = new $entityname();
     	$myLanguagePage->setTitle("New page");
+    	$myLanguagePage->setPermissions();
     	
     	$addcommand = new AddCommand($em, $user);
     	$addcommand->execute("empty page added with locale: " . $locale, array('entity'=> $myLanguagePage));
@@ -181,19 +182,19 @@ class PagesController extends Controller
         	$newpage->setParent($page);
         	$nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
 
-            //get permissions of the parent and apply them on the new child
+        	//get permissions of the parent and apply them on the new child
             $parentPermissions = $em->getRepository('KunstmaanAdminBundle:Permission')->findBy(array(
                 'refId'             => $nodeparent->getId(),
-                'refEntityname'     => $nodeparent->getRefEntityname(),
+                'refEntityname'     => ClassLookup::getClass($nodeparent),
             ));
-
-            if(count($parentPermissions)) {
-                foreach($parentPermissions as $parentPermission) {
+            
+            if($parentPermissions) {
+            	foreach($parentPermissions as $parentPermission) {
                     $permission = new Permission();
 
                     $permission->setRefId($nodenewpage->getId());
                     $permission->setPermissions($parentPermission->getPermissions());
-                    $permission->setRefEntityname($nodenewpage->getRefEntityname());
+                    $permission->setRefEntityname(ClassLookup::getClass($nodeparent));
                     $permission->setRefGroup($parentPermission->getRefGroup());
 
                     $em->persist($permission);
