@@ -2,16 +2,14 @@
 
 namespace Kunstmaan\AdminBundle\Modules;
 
-use Doctrine\ORM\ORMException;
-
-use Monolog\Handler\NullHandler;
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Entity\ErrorLogItem;
 
 use Symfony\Component\DependencyInjection\Container;
-
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\AdminBundle\Entity\ErrorLogItem;
 use Monolog\Logger;
+use Monolog\Handler\NullHandler;
 use Monolog\Handler\AbstractProcessingHandler;
 
 class LogHandler extends AbstractProcessingHandler
@@ -35,7 +33,7 @@ class LogHandler extends AbstractProcessingHandler
 	    	$user = $this->container->get('security.context')->getToken()->getUser();
 	    	
 	    	$logitem = new ErrorLogItem();
-	    	if($user){
+	    	if($user instanceof User){
 	    		$logitem->setUser($user);
 	    	}
 	    	$logitem->setStatus("error");
@@ -45,12 +43,6 @@ class LogHandler extends AbstractProcessingHandler
 		    $em = $this->container->get('doctrine')->getEntityManager();
 			$em->persist($logitem);
 			$em->flush();
-	        /*$conn = $this->container->get('doctrine')->getEntityManager()->getConnection()->getWrappedConnection();
-	        $prep = $conn->prepare('INSERT INTO errorlogitem (channel, level, message) VALUES (?, ?, ?)');
-	        $prep->bindParam(1, $record['channel']);
-	        $prep->bindParam(2, $record['level']);
-	        $prep->bindParam(3, $record['formatted']);
-	        $prep->execute();*/
 	     }catch(\PDOException $e){
 	     	// catching the exception during fullreload: errorlogitem table not found
 	     	// TODO do something useful
