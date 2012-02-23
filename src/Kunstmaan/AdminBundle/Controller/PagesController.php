@@ -355,5 +355,23 @@ class PagesController extends Controller
     	}
     	return array("success" => true);
     }
+    
+    /**
+     * @Route("/ckselecturl", name="KunstmaanAdminBundle_ckselecturl")
+     * @Template()
+     */
+    public function ckselectlinkAction(){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$request = $this->getRequest();
+    	$locale = $request->getSession()->getLocale();
+    	$user = $this->container->get('security.context')->getToken()->getUser();
+    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'read');
+    	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read');
+    
+    	return array(
+    			'topnodes'      => $topnodes,
+    			'nodemenu' 	    => $nodeMenu,
+    	);
+    }
 
 }
