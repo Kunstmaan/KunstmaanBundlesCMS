@@ -37,7 +37,7 @@ class PagesController extends Controller
         $nodeMenu = new NodeMenu($this->container, $locale, null, 'write');
 
         $request    = $this->getRequest();
-        $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'write'), $em);
+        $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'write', $locale), $em);
         $adminlist->bindRequest($request);
 
         return array(
