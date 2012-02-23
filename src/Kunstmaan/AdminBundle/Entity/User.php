@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * omnext user, can have different roles
@@ -36,6 +37,7 @@ class User extends BaseUser
     {
         parent::__construct();
         // your own logic
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -65,7 +67,7 @@ class User extends BaseUser
      */
     public function getGroupIds()
     {
-        $groups = $this->groups ?: $this->groups = new ArrayCollection();
+        $groups = $this->groups;
 
         $groupIds = array();
         if(count($groups) > 0) {
@@ -76,4 +78,14 @@ class User extends BaseUser
 
         return $groupIds;
     }
+
+    /**
+     * Gets the groups the user belongs to.
+     * 
+     * @return ArrayCollection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }    
 }
