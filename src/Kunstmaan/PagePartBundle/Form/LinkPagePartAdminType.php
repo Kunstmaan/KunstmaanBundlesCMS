@@ -15,6 +15,8 @@ class LinkPagePartAdminType extends AbstractType
     {
         $builder
             ->add('url', 'urlchooser', array( 'data_class' =>'Kunstmaan\PagePartBundle\Entity\LinkPagePart', 'required' => false))
+            ->add('openinnewwindow', 'checkbox', array('required' => false))
+            ->add('text', null, array('required' => false))
         ;
     }
 
