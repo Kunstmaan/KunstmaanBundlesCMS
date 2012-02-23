@@ -77,13 +77,13 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
             $subgal->setTranslatableLocale('nl');
             $manager->refresh($subgal);
-            $subgal->setName('Video');
+            $subgal->setName('Video\'s');
             $manager->persist($subgal);
             $manager->flush();
 
             $subgal->setTranslatableLocale('fr');
             $manager->refresh($subgal);
-            $subgal->setName('Video');
+            $subgal->setName('Vidéos');
             $manager->persist($subgal);
             $manager->flush();
 
