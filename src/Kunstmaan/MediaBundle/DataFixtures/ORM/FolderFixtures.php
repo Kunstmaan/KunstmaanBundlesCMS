@@ -68,7 +68,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
             $subgal = new VideoGallery($manager);
             $subgal->setParent($gal);
             $subgal->setName('Videos');
-            $gal->setTranslatableLocale('en');
+            $subgal->setTranslatableLocale('en');
             $subgal->setCanDelete(false);
             $subgal->setRel("video");
             $subgal->setSequencenumber(2);
@@ -77,20 +77,20 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
             $subgal->setTranslatableLocale('nl');
             $manager->refresh($subgal);
-            $subgal->setName('Video');
+            $subgal->setName('Video\'s');
             $manager->persist($subgal);
             $manager->flush();
 
             $subgal->setTranslatableLocale('fr');
             $manager->refresh($subgal);
-            $subgal->setName('Video');
+            $subgal->setName('Vidéos');
             $manager->persist($subgal);
             $manager->flush();
 
             $subgal = new SlideGallery($manager);
             $subgal->setParent($gal);
             $subgal->setName('Slides');
-            $gal->setTranslatableLocale('en');
+            $subgal->setTranslatableLocale('en');
             $subgal->setCanDelete(false);
             $subgal->setRel("slideshow");
             $subgal->setSequencenumber(3);
@@ -112,7 +112,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
             $subgal = new FileGallery($manager);
             $subgal->setParent($gal);
             $subgal->setName('Files');
-            $gal->setTranslatableLocale('en');
+            $subgal->setTranslatableLocale('en');
             $subgal->setCanDelete(false);
             $subgal->setRel("files");
             $subgal->setSequencenumber(4);
