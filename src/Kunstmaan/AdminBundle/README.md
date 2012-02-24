@@ -8,6 +8,8 @@ The KunstmaanAdminBundle is a base bundle and is required by other bundles like 
 
 View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanAdminBundle).
 
+[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanAdminBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminBundle)
+
 Installation requirements
 -------------------------
 You should be able to get Symfony 2 up and running before you can install the KunstmaanAdminBundle.
