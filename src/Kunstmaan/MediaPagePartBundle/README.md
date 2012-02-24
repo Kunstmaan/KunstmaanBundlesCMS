@@ -21,7 +21,7 @@ Installation is straightforward, add the following lines to your deps file:
 
 ```
 [KunstmaanPagePartBundle]
-    git=git@github.com:Kunstmaan/KunstmaanPagePartBundle.git
+    git=https://github.com/Kunstmaan/KunstmaanPagePartBundle.git
     target=/bundles/Kunstmaan/PagePartBundle
 ```
 
