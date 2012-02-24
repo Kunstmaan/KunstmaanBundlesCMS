@@ -8,6 +8,8 @@ You have to install this bundle in order to work with nodes and pagetypes.
 
 View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanAdminNodeBundle).
 
+[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanAdminNodeBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminNodeBundle)
+
 
 Installation requirements
 -------------------------
