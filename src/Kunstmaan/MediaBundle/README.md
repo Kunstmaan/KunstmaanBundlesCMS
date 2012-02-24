@@ -46,7 +46,7 @@ The KunstmaanMediaBundle depends on the hard work of the PHP and Symfony communi
 
 Installation instructions
 -------------------------
-Installation is straightforward, add the following lines to your deps file:
+Installation is straightforward, add the following lines to your deps file and running vendors install.
 
 ```
 [KunstmaanMediaBundle]
@@ -66,14 +66,9 @@ Add the KunstmaanMediaBundle to your AppKernel.php file:
 new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
 ```
 
-Contact
--------
-Kunstmaan (support@kunstmaan.be)
+Reporting an issue or a feature request
+---------------------------------------
 
-Download
---------
-You can also clone the project with Git by running:
+Issues and feature requests are tracked in the [Github issue tracker](https://github.com/Kunstmaan/KunstmaanMediaBundle/issues).
 
-```
-$ git clone git://github.com/Kunstmaan/KunstmaanMediaBundle
-```
+When reporting a bug, it may be a good idea to reproduce it in a basic project built using the Symfony Standard Edition to allow developers of the bundle to reproduce the issue by simply cloning it and following some steps.
