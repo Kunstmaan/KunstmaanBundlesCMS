@@ -76,6 +76,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
 
     function adaptQueryBuilder($querybuilder, $params=array()){
         parent::adaptQueryBuilder($querybuilder);
+        $querybuilder->andWhere('b.node NOT IN (select p.id from Kunstmaan\AdminNodeBundle\Entity\Node p where p.deleted=1)');
         $querybuilder->andWhere('b.lang = :lang');
         $querybuilder->setParameter('lang', $this->locale);
         /*FIXME: not going to fix it now, this list must first be converted to a version changes list
