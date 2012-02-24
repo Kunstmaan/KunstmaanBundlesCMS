@@ -21,7 +21,7 @@ Installation is straightforward, add the following lines to your deps file:
 
 ```
 [KunstmaanAdminNodeBundle]
-    git=git@github.com:Kunstmaan/KunstmaanAdminNodeBundle.git
+    git=https://github.com/Kunstmaan/KunstmaanAdminNodeBundle.git
     target=/bundles/Kunstmaan/AdminNodeBundle
 ```
 
