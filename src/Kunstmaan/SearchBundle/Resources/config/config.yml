@@ -14,7 +14,7 @@ foq_elastica:
     clients:
         default: { host: localhost, port: %searchport% }
     indexes:
-        website:
+        %searchindexname%:
             client: default
             types:
                 page:
