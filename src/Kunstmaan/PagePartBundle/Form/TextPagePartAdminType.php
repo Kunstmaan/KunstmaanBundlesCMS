@@ -14,7 +14,7 @@ class TextPagePartAdminType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('content', 'textarea', array( 'data_class' =>'Kunstmaan\PagePartBundle\Entity\TextPagePart', 'required' => false, 'attr' => array( 'class' => 'rich_editor' )))
+            ->add('content', 'textarea', array('required' => false, 'attr' => array( 'class' => 'rich_editor' )))
         ;
     }
 
