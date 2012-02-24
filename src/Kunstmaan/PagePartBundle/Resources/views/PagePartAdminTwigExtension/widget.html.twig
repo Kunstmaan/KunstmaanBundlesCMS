@@ -150,6 +150,7 @@
 
 	$(document).ready(function () {
 		$('#parts_{{pagepartadmin.context}}').sortable({
+			iframeFix: true,
 		    handle: '.prop_bar',
 		    cursor: 'move',
 		    placeholder: 'placeholder',
@@ -158,14 +159,21 @@
 		    //opacity: 0.4
 		    opacity: 1,
 			start: function(e, ui) {
-				$('.draggable').css('opacity', ".4");
-				$('.ui-sortable-helper .new_pagepart').slideUp("fast");
+				for ( instance in CKEDITOR.instances ){
+		            CKEDITOR.instances[instance].destroy();
+				}
+		        $('.draggable').css('opacity', ".4");
+				$('.ui-sortable-helper .new_pagepart').slideUp("fast");	
 			},
 			stop: function(e, ui) {
-				$('.draggable').css('opacity', "1");
+				$('.draggable').css('opacity', "1");	
+				$('.rich_editor').ckeditor();
 			}
+
 		    //containment: 'document'
-		});
+		});	
+		$("#parts_{{pagepartadmin.context}}").disableSelection();
+		
 	});
 
 </script>
