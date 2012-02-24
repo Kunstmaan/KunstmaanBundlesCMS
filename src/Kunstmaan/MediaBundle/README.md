@@ -3,10 +3,14 @@ KunstmaanMediaBundle by Kunstmaan
 
 About
 -----
-The KunstmaanMediaBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
-The KunstmaanMediaBundle handles various types of media for the KunstmaanAdminBundle on the fontend and administrator interface.
 
-View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanMediaBundle).
+While building websites for clients we have learned that almost every website benefits from a centralised management of multimedia assets. To facilitate our building process we have created this bundle to add this functionality with the least amount of hassle. Additionally, we want our websites to leverage external services as much as possible, so all video and presentation content is offloaded (manually) to external website.
+
+This bundle provides this centralised module for multimedia assets, and has built in providers for local images, [YouTube](http://www.youtube.com), [Vimeo](http://www.vimeo.com) and [Dailymotion](http://www.Dailymotion.com) video's, [Speakerdeck](http://speakerdeck.com/) and [Slideshare](http://www.slideshare.net/) presentations, and generic local files.
+
+No cental asset management module is useful without some pretty advanced image editing functionality. To provide this we have integrated the [Avairy](http://www.aviary.com/) image editing service right from the interface. This provides us with all the tools needed to manage images in a website, without the need of a Photoshop or other image editing tool on the administrators computer.
+
+View some screenshots on this bundles [github page](http://kunstmaan.github.com/KunstmaanMediaBundle).
 
 [![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanMediaBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanMediaBundle)
 
