@@ -1,101 +1,50 @@
-# Introducing [KunstmaanMediaBundle][KunstmaanMediaBundle]
+KunstmaanMediaBundle by Kunstmaan
+=================================
 
-De [KunstmaanMediaBundle][KunstmaanMediaBundle] is a symfony2 bundle used at [Kunstmaan][kunstmaan] to handle media, and media folders. It has objects to handle files, slides, videos and images and keeps them organised in folders.
+About
+-----
+The KunstmaanMediaBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
+The KunstmaanMediaBundle handles various types of media for the KunstmaanAdminBundle on the fontend and administrator interface.
 
-# Installing [KunstmaanMediaBundle][KunstmaanMediaBundle]
+View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanMediaBundle).
 
-## Add to your deps file:
+[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanMediaBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanMediaBundle)
 
-```bash
+
+Installation requirements
+-------------------------
+You should be able to get Symfony 2 up and running before you can install the KunstmaanMediaBundle.
+
+Installation instructions
+-------------------------
+Installation is straightforward, add the following lines to your deps file:
+
+```
 [KunstmaanMediaBundle]
     git=git@github.com:Kunstmaan/KunstmaanMediaBundle.git
-    target=bundles/Kunstmaan/MediaBundle
+    target=/bundles/Kunstmaan/MediaBundle
 ```
 
-## Dependencies:
+Register the Kunstmaan namespace in your autoload.php file:
 
-```bash
-[KunstmaanAdminBundle]
-    git=
-    target=
-
-[Imagine]
-    git=git://github.com/avalanche123/Imagine.git
-    target=/Imagine
-
-[AvalancheImagineBundle]
-    git=http://github.com/avalanche123/AvalancheImagineBundle.git
-    target=bundles/Avalanche/Bundle/ImagineBundle
-
-[gaufrette]
-    git=git://github.com/knplabs/Gaufrette.git
-    target=/gaufrette
-
-[KnpGaufretteBundle]
-    git=http://github.com/knplabs/KnpGaufretteBundle.git
-    target=/bundles/Knp/GaufretteBundle
+```
+'Kunstmaan'        => __DIR__.'/../vendor/bundles'
 ```
 
-## Add to appkernel.php:
+Add the KunstmaanMediaBundle to your AppKernel.php file:
 
-```bash
-$bundles = array(
-            ...
-            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-            new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
-            ...
-        );
+```
+new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
 ```
 
-## Add to autoload.php:
+Contact
+-------
+Kunstmaan (support@kunstmaan.be)
 
-```bash
-$loader->registerNamespaces(array(
-    ...
-    'Imagine'          => __DIR__.'/../vendor/Imagine/lib',
-    'Avalanche'        => __DIR__.'/../vendor/bundles',
-    'Gaufrette'        => __DIR__.'/../vendor/gaufrette/src',
-    'Kunstmaan'        => __DIR__.'/../vendor/bundles',
-    ...
-));
+Download
+--------
+You can also clone the project with Git by running:
+
 ```
-
-## Add to config.yml:
-
-```bash
-imports:
-   KunstmaanMediaBundle:
-        resource: @KunstmaanMediaBundle/Resources/config/config.yml
-
-orm:
-    entity_managers:
-        default:
-            mappings:
-                ...
-                KunstmaanMediaBundle: ~
-```    
-
-## Add to routing.yml:
-
-```bash
-KunstmaanMediaBundle:
-    resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"
-    prefix:   /
-    
-_imagine:
-    resource: .
-    type:     imagine    
-```    
-
-## Add to parameters.ini:
-
-```bash
-[parameters]
-    ...
-    cdnpath="http://example.com/"
-
-```    
-
-       
-[KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
-[kunstmaan]: http://www.kunstmaan.be "Kunstmaan"                
+$ git clone git://github.com/Kunstmaan/KunstmaanMediaBundle
+```
