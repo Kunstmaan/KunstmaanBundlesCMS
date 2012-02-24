@@ -20,7 +20,7 @@ Installation is straightforward, add the following lines to your deps file:
 
 ```
 [KunstmaanSearchBundle]
-    git=git@github.com:Kunstmaan/KunstmaanSearchBundle.git
+    git=https://github.com/Kunstmaan/KunstmaanSearchBundle.git
     target=/bundles/Kunstmaan/SearchBundle
 ```
 
