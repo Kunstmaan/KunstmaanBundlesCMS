@@ -8,6 +8,9 @@ You have to install this bundle in order to be able to add pageparts to nodes in
 
 View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanPagePartBundle).
 
+[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanPagePartBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanPagePartBundle)
+
+
 Installation requirements
 -------------------------
 You should be able to get Symfony 2 up and running before you can install the KunstmaanPagePartBundle.
