@@ -32,9 +32,6 @@ The KunstmaanMediaBundle is licensed under the MIT License.
     IN THE SOFTWARE.
 
 
-[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanMediaBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanMediaBundle)
-
-
 Installation requirements
 -------------------------
 
@@ -65,6 +62,13 @@ Add the KunstmaanMediaBundle to your AppKernel.php file:
 ```
 new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
 ```
+
+Known issues
+------------
+
+This is the first public alpha release of this bundle. Sensible unit tests are still missing, and the coupling with our other bundles is still too tight. Expect these issues to be solved by version v0.2
+
+Continuous testing on Travis CI is implemented: [![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanMediaBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanMediaBundle)
 
 Reporting an issue or a feature request
 ---------------------------------------
