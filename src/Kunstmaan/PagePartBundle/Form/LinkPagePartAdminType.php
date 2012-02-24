@@ -14,7 +14,9 @@ class LinkPagePartAdminType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('url', 'urlchooser', array('required' => false))
+            ->add('url', 'urlchooser', array( 'required' => false))
+            ->add('openinnewwindow', 'checkbox', array('required' => false))
+            ->add('text', null, array('required' => false))
         ;
     }
 

@@ -17,12 +17,22 @@ class LinkPagePart {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(type="string", nullable="true")
      */
     protected $url;
-    
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $openinnewwindow;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $text;
+
     public function __construct() {
     }
 
@@ -51,8 +61,43 @@ class LinkPagePart {
     public function getUrl(){
     	return $this->url;
     }
-    
-    
+
+    /**
+     * Get opennewwindow
+     *
+     * @return bool
+     */
+    public function getOpenInNewWindow() {
+    	return $this->openinnewwindow;
+    }
+
+    /**
+     * Set openwinnewwindow
+     *
+     * @param bool $link
+     */
+    public function setOpenInNewWindow($link) {
+    	$this->openinnewwindow = $link;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     */
+    public function setText($text) {
+    	$this->text = $text;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText() {
+    	return $this->text;
+    }
+
     public function __toString(){
         return "LinkPagePart";
     }
