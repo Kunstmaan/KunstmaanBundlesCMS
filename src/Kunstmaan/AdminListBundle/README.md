@@ -8,6 +8,8 @@ You have to install this bundle in order to work with lists in the administrator
 
 View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanAdminListBundle).
 
+[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanAdminListBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminListBundle)
+
 
 Installation requirements
 -------------------------
