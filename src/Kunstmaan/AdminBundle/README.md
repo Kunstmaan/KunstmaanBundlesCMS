@@ -6,6 +6,8 @@ About
 The KunstmaanAdminBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
 The KunstmaanAdminBundle is a base bundle and is required by other bundles like KunstmaanAdminNodeBundle, KunstmaanAdminListBundle, etc.
 
+View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanAdminBundle).
+
 Installation requirements
 -------------------------
 You should be able to get Symfony 2 up and running before you can install the KunstmaanAdminBundle.
