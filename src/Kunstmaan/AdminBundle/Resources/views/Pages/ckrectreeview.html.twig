@@ -1,6 +1,6 @@
 <li class="{% if node.active %}jstree-open{% endif %} {% if nodemenu.current is not null and nodemenu.current.id == node.id  %}active{% endif %}" rel="page">
     <a onclick="
-    	window.opener.CKEDITOR.tools.callFunction(2, '{{ url("_slug", { "slug": node.slug }) }}'); window.close();
+    	window.opener.CKEDITOR.tools.callFunction(2, '{{ path("_slug", { "slug": node.slug }) }}'); window.close();
     " class="item" href="#">{{ node.title }}</a>
     <ul>
         {% for node in node.children %}
