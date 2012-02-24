@@ -99,8 +99,8 @@ class NodeRepository extends EntityRepository
 		if($parent){
 			$parentNodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityname' => ClassLookup::getClass($parent)));
 			if($parentNodeVersion){
-				
 				$node->setParent($parentNodeVersion->getNodeTranslation()->getNode());
+				$node->setRoles($parentNodeVersion->getNodeTranslation()->getNode()->getRoles());
 			}
 		}
 		$em->persist($node);
