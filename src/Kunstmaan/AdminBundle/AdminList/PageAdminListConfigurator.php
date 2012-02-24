@@ -19,11 +19,13 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
 
     protected $permission;
     protected $user;
+    protected $locale;
 
-    public function __construct($user, $permission)
+    public function __construct($user, $permission, $locale)
     {
         $this->permission   = $permission;
         $this->user         = $user;
+        $this->locale		= $locale;
     }
 
 
@@ -45,12 +47,12 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
 
     public function canEdit()
     {
-        return false;
+        return true;
     }
 
     public function getEditUrlFor($item)
     {
-        return "";
+        return array('path' => 'KunstmaanAdminBundle_pages_edit', 'params' => array( 'id' => $item->getNode()->getId()));
     }
     
     public function canAdd()
@@ -74,7 +76,8 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
 
     function adaptQueryBuilder($querybuilder, $params=array()){
         parent::adaptQueryBuilder($querybuilder);
-
+        $querybuilder->andWhere('b.lang = :lang');
+        $querybuilder->setParameter('lang', $this->locale);
         /*FIXME: not going to fix it now, this list must first be converted to a version changes list
         $querybuilder->andWhere('b.id IN (
             SELECT
