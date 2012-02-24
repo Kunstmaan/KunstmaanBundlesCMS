@@ -212,8 +212,13 @@ class PagesController extends Controller
         if(is_string($delete) && $delete == 'true'){
         	//remove node and page
         	$nodeparent = $node->getParent();
-        	$deletecommand = new DeleteCommand($em, $user);
-        	$deletecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
+        	$node->setDeleted(true);
+        	$updatecommand = new EditCommand($em, $user);
+        	$updatecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $node));
+        	$children = $node->getChildren();
+        	$this->deleteNodeChildren($em, $user, $locale, $children, $page);
+        	//$deletecommand = new DeleteCommand($em, $user);
+        	//$deletecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
         	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId())));
         }
 
@@ -312,6 +317,16 @@ class PagesController extends Controller
             $viewVariables['permissionadmin'] = $permissionadmin;
         }
         return $viewVariables;
+    }
+    
+    private function deleteNodeChildren($em, $user, $locale, $children, $page){
+    	foreach($children as $child){
+	    	$child->setDeleted(true);
+	    	$updatecommand = new EditCommand($em, $user);
+	    	$updatecommand->execute("deleted child for page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $child));
+	    	$children2 = $child->getChildren();
+    		$this->deleteNodeChildren($em, $user, $locale, $children2, $page);
+    	}
     }
     
     /**
