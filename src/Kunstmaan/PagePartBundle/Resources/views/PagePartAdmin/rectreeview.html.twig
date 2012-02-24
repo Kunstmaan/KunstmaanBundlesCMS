@@ -1,3 +1,4 @@
+{% if node.node.deleted ==false %}
 <li class="{% if node.active %}jstree-open{% endif %} {% if nodemenu.current is not null and nodemenu.current.id == node.id  %}active{% endif %}" rel="page">
     <a onclick="handleOK({ path:'{{ path('_slug', { 'slug': node.slug }) }}', id:'{{ node.id }}' });return false;" class="item" href="#">{{ node.title }}</a>
     <ul>
@@ -6,3 +7,4 @@
         {% endfor %}
     </ul>
 </li>
+{% endif %}
