@@ -2,7 +2,7 @@ KunstmaanFormBundle by Kunstmaan
 =================================
 
 About
-------
+-----
 The KunstmaanFormBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
 You have to install this bundle in order to display list of form submissions in the administrator area of your website.
 
