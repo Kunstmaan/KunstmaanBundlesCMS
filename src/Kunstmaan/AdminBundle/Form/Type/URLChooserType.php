@@ -21,7 +21,7 @@ class URLChooserType extends AbstractType {
 	}
 
 	public function getParent(array $options) {
-		return 'uri';
+		return 'text';
 	}
 
 	public function getName() {
