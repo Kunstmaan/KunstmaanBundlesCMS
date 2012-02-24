@@ -21,7 +21,7 @@ Installation is straightforward, add the following lines to your deps file:
 
 ```
 [KunstmaanViewBundle]
-    git=git@github.com:Kunstmaan/KunstmaanViewBundle.git
+    git=https://github.com/Kunstmaan/KunstmaanViewBundle.git
     target=/bundles/Kunstmaan/ViewBundle
 ```
 
