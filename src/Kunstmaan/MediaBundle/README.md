@@ -1,5 +1,5 @@
-KunstmaanMediaBundle by Kunstmaan
-=================================
+KunstmaanMediaBundle
+====================
 
 While building websites for clients we have learned that almost every website benefits from a centralised management of multimedia assets. To facilitate our building process we have created this bundle to add this functionality with the least amount of hassle. Additionally, we want our websites to leverage external services as much as possible, so all video and presentation content is offloaded (manually) to external website.
 
@@ -37,7 +37,12 @@ The KunstmaanMediaBundle is licensed under the MIT License.
 
 Installation requirements
 -------------------------
-You should be able to get Symfony 2 up and running before you can install the KunstmaanMediaBundle.
+
+The KunstmaanMediaBundle depends on the hard work of the PHP and Symfony community and uses the following bundles. Please refer to their documentation for installation and configuration instructions. 
+
+* [Imagine](https://github.com/avalanche123/Imagine)
+* [AvalancheImagineBundle](https://github.com/avalanche123/AvalancheImagineBundle)
+* [Gaufrette](https://github.com/KnpLabs/Gaufrette)
 
 Installation instructions
 -------------------------
