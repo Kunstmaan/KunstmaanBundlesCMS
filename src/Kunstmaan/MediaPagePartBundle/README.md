@@ -6,6 +6,8 @@ About
 The KunstmaanPagePartBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
 You have to install this bundle in order to be able to add pageparts to nodes in the administrator interface.
 
+View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanPagePartBundle).
+
 Installation requirements
 -------------------------
 You should be able to get Symfony 2 up and running before you can install the KunstmaanPagePartBundle.
