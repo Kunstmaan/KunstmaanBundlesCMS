@@ -62,6 +62,7 @@ class Node
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->nodeTranslations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->deleted = false;
     }
 
     /**
