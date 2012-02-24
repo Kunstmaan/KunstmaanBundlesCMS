@@ -103,8 +103,9 @@
 		        <a onclick="$('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" href="#" class="btn secondary">Cancel</a>
 		      </div>
 		    </div>
+		    
             <div class="new_pagepart">
-              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{{ loop.index-1 }}')">
+              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index !=1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
 	            <option value="">Add a pagepart</option>
 	            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
 	              <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
@@ -115,7 +116,7 @@
     {% else %}
     	<section class="draggable pagepartcontainer">
             <div class="new_pagepart">
-              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{{ loop.index-1 }}')">
+              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index != 1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
 	            <option value="">Add a pagepart</option>
 	            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
 	              <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
@@ -135,6 +136,7 @@
             }
             jQuery('#{{pagepartadmin.context}}_addposition').val(position);
             jQuery(select).attr('name', 'addpagepart_{{pagepartadmin.context}}');
+            var newid = id+1;
             jQuery('#pageadminform')[0].action="?edit="+id+"#pagepart"+id;
             jQuery('#pageadminform')[0].submit();
             return false;
