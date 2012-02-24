@@ -21,7 +21,7 @@ Installation is straightforward, add the following lines to your deps file:
 
 ```
 [KunstmaanAdminListBundle]
-    git=git@github.com:Kunstmaan/KunstmaanAdminListBundle.git
+    git=https://github.com/Kunstmaan/KunstmaanAdminListBundle.git
     target=/bundles/Kunstmaan/AdminListBundle
 ```
 
