@@ -4,7 +4,7 @@
 {% block title %}Zoek{% endblock %}
 
 {% block content %}
-	<h1>{{ 'Zoekresultaten' | trans }}</h1> 
+	<h1>{{ 'Search results' | trans }}</h1>
 	{% if error %}
 			<h2>{{ error }}</h2>
 	{% else %}
@@ -12,14 +12,14 @@
 		{% if results %}
 			{% set count=results.count %}
 		{% endif %}
-		 
-		 
-		<h2>{{ count }} {% if count == 1 %}resultaat{% else %}resultaten{% endif %} voor <strong>{{ query }}</strong></h2>
-	    
+
+
+		<h2>{{ count }} {% if count == 1 %}{{ 'result' | trans }}{% else %}{{ 'results' | trans }}{% endif %} {{ 'for' | trans }} <strong>{{ query }}</strong></h2>
+
 	    {% if results.getNbPages() > 1 %}
 	        <div class="paginatie clearfix">
 	            {% if results.hasPreviousPage() %}
-	                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getPreviousPage() }) }}">{{ 'Vorige' | trans}}</a></p>
+	                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getPreviousPage() }) }}">{{ 'Previous' | trans}}</a></p>
 	            {% endif %}
 	                <ul class="clearfix">
 	                    {% for i in 1..results.getNbPages()%}
@@ -27,11 +27,11 @@
 	                    {% endfor %}
 	                </ul>
 	            {% if results.hasNextPage() %}
-	                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getNextPage() }) }}">{{ 'Volgende' | trans}}</a></p>
+	                <p><a href="{{ path(app.request.attributes.get('_route'), { 'slug': slug, 'query': query, 'page': results.getNextPage() }) }}">{{ 'Next' | trans}}</a></p>
 	            {% endif %}
 	        </div>
 	    {% endif %}
-	    
+
 	    {% if results %}
 	    	{% for result in results %}
 	        	<h3><a href="{{ path('_slug', { 'slug': result.slug }) }}">{{ result.title }}</a></h3>
@@ -49,4 +49,3 @@
 	    {% endif %}
     {% endif %}
 {% endblock %}
-				

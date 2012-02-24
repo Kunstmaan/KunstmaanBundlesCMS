@@ -11,7 +11,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\BancontactBundle\Form\ContentPageAdminType;
 use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Kunstmaan\SearchBundle\Entity\SearchedFor;
@@ -112,27 +111,27 @@ class SearchPage implements PageIFace, DeepCloneableIFace {
 
     public function service($container, Request $request, &$result) {
 		$query = $request->get("query");
-		
+
 		if($query and $query != ""){
 		    //use the elasitica service to search for results
 		    $finder = $container->get('foq_elastica.finder.website.page');
-	
+
 		    $boolQuery = new \Elastica_Query_Bool();
-	
+
 		    $languageQuery = new \Elastica_Query_Term(array('lang' => $request->getLocale()));
 		    $boolQuery->addMust($languageQuery);
-	
+
 		    $searchQuery = new \Elastica_Query_QueryString($query);
 		    $boolQuery->addMust($searchQuery);
-	
+
 		    $parentNode = $container->get('doctrine')->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this->parent);
 		    if($parentNode != null) {
 			$parentQuery = new \Elastica_Query_Wildcard('parents', $parentNode->getId());
 			$boolQuery->addMust($parentQuery);
 		    }
-	
+
 		    $queryObj = \Elastica_Query::create($boolQuery);
-	
+
 		    $queryObj->setHighlight(array(
 			'pre_tags' => array('<em class="highlight">'),
 			'post_tags' => array('</em>'),
@@ -147,22 +146,22 @@ class SearchPage implements PageIFace, DeepCloneableIFace {
 			    )
 			)
 		    ));
-	
+
 		    $pages = $finder->findPaginated($queryObj);
 		    $pages->setMaxPerPage(5);
-	
+
 		    $numpage = intval($request->get('page'));
 		    if (!isset($pages)) {
 			$numpage = 1;
 		    }
-	
+
 		    $pages->setCurrentPage($numpage);
-		    
+
 		    $searchedfor = new SearchedFor($query, $this);
 		    $em = $container->get('doctrine')->getEntityManager();
 		    $em->persist($searchedfor);
 		    $em->flush();
-	
+
 		    $result['query'] = $query;
 		    $result['results'] = $pages;
 		    $result['error'] = "";
