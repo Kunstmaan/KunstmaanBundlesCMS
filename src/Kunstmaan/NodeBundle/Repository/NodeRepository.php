@@ -30,10 +30,11 @@ class NodeRepository extends EntityRepository
                    ->setParameter(2, $user->getGroupIds());*/
 	    $qb = $this->createQueryBuilder('b')
 	               ->select('b')
-                   ->where('b.parent is null')
+                   ->where('b.parent is null and b.deleted = 0')
                    ->andWhere('b.id IN (
                         SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
                    )')
+                   
 	               ->addOrderBy('b.sequencenumber', 'ASC')
 	               ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
                    ->setParameter(2, '%|'.$permission.':1|%');
