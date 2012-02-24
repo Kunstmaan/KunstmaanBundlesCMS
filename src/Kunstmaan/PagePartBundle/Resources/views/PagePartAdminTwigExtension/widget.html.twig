@@ -105,7 +105,6 @@
 		    </div>
 		    
             <div class="new_pagepart">
-            	{{ loop.length }}
               <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index !=1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
 	            <option value="">Add a pagepart</option>
 	            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
@@ -117,7 +116,6 @@
     {% else %}
     	<section class="draggable pagepartcontainer">
             <div class="new_pagepart">
-            {{ loop.length }}
               <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index != 1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
 	            <option value="">Add a pagepart</option>
 	            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
