@@ -47,7 +47,7 @@ Installation is straightforward, add the following lines to your deps file and r
 
 ```
 [KunstmaanMediaBundle]
-    git=https://roderik@github.com/Kunstmaan/KunstmaanMediaBundle.git
+    git=https://github.com/Kunstmaan/KunstmaanMediaBundle.git
     target=/bundles/Kunstmaan/MediaBundle
 ```
 
