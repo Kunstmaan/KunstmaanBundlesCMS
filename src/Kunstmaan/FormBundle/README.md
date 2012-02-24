@@ -8,6 +8,8 @@ You have to install this bundle in order to display list of form submissions in 
 
 View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanFormBundle).
 
+[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanFormBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanFormBundle)
+
 Installation requirements
 -------------------------
 You should be able to get Symfony 2 up and running before you can install the KunstmaanFormBundle.
