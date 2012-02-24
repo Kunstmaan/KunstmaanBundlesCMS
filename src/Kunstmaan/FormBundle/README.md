@@ -20,7 +20,7 @@ Installation is straightforward, add the following lines to your deps file:
 
 ```
 [KunstmaanFormBundle]
-    git=git@github.com:Kunstmaan/KunstmaanFormBundle.git
+    git=https://github.com/Kunstmaan/KunstmaanFormBundle.git
     target=/bundles/Kunstmaan/FormBundle
 ```
 
