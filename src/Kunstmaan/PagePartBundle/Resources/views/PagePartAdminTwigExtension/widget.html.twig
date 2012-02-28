@@ -21,6 +21,7 @@
     	<section class="draggable pagepartcontainer" id="{{pagepartref.id}}_container" >
 	        <script>
 	            function delete_{{pagepartref.id}}(){
+	            	isEdited = true;
 	                document.getElementById('{{pagepartref.id}}_deleted').value = 'true';
 	                jQuery('#{{pagepartref.id}}_container').slideUp(function(){
 	                    jQuery('#pagepartsdeletedcontainer').append(jQuery('#{{pagepartref.id}}_container'));
@@ -28,6 +29,7 @@
 	                return true;
 	            }
 	            function moveUp_{{pagepartref.id}}(){
+		            isEdited = true;
 	                var $parent = jQuery('#{{pagepartref.id}}_container');
 	                var $parentprev = $parent.prev();
 	                $parent.swap({
@@ -43,6 +45,7 @@
 	                return false;
 	            }
 	            function moveDown_{{pagepartref.id}}(){
+	            	isEdited = true;
 	                var $parent = jQuery('#{{pagepartref.id}}_container');
 	                var $parentnext = $parent.next();
 	                $parent.swap({
@@ -58,6 +61,7 @@
 	                return false;
 	            }
 	            function edit_{{pagepartref.id}}(){
+	            	isEdited = true;
 	                document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
 	                document.getElementById('{{pagepartref.id}}_edit').style.display = '';
                     window.activeEdit = '{{pagepartref.id}}';
@@ -130,7 +134,7 @@
 <div class="clearfix">
     <script type="text/javascript">
         function doAddpagepart_{{pagepartadmin.context}}(select, id){
-            var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+1;
+        	var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+1;
             if(position<0){
 				position = 0;
             }
