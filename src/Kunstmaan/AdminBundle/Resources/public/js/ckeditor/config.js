@@ -8,9 +8,9 @@ CKEDITOR.editorConfig = function( config )
     config.skin = 'kCK';
     config.startupFocus = false;
     config.height = 500;
-    config.filebrowserBrowseUrl = '/app_dev.php/en/admin/pages/ckselecturl'
-    config.filebrowserImageBrowseUrl = '/app_dev.php/en/admin/media/ckeditor';
-    config.filebrowserImageBrowseLinkUrl = '/app_dev.php/en/admin/media/ckeditor';
+    //config.filebrowserBrowseUrl = '/en/admin/pages/ckselecturl'
+    //config.filebrowserImageBrowseUrl = '/en/admin/media/ckeditor';
+    //config.filebrowserImageBrowseLinkUrl = '/en/admin/media/ckeditor';
     config.filebrowserImageUploadUrl = '';
     config.toolbar_Full =
             [
