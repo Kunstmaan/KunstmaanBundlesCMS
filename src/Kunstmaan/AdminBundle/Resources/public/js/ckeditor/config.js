@@ -3,7 +3,7 @@ Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
-CKEDITOR.editorConfig = function( config )
+/*CKEDITOR.editorConfig = function( config )
 {
     config.skin = 'kCK';
     config.startupFocus = false;
@@ -37,8 +37,8 @@ CKEDITOR.editorConfig = function( config )
                  { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
                  { name: 'colors',      items : [ 'TextColor','BGColor' ] },
                  { name: 'tools',       items : [ 'Maximize', 'ShowBlocks','-','About' ] }*/
-            ];
+           // ];
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-};
+//};
