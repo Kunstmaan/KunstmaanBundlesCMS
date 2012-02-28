@@ -114,7 +114,7 @@ class SearchPage implements PageIFace, DeepCloneableIFace {
 
 		if($query and $query != ""){
 		    //use the elasitica service to search for results
-		    $finder = $container->get('foq_elastica.finder.website.page');
+		    $finder = $container->get('foq_elastica.finder.'.$container->getParameter('searchindexname').'.page');
 
 		    $boolQuery = new \Elastica_Query_Bool();
 
