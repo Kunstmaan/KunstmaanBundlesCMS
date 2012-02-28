@@ -1,6 +1,22 @@
 {% extends 'KunstmaanAdminBundle:Pages:index.html.twig' %}
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
+{% block extrajavascript %}
+	 <script type=text/javascript>
+		var isEdited = false;
+
+		window.onbeforeunload = doUnload;
+	 	
+    	function doUnload(){
+    		//$('#quitpagemodal').modal('show');
+    		//var t = setTimeout(5000);
+    		if(isEdited){
+    			return 'You haven\'t saved this page, are you sure you want to close it?'; 
+        	}
+        }
+	</script>
+{% endblock %}
+
 {% block subbreadcrumb %}
 	<li><a href="{{ path('KunstmaanAdminBundle_pages') }}">{{ 'pages.title' | trans }}</a></li>
     {% for node in nodemenu.breadCrumb %}
@@ -16,6 +32,19 @@
 {% endblock %}
 
 {% block content %}
+	<div id="quitpagemodal" class="modal hide fade">
+				<div class="modal-header">
+					<a href="#" class="close">×</a>
+					<h3>Are you sure you want to unpublish this page?</h3>
+				</div>
+				<div class="modal-body">
+					<p>If you do this, the page will be offline!</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#" onClick="iets=true;" class="btn danger">Unpublish</a>
+					<a href="#" class="btn cancel">Cancel</a>
+				</div>
+	</div>
     <form id="pageadminform" action="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
     <h1>{{ page.title }} {% if draft %} <small>Draft version (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)</small> {% else %} <small>Public version {% if draftNodeVersion is not null %} (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)</small> {% endif %} {% endif %} </h1>
     <div class="sub_actions">
