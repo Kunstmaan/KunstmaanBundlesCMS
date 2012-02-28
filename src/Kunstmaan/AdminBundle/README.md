@@ -20,7 +20,7 @@ Installation is straightforward, add the following lines to your deps file:
 
 ```
 [KunstmaanAdminBundle]
-    git=https://github.com/Kunstmaan/KunstmaanAdminBundle.git
+    git=git@github.com:Kunstmaan/KunstmaanAdminBundle.git
     target=/bundles/Kunstmaan/AdminBundle
 ```
 
