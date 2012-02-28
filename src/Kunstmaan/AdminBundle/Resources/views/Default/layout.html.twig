@@ -58,6 +58,12 @@
     <script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/adapters/jquery.js') }}"></script>
     <script type=text/javascript>
+    	CKEDITOR.editorConfig = function( config )
+    	{
+        	config.filebrowserBrowseUrl = '{{ path('KunstmaanAdminBundle_ckselecturl') }}'
+        	config.filebrowserImageBrowseUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
+        	config.filebrowserImageBrowseLinkUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
+    	};
 	    CKEDITOR.replaceClass = 'rich_editor';
 	</script>
     <!-- Le fav and touch icons -->
