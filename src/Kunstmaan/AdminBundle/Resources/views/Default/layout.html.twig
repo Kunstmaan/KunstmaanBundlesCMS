@@ -60,9 +60,25 @@
     <script type=text/javascript>
     	CKEDITOR.editorConfig = function( config )
     	{
+    		config.skin = 'kCK';
+    	    config.startupFocus = false;
+    	    config.height = 500;
         	config.filebrowserBrowseUrl = '{{ path('KunstmaanAdminBundle_ckselecturl') }}'
         	config.filebrowserImageBrowseUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
         	config.filebrowserImageBrowseLinkUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
+        	config.filebrowserImageUploadUrl = '';
+            config.toolbar_Full =
+                    [
+                        { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike', '-', 'Subscript','Superscript' ] },
+                        { name: 'lists', items : [ 'NumberedList','BulletedList' ] },
+                        { name: 'dents', items : [ 'Outdent','Indent' ] },
+                        { name: 'links', items : [ 'Link','Unlink' ] },
+                        { name: 'insert', items : [ 'Image', 'SpecialChar' ] },
+                        { name: 'format', items : [ 'Format' ] },
+                        { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+                        { name: 'editing', items : [ 'Find','Replace','-','SelectAll', 'RemoveFormat' ] },
+                        { name: 'document', items : [ 'Source' ] }
+                    ];
     	};
 	    CKEDITOR.replaceClass = 'rich_editor';
 	</script>
