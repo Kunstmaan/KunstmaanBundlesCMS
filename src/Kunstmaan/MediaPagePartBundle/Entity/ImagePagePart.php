@@ -25,14 +25,14 @@ class ImagePagePart {
      * @ORM\Column(type="string", nullable=true)
      */
     protected $link;
-    
+
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $openinnewwindow;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $alttext;
 
@@ -71,7 +71,7 @@ class ImagePagePart {
     public function getOpenInNewWindow() {
     	return $this->openinnewwindow;
     }
-    
+
     /**
      * Set openwinnewwindow
      *
@@ -80,7 +80,7 @@ class ImagePagePart {
     public function setOpenInNewWindow($link) {
     	$this->openinnewwindow = $link;
     }
-    
+
     /**
      * Set link
      *
