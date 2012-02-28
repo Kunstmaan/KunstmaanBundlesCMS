@@ -122,6 +122,7 @@ class SearchPage implements PageIFace, DeepCloneableIFace {
 		    $boolQuery->addMust($languageQuery);
 
 		    $searchQuery = new \Elastica_Query_QueryString($query);
+		    $searchQuery->setDefaultField('content');
 		    $boolQuery->addMust($searchQuery);
 
 		    $parentNode = $container->get('doctrine')->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this->parent);
