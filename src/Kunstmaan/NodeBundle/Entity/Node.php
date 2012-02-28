@@ -38,7 +38,7 @@ class Node
      * @ORM\OrderBy({"sequencenumber" = "ASC"})
      */
     protected $children;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="NodeTranslation", mappedBy="node")
      */
@@ -48,12 +48,12 @@ class Node
      * @ORM\Column(type="array", nullable=false)
      */
     protected $roles;
-    
+
     /**
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
-    
+
     /**
      * @ORM\Column(type="string")
      */
@@ -68,7 +68,7 @@ class Node
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -84,13 +84,18 @@ class Node
     }
 
     public function getChildren() {
-        return $this->children;
+        return $this->children->filter( function($entry) {
+		       if ($entry->isDeleted()) {
+		           return false;
+		       }
+		       return true;
+		    });
     }
 
     public function setChildren($children) {
         $this->children = $children;
     }
-    
+
     /**
      * Add children
      *
@@ -106,15 +111,15 @@ class Node
             $this->children->setInitialized(true);
         }
     }
-    
+
     public function getNodeTranslations() {
     	return $this->nodeTranslations;
     }
-    
+
     public function setNodeTranslations($nodeTranslations) {
     	$this->nodeTranslations = $nodeTranslations;
     }
-    
+
     public function getNodeTranslation($lang){
     	foreach($this->nodeTranslations as $nodeTranslation){
     		if($lang == $nodeTranslation->getLang()){
@@ -123,7 +128,7 @@ class Node
     	}
     	return null;
     }
-    
+
     /**
      * Add nodeTranslation
      *
@@ -133,7 +138,7 @@ class Node
     	$this->nodeTranslations[] = $nodeTranslation;
     	$nodeTranslation->setNode($this);
     }
-    
+
     public function disableNodeTranslationsLazyLoading() {
     	if (is_object($this->nodeTranslations)) {
     		$this->nodeTranslations->setInitialized(true);
@@ -152,7 +157,7 @@ class Node
     /**
      * Get parent
      *
-     * @return integer 
+     * @return integer
      */
     public function getParent() {
         return $this->parent;
@@ -170,7 +175,7 @@ class Node
     /**
      * Get sequencenumber
      *
-     * @return integer 
+     * @return integer
      */
     public function getSequencenumber() {
         return $this->sequencenumber;
@@ -195,8 +200,8 @@ class Node
     }
 
 
-    
-    
+
+
     /**
      * Is online
      *
@@ -205,7 +210,7 @@ class Node
     public function isDeleted() {
     	return $this->deleted;
     }
-    
+
     /**
      * Set online
      *
@@ -214,7 +219,7 @@ class Node
     public function setDeleted($deleted) {
     	$this->deleted = $deleted;
     }
-    
+
     /**
      * Set refEntityname
      *
@@ -223,7 +228,7 @@ class Node
     public function setRefEntityname($refEntityname) {
     	$this->refEntityname = $refEntityname;
     }
-    
+
     /**
      * Get refEntityname
      *
@@ -236,7 +241,7 @@ class Node
     public function getDefaultAdminType($container) {
         return new NodeAdminType($container);
     }
-    
+
     /**
      * @ORM\PrePersist
      */
