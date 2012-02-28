@@ -16,6 +16,16 @@
 	{% if app.request.get('edit') is defined and app.request.get('edit') !="" %}
 		{% set editpagepart = app.request.get('edit') + 2 %}
 	{% endif %}
+	<div class="clearfix" style="padding-bottom: 30px;">
+		<div style="position:absolute; right: 20px;">
+	              <select style="width: 150px;" onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
+		            <option value="">Add a pagepart</option>
+		            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+		              <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+		            {% endfor %}
+	              </select>
+	    </div>
+    </div>
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
     	<section class="draggable pagepartcontainer" id="{{pagepartref.id}}_container" >
@@ -114,7 +124,7 @@
             </div>
         </section>
     {% else %}
-    	<section class="draggable pagepartcontainer">
+    	{#<section class="draggable pagepartcontainer">
             <div class="new_pagepart">
               <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index != 1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
 	            <option value="">Add a pagepart</option>
@@ -123,7 +133,7 @@
 	            {% endfor %}
               </select>
             </div>
-        </section>
+        </section>#}
     {% endfor %}
 </div>
 <input type="hidden" id="{{pagepartadmin.context}}_addposition" name="{{pagepartadmin.context}}_addposition" value="" />
