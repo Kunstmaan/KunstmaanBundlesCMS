@@ -166,19 +166,24 @@
         <a onclick="$('#delete-page-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
       </div>
     </div>
-        <ul class="tabs" data-tabs="tabs">
+      <ul class="tabs" data-tabs="tabs">
         	{% for pagepartadmin in pagepartadmins %}
-        	      	 <li {% if loop.first %} class="active" {% endif %}><a href="#pageparts{{ loop.index }}">{{ pagepartadmin.name }}</a></li>
+        			{% set pagepartstab = 'pageparts'~loop.index %}
+        			<li onClick="jQuery('#currenttab').val('pageparts{{ loop.index }}');" {% if currenttab == pagepartstab %} class="active" {% endif %}>
+        	      		 <a href="#pageparts{{ loop.index }}">{{ pagepartadmin.name }}</a>
+        	         </li>
         	{% endfor %}
             {% if is_granted('ROLE_PERMISSIONMANAGER') %}
-            <li><a href="#permissions">{{ 'form.permissions' | trans }}</a></li>
+            <li {% if currenttab == 'permissions' %} class="active" {% endif %} onClick="jQuery('#currenttab').val('permissions');"><a href="#permissions">{{ 'form.permissions' | trans }}</a></li>
             {% endif %}
-            <li><a href="#seo">SEO</a></li>
-            <li><a href="#versions">Versions</a></li>
+            <li {% if currenttab == 'seo' %} class="active" {% endif %} onClick="jQuery('#currenttab').val('seo');"><a href="#seo">SEO</a></li>
+            <li {% if currenttab == 'versions' %} class="active" {% endif %} onClick="jQuery('#currenttab').val('versions');"><a href="#versions">Versions</a></li>
         </ul>
         <div id="my-tab-content" class="tab-content">
+        	<input type="hidden" name="currenttab" id="currenttab" value="{{ currenttab }}">
             {% for pagepartadmin in pagepartadmins %}
-	        	<div class="{% if loop.first %} active {% endif %} tab-pane" id="pageparts{{ loop.index }}">
+            	{% set pagepartstab = 'pageparts'~loop.index %}
+	        	<div class="{% if currenttab == pagepartstab %}active{% endif %} tab-pane" id="pageparts{{ loop.index }}">
 	        		{% if propertiesform is not defined %}
 	        			{% set propertiesform = true %}
 		        		<div id="properties">
@@ -197,7 +202,7 @@
         	{% endfor %}
 
             {% if is_granted('ROLE_PERMISSIONMANAGER') %}
-            <div class="tab-pane" id="permissions">
+            <div class="{% if currenttab == 'permissions' %}active{% endif %} tab-pane" id="permissions">
                 {{ permissionsadmin_widget(permissionadmin, form) }}
             </div>
             {% endif %}
@@ -224,7 +229,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane" id="versions">
+            <div class="{% if currenttab == 'versions' %}active{% endif %} tab-pane" id="versions">
               <table class="bordered-table zebra-striped">
                     <thead>
                     <tr>
@@ -246,7 +251,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane" id="seo">
+            <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
               	<div id="properties">
 				    			<div id="prop_wrp">
 					    			<div class="input_prop">

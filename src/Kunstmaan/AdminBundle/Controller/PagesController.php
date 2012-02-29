@@ -141,6 +141,12 @@ class PagesController extends Controller
     	$saveasdraft = $request->get("saveasdraft");
     	$saveandpublish = $request->get("saveandpublish");
     	$draft = ($subaction == "draft");
+    	
+    	if($request->request->get("currenttab")){
+    		$currenttab = $request->request->get("currenttab");
+    	}else{
+    		$currenttab = 'pageparts1';
+    	}
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $nodeTranslation = $node->getNodeTranslation($locale);
@@ -205,7 +211,7 @@ class PagesController extends Controller
         	$em->persist($nodenewpage);
         	$em->flush();
 
-        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodenewpage->getId())));
+        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodenewpage->getId(), 'currenttab' => $currenttab)));
         }
 
         $delete = $request->get("delete");
@@ -219,7 +225,7 @@ class PagesController extends Controller
         	$this->deleteNodeChildren($em, $user, $locale, $children, $page);
         	//$deletecommand = new DeleteCommand($em, $user);
         	//$deletecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
-        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId())));
+        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));
         }
 
         $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'write');
@@ -291,7 +297,8 @@ class PagesController extends Controller
 
                 return $this->redirect($this->generateUrl('KunstmaanAdminBundle_pages_edit', array(
                     'id' => $node->getId(),
-                	'subaction' => $subaction
+                	'subaction' => $subaction,
+                	'currenttab' => $currenttab,
                 )));
             }
         }
@@ -311,7 +318,8 @@ class PagesController extends Controller
         	'nodeTranslation'   => $nodeTranslation,
         	'draft'             => $draft,
         	'draftNodeVersion'  => $draftNodeVersion,
-        	'subaction'         => $subaction
+        	'subaction'         => $subaction,
+        	'currenttab'		=> $currenttab,
         );
         if($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')){
             $viewVariables['permissionadmin'] = $permissionadmin;
