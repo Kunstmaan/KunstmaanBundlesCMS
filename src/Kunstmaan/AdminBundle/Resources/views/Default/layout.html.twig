@@ -18,6 +18,7 @@
         filter='cssrewrite'
     %}
     <link rel="stylesheet"  media="screen" type="text/css" href="{{ asset_url }}" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
     {% endstylesheets %}
     {% block extracss %}{% endblock %}
     {#
@@ -64,9 +65,11 @@
     	    config.startupFocus = false;
     	    config.height = 500;
         	config.filebrowserBrowseUrl = '{{ path('KunstmaanAdminBundle_ckselecturl') }}'
+        	config.filebrowserWindowWidth = '580'
         	config.filebrowserImageBrowseUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
         	config.filebrowserImageBrowseLinkUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
         	config.filebrowserImageUploadUrl = '';
+        	config.filebrowserImageWindowWidth = '900';
             config.toolbar_Full =
                     [
                         { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike', '-', 'Subscript','Superscript' ] },
