@@ -34,7 +34,7 @@ class PagesController extends Controller
         $locale = $request->getSession()->getLocale();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'write');
-        $nodeMenu = new NodeMenu($this->container, $locale, null, 'write');
+        $nodeMenu = new NodeMenu($this->container, $locale, null, 'write', true);
 
         $request    = $this->getRequest();
         $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'write', $locale), $em);
@@ -58,7 +58,7 @@ class PagesController extends Controller
     	$request = $this->getRequest();
     	$locale = $request->getSession()->getLocale();
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
-    	$otherLanguageNodeTranslation = $node->getNodeTranslation($otherlanguage);
+    	$otherLanguageNodeTranslation = $node->getNodeTranslation($otherlanguage, true);
     	$otherLanguagePage = $otherLanguageNodeTranslation->getPublicNodeVersion()->getRef($em);
     	$myLanguagePage = $otherLanguagePage->deepClone($em);
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $locale, $node, $user);
@@ -80,10 +80,10 @@ class PagesController extends Controller
     	$myLanguagePage = new $entityname();
     	$myLanguagePage->setTitle("New page");
     	$myLanguagePage->setPermissions();
-    	
+
     	$addcommand = new AddCommand($em, $user);
     	$addcommand->execute("empty page added with locale: " . $locale, array('entity'=> $myLanguagePage));
-    	
+
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $locale, $node, $user);
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$id)));
     }
@@ -98,13 +98,13 @@ class PagesController extends Controller
     	$request = $this->getRequest();
     	$locale = $request->getSession()->getLocale();
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
-    	$nodeTranslation = $node->getNodeTranslation($locale);
+    	$nodeTranslation = $node->getNodeTranslation($locale, true);
     	$nodeTranslation->setOnline(true);
-    	
+
     	$user = $this->container->get('security.context')->getToken()->getUser();
     	$editcommand = new EditCommand($em, $user);
     	$editcommand->execute("published page \"" . $nodeTranslation->getTitle() . "\" on locale: " . $locale, array('entity'=> $nodeTranslation));
-    	
+
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$node->getId())));
     }
 
@@ -118,13 +118,13 @@ class PagesController extends Controller
     	$request = $this->getRequest();
     	$locale = $request->getSession()->getLocale();
     	$node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
-    	$nodeTranslation = $node->getNodeTranslation($locale);
+    	$nodeTranslation = $node->getNodeTranslation($locale, true);
     	$nodeTranslation->setOnline(false);
-    	
+
     	$user = $this->container->get('security.context')->getToken()->getUser();
     	$editcommand = new EditCommand($em, $user);
     	$editcommand->execute("unpublished page \"" . $nodeTranslation->getTitle() . "\" on locale: " . $locale, array('entity'=> $nodeTranslation));
-    	
+
     	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$node->getId())));
     }
 
@@ -141,7 +141,7 @@ class PagesController extends Controller
     	$saveasdraft = $request->get("saveasdraft");
     	$saveandpublish = $request->get("saveandpublish");
     	$draft = ($subaction == "draft");
-    	
+
     	if($request->request->get("currenttab")){
     		$currenttab = $request->request->get("currenttab");
     	}else{
@@ -149,9 +149,9 @@ class PagesController extends Controller
     	}
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
-        $nodeTranslation = $node->getNodeTranslation($locale);
+        $nodeTranslation = $node->getNodeTranslation($locale, true);
         if(!$nodeTranslation){
-        	return $this->render('KunstmaanAdminBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write')));
+        	return $this->render('KunstmaanAdminBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write', true)));
         }
         $nodeVersions = $nodeTranslation->getNodeVersions();
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -165,8 +165,12 @@ class PagesController extends Controller
         	$page = $nodeVersion->getRef($em);
         } else {
         	if(is_string($saveasdraft) && $saveasdraft != ''){
-        		$page = $page->deepClone($em);
-        		$nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->createNodeVersionFor($page, $nodeTranslation, $user, 'draft');
+        		$publicpage = $page->deepClone($em);
+        		$publicnodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->createNodeVersionFor($publicpage, $nodeTranslation, $user, 'public');
+        		$nodeTranslation->setPublicNodeVersion($publicnodeVersion);
+        		$nodeVersion->setType('draft');
+        		$em->persist($nodeTranslation);
+        		$em->persist($nodeVersion);
         		$draft = true;
         		$subaction = "draft";
         	}
@@ -193,7 +197,7 @@ class PagesController extends Controller
                 'refId'             => $nodeparent->getId(),
                 'refEntityname'     => ClassLookup::getClass($nodeparent),
             ));
-            
+
             if($parentPermissions) {
             	foreach($parentPermissions as $parentPermission) {
                     $permission = new Permission();
@@ -265,7 +269,6 @@ class PagesController extends Controller
             if ($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')) {
                 $permissionadmin->bindRequest($request);
             }
-
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
 
@@ -303,8 +306,8 @@ class PagesController extends Controller
             }
         }
 
-        $nodeMenu = new NodeMenu($this->container, $locale, $node, 'write');
-        
+        $nodeMenu = new NodeMenu($this->container, $locale, $node, 'write', true);
+
         $viewVariables = array(
             'topnodes'          => $topnodes,
             'page'              => $page,
@@ -326,7 +329,7 @@ class PagesController extends Controller
         }
         return $viewVariables;
     }
-    
+
     private function deleteNodeChildren($em, $user, $locale, $children, $page){
     	foreach($children as $child){
 	    	$child->setDeleted(true);
@@ -336,7 +339,7 @@ class PagesController extends Controller
     		$this->deleteNodeChildren($em, $user, $locale, $children2, $page);
     	}
     }
-    
+
     /**
      * @Route("/movenodes", name="KunstmaanAdminBundle_pages_movenodes")
      * @Method({"GET", "POST"})
@@ -344,13 +347,13 @@ class PagesController extends Controller
     public function movenodesAction(){
     	$request = $this->getRequest();
     	$em = $this->getDoctrine()->getEntityManager();
-    
+
     	$parentid = $request->get('parentid');
     	$parent = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($parentid);
-    
+
     	$fromposition = $request->get('fromposition');
     	$afterposition = $request->get('afterposition');
-    	
+
     	foreach($parent->getChildren() as $child){
     		if($child->getSequencenumber() == $fromposition){
     			if($child->getSequencenumber() > $afterposition){
@@ -373,12 +376,12 @@ class PagesController extends Controller
     				}
     			}
     		}
-    
+
     		$em->flush();
     	}
     	return array("success" => true);
     }
-    
+
     /**
      * @Route("/ckselecturl", name="KunstmaanAdminBundle_ckselecturl")
      * @Template()
@@ -389,8 +392,8 @@ class PagesController extends Controller
     	$locale = $request->getSession()->getLocale();
     	$user = $this->container->get('security.context')->getToken()->getUser();
     	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'read');
-    	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read');
-    
+    	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read', true);
+
     	return array(
     			'topnodes'      => $topnodes,
     			'nodemenu' 	    => $nodeMenu,
