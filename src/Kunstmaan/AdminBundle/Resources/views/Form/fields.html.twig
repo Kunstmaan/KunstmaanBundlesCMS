@@ -21,7 +21,7 @@
 		$(document).ready(function() {
 		    $('.choosebutton{{ id }}').on('click', function(ev) {
 		        ev.preventDefault();
-		        openDGDialog('{{ path('KunstmaanPagePartBundle_selecturl') }}', 400, 500, function(param){
+		        openDGDialog('{{ path('KunstmaanPagePartBundle_selecturl') }}', 580, 500, function(param){
 					var widget = jQuery('#{{ id }}_widget');
 					widget.find('input').val(dialogWin.returnedValue.path);
 				});
