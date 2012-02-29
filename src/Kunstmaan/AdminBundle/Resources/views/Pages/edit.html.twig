@@ -246,8 +246,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="{% if currenttab == 'versions' or propertiesform is not defined %}active{% endif %} tab-pane" id="versions">
-              {% if propertiesform is not defined %}
+            <div class="{% if currenttab == 'versions' or propertiesform == false %}active{% endif %} tab-pane" id="versions">
+              {% if propertiesform == false %}
 	        			{% set propertiesform = true %}
 		        		<div id="properties">
 				    			<div id="prop_wrp">
@@ -282,6 +282,19 @@
                 </table>
             </div>
             <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
+            	{% if propertiesform == false %}
+	        			{% set propertiesform = true %}
+		        		<div id="properties">
+				    			<div id="prop_wrp">
+					    			<div class="input_prop">
+					    				{{ form_widget(form.main) }}
+					    			</div>
+					    			<div class="input_prop">
+					    				{{ form_widget(form.node) }}
+					    			</div>
+					    		</div>
+				    	</div>
+			    	{% endif %}
               	<div id="properties">
 				    			<div id="prop_wrp">
 					    			<div class="input_prop">
