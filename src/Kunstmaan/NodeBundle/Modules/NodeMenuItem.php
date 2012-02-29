@@ -14,6 +14,7 @@ class NodeMenuItem
 {
     private $em;
     private $node;
+    private $nodeTranslation;
     private $lang;
     private $lazyChildren = null;
     private $parent;
@@ -22,10 +23,11 @@ class NodeMenuItem
     /**
      * @param FactoryInterface $factory
      */
-    public function __construct($em, Node $node, $lang, $parent, $menu)
+    public function __construct($em, Node $node, NodeTranslation $nodeTranslation, $lang, $parent, $menu)
     {
         $this->em = $em;
         $this->node = $node;
+        $this->nodeTranslation = $nodeTranslation;
         $this->lang = $lang;
         $this->parent = $parent;
         $this->menu = $menu;
@@ -40,7 +42,7 @@ class NodeMenuItem
     }
 
     public function getNodeTranslation(){
-    	return $this->node->getNodeTranslation($this->getLang());
+    	return $this->nodeTranslation;
     }
 
     public function getLang(){
@@ -53,6 +55,14 @@ class NodeMenuItem
     		return $nodeTranslation->getTitle();
     	}
     	return "Untranslated";
+    }
+
+    public function getOnline(){
+    	$nodeTranslation = $this->getNodeTranslation();
+    	if($nodeTranslation){
+    		return $nodeTranslation->isOnline();
+    	}
+    	return false;
     }
 
     public function getSlugPart(){
@@ -77,7 +87,10 @@ class NodeMenuItem
     		$this->lazyChildren = array();
     		$children = $this->node->getChildren();
     		foreach($children as $child){
-    			$this->lazyChildren[] = new NodeMenuItem($this->em, $child, $this->lang, $this, $this->menu);
+    			$nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
+    			if(!is_null($nodeTranslation)){
+    				$this->lazyChildren[] = new NodeMenuItem($this->em, $child, $nodeTranslation, $this->lang, $this, $this->menu);
+    			}
     		}
     	}
     	return $this->lazyChildren;

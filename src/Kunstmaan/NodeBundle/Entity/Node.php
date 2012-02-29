@@ -112,16 +112,22 @@ class Node
         }
     }
 
-    public function getNodeTranslations() {
-    	return $this->nodeTranslations;
+    public function getNodeTranslations($includeoffline = false) {
+    	return $this->nodeTranslations->filter( function($entry) use ($includeoffline) {
+		       if ($includeoffline || $entry->isOnline()) {
+		           return true;
+		       }
+		       return false;
+		    });
     }
 
     public function setNodeTranslations($nodeTranslations) {
     	$this->nodeTranslations = $nodeTranslations;
     }
 
-    public function getNodeTranslation($lang){
-    	foreach($this->nodeTranslations as $nodeTranslation){
+    public function getNodeTranslation($lang, $includeoffline = false){
+    	$nodeTranslations = $this->getNodeTranslations($includeoffline);
+    	foreach($nodeTranslations as $nodeTranslation){
     		if($lang == $nodeTranslation->getLang()){
     			return $nodeTranslation;
     		}
