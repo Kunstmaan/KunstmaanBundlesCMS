@@ -12,14 +12,16 @@ class NodeMenu {
     private $topNodeMenuItems = array();
     private $breadCrumb = array();
     private $container = null;
+    private $includeoffline = false;
 
     /**
      * @param FactoryInterface $factory
      */
-    public function __construct($container, $lang, Node $currentNode = null, $permission = 'read')
+    public function __construct($container, $lang, Node $currentNode = null, $permission = 'read', $includeoffline = false)
     {
         $this->container = $container;
         $this->em = $this->container->get('doctrine.orm.entity_manager');
+        $this->includeoffline = $includeoffline;
         $tempNode = $currentNode;
 
         //Breadcrumb
@@ -30,9 +32,12 @@ class NodeMenu {
         }
         $parentNodeMenuItem = null;
         foreach($nodeBreadCrumb as $nodeBreadCrumbItem){
-        	$nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $lang, $parentNodeMenuItem, $this);
-        	$this->breadCrumb[] = $nodeMenuItem;
-        	$parentNodeMenuItem = $nodeMenuItem;
+        	$nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($lang, $this->includeoffline);
+        	if(!is_null($nodeTranslation)){
+        		$nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $nodeTranslation, $lang, $parentNodeMenuItem, $this);
+        		$this->breadCrumb[] = $nodeMenuItem;
+        		$parentNodeMenuItem = $nodeMenuItem;
+        	}
         }
 
         $permissionManager = $container->get('kunstmaan_admin.permissionmanager');
@@ -43,11 +48,12 @@ class NodeMenu {
         //topNodes
         $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, $permission);
         foreach($topNodes as $topNode){
-        	if(!is_null($topNode->getNodeTranslation($lang))){
+        	$nodeTranslation = $topNode->getNodeTranslation($lang, $this->includeoffline);
+        	if(!is_null($nodeTranslation)){
 	        	if(sizeof($this->breadCrumb)>0 && $this->breadCrumb[0]->getNode()->getId() == $topNode->getId()){
 	        		$this->topNodeMenuItems[] = $this->breadCrumb[0];
 	        	} else {
-	        		$this->topNodeMenuItems[] = new NodeMenuItem($this->em, $topNode, $lang, null, $this);
+	        		$this->topNodeMenuItems[] = new NodeMenuItem($this->em, $topNode, $nodeTranslation, $lang, null, $this);
 	        	}
         	}
         }
@@ -77,6 +83,10 @@ class NodeMenu {
 
     public function getNodeBySlug(NodeTranslation $parentNode, $slug){
     	return $this->em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug($parentNode, $slug);
+    }
+
+    public function isIncludeOffline(){
+    	return $this->includeoffline;
     }
 
 }
