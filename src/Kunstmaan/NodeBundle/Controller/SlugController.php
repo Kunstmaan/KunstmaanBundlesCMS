@@ -25,16 +25,15 @@ class SlugController extends Controller
     	$locale = $request->getSession()->getLocale();
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
     	if($nodeTranslation){
-            $page = $nodeTranslation->getNodeVersion('draft')->getRef($em);
+    		$version = $nodeTranslation->getNodeVersion('draft');
+    		if(is_null($version)){
+    			$version = $nodeTranslation->getPublicNodeVersion();
+    		}
+            $page = $version->getRef($em);
             $node = $nodeTranslation->getNode();
     	} else {
     		throw $this->createNotFoundException('No page found for slug ' . $slug);
     	}
-
-        //check if the requested node is online, else throw a 404 exception
-        if(!$nodeTranslation->isOnline()){
-            throw $this->createNotFoundException("The requested page is not online");
-        }
 
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
