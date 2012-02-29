@@ -1,3 +1,4 @@
+{% if locales|length > 1 %}
 <li class="dropdown language">
     <a class="dropdown-toggle" href="#">{{ app.request.attributes.get('_locale') }}</a>
 	<ul class="dropdown-menu">
@@ -6,3 +7,4 @@
 		{% endfor %}
 	</ul>
 </li>
+{% endif %}

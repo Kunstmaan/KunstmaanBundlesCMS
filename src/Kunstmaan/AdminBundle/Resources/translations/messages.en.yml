@@ -71,6 +71,6 @@ form:
     
 omnext:
   home: Home
-  title: OpenMercury.NEXT
-  welcome: Welcome.<small> OpenMercury.NEXT application administration....</small>
-  information: <strong>Information. </strong> There are no new notifications.
+  title: Welcome!
+  welcome: Welcome.
+  information: <strong>Information.</strong> There are no new notifications.
