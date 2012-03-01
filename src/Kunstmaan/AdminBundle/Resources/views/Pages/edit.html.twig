@@ -4,6 +4,7 @@
 {% block extrajavascript %}
 	 <script type=text/javascript>
 		var isEdited = false;
+		var oldEdited = false;
 
 		window.onbeforeunload = doUnload;
 	 	
@@ -86,15 +87,15 @@
     <!--Main-->
 	<div class="main_actions">
 	  {% if draft %}
-	    <input type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
+	    <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
 	    <input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
 	    <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
 	  {% else %}
-		  <input type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
-	      <input type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
+		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
+	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
 	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
 	      <button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>
-	      <button data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
+	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
 	  {% endif %}
       {#<button class="btn" data-controls-modal="cancel" data-backdrop="true" data-keyboard="true">Cancel</button>#}
     </div>
@@ -102,15 +103,15 @@
     <div class="main_actions top" id="main_actions_top">
       <div class="pull-right">
         {% if draft %}
-	      <input type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
+	      <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
 	      <input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
           <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
 	    {% else %}
-		  <input type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
-	      <input type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
+		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
+	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
 	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
 	      <button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>
-	      <button data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
+	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
 	    {% endif %}
         {#<button class="btn" data-controls-modal="cancel" data-backdrop="true" data-keyboard="true">Cancel</button>#}
         <a class="btn up">&#9650;</a>
@@ -163,7 +164,7 @@
        </div>
       <div class="modal-footer">
         <a onclick="return doDeletepage(this)" href="#" class="btn primary">Delete</a>
-        <a onclick="$('#delete-page-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
+        <a onclick="$('#delete-page-modal').modal('hide'); isEdited = oldEdited" href="#" class="btn secondary">Cancel</a>
       </div>
     </div>
       <ul class="tabs" data-tabs="tabs">
