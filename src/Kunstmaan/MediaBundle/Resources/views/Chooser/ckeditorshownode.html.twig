@@ -10,7 +10,9 @@
                             	{% if child.children is defined %}
 	                            	<ul>
 										{% for child in child.children %}
-		                                    {% include 'KunstmaanMediaBundle:Chooser:ckeditorshownode.html.twig' %}
+		                                	{% if child.hasImages() %}    
+												{% include 'KunstmaanMediaBundle:Chooser:ckeditorshownode.html.twig' %}
+											{% endif %}	
 		                                {% endfor %}
 	                                </ul>
                                 {% endif %}

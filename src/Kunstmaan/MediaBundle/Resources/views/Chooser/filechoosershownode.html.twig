@@ -10,7 +10,9 @@
                             	{% if child.children is defined %}
 	                            	<ul>
 										{% for child in child.children %}
-		                                    {% include 'KunstmaanMediaBundle:Chooser:filechoosershownode.html.twig' %}
+											{% if child.hasFiles() %}
+		                                    	{% include 'KunstmaanMediaBundle:Chooser:filechoosershownode.html.twig' %}
+		                                    {% endif %}
 		                                {% endfor %}
 	                                </ul>
                                 {% endif %}
