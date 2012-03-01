@@ -15,11 +15,13 @@
 	<section id="map-list">
         <ul class="media-grid">
         {% for child in gallery.children %}
+        	{% if child.hasImages() %}
             <li>
                 <a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item"><img src="{{ asset('bundles/kunstmaanmedia/img/dummy/map.jpg') }}" alt="" /></a>
                 <span class="helper">{{ 'media.folder.open' | trans }}</span>
                 <span class="name">{{ child.name | trans }}</span>
             </li>
+            {% endif %}
         {% endfor %}
         </ul>
     </section>
@@ -30,6 +32,9 @@
             <li>
                 <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
                     <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
+                    <div class="caption">
+						<h5>{{ media.name }}</h5>
+           			</div>
                 </a>
              </li>
         {% endfor %}

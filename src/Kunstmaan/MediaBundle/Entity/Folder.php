@@ -322,6 +322,17 @@ class Folder{
     	return $images;
     }
     
+    public function hasImages(){
+    	if(count($this->getImages()) > 0){
+    		return true;
+    	}
+    	$help = false;
+    	foreach($this->getChildren() as $child){
+    		$help = $child->hasImages();
+    	}
+    	return $help;
+    }
+    
     public function getFilesOnly()
     {
     	$all = $this->files;
@@ -332,6 +343,17 @@ class Folder{
     		}
     	}
     	return $files;
+    }
+    
+    public function hasFiles(){
+    	if(count($this->getFilesOnly()) > 0){
+    		return true;
+    	}
+    	$help = false;
+    	foreach($this->getChildren() as $child){
+    		$help = $child->hasFiles();
+    	}
+    	return $help;
     }
     
     public function getSlidesOnly()
@@ -346,6 +368,17 @@ class Folder{
     	return $files;
     }
     
+    public function hasSlides(){
+    	if(count($this->getSlidesOnly()) > 0){
+    		return true;
+    	}
+    	$help = false;
+    	foreach($this->getChildren() as $child){
+    		$help = $child->hasSlides();
+    	}
+    	return $help;
+    }
+    
     public function getVideosOnly()
     {
     	$all = $this->files;
@@ -356,6 +389,17 @@ class Folder{
     		}
     	}
     	return $files;
+    }
+    
+    public function hasVideos(){
+    	if(count($this->getVideosOnly()) > 0){
+    		return true;
+    	}
+    	$help = false;
+    	foreach($this->getChildren() as $child){
+    		$help = $child->hasVideos();
+    	}
+    	return $help;
     }
     
     public function hasActive($id){

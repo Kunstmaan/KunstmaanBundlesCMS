@@ -15,11 +15,13 @@
 	<section id="map-list">
         <ul class="media-grid">
         {% for child in gallery.children %}
+        	{% if child.hasVideos() %}
             <li>
                 <a href="{{ path('KunstmaanMediaBundle_videochooser_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item"><img src="{{ asset('bundles/kunstmaanmedia/img/dummy/map.jpg') }}" alt="" /></a>
                 <span class="helper">{{ 'media.folder.open' | trans }}</span>
                 <span class="name">{{ child.name | trans }}</span>
             </li>
+            {% endif %}
         {% endfor %}
         </ul>
     </section>
