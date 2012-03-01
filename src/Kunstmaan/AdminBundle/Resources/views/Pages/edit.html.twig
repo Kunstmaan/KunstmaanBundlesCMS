@@ -7,12 +7,12 @@
 		var oldEdited = false;
 
 		window.onbeforeunload = doUnload;
-	 	
+
     	function doUnload(){
     		//$('#quitpagemodal').modal('show');
     		//var t = setTimeout(5000);
     		if(isEdited){
-    			return 'You haven\'t saved this page, are you sure you want to close it?'; 
+    			return 'You haven\'t saved this page, are you sure you want to close it?';
         	}
         }
 	</script>
@@ -82,7 +82,38 @@
 			</div>
         {% endif %}
       {% endif %}
-      <a href="#">Versions</a>
+        <a href="#" data-controls-modal="versions" data-backdrop="true" data-keyboard="true">Versions</a>
+        <div id="versions" class="modal hide fade">
+			<div class="modal-header">
+				<a href="#" class="close">×</a>
+				<h3>Versions</h3>
+			</div>
+			<div class="modal-body" style="height:300px;overflow:scroll">
+				<table class="bordered-table zebra-striped">
+                    <thead>
+                    <tr>
+                    	<th>Nr</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for nodeVersion in nodeVersions %}
+                            <tr>
+                            	<td><a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}">{{ nodeVersion.version }}</a></td>
+                                <td>{{ nodeVersion.type }}</td>
+                                <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
+                                <td>{{ nodeVersion.owner }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn cancel">Close</a>
+			</div>
+		</div>
     </div>
     <!--Main-->
 	<div class="main_actions">
@@ -93,7 +124,7 @@
 	  {% else %}
 		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
 	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
-	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+	      <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
 	      <button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>
 	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
 	  {% endif %}
@@ -105,11 +136,11 @@
         {% if draft %}
 	      <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
 	      <input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
-          <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+          <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
 	    {% else %}
 		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
 	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
-	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+	      <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
 	      <button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>
 	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
 	    {% endif %}
@@ -181,7 +212,6 @@
             	{% set alreadyexiststab = true %}
             {% endif %}
             <li {% if currenttab == 'seo' or alreadyexiststab ==false %} class="active" {% endif %} onClick="jQuery('#currenttab').val('seo');"><a href="#seo">SEO</a></li>
-            <li {% if currenttab == 'versions' %} class="active" {% endif %} onClick="jQuery('#currenttab').val('versions');"><a href="#versions">Versions</a></li>
         </ul>
         <div id="my-tab-content" class="tab-content">
         	<input type="hidden" name="currenttab" id="currenttab" value="{{ currenttab }}">
@@ -247,41 +277,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="{% if currenttab == 'versions' or propertiesform == false %}active{% endif %} tab-pane" id="versions">
-              {% if propertiesform == false %}
-	        			{% set propertiesform = true %}
-		        		<div id="properties">
-				    			<div id="prop_wrp">
-					    			<div class="input_prop">
-					    				{{ form_widget(form.main) }}
-					    			</div>
-					    			<div class="input_prop">
-					    				{{ form_widget(form.node) }}
-					    			</div>
-					    		</div>
-				    	</div>
-			    	{% endif %}
-              <table class="bordered-table zebra-striped">
-                    <thead>
-                    <tr>
-                    	<th>Nr</th>
-                        <th>Type</th>
-                        <th>Date</th>
-                        <th>User</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {% for nodeVersion in nodeVersions %}
-                            <tr>
-                            	<td><a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}">{{ nodeVersion.version }}</a></td>
-                                <td>{{ nodeVersion.type }}</td>
-                                <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
-                                <td>{{ nodeVersion.owner }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
             <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
             	{% if propertiesform == false %}
 	        			{% set propertiesform = true %}
@@ -317,10 +312,8 @@
 				   </div>
                    {{ form_rest(seoform) }}
             </div>
-            <div class="tab-pane" id="mdo">
-              <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
-            </div>
         </div>
+        {{ form_rest(form) }}
     </form>
 
 {% endblock %}

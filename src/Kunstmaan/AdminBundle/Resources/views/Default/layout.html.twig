@@ -66,10 +66,15 @@
     	    config.height = 500;
         	config.filebrowserBrowseUrl = '{{ path('KunstmaanAdminBundle_ckselecturl') }}'
         	config.filebrowserWindowWidth = '580'
+        {% if mediabundleisset is defined %}
         	config.filebrowserImageBrowseUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
         	config.filebrowserImageBrowseLinkUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
-        	config.filebrowserImageUploadUrl = '';
         	config.filebrowserImageWindowWidth = '900';
+        {% else %}
+        	config.filebrowserImageBrowseUrl = '';
+    		config.filebrowserImageBrowseLinkUrl = '';
+        {% endif %}
+       		config.filebrowserImageUploadUrl = '';
             config.toolbar_Full =
                     [
                         { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike', '-', 'Subscript','Superscript' ] },
