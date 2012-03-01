@@ -45,6 +45,11 @@ class ImagineImageManipulator implements ImageManipulatorInterface
         else if (null == $width) {
             $width = (int)($height * $metadata['width'] / $metadata['height']);
         }
+        
+        if($metadata['width'] < $width && $metadata['height'] < $height){
+        	$width = (int)$metadata['width'];
+        	$height = (int)$metadata['height'];
+        }
 
         switch($mode) {
             case self::RESIZE_MODE_OUTBOUND:
