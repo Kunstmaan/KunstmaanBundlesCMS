@@ -12,4 +12,4 @@ before_script: php vendor/vendors.php
 
 notifications:
   email:
-    - support@kunstmaan.be
+    - travis@kunstmaan.be
