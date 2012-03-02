@@ -82,7 +82,7 @@
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
 
         	<div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="pagepart">
-            	<a name="pagepart{{ loop.index }}" ></a>
+            	<a name="{{pagepartadmin.context}}pagepart{{ loop.index }}" ></a>
             	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
             		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
             		{#
@@ -150,8 +150,8 @@
             }
             jQuery('#{{pagepartadmin.context}}_addposition').val(position);
             jQuery(select).attr('name', 'addpagepart_{{pagepartadmin.context}}');
-            var newid = id+1;
-            jQuery('#pageadminform')[0].action="?edit="+id+"#pagepart"+id;
+            var newid = parseInt(id)+1;
+            jQuery('#pageadminform')[0].action="?edit="+id+"#{{pagepartadmin.context}}pagepart"+newid;
             jQuery('#pageadminform')[0].submit();
 
             $("#prop_wrp").slideDown("slow").animate({opacity: 1},{queue: false, duration: "slow"}).addClass('small_prop').removeClass('big_prop');
