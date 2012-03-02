@@ -147,6 +147,12 @@ class PagesController extends Controller
     	}else{
     		$currenttab = 'pageparts1';
     	}
+    	
+    	if($request->request->get("edit")){
+    		$editpagepart = $request->request->get("edit");
+    	}else{
+    		$editpagepart = '-1';
+    	}
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $nodeTranslation = $node->getNodeTranslation($locale, true);
@@ -215,7 +221,7 @@ class PagesController extends Controller
         	$em->persist($nodenewpage);
         	$em->flush();
 
-        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodenewpage->getId(), 'currenttab' => $currenttab)));
+        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodenewpage->getId(), 'currenttab' => $currenttab, 'edit' => $editpagepart)));
         }
 
         $delete = $request->get("delete");
@@ -229,7 +235,7 @@ class PagesController extends Controller
         	$this->deleteNodeChildren($em, $user, $locale, $children, $page);
         	//$deletecommand = new DeleteCommand($em, $user);
         	//$deletecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
-        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));
+        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab, 'edit' => $editpagepart)));
         }
 
         $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'write');
@@ -302,6 +308,7 @@ class PagesController extends Controller
                     'id' => $node->getId(),
                 	'subaction' => $subaction,
                 	'currenttab' => $currenttab,
+                	'edit' => $editpagepart
                 )));
             }
         }
