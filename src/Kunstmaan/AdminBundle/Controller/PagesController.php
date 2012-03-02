@@ -144,14 +144,14 @@ class PagesController extends Controller
 
     	if($request->request->get("currenttab")){
     		$currenttab = $request->request->get("currenttab");
-    	}else{
+    	}else if($request->get("currenttab")){
+    		$currenttab = $request->get("currenttab");
+    	} else{
     		$currenttab = 'pageparts1';
     	}
     	
-    	if($request->request->get("edit")){
-    		$editpagepart = $request->request->get("edit");
-    	}else{
-    		$editpagepart = '-1';
+    	if($request->get("edit")){
+    		$editpagepart = $request->get("edit");
     	}
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
@@ -220,10 +220,8 @@ class PagesController extends Controller
 
         	$em->persist($nodenewpage);
         	$em->flush();
-
-        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodenewpage->getId(), 'currenttab' => $currenttab, 'edit' => $editpagepart)));
+			return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodenewpage->getId(), 'currenttab' => $currenttab)));
         }
-
         $delete = $request->get("delete");
         if(is_string($delete) && $delete == 'true'){
         	//remove node and page
@@ -235,7 +233,7 @@ class PagesController extends Controller
         	$this->deleteNodeChildren($em, $user, $locale, $children, $page);
         	//$deletecommand = new DeleteCommand($em, $user);
         	//$deletecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
-        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab, 'edit' => $editpagepart)));
+        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));       	
         }
 
         $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'write');
@@ -304,12 +302,20 @@ class PagesController extends Controller
                 	$subaction = "public";
                 }
 
-                return $this->redirect($this->generateUrl('KunstmaanAdminBundle_pages_edit', array(
-                    'id' => $node->getId(),
-                	'subaction' => $subaction,
-                	'currenttab' => $currenttab,
-                	'edit' => $editpagepart
-                )));
+                if(isset($editpagepart)){
+                	return $this->redirect($this->generateUrl('KunstmaanAdminBundle_pages_edit', array(
+                			'id' => $node->getId(),
+                			'subaction' => $subaction,
+                			'currenttab' => $currenttab,
+                			'edit' => $editpagepart
+                	)));
+                }else{
+                	return $this->redirect($this->generateUrl('KunstmaanAdminBundle_pages_edit', array(
+                			'id' => $node->getId(),
+                			'subaction' => $subaction,
+                			'currenttab' => $currenttab,
+                	)));
+                }
             }
         }
 
