@@ -10,6 +10,10 @@ parameters:
             handlerclass: Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
             handlermethod: getParentsAndSelfForNode
 
+twig:
+    globals:
+        searchbundleisset: true
+
 foq_elastica:
     clients:
         default: { host: localhost, port: %searchport% }
