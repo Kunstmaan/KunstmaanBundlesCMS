@@ -33,9 +33,6 @@ class MenuBuilder
     {
         $this->rootItem->setCurrentUri($request->getRequestUri());
         switch(true) {
-        	case (stripos($request->attributes->get('_route'), "KunstmaanAdminBundle_pages") === 0):
-        		$this->rootItem[$this->translator->trans('pages.title')]->setCurrent(true);
-        		break;
         	case (stripos($request->attributes->get('_route'), "KunstmaanAdminBundle_settings") === 0):
         		$this->rootItem[$this->translator->trans('settings.title')]->setCurrent(true);
         		break;
@@ -50,8 +47,6 @@ class MenuBuilder
         $rootItem = $this->factory->createItem('root');
         $rootItem->getRoot()->setChildrenAttribute('class', 'nav');
 
-        $rootItem->addChild($translator->trans('pages.title'), array( 'route' => 'KunstmaanAdminBundle_pages' ));
-        //$rootItem->addChild($translator->trans('modules.title'), array( 'route' => 'KunstmaanAdminBundle_modules'));
         $rootItem->addChild($translator->trans('settings.title'), array( 'route' => 'KunstmaanAdminBundle_settings'));
         //$rootItem->addChild($translator->trans('tools.title'), array('uri' => '#', 'attributes' => array('class' => 'dropdown'), 'linkAttributes' => array('class' => 'dropdown-toggle'), 'childrenAttributes' => array('class' => 'dropdown-menu')));
 
