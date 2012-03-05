@@ -11,7 +11,9 @@
 	        	<li {% if route == 'KunstmaanAdminBundle_settings_users' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_users') }}">{{ 'settings.users' | trans }}</a></li>
 	        	<li {% if route == 'KunstmaanAdminBundle_settings_groups' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_groups') }}">{{ 'settings.groups' | trans }}</a></li>
 	        	<li {% if route == 'KunstmaanAdminBundle_settings_roles' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_roles') }}">{{ 'settings.roles' | trans }}</a></li>
+	        {% if searchbundleisset is defined %}	
 	        	<li {% if route == 'KunstmaanAdminBundle_settings_searches' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_searches') }}">{{ 'Searches' | trans }}</a></li>
+	        {% endif %}	
 	        	<li {% if route == 'KunstmaanAdminBundle_settings_log' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_log') }}">{{ 'Log' | trans }}</a></li>
 	    	</ul>
     	</li>
