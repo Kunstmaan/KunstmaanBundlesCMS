@@ -34,7 +34,7 @@ class NodeRepository extends EntityRepository
                    ->andWhere('b.id IN (
                         SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
                    )')
-                   
+
 	               ->addOrderBy('b.sequencenumber', 'ASC')
 	               ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
                    ->setParameter(2, '%|'.$permission.':1|%');
@@ -45,7 +45,7 @@ class NodeRepository extends EntityRepository
             else {
                 $qb->setParameter(3, null);
             }
-            
+
 	    return $qb->getQuery()
 	              ->getResult();
 	}
@@ -86,7 +86,7 @@ class NodeRepository extends EntityRepository
 		return $result;
 	}
 
-	public function createNodeFor(HasNode $hasNode, $lang, Baseuser $owner){
+	public function createNodeFor(HasNode $hasNode, $lang, Baseuser $owner, $internalName = null){
 		$em = $this->getEntityManager();
 		$classname = ClassLookup::getClass($hasNode);
 		if(!$hasNode->getId()>0){
@@ -96,6 +96,7 @@ class NodeRepository extends EntityRepository
 		$node = new Node();
 		$node->setRefEntityname($classname);
 		$node->setDeleted(false);
+		$node->setInternalName($internalName);
 		$parent = $hasNode->getParent();
 		if($parent){
 			$parentNodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityname' => ClassLookup::getClass($parent)));

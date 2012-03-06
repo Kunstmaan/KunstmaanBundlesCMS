@@ -29,7 +29,7 @@ class Node
     protected $parent;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      */
     protected $sequencenumber;
 
@@ -55,9 +55,14 @@ class Node
     protected $deleted;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $refEntityname;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $internalName;
 
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
@@ -242,6 +247,24 @@ class Node
      */
     public function getRefEntityname() {
     	return $this->refEntityname;
+    }
+
+    /**
+     * Set internalName
+     *
+     * @param string $internalName
+     */
+    public function setInternalName($internalName) {
+    	$this->internalName = $internalName;
+    }
+
+    /**
+     * Get internalName
+     *
+     * @return string
+     */
+    public function getInternalName() {
+    	return $this->internalName;
     }
 
     public function getDefaultAdminType($container) {
