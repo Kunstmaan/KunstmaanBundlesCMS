@@ -9,6 +9,7 @@ use Knp\Menu\FactoryInterface;
 
 class NodeMenu {
     private $em;
+    private $lang;
     private $topNodeMenuItems = array();
     private $breadCrumb = array();
     private $container = null;
@@ -21,6 +22,7 @@ class NodeMenu {
     {
         $this->container = $container;
         $this->em = $this->container->get('doctrine.orm.entity_manager');
+        $this->lang = $lang;
         $this->includeoffline = $includeoffline;
         $tempNode = $currentNode;
 
@@ -83,6 +85,14 @@ class NodeMenu {
 
     public function getNodeBySlug(NodeTranslation $parentNode, $slug){
     	return $this->em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug($parentNode, $slug);
+    }
+
+    public function getNodeByInternalName($internalName) {
+    	$node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName));
+    	if(!is_null($node)){
+    		return $node->getNodeTranslation($this->lang);
+    	}
+    	return null;
     }
 
     public function isIncludeOffline(){
