@@ -1,5 +1,11 @@
 {% extends "KunstmaanViewBundle::layout.html.twig" %}
 
+{% block containerclass %}
+	{% if page.getParent().getContainerClass() is defined %}
+		{{ page.getParent().getContainerClass() }}
+	{% endif %}
+{% endblock %}
+
 {% block mainclass %}zoek{% endblock %}
 {% block title %}Zoek{% endblock %}
 
