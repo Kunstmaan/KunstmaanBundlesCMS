@@ -30,7 +30,11 @@ class LogHandler extends AbstractProcessingHandler
         $this->container->get('monolog.logger.doctrine')->pushHandler(new NullHandler());
         
 	    try{
-	    	$user = $this->container->get('security.context')->getToken()->getUser();
+	    	$token = $this->container->get('security.context')->getToken();
+	    	$user=null;
+	    	if(isset($token)){
+	    		$user = $token->getUser();
+	    	}
 	    	
 	    	$logitem = new ErrorLogItem();
 	    	if($user instanceof User){
