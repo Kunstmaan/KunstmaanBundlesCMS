@@ -2,14 +2,13 @@
 
 // Init functions needed on every page
 $(document).ready(function () {
-	init_tree();
 	init_main_functions();
 	initTop();
 	initCancel();
 });
 
 // JS-tree
-function init_tree() {
+function init_tree(var movepagesnodeurl, var movemedianodeurl) {
 	$('#tree').jstree({
 		"plugins" : [ "themes", "html_data", "types", "search" ] ,
 		"themes" : { 
@@ -171,7 +170,7 @@ function init_tree() {
 		$.ajax({
 				async : false,
 				type: 'POST',
-				url: "/app_dev.php/en/admin/pages/movenodes",
+				url: movepagesnodeurl,
 				data : { 
 					"parentid": data.rslt.np.attr("id"),
 					"fromposition": data.rslt.o.attr("sequence"),
@@ -286,7 +285,7 @@ function init_tree() {
 		$.ajax({
 				async : false,
 				type: 'POST',
-				url: "/app_dev.php/en/admin/media/folder/movenodes",
+				url: movemedianodeurl,
 				data : { 
 					"parentid": data.rslt.np.attr("id"),
 					"fromposition": data.rslt.o.attr("sequence"),
