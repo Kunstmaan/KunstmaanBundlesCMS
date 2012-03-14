@@ -8,7 +8,7 @@ $(document).ready(function () {
 });
 
 // JS-tree
-function init_tree(var movepagesnodeurl, var movemedianodeurl) {
+function init_tree(movepagesnodeurl, movemedianodeurl) {
 	$('#tree').jstree({
 		"plugins" : [ "themes", "html_data", "types", "search" ] ,
 		"themes" : { 
