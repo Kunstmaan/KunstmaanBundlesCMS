@@ -61,7 +61,7 @@
     <script type=text/javascript>
     	$(document).ready(function () {
 			init_tree("{{ path('KunstmaanAdminBundle_pages_movenodes') }}", "{% if mediabundleisset is defined %}{{ path('KunstmaanMediaBundle_folder_movenodes') }}{% else %}/movenodes{% endif %}");
-        }
+        });
     
     	CKEDITOR.editorConfig = function( config )
     	{
