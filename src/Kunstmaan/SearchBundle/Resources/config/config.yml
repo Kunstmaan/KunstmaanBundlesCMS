@@ -23,7 +23,7 @@ foq_elastica:
                         id:
                         lang:
                         parents: { analyzer: whitespace }
-                        content: { analyzer: snowball }
+                        content: { analyzer: snowball, store:'yes',  "term_vector" : "with_positions_offsets" }
                     persistence:
                         driver: orm
                         provider:
