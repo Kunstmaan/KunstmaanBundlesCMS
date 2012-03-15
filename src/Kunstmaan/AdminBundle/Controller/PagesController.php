@@ -149,12 +149,23 @@ class PagesController extends Controller
     	} else{
     		$currenttab = 'pageparts1';
     	}
-    	
+
     	if($request->get("edit")){
     		$editpagepart = $request->get("edit");
     	}
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
+        $guestGroup = $em->getRepository('KunstmaanAdminBundle:Group')->findOneByName('Guest');
+        $guestPermission = $em->getRepository('KunstmaanAdminBundle:Permission')->findOneBy(array('refId'=>$node->getId(), 'refEntityname'=>ClassLookup::getClass($node),'refGroup'=> $guestGroup->getId()));
+        if(is_null($guestPermission)){
+        	$guestPermission = new Permission();
+        	$guestPermission->setRefId($node->getId());
+        	$guestPermission->setRefEntityname(ClassLookup::getClass($node));
+        	$guestPermission->setRefGroup($guestGroup);
+        	$guestPermission->setPermissions('|read:1|write:0|delete:0|');
+        	$em->persist($guestPermission);
+        	$em->flush();
+        }
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if(!$nodeTranslation){
         	return $this->render('KunstmaanAdminBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write', true)));
@@ -233,7 +244,7 @@ class PagesController extends Controller
         	$this->deleteNodeChildren($em, $user, $locale, $children, $page);
         	//$deletecommand = new DeleteCommand($em, $user);
         	//$deletecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
-        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));       	
+        	return $this->redirect($this->generateUrl("KunstmaanAdminBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));
         }
 
         $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'write');
