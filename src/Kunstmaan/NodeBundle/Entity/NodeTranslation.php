@@ -60,7 +60,7 @@ class NodeTranslation {
      * @ORM\JoinColumn(name="seo", referencedColumnName="id")
      */
     protected $seo;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
      * @ORM\OrderBy({"version" = "DESC"})
@@ -75,7 +75,7 @@ class NodeTranslation {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
 	return $this->id;
@@ -179,14 +179,14 @@ class NodeTranslation {
     public function getSlug() {
 	$node = $this->getNode();
 	$slug = "";
-	if ($node->getParent() != null)
+	if ($node->getParent() != null && $node->getParent()->getNodeTranslation($this->lang) != null)
 	    $slug = $slug . $this->getParentSlug($node);
 	$slug = $slug . $this->slug;
 	return $slug;
     }
 
     public function getParentSlug($node) {
-	return $node->getParent()->getNodeTranslation($this->lang)->getSlug() . "/";
+		return $node->getParent()->getNodeTranslation($this->lang)->getSlug() . "/";
     }
 
     /**
@@ -265,7 +265,7 @@ class NodeTranslation {
 		$results = array();
 		if($node->getParent()==null) $parents[] = $node->getId();
 		else $parents = $this->getAllParentsForNode($node, $results);
-	
+
 		return 'start '.implode(' ', $parents).' stop';
     }
 
@@ -294,7 +294,7 @@ class NodeTranslation {
 
     /**
      * Returns the date the last nodeversion was updated
-     * 
+     *
      * @return mixed
      */
     public function getUpdated() {
