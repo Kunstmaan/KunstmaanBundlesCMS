@@ -49,6 +49,7 @@ class NodeTranslationRepository extends EntityRepository
 				->select('b')
 				->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
 				->where('b.slug = ?1 and n.parent = ?2')
+				->andWhere('n.deleted != 1')
 				->addOrderBy('n.sequencenumber', 'DESC')
 				->setFirstResult( 0 )
 				->setMaxResults( 1 )
