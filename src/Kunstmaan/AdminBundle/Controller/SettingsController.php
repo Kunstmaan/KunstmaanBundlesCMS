@@ -68,8 +68,11 @@ class SettingsController extends Controller
     	if ('POST' == $request->getMethod()) {
     		$form->bindRequest($request);
     		if ($form->isValid()){
-    				$em->persist($helper);
-    				$em->flush();
+    			$em->persist($helper);
+    			$em->flush();
+    			$manipulator = $this->get('fos_user.util.user_manipulator');
+    			$manipulator->changePassword($helper->getUsername(), $helper->getPlainpassword());	
+    				
     			return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users'));
     		}
     	}
@@ -94,6 +97,11 @@ class SettingsController extends Controller
     	if ('POST' == $request->getMethod()) {
     		$form->bindRequest($request);
     		if ($form->isValid()){
+    			if($helper->getPlainpassword() != ""){
+    				$manipulator = $this->get('fos_user.util.user_manipulator');
+    				$manipulator->changePassword($helper->getUsername(), $helper->getPlainpassword());
+    			}
+    			$helper->setPlainpassword("");
     			$em->persist($helper);
     			$em->flush();
     			return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users'));
