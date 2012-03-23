@@ -53,6 +53,11 @@ class Node
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $hiddenfromnav;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -68,6 +73,7 @@ class Node
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
         $this->nodeTranslations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->deleted = false;
+        $this->hiddenfromnav = false;
     }
 
     /**
@@ -78,7 +84,7 @@ class Node
     public function getId() {
         return $this->id;
     }
-
+    
     /**
      * Set id
      *
@@ -88,6 +94,18 @@ class Node
         $this->id = $num;
     }
 
+    public function isHiddenFromNav(){
+    	return $this->hiddenfromnav;
+    }
+    
+    public function getHiddenFromNav(){
+    	return $this->hiddenfromnav;
+    }
+    
+    public function setHiddenFromNav($var){
+    	$this->hiddenfromnav = $var;
+    }
+    
     public function getChildren() {
         return $this->children->filter( function($entry) {
 		       if ($entry->isDeleted()) {
