@@ -88,7 +88,19 @@
                         { name: 'document', items : [ 'Source' ] }
                     ];
     	};
-	    CKEDITOR.replaceClass = 'rich_editor';
+    	jQuery(document).ready(function(){
+        	jQuery('textarea.rich_editor').each(function(item){
+            	height = '300px';
+            	if($(this).attr('height')){
+					height = $(this).attr('height');
+                }
+        		CKEDITOR.replace( $(this).attr('id'),
+        				{
+           	 				height: height
+        				}
+        			);
+            });
+		});
 	</script>
 	{% block extrajavascript %}{% endblock %}
     <!-- Le fav and touch icons -->
