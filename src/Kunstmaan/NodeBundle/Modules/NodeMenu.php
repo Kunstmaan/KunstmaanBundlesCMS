@@ -87,10 +87,54 @@ class NodeMenu {
     	return $this->em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug($parentNode, $slug);
     }
 
-    public function getNodeByInternalName($internalName) {
-    	$node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName));
+    public function getNodeByInternalName($internalName, $parent = null) {
+    	$node = null;
+    	if(!is_null($parent)){
+    		if($parent instanceof NodeTranslation){
+    			$parent = $parent->getNode();
+    		} else if ($parent instanceof NodeMenuItem){
+    			$parent =$parent->getNode();
+    		}
+    		$node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName, 'parent' => $parent));
+    	} else {
+    		$node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName));
+    	}
     	if(!is_null($node)){
-    		return $node->getNodeTranslation($this->lang);
+    		$nodeTranslation = $node->getNodeTranslation($this->lang, $this->includeoffline);
+
+    		$tempNode = $node;
+    		//Breadcrumb
+    		$nodeBreadCrumb = array();
+    		$parentNodeMenuItem = null;
+    		while($tempNode && is_null($parentNodeMenuItem)){
+    			array_unshift($nodeBreadCrumb, $tempNode);
+    			$tempNode = $tempNode->getParent();
+    			$parentNodeMenuItem = $this->getBreadCrumbItemByNode($tempNode);
+    		}
+    		$nodeMenuItem = null;
+    		foreach($nodeBreadCrumb as $nodeBreadCrumbItem){
+    			$breadCrumbItemFromMain = $this->getBreadCrumbItemByNode($nodeBreadCrumbItem);
+    			if(!is_null($breadCrumbItemFromMain)){
+    				$parentNodeMenuItem = $breadCrumbItemFromMain;
+    			}
+    			$nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeoffline);
+    			if(!is_null($nodeTranslation)){
+    				$nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $nodeTranslation, $this->lang, $parentNodeMenuItem, $this);
+    				$parentNodeMenuItem = $nodeMenuItem;
+    			}
+    		}
+    		//$resultNodeMenuItem = new NodeMenuItem($this->em, $node, $nodeTranslation, $this->lang, $parentNodeMenuItem, $this);
+    		return $nodeMenuItem;
+    	}
+
+    	return null;
+    }
+
+    private function getBreadCrumbItemByNode(Node $node){
+    	foreach($this->breadCrumb as $breadCrumbItem){
+    		if($breadCrumbItem->getNode()->getId() == $node->getId()){
+    			return $breadCrumbItem;
+    		}
     	}
     	return null;
     }
