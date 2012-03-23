@@ -5,7 +5,7 @@
 		<div class="hasnomedia">
 			<div style="float:left;margin-right: 10px; border: 1px solid black; padding:5px">No media selected</div><div><button class="btn choosebutton">Choose</button></div>
 		</div>
-		<div class="hasmedia">
+		<div class="hasmedia clearfix">
 			<div style="float:left;margin-right: 10px; border: 1px solid black; padding:5px">
 				{% if(value.ent is defined) %}
 					{% include 'KunstmaanMediaBundle:'~value.ent.classtype~':widgetview.html.twig' with {'media': value.ent} %}
