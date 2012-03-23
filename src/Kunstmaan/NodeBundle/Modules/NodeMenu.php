@@ -109,7 +109,9 @@ class NodeMenu {
     		while($tempNode && is_null($parentNodeMenuItem)){
     			array_unshift($nodeBreadCrumb, $tempNode);
     			$tempNode = $tempNode->getParent();
-    			$parentNodeMenuItem = $this->getBreadCrumbItemByNode($tempNode);
+    			if(!is_null($tempNode)){
+    				$parentNodeMenuItem = $this->getBreadCrumbItemByNode($tempNode);
+    			}
     		}
     		$nodeMenuItem = null;
     		foreach($nodeBreadCrumb as $nodeBreadCrumbItem){
