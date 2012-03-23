@@ -155,7 +155,7 @@ class PagesController extends Controller
     	}
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
-        $guestGroup = $em->getRepository('KunstmaanAdminBundle:Group')->findOneByName('Guest');
+        $guestGroup = $em->getRepository('KunstmaanAdminBundle:Group')->findOneByName('Guests');
         $guestPermission = $em->getRepository('KunstmaanAdminBundle:Permission')->findOneBy(array('refId'=>$node->getId(), 'refEntityname'=>ClassLookup::getClass($node),'refGroup'=> $guestGroup->getId()));
         if(is_null($guestPermission)){
         	$guestPermission = new Permission();
