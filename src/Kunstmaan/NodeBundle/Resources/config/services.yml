@@ -1,0 +1,8 @@
+services:
+    getpageparts.twig.extension:
+        class: Kunstmaan\ViewBundle\Twig\Extension\GetPagepartsTwigExtension
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: twig.extension }
+            
