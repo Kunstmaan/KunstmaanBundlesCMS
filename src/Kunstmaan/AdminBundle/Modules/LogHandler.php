@@ -28,14 +28,14 @@ class LogHandler extends AbstractProcessingHandler
         }
 
         $this->container->get('monolog.logger.doctrine')->pushHandler(new NullHandler());
-        
+
 	    try{
 	    	$token = $this->container->get('security.context')->getToken();
 	    	$user=null;
 	    	if(isset($token)){
 	    		$user = $token->getUser();
 	    	}
-	    	
+
 	    	$logitem = new ErrorLogItem();
 	    	if($user instanceof User){
 	    		$logitem->setUser($user);
@@ -45,8 +45,10 @@ class LogHandler extends AbstractProcessingHandler
 	        $logitem->setLevel($record['level']);
 	        $logitem->setMessage($record['formatted']);
 		    $em = $this->container->get('doctrine')->getEntityManager();
-			$em->persist($logitem);
-			$em->flush();
+		    if($em->isOpen()){
+		    	$em->persist($logitem);
+		    	$em->flush();
+		    }
 	     }catch(\PDOException $e){
 	     	// catching the exception during fullreload: errorlogitem table not found
 	     	// TODO do something useful
@@ -54,9 +56,9 @@ class LogHandler extends AbstractProcessingHandler
 	     	// catching the exception during fullreload: The EntityManager is closed
 	     	// TODO do something useful
 	     }
-		    
+
 		 $this->container->get('monolog.logger.doctrine')->popHandler();
-	    
+
     }
 
     private function initialize(){
