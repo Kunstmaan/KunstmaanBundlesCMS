@@ -53,6 +53,7 @@ class SlugController extends Controller
             $result = array(
             			'nodetranslation' => $nodeTranslation,
             			'page'      => $page,
+            			'resource'  => $page,
             			'slug'      => $slug,
             			'pageparts' => $pageparts,
             			'nodemenu'  => $nodeMenu);
@@ -112,6 +113,7 @@ class SlugController extends Controller
             			'nodetranslation' => $nodeTranslation,
             			'slug'      => $slug,
             			'page'      => $page,
+            			'resource'  => $page,
             			'pageparts' => $pageparts,
             			'nodemenu'  => $nodeMenu);
 
