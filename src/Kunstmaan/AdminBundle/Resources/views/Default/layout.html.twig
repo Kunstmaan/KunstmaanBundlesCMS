@@ -62,14 +62,14 @@
     	$(document).ready(function () {
 			init_tree("{{ path('KunstmaanAdminBundle_pages_movenodes') }}", "{% if mediabundleisset is defined %}{{ path('KunstmaanMediaBundle_folder_movenodes') }}{% else %}/movenodes{% endif %}");
         });
-    
+
     	CKEDITOR.editorConfig = function( config )
     	{
     		config.skin = 'kCK';
     	    config.startupFocus = false;
     	    config.height = 500;
-        	config.filebrowserBrowseUrl = '{{ path('KunstmaanAdminBundle_ckselecturl') }}'
-        	config.filebrowserWindowWidth = '580'
+        	config.filebrowserBrowseUrl = '{{ path('KunstmaanAdminBundle_ckselecturl') }}';
+        	config.filebrowserWindowWidth = '580';
         {% if mediabundleisset is defined %}
         	config.filebrowserImageBrowseUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
         	config.filebrowserImageBrowseLinkUrl = '{{ path('KunstmaanMediaBundle_chooser_ckeditor') }}';
@@ -94,15 +94,15 @@
     	};
     	jQuery(document).ready(function(){
         	jQuery('textarea.rich_editor').each(function(item){
-            	height = '300px';
+            	var config = {};
             	if($(this).attr('height')){
-					height = $(this).attr('height');
+            		config.height = $(this).attr('height');
                 }
-        		CKEDITOR.replace( $(this).attr('id'),
-        				{
-           	 				height: height
-        				}
-        			);
+            	if($(this).attr('noparagraphs')){
+            		config.enterMode = CKEDITOR.ENTER_BR;
+   	         		config.shiftEnterMode = CKEDITOR.ENTER_P;
+                }
+        		CKEDITOR.replace( $(this).attr('id'), config);
             });
 		});
 	</script>
