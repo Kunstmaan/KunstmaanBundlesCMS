@@ -12,7 +12,7 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 abstract class AbstractAdminListConfigurator {
 
     public function buildFilters(AdminListFilter $builder){
-    	
+
     }
 
 	function getSortFields() {
@@ -24,17 +24,17 @@ abstract class AbstractAdminListConfigurator {
     }
 
     private $fields;
-    
+
     function getFields(){
     	return $this->fields;
     }
-    
+
     abstract function buildFields();
-    
+
     function addField($fieldname, $fieldheader, $sort){
     	$this->fields[] = new Field($fieldname, $fieldheader, $sort);
     }
-    
+
    function configureListFields(&$array){
    		foreach($this->getFields() as $field){
    			$array[$field->getFieldheader()] = $field->getFieldname();
@@ -44,9 +44,9 @@ abstract class AbstractAdminListConfigurator {
     abstract function canEdit();
 
     abstract function getEditUrlFor($item);
-    
+
     abstract function canAdd();
-    
+
     abstract function getAddUrlFor($params=array());
 
     abstract function canDelete($item);
@@ -71,6 +71,17 @@ abstract class AbstractAdminListConfigurator {
         }
         if($result instanceof \DateTime){
             return $result->format('Y-m-d H:i:s');
+        } else if($result instanceof \Doctrine\ORM\PersistentCollection) {
+            $results = "";
+            foreach($result as $entry) {
+                $results[] = $entry->getName();
+            }
+            if (empty($results)) {
+                return "";
+            }
+            return implode(', ', $results);
+        } else if(is_array($result)) {
+            return implode(', ', $result);
         } else {
             return $result;
         }
