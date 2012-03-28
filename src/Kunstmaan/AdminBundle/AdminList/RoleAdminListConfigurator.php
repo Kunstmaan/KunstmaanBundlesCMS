@@ -19,7 +19,7 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator{
     public function buildFilters(AdminListFilter $builder) {
         $builder->add('role', new StringFilterType("role"), "Role");
     }
-    
+
     public function buildFields() {
     	$this->addField("role", "Role", true);
     }
@@ -37,7 +37,7 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator{
     public function canEdit() {
     	return true;
     }
-    
+
     public function getEditUrlFor($item) {
     	return array('path' => 'KunstmaanAdminBundle_settings_roles_edit', 'params' => array('role_id' => $item->getId()));
     }
@@ -54,27 +54,4 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator{
         return 'KunstmaanAdminBundle:Role';
     }
 
-    public function adaptQueryBuilder($querybuilder, $params=array()) {
-        parent::adaptQueryBuilder($querybuilder);
-    }
-
-
-    public function getValue($item, $columnName) {
-        $result = parent::getValue($item, $columnName);
-
-        if($result instanceof \Doctrine\ORM\PersistentCollection) {
-            $results = "";
-            foreach($result as $entry) {
-                $results[] = $entry->getRole();
-            }
-
-            return implode(', ', $results);
-        }
-
-        if(is_array($result)) {
-            return implode(', ', $result);
-        }
-
-        return $result;
-    }
 }
