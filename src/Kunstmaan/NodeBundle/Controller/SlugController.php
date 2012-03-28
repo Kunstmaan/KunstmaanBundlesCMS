@@ -55,6 +55,7 @@ class SlugController extends Controller
             $result = array(
             			'nodetranslation' => $nodeTranslation,
             			'page'      => $page,
+            			'resource'  => $page,
             			'slug'      => $slug,
             			'pageparts' => $pageparts,
             			'nodemenu'  => $nodeMenu);
@@ -110,11 +111,11 @@ class SlugController extends Controller
             	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
             }
 
-
             $renderContext = new RenderContext(array(
 						'nodetranslation' => $nodeTranslation,
 						'slug'      => $slug,
 						'page'      => $page,
+						'resource'  => $page,
 						'pageparts' => $pageparts,
 						'nodemenu'  => $nodeMenu));
             $renderContext->setView($page->getDefaultView());
