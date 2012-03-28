@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\ViewBundle\Controller;
 
+use Kunstmaan\ViewBundle\Helper\RenderContext;
+
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 
 use Kunstmaan\AdminBundle\Entity\PageIFace;
@@ -108,19 +110,18 @@ class SlugController extends Controller
             	$pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
             }
 
-            $result = array(
-            			'nodetranslation' => $nodeTranslation,
-            			'slug'      => $slug,
-            			'page'      => $page,
-            			'pageparts' => $pageparts,
-            			'nodemenu'  => $nodeMenu);
 
-            $page->service($this->container, $request, $result);
+            $renderContext = new RenderContext(array(
+						'nodetranslation' => $nodeTranslation,
+						'slug'      => $slug,
+						'page'      => $page,
+						'pageparts' => $pageparts,
+						'nodemenu'  => $nodeMenu));
+            $renderContext->setView($page->getDefaultView());
+			$page->service($this->container, $request, $renderContext);
 
-            return $this->render($page->getDefaultView(), $result);
-        }
-        throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
-    }
-
-
+			return $this->render($renderContext->getView(), (array)$renderContext);
+		}
+		throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
+	}
 }
