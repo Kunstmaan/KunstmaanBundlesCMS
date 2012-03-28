@@ -19,7 +19,7 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
 	public function buildFilters(AdminListFilter $builder){
         $builder->add('name', new StringFilterType("name"), "Name");
     }
-    
+
 	public function buildFields()
     {
     	$this->addField("name", "Name", true);
@@ -40,7 +40,7 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
     public function canEdit() {
     	return true;
     }
-    
+
     public function getEditUrlFor($item) {
     	return array('path' => 'KunstmaanAdminBundle_settings_groups_edit', 'params' => array( 'group_id' => $item->getId()));
     }
@@ -55,29 +55,5 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
 
     public function getRepositoryName() {
         return 'KunstmaanAdminBundle:Group';
-    }
-
-    public function adaptQueryBuilder($querybuilder, $params=array()) {
-        parent::adaptQueryBuilder($querybuilder);
-    }
-
-
-    public function getValue($item, $columnName) {
-        $result = parent::getValue($item, $columnName);
-
-        if($result instanceof \Doctrine\ORM\PersistentCollection) {
-            $results = "";
-            foreach($result as $entry) {
-                $results[] = $entry->getName();
-            }
-
-            return implode(', ', $results);
-        }
-
-        if(is_array($result)) {
-            return implode(', ', $result);
-        }
-
-        return $result;
     }
 }

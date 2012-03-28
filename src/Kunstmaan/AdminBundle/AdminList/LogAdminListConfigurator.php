@@ -15,7 +15,7 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator{
         $builder->add('message', new StringFilterType("message"), "Message");
         $builder->add('createdat', new DateFilterType("createdat"), "Created At");
     }
-    
+
 	public function buildFields()
     {
     	$this->addField("user", "User", true);
@@ -35,7 +35,7 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator{
     public function canEdit() {
     	return false;
     }
-    
+
     public function getEditUrlFor($item) {
     	return array();
     }
@@ -50,29 +50,5 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator{
 
     public function getRepositoryName() {
         return 'KunstmaanAdminBundle:LogItem';
-    }
-
-    public function adaptQueryBuilder($querybuilder, $params=array()) {
-        parent::adaptQueryBuilder($querybuilder);
-    }
-
-
-    public function getValue($item, $columnName) {
-        $result = parent::getValue($item, $columnName);
-
-        if($result instanceof \Doctrine\ORM\PersistentCollection) {
-            $results = "";
-            foreach($result as $entry) {
-                $results[] = $entry->getName();
-            }
-
-            return implode(', ', $results);
-        }
-
-        if(is_array($result)) {
-            return implode(', ', $result);
-        }
-
-        return $result;
     }
 }

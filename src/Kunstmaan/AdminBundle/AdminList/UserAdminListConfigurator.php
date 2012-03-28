@@ -23,14 +23,14 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator{
         $builder->add('email', new StringFilterType("email"), "E-Mail");
         $builder->add('enabled', new BooleanFilterType("enabled"), "Enabled");
     }
-    
+
 	public function buildFields()
     {
     	$this->addField("username", "Username", true);
     	$this->addField("email", "E-Mail", true);
     	$this->addField("enabled", "Enabled", true);
     	$this->addField("lastlogin", "Last Login", false);
-    	$this->addField("groups", "Groups", false); 	
+    	$this->addField("groups", "Groups", false);
     }
 
 	public function canAdd() {
@@ -47,7 +47,7 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator{
     public function canEdit() {
     	return true;
     }
-    
+
     public function getEditUrlFor($item) {
     	return array('path' => 'KunstmaanAdminBundle_settings_users_edit', 'params' => array( 'user_id' => $item->getId()));
     }
@@ -64,26 +64,4 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator{
         return 'KunstmaanAdminBundle:User';
     }
 
-    public function adaptQueryBuilder($querybuilder, $params=array()) {
-        parent::adaptQueryBuilder($querybuilder);
-        //not needed to change something here yet but already
-    }
-
-
-    public function getValue($item, $columnName) {
-        $result = parent::getValue($item, $columnName);
-
-        if($result instanceof \Doctrine\ORM\PersistentCollection) {
-            $results = "";
-            foreach($result as $entry) {
-                $results[] = $entry->getName();
-            }
-            if (empty($results)) {
-                return "";
-            }
-            return implode(', ', $results);
-        }
-
-        return $result;
-    }
 }
