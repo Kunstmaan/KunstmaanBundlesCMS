@@ -44,7 +44,7 @@
 	        	<p>
 	                {% if result.highlight %}
 	                {% for highlight in result.highlight %}
-	        		    {{ highlight.0|raw }}
+	        		    {{ highlight.0 | trim_highlight | raw }}
 	                {% endfor %}
 	                {% endif %}
 	        	</p>

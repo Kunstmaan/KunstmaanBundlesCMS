@@ -6,3 +6,8 @@ services:
         tags:
             - { name: twig.extension }
             
+    trimhightlight.twig.extension:
+        class: Kunstmaan\ViewBundle\Twig\Extension\TrimHighlightTwigExtension
+        tags:
+            - { name: twig.extension }
+            
