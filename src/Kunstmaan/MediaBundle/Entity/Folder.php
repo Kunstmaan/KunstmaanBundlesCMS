@@ -12,8 +12,6 @@ use Gedmo\Translatable\Translatable;
 /**
  * Class that defines a folder from the MediaBundle in the database
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
  * @ORM\Table(name="media_folder")
  * @ORM\InheritanceType("SINGLE_TABLE")

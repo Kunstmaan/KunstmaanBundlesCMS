@@ -8,8 +8,6 @@ use Assetic\Asset\FileAsset;
 /**
  * Class that defines a Media object from the AnoBundle in the database
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\MediaRepository")
  * @ORM\Table(name="media")
  * @ORM\InheritanceType("JOINED")
