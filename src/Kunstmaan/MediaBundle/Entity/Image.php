@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Kunstmaan\MediaBundle\Entity\Image
  * Class that defines a picture in the system
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Table("media_image")
  * @ORM\Entity
  */

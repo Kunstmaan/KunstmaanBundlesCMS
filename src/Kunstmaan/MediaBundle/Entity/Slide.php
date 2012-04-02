@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * Kunstmaan\MediaBundle\Entity\Slide
  * Class that defines a slide in the system
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Table("media_slide")
  * @ORM\Entity
  */

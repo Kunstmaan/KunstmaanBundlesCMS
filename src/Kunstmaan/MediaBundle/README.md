@@ -9,6 +9,16 @@ No central asset management module is useful without some pretty advanced image 
 
 View some screenshots on this bundles [github page](http://kunstmaan.github.com/KunstmaanMediaBundle).
 
+> ** Important Note **
+>
+> Once again, we're not reinventing code here, the code in this bundle is heavily inspired from the [AnoMediaBundle](https://github.com/benjamindulau/AnoMediaBundle) 
+> which on his turn is based on the [SonataMediaBundle](https://github.com/sonata-project/SonataMediaBundle).
+>
+> The KunstmaanMediaBundle is different in the way that it's base handles galleries, videos and slides without the hassle of adding them yourself.
+>
+> We didn't chose to fork the AnoMediaBundle but started the KunstmaanMediaBundle from sratch. This way we could find out the inner workings of the AnoMediaBundle more easily. 
+> But keep in mind the code in the AnoMediaBundle is reused at a lot of places.
+
 Licensing
 ---------
 
