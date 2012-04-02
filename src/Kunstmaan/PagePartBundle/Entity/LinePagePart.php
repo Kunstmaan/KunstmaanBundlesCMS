@@ -9,7 +9,7 @@ use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="linepagepart")
  */
-class LinePagePart {
+class LinePagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -45,6 +45,10 @@ class LinePagePart {
 
     public function getDefaultView(){
         return "KunstmaanPagePartBundle:LinePagePart:view.html.twig";
+    }
+    
+    public function getElasticaView(){
+    	return $this->getDefaultView();
     }
 
     public function getDefaultAdminType(){

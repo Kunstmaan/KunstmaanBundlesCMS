@@ -9,7 +9,7 @@ use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="tocpagepart")
  */
-class TocPagePart {
+class TocPagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -45,6 +45,10 @@ class TocPagePart {
 
     public function getDefaultView(){
         return "KunstmaanPagePartBundle:TocPagePart:view.html.twig";
+    }
+    
+    public function getElasticaView(){
+    	return $this->getDefaultView();
     }
 
     public function getDefaultAdminType(){
