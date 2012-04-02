@@ -2,6 +2,8 @@
 
 namespace  Kunstmaan\MediaPagePartBundle\Entity;
 
+use Kunstmaan\PagePartBundle\Entity\IsPagePart;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
 use Assetic\AssetManager;
@@ -12,7 +14,7 @@ use Assetic\Asset\FileAsset;
  * @ORM\Entity
  * @ORM\Table(name="pagepart_download")
  */
-class DownloadPagePart {
+class DownloadPagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -76,6 +78,11 @@ class DownloadPagePart {
     public function getDefaultView(){
         return "KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig";
     }
+    
+    public function getElasticaView(){
+    	return "KunstmaanMediaPagePartBundle:DownloadPagePart:elastica.html.twig";
+    }
+    
 
     public function getDefaultAdminType(){
         return new DownloadPagePartAdminType();
