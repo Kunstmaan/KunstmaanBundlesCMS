@@ -16,7 +16,7 @@ View some screenshots on this bundles [github page](http://kunstmaan.github.com/
 >
 > The KunstmaanMediaBundle is different in the way that it's base handles galleries, videos and slides without the hassle of adding them yourself.
 >
-> We didn't chose to fork the AnoMediaBundle but started the KunstmaanMediaBundle from sratch. This way we could find out the inner workings of the AnoMediaBundle more easily. 
+> We didn't chose to fork the AnoMediaBundle but started the KunstmaanMediaBundle from scratch. This way we could find out the inner workings of the AnoMediaBundle more easily. 
 > But keep in mind the code in the AnoMediaBundle is reused at a lot of places.
 
 Licensing
