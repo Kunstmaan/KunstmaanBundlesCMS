@@ -119,8 +119,13 @@ class SlugController extends Controller
 						'pageparts' => $pageparts,
 						'nodemenu'  => $nodeMenu));
             $renderContext->setView($page->getDefaultView());
-			$page->service($this->container, $request, $renderContext);
+			
+            $redirect = $page->service($this->container, $request, $renderContext);
 
+            if( isset($redirect) && $redirect != null && $redirect != "" ){
+            	return $redirect;
+            }
+            
 			return $this->render($renderContext->getView(), (array)$renderContext);
 		}
 		throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
