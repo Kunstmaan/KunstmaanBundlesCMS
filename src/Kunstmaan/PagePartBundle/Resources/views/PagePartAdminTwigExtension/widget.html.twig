@@ -100,7 +100,12 @@
                 {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
                     <div class="block" id="{{pagepartref.id}}_edit" {% if editpagepart is not defined or editpagepart != loop.index %}style="display:none"{% endif %}>
                         {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
-                        {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
+
+                        {% if pagepart.editTemplate is defined %}
+                            {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]} %}
+                        {% else %}
+                            {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
+                        {% endif %}
                     </div>
                 {% endif %}
             </div>
