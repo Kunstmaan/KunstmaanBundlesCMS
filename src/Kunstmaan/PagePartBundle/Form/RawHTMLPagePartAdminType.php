@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
 /**
- * class to define the form to upload a picture
+ * class to add content to a raw html pagepart
  *
  */
 class RawHTMLPagePartAdminType extends AbstractType
