@@ -29,7 +29,16 @@
 		<ul class="media-grid" id="file-list">
         {% for media in gallery.getImages %}
             <li>
-                <a onclick="window.opener.CKEDITOR.tools.callFunction(2, '{{ asset(upload_dir~media.show()) }}'); window.close();" class="item" href="{{ path('KunstmaanMediaBundle_media_show', { 'media_id' : media.id }) }}">
+                <a onclick="
+                	function getUrlParam(paramName)
+			    	{
+			    	  var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
+			    	  var match = window.location.search.match(reParam) ;
+			    	 
+			    	  return (match && match.length > 1) ? match[1] : '' ;
+			    	}
+		    		var funcNum = getUrlParam('CKEditorFuncNum');
+                	window.opener.CKEDITOR.tools.callFunction(funcNum, '{{ asset(upload_dir~media.show()) }}'); window.close();" class="item" href="#">
                     <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
                     <div class="caption">
 						<h5>{{ media.name }}</h5>
