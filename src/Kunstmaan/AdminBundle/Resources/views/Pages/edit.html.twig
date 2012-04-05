@@ -125,7 +125,7 @@
 		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
 	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
 	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
-	      <button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>
+	      {% if page.possibleChildPageTypes is not empty %}<button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>{% endif %}
 	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
 	  {% endif %}
       {#<button class="btn" data-controls-modal="cancel" data-backdrop="true" data-keyboard="true">Cancel</button>#}
@@ -141,7 +141,7 @@
 		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
 	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
 	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
-	      <button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>
+          {% if page.possibleChildPageTypes is not empty %}<button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>{% endif %}
 	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
 	    {% endif %}
         {#<button class="btn" data-controls-modal="cancel" data-backdrop="true" data-keyboard="true">Cancel</button>#}
@@ -149,6 +149,7 @@
       </div>
     </div>
 
+    {% if page.possibleChildPageTypes is not empty %}
     <div id="add-subpage-modal" class="modal hide fade">
       <div class="modal-header">
         <a href="#" class="close">&times;</a>
@@ -179,6 +180,7 @@
         <a onclick="$('#add-subpage-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
       </div>
     </div>
+    {% endif %}
     <div id="delete-page-modal" class="modal hide fade">
       <div class="modal-header">
         <a href="#" class="close">&times;</a>
