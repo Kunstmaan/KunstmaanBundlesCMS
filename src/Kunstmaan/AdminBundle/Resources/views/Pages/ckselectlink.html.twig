@@ -51,7 +51,15 @@
 		    	<p id="selection">Selection: empty</p>
 		    	<div class="main_actions">
 		    		<button onclick="
-    					window.opener.CKEDITOR.tools.callFunction(2, ckurl); window.close();" class="btn primary">Ok</button>
+		    			function getUrlParam(paramName)
+			    		{
+			    		  var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
+			    		  var match = window.location.search.match(reParam) ;
+			    		 
+			    		  return (match && match.length > 1) ? match[1] : '' ;
+			    		}
+		    			var funcNum = getUrlParam('CKEditorFuncNum');
+    					window.opener.CKEDITOR.tools.callFunction(funcNum, ckurl); window.close();" class="btn primary">Ok</button>
 		    		<button onclick="window.close();" class="btn">Cancel</button>
 
 		    	</div>
