@@ -23,8 +23,26 @@ class ChooserController extends Controller
      */
     public function ckeditorAction() {
         $em = $this->getDoctrine()->getEntityManager();
+        $funcnum = $this->getRequest()->get("CKEditorFuncNum");
         $firstgallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1, $em);
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_ckeditor_show", array("id"=>$firstgallery->getId(), "slug" => $firstgallery->getSlug())));
+        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_ckeditor_show", array("id"=>$firstgallery->getId(), "slug" => $firstgallery->getSlug(), "CKEditorFuncNum" => $funcnum)));
+    }
+    
+    /**
+     * @Route("/ckeditor/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
+     * @Template()
+     */
+    function ckeditorshowfolderAction($id){
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
+    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+    	$funcnum = $this->getRequest()->get("CKEditorFuncNum");
+    	
+    	return array(
+    			'gallery'       => $gallery,
+    			'galleries'     => $galleries, 
+    			"CKEditorFuncNum" => $funcnum
+    	);
     }
 
     /**
@@ -124,21 +142,6 @@ class ChooserController extends Controller
     	return array(
     			'gallery'       => $gallery,
     			'galleries'     => $galleries
-    	);
-    }
-
-    /**
-     * @Route("/ckeditor/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
-     * @Template()
-     */
-    function ckeditorshowfolderAction($id){
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
-    	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-
-    	return array(
-            'gallery'       => $gallery,
-            'galleries'     => $galleries
     	);
     }
 
