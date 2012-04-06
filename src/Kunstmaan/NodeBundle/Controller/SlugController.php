@@ -123,7 +123,7 @@ class SlugController extends Controller
             }
             $redirect = $page->service($this->container, $request, $renderContext);
 
-            if( isset($redirect) && $redirect != null && $redirect != "" ){
+            if (!empty($redirect)) {
             	return $redirect;
             }
             
