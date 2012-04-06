@@ -71,7 +71,7 @@ class SlugController extends Controller
             }
 
         }
-        throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
+        throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
 	}
 
     /**
@@ -118,8 +118,9 @@ class SlugController extends Controller
 						'resource'  => $page,
 						'pageparts' => $pageparts,
 						'nodemenu'  => $nodeMenu));
-            $renderContext->setView($page->getDefaultView());
-			
+            if (method_exists($page, "getDefaultView")) {
+                $renderContext->setView($page->getDefaultView());
+            }
             $redirect = $page->service($this->container, $request, $renderContext);
 
             if( isset($redirect) && $redirect != null && $redirect != "" ){
@@ -128,6 +129,6 @@ class SlugController extends Controller
             
 			return $this->render($renderContext->getView(), (array)$renderContext);
 		}
-		throw $this->createNotFoundException('You do not have suffucient rights to access this page.');
+		throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
 	}
 }
