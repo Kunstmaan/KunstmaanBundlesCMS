@@ -2,6 +2,8 @@
 
 namespace  Kunstmaan\MediaPagePartBundle\Entity;
 
+use Kunstmaan\PagePartBundle\Entity\IsPagePart;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
 use Assetic\AssetManager;
@@ -12,7 +14,7 @@ use Assetic\Asset\FileAsset;
  * @ORM\Entity
  * @ORM\Table(name="pagepart_image")
  */
-class ImagePagePart {
+class ImagePagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -144,6 +146,10 @@ class ImagePagePart {
 
     public function getDefaultView(){
         return "KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig";
+    }
+    
+    public function getElasticaView(){
+    	return "KunstmaanMediaPagePartBundle:ImagePagePart:elastica.html.twig";
     }
 
     public function getDefaultAdminType(){
