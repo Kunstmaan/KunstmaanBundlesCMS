@@ -14,7 +14,7 @@ use Assetic\Asset\FileAsset;
  * @ORM\Entity
  * @ORM\Table(name="pagepart_image")
  */
-class ImagePagePart implements IsPagePart{
+class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
 
     /**
      * @ORM\Id

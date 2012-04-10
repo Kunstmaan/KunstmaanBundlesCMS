@@ -2,7 +2,7 @@
 
 namespace  Kunstmaan\MediaPagePartBundle\Entity;
 
-use Kunstmaan\PagePartBundle\Entity\IsPagePart;
+use Kunstmaan\PagePartBundle\Helper\IsPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
