@@ -9,7 +9,7 @@ use Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="totoppagepart")
  */
-class ToTopPagePart {
+class ToTopPagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -45,6 +45,10 @@ class ToTopPagePart {
 
     public function getDefaultView(){
         return "KunstmaanPagePartBundle:ToTopPagePart:view.html.twig";
+    }
+    
+    public function getElasticaView(){
+    	return $this->getDefaultView();
     }
 
     public function getDefaultAdminType(){

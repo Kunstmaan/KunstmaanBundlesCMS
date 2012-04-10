@@ -13,7 +13,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="headerpagepart")
  */
-class HeaderPagePart {
+class HeaderPagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -95,6 +95,10 @@ class HeaderPagePart {
 
     public function getDefaultView(){
         return "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig";
+    }
+    
+    public function getElasticaView(){
+    	return $this->getDefaultView();
     }
 
     public function getDefaultAdminType(){
