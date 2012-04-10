@@ -9,7 +9,7 @@ use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="linkpagepart")
  */
-class LinkPagePart {
+class LinkPagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -104,6 +104,10 @@ class LinkPagePart {
 
     public function getDefaultView(){
         return "KunstmaanPagePartBundle:LinkPagePart:view.html.twig";
+    }
+    
+    public function getElasticaView(){
+    	return $this->getDefaultView();
     }
 
     public function getDefaultAdminType(){

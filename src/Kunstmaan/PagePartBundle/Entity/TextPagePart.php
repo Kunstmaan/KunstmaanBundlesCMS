@@ -13,7 +13,7 @@ use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="textpagepart")
  */
-class TextPagePart{
+class TextPagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -75,6 +75,10 @@ class TextPagePart{
 
     public function getDefaultView(){
         return "KunstmaanPagePartBundle:TextPagePart:view.html.twig";
+    }
+    
+    public function getElasticaView(){
+    	return $this->getDefaultView();
     }
 
     public function getDefaultAdminType(){
