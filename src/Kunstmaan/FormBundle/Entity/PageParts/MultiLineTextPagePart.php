@@ -1,6 +1,8 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
+use Kunstmaan\PagePartBundle\Helper\IsPagePart;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 
@@ -23,7 +25,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="form_multilinetextpagepart")
  */
-class MultiLineTextPagePart implements FormAdaptorIFace {
+class MultiLineTextPagePart implements FormAdaptorIFace, IsPagePart {
 
 	/**
 	 * @ORM\Id

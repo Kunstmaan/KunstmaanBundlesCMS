@@ -1,6 +1,8 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
+use Kunstmaan\PagePartBundle\Helper\IsPagePart;
+
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 
 use Symfony\Component\Form\FormBuilder;
@@ -15,7 +17,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="form_submitbutton")
  */
-class SubmitButtonPagePart {
+class SubmitButtonPagePart implements IsPagePart{
 
 	/**
 	 * @ORM\Id

@@ -1,6 +1,8 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
+use Kunstmaan\PagePartBundle\Helper\IsPagePart;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 
@@ -20,7 +22,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="form_choicepagepart")
  */
-class ChoicePagePart implements FormAdaptorIFace {
+class ChoicePagePart implements FormAdaptorIFace, IsPagePart {
 
 	/**
 	 * @ORM\Id
