@@ -122,6 +122,10 @@ class SingleLineTextPagePart implements FormAdaptorIFace {
 		return "KunstmaanFormBundle:SingleLineTextPagePart:view.html.twig";
 	}
 
+	public function getElasticaView(){
+		return  $this->getDefaultView();
+	}
+	
 	public function adaptForm(FormBuilder $formBuilder, &$fields) {
 		$sfsf = new StringFormSubmissionField();
 		$sfsf->setFieldName("field_".$this->getUniqueId());

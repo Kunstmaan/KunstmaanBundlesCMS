@@ -119,6 +119,10 @@ class MultiLineTextPagePart implements FormAdaptorIFace {
 	public function getDefaultView() {
 		return "KunstmaanFormBundle:MultiLineTextPagePart:view.html.twig";
 	}
+	
+	public function getElasticaView(){
+		return  $this->getDefaultView();
+	}
 
 	public function adaptForm(FormBuilder $formBuilder, &$fields) {
 		$sfsf = new TextFormSubmissionField();

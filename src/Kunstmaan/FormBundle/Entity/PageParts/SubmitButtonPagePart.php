@@ -56,6 +56,10 @@ class SubmitButtonPagePart {
 		return "KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig";
 	}
 
+	public function getElasticaView(){
+		return  $this->getDefaultView();
+	}
+	
 	public function getDefaultAdminType(){
 		return new SubmitButtonPagePartAdminType();
 	}
