@@ -2,6 +2,8 @@
 
 namespace  Kunstmaan\MediaPagePartBundle\Entity;
 
+use Kunstmaan\PagePartBundle\Helper\IsPagePart;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
 use Assetic\AssetManager;
@@ -12,7 +14,7 @@ use Assetic\Asset\FileAsset;
  * @ORM\Entity
  * @ORM\Table(name="pagepart_slide")
  */
-class SlidePagePart {
+class SlidePagePart implements IsPagePart {
 
     /**
      * @ORM\Id
@@ -72,6 +74,10 @@ class SlidePagePart {
 
     public function getDefaultView(){
         return "KunstmaanMediaPagePartBundle:SlidePagePart:view.html.twig";
+    }
+    
+    public function getElasticaView(){
+    	return $this->getDefaultView();
     }
 
     public function getDefaultAdminType(){
