@@ -116,7 +116,7 @@ class ChooserController extends Controller
     }
 
     /**
-     * @Route("/slide/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_slidechooser_show")
+     * @Route("/slidechooser/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_slidechooser_show")
      * @Template()
      */
     function slidechoosershowfolderAction($id){
@@ -131,7 +131,7 @@ class ChooserController extends Controller
     }
 
     /**
-     * @Route("/video/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_videochooser_show")
+     * @Route("/videochooser/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_videochooser_show")
      * @Template()
      */
     function videochoosershowfolderAction($id){
