@@ -79,7 +79,7 @@ class RawHTMLPagePart implements IsPagePart{
         return "KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig";
     }
     
-    public function getDefaultView(){
+    public function getElasticaView(){
     	return $this->getDefaultView();
     }
 
