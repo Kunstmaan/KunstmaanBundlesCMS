@@ -2,6 +2,8 @@
 
 namespace  Kunstmaan\PagePartBundle\Entity;
 
+use Kunstmaan\PagePartBundle\Helper\IsPagePart;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
 
@@ -13,7 +15,7 @@ use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
  * @ORM\Entity
  * @ORM\Table(name="rawhtmlpagepart")
  */
-class RawHTMLPagePart{
+class RawHTMLPagePart implements IsPagePart{
 
     /**
      * @ORM\Id
@@ -75,6 +77,10 @@ class RawHTMLPagePart{
 
     public function getDefaultView(){
         return "KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig";
+    }
+    
+    public function getDefaultView(){
+    	return $this->getDefaultView();
     }
 
     public function getDefaultAdminType(){
