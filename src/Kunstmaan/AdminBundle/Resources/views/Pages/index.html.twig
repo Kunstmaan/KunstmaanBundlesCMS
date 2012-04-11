@@ -7,7 +7,7 @@
             <button id="search" class="btn search"><img src="{{ asset('bundles/kunstmaanadmin/img/icons/search.png') }}" alt="Search" /></button>
         </form>
     </div>
-    <div id="pagestree">
+    <div id="tree" class="pagestree">
         <ul>
             {% for node in nodemenu.topnodes %}
                 {% include 'KunstmaanAdminBundle:Pages:rectreeview.html.twig' %}
