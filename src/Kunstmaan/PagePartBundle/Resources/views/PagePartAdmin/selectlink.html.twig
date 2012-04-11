@@ -77,7 +77,7 @@
 	    		<input type="text" id="searchVal" placeholder="Search" />
 	    		<button id="search" class="btn search"><img src="{{ asset('bundles/kunstmaanadmin/img/icons/search.png') }}" alt="Search" /></button>
 	    	</div>
-<div id="tree">
+<div id="tree" class="tree">
         <ul>
             {% for node in nodemenu.topnodes %}
                 {% include 'KunstmaanPagePartBundle:PagePartAdmin:rectreeview.html.twig' %}
