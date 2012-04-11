@@ -22,7 +22,10 @@ class SlugController extends Controller
 	{
 		$em = $this->getDoctrine()->getEntityManager();
     	$request = $this->getRequest();
-    	$locale = $request->getSession()->getLocale();
+	    $locale = $request->getLocale();
+    	if(empty($locale)){
+    	    $locale = $request->getSession()->getLocale();
+    	}
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
     	if($nodeTranslation){
     		$version = $nodeTranslation->getNodeVersion('draft');
@@ -80,7 +83,10 @@ class SlugController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	$request = $this->getRequest();
-    	$locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
+    	if(empty($locale)){
+    	    $locale = $request->getSession()->getLocale();
+    	}
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
     	if($nodeTranslation){
             $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
