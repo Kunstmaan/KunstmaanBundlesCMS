@@ -93,20 +93,13 @@ class SlugController extends Controller
     	
     	$requiredlocales = $this->container->getParameter("requiredlocales");
     	
-    	$tok = strtok($requiredlocales, "|");
+    	$localesarray = explode("|", $requiredlocales);
     	
-    	$isright = false;
-    	
-    	while ($tok !== false) {
-    		if($tok == $locale){
-    			$isright = true;
-    		}
-    		$tok = strtok("|");
-    	}
-    	
-    	if(!$isright){
+    	if(!in_array($locale, $localesarray)){
     		$locale = $this->container->getParameter("locale");
     	}    	
+    	
+    	var_dump($locale); die;
     	
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
     	if($nodeTranslation){
