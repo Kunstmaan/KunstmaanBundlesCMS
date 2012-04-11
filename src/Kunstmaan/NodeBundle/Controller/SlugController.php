@@ -86,9 +86,30 @@ class SlugController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	$request = $this->getRequest();
         $locale = $request->getLocale();
+        
     	if(empty($locale)){
-    	    $locale = $request->getSession()->getLocale();
+    		$locale = $request->getSession()->getLocale();
     	}
+    	
+    	$requiredlocales = $this->container->getParameter("requiredlocales");
+    	
+    	$tok = strtok($requiredlocales, "|");
+    	
+    	$isright = false;
+    	
+    	while ($tok !== false) {
+    		if($tok == $locale){
+    			$isright = true;
+    		}
+    		$tok = strtok("|");
+    	}
+    	
+    	if(!$isright){
+    		$locale = $this->container->getParameter("locale");
+    	}    	
+    	
+    	var_dump($locale); die;
+    	
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
     	if($nodeTranslation){
             $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
