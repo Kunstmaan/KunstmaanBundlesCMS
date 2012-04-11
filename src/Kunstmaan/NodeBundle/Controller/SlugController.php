@@ -25,9 +25,25 @@ class SlugController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
     	$request = $this->getRequest();
 	    $locale = $request->getLocale();
-    	if(empty($locale)){
-    	    $locale = $request->getSession()->getLocale();
+		
+		if(empty($locale)){
+    		$locale = $request->getSession()->getLocale();
     	}
+    	
+    	$requiredlocales = $this->container->getParameter("requiredlocales");
+    	
+    	$localesarray = explode("|", $requiredlocales);
+    	
+    	if(!empty($localesarray[0])){
+    		$fallback = $localesarray[0];
+    	}else{
+    		$fallback = $this->container->getParameter("locale");
+    	}
+    	
+    	if(!in_array($locale, $localesarray)){
+    		$locale = $fallback;
+    	}    	
+    	
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
     	if($nodeTranslation){
     		$version = $nodeTranslation->getNodeVersion('draft');
@@ -95,8 +111,14 @@ class SlugController extends Controller
     	
     	$localesarray = explode("|", $requiredlocales);
     	
+    	if(!empty($localesarray[0])){
+    		$fallback = $localesarray[0];
+    	}else{
+    		$fallback = $this->container->getParameter("locale");
+    	}
+    	
     	if(!in_array($locale, $localesarray)){
-    		$locale = $this->container->getParameter("locale");
+    		$locale = $fallback;
     	}    	
     	
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
