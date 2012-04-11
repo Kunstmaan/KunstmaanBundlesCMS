@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 // JS-tree
 function init_tree(movepagesnodeurl, movemedianodeurl) {
-	$('#tree').jstree({
+	$('.tree').jstree({
 		"plugins" : [ "themes", "html_data", "types", "search" ] ,
 		"themes" : { 
 			"theme" : "OMNext",
@@ -75,14 +75,14 @@ function init_tree(movepagesnodeurl, movemedianodeurl) {
         }
 	});
     $("#treeform").submit(function() {
-        $('#tree').jstree('search', $('#treeform #searchVal').val());
+        $('.tree').jstree('search', $('#treeform #searchVal').val());
         return false;
     });
     $('#treeform #searchVal').keyup(function() {
-        $('#tree').jstree('search', $('#treeform #searchVal').val());
+        $('.tree').jstree('search', $('#treeform #searchVal').val());
     })
 
-	$('#pagestree').jstree({
+	$('.pagestree').jstree({
 		"plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
 		"themes" : { 
 			"theme" : "OMNext",
@@ -191,14 +191,14 @@ function init_tree(movepagesnodeurl, movemedianodeurl) {
 		});
 	});
     $("#pagestreeform").submit(function() {
-        $('#pagestree').jstree('search', $('#pagestreeform #searchVal').val());
+        $('.pagestree').jstree('search', $('#pagestreeform #searchVal').val());
         return false;
     });
     $('#pagestreeform #searchVal').keyup(function() {
-        $('#pagestree').jstree('search', $('#pagestreeform #searchVal').val());
+        $('.pagestree').jstree('search', $('#pagestreeform #searchVal').val());
     })
 
-	$('#mediatree').jstree({
+	$('.mediatree').jstree({
 		"plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
 		"themes" : { 
 			"theme" : "OMNext",
@@ -306,11 +306,11 @@ function init_tree(movepagesnodeurl, movemedianodeurl) {
 		});
 	});
     $("#mediatreeform").submit(function() {
-        $('#mediatree').jstree('search', $('#mediatreeform #searchVal').val());
+        $('.mediatree').jstree('search', $('#mediatreeform #searchVal').val());
         return false;
     });
     $('#mediatreeform #searchVal').keyup(function() {
-        $('#mediatree').jstree('search', $('#mediatreeform #searchVal').val());
+        $('.mediatree').jstree('search', $('#mediatreeform #searchVal').val());
     })
 }
 
