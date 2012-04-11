@@ -108,8 +108,6 @@ class SlugController extends Controller
     		$locale = $this->container->getParameter("locale");
     	}    	
     	
-    	var_dump($locale); die;
-    	
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
     	if($nodeTranslation){
             $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
