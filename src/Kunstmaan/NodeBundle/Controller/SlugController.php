@@ -42,7 +42,7 @@ class SlugController extends Controller
     	
     	if(!in_array($locale, $localesarray)){
     		$locale = $fallback;
-    		return $this->redirect($this->generateUrl("_slug", array("slug"=>$slug, "_locale"=>$locale)));
+    		return $this->redirect($this->generateUrl("_slug_draft", array("slug"=>$slug, "_locale"=>$locale)));
     	}    	
     	
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
