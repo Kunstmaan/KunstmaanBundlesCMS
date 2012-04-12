@@ -234,6 +234,17 @@
 					    		</div>
 				    	</div>
 			    	{% endif %}
+			    	{% for key, extraform in form %}
+				    	{% if key != 'main' and key == pagepartadmin.context %}
+					    	<div id="properties">
+					    		<div id="prop_wrp">
+						    		<div class="input_prop">
+						    			 {{ form_widget(extraform) }}
+						    		</div>
+						    	</div>
+					    	</div>
+					    {% endif %}
+				    {% endfor %}
 	                {{ pagepartadmin_widget(pagepartadmin, form) }}
 	            </div>
         	{% endfor %}

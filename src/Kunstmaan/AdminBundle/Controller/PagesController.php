@@ -255,8 +255,21 @@ class PagesController extends Controller
         //add the specific data from the custom page
         $formbuilder->add('main', $page->getDefaultAdminType());
         $formbuilder->add('node', $node->getDefaultAdminType($this->container));
+        
+        if(method_exists($page, "getExtraAdminTypes")){
+        	foreach($page->getExtraAdminTypes() as $key => $admintype){
+        		$formbuilder->add($key, $admintype);
+        	}	
+        }
 
-        $formbuilder->setData(array('node' => $node, 'main' => $page));
+        $bindingarray = array('node' => $node, 'main' => $page);
+        if(method_exists($page, "getExtraAdminTypes")){
+        	foreach($page->getExtraAdminTypes() as $key => $admintype){
+        		$bindingarray[$key] = $page;
+        	}
+        }
+                
+        $formbuilder->setData($bindingarray);
 
         //handle the pagepart functions (fetching, change form to reflect all fields, assigning data, etc...)
         $pagepartadmins = array();
