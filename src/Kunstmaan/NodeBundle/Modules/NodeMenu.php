@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\Modules;
 
+use Kunstmaan\AdminNodeBundle\Entity\HasNode;
+
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Translation\Translator;
@@ -89,13 +91,29 @@ class NodeMenu {
 
     public function getNodeByInternalName($internalName, $parent = null) {
     	$node = null;
+
     	if(!is_null($parent)){
     		if($parent instanceof NodeTranslation){
     			$parent = $parent->getNode();
     		} else if ($parent instanceof NodeMenuItem){
-    			$parent =$parent->getNode();
+    			$parent = $parent->getNode();
+    		} else if ($parent instanceof HasNode){
+    			$parent = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($parent);
     		}
-    		$node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName, 'parent' => $parent));
+    		$node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName, 'parent' => $parent->getId()));
+    		if(is_null($node)){
+    		    $nodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findBy(array('internalName' => $internalName));
+    		    foreach($nodes as $n){
+    		        $p = $n;
+    		        while(is_null($node) && !is_null($p->getParent())){
+    		            if($p->getParent()->getId() == $parent->getId()){
+    		                $node = $n;
+    		                break;
+    		            }
+    		            $p = $p->getParent();
+    		        }
+    		    }
+    		}
     	} else {
     		$node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName));
     	}
