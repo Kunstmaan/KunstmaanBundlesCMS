@@ -48,8 +48,13 @@ services:
             - { name: kernel.event_listener, event: security.interactive_login }
             
     kunstmaan_logout_listener:
-        class:  Kunstmaan\AdminBundle\Modules\LogoutListener
+        class: Kunstmaan\AdminBundle\Modules\LogoutListener
         arguments:  [@security.context, @doctrine]
         tags:
             - { name: 'monolog.logger' channel: 'security' }
+            
+    kunstmaan.twig.locale:
+        class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
+        tags:
+            - { name: twig.extension }
  
