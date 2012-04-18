@@ -188,8 +188,20 @@
 				$('.ui-sortable-helper .new_pagepart').slideUp("fast");	
 			},
 			stop: function(e, ui) {
+				jQuery('textarea.rich_editor').each(function(item){
+					var config = {};
+	            	if($(this).attr('height')){
+	            		config.height = $(this).attr('height');
+	                }
+	            	if($(this).attr('noparagraphs')){
+	            		config.enterMode = CKEDITOR.ENTER_BR;
+	   	         		config.shiftEnterMode = CKEDITOR.ENTER_P;
+	                }
+	        		CKEDITOR.replace( $(this).attr('id'), config);
+				});
+				
 				$('.draggable').css('opacity', "1");	
-				$('.rich_editor').ckeditor();
+				//$('.rich_editor').ckeditor();
 			}
 
 		    //containment: 'document'
