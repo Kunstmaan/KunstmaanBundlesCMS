@@ -7,3 +7,9 @@ services:
     kunstmaan_search.transformers.elasticatransformer:
         class: %kunstmaan_search.transformers.elasticatransformerclass%
         arguments: [@doctrine.orm.entity_manager, %kunstmaan_search.entity.website%, [identifier: id, hydrate: true]]
+        
+    admin_menu.adaptor.search:
+        class: Kunstmaan\SearchBundle\Helper\Menu\SearchMenuAdaptor
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            -  { name: admin_menu.adaptor }
