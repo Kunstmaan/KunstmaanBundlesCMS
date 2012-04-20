@@ -35,10 +35,6 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator{
 		$this->addField("ipAddress", "ipAddress", true);
 	}
 
-	public function canEdit() {
-		return true;
-	}
-
 	public function getEditUrlFor($item) {
 		return array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodetranslationid' => $this->nodeTranslation->getId(), 'submissionid' => $item->getId()));
 	}
