@@ -1,0 +1,5 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block content %}
+    {{ adminlist_widget(adminlist, app.request.attributes.get('_route')) }}
+{% endblock %}
