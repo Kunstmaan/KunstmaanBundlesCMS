@@ -1,20 +1,13 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
-{% block subsidebar %}
-    {% include 'KunstmaanMediaBundle:Folder:sidebar.html.twig' %}
-{% endblock %}
-
-{% block subbreadcrumb %}{%  set galstype = 'media.menu.'~gallery.type~'s' %}
-    
-        {% for parent in gallery.parents %}<li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>{% endfor %}
-	<li class="active">{{ gallery.name | trans }}</li>
+{% block page_header_addition %}
+	{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}
+	{% if gallery.parent %}
+		<small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>
+	{% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-		{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
-	</div>
-
         {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
         {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
       

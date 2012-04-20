@@ -1,16 +1,1 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
-
-{% block sidebar %}
-    {% block subsidebar %}
-
-    {% endblock %}
-{% endblock %}
-
-{% block breadcrumb %}
-	<ul class="breadcrumb">
-		<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'media.menu.home'|trans }}</a> </li>
-        {% block subbreadcrumb %}
-
-        {% endblock %}
-	</ul>
-{% endblock %}

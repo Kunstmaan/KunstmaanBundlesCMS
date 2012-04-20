@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * picture controller.
  *
- * @author Kristof Van Cauwenbergh
  */
 class VideoController extends Controller
 {

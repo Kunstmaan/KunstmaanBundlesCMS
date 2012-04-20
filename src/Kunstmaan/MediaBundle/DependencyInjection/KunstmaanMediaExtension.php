@@ -9,6 +9,7 @@ use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader;
 
 use Kunstmaan\MediaBundle\Entity\MediaContext;
 
@@ -55,6 +56,9 @@ class KunstmaanMediaExtension extends Extension
         $this->initManipulators($config, $manager, $container);
         $this->initProviders($config, $manager, $container);
         $this->initContexts($config, $manager, $container);
+        
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
 
     }
 

@@ -29,24 +29,12 @@ class FileListConfigurator extends AbstractAdminListConfigurator{
     	$this->addField("updatedAt", "form.updatedat", true); 
     }
 
-	public function canAdd() {
-        return true;
-    }
-
     public function getAddUrlFor($params=array()) {
     	return array('file' => array('path' => 'KunstmaanMediaBundle_folder_filecreate', 'params' => array( 'gallery_id' => $params['gallery_id'])));
     }
 
-    public function canEdit() {
-    	return true;
-    }
-    
     public function getEditUrlFor($item) {
     	return array('path' => 'KunstmaanMediaBundle_media_show', 'params' => array( 'media_id' => $item->getId()));
-    }
-
-    public function canDelete($item) {
-        return true;
     }
 
     public function getRepositoryName(){

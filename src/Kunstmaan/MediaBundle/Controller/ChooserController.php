@@ -13,7 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * chooser controller.
  *
- * @author Kristof Van Cauwenbergh
  */
 class ChooserController extends Controller
 {

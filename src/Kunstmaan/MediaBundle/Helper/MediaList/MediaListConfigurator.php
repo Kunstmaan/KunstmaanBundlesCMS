@@ -29,10 +29,6 @@ class MediaListConfigurator extends AbstractAdminListConfigurator{
     	$this->addField("updatedAt", "form.updatedat", true); 	
     }
 
-	public function canAdd() {
-        return true;
-    }
-
     public function getAddUrlFor($params=array()) {
     	return array(
     			'image' => array('path' => 'KunstmaanMediaBundle_folder_imagecreate', 'params' => array( 'gallery_id' => $params['gallery_id'])),
@@ -41,16 +37,9 @@ class MediaListConfigurator extends AbstractAdminListConfigurator{
     			'video' => array('path' => 'KunstmaanMediaBundle_folder_videocreate', 'params' => array( 'gallery_id' => $params['gallery_id']))
     	);
     }
-    public function canEdit() {
-    	return true;
-    }
     
     public function getEditUrlFor($item) {
     	return array('path' => 'KunstmaanMediaBundle_media_show', 'params' => array( 'media_id' => $item->getId()));
-    }
-
-    public function canDelete($item) {
-        return true;
     }
 
     public function getRepositoryName(){
