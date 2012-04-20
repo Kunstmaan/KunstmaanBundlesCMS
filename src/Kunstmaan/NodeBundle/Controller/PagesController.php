@@ -167,7 +167,7 @@ class PagesController extends Controller
         }
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if(!$nodeTranslation){
-        	return $this->render('KunstmaanAdminBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write', true)));
+        	return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write', true)));
         }
         $nodeVersions = $nodeTranslation->getNodeVersions();
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -377,7 +377,7 @@ class PagesController extends Controller
     }
 
     /**
-     * @Route("/movenodes", name="KunstmaanAdminBundle_pages_movenodes")
+     * @Route("/movenodes", name="KunstmaanAdminNodeBundle_pages_movenodes")
      * @Method({"GET", "POST"})
      */
     public function movenodesAction(){
@@ -419,7 +419,7 @@ class PagesController extends Controller
     }
 
     /**
-     * @Route("/ckselecturl", name="KunstmaanAdminBundle_ckselecturl")
+     * @Route("/ckselecturl", name="KunstmaanAdminNodeBundle_ckselecturl")
      * @Template()
      */
     public function ckselectlinkAction(){
