@@ -1,3 +1,4 @@
+{% set adminmenu = admin_menu_get() %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -120,7 +121,25 @@
         <div class="container-fluid">
           <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
           <nav>
-          {{ knp_menu_render('main', { 'currentClass': 'active' }) }}
+          <ul class="nav">
+            {% for menuitem in adminmenu.topchildren %}
+            	{% set topchildren = menuitem.topchildren %}
+            	{% if topchildren | length > 0 %}
+            		<li class="dropdown {% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
+                       <a class="dropdown-toggle" href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname | trans }}</a>
+                       <ul class="dropdown-menu">
+                    		{% for topchild in topchildren %}
+                    			<li class="{% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}"><a href="{{ path(topchild.route, topchild.routeparams) }}">{{ topchild.internalname | trans }}</a></li>
+                    		{% endfor %}
+                    	</ul>
+                    </li>
+            	{% else %}
+                	<li class="{% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
+                       <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname | trans }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+          </ul>
           <ul class="nav secondary-nav">
           	<!-- <li class="dropdown">
 				<a href="#" class="dropdown-toggle">Tooltips On</a>
@@ -129,7 +148,6 @@
 				</ul>
 			</li>-->
           	{% set route = app.request.attributes.get('_route') %}
-            {{ app.request.attributes.remove('_route') }}
             {% set attribs = app.request.attributes.all %}
             {{ localeswitcher_widget(requiredlocales, route) }}
           	<li {% if route == 'KunstmaanAdminBundle_settings_users_edit' %}class="active"{% endif %}><a href="{{ path('KunstmaanAdminBundle_settings_users_edit', { 'user_id' : app.user.id }) }}">{{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}</a></li>
@@ -142,10 +160,33 @@
     </header>
     <div class="container-fluid">
       <aside class="sidebar">
-	      {% block sidebar %} {% endblock %}
+	      {% block sidebar %}
+	      	{% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
+	      {% endblock %}
       </aside>
       <div class="content">
-      	{% block breadcrumb %} {% endblock %}
+      	{% block breadcrumb %}
+      	    {% set breadcrumbitems = adminmenu.breadcrumb %}
+      	    {% if breadcrumbitems | length > 0 %}
+          	    <ul class="breadcrumb">
+          	    	<li><a href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ 'omnext.home' | trans }}</a></li>
+          	    	{% for breadcrumbitem in breadcrumbitems %}
+          	    		{% if loop.last %}
+          	    			<li class="active">{{ breadcrumbitem.internalname | trans }}</li>
+          	    		{% else %}
+          	    			<li><a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.internalname | trans }}</a></li>
+          	    		{% endif %}
+          	    	{% endfor %}
+            	</ul>
+      	    {% endif %}
+      	{% endblock %}
+      	{% block header %}
+      		{% if adminmenu.current %}
+          		<div class="page-header">
+            	    <h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>
+            	</div>
+        	{% endif %}
+      	{% endblock %}
         {% block content %} {% endblock %}
       </div>
     </div>

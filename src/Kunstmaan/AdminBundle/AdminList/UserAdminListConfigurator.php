@@ -33,10 +33,6 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator{
     	$this->addField("groups", "Groups", false);
     }
 
-	public function canAdd() {
-        return true;
-    }
-
     public function getAddUrlFor($params=array()) {
     	return array(
     			'user' => array('path' => 'KunstmaanAdminBundle_settings_users_add', 'params'=> $params)
@@ -44,16 +40,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator{
 
     }
 
-    public function canEdit() {
-    	return true;
-    }
-
     public function getEditUrlFor($item) {
     	return array('path' => 'KunstmaanAdminBundle_settings_users_edit', 'params' => array( 'user_id' => $item->getId()));
-    }
-
-    public function canDelete($item) {
-        return true;
     }
 
     public function getAdminType($item) {

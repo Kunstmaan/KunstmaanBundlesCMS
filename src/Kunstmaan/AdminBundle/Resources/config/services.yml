@@ -1,13 +1,29 @@
 parameters:
 #    kunstmaan_admin.example.class: Kunstmaan\AdminBundle\Example
+    admin_menu.menubuilder.class: Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder
 
 services:
+    admin_menu.menubuilder:
+        class: %admin_menu.menubuilder.class%
+        arguments: ["@translator", "@service_container"]
+        
+    admin_menu.adaptor.settings:
+        class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
+        tags:
+            -  { name: admin_menu.adaptor }
+        
+    admin_menu.twig.extension:
+        class: Kunstmaan\AdminBundle\Helper\Menu\MenuTwigExtension
+        arguments: ["@doctrine.orm.entity_manager", "@admin_menu.menubuilder"]
+        tags:
+            -  { name: twig.extension }
+        
     kunstmaan_admin.permissionmanager:
         class: Kunstmaan\AdminBundle\Permission\Manager
 
     kunstmaan_admin.menu.main:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_admin.menu_builder
+        factory_service: admin_menu.menubuilder
         factory_method: mainMenu
         arguments: ["@request"]
         scope: request # needed as we have the request as a dependency here
