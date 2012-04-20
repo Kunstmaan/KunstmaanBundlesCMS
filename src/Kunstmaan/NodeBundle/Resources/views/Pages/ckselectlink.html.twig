@@ -1,0 +1,69 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+	{% block extrajavascript %}
+		<script type="text/javascript">
+			var ckurl = "";
+	    </script>
+	{% endblock %}
+    
+    {% block extraparamsinbody %}
+    	id="smallWindow"
+    {% endblock %}
+    
+  {% block body %}
+  	<header>
+		<div class="topbar" data-dropdown="dropdown">
+			<div class="topbar-inner">
+				<div class="container-fluid">
+					<a class="brand" href="#">{{ websitetitle | trans }}</a>
+					<nav>	
+						<ul class="nav secondary-nav">
+							{% set route = app.request.attributes.get('_route') %}
+							{{ localeswitcher_widget(requiredlocales, route) }}
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--=========Content=========-->
+	<div class="container-fluid">
+		<!--=========Aside=========-->
+
+	    <aside class="sidebar">
+	    	<h1>Select a link</h1>
+	    	<div class="search_wrp">
+	    		<input type="text" id="searchVal" placeholder="Search" />
+	    		<button id="search" class="btn search"><img src="{{ asset('bundles/kunstmaanadmin/img/icons/search.png') }}" alt="Search" /></button>
+	    	</div>
+<div id="tree" class="tree">
+        <ul>
+            {% for node in nodemenu.topnodes %}
+                {% include 'KunstmaanAdminNodeBundle:Pages:ckrectreeview.html.twig' %}
+            {% endfor %}
+        </ul>
+    </div>  
+    </aside>
+    	    
+	    <!--=========Content=========-->
+	    <div class="content">
+	    	<div class="well">
+		    	<p id="selection">Selection: empty</p>
+		    	<div class="main_actions">
+		    		<button onclick="
+		    			function getUrlParam(paramName)
+			    		{
+			    		  var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
+			    		  var match = window.location.search.match(reParam) ;
+			    		 
+			    		  return (match && match.length > 1) ? match[1] : '' ;
+			    		}
+		    			var funcNum = getUrlParam('CKEditorFuncNum');
+    					window.opener.CKEDITOR.tools.callFunction(funcNum, ckurl); window.close();" class="btn primary">Ok</button>
+		    		<button onclick="window.close();" class="btn">Cancel</button>
+
+		    	</div>
+	    	</div>
+	    </div> 
+	   </div>
+		{% endblock %}

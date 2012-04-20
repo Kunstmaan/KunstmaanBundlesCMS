@@ -1,0 +1,10 @@
+{% if node.node.deleted ==false %}
+<li id="{{ node.node.id }}" sequence="{{ node.node.getSequencenumber() }}" class="{% if node.active %}jstree-open{% endif %} {% if nodemenu.current is not null and nodemenu.current.id == node.id  %}active{% endif %} {% if not node.online %}offline{% endif %}" rel="page">
+    <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id }) }}">{{ node.title }}</a>
+    <ul>
+        {% for node in node.children %}
+            {% include 'KunstmaanAdminNodeBundle:Pages:rectreeview.html.twig' %}
+        {% endfor %}
+    </ul>
+</li>
+{% endif %}

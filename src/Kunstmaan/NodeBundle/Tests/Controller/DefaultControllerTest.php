@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\SearchBundle\Tests\Controller;
+namespace Kunstmaan\AdminNodeBundle\Tests\Controller;
 
 class DefaultControllerTest extends \PHPUnit_Framework_TestCase
 {

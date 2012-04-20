@@ -1,0 +1,23 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block subbreadcrumb %}
+	<li><a href="{{ path('KunstmaanAdminNodeBundle_pages') }}">{{ 'pages.title' | trans }}</a></li>
+    {% for node in nodemenu.breadCrumb %}
+    	{% if nodemenu.current.id == node.id %}
+    		<li>{{ node.title }}</li>
+    	{% else %}
+    		<li><a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id}) }}">{{ node.title }}</a></li>
+    	{% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ 'pages.pagenottranslated' | trans }}</h1>
+    <ul>
+	    {% for nodeTranslation in nodeTranslations %}
+	    	<li>{{ 'pages.copyfrom' | trans }} <a href="{{ path('KunstmaanAdminNodeBundle_pages_copyfromotherlanguage', { 'id': node.id, 'otherlanguage': nodeTranslation.lang}) }}">{{ nodeTranslation.lang }}</a> : {{ nodeTranslation.title }}</li>
+	    {% endfor %}
+	    <li><a href="{{ path('KunstmaanAdminNodeBundle_pages_createemptypage', { 'id': node.id}) }}">{{ 'pages.createemptypage' | trans }}</a></li>
+    </ul>
+    
+{% endblock %}
