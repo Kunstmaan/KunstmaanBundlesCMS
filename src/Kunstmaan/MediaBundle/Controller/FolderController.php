@@ -40,7 +40,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * folder controller.
  *
- * @author Kristof Van Cauwenbergh
  */
 class FolderController extends Controller
 {
