@@ -20,7 +20,7 @@ class FormSubmissionsController extends Controller
 {
 	/**
 	 * @Route("/", name="KunstmaanFormBundle_formsubmissions")
-	 * @Template()
+	 * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
 	 */
     public function indexAction()
     {
@@ -31,7 +31,7 @@ class FormSubmissionsController extends Controller
     	$formpagesadminlist->bindRequest($request);
 
     	return array(
-    			'formpagesadminlist' => $formpagesadminlist
+    			'adminlist' => $formpagesadminlist
     	);
     }
 
@@ -49,7 +49,7 @@ class FormSubmissionsController extends Controller
 
         return array(
         	'nodetranslation' => $nodeTranslation,
-            'formsubmissionadminlist' => $adminlist
+            'adminlist' => $adminlist
         );
     }
 

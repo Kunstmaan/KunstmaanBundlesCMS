@@ -1,4 +1,6 @@
 services:
-    kunstmaan_form.form_menu:
+    admin_menu.adaptor.forms:
         class: Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor
-        arguments: ["@knp_menu.factory"]
+        tags:
+            -  { name: admin_menu.adaptor }
+            

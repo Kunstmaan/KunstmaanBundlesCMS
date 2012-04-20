@@ -38,11 +38,6 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator{
     	$this->addField("title", "Title", true);
     }
 
-    public function canEdit()
-    {
-        return true;
-    }
-
 	public function getEditUrlFor($item) {
     	return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array( 'nodetranslationid' => $item->getId()));
     }
