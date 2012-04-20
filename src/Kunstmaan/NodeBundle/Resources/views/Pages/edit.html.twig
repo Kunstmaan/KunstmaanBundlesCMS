@@ -1,0 +1,322 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
+{% block extrajavascript %}
+	 <script type=text/javascript>
+		var isEdited = false;
+		var oldEdited = false;
+
+		window.onbeforeunload = doUnload;
+
+    	function doUnload(){
+    		//$('#quitpagemodal').modal('show');
+    		//var t = setTimeout(5000);
+    		if(isEdited){
+    			return 'You haven\'t saved this page, are you sure you want to close it?';
+        	}
+        }
+	</script>
+{% endblock %}
+
+{% block page_header_addition %}
+{% if draft %} <small>Draft version (Go to <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)</small> {% else %} <small>Public version {% if draftNodeVersion is not null %} (Go to <a href="{{ path('KunstmaanAdminBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)</small> {% endif %} {% endif %}
+{% endblock %}
+
+{% block content %}
+	<div id="quitpagemodal" class="modal hide fade">
+				<div class="modal-header">
+					<a href="#" class="close">×</a>
+					<h3>Are you sure you want to unpublish this page?</h3>
+				</div>
+				<div class="modal-body">
+					<p>If you do this, the page will be offline!</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#" onClick="iets=true;" class="btn danger">Unpublish</a>
+					<a href="#" class="btn cancel">Cancel</a>
+				</div>
+	</div>
+    <form id="pageadminform" action="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+    <div class="sub_actions">
+      {% if not draft %}
+        {% if nodeTranslation.online %}
+          <a href="#" data-controls-modal="unpub" data-backdrop="true" data-keyboard="true">Unpublish</a>
+          <div id="unpub" class="modal hide fade">
+				<div class="modal-header">
+					<a href="#" class="close">×</a>
+					<h3>Are you sure you want to unpublish this page?</h3>
+				</div>
+				<div class="modal-body">
+					<p>If you do this, the page will be offline!</p>
+				</div>
+				<div class="modal-footer">
+					<a href="{{ path('KunstmaanAdminNodeBundle_pages_edit_unpublish', { 'id': node.id}) }}" class="btn danger">Unpublish</a>
+					<a href="#" class="btn cancel">Cancel</a>
+				</div>
+			</div>
+        {% else %}
+          <a href="#" data-controls-modal="pub" data-backdrop="true" data-keyboard="true">Publish</a>
+		  <div id="pub" class="modal hide fade">
+				<div class="modal-header">
+					<a href="#" class="close">×</a>
+					<h3>Are you sure you want to publish this page?</h3>
+				</div>
+				<div class="modal-body">
+					<p>If you do this, the page will be online!</p>
+				</div>
+				<div class="modal-footer">
+					<a href="{{ path('KunstmaanAdminNodeBundle_pages_edit_publish', { 'id': node.id}) }}" class="btn danger">Publish</a>
+					<a href="#" class="btn cancel">Cancel</a>
+				</div>
+			</div>
+        {% endif %}
+      {% endif %}
+        <a href="#" data-controls-modal="versions" data-backdrop="true" data-keyboard="true">Versions</a>
+        <div id="versions" class="modal hide fade">
+			<div class="modal-header">
+				<a href="#" class="close">×</a>
+				<h3>Versions</h3>
+			</div>
+			<div class="modal-body" style="height:300px;overflow:scroll">
+				<table class="bordered-table zebra-striped">
+                    <thead>
+                    <tr>
+                    	<th>Nr</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for nodeVersion in nodeVersions %}
+                            <tr>
+                            	<td><a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}">{{ nodeVersion.version }}</a></td>
+                                <td>{{ nodeVersion.type }}</td>
+                                <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
+                                <td>{{ nodeVersion.owner }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn cancel">Close</a>
+			</div>
+		</div>
+    </div>
+    <!--Main-->
+	<div class="main_actions">
+	  {% if draft %}
+	    <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
+	    <input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
+	    <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+	  {% else %}
+		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
+	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
+	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+	      {% if page.possibleChildPageTypes is not empty %}<button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>{% endif %}
+	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
+	  {% endif %}
+      {#<button class="btn" data-controls-modal="cancel" data-backdrop="true" data-keyboard="true">Cancel</button>#}
+    </div>
+    <!--Scroll-->
+    <div class="main_actions top" id="main_actions_top">
+      <div class="pull-right">
+        {% if draft %}
+	      <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
+	      <input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
+          <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+	    {% else %}
+		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
+	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
+	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+          {% if page.possibleChildPageTypes is not empty %}<button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>{% endif %}
+	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
+	    {% endif %}
+        {#<button class="btn" data-controls-modal="cancel" data-backdrop="true" data-keyboard="true">Cancel</button>#}
+        <a class="btn up">&#9650;</a>
+      </div>
+    </div>
+
+    {% if page.possibleChildPageTypes is not empty %}
+    <div id="add-subpage-modal" class="modal hide fade">
+      <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>Add subpage</h3>
+      </div>
+      <div class="modal-body">
+        <script type="text/javascript">
+	        function doAddpage(link){
+		        link.href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" + "?addpage="+jQuery('#addpage_type').val() + "&addpagetitle=" + jQuery('#addpage_title').val();
+	            return true;
+	        }
+	    </script>
+        <div class="input_prop">
+          <label for="form-add-gallery">Title</label>
+          <input id="addpage_title" type="text" id="form-add-gallery" name="addpagetitle_disabled">
+        </div>
+        <div class="input_prop">
+          <label for="form-add-gallery">Type</label>
+          <select id="addpage_type" name="addpage_disabled">
+            {% for pageType in page.possibleChildPageTypes %}
+              <option value="{{pageType.class}}">{{pageType.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a onclick="return doAddpage(this)" href="#" class="btn primary">Add</a>
+        <a onclick="$('#add-subpage-modal').modal('hide')" href="#" class="btn secondary">Cancel</a>
+      </div>
+    </div>
+    {% endif %}
+    <div id="delete-page-modal" class="modal hide fade">
+      <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>Delete page '{{page.title}}'</h3>
+      </div>
+      <div class="modal-body">
+        <script type="text/javascript">
+          function doDeletepage(link){
+            link.href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id}) }}" + "?delete=true";
+            return true;
+          }
+        </script>
+        <p>This will remove the page completely! Are you really sure about this?</p>
+       </div>
+      <div class="modal-footer">
+        <a onclick="return doDeletepage(this)" href="#" class="btn primary">Delete</a>
+        <a onclick="$('#delete-page-modal').modal('hide'); isEdited = oldEdited" href="#" class="btn secondary">Cancel</a>
+      </div>
+    </div>
+      <ul class="tabs" data-tabs="tabs">
+      		{% set alreadyexiststab = false %}
+        	{% for pagepartadmin in pagepartadmins %}
+        			{% set pagepartstab = 'pageparts'~loop.index %}
+        			{% set alreadyexiststab = true %}
+        			<li onClick="jQuery('#currenttab').val('pageparts{{ loop.index }}');" {% if currenttab == pagepartstab %} class="active" {% endif %}>
+        	      		 <a href="#pageparts{{ loop.index }}">{{ pagepartadmin.name }}</a>
+        	         </li>
+        	{% endfor %}
+            {% if is_granted('ROLE_PERMISSIONMANAGER') %}
+            <li {% if currenttab == 'permissions' or alreadyexiststab == false %} class="active" {% endif %} onClick="jQuery('#currenttab').val('permissions');"><a href="#permissions">{{ 'form.permissions' | trans }}</a></li>
+            	{% set alreadyexiststab = true %}
+            {% endif %}
+            <li {% if currenttab == 'seo' or alreadyexiststab ==false %} class="active" {% endif %} onClick="jQuery('#currenttab').val('seo');"><a href="#seo">SEO</a></li>
+        </ul>
+        <div id="my-tab-content" class="tab-content">
+        	<input type="hidden" name="currenttab" id="currenttab" value="{{ currenttab }}">
+        	{% set propertiesform = false %}
+            {% for pagepartadmin in pagepartadmins %}
+            	{% set pagepartstab = 'pageparts'~loop.index %}
+	        	<div class="{% if currenttab == pagepartstab %}active{% endif %} tab-pane" id="pageparts{{ loop.index }}">
+	        		{% if propertiesform ==false %}
+	        			{% set propertiesform = true %}
+		        		<div id="properties">
+				    			<div id="prop_wrp">
+					    			<div class="input_prop">
+					    				{{ form_widget(form.main) }}
+					    			</div>
+					    			<div class="input_prop">
+					    				{{ form_widget(form.node) }}
+					    			</div>
+					    		</div>
+				    	</div>
+			    	{% endif %}
+			    	{% for key, extraform in form %}
+				    	{% if key != 'main' and key == pagepartadmin.context %}
+					    	<div id="properties">
+					    		<div id="prop_wrp">
+						    		<div class="input_prop">
+						    			 {{ form_widget(extraform) }}
+						    		</div>
+						    	</div>
+					    	</div>
+					    {% endif %}
+				    {% endfor %}
+	                {{ pagepartadmin_widget(pagepartadmin, form) }}
+	            </div>
+        	{% endfor %}
+
+            {% if is_granted('ROLE_PERMISSIONMANAGER') %}
+            <div class="{% if currenttab == 'permissions' or propertiesform == false %}active{% endif %} tab-pane" id="permissions">
+            	{% if propertiesform == false %}
+	        			{% set propertiesform = true %}
+		        		<div id="properties">
+				    			<div id="prop_wrp">
+					    			<div class="input_prop">
+					    				{{ form_widget(form.main) }}
+					    			</div>
+					    			<div class="input_prop">
+					    				{{ form_widget(form.node) }}
+					    			</div>
+					    		</div>
+				    	</div>
+			    {% endif %}
+                {{ permissionsadmin_widget(permissionadmin, form) }}
+            </div>
+            {% endif %}
+
+            <div class="tab-pane" id="children">
+                <table class="bordered-table zebra-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {#
+                        {% for child in page.children %}
+                            <tr>
+                                <td>{{ child.sequencenumber }}</td>
+                                <td><a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': child.id, 'entityname': 'KunstmaanAdminBundle:Page' }) }}">{{ child.title }}</a></td>
+                                <td>Page</td>
+                            </tr>
+                        {% endfor %}
+                    #}
+                    </tbody>
+                </table>
+            </div>
+            <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
+            	{% if propertiesform == false %}
+	        			{% set propertiesform = true %}
+		        		<div id="properties">
+				    			<div id="prop_wrp">
+					    			<div class="input_prop">
+					    				{{ form_widget(form.main) }}
+					    			</div>
+					    			<div class="input_prop">
+					    				{{ form_widget(form.node) }}
+					    			</div>
+					    		</div>
+				    	</div>
+			    	{% endif %}
+              	<div id="properties">
+				    			<div id="prop_wrp">
+					    			<div class="input_prop">
+					    				{{ form_row(seoform.metaauthor) }}
+					    			</div>
+					    			<div class="input_prop">
+										{{ form_row(seoform.metadescription) }}
+					    			</div>
+						    		<div class="input_prop">
+											{{ form_row(seoform.metakeywords) }}
+						    		</div>
+						    		<div class="input_prop">
+											{{ form_row(seoform.metarobots) }}
+						    		</div>
+						    		<div class="input_prop">
+											{{ form_row(seoform.metarevised) }}
+						    		</div>
+					    		</div>
+				   </div>
+                   {{ form_rest(seoform) }}
+            </div>
+        </div>
+        {{ form_rest(form) }}
+    </form>
+
+{% endblock %}
+
