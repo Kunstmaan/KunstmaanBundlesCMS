@@ -26,10 +26,6 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
     	$this->addField("roles", "Roles", false);
     }
 
-	public function canAdd() {
-        return true;
-    }
-
     public function getAddUrlFor($params=array()) {
     	return array(
     			'group' => array('path' => 'KunstmaanAdminBundle_settings_groups_add', 'params'=> $params)
@@ -37,16 +33,8 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
 
     }
 
-    public function canEdit() {
-    	return true;
-    }
-
     public function getEditUrlFor($item) {
     	return array('path' => 'KunstmaanAdminBundle_settings_groups_edit', 'params' => array( 'group_id' => $item->getId()));
-    }
-
-    public function canDelete($item) {
-        return true;
     }
 
     public function getAdminType($item) {

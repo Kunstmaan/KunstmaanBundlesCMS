@@ -8,17 +8,13 @@
 
 {% block content %}
 
-    <div class="page-header">
-        <h1>{{ 'settings.role.edit' | trans }}</h1>
-    </div>
-
     <form action="{{ path('KunstmaanAdminBundle_settings_roles_edit', { 'role_id' : role.id }) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
     	{{ form_errors(form) }}
         <div class="clearfix">
             <label for="xlInput3">{{ 'settings.role.role' | trans }}</label>
             <div class="input">
-                {{ form_widget(form.name) }}
+                {{ form_widget(form.role) }}
             </div>
         </div>
 

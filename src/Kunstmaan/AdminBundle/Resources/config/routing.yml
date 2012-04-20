@@ -3,11 +3,6 @@ KunstmaanAdminBundle_default:
     type:     annotation
     prefix:   /admin  
 
-KunstmaanAdminBundle_pages:
-    resource: "@KunstmaanAdminBundle/Controller/PagesController.php"
-    type:     annotation
-    prefix:   /admin/pages
-
 KunstmaanAdminBundle_modules:
     resource: "@KunstmaanAdminBundle/Controller/ModulesController.php"
     type:     annotation

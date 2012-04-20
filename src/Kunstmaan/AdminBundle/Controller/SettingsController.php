@@ -39,7 +39,7 @@ class SettingsController extends Controller
 
     /**
      * @Route("/users", name="KunstmaanAdminBundle_settings_users")
-     * @Template()
+     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function usersAction() {
         $em = $this->getDoctrine()->getEntityManager();
@@ -48,8 +48,7 @@ class SettingsController extends Controller
         $adminlist->bindRequest($request);
 
         return array(
-            'useradminlist' => $adminlist,
-            'addparams'     => array()
+            'adminlist' => $adminlist,
         );
     }
     
@@ -116,7 +115,7 @@ class SettingsController extends Controller
 
     /**
      * @Route("/groups", name="KunstmaanAdminBundle_settings_groups")
-     * @Template()
+     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function groupsAction() {
         $em = $this->getDoctrine()->getEntityManager();
@@ -125,8 +124,7 @@ class SettingsController extends Controller
         $adminlist->bindRequest($request);
 
         return array(
-            'groupadminlist' => $adminlist,
-            'addparams'     => array()
+            'adminlist' => $adminlist,
         );
     }
 
@@ -185,7 +183,7 @@ class SettingsController extends Controller
     
     /**
      * @Route("/searches", name="KunstmaanAdminBundle_settings_searches")
-     * @Template()
+     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function searchesAction() {
     	$em = $this->getDoctrine()->getEntityManager();
@@ -194,14 +192,13 @@ class SettingsController extends Controller
     	$adminlist->bindRequest($request);
     
     	return array(
-    			'searchedforadminlist' => $adminlist,
-    			'addparams'     => array()
+    			'adminlist' => $adminlist,
     	);
     }
     
     /**
-     * @Route("/log", name="KunstmaanAdminBundle_settings_log")
-     * @Template()
+     * @Route("/logs", name="KunstmaanAdminBundle_settings_logs")
+     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function logAction() {
     	$em = $this->getDoctrine()->getEntityManager();
@@ -210,14 +207,13 @@ class SettingsController extends Controller
     	$adminlist->bindRequest($request);
     
     	return array(
-    			'logadminlist' => $adminlist,
-    			'addparams'     => array()
+    			'adminlist' => $adminlist,
     	);
     }
     
     /**
      * @Route("/roles", name="KunstmaanAdminBundle_settings_roles")
-     * @Template()
+     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function rolesAction() {
         $em = $this->getDoctrine()->getEntityManager();
@@ -226,8 +222,7 @@ class SettingsController extends Controller
         $adminlist->bindRequest($request);
 
         return array(
-            'roleadminlist' => $adminlist,
-            'addparams'     => array()
+            'adminlist' => $adminlist,
         );
     }
 
@@ -267,7 +262,7 @@ class SettingsController extends Controller
 
         $request = $this->getRequest();
         $helper = $em->getRepository('KunstmaanAdminBundle:Role')->find($role_id);
-        $form = $this->createForm(new EditRoleType($this->container), $helper);
+        $form = $this->createForm(new RoleType($this->container), $helper);
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);

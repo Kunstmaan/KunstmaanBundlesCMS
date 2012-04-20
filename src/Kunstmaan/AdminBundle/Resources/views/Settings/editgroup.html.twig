@@ -8,10 +8,6 @@
 
 {% block content %}
 
-    <div class="page-header">
-        <h1>{{ 'settings.group.edit' | trans }}</h1>
-    </div>
-
     <form action="{{ path('KunstmaanAdminBundle_settings_groups_edit', { 'group_id' : group.id }) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
     	{{ form_errors(form) }}

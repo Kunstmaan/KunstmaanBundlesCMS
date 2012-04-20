@@ -8,10 +8,6 @@
 
 {% block content %}
 
-    <div class="page-header">
-        <h1>{{ 'settings.user.add' | trans }}</h1>
-    </div>
-
     <form action="{{ path('KunstmaanAdminBundle_settings_users_add') }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
     	{{ form_errors(form) }}
