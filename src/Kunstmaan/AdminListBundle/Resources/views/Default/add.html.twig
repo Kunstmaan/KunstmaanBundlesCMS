@@ -1,0 +1,15 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
+{% block content %}
+    <form action="{{ path(app.request.attributes.get('_route')) }}" method="post" {{ form_enctype(form) }}>
+        <fieldset>
+        	{{ form_widget(form) }}
+
+            <div class="actions">
+                <input class="btn primary type" type="submit" value="{{ 'settings.role.add' | trans }}">
+                <input onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_roles') }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}
