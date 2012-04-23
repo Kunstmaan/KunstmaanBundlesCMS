@@ -1,3 +1,8 @@
 {% autoescape false %}
-{{ 'resetting.email'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, 'FOSUserBundle') }}
+Reset password
+
+username: {{ user.username }}
+confirmation-url: {{ confirmationUrl }}
+
+{# 'resetting.email'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}, 'FOSUserBundle') #}
 {% endautoescape %}
