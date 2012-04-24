@@ -95,10 +95,11 @@ class SlugController extends Controller
 	}
 
     /**
+     * @Route("/")
      * @Route("/{slug}", requirements={"slug" = ".+"}, name="_slug")
      * @Template()
      */
-    public function slugAction($slug)
+    public function slugAction($slug = null)
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	$request = $this->getRequest();
@@ -122,7 +123,6 @@ class SlugController extends Controller
     		$locale = $fallback;
     		return $this->redirect($this->generateUrl("_slug", array("slug"=>$slug, "_locale"=>$locale)));
     	}    	
-    	
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
     	if($nodeTranslation){
             $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
