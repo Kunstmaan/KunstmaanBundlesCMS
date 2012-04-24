@@ -180,10 +180,20 @@ class NodeTranslation {
      */
     public function getFullSlug() {
     	$node = $this->getNode();
+    	$slug = $this->getSlugPart($node);
+    	return $slug;
+    }
+    
+    public function getSlugPart($node){
     	$slug = "";
-    	if ($node->getParent() != null && $node->getParent()->getNodeTranslation($this->lang) != null)
-    	    $slug = $slug . $this->getParentSlug($node);
-    	$slug = $slug . $this->slug;
+    	if ($node->getParent() != null && $node->getParent()->getNodeTranslation($this->lang) != null){
+    		$slug = $slug . $this->getSlugPart($node->getParent());
+    	}
+    	if(!empty($slug)){
+    		$slug = rtrim($slug, "/");
+    		$slug = $slug . "/";
+    	}
+    	$slug = $slug . $node->getNodeTranslation($this->lang)->getSlug();
     	return $slug;
     }
     
