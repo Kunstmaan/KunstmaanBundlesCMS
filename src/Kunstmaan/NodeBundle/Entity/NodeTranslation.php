@@ -190,6 +190,7 @@ class NodeTranslation {
     		$slug = $slug . $this->getSlugPart($node->getParent());
     	}
     	if(!empty($slug)){
+    		$slug = rtrim($slug, "/");
     		$slug = $slug . "/";
     	}
     	$slug = $slug . $node->getNodeTranslation($this->lang)->getSlug();
