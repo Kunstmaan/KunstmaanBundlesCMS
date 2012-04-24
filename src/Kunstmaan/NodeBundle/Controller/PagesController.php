@@ -254,6 +254,7 @@ class PagesController extends Controller
         //add the specific data from the custom page
         $formbuilder->add('main', $page->getDefaultAdminType());
         $formbuilder->add('node', $node->getDefaultAdminType($this->container));
+        $formbuilder->add('nodetranslation', $nodeTranslation->getDefaultAdminType($this->container));
         
         if(method_exists($page, "getExtraAdminTypes")){
         	foreach($page->getExtraAdminTypes() as $key => $admintype){
@@ -261,7 +262,7 @@ class PagesController extends Controller
         	}	
         }
 
-        $bindingarray = array('node' => $node, 'main' => $page);
+        $bindingarray = array('node' => $node, 'main' => $page, 'nodetranslation'=> $nodeTranslation);
         if(method_exists($page, "getExtraAdminTypes")){
         	foreach($page->getExtraAdminTypes() as $key => $admintype){
         		$bindingarray[$key] = $page;
@@ -309,6 +310,7 @@ class PagesController extends Controller
                 $node->setRoles($roles);
 
                 $em->persist($node);
+                $em->persist($nodeTranslation);
                 $editcommand = new EditCommand($em, $user);
     			$editcommand->execute("added pageparts to page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
 
@@ -317,8 +319,6 @@ class PagesController extends Controller
                 	$nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->createNodeVersionFor($newpublicpage, $nodeTranslation, $user, 'public');
                 	$nodeTranslation->setPublicNodeVersion($nodeVersion);
                 	$nodeTranslation->setTitle($newpublicpage->__toString());
-            		$nodeTranslation->setSlug(Slugifier::slugify($newpublicpage->__toString()));
-            		$nodeTranslation->setOnline($newpublicpage->isOnline());
                 	$addcommand = new AddCommand($em, $user);
         			$addcommand->execute("saved and published page \"". $nodeTranslation->getTitle() ."\" added with locale: " . $locale, array('entity'=> $nodeTranslation));
                 	$draft = false;

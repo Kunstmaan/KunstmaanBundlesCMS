@@ -18,10 +18,11 @@ class NodeTranslationAdminType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('online', 'checkbox', array('required' => false));
+        $builder->add('slug');
     }
 
     public function getName()
     {
-        return 'node';
+        return 'nodetranslation';
     }
 }

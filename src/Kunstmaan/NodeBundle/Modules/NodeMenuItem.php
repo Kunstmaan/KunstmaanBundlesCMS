@@ -68,7 +68,7 @@ class NodeMenuItem
     public function getSlugPart(){
     	$nodeTranslation = $this->getNodeTranslation();
     	if($nodeTranslation){
-    		return $nodeTranslation->getSlug();
+    		return $nodeTranslation->getFullSlug();
     	}
     	return null;
     }
