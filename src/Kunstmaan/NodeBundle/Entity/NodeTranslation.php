@@ -181,10 +181,6 @@ class NodeTranslation {
     public function getFullSlug() {
     	$node = $this->getNode();
     	$slug = $this->getSlugPart($node);
-    	if(!empty($slug)){
-    		$slug = $slug . "/";
-    	}
-    	$slug = $slug . $node->getNodeTranslation($this->lang)->getSlug();
     	return $slug;
     }
     
@@ -192,11 +188,11 @@ class NodeTranslation {
     	$slug = "";
     	if ($node->getParent() != null && $node->getParent()->getNodeTranslation($this->lang) != null){
     		$slug = $slug . $this->getSlugPart($node->getParent());
-    		if(!empty($slug)){
-    			$slug = $slug . "/";
-    		}
-    		$slug = $slug .$node->getParent()->getNodeTranslation($this->lang)->getSlug();
     	}
+    	if(!empty($slug)){
+    		$slug = $slug . "/";
+    	}
+    	$slug = $slug . $node->getNodeTranslation($this->lang)->getSlug();
     	return $slug;
     }
     
