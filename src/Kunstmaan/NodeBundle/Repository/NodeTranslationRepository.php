@@ -35,6 +35,9 @@ class NodeTranslationRepository extends EntityRepository
 	}
 
 	public function getNodeTranslationForSlug(NodeTranslation $parentNode = null, $slug){
+	    if(empty($slug)){
+	        return $this->getNodeTranslationForSlugPart(null, $slug);
+	    }
 		$slugparts = explode("/", $slug);
 		$result = $parentNode;
 		foreach($slugparts as $slugpart){

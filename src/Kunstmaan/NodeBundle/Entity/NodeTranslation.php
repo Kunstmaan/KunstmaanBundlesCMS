@@ -4,6 +4,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
+use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Kunstmaan\SearchBundle\Entity\Indexable;
@@ -176,17 +178,30 @@ class NodeTranslation {
      *
      * @return string
      */
+    public function getFullSlug() {
+    	$node = $this->getNode();
+    	$slug = "";
+    	if ($node->getParent() != null && $node->getParent()->getNodeTranslation($this->lang) != null)
+    	    $slug = $slug . $this->getParentSlug($node);
+    	$slug = $slug . $this->slug;
+    	return $slug;
+    }
+    
+    /**
+    * Get slug
+    *
+    * @return string
+    */
     public function getSlug() {
-	$node = $this->getNode();
-	$slug = "";
-	if ($node->getParent() != null && $node->getParent()->getNodeTranslation($this->lang) != null)
-	    $slug = $slug . $this->getParentSlug($node);
-	$slug = $slug . $this->slug;
-	return $slug;
+        return $this->slug;
     }
 
     public function getParentSlug($node) {
-		return $node->getParent()->getNodeTranslation($this->lang)->getSlug() . "/";
+        $parentslug = $node->getParent()->getNodeTranslation($this->lang)->getSlug();
+        if(!empty($parentslug)){
+            return $parentslug."/";
+        }
+        return "";
     }
 
     /**
@@ -240,7 +255,7 @@ class NodeTranslation {
     }
 
     public function getDefaultAdminType($container) {
-	return new NodeAdminType($container);
+	return new NodeTranslationAdminType($container);
     }
 
     public function getRef($em, $type = "public") {
