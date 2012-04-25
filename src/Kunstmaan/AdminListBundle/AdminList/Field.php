@@ -9,11 +9,13 @@ class Field {
 	private $fieldheader;
     private $fieldname;
     private $sort;
+    private $template;
     
-	public function __construct($fieldname, $fieldheader, $sort){
+	public function __construct($fieldname, $fieldheader, $sort = false, $template = null){
 		$this->fieldname = $fieldname;
 		$this->fieldheader = $fieldheader;
 		$this->sort = $sort;
+		$this->template = $template;
 	}
 	
 	public function getFieldname(){
@@ -26,5 +28,9 @@ class Field {
 	
 	public function isSortable(){
 		return $this->sort;
+	}
+	
+	public function getTemplate(){
+	    return $this->template;
 	}
 }

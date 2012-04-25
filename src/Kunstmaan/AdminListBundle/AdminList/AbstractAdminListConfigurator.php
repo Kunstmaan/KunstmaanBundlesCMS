@@ -28,9 +28,9 @@ abstract class AbstractAdminListConfigurator
 
     abstract function buildFields();
     
-    function addField($fieldname, $fieldheader, $sort)
+    function addField($fieldname, $fieldheader, $sort, $template = null)
     {
-        $this->fields[] = new Field($fieldname, $fieldheader, $sort);
+        $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
     }
 
     function configureListFields(&$array)
@@ -68,16 +68,30 @@ abstract class AbstractAdminListConfigurator
 
     function getValue($item, $columnName)
     {
-        $methodName = "get" . $columnName;
+        $methodName = $columnName;
         if (method_exists($item, $methodName)) {
             $result = $item->$methodName();
         } else {
-            $methodName = "is" . $columnName;
+            $methodName = "get" . $columnName;
             if (method_exists($item, $methodName)) {
                 $result = $item->$methodName();
             } else {
-                return "undefined function";
+                $methodName = "is" . $columnName;
+                if (method_exists($item, $methodName)) {
+                    $result = $item->$methodName();
+                } else {
+                    return "undefined function";
+                }
             }
+        }
+        return $result;
+    }
+    
+    function getStringValue($item, $columnName)
+    {
+        $result = $this->getValue($item, $columnName);
+        if(is_bool($result)){
+            return $result ? "true" : "false";
         }
         if ($result instanceof \DateTime) {
             return $result->format('Y-m-d H:i:s');
