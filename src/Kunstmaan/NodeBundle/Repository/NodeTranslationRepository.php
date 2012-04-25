@@ -101,24 +101,45 @@ class NodeTranslationRepository extends EntityRepository
                 return $result[0];
             }
         } else {
-            /* if parent is null we should look for slugs that have no parent */
-            $qb = $this->createQueryBuilder('t')
-                ->select('t')
-                ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
-                ->where('t.slug = ?1 and n.parent IS NULL')
-                ->andWhere('n.deleted != 1')
-                ->addOrderBy('n.sequencenumber', 'DESC')
-                ->setFirstResult(0)
-                ->setMaxResults(1)
-                ->setParameter(1, $slugpart);
-            $result = $qb->getQuery()->getResult();
-            if (sizeof($result) == 1) {
-                return $result[0];
-            } else if (sizeof($result) == 0) {
-                return null;
-            } else {
-                return $result[0];
-            }
+        	if(empty($slugpart)){
+	            /* if parent is null we should look for slugs that have no parent */
+	            $qb = $this->createQueryBuilder('t')
+	                ->select('t')
+	                ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
+	                ->where('t.slug is NULL and n.parent IS NULL')
+	                ->andWhere('n.deleted != 1')
+	                ->addOrderBy('n.sequencenumber', 'DESC')
+	                ->setFirstResult(0)
+	                ->setMaxResults(1);
+	                //->setParameter(1, $slugpart);
+	            $result = $qb->getQuery()->getResult();
+	            if (sizeof($result) == 1) {
+	                return $result[0];
+	            } else if (sizeof($result) == 0) {
+	                return null;
+	            } else {
+	                return $result[0];
+	            }
+        	}else{
+        		/* if parent is null we should look for slugs that have no parent */
+        		$qb = $this->createQueryBuilder('t')
+        		->select('t')
+        		->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
+        		->where('t.slug = ?1 and n.parent IS NULL')
+        		->andWhere('n.deleted != 1')
+        		->addOrderBy('n.sequencenumber', 'DESC')
+        		->setFirstResult(0)
+        		->setMaxResults(1)
+        		->setParameter(1, $slugpart);
+        		$result = $qb->getQuery()->getResult();
+        		if (sizeof($result) == 1) {
+        			return $result[0];
+        		} else if (sizeof($result) == 0) {
+        			return null;
+        		} else {
+        			return $result[0];
+        		}
+        	}
         }
     }
 
