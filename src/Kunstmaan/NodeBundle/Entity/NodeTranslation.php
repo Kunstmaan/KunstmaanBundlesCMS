@@ -184,26 +184,32 @@ class NodeTranslation {
      *
      * @return string
      */
-    public function getFullSlug() {
-    	$node = $this->getNode();
-    	$slug = $this->getSlugPart($node);
+    public function getFullSlug()
+    {
+    	$slug = $this->getSlugPart();
 
-        if(empty($slug)) {
+        if (empty($slug)) {
             return null;
         }
+
     	return $slug;
     }
-    
-    public function getSlugPart($node){
+
+    public function getSlugPart()
+    {
     	$slug = "";
-    	if ($node->getParent() != null && $node->getParent()->getNodeTranslation($this->lang) != null){
-    		$slug = $slug . $this->getSlugPart($node->getParent());
+    	if ($this->getNode()->getParent() != null) {
+    	    $nodeTranslation = $this->getNode()->getParent()->getNodeTranslation($this->lang);
+    	    if ($nodeTranslation != null) {
+    	        $parentslug = $nodeTranslation->getSlugPart();
+    	        if (!empty($parentslug)) {
+    	            $slug = rtrim($parentslug, "/")."/";
+    	        }
+    	    }
     	}
-    	if(!empty($slug)){
-    		$slug = rtrim($slug, "/");
-    		$slug = $slug . "/";
-    	}
-    	$slug = $slug . $node->getNodeTranslation($this->lang)->getSlug();
+
+    	$slug = $slug . $this->getSlug();
+
     	return $slug;
     }
     
