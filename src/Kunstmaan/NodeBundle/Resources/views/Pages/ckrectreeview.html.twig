@@ -1,4 +1,4 @@
-{% if node.node.deleted ==false %}
+{% if node.node.deleted ==false and node.nodetranslation.online %}
 <li class="{% if node.active %}jstree-open{% endif %} {% if nodemenu.current is not null and nodemenu.current.id == node.id  %}active{% endif %}" rel="page">
     <a onclick="jQuery('#selection').text('Selection: {{ path("_slug", { "slug": node.slug }) }}'); ckurl = '{{ path("_slug", { "slug": node.slug }) }}';" class="item" href="#">{{ node.title }}</a>
     <ul>
