@@ -27,4 +27,8 @@ class NodeTranslationListener
             }
         }
     }
+
+    public function postPersist(LifecycleEventArgs $args) {
+        $this->postUpdate($args);
+    }
 }
