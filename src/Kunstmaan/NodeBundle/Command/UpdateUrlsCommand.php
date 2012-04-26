@@ -26,10 +26,9 @@ class UpdateUrlsCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $mainNodes = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getParentNodeTranslations();
-
         if (count($mainNodes)) {
             foreach($mainNodes as $mainNode) {
-                $mainNode->setUrl($mainNode->getFullSlug());
+                $mainNode->setUrl("");
 
                 $em->persist($mainNode);
                 $em->flush();

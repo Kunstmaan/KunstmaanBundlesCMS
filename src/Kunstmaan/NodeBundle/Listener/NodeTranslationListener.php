@@ -11,7 +11,6 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
  */
 class NodeTranslationListener
 {
-
     /**
      * Runs the postUpdate doctrine event and updates the nodetranslation urls if needed
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
@@ -77,7 +76,8 @@ class NodeTranslationListener
     {
         $fullSlug   = $node->getFullSlug();
         $fullUrl    = $node->getUrl();
-        if ($fullSlug != $fullUrl) {
+
+        if ($fullSlug !== $fullUrl) {
             $node->setUrl($fullSlug);
 
             return $node;
