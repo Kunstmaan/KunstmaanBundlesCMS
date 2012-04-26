@@ -1,20 +1,24 @@
 {% set lowestTopChild = adminmenu.lowestTopChild %}
 {% if lowestTopChild and lowestTopChild.navigationChildren | length > 0 %}
-    <div class="search_wrp">
-        <form id="treeform">
-    	    <input type="text" id="searchVal" value="" />
-    	    <button id="search" class="btn search"><img src="/bundles/kunstmaanadmin/img/icons/search.png" alt="Search" /></button>
-        </form>
-    </div>
-    <div id="tree" class="tree">
-    	<ul>
-            <li class="jstree-open {% if lowestTopChild.internalname == adminmenu.current.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}><a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}">{{ lowestTopChild.internalname | trans }}</a>
-    	        <ul>
-            		{% for menuitem in lowestTopChild.navigationChildren %}
-                        {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
-                    {% endfor %}
-                </ul>
-        	</li>
-        </ul>
-    </div>
+    <aside class="sidebar">
+        <div class="search_wrp">
+            <form id="treeform">
+        	    <input type="text" id="searchVal" value="" />
+        	    <button id="search" class="btn search"><img src="/bundles/kunstmaanadmin/img/icons/search.png" alt="Search" /></button>
+            </form>
+        </div>
+        <div id="tree" class="tree">
+        	<ul>
+                <li class="jstree-open {% if lowestTopChild.internalname == adminmenu.current.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}><a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}">{{ lowestTopChild.internalname | trans }}</a>
+        	        <ul>
+                		{% for menuitem in lowestTopChild.navigationChildren %}
+                            {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
+                        {% endfor %}
+                    </ul>
+            	</li>
+            </ul>
+        </div>
+    </aside>
+{% else %}
+
 {% endif %}

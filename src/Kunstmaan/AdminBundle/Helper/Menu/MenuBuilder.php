@@ -77,10 +77,7 @@ class MenuBuilder
         if(is_null($this->topmenuitems)){
             $this->topmenuitems = array();
             foreach($this->adaptors as $menuadaptor){
-                $adaptions = $menuadaptor->getChildren($this, null, $request);
-                if(!is_null($adaptions)){
-                    $this->topmenuitems = array_merge($this->topmenuitems, $adaptions);
-                }
+                $adaptions = $menuadaptor->adaptChildren($this, $this->topmenuitems, null, $request);
             }
         }
         return $this->topmenuitems;
@@ -90,10 +87,7 @@ class MenuBuilder
         $request = $this->container->get('request');
         $result = array();
         foreach($this->adaptors as $menuadaptor){
-            $adaptions = $menuadaptor->getChildren($this, $parent, $request);
-            if(!is_null($adaptions)){
-                $result = array_merge($result, $adaptions);
-            }
+            $adaptions = $menuadaptor->adaptChildren($this, $result, $parent, $request);
         }
         return $result;
     }
