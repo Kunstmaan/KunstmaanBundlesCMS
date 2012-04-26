@@ -2,6 +2,8 @@
 // src/Acme/DemoBundle/Menu/Builder.php
 namespace Kunstmaan\AdminNodeBundle\Helper\Menu;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -20,89 +22,101 @@ use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Knp\Menu\ItemInterface as KnpMenu;
 
+/**
+ * The Page Menu Adaptor
+ */
 class PageMenuAdaptor implements MenuAdaptorInterface
 {
     private $container;
     private $nodemenu;
-    
-    public function __construct($container){
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct($container)
+    {
         $this->container = $container;
     }
-    
-    public function getChildren(MenuBuilder $menu, MenuItem $parent = null, Request $request)
+
+    /**
+     * In this method you can add children for a specific parent, but also remove and change the already created children
+     *
+     * @param MenuBuilder $menu      The MenuBuilder
+     * @param MenuItem[]  &$children The current children
+     * @param MenuItem    $parent    The parent Menu item
+     * @param Request     $request   The Request
+     */
+    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if(is_null($this->nodemenu)){
+        if (is_null($this->nodemenu)) {
             $node = null;
-            if($request->attributes->get('_route') == 'KunstmaanAdminNodeBundle_pages_edit'){
+            if ($request->attributes->get('_route') == 'KunstmaanAdminNodeBundle_pages_edit') {
                 $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
             $this->nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true);
         }
-        $result = array();
-        if(is_null($parent)) {
+        if (is_null($parent)) {
             $menuitem = new TopMenuItem($menu);
             $menuitem->setRoute('KunstmaanAdminNodeBundle_pages');
             $menuitem->setInternalname("Pages");
             $menuitem->setParent($parent);
-            if(stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0){
+            if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                 $menuitem->setActive(true);
             }
-            $result[] = $menuitem;
-        } else if ('KunstmaanAdminNodeBundle_pages' == $parent->getRoute()){
+            $children[] = $menuitem;
+        } else if ('KunstmaanAdminNodeBundle_pages' == $parent->getRoute()) {
             $topnodes = $this->nodemenu->getTopNodes();
-            foreach( $topnodes as $child) {
+            foreach ($topnodes as $child) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanAdminNodeBundle_pages_edit');
                 $menuitem->setRouteparams(array('id' => $child->getId()));
                 $menuitem->setInternalname($child->getTitle());
                 $menuitem->setParent($parent);
                 $menuitem->setRole('page');
-                if(stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0){
+                if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                     $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->get('id'));
-                    if($currentNode->getId() == $child->getId()){
+                    if ($currentNode->getId() == $child->getId()) {
                         $menuitem->setActive(true);
                     } else {
                         $parentNodes = $currentNode->getParents();
-                        foreach($parentNodes as $parentNode){
-                            if($parentNode->getId() == $child->getId()){
+                        foreach ($parentNodes as $parentNode) {
+                            if ($parentNode->getId() == $child->getId()) {
                                 $menuitem->setActive(true);
                                 break;
                             }
                         }
                     }
                 }
-                $result[] = $menuitem;
+                $children[] = $menuitem;
             }
-        } else if ('KunstmaanAdminNodeBundle_pages_edit' == $parent->getRoute()){
+        } else if ('KunstmaanAdminNodeBundle_pages_edit' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
             $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
             $nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true);
-            $children = $nodemenu->getCurrent()->getChildren();
-            foreach( $children as $child) {
+            $childNodes = $nodemenu->getCurrent()->getChildren();
+            foreach ($childNodes as $child) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanAdminNodeBundle_pages_edit');
                 $menuitem->setRouteparams(array('id' => $child->getId()));
                 $menuitem->setInternalname($child->getTitle());
                 $menuitem->setParent($parent);
                 $menuitem->setRole('page');
-                if(stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0){
+                if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                     $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->get('id'));
-                    if($currentNode->getId() == $child->getId()){
+                    if ($currentNode->getId() == $child->getId()) {
                         $menuitem->setActive(true);
                     } else {
                         $parentNodes = $currentNode->getParents();
-                        foreach($parentNodes as $parentNode){
-                            if($parentNode->getId() == $child->getId()){
+                        foreach ($parentNodes as $parentNode) {
+                            if ($parentNode->getId() == $child->getId()) {
                                 $menuitem->setActive(true);
                                 break;
                             }
                         }
                     }
                 }
-                $result[] = $menuitem;
+                $children[] = $menuitem;
             }
         }
-        return $result;
     }
-    
 }
