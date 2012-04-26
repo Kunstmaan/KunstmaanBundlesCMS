@@ -22,11 +22,14 @@ class NodeTranslationListener
 
         if ($entity instanceof NodeTranslation) {
             $em     = $args->getEntityManager();
-
             $entity = $this->updateUrl($entity);
-            $this->updateNodeChildren($entity, $em);
-			
-            $em->persist($entity);
+
+            if ($entity != false) {
+                $em->persist($entity);
+                $em->flush();
+
+                $this->updateNodeChildren($entity, $em);
+            }
         }
     }
 
@@ -51,9 +54,14 @@ class NodeTranslationListener
             foreach ($children as $child) {
                 $translation = $child->getNodeTranslation($node->getLang(), true);
                 if ($translation) {
-                    $translation->setUrl($translation->getFullSlug());
-                    $em->persist($translation);
-                    $em->flush();
+                    $translation = $this->updateUrl($translation);
+
+                    if ($translation != false) {
+                        $em->persist($translation);
+                        $em->flush();
+
+                        $this->updateNodeChildren($translation, $em);
+                    }
                 }
             }
         }
@@ -63,13 +71,19 @@ class NodeTranslationListener
      * Update the url for a nodetranslation
      * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation $node
      *
-     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
+     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|bool
      */
     private function updateUrl(NodeTranslation $node)
     {
-        $node->setUrl($node->getFullSlug());
+        $fullSlug   = $node->getFullSlug();
+        $fullUrl    = $node->getUrl();
+        if ($fullSlug != $fullUrl) {
+            $node->setUrl($fullSlug);
 
-        return $node;
+            return $node;
+        }
+
+        return false;
     }
 
 }
