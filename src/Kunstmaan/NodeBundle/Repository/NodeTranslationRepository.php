@@ -207,6 +207,7 @@ class NodeTranslationRepository extends EntityRepository
         $em->persist($nodeTranslation);
         $em->flush();
         $em->refresh($nodeTranslation);
+        $em->refresh($node);
         return $nodeTranslation;
     }
 }
