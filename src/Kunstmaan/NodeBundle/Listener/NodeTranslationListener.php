@@ -66,7 +66,9 @@ class NodeTranslationListener
      */
     private function updateUrl(NodeTranslation $node)
     {
-        return $node->setUrl($node->getFullSlug());
+        $node->setUrl($node->getFullSlug());
+
+        return $node;
     }
 
 }
