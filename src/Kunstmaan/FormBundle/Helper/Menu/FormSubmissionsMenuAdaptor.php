@@ -16,22 +16,32 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Knp\Menu\ItemInterface as KnpMenu;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 
+/**
+ * The Form Submissions Menu Adaptor
+ */
 class FormSubmissionsMenuAdaptor implements MenuAdaptorInterface
 {
 
-    public function getChildren(MenuBuilder $menu, MenuItem $parent = null, Request $request)
+    /**
+     * In this method you can add children for a specific parent, but also remove and change the already created children
+     * 
+     * @param MenuBuilder $menu      The MenuBuilder
+     * @param MenuItem[]  &$children The current children
+     * @param MenuItem    $parent    The parent Menu item
+     * @param Request     $request   The Request
+     */
+    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if(is_null($parent)) {
+        if (is_null($parent)) {
             $menuitem = new TopMenuItem($menu);
             $menuitem->setRoute('KunstmaanFormBundle_formsubmissions');
             $menuitem->setInternalname('Form submissions');
             $menuitem->setParent($parent);
-            if(stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0){
+            if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                 $menuitem->setActive(true);
             }
-            return array($menuitem);
+            $children[] = $menuitem;
         }
-        return null;
     }
 
 }
