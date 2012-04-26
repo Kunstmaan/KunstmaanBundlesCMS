@@ -25,7 +25,7 @@ class NodeTranslationListener
 
             $entity = $this->updateUrl($entity);
             $this->updateNodeChildren($entity, $em);
-
+			
             $em->persist($entity);
         }
     }
@@ -53,6 +53,7 @@ class NodeTranslationListener
                 if ($translation) {
                     $translation->setUrl($translation->getFullSlug());
                     $em->persist($translation);
+                    $em->flush();
                 }
             }
         }
