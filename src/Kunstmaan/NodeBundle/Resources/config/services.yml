@@ -1,10 +1,13 @@
 parameters:
-#    kunstmaan_admin_node.example.class: Kunstmaan\AdminNodeBundle\Example
 
 services:
-#    kunstmaan_admin_node.example:
-#        class: %kunstmaan_admin_node.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+
+    nodetranslation.listener:
+         class: Kunstmaan\AdminNodeBundle\Listener\NodeTranslationListener
+         tags:
+                - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+                - { name: doctrine.event_listener, event: postPersist, method: postUpdate }
+
     node.listener:
          class: Kunstmaan\AdminNodeBundle\Listener\NodeGenerator
          tags:

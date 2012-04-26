@@ -1,16 +1,17 @@
 <?php
 
-// src/Blogger/BlogBundle/Entity/Blog.php
-
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
+use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
+use Kunstmaan\SearchBundle\Entity\Indexable;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Common\Annotations\Annotation;
-use Kunstmaan\SearchBundle\Entity\Indexable;
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
+
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeTranslationRepository")
@@ -50,6 +51,11 @@ class NodeTranslation {
      * @ORM\Column(type="string", nullable=true)
      */
     protected $slug;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $url;
 
     /**
      * @ORM\ManyToOne(targetEntity="NodeVersion")
@@ -178,22 +184,32 @@ class NodeTranslation {
      *
      * @return string
      */
-    public function getFullSlug() {
-    	$node = $this->getNode();
-    	$slug = $this->getSlugPart($node);
+    public function getFullSlug()
+    {
+    	$slug = $this->getSlugPart();
+
+        if (empty($slug)) {
+            return null;
+        }
+
     	return $slug;
     }
-    
-    public function getSlugPart($node){
+
+    public function getSlugPart()
+    {
     	$slug = "";
-    	if ($node->getParent() != null && $node->getParent()->getNodeTranslation($this->lang) != null){
-    		$slug = $slug . $this->getSlugPart($node->getParent());
+    	if ($this->getNode()->getParent() != null) {
+    	    $nodeTranslation = $this->getNode()->getParent()->getNodeTranslation($this->lang);
+    	    if ($nodeTranslation != null) {
+    	        $parentslug = $nodeTranslation->getSlugPart();
+    	        if (!empty($parentslug)) {
+    	            $slug = rtrim($parentslug, "/")."/";
+    	        }
+    	    }
     	}
-    	if(!empty($slug)){
-    		$slug = rtrim($slug, "/");
-    		$slug = $slug . "/";
-    	}
-    	$slug = $slug . $node->getNodeTranslation($this->lang)->getSlug();
+
+    	$slug = $slug . $this->getSlug();
+
     	return $slug;
     }
     
@@ -335,6 +351,16 @@ class NodeTranslation {
 
     public function getSEO() {
     	return $this->seo;
+    }
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
     }
 
 }

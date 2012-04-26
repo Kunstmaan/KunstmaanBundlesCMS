@@ -51,7 +51,7 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * Get the nodetranslation for a given url
+     * Get the nodetranslation for a given slug string
      * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|null $parentNode
      * @param $slug
      *
@@ -70,6 +70,58 @@ class NodeTranslationRepository extends EntityRepository
         }
 
         return $result;
+    }
+
+
+    /**
+     * Get the nodetranslation for a given url
+     * @param $urlSlug
+     *
+     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|null|object
+     */
+    public function getNodeTranslationForUrl($urlSlug)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->andWhere('n.deleted != 1')
+            ->addOrderBy('n.sequencenumber', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        if ($urlSlug === null) {
+            $qb->where('b.url IS NULL');
+        } else {
+            $qb->where('b.url = ?1');
+            $qb->setParameter(1, $urlSlug);
+        }
+
+        $result = $qb->getQuery()->getResult();
+
+        if (sizeof($result) == 1) {
+            return $result[0];
+        } else if (sizeof($result) == 0) {
+            return null;
+        } else {
+            return $result[0];
+        }
+    }
+
+
+    /**
+     * Get all parent nodes
+     *
+     * @return array
+     */
+    public function getParentNodeTranslations()
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->where('n.parent IS NULL')
+            ->andWhere('n.deleted != 1');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -160,6 +212,7 @@ class NodeTranslationRepository extends EntityRepository
         $em->persist($nodeTranslation);
         $em->flush();
         $em->refresh($nodeTranslation);
+        $em->refresh($node);
         return $nodeTranslation;
     }
 }
