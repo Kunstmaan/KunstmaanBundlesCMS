@@ -81,21 +81,21 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getNodeTranslationForUrl($urlSlug)
     {
-        $qb = $this->createQueryBuilder('b')
+    	$qb = $this->createQueryBuilder('b')
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->andWhere('n.deleted != 1')
+            ->where("n.deleted != 1 AND b.online = 1")
             ->addOrderBy('n.sequencenumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
 
         if ($urlSlug === null) {
-            $qb->where('b.url IS NULL');
+            $qb->andWhere('b.url IS NULL');
         } else {
-            $qb->where('b.url = ?1');
+            $qb->andWhere('b.url = ?1');
             $qb->setParameter(1, $urlSlug);
         }
-
+        
         $result = $qb->getQuery()->getResult();
 
         if (sizeof($result) == 1) {
