@@ -16,5 +16,5 @@
 {% endif %}
 
 {% if resource is defined and resource != "" %}
-	<p class="download"><a href="{{ asset(upload_dir~resource.media.show()) }}" target="_blank" class="download">{{ resource.media.name }}</a> <span>| {{ resource.media.contentType }} {{ resource.media.getFileSize() }}</span>
+	<p class="download"><a href="{{ asset(upload_dir~resource.media.show()) }}" target="_blank" class="download">{{ resource.media.name }}</a> <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span>
 {% endif %}
