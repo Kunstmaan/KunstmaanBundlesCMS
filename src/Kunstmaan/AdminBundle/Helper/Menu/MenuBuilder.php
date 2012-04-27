@@ -84,6 +84,9 @@ class MenuBuilder
     }
     
     public function getChildren(MenuItem $parent = null){
+        if ($parent == null) {
+            return $this->getTopChildren();
+        }
         $request = $this->container->get('request');
         $result = array();
         foreach($this->adaptors as $menuadaptor){
@@ -102,10 +105,10 @@ class MenuBuilder
         	case (stripos($request->attributes->get('_route'), "KunstmaanAdminBundle_settings") === 0):
         		$this->rootItem[$this->translator->trans('settings.title')]->setCurrent(true);
         		break;
-        }     
+        }
         foreach($this->extra as $menuadaptor){
         	$menuadaptor->setCurrent($this->rootItem, $this->translator, $request);
-        }   
+        }
         return $this->rootItem;*/
     }
 
