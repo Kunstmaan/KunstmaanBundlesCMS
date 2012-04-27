@@ -168,6 +168,19 @@ abstract class Media{
     {
         return $this->contentType;
     }
+    
+    /**
+     * Get contentType
+     *
+     * @return string
+     */
+    public function getContentTypeShort()
+    {
+    	$contentType = $this->contentType;
+    	$array = explode("/", $contentType);
+    	$contentType = end($array);
+    	return $contentType;
+    }
 
     /**
      * Set metadata
