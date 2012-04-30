@@ -79,15 +79,16 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|null|object
      */
-    public function getNodeTranslationForUrl($urlSlug)
+    public function getNodeTranslationForUrl($urlSlug, $locale)
     {
     	$qb = $this->createQueryBuilder('b')
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where("n.deleted != 1 AND b.online = 1")
+            ->where("n.deleted != 1 AND b.online = 1 and b.lang = ?2")
             ->addOrderBy('n.sequencenumber', 'DESC')
             ->setFirstResult(0)
-            ->setMaxResults(1);
+            ->setMaxResults(1)
+    		->setParameter(2, $locale);
 
         if ($urlSlug === null) {
             $qb->andWhere('b.url IS NULL');
