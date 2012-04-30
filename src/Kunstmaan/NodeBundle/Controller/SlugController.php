@@ -123,7 +123,7 @@ class SlugController extends Controller
     		$locale = $fallback;
     		return $this->redirect($this->generateUrl("_slug", array("slug"=>$slug, "_locale"=>$locale)));
     	}
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForUrl($slug);
+        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForUrl($slug, $locale);
         if($nodeTranslation){
             $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
             $node = $nodeTranslation->getNode();
