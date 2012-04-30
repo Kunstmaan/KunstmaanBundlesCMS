@@ -84,11 +84,11 @@ class NodeTranslationRepository extends EntityRepository
     	$qb = $this->createQueryBuilder('b')
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where("n.deleted != 1 AND b.online = 1 and b.lang = ?1")
+            ->where("n.deleted != 1 AND b.online = 1 and b.lang = ?2")
             ->addOrderBy('n.sequencenumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1)
-    		->setParameter(1, $locale);
+    		->setParameter(2, $locale);
 
         if ($urlSlug === null) {
             $qb->andWhere('b.url IS NULL');
