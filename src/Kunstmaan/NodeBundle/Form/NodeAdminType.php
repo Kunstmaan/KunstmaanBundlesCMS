@@ -1,5 +1,4 @@
 <?php
-// src/Blogger/BlogBundle/Form/EnquiryType.php
 
 namespace Kunstmaan\AdminNodeBundle\Form;
 

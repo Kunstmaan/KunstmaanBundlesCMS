@@ -19,15 +19,6 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class NodeRepository extends EntityRepository
 {
 	public function getTopNodes($user, $permission) {
-	   /* $qb = $this->createQueryBuilder('b')
-	               ->select('b')
-                   ->where('b.parent is null')
-                   ->andWhere('b.id IN (
-                        SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = b.refEntityname AND p.permissions LIKE ?1 AND p.refGroup IN(?2)
-                   )')
-	               ->addOrderBy('b.sequencenumber', 'DESC')
-                   ->setParameter(1, '%|'.$permission.':1|%')
-                   ->setParameter(2, $user->getGroupIds());*/
 	    $qb = $this->createQueryBuilder('b')
 	               ->select('b')
                    ->where('b.parent is null and b.deleted = 0')

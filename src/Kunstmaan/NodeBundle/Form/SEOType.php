@@ -1,5 +1,4 @@
 <?php
-// Kunstmaan\AdminNodeBundle\Form\SEOType.php
 
 namespace Kunstmaan\AdminNodeBundle\Form;
 

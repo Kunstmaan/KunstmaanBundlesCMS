@@ -1,12 +1,10 @@
 <?php
-// src/Acme/DemoBundle/Menu/Builder.php
+
 namespace Kunstmaan\AdminNodeBundle\Modules;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-
 use Symfony\Component\Translation\Translator;
-
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
