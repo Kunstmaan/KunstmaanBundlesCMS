@@ -5,10 +5,6 @@ namespace Kunstmaan\MediaBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-/**
- * class to define the form to upload a picture
- *
- */
 class SlideType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
@@ -26,5 +22,3 @@ class SlideType extends AbstractType
         return 'kunstmaan_mediabundle_slidetype';
     }
 }
-
-?>

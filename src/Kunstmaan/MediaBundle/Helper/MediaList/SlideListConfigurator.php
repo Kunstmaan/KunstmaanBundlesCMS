@@ -1,16 +1,8 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: kristof
- * Date: 15/11/11
- * Time: 22:23
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Kunstmaan\MediaBundle\Helper\MediaList;
 
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
-
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;

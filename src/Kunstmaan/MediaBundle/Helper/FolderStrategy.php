@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
-/**
- * Comment controller.
- */
 use Doctrine\ORM\EntityManager;
 
 class FolderStrategy implements GalleryStrategyInterface{

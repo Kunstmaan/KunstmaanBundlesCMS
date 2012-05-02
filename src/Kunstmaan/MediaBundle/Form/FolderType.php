@@ -6,10 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\MediaBundle\Entity\File;
 
-/**
- * class to define the form to upload a file
- *
- */
 class FolderType extends AbstractType
 {
     protected $entityname;
@@ -65,5 +61,3 @@ class FolderType extends AbstractType
         return $ids;
     }
 }
-
-?>

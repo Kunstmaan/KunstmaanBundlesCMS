@@ -1,5 +1,4 @@
 <?php
-// src/Kunstmaan/AdminBundle/controller/PictureController.php
 
 namespace Kunstmaan\MediaBundle\Controller;
 
@@ -12,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * picture controller.
+ * Video controller.
  *
  */
 class VideoController extends Controller
