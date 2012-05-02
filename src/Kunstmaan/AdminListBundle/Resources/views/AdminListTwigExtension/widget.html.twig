@@ -37,6 +37,21 @@
                     {%if adminlist.canDelete(item) %}
                         <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}" data-controls-modal="sure-modal-{{ item.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('bundles/kunstmaanadmin/img/general/delete.png') }}" alt="Delete"/></a>
                     {% endif %}
+                    {% if adminlist.hasCustomActions() %}
+                    	{% for customAction in adminlist.getCustomActions() %}
+                    		{% if customAction.template is not null %}
+                    			{% include customAction.template with {'row': item, 'item': item} %}
+                    		{% else %}
+	                    		<a href="{{ path(customAction.getUrlFor(item)["path"], customAction.getUrlFor(item)[("params")] ) }}">
+	                    		{% if customAction.getIcon(item) is not null %}
+	                    			<img src="{{ asset(customAction.getIcon(item)) }}" alt="{{ customAction.getLabel(item) }}"/>
+	                    		{% else %}
+	                    			{{ customAction.getLabel(item) }}
+	                    		{% endif %}
+                    			</a>
+	                    	{% endif %}
+                    	{% endfor %}
+                    {% endif %}
                 </td>
                 {% for column in adminlist.columns%}
                 	{% set columnName = column.fieldName%}

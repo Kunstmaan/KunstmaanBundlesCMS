@@ -66,6 +66,30 @@ abstract class AbstractAdminListConfigurator
 
     }
 
+    private $customActions = array();
+    
+    public function buildActions() {}
+    
+    public function getCustomActions()
+    {
+    	return $this->customActions;
+    }
+    
+    public function addCustomAction(ActionInterface $customAction)
+    {
+    	$this->customActions[] = $customAction;
+    }
+    
+    public function addSimpleAction($label, $url, $icon, $template = null)
+    {
+    	$this->customActions[] = new SimpleAction($url, $icon, $label, $template);
+    }
+    
+    public function hasCustomActions() 
+    {
+    	return !empty($this->customActions);
+    }
+    
     function getValue($item, $columnName)
     {
         $methodName = $columnName;

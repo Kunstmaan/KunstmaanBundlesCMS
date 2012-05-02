@@ -36,6 +36,7 @@ class AdminList {
         $adminlistfilter = new AdminListFilter();
         $this->configurator->buildFilters($adminlistfilter);
         $this->configurator->buildFields();
+        $this->configurator->buildActions();
         $this->adminlistfilter = $adminlistfilter;
         $this->queryparams = $queryparams;
     }
@@ -135,5 +136,13 @@ class AdminList {
 
     public function getOrderDirection(){
         return $this->orderDirection;
+    }
+    
+    public function getCustomActions() {
+    	return $this->configurator->getCustomActions();
+    }
+    
+    public function hasCustomActions() {
+    	return $this->configurator->hasCustomActions();
     }
 }
