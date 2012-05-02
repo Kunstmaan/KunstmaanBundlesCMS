@@ -1,10 +1,9 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity;
+
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
-
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;

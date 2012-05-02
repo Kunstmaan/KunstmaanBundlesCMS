@@ -1,14 +1,11 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
+
 use Kunstmaan\PagePartBundle\Helper\IsPagePart;
-
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
-
 use Symfony\Component\Form\FormBuilder;
-
 use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 

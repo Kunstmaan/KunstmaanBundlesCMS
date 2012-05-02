@@ -1,13 +1,11 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
-
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
-
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
