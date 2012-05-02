@@ -1,19 +1,14 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
-use Kunstmaan\PagePartBundle\Helper\IsPagePart;
 
+use Kunstmaan\PagePartBundle\Helper\IsPagePart;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
-
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-
 use Symfony\Component\Form\FormBuilder;
-
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
-
 use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 

@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 

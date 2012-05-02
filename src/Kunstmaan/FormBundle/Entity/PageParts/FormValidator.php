@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
+
 use Symfony\Component\Form\FormValidatorInterface;
 use Symfony\Component\Form\FormInterface;
 

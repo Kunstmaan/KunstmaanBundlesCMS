@@ -1,19 +1,15 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
+
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
-
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
-
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Type;
-
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;

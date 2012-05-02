@@ -1,24 +1,17 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
+
 use Kunstmaan\PagePartBundle\Helper\IsPagePart;
-
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
-
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
-
 use Symfony\Component\Form\CallbackValidator;
-
 use Symfony\Component\Form\FormBuilder;
-
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
-
 use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
