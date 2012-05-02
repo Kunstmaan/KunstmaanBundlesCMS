@@ -3,7 +3,6 @@
 namespace  Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
 

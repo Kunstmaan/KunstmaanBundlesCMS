@@ -4,9 +4,6 @@ namespace Kunstmaan\MediaBundle\Helper;
 
 use Symfony\Component\HttpFoundation\File\File as SystemFile;
 
-/**
- * Comment controller.
- */
 class MediaHelper{
 
     protected $media;

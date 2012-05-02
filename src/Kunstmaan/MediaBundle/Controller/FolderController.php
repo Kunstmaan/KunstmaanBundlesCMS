@@ -1,30 +1,18 @@
 <?php
-// src/Blogger/BlogBundle/Controller/CommentController.php
 
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Kunstmaan\MediaBundle\Helper\FolderFactory;
-
 use Kunstmaan\MediaBundle\Form\VideoType;
-
 use Kunstmaan\MediaBundle\Entity\Video;
-
 use Kunstmaan\MediaBundle\Form\SlideType;
-
 use Kunstmaan\MediaBundle\Entity\Slide;
-
 use Kunstmaan\MediaBundle\Entity\Image;
-
 use Kunstmaan\MediaBundle\Entity\File;
-
 use Kunstmaan\MediaBundle\Form\MediaType;
-
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
-
 use Kunstmaan\MediaBundle\Entity\Folder;
-
 use Kunstmaan\MediaBundle\Helper\MediaList\MediaListConfigurator;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Entity\SlideGallery;
@@ -60,7 +48,6 @@ class FolderController extends Controller
             $itemlist->bindRequest($this->getRequest());
         }
 
-        //$form = $this->createForm($gallery->getStrategy()->getFormType(), $gallery->getStrategy()->getFormHelper());
         $sub = $gallery->getStrategy()->getNewGallery($em);
         $sub->setParent($gallery);
         $subform = $this->createForm(new SubFolderType(), $sub);

@@ -3,7 +3,6 @@
 namespace Kunstmaan\MediaBundle\Repository;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 use Kunstmaan\MediaBundle\Entity\Media;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;

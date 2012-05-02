@@ -3,9 +3,7 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Entity\FileGallery;

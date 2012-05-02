@@ -1,5 +1,4 @@
 <?php
-// src/Kunstmaan/AdminBundle/controller/PictureController.php
 
 namespace Kunstmaan\MediaBundle\Controller;
 

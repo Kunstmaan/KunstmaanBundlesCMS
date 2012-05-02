@@ -4,11 +4,9 @@ namespace Kunstmaan\MediaBundle\Helper\Manipulator;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
-
-use Imagine\Image\ImagineInterface,
-    Imagine\Image\ImageInterface,
-    Imagine\Image\Box;
-
+use Imagine\Image\ImagineInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Box;
 use Gaufrette\File;
 
 class ImagineImageManipulator implements ImageManipulatorInterface
@@ -71,6 +69,4 @@ class ImagineImageManipulator implements ImageManipulatorInterface
 
         $toFile->setContent($output);
     }
-
-
 }

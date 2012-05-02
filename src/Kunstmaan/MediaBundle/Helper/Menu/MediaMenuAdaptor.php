@@ -1,20 +1,14 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-
 use Symfony\Component\Translation\Translator;
-
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Knp\Menu\ItemInterface as KnpMenu;

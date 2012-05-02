@@ -1,12 +1,11 @@
 <?php
-// Kunstmaan/MediaBundle/DataFixtures/ORM/FolderFixtures
+
 namespace Kunstmaan\MediaBundle\DataFixtures\ORM;
 
 use Kunstmaan\MediaBundle\Entity\FileGallery;
 use Kunstmaan\MediaBundle\Entity\SlideGallery;
 use Kunstmaan\MediaBundle\Entity\VideoGallery;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Kunstmaan\MediaBundle\Entity\Folder;
