@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\ViewBundle\Twig\Extension;
 
-
 use Doctrine\ORM\EntityManager;
 
 class TrimHighlightTwigExtension extends \Twig_Extension

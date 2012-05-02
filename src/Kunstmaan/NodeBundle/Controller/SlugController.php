@@ -3,11 +3,8 @@
 namespace Kunstmaan\ViewBundle\Controller;
 
 use Kunstmaan\ViewBundle\Helper\RenderContext;
-
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
-
 use Kunstmaan\AdminBundle\Entity\PageIFace;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -89,7 +86,6 @@ class SlugController extends Controller
             } else {
             	return $result;
             }
-
         }
         throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
 	}

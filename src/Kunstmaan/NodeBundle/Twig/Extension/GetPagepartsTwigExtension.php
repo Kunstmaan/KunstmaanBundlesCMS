@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\ViewBundle\Twig\Extension;
 
-
 use Doctrine\ORM\EntityManager;
 
 class GetPagepartsTwigExtension extends \Twig_Extension
