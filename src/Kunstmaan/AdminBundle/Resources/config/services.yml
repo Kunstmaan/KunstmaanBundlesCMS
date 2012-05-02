@@ -12,6 +12,11 @@ services:
         tags:
             -  { name: admin_menu.adaptor }
         
+    admin_menu.adaptor.modules:
+        class: Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor
+        tags:
+            -  { name: admin_menu.adaptor }
+
     admin_menu.twig.extension:
         class: Kunstmaan\AdminBundle\Helper\Menu\MenuTwigExtension
         arguments: ["@doctrine.orm.entity_manager", "@admin_menu.menubuilder"]
