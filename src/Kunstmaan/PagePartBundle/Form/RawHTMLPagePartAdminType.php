@@ -30,5 +30,3 @@ class RawHTMLPagePartAdminType extends AbstractType
         return 'kunstmaan_pagepartbundle_rawhtmlpageparttype';
     }
 }
-
-?>

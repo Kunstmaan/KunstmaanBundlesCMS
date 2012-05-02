@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: kris
- * Date: 18/11/11
- * Time: 11:00
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Kunstmaan\PagePartBundle\Entity;
 

@@ -3,12 +3,11 @@
 namespace  Kunstmaan\PagePartBundle\Entity;
 
 use Kunstmaan\PagePartBundle\Helper\IsPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
 
 /**
- * Class that defines a textpart object to add to a page
+ * Class that defines a text page part object to add to a page
  *
  * @author Kristof Van Cauwenbergh
  *
