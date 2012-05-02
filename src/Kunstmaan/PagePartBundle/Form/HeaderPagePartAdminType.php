@@ -5,10 +5,6 @@ namespace Kunstmaan\PagePartBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-/**
- * class to define the form to upload a picture
- *
- */
 class HeaderPagePartAdminType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
@@ -27,5 +23,3 @@ class HeaderPagePartAdminType extends AbstractType
         return 'kunstmaan_pagepartbundle_headerpageparttype';
     }
 }
-
-?>

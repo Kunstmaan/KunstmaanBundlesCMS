@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
-
 class PagePartAdminTwigExtension extends \Twig_Extension
 {
     /**

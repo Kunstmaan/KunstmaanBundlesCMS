@@ -3,7 +3,6 @@
 namespace  Kunstmaan\PagePartBundle\Entity;
 
 use Kunstmaan\PagePartBundle\Helper\IsPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
 
