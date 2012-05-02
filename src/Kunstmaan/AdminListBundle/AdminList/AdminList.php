@@ -35,6 +35,7 @@ class AdminList {
         $this->em = $em;
         $adminlistfilter = new AdminListFilter();
         $this->configurator->buildFilters($adminlistfilter);
+        $this->configurator->buildFields();
         $this->adminlistfilter = $adminlistfilter;
         $this->queryparams = $queryparams;
     }
@@ -71,10 +72,7 @@ class AdminList {
     }
 
     public function getColumns(){
-        $result = array();
-        $this->configurator->buildFields();
-        $this->configurator->configureListFields($result);
-        return $result;
+        return $this->configurator->getFields();
     }
 
     public function getCount($params = array()){
@@ -123,8 +121,12 @@ class AdminList {
         return $this->configurator->canDelete($item);
     }
 
-    public function getFrom($object, $attribute){
+    public function getValue($object, $attribute){
         return $this->configurator->getValue($object, $attribute);
+    }
+    
+    public function getStringValue($object, $attribute){
+        return $this->configurator->getStringValue($object, $attribute);
     }
 
     public function getOrderBy(){

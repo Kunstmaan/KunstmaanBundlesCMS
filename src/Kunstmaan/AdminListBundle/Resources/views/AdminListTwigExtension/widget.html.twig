@@ -9,7 +9,9 @@
         <thead>
         <tr>
             <th>{{ 'form.actions'|trans }}</th>
-            {% for columnkey,columnName in adminlist.columns%}
+            {% for column in adminlist.columns%}
+                {% set columnName = column.fieldName%}
+                {% set columnkey = column.fieldheader%}
                 {% set orderDirection = "DESC" %}
                 {% set extraHeaderClass = "" %}
                 {% if ( columnName == adminlist.orderBy )%}
@@ -36,8 +38,14 @@
                         <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}" data-controls-modal="sure-modal-{{ item.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('bundles/kunstmaanadmin/img/general/delete.png') }}" alt="Delete"/></a>
                     {% endif %}
                 </td>
-                {% for columnName in adminlist.columns%}
-                    <td>{{adminlist.getFrom(item, columnName)}}</td>
+                {% for column in adminlist.columns%}
+                	{% set columnName = column.fieldName%}
+                	{% set template = column.template%}
+                	{% if template is not null %}
+                		<td>{% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getValue(item, columnName)} %}</td>
+                	{% else %}
+                		<td>{{adminlist.getStringValue(item, columnName)}}</td>
+                	{% endif %}
                 {% endfor %}
             </tr>
         {% endfor %}
