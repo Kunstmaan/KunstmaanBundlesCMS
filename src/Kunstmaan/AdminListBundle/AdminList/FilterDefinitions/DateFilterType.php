@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: kris
- * Date: 28/11/11
- * Time: 17:45
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Kunstmaan\AdminListBundle\AdminList\FilterDefinitions;
 
