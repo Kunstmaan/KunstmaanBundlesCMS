@@ -1,23 +1,15 @@
 <?php
-// src/Acme/DemoBundle/Menu/Builder.php
+
 namespace Kunstmaan\AdminNodeBundle\Helper\Menu;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-
 use Symfony\Component\Translation\Translator;
-
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Knp\Menu\ItemInterface as KnpMenu;

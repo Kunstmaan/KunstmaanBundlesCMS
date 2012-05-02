@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminNodeBundle\Repository;
 
 use Kunstmaan\AdminNodeBundle\Entity\HasNode;
-
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;

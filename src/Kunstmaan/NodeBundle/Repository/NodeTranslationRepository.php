@@ -9,9 +9,7 @@ use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
-
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
-
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 
