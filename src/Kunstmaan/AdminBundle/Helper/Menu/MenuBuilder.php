@@ -1,5 +1,5 @@
 <?php
-// src/Acme/DemoBundle/Menu/Builder.php
+
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -77,7 +77,7 @@ class MenuBuilder
         if(is_null($this->topmenuitems)){
             $this->topmenuitems = array();
             foreach($this->adaptors as $menuadaptor){
-                $adaptions = $menuadaptor->adaptChildren($this, $this->topmenuitems, null, $request);
+                $menuadaptor->adaptChildren($this, $this->topmenuitems, null, $request);
             }
         }
         return $this->topmenuitems;
@@ -90,11 +90,16 @@ class MenuBuilder
         $request = $this->container->get('request');
         $result = array();
         foreach($this->adaptors as $menuadaptor){
-            $adaptions = $menuadaptor->adaptChildren($this, $result, $parent, $request);
+            $menuadaptor->adaptChildren($this, $result, $parent, $request);
         }
         return $result;
     }
 
+    /**
+     * @todo: clean this up, why the die?
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return null
+     */
     public function mainMenu(\Symfony\Component\HttpFoundation\Request $request)
     {
         die();
@@ -112,6 +117,11 @@ class MenuBuilder
         return $this->rootItem;*/
     }
 
+    /**
+     * @todo: can this be removed?
+     * @param \Symfony\Component\Translation\Translator $translator
+     * @return null
+     */
     public function populateMenu(Translator $translator){
         return null;
         /*$rootItem = $this->factory->createItem('root');

@@ -1,5 +1,5 @@
 <?php
-// src/Acme/DemoBundle/Menu/Builder.php
+
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 use Symfony\Component\Translation\Translator;

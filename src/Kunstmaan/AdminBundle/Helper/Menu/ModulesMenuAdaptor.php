@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Helper\Menu;
+
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
