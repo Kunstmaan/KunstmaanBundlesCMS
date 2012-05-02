@@ -45,6 +45,7 @@ class LogItem{
     protected $createdat;
 
     /**
+     * @todo: Why the //?
      * //@ORM\ManyToOne(targetEntity="Command")
      */
     //protected $command;

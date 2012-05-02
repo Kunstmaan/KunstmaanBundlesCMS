@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * omnext addcommand
+ * omnext delete command
  * 
  * @author Kristof Van Cauwenbergh
  *

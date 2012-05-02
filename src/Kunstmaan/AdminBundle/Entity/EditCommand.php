@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * omnext addcommand
+ * omnext edit command
  * 
  * @author Kristof Van Cauwenbergh
  *
@@ -24,9 +24,6 @@ class EditCommand extends Command{
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	protected $id;
-	
-	//protected $old;
-	//protected $new;
 	
 	/**
 	 * @ORM\ManyToOne(targetEntity="User")

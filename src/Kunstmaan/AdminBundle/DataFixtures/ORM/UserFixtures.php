@@ -1,5 +1,4 @@
 <?php
-// src/Kunstmaan/DemoBundle/DataFixtures/ORM/UserFixtures.php
 
 namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
 

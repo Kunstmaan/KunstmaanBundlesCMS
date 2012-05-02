@@ -3,13 +3,9 @@
 namespace Kunstmaan\AdminBundle\Modules;
 
 use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
 use Symfony\Component\Routing\Router;
-
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Bundle\DoctrineBundle\Registry as Doctrine;

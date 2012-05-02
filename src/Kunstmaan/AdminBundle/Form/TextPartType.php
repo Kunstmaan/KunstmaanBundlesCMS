@@ -23,5 +23,3 @@ class TextPartType extends AbstractType
         return 'kunstmaan_adminbundle_textparttype';
     }
 }
-
-?>
