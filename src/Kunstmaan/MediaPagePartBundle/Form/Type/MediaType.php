@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Form\Type;
+
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
