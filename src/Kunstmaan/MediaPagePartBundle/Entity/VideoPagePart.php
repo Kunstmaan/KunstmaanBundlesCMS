@@ -3,7 +3,6 @@
 namespace  Kunstmaan\MediaPagePartBundle\Entity;
 
 use Kunstmaan\PagePartBundle\Helper\IsPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\VideoPagePartAdminType;
 use Assetic\AssetManager;
