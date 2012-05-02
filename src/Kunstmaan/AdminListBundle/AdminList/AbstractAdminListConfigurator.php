@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\AdminListBundle\AdminList;
+
 abstract class AbstractAdminListConfigurator
 {
 

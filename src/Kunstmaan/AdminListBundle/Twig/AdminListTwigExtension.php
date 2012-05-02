@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: kris
- * Date: 15/11/11
- * Time: 23:30
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Kunstmaan\AdminListBundle\Twig;
 
