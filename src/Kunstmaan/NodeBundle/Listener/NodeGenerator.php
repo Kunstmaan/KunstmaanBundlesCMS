@@ -29,7 +29,7 @@ class NodeGenerator {
 	             $nodeTranslation = $nodeVersion->getNodeTranslation();
 	             if($nodeTranslation->getPublicNodeVersion() && $nodeTranslation->getPublicNodeVersion()->getId() == $nodeVersion->getId()){
 		             $nodeTranslation->setTitle($entity->__toString());
-		             $nodeTranslation->setSlug(Slugifier::slugify($entity->__toString()));
+		             //$nodeTranslation->setSlug(Slugifier::slugify($entity->__toString()));
 		             $nodeTranslation->setOnline($entity->isOnline());
 		             $em->persist($nodeTranslation);
 		             $em->flush();
