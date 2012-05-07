@@ -15,3 +15,5 @@ services:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
         tags:
             -  { name: twig.extension }
+        arguments:
+            -  @service_container
