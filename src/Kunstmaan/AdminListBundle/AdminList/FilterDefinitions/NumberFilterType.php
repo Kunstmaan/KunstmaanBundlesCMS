@@ -6,10 +6,12 @@ class NumberFilterType
 {
 
     protected $columnname = null;
-
-    function __construct($columnname)
+    protected $alias = null;
+    
+    function __construct($columnname, $alias = "b")
     {
         $this->columnname = $columnname;
+        $this->alias = $alias;
     }
 
     function bindRequest($request, &$data, $uniqueid)
@@ -23,35 +25,31 @@ class NumberFilterType
 
     function adaptQueryBuilder($querybuilder, &$expressions, $data, $uniqueid)
     {
-        $prefix = '';
-        if (!strpos($this->columnname, '.')) {
-            $prefix = 'b.';
-        }
         if (isset($data['value']) && isset($data['comparator'])) {
             switch ($data['comparator']) {
             case "eq":
-                $expressions[] = $querybuilder->expr()->eq($prefix . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->eq($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
                 break;
             case "neq":
-                $expressions[] = $querybuilder->expr()->neq($prefix . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->neq($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
                 break;
             case "lt":
-                $expressions[] = $querybuilder->expr()->lt($prefix . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->lt($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
                 break;
             case "lte":
-                $expressions[] = $querybuilder->expr()->lte($prefix . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->lte($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
                 break;
             case "gt":
-                $expressions[] = $querybuilder->expr()->gt($prefix . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->gt($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
                 break;
             case "gte":
-                $expressions[] = $querybuilder->expr()->gte($prefix . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->gte($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
                 break;
             case "isnull":
-                $expressions[] = $querybuilder->expr()->isNull($prefix . $this->columnname);
+                $expressions[] = $querybuilder->expr()->isNull($this->prefix . '.' . $this->columnname);
                 return;
             case "isnotnull":
-                $expressions[] = $querybuilder->expr()->isNotNull($prefix . $this->columnname);
+                $expressions[] = $querybuilder->expr()->isNotNull($this->prefix . '.' . $this->columnname);
                 return;
             }
 

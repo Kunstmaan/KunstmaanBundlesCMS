@@ -6,10 +6,12 @@ class DateFilterType
 {
 
     protected $columnname = null;
-
-    function __construct($columnname)
+    protected $alias = null;
+    
+    function __construct($columnname, $alias = "b")
     {
         $this->columnname = $columnname;
+        $this->alias = $alias;
     }
 
     function bindRequest($request, &$data, $uniqueid)
@@ -23,18 +25,14 @@ class DateFilterType
 
     function adaptQueryBuilder($querybuilder, &$expressions, $data, $uniqueid)
     {
-        $prefix = '';
-        if (!strpos($this->columnname, '.')) {
-            $prefix = 'b.';
-        }
         if (isset($data['value']) && isset($data['comparator'])) {
             switch ($data['comparator']) {
             case "before":
-                $expressions[] = $querybuilder->expr()->lte($prefix . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->lte($this->alias . '.' . $this->columnname, "?" . $uniqueid);
                 $querybuilder->setParameter($uniqueid, $data['value']);
                 break;
             case "after":
-                $expressions[] = $querybuilder->expr()->gt($prefix . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->gt($this->alias . '.' . $this->columnname, "?" . $uniqueid);
                 $querybuilder->setParameter($uniqueid, $data['value']);
                 break;
             }

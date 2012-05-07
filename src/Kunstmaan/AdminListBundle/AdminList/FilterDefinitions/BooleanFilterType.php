@@ -6,12 +6,14 @@ class BooleanFilterType
 {
 
     protected $columnname = null;
-
+    protected $alias= null;
+    
     protected $value = null;
 
-    function __construct($columnname)
+    function __construct($columnname, $alias = "b")
     {
         $this->columnname = $columnname;
+        $this->alias = $alias;
     }
 
     function bindRequest($request, &$data, $uniqueid)
@@ -21,17 +23,13 @@ class BooleanFilterType
 
     function adaptQueryBuilder($querybuilder, &$expressions, $data, $uniqueid)
     {
-        $prefix = '';
-        if (!strpos($this->columnname, '.')) {
-            $prefix = 'b.';
-        }
         if (isset($data['value'])) {
             switch ($data['value']) {
             case "true":
-                $expressions[] = $querybuilder->expr()->eq($prefix . $this->columnname, "true");
+                $expressions[] = $querybuilder->expr()->eq($this->alias . '.' . $this->columnname, "true");
                 break;
             case "false":
-                $expressions[] = $querybuilder->expr()->like($prefix . $this->columnname, "false");
+                $expressions[] = $querybuilder->expr()->like($this->alias . '.' . $this->columnname, "false");
                 break;
             }
         }
