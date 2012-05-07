@@ -105,11 +105,12 @@ class NodeMenu {
     		    foreach($nodes as $n){
     		        $p = $n;
     		        while(is_null($node) && !is_null($p->getParent())){
-    		            if($p->getParent()->getId() == $parent->getId()){
+                        $pParent = $p->getParent();
+    		            if($pParent->getId() == $parent->getId()){
     		                $node = $n;
     		                break;
     		            }
-    		            $p = $p->getParent();
+    		            $p = $pParent;
     		        }
     		    }
     		}

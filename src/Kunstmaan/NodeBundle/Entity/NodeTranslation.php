@@ -198,8 +198,9 @@ class NodeTranslation {
     public function getSlugPart()
     {
     	$slug = "";
-    	if ($this->getNode()->getParent() != null) {
-    	    $nodeTranslation = $this->getNode()->getParent()->getNodeTranslation($this->lang);
+        $parentNode = $this->getNode()->getParent();
+    	if ( $parentNode != null) {
+    	    $nodeTranslation = $parentNode->getNodeTranslation($this->lang);
     	    if ($nodeTranslation != null) {
     	        $parentslug = $nodeTranslation->getSlugPart();
     	        if (!empty($parentslug)) {

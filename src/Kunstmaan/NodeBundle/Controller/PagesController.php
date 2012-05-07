@@ -137,8 +137,10 @@ class PagesController extends Controller
     	$user = $this->container->get('security.context')->getToken()->getUser();
     	$request = $this->getRequest();
     	$locale = $request->getSession()->getLocale();
+
     	$saveasdraft = $request->get("saveasdraft");
     	$saveandpublish = $request->get("saveandpublish");
+
     	$draft = ($subaction == "draft");
 
     	if($request->request->get("currenttab")){
@@ -154,8 +156,9 @@ class PagesController extends Controller
     	}
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
+
         $guestGroup = $em->getRepository('KunstmaanAdminBundle:Group')->findOneByName('Guests');
-        $guestPermission = $em->getRepository('KunstmaanAdminBundle:Permission')->findOneBy(array('refId'=>$node->getId(), 'refEntityname'=>ClassLookup::getClass($node),'refGroup'=> $guestGroup->getId()));
+        $guestPermission = $em->getRepository('KunstmaanAdminBundle:Permission')->findOneBy(array('refId' => $node->getId(), 'refEntityname' => ClassLookup::getClass($node), 'refGroup' => $guestGroup->getId()));
         if(is_null($guestPermission)){
         	$guestPermission = new Permission();
         	$guestPermission->setRefId($node->getId());
@@ -165,19 +168,23 @@ class PagesController extends Controller
         	$em->persist($guestPermission);
         	$em->flush();
         }
+
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if(!$nodeTranslation){
         	return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write', true)));
         }
+
         $nodeVersions = $nodeTranslation->getNodeVersions();
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $draftNodeVersion = $nodeTranslation->getNodeVersion('draft');
+
         $page = $em->getRepository($nodeVersion->getRefEntityname())->find($nodeVersion->getRefId());
         if(!is_null($this->getRequest()->get('version'))) {
         	$repo->revert($page, $this->getRequest()->get('version'));
         }
+
         if($draft){
-        	$nodeVersion = $nodeTranslation->getNodeVersion('draft');
+        	$nodeVersion = $draftNodeVersion;
         	$page = $nodeVersion->getRef($em);
         } else {
         	if(is_string($saveasdraft) && $saveasdraft != ''){
@@ -194,7 +201,7 @@ class PagesController extends Controller
 
         $addpage = $request->get("addpage");
         $addpagetitle = $request->get("addpagetitle");
-        if(is_string($addpage) && $addpage != ''){
+        if(is_string($addpage) && $addpage != '') {
         	$newpage = new $addpage();
         	if(is_string($addpagetitle) && $addpagetitle != ''){
         		$newpage->setTitle($addpagetitle);
@@ -241,8 +248,7 @@ class PagesController extends Controller
         	$updatecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $node));
         	$children = $node->getChildren();
         	$this->deleteNodeChildren($em, $user, $locale, $children, $page);
-        	//$deletecommand = new DeleteCommand($em, $user);
-        	//$deletecommand->execute("deleted page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
+
         	return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));
         }
 
@@ -255,20 +261,15 @@ class PagesController extends Controller
         $formbuilder->add('main', $page->getDefaultAdminType());
         $formbuilder->add('node', $node->getDefaultAdminType($this->container));
         $formbuilder->add('nodetranslation', $nodeTranslation->getDefaultAdminType($this->container));
-        
-        if(method_exists($page, "getExtraAdminTypes")){
-        	foreach($page->getExtraAdminTypes() as $key => $admintype){
-        		$formbuilder->add($key, $admintype);
-        	}	
-        }
 
         $bindingarray = array('node' => $node, 'main' => $page, 'nodetranslation'=> $nodeTranslation);
         if(method_exists($page, "getExtraAdminTypes")){
         	foreach($page->getExtraAdminTypes() as $key => $admintype){
-        		$bindingarray[$key] = $page;
+        		$formbuilder->add($key, $admintype);
+                $bindingarray[$key] = $page;
         	}
         }
-                
+
         $formbuilder->setData($bindingarray);
 
         //handle the pagepart functions (fetching, change form to reflect all fields, assigning data, etc...)
@@ -363,6 +364,7 @@ class PagesController extends Controller
         if($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')){
             $viewVariables['permissionadmin'] = $permissionadmin;
         }
+
         return $viewVariables;
     }
 
