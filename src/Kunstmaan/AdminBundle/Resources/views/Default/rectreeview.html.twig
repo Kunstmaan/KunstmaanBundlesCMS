@@ -5,7 +5,7 @@
 {#
 sequence="{{ node.node.getSequencenumber() }}"
 #}
-class="{% if menuitem.active %}jstree-open{% endif %} {% if adminmenu.current is not null and adminmenu.current.internalname == menuitem.internalname  %}active{% endif %}
+class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is not null and currentMenuItem.internalname == menuitem.internalname  %}active{% endif %}
 {#
 {% if not node.online %}offline{% endif %}"
 #}
@@ -13,7 +13,7 @@ class="{% if menuitem.active %}jstree-open{% endif %} {% if adminmenu.current is
 {% if menuitem.role %} rel="{{menuitem.role}}" {% endif %}>
     <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname | trans }}</a>
     <ul>
-        {% for menuitem in menuitem.navigationChildren%}
+        {% for menuitem in menuitem.navigationChildren %}
             {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
         {% endfor %}
     </ul>

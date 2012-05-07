@@ -18,6 +18,8 @@ class MenuBuilder
     private $adaptors = array();
     private $topmenuitems = null;
 
+    private $currentCache = null;
+
     /**
      * @param FactoryInterface $factory
      */
@@ -27,14 +29,17 @@ class MenuBuilder
         $this->rootItem = $this->populateMenu($translator);
         $this->container = $container;
     }
-    
+
     public function addAdaptMenu(MenuAdaptorInterface $adaptor)
     {
         $this->adaptors[] = $adaptor;
     }
-    
+
     public function getCurrent()
     {
+        if ($this->currentCache !== null) {
+            return $this->currentCache;
+        }
         $active = null;
         do {
             $children = $this->getChildren($active);
@@ -47,6 +52,9 @@ class MenuBuilder
                 }
             }
         } while($foundActiveChild);
+
+        $this->currentCache = $active;
+
         return $active;
     }
     
