@@ -62,7 +62,7 @@
         </div>
 
         {% for columnname, value in filter.filterdefinitions %}
-        <div id="filterdummyoptions_{{columnname}}" style="display:none">
+        <div id="filterdummyoptions_{{columnname|replace({'.': '_'})}}" style="display:none">
             {% include value.type.template with {'filtertype': value.type, 'nameprefix': '', 'namesuffix': ''} %}
         </div>
         {% endfor %}
@@ -131,6 +131,8 @@
 
         function updateOptions(element){
             var val = jQuery(element).val();
+            val = val.replace('.',  '_');
+            // alert(val);
             jQuery(element).parent(".filterline").find(".filteroptions").html(jQuery('#filterdummyoptions_'+ val).html());
            	jQuery(element).parent(".filterline").find(".datepick").datePicker();
         }
