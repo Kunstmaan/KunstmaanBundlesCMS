@@ -132,7 +132,6 @@
         function updateOptions(element){
             var val = jQuery(element).val();
             val = val.replace('.',  '_');
-            // alert(val);
             jQuery(element).parent(".filterline").find(".filteroptions").html(jQuery('#filterdummyoptions_'+ val).html());
            	jQuery(element).parent(".filterline").find(".datepick").datePicker();
         }
