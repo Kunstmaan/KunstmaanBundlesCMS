@@ -45,6 +45,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
     {
         if (is_null($parent)) {
             $galleries = $this->em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
+            $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($request->get('id'));
+            $parents = $currentGallery->getParents();
             foreach ($galleries as $gallery) {
                 $menuitem = new TopMenuItem($menu);
                 $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
@@ -53,11 +55,9 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setParent($parent);
                 $menuitem->setRole($gallery->getRel());
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                    $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($request->get('id'));
                     if ($currentGallery->getId() == $gallery->getId()) {
                         $menuitem->setActive(true);
                     } else {
-                        $parents = $currentGallery->getParents();
                         foreach ($parents as $parent) {
                             if ($parent->getId() == $gallery->getId()) {
                                 $menuitem->setActive(true);
@@ -72,6 +72,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             $parentRouteParams = $parent->getRouteparams();
             $parentgallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($parentRouteParams['id']);
             $galleries = $parentgallery->getChildren();
+            $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($request->get('id'));
+            $parentGalleries = $currentGallery->getParents();
             foreach ($galleries as $gallery) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
@@ -80,11 +82,9 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setParent($parent);
                 $menuitem->setRole($gallery->getRel());
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                    $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($request->get('id'));
                     if ($currentGallery->getId() == $gallery->getId()) {
                         $menuitem->setActive(true);
                     } else {
-                        $parentGalleries = $currentGallery->getParents();
                         foreach ($parentGalleries as $parentGallery) {
                             if ($parentGallery->getId() == $gallery->getId()) {
                                 $menuitem->setActive(true);
