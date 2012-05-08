@@ -50,12 +50,12 @@ class AdminList
         $todelete = $request->query->get("delete");
         if (!is_null($todelete)) {
             $repo = $this->em->getRepository($this->configurator->getRepositoryName());
-            if (method_exists($repo, 'delete')) {
-                $repo->delete($todelete);
-            }
-            else {
-                $todeleteitem = $repo->find($todelete);
-                if (!is_null($todeleteitem)) {
+            $todeleteitem = $repo->find($todelete);
+            if (!is_null($todeleteitem)) {
+                if (method_exists($repo, 'delete')) {
+                    $repo->delete($todeleteitem);
+                }
+                else {
                     $this->em->remove($todeleteitem);
                     $this->em->flush();
                 }
