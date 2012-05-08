@@ -1,142 +1,117 @@
 <?php
 
 namespace Kunstmaan\AdminListBundle\AdminList;
-abstract class AbstractAdminListConfigurator
-{
 
-    public function buildFilters(AdminListFilter $builder)
-    {
+abstract class AbstractAdminListConfigurator {
 
-    }
+	private $fields = array();
+	private $customActions = array();
 
-    function getSortFields()
-    {
-        $array = array();
-        foreach ($this->getFields() as $field) {
-            if ($field->isSortable())
-                $array[] = $field->getFieldname();
-        }
-        return $array;
-    }
+	abstract function buildFields();
+	abstract function getEditUrlFor($item);
+	abstract function getAddUrlFor($params = array());
+	abstract function getDeleteUrlFor($item);
+	abstract function getRepositoryName();
 
-    private $fields = array();
+	public function buildFilters(AdminListFilter $builder) {}
+	public function adaptQueryBuilder($querybuilder, $params = array()) {}
+	public function buildActions() {}
 
-    function getFields()
-    {
-        return $this->fields;
-    }
+	public function canEdit() {
+		return true;
+	}
 
-    abstract function buildFields();
-    
-    function addField($fieldname, $fieldheader, $sort, $template = null)
-    {
-        $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
-    }
+	public function canAdd() {
+		return true;
+	}
 
-    function configureListFields(&$array)
-    {
-        foreach ($this->getFields() as $field) {
-            $array[$field->getFieldheader()] = $field->getFieldname();
-        }
-    }
+	public function canDelete($item) {
+		return true;
+	}
 
-    public function canEdit()
-    {
-        return true;
-    }
+	function getLimit() {
+		return 10;
+	}
 
-    abstract function getEditUrlFor($item);
+	function getSortFields() {
+		$array = array();
+		foreach ($this->getFields() as $field) {
+			if ($field->isSortable())
+				$array[] = $field->getFieldname();
+		}
+		return $array;
+	}
 
-    public function canAdd()
-    {
-        return true;
-    }
+	function getFields() {
+		return $this->fields;
+	}
 
-    abstract function getAddUrlFor($params = array());
+	function addField($fieldname, $fieldheader, $sort, $template = null) {
+		$this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
+	}
 
-    public function canDelete($item)
-    {
-        return true;
-    }
+	function configureListFields(&$array) {
+		foreach ($this->getFields() as $field) {
+			$array[$field->getFieldheader()] = $field->getFieldname();
+		}
+	}
 
-    abstract function getRepositoryName();
+	public function getCustomActions() {
+		return $this->customActions;
+	}
 
-    function adaptQueryBuilder($querybuilder, $params = array())
-    {
+	public function addCustomAction(ActionInterface $customAction) {
+		$this->customActions[] = $customAction;
+	}
 
-    }
+	public function addSimpleAction($label, $url, $icon, $template = null) {
+		$this->customActions[] = new SimpleAction($url, $icon, $label, $template);
+	}
 
-    private $customActions = array();
-    
-    public function buildActions() {}
-    
-    public function getCustomActions()
-    {
-    	return $this->customActions;
-    }
-    
-    public function addCustomAction(ActionInterface $customAction)
-    {
-    	$this->customActions[] = $customAction;
-    }
-    
-    public function addSimpleAction($label, $url, $icon, $template = null)
-    {
-    	$this->customActions[] = new SimpleAction($url, $icon, $label, $template);
-    }
-    
-    public function hasCustomActions() 
-    {
-    	return !empty($this->customActions);
-    }
-    
-    function getValue($item, $columnName)
-    {
-        $methodName = $columnName;
-        if (method_exists($item, $methodName)) {
-            $result = $item->$methodName();
-        } else {
-            $methodName = "get" . $columnName;
-            if (method_exists($item, $methodName)) {
-                $result = $item->$methodName();
-            } else {
-                $methodName = "is" . $columnName;
-                if (method_exists($item, $methodName)) {
-                    $result = $item->$methodName();
-                } else {
-                    return "undefined function";
-                }
-            }
-        }
-        return $result;
-    }
-    
-    function getStringValue($item, $columnName)
-    {
-        $result = $this->getValue($item, $columnName);
-        if(is_bool($result)){
-            return $result ? "true" : "false";
-        }
-        if ($result instanceof \DateTime) {
-            return $result->format('Y-m-d H:i:s');
-        } else if ($result instanceof \Doctrine\ORM\PersistentCollection) {
-            $results = "";
-            foreach ($result as $entry) {
-                $results[] = $entry->getName();
-            }
-            if (empty($results)) {
-                return "";
-            }
-            return implode(', ', $results);
-        } else if (is_array($result)) {
-            return implode(', ', $result);
-        } else {
-            return $result;
-        }
-    }
+	public function hasCustomActions() {
+		return !empty($this->customActions);
+	}
 
-    function getLimit()
-    {
-        return 10;
-    }
+	function getValue($item, $columnName) {
+		$methodName = $columnName;
+		if (method_exists($item, $methodName)) {
+			$result = $item->$methodName();
+		} else {
+			$methodName = "get" . $columnName;
+			if (method_exists($item, $methodName)) {
+				$result = $item->$methodName();
+			} else {
+				$methodName = "is" . $columnName;
+				if (method_exists($item, $methodName)) {
+					$result = $item->$methodName();
+				} else {
+					return "undefined function";
+				}
+			}
+		}
+		return $result;
+	}
+
+	function getStringValue($item, $columnName) {
+		$result = $this->getValue($item, $columnName);
+		if (is_bool($result)) {
+			return $result ? "true" : "false";
+		}
+		if ($result instanceof \DateTime) {
+			return $result->format('Y-m-d H:i:s');
+		} else if ($result instanceof \Doctrine\ORM\PersistentCollection) {
+			$results = "";
+			foreach ($result as $entry) {
+				$results[] = $entry->getName();
+			}
+			if (empty($results)) {
+				return "";
+			}
+			return implode(', ', $results);
+		} else if (is_array($result)) {
+			return implode(', ', $result);
+		} else {
+			return $result;
+		}
+	}
 }

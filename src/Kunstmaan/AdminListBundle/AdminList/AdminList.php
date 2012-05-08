@@ -26,9 +26,9 @@ class AdminList {
     protected $orderBy = null;
 
     protected $orderDirection = null;
- 
+
     protected $queryparams = array();
-    
+
     function __construct(AbstractAdminListConfigurator $configurator, $em, $queryparams = array())
     {
         $this->configurator = $configurator;
@@ -51,14 +51,6 @@ class AdminList {
 
     public function bindRequest($request){
         $this->request = $request;
-        $todelete = $request->query->get("delete");
-        if(!is_null($todelete)){
-            $todeleteitem = $this->em->getRepository($this->configurator->getRepositoryName())->find($todelete);
-            if(!is_null($todeleteitem)){
-                $this->em->remove($todeleteitem);
-                $this->em->flush();
-            }
-        }
         $this->page = $this->request->query->get("page");
         if(is_null($this->page)){
             $this->page = 1;
@@ -105,7 +97,7 @@ class AdminList {
     public function canEdit(){
         return $this->configurator->canEdit();
     }
-    
+
     public function canAdd(){
     	return $this->configurator->canAdd();
     }
@@ -113,9 +105,13 @@ class AdminList {
     public function getEditUrlFor($item){
         return $this->configurator->getEditUrlFor($item);
     }
-    
+
     public function getAddUrlFor($params){
     	return $this->configurator->getAddUrlFor($params);
+    }
+
+    public function getDeleteUrlFor($item){
+    	return $this->configurator->getDeleteUrlFor($item);
     }
 
     public function canDelete($item){
@@ -125,7 +121,7 @@ class AdminList {
     public function getValue($object, $attribute){
         return $this->configurator->getValue($object, $attribute);
     }
-    
+
     public function getStringValue($object, $attribute){
         return $this->configurator->getStringValue($object, $attribute);
     }
@@ -137,11 +133,11 @@ class AdminList {
     public function getOrderDirection(){
         return $this->orderDirection;
     }
-    
+
     public function getCustomActions() {
     	return $this->configurator->getCustomActions();
     }
-    
+
     public function hasCustomActions() {
     	return $this->configurator->hasCustomActions();
     }
