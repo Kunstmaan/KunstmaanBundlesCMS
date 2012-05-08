@@ -58,8 +58,12 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $children[] = $menuitem;
         } else if ('KunstmaanAdminNodeBundle_pages' == $parent->getRoute()) {
             $topnodes = $this->nodemenu->getTopNodes();
-            $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->get('id'));
-            $parentNodes = $currentNode->getParents();
+
+            $currentId = $request->attributes->get('id');
+            if (isset($currentId)) {
+                $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($currentId);
+                $parentNodes = $currentNode->getParents();
+            }
 
             foreach ($topnodes as $child) {
                 $menuitem = new MenuItem($menu);
@@ -68,7 +72,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setInternalname($child->getTitle());
                 $menuitem->setParent($parent);
                 $menuitem->setRole('page');
-                if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
+                if (isset($currentNode) && stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                     if ($currentNode->getId() == $child->getId()) {
                         $menuitem->setActive(true);
                     } else {
