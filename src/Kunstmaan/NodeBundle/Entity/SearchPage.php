@@ -16,6 +16,8 @@ use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Kunstmaan\SearchBundle\Entity\SearchedFor;
 
 /**
+ * The default search page
+ * 
  * @ORM\Entity
  * @ORM\Table(name="searchpage")
  * @ORM\HasLifecycleCallbacks()
@@ -145,7 +147,8 @@ class SearchPage implements PageIFace, DeepCloneableIFace {
 					'fragment_size' => 200,
 					'number_of_fragments' => 1,
 			    )
-			)
+			),
+		    "require_field_match" => true
 		    ));
 
 		    $pages = $finder->findPaginated($queryObj);
