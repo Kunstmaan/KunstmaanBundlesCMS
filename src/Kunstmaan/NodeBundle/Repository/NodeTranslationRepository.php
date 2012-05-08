@@ -32,6 +32,21 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
+     * This returns the node translations that are visible for guest users
+     * 
+     * @return array
+     */
+    public function getOnlineNodes()
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->where("n.deleted != 1 AND b.online = 1");
+
+        return $qb;
+    }
+
+    /**
      * Get the nodetranslation for a node
      * @param \Kunstmaan\AdminNodeBundle\Entity\HasNode $hasNode
      *
