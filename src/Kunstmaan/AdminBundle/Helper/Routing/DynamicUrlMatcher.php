@@ -18,6 +18,7 @@ class DynamicUrlMatcher extends UrlMatcher
     /**
      * Check if url exists
      *
+     * @todo Check if there's a better solution then this hack...
      * @param string $pathinfo
      */
     public function match($pathinfo)
