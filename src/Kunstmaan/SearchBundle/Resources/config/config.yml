@@ -31,6 +31,7 @@ foq_elastica:
                     persistence:
                         driver: orm
                         provider:
+                              query_builder_method: getOnlineNodes
                         model: Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
                         model_to_elastica_transformer:
                             service: kunstmaan_search.transformers.nodetransformer
