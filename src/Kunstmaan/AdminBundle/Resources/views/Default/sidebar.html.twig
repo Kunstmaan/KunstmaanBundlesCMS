@@ -1,5 +1,7 @@
 {% set lowestTopChild = adminmenu.lowestTopChild %}
-{% set navigationChildren = lowestTopChild.navigationChildren %}
+{% if lowestTopChild %}
+    {% set navigationChildren = lowestTopChild.navigationChildren %}
+{% endif %}
 
 {% if lowestTopChild and navigationChildren | length > 0 %}
     <aside class="sidebar">
