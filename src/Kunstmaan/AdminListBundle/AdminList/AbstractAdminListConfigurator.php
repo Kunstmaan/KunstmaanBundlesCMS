@@ -28,7 +28,7 @@ abstract class AbstractAdminListConfigurator
     }
 
     abstract function buildFields();
-    
+
     function addField($fieldname, $fieldheader, $sort, $template = null)
     {
         $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
@@ -64,7 +64,7 @@ abstract class AbstractAdminListConfigurator
 
     function adaptQueryBuilder($querybuilder, $params = array())
     {
-
+        $querybuilder->where('1=1');
     }
 
     function getValue($item, $columnName)
@@ -87,11 +87,11 @@ abstract class AbstractAdminListConfigurator
         }
         return $result;
     }
-    
+
     function getStringValue($item, $columnName)
     {
         $result = $this->getValue($item, $columnName);
-        if(is_bool($result)){
+        if (is_bool($result)) {
             return $result ? "true" : "false";
         }
         if ($result instanceof \DateTime) {
