@@ -58,6 +58,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $children[] = $menuitem;
         } else if ('KunstmaanAdminNodeBundle_pages' == $parent->getRoute()) {
             $topnodes = $this->nodemenu->getTopNodes();
+            $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->get('id'));
+            $parentNodes = $currentNode->getParents();
+
             foreach ($topnodes as $child) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanAdminNodeBundle_pages_edit');
@@ -66,11 +69,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setParent($parent);
                 $menuitem->setRole('page');
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                    $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->get('id'));
                     if ($currentNode->getId() == $child->getId()) {
                         $menuitem->setActive(true);
                     } else {
-                        $parentNodes = $currentNode->getParents();
                         foreach ($parentNodes as $parentNode) {
                             if ($parentNode->getId() == $child->getId()) {
                                 $menuitem->setActive(true);
@@ -86,6 +87,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
             $nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true);
             $childNodes = $nodemenu->getCurrent()->getChildren();
+            $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->get('id'));
+            $parentNodes = $currentNode->getParents();
+
             foreach ($childNodes as $child) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanAdminNodeBundle_pages_edit');
@@ -94,11 +98,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setParent($parent);
                 $menuitem->setRole('page');
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                    $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->get('id'));
                     if ($currentNode->getId() == $child->getId()) {
                         $menuitem->setActive(true);
                     } else {
-                        $parentNodes = $currentNode->getParents();
                         foreach ($parentNodes as $parentNode) {
                             if ($parentNode->getId() == $child->getId()) {
                                 $menuitem->setActive(true);
