@@ -62,7 +62,11 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $currentId = $request->attributes->get('id');
             if (isset($currentId)) {
                 $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($currentId);
-                $parentNodes = $currentNode->getParents();
+                if(!is_null($currentNode)) {
+                    $parentNodes = $currentNode->getParents();
+                } else {
+                    $parentNodes = array();
+                }
             }
 
             foreach ($topnodes as $child) {
@@ -91,8 +95,16 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
             $nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true);
             $childNodes = $nodemenu->getCurrent()->getChildren();
-            $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->get('id'));
-            $parentNodes = $currentNode->getParents();
+
+            $currentId = $request->attributes->get('id');
+            if (isset($currentId)) {
+                $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($currentId);
+                if(!is_null($currentNode)) {
+                    $parentNodes = $currentNode->getParents();
+                } else {
+                    $parentNodes = array();
+                }
+            }
 
             foreach ($childNodes as $child) {
                 $menuitem = new MenuItem($menu);
@@ -101,7 +113,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setInternalname($child->getTitle());
                 $menuitem->setParent($parent);
                 $menuitem->setRole('page');
-                if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
+                if (isset($currentNode) && stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                     if ($currentNode->getId() == $child->getId()) {
                         $menuitem->setActive(true);
                     } else {
