@@ -49,10 +49,16 @@ class AdminList
         $this->request = $request;
         $todelete = $request->query->get("delete");
         if (!is_null($todelete)) {
-            $todeleteitem = $this->em->getRepository($this->configurator->getRepositoryName())->find($todelete);
+            $repo = $this->em->getRepository($this->configurator->getRepositoryName());
+            $todeleteitem = $repo->find($todelete);
             if (!is_null($todeleteitem)) {
-                $this->em->remove($todeleteitem);
-                $this->em->flush();
+                if (method_exists($repo, 'delete')) {
+                    $repo->delete($todeleteitem);
+                }
+                else {
+                    $this->em->remove($todeleteitem);
+                    $this->em->flush();
+                }
             }
         }
         $this->page = $this->request->query->get("page");
