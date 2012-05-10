@@ -10,6 +10,8 @@ use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
+ * The formsubmission field
+ * 
  * @ORM\Entity(repositoryClass="Kunstmaan\FormBundle\Repository\FormSubmissionFieldRepository")
  * @ORM\Table(name="form_formsubmissionfield")
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -17,8 +19,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\DiscriminatorMap({ "string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" , "text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField" })
  */
-
-class FormSubmissionField {
+class FormSubmissionField
+{
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="bigint")
@@ -42,15 +44,13 @@ class FormSubmissionField {
 	 */
 	protected $formsubmission;
 
-	public function __construct() {
-	}
-
 	/**
 	 * Get id
 	 *
 	 * @return integer
 	 */
-	public function getId() {
+	public function getId()
+	{
 		return $this->id;
 	}
 
@@ -59,59 +59,64 @@ class FormSubmissionField {
 	 *
 	 * @param string $id
 	 */
-	public function setId($num) {
-		$this->id = $num;
+	public function setId($id)
+	{
+		$this->id = $id;
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
-	public function getFieldName() {
+	public function getFieldName()
+	{
 		return $this->fieldName;
 	}
 
 	/**
-	 *
-	 * @param string $refEntityname
+	 * @param string $fieldName
 	 */
-	public function setFieldName($fieldName) {
+	public function setFieldName($fieldName)
+	{
 		$this->fieldName = $fieldName;
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
-	public function getLabel() {
+	public function getLabel()
+	{
 		return $this->label;
 	}
 
 	/**
-	 *
-	 * @param string $refEntityname
+	 * @param string $label
 	 */
-	public function setLabel($label) {
+	public function setLabel($label)
+	{
 		$this->label = $label;
 	}
 
 	/**
-	 *
 	 * @return string
 	 */
-	public function getSubmission() {
+	public function getSubmission()
+	{
 		return $this->formsubmission;
 	}
 
 	/**
-	 *
-	 * @param string $refEntityname
+	 * @param string $formsubmission
 	 */
-	public function setSubmission(FormSubmission $formsubmission) {
+	public function setSubmission(FormSubmission $formsubmission)
+	{
 		$this->formsubmission = $formsubmission;
 	}
 
-	public function __toString() {
+	/**
+	 * @return string
+	 */
+	public function __toString()
+	{
 		return "FormSubmission Field";
 	}
 

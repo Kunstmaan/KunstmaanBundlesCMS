@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
+use Symfony\Component\Form\AbstractType;
+
 use Kunstmaan\PagePartBundle\Helper\IsPagePart;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Symfony\Component\Form\FormBuilder;
@@ -10,11 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
- *
+ * A submit button
+ * 
  * @ORM\Entity
  * @ORM\Table(name="form_submitbutton")
  */
-class SubmitButtonPagePart implements IsPagePart{
+class SubmitButtonPagePart implements IsPagePart
+{
 
 	/**
 	 * @ORM\Id
@@ -28,38 +32,73 @@ class SubmitButtonPagePart implements IsPagePart{
 	 */
 	protected $label;
 
-	public function __construct() {
-	}
-
-	public function setId($id) {
+	/**
+	 * Set the id
+	 * @param int $id
+	 */
+	public function setId($id)
+	{
 		$this->id = $id;
 	}
 
-	public function getId() {
+	/**
+	 * Get the id
+	 * 
+	 * @return int
+	 */
+	public function getId()
+	{
 		return $this->id;
 	}
 
-	public function setLabel($label) {
+	/**
+	 * Set the label
+	 * @param int $label
+	 */
+	public function setLabel($label)
+	{
 		$this->label = $label;
 	}
 
-	public function getLabel() {
+	/**
+	 * Get the label
+	 *
+	 * @return string
+	 */
+	public function getLabel()
+	{
 		return $this->label;
 	}
 
-	public function __toString() {
+    /**
+     * @return string
+     */
+	public function __toString()
+	{
 		return "SubmitButtonPagePart";
 	}
 
-	public function getDefaultView() {
+	/**
+	 * @return string
+	 */
+	public function getDefaultView()
+	{
 		return "KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig";
 	}
 
-	public function getElasticaView(){
+	/**
+	 * @return string
+	 */
+	public function getElasticaView()
+	{
 		return  $this->getDefaultView();
 	}
-	
-	public function getDefaultAdminType(){
+
+	/**
+	 * @return AbstractType
+	 */
+	public function getDefaultAdminType()
+	{
 		return new SubmitButtonPagePartAdminType();
 	}
 }

@@ -1,7 +1,6 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
-
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Doctrine\ORM\EntityManager;
@@ -16,46 +15,53 @@ use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
+ * StringFormSubmissionField
+ * 
  * @ORM\Entity
  * @ORM\Table(name="form_stringformsubmissionfield")
  */
+class StringFormSubmissionField extends FormSubmissionField
+{
 
-class StringFormSubmissionField extends FormSubmissionField {
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $value;
 
-	/**
-	 * @ORM\Column(type="string")
-	 */
-	protected $value;
+    /**
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-	public function __construct() {
-		parent::__construct();
-	}
+    /**
+     * @param string $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
 
-	/**
-	 *
-	 * @return string
-	 */
-	public function getValue() {
-		return $this->value;
-	}
+    /**
+     * @return \Kunstmaan\FormBundle\Form\StringFormSubmissionType
+     */
+    public function getDefaultAdminType()
+    {
+        return new StringFormSubmissionType();
+    }
 
-	/**
-	 *
-	 * @param string $refEntityname
-	 */
-	public function setValue($value) {
-		$this->value = $value;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        if (is_null($this->getValue())) {
+            return "";
+        }
 
-	public function getDefaultAdminType(){
-		return new StringFormSubmissionType();
-	}
-
-	public function __toString() {
-		if(is_null($this->getValue())){
-			return "";
-		}
-		return $this->getValue();
-	}
+        return $this->getValue();
+    }
 
 }
