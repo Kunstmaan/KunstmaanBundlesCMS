@@ -1,8 +1,8 @@
 <?php
 
-namespace  Kunstmaan\MediaPagePartBundle\Entity;
+namespace Kunstmaan\MediaPagePartBundle\Entity;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
-use Kunstmaan\PagePartBundle\Entity\IsPagePart;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
 use Assetic\AssetManager;
@@ -10,17 +10,13 @@ use Assetic\Asset\AssetCollection;
 use Assetic\Asset\FileAsset;
 
 /**
+ * ImagePagePart
+ * 
  * @ORM\Entity
  * @ORM\Table(name="pagepart_image")
  */
-class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+class ImagePagePart extends AbstractPagePart
+{
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -42,35 +38,14 @@ class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
      */
     public $media;
 
-
-    public function __construct() {
-    }
-
-    /**
-     * Set id
-     *
-     * @param string $id
-     */
-    public function setId($id){
-        $this->id = $id;
-    }
-
-    /**
-     * Get pageId
-     *
-     * @return integer
-     */
-    public function getId(){
-        return $this->id;
-    }
-
     /**
      * Get opennewwindow
      *
      * @return bool
      */
-    public function getOpenInNewWindow() {
-    	return $this->openinnewwindow;
+    public function getOpenInNewWindow()
+    {
+        return $this->openinnewwindow;
     }
 
     /**
@@ -78,8 +53,9 @@ class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
      *
      * @param bool $link
      */
-    public function setOpenInNewWindow($link) {
-    	$this->openinnewwindow = $link;
+    public function setOpenInNewWindow($link)
+    {
+        $this->openinnewwindow = $link;
     }
 
     /**
@@ -87,7 +63,8 @@ class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
      *
      * @param string $link
      */
-    public function setLink($link) {
+    public function setLink($link)
+    {
         $this->link = $link;
     }
 
@@ -96,7 +73,8 @@ class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
      *
      * @return string
      */
-    public function getLink() {
+    public function getLink()
+    {
         return $this->link;
     }
 
@@ -105,7 +83,8 @@ class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
      *
      * @param string $alttext
      */
-    public function setAlttext($alttext) {
+    public function setAlttext($alttext)
+    {
         $this->alttext = $alttext;
     }
 
@@ -114,7 +93,8 @@ class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
      *
      * @return Kunstmaan\MediaBundle\Entity\Media
      */
-    public function getMedia() {
+    public function getMedia()
+    {
         return $this->media;
     }
 
@@ -123,7 +103,8 @@ class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
      *
      * @param Kunstmaan\MediaBundle\Entity\Media $media
      */
-    public function setMedia($media) {
+    public function setMedia($media)
+    {
         $this->media = $media;
     }
 
@@ -132,26 +113,44 @@ class ImagePagePart implements \Kunstmaan\PagePartBundle\Helper\IsPagePart{
      *
      * @return string
      */
-    public function getAlttext() {
+    public function getAlttext()
+    {
         return $this->alttext;
     }
 
-    public function __toString() {
-        if($this->getMedia()) {
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        if ($this->getMedia()) {
             return $this->getMedia()->getUrl();
         }
+
         return "";
     }
 
-    public function getDefaultView(){
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultView()
+    {
         return "KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig";
     }
-    
-    public function getElasticaView(){
-    	return "KunstmaanMediaPagePartBundle:ImagePagePart:elastica.html.twig";
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getElasticaView()
+    {
+        return "KunstmaanMediaPagePartBundle:ImagePagePart:elastica.html.twig";
     }
 
-    public function getDefaultAdminType(){
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultAdminType()
+    {
         return new ImagePagePartAdminType();
     }
 }
