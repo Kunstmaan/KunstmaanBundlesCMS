@@ -1,23 +1,17 @@
 <?php
 
-namespace  Kunstmaan\PagePartBundle\Entity;
-
-use Kunstmaan\PagePartBundle\Helper\IsPagePart;
+namespace Kunstmaan\PagePartBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
 
 /**
+ * LinkPagePart
+ * 
  * @ORM\Entity
  * @ORM\Table(name="linkpagepart")
  */
-class LinkPagePart implements IsPagePart{
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+class LinkPagePart extends AbstractPagePart
+{
 
     /**
      * @ORM\Column(type="string", nullable="true")
@@ -34,84 +28,83 @@ class LinkPagePart implements IsPagePart{
      */
     protected $text;
 
-    public function __construct() {
-    }
-
     /**
-     * Set id
-     *
-     * @param string $id
+     * @param string $url
      */
-    public function setId($id){
-        $this->id = $id;
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
     /**
-     * Get pageId
-     *
-     * @return integer
-     */
-    public function getId(){
-        return $this->id;
-    }
-
-    public function setUrl($url){
-    	$this->url = $url;
-    }
-
-    public function getUrl(){
-    	return $this->url;
-    }
-
-    /**
-     * Get opennewwindow
-     *
-     * @return bool
-     */
-    public function getOpenInNewWindow() {
-    	return $this->openinnewwindow;
-    }
-
-    /**
-     * Set openwinnewwindow
-     *
-     * @param bool $link
-     */
-    public function setOpenInNewWindow($link) {
-    	$this->openinnewwindow = $link;
-    }
-
-    /**
-     * Set text
-     *
-     * @param string $text
-     */
-    public function setText($text) {
-    	$this->text = $text;
-    }
-
-    /**
-     * Get text
-     *
      * @return string
      */
-    public function getText() {
-    	return $this->text;
+    public function getUrl()
+    {
+        return $this->url;
     }
 
-    public function __toString(){
+    /**
+     * @return boolean
+     */
+    public function getOpenInNewWindow()
+    {
+        return $this->openinnewwindow;
+    }
+
+    /**
+     * @param boolean $openInNewWindow
+     */
+    public function setOpenInNewWindow($openInNewWindow)
+    {
+        $this->openinnewwindow = $openInNewWindow;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
         return "LinkPagePart";
     }
 
-    public function getDefaultView(){
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultView()
+    {
         return "KunstmaanPagePartBundle:LinkPagePart:view.html.twig";
     }
-    
-    public function getElasticaView(){
-    	return $this->getDefaultView();
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getElasticaView()
+    {
+        return $this->getDefaultView();
     }
 
-    public function getDefaultAdminType(){
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultAdminType()
+    {
         return new LinkPagePartAdminType();
     }
 }
