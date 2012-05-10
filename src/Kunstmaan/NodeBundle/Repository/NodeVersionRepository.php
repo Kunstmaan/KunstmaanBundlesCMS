@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminNodeBundle\Repository;
 
-use Kunstmaan\AdminNodeBundle\Entity\HasNode;
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
@@ -20,7 +20,7 @@ use Kunstmaan\AdminBundle\Entity\AddCommand;
  */
 class NodeVersionRepository extends EntityRepository
 {
-	public function getNodeVersionFor(HasNode $hasNode) {
+	public function getNodeVersionFor(HasNodeInterface $hasNode) {
 		return $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityname' => ClassLookup::getClass($hasNode)));
 	}
 
@@ -43,7 +43,7 @@ class NodeVersionRepository extends EntityRepository
 		return $result;
 	}
 
-	public function createNodeVersionFor(HasNode $hasNode, NodeTranslation $nodeTranslation, $owner, $type = "public"){
+	public function createNodeVersionFor(HasNodeInterface $hasNode, NodeTranslation $nodeTranslation, $owner, $type = "public"){
 		$em = $this->getEntityManager();
 		$classname = ClassLookup::getClass($hasNode);
 		if(!$hasNode->getId()>0){

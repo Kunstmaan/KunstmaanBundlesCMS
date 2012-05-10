@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminNodeBundle\Repository;
 
-use Kunstmaan\AdminNodeBundle\Entity\HasNode;
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminBundle\Entity\PageIFace;
@@ -23,7 +23,7 @@ class NodeTranslationRepository extends EntityRepository
 {
     /**
      * Get all childs of a given node
-     * @param \Kunstmaan\AdminNodeBundle\Entity\Node $node
+     * @param Node $node
      *
      * @return array
      */
@@ -34,11 +34,11 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * Get the nodetranslation for a node
-     * @param \Kunstmaan\AdminNodeBundle\Entity\HasNode $hasNode
+     * @param HasNodeInterface $hasNode
      *
-     * @return Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
+     * @return NodeTranslation
      */
-    public function getNodeTranslationFor(HasNode $hasNode)
+    public function getNodeTranslationFor(HasNodeInterface $hasNode)
     {
         $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
         if (!is_null($nodeVersion)) {
@@ -50,12 +50,12 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * Get the nodetranslation for a given slug string
-     * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|null $parentNode
-     * @param $slug
+     * @param NodeTranslation|null $parentNode The parentnode
+     * @param string               $slug       The slug
      *
      * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|null|object
      */
-    public function getNodeTranslationForSlug(NodeTranslation $parentNode = null, $slug)
+    public function getNodeTranslationForSlug(NodeTranslation $parentNode = null, $slug = "")
     {
         if (empty($slug)) {
             return $this->getNodeTranslationForSlugPart(null, $slug);
@@ -73,9 +73,10 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * Get the nodetranslation for a given url
-     * @param $urlSlug
+     * @param string $urlSlug The full url
+     * @param string $locale  The locale
      *
-     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|null|object
+     * @return NodeTranslation|null|object
      */
     public function getNodeTranslationForUrl($urlSlug, $locale)
     {
@@ -94,7 +95,7 @@ class NodeTranslationRepository extends EntityRepository
             $qb->andWhere('b.url = ?1');
             $qb->setParameter(1, $urlSlug);
         }
-        
+
         $result = $qb->getQuery()->getResult();
 
         if (sizeof($result) == 1) {
@@ -125,14 +126,14 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * Returns the nodetranslation for a given slug
-     * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|null $parentNode
-     * @param $slugpart
+     * @param NodeTranslation|null $parentNode The parentNode
+     * @param string               $slugpart   The slug part
      *
      * @return null|object
      */
-    private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugpart)
+    private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugpart = "")
     {
-    	 if ($parentNode != null) {
+    	if ($parentNode != null) {
             $qb = $this->createQueryBuilder('b')
                 ->select('b')
                 ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
@@ -160,10 +161,9 @@ class NodeTranslationRepository extends EntityRepository
 	                ->addOrderBy('n.sequencenumber', 'DESC')
 	                ->setFirstResult(0)
 	                ->setMaxResults(1);
-	        
-	        if(empty($slugpart)){
+	        if (empty($slugpart)) {
 	        	$qb->andWhere('t.slug is NULL');
-	        }else{
+	        } else {
 	        	$qb->andWhere('t.slug = ?1');
 	        	$qb->setParameter(1, $slugpart);
 	        }
@@ -174,21 +174,21 @@ class NodeTranslationRepository extends EntityRepository
 	            return null;
 	        } else {
 	            return $result[0];
-	        }    
+	        }
         }
     }
 
     /**
      * Create a nodetranslation for a given node
-     * @param \Kunstmaan\AdminNodeBundle\Entity\HasNode $hasNode
-     * @param string $lang
-     * @param \Kunstmaan\AdminNodeBundle\Entity\Node $node
-     * @param \Kunstmaan\AdminBundle\Entity\User $owner
+     * @param HasNodeInterface $hasNode The hasNode
+     * @param string           $lang    The locale
+     * @param Node             $node    The node
+     * @param Baseuser         $owner   The user
      *
      * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
      * @throws \Exception
      */
-    public function createNodeTranslationFor(HasNode $hasNode, $lang, Node $node, Baseuser $owner)
+    public function createNodeTranslationFor(HasNodeInterface $hasNode, $lang, Node $node, Baseuser $owner)
     {
         $em = $this->getEntityManager();
         $classname = ClassLookup::getClass($hasNode);
@@ -212,6 +212,7 @@ class NodeTranslationRepository extends EntityRepository
         $em->flush();
         $em->refresh($nodeTranslation);
         $em->refresh($node);
+        
         return $nodeTranslation;
     }
 }
