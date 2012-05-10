@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 
-use Kunstmaan\PagePartBundle\Helper\IsPagePart;
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;

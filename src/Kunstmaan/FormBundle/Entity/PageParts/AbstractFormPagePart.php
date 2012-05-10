@@ -5,7 +5,6 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 
-use Kunstmaan\PagePartBundle\Helper\IsPagePart;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;

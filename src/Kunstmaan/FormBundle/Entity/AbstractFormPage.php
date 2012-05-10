@@ -8,7 +8,6 @@ use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 
 use Doctrine\ORM\EntityManager;
