@@ -33,6 +33,21 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
+     * This returns the node translations that are visible for guest users
+     * 
+     * @return array
+     */
+    public function getOnlineNodes()
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->where("n.deleted != 1 AND b.online = 1");
+
+        return $qb;
+    }
+
+    /**
      * Get the nodetranslation for a node
      * @param HasNodeInterface $hasNode
      *
@@ -55,7 +70,7 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|null|object
      */
-    public function getNodeTranslationForSlug(NodeTranslation $parentNode = null, $slug = "")
+    public function getNodeTranslationForSlug(NodeTranslation $parentNode = null, $slug)
     {
         if (empty($slug)) {
             return $this->getNodeTranslationForSlugPart(null, $slug);
@@ -69,7 +84,6 @@ class NodeTranslationRepository extends EntityRepository
 
         return $result;
     }
-
 
     /**
      * Get the nodetranslation for a given url
@@ -95,7 +109,7 @@ class NodeTranslationRepository extends EntityRepository
             $qb->andWhere('b.url = ?1');
             $qb->setParameter(1, $urlSlug);
         }
-
+        
         $result = $qb->getQuery()->getResult();
 
         if (sizeof($result) == 1) {
@@ -106,7 +120,6 @@ class NodeTranslationRepository extends EntityRepository
             return $result[0];
         }
     }
-
 
     /**
      * Get all parent nodes

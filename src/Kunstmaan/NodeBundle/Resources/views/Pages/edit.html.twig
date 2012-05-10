@@ -104,17 +104,20 @@
 			</div>
 		</div>
     </div>
+
+    {% set nodemenuCurrent = nodemenu.current %}
+    {% set pagePossibleChildPages = page.possibleChildPageTypes %}
     <!--Main-->
 	<div class="main_actions">
 	  {% if draft %}
 	    <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
 	    <input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
-	    <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+	    <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 	  {% else %}
 		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
 	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
-	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
-	      {% if page.possibleChildPageTypes is not empty %}<button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>{% endif %}
+	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+	      {% if pagePossibleChildPages is not empty %}<button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>{% endif %}
 	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
 	  {% endif %}
       {#<button class="btn" data-controls-modal="cancel" data-backdrop="true" data-keyboard="true">Cancel</button>#}
@@ -125,12 +128,12 @@
         {% if draft %}
 	      <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
 	      <input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
-          <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
+          <a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 	    {% else %}
 		  <input onClick="isEdited=false" type="submit" class="btn primary" name="save" value="{{ 'form.save' | trans }}">
 	      <input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
-	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" target="_blank">Preview</a>
-          {% if page.possibleChildPageTypes is not empty %}<button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>{% endif %}
+	      <a class="btn" href="{{ path('_slug', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+          {% if pagePossibleChildPages is not empty %}<button data-controls-modal="add-subpage-modal" data-backdrop="true" class="btn">Add subpage</button>{% endif %}
 	      <button onClick="oldEdited = isEdited; isEdited=false" data-controls-modal="delete-page-modal" data-backdrop="true" class="btn danger">Delete</button>
 	    {% endif %}
         {#<button class="btn" data-controls-modal="cancel" data-backdrop="true" data-keyboard="true">Cancel</button>#}
@@ -138,7 +141,7 @@
       </div>
     </div>
 
-    {% if page.possibleChildPageTypes is not empty %}
+    {% if pagePossibleChildPages is not empty %}
     <div id="add-subpage-modal" class="modal hide fade">
       <div class="modal-header">
         <a href="#" class="close">&times;</a>
@@ -158,7 +161,7 @@
         <div class="input_prop">
           <label for="form-add-gallery">Type</label>
           <select id="addpage_type" name="addpage_disabled">
-            {% for pageType in page.possibleChildPageTypes %}
+            {% for pageType in pagePossibleChildPages %}
               <option value="{{pageType.class}}">{{pageType.name}}</option>
             {% endfor %}
           </select>

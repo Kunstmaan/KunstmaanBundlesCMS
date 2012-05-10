@@ -27,7 +27,8 @@ class NodeGenerator {
             $nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($entity);
             if($nodeVersion!=null){
 	             $nodeTranslation = $nodeVersion->getNodeTranslation();
-	             if($nodeTranslation->getPublicNodeVersion() && $nodeTranslation->getPublicNodeVersion()->getId() == $nodeVersion->getId()){
+                 $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
+	             if( $publicNodeVersion && $publicNodeVersion->getId() == $nodeVersion->getId()){
 		             $nodeTranslation->setTitle($entity->__toString());
 		             //$nodeTranslation->setSlug(Slugifier::slugify($entity->__toString()));
 		             $nodeTranslation->setOnline($entity->isOnline());
