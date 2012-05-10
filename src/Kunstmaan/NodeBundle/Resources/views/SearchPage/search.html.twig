@@ -40,7 +40,7 @@
 
 	    {% if results %}
 	    	{% for result in results %}
-	        	<h3><a href="{{ path('_slug', { 'slug': result.slug }) }}">{{ result.title }}</a></h3>
+	        	<h3><a href="{{ path('_slug', { 'slug': result.fullslug }) }}">{{ result.title }}</a></h3>
 	        	<p>
 	                {% if result.highlight %}
 	                {% for highlight in result.highlight %}

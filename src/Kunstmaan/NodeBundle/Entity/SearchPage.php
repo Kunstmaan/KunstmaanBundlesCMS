@@ -17,7 +17,7 @@ use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Kunstmaan\SearchBundle\Entity\SearchedFor;
 
 /**
- * SearchPage
+ * The default search page
  * 
  * @ORM\Entity
  * @ORM\Table(name="searchpage")
