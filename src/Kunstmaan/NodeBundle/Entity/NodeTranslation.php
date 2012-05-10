@@ -1,10 +1,12 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+
+use Kunstmaan\SearchBundle\Entity\IndexableInterface;
 
 use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
-use Kunstmaan\SearchBundle\Entity\Indexable;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -12,19 +14,14 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
 
-
 /**
+ * NodeTranslation
+ * 
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeTranslationRepository")
  * @ORM\Table(name="nodetranslation")
  */
-class NodeTranslation {
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+class NodeTranslation extends AbstractEntity
+{
 
     /**
      * @ORM\ManyToOne(targetEntity="Node")
@@ -75,27 +72,10 @@ class NodeTranslation {
      */
     protected $nodeVersions;
 
-    public function __construct() {
-		$this->nodeVersions = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->seo = new SEO();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId() {
-	return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @param string $id
-     */
-    public function setId($num) {
-	$this->id = $num;
+    public function __construct()
+    {
+        $this->nodeVersions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->seo = new SEO();
     }
 
     /**
@@ -103,8 +83,9 @@ class NodeTranslation {
      *
      * @param integer $node
      */
-    public function setNode($node) {
-	$this->node = $node;
+    public function setNode($node)
+    {
+        $this->node = $node;
     }
 
     /**
@@ -112,8 +93,9 @@ class NodeTranslation {
      *
      * @return integer
      */
-    public function getNode() {
-	return $this->node;
+    public function getNode()
+    {
+        return $this->node;
     }
 
     /**
@@ -121,8 +103,9 @@ class NodeTranslation {
      *
      * @param string $lang
      */
-    public function setLang($lang) {
-	$this->lang = $lang;
+    public function setLang($lang)
+    {
+        $this->lang = $lang;
     }
 
     /**
@@ -130,8 +113,9 @@ class NodeTranslation {
      *
      * @return string
      */
-    public function getLang() {
-	return $this->lang;
+    public function getLang()
+    {
+        return $this->lang;
     }
 
     /**
@@ -139,8 +123,9 @@ class NodeTranslation {
      *
      * @return boolean
      */
-    public function isOnline() {
-	return $this->online;
+    public function isOnline()
+    {
+        return $this->online;
     }
 
     /**
@@ -148,8 +133,9 @@ class NodeTranslation {
      *
      * @param boolean $online
      */
-    public function setOnline($online) {
-	$this->online = $online;
+    public function setOnline($online)
+    {
+        $this->online = $online;
     }
 
     /**
@@ -157,8 +143,9 @@ class NodeTranslation {
      *
      * @param string $title
      */
-    public function setTitle($title) {
-	$this->title = $title;
+    public function setTitle($title)
+    {
+        $this->title = $title;
     }
 
     /**
@@ -166,8 +153,9 @@ class NodeTranslation {
      *
      * @return string
      */
-    public function getTitle() {
-	return $this->title;
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -175,8 +163,9 @@ class NodeTranslation {
      *
      * @param string $slug
      */
-    public function setSlug($slug) {
-	$this->slug = $slug;
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
     }
 
     /**
@@ -186,83 +175,95 @@ class NodeTranslation {
      */
     public function getFullSlug()
     {
-    	$slug = $this->getSlugPart();
+        $slug = $this->getSlugPart();
 
         if (empty($slug)) {
             return null;
         }
 
-    	return $slug;
+        return $slug;
     }
 
     public function getSlugPart()
     {
-    	$slug = "";
+        $slug = "";
         $parentNode = $this->getNode()->getParent();
-    	if ( $parentNode != null) {
-    	    $nodeTranslation = $parentNode->getNodeTranslation($this->lang);
-    	    if ($nodeTranslation != null) {
-    	        $parentslug = $nodeTranslation->getSlugPart();
-    	        if (!empty($parentslug)) {
-    	            $slug = rtrim($parentslug, "/")."/";
-    	        }
-    	    }
-    	}
+        if ($parentNode != null) {
+            $nodeTranslation = $parentNode->getNodeTranslation($this->lang);
+            if ($nodeTranslation != null) {
+                $parentslug = $nodeTranslation->getSlugPart();
+                if (!empty($parentslug)) {
+                    $slug = rtrim($parentslug, "/") . "/";
+                }
+            }
+        }
 
-    	$slug = $slug . $this->getSlug();
+        $slug = $slug . $this->getSlug();
 
-    	return $slug;
+        return $slug;
     }
-    
+
     /**
-    * Get slug
-    *
-    * @return string
-    */
-    public function getSlug() {
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
         return $this->slug;
     }
 
-    public function getParentSlug($node) {
+    public function getParentSlug($node)
+    {
         $parentslug = $node->getParent()->getNodeTranslation($this->lang)->getSlug();
-        if(!empty($parentslug)){
-            return $parentslug."/";
+        if (!empty($parentslug)) {
+            return $parentslug . "/";
         }
         return "";
     }
 
     /**
-     * Set publicNodeVersion
-     *
+     * @param NodeVersion $publicNodeVersion
      */
-    public function setPublicNodeVersion($publicNodeVersion) {
-	$this->publicNodeVersion = $publicNodeVersion;
+    public function setPublicNodeVersion($publicNodeVersion)
+    {
+        $this->publicNodeVersion = $publicNodeVersion;
     }
 
     /**
-     * Get publicNodeVersion
-     *
+     * @return NodeVersion
      */
-    public function getPublicNodeVersion() {
-	return $this->publicNodeVersion;
+    public function getPublicNodeVersion()
+    {
+        return $this->publicNodeVersion;
     }
 
-    public function getNodeVersions() {
-	return $this->nodeVersions;
+    /**
+     * @return NodeVersion[]
+     */
+    public function getNodeVersions()
+    {
+        return $this->nodeVersions;
     }
 
-    public function setNodeVersions($nodeVersions) {
-	$this->nodeVersions = $nodeVersions;
+    /**
+     * @param NodeVersion[] $nodeVersions
+     */
+    public function setNodeVersions($nodeVersions)
+    {
+        $this->nodeVersions = $nodeVersions;
     }
 
-    public function getNodeVersion($type) {
-	$nodeVersions = $this->getNodeVersions();
-	foreach ($nodeVersions as $nodeVersion) {
-	    if ($type == $nodeVersion->getType()) {
-		return $nodeVersion;
-	    }
-	}
-	return null;
+    public function getNodeVersion($type)
+    {
+        $nodeVersions = $this->getNodeVersions();
+        foreach ($nodeVersions as $nodeVersion) {
+            if ($type == $nodeVersion->getType()) {
+                return $nodeVersion;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -270,56 +271,66 @@ class NodeTranslation {
      *
      * @param NodeVersion $nodeVersion
      */
-    public function addNodeVersion(NodeVersion $nodeVersion) {
-	$this->nodeVersions[] = $nodeVersion;
-	$nodeVersion->setNodeTranslation($this);
+    public function addNodeVersion(NodeVersion $nodeVersion)
+    {
+        $this->nodeVersions[] = $nodeVersion;
+        $nodeVersion->setNodeTranslation($this);
     }
 
-    public function disableNodeVersionsLazyLoading() {
-	if (is_object($this->nodeVersions)) {
-	    $this->nodeVersions->setInitialized(true);
-	}
+    public function disableNodeVersionsLazyLoading()
+    {
+        if (is_object($this->nodeVersions)) {
+            $this->nodeVersions->setInitialized(true);
+        }
     }
 
-    public function getDefaultAdminType($container) {
-	return new NodeTranslationAdminType($container);
+    public function getDefaultAdminType($container)
+    {
+        return new NodeTranslationAdminType($container);
     }
 
-    public function getRef($em, $type = "public") {
-	$nodeVersion = $this->getNodeVersion($type);
-	if ($nodeVersion) {
-	    return $em->getRepository($nodeVersion->getRefEntityname())->find($nodeVersion->getRefId());
-	}
-	return null;
+    public function getRef($em, $type = "public")
+    {
+        $nodeVersion = $this->getNodeVersion($type);
+        if ($nodeVersion) {
+            return $em->getRepository($nodeVersion->getRefEntityname())->find($nodeVersion->getRefId());
+        }
+        return null;
     }
 
-    public function getSearchContentForNode($container, $entity, $field) {
-	$page = $entity->getRef($container->get('doctrine')->getEntityManager());
-	if ($page instanceof Indexable) {
-	    return $page;
-	}
+    public function getSearchContentForNode($container, $entity, $field)
+    {
+        $page = $entity->getRef($container->get('doctrine')->getEntityManager());
+        if ($page instanceof IndexableInterface) {
+            return $page;
+        }
 
-	return null;
+        return null;
     }
 
-    public function getParentsAndSelfForNode($container, $entity, $field) {
-		$node = $entity->getNode();
-		$results = array();
-		if($node->getParent()==null) $parents[] = $node->getId();
-		else $parents = $this->getAllParentsForNode($node, $results);
+    public function getParentsAndSelfForNode($container, $entity, $field)
+    {
+        $node = $entity->getNode();
+        $results = array();
+        if ($node->getParent() == null) {
+            $parents[] = $node->getId();
+        } else {
+            $parents = $this->getAllParentsForNode($node, $results);
+        }
 
-		return 'start '.implode(' ', $parents).' stop';
+        return 'start ' . implode(' ', $parents) . ' stop';
     }
 
-    public function getAllParentsForNode($node, $results) {
-	$parentNode = $node->getParent();
-	if (is_object($parentNode)) {
-	    $results[] = $parentNode->getId();
+    public function getAllParentsForNode($node, $results)
+    {
+        $parentNode = $node->getParent();
+        if (is_object($parentNode)) {
+            $results[] = $parentNode->getId();
 
-	    return $this->getAllParentsForNode($parentNode, $results);
-	} else {
-	    return $results;
-	}
+            return $this->getAllParentsForNode($parentNode, $results);
+        } else {
+            return $results;
+        }
     }
 
     /**
@@ -327,11 +338,12 @@ class NodeTranslation {
      *
      * @return mixed
      */
-    public function getCreated() {
-	$versions = $this->getNodeVersions();
-	$firstVersion = $versions->first();
+    public function getCreated()
+    {
+        $versions = $this->getNodeVersions();
+        $firstVersion = $versions->first();
 
-	return $firstVersion->getCreated();
+        return $firstVersion->getCreated();
     }
 
     /**
@@ -339,19 +351,22 @@ class NodeTranslation {
      *
      * @return mixed
      */
-    public function getUpdated() {
-	$versions = $this->getNodeVersions();
-	$lastVersion = $versions->last();
+    public function getUpdated()
+    {
+        $versions = $this->getNodeVersions();
+        $lastVersion = $versions->last();
 
-	return $lastVersion->getUpdated();
+        return $lastVersion->getUpdated();
     }
 
-    public function setSEO($seo) {
-    	$this->seo = $seo;
+    public function setSEO($seo)
+    {
+        $this->seo = $seo;
     }
 
-    public function getSEO() {
-    	return $this->seo;
+    public function getSEO()
+    {
+        return $this->seo;
     }
 
     public function setUrl($url)

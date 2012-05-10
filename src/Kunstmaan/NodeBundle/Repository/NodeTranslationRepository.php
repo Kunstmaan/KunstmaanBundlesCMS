@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminNodeBundle\Repository;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminBundle\Modules\Slugifier;

@@ -7,7 +7,6 @@ use Doctrine\ORM\Events;
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\AdminBundle\Form\PageAdminType;
-use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminNodeBundle\AdminList\PageAdminListConfigurator;
 use Kunstmaan\AdminBundle\Form\NodeInfoAdminType;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;

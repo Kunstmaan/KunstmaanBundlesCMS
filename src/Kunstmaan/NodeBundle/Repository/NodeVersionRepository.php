@@ -6,7 +6,6 @@ use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
-use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;

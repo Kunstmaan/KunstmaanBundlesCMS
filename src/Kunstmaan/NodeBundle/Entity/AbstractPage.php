@@ -1,6 +1,8 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
+use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -9,26 +11,23 @@ use Kunstmaan\AdminBundle\Form\PageAdminType;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 
 use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\AdminBundle\Entity\DeepCloneableIFace;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminBundle\Entity\PageIFace;
-use Kunstmaan\SearchBundle\Entity\Indexable;
+use Kunstmaan\AdminBundle\Entity\PageInterface;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The Abstract ORM Page
  */
-abstract class AbstractPage extends AbstractEntity implements PageIFace, DeepCloneableIFace
+abstract class AbstractPage extends AbstractEntity implements PageInterface, DeepCloneableInterface
 {
 
     /**
