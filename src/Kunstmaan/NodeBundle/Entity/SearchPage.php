@@ -1,18 +1,18 @@
 <?php
 
 namespace Kunstmaan\ViewBundle\Entity;
+use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
+
 use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 
 use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\ViewBundle\Form\SearchPageAdminType;
 use Kunstmaan\AdminNodeBundle\Entity\HasNode;
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\DeepCloneableIFace;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Kunstmaan\SearchBundle\Entity\SearchedFor;
 
@@ -23,7 +23,7 @@ use Kunstmaan\SearchBundle\Entity\SearchedFor;
  * @ORM\Table(name="searchpage")
  * @ORM\HasLifecycleCallbacks()
  */
-class SearchPage extends AbstractPage implements DeepCloneableIFace
+class SearchPage extends AbstractPage implements DeepCloneableInterface
 {
 
     /**

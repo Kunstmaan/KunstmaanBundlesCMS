@@ -1,25 +1,37 @@
 <?php
 
 namespace Kunstmaan\ViewBundle\Helper;
-
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
-use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
+/**
+ *  a context for rendering pages through service methods
+ */
 class RenderContext extends \ArrayObject
 {
 
-	private $view;
+    /**
+     * @var string
+     */
+    private $view;
 
-	public function getView(){
-		return $this->view;
-	}
+    /**
+     * @return string
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
 
-	public function setView($view){
-		$this->view = $view;
-	}
+    /**
+     * @param string $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+    }
 }
