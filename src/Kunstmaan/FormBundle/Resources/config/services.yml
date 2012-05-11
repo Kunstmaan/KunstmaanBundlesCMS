@@ -3,4 +3,7 @@ services:
         class: Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor
         tags:
             -  { name: admin_menu.adaptor }
+    form.mailer:
+        class: Kunstmaan\FormBundle\Helper\Mailer
+        arguments: [@mailer, @templating]
             

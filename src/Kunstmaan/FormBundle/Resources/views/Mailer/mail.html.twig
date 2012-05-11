@@ -1,0 +1,26 @@
+<table class="bordered-table zebra-striped">
+		<thead>
+			<th width="30%">Label</th>
+			<th width="70%">Value</th>
+		</thead>
+		<body>
+			<tr>
+				<td>Date</td>
+				<td>{{ submission.created|date }}</td>
+			</tr>
+			<tr>
+				<td>Lang</td>
+				<td>{{ submission.lang }}</td>
+			</tr>
+			<tr>
+				<td>ipAddress</td>
+				<td>{{ submission.ipAddress }}</td>
+			</tr>
+			{% for field in submission.fields  %}
+				<tr>
+					<td><strong>{{ field.label }}</strong></td>
+					<td>{{ field }}</td>
+				</tr>
+			{% endfor %}
+		</body>
+</table>
