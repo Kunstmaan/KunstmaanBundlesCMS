@@ -2,18 +2,20 @@
 
 namespace Kunstmaan\AdminNodeBundle\Controller;
 
-use Kunstmaan\AdminBundle\Modules\PrepersistListener;
-use Doctrine\ORM\Events;
-use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use Doctrine\ORM\Events;
+
+use Kunstmaan\AdminBundle\Modules\PrepersistListener;
+use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 use Kunstmaan\AdminBundle\Form\PageAdminType;
 use Kunstmaan\AdminNodeBundle\AdminList\PageAdminListConfigurator;
 use Kunstmaan\AdminBundle\Form\NodeInfoAdminType;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Kunstmaan\AdminBundle\Entity\Permission;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
 use Kunstmaan\AdminNodeBundle\Form\SEOType;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
@@ -201,43 +203,9 @@ class PagesController extends Controller
         $addpage = $request->get("addpage");
         $addpagetitle = $request->get("addpagetitle");
         if(is_string($addpage) && $addpage != '') {
-        	$newpage = new $addpage();
-        	if(is_string($addpagetitle) && $addpagetitle != ''){
-        		$newpage->setTitle($addpagetitle);
-        	} else {
-        		$newpage->setTitle('New page');
-        	}
-        	$addcommand = new AddCommand($em, $user);
-        	$addcommand->execute("page \"". $newpage->getTitle() ."\" added with locale: " . $locale, array('entity'=> $newpage));
-
-        	$nodeparent = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($page);
-        	$newpage->setParent($page);
-        	$nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
-
-        	//get permissions of the parent and apply them on the new child
-            $parentPermissions = $em->getRepository('KunstmaanAdminBundle:Permission')->findBy(array(
-                'refId'             => $nodeparent->getId(),
-                'refEntityname'     => ClassLookup::getClass($nodeparent),
-            ));
-
-            if($parentPermissions) {
-            	foreach($parentPermissions as $parentPermission) {
-                    $permission = new Permission();
-
-                    $permission->setRefId($nodenewpage->getId());
-                    $permission->setPermissions($parentPermission->getPermissions());
-                    $permission->setRefEntityname(ClassLookup::getClass($nodeparent));
-                    $permission->setRefGroup($parentPermission->getRefGroup());
-
-                    $em->persist($permission);
-                    $em->flush();
-                }
-            }
-
-        	$em->persist($nodenewpage);
-        	$em->flush();
-			return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id'=>$nodenewpage->getId(), 'currenttab' => $currenttab)));
+            return $this->addPage($em, $user, $locale, $page, $addpage, $addpagetitle, $currenttab);
         }
+
         $delete = $request->get("delete");
         if(is_string($delete) && $delete == 'true'){
         	//remove node and page
@@ -366,6 +334,51 @@ class PagesController extends Controller
 
         return $viewVariables;
     }
+
+
+    protected function addPage($em, $user, $locale, $parentPage, $pageType, $pageTitle = '', $currentTab = '', $url = "KunstmaanAdminNodeBundle_pages_edit") {
+        $newpage = new $pageType();
+
+        if(is_string($pageTitle) && $pageTitle != ''){
+            $newpage->setTitle($pageTitle);
+        } else {
+            $newpage->setTitle('New page');
+        }
+
+        $addcommand = new AddCommand($em, $user);
+        $addcommand->execute("page \"". $newpage->getTitle() ."\" added with locale: " . $locale, array('entity'=> $newpage));
+
+        $nodeparent = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($parentPage);
+        $newpage->setParent($parentPage);
+
+        $nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
+
+        //get permissions of the parent and apply them on the new child
+        $parentPermissions = $em->getRepository('KunstmaanAdminBundle:Permission')->findBy(array(
+            'refId'             => $nodeparent->getId(),
+            'refEntityname'     => ClassLookup::getClass($nodeparent),
+        ));
+
+        if($parentPermissions) {
+            foreach($parentPermissions as $parentPermission) {
+                $permission = new Permission();
+
+                $permission->setRefId($nodenewpage->getId());
+                $permission->setPermissions($parentPermission->getPermissions());
+                $permission->setRefEntityname(ClassLookup::getClass($nodeparent));
+                $permission->setRefGroup($parentPermission->getRefGroup());
+
+                $em->persist($permission);
+                $em->flush();
+            }
+        }
+
+        $em->persist($nodenewpage);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl($url, array('id' => $nodenewpage->getId(), 'currenttab' => $currentTab)));
+    }
+
 
     private function deleteNodeChildren($em, $user, $locale, $children, $page){
     	foreach($children as $child){
