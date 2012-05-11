@@ -6,7 +6,6 @@ use Kunstmaan\AdminBundle\Entity\DynamicRoutingPageInterface;
 
 use Kunstmaan\ViewBundle\Helper\RenderContext;
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
-use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
