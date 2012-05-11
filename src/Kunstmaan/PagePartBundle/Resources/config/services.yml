@@ -15,3 +15,10 @@ services:
         class: Kunstmaan\PagePartBundle\Twig\Extension\PagePartAdminTwigExtension
         tags:
             -  { name: twig.extension }
+
+    pageparts.twig.extension:
+            class: Kunstmaan\PagePartBundle\Twig\Extension\PagepartTwigExtension
+            arguments:
+                - @doctrine.orm.entity_manager
+            tags:
+                - { name: twig.extension }
