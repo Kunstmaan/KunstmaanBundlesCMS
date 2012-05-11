@@ -20,10 +20,10 @@
     %}
     <style type="text/css">
     {% if titlecolor is not defined or titlecolor is empty %}
-    {% set titlecolor = "white" %}
+    {% set titlecolor = "#FFFFFF" %}
     {% endif %}
     {% if titlebgcolor is not defined or titlebgcolor is empty %}
-    {% set titlebgcolor = "\#F53111" %}
+    {% set titlebgcolor = "#F53111" %}
 
     {% endif %}
 	    header .topbar .container-fluid .brand:visited, header .topbar .container-fluid .brand:hover, header .topbar .container-fluid .brand:active, header .topbar .container-fluid .brand:focus {color: {{ titlecolor }}; background-color: {{ titlebgcolor }}}
