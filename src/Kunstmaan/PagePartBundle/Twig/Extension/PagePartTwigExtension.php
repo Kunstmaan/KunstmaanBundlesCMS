@@ -49,8 +49,6 @@ class PagePartTwigExtension extends \Twig_Extension
 
     public function getPageParts($page, $context = "main")
     {
-        $template = $this->environment->loadTemplate("KunstmaanViewBundle:GetPagepartsTwigExtension:widget.html.twig");
-
         $pageparts = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
 
         return $pageparts;
