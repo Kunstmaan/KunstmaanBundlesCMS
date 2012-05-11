@@ -18,6 +18,17 @@
         output='generated-css/style.css'
         filter='cssrewrite'
     %}
+    <style type="text/css">
+    {% if titlecolor is not defined or titlecolor is empty %}
+    {% set titlecolor = "#FFFFFF" %}
+    {% endif %}
+    {% if titlebgcolor is not defined or titlebgcolor is empty %}
+    {% set titlebgcolor = "#F53111" %}
+
+    {% endif %}
+	    header .topbar .container-fluid .brand:visited, header .topbar .container-fluid .brand:hover, header .topbar .container-fluid .brand:active, header .topbar .container-fluid .brand:focus {color: {{ titlecolor }}; background-color: {{ titlebgcolor }}}
+		header .topbar .container-fluid .brand::after {border-left-color:{{ titlebgcolor }};}
+	</style>
     <link rel="stylesheet"  media="screen" type="text/css" href="{{ asset_url }}" />
     {% endstylesheets %}
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
