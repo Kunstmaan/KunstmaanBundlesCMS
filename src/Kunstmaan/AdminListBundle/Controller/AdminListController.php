@@ -38,6 +38,7 @@ abstract class AdminListController extends Controller {
 	 * @return array
 	 */
 	public function exportAction($_format) {
+
 		$em = $this->getDoctrine()->getEntityManager();
 		$request = $this->getRequest();
 		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
@@ -64,11 +65,14 @@ abstract class AdminListController extends Controller {
 	 * @return array
 	 */
 	public function addAction() {
-		$em = $this->getDoctrine()->getEntityManager();
 
+		$em = $this->getDoctrine()->getEntityManager();
 		$request = $this->getRequest();
-		$helper = new Post();
-		$form = $this->createForm(new PostAdminType(), $helper);
+		$entityName = $this->getAdminListConfiguration()->getRepositoryName();
+		$classMetaData = $em->getClassMetadata($entityName);
+		// Creates a new instance of the mapped class, without invoking the constructor.
+		$helper = $classMetaData->newInstance();
+		$form = $this->createForm($this->getAdminType(), $helper);
 
 		if ('POST' == $request->getMethod()) {
 			$form->bindRequest($request);
@@ -88,6 +92,7 @@ abstract class AdminListController extends Controller {
 	 * @return array
 	 */
 	public function editAction($entity_id) {
+
 		$em = $this->getDoctrine()->getEntityManager();
 
 		$request = $this->getRequest();
