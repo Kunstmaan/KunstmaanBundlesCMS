@@ -9,7 +9,7 @@ use Kunstmaan\AdminNodeBundle\Entity\HasNode;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
-interface DynamicRoutingPageInterface extends PageIFace
+interface DynamicRoutingPageInterface extends PageInterface
 {
     public function initRoutes();
     public function getRoutes();
