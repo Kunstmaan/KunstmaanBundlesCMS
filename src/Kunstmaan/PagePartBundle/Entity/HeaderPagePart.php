@@ -1,27 +1,17 @@
 <?php
 
-namespace  Kunstmaan\PagePartBundle\Entity;
-
-use Kunstmaan\PagePartBundle\Helper\IsPagePart;
+namespace Kunstmaan\PagePartBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
  * Class that defines a header page part object to add to a page
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity
  * @ORM\Table(name="headerpagepart")
  */
-class HeaderPagePart implements IsPagePart{
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+class HeaderPagePart extends AbstractPagePart
+{
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -33,33 +23,13 @@ class HeaderPagePart implements IsPagePart{
      */
     protected $title;
 
-    public function __construct() {
-    }
-
-    /**
-     * Set id
-     *
-     * @param string $id
-     */
-    public function setId($id){
-        $this->id = $id;
-    }
-
-    /**
-     * Get pageId
-     *
-     * @return integer
-     */
-    public function getId(){
-        return $this->id;
-    }
-
     /**
      * Set niv
      *
      * @param int $niv
      */
-    public function setNiv($niv) {
+    public function setNiv($niv)
+    {
         $this->niv = $niv;
     }
 
@@ -68,41 +38,56 @@ class HeaderPagePart implements IsPagePart{
      *
      * @return int
      */
-    public function getNiv() {
+    public function getNiv()
+    {
         return $this->niv;
     }
 
     /**
-     * Set content
-     *
-     * @param string $content
+     * @param string $title
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
     /**
-     * Get content
-     *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
-    public function __toString(){
-        return "HeaderPagePart ".$this->getTitle();
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return "HeaderPagePart " . $this->getTitle();
     }
 
-    public function getDefaultView(){
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultView()
+    {
         return "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig";
     }
-    
-    public function getElasticaView(){
-    	return $this->getDefaultView();
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getElasticaView()
+    {
+        return $this->getDefaultView();
     }
 
-    public function getDefaultAdminType(){
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultAdminType()
+    {
         return new HeaderPagePartAdminType();
     }
 }
