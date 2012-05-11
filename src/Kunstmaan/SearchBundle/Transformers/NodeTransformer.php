@@ -2,11 +2,12 @@
 
 namespace Kunstmaan\SearchBundle\Transformers;
 
+use Kunstmaan\SearchBundle\Entity\IndexableInterface;
+
 use Elastica_Document;
 use RuntimeException;
 use FOQ\ElasticaBundle\Transformer\ModelToElasticaAutoTransformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Kunstmaan\SearchBundle\Entity\Indexable;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 
@@ -106,9 +107,9 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
         $searchResult = $class->$mappingSettings['handlermethod']($container, $object, $field);
 
 	if(is_object($searchResult)) {
-	    //gets the output from the getContentForIndexing method, but only if it's an instance of Indexable
+	    //gets the output from the getContentForIndexing method, but only if it's an instance of IndexableInterface
 	    $output = '';
-	    if($searchResult instanceof Indexable) {
+	    if($searchResult instanceof IndexableInterface) {
 		$output = $searchResult->getContentForIndexing($container, $object);
 	    }
 	} else {
