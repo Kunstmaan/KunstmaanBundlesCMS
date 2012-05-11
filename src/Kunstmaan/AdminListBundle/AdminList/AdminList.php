@@ -102,6 +102,11 @@ class AdminList {
     	return $this->configurator->canAdd();
     }
 
+    public function canExport()
+    {
+        return $this->configurator->canExport();
+    }
+
     public function getEditUrlFor($item){
         return $this->configurator->getEditUrlFor($item);
     }
@@ -140,5 +145,15 @@ class AdminList {
 
     public function hasCustomActions() {
     	return $this->configurator->hasCustomActions();
+    }
+
+    public function hasExportActions()
+    {
+        return $this->configurator->hasExportActions();
+    }
+
+    public function getExportActions()
+    {
+        return $this->configurator->getExportActions();
     }
 }

@@ -6,6 +6,7 @@ abstract class AbstractAdminListConfigurator {
 
 	private $fields = array();
 	private $customActions = array();
+    private $exportActions = array();
 
 	abstract function buildFields();
 	abstract function getEditUrlFor($item);
@@ -28,6 +29,10 @@ abstract class AbstractAdminListConfigurator {
 	public function canDelete($item) {
 		return true;
 	}
+
+    public function canExport() {
+        return false;
+    }
 
 	function getLimit() {
 		return 10;
@@ -71,6 +76,21 @@ abstract class AbstractAdminListConfigurator {
 	public function hasCustomActions() {
 		return !empty($this->customActions);
 	}
+
+    public function hasExportActions()
+    {
+        return !empty($this->exportActions);
+    }
+
+    public function getExportActions()
+    {
+        return $this->exportActions;
+    }
+
+    public function addExportAction(ExportInterface $exportAction)
+    {
+        $this->exportActions[] = $exportAction;
+    }
 
 	function getValue($item, $columnName) {
 		$methodName = $columnName;

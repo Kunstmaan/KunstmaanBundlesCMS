@@ -35,8 +35,7 @@
                         <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/edit.png') }}" alt="alt="{{ 'form.edit' | trans }}""/></a>
                     {% endif %}
                     {%if adminlist.canDelete(item) %}
-                        {#}<a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}" data-controls-modal="sure-modal-{{ item.id }}" data-backdrop="true" data keyboard="true"><img src="{{ asset('bundles/kunstmaanadmin/img/general/delete.png') }}" alt="Delete"/></a>{#}
-                        {% if adminlist.getDeleteUrlFor(item)["action"] is not null %}
+                        {% if adminlist.getDeleteUrlFor(item)["action"] is defined %}
                     		{% render adminlist.getDeleteUrlFor(item)["action"] with {'entity_id': item.id} %}
                         {% endif %}
                     {% endif %}

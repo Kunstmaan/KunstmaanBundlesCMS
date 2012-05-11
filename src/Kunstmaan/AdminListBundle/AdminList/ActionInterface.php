@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\AdminList;
+
 interface ActionInterface {
 
 	public function getUrlFor($item);
