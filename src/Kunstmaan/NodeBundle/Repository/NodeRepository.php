@@ -2,10 +2,9 @@
 
 namespace Kunstmaan\AdminNodeBundle\Repository;
 
-use Kunstmaan\AdminNodeBundle\Entity\HasNode;
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -41,7 +40,7 @@ class NodeRepository extends EntityRepository
 	              ->getResult();
 	}
 
-	public function getNodeFor(HasNode $hasNode) {
+	public function getNodeFor(HasNodeInterface $hasNode) {
 		$nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
 		if(!is_null($nodeVersion)){
 			$nodeTranslation = $nodeVersion->getNodeTranslation();
@@ -77,7 +76,7 @@ class NodeRepository extends EntityRepository
 		return $result;
 	}
 
-	public function createNodeFor(HasNode $hasNode, $lang, Baseuser $owner, $internalName = null){
+	public function createNodeFor(HasNodeInterface $hasNode, $lang, Baseuser $owner, $internalName = null){
 		$em = $this->getEntityManager();
 		$classname = ClassLookup::getClass($hasNode);
 		if(!$hasNode->getId()>0){
