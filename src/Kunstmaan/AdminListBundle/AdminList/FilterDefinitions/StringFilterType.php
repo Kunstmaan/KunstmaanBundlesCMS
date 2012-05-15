@@ -32,7 +32,7 @@ class StringFilterType {
                 case "notequals" :
                   	$expressions[] = $querybuilder->expr()->neq("b.".$this->columnname, "?".$uniqueid);
                    	$querybuilder->setParameter($uniqueid, $data['value']);
-                   	break;                    
+                   	break;
                 case "contains" :
                     $expressions[] = $querybuilder->expr()->like("b.".$this->columnname, "?".$uniqueid);
                     $querybuilder->setParameter($uniqueid, '%'.$data['value'].'%');
