@@ -3,16 +3,16 @@
 {% block content %}
     {{ adminlist_widget(adminlist, app.request.attributes.get('_route')) }}
 
-    {% if adminlist.canExport and adminlist.hasExportActions %}
-        {% for export in adminlist.getExportActions() %}
-            {% if export.template is not null %}
-                {% include export.template with {'exportaction': export} %}
+    {% if adminlist.hasListActions %}
+        {% for action in adminlist.getListActions() %}
+            {% if action.template is not null %}
+                {% include action.template with {'action': action} %}
             {% else %}
-                <a href="{{ path(export.getUrl()["path"], export.getUrl()[("params")] ) }}">
-                    {% if export.getIcon() is not null %}
-                        <img src="{{ asset(export.getIcon()) }}" alt="{{ export.getLabel() }}"/>
+                <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}">
+                    {% if action.getIcon() is not null %}
+                        <img src="{{ asset(action.getIcon()) }}" alt="{{ action.getLabel() }}"/>
                     {% else %}
-                        {{ export.getLabel() }}
+                        {{ action.getLabel() }}
                     {% endif %}
                 </a>
             {% endif %}

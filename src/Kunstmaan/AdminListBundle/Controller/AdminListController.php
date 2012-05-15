@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;

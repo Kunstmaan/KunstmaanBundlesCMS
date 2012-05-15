@@ -2,136 +2,133 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-abstract class AbstractAdminListConfigurator {
+abstract class AbstractAdminListConfigurator
+{
 
-	private $fields = array();
-	private $customActions = array();
-    private $exportActions = array();
+    private $fields = array();
+    private $customActions = array();
+    private $listActions = array();
 
-	abstract function buildFields();
-	abstract function getEditUrlFor($item);
-	abstract function getAddUrlFor($params = array());
-	abstract function getDeleteUrlFor($item);
-	abstract function getRepositoryName();
+    abstract function buildFields();
+    abstract function getEditUrlFor($item);
+    abstract function getAddUrlFor($params = array());
+    abstract function getDeleteUrlFor($item);
+    abstract function getRepositoryName();
 
-	public function buildFilters(AdminListFilter $builder) {}
-	public function adaptQueryBuilder($querybuilder, $params = array()) {}
-	public function buildActions() {}
+    public function buildFilters(AdminListFilter $builder) {}
+    public function buildActions() {}
 
-	public function canEdit() {
-		return true;
-	}
-
-	public function canAdd() {
-		return true;
-	}
-
-	public function canDelete($item) {
-		return true;
-	}
-
-    public function canExport() {
-        return false;
+    public function canEdit() {
+        return true;
     }
 
-	function getLimit() {
-		return 10;
-	}
-
-	function getSortFields() {
-		$array = array();
-		foreach ($this->getFields() as $field) {
-			if ($field->isSortable())
-				$array[] = $field->getFieldname();
-		}
-		return $array;
-	}
-
-	function getFields() {
-		return $this->fields;
-	}
-
-	function addField($fieldname, $fieldheader, $sort, $template = null) {
-		$this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
-	}
-
-	function configureListFields(&$array) {
-		foreach ($this->getFields() as $field) {
-			$array[$field->getFieldheader()] = $field->getFieldname();
-		}
-	}
-
-	public function getCustomActions() {
-		return $this->customActions;
-	}
-
-	public function addCustomAction(ActionInterface $customAction) {
-		$this->customActions[] = $customAction;
-	}
-
-	public function addSimpleAction($label, $url, $icon, $template = null) {
-		$this->customActions[] = new SimpleAction($url, $icon, $label, $template);
-	}
-
-	public function hasCustomActions() {
-		return !empty($this->customActions);
-	}
-
-    public function hasExportActions()
+    function addField($fieldname, $fieldheader, $sort, $template = null)
     {
-        return !empty($this->exportActions);
+        $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
     }
 
-    public function getExportActions()
+    public function canDelete($item) {
+        return true;
+    }
+
+    public function canAdd()
     {
-        return $this->exportActions;
+        return true;
     }
 
-    public function addExportAction(ExportInterface $exportAction)
+    function getLimit() {
+        return 10;
+    }
+
+    function getSortFields() {
+        $array = array();
+        foreach ($this->getFields() as $field) {
+            if ($field->isSortable())
+                $array[] = $field->getFieldname();
+        }
+        return $array;
+    }
+
+    function getFields() {
+        return $this->fields;
+    }
+
+    function configureListFields(&$array) {
+        foreach ($this->getFields() as $field) {
+            $array[$field->getFieldheader()] = $field->getFieldname();
+        }
+    }
+
+    function adaptQueryBuilder($querybuilder, $params = array())
     {
-        $this->exportActions[] = $exportAction;
+        $querybuilder->where('1=1');
     }
 
-	function getValue($item, $columnName) {
-		$methodName = $columnName;
-		if (method_exists($item, $methodName)) {
-			$result = $item->$methodName();
-		} else {
-			$methodName = "get" . $columnName;
-			if (method_exists($item, $methodName)) {
-				$result = $item->$methodName();
-			} else {
-				$methodName = "is" . $columnName;
-				if (method_exists($item, $methodName)) {
-					$result = $item->$methodName();
-				} else {
-					return "undefined function";
-				}
-			}
-		}
-		return $result;
-	}
+    public function addSimpleAction($label, $url, $icon, $template = null) {
+        $this->customActions[] = new SimpleAction($url, $icon, $label, $template);
+    }
 
-	function getStringValue($item, $columnName) {
-		$result = $this->getValue($item, $columnName);
-		if (is_bool($result)) {
-			return $result ? "true" : "false";
-		}
-		if ($result instanceof \DateTime) {
-			return $result->format('Y-m-d H:i:s');
-		} else if ($result instanceof \Doctrine\ORM\PersistentCollection) {
-			$results = "";
-			foreach ($result as $entry) {
-				$results[] = $entry->getName();
-			}
-			if (empty($results)) {
-				return "";
-			}
-			return implode(', ', $results);
-		} else if (is_array($result)) {
-			return implode(', ', $result);
-		} else {
-			return $result;
-		}
-	}
+    public function hasCustomActions() {
+        return !empty($this->customActions);
+    }
+
+    public function hasListActions()
+    {
+        return !empty($this->listActions);
+    }
+
+    public function getListActions()
+    {
+        return $this->listActions;
+    }
+
+    function getValue($item, $columnName)
+    {
+        $methodName = $columnName;
+        if (method_exists($item, $methodName)) {
+            $result = $item->$methodName();
+        } else {
+            $methodName = "get" . $columnName;
+            if (method_exists($item, $methodName)) {
+                $result = $item->$methodName();
+            } else {
+                $methodName = "is" . $columnName;
+                if (method_exists($item, $methodName)) {
+                    $result = $item->$methodName();
+                } else {
+                    return "undefined function";
+                }
+            }
+        }
+        return $result;
+    }
+
+    function getStringValue($item, $columnName)
+    {
+        $result = $this->getValue($item, $columnName);
+        if (is_bool($result)) {
+            return $result ? "true" : "false";
+        }
+        if ($result instanceof \DateTime) {
+            return $result->format('Y-m-d H:i:s');
+        } else if ($result instanceof \Doctrine\ORM\PersistentCollection) {
+            $results = "";
+            foreach ($result as $entry) {
+                $results[] = $entry->getName();
+            }
+            if (empty($results)) {
+                return "";
+            }
+            return implode(', ', $results);
+        } else if (is_array($result)) {
+            return implode(', ', $result);
+        } else {
+            return $result;
+        }
+    }
+
+    public function addListAction(ListActionInterface $listAction)
+    {
+        $this->listActions[] = $listAction;
+    }
 }

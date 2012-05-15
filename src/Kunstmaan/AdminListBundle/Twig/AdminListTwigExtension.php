@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: kris
- * Date: 15/11/11
- * Time: 23:30
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Kunstmaan\AdminListBundle\Twig;
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AdminListTwigExtension extends \Twig_Extension {
 
@@ -15,6 +10,8 @@ class AdminListTwigExtension extends \Twig_Extension {
      * @var \Twig_Environment
      */
     protected $environment;
+
+    protected $container;
 
     /**
      * {@inheritdoc}
@@ -24,13 +21,15 @@ class AdminListTwigExtension extends \Twig_Extension {
         $this->environment = $environment;
     }
 
-    public function __construct()
+    public function __construct($container)
     {
+        $this->container = $container;
     }
 
     public function getFunctions() {
         return array(
             'adminlist_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
+            'my_router_params' => new \Twig_Function_Method($this, 'routerParams')
         );
     }
 
@@ -64,6 +63,24 @@ class AdminListTwigExtension extends \Twig_Extension {
         	'queryparams' => $queryparams,
             'adminlist' => $view
         ));
+    }
+
+    /**
+     * Emulating the symfony 2.1.x $request->attributes->get('_route_params') feature.
+     * Code based on PagerfantaBundle's twig extension.
+     */
+    public function routerParams()
+    {
+        $router = $this->container->get('router');
+        $request = $this->container->get('request');
+
+        $routeName = $request->attributes->get('_route');
+        $routeParams = $request->query->all();
+        foreach ($router->getRouteCollection()->get($routeName)->compile()->getVariables() as $variable) {
+            $routeParams[$variable] = $request->attributes->get($variable);
+        }
+
+        return $routeParams;
     }
 
     public function getName()

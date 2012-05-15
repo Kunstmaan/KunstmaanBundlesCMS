@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-interface ExportInterface {
+interface ListActionInterface {
 
     public function getUrl();
 

@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: kris
- * Date: 16/11/11
- * Time: 17:45
- * To change this template use File | Settings | File Templates.
- */
+
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 class PaginationBean {
