@@ -30,6 +30,15 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
     	return array('path' => 'KunstmaanAdminBundle_settings_groups_edit', 'params' => array( 'group_id' => $item->getId()));
     }
 
+    public function getDeleteUrlFor($item) {
+        return array(
+            'path'      => 'KunstmaanAdminBundle_settings_groups_delete',
+            'params'    => array(
+                'group_id'    => $item->getId()
+            )
+        );
+    }
+
     public function getAdminType($item) {
         return null;
     }
