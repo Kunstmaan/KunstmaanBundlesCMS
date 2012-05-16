@@ -52,6 +52,16 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
     	return "";
     }
 
+    public function canDelete($item)
+    {
+        return false;
+    }
+
+    function getDeleteUrlFor($item)
+    {
+        return array();
+    }
+
 
     public function getRepositoryName()
     {
