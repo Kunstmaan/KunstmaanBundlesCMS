@@ -72,6 +72,10 @@ abstract class AbstractAdminListConfigurator
         return !empty($this->customActions);
     }
 
+    public function getCustomActions() {
+    	return $this->customActions;
+    }
+
     public function hasListActions()
     {
         return !empty($this->listActions);
