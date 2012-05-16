@@ -7,3 +7,9 @@ services:
         class: Kunstmaan\FormBundle\Helper\Mailer
         arguments: [@mailer, @templating]
             
+    entity_id.type:
+        class: Kunstmaan\FormBundle\Form\EntityIdType
+        arguments: [@doctrine]
+        tags:
+            - { name: form.type, alias: entity_id }
+                        
