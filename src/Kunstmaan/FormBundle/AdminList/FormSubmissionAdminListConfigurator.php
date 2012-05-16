@@ -99,4 +99,11 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
 
 		return $querybuilder;
 	}
+
+    function getDeleteUrlFor($item)
+    {
+        return array();
+    }
+
+
 }
