@@ -104,4 +104,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
 
         return $querybuilder;
     }
+
+    function getDeleteUrlFor($item)
+    {
+        return array();
+    }
+
+
 }
