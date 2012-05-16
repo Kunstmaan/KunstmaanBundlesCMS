@@ -80,7 +80,7 @@ abstract class AdminListController extends Controller {
 			if ($form->isValid()) {
 				$em->persist($helper);
 				$em->flush();
-				return new RedirectResponse($this->generateUrl('KunstmaanAdminListBundle_admin_index'));
+				return new RedirectResponse($this->generateUrl($this->getAdminListConfiguration()->getIndexUrlFor()));
 			}
 		}
 		return array('form' => $form->createView());
@@ -108,7 +108,7 @@ abstract class AdminListController extends Controller {
 			if ($form->isValid()) {
 				$em->persist($helper);
 				$em->flush();
-				return new RedirectResponse($this->generateUrl('KunstmaanAdminListBundle_admin_index'));
+				return new RedirectResponse($this->generateUrl($this->getAdminListConfiguration()->getIndexUrlFor()));
 			}
 		}
 		return array(
@@ -139,7 +139,7 @@ abstract class AdminListController extends Controller {
 			if ($form->isValid()) {
 				$em->remove($helper);
 				$em->flush();
-				return new RedirectResponse($this->generateUrl('KunstmaanAdminListBundle_admin_index'));
+				return new RedirectResponse($this->generateUrl($this->getAdminListConfiguration()->getIndexUrlFor()));
 			}
 		}
 		return array(

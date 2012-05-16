@@ -13,6 +13,7 @@ abstract class AbstractAdminListConfigurator
     abstract function getEditUrlFor($item);
     abstract function getAddUrlFor($params = array());
     abstract function getDeleteUrlFor($item);
+    abstract function getIndexUrlFor();
     abstract function getRepositoryName();
 
     public function buildFilters(AdminListFilter $builder) {}
