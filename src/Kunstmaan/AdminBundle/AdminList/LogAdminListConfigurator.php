@@ -40,6 +40,10 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator{
     	return array();
     }
 
+    public function getDeleteUrlFor($item) {
+        return array();
+    }
+
     public function canDelete($item) {
         return false;
     }

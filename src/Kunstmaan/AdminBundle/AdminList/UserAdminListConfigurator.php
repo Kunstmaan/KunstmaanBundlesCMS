@@ -41,6 +41,15 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator{
         return null;
     }
 
+    public function getDeleteUrlFor($item) {
+        return array(
+            'path'      => 'KunstmaanAdminBundle_settings_users_delete',
+            'params'    => array(
+                'user_id'    => $item->getId()
+            )
+        );
+    }
+
     public function getRepositoryName() {
         return 'KunstmaanAdminBundle:User';
     }

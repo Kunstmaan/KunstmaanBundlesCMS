@@ -114,6 +114,24 @@ class SettingsController extends Controller
     }
 
     /**
+     * @Route("/users/{user_id}/delete", requirements={"user_id" = "\d+"}, name="KunstmaanAdminBundle_settings_users_delete")
+     * @Method({"GET", "POST"})
+     */
+    public function deleteuserAction($user_id) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $repo = $em->getRepository('KunstmaanAdminBundle:User');
+        $item = $repo->find($user_id);
+        if (!is_null($item)) {
+            $em->remove($item);
+            $em->flush();
+        }
+
+        return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users'));
+    }
+
+
+    /**
      * @Route("/groups", name="KunstmaanAdminBundle_settings_groups")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
@@ -180,6 +198,25 @@ class SettingsController extends Controller
             'group' => $helper
         );
     }
+
+    /**
+     * @Route("/groups/{group_id}/delete", requirements={"group_id" = "\d+"}, name="KunstmaanAdminBundle_settings_groups_delete")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function deletegroupAction($group_id) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $repo = $em->getRepository('KunstmaanAdminBundle:Group');
+        $item = $repo->find($group_id);
+        if (!is_null($item)) {
+            $em->remove($item);
+            $em->flush();
+        }
+
+        return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
+    }
+
     
     /**
      * @Route("/searches", name="KunstmaanAdminBundle_settings_searches")
@@ -277,5 +314,23 @@ class SettingsController extends Controller
             'form' => $form->createView(),
             'role' => $helper
         );
-    }    
+    }
+
+    /**
+     * @Route("/roles/{role_id}/delete", requirements={"role_id" = "\d+"}, name="KunstmaanAdminBundle_settings_roles_delete")
+     * @Method({"GET", "POST"})
+     */
+    public function deleteroleAction($role_id) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $repo = $em->getRepository('KunstmaanAdminBundle:Role');
+        $item = $repo->find($role_id);
+        if (!is_null($item)) {
+            $em->remove($item);
+            $em->flush();
+        }
+
+        return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
+    }
+
 }
