@@ -5,13 +5,42 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 abstract class AbstractAdminListConfigurator
 {
 
-    public function buildFilters(AdminListFilter $builder)
-    {
+    private $fields = array();
+    private $customActions = array();
+    private $listActions = array();
 
+    abstract function buildFields();
+    abstract function getEditUrlFor($item);
+    abstract function getAddUrlFor($params = array());
+    abstract function getDeleteUrlFor($item);
+    abstract function getRepositoryName();
+
+    public function buildFilters(AdminListFilter $builder) {}
+    public function buildActions() {}
+
+    public function canEdit() {
+        return true;
     }
 
-    function getSortFields()
+    function addField($fieldname, $fieldheader, $sort, $template = null)
     {
+        $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
+    }
+
+    public function canDelete($item) {
+        return true;
+    }
+
+    public function canAdd()
+    {
+        return true;
+    }
+
+    function getLimit() {
+        return 10;
+    }
+
+    function getSortFields() {
         $array = array();
         foreach ($this->getFields() as $field) {
             if ($field->isSortable())
@@ -20,51 +49,41 @@ abstract class AbstractAdminListConfigurator
         return $array;
     }
 
-    private $fields = array();
-
-    function getFields()
-    {
+    function getFields() {
         return $this->fields;
     }
 
-    abstract function buildFields();
-
-    function addField($fieldname, $fieldheader, $sort, $template = null)
-    {
-        $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
-    }
-
-    function configureListFields(&$array)
-    {
+    function configureListFields(&$array) {
         foreach ($this->getFields() as $field) {
             $array[$field->getFieldheader()] = $field->getFieldname();
         }
     }
 
-    public function canEdit()
-    {
-        return true;
-    }
-
-    abstract function getEditUrlFor($item);
-
-    public function canAdd()
-    {
-        return true;
-    }
-
-    abstract function getAddUrlFor($params = array());
-
-    public function canDelete($item)
-    {
-        return true;
-    }
-
-    abstract function getRepositoryName();
-
     function adaptQueryBuilder($querybuilder, $params = array())
     {
         $querybuilder->where('1=1');
+    }
+
+    public function addSimpleAction($label, $url, $icon, $template = null) {
+        $this->customActions[] = new SimpleAction($url, $icon, $label, $template);
+    }
+
+    public function hasCustomActions() {
+        return !empty($this->customActions);
+    }
+
+    public function getCustomActions() {
+    	return $this->customActions;
+    }
+
+    public function hasListActions()
+    {
+        return !empty($this->listActions);
+    }
+
+    public function getListActions()
+    {
+        return $this->listActions;
     }
 
     function getValue($item, $columnName)
@@ -112,8 +131,8 @@ abstract class AbstractAdminListConfigurator
         }
     }
 
-    function getLimit()
+    public function addListAction(ListActionInterface $listAction)
     {
-        return 10;
+        $this->listActions[] = $listAction;
     }
 }

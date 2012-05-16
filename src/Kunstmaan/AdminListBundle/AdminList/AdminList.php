@@ -30,6 +30,7 @@ class AdminList
         $adminlistfilter = new AdminListFilter();
         $this->configurator->buildFilters($adminlistfilter);
         $this->configurator->buildFields();
+        $this->configurator->buildActions();
         $this->adminlistfilter = $adminlistfilter;
         $this->queryparams = $queryparams;
     }
@@ -46,32 +47,17 @@ class AdminList
 
     public function bindRequest($request)
     {
-        $this->request = $request;
-        $todelete = $request->query->get("delete");
-        if (!is_null($todelete)) {
-            $repo = $this->em->getRepository($this->configurator->getRepositoryName());
-            $todeleteitem = $repo->find($todelete);
-            if (!is_null($todeleteitem)) {
-                if (method_exists($repo, 'delete')) {
-                    $repo->delete($todeleteitem);
-                }
-                else {
-                    $this->em->remove($todeleteitem);
-                    $this->em->flush();
-                }
-            }
-        }
-        $this->page = $this->request->query->get("page");
+        $this->page = $request->query->get("page");
         if (is_null($this->page)) {
             $this->page = 1;
         }
-        if (!is_null($this->request->query->get("orderBy"))) {
-            $this->orderBy = $this->request->query->get("orderBy");
+        if (!is_null($request->query->get("orderBy"))) {
+            $this->orderBy = $request->query->get("orderBy");
         }
-        if (!is_null($this->request->query->get("orderDirection"))) {
-            $this->orderDirection = $this->request->query->get("orderDirection");
+        if (!is_null($request->query->get("orderDirection"))) {
+            $this->orderDirection = $request->query->get("orderDirection");
         }
-        $this->adminlistfilter->bindRequest($this->request);
+        $this->adminlistfilter->bindRequest($request);
     }
 
     public function getColumns()
@@ -127,6 +113,11 @@ class AdminList
         return $this->configurator->getEditUrlFor($item);
     }
 
+    public function getDeleteUrlFor($item)
+    {
+        return $this->configurator->getDeleteUrlFor($item);
+    }
+
     public function getAddUrlFor($params)
     {
         return $this->configurator->getAddUrlFor($params);
@@ -155,5 +146,23 @@ class AdminList
     public function getOrderDirection()
     {
         return $this->orderDirection;
+    }
+
+    public function getCustomActions() {
+    	return $this->configurator->getCustomActions();
+    }
+
+    public function hasCustomActions() {
+    	return $this->configurator->hasCustomActions();
+    }
+
+    public function hasListActions()
+    {
+        return $this->configurator->hasListActions();
+    }
+
+    public function getListActions()
+    {
+        return $this->configurator->getListActions();
     }
 }

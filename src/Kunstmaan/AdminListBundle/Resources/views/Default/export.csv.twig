@@ -1,0 +1,23 @@
+{% set quote = '"' %}
+{%- for column in adminlist.columns -%}
+	{{- quote|raw -}}{{- column.fieldheader | trans -}}{{- quote|raw -}}
+	{%- if not loop.last -%},{%- endif -%}
+{%- endfor -%}
+{% for item in adminlist.items(queryparams) %}
+
+{% for column in adminlist.columns -%}
+	{%- set columnName = column.fieldName -%}
+	{%- set template = column.template -%}
+	{{- quote|raw -}}{{- adminlist.getStringValue(item, columnName) -}}{{- quote|raw -}}
+	{%- if not loop.last -%},{%- endif -%}
+	{#-
+	{% spaceless %}
+	{% if template is not null %}
+		{% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getValue(item, columnName)} %},
+	{% else %}
+		{{- quote|raw -}}{{adminlist.getStringValue(item, columnName)}}{{- quote|raw -}},
+	{% endif %}
+	{% endspaceless %}
+	-#}
+{%- endfor -%}
+{% endfor %}
