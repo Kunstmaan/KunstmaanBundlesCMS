@@ -16,10 +16,6 @@
         {
             "type": "vcs",
             "url": "http://github.com/Kunstmaan/KunstmaanAdminListBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Kunstmaan/KunstmaanAdminBundle"
         }
     ],
     "require": {
