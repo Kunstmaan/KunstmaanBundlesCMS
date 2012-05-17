@@ -1,7 +1,7 @@
 {
     "name": "kunstmaan/media-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony KunstmaanMediaBundle",
+    "description": "Symfony2 KunstmaanMediaBundle",
     "keywords": [],
     "homepage": "https://github.com/Kunstmaan/KunstmaanMediaBundle",
     "license": "MIT",
@@ -10,39 +10,56 @@
             "name": "Kunstmaan Team",
             "homepage": "http://www.kunstmaan.be/",
             "email": "support@kunstmaan.be"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanAdminBundle"
         },
         {
-            "name": "Ibe Vanmeenen",
-            "email": "ibe.vanmeenen@kunstmaan.be"
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanAdminListBundle"
         },
         {
-            "name": "Indri Kenens",
-            "email": "indri.kenens@kunstmaan.be"
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanAdminNodeBundle"
         },
         {
-            "name": "Kim Ausloos",
-            "email": "kim.ausloos@kunstmaan.be"
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanMediaBundle"
         },
         {
-            "name": "Kris Pypen",
-            "email": "kris.pypen@kunstmaan.be"
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanViewBundle"
         },
         {
-            "name": "Kristof van Cauwenbergh",
-            "email": "kristof.van.cauwenbergh@kunstmaan.be"
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanSentryBundle"
         },
         {
-            "name": "Wim Vandersmissen",
-            "email": "wim.vandersmissen@kunstmaan.be"
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanPagePartBundle"
         },
         {
-            "name": "Roderik van der Veer",
-            "email": "roderik.van.der.veer@kunstmaan.be"
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanMediaPagePartBundle"
+        },
+        {
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanFormBundle"
+        },
+        {
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanSearchBundle"
         }
     ],
     "require": {
-        "php": ">=5.3.2",
-        "symfony/framework-bundle": "2.1.*",
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.0.*",
+        "doctrine/doctrine-fixtures-bundle": "2.0.*",
+        "kunstmaan/adminlist-bundle": "dev-master",
+        "kunstmaan/admin-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
