@@ -31,9 +31,10 @@ class MediaRepository extends EntityRepository
         return $media;
     }
 
-    public function getPicture($picture_id, EntityManager $em){
+    public function getPicture($picture_id, EntityManager $em)
+    {
         $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($picture_id);
-        if (!$picture){
+        if (!$picture) {
             throw new EntityNotFoundException('Unable to find image.');
         }
 

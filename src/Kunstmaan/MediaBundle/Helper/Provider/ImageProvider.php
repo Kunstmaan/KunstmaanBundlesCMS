@@ -39,13 +39,8 @@ class ImageProvider extends FileProvider
     {
         $originalFile = $this->getOriginalFile($media);
 
-        foreach($this->formats as $format => $options) {
-            $this->imageManipulator->resize(
-                $media,
-                $originalFile,
-                $this->filesystem->get($this->generateRelativePath($media, $format), true),
-                $options
-            );
+        foreach ($this->formats as $format => $options) {
+            $this->imageManipulator->resize($media, $originalFile, $this->filesystem->get($this->generateRelativePath($media, $format), TRUE), $options);
         }
     }
 
