@@ -16,6 +16,12 @@ class MediaContext
     protected $formats = array();
 
 
+    /**
+     * @var AbstractMediaMetadata
+     */
+    protected $metadataClass;
+
+
     public function __construct($name)
     {
         $this->setName($name);
@@ -90,5 +96,26 @@ class MediaContext
     public function getFormats()
     {
         return $this->formats;
+    }
+
+    /**
+     * Set metadataClass
+     *
+     * @param \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata $metadataClass
+     */
+    public function setMetadataClass($metadataClass)
+    {
+        $this->metadataClass = $metadataClass;
+        return $this;
+    }
+
+    /**
+     * Get metadataClass
+     *
+     * @return \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata
+     */
+    public function getMetadataClass()
+    {
+        return $this->metadataClass;
     }
 }

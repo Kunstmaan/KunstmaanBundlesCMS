@@ -22,7 +22,6 @@ class Video extends Media
     public function __construct()
     {
         parent::__construct();
-        $this->classtype = "Video";
     }
 
     /**

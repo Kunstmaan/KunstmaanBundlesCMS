@@ -64,11 +64,6 @@ abstract class Media extends AbstractEntity
      */
     protected $filesize;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $classtype;
-
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -291,7 +286,9 @@ abstract class Media extends AbstractEntity
 
     public function getClassType()
     {
-        return $this->classtype;
+        $class = explode('\\', get_class($this));
+        $classname = end($class);
+        return $classname;
     }
 
     /**

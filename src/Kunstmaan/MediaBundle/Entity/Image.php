@@ -30,7 +30,6 @@ class Image extends Media
     {
         parent::__construct();
         $this->edits = new ArrayCollection();
-        $this->classtype = "Image";
     }
 
     /**
