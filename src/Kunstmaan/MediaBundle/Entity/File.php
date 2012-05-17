@@ -5,7 +5,7 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Kunstmaan\MediaBundle\Entity\Image
+ * Kunstmaan\MediaBundle\Entity\File
  * Class that defines a picture in the system
  *
  * @ORM\Entity
