@@ -14,33 +14,31 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>{{ 'media.image.image'|trans }} <small>{{ media.name }}
-        </small></h1>
+        <h1>{{ 'media.image.image'|trans }} <small>{{ media.name }}</small></h1>
     </div>
+
     <div>
 
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
         <form action="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}" method="post" enctype="multipart/form-data">
-               <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
-                    <input name="picture" type="hidden" value="" />
-                    <div class="actions"><input type="image" class="btn primary type" value="{{ 'media.image.edit' | trans }}" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
-                        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
-                        <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
-                    </div>
-                </form>
+            <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
+            <input name="picture" type="hidden" value="" />
+            <div class="actions">
+                <input type="image" class="btn primary type" value="{{ 'media.image.edit' | trans }}" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
+                <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
+                <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+            </div>
+        </form>
 
-<ul>
-    <li>Name: {{ media.name }} </li>
-    <li>Content-type: {{ media.contentType }}</li>
-    <li>Added; {{ media.createdat|date|escape }}</li>
-    <li>Updated: {{ media.updatedat|date|escape }}</li>
-</ul>
+        <ul>
+            <li>Name: {{ media.name }} </li>
+            <li>Content-type: {{ media.contentType }}</li>
+            <li>Added; {{ media.createdat|date|escape }}</li>
+            <li>Updated: {{ media.updatedat|date|escape }}</li>
+        </ul>
 
-        <p>Original: <br/><img id="editimage" class="thumbnail" src="{{ asset(upload_dir~media.show()) }}" alt="{{ media.name }}" /></p>
-        <p>Large: <br/><img class="thumbnail" src="{{ asset(upload_dir~media.show('large')) }}" alt="{{ media.name }}" /></p>
-        <p>Medium: <br/><img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" /></p>
-        <p>Small: <br/><img class="thumbnail" src="{{ asset(upload_dir~media.show('small')) }}" alt="{{ media.name }}" /></p>
+        <p><img id="editimage" class="thumbnail" src="{{ asset(upload_dir~media.show()) }}" alt="{{ media.name }}" /></p>
 
         <!-- Load Feather code -->
         <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
@@ -54,7 +52,7 @@
                 onSave: function(imageID, newURL) {
                     var img = document.getElementById(imageID);
                     img.src = newURL;
-                   	window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'gallery_id' : gallery.id, 'image_id' : media.id }) }}?url='+newURL;
+                    window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'gallery_id' : gallery.id, 'image_id' : media.id }) }}?url='+newURL;
                 }
 
             });
@@ -66,13 +64,9 @@
                 });
                 return false;
             }
-
-
         </script>
 
         <div id="injection_site"></div>
-
-
 
         <form action="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}" method="post" enctype="multipart/form-data">
        <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
@@ -84,17 +78,18 @@
         </form>
 
         <h2>{{ 'media.image.edits' | trans }}</h2>
-                <ul class="media-grid">
-                {% for image in media.edits %}
-                    <li>
-                        <a href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : image.id }) }}">
-                            <img class="thumbnail" src="{{ asset(upload_dir~image.show('medium')) }}" alt="{{ image.name }}" />
-                        </a>
-                     </li>
-                {% else %}
-                    <ul><li>{{ 'media.image.noedits' | trans }}</li></ul>
-                {% endfor %}
-                </ul>
 
-        </div>
+        <ul class="media-grid">
+            {% for image in media.edits %}
+                <li>
+                    <a href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : image.id }) }}">
+                        <img class="thumbnail" src="{{ asset(upload_dir~image.show('medium')) }}" alt="{{ image.name }}" />
+                    </a>
+                 </li>
+            {% else %}
+                <ul><li>{{ 'media.image.noedits' | trans }}</li></ul>
+            {% endfor %}
+        </ul>
+
+    </div>
 {% endblock %}
