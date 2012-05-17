@@ -28,9 +28,8 @@
         "doctrine/doctrine-fixtures-bundle": "2.0.*",
         "symfony/symfony": "2.0.*",
         "friendsofsymfony/user-bundle": "1.2.*",
-        
-        "kunstmaan/adminlist-bundle": "dev-tests/setuptraviscomposer",
-        "kunstmaan/adminnode-bundle": "dev-tests/setuptraviscomposer"
+        "kunstmaan/adminlist-bundle": "dev-master",
+        "kunstmaan/adminnode-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
