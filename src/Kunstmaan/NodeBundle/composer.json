@@ -1,7 +1,7 @@
 {
     "name": "kunstmaan/adminnode-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony KunstmaanAdminNodeBundle",
+    "description": "Symfony2 KunstmaanAdminNodeBundle",
     "keywords": [],
     "homepage": "https://github.com/Kunstmaan/KunstmaanAdminNodeBundle",
     "license": "MIT",
@@ -10,39 +10,24 @@
             "name": "Kunstmaan Team",
             "homepage": "http://www.kunstmaan.be/",
             "email": "support@kunstmaan.be"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/Kunstmaan/KunstmaanAdminListBundle"
         },
         {
-            "name": "Ibe Vanmeenen",
-            "email": "ibe.vanmeenen@kunstmaan.be"
-        },
-        {
-            "name": "Indri Kenens",
-            "email": "indri.kenens@kunstmaan.be"
-        },
-        {
-            "name": "Kim Ausloos",
-            "email": "kim.ausloos@kunstmaan.be"
-        },
-        {
-            "name": "Kris Pypen",
-            "email": "kris.pypen@kunstmaan.be"
-        },
-        {
-            "name": "Kristof van Cauwenbergh",
-            "email": "kristof.van.cauwenbergh@kunstmaan.be"
-        },
-        {
-            "name": "Wim Vandersmissen",
-            "email": "wim.vandersmissen@kunstmaan.be"
-        },
-        {
-            "name": "Roderik van der Veer",
-            "email": "roderik.van.der.veer@kunstmaan.be"
+            "type": "vcs",
+            "url": "https://github.com/Kunstmaan/KunstmaanAdminBundle"
         }
     ],
     "require": {
-        "php": ">=5.3.2",
-        "symfony/framework-bundle": "2.1.*",
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.0.*",
+
+        "kunstmaan/adminlist-bundle": "dev-tests/setuptraviscomposer",
+        "kunstmaan/admin-bundle": "dev-feature/travis-composer-dependencies-versioning"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminNodeBundle": "" }

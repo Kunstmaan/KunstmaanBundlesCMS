@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="./Tests/bootstrap.php" colors="true">
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="true"
+         bootstrap="./vendor/autoload.php"
+        >
 
     <testsuites>
-        <testsuite name="KunstmaanAdminNodeBundle test suite">
+        <testsuite name="Kunstmaan Test Suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
@@ -11,6 +21,14 @@
     <filter>
         <whitelist>
             <directory>./</directory>
+            <exclude>
+                <directory>./Resources</directory>
+                <directory>./vendor</directory>
+            </exclude>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+    </logging>
 </phpunit>
