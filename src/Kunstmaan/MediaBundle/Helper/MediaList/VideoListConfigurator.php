@@ -41,4 +41,9 @@ class VideoListConfigurator extends AbstractAdminListConfigurator{
         parent::adaptQueryBuilder($querybuilder);
         $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
     }
+
+    function getDeleteUrlFor($item)
+    {
+        // TODO: Implement getDeleteUrlFor() method.
+    }
 }
