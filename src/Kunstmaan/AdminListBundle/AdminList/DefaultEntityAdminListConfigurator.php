@@ -3,13 +3,29 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 class DefaultEntityAdminListConfigurator extends AbstractAdminListConfigurator{
-    /**
-     *
-     * @return void
-     */
-    protected function configureListFields($array)
+
+    function buildFields()
     {
-        //$array[] = "username";
-        //$array[] = "email";
+        // TODO: Implement buildFields() method.
+    }
+
+    function getEditUrlFor($item)
+    {
+        // TODO: Implement getEditUrlFor() method.
+    }
+
+    function getAddUrlFor($params = array())
+    {
+        // TODO: Implement getAddUrlFor() method.
+    }
+
+    function getDeleteUrlFor($item)
+    {
+        // TODO: Implement getDeleteUrlFor() method.
+    }
+
+    function getRepositoryName()
+    {
+        // TODO: Implement getRepositoryName() method.
     }
 }
