@@ -227,4 +227,39 @@ class NodeTranslationRepository extends EntityRepository
         
         return $nodeTranslation;
     }
+
+    /**
+     * Find best match for given URL and locale
+     *
+     * @param string $urlSlug
+     * @param string $locale
+     *
+     * @return NodeTranslation
+     */
+    public function getBestMatchForUrl($urlSlug, $locale)
+    {
+        $em = $this->getEntityManager();
+
+        $rsm = new ResultSetMapping();
+        $rsm->addEntityResult('Kunstmaan\AdminNodeBundle\Entity\NodeTranslation', 'nt');
+        $rsm->addFieldResult('nt', 'id', 'id');
+        $rsm->addMetaResult('nt', 'node', 'node');
+        $rsm->addFieldResult('nt', 'lang', 'lang');
+        $rsm->addFieldResult('nt', 'online', 'online');
+        $rsm->addFieldResult('nt', 'title', 'title');
+        $rsm->addFieldResult('nt', 'slug', 'slug');
+        $rsm->addFieldResult('nt', 'url', 'url');
+        $rsm->addMetaResult('nt', 'publicNodeVersion', 'publicNodeVersion');
+        $rsm->addMetaResult('nt', 'seo', 'seo');
+
+        $query = $em
+            ->createNativeQuery(
+            'select nt.id, nt.node, nt.lang, nt.online, nt.title, nt.slug, nt.url, nt.publicNodeVersion, nt.seo from nodetranslation nt where nt.lang = ? and locate(url, ?) = 1 order by length(url) desc limit 1',
+            $rsm);
+        $query->setParameter(1, $locale);
+        $query->setParameter(2, $urlSlug);
+        $translation = $query->getOneOrNullResult();
+
+        return $translation;
+    }
 }
