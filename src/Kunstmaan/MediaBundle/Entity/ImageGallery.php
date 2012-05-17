@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kunstmaan\MediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="media_gallery_image")
  * @ORM\HasLifecycleCallbacks
  */
-class ImageGallery extends Folder{
+class ImageGallery extends Folder
+{
 
     /**
      * @ORM\Id
@@ -26,7 +27,8 @@ class ImageGallery extends Folder{
         parent::__construct($em);
     }
 
-    public function getStrategy(){
+    public function getStrategy()
+    {
         return new \Kunstmaan\MediaBundle\Helper\ImageGalleryStrategy();
     }
 }

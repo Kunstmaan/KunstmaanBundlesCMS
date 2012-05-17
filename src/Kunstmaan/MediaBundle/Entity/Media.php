@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kunstmaan\MediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Assetic\Asset\FileAsset;
@@ -15,7 +15,8 @@ use Assetic\Asset\FileAsset;
  * @ORM\DiscriminatorMap({"media" = "Media", "image" = "Image", "file" = "File", "slide" = "Slide" , "video" = "Video"})
  * @ORM\HasLifecycleCallbacks
  */
-abstract class Media{
+abstract class Media
+{
 
     /**
      * @ORM\Id
@@ -63,20 +64,20 @@ abstract class Media{
 
     protected $content;
     protected $context;
-    
+
     /**
      * @ORM\Column(type="integer", nullable="true")
      */
     protected $filesize;
-    
+
     /**
      * @ORM\Column(type="string")
      */
     protected $classtype;
 
-    public function __construct($context = null)
+    public function __construct($context = NULL)
     {
-        if (null !== $context) {
+        if (NULL !== $context) {
             $this->setContext($context);
         }
         $this->setCreatedAt(new \DateTime());
@@ -87,26 +88,26 @@ abstract class Media{
     {
         $this->id = $id;
     }
-    
+
     public function getId()
     {
-    	return $this->id;
+        return $this->id;
     }
-    
+
     public function getFileSize()
     {
-    	$size = $this->filesize;
-    	if($size < 1024) return $size."b";
-    	else{
-    		$help = $size/1024;
-    		if($help<1024) return round($help,1)."kb";
-    		else return round(($help/1024), 1)."mb";
-    	}
+        $size = $this->filesize;
+        if ($size < 1024) return $size . "b";
+        else {
+            $help = $size / 1024;
+            if ($help < 1024) return round($help, 1) . "kb";
+            else return round(($help / 1024), 1) . "mb";
+        }
     }
-    
+
     public function setFileSize($filesize)
     {
-    	$this->filesize = $filesize;
+        $this->filesize = $filesize;
     }
 
     /**
@@ -142,7 +143,7 @@ abstract class Media{
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -162,13 +163,13 @@ abstract class Media{
     /**
      * Get contentType
      *
-     * @return string 
+     * @return string
      */
     public function getContentType()
     {
         return $this->contentType;
     }
-    
+
     /**
      * Get contentType
      *
@@ -176,10 +177,10 @@ abstract class Media{
      */
     public function getContentTypeShort()
     {
-    	$contentType = $this->contentType;
-    	$array = explode("/", $contentType);
-    	$contentType = end($array);
-    	return $contentType;
+        $contentType = $this->contentType;
+        $array       = explode("/", $contentType);
+        $contentType = end($array);
+        return $contentType;
     }
 
     /**
@@ -256,7 +257,7 @@ abstract class Media{
     /**
      * Get content
      *
-     * @return mixed 
+     * @return mixed
      */
     public function getContent()
     {
@@ -276,7 +277,7 @@ abstract class Media{
     /**
      * Get gallery
      *
-     * @return Kunstmaan\MediaBundle\Entity\Folder 
+     * @return Kunstmaan\MediaBundle\Entity\Folder
      */
     public function getGallery()
     {
@@ -304,24 +305,26 @@ abstract class Media{
     }
 
 
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->show();
     }
 
 
-    public function show($format=null, $options = array())
+    public function show($format = NULL, $options = array())
     {
-        $path = $this->getContext()."/";
-        $path = $path.$this->getUuid();
-        if(isset($format)){
-            $path = $path."_".$format;
+        $path = $this->getContext() . "/";
+        $path = $path . $this->getUuid();
+        if (isset($format)) {
+            $path = $path . "_" . $format;
         }
-        $path = $path.".".\Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser::guess($this->getContentType());
+        $path = $path . "." . \Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser::guess($this->getContentType());
         return $path;
     }
 
-    public function getClassType(){
-    	return $this->classtype;
+    public function getClassType()
+    {
+        return $this->classtype;
     }
 
     /**

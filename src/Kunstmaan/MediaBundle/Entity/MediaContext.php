@@ -56,6 +56,7 @@ class MediaContext
     /**
      * @param string $name
      * @param array $format
+     *
      * @return void
      */
     public function addFormat($name, array $format)
@@ -65,6 +66,7 @@ class MediaContext
 
     /**
      * @param string $name
+     *
      * @return boolean
      */
     public function hasFormat($name)
@@ -74,11 +76,12 @@ class MediaContext
 
     /**
      * @param string $name
+     *
      * @return string|boolean
      */
     public function getFormat($name)
     {
-        return $this->hasFormat($name) ? $this->formats[$name] : false;
+        return $this->hasFormat($name) ? $this->formats[$name] : FALSE;
     }
 
     /**

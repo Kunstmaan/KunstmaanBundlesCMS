@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="media_gallery_file")
  * @ORM\HasLifecycleCallbacks
  */
-class FileGallery extends Folder{
+class FileGallery extends Folder
+{
 
     /**
      * @ORM\Id
@@ -26,7 +27,8 @@ class FileGallery extends Folder{
         parent::__construct($em);
     }
 
-    public function getStrategy(){
+    public function getStrategy()
+    {
         return new \Kunstmaan\MediaBundle\Helper\FileGalleryStrategy();
     }
 }

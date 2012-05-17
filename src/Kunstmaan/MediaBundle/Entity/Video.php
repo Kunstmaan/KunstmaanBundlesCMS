@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * Kunstmaan\MediaBundle\Entity\Video
  * Class that defines a video in the system
  *
- * @ORM\Table("media_video")
  * @ORM\Entity
+ * @ORM\Table(name="media_video")
  */
 class Video extends Media
 {
