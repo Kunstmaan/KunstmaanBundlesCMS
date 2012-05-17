@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
 use Kunstmaan\MediaBundle\Helper\FolderStrategy;
@@ -21,7 +22,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\Loggable
  */
-class Folder
+class Folder extends AbstractEntity
 {
 
     /**
