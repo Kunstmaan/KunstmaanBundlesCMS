@@ -3,6 +3,8 @@
 namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Assetic\Asset\FileAsset;
 
 /**
@@ -15,15 +17,8 @@ use Assetic\Asset\FileAsset;
  * @ORM\DiscriminatorMap({"media" = "Media", "image" = "Image", "file" = "File", "slide" = "Slide" , "video" = "Video"})
  * @ORM\HasLifecycleCallbacks
  */
-abstract class Media
+abstract class Media extends AbstractEntity
 {
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
     /**
      * @ORM\Column(type="string", unique=true, length=255)
@@ -318,7 +313,7 @@ abstract class Media
         if (isset($format)) {
             $path = $path . "_" . $format;
         }
-        $path = $path . "." . \Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser::guess($this->getContentType());
+        $path = $path . "." . ExtensionGuesser::guess($this->getContentType());
         return $path;
     }
 

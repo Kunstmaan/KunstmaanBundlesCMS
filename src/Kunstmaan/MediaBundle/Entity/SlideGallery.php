@@ -16,13 +16,6 @@ use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
 class SlideGallery extends Folder
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);

@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Image
@@ -13,18 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Image extends Media
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
-     * @ORM\Column(type="string", unique=true, length=255)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $uuid;
 
     /**
      * @ORM\ManyToOne(targetEntity="Image", inversedBy="edits")
@@ -46,7 +35,7 @@ class Image extends Media
     public function __construct()
     {
         parent::__construct();
-        $this->edits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->edits = new ArrayCollection();
         $this->classtype = "Image";
     }
 
@@ -95,7 +84,7 @@ class Image extends Media
      *
      * @param Kunstmaan\MediaBundle\Entity\Image $edits
      */
-    public function addImage(\Kunstmaan\MediaBundle\Entity\Image $edits)
+    public function addImage(Image $edits)
     {
         $this->edits[] = $edits;
     }

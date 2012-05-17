@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
 use Kunstmaan\MediaBundle\Helper\FolderStrategy;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,13 +23,6 @@ use Gedmo\Translatable\Translatable;
  */
 class Folder
 {
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
     /**
      * @Gedmo\Translatable
@@ -437,7 +431,7 @@ class Folder
 
     public function getFormType($gallery = NULL)
     {
-        return new \Kunstmaan\MediaBundle\Form\FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
+        return new FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
     }
 
     public function getType()

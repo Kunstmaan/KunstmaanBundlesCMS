@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\MediaBundle\Helper\FileGalleryStrategy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,13 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
 class FileGallery extends Folder
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
@@ -29,6 +23,6 @@ class FileGallery extends Folder
 
     public function getStrategy()
     {
-        return new \Kunstmaan\MediaBundle\Helper\FileGalleryStrategy();
+        return new FileGalleryStrategy();
     }
 }
