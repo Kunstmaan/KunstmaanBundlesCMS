@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Slide extends Media
 {
 
+    const CONTEXT = "kunstmaan_media_code";
+
     /**
      * @ORM\Column(type="string")
      */
@@ -31,7 +33,7 @@ class Slide extends Media
      */
     public function getContext()
     {
-        return "kunstmaan_media_code";
+        return $this::CONTEXT;
     }
 
     public function show($format=null, $options = array())

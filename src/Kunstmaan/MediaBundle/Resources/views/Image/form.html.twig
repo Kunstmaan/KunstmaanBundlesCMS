@@ -1,13 +1,17 @@
+{% form_theme form 'KunstmaanMediaBundle:Form:fields.html.twig' %}
+
+
 <form action="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
-        <div class="clearfix">
-            {{ form_errors(form) }}
-            <label for="xlInput3">{{ 'media.image.image'|trans }}</label>
-            <div class="input">
-                {{ form_widget(form.media) }}
-            </div>
-            {{ form_rest(form) }}
-        </div>
+
+        {{ form_widget(form.media) }}
+
+        {% if form.metadata is defined %}
+            {{ form_widget(form.metadata) }}
+        {% endif %}
+
+        {{ form_rest(form) }}
+
         <div class="actions">
             <input class="btn primary type" type="submit" value="{{ 'media.image.add' | trans }}">
             <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="{{  'form.cancel' | trans }}" />

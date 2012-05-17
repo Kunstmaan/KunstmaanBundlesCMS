@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 class File extends Media
 {
 
+    const CONTEXT = "kunstmaan_media_file";
+
     public function __construct()
     {
         parent::__construct();
@@ -26,6 +28,6 @@ class File extends Media
      */
     public function getContext()
     {
-        return "kunstmaan_media_file";
+        return $this::CONTEXT;
     }
 }

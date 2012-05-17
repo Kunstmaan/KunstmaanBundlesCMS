@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Image extends Media
 {
 
+    const CONTEXT = "kunstmaan_media_image";
+
     /**
      * @ORM\ManyToOne(targetEntity="Image", inversedBy="edits")
      * @ORM\JoinColumn(name="original", referencedColumnName="id", nullable=true, onDelete="SET NULL")
@@ -39,7 +41,7 @@ class Image extends Media
      */
     public function getContext()
     {
-        return "kunstmaan_media_image";
+        return $this::CONTEXT;
     }
 
     /**

@@ -70,7 +70,21 @@ class MediaController extends Controller
 
         $request = $this->getRequest();
         $helper  = new MediaHelper();
-        $form    = $this->createForm(new MediaType(), $helper);
+
+        $formbuilder = $this->createFormBuilder();
+        $formbuilder->add('media', new MediaType());
+        $bindingarray = array('media' => $helper);
+
+        $metadataClass = $this->getMetadataClass(File::CONTEXT);
+
+        if (isset($metadataClass)) {
+            $metadata = new $metadataClass();
+            $formbuilder->add('metadata', $metadata->getDefaultAdminType());
+            $bindingarray['metadata'] = $metadata;
+        }
+
+        $formbuilder->setData($bindingarray);
+        $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
@@ -82,6 +96,12 @@ class MediaController extends Controller
                     $file->setGallery($gallery);
 
                     $em->getRepository('KunstmaanMediaBundle:Media')->save($file, $em);
+
+                    if (isset($metadata)) {
+                        $metadata->setMedia($file);
+                        $em->persist($metadata);
+                        $em->flush();
+                    }
 
                     return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
                                                                                                             'slug' => $gallery->getSlug()
@@ -111,7 +131,21 @@ class MediaController extends Controller
 
         $request       = $this->getRequest();
         $picturehelper = new MediaHelper();
-        $form          = $this->createForm(new MediaType(), $picturehelper);
+
+        $formbuilder = $this->createFormBuilder();
+        $formbuilder->add('media', new MediaType());
+        $bindingarray = array('media' => $picturehelper);
+
+        $metadataClass = $this->getMetadataClass(Image::CONTEXT);
+
+        if (isset($metadataClass)) {
+            $metadata = new $metadataClass();
+            $formbuilder->add('metadata', $metadata->getDefaultAdminType());
+            $bindingarray['metadata'] = $metadata;
+        }
+
+        $formbuilder->setData($bindingarray);
+        $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
@@ -123,6 +157,12 @@ class MediaController extends Controller
                     $picture->setGallery($gallery);
 
                     $em->getRepository('KunstmaanMediaBundle:Media')->save($picture, $em);
+
+                    if (isset($metadata)) {
+                        $metadata->setMedia($picture);
+                        $em->persist($metadata);
+                        $em->flush();
+                    }
 
                     return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
                                                                                                                                               'slug' => $gallery->getSlug()
@@ -151,14 +191,35 @@ class MediaController extends Controller
         $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
 
         $request = $this->getRequest();
-        $Video   = new Video();
-        $Video->setGallery($gallery);
-        $form = $this->createForm(new VideoType(), $Video);
+        $video   = new Video();
+
+        $formbuilder = $this->createFormBuilder();
+        $formbuilder->add('media', new VideoType());
+        $bindingarray = array('media' => $video);
+
+        $metadataClass = $this->getMetadataClass(Video::CONTEXT);
+
+        if (isset($metadataClass)) {
+            $metadata = new $metadataClass();
+            $formbuilder->add('metadata', $metadata->getDefaultAdminType());
+            $bindingarray['metadata'] = $metadata;
+        }
+
+        $formbuilder->setData($bindingarray);
+        $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
             if ($form->isValid()) {
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($Video, $em);
+                $video->setGallery($gallery);
+
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($video, $em);
+
+                if (isset($metadata)) {
+                    $metadata->setMedia($video);
+                    $em->persist($metadata);
+                    $em->flush();
+                }
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
                                                                                                                                           'slug' => $gallery->getSlug()
@@ -188,13 +249,34 @@ class MediaController extends Controller
 
         $request = $this->getRequest();
         $slide   = new Slide();
-        $slide->setGallery($gallery);
-        $form = $this->createForm(new SlideType(), $slide);
+
+        $formbuilder = $this->createFormBuilder();
+        $formbuilder->add('media', new SlideType());
+        $bindingarray = array('media' => $slide);
+
+        $metadataClass = $this->getMetadataClass(Slide::CONTEXT);
+
+        if (isset($metadataClass)) {
+            $metadata = new $metadataClass();
+            $formbuilder->add('metadata', $metadata->getDefaultAdminType());
+            $bindingarray['metadata'] = $metadata;
+        }
+
+        $formbuilder->setData($bindingarray);
+        $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
             if ($form->isValid()) {
+                $slide->setGallery($gallery);
+
                 $em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
+
+                if (isset($metadata)) {
+                    $metadata->setMedia($picture);
+                    $em->persist($slide);
+                    $em->flush();
+                }
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
                                                                                                                                           'slug' => $gallery->getSlug()
@@ -208,6 +290,13 @@ class MediaController extends Controller
             'gallery'   => $gallery,
             'galleries' => $galleries
         );
+    }
+
+    private function getMetadataClass($context = File::CONTEXT)
+    {
+        $mediaManager = $this->get('kunstmaan_media.manager');
+        $imageContext = $mediaManager->getContext($context);
+        return $imageContext->getMetadataClass();
     }
 
 }

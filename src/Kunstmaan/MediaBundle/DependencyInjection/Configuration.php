@@ -306,6 +306,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->children()
                             ->scalarNode('provider')->end()
+                            ->scalarNode('metadata_class')->end()
                             ->arrayNode('generator')
                                 ->children()
                                     ->scalarNode('path')->end()
