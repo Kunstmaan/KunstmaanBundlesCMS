@@ -25,7 +25,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.0.*",
-        "kunstmaan/adminlist-bundle": "dev-tests/setuptraviscomposer",
+        "kunstmaan/adminlist-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminNodeBundle": "" }
