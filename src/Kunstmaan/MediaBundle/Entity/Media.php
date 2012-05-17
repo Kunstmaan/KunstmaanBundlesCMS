@@ -58,7 +58,6 @@ abstract class Media extends AbstractEntity
     protected $gallery;
 
     protected $content;
-    protected $context;
 
     /**
      * @ORM\Column(type="integer", nullable="true")
@@ -70,24 +69,18 @@ abstract class Media extends AbstractEntity
      */
     protected $classtype;
 
-    public function __construct($context = NULL)
+    public function __construct()
     {
-        if (NULL !== $context) {
-            $this->setContext($context);
-        }
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
+    /**
+     * Get context
+     *
+     * @return string
+     */
+    public abstract function getContext();
 
     public function getFileSize()
     {
@@ -278,27 +271,6 @@ abstract class Media extends AbstractEntity
     {
         return $this->gallery;
     }
-
-    /**
-     * Get context
-     *
-     * @return string
-     */
-    public function getContext()
-    {
-        return $this->context;
-    }
-
-    /**
-     * Set context
-     *
-     * @param string $context
-     */
-    public function setContext($context)
-    {
-        $this->context = $context;
-    }
-
 
     public function getUrl()
     {

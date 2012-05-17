@@ -15,12 +15,6 @@ class Slide extends Media
 {
 
     /**
-     * @var string $context
-     *
-     */
-    protected $context = "kunstmaan_media_code";
-    
-    /**
      * @ORM\Column(type="string")
      */
     protected $type;
@@ -29,6 +23,16 @@ class Slide extends Media
     {
         parent::__construct();
         $this->classtype = "Slide";
+    }
+
+    /**
+     * Get context
+     *
+     * @return string
+     */
+    public function getContext()
+    {
+        return "kunstmaan_media_code";
     }
 
     public function show($format=null, $options = array())

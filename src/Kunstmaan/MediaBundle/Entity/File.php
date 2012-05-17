@@ -14,15 +14,19 @@ use Doctrine\ORM\Mapping as ORM;
 class File extends Media
 {
 
-    /**
-     * @var string $context
-     *
-     */
-    protected $context = "kunstmaan_media_file";
-
     public function __construct()
     {
         parent::__construct();
         $this->classtype = "File";
+    }
+
+    /**
+     * Get context
+     *
+     * @return string
+     */
+    public function getContext()
+    {
+        return "kunstmaan_media_file";
     }
 }

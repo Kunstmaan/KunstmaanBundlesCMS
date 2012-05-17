@@ -26,17 +26,21 @@ class Image extends Media
      */
     protected $edits;
 
-    /**
-     * @var string $context
-     *
-     */
-    protected $context = "kunstmaan_media_image";
-
     public function __construct()
     {
         parent::__construct();
         $this->edits = new ArrayCollection();
         $this->classtype = "Image";
+    }
+
+    /**
+     * Get context
+     *
+     * @return string
+     */
+    public function getContext()
+    {
+        return "kunstmaan_media_image";
     }
 
     /**
