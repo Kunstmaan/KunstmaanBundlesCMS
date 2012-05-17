@@ -71,7 +71,8 @@
         <form action="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}" method="post" enctype="multipart/form-data">
        <!-- Add an edit button, passing the HTML id of the image and the public URL ot the image -->
             <input name="picture" type="hidden" value="" />
-            <div class="actions"><input type="image" class="btn primary type" value="{{ 'media.image.edit' | trans }}" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
+            <div class="actions">
+                <input type="image" class="btn primary type" value="{{ 'media.image.edit' | trans }}" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
                 <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
                 <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="{{ 'form.cancel'|trans }}" />
             </div>
