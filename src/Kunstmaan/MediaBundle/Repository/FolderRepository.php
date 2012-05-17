@@ -9,12 +9,20 @@ use Doctrine\ORM\EntityNotFoundException;
 
 class FolderRepository extends EntityRepository
 {
+    /**
+     * @param \Kunstmaan\MediaBundle\Entity\Folder $gallery
+     * @param \Doctrine\ORM\EntityManager $em
+     */
     public function save(Folder $gallery, EntityManager $em)
     {
         $em->persist($gallery);
         $em->flush();
     }
 
+    /**
+     * @param \Kunstmaan\MediaBundle\Entity\Folder $gallery
+     * @param \Doctrine\ORM\EntityManager $em
+     */
     public function delete(Folder $gallery, EntityManager $em)
     {
         $this->deleteFiles($gallery, $em);
@@ -23,6 +31,10 @@ class FolderRepository extends EntityRepository
         $em->flush();
     }
 
+    /**
+     * @param \Kunstmaan\MediaBundle\Entity\Folder $gallery
+     * @param \Doctrine\ORM\EntityManager $em
+     */
     public function deleteFiles(Folder $gallery, EntityManager $em)
     {
         foreach ($gallery->getFiles() as $item) {
@@ -30,6 +42,10 @@ class FolderRepository extends EntityRepository
         }
     }
 
+    /**
+     * @param \Kunstmaan\MediaBundle\Entity\Folder $gallery
+     * @param \Doctrine\ORM\EntityManager $em
+     */
     public function deleteChildren(Folder $gallery, EntityManager $em)
     {
         foreach ($gallery->getChildren() as $child) {
@@ -39,6 +55,11 @@ class FolderRepository extends EntityRepository
         }
     }
 
+    /**
+     * @param null $limit
+     *
+     * @return array
+     */
     public function getAllFolders($limit = NULL)
     {
         $qb = $this->createQueryBuilder('folder')->select('folder')->where('folder.parent is null')->orderby('folder.sequencenumber');
@@ -47,6 +68,11 @@ class FolderRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param null $limit
+     *
+     * @return array
+     */
     public function getAllFoldersByType($limit = NULL)
     {
         $all    = $this->getAllFolders($limit);
@@ -58,6 +84,13 @@ class FolderRepository extends EntityRepository
         return $bytype;
     }
 
+    /**
+     * @param $folder_id
+     * @param \Doctrine\ORM\EntityManager $em
+     *
+     * @return object
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     */
     public function getFolder($folder_id, EntityManager $em)
     {
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->find($folder_id);
