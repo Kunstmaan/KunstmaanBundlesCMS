@@ -28,13 +28,43 @@ class SlideController extends Controller
         $slide = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
         $slide->setContent($slide->getUuid());
         $request = $this->getRequest();
-        $form = $this->createForm(new SlideType(), $slide);
+
+        $formbuilder = $this->createFormBuilder();
+        $formbuilder->add('media', new SlideType());
+        $bindingarray = array('media' => $slide);
+
+        $metadataClass = $this->getMetadataClass(Slide::CONTEXT);
+        if (isset($metadataClass)) {
+            $classMetadata = $em->getClassMetadata($metadataClass);
+            $repo = new EntityRepository($em, $classMetadata);
+
+            $result = $repo->findByMedia($video);
+
+            if(!empty($result)) {
+                $metadata = $result[0];
+            } else {
+                $metadata = new $metadataClass();
+            }
+
+            $formbuilder->add('metadata', $metadata->getDefaultAdminType());
+            $bindingarray['metadata'] = $metadata;
+        }
+
+        $formbuilder->setData($bindingarray);
+        $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
             $form->bindRequest($request);
             if ($form->isValid()){
                 $slide->setUuid($slide->getContent());
+
                 $em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
+
+                if (isset($metadata)) {
+                    $metadata->setMedia($slide);
+                    $em->persist($metadata);
+                    $em->flush();
+                }
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $slide->getId() )));
             }
@@ -48,5 +78,12 @@ class SlideController extends Controller
             'gallery' => $slide->getGallery(),
             'galleries' => $galleries
         );
+    }
+
+    private function getMetadataClass($context = File::CONTEXT)
+    {
+        $mediaManager = $this->get('kunstmaan_media.manager');
+        $imageContext = $mediaManager->getContext($context);
+        return $imageContext->getMetadataClass();
     }
 }
