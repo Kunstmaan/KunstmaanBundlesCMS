@@ -12,16 +12,9 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanAdminListBundle"
-        }
-    ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.0.x-dev",
-        "kunstmaan/adminlist-bundle": "dev-tests/setuptraviscomposer"
+        "symfony/symfony": "2.0.x-dev"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminListBundle": "" }
