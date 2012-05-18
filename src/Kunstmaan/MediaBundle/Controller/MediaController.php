@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
@@ -54,6 +55,25 @@ class MediaController extends Controller
         $em      = $this->getDoctrine()->getEntityManager();
         $media   = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
         $gallery = $media->getGallery();
+
+        $mediaManager = $this->get('kunstmaan_media.manager');
+        $mediaContext = $mediaManager->getContext($media->getContext());
+        $metadataClass = $mediaContext->getMetadataClass();
+
+        if (isset($metadataClass)) {
+            $classMetadata = $em->getClassMetadata($metadataClass);
+            $repo = new EntityRepository($em, $classMetadata);
+
+            $result = $repo->findByMedia($media->getId());
+
+            if(!empty($result)) {
+                $metadata = $result[0];
+
+                $em->remove($metadata);
+                $em->flush();
+            }
+        }
+
         $em->getRepository('KunstmaanMediaBundle:Media')->delete($media, $em);
 
         return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),

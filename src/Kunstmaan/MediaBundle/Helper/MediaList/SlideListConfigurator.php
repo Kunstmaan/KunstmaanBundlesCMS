@@ -62,6 +62,11 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
 
     function getDeleteUrlFor($item)
     {
-        // TODO: Implement getDeleteUrlFor() method.
+        return array(
+            'path'      => 'KunstmaanMediaBundle_media_delete',
+            'params'    => array(
+                'media_id'    => $item->getId()
+            )
+        );
     }
 }

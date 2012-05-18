@@ -298,4 +298,5 @@ abstract class Media extends AbstractEntity
     {
         $this->setUpdatedAt(new \DateTime());
     }
+
 }
