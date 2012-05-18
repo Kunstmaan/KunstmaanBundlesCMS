@@ -52,4 +52,9 @@ class FileListConfigurator extends AbstractAdminListConfigurator
         parent::adaptQueryBuilder($querybuilder, $params);
         $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
     }
+
+    function getDeleteUrlFor($item)
+    {
+        // TODO: Implement getDeleteUrlFor() method.
+    }
 }
