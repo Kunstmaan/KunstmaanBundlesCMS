@@ -17,7 +17,7 @@ services:
             -  { name: twig.extension }
 
     pageparts.twig.extension:
-            class: Kunstmaan\PagePartBundle\Twig\Extension\PagepartTwigExtension
+            class: Kunstmaan\PagePartBundle\Twig\Extension\PagePartTwigExtension
             arguments:
                 - @doctrine.orm.entity_manager
             tags:
