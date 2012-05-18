@@ -88,4 +88,9 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator{
 
         return $result;
     }
+
+    function getDeleteUrlFor($item)
+    {
+        // TODO: Implement getDeleteUrlFor() method.
+    }
 }
