@@ -12,48 +12,6 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanAdminBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanAdminListBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanAdminNodeBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanMediaBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanViewBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanSentryBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanPagePartBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanMediaPagePartBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanFormBundle"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/Kunstmaan/KunstmaanSearchBundle"
-        }
-    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.0.*",
