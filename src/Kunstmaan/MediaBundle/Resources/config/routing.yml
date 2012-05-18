@@ -27,6 +27,11 @@ KunstmaanMediaBundle_slide:
     resource: "@KunstmaanMediaBundle/Controller/SlideController.php"
     type:     annotation
     prefix:   /admin/media/slide
+
+KunstmaanMediaBundle_metadata:
+    resource: "@KunstmaanMediaBundle/Controller/MediaMetadataController.php"
+    type:     annotation
+    prefix:   /admin/media/metadata
         
 _imagine:
     resource: .

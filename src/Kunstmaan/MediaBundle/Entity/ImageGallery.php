@@ -1,8 +1,9 @@
 <?php
 
-namespace  Kunstmaan\MediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\MediaBundle\Helper\ImageGalleryStrategy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,21 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="media_gallery_image")
  * @ORM\HasLifecycleCallbacks
  */
-class ImageGallery extends Folder{
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+class ImageGallery extends Folder
+{
 
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
     }
 
-    public function getStrategy(){
-        return new \Kunstmaan\MediaBundle\Helper\ImageGalleryStrategy();
+    public function getStrategy()
+    {
+        return new ImageGalleryStrategy();
     }
 }

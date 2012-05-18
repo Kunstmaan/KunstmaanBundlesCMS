@@ -1,38 +1,39 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
-{% block subsidebar %}
-    {% include 'KunstmaanMediaBundle:Folder:sidebar.html.twig' %}
-{% endblock %}
-
-{% block subbreadcrumb %}
-    {% for parent in gallery.parents %}
-    	<li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name| trans}}</a></li>
-    {% endfor %}
-    <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}">{{ gallery.name|trans }}</a></li>
-    <li class="active">{{ media.name }}</li>
+{% block header %}
+    <div class="page-header">
+        <h1>{{ 'media.file.file'|trans }} <small>{{ media.name }}</small></h1>
+    </div>
 {% endblock %}
 
 {% block content %}
-    <div class="page-header">
-        <h1>{{ 'media.file.file'|trans }} <small>{{ media.name }}
-        </small></h1>
-    </div>
     <div>
 
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
         <div class="actions">
-                    <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">{{ 'media.file.open'|trans }}</a>
-                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
+            <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">{{ 'media.file.open'|trans }}</a>
+            {% if hasmetadata %}
+                <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn primary type">{{ 'media.file.editmetadata' | trans }}</a>
+            {% endif %}
+            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
         </div>
-		<ul>
-		    <li>Name: {{ media.name }} </li>
-		    <li>Content-type: {{ media.contentType }}</li>
-		    <li>Added: {{ media.createdat|date|escape }}</li>
-		</ul>
+
+        <ul>
+            <li>Name: {{ media.name }} </li>
+            <li>Content-type: {{ media.contentType }}</li>
+            <li>Added: {{ media.createdat|date|escape }}</li>
+        </ul>
+
         <div class="actions">
             <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">{{ 'media.file.open'|trans }}</a>
+            {% if hasmetadata %}
+                <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn primary type">{{ 'media.file.editmetadata' | trans }}</a>
+            {% endif %}
             <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
         </div>
+
     </div>
 {% endblock %}

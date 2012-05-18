@@ -1,0 +1,7 @@
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+
+{% block title %}{{ 'media.metadata.edit' | trans }}{% endblock%}
+
+{% block content %}
+    {% include 'KunstmaanMediaBundle:MediaMetadata:editform.html.twig' with { 'form': form } %}
+{% endblock %}

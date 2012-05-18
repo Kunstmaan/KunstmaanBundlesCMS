@@ -1,8 +1,10 @@
 <?php
 
-namespace  Kunstmaan\MediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Assetic\Asset\FileAsset;
 
 /**
@@ -15,14 +17,8 @@ use Assetic\Asset\FileAsset;
  * @ORM\DiscriminatorMap({"media" = "Media", "image" = "Image", "file" = "File", "slide" = "Slide" , "video" = "Video"})
  * @ORM\HasLifecycleCallbacks
  */
-abstract class Media{
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+abstract class Media extends AbstractEntity
+{
 
     /**
      * @ORM\Column(type="string", unique=true, length=255)
@@ -62,51 +58,39 @@ abstract class Media{
     protected $gallery;
 
     protected $content;
-    protected $context;
-    
+
     /**
      * @ORM\Column(type="integer", nullable="true")
      */
     protected $filesize;
-    
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $classtype;
 
-    public function __construct($context = null)
+    public function __construct()
     {
-        if (null !== $context) {
-            $this->setContext($context);
-        }
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-    
-    public function getId()
-    {
-    	return $this->id;
-    }
-    
+    /**
+     * Get context
+     *
+     * @return string
+     */
+    public abstract function getContext();
+
     public function getFileSize()
     {
-    	$size = $this->filesize;
-    	if($size < 1024) return $size."b";
-    	else{
-    		$help = $size/1024;
-    		if($help<1024) return round($help,1)."kb";
-    		else return round(($help/1024), 1)."mb";
-    	}
+        $size = $this->filesize;
+        if ($size < 1024) return $size . "b";
+        else {
+            $help = $size / 1024;
+            if ($help < 1024) return round($help, 1) . "kb";
+            else return round(($help / 1024), 1) . "mb";
+        }
     }
-    
+
     public function setFileSize($filesize)
     {
-    	$this->filesize = $filesize;
+        $this->filesize = $filesize;
     }
 
     /**
@@ -142,7 +126,7 @@ abstract class Media{
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -162,13 +146,13 @@ abstract class Media{
     /**
      * Get contentType
      *
-     * @return string 
+     * @return string
      */
     public function getContentType()
     {
         return $this->contentType;
     }
-    
+
     /**
      * Get contentType
      *
@@ -176,10 +160,10 @@ abstract class Media{
      */
     public function getContentTypeShort()
     {
-    	$contentType = $this->contentType;
-    	$array = explode("/", $contentType);
-    	$contentType = end($array);
-    	return $contentType;
+        $contentType = $this->contentType;
+        $array       = explode("/", $contentType);
+        $contentType = end($array);
+        return $contentType;
     }
 
     /**
@@ -256,7 +240,7 @@ abstract class Media{
     /**
      * Get content
      *
-     * @return mixed 
+     * @return mixed
      */
     public function getContent()
     {
@@ -276,52 +260,35 @@ abstract class Media{
     /**
      * Get gallery
      *
-     * @return Kunstmaan\MediaBundle\Entity\Folder 
+     * @return Kunstmaan\MediaBundle\Entity\Folder
      */
     public function getGallery()
     {
         return $this->gallery;
     }
 
-    /**
-     * Get context
-     *
-     * @return string
-     */
-    public function getContext()
+    public function getUrl()
     {
-        return $this->context;
-    }
-
-    /**
-     * Set context
-     *
-     * @param string $context
-     */
-    public function setContext($context)
-    {
-        $this->context = $context;
-    }
-
-
-    public function getUrl() {
         return $this->show();
     }
 
 
-    public function show($format=null, $options = array())
+    public function show($format = NULL, $options = array())
     {
-        $path = $this->getContext()."/";
-        $path = $path.$this->getUuid();
-        if(isset($format)){
-            $path = $path."_".$format;
+        $path = $this->getContext() . "/";
+        $path = $path . $this->getUuid();
+        if (isset($format)) {
+            $path = $path . "_" . $format;
         }
-        $path = $path.".".\Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser::guess($this->getContentType());
+        $path = $path . "." . ExtensionGuesser::guess($this->getContentType());
         return $path;
     }
 
-    public function getClassType(){
-    	return $this->classtype;
+    public function getClassType()
+    {
+        $class = explode('\\', get_class($this));
+        $classname = end($class);
+        return $classname;
     }
 
     /**
@@ -331,4 +298,5 @@ abstract class Media{
     {
         $this->setUpdatedAt(new \DateTime());
     }
+
 }

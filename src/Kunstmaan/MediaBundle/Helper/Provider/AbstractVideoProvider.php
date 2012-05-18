@@ -15,7 +15,7 @@ abstract class AbstractVideoProvider extends AbstractProvider
      */
     public function prepareMedia(Media $media)
     {
-        if (null == $media->getUuid()) {
+        if (NULL == $media->getUuid()) {
             $uuid = $this->uuidGenerator->generateUuid($media);
             $media->setUuid($uuid);
         }
@@ -57,7 +57,7 @@ abstract class AbstractVideoProvider extends AbstractProvider
     /**
      * {@inheritDoc}
      */
-    public function getMediaUrl(Media $media, $format = null)
+    public function getMediaUrl(Media $media, $format = NULL)
     {
         $path = $this->generateRelativePath($media, $format);
 

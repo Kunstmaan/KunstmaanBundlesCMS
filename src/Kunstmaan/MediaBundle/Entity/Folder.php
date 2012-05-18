@@ -1,8 +1,10 @@
 <?php
 
-namespace  Kunstmaan\MediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
 use Kunstmaan\MediaBundle\Helper\FolderStrategy;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,28 +22,22 @@ use Gedmo\Translatable\Translatable;
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\Loggable
  */
-class Folder{
+class Folder extends AbstractEntity
+{
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @Gedmo\Translatable
+     * @ORM\Column(type="string")
      */
-    protected $id;
-    
-   /**
-    * @Gedmo\Translatable
-    * @ORM\Column(type="string")
-    */
     protected $name;
-    
+
     /**
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
      */
     protected $locale;
-    
+
     /**
      * @ORM\Column(type="string")
      */
@@ -73,54 +69,58 @@ class Folder{
      * @ORM\Column(type="datetime")
      */
     protected $updated;
-    
+
     /**
      * @ORM\Column(type="boolean")
      */
-	protected $candelete;
-	
-	/**
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $rel;
-	
-	/**
-	 * @ORM\Column(type="integer")
-	 */
-	protected $sequencenumber;
-    
-	protected $em;
-	
+    protected $candelete;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $rel;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $sequencenumber;
+
+    protected $em;
+
     public function __construct(EntityManager $em)
     {
-    	$this->em = $em;
+        $this->em       = $em;
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->files    = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
-        $this->setCanDelete(true);
+        $this->setCanDelete(TRUE);
     }
 
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setName($name){
+    public function setName($name)
+    {
         $this->name = $name;
         $this->setSlug($this->name);
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
-    
+
     public function setTranslatableLocale($locale)
     {
-    	$this->locale = $locale;
+        $this->locale = $locale;
     }
 
     /**
@@ -132,7 +132,7 @@ class Folder{
     {
         $this->slug = $slug;
     }
-    
+
     /**
      * Get slug
      *
@@ -140,64 +140,68 @@ class Folder{
      */
     public function getSlug()
     {
-    	return $this->slug;
+        return $this->slug;
     }
-    
-    public function setCanDelete($bool){
-    	$this->candelete = $bool;
+
+    public function setCanDelete($bool)
+    {
+        $this->candelete = $bool;
     }
-    
-    public function canDelete(){
-    	return $this->candelete;
+
+    public function canDelete()
+    {
+        return $this->candelete;
     }
-    
-    public function setRel($rel){
-    	$this->rel = $rel;
+
+    public function setRel($rel)
+    {
+        $this->rel = $rel;
     }
-    
-    public function getRel(){
-    	return $this->rel;
+
+    public function getRel()
+    {
+        return $this->rel;
     }
- 
+
     /**
-      * Set created
-      *
-      * @param datetime $created
-      */
-     public function setCreated($created)
-     {
-         $this->created = $created;
-     }
+     * Set created
+     *
+     * @param datetime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
 
-     /**
-      * Get created
-      *
-      * @return datetime
-      */
-     public function getCreated()
-     {
-         return $this->created;
-     }
+    /**
+     * Get created
+     *
+     * @return datetime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
 
-     /**
-      * Set updated
-      *
-      * @param datetime $updated
-      */
-     public function setUpdated($updated)
-     {
-         $this->updated = $updated;
-     }
+    /**
+     * Set updated
+     *
+     * @param datetime $updated
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
 
-     /**
-      * Get updated
-      *
-      * @return datetime
-      */
-     public function getUpdated()
-     {
-         return $this->updated;
-     }
+    /**
+     * Get updated
+     *
+     * @return datetime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
     /**
      * Set parent
@@ -212,7 +216,7 @@ class Folder{
     /**
      * Get parent
      *
-     * @return Kunstmaan\MediaBundle\Entity\Folder 
+     * @return Kunstmaan\MediaBundle\Entity\Folder
      */
     public function getParent()
     {
@@ -221,11 +225,11 @@ class Folder{
 
     public function getParents()
     {
-        $parent = $this->getParent();
-        $parents=array();
-        while($parent!=null){
+        $parent  = $this->getParent();
+        $parents = array();
+        while ($parent != NULL) {
             $parents[] = $parent;
-            $parent = $parent->getParent();
+            $parent    = $parent->getParent();
         }
         return array_reverse($parents);
     }
@@ -240,48 +244,54 @@ class Folder{
         $this->children[] = $children;
     }
 
-     /**
-      * Add children
-      *
-      * @param \Kunstmaan\MediaBundle\Entity\ImageGallery $children
-      */
-     public function addChild(Folder $child){
-         $this->children[] = $child;
-         $child->setParent($this);
-     }
+    /**
+     * Add children
+     *
+     * @param \Kunstmaan\MediaBundle\Entity\ImageGallery $children
+     */
+    public function addChild(Folder $child)
+    {
+        $this->children[] = $child;
+        $child->setParent($this);
+    }
 
 
-     public function getChildren(){
-         return $this->children;
-     }
-     
-     public function getNextSequence(){
-     	$children = $this->getChildren();
-     	$count = 0;
-     	foreach($children as $child){
-     		$count++;
-     	}
-     	return $count + 1;
-     }
+    public function getChildren()
+    {
+        return $this->children;
+    }
 
-     public function setChildren($children){
-         $this->children = $children;
-     }
-     
-     public function getSequencenumber(){
-     	return $this->sequencenumber;
-     }
-     
-     public function setSequencenumber($sequencenumber){
-     	$this->sequencenumber = $sequencenumber;
-     }
+    public function getNextSequence()
+    {
+        $children = $this->getChildren();
+        $count    = 0;
+        foreach ($children as $child) {
+            $count++;
+        }
+        return $count + 1;
+    }
 
-     public function disableChildrenLazyLoading()
-     {
-         if (is_object($this->children)) {
-             $this->children->setInitialized(true);
-         }
-     }
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+    public function getSequencenumber()
+    {
+        return $this->sequencenumber;
+    }
+
+    public function setSequencenumber($sequencenumber)
+    {
+        $this->sequencenumber = $sequencenumber;
+    }
+
+    public function disableChildrenLazyLoading()
+    {
+        if (is_object($this->children)) {
+            $this->children->setInitialized(TRUE);
+        }
+    }
 
     /**
      * Add files
@@ -296,13 +306,13 @@ class Folder{
     /**
      * Get files
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getFiles()
     {
         return $this->files;
     }
-    
+
     /**
      * Get images
      *
@@ -310,118 +320,124 @@ class Folder{
      */
     public function getImages()
     {
-    	$all = $this->files;
-    	$images = array();
-    	foreach($all as $file){
-    		if($file instanceof Image){
-    			$images[] = $file;
-    		}
-    	}
-    	return $images;
+        $all    = $this->files;
+        $images = array();
+        foreach ($all as $file) {
+            if ($file instanceof Image) {
+                $images[] = $file;
+            }
+        }
+        return $images;
     }
-    
-    public function hasImages(){
-    	if(count($this->getImages()) > 0){
-    		return true;
-    	}
-    	$help = false;
-    	foreach($this->getChildren() as $child){
-    		$help = $child->hasImages();
-    	}
-    	return $help;
+
+    public function hasImages()
+    {
+        if (count($this->getImages()) > 0) {
+            return TRUE;
+        }
+        $help = FALSE;
+        foreach ($this->getChildren() as $child) {
+            $help = $child->hasImages();
+        }
+        return $help;
     }
-    
+
     public function getFilesOnly()
     {
-    	$all = $this->files;
-    	$files = array();
-    	foreach($all as $file){
-    		if($file instanceof File){
-    			$files[] = $file;
-    		}
-    	}
-    	return $files;
+        $all   = $this->files;
+        $files = array();
+        foreach ($all as $file) {
+            if ($file instanceof File) {
+                $files[] = $file;
+            }
+        }
+        return $files;
     }
-    
-    public function hasFiles(){
-    	if(count($this->getFilesOnly()) > 0){
-    		return true;
-    	}
-    	$help = false;
-    	foreach($this->getChildren() as $child){
-    		$help = $child->hasFiles();
-    	}
-    	return $help;
+
+    public function hasFiles()
+    {
+        if (count($this->getFilesOnly()) > 0) {
+            return TRUE;
+        }
+        $help = FALSE;
+        foreach ($this->getChildren() as $child) {
+            $help = $child->hasFiles();
+        }
+        return $help;
     }
-    
+
     public function getSlidesOnly()
     {
-    	$all = $this->files;
-    	$files = array();
-    	foreach($all as $file){
-    		if($file instanceof Slide){
-    			$files[] = $file;
-    		}
-    	}
-    	return $files;
+        $all   = $this->files;
+        $files = array();
+        foreach ($all as $file) {
+            if ($file instanceof Slide) {
+                $files[] = $file;
+            }
+        }
+        return $files;
     }
-    
-    public function hasSlides(){
-    	if(count($this->getSlidesOnly()) > 0){
-    		return true;
-    	}
-    	$help = false;
-    	foreach($this->getChildren() as $child){
-    		$help = $child->hasSlides();
-    	}
-    	return $help;
+
+    public function hasSlides()
+    {
+        if (count($this->getSlidesOnly()) > 0) {
+            return TRUE;
+        }
+        $help = FALSE;
+        foreach ($this->getChildren() as $child) {
+            $help = $child->hasSlides();
+        }
+        return $help;
     }
-    
+
     public function getVideosOnly()
     {
-    	$all = $this->files;
-    	$files = array();
-    	foreach($all as $file){
-    		if($file instanceof Video){
-    			$files[] = $file;
-    		}
-    	}
-    	return $files;
+        $all   = $this->files;
+        $files = array();
+        foreach ($all as $file) {
+            if ($file instanceof Video) {
+                $files[] = $file;
+            }
+        }
+        return $files;
     }
-    
-    public function hasVideos(){
-    	if(count($this->getVideosOnly()) > 0){
-    		return true;
-    	}
-    	$help = false;
-    	foreach($this->getChildren() as $child){
-    		$help = $child->hasVideos();
-    	}
-    	return $help;
-    }
-    
-    public function hasActive($id){
-    	$bool = false;
-    	foreach($this->getChildren() as $child){
-    		$bool = $child->hasActive($id);
-    		if($bool == true) return true;
-    		if($child->getId()==$id) return true;
-    	}
-    	return false;
-    }
-    
-    public function getStrategy(){
-    	return new FolderStrategy();
-    }
-    
-    public function getFormType($gallery = null)
+
+    public function hasVideos()
     {
-    	return new \Kunstmaan\MediaBundle\Form\FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
+        if (count($this->getVideosOnly()) > 0) {
+            return TRUE;
+        }
+        $help = FALSE;
+        foreach ($this->getChildren() as $child) {
+            $help = $child->hasVideos();
+        }
+        return $help;
     }
-    
+
+    public function hasActive($id)
+    {
+        $bool = FALSE;
+        foreach ($this->getChildren() as $child) {
+            $bool = $child->hasActive($id);
+            if ($bool == TRUE) return TRUE;
+            if ($child->getId() == $id) return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getStrategy()
+    {
+        return new FolderStrategy();
+    }
+
+    public function getFormType($gallery = NULL)
+    {
+        return new FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
+    }
+
     public function getType()
     {
-    	return $this->getStrategy()->getType();
+        return $this->getStrategy()->getType();
     }
 
     /**
@@ -429,9 +445,9 @@ class Folder{
      */
     public function __toString()
     {
-    	return $this->getName();
+        return $this->getName();
     }
-    
+
     /**
      * @ORM\PrePersist
      */
@@ -455,17 +471,19 @@ class Folder{
     {
 
     }
-    
+
     /**
      * @ORM\PrePersist
      */
-    public function preInsert(){
-    	if(!$this->sequencenumber){
-	    	$parent = $this->getParent();
-	    	if($parent){
-	    		$count = $parent->getChildren()->count();
-	    		$this->sequencenumber = $count+1;
-	    	}else $this->sequencenumber = 1;
-    	}
+    public function preInsert()
+    {
+        if (!$this->sequencenumber) {
+            $parent = $this->getParent();
+            if ($parent) {
+                $count                = $parent->getChildren()->count();
+                $this->sequencenumber = $count + 1;
+            }
+            else $this->sequencenumber = 1;
+        }
     }
 }

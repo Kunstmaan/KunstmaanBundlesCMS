@@ -1,6 +1,6 @@
 <?php
 
-namespace  Kunstmaan\MediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,21 +13,16 @@ use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
  * @ORM\Table(name="media_gallery_slide")
  * @ORM\HasLifecycleCallbacks
  */
-class SlideGallery extends Folder{
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+class SlideGallery extends Folder
+{
 
     public function __construct(EntityManager $em)
     {
         parent::__construct($em);
     }
 
-    public function getStrategy(){
+    public function getStrategy()
+    {
         return new SlideGalleryStrategy();
     }
 }

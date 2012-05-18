@@ -27,7 +27,8 @@ media:
     gallery:
       new: Make new file folder
       subnew: Make new file folder in %gallery%
-    sure: Are you sure you want to delete this file?  
+    sure: Are you sure you want to delete this file?
+    editmetadata: Edit metadata
   
   image: 
     images: images
@@ -43,7 +44,10 @@ media:
     gallery:
       new: Make new image folder
       subnew: Make new image folder in %gallery%
-    sure: Are you sure you want to delete this image?  
+    sure: Are you sure you want to delete this image?
+    editmetadata: Edit metadata
+    edits: Image edits
+    noedits: No edits available
   
   slide: 
     slides: slides
@@ -103,4 +107,7 @@ media:
     folders: an event
     open: open this folder
     properties: Properties
+
+  metadata:
+    edit: Edit metadata
     

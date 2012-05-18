@@ -9,7 +9,6 @@ use Kunstmaan\MediaBundle\Helper\Generator\PathGeneratorInterface;
 use Kunstmaan\MediaBundle\Helper\Generator\UuidGeneratorInterface;
 use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
-
 abstract class AbstractProvider implements ProviderInterface
 {
     /* @var array */
@@ -33,25 +32,20 @@ abstract class AbstractProvider implements ProviderInterface
     /* @var string */
     protected $template;
 
-    public function __construct(
-        $name,
-        CdnInterface $cdn,
-        Filesystem $filesystem,
-        PathGeneratorInterface $pathGenerator,
-        UuidGeneratorInterface $uuidGenerator
-    )
+    public function __construct($name, CdnInterface $cdn, Filesystem $filesystem, PathGeneratorInterface $pathGenerator, UuidGeneratorInterface $uuidGenerator)
     {
-        $this->name = $name;
-        $this->cdn = $cdn;
-        $this->filesystem = $filesystem;
+        $this->name          = $name;
+        $this->cdn           = $cdn;
+        $this->filesystem    = $filesystem;
         $this->pathGenerator = $pathGenerator;
         $this->uuidGenerator = $uuidGenerator;
-        $this->formats = array();
+        $this->formats       = array();
     }
 
     /**
      * @param string $name
      * @param array $format
+     *
      * @return void
      */
     public function addFormat($name, array $format)
@@ -61,6 +55,7 @@ abstract class AbstractProvider implements ProviderInterface
 
     /**
      * @param string $name
+     *
      * @return boolean
      */
     public function hasFormat($name)
@@ -70,11 +65,12 @@ abstract class AbstractProvider implements ProviderInterface
 
     /**
      * @param string $name
+     *
      * @return string|boolean
      */
     public function getFormat($name)
     {
-        return $this->hasFormat($name) ? $this->formats[$name] : false;
+        return $this->hasFormat($name) ? $this->formats[$name] : FALSE;
     }
 
     /**
@@ -87,6 +83,7 @@ abstract class AbstractProvider implements ProviderInterface
 
     /**
      * @param array $formats
+     *
      * @return void
      */
     public function setFormats(array $formats)
@@ -96,6 +93,7 @@ abstract class AbstractProvider implements ProviderInterface
 
     /**
      * @param string $name
+     *
      * @return void
      */
     public function setName($name)
@@ -113,6 +111,7 @@ abstract class AbstractProvider implements ProviderInterface
 
     /**
      * @param Media $media
+     *
      * @return string
      */
     public function generatePath(Media $media)
@@ -122,6 +121,7 @@ abstract class AbstractProvider implements ProviderInterface
 
     /**
      * @param Media $media
+     *
      * @return string
      */
     public function generateUuid(Media $media)
@@ -164,21 +164,15 @@ abstract class AbstractProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
-    public function renderRaw(Media $media, $format = null, array $options = array())
+    public function renderRaw(Media $media, $format = NULL, array $options = array())
     {
         return $this->getMediaUrl($media, $format);
     }
 
 
-    public function generateRelativePath(Media $media, $format = null)
+    public function generateRelativePath(Media $media, $format = NULL)
     {
-        return sprintf(
-            '%s/%s_%s.%s',
-            $this->generatePath($media),
-            $media->getUuid(),
-            $format,
-            ExtensionGuesser::guess($media->getContentType())
-        );
+        return sprintf('%s/%s_%s.%s', $this->generatePath($media), $media->getUuid(), $format, ExtensionGuesser::guess($media->getContentType()));
     }
 
     /**

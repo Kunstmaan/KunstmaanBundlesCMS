@@ -8,20 +8,35 @@ use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
 use Kunstmaan\MediaBundle\Entity\Folder;
 
-class FolderFactory{
-    
-    private static function getTypeArray(){
-    	return array("folder" => new Folder(), 
-    				 "file" => new FileGallery(), 
-    				 "image" => new ImageGallery(), 
-    				 "slide" => new SlideGallery(),
-    				 "video" => new VideoGallery()
-    		   );
+class FolderFactory
+{
+
+    /**
+     * @static
+     * @return array
+     */
+    private static function getTypeArray()
+    {
+        return array(
+            "folder" => new Folder(),
+            "file"   => new FileGallery(),
+            "image"  => new ImageGallery(),
+            "slide"  => new SlideGallery(),
+            "video"  => new VideoGallery()
+        );
     }
-    
-    public static function getTypeFolder($type){
-    	$typearray = FolderFactory::getTypeArray();
-    	return $typearray[$type];
+
+    /**
+     * @static
+     *
+     * @param $type
+     *
+     * @return mixed
+     */
+    public static function getTypeFolder($type)
+    {
+        $typearray = FolderFactory::getTypeArray();
+        return $typearray[$type];
     }
 }
 

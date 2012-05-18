@@ -15,7 +15,7 @@ class CodeProvider extends AbstractVideoProvider
     {
         parent::prepareMedia($media);
 
-        $metadata = $this->getMetadata($media);
+        $metadata         = $this->getMetadata($media);
         $metadata['uuid'] = $media->getContent();
 
         $media->setMetadata($metadata);
@@ -24,7 +24,7 @@ class CodeProvider extends AbstractVideoProvider
     protected function getMetadata(Media $media)
     {
         if (!$media->getContent()) {
-            return null;
+            return NULL;
         }
 
         return array("content" => $media->getContent());

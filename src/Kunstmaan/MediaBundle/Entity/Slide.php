@@ -8,30 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
  * Kunstmaan\MediaBundle\Entity\Slide
  * Class that defines a slide in the system
  *
- * @ORM\Table("media_slide")
  * @ORM\Entity
+ * @ORM\Table(name="media_slide")
  */
 class Slide extends Media
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
-    /**
-     * @ORM\Column(type="string", unique=true, length=255)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $uuid;
+    const CONTEXT = "kunstmaan_media_code";
 
-    /**
-     * @var string $context
-     *
-     */
-    protected $context = "kunstmaan_media_code";
-    
     /**
      * @ORM\Column(type="string")
      */
@@ -40,7 +24,16 @@ class Slide extends Media
     public function __construct()
     {
         parent::__construct();
-        $this->classtype = "Slide";
+    }
+
+    /**
+     * Get context
+     *
+     * @return string
+     */
+    public function getContext()
+    {
+        return $this::CONTEXT;
     }
 
     public function show($format=null, $options = array())

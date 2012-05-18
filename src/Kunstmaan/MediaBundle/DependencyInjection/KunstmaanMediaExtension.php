@@ -238,6 +238,11 @@ class KunstmaanMediaExtension extends Extension
                 $context->addMethodCall('addFormat', array($formatName, $params));
             }
 
+            // Metadata class
+            if (isset($options['metadata_class'])) {
+                $context->addMethodCall('setMetadataClass', array($options['metadata_class']));
+            }
+
             $manager->addMethodCall('addContext', array($name, $context));
         }
     }
