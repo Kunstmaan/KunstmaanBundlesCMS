@@ -35,9 +35,14 @@ class MediaController extends Controller
         $media     = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
         $gallery   = $media->getGallery();
 
+        $mediaManager = $this->get('kunstmaan_media.manager');
+        $mediaContext = $mediaManager->getContext($media->getContext());
+        $metadataClass = $mediaContext->getMetadataClass();
+
         return $this->render('KunstmaanMediaBundle:' . $media->getClassType() . ':show.html.twig', array(
                                                                                                         'media'     => $media,
-                                                                                                        'gallery'   => $gallery
+                                                                                                        'gallery'   => $gallery,
+                                                                                                        'hasmetadata' => (isset($metadataClass) ? TRUE : FALSE)
                                                                                                    ));
     }
 
