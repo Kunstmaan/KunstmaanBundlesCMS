@@ -74,12 +74,10 @@ class VideoController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
         return array(
             'form' => $form->createView(),
             'media' => $video,
-            'gallery' => $video->getGallery(),
-            'galleries' => $galleries
+            'gallery' => $video->getGallery()
         );
     }
 

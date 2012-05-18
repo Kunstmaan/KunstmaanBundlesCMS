@@ -43,17 +43,45 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
+
+        $media_routes = array(
+            'Show media' => 'KunstmaanMediaBundle_media_show',
+            'Edit metadata' => 'KunstmaanMediaBundle_metadata_edit',
+            'Edit slide' => 'KunstmaanMediaBundle_slide_edit',
+            'Edit video' => 'KunstmaanMediaBundle_video_edit'
+        );
+
+        $create_routes = array(
+            'Create slide' => 'KunstmaanMediaBundle_folder_slidecreate',
+            'Create video' => 'KunstmaanMediaBundle_folder_videocreate',
+            'Create image' => 'KunstmaanMediaBundle_folder_imagecreate',
+            'Create file' => 'KunstmaanMediaBundle_folder_filecreate'
+        );
+
+        $all_routes = array_merge($create_routes, $media_routes);
+
         if (is_null($parent)) {
             $galleries = $this->em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
             $currentId = $request->get('id');
-            if(isset($currentId)) {
+
+            if (isset($currentId)) {
                 $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
-                if(!is_null($currentGallery)) {
-                    $parents = $currentGallery->getParents();
-                } else {
-                    $parents = array();
+            } else if (in_array($request->attributes->get('_route'), $media_routes)) {
+                $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('media_id'), $this->em);
+                $currentGallery = $media->getGallery();
+            } else if (in_array($request->attributes->get('_route'), $create_routes)) {
+                $currentId = $request->get('gallery_id');
+                if(isset($currentId)) {
+                    $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
                 }
             }
+
+            if(!is_null($currentGallery)) {
+                $parents = $currentGallery->getParents();
+            } else {
+                $parents = array();
+            }
+
             foreach ($galleries as $gallery) {
                 $menuitem = new TopMenuItem($menu);
                 $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
@@ -61,7 +89,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setInternalname($gallery->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($gallery->getRel());
-                if (isset($currentGallery) && stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
+                if (isset($currentGallery) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $all_routes))) {
                     if ($currentGallery->getId() == $gallery->getId()) {
                         $menuitem->setActive(true);
                     } else {
@@ -80,14 +108,25 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             $parentgallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($parentRouteParams['id']);
             $galleries = $parentgallery->getChildren();
             $currentId = $request->get('id');
+
             if (isset($currentId)) {
                 $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
-                if (!is_null($currentGallery)) {
-                    $parentGalleries = $currentGallery->getParents();
-                } else {
-                    $parentGalleries = array();
+            } else if (in_array($request->attributes->get('_route'), $media_routes)) {
+                $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('media_id'), $this->em);
+                $currentGallery = $media->getGallery();
+            } else if (in_array($request->attributes->get('_route'), $create_routes)) {
+                $currentId = $request->get('gallery_id');
+                if(isset($currentId)) {
+                    $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
                 }
             }
+
+            if (!is_null($currentGallery)) {
+                $parentGalleries = $currentGallery->getParents();
+            } else {
+                $parentGalleries = array();
+            }
+
             foreach ($galleries as $gallery) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
@@ -95,7 +134,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setInternalname($gallery->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($gallery->getRel());
-                if (isset($currentGallery) && stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
+                if (isset($currentGallery) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $all_routes))) {
                     if ($currentGallery->getId() == $gallery->getId()) {
                         $menuitem->setActive(true);
                     } else {
@@ -109,6 +148,21 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 }
                 $children[] = $menuitem;
             }
+
+            foreach($all_routes as $name => $route) {
+                $menuitem = new MenuItem($menu);
+                $menuitem->setRoute($route);
+                $menuitem->setInternalname($name);
+                $menuitem->setParent($parent);
+                $menuitem->setAppearInNavigation(false);
+                if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
+                    $menuitem->setActive(true);
+                }
+
+                $children[] = $menuitem;
+            }
+
         }
+
     }
 }

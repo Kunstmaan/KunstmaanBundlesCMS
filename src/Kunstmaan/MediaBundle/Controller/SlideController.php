@@ -75,12 +75,10 @@ class SlideController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllGalleriesByType();
         return array(
             'form' => $form->createView(),
             'media' => $slide,
-            'gallery' => $slide->getGallery(),
-            'galleries' => $galleries
+            'gallery' => $slide->getGallery()
         );
     }
 

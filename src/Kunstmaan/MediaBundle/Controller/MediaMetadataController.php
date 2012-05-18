@@ -59,13 +59,10 @@ class MediaMetadataController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-
         return array(
             'form' => $form->createView(),
             'media' => $media,
-            'gallery' => $media->getGallery(),
-            'galleries' => $galleries
+            'gallery' => $media->getGallery()
         );
     }
 
