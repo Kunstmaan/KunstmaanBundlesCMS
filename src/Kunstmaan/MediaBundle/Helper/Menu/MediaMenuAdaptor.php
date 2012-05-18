@@ -156,6 +156,10 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setParent($parent);
                 $menuitem->setAppearInNavigation(false);
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
+                    if(stripos($menuitem->getRoute(), 'KunstmaanMediaBundle_media_show') === 0) {
+                        $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('media_id'), $this->em);
+                        $menuitem->setInternalname('Show ' . $media->getClassType() . ' ' . $media->getName());
+                    }
                     $menuitem->setActive(true);
                 }
 
