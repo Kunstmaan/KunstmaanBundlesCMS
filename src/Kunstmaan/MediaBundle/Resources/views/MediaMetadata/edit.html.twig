@@ -3,6 +3,5 @@
 {% block title %}{{ 'media.metadata.edit' | trans }}{% endblock%}
 
 {% block content %}
-    <h1>{{ 'media.metadata.edit' | trans }}</h1>
     {% include 'KunstmaanMediaBundle:MediaMetadata:editform.html.twig' with { 'form': form } %}
 {% endblock %}
