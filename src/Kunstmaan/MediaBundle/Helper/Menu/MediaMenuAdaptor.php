@@ -76,7 +76,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 }
             }
 
-            if(!is_null($currentGallery)) {
+            if(isset($currentGallery)) {
                 $parents = $currentGallery->getParents();
             } else {
                 $parents = array();
@@ -121,7 +121,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 }
             }
 
-            if (!is_null($currentGallery)) {
+            if (isset($currentGallery)) {
                 $parentGalleries = $currentGallery->getParents();
             } else {
                 $parentGalleries = array();
