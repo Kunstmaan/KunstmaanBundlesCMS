@@ -1,0 +1,20 @@
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+
+{% block subsidebar %}
+    {% include 'KunstmaanMediaBundle:Folder:sidebar.html.twig' %}
+{% endblock %}
+
+{% block subbreadcrumb %}
+    {% for parent in gallery.parents %}
+        <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name| trans }}</a></li>
+    {% endfor %}
+    <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}">{{ gallery.name |trans  }}</a></li>
+    <li class="active">{{ 'media.metadata.edit' | trans }}</li>
+{% endblock %}
+
+{% block title %}{{ 'media.metadata.edit' | trans }}{% endblock%}
+
+{% block content %}
+    <h1>{{ 'media.metadata.edit' | trans }}</h1>
+    {% include 'KunstmaanMediaBundle:MediaMetadata:editform.html.twig' with { 'form': form } %}
+{% endblock %}

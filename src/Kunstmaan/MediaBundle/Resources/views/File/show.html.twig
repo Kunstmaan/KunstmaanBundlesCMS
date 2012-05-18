@@ -23,6 +23,7 @@
 
         <div class="actions">
             <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">{{ 'media.file.open'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn primary type">{{ 'media.file.editmetadata' | trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
         </div>
@@ -35,6 +36,7 @@
 
         <div class="actions">
             <a href="{{ asset(upload_dir~media.show()) }}" class="btn primary">{{ 'media.file.open'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn primary type">{{ 'media.file.editmetadata' | trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
         </div>

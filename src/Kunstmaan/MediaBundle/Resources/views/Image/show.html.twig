@@ -26,8 +26,9 @@
             <input name="picture" type="hidden" value="" />
             <div class="actions">
                 <input type="image" class="btn primary type" value="{{ 'media.image.edit' | trans }}" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
+                <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn primary type">{{ 'media.image.editmetadata' | trans }}</a>
                 <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
-                <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+                <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
             </div>
         </form>
 
@@ -73,8 +74,9 @@
             <input name="picture" type="hidden" value="" />
             <div class="actions">
                 <input type="image" class="btn primary type" value="{{ 'media.image.edit' | trans }}" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" />
+                <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn primary type">{{ 'media.image.editmetadata' | trans }}</a>
                 <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
-                <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}'" type="reset" class="btn" value="{{ 'form.cancel'|trans }}" />
+                <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
             </div>
         </form>
 

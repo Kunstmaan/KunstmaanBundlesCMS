@@ -1,0 +1,15 @@
+{% form_theme form 'KunstmaanMediaBundle:Form:fields.html.twig' %}
+
+<form action="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id' : media.id } ) }}" method="post" {{ form_enctype(form) }}>
+    <fieldset>
+
+        {{ form_errors(form) }}
+
+        {{ form_widget(form) }}
+
+        <div class="actions">
+            <input class="btn primary type" type="submit" value="{{ 'media.metadata.edit' | trans }}">
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="{{  'form.cancel' | trans }}" />
+        </div>
+    </fieldset>
+</form>

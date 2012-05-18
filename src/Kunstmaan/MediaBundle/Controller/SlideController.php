@@ -2,13 +2,18 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Doctrine\ORM\EntityRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Kunstmaan\MediaBundle\Form\SlideType;
 use Kunstmaan\MediaBundle\Entity\Slide;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 /**
  * picture controller.
@@ -38,7 +43,7 @@ class SlideController extends Controller
             $classMetadata = $em->getClassMetadata($metadataClass);
             $repo = new EntityRepository($em, $classMetadata);
 
-            $result = $repo->findByMedia($video);
+            $result = $repo->findByMedia($slide->getId());
 
             if(!empty($result)) {
                 $metadata = $result[0];
@@ -70,8 +75,7 @@ class SlideController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Gallery')
-                        ->getAllGalleriesByType();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllGalleriesByType();
         return array(
             'form' => $form->createView(),
             'media' => $slide,
