@@ -1,5 +1,4 @@
 <?php
-
 namespace Kunstmaan\SearchBundle\Entity;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;

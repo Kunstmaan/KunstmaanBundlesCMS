@@ -1,29 +1,22 @@
 <?php
-
 namespace Kunstmaan\SearchBundle\Entity;
+
 use Symfony\Component\Validator\Constraints\DateTime;
-
 use Kunstmaan\AdminBundle\Entity\PageInterface;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
-use Kunstmaan\ViewBundle\Entity\SearchPage;
-
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * SearchedFor
- * 
+ * The SearchedFor entity registers searches performed on the website.
+ *
  * @ORM\Entity(repositoryClass="Kunstmaan\SearchBundle\Repository\SearchedForRepository")
  * @ORM\Table(name="searchedfor")
  * @ORM\HasLifecycleCallbacks()
  */
 class SearchedFor extends AbstractEntity
 {
-
     /**
      * @ORM\Column(type="string")
      */
