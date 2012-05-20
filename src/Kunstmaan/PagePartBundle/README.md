@@ -67,7 +67,7 @@ and is tested on Travis CI [![Build Status](https://secure.travis-ci.org/Kunstma
 ## [1.1 branch](https://github.com/Kunstmaan/KunstmaanPagePartBundle/tree/1.1)
 
 Contains the first version that we are running in production. It is not advisable to run this in a new project. We will
-continue to support the 1.0 branch and keep releasing 1.0.x versions as long as we have a production website operating
+continue to support the 1.1 branch and keep releasing 1.1.x versions as long as we have a production website operating
 on this major version. It is available on GitHub and on [Packagist](http://packagist.org/packages/kunstmaan/pagepart-bundle)
 and is tested on Travis CI [![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanPagePartBundle.png?branch=1.1)](http://travis-ci.org/Kunstmaan/KunstmaanPagePartBundle)
 
