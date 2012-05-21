@@ -15,7 +15,7 @@ use Assetic\Asset\FileAsset;
  * @ORM\DiscriminatorMap({"media" = "Media", "image" = "Image", "file" = "File", "slide" = "Slide" , "video" = "Video"})
  * @ORM\HasLifecycleCallbacks
  */
-abstract class Media{
+abstract class Media {
 
     /**
      * @ORM\Id
@@ -65,7 +65,7 @@ abstract class Media{
     protected $context;
     
     /**
-     * @ORM\Column(type="integer", nullable="true")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $filesize;
     
@@ -142,7 +142,7 @@ abstract class Media{
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -162,7 +162,7 @@ abstract class Media{
     /**
      * Get contentType
      *
-     * @return string 
+     * @return string
      */
     public function getContentType()
     {
@@ -256,7 +256,7 @@ abstract class Media{
     /**
      * Get content
      *
-     * @return mixed 
+     * @return mixed
      */
     public function getContent()
     {
@@ -276,7 +276,7 @@ abstract class Media{
     /**
      * Get gallery
      *
-     * @return Kunstmaan\MediaBundle\Entity\Folder 
+     * @return Kunstmaan\MediaBundle\Entity\Folder
      */
     public function getGallery()
     {
