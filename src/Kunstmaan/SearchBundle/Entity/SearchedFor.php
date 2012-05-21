@@ -5,8 +5,6 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Kunstmaan\AdminBundle\Entity\PageInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * The SearchedFor entity registers searches performed on the website.

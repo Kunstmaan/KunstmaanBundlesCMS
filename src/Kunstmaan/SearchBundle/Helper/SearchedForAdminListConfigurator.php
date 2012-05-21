@@ -126,8 +126,10 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
             if (empty($results)) {
                 return "";
             }
+
             return implode(', ', $results);
         }
+
         return $result;
     }
 

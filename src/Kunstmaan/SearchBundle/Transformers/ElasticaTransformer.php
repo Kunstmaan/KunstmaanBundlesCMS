@@ -22,16 +22,14 @@ class ElasticaTransformer extends ElasticaToModelTransformer
      **/
     public function transform(array $elasticaObjects)
     {
-        $ids = array_map(function($elasticaObject)
-        {
+        $ids = array_map(function($elasticaObject) {
             return $elasticaObject->getId();
         }, $elasticaObjects);
         $objects = $this->findByIdentifiers($this->objectClass, $this->options['identifier'], $ids, $this->options['hydrate']);
         $identifierGetter = 'get' . ucfirst($this->options['identifier']);
         // sort objects in the order of ids
         $idPos = array_flip($ids);
-        usort($objects, function($a, $b) use ($idPos, $identifierGetter)
-        {
+        usort($objects, function($a, $b) use ($idPos, $identifierGetter) {
             return $idPos[$a->$identifierGetter()] > $idPos[$b->$identifierGetter()];
         });
         foreach ($objects as &$object) {
@@ -43,6 +41,7 @@ class ElasticaTransformer extends ElasticaToModelTransformer
                 }
             }
         }
+
         return $objects;
     }
 }

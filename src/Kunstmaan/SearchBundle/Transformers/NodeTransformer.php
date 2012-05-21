@@ -5,7 +5,6 @@ use Kunstmaan\SearchBundle\Entity\IndexableInterface;
 use Elastica_Document;
 use RuntimeException;
 use FOQ\ElasticaBundle\Transformer\ModelToElasticaAutoTransformer;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 class NodeTransformer extends ModelToElasticaAutoTransformer
@@ -49,6 +48,7 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
         } else {
             $identifier = $array[$this->options['identifier']];
         }
+
         return new Elastica_Document($identifier, array_filter($array));
     }
 
@@ -68,6 +68,7 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
         if (!method_exists($class, $getter)) {
             throw new RuntimeException(sprintf('The getter %s::%s does not exist', $class, $getter));
         }
+
         return $this->normalizeValue($object->$getter());
     }
 
@@ -104,6 +105,7 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
         } else {
             $output = $searchResult;
         }
+
         return $output;
     }
 }
