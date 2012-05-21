@@ -10,14 +10,14 @@ use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 class FileProvider extends AbstractProvider
 {
     /* @var string */
-    protected $template = null;
+    protected $template = NULL;
 
     /**
      * {@inheritDoc}
      */
     public function prepareMedia(Media $media)
     {
-        if (null == $media->getUuid()) {
+        if (NULL == $media->getUuid()) {
             $uuid = $this->uuidGenerator->generateUuid($media);
             $media->setUuid($uuid);
         }
@@ -37,7 +37,7 @@ class FileProvider extends AbstractProvider
         }
 
         $metadata = array();
-        
+
         $media->setFileSize(filesize($media->getContent()));
         $media->setMetadata($metadata);
         //$media->setName($media->getContent()->getBasename());
@@ -62,7 +62,7 @@ class FileProvider extends AbstractProvider
      */
     public function removeMedia(Media $media)
     {
-        foreach($this->formats as $format => $options) {
+        foreach ($this->formats as $format => $options) {
             $path = $this->generateRelativePath($media, $format);
             if ($this->getFilesystem()->has($path)) {
                 $this->getFilesystem()->delete($path);
@@ -78,26 +78,21 @@ class FileProvider extends AbstractProvider
 
     public function getOriginalFilePath(Media $media)
     {
-        return sprintf(
-            '%s/%s.%s',
-            $this->generatePath($media),
-            $media->getUuid(),
-            ExtensionGuesser::guess($media->getContentType())
-        );
+        return sprintf('%s/%s.%s', $this->generatePath($media), $media->getUuid(), ExtensionGuesser::guess($media->getContentType()));
     }
 
     public function getOriginalFile(Media $media)
     {
-        return $this->getFilesystem()->get($this->getOriginalFilePath($media), true);
+        return $this->getFilesystem()->get($this->getOriginalFilePath($media), TRUE);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getMediaUrl(Media $media, $format = null)
+    public function getMediaUrl(Media $media, $format = NULL)
     {
         // wants original file
-        if (null == $format) {
+        if (NULL == $format) {
             $path = $this->getOriginalFilePath($media);
         }
         else {

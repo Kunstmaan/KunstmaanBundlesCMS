@@ -24,7 +24,7 @@ class MediaManager
 
     /* @var CdnInterface */
     protected $defaultCdn;
-    
+
     /* @var array */
     protected $filesystems = array();
 
@@ -35,6 +35,7 @@ class MediaManager
     /**
      * @param string       $name
      * @param MediaContext $context
+     *
      * @return void
      */
     public function addContext($name, MediaContext $context)
@@ -44,6 +45,7 @@ class MediaManager
 
     /**
      * @param string $name
+     *
      * @return \Ano\Bundle\MediaBundle\Model\MediaContext
      */
     public function getContext($name)
@@ -57,6 +59,7 @@ class MediaManager
 
     /**
      * @param string $name
+     *
      * @return boolean
      */
     public function hasContext($name)
@@ -88,11 +91,21 @@ class MediaManager
         return $this->cdns;
     }
 
+    /**
+     * @param $name
+     * @param Cdn\CdnInterface $cdn
+     */
     public function addCdn($name, CdnInterface $cdn)
     {
         $this->cdns[$name] = $cdn;
     }
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public function getCdn($name)
     {
         if (!$this->hasCdn($name)) {
@@ -102,6 +115,11 @@ class MediaManager
         return $this->cdns[$name];
     }
 
+    /**
+     * @param $name
+     *
+     * @return bool
+     */
     public function hasCdn($name)
     {
         return array_key_exists($name, $this->cdns);
@@ -155,11 +173,21 @@ class MediaManager
         return $this->providers;
     }
 
+    /**
+     * @param $name
+     * @param Provider\ProviderInterface $provider
+     */
     public function addProvider($name, ProviderInterface $provider)
     {
         $this->providers[$name] = $provider;
     }
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public function getProvider($name)
     {
         if (!$this->hadProvider($name)) {
@@ -169,11 +197,16 @@ class MediaManager
         return $this->providers[$name];
     }
 
+    /**
+     * @param $name
+     *
+     * @return bool
+     */
     public function hasProvider($name)
     {
         return array_key_exists($name, $this->providers);
     }
-    
+
     /**
      * @param Filesystem
      */
@@ -206,11 +239,21 @@ class MediaManager
         return $this->filesystems;
     }
 
+    /**
+     * @param $name
+     * @param \Gaufrette\Filesystem $filesystem
+     */
     public function addFilesystem($name, Filesystem $filesystem)
     {
         $this->filesystems[$name] = $filesystem;
     }
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
     public function getFilesystem($name)
     {
         if (!$this->hadFilesystem($name)) {
@@ -220,18 +263,30 @@ class MediaManager
         return $this->filesystems[$name];
     }
 
+    /**
+     * @param $name
+     *
+     * @return bool
+     */
     public function hasFilesystem($name)
     {
         return array_key_exists($name, $this->filesystems);
     }
 
+    /**
+     * @param \Kunstmaan\MediaBundle\Entity\Media $media
+     */
     public function prepareMedia(Media $media)
     {
         $context = $this->getContext($media->getContext());
         $context->getProvider()->prepareMedia($media);
     }
 
-    public function saveMedia(Media $media, $new = false)
+    /**
+     * @param \Kunstmaan\MediaBundle\Entity\Media $media
+     * @param bool $new
+     */
+    public function saveMedia(Media $media, $new = FALSE)
     {
         $context = $this->getContext($media->getContext());
         $context->getProvider()->setFormats($context->getFormats());
@@ -244,6 +299,9 @@ class MediaManager
         }
     }
 
+    /**
+     * @param \Kunstmaan\MediaBundle\Entity\Media $media
+     */
     public function removeMedia(Media $media)
     {
         $context = $this->getContext($media->getContext());

@@ -16,6 +16,12 @@ class MediaContext
     protected $formats = array();
 
 
+    /**
+     * @var AbstractMediaMetadata
+     */
+    protected $metadataClass;
+
+
     public function __construct($name)
     {
         $this->setName($name);
@@ -56,6 +62,7 @@ class MediaContext
     /**
      * @param string $name
      * @param array $format
+     *
      * @return void
      */
     public function addFormat($name, array $format)
@@ -65,6 +72,7 @@ class MediaContext
 
     /**
      * @param string $name
+     *
      * @return boolean
      */
     public function hasFormat($name)
@@ -74,11 +82,12 @@ class MediaContext
 
     /**
      * @param string $name
+     *
      * @return string|boolean
      */
     public function getFormat($name)
     {
-        return $this->hasFormat($name) ? $this->formats[$name] : false;
+        return $this->hasFormat($name) ? $this->formats[$name] : FALSE;
     }
 
     /**
@@ -87,5 +96,26 @@ class MediaContext
     public function getFormats()
     {
         return $this->formats;
+    }
+
+    /**
+     * Set metadataClass
+     *
+     * @param \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata $metadataClass
+     */
+    public function setMetadataClass($metadataClass)
+    {
+        $this->metadataClass = $metadataClass;
+        return $this;
+    }
+
+    /**
+     * Get metadataClass
+     *
+     * @return \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata
+     */
+    public function getMetadataClass()
+    {
+        return $this->metadataClass;
     }
 }
