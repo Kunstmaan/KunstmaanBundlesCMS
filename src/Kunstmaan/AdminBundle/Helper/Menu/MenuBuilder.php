@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 class MenuBuilder
 {
-    private $rootItem;
     private $translator;
     private $extra;
     private $request;
@@ -26,7 +25,6 @@ class MenuBuilder
     public function __construct(Translator $translator, ContainerInterface $container)
     {
         $this->translator = $translator;
-        $this->rootItem = $this->populateMenu($translator);
         $this->container = $container;
     }
 
@@ -103,40 +101,4 @@ class MenuBuilder
         return $result;
     }
 
-    /**
-     * @todo: clean this up, why the die?
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return null
-     */
-    public function mainMenu(\Symfony\Component\HttpFoundation\Request $request)
-    {
-        die();
-        $this->request = $request;
-        return null;
-        /*$this->rootItem->setCurrentUri($request->getRequestUri());
-        switch(true) {
-        	case (stripos($request->attributes->get('_route'), "KunstmaanAdminBundle_settings") === 0):
-        		$this->rootItem[$this->translator->trans('settings.title')]->setCurrent(true);
-        		break;
-        }
-        foreach($this->extra as $menuadaptor){
-        	$menuadaptor->setCurrent($this->rootItem, $this->translator, $request);
-        }
-        return $this->rootItem;*/
-    }
-
-    /**
-     * @todo: can this be removed?
-     * @param \Symfony\Component\Translation\Translator $translator
-     * @return null
-     */
-    public function populateMenu(Translator $translator){
-        return null;
-        /*$rootItem = $this->factory->createItem('root');
-        $rootItem->getRoot()->setChildrenAttribute('class', 'nav');
-
-        $rootItem->addChild($translator->trans('settings.title'), array( 'route' => 'KunstmaanAdminBundle_settings'));
-        
-        return $rootItem;*/
-    }
 }
