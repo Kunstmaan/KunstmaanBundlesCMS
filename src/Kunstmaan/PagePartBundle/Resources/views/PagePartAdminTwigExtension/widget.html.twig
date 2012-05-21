@@ -97,7 +97,7 @@
                 <div class="block" id="{{pagepartref.id}}_view" {% if editpagepart is defined and editpagepart == loop.index %}style="display:none"{% endif %}>
                     {% include pagepart.defaultview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
-                {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
+                {# if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count #}
                     <div class="block" id="{{pagepartref.id}}_edit" {% if editpagepart is not defined or editpagepart != loop.index %}style="display:none"{% endif %}>
                         {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
 
@@ -107,7 +107,7 @@
                             {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
                         {% endif %}
                     </div>
-                {% endif %}
+                {# endif #}
             </div>
             <div id="delete-pagepart-modal{{pagepartref.id}}" class="modal hide fade">
 		      <div class="modal-header">
@@ -185,7 +185,7 @@
 		            CKEDITOR.instances[instance].destroy();
 				}
 		        $('.draggable').css('opacity', ".4");
-				$('.ui-sortable-helper .new_pagepart').slideUp("fast");	
+				$('.ui-sortable-helper .new_pagepart').slideUp("fast");
 			},
 			stop: function(e, ui) {
 				jQuery('textarea.rich_editor').each(function(item){
@@ -200,12 +200,12 @@
 	        		CKEDITOR.replace( $(this).attr('id'), config);
 				});
 				
-				$('.draggable').css('opacity', "1");	
+				$('.draggable').css('opacity', "1");
 				//$('.rich_editor').ckeditor();
 			}
 
 		    //containment: 'document'
-		});	
+		});
 	});
 
 </script>
