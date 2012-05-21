@@ -6,13 +6,10 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
-use Assetic\AssetManager;
-use Assetic\Asset\AssetCollection;
-use Assetic\Asset\FileAsset;
 
 /**
  * DownloadPagePart
- * 
+ *
  * @ORM\Entity
  * @ORM\Table(name="pagepart_download")
  */
@@ -69,7 +66,7 @@ class DownloadPagePart extends AbstractPagePart
      */
     public function getElasticaView()
     {
-    	return "KunstmaanMediaPagePartBundle:DownloadPagePart:elastica.html.twig";
+        return "KunstmaanMediaPagePartBundle:DownloadPagePart:elastica.html.twig";
     }
 
     /**

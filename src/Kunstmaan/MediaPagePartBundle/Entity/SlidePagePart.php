@@ -5,13 +5,10 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
-use Assetic\AssetManager;
-use Assetic\Asset\AssetCollection;
-use Assetic\Asset\FileAsset;
 
 /**
  * SlidePagePart
- * 
+ *
  * @ORM\Entity
  * @ORM\Table(name="pagepart_slide")
  */

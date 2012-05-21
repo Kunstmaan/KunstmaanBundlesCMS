@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form\Type;
 
-use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -16,27 +15,27 @@ class IdToMediaTransformer implements DataTransformerInterface
     public function __construct($objectManager, $currentValueContainer)
     {
         $this->objectManager = $objectManager;
-       	$this->currentValueContainer = $currentValueContainer;
+           $this->currentValueContainer = $currentValueContainer;
     }
 
     public function transform($entity)
     {
-    	if (null === $entity || '' === $entity) {
-    		return '';
-    	}
+        if (null === $entity || '' === $entity) {
+            return '';
+        }
 
-		if (!is_object($entity)) {
-    		throw new UnexpectedTypeException($entity, 'object');
-    	}
+        if (!is_object($entity)) {
+            throw new UnexpectedTypeException($entity, 'object');
+        }
 
-    	if ($entity instanceof Collection) {
-    		throw new \InvalidArgumentException('Expected an object, but got a collection. Did you forget to pass "multiple=true" to an entity field?');
-    	}
+        if ($entity instanceof Collection) {
+            throw new \InvalidArgumentException('Expected an object, but got a collection. Did you forget to pass "multiple=true" to an entity field?');
+        }
 
-    	$this->currentValueContainer->setCurrentValue($entity);
+        $this->currentValueContainer->setCurrentValue($entity);
 
-    	return array("ent"=>$entity,
-    	"id" => $entity->getId());
+        return array("ent"=>$entity,
+        "id" => $entity->getId());
 
     }
 
