@@ -60,7 +60,7 @@ abstract class Media extends AbstractEntity
     protected $content;
 
     /**
-     * @ORM\Column(type="integer", nullable="true")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $filesize;
 
