@@ -6,7 +6,7 @@ use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
 
 /**
  * LinkPagePart
- * 
+ *
  * @ORM\Entity
  * @ORM\Table(name="linkpagepart")
  */

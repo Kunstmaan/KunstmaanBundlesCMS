@@ -122,7 +122,7 @@
 		        <a onclick="$('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" href="#" class="btn secondary">Cancel</a>
 		      </div>
 		    </div>
-		    
+
             <div class="new_pagepart">
               <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index !=1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
 	            <option value="">Add a pagepart</option>

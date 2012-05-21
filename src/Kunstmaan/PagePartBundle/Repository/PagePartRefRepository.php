@@ -9,13 +9,13 @@ class PagePartRefRepository extends EntityRepository
 {
 
     public function addPagePart($page, $pagepart, $sequencenumber, $context = "main"){
-    	$pagepartrefs = $this->getPagePartRefs($page);
-    	foreach($pagepartrefs as $pagepartref){
-    		if($pagepartref->getSequencenumber()>=$sequencenumber){
-    			$pagepartref->setSequencenumber($pagepartref->getSequencenumber()+1);
-    			$this->getEntityManager()->persist($pagepartref);
-    		}
-    	}
+        $pagepartrefs = $this->getPagePartRefs($page);
+        foreach($pagepartrefs as $pagepartref){
+            if($pagepartref->getSequencenumber()>=$sequencenumber){
+                $pagepartref->setSequencenumber($pagepartref->getSequencenumber()+1);
+                $this->getEntityManager()->persist($pagepartref);
+            }
+        }
         $pagepartref = new \Kunstmaan\PagePartBundle\Entity\PagePartRef();
         $pagepartref->setContext($context);
         $page_classname = ClassLookup::getClass($page);
@@ -27,32 +27,34 @@ class PagePartRefRepository extends EntityRepository
         $pagepartref->setSequencenumber($sequencenumber);
         $this->getEntityManager()->persist($pagepartref);
         $this->getEntityManager()->flush();
+
         return $pagepartref;
     }
 
     public function getPagePartRefs($page, $context = "main"){
-    	return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => ClassLookup::getClass($page), 'context' => $context), array('sequencenumber' => 'ASC'));
+        return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => ClassLookup::getClass($page), 'context' => $context), array('sequencenumber' => 'ASC'));
     }
 
     public function getPageParts($page, $context = "main"){
-    	$pagepartrefs = $this->getPagePartRefs($page, $context);
-    	$result = array();
-    	foreach($pagepartrefs as $pagepartref){
-    		$result[] = $pagepartref->getPagePart($this->getEntityManager());
-    	}
-    	return $result;
+        $pagepartrefs = $this->getPagePartRefs($page, $context);
+        $result = array();
+        foreach($pagepartrefs as $pagepartref){
+            $result[] = $pagepartref->getPagePart($this->getEntityManager());
+        }
+
+        return $result;
     }
 
     public function copyPageParts($em, $frompage, $topage, $context = "main"){
-    	$frompageparts = $this->getPageParts($frompage, $context);
-    	$sequencenumber = 1;
-    	foreach ($frompageparts as $frompagepart){
-    		$toppagepart = clone $frompagepart;
-    		$toppagepart->setId(null);
-    		$em->persist($toppagepart);
-    		$em->flush();
-    		$this->addPagePart($topage, $toppagepart, $sequencenumber, $context);
-    		$sequencenumber++;
-    	}
+        $frompageparts = $this->getPageParts($frompage, $context);
+        $sequencenumber = 1;
+        foreach ($frompageparts as $frompagepart){
+            $toppagepart = clone $frompagepart;
+            $toppagepart->setId(null);
+            $em->persist($toppagepart);
+            $em->flush();
+            $this->addPagePart($topage, $toppagepart, $sequencenumber, $context);
+            $sequencenumber++;
+        }
     }
 }

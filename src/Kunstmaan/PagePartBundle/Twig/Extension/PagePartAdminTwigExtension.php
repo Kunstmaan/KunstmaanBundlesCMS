@@ -40,14 +40,15 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param FormView        $view      The view to render
-     * @param array           $variables Additional variables passed to the template
+     * @param FormView $view      The view to render
+     * @param array    $variables Additional variables passed to the template
      *
      * @return string The html markup
      */
     public function renderWidget( $view , $form , array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig");
+
         return $template->render(array_merge($parameters, array(
             'pagepartadmin' => $view,
             'form' => $form
