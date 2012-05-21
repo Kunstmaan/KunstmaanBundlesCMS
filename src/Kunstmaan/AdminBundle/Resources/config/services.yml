@@ -26,15 +26,6 @@ services:
     kunstmaan_admin.permissionmanager:
         class: Kunstmaan\AdminBundle\Permission\Manager
 
-    kunstmaan_admin.menu.main:
-        class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: admin_menu.menubuilder
-        factory_method: mainMenu
-        arguments: ["@request"]
-        scope: request # needed as we have the request as a dependency here
-        tags:
-            - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
-
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
 
