@@ -6,7 +6,7 @@ use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
 
 /**
  * TocPagePart
- * 
+ *
  * @ORM\Entity
  * @ORM\Table(name="tocpagepart")
  */

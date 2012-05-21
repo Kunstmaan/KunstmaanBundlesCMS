@@ -6,7 +6,7 @@ use Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType;
 
 /**
  * ToTopPagePart
- * 
+ *
  * @ORM\Entity
  * @ORM\Table(name="totoppagepart")
  */

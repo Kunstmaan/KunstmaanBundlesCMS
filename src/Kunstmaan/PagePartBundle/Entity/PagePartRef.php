@@ -261,8 +261,8 @@ class PagePartRef
     public function getDefaultAdminType(){
         return new PagePartRefAdminType();
     }
-    
+
     public function getPagePart($em){
-    	return $em->getRepository($this->getPagePartEntityname())->find($this->getPagePartId());
+        return $em->getRepository($this->getPagePartEntityname())->find($this->getPagePartId());
     }
 }

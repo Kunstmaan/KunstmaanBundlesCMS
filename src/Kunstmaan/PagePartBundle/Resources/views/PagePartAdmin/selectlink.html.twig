@@ -46,18 +46,18 @@
 		var ckid="";
     </script>
 	{% endblock %}
-	
+
 	 {% block extraparamsinbody %}
     	id="smallWindow"
     {% endblock %}
-    
+
    {% block body %}
   	<header>
 		<div class="topbar" data-dropdown="dropdown">
 			<div class="topbar-inner">
 				<div class="container-fluid">
 					<a class="brand" href="#">{{ websitetitle | trans }}</a>
-					<nav>	
+					<nav>
 						<ul class="nav secondary-nav">
 							{% set route = app.request.attributes.get('_route') %}
 							{{ localeswitcher_widget(requiredlocales, route) }}
@@ -83,9 +83,9 @@
                 {% include 'KunstmaanPagePartBundle:PagePartAdmin:rectreeview.html.twig' %}
             {% endfor %}
         </ul>
-    </div>  
+    </div>
     </aside>
-    	    
+
 	    <!--=========Content=========-->
 	    <div class="content">
 	    	<div class="well">
@@ -97,6 +97,6 @@
 
 		    	</div>
 	    	</div>
-	    </div> 
+	    </div>
 	   </div>
 {% endblock %}

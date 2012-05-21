@@ -6,7 +6,7 @@ use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
 
 /**
  * LinePagePart
- * 
+ *
  * @ORM\Entity
  * @ORM\Table(name="linepagepart")
  */

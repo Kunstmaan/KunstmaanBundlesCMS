@@ -27,11 +27,11 @@ class PagePartAdmin {
         $this->em = $em;
         $this->page = $page;
         if($context){
-        	$this->context = $context;
+            $this->context = $context;
         } else if($this->configurator->getDefaultContext()){
-        	$this->context = $this->configurator->getDefaultContext();
+            $this->context = $this->configurator->getDefaultContext();
         } else {
-        	$this->context = "main";
+            $this->context = "main";
         }
         $this->container = $container;
     }
@@ -53,10 +53,10 @@ class PagePartAdmin {
         }
         $addpagepart = $this->request->request->get("addpagepart_".$this->getContext());
         if(is_string($addpagepart) && $addpagepart != ''){
-        	$addpagepartposition = $this->request->request->get($this->getContext()."_addposition");
-        	if(!is_string($addpagepartposition) || $addpagepartposition == ''){
-        		$addpagepartposition = sizeof($pagepartrefs)+1;
-        	}
+            $addpagepartposition = $this->request->request->get($this->getContext()."_addposition");
+            if(!is_string($addpagepartposition) || $addpagepartposition == ''){
+                $addpagepartposition = sizeof($pagepartrefs)+1;
+            }
             $newpagepart = new $addpagepart;
             $this->em->persist($newpagepart);
             $this->em->flush();
@@ -89,7 +89,7 @@ class PagePartAdmin {
     }
 
     public function getName(){
-    	return $this->configurator->getName();
+        return $this->configurator->getName();
     }
 
     public function getPagePartRefs(){
@@ -101,11 +101,13 @@ class PagePartAdmin {
         ->setParameter('pageEntityname', ClassLookup::getClass($this->page))
         ->setParameter('context', $this->context)
         ->orderBy("b.sequencenumber")->getQuery();
+
         return $query->getResult();
     }
 
     public function getPagePart(\Kunstmaan\PagePartBundle\Entity\PagePartRef $pagepartref){
         $result = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
+
         return $result;
     }
 
@@ -116,6 +118,7 @@ class PagePartAdmin {
                 return $pageparttype['name'];
             }
         }
+
         return "no name";
     }
 
