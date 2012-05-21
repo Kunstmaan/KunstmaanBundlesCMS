@@ -12,7 +12,6 @@ use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
  */
 class LinePagePart extends AbstractPagePart
 {
-
     /**
      * {@inheritdoc}
      */
