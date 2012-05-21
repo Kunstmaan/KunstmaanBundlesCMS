@@ -121,7 +121,7 @@ $loader->registerNamespaces(array(
 {
     "require": {
         // ...
-        "kunstmaan/media-pagepart-bundle": "1.2.*"
+        "kunstmaan/media-pagepart-bundle": "1.1.*"
         // ...
     }
 }
