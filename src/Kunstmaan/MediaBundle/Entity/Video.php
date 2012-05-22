@@ -1,7 +1,6 @@
 <?php
 
 namespace Kunstmaan\MediaBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,12 +35,13 @@ class Video extends Media
         return $this::CONTEXT;
     }
 
- 	public function show($format=null, $options = array())
+    public function show($format = null, $options = array())
     {
         return '';
     }
 
-    public function getCode(){
+    public function getCode()
+    {
         return $this->metadata['uuid'];
     }
 
@@ -58,7 +58,7 @@ class Video extends Media
     /**
      * Get slidetype
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {

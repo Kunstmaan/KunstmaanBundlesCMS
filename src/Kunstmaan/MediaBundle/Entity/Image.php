@@ -77,14 +77,14 @@ class Image extends Media
     /**
      * Get edits
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getEdits()
     {
         return $this->edits;
     }
 
- 	/**
+    /**
      * Add edits
      *
      * @param Kunstmaan\MediaBundle\Entity\Image $edits
@@ -93,8 +93,9 @@ class Image extends Media
     {
         $this->edits[] = $edits;
     }
-    
-    public function __tostring(){
-    	return $this->getName();
+
+    public function __tostring()
+    {
+        return $this->getName();
     }
 }
