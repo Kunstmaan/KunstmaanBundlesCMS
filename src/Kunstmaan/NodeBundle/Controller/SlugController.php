@@ -28,22 +28,28 @@ class SlugController extends Controller
             $locale = $request->getSession()->getLocale();
         }
 
-        $requiredlocales = $this->container->getParameter("requiredlocales");
+        $requiredlocales = $this->container->getParameter('requiredlocales');
 
-        $localesarray = explode("|", $requiredlocales);
+        $localesarray = explode('|', $requiredlocales);
 
         if (!empty($localesarray[0])) {
             $fallback = $localesarray[0];
         } else {
-            $fallback = $this->container->getParameter("locale");
+            $fallback = $this->container->getParameter('locale');
         }
 
         if (!in_array($locale, $localesarray)) {
             $locale = $fallback;
-            return $this->redirect($this->generateUrl("_slug_draft", array("slug" => $slug, "_locale" => $locale)));
+            return $this->redirect($this->generateUrl('_slug_draft', array('slug' => $slug, '_locale' => $locale)));
         }
 
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
+        $exactMatch = true;
+        if (!$nodeTranslation) {
+            // Lookup node by best match for url
+            $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getBestMatchForUrl($slug, $locale);
+            $exactMatch = false;
+        }
         if ($nodeTranslation) {
             $version = $nodeTranslation->getNodeVersion('draft');
             if (is_null($version)) {
@@ -63,25 +69,49 @@ class SlugController extends Controller
         if ($canViewPage) {
             $nodeMenu = new NodeMenu($this->container, $locale, $node);
 
+            if ($page instanceof DynamicRoutingPageInterface) {
+                $path = $page->match($slug, $nodeTranslation->getUrl());
+                if (!$path) {
+                    // Try match with trailing slash - this is needed to match the root path in Controller actions...
+                    $path = $page->match($slug . '/', $nodeTranslation->getUrl());
+                }
+                if ($path) {
+                    $path['_locale'] = $locale;
+                    return $this->forward($path['_controller'], $path);
+                }
+            }
+            
             //render page
             $pageparts = array();
-            foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
-                $context = $pagePartAdminConfiguration->getDefaultContext();
-                $pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
+            if ($exactMatch && method_exists($page, 'getPagePartAdminConfigurations')) {
+                foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
+                    $context = $pagePartAdminConfiguration->getDefaultContext();
+                    $pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
+                }
             }
 
-            $result = array('nodetranslation' => $nodeTranslation, 'page' => $page, 'resource' => $page, 'slug' => $slug, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu);
-
-            if (method_exists($page, "service")) {
-                $page->service($this->container, $request, $result);
+            $renderContext = new RenderContext(
+                            array('nodetranslation' => $nodeTranslation, 'slug' => $slug, 'page' => $page, 'resource' => $page, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu,
+                                            'locales' => $localesarray));
+            $hasView = false;
+            if (method_exists($page, 'getDefaultView')) {
+                $renderContext->setView($page->getDefaultView());
+                $hasView = true;
             }
-
-            if (method_exists($page, "getDefaultView")) {
-                return $this->render($page->getDefaultView(), $result);
-            } else {
-                return $result;
+            if (method_exists($page, 'service')) {
+                $redirect = $page->service($this->container, $request, $renderContext);
+                if (!empty($redirect)) {
+                    return $redirect;
+                }
+                else if (!$exactMatch && !$hasView) {
+                    // If it was a dynamic routing page and no view and no service implementation -> 404
+                    throw $this->createNotFoundException('No page found for slug ' . $slug);
+                }
             }
+            
+            return $this->render($renderContext->getView(), (array) $renderContext);
         }
+        
         throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
     }
 
@@ -100,19 +130,19 @@ class SlugController extends Controller
             $locale = $request->getSession()->getLocale();
         }
 
-        $requiredlocales = $this->container->getParameter("requiredlocales");
+        $requiredlocales = $this->container->getParameter('requiredlocales');
 
-        $localesarray = explode("|", $requiredlocales);
+        $localesarray = explode('|', $requiredlocales);
 
         if (!empty($localesarray[0])) {
             $fallback = $localesarray[0];
         } else {
-            $fallback = $this->container->getParameter("locale");
+            $fallback = $this->container->getParameter('locale');
         }
 
         if (!in_array($locale, $localesarray)) {
             $locale = $fallback;
-            return $this->redirect($this->generateUrl("_slug", array("slug" => $slug, "_locale" => $locale)));
+            return $this->redirect($this->generateUrl('_slug', array('slug' => $slug, '_locale' => $locale)));
         }
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForUrl($slug, $locale);
         $exactMatch = true;
@@ -124,8 +154,7 @@ class SlugController extends Controller
         if ($nodeTranslation) {
             $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
             $node = $nodeTranslation->getNode();
-        }
-        if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingPageInterface))) {
+        } else {
             throw $this->createNotFoundException('No page found for slug ' . $slug);
         }
 
@@ -144,6 +173,10 @@ class SlugController extends Controller
 
             if ($page instanceof DynamicRoutingPageInterface) {
                 $path = $page->match($slug, $nodeTranslation->getUrl());
+                if (!$path) {
+                    // Try match with trailing slash - this is needed to match the root path in Controller actions...
+                    $path = $page->match($slug . '/', $nodeTranslation->getUrl());
+                }
                 if ($path) {
                     $path['_locale'] = $locale;
                     return $this->forward($path['_controller'], $path);
@@ -152,7 +185,7 @@ class SlugController extends Controller
             
             //render page
             $pageparts = array();
-            if ($exactMatch) {
+            if ($exactMatch && method_exists($page, 'getPagePartAdminConfigurations')) {
                 foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
                     $context = $pagePartAdminConfiguration->getDefaultContext();
                     $pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
@@ -162,11 +195,11 @@ class SlugController extends Controller
                     array('nodetranslation' => $nodeTranslation, 'slug' => $slug, 'page' => $page, 'resource' => $page, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu,
                             'locales' => $localesarray));
             $hasView = false;
-            if (method_exists($page, "getDefaultView")) {
+            if (method_exists($page, 'getDefaultView')) {
                 $renderContext->setView($page->getDefaultView());
                 $hasView = true;
             }
-            if (method_exists($page, "service")) {
+            if (method_exists($page, 'service')) {
                 $redirect = $page->service($this->container, $request, $renderContext);
                 if (!empty($redirect)) {
                     return $redirect;
@@ -179,6 +212,7 @@ class SlugController extends Controller
 
             return $this->render($renderContext->getView(), (array) $renderContext);
         }
+        
         throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
     }
 }
