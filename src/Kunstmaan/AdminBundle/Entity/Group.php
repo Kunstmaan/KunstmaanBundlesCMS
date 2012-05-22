@@ -22,8 +22,8 @@ class Group implements RoleInterface, GroupInterface
     protected $id;
 
     /**
-    * @ORM\OneToMany(targetEntity="Permission", mappedBy="refGroup")
-    */
+     * @ORM\OneToMany(targetEntity="Permission", mappedBy="refGroup")
+     */
     protected $permissions;
 
     /**
@@ -37,14 +37,13 @@ class Group implements RoleInterface, GroupInterface
      */
     protected $roles;
 
-
     /**
      * @ORM\ManyToMany(targetEntity="Role")
      */
     protected $rolescollection;
 
-
-    public function getPermissions() {
+    public function getPermissions()
+    {
         return $this->permissions;
     }
 
@@ -58,7 +57,8 @@ class Group implements RoleInterface, GroupInterface
         return $this->id;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
@@ -75,7 +75,8 @@ class Group implements RoleInterface, GroupInterface
      * Returns the true ArrayCollection of Roles.
      * @return Doctrine\Common\Collections\ArrayCollection
      */
-    public function getRolesCollection() {
+    public function getRolesCollection()
+    {
         return $this->roles;
     }
 
@@ -84,7 +85,8 @@ class Group implements RoleInterface, GroupInterface
      * @param string $role
      * @return Role|null
      */
-    public function getRole($role = null) {
+    public function getRole($role = null)
+    {
         foreach ($this->getRoles() as $roleItem) {
             if ($role == $roleItem->getRole()) {
                 return $roleItem;
@@ -98,8 +100,9 @@ class Group implements RoleInterface, GroupInterface
      * @param string $role
      * @return boolean
      */
-    public function hasRole($role) {
-        if ($this->getRole($role)){
+    public function hasRole($role)
+    {
+        if ($this->getRole($role)) {
             return true;
         }
         return false;
@@ -110,9 +113,10 @@ class Group implements RoleInterface, GroupInterface
      * @throws Exception
      * @param Role $role
      */
-    public function addRole($role) {
+    public function addRole($role)
+    {
         if (!$role instanceof Role) {
-            throw new \Exception( "addRole takes a Role object as the parameter" );
+            throw new \Exception("addRole takes a Role object as the parameter");
         }
 
         if (!$this->hasRole($role->getRole())) {
@@ -124,7 +128,8 @@ class Group implements RoleInterface, GroupInterface
      * Pass a string, remove the Role object from collection.
      * @param string $role
      */
-    public function removeRole($role) {
+    public function removeRole($role)
+    {
         $roleElement = $this->getRole($role);
         if ($roleElement) {
             $this->roles->removeElement($roleElement);
@@ -136,7 +141,8 @@ class Group implements RoleInterface, GroupInterface
      * Type hinted array due to interface.
      * @param array $roles Of Role objects.
      */
-    public function setRoles(array $roles) {
+    public function setRoles(array $roles)
+    {
         $this->roles->clear();
         foreach ($roles as $role) {
             $this->addRole($role);
@@ -147,10 +153,10 @@ class Group implements RoleInterface, GroupInterface
      * Directly set the ArrayCollection of Roles. Type hinted as Collection which is the parent of (Array|Persistent)Collection.
      * @param Doctrine\Common\Collections\Collection $role
      */
-    public function setRolesCollection(Collection $collection) {
+    public function setRolesCollection(Collection $collection)
+    {
         $this->roles = $collection;
     }
-
 
     public function __construct($name = '', $roles = array())
     {
@@ -163,7 +169,6 @@ class Group implements RoleInterface, GroupInterface
     {
         return $this->name;
     }
-
 
     public function setName($name)
     {

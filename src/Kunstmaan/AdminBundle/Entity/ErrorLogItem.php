@@ -6,13 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * omnext errorlogitem
- * 
+ *
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Entity
  * @ORM\Table(name="errorlogitem")
  */
-class ErrorLogItem extends LogItem{
+class ErrorLogItem extends LogItem
+{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -24,14 +25,15 @@ class ErrorLogItem extends LogItem{
      * @ORM\Column(type="string")
      */
     protected $channel;
-    
+
     /**
      * @ORM\Column(type="string")
      */
     protected $level;
-    
-    public function __construct(){
-     	$this->createdat = new \DateTime();
+
+    public function __construct()
+    {
+        $this->createdat = new \DateTime();
     }
 
     /**
@@ -39,32 +41,38 @@ class ErrorLogItem extends LogItem{
      *
      * @return integer
      */
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
-    
+
     /**
      * Set id
      *
      * @param id integer
      */
-    public function setId($id){
-    	$this->id = $id;
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
-    public function getChannel(){
-    	return $this->channel;
+    public function getChannel()
+    {
+        return $this->channel;
     }
-    
-    public function setChannel($channel){
-    	$this->channel = $channel;
+
+    public function setChannel($channel)
+    {
+        $this->channel = $channel;
     }
-    
-    public function getLevel(){
-    	return $this->level;
+
+    public function getLevel()
+    {
+        return $this->level;
     }
-    
-    public function setLevel($level){
-    	$this->level = $level;
+
+    public function setLevel($level)
+    {
+        $this->level = $level;
     }
 }
