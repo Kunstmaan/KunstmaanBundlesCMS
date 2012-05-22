@@ -83,25 +83,35 @@ class SlugController extends Controller
             
             //render page
             $pageparts = array();
-            if (method_exists($page, 'getPagePartAdminConfigurations')) {
+            if ($exactMatch && method_exists($page, 'getPagePartAdminConfigurations')) {
                 foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
                     $context = $pagePartAdminConfiguration->getDefaultContext();
                     $pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
                 }
             }
 
-            $result = array('nodetranslation' => $nodeTranslation, 'page' => $page, 'resource' => $page, 'slug' => $slug, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu);
-
-            if (method_exists($page, 'service')) {
-                $page->service($this->container, $request, $result);
-            }
-
+            $renderContext = new RenderContext(
+                            array('nodetranslation' => $nodeTranslation, 'slug' => $slug, 'page' => $page, 'resource' => $page, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu,
+                                            'locales' => $localesarray));
+            $hasView = false;
             if (method_exists($page, 'getDefaultView')) {
-                return $this->render($page->getDefaultView(), $result);
-            } else {
-                return $result;
+                $renderContext->setView($page->getDefaultView());
+                $hasView = true;
             }
+            if (method_exists($page, 'service')) {
+                $redirect = $page->service($this->container, $request, $renderContext);
+                if (!empty($redirect)) {
+                    return $redirect;
+                }
+                else if (!$exactMatch && !$hasView) {
+                    // If it was a dynamic routing page and no view and no service implementation -> 404
+                    throw $this->createNotFoundException('No page found for slug ' . $slug);
+                }
+            }
+            
+            return $this->render($renderContext->getView(), (array) $renderContext);
         }
+        
         throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
     }
 
@@ -202,6 +212,7 @@ class SlugController extends Controller
 
             return $this->render($renderContext->getView(), (array) $renderContext);
         }
+        
         throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
     }
 }
