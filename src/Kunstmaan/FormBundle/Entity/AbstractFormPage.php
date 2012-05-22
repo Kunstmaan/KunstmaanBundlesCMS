@@ -25,24 +25,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 abstract class AbstractFormPage extends AbstractPage
 {
     /**
-     * @ORM\Column(type="text", nullable="true")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $thanks;
 
     /**
-     * @ORM\Column(type="string", nullable="true")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $subject;
 
     /**
-     * @ORM\Column(type="string", name="from_email", nullable="true")
+     * @ORM\Column(type="string", name="from_email", nullable=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     protected $fromEmail;
 
     /**
-     * @ORM\Column(type="string", name="to_email", nullable="true")
+     * @ORM\Column(type="string", name="to_email", nullable=true)
      */
     protected $toEmail;
 
