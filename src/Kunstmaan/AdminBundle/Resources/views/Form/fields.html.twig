@@ -1,6 +1,40 @@
+{% block choice_widget %}
+{% spaceless %}
+{% if expanded %}
+    <div {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+        <div class="input_prop">
+            {{ form_label(child) }}
+            <div class="input">
+                {{ form_widget(child) }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if empty_value is not none %}
+        <option value="">{{ empty_value|trans }}</option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+        {% set options = preferred_choices %}
+        {{ block('widget_choice_options') }}
+        {% if choices|length > 0 and separator is not none %}
+        <option disabled="disabled">{{ separator }}</option>
+        {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('widget_choice_options') }}
+    </select>
+{% endif %}
+{% endspaceless %}
+{% endblock choice_widget %}
+
+
+
 {% block field_row %}
 {% spaceless %}
-<div class=input_prop>
+<div class="input_prop">
     {{ form_label(form) }}
     {{ form_errors(form) }}
     <div class="input">
