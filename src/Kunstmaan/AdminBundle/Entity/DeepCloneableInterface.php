@@ -11,8 +11,8 @@ interface DeepCloneableInterface
 {
     /**
      * Deep clone the object and persist it.
-     * 
+     *
      * @param EntityManager $em
      */
-	public function deepClone(EntityManager $em);
+    public function deepClone(EntityManager $em);
 }
