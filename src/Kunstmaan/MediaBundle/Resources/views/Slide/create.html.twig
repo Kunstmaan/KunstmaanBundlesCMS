@@ -2,7 +2,12 @@
 
 {% block title %}{{ 'media.slide.new' | trans }}{% endblock%}
 
+{% block header %}
+    <div class="page-header">
+        <h1>{{ 'media.slide.addto'| trans({'%gallery%': gallery.name|trans }) | raw }}</h1>
+    </div>
+{% endblock %}
+
 {% block content %}
-    <h1>{{ 'media.slide.addto'| trans({'%gallery%': gallery.name|trans }) | raw }}</h1>
     {% include 'KunstmaanMediaBundle:Slide:form.html.twig' with { 'form': form } %}
 {% endblock %}

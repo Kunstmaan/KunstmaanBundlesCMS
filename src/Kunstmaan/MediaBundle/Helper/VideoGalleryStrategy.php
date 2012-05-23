@@ -3,6 +3,10 @@
 namespace Kunstmaan\MediaBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\MediaBundle\Entity\VideoGallery;
+use Kunstmaan\MediaBundle\Form\VideoType;
+use Kunstmaan\MediaBundle\Helper\MediaList\VideoListConfigurator;
+use Kunstmaan\MediaBundle\Entity\Video;
 
 class VideoGalleryStrategy implements GalleryStrategyInterface
 {
@@ -24,13 +28,24 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
+     * @return \Kunstmaan\MediaBundle\Entity\Media
+     */
+    public function getNewBulkUploadMediaInstance() {
+        return null;
+    }
+
+    public function getBulkUploadAccept() {
+        return null;
+    }
+
+    /**
      * @param \Doctrine\ORM\EntityManager $em
      *
      * @return \Kunstmaan\MediaBundle\Entity\VideoGallery
      */
     public function getNewGallery(EntityManager $em)
     {
-        return new \Kunstmaan\MediaBundle\Entity\VideoGallery($em);
+        return new VideoGallery($em);
     }
 
     /**
@@ -46,7 +61,7 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
      */
     function getFormType()
     {
-        return new \Kunstmaan\MediaBundle\Form\VideoType();
+        return new VideoType();
     }
 
     /**
@@ -54,7 +69,7 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
      */
     function getFormHelper()
     {
-        return new \Kunstmaan\MediaBundle\Entity\Video();
+        return new Video();
     }
 
     /**
@@ -62,7 +77,7 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
      */
     function getListConfigurator()
     {
-        return new \Kunstmaan\MediaBundle\Helper\MediaList\VideoListConfigurator();
+        return new VideoListConfigurator();
     }
 }
 

@@ -32,8 +32,7 @@
     </div>
 
     <ul class="tabs" data-tabs="tabs">
-        {%  set galstype = 'media.menu.'~gallery.type~'s' %}
-        <li class="active"><a href="#imagegallery">{{ galstype|trans|capitalize }}</a></li>
+        <li class="active"><a href="#imagegallery">{{ 'media.file.file'|trans|capitalize }}</a></li>
         <li><a href="#edits">{{ 'media.image.edits' | trans }}</a></li>
     </ul>
 

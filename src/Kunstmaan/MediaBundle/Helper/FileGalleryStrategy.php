@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\MediaBundle\Entity\File;
 use Kunstmaan\MediaBundle\Helper\MediaList\FileListConfigurator;
 use Kunstmaan\MediaBundle\Form\MediaType;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
@@ -27,6 +28,17 @@ class FileGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
+     * @return \Kunstmaan\MediaBundle\Entity\Media
+     */
+    public function getNewBulkUploadMediaInstance() {
+        return new File();
+    }
+
+    public function getBulkUploadAccept() {
+        return null;
+    }
+
+    /**
      * @param \Doctrine\ORM\EntityManager $em
      *
      * @return \Kunstmaan\MediaBundle\Entity\FileGallery
@@ -35,6 +47,7 @@ class FileGalleryStrategy implements GalleryStrategyInterface
     {
         return new FileGallery($em);
     }
+
 
     /**
      * @return string

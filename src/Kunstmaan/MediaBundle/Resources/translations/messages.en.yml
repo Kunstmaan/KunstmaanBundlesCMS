@@ -29,6 +29,8 @@ media:
       subnew: Make new file folder in %gallery%
     sure: Are you sure you want to delete this file?
     editmetadata: Edit metadata
+    bulkupload:
+        addto: Upload files to "%gallery%"
   
   image: 
     images: images
@@ -48,6 +50,8 @@ media:
     editmetadata: Edit metadata
     edits: Image edits
     noedits: No edits available
+    bulkupload:
+            addto: Upload images to "%gallery%"
   
   slide: 
     slides: slides
@@ -110,4 +114,8 @@ media:
 
   metadata:
     edit: Edit metadata
+
+  bulkupload:
+    upload: Upload
+    bulkupload: Bulk upload
     
