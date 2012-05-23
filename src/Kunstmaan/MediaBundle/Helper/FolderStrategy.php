@@ -26,6 +26,17 @@ class FolderStrategy implements GalleryStrategyInterface
     }
 
     /**
+     * @return \Kunstmaan\MediaBundle\Entity\Media
+     */
+    public function getNewBulkUploadMediaInstance() {
+        return null;
+    }
+
+    public function getBulkUploadAccept() {
+        return null;
+    }
+
+    /**
      * @param \Doctrine\ORM\EntityManager $em
      *
      * @return \Kunstmaan\MediaBundle\Entity\Folder

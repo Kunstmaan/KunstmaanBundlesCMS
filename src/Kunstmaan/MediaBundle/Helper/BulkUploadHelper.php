@@ -8,8 +8,23 @@ use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 class BulkUploadHelper
 {
 
-    protected $files;
+    public $files;
 
+    public function __construct()
+    {
+        $files = array();
+    }
+
+    public function setFiles($files)
+    {
+        $this->files = $files;
+        return $this;
+    }
+
+    public function getFiles()
+    {
+        return $this->files;
+    }
 }
 
 ?>

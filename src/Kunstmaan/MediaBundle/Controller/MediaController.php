@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\MediaBundle\Form\BulkUploadType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,6 +19,7 @@ use Kunstmaan\MediaBundle\Entity\Image;
 use Kunstmaan\MediaBundle\Entity\File;
 use Kunstmaan\MediaBundle\Form\MediaType;
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
+use Kunstmaan\MediaBundle\Helper\BulkUploadHelper;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -79,6 +81,61 @@ class MediaController extends Controller
         return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
                                                                                                 'slug' => $gallery->getSlug()
                                                                                            )));
+    }
+
+    /**
+     * @Route("bulkupload/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_bulkupload")
+     * @Method({"GET", "POST"})
+     * @Template("KunstmaanMediaBundle:File:bulkupload.html.twig")
+     */
+    public function bulkUploadAction($gallery_id)
+    {
+        $em      = $this->getDoctrine()->getEntityManager();
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $strategy = $gallery->getStrategy();
+
+        $newMediaInstance = $strategy->getNewBulkUploadMediaInstance();
+
+        if(is_null($newMediaInstance)) {
+            throw new \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException("This type of gallery doesn't support multiple file upload.");
+        }
+
+        $request = $this->getRequest();
+        $helper  = new BulkUploadHelper();
+
+        $form = $this->createForm(new BulkUploadType($strategy->getBulkUploadAccept()), $helper);
+
+        if ('POST' == $request->getMethod()) {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+
+                foreach ($helper->getFiles() as $file) {
+
+                    $media = clone $newMediaInstance;
+                    $media->setName($file->getClientOriginalName());
+                    $media->setContent($file);
+                    $media->setGallery($gallery);
+
+                    $em->getRepository('KunstmaanMediaBundle:Media')->save($media, $em);
+
+                }
+
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array(
+                                                                                                        'id'  => $gallery->getId(),
+                                                                                                        'slug' => $gallery->getSlug()
+                                                                                                   )));
+            }
+        }
+
+        $formView = $form->createView();
+        $formView->getChild('files')->set('full_name', 'kunstmaan_mediabundle_bulkupload[files][]');
+
+        return array(
+            'form'      => $formView,
+            'gallery'   => $gallery
+        );
+
     }
 
     /**

@@ -55,7 +55,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             'Create slide' => 'KunstmaanMediaBundle_folder_slidecreate',
             'Create video' => 'KunstmaanMediaBundle_folder_videocreate',
             'Create image' => 'KunstmaanMediaBundle_folder_imagecreate',
-            'Create file' => 'KunstmaanMediaBundle_folder_filecreate'
+            'Create file' => 'KunstmaanMediaBundle_folder_filecreate',
+            'Bulk upload' => 'KunstmaanMediaBundle_folder_bulkupload'
         );
 
         $all_routes = array_merge($create_routes, $media_routes);

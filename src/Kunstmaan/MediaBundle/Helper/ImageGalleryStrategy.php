@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\MediaBundle\Entity\Image;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Form\MediaType;
 
@@ -23,6 +24,17 @@ class ImageGalleryStrategy implements GalleryStrategyInterface
     public function getType()
     {
         return 'image';
+    }
+
+    /**
+     * @return \Kunstmaan\MediaBundle\Entity\Media
+     */
+    public function getNewBulkUploadMediaInstance() {
+        return new Image();
+    }
+
+    public function getBulkUploadAccept() {
+        return 'image/*';
     }
 
     /**
