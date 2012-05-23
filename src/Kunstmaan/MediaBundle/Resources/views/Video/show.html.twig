@@ -7,32 +7,32 @@
 {% endblock %}
 
 {% block content %}
-    <div>
 
-        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
-        
-        <div class="actions">
-            <a href="{{ path('KunstmaanMediaBundle_video_edit', { 'media_id': media.id }) }}" class="btn">{{ 'form.edit' |trans }}</a>
+    {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+
+    <div class="main_actions">
+        <a class="btn primary type" href="{{ path('KunstmaanMediaBundle_video_edit', { 'media_id': media.id }) }}" class="btn">{{ 'form.edit' |trans }}</a>
+        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete' |trans }}</a>
+        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
+    </div>
+
+    <div id="main_actions_top" class="main_actions top">
+        <div class="pull-right">
+            <a class="btn primary type" href="{{ path('KunstmaanMediaBundle_video_edit', { 'media_id': media.id }) }}" class="btn">{{ 'form.edit' |trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete' |trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
+            <a class="btn up">&#9650;</a>
         </div>
+    </div>
 
-        <ul>
-            <li>Name: {{ media.name }} </li>
-            <li>Content-type: {{ media.contentType }}</li>
-            <li>Type: {{ media.type }}</li>
-            <li>Added; {{ media.createdat|date|escape }}</li>
-            <li>Updated: {{ media.updatedat|date|escape }}</li>
-        </ul>
+    <ul>
+        <li>Name: {{ media.name }} </li>
+        <li>Content-type: {{ media.contentType }}</li>
+        <li>Type: {{ media.type }}</li>
+        <li>Added; {{ media.createdat|date|escape }}</li>
+        <li>Updated: {{ media.updatedat|date|escape }}</li>
+    </ul>
 
-        {% include 'KunstmaanMediaBundle:Video:'~ media.type ~'.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Video:'~ media.type ~'.html.twig' %}
 
-        <div class="actions">
-            <a href="{{ path('KunstmaanMediaBundle_video_edit', { 'media_id': media.id }) }}" class="btn">{{ 'form.edit' |trans }}</a>
-            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete' |trans }}</a>
-            <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
-
-        </div>
-
-     </div>
 {% endblock %}

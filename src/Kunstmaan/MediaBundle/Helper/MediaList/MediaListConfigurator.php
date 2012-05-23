@@ -7,6 +7,10 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 
+/**
+ * @Deprecated
+ *  This isn't used anymore, we cannot add any media directly under the 'Media' folder.
+ */
 class MediaListConfigurator extends AbstractAdminListConfigurator
 {
 
@@ -22,6 +26,11 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
         $this->addField("classtype", "form.type", TRUE);
         $this->addField("createdAt", "form.createdat", TRUE);
         $this->addField("updatedAt", "form.updatedat", TRUE);
+    }
+
+    public function canAdd()
+    {
+        return false;
     }
 
     public function getAddUrlFor($params = array())

@@ -38,12 +38,11 @@ class FolderController extends Controller
     function showAction($id){
         $em = $this->getDoctrine()->getEntityManager();
         $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
-                                ->getAllFoldersByType();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
         $itemlist = "";
         $listconfigurator = $gallery->getStrategy()->getListConfigurator();
-        if(isset($listconfigurator) && $listconfigurator != null){
+        if (isset($listconfigurator) && $listconfigurator != null){
             $itemlist = $this->get("adminlist.factory")->createList($listconfigurator, $em, array("gallery" => $gallery->getId()));
             $itemlist->bindRequest($this->getRequest());
         }

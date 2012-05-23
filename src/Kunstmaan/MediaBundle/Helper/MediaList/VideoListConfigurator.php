@@ -27,6 +27,11 @@ class VideoListConfigurator extends AbstractAdminListConfigurator
         $this->addField("updatedAt", "form.updatedat", TRUE);
     }
 
+    public function canAdd()
+    {
+        return false;
+    }
+
     public function getAddUrlFor($params = array())
     {
         return array(
