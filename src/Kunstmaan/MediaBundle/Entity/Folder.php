@@ -335,11 +335,12 @@ class Folder extends AbstractEntity
         if (count($this->getImages()) > 0) {
             return TRUE;
         }
-        $help = FALSE;
         foreach ($this->getChildren() as $child) {
-            $help = $child->hasImages();
+            if($child->hasImages()) {
+                return TRUE;
+            }
         }
-        return $help;
+        return FALSE;
     }
 
     public function getFilesOnly()
@@ -359,11 +360,12 @@ class Folder extends AbstractEntity
         if (count($this->getFilesOnly()) > 0) {
             return TRUE;
         }
-        $help = FALSE;
         foreach ($this->getChildren() as $child) {
-            $help = $child->hasFiles();
+            if($child->hasFiles()) {
+                return TRUE;
+            }
         }
-        return $help;
+        return FALSE;
     }
 
     public function getSlidesOnly()
@@ -383,11 +385,12 @@ class Folder extends AbstractEntity
         if (count($this->getSlidesOnly()) > 0) {
             return TRUE;
         }
-        $help = FALSE;
         foreach ($this->getChildren() as $child) {
-            $help = $child->hasSlides();
+            if ($child->hasSlides()) {
+                return TRUE;
+            }
         }
-        return $help;
+        return FALSE;
     }
 
     public function getVideosOnly()
@@ -407,11 +410,12 @@ class Folder extends AbstractEntity
         if (count($this->getVideosOnly()) > 0) {
             return TRUE;
         }
-        $help = FALSE;
         foreach ($this->getChildren() as $child) {
-            $help = $child->hasVideos();
+            if ($child->hasVideos()) {
+                return TRUE;
+            }
         }
-        return $help;
+        return FALSE;
     }
 
     public function hasActive($id)
