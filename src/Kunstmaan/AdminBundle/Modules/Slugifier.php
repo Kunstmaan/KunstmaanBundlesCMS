@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\Modules;
 
 class Slugifier
 {
-    public static function slugify($text)
+    public static function slugify($text, $useDefault = true)
     {
         $text = preg_replace('#[^\\pL\d]+#u', '-', $text); // replace non letter or digits by -
         $text = trim($text, '-'); //trim
@@ -17,8 +17,11 @@ class Slugifier
         $text = strtolower($text); // lowercase
         $text = preg_replace('#[^-\w]+#', '', $text); // remove unwanted characters
 
-        if (empty($text)){
-            return 'n-a';
+        if (empty($text)) {
+            if($useDefault) {
+                return 'n-a';
+            }
+            return '';
         }
 
         return $text;
