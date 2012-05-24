@@ -23,11 +23,9 @@ class SlugController extends Controller
         $request = $this->getRequest();
         $locale = $request->getLocale();
 
-        /*
         if (empty($locale)) {
             $locale = $request->getSession()->getLocale();
         }
-        */
 
         $requiredlocales = $this->container->getParameter('requiredlocales');
 
