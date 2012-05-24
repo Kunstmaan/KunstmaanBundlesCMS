@@ -19,6 +19,8 @@ class SlugController extends Controller
      */
     public function slugDraftAction($slug)
     {
+    	//Remove last slash from slug (if there is one)
+    	$slug = rtrim($slug, "/");
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
@@ -124,6 +126,8 @@ class SlugController extends Controller
      */
     public function slugAction($slug = null)
     {
+    	//Remove last slash from slug (if there is one)
+    	$slug = rtrim($slug, "/");
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
