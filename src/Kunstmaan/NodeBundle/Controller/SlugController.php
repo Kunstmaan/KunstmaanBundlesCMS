@@ -49,6 +49,7 @@ class SlugController extends Controller
             $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getBestMatchForUrl($slug, $locale);
             $exactMatch = false;
         }
+        
         if ($nodeTranslation) {
             $version = $nodeTranslation->getNodeVersion('draft');
             if (is_null($version)) {
@@ -56,10 +57,13 @@ class SlugController extends Controller
             }
             $page = $version->getRef($em);
             $node = $nodeTranslation->getNode();
-        } else {
+        }
+        
+        // If no node translation or no exact match that is not a dynamic routing page -> 404
+        if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingPageInterface))) {
             throw $this->createNotFoundException('No page found for slug ' . $slug);
         }
-
+        
         $currentUser = $this->get('security.context')->getToken()->getUser();
 
         $permissionManager = $this->get('kunstmaan_admin.permissionmanager');
@@ -70,7 +74,7 @@ class SlugController extends Controller
 
             if ($page instanceof DynamicRoutingPageInterface) {
                             $page->setLocale($locale);
-                $slugPart = substr($slug, strlen($nodeTranslation->getFullSlug()));
+                $slugPart = substr($slug, strlen($nodeTranslation->getUrl()));
                 $path = $page->match($slugPart);
                 if (!$path) {
                     // Try match with trailing slash - this is needed to match the root path in Controller actions...
@@ -156,7 +160,10 @@ class SlugController extends Controller
         if ($nodeTranslation) {
             $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
             $node = $nodeTranslation->getNode();
-        } else {
+        }
+        
+        // If no node translation or no exact match that is not a dynamic routing page -> 404
+        if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingPageInterface))) {
             throw $this->createNotFoundException('No page found for slug ' . $slug);
         }
 
@@ -175,7 +182,7 @@ class SlugController extends Controller
 
             if ($page instanceof DynamicRoutingPageInterface) {
                 $page->setLocale($locale);
-                $slugPart = substr($slug, strlen($nodeTranslation->getFullSlug()));
+                $slugPart = substr($slug, strlen($nodeTranslation->getUrl()));
                 $path = $page->match($slugPart);
                 if (!$path) {
                     // Try match with trailing slash - this is needed to match the root path in Controller actions...
