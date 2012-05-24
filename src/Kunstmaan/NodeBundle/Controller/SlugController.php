@@ -20,9 +20,8 @@ class SlugController extends Controller
      */
     public function slugDraftAction($slug)
     {
-    	if(substr($slug, -1) == '/') {
-    		$slug = substr($slug, 0, -1);
-    	}
+    	//Remove last slash from slug (if there is one)
+    	$slug = rtrim($slug, "/");
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
@@ -125,9 +124,8 @@ class SlugController extends Controller
      */
     public function slugAction($slug = null)
     {
-	    if(substr($slug, -1) == '/') {
-	    $slug = substr($slug, 0, -1);
-		}
+    	//Remove last slash from slug (if there is one)
+    	$slug = rtrim($slug, "/");
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
