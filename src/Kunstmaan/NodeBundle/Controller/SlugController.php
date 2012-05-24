@@ -3,7 +3,6 @@
 namespace Kunstmaan\ViewBundle\Controller;
 
 use Kunstmaan\AdminBundle\Entity\DynamicRoutingPageInterface;
-
 use Kunstmaan\ViewBundle\Helper\RenderContext;
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -70,13 +69,16 @@ class SlugController extends Controller
             $nodeMenu = new NodeMenu($this->container, $locale, $node);
 
             if ($page instanceof DynamicRoutingPageInterface) {
-                $path = $page->match($slug, $nodeTranslation->getUrl());
+                            $page->setLocale($locale);
+                $slugPart = substr($slug, strlen($nodeTranslation->getFullSlug()));
+                $path = $page->match($slugPart);
                 if (!$path) {
                     // Try match with trailing slash - this is needed to match the root path in Controller actions...
-                    $path = $page->match($slug . '/', $nodeTranslation->getUrl());
+                    $path = $page->match($slugPart . '/');
                 }
                 if ($path) {
-                    $path['_locale'] = $locale;
+                    $path['nodeTranslationId'] = $nodeTranslation->getId();
+                    
                     return $this->forward($path['_controller'], $path);
                 }
             }
@@ -172,13 +174,16 @@ class SlugController extends Controller
             $nodeMenu = new NodeMenu($this->container, $locale, $node);
 
             if ($page instanceof DynamicRoutingPageInterface) {
-                $path = $page->match($slug, $nodeTranslation->getUrl());
+                $page->setLocale($locale);
+                $slugPart = substr($slug, strlen($nodeTranslation->getFullSlug()));
+                $path = $page->match($slugPart);
                 if (!$path) {
                     // Try match with trailing slash - this is needed to match the root path in Controller actions...
-                    $path = $page->match($slug . '/', $nodeTranslation->getUrl());
+                    $path = $page->match($slugPart . '/');
                 }
                 if ($path) {
-                    $path['_locale'] = $locale;
+                    $path['nodeTranslationId'] = $nodeTranslation->getId();
+                    
                     return $this->forward($path['_controller'], $path);
                 }
             }
