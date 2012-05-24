@@ -23,9 +23,11 @@ class SlugController extends Controller
         $request = $this->getRequest();
         $locale = $request->getLocale();
 
+        /*
         if (empty($locale)) {
             $locale = $request->getSession()->getLocale();
         }
+        */
 
         $requiredlocales = $this->container->getParameter('requiredlocales');
 
@@ -38,6 +40,11 @@ class SlugController extends Controller
         }
 
         if (!in_array($locale, $localesarray)) {
+            if (empty($slug)) {
+                $slug = $locale;
+            } else {
+                $slug = $locale . '/' . $slug;
+            }
             $locale = $fallback;
             return $this->redirect($this->generateUrl('_slug_draft', array('slug' => $slug, '_locale' => $locale)));
         }
@@ -135,7 +142,7 @@ class SlugController extends Controller
         if (empty($locale)) {
             $locale = $request->getSession()->getLocale();
         }
-
+        
         $requiredlocales = $this->container->getParameter('requiredlocales');
 
         $localesarray = explode('|', $requiredlocales);
@@ -147,6 +154,11 @@ class SlugController extends Controller
         }
 
         if (!in_array($locale, $localesarray)) {
+            if (empty($slug)) {
+                $slug = $locale;
+            } else {
+                $slug = $locale . '/' . $slug;
+            }
             $locale = $fallback;
             return $this->redirect($this->generateUrl('_slug', array('slug' => $slug, '_locale' => $locale)));
         }
