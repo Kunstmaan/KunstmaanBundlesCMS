@@ -20,6 +20,9 @@ class SlugController extends Controller
      */
     public function slugDraftAction($slug)
     {
+    	if(substr($slug, -1) == '/') {
+    		$slug = substr($slug, 0, -1);
+    	}
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
@@ -122,6 +125,9 @@ class SlugController extends Controller
      */
     public function slugAction($slug = null)
     {
+	    if(substr($slug, -1) == '/') {
+	    $slug = substr($slug, 0, -1);
+		}
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
