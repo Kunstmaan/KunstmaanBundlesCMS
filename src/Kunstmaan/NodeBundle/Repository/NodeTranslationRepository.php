@@ -33,7 +33,7 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * This returns the node translations that are visible for guest users
-     * 
+     *
      * @return array
      */
     public function getOnlineNodes()
@@ -254,7 +254,9 @@ class NodeTranslationRepository extends EntityRepository
 
         $query = $em
             ->createNativeQuery(
-            'select nt.id, nt.node, nt.lang, nt.online, nt.title, nt.slug, nt.url, nt.publicNodeVersion, nt.seo from nodetranslation nt where nt.lang = ? and locate(url, ?) = 1 order by length(url) desc limit 1',
+            'select nt.id, nt.node, nt.lang, nt.online, nt.title, nt.slug, nt.url, nt.publicNodeVersion, nt.seo from nodetranslation nt
+                            join node n on n.id = nt.node
+                            where n.deleted = 0 and nt.lang = ? and locate(url, ?) = 1 order by length(url) desc limit 1',
             $rsm);
         $query->setParameter(1, $locale);
         $query->setParameter(2, $urlSlug);
