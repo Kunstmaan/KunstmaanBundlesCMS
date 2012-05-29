@@ -65,6 +65,11 @@ class AdminList
         return $this->configurator->getFields();
     }
 
+    public function getExportColumns()
+    {
+        return $this->configurator->getExportFields();
+    }
+    
     public function getCount($params = array())
     {
         $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');

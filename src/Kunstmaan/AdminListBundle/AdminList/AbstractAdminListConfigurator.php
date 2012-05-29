@@ -6,6 +6,7 @@ abstract class AbstractAdminListConfigurator
 {
 
     private $fields = array();
+    private $exportFields = array(); 
     private $customActions = array();
     private $listActions = array();
 
@@ -26,6 +27,11 @@ abstract class AbstractAdminListConfigurator
     function addField($fieldname, $fieldheader, $sort, $template = null)
     {
         $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
+    }
+    
+    function addExportField($fieldname, $fieldheader, $sort, $template = null)
+    {
+        $this->exportFields[] = new Field($fieldname, $fieldheader, $sort, $template); 
     }
 
     public function canDelete($item) {
@@ -52,6 +58,14 @@ abstract class AbstractAdminListConfigurator
 
     function getFields() {
         return $this->fields;
+    }
+    
+    function getExportFields(){
+        if(empty($this->exportFields )){
+            return $this->fields; 
+        }else{
+            return $this->exportFields; 
+        }
     }
 
     function configureListFields(&$array) {

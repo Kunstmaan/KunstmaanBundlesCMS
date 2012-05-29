@@ -45,6 +45,8 @@ abstract class AdminListController extends Controller {
 		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
 		$adminlist->bindRequest($request);
 		$entities = $adminlist->getItems(array());
+		
+		
 
 		$response = new Response();
 		$filename = sprintf('entries.%s', $_format);
