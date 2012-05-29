@@ -3,6 +3,8 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
+use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
+use Kunstmaan\MediaBundle\Helper\Event\Events;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -69,6 +71,12 @@ class SlideController extends Controller
                     $metadata->setMedia($slide);
                     $em->persist($metadata);
                     $em->flush();
+                }
+
+                $dispatcher = $this->get('event_dispatcher');
+                if ($dispatcher->hasListeners(Events::postEdit)) {
+                    $event = new MediaEvent($slide, $metadata);
+                    $dispatcher->dispatch(Events::postEdit, $event);
                 }
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $slide->getId() )));
