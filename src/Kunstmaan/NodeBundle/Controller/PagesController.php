@@ -7,7 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Doctrine\ORM\Events;
+use Kunstmaan\AdminNodeBundle\Helper\Event\Events;
+use Kunstmaan\AdminNodeBundle\Helper\Event\PageEvent;
 
 use Kunstmaan\AdminBundle\Modules\PrepersistListener;
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
@@ -291,6 +292,13 @@ class PagesController extends Controller
         			$addcommand->execute("saved and published page \"". $nodeTranslation->getTitle() ."\" added with locale: " . $locale, array('entity'=> $nodeTranslation));
                 	$draft = false;
                 	$subaction = "public";
+                }
+
+                $dispatcher = $this->get('event_dispatcher');
+
+                if ($dispatcher->hasListeners(Events::postEdit)) {
+                    $event = new PageEvent($node, $nodeTranslation, $page);
+                    $dispatcher->dispatch(Events::postEdit, $event);
                 }
 
                 if(isset($editpagepart)){
