@@ -3,6 +3,8 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
+use Kunstmaan\MediaBundle\Helper\Event\Events;
 use Kunstmaan\MediaBundle\Form\BulkUploadType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -183,6 +185,12 @@ class MediaController extends Controller
                         $em->flush();
                     }
 
+                    $dispatcher = $this->get('event_dispatcher');
+                    if ($dispatcher->hasListeners(Events::postCreate)) {
+                        $event = new MediaEvent($file, isset($metadata)? $metadata : null);
+                        $dispatcher->dispatch(Events::postCreate, $event);
+                    }
+
                     return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
                                                                                                             'slug' => $gallery->getSlug()
                                                                                                        )));
@@ -241,6 +249,12 @@ class MediaController extends Controller
                         $em->flush();
                     }
 
+                    $dispatcher = $this->get('event_dispatcher');
+                    if ($dispatcher->hasListeners(Events::postCreate)) {
+                        $event = new MediaEvent($picture, isset($metadata)? $metadata : null);
+                        $dispatcher->dispatch(Events::postCreate, $event);
+                    }
+
                     return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
                                                                                                                                               'slug' => $gallery->getSlug()
                                                                                                                                          )));
@@ -295,6 +309,12 @@ class MediaController extends Controller
                     $em->flush();
                 }
 
+                $dispatcher = $this->get('event_dispatcher');
+                if ($dispatcher->hasListeners(Events::postCreate)) {
+                    $event = new MediaEvent($video, isset($metadata)? $metadata : null);
+                    $dispatcher->dispatch(Events::postCreate, $event);
+                }
+
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
                                                                                                                                           'slug' => $gallery->getSlug()
                                                                                                                                      )));
@@ -347,6 +367,12 @@ class MediaController extends Controller
                     $metadata->setMedia($picture);
                     $em->persist($slide);
                     $em->flush();
+                }
+
+                $dispatcher = $this->get('event_dispatcher');
+                if ($dispatcher->hasListeners(Events::postCreate)) {
+                    $event = new MediaEvent($slide, isset($metadata)? $metadata : null);
+                    $dispatcher->dispatch(Events::postCreate, $event);
                 }
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
