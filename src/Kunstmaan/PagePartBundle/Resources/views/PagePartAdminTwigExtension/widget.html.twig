@@ -95,7 +95,7 @@
                     {% endif %}
             	</div>
                 <div class="block" id="{{pagepartref.id}}_view" {% if editpagepart is defined and editpagepart == loop.index %}style="display:none"{% endif %}>
-                    {% include pagepart.defaultview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
+                    {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
                 {# Following if/endif was commented out to prevent LinePageParts from displaying text when calling form_rest, they can probably be removed #}
                 {# if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count #}
