@@ -11,10 +11,19 @@ use Symfony\Component\Form\AbstractType;
 interface PagePartInterface
 {
 
-    /**
-     * @return string
-     */
+	/**
+	 * Returns the view used in the frontend
+	 * @abstract
+	 * @return mixed
+	 */
     public function getDefaultView();
+
+	/**
+	 * Returns the view used in the backend
+	 * @abstract
+	 * @return mixed
+	 */
+	public function getAdminView();
 
     /**
      * @return string

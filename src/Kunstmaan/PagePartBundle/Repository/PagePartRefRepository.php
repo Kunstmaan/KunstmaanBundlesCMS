@@ -57,4 +57,22 @@ class PagePartRefRepository extends EntityRepository
             $sequencenumber++;
         }
     }
+
+	public function countPagePartsOfType($page, $pagepart_classname, $context = 'main')
+	{
+		$em = $this->getEntityManager();
+		$page_classname = ClassLookup::getClass($page);
+
+		$sql = 'SELECT COUNT(pp.id) FROM KunstmaanPagePartBundle:PagePartRef pp
+				 WHERE pp.pageEntityname = :pageEntityname
+				   AND pp.pageId = :pageId
+				   AND pp.pagePartEntityname = :pagePartEntityname
+				   AND pp.context = :context';
+		return $em->createQuery($sql)
+			->setParameter('pageEntityname', $page_classname)
+			->setParameter('pageId', $page->getId())
+			->setParameter('pagePartEntityname', $pagepart_classname)
+			->setParameter('context', $context)
+			->getSingleScalarResult();
+	}
 }
