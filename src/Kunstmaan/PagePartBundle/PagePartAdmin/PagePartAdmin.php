@@ -84,8 +84,39 @@ class PagePartAdmin {
         return $this->context;
     }
 
-    public function getPossiblePagePartTypes(){
-        return $this->configurator->getPossiblePagePartTypes();
+	/**
+	 * This getter returns an array holding info on page part types that can be added to the page.
+	 * The types are filtererd here, based on the amount of page parts of a certain type that can be added to the page.
+	 *
+	 * @return mixed
+	 */
+    public function getPossiblePagePartTypes()
+	{
+		$possiblePPTypes = $this->configurator->getPossiblePagePartTypes();
+		$em = $this->container->get('doctrine')->getEntityManager();
+
+		// filter page part types that can only be added x times to the page.
+		// to achieve this, provide a 'pagelimit' parameter when adding the pp type in your PagePartAdminConfiguration
+		if(!empty($possiblePPTypes))
+		{
+			for ($i=0; $i<sizeof($possiblePPTypes); $i++)
+			{
+				$possibleTypeArray = $possiblePPTypes[$i];
+				if(array_key_exists('pagelimit', $possibleTypeArray))
+				{
+					$pageLimit = $possibleTypeArray['pagelimit'];
+					$formPPCount = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')
+						->countPagePartsOfType($this->page, $possibleTypeArray['class'], $this->configurator->getDefaultContext());
+
+					if($formPPCount >= $pageLimit) {
+						// 'pagelimit' reached -> remove pp type
+						unset($possiblePPTypes[$i]);
+					}
+				}
+			}
+		}
+
+        return $possiblePPTypes;
     }
 
     public function getName(){
@@ -112,7 +143,7 @@ class PagePartAdmin {
     }
 
     public function getType($pagepart){
-        $possiblePagePartTypes = $this->getPossiblePagePartTypes();
+        $possiblePagePartTypes = $this->configurator->getPossiblePagePartTypes();
         foreach( $possiblePagePartTypes as &$pageparttype){
             if($pageparttype['class'] == ClassLookup::getClass($pagepart)){
                 return $pageparttype['name'];
