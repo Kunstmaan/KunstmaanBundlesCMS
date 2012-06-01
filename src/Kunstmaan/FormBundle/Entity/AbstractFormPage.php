@@ -134,8 +134,8 @@ abstract class AbstractFormPage extends AbstractPage
     {
         $formbuilder = $container->get('form.factory')->createBuilder('form');
         $em = $container->get('doctrine')->getEntityManager();
-        $pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($this, "main");
-        $fields = array();
+        $pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($this, $this->getFormElementsContext());
+		$fields = array();
         foreach ($pageparts as $pagepart) {
             if ($pagepart instanceof FormAdaptorInterface) {
                 $pagepart->adaptForm($formbuilder, $fields);
@@ -190,5 +190,10 @@ abstract class AbstractFormPage extends AbstractPage
     {
         return new AbstractFormPageAdminType();
     }
+
+	public function getFormElementsContext()
+	{
+		return "main";
+	}
 
 }
