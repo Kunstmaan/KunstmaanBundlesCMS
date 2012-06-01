@@ -49,7 +49,7 @@ class StringFormSubmissionField extends FormSubmissionField
      */
     public function getDefaultAdminType()
     {
-        return new StringFormSubmissionType();
+        return new StringFormSubmissionType($this->getLabel());
     }
 
     /**

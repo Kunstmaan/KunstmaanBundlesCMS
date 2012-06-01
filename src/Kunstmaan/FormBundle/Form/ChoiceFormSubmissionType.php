@@ -35,10 +35,12 @@ class ChoiceFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder
-                ->add('value', 'choice',
-                    array('data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField', 'label' => $this->label, 'expanded' => $this->expanded,
-                                'multiple' => $this->multiple, 'choices' => $this->choices));
+        $builder->add('value', 'choice', array(
+			'label' => $this->label,
+			'expanded' => $this->expanded,
+			'multiple' => $this->multiple,
+			'choices' => $this->choices
+		));
     }
 
     /**

@@ -45,7 +45,7 @@ class TextFormSubmissionField extends FormSubmissionField
      */
     public function getDefaultAdminType()
     {
-        return new TextFormSubmissionType();
+        return new TextFormSubmissionType($this->getLabel());
     }
 
     /**

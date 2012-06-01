@@ -30,7 +30,10 @@ class StringFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('value', 'text', array('data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField', 'label' => $this->label));
+        $builder->add('value', 'text', array(
+			'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField',
+			'label' => $this->label
+		));
     }
 
     /**
