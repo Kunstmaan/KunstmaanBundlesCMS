@@ -242,11 +242,13 @@ class PagesController extends Controller
 
         //handle the pagepart functions (fetching, change form to reflect all fields, assigning data, etc...)
         $pagepartadmins = array();
-        foreach($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration){
-        	$pagepartadmin = $this->get("pagepartadmin.factory")->createList($pagePartAdminConfiguration, $em, $page, null, $this->container);
-        	$pagepartadmin->preBindRequest($request);
-        	$pagepartadmin->adaptForm($formbuilder, $formfactory);
-        	$pagepartadmins[] = $pagepartadmin;
+        if (method_exists($page, "getPagePartAdminConfigurations")) {
+            foreach($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration){
+                $pagepartadmin = $this->get("pagepartadmin.factory")->createList($pagePartAdminConfiguration, $em, $page, null, $this->container);
+                $pagepartadmin->preBindRequest($request);
+                $pagepartadmin->adaptForm($formbuilder, $formfactory);
+                $pagepartadmins[] = $pagepartadmin;
+            }
         }
 
         if ($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')) {
