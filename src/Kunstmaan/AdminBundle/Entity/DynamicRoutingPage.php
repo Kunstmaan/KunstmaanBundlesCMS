@@ -2,19 +2,21 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-use Symfony\Component\Routing\Generator\UrlGenerator;
+use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 use Kunstmaan\AdminBundle\Helper\Routing\DynamicUrlMatcher;
+
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-abstract class DynamicRoutingPage implements DynamicRoutingPageInterface
+abstract class DynamicRoutingPage extends AbstractPage implements DynamicRoutingPageInterface
 {
-    private $routes = null;
+    private $routes = NULL;
     private $context;
     private $matcher;
     private $generator;
@@ -64,7 +66,7 @@ abstract class DynamicRoutingPage implements DynamicRoutingPageInterface
         return $this->getMatcher()->match($slug);
     }
 
-    public function generate($name, $parameters = array(), $absolute = false)
+    public function generate($name, $parameters = array(), $absolute = FALSE)
     {
         return $this->getGenerator()->generate($name, $parameters, $absolute);
     }
