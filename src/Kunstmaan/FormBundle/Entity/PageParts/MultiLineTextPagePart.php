@@ -89,17 +89,17 @@ class MultiLineTextPagePart extends AbstractFormPagePart
         $formBuilder->add('formwidget_' . $this->getUniqueId(), new TextFormSubmissionType($label));
         $formBuilder->setData($data);
         if ($this->getRequired()) {
-            $formBuilder
-                    ->addValidator(
-                        new FormValidator($sfsf, $this,
-                            function (FormInterface $form, $sfsf, $thiss)
-                                    {
-                                        $value = $sfsf->getValue();
-                                        if ($value != null && !is_string($value)) {
-                                            $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                                            $v->addError(new FormError($thiss->getErrormessageRequired()));
-                                        }
-                            }));
+            $formBuilder->addValidator(
+				new FormValidator($sfsf, $this,
+					function (FormInterface $form, $sfsf, $thiss)
+					{
+						$value = $sfsf->getValue();
+						if ($value != null && !is_string($value)) {
+							$v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
+							$v->addError(new FormError($thiss->getErrormessageRequired()));
+						}
+					}
+			));
         }
         if ($this->getRegex()) {
             $formBuilder

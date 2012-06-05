@@ -24,7 +24,7 @@ class StringFormSubmissionField extends FormSubmissionField
 {
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="sfsf_value", type="string")
      */
     protected $value;
 
@@ -57,11 +57,8 @@ class StringFormSubmissionField extends FormSubmissionField
      */
     public function __toString()
     {
-        if (is_null($this->getValue())) {
-            return "";
-        }
-
-        return $this->getValue();
+		$value = $this->getValue();
+        return (defined($value) && !is_null($value)) ? $value : "";
     }
 
 }

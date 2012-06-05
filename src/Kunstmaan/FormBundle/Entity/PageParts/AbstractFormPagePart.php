@@ -75,7 +75,7 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
-     * @param boolean $errormessageRequired
+     * @param string $errormessageRequired
      */
     public function setErrormessageRequired($errormessageRequired)
     {
@@ -83,11 +83,12 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
-     * @return boolean
+     * @return string
      */
     public function getErrormessageRequired()
     {
-        return $this->errormessageRequired;
+		$msg = $this->errormessageRequired;
+        return empty($msg) ? "Required field!" : $msg;
     }
 
     /**

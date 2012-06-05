@@ -14,24 +14,24 @@ class ChoiceFormSubmissionField extends FormSubmissionField
 {
 
 	/**
-	 * @ORM\Column(type="string", nullable=true)
+	 * @ORM\Column(name="cfsf_value", type="array", nullable=true)
 	 */
 	protected $value;
 
 	/**
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
-	protected $expanded;
+	protected $expanded = false;
 
 	/**
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
-	protected $multiple;
+	protected $multiple = false;
 
 	/**
-	 * @ORM\Column(type="text", nullable=true)
+	 * @ORM\Column(type="array", nullable=true)
 	 */
-	protected $choices;
+	protected $choices = array();
 
 
 	/**
@@ -46,10 +46,39 @@ class ChoiceFormSubmissionField extends FormSubmissionField
 	 */
 	public function __toString()
 	{
-		return (is_null($this->getValue())) ? "" : $this->getValue();
+		$values = $this->getValue();
+		$choices = $this->getChoices();
+
+		if (!empty($values)) {
+			if(is_array($values) && sizeof($values)>0) {
+				$result = array();
+				foreach ($values as $value) {
+					$result[] = $choices[$value];
+				}
+				return implode(",", $result);
+			}
+			else {
+				return $choices[$values];
+			}
+		}
+		return "";
 	}
+
+	public function isNull() {
+		$isNull = true;
+		$values = $this->getValue();
+		if (!empty($values)) {
+			if(is_array($values)) {
+				$isNull = !(sizeof($values)>0 && !empty($values[0]));
+			} else {
+				$isNull = false;
+			}
+		}
+		return $isNull;
+	}
+
 	/**
-	 * @return string
+	 * @return array
 	 */
 	public function getValue()
 	{
@@ -57,11 +86,11 @@ class ChoiceFormSubmissionField extends FormSubmissionField
 	}
 
 	/**
-	 * @param string $value
+	 * @param array $value
 	 */
-	public function setValue($value)
+	public function setValue($values = array())
 	{
-		$this->value = $value;
+		$this->value = $values;
 	}
 
 
@@ -112,4 +141,5 @@ class ChoiceFormSubmissionField extends FormSubmissionField
 	{
 		return $this->choices;
 	}
+
 }
