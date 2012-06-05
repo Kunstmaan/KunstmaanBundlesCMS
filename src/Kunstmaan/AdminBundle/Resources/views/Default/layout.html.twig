@@ -176,9 +176,14 @@
 	
 	
 	<!--=========== JS ===========-->
+	
+	<!--Uncombined-->
+	<script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.jstree.js') }}"></script>
+	<!--<script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/ckeditor.js') }}"></script>-->
+	<!--<script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/adapters/jquery.js') }}"></script>-->
+	
     <!--Combined-->
     {% javascripts
-    	'@KunstmaanAdminBundle/Resources/public/js/libs/jquery.jstree.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-ui-1.8.20.custom.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/chosen.jquery.min.js'
@@ -188,6 +193,8 @@
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.ui.widget.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.datePicker.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/modaldialog.min.js'
+        '@KunstmaanAdminBundle/Resources/public/js/ckeditor/ckeditor.js'
+        '@KunstmaanAdminBundle/Resources/public/js/ckeditor/adapters/jquery.js'
         '@KunstmaanAdminBundle/Resources/public/js/plugins.js'
         '@KunstmaanAdminBundle/Resources/public/js/script.js'
         output='generated-js/scripts_bottom.js'
