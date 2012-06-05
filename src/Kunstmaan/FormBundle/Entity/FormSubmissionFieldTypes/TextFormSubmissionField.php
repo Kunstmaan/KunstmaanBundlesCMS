@@ -20,7 +20,7 @@ class TextFormSubmissionField extends FormSubmissionField
 {
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(name="tfsf_value", type="text")
      */
     protected $value;
 
@@ -45,7 +45,7 @@ class TextFormSubmissionField extends FormSubmissionField
      */
     public function getDefaultAdminType()
     {
-        return new TextFormSubmissionType();
+        return new TextFormSubmissionType($this->getLabel());
     }
 
     /**
@@ -53,11 +53,8 @@ class TextFormSubmissionField extends FormSubmissionField
      */
     public function __toString()
     {
-        if (is_null($this->getValue())) {
-            return "";
-        }
-
-        return $this->getValue();
+		$value = $this->getValue();
+		return (defined($value) && !is_null($value)) ? $value : "";
     }
 
 }

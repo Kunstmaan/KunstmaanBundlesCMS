@@ -3,10 +3,12 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
+use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormError;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
@@ -34,6 +36,62 @@ class ChoicePagePart extends AbstractFormPagePart
      * @ORM\Column(type="text", nullable=true)
      */
     protected $choices;
+
+	/**
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $empty_value;
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getDefaultView()
+	{
+		return "KunstmaanFormBundle:ChoicePagePart:view.html.twig";
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function adaptForm(FormBuilder $formBuilder, &$fields)
+	{
+		$choices = explode("\n", $this->getChoices());
+
+		$cfsf = new ChoiceFormSubmissionField();
+		$cfsf->setFieldName("field_" . $this->getUniqueId());
+		$cfsf->setLabel($this->getLabel());
+		$cfsf->setChoices($choices);
+		$data = $formBuilder->getData();
+		$data['formwidget_' . $this->getUniqueId()] = $cfsf;
+		$label = $this->getLabel();
+		if ($this->getRequired()) {
+			$label = $label . ' *';
+		}
+
+		$formBuilder->add('formwidget_' . $this->getUniqueId(), new ChoiceFormSubmissionType($label, $this->getExpanded(), $this->getMultiple(), $choices, $this->getEmptyValue()));
+		$formBuilder->setData($data);
+		if ($this->getRequired()) {
+			$formBuilder->addValidator(
+				new FormValidator($cfsf, $this,
+					function (FormInterface $form, $cfsf, $thiss)
+					{
+						if ($cfsf->isNull()) {
+							$v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
+							$v->addError(new FormError($thiss->getErrormessageRequired()));
+						}
+					}
+				));
+		}
+		$fields[] = $cfsf;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getDefaultAdminType()
+	{
+		return new ChoicePagePartAdminType();
+	}
 
     /**
      * @param boolean $expanded
@@ -84,52 +142,23 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * Set empty_value
+     *
+     * @param string $emptyValue
      */
-    public function getDefaultView()
+    public function setEmptyValue($emptyValue)
     {
-        return "KunstmaanFormBundle:ChoicePagePart:view.html.twig";
+        $this->empty_value = $emptyValue;
     }
 
     /**
-     * {@inheritdoc}
+     * Get empty_value
+     *
+     * @return string 
      */
-    public function adaptForm(FormBuilder $formBuilder, &$fields)
+    public function getEmptyValue()
     {
-        $sfsf = new StringFormSubmissionField();
-        $sfsf->setFieldName("field_" . $this->getUniqueId());
-        $sfsf->setLabel($this->getLabel());
-        $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $sfsf;
-        $label = $this->getLabel();
-        if ($this->getRequired()) {
-            $label = $label . ' *';
-        }
-        $choices = explode("\n", $this->getChoices());
-        $formBuilder->add('formwidget_' . $this->getUniqueId(), new ChoiceFormSubmissionType($label, $this->getExpanded(), $this->getMultiple(), $choices));
-        $formBuilder->setData($data);
-        if ($this->getRequired()) {
-            $formBuilder
-                    ->addValidator(
-                            new FormValidator($sfsf, $this,
-                                    function (FormInterface $form, $sfsf, $thiss)
-                                    {
-                                        $value = $sfsf->getValue();
-                                        if ($value != null && !is_string($value)) {
-                                            $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                                            $v->addError(new FormError($thiss->getErrormessageRequired()));
-                                        }
-                                    }));
-        }
-        $fields[] = $sfsf;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefaultAdminType()
-    {
-        return new ChoicePagePartAdminType();
+        return $this->empty_value;
     }
 
 }

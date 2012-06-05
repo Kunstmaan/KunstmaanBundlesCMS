@@ -15,19 +15,21 @@ class ChoiceFormSubmissionType extends AbstractType
     private $expanded;
     private $multiple;
     private $choices;
+	private $empty_value;
 
     /**
      * @param string  $label    The label
      * @param boolean $expanded Expanded or not
      * @param boolean $multiple Multiple or not
-     * @param arra    $choices  The choices array
+     * @param array   $choices  The choices array
      */
-    public function __construct($label, $expanded, $multiple, $choices)
+    public function __construct($label, $expanded, $multiple, $choices, $empty_value = null)
     {
         $this->label = $label;
         $this->expanded = $expanded;
         $this->multiple = $multiple;
         $this->choices = $choices;
+		$this->empty_value = $empty_value;
     }
 
     /**
@@ -35,10 +37,15 @@ class ChoiceFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder
-                ->add('value', 'choice',
-                    array('data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField', 'label' => $this->label, 'expanded' => $this->expanded,
-                                'multiple' => $this->multiple, 'choices' => $this->choices));
+		// Symfony\Component\Form\Extension\Core\Type\ChoiceType
+        $builder->add('value', 'choice', array(
+			'label' => $this->label,
+			'expanded' => $this->expanded,
+			'multiple' => $this->multiple,
+			'choices' => $this->choices,
+			'empty_value' => $this->empty_value,
+			'empty_data' => null
+		));
     }
 
     /**

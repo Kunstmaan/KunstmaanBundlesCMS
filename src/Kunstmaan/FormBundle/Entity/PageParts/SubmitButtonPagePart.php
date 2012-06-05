@@ -59,7 +59,12 @@ class SubmitButtonPagePart extends AbstractPagePart
         return "KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig";
     }
 
-    /**
+	public function getAdminView()
+	{
+		return "KunstmaanFormBundle:SubmitButtonPagePart:view-admin.html.twig";
+	}
+
+	/**
      * @return string
      */
     public function getElasticaView()
@@ -74,4 +79,5 @@ class SubmitButtonPagePart extends AbstractPagePart
     {
         return new SubmitButtonPagePartAdminType();
     }
+
 }
