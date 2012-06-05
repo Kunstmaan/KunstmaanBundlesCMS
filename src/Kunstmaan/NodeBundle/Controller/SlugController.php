@@ -87,8 +87,8 @@ class SlugController extends Controller
                 }
                 if ($path) {
                     $path['nodeTranslationId'] = $nodeTranslation->getId();
-                    
-                    return $this->forward($path['_controller'], $path);
+
+                    return $this->forward($path['_controller'], $path, $request->query->all());
                 }
             }
             
@@ -200,8 +200,7 @@ class SlugController extends Controller
                 }
                 if ($path) {
                     $path['nodeTranslationId'] = $nodeTranslation->getId();
-                    
-                    return $this->forward($path['_controller'], $path);
+                    return $this->forward($path['_controller'], $path, $request->query->all());
                 }
             }
             
