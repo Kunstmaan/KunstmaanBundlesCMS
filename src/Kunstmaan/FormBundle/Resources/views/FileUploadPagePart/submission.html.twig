@@ -1,0 +1,5 @@
+{% if resource is defined and resource is not null %}
+	{% if not resource.isNull() %}
+		<a target="_blank" href="{{ formsubmission_webdir }}{{ resource.fileName }}">{{ resource.fileName }}</a>
+	{% endif %}
+{% endif %}

@@ -23,7 +23,13 @@
 			{% for field in formsubmission.fields  %}
 				<tr>
 					<td><strong>{{ field.label }}</strong></td>
-					<td>{{ field }}</td>
+					<td>
+						{% if (field.submissionTemplate is defined) %}
+							{% include field.submissionTemplate with {'resource' : field} %}
+						{% else %}
+							{{ field }}
+						{% endif %}
+					</td>
 				</tr>
 			{% endfor %}
 		</body>

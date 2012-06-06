@@ -88,5 +88,9 @@ class FileFormSubmissionField extends FormSubmissionField
 		return $this->file_name;
 	}
 
+	public function getSubmissionTemplate()
+	{
+		return "KunstmaanFormBundle:FileUploadPagePart:submission.html.twig";
+	}
 
 }
