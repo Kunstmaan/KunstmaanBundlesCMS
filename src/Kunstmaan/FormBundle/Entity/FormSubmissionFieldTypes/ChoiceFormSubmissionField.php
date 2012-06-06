@@ -55,7 +55,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
 				foreach ($values as $value) {
 					$result[] = $choices[$value];
 				}
-				return implode(",", $result);
+				return implode(", ", $result);
 			}
 			else {
 				return $choices[$values];
@@ -64,17 +64,10 @@ class ChoiceFormSubmissionField extends FormSubmissionField
 		return "";
 	}
 
-	public function isNull() {
-		$isNull = true;
+	public function isNull()
+	{
 		$values = $this->getValue();
-		if (!empty($values)) {
-			if(is_array($values)) {
-				$isNull = !(sizeof($values)>0 && !empty($values[0]));
-			} else {
-				$isNull = false;
-			}
-		}
-		return $isNull;
+		return empty($values) ? true : (is_array($values) ? sizeof($values) <= 0 : false);
 	}
 
 	/**

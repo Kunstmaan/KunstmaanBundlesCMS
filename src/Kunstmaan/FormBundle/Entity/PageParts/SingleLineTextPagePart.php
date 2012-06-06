@@ -1,7 +1,6 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
-use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;

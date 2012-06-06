@@ -1,0 +1,3 @@
+parameters:
+  formsubmission_rootdir: "%kernel.root_dir%/../web/uploads/formsubmissions"
+  formsubmission_webdir: "/web/uploads/formsubmissions/"

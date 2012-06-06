@@ -19,7 +19,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\DiscriminatorMap({
  		"string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
 		"text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
-		"choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField"
+		"choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
+		"file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField"
  * })
  */
 class FormSubmissionField
@@ -123,4 +124,8 @@ class FormSubmissionField
         return "FormSubmission Field";
     }
 
+	public function onValidPost($form, $formbuilder, $request, $container)
+	{
+		// do nothing by default
+	}
 }
