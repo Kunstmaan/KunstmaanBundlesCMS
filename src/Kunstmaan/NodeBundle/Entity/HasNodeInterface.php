@@ -21,6 +21,11 @@ interface HasNodeInterface
     public function getTitle();
 
     /**
+     * @return string
+     */
+    public function getPageTitle();
+    
+    /**
      * @return boolean
      */
     public function isOnline();
