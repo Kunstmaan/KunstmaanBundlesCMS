@@ -1,54 +1,25 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
-{% block extracss %}
-        <style type="text/css">
-             body {
-                margin: 0;
-                padding: 0;
-                text-align: center;
-             }
-
-             div#wrapper{
-                margin: 100px auto;
-                padding-top: 25px;
-                width: 500px;
-                text-align: left;
-                border:2px solid #ddd;
-                background-color: #fff;
-             }
-
-             div.actions{
-                padding: 10;
-                margin: 0;
-             }
-
-             .alert-message{
-                margin-left: 20px;
-                margin-bottom: 25px;
-                margin-right: 20px;
-             }
-        </style>
-{% endblock %}
 {% block body %}
         <header>
-        <div class="topbar" data-dropdown="dropdown">
-           <div class="topbar-inner">
-               <div class="container-fluid">
-                  <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
-                  <nav>
-                  <ul class="nav secondary-nav">
-					{% set route = app.request.attributes.get('_route') %}
-		            {{ app.request.attributes.remove('_route') }}
-		            {% set attribs = app.request.attributes.all %}
-		            {# {{ localeswitcher_widget(requiredlocales, route) }}	#}
-            	  </ul>
-          			</nav>
-               </div>
-           </div>
-        </div>
+        	<div class="navbar navbar-fixed-top" data-dropdown="dropdown">
+        		<div class="navbar-inner">
+        			<div class="container-fluid">
+						<a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
+						<nav>
+							<ul class="nav secondary-nav">
+							{% set route = app.request.attributes.get('_route') %}
+							{{ app.request.attributes.remove('_route') }}
+							{% set attribs = app.request.attributes.all %}
+							{# {{ localeswitcher_widget(requiredlocales, route) }}	#}
+							</ul>
+						</nav>
+	               </div>
+	           </div>
+	        </div>
         </header>
         <div class="container-fluid">
-	        <div id="wrapper">
+	        <div class="center_box">
 	              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	                 <div class="alert-message warning">
 	                     <strong>{{ 'form.warning' | trans }}: </strong>
@@ -74,8 +45,8 @@
 	        </div>
 	     </div>
          <footer>
-        <div class="container-fluid">
-          <p class="pull-right"><a target="_blank" href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan.png') }}" alt="Kunstmaan" class="kunstmaan-logo" /></a></p>
-        </div>
-      </footer>
+        	<div class="container-fluid">
+          		<p class="pull-right"><a target="_blank" href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan.png') }}" alt="Kunstmaan" class="kunstmaan-logo" /></a></p>
+        	</div>
+     	</footer>
 {% endblock %}
