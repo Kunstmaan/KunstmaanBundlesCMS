@@ -168,7 +168,8 @@ abstract class AbstractFormPage extends AbstractPage
             }
         }
         $result["frontendform"] = $form->createView();
-    }
+		$result["frontendformobject"] = $form;
+	}
 
     /**
      * @return array
