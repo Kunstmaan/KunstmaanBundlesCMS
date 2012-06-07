@@ -19,7 +19,13 @@
 			{% for field in submission.fields  %}
 				<tr>
 					<td><strong>{{ field.label }}</strong></td>
-					<td>{{ field }}</td>
+					<td>
+						{% if (field.submissionTemplate is defined) %}
+							{% include field.submissionTemplate with {'resource' : field, 'host' : host} %}
+						{% else %}
+							{{ field }}
+						{% endif %}
+					</td>
 				</tr>
 			{% endfor %}
 		</body>

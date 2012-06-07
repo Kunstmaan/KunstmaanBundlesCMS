@@ -5,7 +5,7 @@ services:
             -  { name: admin_menu.adaptor }
     form.mailer:
         class: Kunstmaan\FormBundle\Helper\Mailer
-        arguments: [@mailer, @templating]
+        arguments: [@mailer, @templating, @service_container]
             
     entity_id.type:
         class: Kunstmaan\FormBundle\Form\EntityIdType

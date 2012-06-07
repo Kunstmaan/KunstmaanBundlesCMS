@@ -3,21 +3,19 @@
 namespace Kunstmaan\FormBundle\Entity;
 
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
-
+use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
-use Kunstmaan\FormBundle\Entity\FormSubmission;
-
-use Doctrine\ORM\EntityManager;
-
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\EntityManager;
+
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * The Abstract ORM FormPage
@@ -144,17 +142,16 @@ abstract class AbstractFormPage extends AbstractPage
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
-
-            if ($form->isValid()) {
+			if ($form->isValid()) {
                 $formsubmission = new FormSubmission();
                 $formsubmission->setIpAddress($request->getClientIp());
                 $formsubmission->setNode($em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this));
                 $formsubmission->setLang($locale = $request->getSession()->getLocale());
                 $em->persist($formsubmission);
-                $em->flush();
                 foreach ($fields as &$field) {
                     $field->setSubmission($formsubmission);
-                    $em->persist($field);
+					$field->onValidPost($form, $formbuilder, $request, $container);
+					$em->persist($field);
                 }
                 $em->flush();
                 $em->refresh($formsubmission);
