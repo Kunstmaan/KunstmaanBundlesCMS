@@ -2,4 +2,8 @@
 .idea
 vendor/*
 composer.lock
+<<<<<<< HEAD
 composer.phar
+=======
+composer.phar
+>>>>>>> master
