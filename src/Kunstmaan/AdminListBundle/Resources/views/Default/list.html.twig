@@ -2,4 +2,20 @@
 
 {% block content %}
     {{ adminlist_widget(adminlist, app.request.attributes.get('_route')) }}
+
+    {% if adminlist.hasListActions %}
+        {% for action in adminlist.getListActions() %}
+            {% if action.template is not null %}
+                {% include action.template with {'action': action} %}
+            {% else %}
+                <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}">
+                    {% if action.getIcon() is not null %}
+                        <img src="{{ asset(action.getIcon()) }}" alt="{{ action.getLabel() }}"/>
+                    {% else %}
+                        {{ action.getLabel() }}
+                    {% endif %}
+                </a>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

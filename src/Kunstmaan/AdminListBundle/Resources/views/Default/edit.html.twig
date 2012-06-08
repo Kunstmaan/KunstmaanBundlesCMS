@@ -2,7 +2,7 @@
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
 {% block content %}
-    <form action="{{ path(app.request.attributes.get('_route'), { 'entity_id' : entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }}>
         <fieldset>
         	{{ form_widget(form) }}
 
