@@ -18,6 +18,9 @@ class NodeTranslationAdminType extends AbstractType
     {
         $builder->add('online', 'checkbox', array('required' => false));
         $builder->add('slug');
+        $builder->add('weight', 'choice', array(
+                'choices'=>array_combine(range(-50,50), range(-50,50)),
+                'empty_value' => false));
     }
 
     public function getName()
