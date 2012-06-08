@@ -111,12 +111,17 @@ abstract class AbstractAdminListConfigurator
             if (method_exists($item, $methodName)) {
                 $result = $item->$methodName();
             } else {
-                $methodName = "is" . $columnName;
-                if (method_exists($item, $methodName)) {
-                    $result = $item->$methodName();
-                } else {
-                    return "undefined function";
-                }
+            	$methodName = "is" . $columnName;
+            	if(method_exists($item, $methodName)) {
+            		$result = $item->$methodName();
+            	} else {
+            		$methodName = "has" . $columnName;
+            		if(method_exists($item, $methodName)) {
+            			$result = $item->$methodName();
+            		} else {
+            			return sprintf("undefined function [get/is/has]%s()", $columnName);
+            		}
+            	}
             }
         }
         return $result;
