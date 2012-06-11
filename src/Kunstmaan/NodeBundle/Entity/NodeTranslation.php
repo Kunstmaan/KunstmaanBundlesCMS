@@ -73,7 +73,7 @@ class NodeTranslation extends AbstractEntity
     protected $nodeVersions;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $weight;
     

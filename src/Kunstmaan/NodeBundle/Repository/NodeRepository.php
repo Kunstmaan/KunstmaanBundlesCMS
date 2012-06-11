@@ -17,27 +17,8 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class NodeRepository extends EntityRepository
 {
-	public function getTopNodes($user, $permission) {
-	    $qb = $this->createQueryBuilder('b')
-	               ->select('b')
-                   ->where('b.parent is null and b.deleted = 0')
-                   ->andWhere('b.id IN (
-                        SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
-                   )')
-
-	               ->addOrderBy('b.sequencenumber', 'ASC')
-	               ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
-                   ->setParameter(2, '%|'.$permission.':1|%');
-            $groupIds = $user->getGroupIds();
-            if (!empty($groupIds)) {
-                $qb->setParameter(3, $groupIds);
-            }
-            else {
-                $qb->setParameter(3, null);
-            }
-
-	    return $qb->getQuery()
-	              ->getResult();
+	public function getTopNodes($lang, $user, $permission) {
+	   return $this->getChildNodes(null, $lang, $user, $permission); 
 	}
 
 	public function getNodeFor(HasNodeInterface $hasNode) {
@@ -100,6 +81,35 @@ class NodeRepository extends EntityRepository
 		$em->refresh($node);
 		$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->createNodeTranslationFor($hasNode, $lang, $node, $owner);
 		return $node;
+	}
+	
+	public function getChildNodes($parent_id, $lang, $user, $permission){
+	    $qb = $this->createQueryBuilder('b')
+	    ->select('b')
+	    ->innerJoin("b.nodeTranslations", "t")
+	    ->where('b.deleted = 0')
+	    ->andWhere('b.id IN (
+	            SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
+	    )')
+	    ->andWhere("t.lang = :lang")
+	    ->andWhere("b.parent = :parent")
+	    
+	    ->addOrderBy('t.weight', 'DESC')
+	    ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
+	    ->setParameter(2, '%|'.$permission.':1|%');
+	    $groupIds = $user->getGroupIds();
+	    if (!empty($groupIds)) {
+	        $qb->setParameter(3, $groupIds);
+	    }
+	    else {
+	        $qb->setParameter(3, null);
+	    }
+	    $qb->setParameter("lang", $lang);
+	    $qb->setParameter("parent", $parent_id);
+	    
+	    $result = $qb->getQuery()->getResult();
+	    //var_dump($result);
+	    return $result; 
 	}
 
 }

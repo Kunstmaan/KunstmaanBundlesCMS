@@ -34,11 +34,11 @@ class PagesController extends Controller
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'write');
+        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'write');
         $nodeMenu = new NodeMenu($this->container, $locale, null, 'write', true);
 
         $request    = $this->getRequest();
-        $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'write', $locale), $em);
+        $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($locale, $user, 'write', $locale), $em);
         $adminlist->bindRequest($request);
 
         return array(
@@ -220,7 +220,7 @@ class PagesController extends Controller
         	return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));
         }
 
-        $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'write');
+        $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'write');
 
         $formfactory = $this->container->get('form.factory');
         $formbuilder = $this->createFormBuilder();
@@ -451,7 +451,7 @@ class PagesController extends Controller
     	$request = $this->getRequest();
     	$locale = $request->getSession()->getLocale();
     	$user = $this->container->get('security.context')->getToken()->getUser();
-    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'read');
+    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read');
     	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read', true);
 
     	return array(

@@ -72,7 +72,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             }
 
             foreach ($topnodes as $child) {
-                $menuitem = new MenuItemWithWeight($menu);
+                $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanAdminNodeBundle_pages_edit');
                 $menuitem->setRouteparams(array('id' => $child->getId()));
                 $menuitem->setInternalname($child->getTitle());
@@ -94,9 +94,6 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 }
                  
                 $children[] = $menuitem;
-                
-                //used to sort the menuitems based on the node weight;
-                usort($children, array($this, "compare"));
             }
             
          
@@ -118,8 +115,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             }
 
             foreach ($childNodes as $child) {
-                //var_dump($child->getId());die;
-                $menuitem = new MenuItemWithWeight($menu);
+                $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanAdminNodeBundle_pages_edit');
                 $menuitem->setRouteparams(array('id' => $child->getId()));
                 $menuitem->setInternalname($child->getTitle());
@@ -139,11 +135,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                         }
                     }
                 }
-                $children[] = $menuitem;
-                
-                //used to sort the menuitems based on the node weight;
-                usort($children, array($this, "compare"));
-                
+                $children[] = $menuitem;              
             } 
         }
     }
