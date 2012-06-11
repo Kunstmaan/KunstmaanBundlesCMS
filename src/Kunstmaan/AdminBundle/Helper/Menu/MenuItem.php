@@ -18,6 +18,7 @@ class MenuItem
     private $children = null;
     private $attributes = array();
     private $appearInNavigation;
+    private $weight = -50; 
 
     public function __construct(MenuBuilder $menu)
     {
@@ -142,5 +143,14 @@ class MenuItem
     {
         $this->appearInNavigation = $appearInNavigation;
     }
+    
+    public function getWeight(){
+        return $this->weight;
+    }
+    
+    public function setWeight($weight){
+        $this->weight = $weight;
+    }
+    
 
 }
