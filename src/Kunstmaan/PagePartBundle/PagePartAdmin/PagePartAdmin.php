@@ -50,6 +50,7 @@ class PagePartAdmin {
                     $this->em->remove($pagepartref);
                 }
             }
+            $this->em->flush();
         }
         $addpagepart = $this->request->request->get("addpagepart_".$this->getContext());
         if(is_string($addpagepart) && $addpagepart != ''){
@@ -73,7 +74,7 @@ class PagePartAdmin {
                 $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->find($sequence);
                 if(is_object($pagepartref)){
                     $pagepartref->setSequencenumber($i+1);
-                    //$this->em->persist($pagepartref);
+                    $this->em->persist($pagepartref);
                 }
             }
         }
