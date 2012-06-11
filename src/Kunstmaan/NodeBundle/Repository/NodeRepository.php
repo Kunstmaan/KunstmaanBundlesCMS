@@ -94,7 +94,7 @@ class NodeRepository extends EntityRepository
 	    ->andWhere("t.lang = :lang")
 	    ->andWhere("b.parent = :parent")
 	    
-	    ->addOrderBy('t.weight', 'DESC')
+	    ->addOrderBy('t.weight', 'ASC')
 	    ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
 	    ->setParameter(2, '%|'.$permission.':1|%');
 	    $groupIds = $user->getGroupIds();
