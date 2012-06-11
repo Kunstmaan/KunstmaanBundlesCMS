@@ -96,7 +96,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
 						if ($value != null && !is_string($value)) {
 							$errormsg = $thiss->getErrormessageRequired();
 							$v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-							$v->addError(new FormError(empty($errormsg) ? self::ERROR_REQUIRED_FIELD : $errormsg));
+							$v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
 						}
 					}
 			));

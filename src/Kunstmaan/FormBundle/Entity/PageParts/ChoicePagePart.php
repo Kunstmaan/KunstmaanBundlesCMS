@@ -77,7 +77,7 @@ class ChoicePagePart extends AbstractFormPagePart
 						if ($cfsf->isNull()) {
 							$errormsg = $thiss->getErrormessageRequired();
 							$v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-							$v->addError(new FormError( empty($errormsg) ? self::ERROR_REQUIRED_FIELD : $errormsg));
+							$v->addError(new FormError( empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
 						}
 					}
 				));
