@@ -8,6 +8,7 @@ use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -130,45 +131,52 @@ abstract class AbstractFormPage extends AbstractPage
      */
     public function service($container, Request $request, &$result)
     {
-        $formbuilder = $container->get('form.factory')->createBuilder('form');
-        $em = $container->get('doctrine')->getEntityManager();
-        $pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($this, $this->getFormElementsContext());
-		$fields = array();
-        foreach ($pageparts as $pagepart) {
-            if ($pagepart instanceof FormAdaptorInterface) {
-                $pagepart->adaptForm($formbuilder, $fields);
-            }
-        }
-        $form = $formbuilder->getForm();
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-			if ($form->isValid()) {
-                $formsubmission = new FormSubmission();
-                $formsubmission->setIpAddress($request->getClientIp());
-                $formsubmission->setNode($em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this));
-                $formsubmission->setLang($locale = $request->getSession()->getLocale());
-                $em->persist($formsubmission);
-                foreach ($fields as &$field) {
-                    $field->setSubmission($formsubmission);
-					$field->onValidPost($form, $formbuilder, $request, $container);
-					$em->persist($field);
-                }
-                $em->flush();
-                $em->refresh($formsubmission);
+		$thanksParam = $request->get('thanks');
+		if (!empty($thanksParam)) {
+			$result["thanks"] = true;
+		} else {
+			$formbuilder = $container->get('form.factory')->createBuilder('form');
+			$em = $container->get('doctrine')->getEntityManager();
+			$pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($this, $this->getFormElementsContext());
+			$fields = array();
+			foreach ($pageparts as $pagepart) {
+				if ($pagepart instanceof FormAdaptorInterface) {
+					$pagepart->adaptForm($formbuilder, $fields);
+				}
+			}
+			$form = $formbuilder->getForm();
+			if ($request->getMethod() == 'POST') {
+				$form->bindRequest($request);
+				if ($form->isValid()) {
+					$formsubmission = new FormSubmission();
+					$formsubmission->setIpAddress($request->getClientIp());
+					$formsubmission->setNode($em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this));
+					$formsubmission->setLang($locale = $request->getSession()->getLocale());
+					$em->persist($formsubmission);
+					foreach ($fields as &$field) {
+						$field->setSubmission($formsubmission);
+						$field->onValidPost($form, $formbuilder, $request, $container);
+						$em->persist($field);
+					}
+					$em->flush();
+					$em->refresh($formsubmission);
 
-                $from = $this->getFromEmail();
-                $to = $this->getToEmail();
-                $subject = $this->getSubject();
-                if (!empty($from) && !empty($to) && !empty($subject)) {
-                    $container->get('form.mailer')->sendContactMail($formsubmission, $from, $to, $subject);
-                }
-                $result["thanks"] = true;
-
-                return;
-            }
-        }
-        $result["frontendform"] = $form->createView();
-		$result["frontendformobject"] = $form;
+					$from = $this->getFromEmail();
+					$to = $this->getToEmail();
+					$subject = $this->getSubject();
+					if (!empty($from) && !empty($to) && !empty($subject)) {
+						$container->get('form.mailer')->sendContactMail($formsubmission, $from, $to, $subject);
+					}
+					return new RedirectResponse($container->get('router')->generate('_slug', array(
+						'slug' => $result['slug'],
+						'_locale' => $result['nodetranslation']->getLang(),
+						'thanks' => true
+					)));
+				}
+			}
+			$result["frontendform"] = $form->createView();
+			$result["frontendformobject"] = $form;
+		}
 	}
 
     /**
