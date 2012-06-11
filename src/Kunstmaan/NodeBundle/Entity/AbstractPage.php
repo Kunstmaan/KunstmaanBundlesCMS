@@ -34,6 +34,11 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
      * @ORM\Column(type="string")
      */
     protected $title;
+    
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $pageTitle;
 
     protected $parent;
 
@@ -55,6 +60,30 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     public function getTitle()
     {
         return $this->title;
+    }
+    
+        /**
+     * Set pagetitle
+     *
+     * @param string $title
+     */
+    public function setPageTitle($pageTitle)
+    {
+        $this->pageTitle = $pageTitle;
+    }
+    
+    /**
+     * Get pagetitle
+     *
+     * @return string
+     */
+    public function getPageTitle()
+    {
+        if(isset($this->pageTitle) && (!is_null($this->pageTitle)) && (!empty($this->pageTitle))){
+            return $this->pageTitle;
+        }else{
+            return $this->getTitle();
+        }
     }
 
     /**
