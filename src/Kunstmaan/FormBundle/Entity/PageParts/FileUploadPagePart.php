@@ -45,8 +45,10 @@ class FileUploadPagePart extends AbstractFormPagePart
 				new FormValidator($ffsf, $this,	function(FormInterface $form, $ffsf, $thiss)
 				{
 					if ($ffsf->isNull()) {
+						$errormsg = $thiss->getErrormessageRequired();
 						$v = $form->get('formwidget_' . $thiss->getUniqueId())->get('file');
-						$v->addError(new FormError($thiss->getErrormessageRequired()));
+						$v->addError(new FormError( empty($errormsg) ? self::ERROR_REQUIRED_FIELD : $errormsg));
+
 					}
 				}
 			));

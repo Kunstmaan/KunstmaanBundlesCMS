@@ -19,6 +19,8 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
 
+	const ERROR_REQUIRED_FIELD = "field.required";
+
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -87,8 +89,7 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
      */
     public function getErrormessageRequired()
     {
-		$msg = $this->errormessageRequired;
-        return empty($msg) ? "Required field!" : $msg;
+        return $this->errormessageRequired;
     }
 
     /**
