@@ -94,7 +94,9 @@ class NodeMenuItem
     public function getChildren(){
     	if(is_null($this->lazyChildren)){
     		$this->lazyChildren = array();
-    		$children = $this->node->getChildren();
+    		//$children = $this->node->getChildren();
+    		$NodeRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:Node');
+    		$children = $NodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getUser(), $this->menu->getPermission()); 
     		foreach($children as $child){
     			$nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
     			if(!is_null($nodeTranslation)){

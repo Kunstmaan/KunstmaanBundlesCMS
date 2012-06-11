@@ -15,6 +15,8 @@ class NodeMenu {
     private $breadCrumb = array();
     private $container = null;
     private $includeoffline = false;
+    private $permission = null;
+    private $user = null;
 
     /**
      * @param FactoryInterface $factory
@@ -25,6 +27,7 @@ class NodeMenu {
         $this->em = $this->container->get('doctrine.orm.entity_manager');
         $this->lang = $lang;
         $this->includeoffline = $includeoffline;
+        $this->permission = $permission;
         $tempNode = $currentNode;
 
         //Breadcrumb
@@ -44,12 +47,12 @@ class NodeMenu {
         }
 
         $permissionManager = $container->get('kunstmaan_admin.permissionmanager');
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $this->user = $this->container->get('security.context')->getToken()->getUser();
 
-        $user = $permissionManager->getCurrentUser($user, $this->em);
+        $this->user = $permissionManager->getCurrentUser($this->user, $this->em);
 
         //topNodes
-        $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, $permission);
+        $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($this->lang, $this->user, $permission);
         foreach($topNodes as $topNode){
         	$nodeTranslation = $topNode->getNodeTranslation($lang, $this->includeoffline);
         	if(!is_null($nodeTranslation)){
@@ -159,8 +162,19 @@ class NodeMenu {
     	return null;
     }
 
-    public function isIncludeOffline(){
+    public function isIncludeOffline()
+    {
     	return $this->includeoffline;
+    }
+    
+    public function getPermission()
+    {
+        return $this->permission;
+    }
+    
+    public function getUser()
+    {
+        return $this->user;
     }
 
 }
