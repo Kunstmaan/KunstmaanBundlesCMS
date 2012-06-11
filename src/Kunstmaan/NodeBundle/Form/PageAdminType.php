@@ -15,7 +15,7 @@ class PageAdminType extends AbstractType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('title');
+        $builder->add('pageTitle');
     }
 
     /**

@@ -36,7 +36,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     protected $title;
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      */
     protected $pageTitle;
 
