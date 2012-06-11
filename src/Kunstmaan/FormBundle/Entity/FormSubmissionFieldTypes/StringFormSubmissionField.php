@@ -58,7 +58,7 @@ class StringFormSubmissionField extends FormSubmissionField
     public function __toString()
     {
 		$value = $this->getValue();
-        return (defined($value) && !is_null($value)) ? $value : "";
+        return !empty($value) ? $value : "";
     }
 
 }
