@@ -19,7 +19,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
 
-	const ERROR_REQUIRED_FIELD = "Required Field!";
+	const ERROR_REQUIRED_FIELD = "field.required";
 
     /**
      * @ORM\Column(type="string", nullable=true)
