@@ -29,6 +29,8 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
         foreach($nodeTranslations as $nodeTranslation) {
            $nodeTranslation->setWeight($nodeTranslation->getNode()->getSequencenumber());
 
+           $output->writeln('- Updating ' . $nodeTranslation->getTitle());
+
            $em->persist($nodeTranslation);
            $em->flush();
         }
