@@ -67,7 +67,13 @@ class ChoiceFormSubmissionField extends FormSubmissionField
 	public function isNull()
 	{
 		$values = $this->getValue();
-		return empty($values) ? true : (is_array($values) ? sizeof($values) <= 0 : false);
+		if (is_array($values)) {
+			return empty($values) || sizeof($values) <= 0;
+		} elseif (is_string($values)) {
+			return (!isset($values) || trim($values)==='');
+		} else {
+			return empty($values);
+		}
 	}
 
 	/**
