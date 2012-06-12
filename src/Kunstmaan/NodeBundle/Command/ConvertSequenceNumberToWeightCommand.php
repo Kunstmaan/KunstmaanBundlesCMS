@@ -15,7 +15,7 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('Nodes:nodes:convertsequencenumbertoweight')
+        $this->setName('kuma:nodes:convertsequencenumbertoweight')
             ->setDescription('Set all the nodetranslations weights based on the nodes sequencenumber')
             ->setHelp("The <info>AdminNode:nodetranslations:updateweights</info> will loop over all nodetranslation and set their weight based on the nodes sequencenumber.");
     }
