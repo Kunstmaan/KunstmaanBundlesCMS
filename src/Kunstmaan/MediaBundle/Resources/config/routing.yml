@@ -32,10 +32,5 @@ KunstmaanMediaBundle_metadata:
     resource: "@KunstmaanMediaBundle/Controller/MediaMetadataController.php"
     type:     annotation
     prefix:   /admin/media/metadata
-        
-_imagine:
-    resource: .
-    type:     imagine
-    
 
-                 
+
