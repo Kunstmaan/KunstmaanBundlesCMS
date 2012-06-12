@@ -24,13 +24,23 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $nodeTranslations = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->findAll();
-       
-        foreach($nodeTranslations as $nodeTranslation) {
-           $nodeTranslation->setWeight($nodeTranslation->getNode()->getSequencenumber());
-
-           $em->persist($nodeTranslation);
-           $em->flush();
+        $batchSize = 20; 
+        $i =0;
+        $q = $em->createQuery('select t from Kunstmaan\AdminNodeBundle\Entity\NodeTranslation t');
+        
+        $iterableResult = $q->iterate(); 
+        
+        while (($row = $iterableResult->next()) !== false){
+            if($row[0]->getWeight() == null){
+                $output->writeln('editing node: '. $row[0]->getTitle());
+                $row[0]->setWeight($row[0]->getNode()->getSequencenumber());
+                $em->persist($row[0]); 
+            }
+            if(($i % $batchSize) == 0){
+                $em->flush(); 
+                $em->clear();
+            }
+            ++$i; 
         }
 
         $output->writeln('Updated all nodes');
