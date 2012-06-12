@@ -46,19 +46,20 @@ class ChoiceFormSubmissionField extends FormSubmissionField
 	 */
 	public function __toString()
 	{
-		$values = $this->getValue();
-		$choices = $this->getChoices();
+		if (!$this->isNull()) {
+			$values = $this->getValue();
+			$choices = $this->getChoices();
 
-		if (!empty($values)) {
-			if(is_array($values) && sizeof($values)>0) {
+			if (is_array($values) && sizeof($values)>0) {
 				$result = array();
 				foreach ($values as $value) {
-					$result[] = $choices[$value];
+					$result[] = array_key_exists($value, $choices) ? $choices[$value] : $value;
 				}
 				return implode(", ", $result);
-			}
-			else {
+			} elseif (array_key_exists($values, $choices)) {
 				return $choices[$values];
+			} else {
+				return $values;
 			}
 		}
 		return "";
