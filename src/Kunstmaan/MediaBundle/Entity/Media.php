@@ -64,10 +64,16 @@ abstract class Media extends AbstractEntity
      */
     protected $filesize;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $deleted;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
+        $this->deleted = false;
     }
 
     /**
@@ -267,6 +273,22 @@ abstract class Media extends AbstractEntity
         return $this->gallery;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param boolean $deleted
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+    }
+
     public function getUrl()
     {
         return $this->show();
@@ -281,6 +303,7 @@ abstract class Media extends AbstractEntity
             $path = $path . "_" . $format;
         }
         $path = $path . "." . ExtensionGuesser::guess($this->getContentType());
+
         return $path;
     }
 
@@ -288,6 +311,7 @@ abstract class Media extends AbstractEntity
     {
         $class = explode('\\', get_class($this));
         $classname = end($class);
+
         return $classname;
     }
 
