@@ -22,9 +22,11 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        ini_set('xdebug.max_nesting_level', 150);
+
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $batchSize = 20; 
+        $batchSize = 20;
         $i =0;
         $q = $em->createQuery('SELECT t FROM Kunstmaan\AdminNodeBundle\Entity\NodeTranslation t WHERE t.weight IS NULL');
         
