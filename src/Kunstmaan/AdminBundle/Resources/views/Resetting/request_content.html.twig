@@ -1,24 +1,47 @@
 {% if invalid_username is defined %}
-        <div class="alert-message error">
-                <a class="close" href="{{ path('fos_user_security_login') }}">×</a>
-                <strong>{{ 'form.error' | trans }}: </strong>
-				{{ 'The username or email address does not exist.' | trans }}
-        </div>
-        {% endif %}
+<div class="alert fade in alert-error">
+    <button class="close" data-dismiss="alert">&times;</button>
+    <strong>{{ 'form.error' | trans }}: </strong>
+	{{ 'The username or email address does not exist.' | trans }}
+</div>
+{% endif %}
+
 
 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request form-stacked">
-    <fieldset>
-        <legend>{{ 'Reset password' |trans }}</legend>
-        <div class="clearfix">
-            <div class="input">
-            <label for="xlInput3">{{ 'Username or email address:' |trans }}</label>
-            <input class="xlarge" type="text" id="username" name="username" />
-            </div>
-        </div>
-        <br />
-        <div class="actions">
-            <input class="btn primary type" type="submit" value="{{ 'Reset password' |trans }}" />
-            <input onclick="window.location = '{{ path('fos_user_security_login' ) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
-        </div>
-    </fieldset>
+    <h1>{{ 'Reset password' |trans }}</h1>
+	<div class="control-group">
+		<label for="username">{{ 'Username or email address:' |trans }}</label>
+		<i class="icon-user"></i>
+		<input class="username" id="username" type="text" name="username" value="" placeholder="username" autofocus />
+	</div>
+	<div class="btn_group">
+		<button class="btn" type="submit">{{ 'Reset password' |trans }}</button>
+		<button class="btn" type="reset" onclick="window.location = '{{ path('fos_user_security_login' ) }}'">{{ 'form.cancel' | trans }}</button>
+	</div>
+
+
+
 </form>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ <!--
+ <div class="clearfix">
+     <div class="input">
+     <label for="xlInput3">{{ 'Username or email address:' |trans }}</label>
+     <input class="xlarge" type="text" id="username" name="username" />
+     </div>
+ </div>
+ <br />
+ <div class="actions">
+     <input class="btn primary type" type="submit" value="{{ 'Reset password' |trans }}" />
+     <input onclick="window.location = '{{ path('fos_user_security_login' ) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+ </div>
+ -->

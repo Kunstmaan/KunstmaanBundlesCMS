@@ -6,47 +6,37 @@
         		<div class="navbar-inner">
         			<div class="container-fluid">
 						<a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
-						<nav>
-							<ul class="nav secondary-nav">
-							{% set route = app.request.attributes.get('_route') %}
-							{{ app.request.attributes.remove('_route') }}
-							{% set attribs = app.request.attributes.all %}
-							{# {{ localeswitcher_widget(requiredlocales, route) }}	#}
-							</ul>
-						</nav>
+						<p class="pull-right">
+							<a target="_blank" href="http://www.kunstmaan.be">
+								<img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan.png') }}" alt="Kunstmaan" class="kunstmaan-logo" />
+							</a>
+						</p>
 	               </div>
 	           </div>
 	        </div>
         </header>
         <div class="container-fluid">
-	        <div class="bounceIn">
-				<div class="login_form">
-					{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-					 <div class="alert alert-warning">
-					     <strong>{{ 'form.warning' | trans }}: </strong>
-					     {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-					     <a href="{{ path('fos_user_security_logout') }}">
-					        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-					     </a>
-					 </div>
-					{% endif %}
-					{% for key, message in app.session.getFlashes() %}
-					<div class="alert alert-info {{ key }}">
-					     <button class="close" data-dismiss="alert">&times;</button>
-					     <strong>{{ 'form.headsup' | trans }}! </strong>
-					     {{ message|trans({}, 'FOSUserBundle') }}
-					</div>
-					{% endfor %}
-					
-					{% block fos_user_content %}
-					{% endblock fos_user_content %}
+			<div class="login_form">
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+				 <div class="alert alert-warning">
+				     <strong>{{ 'form.warning' | trans }}: </strong>
+				     {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+				     <a href="{{ path('fos_user_security_logout') }}">
+				        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+				     </a>
+				 </div>
+				{% endif %}
+				{% for key, message in app.session.getFlashes() %}
+				<div class="alert alert-info {{ key }}">
+				     <button class="close" data-dismiss="alert">&times;</button>
+				     <strong>{{ 'form.headsup' | trans }}! </strong>
+				     {{ message|trans({}, 'FOSUserBundle') }}
 				</div>
+				{% endfor %}
+				
+				{% block fos_user_content %}
+				{% endblock fos_user_content %}
 				<a href="{{ path('fos_user_resetting_request') }}" class="forgot_password fadeInDownPw">{{ 'Forgot my password.' | trans }}</a>
-	        </div>
+			</div>
 	     </div>
-         <footer>
-        	<div class="container-fluid">
-          		<p class="pull-right"><a target="_blank" href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan.png') }}" alt="Kunstmaan" class="kunstmaan-logo" /></a></p>
-        	</div>
-     	</footer>
 {% endblock %}
