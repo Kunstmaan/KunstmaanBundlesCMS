@@ -15,7 +15,7 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
     {
         parent::configure();
 
-        $this->setName('Nodes:nodes:convertsequencenumbertoweight')
+        $this->setName('kuma:nodes:convertsequencenumbertoweight')
             ->setDescription('Set all the nodetranslations weights based on the nodes sequencenumber')
             ->setHelp("The <info>AdminNode:nodetranslations:updateweights</info> will loop over all nodetranslation and set their weight based on the nodes sequencenumber.");
     }
@@ -26,21 +26,24 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
 
         $batchSize = 20; 
         $i =0;
-        $q = $em->createQuery('select t from Kunstmaan\AdminNodeBundle\Entity\NodeTranslation t');
+        $q = $em->createQuery('SELECT t FROM Kunstmaan\AdminNodeBundle\Entity\NodeTranslation t WHERE t.weight IS NULL');
         
         $iterableResult = $q->iterate(); 
         
         while (($row = $iterableResult->next()) !== false){
-            if($row[0]->getWeight() == null){
-                $output->writeln('editing node: '. $row[0]->getTitle());
-                $row[0]->setWeight($row[0]->getNode()->getSequencenumber());
-                $em->persist($row[0]); 
+            $nodeTranslation = $row[0];
+            if ($nodeTranslation->getWeight() == null) {
+                $output->writeln('- editing node: '. $nodeTranslation->getTitle());
+                $nodeTranslation->setWeight($nodeTranslation->getNode()->getSequencenumber());
+                $em->persist($nodeTranslation);
+
+                ++$i;
             }
-            if(($i % $batchSize) == 0){
+            if (($i % $batchSize) == 0) {
+                $output->writeln('FLUSHING!');
                 $em->flush(); 
                 $em->clear();
             }
-            ++$i; 
         }
 
         $output->writeln('Updated all nodes');
