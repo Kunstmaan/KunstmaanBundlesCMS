@@ -37,6 +37,11 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator{
     	return array('path' => 'KunstmaanAdminBundle_settings_users_edit', 'params' => array( 'user_id' => $item->getId()));
     }
 
+    public function getIndexUrlFor()
+    {
+        return array('path' => 'KunstmaanAdminBundle_settings_users');
+    }
+
     public function getAdminType($item) {
         return null;
     }
