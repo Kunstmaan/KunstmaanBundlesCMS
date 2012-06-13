@@ -6,6 +6,7 @@ abstract class AbstractAdminListConfigurator
 {
 
     private $fields = array();
+    private $exportFields = array(); 
     private $customActions = array();
     private $listActions = array();
 
@@ -13,6 +14,7 @@ abstract class AbstractAdminListConfigurator
     abstract function getEditUrlFor($item);
     abstract function getAddUrlFor($params = array());
     abstract function getDeleteUrlFor($item);
+    abstract function getIndexUrlFor();
     abstract function getRepositoryName();
 
     public function buildFilters(AdminListFilter $builder) {}
@@ -25,6 +27,11 @@ abstract class AbstractAdminListConfigurator
     function addField($fieldname, $fieldheader, $sort, $template = null)
     {
         $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
+    }
+    
+    function addExportField($fieldname, $fieldheader, $sort, $template = null)
+    {
+        $this->exportFields[] = new Field($fieldname, $fieldheader, $sort, $template); 
     }
 
     public function canDelete($item) {
@@ -51,6 +58,14 @@ abstract class AbstractAdminListConfigurator
 
     function getFields() {
         return $this->fields;
+    }
+    
+    function getExportFields(){
+        if(empty($this->exportFields )){
+            return $this->fields; 
+        }else{
+            return $this->exportFields; 
+        }
     }
 
     function configureListFields(&$array) {
@@ -96,12 +111,17 @@ abstract class AbstractAdminListConfigurator
             if (method_exists($item, $methodName)) {
                 $result = $item->$methodName();
             } else {
-                $methodName = "is" . $columnName;
-                if (method_exists($item, $methodName)) {
-                    $result = $item->$methodName();
-                } else {
-                    return "undefined function";
-                }
+            	$methodName = "is" . $columnName;
+            	if(method_exists($item, $methodName)) {
+            		$result = $item->$methodName();
+            	} else {
+            		$methodName = "has" . $columnName;
+            		if(method_exists($item, $methodName)) {
+            			$result = $item->$methodName();
+            		} else {
+            			return sprintf("undefined function [get/is/has]%s()", $columnName);
+            		}
+            	}
             }
         }
         return $result;
