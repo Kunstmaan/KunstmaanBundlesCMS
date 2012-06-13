@@ -72,6 +72,11 @@ class NodeTranslation extends AbstractEntity
      */
     protected $nodeVersions;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $weight;
+    
     public function __construct()
     {
         $this->nodeVersions = new \Doctrine\Common\Collections\ArrayCollection();
@@ -377,6 +382,16 @@ class NodeTranslation extends AbstractEntity
     public function getUrl()
     {
         return $this->url;
+    }
+    
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+    
+    public function getWeight()
+    {
+        return $this->weight;
     }
 
 }
