@@ -42,7 +42,12 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
     {
         return array('path' => 'KunstmaanAdminNodeBundle_pages_edit', 'params' => array( 'id' => $item->getNode()->getId()));
     }
-    
+
+    public function getIndexUrlFor()
+    {
+        return array('path' => 'KunstmaanAdminNodeBundle_pages');
+    }
+
     public function canAdd()
     {
     	return false;
