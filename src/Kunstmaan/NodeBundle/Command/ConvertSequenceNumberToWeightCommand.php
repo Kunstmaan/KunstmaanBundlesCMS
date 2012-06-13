@@ -45,6 +45,10 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
                 $em->clear();
             }
         }
+        
+        $output->writeln('FLUSHING!'); 
+            $em->flush(); 
+            $em->clear(); 
 
         $output->writeln('Updated all nodes');
     }
