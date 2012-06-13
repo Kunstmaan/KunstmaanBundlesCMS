@@ -57,6 +57,14 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
 	/**
 	 * {@inheritdoc}
 	 */
+	public function getIndexUrlFor()
+	{
+	    return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array('nodetranslationid' => $this->nodeTranslation->getId()));
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function canAdd()
 	{
 		return false;
@@ -100,7 +108,10 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
 		return $querybuilder;
 	}
 
-    function getDeleteUrlFor($item)
+	/**
+	 * {@inheritdoc}
+	 */
+    public function getDeleteUrlFor($item)
     {
         return array();
     }
