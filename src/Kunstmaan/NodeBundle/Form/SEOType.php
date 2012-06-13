@@ -17,6 +17,7 @@ class SEOType extends AbstractType
         $builder->add('metakeywords');
         $builder->add('metarobots');
         $builder->add('metarevised');
+        $builder->add('extraMetadata', 'textarea');
     }
 
     public function getName()
