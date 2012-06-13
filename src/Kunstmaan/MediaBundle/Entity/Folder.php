@@ -50,7 +50,7 @@ class Folder extends AbstractEntity
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="LAZY")
      * @ORM\OrderBy({"sequencenumber" = "ASC"})
      */
     protected $children;
