@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * The SearchedFor entity registers searches performed on the website.
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\SearchBundle\Repository\SearchedForRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="searchedfor")
  * @ORM\HasLifecycleCallbacks()
  */
