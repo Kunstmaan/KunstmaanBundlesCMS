@@ -29,6 +29,6 @@ interface GalleryStrategyInterface
 
     function getFormHelper();
 
-    function getListConfigurator();
+    function getListConfigurator($folder);
 
 }

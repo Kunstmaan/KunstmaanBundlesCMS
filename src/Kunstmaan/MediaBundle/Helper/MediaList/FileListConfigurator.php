@@ -9,6 +9,11 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 
 class FileListConfigurator extends AbstractAdminListConfigurator
 {
+    private $folder;
+
+    public function __construct($folder){
+        $this->folder = $folder;
+    }
 
     public function buildFilters(AdminListFilter $builder)
     {
@@ -45,6 +50,11 @@ class FileListConfigurator extends AbstractAdminListConfigurator
             'path'   => 'KunstmaanMediaBundle_media_show',
             'params' => array('media_id' => $item->getId())
         );
+    }
+
+    public function getIndexUrlFor()
+    {
+        return array('path' => 'KunstmaanMediaBundle_folder_show', 'params' => array('id' => $this->folder->getId()));
     }
 
     public function getRepositoryName()

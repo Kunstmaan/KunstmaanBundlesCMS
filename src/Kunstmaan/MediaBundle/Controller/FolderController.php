@@ -41,7 +41,7 @@ class FolderController extends Controller
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
         $itemlist = "";
-        $listconfigurator = $gallery->getStrategy()->getListConfigurator();
+        $listconfigurator = $gallery->getStrategy()->getListConfigurator($gallery);
         if (isset($listconfigurator) && $listconfigurator != null){
             $itemlist = $this->get("adminlist.factory")->createList($listconfigurator, $em, array("gallery" => $gallery->getId()));
             $itemlist->bindRequest($this->getRequest());
@@ -69,7 +69,7 @@ class FolderController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
-        
+
         $em->getRepository('KunstmaanMediaBundle:Folder')->delete($gallery, $em);
 
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
@@ -87,7 +87,7 @@ class FolderController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
-        
+
         $request = $this->getRequest();
         $form = $this->createForm($gallery->getFormType($gallery), $gallery);
 
@@ -118,7 +118,7 @@ class FolderController extends Controller
     public function createAction($type)
     {
     	$gallery = FolderFactory::getTypeFolder($type);
-    	
+
         $request = $this->getRequest();
         $form = $this->createForm(new FolderType($gallery->getStrategy()->getGalleryClassName()), $gallery);
 
@@ -179,7 +179,7 @@ class FolderController extends Controller
                 'parent' => $parent
             ));
     }
-    
+
     /**
      * @Route("/movenodes", name="KunstmaanMediaBundle_folder_movenodes")
      * @Method({"GET", "POST"})
@@ -187,13 +187,13 @@ class FolderController extends Controller
     public function movenodesAction(){
     	$request = $this->getRequest();
     	$em = $this->getDoctrine()->getEntityManager();
-    	
+
     	$parentid = $request->get('parentid');
     	$parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($parentid, $em);
-    	
+
     	$fromposition = $request->get('fromposition');
     	$afterposition = $request->get('afterposition');
-    	
+
     	foreach($parent->getChildren() as $child){
     		if($child->getSequencenumber() == $fromposition){
     			if($child->getSequencenumber() > $afterposition){
@@ -215,8 +215,8 @@ class FolderController extends Controller
     					$em->persist($child);
     				}
     			}
-    		}	
-    		
+    		}
+
     		$em->flush();
     	}
     	return array("success" => true);

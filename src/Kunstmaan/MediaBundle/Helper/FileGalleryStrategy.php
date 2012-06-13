@@ -76,9 +76,9 @@ class FileGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return MediaList\FileListConfigurator
      */
-    function getListConfigurator()
+    function getListConfigurator($folder)
     {
-        return new FileListConfigurator();
+        return new FileListConfigurator($folder);
     }
 }
 

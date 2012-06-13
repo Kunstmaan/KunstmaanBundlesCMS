@@ -75,9 +75,9 @@ class SlideGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return MediaList\SlideListConfigurator
      */
-    function getListConfigurator()
+    function getListConfigurator($folder)
     {
-        return new SlideListConfigurator();
+        return new SlideListConfigurator($folder);
     }
 }
 
