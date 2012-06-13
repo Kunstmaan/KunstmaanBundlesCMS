@@ -17,11 +17,14 @@ use Doctrine\ORM\Query\ResultSetMapping;
  */
 class NodeRepository extends EntityRepository
 {
-	public function getTopNodes($user, $permission) {
+	public function getTopNodes($user, $permission, $includehiddenfromnav = false) {
 	    $qb = $this->createQueryBuilder('b')
 	               ->select('b')
-                   ->where('b.parent is null and b.deleted = 0')
-                   ->andWhere('b.id IN (
+                   ->where('b.parent is null and b.deleted = 0');
+	    if (!$includehiddenfromnav) {
+	        $qb->andWhere('b.hiddenfromnav != true');
+	    }
+        $qb->andWhere('b.id IN (
                         SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
                    )')
 

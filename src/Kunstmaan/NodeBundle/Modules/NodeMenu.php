@@ -19,7 +19,7 @@ class NodeMenu {
     /**
      * @param FactoryInterface $factory
      */
-    public function __construct($container, $lang, Node $currentNode = null, $permission = 'read', $includeoffline = false)
+    public function __construct($container, $lang, Node $currentNode = null, $permission = 'read', $includeoffline = false, $includehiddenfromnav = false)
     {
         $this->container = $container;
         $this->em = $this->container->get('doctrine.orm.entity_manager');
@@ -49,7 +49,7 @@ class NodeMenu {
         $user = $permissionManager->getCurrentUser($user, $this->em);
 
         //topNodes
-        $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, $permission);
+        $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, $permission, $includehiddenfromnav);
         foreach($topNodes as $topNode){
         	$nodeTranslation = $topNode->getNodeTranslation($lang, $this->includeoffline);
         	if(!is_null($nodeTranslation)){
