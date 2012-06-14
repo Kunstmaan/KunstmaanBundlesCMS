@@ -1,6 +1,15 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
+{% block extracss %}
+<style type="text/css">
+	.input_prop textarea {
+		width: 400px;
+		height: 100px; 
+	}
+</style>
+{% endblock extracss %}
+
 {% block extrajavascript %}
      <script type=text/javascript>
         var isEdited = false;
@@ -232,6 +241,7 @@
                                 <div class="input_prop">
                                     {{ form_widget(form.nodetranslation) }}
                                 </div>
+                               
                             </div>
                     </div>
                     {% for key, extraform in form %}
@@ -311,6 +321,9 @@
                         <div class="input_prop">
                                 {{ form_row(seoform.metarevised) }}
                         </div>
+                        <div class="input_prop">
+                                {{ form_row(seoform.extraMetadata) }}
+                        </div>
                     </div>
                 </div>
                 {{ form_rest(seoform) }}
@@ -319,4 +332,3 @@
         {{ form_rest(form) }}
     </form>
 {% endblock %}
-

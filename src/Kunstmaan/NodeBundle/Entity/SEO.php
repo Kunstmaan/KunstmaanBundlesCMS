@@ -46,6 +46,11 @@ class SEO extends AbstractEntity
      */
     protected $metarevised;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $extraMetadata;
+    
     public function getMetaAuthor()
     {
         return $this->metaauthor;
@@ -94,5 +99,15 @@ class SEO extends AbstractEntity
     public function setMetaRevised($meta)
     {
         $this->metarevised = $meta;
+    }
+    
+    public function getExtraMetadata()
+    {
+        return $this->extraMetadata;
+    }
+    
+    public function setExtraMetadata($extraMetadata)
+    {
+        $this->extraMetadata = $extraMetadata;
     }
 }
