@@ -212,12 +212,8 @@
             <li {% if currenttab == 'permissions' or alreadyexiststab == false %} class="active" {% endif %} onClick="jQuery('#currenttab').val('permissions');"><a href="#permissions">{{ 'form.permissions' | trans }}</a></li>
             	{% set alreadyexiststab = true %}
             {% endif %}
-<<<<<<< HEAD
-            <li {% if currenttab == 'seo' %} class="active" {% endif %} onClick="jQuery('#currenttab').val('seo');"><a href="#seo">SEO</a></li>
-=======
             <li {% if currenttab == 'seo' or alreadyexiststab ==false %} class="active" {% endif %} onClick="jQuery('#currenttab').val('seo');"><a href="#seo">SEO</a></li>
             <li {% if currenttab == 'versions' %} class="active" {% endif %} onClick="jQuery('#currenttab').val('versions');"><a href="#versions">Versions</a></li>
->>>>>>> master
         </ul>
         <div id="my-tab-content" class="tab-content">
         	<input type="hidden" name="currenttab" id="currenttab" value="{{ currenttab }}">
@@ -283,8 +279,6 @@
                     </tbody>
                 </table>
             </div>
-<<<<<<< HEAD
-=======
             <div class="{% if currenttab == 'versions' or propertiesform == false %}active{% endif %} tab-pane" id="versions">
               {% if propertiesform == false %}
 	        			{% set propertiesform = true %}
@@ -320,7 +314,6 @@
                     </tbody>
                 </table>
             </div>
->>>>>>> master
             <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
             	{% if propertiesform == false %}
 	        			{% set propertiesform = true %}
