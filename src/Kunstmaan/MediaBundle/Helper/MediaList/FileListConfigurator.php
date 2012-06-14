@@ -66,10 +66,16 @@ class FileListConfigurator extends AbstractAdminListConfigurator
     {
         parent::adaptQueryBuilder($querybuilder, $params);
         $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
+        $querybuilder->andwhere("b.deleted != true");
     }
 
     function getDeleteUrlFor($item)
     {
-        // TODO: Implement getDeleteUrlFor() method.
+        return array(
+            'path'      => 'KunstmaanMediaBundle_media_delete',
+            'params'    => array(
+                'media_id'    => $item->getId()
+            )
+        );
     }
 }

@@ -74,6 +74,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
     {
         parent::adaptQueryBuilder($querybuilder);
         $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
+        $querybuilder->andwhere("b.deleted != true");
     }
 
     function getDeleteUrlFor($item)

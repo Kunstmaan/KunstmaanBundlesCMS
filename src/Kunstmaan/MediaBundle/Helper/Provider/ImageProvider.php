@@ -21,6 +21,10 @@ class ImageProvider extends FileProvider
     {
         parent::prepareMedia($media);
 
+        $content = $media->getContent();
+        if (empty($content)) {
+            return;
+        }
         $metadata = $media->getMetadata();
         list($metadata['width'], $metadata['height']) = @getimagesize($media->getContent()->getRealPath());
         $media->setMetadata($metadata);

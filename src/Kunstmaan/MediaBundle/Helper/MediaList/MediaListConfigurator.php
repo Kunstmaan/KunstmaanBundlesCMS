@@ -93,6 +93,7 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
     {
         parent::adaptQueryBuilder($querybuilder, $params);
         $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
+        $querybuilder->andwhere("b.deleted != true");
     }
 
     function getDeleteUrlFor($item)

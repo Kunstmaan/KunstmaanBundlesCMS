@@ -50,7 +50,7 @@ class Folder extends AbstractEntity
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="LAZY")
      * @ORM\OrderBy({"sequencenumber" = "ASC"})
      */
     protected $children;
@@ -85,6 +85,11 @@ class Folder extends AbstractEntity
      */
     protected $sequencenumber;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $deleted;
+
     protected $em;
 
     public function __construct(EntityManager $em)
@@ -95,6 +100,7 @@ class Folder extends AbstractEntity
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
         $this->setCanDelete(TRUE);
+        $this->deleted = false;
     }
 
     public function setId($id)
@@ -256,9 +262,19 @@ class Folder extends AbstractEntity
     }
 
 
-    public function getChildren()
+    public function getChildren($includeDeleted = false)
     {
-        return $this->children;
+        if ($includeDeleted) {
+            return $this->children;
+        }
+
+        return $this->children->filter( function ($entry) {
+            if ($entry->isDeleted()) {
+                return false;
+            }
+
+            return true;
+        });
     }
 
     public function getNextSequence()
@@ -286,6 +302,22 @@ class Folder extends AbstractEntity
         $this->sequencenumber = $sequencenumber;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param boolean $deleted
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+    }
+
     public function disableChildrenLazyLoading()
     {
         if (is_object($this->children)) {
@@ -308,9 +340,19 @@ class Folder extends AbstractEntity
      *
      * @return Doctrine\Common\Collections\Collection
      */
-    public function getFiles()
+    public function getFiles($includeDeleted = false)
     {
-        return $this->files;
+        if ($includeDeleted) {
+            return $this->files;
+        }
+
+        return $this->files->filter( function ($entry) {
+            if ($entry->isDeleted()) {
+                return false;
+            }
+
+            return true;
+        });
     }
 
     /**
@@ -320,14 +362,13 @@ class Folder extends AbstractEntity
      */
     public function getImages()
     {
-        $all    = $this->files;
-        $images = array();
-        foreach ($all as $file) {
+        return $this->getFiles()->filter( function ($file) {
             if ($file instanceof Image) {
-                $images[] = $file;
+                return true;
             }
-        }
-        return $images;
+
+            return false;
+        });
     }
 
     public function hasImages()
@@ -345,14 +386,13 @@ class Folder extends AbstractEntity
 
     public function getFilesOnly()
     {
-        $all   = $this->files;
-        $files = array();
-        foreach ($all as $file) {
+        return $this->getFiles()->filter( function ($file) {
             if ($file instanceof File) {
-                $files[] = $file;
+                return true;
             }
-        }
-        return $files;
+
+            return false;
+        });
     }
 
     public function hasFiles()
@@ -370,14 +410,13 @@ class Folder extends AbstractEntity
 
     public function getSlidesOnly()
     {
-        $all   = $this->files;
-        $files = array();
-        foreach ($all as $file) {
+        return $this->getFiles()->filter( function ($file) {
             if ($file instanceof Slide) {
-                $files[] = $file;
+                return true;
             }
-        }
-        return $files;
+
+            return false;
+        });
     }
 
     public function hasSlides()
@@ -395,14 +434,13 @@ class Folder extends AbstractEntity
 
     public function getVideosOnly()
     {
-        $all   = $this->files;
-        $files = array();
-        foreach ($all as $file) {
+        return $this->getFiles()->filter( function ($file) {
             if ($file instanceof Video) {
-                $files[] = $file;
+                return true;
             }
-        }
-        return $files;
+
+            return false;
+        });
     }
 
     public function hasVideos()

@@ -10,7 +10,7 @@ abstract class AbstractMediaMetadata extends AbstractEntity
 
     /**
      * @ORM\OneToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media"))
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $media;
 
