@@ -26,7 +26,8 @@ class MediaRepository extends EntityRepository
      */
     public function delete(Media $media, EntityManager $em)
     {
-        $em->remove($media);
+        $media->setDeleted(true);
+        $em->persist($media);
         $em->flush();
     }
 

@@ -27,7 +27,8 @@ class FolderRepository extends EntityRepository
     {
         $this->deleteFiles($gallery, $em);
         $this->deleteChildren($gallery, $em);
-        $em->remove($gallery);
+        $gallery->setDeleted(true);
+        $em->persist($gallery);
         $em->flush();
     }
 
@@ -38,6 +39,8 @@ class FolderRepository extends EntityRepository
     public function deleteFiles(Folder $gallery, EntityManager $em)
     {
         foreach ($gallery->getFiles() as $item) {
+            $item->setDeleted(true);
+            $em->persist($item);
             $em->remove($item);
         }
     }
@@ -51,7 +54,8 @@ class FolderRepository extends EntityRepository
         foreach ($gallery->getChildren() as $child) {
             $this->deleteFiles($child, $em);
             $this->deleteChildren($child, $em);
-            $em->remove($child);
+            $child->setDeleted(true);
+            $em->persist($child);
         }
     }
 
@@ -62,7 +66,7 @@ class FolderRepository extends EntityRepository
      */
     public function getAllFolders($limit = NULL)
     {
-        $qb = $this->createQueryBuilder('folder')->select('folder')->where('folder.parent is null')->orderby('folder.sequencenumber');
+        $qb = $this->createQueryBuilder('folder')->select('folder')->where('folder.parent is null AND folder.deleted != true')->orderby('folder.sequencenumber');
         if (FALSE === is_null($limit)) $qb->setMaxResults($limit);
 
         return $qb->getQuery()->getResult();
