@@ -8,10 +8,10 @@
         <div class="search_wrp">
             <form id="treeform">
         	    <input type="text" id="searchVal" value="" />
-        	    <button id="search" class="btn search"><img src="/bundles/kunstmaanadmin/img/icons/search.png" alt="Search" /></button>
+        	    <button id="search" class="btn search"><i class="icon-search"></i></button>
             </form>
         </div>
-        <div class="tree">
+        <div class="tree clearfix">
         	<ul>
                 {% set currentMenuItem = adminmenu.current %}
                 <li class="jstree-open {% if lowestTopChild.internalname == currentMenuItem.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}>
