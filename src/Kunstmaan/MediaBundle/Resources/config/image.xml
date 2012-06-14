@@ -10,7 +10,7 @@
 
     <services>
         <service id="kunstmaan_media.util.image.manipulator.imagine" class="%kunstmaan_media.util.image.manipulator.imagine.class%">
-            <argument type="service" id="imagine" />
+            <argument type="service" id="liip_imagine" />
         </service>
     </services>
 
