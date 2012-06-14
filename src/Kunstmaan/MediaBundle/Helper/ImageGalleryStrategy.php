@@ -74,7 +74,7 @@ class ImageGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return null
      */
-    function getListConfigurator()
+    function getListConfigurator($folder)
     {
         return NULL;
     }

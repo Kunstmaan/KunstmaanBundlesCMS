@@ -14,6 +14,12 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 class MediaListConfigurator extends AbstractAdminListConfigurator
 {
 
+    private $folder;
+
+    public function __construct($folder){
+        $this->folder = $folder;
+    }
+
     public function buildFilters(AdminListFilter $builder)
     {
         $builder->add('name', new StringFilterType("name"), "form.name");
@@ -71,6 +77,11 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
                 'media_id' => $item->getId()
             )
         );
+    }
+
+    public function getIndexUrlFor()
+    {
+        return array('path' => 'KunstmaanMediaBundle_folder_show', 'params' => array('id' => $this->folder->getId()));
     }
 
     public function getRepositoryName()

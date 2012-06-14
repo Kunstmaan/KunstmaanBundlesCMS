@@ -75,9 +75,9 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return MediaList\VideoListConfigurator
      */
-    function getListConfigurator()
+    function getListConfigurator($folder)
     {
-        return new VideoListConfigurator();
+        return new VideoListConfigurator($folder);
     }
 }
 
