@@ -7,8 +7,10 @@
         			<div class="container-fluid">
 						<a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
 						<p class="pull-right">
-							<a target="_blank" href="http://www.kunstmaan.be">
-								<img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan.png') }}" alt="Kunstmaan" class="kunstmaan-logo" />
+							<a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
+								<object data="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.svg') }}" type="image/svg+xml">
+									<img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.png') }}" alt="Kunstmaan" />
+								</object>
 							</a>
 						</p>
 	               </div>

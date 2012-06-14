@@ -162,7 +162,13 @@
 	<!--=========Footer=========-->				
 	<footer>
 		<div class="container-fluid">
-			<p class="pull-right"><a target="_blank" href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_dark.png') }}" alt="Kunstmaan" class="kunstmaan-logo" /></a></p>
+			<p class="pull-right">
+				<a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
+					<object data="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_dark.svg') }}" type="image/svg+xml">
+						<img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_dark.png') }}" alt="Kunstmaan" />
+					</object>
+				</a>
+			</p>
 		</div>
 	</footer>
 	{% endblock %}
