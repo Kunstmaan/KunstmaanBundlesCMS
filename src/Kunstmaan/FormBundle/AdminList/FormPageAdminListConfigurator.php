@@ -57,6 +57,14 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * {@inheritdoc}
      */
+    public function getIndexUrlFor()
+    {
+        return array('path' => 'KunstmaanFormBundle_formsubmissions');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function canAdd()
     {
     	return false;
@@ -105,7 +113,10 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
         return $querybuilder;
     }
 
-    function getDeleteUrlFor($item)
+    /**
+     * {@inheritdoc}
+     */
+    public function getDeleteUrlFor($item)
     {
         return array();
     }
