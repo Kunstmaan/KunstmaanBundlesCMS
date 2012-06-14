@@ -2,17 +2,15 @@
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
 {% block extrajavascript %}
-     <script type=text/javascript>
-        var isEdited = false;
-        var oldEdited = false;
+     <script type="text/javascript">
+        var isEdited = false,
+        	oldEdited = false;
 
         window.onbeforeunload = doUnload;
-
+		
         function doUnload(){
-            //$('#quitpagemodal').modal('show');
-            //var t = setTimeout(5000);
             if(isEdited){
-                return 'You haven\'t saved this page, are you sure you want to close it?';
+                return 'You haven\'t saved this page!';
             }
         }
     </script>
