@@ -64,6 +64,11 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
         return array();
     }
 
+    public function getIndexUrlFor()
+    {
+        return array('path' => 'KunstmaanAdminBundle_settings_searches');
+    }
+
     /**
      * @param $item
      * @return bool
