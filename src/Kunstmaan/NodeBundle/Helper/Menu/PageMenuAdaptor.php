@@ -45,7 +45,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             if ($request->attributes->get('_route') == 'KunstmaanAdminNodeBundle_pages_edit') {
                 $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
-            $this->nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true);
+            $this->nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true, true);
         }
         if (is_null($parent)) {
             $menuitem = new TopMenuItem($menu);

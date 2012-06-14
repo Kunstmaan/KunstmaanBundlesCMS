@@ -34,8 +34,8 @@ class PagesController extends Controller
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'write');
-        $nodeMenu = new NodeMenu($this->container, $locale, null, 'write', true);
+        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'write', true);
+        $nodeMenu = new NodeMenu($this->container, $locale, null, 'write', true, true);
 
         $request    = $this->getRequest();
         $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($locale, $user, 'write', $locale), $em);
@@ -173,7 +173,7 @@ class PagesController extends Controller
 
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if(!$nodeTranslation){
-        	return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write', true)));
+        	return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write', true, true)));
         }
 
         $nodeVersions = $nodeTranslation->getNodeVersions();
@@ -320,7 +320,7 @@ class PagesController extends Controller
             }
         }
 
-        $nodeMenu = new NodeMenu($this->container, $locale, $node, 'write', true);
+        $nodeMenu = new NodeMenu($this->container, $locale, $node, 'write', true, true);
 
         $viewVariables = array(
             'topnodes'          => $topnodes,
@@ -451,8 +451,8 @@ class PagesController extends Controller
     	$request = $this->getRequest();
     	$locale = $request->getSession()->getLocale();
     	$user = $this->container->get('security.context')->getToken()->getUser();
-    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read');
-    	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read', true);
+    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'read');
+    	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read', true, true);
 
     	return array(
     			'topnodes'      => $topnodes,
