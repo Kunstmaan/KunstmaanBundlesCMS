@@ -91,7 +91,7 @@ class NodeMenuItem
         return array_reverse($parents);
     }
 
-    public function getChildren(){
+    public function getChildren($includeoffline = FALSE, $includehiddenfromnav = TRUE){
     	if(is_null($this->lazyChildren)){
     		$this->lazyChildren = array();
     		//$children = $this->node->getChildren();
@@ -104,7 +104,16 @@ class NodeMenuItem
     			}
     		}
     	}
-    	return $this->lazyChildren;
+    	return array_filter($this->lazyChildren, function ($entry) use ($includeoffline, $includehiddenfromnav)
+        {
+            if(!$entry->getOnline() && !$includeoffline) {
+                return false;
+            }
+            if($entry->getNode()->isHiddenFromNav() && !$includehiddenfromnav) {
+                return false;
+            }
+            return true;
+        });
     }
 
     public function getPage(){
