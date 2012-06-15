@@ -116,4 +116,14 @@ class NodeRepository extends EntityRepository
 	    return $result; 
 	}
 
+	public function getAllTopNodes(){
+	    $qb = $this->createQueryBuilder('b')
+	    ->select('b')
+	    ->where('b.deleted = 0')
+	    ->andWhere("b.parent IS NULL");
+	    
+	    $result = $qb->getQuery()->getResult();
+	    //var_dump($result);
+	    return $result;
+	}
 }

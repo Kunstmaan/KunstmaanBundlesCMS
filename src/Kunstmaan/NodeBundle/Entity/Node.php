@@ -312,4 +312,8 @@ class Node extends AbstractEntity
             }
         }
     }
+    
+    public function __toString(){
+        return "node ".$this->getId() . ", refEntityname: ". $this->getRefEntityname();
+    }
 }
