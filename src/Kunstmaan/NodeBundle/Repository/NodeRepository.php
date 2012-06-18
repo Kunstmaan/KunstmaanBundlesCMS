@@ -85,22 +85,31 @@ class NodeRepository extends EntityRepository
 	
 	public function getChildNodes($parent_id, $lang, $user, $permission, $includehiddenfromnav = false){
 	    $qb = $this->createQueryBuilder('b')
-	    ->select('b')
-	    ->innerJoin("b.nodeTranslations", "t")
-	    ->where('b.deleted = 0');
+	       ->select('b')
+	       ->innerJoin("b.nodeTranslations", "t")
+	       ->where('b.deleted = 0');
+
         if (!$includehiddenfromnav) {
 	        $qb->andWhere('b.hiddenfromnav != true');
 	    }
+
 	    $qb->andWhere('b.id IN (
 	            SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
 	    )')
-	    ->andWhere("t.lang = :lang")
-	    ->andWhere("b.parent = :parent")
+	       ->andWhere("t.lang = :lang");
+
+        if (is_null($parent_id)) {
+            $qb->andWhere("b.parent is NULL");
+        } else {
+            $qb->andWhere("b.parent = :parent")
+                ->setParameter("parent", $parent_id);
+        }
 	    
-	    ->addOrderBy('t.weight', 'ASC')
-        ->addOrderBy('t.title', 'ASC')
-	    ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
-	    ->setParameter(2, '%|'.$permission.':1|%');
+	    $qb->addOrderBy('t.weight', 'ASC')
+           ->addOrderBy('t.title', 'ASC')
+	       ->setParameter(1, 'Kunstmaan\\AdminNodeBundle\\Entity\\Node')
+	       ->setParameter(2, '%|'.$permission.':1|%');
+
 	    $groupIds = $user->getGroupIds();
 	    if (!empty($groupIds)) {
 	        $qb->setParameter(3, $groupIds);
@@ -109,8 +118,7 @@ class NodeRepository extends EntityRepository
 	        $qb->setParameter(3, null);
 	    }
 	    $qb->setParameter("lang", $lang);
-	    $qb->setParameter("parent", $parent_id);
-	    
+
 	    $result = $qb->getQuery()->getResult();
 
 	    return $result; 
