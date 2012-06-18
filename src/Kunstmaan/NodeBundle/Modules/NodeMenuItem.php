@@ -91,12 +91,12 @@ class NodeMenuItem
         return array_reverse($parents);
     }
 
-    public function getChildren($includeoffline = FALSE, $includehiddenfromnav = TRUE){
+    public function getChildren($includehiddenfromnav = TRUE){
     	if(is_null($this->lazyChildren)){
     		$this->lazyChildren = array();
     		//$children = $this->node->getChildren();
     		$NodeRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:Node');
-    		$children = $NodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getUser(), $this->menu->getPermission()); 
+    		$children = $NodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getUser(), $this->menu->getPermission(), true);
     		foreach($children as $child){
     			$nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
     			if(!is_null($nodeTranslation)){
@@ -104,11 +104,8 @@ class NodeMenuItem
     			}
     		}
     	}
-    	return array_filter($this->lazyChildren, function ($entry) use ($includeoffline, $includehiddenfromnav)
+    	return array_filter($this->lazyChildren, function ($entry) use ($includehiddenfromnav)
         {
-            if(!$entry->getOnline() && !$includeoffline) {
-                return false;
-            }
             if($entry->getNode()->isHiddenFromNav() && !$includehiddenfromnav) {
                 return false;
             }

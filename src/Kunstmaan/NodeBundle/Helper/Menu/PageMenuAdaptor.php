@@ -100,7 +100,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         } else if ('KunstmaanAdminNodeBundle_pages_edit' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
             $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
-            $nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true);
+            $nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true, true);
             
             $childNodes = $nodemenu->getCurrent()->getChildren();
 
@@ -113,7 +113,6 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                     $parentNodes = array();
                 }
             }
-
             foreach ($childNodes as $child) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanAdminNodeBundle_pages_edit');
@@ -136,7 +135,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                     }
                 }
                 $children[] = $menuitem;              
-            } 
+            }
         }
     }
     
