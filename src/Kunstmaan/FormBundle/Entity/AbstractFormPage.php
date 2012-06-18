@@ -24,6 +24,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 abstract class AbstractFormPage extends AbstractPage
 {
     /**
+	 * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
      */
     protected $thanks;
