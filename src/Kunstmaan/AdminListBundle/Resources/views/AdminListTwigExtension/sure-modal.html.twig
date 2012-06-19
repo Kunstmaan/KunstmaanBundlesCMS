@@ -5,7 +5,7 @@
     </div>
 
     <div class="modal-footer">
-        <a href="{{ path(basepath, extraparams|merge({ 'delete': item.id }))}}" class="btn danger">Delete</a>
+        <a href="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}" class="btn danger">Delete</a>
         <a onclick="javascript:$('#sure-modal-{{ item.id }}').modal('hide')" href="#" class="btn secondary">Cancel</a>
     </div>
 </div>

@@ -10,7 +10,7 @@
                     	{% else %}
                     		{% set filtername = columnname %}
                     	{% endif %}
-                        <option>{{filtername|trans}}</option>
+                        <option value="{{columnname}}">{{filtername|trans}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -114,7 +114,7 @@
                 newitem.slideDown();
             }
             jQuery("#filterbuttons").show();
-            
+
             return false;
         }
 
