@@ -22,7 +22,7 @@ class SEO extends AbstractEntity
     protected $id;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $metadescription;
 
@@ -57,7 +57,7 @@ class SEO extends AbstractEntity
     protected $ogTitle;
 
     /**
-     * @ORM\Column(name="og_description", type="string", nullable=true)
+     * @ORM\Column(name="og_description", type="text", nullable=true)
      */
     protected $ogDescription;
 
