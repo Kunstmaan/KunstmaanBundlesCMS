@@ -2,7 +2,6 @@
 
 // Init functions needed on every page
 $(document).ready(function () {
-	init_tree();
 	init_main_functions();
 	initTop();
 	initCustomSelect();
