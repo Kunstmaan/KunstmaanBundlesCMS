@@ -91,10 +91,12 @@ class NodeMenuItem
         return array_reverse($parents);
     }
 
-    public function getChildren(){
+    public function getChildren($includehiddenfromnav = TRUE){
     	if(is_null($this->lazyChildren)){
     		$this->lazyChildren = array();
-    		$children = $this->node->getChildren();
+    		//$children = $this->node->getChildren();
+    		$NodeRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:Node');
+    		$children = $NodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getUser(), $this->menu->getPermission(), true);
     		foreach($children as $child){
     			$nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
     			if(!is_null($nodeTranslation)){
@@ -102,7 +104,13 @@ class NodeMenuItem
     			}
     		}
     	}
-    	return $this->lazyChildren;
+    	return array_filter($this->lazyChildren, function ($entry) use ($includehiddenfromnav)
+        {
+            if($entry->getNode()->isHiddenFromNav() && !$includehiddenfromnav) {
+                return false;
+            }
+            return true;
+        });
     }
 
     public function getPage(){

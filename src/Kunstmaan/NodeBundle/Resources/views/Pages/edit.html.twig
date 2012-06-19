@@ -1,6 +1,15 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
+{% block extracss %}
+<style type="text/css">
+	.input_prop textarea {
+		width: 400px;
+		height: 100px; 
+	}
+</style>
+{% endblock extracss %}
+
 {% block extrajavascript %}
      <script type="text/javascript">
         var isEdited = false,
@@ -138,26 +147,28 @@
                 
                 <!--Tab--> 
                 <div class="{% if currenttab == pagepartstab %}active{% endif %} tab-pane" id="pageparts{{ loop.index }}">
-                    <fieldset class="properties">
-                        <div class="input_prop">
-                            {{ form_widget(form.main) }}
-                        </div>
-                        <div class="input_prop">
-                            {{ form_widget(form.node) }}
-                        </div>
-                        <div class="input_prop">
-                            {{ form_widget(form.nodetranslation) }}
-                        </div>
-                    </fieldset>
-                    {% for key, extraform in form %}
-                        {% if key != 'main' and key == pagepartadmin.context %}
-                            <fieldset class="properties">
-                                <div class="input_prop">
-                                     {{ form_widget(extraform) }}
-                                </div>
-                            </fieldset>
-                        {% endif %}
-                    {% endfor %}
+                    {% if loop.index == 1 %}
+	                    <fieldset class="properties">
+	                        <div class="input_prop">
+	                            {{ form_widget(form.main) }}
+	                        </div>
+	                        <div class="input_prop">
+	                            {{ form_widget(form.node) }}
+	                        </div>
+	                        <div class="input_prop">
+	                            {{ form_widget(form.nodetranslation) }}
+	                        </div>
+	                    </fieldset>
+	                    {% for key, extraform in form %}
+	                        {% if key != 'main' and key == pagepartadmin.context %}
+	                            <fieldset class="properties">
+	                                <div class="input_prop">
+	                                     {{ form_widget(extraform) }}
+	                                </div>
+	                            </fieldset>
+	                        {% endif %}
+	                    {% endfor %}
+	            	{% endif %}
                     {{ pagepartadmin_widget(pagepartadmin, form) }}
                 </div>
             {% else %}
@@ -226,7 +237,22 @@
                     <div class="input_prop">
                             {{ form_row(seoform.metarevised) }}
                     </div>
-                </div>
+                    <div class="input_prop">
+                        {{ form_row(seoform.ogType) }}
+                    </div>
+                    <div class="input_prop">
+                        {{ form_row(seoform.ogTitle) }}
+                    </div>
+                    <div class="input_prop">
+                        {{ form_row(seoform.ogDescription) }}
+                    </div>
+                    <div class="input_prop">
+                        {{ form_row(seoform.ogImage) }}
+                    </div>
+                    <div class="input_prop">
+                            {{ form_row(seoform.extraMetadata) }}
+                    </div>
+                </fieldset>
                 {{ form_rest(seoform) }}
             </div>
         </div>
@@ -372,4 +398,3 @@
     
     
 {% endblock %}
-
