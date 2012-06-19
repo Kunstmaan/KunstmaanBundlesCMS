@@ -27,6 +27,11 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator{
     	return array('path' => 'KunstmaanAdminBundle_settings_roles_edit', 'params' => array('role_id' => $item->getId()));
     }
 
+    public function getIndexUrlFor()
+    {
+        return array('path' => 'KunstmaanAdminBundle_settings_roles');
+    }
+
     public function getAdminType($item) {
         return null;
     }
