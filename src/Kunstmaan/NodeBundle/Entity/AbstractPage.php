@@ -148,8 +148,16 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     public function deepClone(EntityManager $em)
     {
         $newpage = clone $this;
+        $newpage->setId(null);
         $em->persist($newpage);
         $em->flush();
+
+        if (method_exists($this, 'getPagePartAdminConfigurations')) {
+            $ppconfigurations = $this->getPagePartAdminConfigurations();
+            foreach ($ppconfigurations as $ppconfiguration) {
+                $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($em, $this, $newpage, $ppconfiguration->getDefaultContext());
+            }
+        }
 
         return $newpage;
     }
