@@ -36,7 +36,7 @@ class SearchPageController extends Controller
    		}
    		
    		if($searchpage){
-   			return $this->redirect($this->generateUrl('_slug', array('slug' => $searchpage->getNodeTranslation($request->getSession()->getLocale())->getSlug(), 'query' => $query)));
+   			return $this->redirect($this->generateUrl('_slug', array('url' => $searchpage->getNodeTranslation($request->getSession()->getLocale())->getUrl(), 'query' => $query)));
    		}else {
    			throw $this->createNotFoundException('No searchpage found');
    		}
