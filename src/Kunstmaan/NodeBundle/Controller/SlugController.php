@@ -14,10 +14,10 @@ use Kunstmaan\AdminBundle\Modules\ClassLookup;
 class SlugController extends Controller
 {
     /**
-     * @Route("/draft/{slug}", requirements={"slug" = ".+"}, name="_slug_draft")
+     * @Route("/draft/{url}", requirements={"url" = ".+"}, name="_slug_draft")
      * @Template("KunstmaanViewBundle:Slug:slug.html.twig")
      */
-    public function slugDraftAction($slug)
+    public function slugDraftAction($url)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
@@ -38,20 +38,20 @@ class SlugController extends Controller
         }
 
         if (!in_array($locale, $localesarray)) {
-            if (empty($slug)) {
-                $slug = $locale;
+            if (empty($url)) {
+                $url = $locale;
             } else {
-                $slug = $locale . '/' . $slug;
+                $url = $locale . '/' . $url;
             }
             $locale = $fallback;
-            return $this->redirect($this->generateUrl('_slug_draft', array('slug' => $slug, '_locale' => $locale)));
+            return $this->redirect($this->generateUrl('_slug_draft', array('url' => $url, '_locale' => $locale)));
         }
 
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $slug);
+        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug(null, $url);
         $exactMatch = true;
         if (!$nodeTranslation) {
             // Lookup node by best match for url
-            $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getBestMatchForUrl($slug, $locale);
+            $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getBestMatchForUrl($url, $locale);
             $exactMatch = false;
         }
         
@@ -66,7 +66,7 @@ class SlugController extends Controller
         
         // If no node translation or no exact match that is not a dynamic routing page -> 404
         if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingPageInterface))) {
-            throw $this->createNotFoundException('No page found for slug ' . $slug);
+            throw $this->createNotFoundException('No page found for slug ' . $url);
         }
         
         $currentUser = $this->get('security.context')->getToken()->getUser();
@@ -79,7 +79,7 @@ class SlugController extends Controller
 
             if ($page instanceof DynamicRoutingPageInterface) {
                             $page->setLocale($locale);
-                $slugPart = substr($slug, strlen($nodeTranslation->getUrl()));
+                $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
                 $path = $page->match($slugPart);
                 if (!$path) {
                     // Try match with trailing slash - this is needed to match the root path in Controller actions...
@@ -102,7 +102,7 @@ class SlugController extends Controller
             }
 
             $renderContext = new RenderContext(
-                            array('nodetranslation' => $nodeTranslation, 'slug' => $slug, 'page' => $page, 'resource' => $page, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu,
+                            array('nodetranslation' => $nodeTranslation, 'slug' => $url, 'page' => $page, 'resource' => $page, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu,
                                             'locales' => $localesarray));
             $hasView = false;
             if (method_exists($page, 'getDefaultView')) {
@@ -116,7 +116,7 @@ class SlugController extends Controller
                 }
                 else if (!$exactMatch && !$hasView) {
                     // If it was a dynamic routing page and no view and no service implementation -> 404
-                    throw $this->createNotFoundException('No page found for slug ' . $slug);
+                    throw $this->createNotFoundException('No page found for slug ' . $url);
                 }
             }
             
@@ -128,10 +128,10 @@ class SlugController extends Controller
 
     /**
      * @Route("/")
-     * @Route("/{slug}", requirements={"slug" = ".+"}, name="_slug")
+     * @Route("/{url}", requirements={"url" = ".+"}, name="_slug")
      * @Template()
      */
-    public function slugAction($slug = null)
+    public function slugAction($url = null)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
@@ -152,19 +152,19 @@ class SlugController extends Controller
         }
 
         if (!in_array($locale, $localesarray)) {
-            if (empty($slug)) {
-                $slug = $locale;
+            if (empty($url)) {
+                $url = $locale;
             } else {
-                $slug = $locale . '/' . $slug;
+                $url = $locale . '/' . $url;
             }
             $locale = $fallback;
-            return $this->redirect($this->generateUrl('_slug', array('slug' => $slug, '_locale' => $locale)));
+            return $this->redirect($this->generateUrl('_slug', array('url' => $url, '_locale' => $locale)));
         }
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForUrl($slug, $locale);
+        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForUrl($url, $locale);
         $exactMatch = true;
         if (!$nodeTranslation) {
             // Lookup node by best match for url
-            $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getBestMatchForUrl($slug, $locale);
+            $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getBestMatchForUrl($url, $locale);
             $exactMatch = false;
         }
         if ($nodeTranslation) {
@@ -174,7 +174,7 @@ class SlugController extends Controller
         
         // If no node translation or no exact match that is not a dynamic routing page -> 404
         if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingPageInterface))) {
-            throw $this->createNotFoundException('No page found for slug ' . $slug);
+            throw $this->createNotFoundException('No page found for slug ' . $url);
         }
 
         //check if the requested node is online, else throw a 404 exception
@@ -192,7 +192,7 @@ class SlugController extends Controller
 
             if ($page instanceof DynamicRoutingPageInterface) {
                 $page->setLocale($locale);
-                $slugPart = substr($slug, strlen($nodeTranslation->getUrl()));
+                $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
                 $path = $page->match($slugPart);
                 if (!$path) {
                     // Try match with trailing slash - this is needed to match the root path in Controller actions...
@@ -213,7 +213,7 @@ class SlugController extends Controller
                 }
             }
             $renderContext = new RenderContext(
-                    array('nodetranslation' => $nodeTranslation, 'slug' => $slug, 'page' => $page, 'resource' => $page, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu,
+                    array('nodetranslation' => $nodeTranslation, 'slug' => $url, 'page' => $page, 'resource' => $page, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu,
                             'locales' => $localesarray));
             $hasView = false;
             if (method_exists($page, 'getDefaultView')) {
@@ -227,7 +227,7 @@ class SlugController extends Controller
                 }
                 else if (!$exactMatch && !$hasView) {
                     // If it was a dynamic routing page and no view and no service implementation -> 404
-                    throw $this->createNotFoundException('No page found for slug ' . $slug);
+                    throw $this->createNotFoundException('No page found for slug ' . $url);
                 }
             }
 
