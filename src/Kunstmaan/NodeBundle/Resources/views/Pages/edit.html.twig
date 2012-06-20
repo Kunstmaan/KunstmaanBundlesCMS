@@ -1,15 +1,6 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-{% block extracss %}
-<style type="text/css">
-	.input_prop textarea {
-		width: 400px;
-		height: 100px; 
-	}
-</style>
-{% endblock extracss %}
-
 {% block extrajavascript %}
      <script type="text/javascript">
         var isEdited = false,
@@ -229,13 +220,13 @@
                         {{ form_row(seoform.metadescription) }}
                     </div>
                     <div class="input_prop">
-                            {{ form_row(seoform.metakeywords) }}
+                    	{{ form_row(seoform.metakeywords) }}
                     </div>
                     <div class="input_prop">
-                            {{ form_row(seoform.metarobots) }}
+                    	{{ form_row(seoform.metarobots) }}
                     </div>
                     <div class="input_prop">
-                            {{ form_row(seoform.metarevised) }}
+                    	{{ form_row(seoform.metarevised) }}
                     </div>
                     <div class="input_prop">
                         {{ form_row(seoform.ogType) }}
@@ -246,11 +237,11 @@
                     <div class="input_prop">
                         {{ form_row(seoform.ogDescription) }}
                     </div>
-                    <div class="input_prop">
+                    <div class="input_prop input_media_wrp">
                         {{ form_row(seoform.ogImage) }}
                     </div>
                     <div class="input_prop">
-                            {{ form_row(seoform.extraMetadata) }}
+                    	{{ form_row(seoform.extraMetadata) }}
                     </div>
                 </fieldset>
                 {{ form_rest(seoform) }}
