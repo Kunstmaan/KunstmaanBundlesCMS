@@ -169,7 +169,7 @@ abstract class AbstractFormPage extends AbstractPage
 						$container->get('form.mailer')->sendContactMail($formsubmission, $from, $to, $subject);
 					}
 					return new RedirectResponse($container->get('router')->generate('_slug', array(
-						'slug' => $result['slug'],
+						'url' => $result['slug'],
 						'_locale' => $result['nodetranslation']->getLang(),
 						'thanks' => true
 					)));
