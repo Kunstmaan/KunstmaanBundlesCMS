@@ -72,8 +72,13 @@ class NodeMenuItem
     }
 
     public function getSlug(){
-    	$result = $this->getSlugPart();
-    	return $result;
+    	return $this->getUrl();
+    }
+
+    public function getUrl()
+    {
+        $result = $this->getSlugPart();
+        return $result;
     }
 
     public function getParent(){
