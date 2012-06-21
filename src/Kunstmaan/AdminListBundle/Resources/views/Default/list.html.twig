@@ -1,7 +1,11 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
 {% block content %}
-    {{ adminlist_widget(adminlist, app.request.attributes.get('_route')) }}
+	{% if extraparams is defined %}
+		{{ adminlist_widget(adminlist, app.request.attributes.get('_route'), extraparams) }}
+	{% else %}
+		{{ adminlist_widget(adminlist, app.request.attributes.get('_route')) }}
+	{% endif %}
 
     {% if adminlist.hasListActions %}
         {% for action in adminlist.getListActions() %}
