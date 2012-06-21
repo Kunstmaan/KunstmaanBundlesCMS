@@ -451,7 +451,7 @@ class PagesController extends Controller
     	$request = $this->getRequest();
     	$locale = $request->getSession()->getLocale();
     	$user = $this->container->get('security.context')->getToken()->getUser();
-    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'read');
+    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read');
     	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read', true, true);
 
     	return array(
