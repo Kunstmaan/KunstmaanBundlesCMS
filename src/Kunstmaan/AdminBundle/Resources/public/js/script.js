@@ -6,6 +6,7 @@ $(document).ready(function () {
 	initTop();
 	initCustomSelect();
 	initDel();
+	initFilter();
 });
 
 // JS-tree
@@ -405,5 +406,27 @@ function init_twipsy() {
 // Custom Select
 function initCustomSelect() {
 	$('.chzn-select').chosen();
+}
+
+//Filter
+function initFilter() {
+	var checked = $(".filter_on_off").attr("checked");
+	
+	if (checked) {
+		$(".all").removeClass("active");
+	} else {
+		$(".all").addClass("active");
+	}
+	
+	$(".filter_on_off").live("click", function() {
+		checked = $(this).attr("checked");
+		
+		if (checked) {
+			$(".all").removeClass("active");
+		} else {
+			$(".all").addClass("active");
+		}
+	
+	});
 }
 
