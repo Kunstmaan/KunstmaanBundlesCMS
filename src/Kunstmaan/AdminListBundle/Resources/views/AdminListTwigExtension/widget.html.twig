@@ -30,14 +30,12 @@
             <td>
                 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
                 {% if adminlist.canEdit(item) %}
-                    <!--<a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/edit.png') }}" alt="alt="{{ 'form.edit' | trans }}""/></a>-->
                     <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><i class="icon-edit"></i></a>
                 {% endif %}
                 {% if adminlist.canDelete(item) %}
                     {% if adminlist.getDeleteUrlFor(item)["action"] is defined %}
                         {% render adminlist.getDeleteUrlFor(item)["action"] with {'entity_id': item.id} %}
                     {% elseif adminlist.getDeleteUrlFor(item)["path"] is defined %}
-                        <!--<a href="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/delete.png') }}" alt="alt="{{ 'form.delete' | trans }}""/></a>-->
                         <a href="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}" data-toggle="modal" data-target="#sure-modal-{{ item.id }}"><i class="icon-remove"></i></a>
                     {% endif %}
                 {% endif %}

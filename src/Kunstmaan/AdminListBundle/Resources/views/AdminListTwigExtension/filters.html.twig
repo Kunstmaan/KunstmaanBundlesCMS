@@ -1,4 +1,40 @@
 {% if filter.filterdefinitions|length > 0 %}
+    
+    <form action="{{ path(basepath, extraparams) }}">
+    	<div class="filter_lists">
+    		<span class="status all">Show all</span>
+    		<input type="checkbox" name="" value="" id="filter_on_off" class="filter_on_off" />
+    		<div class="filters_wrp">
+    			<label for="filter_on_off" class="status">Filter</label>
+    			<ul class="filters">
+    				<li>
+    					<select class="filterselect" id="addfilter" onchange="createFilter(this, true)">
+    						<option>{{ "form.addfilter"|trans }}</option>
+    						{% for columnname, value in filter.filterdefinitions %}
+    							{% if value['filtername'] is defined %}
+    								{% set filtername = value['filtername'] %}
+    							{% else %}
+    								{% set filtername = columnname %}
+    							{% endif %}
+    						    <option value="{{columnname}}">{{filtername|trans}}</option>
+    						{% endfor %}
+    					</select>
+    					<button class="remove_filter"><i class="icon-remove-sign"></i></button>
+    				</li>
+    				<li>
+    					<button class="btn add_filter"><i class="icon-plus-sign"></i>Add filter</button>
+    				</li>
+    				<li>
+    					<button class="btn apply_filter">Apply</button>
+    				</li>
+    			</ul>
+    		</div>
+    	</div>
+    </form>
+    
+    
+    
+    <!--
     <form action="{{ path(basepath, extraparams) }}">
         <div id="filtermap">
             <div class="filterline" id="addline" {% if filter.currentfilters|length >0 %} style="display:none" {% endif %}>
@@ -68,6 +104,7 @@
         {% endfor %}
 
     </form>
+    -->
     <script>
         function resetFilters(){
             //jQuery(".removefilterbutton").click();
@@ -136,5 +173,4 @@
            	jQuery(element).parent(".filterline").find(".datepick").datePicker();
         }
     </script>
-    <div style="clear:both"></div>
 {% endif %}
