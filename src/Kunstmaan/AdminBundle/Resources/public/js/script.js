@@ -1,6 +1,6 @@
-// Author: Indri & Ibe
+//Author: Indri & Ibe
 
-// Init functions needed on every page
+//Init functions needed on every page
 $(document).ready(function () {
 	init_main_functions();
 	initTop();
@@ -9,7 +9,7 @@ $(document).ready(function () {
 	initFilter();
 });
 
-// JS-tree
+//JS-tree
 function init_tree(movepagesnodeurl, movemedianodeurl) {
 	$('.tree').jstree({
 		"plugins" : [ "themes", "html_data", "types", "search" ] ,
@@ -334,7 +334,7 @@ function init_tree(movepagesnodeurl, movemedianodeurl) {
     })
 }
 
-// Drag and Drop
+//Drag and Drop
 function init_DragDrop() {
 	$('#parts').sortable({  
 	    handle: '.prop_bar',  
@@ -356,7 +356,7 @@ function init_DragDrop() {
 
  
 
-// Drop down main_actions
+//Drop down main_actions
 function init_main_functions() {
 	$(window).scroll(
 		function() {
@@ -372,7 +372,7 @@ function init_main_functions() {
 	);
 }
 
-// Toplink
+//Toplink
 function initTop() {
 	$(".up").click(function(e) {
 		e.preventDefault();
@@ -380,7 +380,7 @@ function initTop() {
 	});
 }
 
-// Thumbnails Helper
+//Thumbnails Helper
 function initDel() {
 	$('.thumbnails .del').live("mouseover mouseout", function(e) {
 		if (e.type == "mouseover") {
@@ -393,7 +393,7 @@ function initDel() {
 	});
 }
 
-// Datepicker
+//Datepicker
 function init_datePicker() {
 	$('.date-pick').datePicker();
 }
@@ -403,12 +403,14 @@ function init_twipsy() {
 	$("a[rel=twipsy]").twipsy({live:true});
 };
 
-// Custom Select
+//Custom Select
 function initCustomSelect() {
 	$('.chzn-select').chosen();
 }
 
-//Filter
+
+
+////FILTERS
 function initFilter() {
 	var checked = $(".filter_on_off").attr("checked");
 	
@@ -425,8 +427,104 @@ function initFilter() {
 			$(".all").removeClass("active");
 		} else {
 			$(".all").addClass("active");
+			resetFilters();
 		}
+	});
 	
+	$(".apply_filter").live("click", function(e) {
+		setTimeout(function(){
+			$(".filter_on_off").attr('checked', true);
+			$(".all").addClass("active");
+		}, 1000);
+		
+				
 	});
 }
+
+
+
+
+
+
+function createFilter(el, hide){
+    console.log("Create filter init");
+    
+    var line = $(el).parent("li");
+    
+    if(hide == true){
+        line.addClass("hidden");
+    }
+  
+    var uniqueid = calculateUniqueFilterId();
+    var newitem = $('<li>').attr('class', 'filterline').append($("#filterdummyline").html());
+    
+    line.after(newitem);
+    newitem.find(".uniquefilterid").val(uniqueid);
+    newitem.find(".filterdummy").val(line.find(".filterselect").val());
+    updateOptions(newitem.find(".filterdummy"));
+    newitem.find("input, select").each(function(){
+        $(this).attr("name", "filter_" + $(this).attr("name"));
+    });
+    
+    newitem.find(".filteroptions").find("input:not(.uniquefilterid), select").each(function(){
+        $(this).attr("name", $(this).attr("name") + "_" + uniqueid);
+		if($(this).hasClass("datepick")){
+			$(this).datePicker();
+		}
+    });
+    
+    if(hide == true){
+        newitem.removeClass("hidden");
+        line.find("select").val("");
+    } else {
+        newitem.slideDown();
+    }
+
+    return false;
+}
+
+
+
+function resetFilters(){
+    $(".filterline").remove();
+    $(".apply_filter").click();
+    return false;
+}
+
+
+
+function removeFilter(el){
+    if($("#filtermap").find(".filterline").length==2){
+        $(el).parent(".filterline").remove();
+        $("#addline").removeClass("hidden");
+    } else {
+        $(el).parent(".filterline").slideUp(function(){
+            $(this).remove();
+        });
+    }
+    return false;
+}
+
+
+
+function calculateUniqueFilterId(){
+    var result = 1;
+    $("input.uniquefilterid").each(function(){
+        var value = parseInt( jQuery(this).val() );
+        if(result <= value){
+            result = value+1;
+        }
+    });
+    return result;
+}
+
+
+
+function updateOptions(el){
+    var val = $(el).val();
+    val = val.replace('.',  '_');
+    $(el).parent(".filterline").find(".filteroptions").html($('#filterdummyoptions_'+ val).html());
+   	$(el).parent(".filterline").find(".datepick").datePicker();
+}
+
 
