@@ -80,11 +80,10 @@ class SlugController extends Controller
             if ($page instanceof DynamicRoutingPageInterface) {
                             $page->setLocale($locale);
                 $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
-                $path = $page->match($slugPart);
-                if (!$path) {
-                    // Try match with trailing slash - this is needed to match the root path in Controller actions...
-                    $path = $page->match($slugPart . '/');
+                if (false === $slugPart) {
+                    $slugPart = '/';
                 }
+                $path = $page->match($slugPart);
                 if ($path) {
                     $path['nodeTranslationId'] = $nodeTranslation->getId();
 
@@ -193,11 +192,10 @@ class SlugController extends Controller
             if ($page instanceof DynamicRoutingPageInterface) {
                 $page->setLocale($locale);
                 $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
-                $path = $page->match($slugPart);
-                if (!$path) {
-                    // Try match with trailing slash - this is needed to match the root path in Controller actions...
-                    $path = $page->match($slugPart . '/');
+                if (false === $slugPart) {
+                    $slugPart = '/';
                 }
+                $path = $page->match($slugPart);
                 if ($path) {
                     $path['nodeTranslationId'] = $nodeTranslation->getId();
                     return $this->forward($path['_controller'], $path, $request->query->all());
