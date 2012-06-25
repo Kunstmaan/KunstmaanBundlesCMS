@@ -80,7 +80,6 @@ class PagesController extends Controller
     	$entityname = $node->getRefEntityname();
     	$myLanguagePage = new $entityname();
     	$myLanguagePage->setTitle("New page");
-    	$myLanguagePage->setPermissions();
 
     	$addcommand = new AddCommand($em, $user);
     	$addcommand->execute("empty page added with locale: " . $locale, array('entity'=> $myLanguagePage));
