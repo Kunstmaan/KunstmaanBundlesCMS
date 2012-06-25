@@ -113,23 +113,6 @@ abstract class AbstractFormPage extends AbstractPage
     /**
      * {@inheritdoc}
      */
-    public function deepClone(EntityManager $em)
-    {
-        $newpage = new FormPage();
-        $newpage->setTitle($this->getTitle());
-        $em->persist($newpage);
-        $em->flush();
-        $ppconfigurations = $this->getPagePartAdminConfigurations();
-        foreach ($ppconfigurations as $ppconfiguration) {
-            $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($em, $this, $newpage, $ppconfiguration->getDefaultContext());
-        }
-
-        return $newpage;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function service($container, Request $request, &$result)
     {
 		$thanksParam = $request->get('thanks');
