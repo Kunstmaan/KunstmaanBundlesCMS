@@ -34,12 +34,12 @@
 
 {% block field_row %}
 {% spaceless %}
-<div class="input_prop">
+<div class="clearfix input_prop{% if errors|length > 0 %} error{% endif %}">
     {{ form_label(form) }}
-    {{ form_errors(form) }}
     <div class="input">
         {{ form_widget(form) }}
     </div>
+    {{ form_errors(form) }}
 </div>
 {% endspaceless %}
 {% endblock field_row %}
@@ -50,7 +50,7 @@
 		<input type="text" name="{{ full_name }}" value="{% if(value is defined) %}{{ value }}{% endif %}"/>
 		<button class="btn choosebutton{{ id }}">Choose</button>
 	</div>
-	
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 		    $('.choosebutton{{ id }}').on('click', function(ev) {
@@ -64,3 +64,15 @@
 	</script>
 {% endspaceless %}
 {% endblock urlchooser_widget %}
+
+{% block field_errors %}
+{% spaceless %}
+{% if errors|length > 0 %}
+<div class="input">
+    {% for error in errors %}
+        <div class="help-inline">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endspaceless %}
+{% endblock field_errors %}
