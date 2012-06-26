@@ -45,7 +45,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *
      * @return string The html markup
      */
-    public function renderWidget( $view , $form , array $parameters = array())
+    public function renderWidget( $view , $form = null , array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig");
 
