@@ -16,7 +16,14 @@
     </script>
 {% endblock %}
 
-
+{% block messages %}
+	{% if form_has_errors_recursive(form) %}
+	<div class="alert alert-error">
+		<strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
+		<button class="close" data-dismiss="alert">&times;</button>
+	</div>
+	{% endif %}
+{% endblock %}
 
 
 {% block header %}
@@ -42,12 +49,6 @@
 
 
 {% block content %}
-	{% if form_has_errors_recursive(form) %}
-	   <div class="alert-message error">
-		   <strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
-	   </div>
-	   <div class="clear">&nbsp;</div>
-	{% endif %}
     <form id="pageadminform" class="form-horizontal" action="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
         
         <!--=========Actions=========-->
@@ -99,7 +100,7 @@
 					{% if pagePossibleChildPages is not empty %}
 						<button data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
 					{% endif %}
-					<button onClick="oldEdited = isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
+					<button onClick="oldEdited=isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
 				{% endif %}
 				<a class="btn up">&#9650;</a>
 			</div>
@@ -115,14 +116,48 @@
             {% set alreadyexiststab = false %}
             {% for pagepartadmin in pagepartadmins %}
                 {% set pagepartstab = 'pageparts'~loop.index %}
+                
+				
+				{% if form['pagepartadmin_'~pagepartadmin.context] is defined %}
+					{% if alreadyexiststab %}
+						{% set form_errors_recursive = form_errors_recursive([form['pagepartadmin_'~pagepartadmin.context]]) %}
+					{% else %}
+						{% set form_errors_recursive = form_errors_recursive([form.main, form.node, form.nodetranslation, form['pagepartadmin_'~pagepartadmin.context]]) %}
+					{% endif %}
+				{% else %}
+					{% if alreadyexiststab %}
+						{% set form_errors_recursive = form_errors_recursive([]) %}
+					{% else %}
+						{% set form_errors_recursive = form_errors_recursive([form.main, form.node, form.nodetranslation]) %}
+					{% endif %}	
+				{% endif %}
+                
+                
                 {% set alreadyexiststab = true %}
                 <li onClick="jQuery('#currenttab').val('pageparts{{ loop.index }}');" {% if currenttab == pagepartstab %} class="active" {% endif %}>
-                    <a href="#pageparts{{ loop.index }}" data-toggle="tab">{{ pagepartadmin.name }}</a>
+                    <a href="#pageparts{{ loop.index }}" data-toggle="tab">
+                    	{{ pagepartadmin.name }}
+                    	{% if(form_errors_recursive|length > 0) %}
+                    		<span class="label label-important">{% if form_errors_recursive|length >1 %}{{form_errors_recursive|length}} {{ "Errors" | trans }}{% else %}{{ "1 Error" | trans }}{% endif %}</span>
+                    	{% endif %}
+                    </a>
                 </li>
             {% else %}
+            	{% set form_errors_recursive = form_errors_recursive([form.main, form.node, form.nodetranslation]) %}
                 <li {% if currenttab == 'properties' or alreadyexiststab ==false %} class="active" {% endif %} onClick="jQuery('#currenttab').val('properties');">
                     {% set alreadyexiststab = true %}
-                    <a href="#properties" data-toggle="tab">{{ 'Properties' | trans }}</a>
+                    <a href="#properties" data-toggle="tab">
+                    	{{ 'Properties' | trans }}
+                    	{% if(form_errors_recursive|length > 0) %}
+                    		<span class="label label-important">
+                    			{% if form_errors_recursive|length >1 %}
+                    				{{form_errors_recursive|length}} {{ "Errors" | trans }}
+                    			{% else %}
+                    				{{ "1 Error" | trans }}
+                    			{% endif %}
+                    		</span>
+                    	{% endif %}	
+                    </a>
                 </li>
             {% endfor %}
             {% if is_granted('ROLE_PERMISSIONMANAGER') %}
@@ -131,8 +166,20 @@
                     <a href="#permissions" data-toggle="tab">{{ 'form.permissions' | trans }}</a>
                 </li>
             {% endif %}
+            {% set form_errors_recursive = form_errors_recursive([form.seo]) %}
             <li {% if currenttab == 'seo' or alreadyexiststab ==false %} class="active" {% endif %} onClick="jQuery('#currenttab').val('seo');">
-                <a href="#seo" data-toggle="tab">SEO</a>
+                <a href="#seo" data-toggle="tab">
+                	SEO
+                	{% if(form_errors_recursive|length > 0) %}
+                		<span class="label label-important">
+                			{% if form_errors_recursive|length >1 %}
+                				{{form_errors_recursive|length}} {{ "Errors" | trans }}
+                			{% else %}
+                				{{ "1 Error" | trans }}
+                			{% endif %}
+                		</span>
+                	{% endif %}
+                </a>
             </li>
         </ul>
         
@@ -146,15 +193,9 @@
                 <div class="{% if currenttab == pagepartstab %}active{% endif %} tab-pane" id="pageparts{{ loop.index }}">
                     {% if loop.index == 1 %}
 	                    <fieldset class="properties">
-	                        <div class="input_prop">
-	                            {{ form_widget(form.main) }}
-	                        </div>
-	                        <div class="input_prop">
-	                            {{ form_widget(form.node) }}
-	                        </div>
-	                        <div class="input_prop">
-	                            {{ form_widget(form.nodetranslation) }}
-	                        </div>
+	                    	{{ form_widget(form.main) }}
+	                        {{ form_widget(form.node) }}
+	                        {{ form_widget(form.nodetranslation) }}
 	                    </fieldset>
 	            	{% endif %}
                     {% if form['pagepartadmin_'~pagepartadmin.context] is defined %}
