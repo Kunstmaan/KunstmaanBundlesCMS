@@ -131,7 +131,7 @@ class NodeRepository extends EntityRepository
 	    ->andWhere("b.parent IS NULL");
 	    
 	    $result = $qb->getQuery()->getResult();
-	    //var_dump($result);
+	    
 	    return $result;
 	}
 }
