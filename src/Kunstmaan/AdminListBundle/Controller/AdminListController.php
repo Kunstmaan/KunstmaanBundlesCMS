@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminListBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -100,7 +101,7 @@ abstract class AdminListController extends Controller {
 
 		$request = $this->getRequest();
 		$helper = $em->getRepository($this->getAdminListConfiguration()->getRepositoryName())->findOneById($entity_id);
-		if ($helper == null) {
+		if ($helper == NULL) {
 			throw new NotFoundHttpException("Entity not found.");
 		}
 		$form = $this->createForm($this->getAdminType(), $helper);
@@ -131,7 +132,7 @@ abstract class AdminListController extends Controller {
 
 		$request = $this->getRequest();
 		$helper = $em->getRepository($this->getAdminListConfiguration()->getRepositoryName())->findOneById($entity_id);
-		if ($helper == null) {
+		if ($helper == NULL) {
 			throw new NotFoundHttpException("Entity not found.");
 		}
 		$form = $this->createFormBuilder($helper)->add('id', "hidden")->getForm();
