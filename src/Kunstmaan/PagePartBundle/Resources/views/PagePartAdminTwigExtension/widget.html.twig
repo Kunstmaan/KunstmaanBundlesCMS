@@ -21,20 +21,21 @@
 	              <select style="width: 150px;" onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
 		            <option value="">Add a pagepart</option>
 		            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-		              <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+		                <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
 		            {% endfor %}
 	              </select>
 	    </div>
     </div>
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
+    	<input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
     	<section class="draggable pagepartcontainer" id="{{pagepartref.id}}_container" >
 	        <script>
 	            function delete_{{pagepartref.id}}(){
 	            	isEdited = true;
 	                document.getElementById('{{pagepartref.id}}_deleted').value = 'true';
 	                jQuery('#{{pagepartref.id}}_container').slideUp(function(){
-	                    jQuery('#pagepartsdeletedcontainer').append(jQuery('#{{pagepartref.id}}_container'));
+	                	jQuery('#{{pagepartref.id}}_container').html('');
 	                });
 	                return true;
 	            }
@@ -78,7 +79,7 @@
 	                return false;
 	            }
 	        </script>
-	        <input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
+	        
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
 
         	<div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="pagepart">
@@ -94,21 +95,22 @@
                         <a href="#" class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</a>
                     {% endif %}
             	</div>
-                <div class="block" id="{{pagepartref.id}}_view" {% if editpagepart is defined and editpagepart == loop.index %}style="display:none"{% endif %}>
+            	{% if (editpagepart is defined and editpagepart == loop.index) or form_has_errors_recursive(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) %}
+            		{% set editmode = true %}
+            	{% else %}
+            		{% set editmode = false %}
+            	{% endif %}
+                <div class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %}>
                     {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
-                {# Following if/endif was commented out to prevent LinePageParts from displaying text when calling form_rest, they can probably be removed #}
-                {# if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count #}
-                    <div class="block" id="{{pagepartref.id}}_edit" {% if editpagepart is not defined or editpagepart != loop.index %}style="display:none"{% endif %}>
-                        {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
-
-                        {% if pagepart.editTemplate is defined %}
-                            {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]} %}
-                        {% else %}
-                            {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
-                        {% endif %}
-                    </div>
-                {# endif #}
+                <div class="block" id="{{pagepartref.id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
+                    {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
+                    {% if pagepart.editTemplate is defined %}
+                        {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]} %}
+                    {% else %}
+                        {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
+                    {% endif %}
+                </div>
             </div>
             <div id="delete-pagepart-modal{{pagepartref.id}}" class="modal hide fade">
 		      <div class="modal-header">
@@ -210,3 +212,4 @@
 	});
 
 </script>
+

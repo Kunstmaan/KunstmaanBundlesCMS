@@ -2,6 +2,10 @@
 
 namespace Kunstmaan\PagePartBundle\Entity;
 
+use Symfony\Component\Validator\Constraints\NotBlank;
+
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
@@ -23,6 +27,15 @@ class HeaderPagePart extends AbstractPagePart
      * @ORM\Column(type="string", nullable=true)
      */
     protected $title;
+
+    /**
+     * @param ClassMetadata $metadata
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('niv', new NotBlank(array('message' => 'headerpagepart.niv.not_blank')));
+        $metadata->addPropertyConstraint('title', new NotBlank(array('message' => 'headerpagepart.title.not_blank')));
+    }
 
     /**
      * Set niv
