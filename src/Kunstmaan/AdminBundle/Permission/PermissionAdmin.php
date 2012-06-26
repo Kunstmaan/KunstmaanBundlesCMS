@@ -58,7 +58,7 @@ class PermissionAdmin {
             }
             $this->em->persist($dbPermission);
         }
-        $this->em->flush();
+        //$this->em->flush();
 
         return true;
     }

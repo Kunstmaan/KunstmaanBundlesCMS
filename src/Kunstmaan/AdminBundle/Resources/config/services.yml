@@ -69,4 +69,8 @@ services:
         class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
         tags:
             - { name: twig.extension }
+    kunstmaan.twig.formtools:
+        class: Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension
+        tags:
+            - { name: twig.extension }
  
