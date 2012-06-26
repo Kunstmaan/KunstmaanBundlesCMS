@@ -22,6 +22,7 @@
     
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
+		<input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
     	<section class="draggable" id="{{pagepartref.id}}_container" >
 	        
 	        <script>
@@ -29,7 +30,7 @@
 	            	isEdited = true;
 	                document.getElementById('{{pagepartref.id}}_deleted').value = 'true';
 	                jQuery('#{{pagepartref.id}}_container').slideUp(function(){
-	                    jQuery('#pagepartsdeletedcontainer').append(jQuery('#{{pagepartref.id}}_container'));
+	                	jQuery('#{{pagepartref.id}}_container').html('');
 	                });
 	                return true;
 	            }
@@ -42,29 +43,27 @@
 	            }
 	        </script>
 	        
-	        
-	        <input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
 			
         	<div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="pagepart">
-            	<!--<a name="{{pagepartadmin.context}}pagepart{{ loop.index }}" ></a>-->
+            	<a id="{{pagepartadmin.context}}pagepart{{ loop.index }}" ></a>
             	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
             		<i class="icon-move"></i>
             		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
-					
 					<button class="del red" data-toggle="modal" data-target="#delete-pagepart-modal{{pagepartref.id}}"><i class="icon-trash"></i></button>
 					{% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
 						<button class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</button>	
 					{% endif %}
             	</div>
-            	
-                <div class="block" id="{{pagepartref.id}}_view" {% if editpagepart is defined and editpagepart == loop.index %}style="display:none"{% endif %}>
+            	{% if (editpagepart is defined and editpagepart == loop.index) or form_has_errors_recursive(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) %}
+            		{% set editmode = true %}
+            	{% else %}
+            		{% set editmode = false %}
+            	{% endif %}
+                <div class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %}>
                     {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
-                
-                {# Following if/endif was commented out to prevent LinePageParts from displaying text when calling form_rest, they can probably be removed #}
-                {# if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count #}
-                    <div class="block" id="{{pagepartref.id}}_edit" {% if editpagepart is not defined or editpagepart != loop.index %}style="display:none"{% endif %}>
+                    <div class="block" id="{{pagepartref.id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
                         {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
 
                         {% if pagepart.editTemplate is defined %}
@@ -73,7 +72,6 @@
                             {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
                         {% endif %}
                     </div>
-                {# endif #}
             </div>
             
             <div class="new_pagepart">
@@ -114,10 +112,6 @@
 	    </div>
     {% endfor %}
 </div>
-
-
-
-
 <input type="hidden" id="{{pagepartadmin.context}}_addposition" name="{{pagepartadmin.context}}_addposition" value="" />
 <div id="pagepartsdeletedcontainer"></div>
 

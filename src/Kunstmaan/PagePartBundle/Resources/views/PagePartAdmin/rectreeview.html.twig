@@ -1,7 +1,7 @@
 {% if node.node.deleted ==false %}
 <li class="{% if node.active %}jstree-open{% endif %} {% if nodemenu.current is not null and nodemenu.current.id == node.id  %}active{% endif %}" rel="page">
     <a onclick="
-    	jQuery('#selection').text('Selection: {{ path('_slug', { 'slug': node.slug }) }}'); ckurl = '{{ path("_slug", { "slug": node.slug }) }}'; ckid = '{{ node.id }}';
+    	jQuery('#selection').text('Selection: {{ path('_slug', { 'url': node.url }) }}'); ckurl = '{{ path("_slug", { "url": node.url }) }}'; ckid = '{{ node.id }}';
     " class="item" href="#">{{ node.title }}</a>
     <ul>
         {% for node in node.children %}

@@ -52,17 +52,22 @@ class PagePartAdmin {
             }
             $this->em->flush();
         }
-        $addpagepart = $this->request->request->get("addpagepart_".$this->getContext());
-        if(is_string($addpagepart) && $addpagepart != ''){
-            $addpagepartposition = $this->request->request->get($this->getContext()."_addposition");
-            if(!is_string($addpagepartposition) || $addpagepartposition == ''){
-                $addpagepartposition = sizeof($pagepartrefs)+1;
-            }
-            $newpagepart = new $addpagepart;
-            $this->em->persist($newpagepart);
-            $this->em->flush();
-            $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($this->page, $newpagepart, $addpagepartposition, $this->context);
-        }
+        
+    }
+    
+    public function postBindRequest($request)
+    {
+    	$addpagepart = $this->request->request->get("addpagepart_".$this->getContext());
+    	if(is_string($addpagepart) && $addpagepart != ''){
+    		$addpagepartposition = $this->request->request->get($this->getContext()."_addposition");
+    		if(!is_string($addpagepartposition) || $addpagepartposition == ''){
+    			$addpagepartposition = sizeof($pagepartrefs)+1;
+    		}
+    		$newpagepart = new $addpagepart;
+    		$this->em->persist($newpagepart);
+    		$this->em->flush();
+    		$pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($this->page, $newpagepart, $addpagepartposition, $this->context);
+    	}
     }
 
     public function bindRequest($request){
@@ -78,7 +83,6 @@ class PagePartAdmin {
                 }
             }
         }
-        //$this->em->flush();
     }
 
     public function getContext(){
@@ -156,14 +160,18 @@ class PagePartAdmin {
 
     public function adaptForm(FormBuilder $formbuilder, $formfactory, array $options = array()){
         $pagepartrefs = $this->getPagePartRefs();
-        $data = $formbuilder->getData();
-        for($i = 0; $i < sizeof($pagepartrefs); $i++) {
-            $pagepartref = $pagepartrefs[$i];
-            $pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
-            $pageparts[] = $pagepart;
-            $data['pagepartadmin_'.$this->getContext().'_'.$pagepartref->getId()] = $pagepart;
-            $formbuilder->add('pagepartadmin_'.$this->getContext().'_'.$pagepartref->getId(), $pagepart->getDefaultAdminType());
+        if(sizeof($pagepartrefs) > 0) {
+        	$ppformbuilder = $formbuilder->getFormFactory()->createNamedBuilder('form', 'pagepartadmin_'.$this->getContext());
+        	$data = $formbuilder->getData();
+        	for($i = 0; $i < sizeof($pagepartrefs); $i++) {
+        		$pagepartref = $pagepartrefs[$i];
+        		$pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
+        		$pageparts[] = $pagepart;
+        		$data['pagepartadmin_'.$this->getContext()]['pagepartadmin_'.$this->getContext().'_'.$pagepartref->getId()] = $pagepart;
+        		$ppformbuilder->add('pagepartadmin_'.$this->getContext().'_'.$pagepartref->getId(), $pagepart->getDefaultAdminType());
+        	}
+        	$formbuilder->setData($data);
+        	$formbuilder->add($ppformbuilder);
         }
-        $formbuilder->setData($data);
     }
 }
