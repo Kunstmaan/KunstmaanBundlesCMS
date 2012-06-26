@@ -32,9 +32,10 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $title;
-    
+
     /**
      * @ORM\Column(type="string",nullable=true)
      */
@@ -61,7 +62,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     {
         return $this->title;
     }
-    
+
         /**
      * Set pagetitle
      *
@@ -71,7 +72,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     {
         $this->pageTitle = $pageTitle;
     }
-    
+
     /**
      * Get pagetitle
      *
@@ -136,7 +137,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     {
         return $this->possiblePermissions;
     }
-    
+
     /**
      * @return array
      */
@@ -148,8 +149,16 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     public function deepClone(EntityManager $em)
     {
         $newpage = clone $this;
+        $newpage->setId(null);
         $em->persist($newpage);
         $em->flush();
+
+        if (method_exists($this, 'getPagePartAdminConfigurations')) {
+            $ppconfigurations = $this->getPagePartAdminConfigurations();
+            foreach ($ppconfigurations as $ppconfiguration) {
+                $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($em, $this, $newpage, $ppconfiguration->getDefaultContext());
+            }
+        }
 
         return $newpage;
     }

@@ -10,7 +10,7 @@
 		
         function doUnload(){
             if(isEdited){
-                return 'You haven\'t saved this page!';
+                return 'You haven\'t saved this page, are you sure you want to close it?';
             }
         }
     </script>
@@ -42,6 +42,12 @@
 
 
 {% block content %}
+	{% if form_has_errors_recursive(form) %}
+	   <div class="alert-message error">
+		   <strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
+	   </div>
+	   <div class="clear">&nbsp;</div>
+	{% endif %}
     <form id="pageadminform" class="form-horizontal" action="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
         
         <!--=========Actions=========-->
@@ -69,7 +75,7 @@
 			{% else %}
 				<input onClick="isEdited=false" type="submit" class="btn btn-primary" name="save" value="{{ 'form.save' | trans }}">
 				<input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
-				<a class="btn" href="{{ path('_slug', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+				<a class="btn" href="{{ path('_slug', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
 				{% if pagePossibleChildPages is not empty %}
 					<button data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
 				{% endif %}
@@ -89,7 +95,7 @@
 				{% else %}
 					<input onClick="isEdited=false" type="submit" class="btn btn-primary" name="save" value="{{ 'form.save' | trans }}">
 					<input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
-					<a class="btn" href="{{ path('_slug', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+					<a class="btn" href="{{ path('_slug', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
 					{% if pagePossibleChildPages is not empty %}
 						<button data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
 					{% endif %}
@@ -150,17 +156,12 @@
 	                            {{ form_widget(form.nodetranslation) }}
 	                        </div>
 	                    </fieldset>
-	                    {% for key, extraform in form %}
-	                        {% if key != 'main' and key == pagepartadmin.context %}
-	                            <fieldset class="properties">
-	                                <div class="input_prop">
-	                                     {{ form_widget(extraform) }}
-	                                </div>
-	                            </fieldset>
-	                        {% endif %}
-	                    {% endfor %}
 	            	{% endif %}
-                    {{ pagepartadmin_widget(pagepartadmin, form) }}
+                    {% if form['pagepartadmin_'~pagepartadmin.context] is defined %}
+                    	{{ pagepartadmin_widget(pagepartadmin, form['pagepartadmin_'~pagepartadmin.context]) }}
+                    {% else %}
+                    	{{ pagepartadmin_widget(pagepartadmin) }}
+                    {% endif %}
                 </div>
             {% else %}
             	<!--Tab-->
@@ -211,6 +212,7 @@
             </div>
             
             <!--Tab-->
+			{% set seoform = form.seo %}
             <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
                 <fieldset class="properties">
                     <div class="input_prop">

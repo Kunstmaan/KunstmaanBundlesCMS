@@ -80,7 +80,6 @@ class PagesController extends Controller
     	$entityname = $node->getRefEntityname();
     	$myLanguagePage = new $entityname();
     	$myLanguagePage->setTitle("New page");
-    	$myLanguagePage->setPermissions();
 
     	$addcommand = new AddCommand($em, $user);
     	$addcommand->execute("empty page added with locale: " . $locale, array('entity'=> $myLanguagePage));
@@ -224,13 +223,16 @@ class PagesController extends Controller
 
         $formfactory = $this->container->get('form.factory');
         $formbuilder = $this->createFormBuilder();
+        
+        $seo = $nodeTranslation->getSEO();
 
         //add the specific data from the custom page
         $formbuilder->add('main', $page->getDefaultAdminType());
         $formbuilder->add('node', $node->getDefaultAdminType($this->container));
         $formbuilder->add('nodetranslation', $nodeTranslation->getDefaultAdminType($this->container));
+        $formbuilder->add('seo', new SEOType());
 
-        $bindingarray = array('node' => $node, 'main' => $page, 'nodetranslation'=> $nodeTranslation);
+        $bindingarray = array('node' => $node, 'main' => $page, 'nodetranslation'=> $nodeTranslation, 'seo' => $seo);
         if(method_exists($page, "getExtraAdminTypes")){
         	foreach($page->getExtraAdminTypes() as $key => $admintype){
         		$formbuilder->add($key, $admintype);
@@ -256,20 +258,20 @@ class PagesController extends Controller
             $permissionadmin->initialize($node, $em, $page->getPossiblePermissions());
         }
 
-        $seoform = $this->createForm(new SEOType(), $nodeTranslation->getSEO());
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
-            $form           ->bindRequest($request);
-            $seoform        ->bindRequest($request);
+            $form->bindRequest($request);
             foreach($pagepartadmins as $pagepartadmin) {
-            	$pagepartadmin  ->bindRequest($request);
+            	$pagepartadmin->bindRequest($request);
             }
-
             if ($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')) {
                 $permissionadmin->bindRequest($request);
             }
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
+            	foreach($pagepartadmins as $pagepartadmin) {
+            		$pagepartadmin->postBindRequest($request);
+            	}
+                $em->flush();
 
                 $formValues = $request->request->get('form');
                 if(isset($formValues['node']['roles'])) {
@@ -327,7 +329,6 @@ class PagesController extends Controller
             'page'              => $page,
             'entityname'        => ClassLookup::getClass($page),
             'form'              => $form->createView(),
-        	'seoform'			=> $seoform->createView(),
             'pagepartadmins'    => $pagepartadmins,
             'nodeVersions'      => $nodeVersions,
             'nodemenu'          => $nodeMenu,
@@ -451,7 +452,7 @@ class PagesController extends Controller
     	$request = $this->getRequest();
     	$locale = $request->getSession()->getLocale();
     	$user = $this->container->get('security.context')->getToken()->getUser();
-    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($user, 'read');
+    	$topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read');
     	$nodeMenu = new NodeMenu($this->container, $locale, null, 'read', true, true);
 
     	return array(
