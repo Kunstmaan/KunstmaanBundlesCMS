@@ -8,7 +8,7 @@
 
             <div class="actions">
                 <input class="btn primary type" type="submit" value="{{ 'save' | trans }}">
-                <input onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_roles') }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+                <input onclick="window.location = '{{ path(adminlistconfiguration.getIndexUrlFor()["path"]) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
             </div>
         </fieldset>
     </form>
