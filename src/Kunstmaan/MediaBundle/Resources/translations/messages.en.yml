@@ -93,7 +93,7 @@ media:
     sub:
       sub: Subfolder
       addshort: Add new folder
-      belongsto: The folder this folder belongs to
+      belongsto: This folder belongs to
       list: The subfolders of "%gallery%"
       add: Add subfolder
       no: No subfolders yet.
