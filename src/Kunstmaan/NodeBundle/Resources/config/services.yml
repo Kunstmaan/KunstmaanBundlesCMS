@@ -5,3 +5,7 @@ services:
         tags:
             - { name: twig.extension }
             
+    fixdatelistener:
+        class: Kunstmaan\ViewBundle\EventListener\FixDateListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -100 }
