@@ -458,7 +458,14 @@ function createFilter(el, hide){
     var uniqueid = calculateUniqueFilterId();
     var newitem = $('<li>').attr('class', 'filterline').append($("#filterdummyline").html());
     
-    line.after(newitem);
+    if(hide == true){
+    	line.after(newitem);
+    } else {
+    	line.before(newitem);
+    }
+    
+    
+    
     newitem.find(".uniquefilterid").val(uniqueid);
     newitem.find(".filterdummy").val(line.find(".filterselect").val());
     updateOptions(newitem.find(".filterdummy"));

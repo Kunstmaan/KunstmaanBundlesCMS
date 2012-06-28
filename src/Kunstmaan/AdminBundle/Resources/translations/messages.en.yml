@@ -68,6 +68,7 @@ form:
   updatedat: Updated At
   actions: Actions
   addfilter: Add filter
+  choosetypefilter: Filter at
     
 omnext:
   home: Home
