@@ -18,6 +18,16 @@
 	{% if app.request.get('edit') is defined and app.request.get('edit') !="" %}
 		{% set editpagepart = app.request.get('edit') + 2 %}
 	{% endif %}
+
+
+	<div class="new_pagepart first">
+	  <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
+	    <option value="">Add a pagepart</option>
+	    {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+	      <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+	    {% endfor %}
+	  </select>
+	</div>
 		
     
     {% for pagepartref in pagepartadmin.pagepartrefs %}
@@ -95,13 +105,14 @@
 				</div>
 				<div class="modal-footer">
 					<div class="btn_group">
-						<button onclick="delete_{{pagepartref.id}}(); $('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" class="btn btn-danger">Delete</button>
+						<button type="button" onclick="delete_{{pagepartref.id}}(); $('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" class="btn btn-danger">Delete</button>
 						<button class="btn" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
 			</div>
         </section>
     {% else %}
+	    <!--
 	    <div class="new_pagepart">
 	    	<select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
 	    		<option value="">Add a pagepart</option>
@@ -110,6 +121,7 @@
 	    		{% endfor %}
 	    	</select>    						
 	    </div>
+	    -->
     {% endfor %}
 </div>
 <input type="hidden" id="{{pagepartadmin.context}}_addposition" name="{{pagepartadmin.context}}_addposition" value="" />
