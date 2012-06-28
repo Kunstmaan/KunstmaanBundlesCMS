@@ -33,8 +33,4 @@ class DefaultEntityAdminListConfigurator extends AbstractAdminListConfigurator{
 	{
 		// TODO: Implement getIndexUrlFor() method.
 	}
-	
-	function getExportUrlFor(){
-	    // TODO: Implement getExportUrlFor() method.
-	}
 }
