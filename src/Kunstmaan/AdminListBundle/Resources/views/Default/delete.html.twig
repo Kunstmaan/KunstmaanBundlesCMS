@@ -11,7 +11,7 @@
 </div>
 {# Actual delete form. Will still work without javascript or modal. #}
 <form id="adminlist-delete-{{ entity.id }}" action="{{ path(adminlistconfiguration.getDeleteUrlFor(entity)["path"], { 'entity_id': entity.id }) }}" method="post" {{ form_enctype(form) }} class="form-inline form-horizontal" style="display: inline-block;margin-bottom:0">
-	{{ form_row(form.id) }}
+	{{ form_widget(form) }}
 	{{ form_rest(form) }}
 	<button type="submit" data-controls-modal="delete-modal-{{ entity.id }}" data-backdrop="true" data-keyboard="true" style="background-color:transparent;">
 		{#- Use the following when bootstrap theme is updated + add class="btn danger" to the button (+remove style)

@@ -30,6 +30,7 @@ abstract class AdminListController extends Controller {
 
 		return array(
 			'adminlist' => $adminlist,
+		    'adminlistconfiguration' => $this->getAdminListConfiguration(),
 			'addparams' => array()
 		);
 	}
@@ -86,7 +87,7 @@ abstract class AdminListController extends Controller {
 				return new RedirectResponse($this->generateUrl($this->getAdminListConfiguration()->getIndexUrlFor()));
 			}
 		}
-		return array('form' => $form->createView());
+		return array('form' => $form->createView(), 'adminlistconfiguration' => $this->getAdminListConfiguration(),);
 	}
 
 	/**
@@ -116,6 +117,7 @@ abstract class AdminListController extends Controller {
 		}
 		return array(
 			'form' => $form->createView(),
+		        'adminlistconfiguration' => $this->getAdminListConfiguration(),
 			'entity' => $helper
 		);
 	}
