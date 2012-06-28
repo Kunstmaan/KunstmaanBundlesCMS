@@ -118,13 +118,13 @@
 
 <script>
     function doAddpagepart_{{pagepartadmin.context}}(select, id){
-    	var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+1;
+    	var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+2;
         if(position<0){
 			position = 0;
         }
         jQuery('#{{pagepartadmin.context}}_addposition').val(position);
         jQuery(select).attr('name', 'addpagepart_{{pagepartadmin.context}}');
-        var newid = parseInt(id)+1;
+        var newid = parseInt(id)+2;
         jQuery('#pageadminform')[0].action="?edit="+id+"#{{pagepartadmin.context}}pagepart"+newid;
         jQuery('#pageadminform')[0].submit();
 
