@@ -78,11 +78,11 @@
         </div>
 
         <div class="tab-pane" id="edits">
-            <ul class="media-grid">
+            <ul class="thumbnails">
                 {% for image in media.edits %}
-                <li>
-                    <a href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : image.id }) }}">
-                        <img class="thumbnail" src="{{ asset(upload_dir~image.show('medium')) }}" alt="{{ image.name }}" />
+                <li >
+                    <a href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : image.id }) }}" class="thumbnail">
+                        <img  src="{{ asset(upload_dir~image.show('medium')) }}" alt="{{ image.name }}" />
                     </a>
                 </li>
                 {% else %}
