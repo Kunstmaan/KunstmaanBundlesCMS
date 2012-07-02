@@ -70,17 +70,17 @@
         {% set pagePossibleChildPages = page.possibleChildPageTypes %}
         <div class="main_actions">
 			{% if draft %}
-				<input onClick="isEdited=false" type="submit" class="btn btn-primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
-				<input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
+				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save">{{ 'form.saveasdraft' | trans }}</button>
+				<button type="submit" class="btn" name="saveandpublish">{{ 'form.publish' | trans }}</button>
 				<a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 			{% else %}
-				<input onClick="isEdited=false" type="submit" class="btn btn-primary" name="save" value="{{ 'form.save' | trans }}">
-				<input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
+				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save">{{ 'form.save' | trans }}</button>
+				<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
 				<a class="btn" href="{{ path('_slug', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
 				{% if pagePossibleChildPages is not empty %}
-					<button data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
+					<button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
 				{% endif %}
-				<button onClick="oldEdited = isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
+				<button type="button" onClick="oldEdited = isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
 			{% endif %}
         </div>
         
@@ -90,17 +90,17 @@
         <div class="main_actions top" id="main_actions_top">
 			<div class="pull-right">
 				{% if draft %}
-					<input onClick="isEdited=false" type="submit" class="btn btn-primary" name="save" value="{{ 'form.saveasdraft' | trans }}">
-					<input type="submit" class="btn" name="saveandpublish" value="{{ 'form.publish' | trans }}">
+					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save">{{ 'form.saveasdraft' | trans }}</button>
+					<button type="submit" class="btn" name="saveandpublish">{{ 'form.publish' | trans }}</button>
 					<a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 				{% else %}
-					<input onClick="isEdited=false" type="submit" class="btn btn-primary" name="save" value="{{ 'form.save' | trans }}">
-					<input onClick="isEdited=false" type="submit" class="btn" name="saveasdraft" value="{{ 'form.saveasdraft' | trans }}">
+					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save">{{ 'form.save' | trans }}</button>
+					<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
 					<a class="btn" href="{{ path('_slug', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
 					{% if pagePossibleChildPages is not empty %}
-						<button data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
+						<button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
 					{% endif %}
-					<button onClick="oldEdited=isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
+					<button type="button" onClick="oldEdited=isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
 				{% endif %}
 				<a class="btn up">&#9650;</a>
 			</div>
