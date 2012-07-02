@@ -11,7 +11,7 @@ class SEOType extends AbstractType
 	}
 	
     public function buildForm(FormBuilder $builder, array $options)
-    {	
+    {
         $builder->add('metaauthor');
         $builder->add('metadescription');
         $builder->add('metakeywords');
@@ -25,6 +25,7 @@ class SEOType extends AbstractType
             'label' => 'OG image'
         ));
         $builder->add('extraMetadata', 'textarea');
+        $builder->add('cimKeyword', 'text', array('required' => true, 'max_length' => 24));
     }
 
     public function getName()
