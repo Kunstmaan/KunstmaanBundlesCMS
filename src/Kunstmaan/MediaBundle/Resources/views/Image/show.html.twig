@@ -1,50 +1,67 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block header %}
-    <div class="page-header">
-        <h1>{{ 'media.image.image'|trans }} <small>{{ media.name }}</small></h1>
-    </div>
+     <h1>{{ 'media.image.image'|trans }} <small>{{ media.name }}</small></h1>
 {% endblock %}
 
 {% block content %}
 
-    {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 
+
+
+	<!--=========Actions=========-->
+	
+	<!--Main-->
     <div class="main_actions">
-        <a href="#" class="btn primary type" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.image.edit' | trans }}</a>
+        <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.image.edit' | trans }}</button>
         {% if hasmetadata %}
-            <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn primary type">{{ 'media.image.editmetadata' | trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn">{{ 'media.image.editmetadata' | trans }}</a>
         {% endif %}
-        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
+        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
         <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
     </div>
 
+	<!--Scroll-->
     <div id="main_actions_top" class="main_actions top">
         <div class="pull-right">
-            <a href="#" class="btn primary type" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.image.edit' | trans }}</a>
+            <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.image.edit' | trans }}</button>
             {% if hasmetadata %}
-            <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn primary type">{{ 'media.image.editmetadata' | trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn">{{ 'media.image.editmetadata' | trans }}</a>
             {% endif %}
-            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
             <a class="btn up">&#9650;</a>
         </div>
     </div>
 
-    <ul class="tabs" data-tabs="tabs">
-        <li class="active"><a href="#imagegallery">{{ 'media.file.file'|trans|capitalize }}</a></li>
-        <li><a href="#edits">{{ 'media.image.edits' | trans }}</a></li>
+
+
+
+	<!--=========Tabs=========-->
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.file.file'|trans|capitalize }}</a></li>
+        <li><a href="#edits" data-toggle="tab">{{ 'media.image.edits' | trans }}</a></li>
     </ul>
 
-    <div id="my-tab-content" class="tab-content">
+    <div class="tab-content">
         <div class="tab-pane active" id="imagegallery">
-
-            <ul>
-                <li>Name: {{ media.name }} </li>
-                <li>Content-type: {{ media.contentType }}</li>
-                <li>Added; {{ media.createdat|date|escape }}</li>
-                <li>Updated: {{ media.updatedat|date|escape }}</li>
-            </ul>
+			
+			<div class="properties">
+				<dl>
+				    <dt>Name:</dt>
+				    	<dd>{{ media.name }}</dd>
+				    <dt>Content-type:</dt>
+				    	<dd>{{ media.contentType }}</dd>
+				    <dt>Added:</dt>
+				    	<dd>{{ media.createdat|date|escape }}</dd>
+				    <dt>Updated:</dt>
+				    	<dd>{{ media.updatedat|date|escape }}</dd>
+				</dl>
+			</div>
+			
+			
+			
+           
 
             <p><img id="editimage" class="thumbnail" src="{{ asset(upload_dir~media.show()) }}" alt="{{ media.name }}" /></p>
 
@@ -86,10 +103,16 @@
                     </a>
                 </li>
                 {% else %}
-                <ul><li>{{ 'media.image.noedits' | trans }}</li></ul>
+                <li>{{ 'media.image.noedits' | trans }}</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
+    
+    
+    
+    <!--=========Modals=========-->
+    {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+    
 
 {% endblock %}
