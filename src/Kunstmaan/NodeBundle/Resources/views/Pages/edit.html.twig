@@ -256,36 +256,16 @@
 			{% set seoform = form.seo %}
             <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
                 <fieldset class="properties">
-                    <div class="input_prop">
-                        {{ form_row(seoform.metaauthor) }}
-                    </div>
-                    <div class="input_prop">
-                        {{ form_row(seoform.metadescription) }}
-                    </div>
-                    <div class="input_prop">
-                    	{{ form_row(seoform.metakeywords) }}
-                    </div>
-                    <div class="input_prop">
-                    	{{ form_row(seoform.metarobots) }}
-                    </div>
-                    <div class="input_prop">
-                    	{{ form_row(seoform.metarevised) }}
-                    </div>
-                    <div class="input_prop">
-                        {{ form_row(seoform.ogType) }}
-                    </div>
-                    <div class="input_prop">
-                        {{ form_row(seoform.ogTitle) }}
-                    </div>
-                    <div class="input_prop">
-                        {{ form_row(seoform.ogDescription) }}
-                    </div>
-                    <div class="input_prop input_media_wrp">
-                        {{ form_row(seoform.ogImage) }}
-                    </div>
-                    <div class="input_prop">
-                    	{{ form_row(seoform.extraMetadata) }}
-                    </div>
+                    {{ form_row(seoform.metaauthor) }}
+                    {{ form_row(seoform.metadescription) }}
+                	{{ form_row(seoform.metakeywords) }}
+                	{{ form_row(seoform.metarobots) }}
+                	{{ form_row(seoform.metarevised) }}
+                    {{ form_row(seoform.ogType) }}
+                    {{ form_row(seoform.ogTitle) }}
+                    {{ form_row(seoform.ogDescription) }}
+                    {{ form_row(seoform.ogImage) }}
+                	{{ form_row(seoform.extraMetadata) }}
                 </fieldset>
                 {{ form_rest(seoform) }}
             </div>
