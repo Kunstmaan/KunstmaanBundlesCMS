@@ -41,6 +41,7 @@
         <div class="main_actions">
             {%  set addmediatype = 'media.'~gallery.type~'.add' %}
             <a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>
+            <!--<button class="btn btn-primary" data-toggle="modal" data-target="#upload-image-modal">{{ 'media.bulkupload.bulkupload' |trans }}</button>-->
             {% if gallery.strategy.getNewBulkUploadMediaInstance() is not null %}
                 <a href="{{ path('KunstmaanMediaBundle_folder_bulkupload', { 'gallery_id' : gallery.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
             {% endif %}
@@ -116,6 +117,7 @@
     <!--=========Modals=========-->
     {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
     {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+    {# include 'KunstmaanMediaBundle:Image:create-modal.html.twig' #}
     
     
     
