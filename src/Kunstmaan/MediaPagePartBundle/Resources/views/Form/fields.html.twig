@@ -10,15 +10,15 @@
 		</div>
 		
 		<div class="input_media hasmedia">
-			<div class="preview">
-				{% if(value.ent is defined) %}
-					{% include 'KunstmaanMediaBundle:'~value.ent.classtype~':widgetview.html.twig' with {'media': value.ent} %}
-				{% else %}
+			{% if(value.ent is defined) %}
+				{% include 'KunstmaanMediaBundle:'~value.ent.classtype~':widgetview.html.twig' with {'media': value.ent} %}
+			{% else %}
+				<div class="preview">
 					<img src="" alt="" />
-				{% endif %}
-			</div>
-			<button class="del">Delete File</button>
-			<p class="title"></p>
+				</div>
+				<button class="del">Delete File</button>
+				<p class="title"></p>
+			{% endif %}
 		</div>
 	</div>
 
