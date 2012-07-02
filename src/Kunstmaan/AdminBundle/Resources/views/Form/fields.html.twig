@@ -34,7 +34,7 @@
 
 {% block field_row %}
 {% spaceless %}
-<div class="clearfix input_prop{% if errors|length > 0 %} error{% endif %}">
+<div class="input_prop{% if errors|length > 0 %} error{% endif %}">
     {{ form_label(form) }}
     <div class="input">
         {{ form_widget(form) }}

@@ -19,7 +19,7 @@ settings:
   groups: Groups
   group:
       name: Name
-      edit: Edit
+      edit: Edit group
       add: Add group
       roles: Roles
   users: Users
