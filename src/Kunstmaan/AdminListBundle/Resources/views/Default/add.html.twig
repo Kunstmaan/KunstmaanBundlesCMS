@@ -6,9 +6,9 @@
         <fieldset>
         	{{ form_widget(form) }}
 
-            <div class="actions">
-                <input class="btn primary type" type="submit" value="{{ 'save' | trans }}">
-                <input onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_roles') }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">{{ 'save' | trans }}</button>
+                <button type="reset" onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_roles') }}'" class="btn">{{ 'form.cancel' | trans }}</button>
             </div>
         </fieldset>
     </form>

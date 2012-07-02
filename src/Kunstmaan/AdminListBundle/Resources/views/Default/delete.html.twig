@@ -1,22 +1,23 @@
 {# Twitter Bootstrap Popover modal #}
 <div id="delete-modal-{{ entity.id }}" class="modal hide fade">
     <div class="modal-header">
-        <a href="#" class="close">&times;</a>
+        <button class="close" data-dismiss="modal">&times;</button>
         <h3>{{ 'form.modal.delete' | trans }}</h3>
     </div>
     <div class="modal-footer">
-        <a onclick="javascript:$('#adminlist-delete-{{ entity.id }}').submit()"  href="#" class="btn danger">{{ 'form.delete' | trans }}</a>
-        <a onclick="javascript:$('#delete-modal-{{ entity.id }}').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' | trans }}</a>
+        <div class="btn_group">
+	        <button type="button" onclick="javascript:$('#adminlist-delete-{{ entity.id }}').submit()" class="btn btn-danger">{{ 'form.delete' | trans }}</button>
+	        <button class="btn" data-dismiss="modal">Cancel</button>
+		</div>
     </div>
 </div>
+
+
 {# Actual delete form. Will still work without javascript or modal. #}
 <form id="adminlist-delete-{{ entity.id }}" action="{{ path(adminlistconfiguration.getDeleteUrlFor(entity)["path"], { 'entity_id': entity.id }) }}" method="post" {{ form_enctype(form) }} class="form-inline form-horizontal" style="display: inline-block;margin-bottom:0">
 	{{ form_row(form.id) }}
 	{{ form_rest(form) }}
-	<button type="submit" data-controls-modal="delete-modal-{{ entity.id }}" data-backdrop="true" data-keyboard="true" style="background-color:transparent;">
-		{#- Use the following when bootstrap theme is updated + add class="btn danger" to the button (+remove style)
-			<i class="icon-trash icon-white"></i> {{ 'form.delete' | trans }}
-		-#}
-		<img src="{{ asset('bundles/kunstmaanadmin/img/general/delete.png') }}" alt="{{ 'form.delete' | trans }}"/>
+	<button type="submit" data-toggle="modal" data-target="delete-modal-{{ entity.id }}">
+		<i class="icon-trash icon-white"></i> {{ 'form.delete' | trans }}
 	</button>
 </form>
