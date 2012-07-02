@@ -38,7 +38,9 @@
 				
 				{% block fos_user_content %}
 				{% endblock fos_user_content %}
-				<a href="{{ path('fos_user_resetting_request') }}" class="forgot_password fadeInDownPw">{{ 'Forgot my password.' | trans }}</a>
+				{% block forgot_password_link %}
+					<a href="{{ path('fos_user_resetting_request') }}" class="forgot_password fadeInDownPw">{{ 'Forgot my password.' | trans }}</a>
+				{% endblock %}
 			</div>
 	     </div>
 {% endblock %}
