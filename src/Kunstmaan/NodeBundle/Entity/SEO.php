@@ -1,9 +1,12 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SEO settings
@@ -71,6 +74,12 @@ class SEO extends AbstractEntity
      * @ORM\Column(type="text", nullable=true)
      */
     protected $extraMetadata;
+
+    /**
+     * @ORM\Column(name="cim_keyword", type="string", length=24, nullable=true)
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9\/]*$/")
+     */
+    public $cimKeyword;
 
     /**
      * @return mixed
@@ -243,4 +252,25 @@ class SEO extends AbstractEntity
     {
         return $this->ogType;
     }
+
+    /**
+     * @return string
+     */
+    public function getCimKeyword()
+    {
+        return $this->cimKeyword;
+    }
+
+    /**
+     * @param string $cimKeyword
+     */
+    public function setCimKeyword($cimKeyword)
+    {
+        // CIM keyword is limited to 24 characters
+        if (strlen($cimKeyword) > 24) {
+            $cimKeyword = substr($cimKeyword, 0, 24);
+        }
+        $this->cimKeyword = $cimKeyword;
+    }
+
 }
