@@ -5,10 +5,9 @@
     <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }}>
         <fieldset>
         	{{ form_widget(form) }}
-
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
-                <button type="reset" onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_roles') }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+                <button type="reset" onclick="window.location = '{{ path(adminlistconfiguration.getIndexUrlFor()["path"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
             </div>
         </fieldset>
     </form>
