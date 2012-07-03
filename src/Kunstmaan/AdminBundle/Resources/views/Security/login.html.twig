@@ -1,47 +1,40 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-{% if error %}
-    <div class="alert-message error">
-        <a class="close" href="{{ path('fos_user_security_login') }}">×</a>
-        <strong>{{ 'form.error' |trans }}: </strong>
-        {{ error }}
-    </div>
-{% endif %}
 
 <form action="{{ path("fos_user_security_check") }}" method="post">
-               <fieldset>
-                <legend>{{ 'Login' | trans }}</legend>
-                <div class="clearfix">
-                    <label for="username">{{ 'Username:' | trans }}</label>
-                    <div class="input">
-                         <input class="xlarge" type="text" id="username" name="_username" value="{{ last_username }}" />
-                    </div>
-                </div>
+	{% if error %}
+    <div class="alert fade in alert-error">
+        <button class="close" data-dismiss="alert">&times;</button>
+        Wrong password or email
+    </div>
+	{% endif %}
+	
+	
+	<div class="control-group">
+		<label for="username">{{ 'Username:' | trans }}</label>
+		<i class="icon-user"></i>
+		<input class="username" id="username" type="text" name="_username" value="{{ last_username }}" placeholder="{{ 'Username' | trans }}" autofocus />
+	</div>
+	<div class="control-group">
+		<label for="password">{{ 'Password:' | trans }}</label>
+		<i class="icon-key"></i>
+		<input class="password" id="password" type="password" name="_password" value="" placeholder="{{ 'Password' | trans }}" />
+	</div>
+	<div class="control-group remember">
+		<label class="checkbox">
+			<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+			{{ 'Remember Me' | trans }}
+		</label>
+	</div>
+	
+	<div class="login_control">
+		<button class="login_btn" type="submit" id="_submit" name="_submit">
+			<i class="icon-lock"></i>
+		</button>
+	</div>
+	
+</form>
 
-                <div class="clearfix">
-                    <label for="password">{{ 'Password:' | trans }}</label>
-                        <div class="input">
-                            <input class="xlarge" type="password" id="password" name="_password" /><br />
-                            <span class="help-block">
-                                <a href="{{ path('fos_user_resetting_request') }}">{{ 'Forgot my password.' | trans }}</a>
-                            </span>
-                        </div>
-                </div>
 
-                <div class="input">
-                <ul class="inputs-list">
-                <li>
-                    <label>
-                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                <span>{{ 'Remember Me' | trans }}</span></label>
-                </div>
-                </div>
-
-                <div class="actions">
-                    <input class="btn primary type" type="submit" id="_submit" name="_submit" value="Login" />
-                    <input type="reset" class="btn" value="Cancel" />
-                </div>
-               </fieldset>
-            </form>
 {% endblock fos_user_content %}

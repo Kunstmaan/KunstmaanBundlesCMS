@@ -1,6 +1,6 @@
 <div class="permissionscontainer">
 {% spaceless %}
-    <table class="bordered-table zebra-striped">
+    <table class="table table-bordered table-striped">
         <thead>
            <tr>
                <th>Groupname</th>
@@ -13,21 +13,21 @@
                {% endfor %}
            </tr>
         </thead>
-    {% for permission in permissionadmin.getPermissions() %}
         <tbody>
-            <tr>
-                <td>
-                    {{ permission.getRefGroup().getName() }}
-                </td>
-
-                {% for permissionName, permissionValue in permission.getPermissionsAsArray() %}
-                <td>
-                    <input type="checkbox" name="permissions[{{ permission.getRefGroup().getId() }}][{{ permissionName }}]" {% if permissionValue %}checked="checked"{% endif %} />
-                </td>
-                {% endfor %}
-            </tr>
+        	{% for permission in permissionadmin.getPermissions() %}
+	            <tr>
+	                <td>
+	                    {{ permission.getRefGroup().getName() }}
+	                </td>
+	
+	                {% for permissionName, permissionValue in permission.getPermissionsAsArray() %}
+		                <td>
+		                    <input type="checkbox" name="permissions[{{ permission.getRefGroup().getId() }}][{{ permissionName }}]" {% if permissionValue %}checked="checked"{% endif %} />
+		                </td>
+	                {% endfor %}
+	            </tr>
+            {% endfor %}
         </tbody>
-    {% endfor %}
     </table>
 {% endspaceless %}
 </div>

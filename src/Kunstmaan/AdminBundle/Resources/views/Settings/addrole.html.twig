@@ -7,23 +7,21 @@
 {% endblock %}
 
 {% block content %}
-
-    <form action="{{ path('KunstmaanAdminBundle_settings_roles_add') }}" method="post" {{ form_enctype(form) }}>
-    <fieldset>
-    	{{ form_errors(form) }}
-        <div class="clearfix">
-            <label for="xlInput3">{{ 'settings.role.role' | trans }}</label>
-            <div class="input">
-                {{ form_widget(form.role) }}
-            </div>
-        </div>
-
-        {{ form_rest(form) }}
-        <div class="actions">
-            <input class="btn primary type" type="submit" value="{{ 'settings.role.add' | trans }}">
-            <input onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_roles') }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
-        </div>
-    </fieldset>
-</form>
-
+	<form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_roles_add') }}" method="post" {{ form_enctype(form) }}>
+	    <fieldset>
+	    	{{ form_errors(form) }}
+	        <div class="control-group">
+	            <label class="control-label" for="xlInput3">{{ 'settings.role.role' | trans }}</label>
+	            <div class="controls">
+	                {{ form_widget(form.role) }}
+	            </div>
+	        </div>
+	
+	        {{ form_rest(form) }}
+	        <div class="form-actions">
+	            <button class="btn btn-primary" type="submit">{{ 'settings.role.add' | trans }}</button>
+	            <button onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_roles') }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>
+	        </div>
+	    </fieldset>
+	</form>
 {% endblock %}

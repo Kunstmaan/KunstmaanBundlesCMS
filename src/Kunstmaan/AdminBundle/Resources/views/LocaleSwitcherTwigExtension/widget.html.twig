@@ -1,9 +1,14 @@
 {% if locales|length > 1 %}
 <li class="dropdown language">
-    <a class="dropdown-toggle" href="#">{{ app.request.attributes.get('_locale') }}</a>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#language">
+    	{{ app.request.attributes.get('_locale') }}
+    	<b class="caret"></b>
+    </a>
 	<ul class="dropdown-menu">
 		{% for locale in locales %}
-			<li {% if app.request.attributes.get('_locale') == locale %}class="active"{% endif %}><a href="{{ path(route,  app.request.attributes.all|merge({ '_locale': locale, '_route': null, '_template':null })) }}">{{ locale }}</a></li>
+		<li {% if app.request.attributes.get('_locale') == locale %}class="active"{% endif %}>
+			<a href="{{ path(route,  app.request.attributes.all|merge({ '_locale': locale, '_route': null, '_template':null })) }}">{{ locale }}</a>
+		</li>
 		{% endfor %}
 	</ul>
 </li>

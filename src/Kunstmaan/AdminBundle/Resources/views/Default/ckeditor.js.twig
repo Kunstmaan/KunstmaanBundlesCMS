@@ -3,6 +3,7 @@ CKEDITOR.editorConfig = function( config )
 config.skin = 'kCK';
 config.startupFocus = false;
 config.height = 500;
+config.bodyClass = 'CKEditor';
 config.filebrowserBrowseUrl = '{{ path('KunstmaanAdminNodeBundle_ckselecturl') }}';
 config.filebrowserWindowWidth = '580';
 {% if mediabundleisset is defined %}
