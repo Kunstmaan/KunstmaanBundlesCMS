@@ -42,6 +42,14 @@ abstract class AbstractAdminListConfigurator
     {
         return true;
     }
+    
+    public function canExport() {
+        return false;
+    }
+    
+    public function getExportUrlFor(){
+        return "";
+    }
 
     function getLimit() {
         return 10;

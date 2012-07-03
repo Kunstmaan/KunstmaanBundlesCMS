@@ -132,6 +132,14 @@ class AdminList
     {
         return $this->configurator->canDelete($item);
     }
+    
+    public function canExport() {
+        return $this->configurator->canExport();
+    }
+    
+    public function getExportUrlFor(){
+        return $this->configurator->getExportUrlFor();
+    }
 
     public function getValue($object, $attribute)
     {

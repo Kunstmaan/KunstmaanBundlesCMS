@@ -31,6 +31,6 @@ class DefaultEntityAdminListConfigurator extends AbstractAdminListConfigurator{
 
 	function getIndexUrlFor()
 	{
-		// TODO: Implement getRepositoryName() method.
+		// TODO: Implement getIndexUrlFor() method.
 	}
 }
