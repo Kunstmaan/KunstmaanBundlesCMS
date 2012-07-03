@@ -12,24 +12,29 @@
     	window.VideoChosenCallback = new Array();
 	}
 </script>
+
+
 <div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
 	{% if app.request.get('edit') is defined and app.request.get('edit') !="" %}
 		{% set editpagepart = app.request.get('edit') + 2 %}
 	{% endif %}
-	<div class="clearfix" style="padding-bottom: 30px;">
-		<div style="position:absolute; right: 20px;">
-	              <select style="width: 150px;" onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
-		            <option value="">Add a pagepart</option>
-		            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-		                <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
-		            {% endfor %}
-	              </select>
-	    </div>
-    </div>
+
+
+	<div class="new_pagepart first">
+	  <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
+	    <option value="">Add a pagepart</option>
+	    {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+	      <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+	    {% endfor %}
+	  </select>
+	</div>
+		
+    
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
-    	<input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
-    	<section class="draggable pagepartcontainer" id="{{pagepartref.id}}_container" >
+		<input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
+    	<section class="draggable" id="{{pagepartref.id}}_container" >
+	        
 	        <script>
 	            function delete_{{pagepartref.id}}(){
 	            	isEdited = true;
@@ -38,38 +43,6 @@
 	                	jQuery('#{{pagepartref.id}}_container').html('');
 	                });
 	                return true;
-	            }
-	            function moveUp_{{pagepartref.id}}(){
-		            isEdited = true;
-	                var $parent = jQuery('#{{pagepartref.id}}_container');
-	                var $parentprev = $parent.prev();
-	                $parent.swap({
-	                    target: $parent.prev().attr('id'),
-	                    opacity: "0.5",
-	                    speed: 1000,
-	                    callback: function() {
-	                        $parent.insertBefore($parentprev);
-	                        $parent.css("top", "auto").css("left", "auto");
-	                        $parentprev.css("top", "auto").css("left", "auto");
-	                    }
-	                });
-	                return false;
-	            }
-	            function moveDown_{{pagepartref.id}}(){
-	            	isEdited = true;
-	                var $parent = jQuery('#{{pagepartref.id}}_container');
-	                var $parentnext = $parent.next();
-	                $parent.swap({
-	                    target: $parent.next().attr('id'),
-	                    opacity: "0.5",
-	                    speed: 1000,
-	                    callback: function() {
-	                        $parent.insertAfter($parentnext);
-	                        $parent.css("top", "auto").css("left", "auto");
-	                        $parentnext.css("top", "auto").css("left", "auto");
-	                    }
-	                });
-	                return false;
 	            }
 	            function edit_{{pagepartref.id}}(){
 	            	isEdited = true;
@@ -81,19 +54,16 @@
 	        </script>
 	        
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
-
+			
         	<div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="pagepart">
-            	<a name="{{pagepartadmin.context}}pagepart{{ loop.index }}" ></a>
+            	<a id="{{pagepartadmin.context}}pagepart{{ loop.index }}" ></a>
             	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
+            		<i class="icon-move"></i>
             		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
-            		{#
-            		  <a class="btn small" href="#" onclick="return moveUp_{{pagepartref.id}}()">Up</a>
-                      <a class="btn small" href="#" onclick="return moveDown_{{pagepartref.id}}()">Down</a>
-            		#}
-					<a class="del red" data-controls-modal="delete-pagepart-modal{{pagepartref.id}}" data-backdrop="true" data-keyboard="true" ><span>Del</span></a>
-                    {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
-                        <a href="#" class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</a>
-                    {% endif %}
+					<button class="del red" data-toggle="modal" data-target="#delete-pagepart-modal{{pagepartref.id}}"><i class="icon-trash"></i></button>
+					{% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
+						<button class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</button>	
+					{% endif %}
             	</div>
             	{% if (editpagepart is defined and editpagepart == loop.index) or form_has_errors_recursive(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) %}
             		{% set editmode = true %}
@@ -103,29 +73,17 @@
                 <div class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %}>
                     {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
-                <div class="block" id="{{pagepartref.id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
-                    {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
-                    {% if pagepart.editTemplate is defined %}
-                        {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]} %}
-                    {% else %}
-                        {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
-                    {% endif %}
-                </div>
-            </div>
-            <div id="delete-pagepart-modal{{pagepartref.id}}" class="modal hide fade">
-		      <div class="modal-header">
-		        <a href="#" class="close">&times;</a>
-		        <h3>Delete pagepart '{{pagepartadmin.getType(pagepart)}}'</h3>
-		      </div>
-		      <div class="modal-body">
-		        <p>This will not remove the pagepart completely, save the page to remove this pagepart permanently.</p>
-		       </div>
-		      <div class="modal-footer">
-		        <a onclick="delete_{{pagepartref.id}}(); $('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" href="#" class="btn primary">Delete</a>
-		        <a onclick="$('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" href="#" class="btn secondary">Cancel</a>
-		      </div>
-		    </div>
+                    <div class="block" id="{{pagepartref.id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
+                        {% set pagepartid %}pagepart{{pagepartref.id}}{%endset%}
 
+                        {% if pagepart.editTemplate is defined %}
+                            {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]} %}
+                        {% else %}
+                            {{ form_widget(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) }}
+                        {% endif %}
+                    </div>
+            </div>
+            
             <div class="new_pagepart">
               <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index !=1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
 	            <option value="">Add a pagepart</option>
@@ -134,82 +92,90 @@
 	            {% endfor %}
               </select>
             </div>
+            
+            
+            <!--Del modal-->
+			<div id="delete-pagepart-modal{{pagepartref.id}}" class="modal hide fade">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal">&times;</button>
+					<h3>Delete pagepart '{{pagepartadmin.getType(pagepart)}}'</h3>
+				</div>
+				<div class="modal-body">
+					<p>This will not remove the pagepart completely, save the page to remove this pagepart permanently.</p>
+				</div>
+				<div class="modal-footer">
+					<div class="btn_group">
+						<button type="button" onclick="delete_{{pagepartref.id}}(); $('#delete-pagepart-modal{{pagepartref.id}}').modal('hide');" class="btn btn-danger">Delete</button>
+						<button class="btn" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
         </section>
     {% else %}
-    	{#<section class="draggable pagepartcontainer">
-            <div class="new_pagepart">
-              <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index != 1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
-	            <option value="">Add a pagepart</option>
-	            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-	              <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
-	            {% endfor %}
-              </select>
-            </div>
-        </section>#}
+	    <!--
+	    <div class="new_pagepart">
+	    	<select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
+	    		<option value="">Add a pagepart</option>
+	    		{% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+	    			<option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+	    		{% endfor %}
+	    	</select>    						
+	    </div>
+	    -->
     {% endfor %}
 </div>
 <input type="hidden" id="{{pagepartadmin.context}}_addposition" name="{{pagepartadmin.context}}_addposition" value="" />
-<div class="clearfix">
-    <script type="text/javascript">
-        function doAddpagepart_{{pagepartadmin.context}}(select, id){
-        	var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+1;
-            if(position<0){
-				position = 0;
-            }
-            jQuery('#{{pagepartadmin.context}}_addposition').val(position);
-            jQuery(select).attr('name', 'addpagepart_{{pagepartadmin.context}}');
-            var newid = parseInt(id)+1;
-            jQuery('#pageadminform')[0].action="?edit="+id+"#{{pagepartadmin.context}}pagepart"+newid;
-            jQuery('#pageadminform')[0].submit();
+<div id="pagepartsdeletedcontainer"></div>
 
-            $("#prop_wrp").slideDown("slow").animate({opacity: 1},{queue: false, duration: "slow"}).addClass('small_prop').removeClass('big_prop');
-			$(this).removeClass('small').addClass('big').html('Hide Properties');
-            return false;
+
+<script>
+    function doAddpagepart_{{pagepartadmin.context}}(select, id){
+    	var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+2;
+        if(position<0){
+			position = 0;
         }
-    </script>
-</div>
-<div id="pagepartsdeletedcontainer">
+        jQuery('#{{pagepartadmin.context}}_addposition').val(position);
+        jQuery(select).attr('name', 'addpagepart_{{pagepartadmin.context}}');
+        var newid = parseInt(id)+2;
+        jQuery('#pageadminform')[0].action="?edit="+id+"#{{pagepartadmin.context}}pagepart"+newid;
+        jQuery('#pageadminform')[0].submit();
 
-</div>
-<script type="text/javascript">
-
-	$(document).ready(function () {
-		$('#parts_{{pagepartadmin.context}}').sortable({
-			iframeFix: true,
-		    handle: '.prop_bar',
-		    cursor: 'move',
-		    placeholder: 'placeholder',
-		    forcePlaceholderSize: true,
-			revert: 100,
-		    //opacity: 0.4
-		    opacity: 1,
-			start: function(e, ui) {
-				for ( instance in CKEDITOR.instances ){
-		            CKEDITOR.instances[instance].destroy();
-				}
-		        $('.draggable').css('opacity', ".4");
-				$('.ui-sortable-helper .new_pagepart').slideUp("fast");
-			},
-			stop: function(e, ui) {
-				jQuery('textarea.rich_editor').each(function(item){
-					var config = {};
-	            	if($(this).attr('height')){
-	            		config.height = $(this).attr('height');
-	                }
-	            	if($(this).attr('noparagraphs')){
-	            		config.enterMode = CKEDITOR.ENTER_BR;
-	   	         		config.shiftEnterMode = CKEDITOR.ENTER_P;
-	                }
-	        		CKEDITOR.replace( $(this).attr('id'), config);
-				});
-				
-				$('.draggable').css('opacity', "1");
-				//$('.rich_editor').ckeditor();
-			}
-
-		    //containment: 'document'
-		});
-	});
-
+        $("#prop_wrp").slideDown("slow").animate({opacity: 1},{queue: false, duration: "slow"}).addClass('small_prop').removeClass('big_prop');
+		$(this).removeClass('small').addClass('big').html('Hide Properties');
+        return false;
+    }
+    
+    $(document).ready(function () {
+    	$('#parts_{{pagepartadmin.context}}').sortable({
+    		iframeFix: true,
+    	    handle: '.prop_bar',
+    	    cursor: 'move',
+    	    placeholder: 'placeholder',
+    	    forcePlaceholderSize: true,
+    		revert: 100,
+    	    opacity: 1,
+    		start: function(e, ui) {
+    			for ( instance in CKEDITOR.instances ){
+    	            CKEDITOR.instances[instance].destroy();
+    			}
+    	        $('.draggable').css('opacity', ".4");
+    			$('.ui-sortable-helper .new_pagepart').slideUp("fast");
+    		},
+    		stop: function(e, ui) {
+    			jQuery('textarea.rich_editor').each(function(item){
+    				var config = {};
+                	if($(this).attr('height')){
+                		config.height = $(this).attr('height');
+                    }
+                	if($(this).attr('noparagraphs')){
+                		config.enterMode = CKEDITOR.ENTER_BR;
+       	         		config.shiftEnterMode = CKEDITOR.ENTER_P;
+                    }
+            		CKEDITOR.replace( $(this).attr('id'), config);
+    			});
+    			
+    			$('.draggable').css('opacity', "1");
+    		}
+    	});
+    });
 </script>
-
