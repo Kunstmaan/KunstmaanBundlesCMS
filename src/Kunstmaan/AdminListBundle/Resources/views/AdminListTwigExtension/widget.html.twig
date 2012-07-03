@@ -36,16 +36,15 @@
                     <td>{{adminlist.getStringValue(item, columnName)}}</td>
                 {% endif %}
             {% endfor %}
-            <td>
-                {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
+            <td class="actions">
                 {% if adminlist.canEdit(item) %}
-                    <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><i class="icon-edit"></i></a>
+                    <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><i class="icon-edit"></i>Edit</a>
                 {% endif %}
                 {% if adminlist.canDelete(item) %}
                     {% if adminlist.getDeleteUrlFor(item)["action"] is defined %}
                         {% render adminlist.getDeleteUrlFor(item)["action"] with {'entity_id': item.id} %}
                     {% elseif adminlist.getDeleteUrlFor(item)["path"] is defined %}
-                        <a href="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}" data-toggle="modal" data-target="#sure-modal-{{ item.id }}"><i class="icon-remove-sign"></i></a>
+                        <a href="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="danger"><i class="icon-remove-sign"></i>Delete</a>
                     {% endif %}
                 {% endif %}
                 {% if adminlist.hasCustomActions() %}
@@ -63,6 +62,7 @@
                         {% endif %}
                     {% endfor %}
                 {% endif %}
+                {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
             </td>
         </tr>
     {% endfor %}
