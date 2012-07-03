@@ -152,6 +152,7 @@
 			{% if adminmenu.current %}
 			<div class="page-header">
 				<h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>
+				{% block extra_actions_header %}{% endblock %}
 			</div>
 			{% endif %}
 			{% endblock %}
