@@ -411,39 +411,6 @@ function initCustomSelect() {
 
 
 ////FILTERS
-/*
-function initFilter() {
-	var checked = $(".filter_on_off").attr("checked");
-	
-	if (checked) {
-		$(".all").removeClass("active");
-	} else {
-		$(".all").addClass("active");
-	}
-	
-	$(".filter_on_off").live("click", function() {
-		checked = $(this).attr("checked");
-		
-		if (checked) {
-			$(".all").removeClass("active");
-		} else {
-			$(".all").addClass("active");
-			resetFilters();
-		}
-	});
-	
-	$(".apply_filter").live("click", function(e) {
-		setTimeout(function(){
-			$(".filter_on_off").attr('checked', true);
-			$(".all").addClass("active");
-		}, 1000);
-		
-				
-	});
-}
-*/
-
-
 function initFilter() {
 	var checked = $("#filter_on_off").attr("checked");
 	
