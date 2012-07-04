@@ -1,5 +1,6 @@
 {% set extraparams = extraparams|merge(filter.currentparameters) %}
 
+
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
 
@@ -80,6 +81,4 @@
 
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
 
-{% if adminlist.canExport() %}
-    <a href="{{ path(adminlist.getExportUrlFor()["path"], adminlist.getExportUrlFor()[("params")]) }}"><img src="{{ asset('bundles/kunstmaanadmin/img/general/export.png') }}" alt="{{ 'form.export' | trans }}"/></a>
-{% endif %}
+
