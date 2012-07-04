@@ -1,12 +1,12 @@
-<aside class="sidebar">      
+<aside class="sidebar"> 
+	<h2>Video Chooser</h2>    
     <div id="tree" class="tree">
     	{% for key,gals in galleries %}
     		<ul>
-	    			{% for child in gals %}
-		                {% include 'KunstmaanMediaBundle:Chooser:videochoosershownode.html.twig' %}
-		            {% endfor %}
+    			{% for child in gals %}
+	                {% include 'KunstmaanMediaBundle:Chooser:videochoosershownode.html.twig' %}
+	            {% endfor %}
 	         </ul>
-    	{%  endfor %} 
- 
+    	{% endfor %}
     </div>
 </aside>

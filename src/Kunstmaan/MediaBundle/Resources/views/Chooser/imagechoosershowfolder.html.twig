@@ -1,5 +1,7 @@
 {% extends 'KunstmaanMediaBundle:Chooser:imagechooser.html.twig' %}
 
+
+
 {% block subbreadcrumb %}{%  set galstype = 'media.menu.'~gallery.type~'s' %}
     {% for parent in gallery.parents %}
     <li><a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>
@@ -7,39 +9,39 @@
 	<li class="active">{{ gallery.name | trans }}</li>
 {% endblock %}
 
+
+
+
 {% block content %}
-<div class="page-header">
-		{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
-</div>
-<div class="tab-pane active" id="imagegallery" style="height: 400px; overflow: auto;">
-	<section id="map-list">
-        <ul class="media-grid">
-        {% for child in gallery.children %}
-        	{% if child.hasImages() %}
-            <li>
-                <a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item"><img src="{{ asset('bundles/kunstmaanmedia/img/dummy/map.jpg') }}" alt="" /></a>
-                <span class="helper">{{ 'media.folder.open' | trans }}</span>
-                <span class="name">{{ child.name | trans }}</span>
-            </li>
-            {% endif %}
-        {% endfor %}
-        </ul>
+	{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}
+	
+	<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
+	
+	<section class="map-list">
+        <table class="table">
+        	<tbody>
+		        {% for child in gallery.children %}
+		        	{% if child.hasImages() %}
+		            <tr>
+		            	<td><a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name | trans }}</td>
+		            </tr>
+		            {% endif %}
+		        {% endfor %}
+			</tbody>
+        </table>
     </section>
-    <section>
-		<ul class="media-grid" id="file-list">
-        {% for media in gallery.getImages %}
-            {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
-            <li>
-                <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
-                    <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
-                    <div class="caption">
-						<h5>{{ media.name }}</h5>
-           			</div>
-                </a>
-             </li>
-        {% endfor %}
-        	{#<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" id="droplabel">{{ 'form.add' | trans }}</a></li>#}
-        </ul>
-</section>
-</div>
+	<section>
+		<ul class="thumbnails" id="file-list">
+		    {% for media in gallery.getImages %}
+		        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+		        <li>
+		            <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+		                <img src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
+		                <p class="img_name">{{ media.name }}</p>
+		            </a>
+		            <span class="helper">Click to select</span>
+		         </li>
+		    {% endfor %}
+	    </ul>
+	</section>
 {% endblock %}
