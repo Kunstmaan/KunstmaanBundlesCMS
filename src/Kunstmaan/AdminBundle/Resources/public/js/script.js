@@ -411,6 +411,7 @@ function initCustomSelect() {
 
 
 ////FILTERS
+/*
 function initFilter() {
 	var checked = $(".filter_on_off").attr("checked");
 	
@@ -438,6 +439,41 @@ function initFilter() {
 		}, 1000);
 		
 				
+	});
+}
+*/
+
+
+function initFilter() {
+	var checked = $("#filter_on_off").attr("checked");
+	
+	if (checked) {
+		$(".all").removeClass("active");
+		$(".filters_wrp").addClass("active");
+	} else {
+		$(".all").addClass("active");
+	}
+	
+	$("#filter_on_off").iphoneStyle({
+		checkedLabel: '',
+		uncheckedLabel: '',
+		resizeHandle: true,
+		resizeContainer: true,
+		dragThreshold: 0,
+		handleMargin: 5,
+		handleRadius: 12,
+		containerRadius: 5,
+		onChange: function (e, value) {
+			if(value){
+				$(".all").removeClass("active");
+				$(".filters_wrp").addClass("active");				
+			} else {
+				$(".all").addClass("active");
+				$(".filters_wrp").removeClass("active");
+				resetFilters();
+			}
+		
+		}
 	});
 }
 
