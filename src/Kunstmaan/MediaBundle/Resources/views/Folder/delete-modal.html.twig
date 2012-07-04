@@ -1,6 +1,6 @@
 <div id="delete-modal" class="modal hide fade">
     <div class="modal-header">
-        <a href="#" class="close">&times;</a>
+        <button class="close" data-dismiss="modal">&times;</button>
         <h3>{{ 'media.gallery.deletesure'| trans({'%gallery%': gallery.name }) | raw }}</h3>
     </div>
     <div class="modal-body">
@@ -30,7 +30,9 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" class="btn danger">{{ 'form.delete' |trans }}</a>
-        <a onclick="javascript:$('#delete-modal').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' |trans  }}</a>
+    	<div class="btn_group">
+	        <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" class="btn btn-danger">{{ 'form.delete' |trans }}</a>
+	        <button class="btn" data-dismiss="modal">{{ 'form.cancel' |trans  }}</button>
+		</div>
     </div>
 </div>

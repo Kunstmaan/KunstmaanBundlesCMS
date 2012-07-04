@@ -1,2 +1,5 @@
-<img src="{{ asset('/uploads/media/'~media.url) }}" width="150" />
-<h5 class="title">{{ media.name }}</h5>
+<div class="preview">
+	<img src="{{ asset('/uploads/media/'~media.url) }}" alt="{{ media.name }}" />
+</div>
+<button class="del">Delete File</button>
+<p class="title">{{ media.name }}</p>

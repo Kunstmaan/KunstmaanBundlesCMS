@@ -1,26 +1,26 @@
 <div id="addsub-modal" class="modal hide fade">
     <form action="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }  ) }}" method="post" {{ form_enctype(subform) }}>
         <div class="modal-header">
-            <a href="#" class="close">&times;</a>
+        	<button class="close" data-dismiss="modal">&times;</button>
             <h3>{{ 'media.gallery.sub.add' | trans }}</h3>
         </div>
         <div class="modal-body">
-            <p>
-                <fieldset>
-                    <div class="clearfix">
-                        {{ form_errors(subform) }}
-                        <label for="xlInput3">Name</label>
-                        <div class="input">
-                            {{ form_widget(subform.name) }}
-                        </div>
-                    </div>
-                    {{ form_rest(subform) }}
-                </fieldset>
-            </p>
+	        <fieldset>
+	            <div class="control-group">
+	                {{ form_errors(subform) }}
+	                <label class="control-label" for="xlInput3">Name</label>
+	                <div class="controls">
+	                    {{ form_widget(subform.name) }}
+	                </div>
+	            </div>
+	            {{ form_rest(subform) }}
+	        </fieldset>
         </div>
         <div class="modal-footer">
-            <input class="btn primary type" type="submit" value="{{ 'media.gallery.sub.add' | trans }}">
-            <a onclick="$('#addsub-modal').modal('hide')" href="#" class="btn secondary">{{ 'form.cancel' | trans }}</a>
+            <div class="btn_group">
+	            <button class="btn btn-primary" type="submit">{{ 'media.gallery.sub.add' | trans }}</button>
+	            <button class="btn" type="reset" data-dismiss="modal">{{ 'form.cancel' | trans }}</button>
+	    	</div>
         </div>
     </form>
 </div>

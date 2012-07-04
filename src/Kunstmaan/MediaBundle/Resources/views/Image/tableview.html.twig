@@ -1,36 +1,21 @@
-{#<script>
-	$(function () {
-	    $('#drop-area').fileupload({
-	        dataType: 'json',
-	        url: '{{ path("KunstmaanMediaBundle_image_dragupload", { "gallery_id" : gallery.id }) }}',
-	        sequentialUploads: true,
-	        done: function (e, data) {
-	            $.each(data.result, function (index, file) {
-	                $('<p/>').text(file.name).appendTo(document.body);
-	            });
-	        }
-	    });
-	});
-</script>#}
-
 <section> 
-		<ul class="media-grid" id="file-list">
-        {% for media in gallery.files %}
-            {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
-
-            <li>
-                <a class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
-                    <img class="thumbnail" src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
-                </a>
-                <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
-             	<span class="helper">Click to edit</span>
-             </li>
-        {% else %}
-    		<li><a href="{{ path('KunstmaanMediaBundle_folder_imagecreate', { 'gallery_id' : gallery.id }) }}" class="btn">{{ 'media.image.no' |trans }} {{ 'media.image.add' |trans }}</a>
-    		</li>
-        {% endfor %}
-        	{#<li class="add-new" id="drop-area"><a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" id="droplabel">{{ 'form.add' | trans }}</a></li>#}
-        </ul>
+	<ul class="thumbnails" id="file-list">
+    {% for media in gallery.files %}
+        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
+        <li>
+            <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+                <img src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
+                <p class="img_name">{{ media.name }}</p>
+            </a>
+            <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
+         	<span class="helper">Click to edit</span>
+         </li>
+    {% else %}
+		<li class="no_item">
+			{{ 'media.image.no' |trans }}
+		</li>
+    {% endfor %}
+    </ul>
 </section>
 <script type="text/javascript"> 
 	$(document).ready(function () {
