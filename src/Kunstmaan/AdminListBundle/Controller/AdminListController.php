@@ -84,7 +84,8 @@ abstract class AdminListController extends Controller {
 			if ($form->isValid()) {
 				$em->persist($helper);
 				$em->flush();
-				return new RedirectResponse($this->generateUrl($this->getAdminListConfiguration()->getIndexUrlFor()));
+                $indexUrl = $this->getAdminListConfiguration()->getIndexUrlFor();
+                return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
 			}
 		}
 		return array('form' => $form->createView(), 'adminlistconfiguration' => $this->getAdminListConfiguration(),);
@@ -112,7 +113,8 @@ abstract class AdminListController extends Controller {
 			if ($form->isValid()) {
 				$em->persist($helper);
 				$em->flush();
-				return new RedirectResponse($this->generateUrl($this->getAdminListConfiguration()->getIndexUrlFor()));
+                $indexUrl = $this->getAdminListConfiguration()->getIndexUrlFor();
+				return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
 			}
 		}
 		return array(
@@ -144,7 +146,8 @@ abstract class AdminListController extends Controller {
 			if ($form->isValid()) {
 				$em->remove($helper);
 				$em->flush();
-				return new RedirectResponse($this->generateUrl($this->getAdminListConfiguration()->getIndexUrlFor()));
+                $indexUrl = $this->getAdminListConfiguration()->getIndexUrlFor();
+                return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
 			}
 		}
 		return array(
