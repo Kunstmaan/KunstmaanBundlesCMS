@@ -1,24 +1,24 @@
 {% block media_widget %}
 {% spaceless %}
-	<div id="{{ id }}_widget">
+	<div id="{{ id }}_widget" class="clearfix">
 		<input type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}"/>
-		
-		
+
+
 		<div class="input_media hasnomedia">
 			<div class="preview"></div>
 			<button data-toggle="modal" data-target="#Media_Chooser" class="choose">Choose File</button>
 		</div>
-		
+
 		<div class="input_media hasmedia">
-			<div class="preview">
-				{% if(value.ent is defined) %}
-					{% include 'KunstmaanMediaBundle:'~value.ent.classtype~':widgetview.html.twig' with {'media': value.ent} %}
-				{% else %}
+			{% if(value.ent is defined) %}
+				{% include 'KunstmaanMediaBundle:'~value.ent.classtype~':widgetview.html.twig' with {'media': value.ent} %}
+			{% else %}
+				<div class="preview">
 					<img src="" alt="" />
-				{% endif %}
-			</div>
-			<button class="del">Delete File</button>
-			<p class="title"></p>
+				</div>
+				<button class="del">Delete File</button>
+				<p class="title"></p>
+			{% endif %}
 		</div>
 	</div>
 
