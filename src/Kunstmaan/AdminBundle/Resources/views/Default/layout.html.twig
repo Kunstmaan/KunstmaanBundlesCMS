@@ -81,7 +81,7 @@
 							{% set topchildren = menuitem.topchildren %}
 							{% if topchildren | length > 0 %}
 							<li class="dropdown {% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="{{ path(menuitem.route, menuitem.routeparams) }}">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 									{{ menuitem.internalname | trans }}
 									<b class="caret"></b>
 								</a>
