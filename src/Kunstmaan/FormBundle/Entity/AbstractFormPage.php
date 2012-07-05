@@ -36,7 +36,6 @@ abstract class AbstractFormPage extends AbstractPage
 
     /**
      * @ORM\Column(type="string", name="from_email", nullable=true)
-     * @Assert\NotBlank()
      * @Assert\Email()
      */
     protected $fromEmail;
