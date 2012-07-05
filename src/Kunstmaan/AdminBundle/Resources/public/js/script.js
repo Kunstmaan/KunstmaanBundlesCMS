@@ -405,7 +405,7 @@ function init_twipsy() {
 
 //Custom Select
 function initCustomSelect() {
-	$('.chzn-select').chosen();
+	$('select.chzn-select').chosen();
 }
 
 
