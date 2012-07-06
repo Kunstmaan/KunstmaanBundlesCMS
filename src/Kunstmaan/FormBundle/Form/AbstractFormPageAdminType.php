@@ -15,10 +15,17 @@ class AbstractFormPageAdminType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('title');
-        $builder->add('thanks', 'textarea', array('data_class' => 'Kunstmaan\BancontactBundle\Entity\FormPage', 'required' => false, 'attr' => array('class' => 'rich_editor')));
+        $builder->add('thanks', 'textarea', array('required' => false, 'attr' => array('class' => 'rich_editor')));
         $builder->add('subject');
         $builder->add('from_email');
         $builder->add('to_email');
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Kunstmaan\BancontactBundle\Entity\FormPage',
+        );
     }
 
     /**
