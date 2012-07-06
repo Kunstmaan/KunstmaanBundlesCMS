@@ -2,13 +2,19 @@
 
 namespace Kunstmaan\AdminNodeBundle\Modules;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Translation\Translator;
 use Knp\Menu\FactoryInterface;
 
-class NodeMenu {
+/**
+ * NodeMenu
+ */
+class NodeMenu
+{
     private $em;
     private $lang;
     private $topNodeMenuItems = array();
@@ -19,7 +25,12 @@ class NodeMenu {
     private $user = null;
 
     /**
-     * @param FactoryInterface $factory
+     * @param ContainerInterface $container            The container
+     * @param string             $lang                 The language
+     * @param Node               $currentNode          The node
+     * @param string             $permission           The permission
+     * @param boolean            $includeoffline       Include offline pages
+     * @param boolean            $includehiddenfromnav Include hidden pages
      */
     public function __construct($container, $lang, Node $currentNode = null, $permission = 'read', $includeoffline = false, $includehiddenfromnav = false)
     {
@@ -65,33 +76,39 @@ class NodeMenu {
         }
     }
 
-    public function getTopNodes(){
+    public function getTopNodes()
+    {
         return $this->topNodeMenuItems;
     }
 
-    public function getCurrent(){
+    public function getCurrent()
+    {
     	if(sizeof($this->breadCrumb)>0){
     		return $this->breadCrumb[sizeof($this->breadCrumb)-1];
     	}
     	return null;
     }
 
-    public function getActiveForDepth($depth){
+    public function getActiveForDepth($depth)
+    {
     	if(sizeof($this->breadCrumb)>=$depth){
     		return $this->breadCrumb[$depth-1];
     	}
     	return null;
     }
 
-    public function getBreadCrumb(){
+    public function getBreadCrumb()
+    {
     	return $this->breadCrumb;
     }
 
-    public function getNodeBySlug(NodeTranslation $parentNode, $slug){
+    public function getNodeBySlug(NodeTranslation $parentNode, $slug)
+    {
     	return $this->em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug($parentNode, $slug);
     }
 
-    public function getNodeByInternalName($internalName, $parent = null) {
+    public function getNodeByInternalName($internalName, $parent = null)
+    {
     	$node = null;
 
     	if(!is_null($parent)){
@@ -122,35 +139,44 @@ class NodeMenu {
     	}
     	if(!is_null($node)){
     		$nodeTranslation = $node->getNodeTranslation($this->lang, $this->includeoffline);
-
-    		$tempNode = $node;
-    		//Breadcrumb
-    		$nodeBreadCrumb = array();
-    		$parentNodeMenuItem = null;
-    		while($tempNode && is_null($parentNodeMenuItem)){
-    			array_unshift($nodeBreadCrumb, $tempNode);
-    			$tempNode = $tempNode->getParent();
-    			if(!is_null($tempNode)){
-    				$parentNodeMenuItem = $this->getBreadCrumbItemByNode($tempNode);
-    			}
+    		if(!is_null($nodeTranslation)) {
+                return $this->getNodemenuForNodeTranslation($nodeTranslation);
     		}
-    		$nodeMenuItem = null;
-    		foreach($nodeBreadCrumb as $nodeBreadCrumbItem){
-    			$breadCrumbItemFromMain = $this->getBreadCrumbItemByNode($nodeBreadCrumbItem);
-    			if(!is_null($breadCrumbItemFromMain)){
-    				$parentNodeMenuItem = $breadCrumbItemFromMain;
-    			}
-    			$nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeoffline);
-    			if(!is_null($nodeTranslation)){
-    				$nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $nodeTranslation, $this->lang, $parentNodeMenuItem, $this);
-    				$parentNodeMenuItem = $nodeMenuItem;
-    			}
-    		}
-    		//$resultNodeMenuItem = new NodeMenuItem($this->em, $node, $nodeTranslation, $this->lang, $parentNodeMenuItem, $this);
-    		return $nodeMenuItem;
     	}
 
     	return null;
+    }
+
+    private function getNodemenuForNodeTranslation(NodeTranslation $nodeTranslation)
+    {
+        if(!is_null($nodeTranslation)) {
+            $tempNode = $nodeTranslation->getNode();
+            //Breadcrumb
+            $nodeBreadCrumb = array();
+            $parentNodeMenuItem = null;
+            while($tempNode && is_null($parentNodeMenuItem)){
+                array_unshift($nodeBreadCrumb, $tempNode);
+                $tempNode = $tempNode->getParent();
+                if(!is_null($tempNode)){
+                    $parentNodeMenuItem = $this->getBreadCrumbItemByNode($tempNode);
+                }
+            }
+            $nodeMenuItem = null;
+            foreach($nodeBreadCrumb as $nodeBreadCrumbItem){
+                $breadCrumbItemFromMain = $this->getBreadCrumbItemByNode($nodeBreadCrumbItem);
+                if(!is_null($breadCrumbItemFromMain)){
+                    $parentNodeMenuItem = $breadCrumbItemFromMain;
+                }
+                $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeoffline);
+                if(!is_null($nodeTranslation)){
+                    $nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $nodeTranslation, $this->lang, $parentNodeMenuItem, $this);
+                    $parentNodeMenuItem = $nodeMenuItem;
+                }
+            }
+            //$resultNodeMenuItem = new NodeMenuItem($this->em, $node, $nodeTranslation, $this->lang, $parentNodeMenuItem, $this);
+            return $nodeMenuItem;
+        }
+        return null;
     }
 
     private function getBreadCrumbItemByNode(Node $node){
@@ -165,12 +191,12 @@ class NodeMenu {
     public function isIncludeOffline(){
     	return $this->includeoffline;
     }
-    
+
     public function getPermission()
     {
         return $this->permission;
     }
-    
+
     public function getUser()
     {
         return $this->user;
