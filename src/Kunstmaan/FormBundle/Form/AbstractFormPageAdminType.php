@@ -24,7 +24,7 @@ class AbstractFormPageAdminType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'Kunstmaan\BancontactBundle\Entity\FormPage',
+            'data_class' => 'Kunstmaan\FormBundle\Entity\AbstractFormPage',
         );
     }
 
