@@ -94,7 +94,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
 					function (FormInterface $form, $sfsf, $thiss)
 					{
 						$value = $sfsf->getValue();
-						if ($value != null && !is_string($value)) {
+						if (is_null($value) || !is_string($value) || empty($value)) {
 							$errormsg = $thiss->getErrormessageRequired();
 							$v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
 							$v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
@@ -110,7 +110,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
                             function (FormInterface $form, $sfsf, $thiss)
                                     {
                                         $value = $sfsf->getValue();
-                                        if ($value != null && is_string($value) && !preg_match('/' . $thiss->getRegex() . '/', $value)) {
+                                        if (!is_null($value) && is_string($value) && !preg_match('/' . $thiss->getRegex() . '/', $value)) {
                                             $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
                                             $v->addError(new FormError($thiss->getErrormessageRegex()));
                                         }
