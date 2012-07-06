@@ -27,7 +27,14 @@ class TextFormSubmissionType extends AbstractType
     {
         $builder
                 ->add('value', 'textarea',
-                    array('data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField', 'label' => $this->label, 'attr' => array('rows' => '6')));
+                    array('label' => $this->label, 'attr' => array('rows' => '6')));
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField',
+        );
     }
 
     /**
