@@ -1,5 +1,8 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
+
+
+
 {% block extrajavascript %}
 	<script type="text/javascript">
 		// Close the dialog
@@ -42,9 +45,15 @@
 	    }
 	</script>
 {% endblock %}
+
+{% block extraclasshtml %}overflow-scroll{% endblock %}
+
+{% block extraparamsinbody %}
+	class="media_popup_temp"
+{% endblock %}
     
 {% block body %}
-	<div class="container-fluid media_popup_temp">
+	<div class="container-fluid">
 		<aside class="sidebar">
 			{% block sidebar %}
 				{% include 'KunstmaanMediaBundle:Chooser:imagechoosersidebar.html.twig' %}
