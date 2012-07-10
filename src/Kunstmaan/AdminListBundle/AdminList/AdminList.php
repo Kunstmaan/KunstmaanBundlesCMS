@@ -84,9 +84,9 @@ class AdminList
             $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
             $this->configurator->adaptNativeCountQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
-            $query = $queryBuilder->getQuery();
+            $stmt = $queryBuilder->execute();
     
-            return $query->getSingleScalarResult();
+            return $stmt->fetchColumn();
         }
     }
 
@@ -112,16 +112,13 @@ class AdminList
             $this->configurator->adaptNativeItemsQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
             if (!is_null($this->orderBy)) {
-                /*
-                if (!strpos($this->orderBy, '.')) {
-                    $this->orderBy = 'b.' . $this->orderBy;
-                }
-                */
                 $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
             }
-            $query = $queryBuilder->getQuery();
-    
-            return $query->getSingleScalarResult();
+            $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
+            $queryBuilder->setMaxResults($this->configurator->getLimit());
+            $stmt = $queryBuilder->execute();
+            
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
     }
 

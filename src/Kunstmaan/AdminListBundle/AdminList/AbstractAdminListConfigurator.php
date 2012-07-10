@@ -128,6 +128,14 @@ abstract class AbstractAdminListConfigurator
 
     function getValue($item, $columnName)
     {
+        if (is_array($item)) {
+            if (isset($item[$columnName])) {
+                return $item[$columnName];
+            } else {
+                return '';
+                // return sprintf("undefined column %s", $columnName);
+            }
+        }
         $methodName = $columnName;
         if (method_exists($item, $methodName)) {
             $result = $item->$methodName();
