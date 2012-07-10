@@ -4,25 +4,21 @@
         <thead>
            <tr>
                <th>Groupname</th>
-               {% for permission in permissionadmin.getPermissions() %}
-                    {% if loop.first %}
-                        {% for permissionName, permissionValue in permission.getPermissionsAsArray() %}
-                            <th>{{ permissionName }}</th>
-                        {% endfor %}
-                    {% endif %}
-               {% endfor %}
+                {% for permissionName in permissionadmin.getPossiblePermissions() %}
+                    <th>{{ permissionName }}</th>
+                {% endfor %}
            </tr>
         </thead>
         <tbody>
-        	{% for permission in permissionadmin.getPermissions() %}
+            {% for group in permissionadmin.getAllGroups() %}
 	            <tr>
 	                <td>
-	                    {{ permission.getRefGroup().getName() }}
+	                    {{ group.getName() }}
 	                </td>
-	
-	                {% for permissionName, permissionValue in permission.getPermissionsAsArray() %}
+	                {% set permission = permissionadmin.getPermission(group) %}
+	                {% for permissionName in permissionadmin.getPossiblePermissions() %}
 		                <td>
-		                    <input type="checkbox" name="permissions[{{ permission.getRefGroup().getId() }}][{{ permissionName }}]" {% if permissionValue %}checked="checked"{% endif %} />
+		                    <input type="checkbox" name="permissions[{{ group.id }}][{{ permissionName }}]" {% if permission is not null and permission.hasPermission(permissionName) %}checked="checked"{% endif %} />
 		                </td>
 	                {% endfor %}
 	            </tr>
