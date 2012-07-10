@@ -28,12 +28,12 @@ class DateFilterType
         if (isset($data['value']) && isset($data['comparator'])) {
             switch ($data['comparator']) {
             case "before":
-                $expressions[] = $querybuilder->expr()->lte($this->alias . '.' . $this->columnname, "?" . $uniqueid);
-                $querybuilder->setParameter($uniqueid, $data['value']);
+                $expressions[] = $querybuilder->expr()->lte($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
+                $querybuilder->setParameter('var_' . $uniqueid, $data['value']);
                 break;
             case "after":
-                $expressions[] = $querybuilder->expr()->gt($this->alias . '.' . $this->columnname, "?" . $uniqueid);
-                $querybuilder->setParameter($uniqueid, $data['value']);
+                $expressions[] = $querybuilder->expr()->gt($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
+                $querybuilder->setParameter('var_' . $uniqueid, $data['value']);
                 break;
             }
         }

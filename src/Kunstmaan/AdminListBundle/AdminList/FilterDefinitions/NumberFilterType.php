@@ -28,32 +28,32 @@ class NumberFilterType
         if (isset($data['value']) && isset($data['comparator'])) {
             switch ($data['comparator']) {
             case "eq":
-                $expressions[] = $querybuilder->expr()->eq($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->eq($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
                 break;
             case "neq":
-                $expressions[] = $querybuilder->expr()->neq($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->neq($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
                 break;
             case "lt":
-                $expressions[] = $querybuilder->expr()->lt($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->lt($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
                 break;
             case "lte":
-                $expressions[] = $querybuilder->expr()->lte($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->lte($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
                 break;
             case "gt":
-                $expressions[] = $querybuilder->expr()->gt($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->gt($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
                 break;
             case "gte":
-                $expressions[] = $querybuilder->expr()->gte($this->prefix . '.' . $this->columnname, "?" . $uniqueid);
+                $expressions[] = $querybuilder->expr()->gte($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
                 break;
             case "isnull":
-                $expressions[] = $querybuilder->expr()->isNull($this->prefix . '.' . $this->columnname);
+                $expressions[] = $querybuilder->expr()->isNull($this->alias . '.' . $this->columnname);
                 return;
             case "isnotnull":
-                $expressions[] = $querybuilder->expr()->isNotNull($this->prefix . '.' . $this->columnname);
+                $expressions[] = $querybuilder->expr()->isNotNull($this->alias . '.' . $this->columnname);
                 return;
             }
 
-            $querybuilder->setParameter($uniqueid, $data['value']);
+            $querybuilder->setParameter("var_" . $uniqueid, $data['value']);
         }
     }
 

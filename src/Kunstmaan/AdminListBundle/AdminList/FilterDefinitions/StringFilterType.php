@@ -25,28 +25,28 @@ class StringFilterType
         if (isset($data['value']) && isset($data['comparator'])) {
             switch ($data['comparator']) {
             case "equals":
-                $expressions[] = $querybuilder->expr()->eq($this->alias . '.' . $this->columnname, "?" . $uniqueid);
-                $querybuilder->setParameter($uniqueid, $data['value']);
+                $expressions[] = $querybuilder->expr()->eq($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
+                $querybuilder->setParameter('var_' . $uniqueid, $data['value']);
                 break;
             case "notequals":
-                $expressions[] = $querybuilder->expr()->neq($this->alias . '.' . $this->columnname, "?" . $uniqueid);
-                $querybuilder->setParameter($uniqueid, $data['value']);
+                $expressions[] = $querybuilder->expr()->neq($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
+                $querybuilder->setParameter('var_' . $uniqueid, $data['value']);
                 break;
             case "contains":
-                $expressions[] = $querybuilder->expr()->like($this->alias . '.' . $this->columnname, "?" . $uniqueid);
-                $querybuilder->setParameter($uniqueid, '%' . $data['value'] . '%');
+                $expressions[] = $querybuilder->expr()->like($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
+                $querybuilder->setParameter('var_' . $uniqueid, '%' . $data['value'] . '%');
                 break;
             case "doesntcontain":
-                $expressions[] = $querybuilder->expr()->not($querybuilder->expr()->like($this->alias . '.' . $this->columnname, "?" . $uniqueid));
-                $querybuilder->setParameter($uniqueid, '%' . $data['value'] . '%');
+                $expressions[] = $querybuilder->expr()->not($querybuilder->expr()->like($this->alias . '.' . $this->columnname, ":var_" . $uniqueid));
+                $querybuilder->setParameter('var_' . $uniqueid, '%' . $data['value'] . '%');
                 break;
             case "startswith":
-                $expressions[] = $querybuilder->expr()->like($this->alias . '.' . $this->columnname, "?" . $uniqueid);
-                $querybuilder->setParameter($uniqueid, $data['value'] . '%');
+                $expressions[] = $querybuilder->expr()->like($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
+                $querybuilder->setParameter('var_' . $uniqueid, $data['value'] . '%');
                 break;
             case "endswith":
-                $expressions[] = $querybuilder->expr()->like($this->alias . '.' . $this->columnname, "?" . $uniqueid);
-                $querybuilder->setParameter($uniqueid, '%' . $data['value']);
+                $expressions[] = $querybuilder->expr()->like($this->alias . '.' . $this->columnname, ":var_" . $uniqueid);
+                $querybuilder->setParameter('var_' . $uniqueid, '%' . $data['value']);
                 break;
             }
         }

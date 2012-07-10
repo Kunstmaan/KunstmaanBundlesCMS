@@ -86,7 +86,7 @@ class AdminListFilter
         return $this->currentfilters;
     }
 
-    public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $querybuilder)
+    public function adaptQueryBuilder($querybuilder)
     {
         $expressions = array();
         foreach ($this->currentfilters as $filter) {

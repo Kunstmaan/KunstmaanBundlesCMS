@@ -72,30 +72,54 @@ class AdminList
     
     public function getCount($params = array())
     {
-        $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
-        $queryBuilder = $queryBuilder->select("count(b.id)");
-        $this->configurator->adaptQueryBuilder($queryBuilder, $params);
-        $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
-        $query = $queryBuilder->getQuery();
-
-        return $query->getSingleScalarResult();
+        if (!$this->configurator->useNativeQuery()) {
+            $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
+            $queryBuilder = $queryBuilder->select("count(b.id)");
+            $this->configurator->adaptQueryBuilder($queryBuilder, $params);
+            $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
+            $query = $queryBuilder->getQuery();
+    
+            return $query->getSingleScalarResult();
+        } else {
+            $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
+            $this->configurator->adaptNativeCountQueryBuilder($queryBuilder, $params);
+            $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
+            $stmt = $queryBuilder->execute();
+    
+            return $stmt->fetchColumn();
+        }
     }
 
     public function getItems($params = array())
     {
-        $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
-        $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
-        $queryBuilder->setMaxResults($this->configurator->getLimit());
-        $this->configurator->adaptQueryBuilder($queryBuilder, $params);
-        $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
-        if (!is_null($this->orderBy)) {
-            if (!strpos($this->orderBy, '.')) {
-                $this->orderBy = 'b.' . $this->orderBy;
+        if (!$this->configurator->useNativeQuery()) {
+            $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
+            $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
+            $queryBuilder->setMaxResults($this->configurator->getLimit());
+            $this->configurator->adaptQueryBuilder($queryBuilder, $params);
+            $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
+            if (!is_null($this->orderBy)) {
+                if (!strpos($this->orderBy, '.')) {
+                    $this->orderBy = 'b.' . $this->orderBy;
+                }
+                $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
             }
-            $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
+            $query = $queryBuilder->getQuery();
+            
+            return $query->getResult();
+        } else {
+            $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
+            $this->configurator->adaptNativeItemsQueryBuilder($queryBuilder, $params);
+            $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
+            if (!is_null($this->orderBy)) {
+                $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
+            }
+            $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
+            $queryBuilder->setMaxResults($this->configurator->getLimit());
+            $stmt = $queryBuilder->execute();
+            
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
-        $query = $queryBuilder->getQuery();
-        return $query->getResult();
     }
 
     public function hasSort($columnName)
