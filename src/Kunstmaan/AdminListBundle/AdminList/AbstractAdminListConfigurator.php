@@ -6,7 +6,7 @@ abstract class AbstractAdminListConfigurator
 {
 
     private $fields = array();
-    private $exportFields = array(); 
+    private $exportFields = array();
     private $customActions = array();
     private $listActions = array();
 
@@ -17,10 +17,16 @@ abstract class AbstractAdminListConfigurator
     abstract function getIndexUrlFor();
     abstract function getRepositoryName();
 
-    public function buildFilters(AdminListFilter $builder) {}
-    public function buildActions() {}
+    public function buildFilters(AdminListFilter $builder)
+    {
+    }
+    
+    public function buildActions()
+    {
+    }
 
-    public function canEdit() {
+    public function canEdit()
+    {
         return true;
     }
 
@@ -28,13 +34,14 @@ abstract class AbstractAdminListConfigurator
     {
         $this->fields[] = new Field($fieldname, $fieldheader, $sort, $template);
     }
-    
+
     function addExportField($fieldname, $fieldheader, $sort, $template = null)
     {
-        $this->exportFields[] = new Field($fieldname, $fieldheader, $sort, $template); 
+        $this->exportFields[] = new Field($fieldname, $fieldheader, $sort, $template);
     }
 
-    public function canDelete($item) {
+    public function canDelete($item)
+    {
         return true;
     }
 
@@ -42,20 +49,24 @@ abstract class AbstractAdminListConfigurator
     {
         return true;
     }
-    
-    public function canExport() {
+
+    public function canExport()
+    {
         return false;
     }
-    
-    public function getExportUrlFor(){
+
+    public function getExportUrlFor()
+    {
         return "";
     }
 
-    function getLimit() {
+    function getLimit()
+    {
         return 10;
     }
 
-    function getSortFields() {
+    function getSortFields()
+    {
         $array = array();
         foreach ($this->getFields() as $field) {
             if ($field->isSortable())
@@ -64,19 +75,22 @@ abstract class AbstractAdminListConfigurator
         return $array;
     }
 
-    function getFields() {
+    function getFields()
+    {
         return $this->fields;
     }
-    
-    function getExportFields(){
-        if(empty($this->exportFields )){
-            return $this->fields; 
-        }else{
-            return $this->exportFields; 
+
+    function getExportFields()
+    {
+        if (empty($this->exportFields)) {
+            return $this->fields;
+        } else {
+            return $this->exportFields;
         }
     }
 
-    function configureListFields(&$array) {
+    function configureListFields(&$array)
+    {
         foreach ($this->getFields() as $field) {
             $array[$field->getFieldheader()] = $field->getFieldname();
         }
@@ -87,16 +101,19 @@ abstract class AbstractAdminListConfigurator
         $querybuilder->where('1=1');
     }
 
-    public function addSimpleAction($label, $url, $icon, $template = null) {
+    public function addSimpleAction($label, $url, $icon, $template = null)
+    {
         $this->customActions[] = new SimpleAction($url, $icon, $label, $template);
     }
 
-    public function hasCustomActions() {
+    public function hasCustomActions()
+    {
         return !empty($this->customActions);
     }
 
-    public function getCustomActions() {
-    	return $this->customActions;
+    public function getCustomActions()
+    {
+        return $this->customActions;
     }
 
     public function hasListActions()
@@ -119,17 +136,17 @@ abstract class AbstractAdminListConfigurator
             if (method_exists($item, $methodName)) {
                 $result = $item->$methodName();
             } else {
-            	$methodName = "is" . $columnName;
-            	if(method_exists($item, $methodName)) {
-            		$result = $item->$methodName();
-            	} else {
-            		$methodName = "has" . $columnName;
-            		if(method_exists($item, $methodName)) {
-            			$result = $item->$methodName();
-            		} else {
-            			return sprintf("undefined function [get/is/has]%s()", $columnName);
-            		}
-            	}
+                $methodName = "is" . $columnName;
+                if (method_exists($item, $methodName)) {
+                    $result = $item->$methodName();
+                } else {
+                    $methodName = "has" . $columnName;
+                    if (method_exists($item, $methodName)) {
+                        $result = $item->$methodName();
+                    } else {
+                        return sprintf("undefined function [get/is/has]%s()", $columnName);
+                    }
+                }
             }
         }
         return $result;
@@ -163,4 +180,20 @@ abstract class AbstractAdminListConfigurator
     {
         $this->listActions[] = $listAction;
     }
+    
+    public function useNativeQuery()
+    {
+        return false;
+    }
+    
+    function adaptNativeCountQueryBuilder($querybuilder, $params = array())
+    {
+        throw new \Exception('You have to implement the native count query builder!');
+    }
+    
+    function adaptNativeItemsQueryBuilder($querybuilder, $params = array())
+    {
+        throw new \Exception('You have to implement the native items query builder!');
+    }
+    
 }
