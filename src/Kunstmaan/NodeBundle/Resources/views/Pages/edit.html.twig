@@ -29,11 +29,11 @@
 {% block header %}
 {% if adminmenu.current %}
 	<h1>
-		{{ adminmenu.current.internalname | trans }} 
-		{% if draft %} 
+		{{ adminmenu.current.internalname | trans }}
+		{% if draft %}
 			<small>
 				Draft version (Go to <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)
-			</small> 
+			</small>
 		{% else %}
 			<small>
 				Public version
@@ -70,12 +70,12 @@
         {% set pagePossibleChildPages = page.possibleChildPageTypes %}
         <div class="main_actions">
 			{% if draft %}
-				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save">{{ 'form.saveasdraft' | trans }}</button>
-				<button type="submit" class="btn" name="saveandpublish">{{ 'form.publish' | trans }}</button>
+				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
+				<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
 				<a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 			{% else %}
-				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save">{{ 'form.save' | trans }}</button>
-				<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
+				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
+				<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
 				<a class="btn" href="{{ path('_slug', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
 				{% if pagePossibleChildPages is not empty %}
 					<button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
@@ -90,12 +90,12 @@
         <div class="main_actions top" id="main_actions_top">
 			<div class="pull-right">
 				{% if draft %}
-					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save">{{ 'form.saveasdraft' | trans }}</button>
-					<button type="submit" class="btn" name="saveandpublish">{{ 'form.publish' | trans }}</button>
+					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
+					<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
 					<a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 				{% else %}
-					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save">{{ 'form.save' | trans }}</button>
-					<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
+					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
+					<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
 					<a class="btn" href="{{ path('_slug', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
 					{% if pagePossibleChildPages is not empty %}
 						<button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
@@ -129,7 +129,7 @@
 						{% set form_errors_recursive = form_errors_recursive([]) %}
 					{% else %}
 						{% set form_errors_recursive = form_errors_recursive([form.main, form.node, form.nodetranslation]) %}
-					{% endif %}	
+					{% endif %}
 				{% endif %}
                 
                 
@@ -156,7 +156,7 @@
                     				{{ "1 Error" | trans }}
                     			{% endif %}
                     		</span>
-                    	{% endif %}	
+                    	{% endif %}
                     </a>
                 </li>
             {% endfor %}
@@ -189,7 +189,7 @@
             {% for pagepartadmin in pagepartadmins %}
                 {% set pagepartstab = 'pageparts'~loop.index %}
                 
-                <!--Tab--> 
+                <!--Tab-->
                 <div class="{% if currenttab == pagepartstab %}active{% endif %} tab-pane" id="pageparts{{ loop.index }}">
                     {% if loop.index == 1 %}
 	                    <fieldset class="properties">
@@ -271,7 +271,7 @@
                 {{ form_rest(seoform) }}
             </div>
         </div>
-        {{ form_rest(form) }}    
+        {{ form_rest(form) }}
     
     
 	    <!--MODALS-->
@@ -288,7 +288,7 @@
 		            <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
 		            <button class="btn" data-dismiss="modal">Cancel</button>
 		    	</div>
-	        </div> 
+	        </div>
 	    </div>
 	    
 	    <div id="pub" class="modal hide fade">
@@ -305,7 +305,7 @@
 		            <button class="btn" data-dismiss="modal">Cancel</button>
 		    	</div>
 	        </div>
-	    </div>   
+	    </div>
 	    
 	    <div id="quitpagemodal" class="modal hide fade">
 	        <div class="modal-header">
