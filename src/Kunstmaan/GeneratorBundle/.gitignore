@@ -1,12 +1,5 @@
-# Bootstrap
-app/bootstrap*
-
-# Symfony directories
+.DS_Store
+.idea
 vendor/*
-*/logs/*
-*/cache/*
-web/uploads/*
-web/bundles/*
-
-# Configuration files
-app/config/parameters.ini
+composer.lock
+composer.phar

@@ -1,0 +1,28 @@
+{
+    "name": "kunstmaan/admin-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 KunstmaanAdminBundle",
+    "keywords": [],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanAdminBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/orm": "2.1.*",
+        "doctrine/doctrine-fixtures-bundle": "2.0.*",
+        "symfony/symfony": "2.0.*",
+        "friendsofsymfony/user-bundle": "1.2.*",
+        "kunstmaan/adminlist-bundle": "dev-master",
+        "kunstmaan/adminnode-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\AdminBundle": "" }
+    },
+    "target-dir": "Kunstmaan/AdminBundle"
+}

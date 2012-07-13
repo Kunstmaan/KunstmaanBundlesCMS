@@ -1,4 +1,49 @@
-KunstmaanGeneratorBundle
-========================
+KunstmaanGeneratorBundle by Kunstmaan
+=================================
 
-Generators for the Kunstmaan Bundles
+About
+-----
+The KunstmaanGeneratorBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
+The KunstmaanGeneratorBundle is a feature bundle
+
+View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanGeneratorBundle).
+
+[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanGeneratorBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanGeneratorBundle)
+
+Installation requirements
+-------------------------
+You should be able to get Symfony 2 up and running before you can install the KunstmaanGeneratorBundle.
+
+Installation instructions
+-------------------------
+Installation is straightforward, add the following lines to your deps file:
+
+```
+[KunstmaanGeneratorBundle]
+    git=https://github.com/Kunstmaan/KunstmaanGeneratorBundle.git
+    target=/bundles/Kunstmaan/GeneratorBundle
+```
+
+Register the Kunstmaan namespace in your autoload.php file:
+
+```
+'Kunstmaan'        => __DIR__.'/../vendor/bundles'
+```
+
+Add the KunstmaanGeneratorBundle to your AppKernel.php file:
+
+```
+new Kunstmaan\AdminBundle\KunstmaanGeneratorBundle(),
+```
+
+Contact
+-------
+Kunstmaan (support@kunstmaan.be)
+
+Download
+--------
+You can also clone the project with Git by running:
+
+```
+$ git clone git://github.com/Kunstmaan/KunstmaanGeneratorBundle
+```
