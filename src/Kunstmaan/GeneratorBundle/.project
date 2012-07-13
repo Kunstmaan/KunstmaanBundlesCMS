@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>KunstmaanGeneratorBundle</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.dubture.doctrine.core.doctrineBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.dubture.symfony.core.symfonyBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.dltk.core.scriptbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.dubture.symfony.core.symfonyNature</nature>
+		<nature>org.eclipse.php.core.PHPNature</nature>
+		<nature>com.dubture.twig.core.TwigNature</nature>
+		<nature>com.dubture.doctrine.core.doctrineNature</nature>
+	</natures>
+</projectDescription>
