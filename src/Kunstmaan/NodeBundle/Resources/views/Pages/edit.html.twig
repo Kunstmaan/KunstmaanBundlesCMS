@@ -72,7 +72,7 @@
 			{% if draft %}
 				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
 				<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
-				<a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+				<a class="btn" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 			{% else %}
 				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
 				<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
@@ -92,7 +92,7 @@
 				{% if draft %}
 					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
 					<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
-					<a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+					<a class="btn" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 				{% else %}
 					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
 					<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
