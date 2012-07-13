@@ -4,7 +4,7 @@ KunstmaanGeneratorBundle by Kunstmaan
 About
 -----
 The KunstmaanGeneratorBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
-The KunstmaanGeneratorBundle is a feature bundle
+The KunstmaanGeneratorBundle is a feature bundle and supplies helpful generators for the Kunstmaan bundles.
 
 View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanGeneratorBundle).
 
@@ -34,6 +34,15 @@ Add the KunstmaanGeneratorBundle to your AppKernel.php file:
 
 ```
 new Kunstmaan\AdminBundle\KunstmaanGeneratorBundle(),
+```
+
+Use
+---
+
+Generate a KunstmaanAdminList for an Entity :
+
+```
+ app/console kuma:generate:adminlist --entity=Bundle:Entity
 ```
 
 Contact
