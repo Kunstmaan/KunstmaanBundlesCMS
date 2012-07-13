@@ -89,7 +89,6 @@ class NodeTranslationRepository extends EntityRepository
      * Get the nodetranslation for a given url
      * @param string $urlSlug The full url
      * @param string $locale  The locale
-     * @param boolean $preview Is it a preview?
      *
      * @return NodeTranslation|null|object
      */
