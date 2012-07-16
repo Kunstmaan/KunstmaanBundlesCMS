@@ -1,9 +1,9 @@
 {
-    "name": "kunstmaan/admin-bundle",
+    "name": "kunstmaan/generator-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 KunstmaanAdminBundle",
+    "description": "Symfony2 KunstmaanGeneratorBundle",
     "keywords": [],
-    "homepage": "https://github.com/Kunstmaan/KunstmaanAdminBundle",
+    "homepage": "https://github.com/Kunstmaan/KunstmaanGeneratorBundle",
     "license": "MIT",
     "authors": [
         {
@@ -19,10 +19,9 @@
         "symfony/symfony": "2.0.*",
         "friendsofsymfony/user-bundle": "1.2.*",
         "kunstmaan/adminlist-bundle": "dev-master",
-        "kunstmaan/adminnode-bundle": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\AdminBundle": "" }
+        "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
     },
-    "target-dir": "Kunstmaan/AdminBundle"
+    "target-dir": "Kunstmaan/GeneratorBundle"
 }
