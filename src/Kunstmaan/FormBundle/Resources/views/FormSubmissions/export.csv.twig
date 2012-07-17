@@ -1,0 +1,20 @@
+{% set quote = '"' %}
+{% set submission = submissions[0] %}
+{% spaceless %}
+{{- quote|raw -}}lang{{- quote|raw -}};
+{%- for field in submission.fields -%}
+	{{- quote|raw -}}{{- field.label | trans -}}{{- quote|raw -}}
+	{%- if not loop.last -%};{%- endif -%}
+{%- endfor -%}
+{% endspaceless %}
+
+{% for submission in submissions %}
+
+{% spaceless %}
+{{- quote|raw -}}{{ submission.lang }}{{- quote|raw -}};
+{%- for field in submission.fields -%}
+	{{- quote|raw -}}{{- field.value -}}{{- quote|raw -}}
+	{%- if not loop.last -%};{%- endif -%}
+{%- endfor -%}
+{% endspaceless %}
+{% endfor %}
