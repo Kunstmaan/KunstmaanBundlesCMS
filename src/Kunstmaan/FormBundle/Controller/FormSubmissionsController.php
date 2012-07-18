@@ -122,7 +122,7 @@ class FormSubmissionsController extends Controller
             if (!$isHeaderWritten) {
                 $header = array($translator->trans("Id"), $translator->trans("Date"), $translator->trans("Language"));
                 foreach ($submission->getFields() as $field) {
-                    $header[] = mb_convert_encoding($translator->trans($field->getLabel(), 'ISO-8859-1', 'UTF-8'));
+                    $header[] = mb_convert_encoding($translator->trans($field->getLabel()), 'ISO-8859-1', 'UTF-8');
                 }
                 $writer->writeItem($header);
                 $isHeaderWritten = true;
