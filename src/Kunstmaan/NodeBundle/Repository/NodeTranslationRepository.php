@@ -9,6 +9,7 @@ use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminBundle\Modules\Slugifier;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
+
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 
@@ -39,9 +40,9 @@ class NodeTranslationRepository extends EntityRepository
     public function getOnlineNodes()
     {
         $qb = $this->createQueryBuilder('b')
-            ->select('b')
-            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where("n.deleted != 1 AND b.online = 1");
+                ->select('b')
+                ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+                ->where("n.deleted != 1 AND b.online = 1");
 
         return $qb;
     }
@@ -93,31 +94,25 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getNodeTranslationForUrl($urlSlug, $locale)
     {
-    	$qb = $this->createQueryBuilder('b')
-            ->select('b')
-            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where("n.deleted != 1 AND b.online = 1 and b.lang = ?2")
-            ->addOrderBy('n.sequencenumber', 'DESC')
-            ->setFirstResult(0)
-            ->setMaxResults(1)
-    		->setParameter(2, $locale);
+        $qb = $this->createQueryBuilder('b')
+                ->select('b')
+                ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+                ->where("n.deleted != 1 AND b.lang = :lang")
+                ->addOrderBy('n.sequencenumber', 'DESC')
+                ->setFirstResult(0)
+                ->setMaxResults(1)
+                ->setParameter('lang', $locale);
 
         if ($urlSlug === null) {
             $qb->andWhere('b.url IS NULL');
         } else {
-            $qb->andWhere('b.url = ?1');
-            $qb->setParameter(1, $urlSlug);
+            $qb->andWhere('b.url = :url');
+            $qb->setParameter('url', $urlSlug);
         }
         
-        $result = $qb->getQuery()->getResult();
-
-        if (sizeof($result) == 1) {
-            return $result[0];
-        } else if (sizeof($result) == 0) {
-            return null;
-        } else {
-            return $result[0];
-        }
+        $result = $qb->getQuery()->getOneOrNullResult();
+        
+        return $result;
     }
 
     /**
@@ -127,11 +122,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getParentNodeTranslations()
     {
-        $qb = $this->createQueryBuilder('b')
-            ->select('b')
-            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where('n.parent IS NULL')
-            ->andWhere('n.deleted != 1');
+        $qb = $this->createQueryBuilder('b')->select('b')->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')->where('n.parent IS NULL')->andWhere('n.deleted != 1');
 
         return $qb->getQuery()->getResult();
     }
@@ -145,48 +136,38 @@ class NodeTranslationRepository extends EntityRepository
      */
     private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugpart = "")
     {
-    	if ($parentNode != null) {
+        if ($parentNode != null) {
             $qb = $this->createQueryBuilder('b')
-                ->select('b')
-                ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-                ->where('b.slug = ?1 and n.parent = ?2')
-                ->andWhere('n.deleted != 1')
-                ->addOrderBy('n.sequencenumber', 'DESC')
-                ->setFirstResult(0)
-                ->setMaxResults(1)
-                ->setParameter(1, $slugpart)
-                ->setParameter(2, $parentNode->getNode()->getId());
-            $result = $qb->getQuery()->getResult();
-            if (sizeof($result) == 1) {
-                return $result[0];
-            } else if (sizeof($result) == 0) {
-                return null;
-            } else {
-                return $result[0];
-            }
+                    ->select('b')
+                    ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+                    ->where('b.slug = :slug and n.parent = :parent')
+                    ->andWhere('n.deleted != 1')
+                    ->addOrderBy('n.sequencenumber', 'DESC')
+                    ->setFirstResult(0)
+                    ->setMaxResults(1)
+                    ->setParameter('slug', $slugpart)
+                    ->setParameter('parent', $parentNode->getNode()->getId());
+            $result = $qb->getQuery()->getOneOrNullResult();
+            
+            return $result;
         } else {
-        	/* if parent is null we should look for slugs that have no parent */
-	        $qb = $this->createQueryBuilder('t')
-	                ->select('t')
-	                ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
-	                ->where('n.deleted != 1 and n.parent IS NULL')
-	                ->addOrderBy('n.sequencenumber', 'DESC')
-	                ->setFirstResult(0)
-	                ->setMaxResults(1);
-	        if (empty($slugpart)) {
-	        	$qb->andWhere('t.slug is NULL');
-	        } else {
-	        	$qb->andWhere('t.slug = ?1');
-	        	$qb->setParameter(1, $slugpart);
-	        }
-	        $result = $qb->getQuery()->getResult();
-	        if (sizeof($result) == 1) {
-	        	return $result[0];
-	        } else if (sizeof($result) == 0) {
-	            return null;
-	        } else {
-	            return $result[0];
-	        }
+            /* if parent is null we should look for slugs that have no parent */
+            $qb = $this->createQueryBuilder('t')
+                    ->select('t')
+                    ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
+                    ->where('n.deleted != 1 and n.parent IS NULL')
+                    ->addOrderBy('n.sequencenumber', 'DESC')
+                    ->setFirstResult(0)
+                    ->setMaxResults(1);
+            if (empty($slugpart)) {
+                $qb->andWhere('t.slug is NULL');
+            } else {
+                $qb->andWhere('t.slug = :slug');
+                $qb->setParameter('slug', $slugpart);
+            }
+            $result = $qb->getQuery()->getOneOrNullResult();
+            
+            return $result;
         }
     }
 
@@ -224,7 +205,7 @@ class NodeTranslationRepository extends EntityRepository
         $em->flush();
         $em->refresh($nodeTranslation);
         $em->refresh($node);
-        
+
         return $nodeTranslation;
     }
 
@@ -233,6 +214,7 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @param string $urlSlug
      * @param string $locale
+     * @param boolean $preview
      *
      * @return NodeTranslation
      */
@@ -253,11 +235,10 @@ class NodeTranslationRepository extends EntityRepository
         $rsm->addMetaResult('nt', 'seo', 'seo');
 
         $query = $em
-            ->createNativeQuery(
-            'select nt.id, nt.node, nt.lang, nt.online, nt.title, nt.slug, nt.url, nt.publicNodeVersion, nt.seo from nodetranslation nt
+                ->createNativeQuery(
+                        'select nt.id, nt.node, nt.lang, nt.online, nt.title, nt.slug, nt.url, nt.publicNodeVersion, nt.seo from nodetranslation nt
                             join node n on n.id = nt.node
-                            where n.deleted = 0 and nt.lang = ? and locate(url, ?) = 1 order by length(url) desc limit 1',
-            $rsm);
+                            where n.deleted = 0 and nt.lang = ? and locate(url, ?) = 1 order by length(url) desc limit 1', $rsm);
         $query->setParameter(1, $locale);
         $query->setParameter(2, $urlSlug);
         $translation = $query->getOneOrNullResult();

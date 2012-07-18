@@ -72,11 +72,11 @@
 			{% if draft %}
 				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
 				<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
-				<a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+				<a class="btn" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 			{% else %}
 				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
 				<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
-				<a class="btn" href="{{ path('_slug', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
+				<a class="btn" href="{{ path('_slug_preview', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
 				{% if pagePossibleChildPages is not empty %}
 					<button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
 				{% endif %}
@@ -92,11 +92,11 @@
 				{% if draft %}
 					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
 					<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
-					<a class="btn" href="{{ path('_slug_draft', { 'slug': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+					<a class="btn" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
 				{% else %}
 					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
 					<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
-					<a class="btn" href="{{ path('_slug', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
+					<a class="btn" href="{{ path('_slug_preview', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
 					{% if pagePossibleChildPages is not empty %}
 						<button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
 					{% endif %}
@@ -341,7 +341,7 @@
 	                <tbody>
 	                    {% for nodeVersion in nodeVersions %}
 	                    <tr>
-	                        <td><a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}">{{ nodeVersion.version }}</a></td>
+	                        <td>{# <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}"> #}{{ nodeVersion.version }}{# </a> #}</td>
 	                        <td>{{ nodeVersion.type }}</td>
 	                        <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
 	                        <td>{{ nodeVersion.owner }}</td>
