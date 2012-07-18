@@ -93,7 +93,6 @@ class FormSubmissionsController extends Controller
      *
      * @Route("/export/{nodetranslationid}", requirements={"nodetranslationid" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_export")
      * @Method({"GET"})
-     * @Template()
      */
     public function exportAction($nodetranslationid)
     {
@@ -114,15 +113,16 @@ class FormSubmissionsController extends Controller
                 ->addOrderBy('fs.created', 'DESC');
         $iterableResult = $qb->getQuery()->iterate();
         $isHeaderWritten = false;
+        $translator = $this->get('translator');
         
         foreach ($iterableResult AS $row) {
             $submission = $row[0];
             
             // Write header info
             if (!$isHeaderWritten) {
-                $header = array("id", "date", "lang");
+                $header = array("Id", "Date", "Language");
                 foreach ($submission->getFields() as $field) {
-                    $header[] = $field->getLabel();
+                    $header[] = mb_convert_encoding($translator->trans($field->getLabel(), 'ISO-8859-1', 'UTF-8'));
                 }
                 $writer->writeItem($header);
                 $isHeaderWritten = true;
