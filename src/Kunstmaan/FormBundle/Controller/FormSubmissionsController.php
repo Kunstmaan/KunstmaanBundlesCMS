@@ -2,18 +2,19 @@
 
 namespace Kunstmaan\FormBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-
-use Kunstmaan\AdminBundle\Form\EditUserType;
-use Kunstmaan\AdminBundle\Form\EditGroupType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Form\EditUserType;
+use Kunstmaan\AdminBundle\Form\EditGroupType;
 use Kunstmaan\AdminBundle\Form\UserType;
 use Kunstmaan\AdminBundle\Form\GroupType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -23,25 +24,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  */
 class FormSubmissionsController extends Controller
 {
-	/**
-	 * The index action
-	 *
-	 * @Route("/", name="KunstmaanFormBundle_formsubmissions")
-	 * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-	 *
-	 * @return array
-	 */
+    /**
+     * The index action
+     *
+     * @Route("/", name="KunstmaanFormBundle_formsubmissions")
+     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     *
+     * @return array
+     */
     public function indexAction()
     {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$request = $this->getRequest();
-    	$user = $this->container->get('security.context')->getToken()->getUser();
-    	$formpagesadminlist = $this->get("adminlist.factory")->createList(new FormPageAdminListConfigurator($user, 'read'), $em);
-    	$formpagesadminlist->bindRequest($request);
+        $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $formpagesadminlist = $this->get("adminlist.factory")->createList(new FormPageAdminListConfigurator($user, 'read'), $em);
+        $formpagesadminlist->bindRequest($request);
 
-    	return array(
-    			'adminlist' => $formpagesadminlist
-    	);
+        return array('adminlist' => $formpagesadminlist);
     }
 
     /**
@@ -62,10 +61,7 @@ class FormSubmissionsController extends Controller
         $adminlist = $this->get("adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($nodeTranslation), $em);
         $adminlist->bindRequest($request);
 
-        return array(
-        	'nodetranslation' => $nodeTranslation,
-            'adminlist' => $adminlist
-        );
+        return array('nodetranslation' => $nodeTranslation, 'adminlist' => $adminlist);
     }
 
     /**
@@ -81,15 +77,12 @@ class FormSubmissionsController extends Controller
      */
     public function editAction($nodetranslationid, $submissionid)
     {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$request = $this->getRequest();
-    	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
-    	$formSubmission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionid);
+        $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
+        $formSubmission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionid);
 
-    	return array(
-    			'nodetranslation' => $nodeTranslation,
-    			'formsubmission' => $formSubmission,
-    	);
+        return array('nodetranslation' => $nodeTranslation, 'formsubmission' => $formSubmission,);
     }
 
     /**
@@ -106,20 +99,22 @@ class FormSubmissionsController extends Controller
         $request = $this->getRequest();
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
 
+        $file = new \SplFileObject();
+
         $qb = $em->createQueryBuilder()
-            ->select('fs')
-            ->from('KunstmaanFormBundle:FormSubmission', 'fs')
-            ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
-            ->andWhere('n.id = ?1')
-            ->setParameter(1, $nodeTranslation->getNode()->getId())
-            ->addOrderBy('fs.created', 'DESC');
-        
+                ->select('fs')
+                ->from('KunstmaanFormBundle:FormSubmission', 'fs')
+                ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
+                ->andWhere('n.id = ?1')
+                ->setParameter(1, $nodeTranslation->getNode()->getId())
+                ->addOrderBy('fs.created', 'DESC');
+
         $submissions = $qb->getQuery()->getResult();
         $response = $this->render('KunstmaanFormBundle:FormSubmissions:export.csv.twig', array('submissions' => $submissions));
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="form-submissions.csv"');
-        
+
         return $response;
     }
-    
+
 }

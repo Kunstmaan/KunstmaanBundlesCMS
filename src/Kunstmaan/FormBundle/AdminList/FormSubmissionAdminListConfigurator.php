@@ -1,13 +1,13 @@
 <?php
 
 namespace Kunstmaan\FormBundle\AdminList;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 /**
  * The form submssions admin list configurator
