@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\FormBundle\Controller;
 
+use Ddeboer\DataImportBundle\Writer\CsvWriter;
+
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Form\EditUserType;
@@ -99,8 +101,10 @@ class FormSubmissionsController extends Controller
         $request = $this->getRequest();
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
 
-        $file = new \SplFileObject();
-
+        $tmpFilename = tempnam('/tmp', 'cb_csv_');
+        $file = new \SplFileObject($tmpFilename);
+        $writer = new CsvWriter($file);
+        
         $qb = $em->createQueryBuilder()
                 ->select('fs')
                 ->from('KunstmaanFormBundle:FormSubmission', 'fs')
@@ -108,12 +112,37 @@ class FormSubmissionsController extends Controller
                 ->andWhere('n.id = ?1')
                 ->setParameter(1, $nodeTranslation->getNode()->getId())
                 ->addOrderBy('fs.created', 'DESC');
-
-        $submissions = $qb->getQuery()->getResult();
-        $response = $this->render('KunstmaanFormBundle:FormSubmissions:export.csv.twig', array('submissions' => $submissions));
+        $iterableResult = $qb->getQuery()->iterate();
+        $isHeaderWritten = false;
+        
+        foreach ($iterableResult AS $row) {
+            $submission = $row[0];
+            
+            // Write header info
+            if (!$isHeaderWritten) {
+                $header = array("id", "date", "lang");
+                foreach ($submission->getFields() as $field) {
+                    $header[] = $field->getLabel();
+                }
+                $writer->writeItem($header);
+                $isHeaderWritten = true;
+            }
+            
+            // Write row data
+            $data = array($submission->getId(), $submission->getCreated()->format('d/m/Y H:i:s'), $submission->getLang());
+            foreach ($submission->getFields() as $field) {
+                $data[] = mb_convert_encoding($field->getValue(), 'ISO-8859-1', 'UTF-8');
+            }
+            $writer->writeItem($data);
+            $em->detach($submission);
+        }
+        $writer->finish();
+                
+        $response = new Response(file_get_contents($tmpFilename));
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="form-submissions.csv"');
-
+        unlink($tmpFilename);
+        
         return $response;
     }
 
