@@ -8,7 +8,7 @@
     			<label for="filter_on_off" class="status">Filter</label>
     			<ul class="filters">
     				<li class="filterline {% if filter.currentfilters|length >0 %}hidden{% endif %}" id="addline">
-    					<select class="filterselect" id="addfilter" onchange="createFilter(this, true)">
+    					<select class="filterselect" id="addfilter" onchange="createFilter(this, true, {startDate: '{{ datePicker_startDate }}'})">
     						<option>{{ "form.choosetypefilter"|trans }}</option>
     						{% for columnname, value in filter.filterdefinitions %}
     							{% if value['filtername'] is defined %}
@@ -22,7 +22,7 @@
     				</li>
     				{% for columnname, value in filter.currentfilters %}
     				<li class="filterline">
-					    <select class="filterdummy filterselect" name="filter_columnname[]" onchange="updateOptions(this)">
+					    <select class="filterdummy filterselect" name="filter_columnname[]" onchange="updateOptions(this, {startDate: '{{ datePicker_startDate }}'})">
 					        {% for defcolumnname, defvalue in filter.filterdefinitions %}
 					        	{% if defvalue['filtername'] is defined %}
 					        		{% set filtername = defvalue['filtername'] %}
@@ -37,11 +37,11 @@
 				            {% set namesuffix %}_{{value.uniqueid}}{%endset%}
 				            {% include value.type.template with {'filtertype': value.type, 'data': value.data, 'nameprefix':'filter_', 'namesuffix': namesuffix} %}
 				        </span>
-				        <button class="remove_filter" type="button" onclick="return removeFilter(this, false)"><i class="icon-remove-sign"></i></button>					
+				        <button class="remove_filter" type="button" onclick="return removeFilter(this, false)"><i class="icon-remove-sign"></i></button>
     				</li>
-    				{% endfor %}  
+    				{% endfor %}
     				<li>
-    					<button class="btn add_filter" type="button" onclick="return createFilter(this, false)"><i class="icon-plus-sign"></i>{{ "form.addfilter"|trans }}</button>
+    					<button class="btn add_filter" type="button" onclick="return createFilter(this, false, {startDate: '{{ datePicker_startDate }}'})"><i class="icon-plus-sign"></i>{{ "form.addfilter"|trans }}</button>
     				</li>
     				<li>
     					<button class="btn apply_filter" type="submit">Filter</button>
@@ -52,7 +52,7 @@
     </form>
     
 	<div id="filterdummyline" class="hidden">
-		<select class="filterdummy filterselect" name="columnname[]" onchange="updateOptions(this)">
+		<select class="filterdummy filterselect" name="columnname[]" onchange="updateOptions(this, {startDate: '{{ datePicker_startDate }}'})">
 		    {% for columnname, value in filter.filterdefinitions %}
 		    {% if value['filtername'] is defined %}
 		        		{% set filtername = value['filtername'] %}
