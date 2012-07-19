@@ -449,7 +449,7 @@ function initFilter() {
 
 
 
-function createFilter(el, hide){
+function createFilter(el, hide, options){
     console.log("Create filter init");
     
     var line = $(el).parent("li");
@@ -471,7 +471,7 @@ function createFilter(el, hide){
     
     newitem.find(".uniquefilterid").val(uniqueid);
     newitem.find(".filterdummy").val(line.find(".filterselect").val());
-    updateOptions(newitem.find(".filterdummy"));
+    updateOptions(newitem.find(".filterdummy"), options);
     newitem.find("input, select").each(function(){
         $(this).attr("name", "filter_" + $(this).attr("name"));
     });
@@ -479,7 +479,7 @@ function createFilter(el, hide){
     newitem.find(".filteroptions").find("input:not(.uniquefilterid), select").each(function(){
         $(this).attr("name", $(this).attr("name") + "_" + uniqueid);
 		if($(this).hasClass("datepick")){
-			$(this).datePicker();
+			$(this).datePicker(options);				
 		}
     });
     
@@ -530,11 +530,11 @@ function calculateUniqueFilterId(){
 
 
 
-function updateOptions(el){
+function updateOptions(el, options){
     var val = $(el).val();
     val = val.replace('.',  '_');
     $(el).parent(".filterline").find(".filteroptions").html($('#filterdummyoptions_'+ val).html());
-   	$(el).parent(".filterline").find(".datepick").datePicker();
+   	$(el).parent(".filterline").find(".datepick").datePicker(options);
 }
 
 
