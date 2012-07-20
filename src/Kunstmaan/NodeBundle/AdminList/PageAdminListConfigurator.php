@@ -78,23 +78,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator{
         $querybuilder->andWhere('b.node NOT IN (select p.id from Kunstmaan\AdminNodeBundle\Entity\Node p where p.deleted=1)');
         $querybuilder->andWhere('b.lang = :lang');
         $querybuilder->setParameter('lang', $this->locale);
-        /*FIXME: not going to fix it now, this list must first be converted to a version changes list
-        $querybuilder->andWhere('b.id IN (
-            SELECT
-                p.refId
-            FROM
-                Kunstmaan\AdminBundle\Entity\Permission p
-            WHERE
-                    p.refEntityname = b.node.refEntityname
-                AND
-                    p.permissions LIKE :permissions
-                AND
-                    p.refGroup IN(:groups)
-        )');
-
-        $querybuilder->setParameter('permissions', '%|'.$this->permission.':1|%');
-        $querybuilder->setParameter('groups', $this->user->getGroupIds());
-	*/
+        //TODO: add permissions, and order by updated date
         return $querybuilder;
     }
 }

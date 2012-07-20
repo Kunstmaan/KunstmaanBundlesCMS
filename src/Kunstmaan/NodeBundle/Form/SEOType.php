@@ -7,9 +7,6 @@ use Symfony\Component\Form\FormBuilder;
 
 class SEOType extends AbstractType
 {
-	public function __construct(){
-	}
-	
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('metaauthor');

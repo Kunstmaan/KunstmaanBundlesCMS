@@ -2,10 +2,12 @@
 
 namespace Kunstmaan\AdminNodeBundle\Helper\Event;
 
+/**
+ * Events
+ */
 class Events
 {
 
-    private function __construct() {}
     /**
      * The postEdit event occurs for a given page, after the update method.
      *
@@ -13,6 +15,6 @@ class Events
      *
      * @var string
      */
-    const postEdit = 'adminnode.postEdit';
+    const POSTEDIT = 'adminnode.postEdit';
 
 }
