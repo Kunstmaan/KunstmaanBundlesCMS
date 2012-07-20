@@ -237,7 +237,7 @@ class PagesController extends Controller
         if (is_string($addpage) && $addpage != '') {
             $nodenewpage = $this->addPage($em, $user, $locale, $page, $addpage, $addpagetitle);
 
-            return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id' => $nodenewpage->getId(), 'currenttab' => $currentTab)));
+            return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id' => $nodenewpage->getId(), 'currenttab' => $currenttab)));
         }
 
         $delete = $request->get("delete");
@@ -424,7 +424,7 @@ class PagesController extends Controller
         $em->persist($nodenewpage);
         $em->flush();
 
-        return $$nodenewpage;
+        return $nodenewpage;
     }
 
     /**
