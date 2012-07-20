@@ -2,11 +2,16 @@
 
 namespace Kunstmaan\AdminNodeBundle\Helper\Event;
 
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+
 use Symfony\Component\EventDispatcher\Event;
 
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 
+/**
+ * PageEvent
+ */
 class PageEvent extends Event
 {
     /**
@@ -24,11 +29,11 @@ class PageEvent extends Event
 
 
     /**
-     * @param \Kunstmaan\AdminNodeBundle\Entity\Node $node
-     * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation $nodeTranslation
-     * @param $page
+     * @param Node             $node            The node
+     * @param NodeTranslation  $nodeTranslation The nodetranslation
+     * @param HasNodeInterface $page            The object
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, $page)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, HasNodeInterface $page)
     {
         $this->node            = $node;
         $this->nodeTranslation = $nodeTranslation;
@@ -36,13 +41,14 @@ class PageEvent extends Event
     }
 
     /**
-     * @param $node
+     * @param Node $node
      *
      * @return PageEvent
      */
     public function setNode($node)
     {
         $this->node = $node;
+
         return $this;
     }
 
@@ -55,13 +61,14 @@ class PageEvent extends Event
     }
 
     /**
-     * @param $nodeTranslation
+     * @param NodeTranslation $nodeTranslation
      *
      * @return PageEvent
      */
     public function setNodeTranslation($nodeTranslation)
     {
         $this->nodeTranslation = $nodeTranslation;
+
         return $this;
     }
 
@@ -74,18 +81,19 @@ class PageEvent extends Event
     }
 
     /**
-     * @param $page
+     * @param HasNodeInterface $page
      *
      * @return PageEvent
      */
     public function setPage($page)
     {
         $this->page = $page;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return HasNodeInterface
      */
     public function getPage()
     {
