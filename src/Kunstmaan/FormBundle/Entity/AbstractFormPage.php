@@ -129,7 +129,7 @@ abstract class AbstractFormPage extends AbstractPage
 			}
 			$form = $formbuilder->getForm();
 			if ($request->getMethod() == 'POST') {
-				$form->bindRequest($request);
+				$form->bind($request);
 				if ($form->isValid()) {
 					$formsubmission = new FormSubmission();
 					$formsubmission->setIpAddress($request->getClientIp());
