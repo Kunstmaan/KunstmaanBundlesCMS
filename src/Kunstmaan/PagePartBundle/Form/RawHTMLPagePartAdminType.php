@@ -30,4 +30,11 @@ class RawHTMLPagePartAdminType extends AbstractType
     {
         return 'kunstmaan_pagepartbundle_rawhtmlpageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
+        );
+    }
 }

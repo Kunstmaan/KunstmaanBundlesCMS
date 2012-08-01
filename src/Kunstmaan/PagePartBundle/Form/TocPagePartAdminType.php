@@ -13,4 +13,11 @@ class TocPagePartAdminType extends AbstractType {
     public function getName() {
         return 'kunstmaan_pagepartbundle_tocpageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\TocPagePart',
+        );
+    }
 }

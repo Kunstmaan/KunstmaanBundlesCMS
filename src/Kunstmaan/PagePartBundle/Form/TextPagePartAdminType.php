@@ -26,4 +26,11 @@ class TextPagePartAdminType extends AbstractType
     {
         return 'kunstmaan_pagepartbundle_textpageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\TextPagePart',
+        );
+    }
 }

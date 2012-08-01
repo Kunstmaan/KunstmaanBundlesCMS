@@ -25,4 +25,11 @@ class LinePagePartAdminType extends AbstractType
     {
         return 'kunstmaan_pagepartbundle_linepageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinePagePart',
+        );
+    }
 }

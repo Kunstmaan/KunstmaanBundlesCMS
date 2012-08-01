@@ -31,4 +31,11 @@ class HeaderPagePartAdminType extends AbstractType
     {
         return 'kunstmaan_pagepartbundle_headerpageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+        );
+    }
 }

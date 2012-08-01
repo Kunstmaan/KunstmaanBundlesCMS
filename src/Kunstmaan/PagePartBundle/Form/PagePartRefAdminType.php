@@ -25,4 +25,5 @@ class PagePartRefAdminType extends AbstractType
     {
         return 'page';
     }
+
 }

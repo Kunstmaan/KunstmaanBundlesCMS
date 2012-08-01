@@ -13,4 +13,11 @@ class ToTopPagePartAdminType extends AbstractType {
     public function getName() {
         return 'kunstmaan_pagepartbundle_totoppageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart',
+        );
+    }
 }
