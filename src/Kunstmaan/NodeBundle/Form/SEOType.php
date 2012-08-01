@@ -9,6 +9,7 @@ class SEOType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
+        $builder->add('id', 'hidden');
         $builder->add('metaauthor');
         $builder->add('metadescription');
         $builder->add('metakeywords');

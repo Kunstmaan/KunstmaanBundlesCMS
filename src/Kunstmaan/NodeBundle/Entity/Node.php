@@ -10,10 +10,11 @@ use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 
 /**
  * Node
- * 
+ *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeRepository")
  * @ORM\Table(name="node")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class Node extends AbstractEntity
 {

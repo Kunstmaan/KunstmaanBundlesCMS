@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity
  * @ORM\Table(name="seoinformation")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class SEO extends AbstractEntity
 {

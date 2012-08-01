@@ -273,7 +273,6 @@ class PagesController extends Controller
                 $bindingarray[$key] = $page;
             }
         }
-
         $formbuilder->setData($bindingarray);
 
         //handle the pagepart functions (fetching, change form to reflect all fields, assigning data, etc...)
@@ -291,7 +290,6 @@ class PagesController extends Controller
             $permissionadmin = $this->get("kunstmaan_admin.permissionadmin");
             $permissionadmin->initialize($node, $em, $page->getPossiblePermissions());
         }
-
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
@@ -315,12 +313,14 @@ class PagesController extends Controller
                 }
 
                 $node->setRoles($roles);
-
+                $nodeTranslation->setTitle($page->getTitle());
                 $em->persist($node);
                 $em->persist($nodeTranslation);
+                $em->flush();
+                
                 $editcommand = new EditCommand($em, $user);
                 $editcommand->execute("added pageparts to page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
-
+                
                 if (is_string($saveandpublish) && $saveandpublish != '') {
                     $newpublicpage = $page->deepClone($em);
                     $nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->createNodeVersionFor($newpublicpage, $nodeTranslation, $user, 'public');

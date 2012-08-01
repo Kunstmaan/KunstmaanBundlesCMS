@@ -221,7 +221,7 @@
                 </div>
             {% endfor %}
 
-            {% if is_granted('ROLE_PERMISSIONMANAGER') %}
+            {% if is_granted('ROLE_PERMISSIONMANAGER') and permissionadmin is defined %}
                 <!--Tab-->
                 <div class="{% if currenttab == 'permissions' %}active{% endif %} tab-pane" id="permissions">
                     {{ permissionsadmin_widget(permissionadmin, form) }}

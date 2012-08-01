@@ -16,9 +16,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * NodeTranslation
- * 
+ *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeTranslationRepository")
  * @ORM\Table(name="nodetranslation")
+ * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class NodeTranslation extends AbstractEntity
 {

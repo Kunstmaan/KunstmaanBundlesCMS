@@ -1,25 +1,13 @@
 parameters:
 
 services:
-
     nodetranslation.listener:
-         class: Kunstmaan\AdminNodeBundle\Listener\NodeTranslationListener
-         tags:
-                - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
-                - { name: doctrine.event_listener, event: postPersist, method: postUpdate }
-
-    node.listener:
-         class: Kunstmaan\AdminNodeBundle\Listener\NodeGenerator
-         tags:
-                - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
-                - { name: doctrine.event_listener, event: postPersist, method: postPersist }
-                - { name: doctrine.event_listener, event: prePersist, method: prePersist }
-                - { name: doctrine.event_listener, event: preRemove, method: preRemove }
-                - { name: doctrine.event_listener, event: postLoad, method: postLoad }
+        class: Kunstmaan\AdminNodeBundle\Listener\NodeTranslationListener
+        tags:
+            - { name: doctrine.event_listener, event: postFlush, method: postFlush }
 
     admin_menu.adaptor.pages:
         class: Kunstmaan\AdminNodeBundle\Helper\Menu\PageMenuAdaptor
         arguments: ["@service_container"]
         tags:
             -  { name: admin_menu.adaptor }
-            

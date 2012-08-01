@@ -16,6 +16,8 @@ class NodeTranslationAdminType extends AbstractType
 
     public function buildForm(FormBuilder $builder, array $options)
     {
+        $builder->add('id', 'hidden');
+        $builder->add('node', 'entity_id', array('class' => 'Kunstmaan\AdminNodeBundle\Entity\Node'));
         $builder->add('online', 'checkbox', array('required' => false));
         $builder->add('slug');
         $builder->add('weight', 'choice', array(

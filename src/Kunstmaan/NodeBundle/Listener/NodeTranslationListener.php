@@ -2,45 +2,42 @@
 
 namespace Kunstmaan\AdminNodeBundle\Listener;
 
+use Doctrine\ORM\Event\PostFlushEventArgs;
+
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
 /**
- * Listens to doctrine postPersist and postUpdate events and updates
+ * Listens to doctrine postFlush event and updates
  * the urls if the entities are nodetranslations
  */
 class NodeTranslationListener
 {
+    
     /**
-     * Runs the postUpdate doctrine event and updates the nodetranslation urls if needed
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     * PostUpdate doctrine event - updates the nodetranslation urls if needed
+     *
+     * @param PostFlushEventArgs $args
      */
-    public function postUpdate(LifecycleEventArgs $args)
+    public function postFlush(PostFlushEventArgs $args)
     {
-        $entity = $args->getEntity();
-
-        if ($entity instanceof NodeTranslation) {
-            $em     = $args->getEntityManager();
-            $entity = $this->updateUrl($entity);
-
-            if ($entity != false) {
-                $em->persist($entity);
-                $em->flush();
-
-                $this->updateNodeChildren($entity, $em);
+        $em = $args->getEntityManager();
+        
+        foreach ($em->getUnitOfWork()->getScheduledEntityUpdates() as $entity) {
+            die('postFlush Entity updates');
+            if ($entity instanceof NodeTranslation) {
+                $entity = $this->updateUrl($entity);
+                
+                if ($entity != false) {
+                    $em->persist($entity);
+                    $em->flush();
+                
+                    $this->updateNodeChildren($entity, $em);
+                }
             }
         }
     }
-
-    /**
-     * Runs the postPersist doctrine event and updates the nodetranslation urls if needed
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
-    public function postPersist(LifecycleEventArgs $args)
-    {
-        $this->postUpdate($args);
-    }
-
+    
     /**
      * Checks if a nodetranslation has children and update their url
      * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation $node
