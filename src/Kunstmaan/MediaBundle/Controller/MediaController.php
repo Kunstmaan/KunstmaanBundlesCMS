@@ -90,7 +90,7 @@ class MediaController extends Controller
         $form = $this->createForm(new BulkUploadType($strategy->getBulkUploadAccept()), $helper);
 
         if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
 
             if ($form->isValid()) {
 
@@ -151,7 +151,7 @@ class MediaController extends Controller
         $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
             if ($form->isValid()) {
                 if ($helper->getMedia() != NULL) {
                     $file = new File();
@@ -215,7 +215,7 @@ class MediaController extends Controller
         $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
             if ($form->isValid()) {
                 if ($picturehelper->getMedia() != NULL) {
                     $picture = new Image();
@@ -279,7 +279,7 @@ class MediaController extends Controller
         $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
             if ($form->isValid()) {
                 $video->setGallery($gallery);
 
@@ -339,7 +339,7 @@ class MediaController extends Controller
         $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
             if ($form->isValid()) {
                 $slide->setGallery($gallery);
 

@@ -48,7 +48,7 @@ class MediaMetadataController extends Controller
         }
 
         if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
             if ($form->isValid()){
 
                 if (isset($metadata)) {
