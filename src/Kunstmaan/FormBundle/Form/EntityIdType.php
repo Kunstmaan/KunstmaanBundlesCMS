@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\FormBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -23,7 +25,7 @@ class EntityIdType extends AbstractType
         $this->registry = $registry;
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->prependClientTransformer(new OneEntityToIdTransformer(
                         $this->registry->getEntityManager($options['em']),
@@ -53,7 +55,7 @@ class EntityIdType extends AbstractType
         return $options;
     }
 
-    public function getParent(array $options)
+    public function getParent()
     {
         return $options['hidden'] ? 'hidden' : 'text';
     }
