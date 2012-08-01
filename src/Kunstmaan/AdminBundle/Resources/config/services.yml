@@ -63,7 +63,7 @@ services:
         class: Kunstmaan\AdminBundle\Modules\LogoutListener
         arguments:  [@security.context, @doctrine]
         tags:
-            - { name: 'monolog.logger' channel: 'security' }
+            - { name: 'monolog.logger', channel: 'security' }
             
     kunstmaan.twig.locale:
         class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
