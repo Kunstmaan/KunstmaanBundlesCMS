@@ -2,12 +2,13 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class MediaType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('media', 'file')
@@ -17,5 +18,12 @@ class MediaType extends AbstractType
     public function getName()
     {
         return 'kunstmaan_mediabundle_filetype';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\MediaBundle\Helper\MediaHelper',
+        );
     }
 }
