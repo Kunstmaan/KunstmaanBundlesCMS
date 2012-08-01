@@ -18,8 +18,8 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "symfony/symfony": "2.1.*",
         "friendsofsymfony/user-bundle": "dev-master",
-        "kunstmaan/adminlist-bundle": "dev-master",
-        "kunstmaan/adminnode-bundle": "dev-master"
+        "kunstmaan/adminlist-bundle": "2.0.*",
+        "kunstmaan/adminnode-bundle": "2.0.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
