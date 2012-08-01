@@ -294,7 +294,7 @@ class PagesController extends Controller
 
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
+            $form->bind($request);
             foreach ($pagepartadmins as $pagepartadmin) {
                 $pagepartadmin->bindRequest($request);
             }
