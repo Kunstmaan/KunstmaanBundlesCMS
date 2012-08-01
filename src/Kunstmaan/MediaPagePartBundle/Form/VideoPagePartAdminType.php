@@ -24,4 +24,11 @@ class VideoPagePartAdminType extends AbstractType {
     public function getName() {
         return 'kunstmaan_mediabundle_videopageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart',
+        );
+    }
 }

@@ -17,4 +17,11 @@ class ImagePagePartAdminType extends AbstractType {
     public function getName() {
         return 'kunstmaan_mediabundle_imagepageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
+        );
+    }
 }

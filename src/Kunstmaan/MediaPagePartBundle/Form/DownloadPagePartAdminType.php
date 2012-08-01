@@ -24,4 +24,12 @@ class DownloadPagePartAdminType extends AbstractType {
     public function getName() {
         return 'kunstmaan_mediabundle_downloadpageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart',
+        );
+    }
+
 }

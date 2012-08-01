@@ -24,4 +24,11 @@ class SlidePagePartAdminType extends AbstractType {
     public function getName() {
         return 'kunstmaan_mediabundle_slidepageparttype';
     }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart',
+        );
+    }
 }

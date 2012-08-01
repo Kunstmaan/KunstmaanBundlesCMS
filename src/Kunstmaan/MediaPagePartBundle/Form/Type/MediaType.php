@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form\Type;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
@@ -17,27 +19,23 @@ class MediaType extends AbstractType {
         $builder->prependClientTransformer(new IdToMediaTransformer($this->objectManager, $options['current_value_container']));
     }
 
-    public function getDefaultOptions(array $options) {
-        $defaultOptions = array(
+    public function getParent()
+    {
+        return 'form';
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'compound' => false,
             'em'                => null,
-            'class'             => null,
+            'class'             => "input_prop",
             'property'          => null,
             'query_builder'     => null,
             'choices'           => null,
             'chooserpath'		=> null,
-        );
-
-        $options = array_replace($defaultOptions, $options);
-
-        if (!isset($options['current_value_container'])) {
-            $defaultOptions['current_value_container'] = new CurrentValueContainer();
-        }
-
-        return $defaultOptions;
-    }
-
-    public function getParent() {
-        return 'field';
+            'current_value_container' => new CurrentValueContainer(),
+        ));
     }
 
     public function getName() {
