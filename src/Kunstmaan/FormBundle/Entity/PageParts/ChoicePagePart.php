@@ -2,10 +2,11 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
@@ -52,7 +53,7 @@ class ChoicePagePart extends AbstractFormPagePart
 	/**
 	 * {@inheritdoc}
 	 */
-	public function adaptForm(FormBuilder $formBuilder, &$fields)
+	public function adaptForm(FormBuilderInterface $formBuilder, &$fields)
 	{
 		$choices = explode("\n", $this->getChoices());
 
@@ -154,7 +155,7 @@ class ChoicePagePart extends AbstractFormPagePart
     /**
      * Get empty_value
      *
-     * @return string 
+     * @return string
      */
     public function getEmptyValue()
     {

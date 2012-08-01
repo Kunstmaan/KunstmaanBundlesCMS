@@ -134,7 +134,7 @@ abstract class AbstractFormPage extends AbstractPage
 					$formsubmission = new FormSubmission();
 					$formsubmission->setIpAddress($request->getClientIp());
 					$formsubmission->setNode($em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this));
-					$formsubmission->setLang($locale = $request->getSession()->getLocale());
+					$formsubmission->setLang($locale = $request->getLocale());
 					$em->persist($formsubmission);
 					foreach ($fields as &$field) {
 						$field->setSubmission($formsubmission);
