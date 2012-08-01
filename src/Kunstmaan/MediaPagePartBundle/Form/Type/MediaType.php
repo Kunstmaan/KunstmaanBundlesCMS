@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form\Type;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\AbstractType;
 
@@ -12,7 +14,7 @@ class MediaType extends AbstractType {
         $this->objectManager = $objectManager;
     }
 
-    public function buildForm(FormBuilder $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->prependClientTransformer(new IdToMediaTransformer($this->objectManager, $options['current_value_container']));
     }
 
@@ -35,7 +37,7 @@ class MediaType extends AbstractType {
         return $defaultOptions;
     }
 
-    public function getParent(array $options) {
+    public function getParent() {
         return 'field';
     }
 
