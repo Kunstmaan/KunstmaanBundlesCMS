@@ -1,0 +1,10 @@
+parameters:
+    security:
+        acl:
+            permission:
+                map:
+                    class: AdminBundle\Component\Security\Acl\Permission\KunstmaanPermissionMap
+      
+security:
+    acl:
+        connection: default
