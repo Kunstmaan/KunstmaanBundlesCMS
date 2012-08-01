@@ -40,7 +40,7 @@ class PagesController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'write', true);
         $nodeMenu = new NodeMenu($this->container, $locale, null, 'write', true, true);
@@ -70,7 +70,7 @@ class PagesController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $otherLanguageNodeTranslation = $node->getNodeTranslation($otherlanguage, true);
         $otherLanguagePage = $otherLanguageNodeTranslation->getPublicNodeVersion()->getRef($em);
@@ -93,7 +93,7 @@ class PagesController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $entityname = $node->getRefEntityname();
         $myLanguagePage = new $entityname();
@@ -119,7 +119,7 @@ class PagesController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         $nodeTranslation->setOnline(true);
@@ -143,7 +143,7 @@ class PagesController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         $nodeTranslation->setOnline(false);
@@ -169,7 +169,7 @@ class PagesController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
 
         $saveasdraft = $request->get("saveasdraft");
         $saveandpublish = $request->get("saveandpublish");
@@ -500,7 +500,7 @@ class PagesController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read');
         $nodeMenu = new NodeMenu($this->container, $locale, null, 'read', true, true);

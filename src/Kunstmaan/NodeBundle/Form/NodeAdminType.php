@@ -2,8 +2,9 @@
 
 namespace Kunstmaan\AdminNodeBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class NodeAdminType extends AbstractType
 {
@@ -14,7 +15,7 @@ class NodeAdminType extends AbstractType
         $this->container = $container;
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
        	$builder->add('hiddenfromnav', "checkbox");
     }
@@ -22,5 +23,12 @@ class NodeAdminType extends AbstractType
     public function getName()
     {
         return 'node';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\AdminNodeBundle\Entity\Node',
+        );
     }
 }

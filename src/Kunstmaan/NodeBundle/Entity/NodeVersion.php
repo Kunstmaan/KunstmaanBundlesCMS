@@ -16,7 +16,7 @@ use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 
 /**
  * NodeVersion
- * 
+ *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeVersionRepository")
  * @ORM\Table(name="nodeversion")
  * @ORM\HasLifecycleCallbacks()
@@ -195,7 +195,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * @ORM\preUpdate
+     * @ORM\PreUpdate
      */
     public function setUpdatedValue()
     {
@@ -244,7 +244,7 @@ class NodeVersion extends AbstractEntity
 
     /**
      * @param ContainerInterface $container
-     * 
+     *
      * @return NodeAdminType
      */
     public function getDefaultAdminType(ContainerInterface $container)
@@ -254,7 +254,7 @@ class NodeVersion extends AbstractEntity
 
     /**
      * @param EntityManager $em
-     * 
+     *
      * @return Entity
      */
     public function getRef(EntityManager $em)
