@@ -33,7 +33,6 @@
 	<section>
 		<ul class="thumbnails" id="file-list">
 		    {% for media in gallery.getImages %}
-		        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 		        <li>
 		            <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
 		                <img src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />

@@ -28,7 +28,6 @@
 	<section>
 		<ul>
 		    {% for media in gallery.getSlidesOnly %}
-		        {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
 		        <li>
 		            <a onclick="handleOK({title:'{{ media.name }}', id:'{{media.id}}'});return false;"  class="item" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
 		                {{ media.name }}
