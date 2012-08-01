@@ -28,9 +28,9 @@ class SlugController extends Controller
         $locale = $request->getLocale();
 
         if (empty($locale)) {
-            $locale = $request->getSession()->getLocale();
+            $locale = $request->getLocale();
         }
-        
+
         $requiredlocales = $this->container->getParameter('requiredlocales');
 
         $localesarray = explode('|', $requiredlocales);
@@ -54,7 +54,7 @@ class SlugController extends Controller
                 return $this->redirect($this->generateUrl('_slug', array('url' => $url, '_locale' => $locale)));
             }
         }
-        
+
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForUrl($url, $locale);
         $exactMatch = true;
         if (!$nodeTranslation) {
@@ -74,7 +74,7 @@ class SlugController extends Controller
             }
             $node = $nodeTranslation->getNode();
         }
-        
+
         // If no node translation or no exact match that is not a dynamic routing page -> 404
         if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingPageInterface))) {
             throw $this->createNotFoundException('No page found for slug ' . $url);
@@ -102,11 +102,11 @@ class SlugController extends Controller
                 $path = $page->match($slugPart);
                 if ($path) {
                     $path['nodeTranslationId'] = $nodeTranslation->getId();
-                    
+
                     return $this->forward($path['_controller'], $path, $request->query->all());
                 }
             }
-            
+
             //render page
             $pageparts = array();
             if ($exactMatch && method_exists($page, 'getPagePartAdminConfigurations')) {
@@ -136,7 +136,7 @@ class SlugController extends Controller
 
             return $this->render($renderContext->getView(), (array) $renderContext);
         }
-        
+
         throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
     }
 }
