@@ -16,8 +16,8 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
-        "kunstmaan/adminlist-bundle": "dev-master",
-        "kunstmaan/admin-bundle": "dev-master"
+        "kunstmaan/adminlist-bundle": "2.0.*",
+        "kunstmaan/admin-bundle": "2.0.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
