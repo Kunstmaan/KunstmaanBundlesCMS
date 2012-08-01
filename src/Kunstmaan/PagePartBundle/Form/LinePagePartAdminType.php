@@ -2,8 +2,9 @@
 
 namespace Kunstmaan\PagePartBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 /**
  * LinePagePartAdminType
@@ -13,7 +14,7 @@ class LinePagePartAdminType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
     }
 

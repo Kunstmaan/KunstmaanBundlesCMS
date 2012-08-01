@@ -57,7 +57,7 @@ class PagePartAdminController extends Controller
     public function selectlinkAction(){
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
+        $locale = $request->getLocale();
         $user = $this->container->get('security.context')->getToken()->getUser();
         $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read', TRUE);
         $nodeMenu = new NodeMenu($this->container, $locale, null, 'read', FALSE, TRUE);

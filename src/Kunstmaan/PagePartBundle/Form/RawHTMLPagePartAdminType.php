@@ -2,8 +2,9 @@
 
 namespace Kunstmaan\PagePartBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 /**
  * class to add content to a raw html pagepart
@@ -11,7 +12,7 @@ use Symfony\Component\Form\FormBuilder;
  */
 class RawHTMLPagePartAdminType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('content', 'textarea', array('required' => false, 'attr' => array( "style"=> "width: 600px",'rows'=>32 )))
