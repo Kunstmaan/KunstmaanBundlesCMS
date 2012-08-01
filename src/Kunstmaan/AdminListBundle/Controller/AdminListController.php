@@ -47,8 +47,8 @@ abstract class AdminListController extends Controller {
 		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
 		$adminlist->bindRequest($request);
 		$entities = $adminlist->getItems(array());
-		
-		
+
+
 
 		$response = new Response();
 		$filename = sprintf('entries.%s', $_format);
@@ -80,7 +80,7 @@ abstract class AdminListController extends Controller {
 		$form = $this->createForm($this->getAdminType(), $helper);
 
 		if ('POST' == $request->getMethod()) {
-			$form->bindRequest($request);
+			$form->bind($request);
 			if ($form->isValid()) {
 				$em->persist($helper);
 				$em->flush();
@@ -109,7 +109,7 @@ abstract class AdminListController extends Controller {
 		$form = $this->createForm($this->getAdminType(), $helper);
 
 		if ('POST' == $request->getMethod()) {
-			$form->bindRequest($request);
+			$form->bind($request);
 			if ($form->isValid()) {
 				$em->persist($helper);
 				$em->flush();
@@ -142,7 +142,7 @@ abstract class AdminListController extends Controller {
 		$form = $this->createFormBuilder($helper)->add('id', "hidden")->getForm();
 
 		if ('POST' == $request->getMethod()) {
-			$form->bindRequest($request);
+			$form->bind($request);
 			if ($form->isValid()) {
 				$em->remove($helper);
 				$em->flush();
