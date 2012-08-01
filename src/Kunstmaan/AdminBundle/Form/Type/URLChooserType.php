@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Form\Type;
 
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 use Symfony\Bridge\Doctrine\Form\EventListener\MergeCollectionListener;

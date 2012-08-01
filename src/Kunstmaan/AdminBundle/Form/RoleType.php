@@ -2,9 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class RoleType extends AbstractType {
     private $container;
@@ -13,7 +14,7 @@ class RoleType extends AbstractType {
         $this->container = $container;
     }
 
-    public function buildForm(FormBuilder $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('role');
     }
 

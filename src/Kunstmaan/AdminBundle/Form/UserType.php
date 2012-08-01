@@ -2,24 +2,25 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\DependencyInjection\Container;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class UserType extends AbstractType
 {
 	private $container;
-	
+
 	public function __construct(Container $container){
 		$this->container = $container;
 	}
-	
-    public function buildForm(FormBuilder $builder, array $options)
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	// get roles from the service container
     	/*$definedRoles = $this->container->getParameter('security.role_hierarchy.roles');
-    	
+
     	$roles = array();
     	foreach ($definedRoles as $name => $rolesHierarchy) {
     		$roles[$name] = $name . ': ' . implode(', ', $rolesHierarchy);
@@ -30,7 +31,7 @@ class UserType extends AbstractType
     			}
     		}
     	}*/
-    	    	
+
         $builder->add('username');
         $builder->add('plainPassword', 'repeated', array(
                 'type' => 'password',
@@ -47,14 +48,14 @@ class UserType extends AbstractType
     {
         return 'user';
     }
-    
+
     public function getDefaultOptions(array $options)
     {
         return array(
             'password_required' => false,
         );
     }
-    
+
     public function getAllowedOptionValues(array $options)
     {
         return array(
@@ -63,5 +64,5 @@ class UserType extends AbstractType
                 false
             ),
         );
-    }    
+    }
 }
