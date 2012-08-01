@@ -4,6 +4,7 @@ services:
     nodetranslation.listener:
         class: Kunstmaan\AdminNodeBundle\Listener\NodeTranslationListener
         tags:
+            - { name: doctrine.event_listener, event: onFlush, method: onFlush }
             - { name: doctrine.event_listener, event: postFlush, method: postFlush }
 
     admin_menu.adaptor.pages:

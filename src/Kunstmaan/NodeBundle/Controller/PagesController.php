@@ -303,7 +303,6 @@ class PagesController extends Controller
                 foreach ($pagepartadmins as $pagepartadmin) {
                     $pagepartadmin->postBindRequest($request);
                 }
-                $em->flush();
 
                 $formValues = $request->request->get('form');
                 if (isset($formValues['node']['roles'])) {
@@ -316,7 +315,6 @@ class PagesController extends Controller
                 $nodeTranslation->setTitle($page->getTitle());
                 $em->persist($node);
                 $em->persist($nodeTranslation);
-                $em->flush();
                 
                 $editcommand = new EditCommand($em, $user);
                 $editcommand->execute("added pageparts to page \"". $page->getTitle() ."\" with locale: " . $locale, array('entity'=> $page));
