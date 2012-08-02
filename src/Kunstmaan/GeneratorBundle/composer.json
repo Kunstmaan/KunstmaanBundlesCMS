@@ -18,7 +18,7 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "symfony/symfony": "2.1.*",
         "friendsofsymfony/user-bundle": "1.2.*",
-        "kunstmaan/adminlist-bundle": "dev-master",
+        "kunstmaan/adminlist-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
