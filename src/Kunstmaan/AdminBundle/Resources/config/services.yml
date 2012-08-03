@@ -77,4 +77,8 @@ services:
     security.acl.permission.map:
         class: Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap
         
- 
+    security.acl.object_identity_retrieval_strategy:
+        class: Kunstmaan\AdminBundle\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy
+        arguments:
+            - @doctrine.orm.entity_manager
+        
