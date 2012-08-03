@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Permission;
 
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+
 use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionHelper;
 
 use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
@@ -130,6 +132,17 @@ class PermissionAdmin
                 $acl->insertObjectAce($securityIdentity, $mask->get());
             }
         }
+        
+        // Process removed Aces
+        foreach ($this->permissions as $role => $permission) {
+            if (!isset($postPermissions[$role])) {
+                $index = PermissionHelper::getObjectAceIndex($acl, $role);
+                if (false !== $index) {
+                    $acl->updateObjectAce($index, 0);
+                }
+            }
+        }
+        
         $this->aclProvider->updateAcl($acl);
         
         return true;
