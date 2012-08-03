@@ -2,28 +2,29 @@
 
 namespace Kunstmaan\AdminNodeBundle\Controller;
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Kunstmaan\AdminNodeBundle\Helper\Event\Events;
-use Kunstmaan\AdminNodeBundle\Helper\Event\PageEvent;
-
-use Kunstmaan\AdminBundle\Modules\PrepersistListener;
-use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
-use Kunstmaan\AdminBundle\Form\PageAdminType;
-use Kunstmaan\AdminNodeBundle\AdminList\PageAdminListConfigurator;
-use Kunstmaan\AdminBundle\Form\NodeInfoAdminType;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
-use Kunstmaan\AdminBundle\Entity\Permission;
-use Kunstmaan\AdminBundle\Modules\Slugifier;
-use Kunstmaan\AdminNodeBundle\Form\SEOType;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\EditCommand;
 use Kunstmaan\AdminBundle\Entity\DeleteCommand;
+use Kunstmaan\AdminBundle\Entity\Permission;
+use Kunstmaan\AdminBundle\Form\NodeInfoAdminType;
+use Kunstmaan\AdminBundle\Form\PageAdminType;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Modules\PrepersistListener;
+use Kunstmaan\AdminBundle\Modules\Slugifier;
+use Kunstmaan\AdminNodeBundle\AdminList\PageAdminListConfigurator;
+use Kunstmaan\AdminNodeBundle\Form\SEOType;
+use Kunstmaan\AdminNodeBundle\Helper\Event\Events;
+use Kunstmaan\AdminNodeBundle\Helper\Event\PageEvent;
+use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 
 /**
  * PagesController
@@ -167,7 +168,9 @@ class PagesController extends Controller
     public function editAction($id, $subaction)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $securityContext = $this->container->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+        $aclProvider = $this->container->get('security.acl.provider');
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
 
@@ -190,16 +193,9 @@ class PagesController extends Controller
 
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
 
-        $guestGroup = $em->getRepository('KunstmaanAdminBundle:Group')->findOneByName('Guests');
-        $guestPermission = $em->getRepository('KunstmaanAdminBundle:Permission')->findOneBy(array('refId' => $node->getId(), 'refEntityname' => ClassLookup::getClass($node), 'refGroup' => $guestGroup->getId()));
-        if (is_null($guestPermission)) {
-            $guestPermission = new Permission();
-            $guestPermission->setRefId($node->getId());
-            $guestPermission->setRefEntityname(ClassLookup::getClass($node));
-            $guestPermission->setRefGroup($guestGroup);
-            $guestPermission->setPermissions('|read:1|write:0|delete:0|');
-            $em->persist($guestPermission);
-            $em->flush();
+        // Check with Acl
+        if (false === $securityContext->isGranted('EDIT', $node)) {
+            throw new AccessDeniedException();
         }
 
         $nodeTranslation = $node->getNodeTranslation($locale, true);
@@ -287,8 +283,10 @@ class PagesController extends Controller
         }
 
         if ($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')) {
-            $permissionadmin = $this->get("kunstmaan_admin.permissionadmin");
-            $permissionadmin->initialize($node, $em, $page->getPossiblePermissions());
+            $permissionadmin = $this->container->get('kunstmaan_admin.permissionadmin');
+            // @todo Fetch permissionmap from page?
+            $permissionMap = $this->container->get('security.acl.permission.map');
+            $permissionadmin->initialize($node, $em, $aclProvider, $permissionMap);
         }
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
