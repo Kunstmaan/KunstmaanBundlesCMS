@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\Controller;
 
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -301,15 +303,6 @@ class PagesController extends Controller
                 foreach ($pagepartadmins as $pagepartadmin) {
                     $pagepartadmin->postBindRequest($request);
                 }
-
-                $formValues = $request->request->get('form');
-                if (isset($formValues['node']['roles'])) {
-                    $roles = array_keys($formValues['node']['roles']);
-                } else {
-                    $roles = array();
-                }
-
-                $node->setRoles($roles);
                 $nodeTranslation->setTitle($page->getTitle());
                 $em->persist($node);
                 $em->persist($nodeTranslation);
@@ -396,30 +389,27 @@ class PagesController extends Controller
         $newpage->setParent($parentPage);
 
         $nodenewpage = $em->getRepository('KunstmaanAdminNodeBundle:Node')->createNodeFor($newpage, $locale, $user);
-
-        //get permissions of the parent and apply them on the new child
-        $parentPermissions = $em->getRepository('KunstmaanAdminBundle:Permission')->findBy(array(
-            'refId'             => $nodeparent->getId(),
-            'refEntityname'     => ClassLookup::getClass($nodeparent),
-        ));
-
-        if ($parentPermissions) {
-            foreach ($parentPermissions as $parentPermission) {
-                $permission = new Permission();
-
-                $permission->setRefId($nodenewpage->getId());
-                $permission->setPermissions($parentPermission->getPermissions());
-                $permission->setRefEntityname(ClassLookup::getClass($nodeparent));
-                $permission->setRefGroup($parentPermission->getRefGroup());
-
-                $em->persist($permission);
-                $em->flush();
-            }
-        }
-
         $em->persist($nodenewpage);
         $em->flush();
-
+                
+        $securityContext = $this->container->get('security.context');
+        $aclProvider = $this->container->get('security.acl.provider');
+        
+        $parentIdentity = ObjectIdentity::fromDomainObject($nodeparent);
+        $parentAcl = $aclProvider->findAcl($parentIdentity);
+        
+        $newIdentity = ObjectIdentity::fromDomainObject($nodenewpage);
+        $newAcl = $aclProvider->createAcl($newIdentity);
+        
+        $aces = $parentAcl->getObjectAces();
+        foreach ($aces as $ace) {
+            $securityIdentity = $ace->getSecurityIdentity();
+            if ($securityIdentity instanceof RoleSecurityIdentity) {
+                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
+            }
+        }
+        $aclProvider->updateAcl($newAcl);
+        
         return $nodenewpage;
     }
 
