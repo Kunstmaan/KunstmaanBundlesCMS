@@ -2,12 +2,19 @@
 
 namespace Kunstmaan\AdminBundle\Permission;
 
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionHelper;
+
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
+
 use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\AdminBundle\Entity\Permission;
-
 use Symfony\Component\Form\FormBuilder;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\AclProviderInterface;
+use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
+
 
 /**
  * PermissionAdmin
@@ -15,26 +22,40 @@ use Kunstmaan\AdminBundle\Modules\ClassLookup;
 class PermissionAdmin
 {
 
-    protected $request      = null;
-    protected $resource     = null;
-    protected $em           = null;
-    protected $possiblePermissions = null;
-    protected $permissions = null;
+    protected $request       = null;
+    protected $resource      = null;
+    protected $em            = null;
+    protected $aclProvider   = null;
+    protected $permissionMap = null;
+    protected $permissions   = null;
 
     /**
      * @param object        $resource            The object which has the permissions
      * @param EntityManager $em                  The EntityManager
      * @param array         $possiblePermissions Possible permissions
      */
-    public function initialize($resource, EntityManager $em, $possiblePermissions = array('read', 'write', 'delete'))
+    public function initialize($resource, EntityManager $em, AclProviderInterface $aclProvider, PermissionMapInterface $permissionMap)
     {
-        $this->em           = $em;
-        $this->resource     = $resource;
-        $this->possiblePermissions = $possiblePermissions;
-        $this->permissions = $this->em->getRepository('KunstmaanAdminBundle:Permission')->findBy(array(
-                'refId'         => $resource->getId(),
-                'refEntityname' => ClassLookup::getClass($resource),
-        ));
+        $this->em            = $em;
+        $this->resource      = $resource;
+        $this->aclProvider   = $aclProvider;
+        $this->permissionMap = $permissionMap;
+        $this->permissions   = array();
+        
+        // Init permissions
+        try {
+            $objectIdentity = ObjectIdentity::fromDomainObject($this->resource);
+            $acl = $aclProvider->findAcl($objectIdentity);
+            $aces = $acl->getObjectAces();
+            foreach ($aces as $ace) {
+                $securityIdentity = $ace->getSecurityIdentity();
+                if ($securityIdentity instanceof RoleSecurityIdentity) {
+                    $this->permissions[$securityIdentity->getRole()] = new MaskBuilder($ace->getMask());
+                }
+            }
+        } catch (AclNotFoundException $e) {
+            // No Acl found - do nothing (or should we initialize with default values here?)
+        }
     }
 
     /**
@@ -46,16 +67,17 @@ class PermissionAdmin
     }
 
     /**
-     * @param Group $group
+     * @param Role $role
      *
      * @return Permission
      */
-    public function getPermission($group)
+    public function getPermission($role)
     {
-        foreach ($this->permissions as &$permission) {
-            if ($permission->getRefGroup() == $group) {
-                return $permission;
-            }
+        if ($role instanceof RoleInterface) {
+            $role = $role->getRole();
+        }
+        if (isset($this->permissions[$role])) {
+            return $this->permissions[$role];
         }
 
         return null;
@@ -64,9 +86,9 @@ class PermissionAdmin
     /**
      * @return array
      */
-    public function getAllGroups()
+    public function getAllRoles()
     {
-        return $this->em->getRepository('KunstmaanAdminBundle:Group')->findAll();
+        return $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
     }
 
     /**
@@ -74,7 +96,7 @@ class PermissionAdmin
      */
     public function getPossiblePermissions()
     {
-        return $this->possiblePermissions;
+        return $this->permissionMap->getPossiblePermissions();
     }
 
     /**
@@ -87,31 +109,29 @@ class PermissionAdmin
         $this->request = $request;
 
         $postPermissions = $request->request->get('permissions');
-
-        //Fetch all permissions for the object to loop trough them
-        $dbPermissions = $this->em->getRepository('KunstmaanAdminBundle:Permission')->findBy(array(
-            'refId'         => $this->resource->getId(),
-            'refEntityname' => ClassLookup::getClass($this->resource),
-        ));
-
-        foreach ($this->getAllGroups() as $group) {
-            $dbPermission = $this->getPermission($group);
-            if ($dbPermission==null) {
-                $dbPermission = new Permission();
-                $dbPermission->setRefEntityname(ClassLookup::getClass($this->resource));
-                $dbPermission->setRefId($this->resource->getId());
-                $dbPermission->setRefGroup($group);
-            }
-            foreach ($this->possiblePermissions as $permission) {
-                if (isset($postPermissions[$group->getId()][$permission])) {
-                    $dbPermission->setPermission($permission, true);
-                } else {
-                    $dbPermission->setPermission($permission, false);
-                }
-            }
-            $this->em->persist($dbPermission);
+        $objectIdentity = ObjectIdentity::fromDomainObject($this->resource);
+        try {
+            $acl = $this->aclProvider->findAcl($objectIdentity);
+        } catch (AclNotFoundException $e) {
+            $acl = $this->aclProvider->createAcl($objectIdentity);
         }
-
+        
+        foreach ($postPermissions as $role => $permissions) {
+            $mask = new MaskBuilder();
+            foreach ($permissions as $permission => $value) {
+                $mask->add($permission);
+            }
+            
+            $index = PermissionHelper::getObjectAceIndex($acl, $role);
+            if (false !== $index) {
+                $acl->updateObjectAce($index, $mask->get());
+            } else {
+                $securityIdentity = new RoleSecurityIdentity($role);
+                $acl->insertObjectAce($securityIdentity, $mask->get());
+            }
+        }
+        $this->aclProvider->updateAcl($acl);
+        
         return true;
     }
 }

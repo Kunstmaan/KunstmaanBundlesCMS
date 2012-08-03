@@ -15,21 +15,19 @@ namespace Kunstmaan\AdminBundle\Component\Security\Acl\Permission;
  * This class allows you to build cumulative permissions easily, or convert
  * masks to a human-readable format.
  */
-class KunstmaanMaskBuilder
+class MaskBuilder
 {
     const MASK_VIEW         = 1;          // 1 << 0
     const MASK_CREATE       = 2;          // 1 << 1
     const MASK_EDIT         = 4;          // 1 << 2
     const MASK_DELETE       = 8;          // 1 << 3
-    const MASK_UNDELETE     = 16;         // 1 << 4
-    const MASK_PUBLISH      = 32;         // 1 << 5
+    const MASK_PUBLISH      = 16;         // 1 << 4
     const MASK_IDDQD        = 1073741823; // 1 << 0 | 1 << 1 | ... | 1 << 30
 
     const CODE_VIEW         = 'V';
     const CODE_CREATE       = 'C';
     const CODE_EDIT         = 'E';
     const CODE_DELETE       = 'D';
-    const CODE_UNDELETE     = 'U';
     const CODE_PUBLISH      = 'P';
 
     const ALL_OFF           = '................................';
@@ -57,7 +55,7 @@ class KunstmaanMaskBuilder
      * Adds a mask to the permission
      *
      * @param mixed $mask
-     * @return KunstmaanMaskBuilder
+     * @return MaskBuilder
      */
     public function add($mask)
     {
@@ -110,7 +108,7 @@ class KunstmaanMaskBuilder
      * Removes a mask from the permission
      *
      * @param mixed $mask
-     * @return KunstmaanMaskBuilder
+     * @return MaskBuilder
      */
     public function remove($mask)
     {
@@ -126,9 +124,9 @@ class KunstmaanMaskBuilder
     }
 
     /**
-     * Resets the KunstmaanMaskBuilder
+     * Resets the MaskBuilder
      *
-     * @return KunstmaanMaskBuilder
+     * @return MaskBuilder
      */
     public function reset()
     {
@@ -167,5 +165,16 @@ class KunstmaanMaskBuilder
         }
 
         throw new \InvalidArgumentException(sprintf('The mask "%d" is not supported.', $mask));
+    }
+    
+    public function has($mask)
+    {
+        if (is_string($mask) && defined($name = 'static::MASK_'.strtoupper($mask))) {
+            $mask = constant($name);
+        } elseif (!is_int($mask)) {
+            throw new \InvalidArgumentException('$mask must be an integer.');
+        }
+        
+        return ($this->mask & $mask) != 0;
     }
 }

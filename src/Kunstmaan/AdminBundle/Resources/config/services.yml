@@ -73,4 +73,8 @@ services:
         class: Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension
         tags:
             - { name: twig.extension }
+            
+    security.acl.permission.map:
+        class: Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap
+        
  

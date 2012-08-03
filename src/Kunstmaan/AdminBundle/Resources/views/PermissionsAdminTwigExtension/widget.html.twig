@@ -3,22 +3,22 @@
     <table class="table table-bordered table-striped">
         <thead>
            <tr>
-               <th>Groupname</th>
+               <th>Rollname</th>
                 {% for permissionName in permissionadmin.getPossiblePermissions() %}
                     <th>{{ permissionName }}</th>
                 {% endfor %}
            </tr>
         </thead>
         <tbody>
-            {% for group in permissionadmin.getAllGroups() %}
+            {% for role in permissionadmin.getAllRoles() %}
 	            <tr>
 	                <td>
-	                    {{ group.getName() }}
+	                    {{ role.getRole() }}
 	                </td>
-	                {% set permission = permissionadmin.getPermission(group) %}
+	                {% set permission = permissionadmin.getPermission(role) %}
 	                {% for permissionName in permissionadmin.getPossiblePermissions() %}
 		                <td>
-		                    <input type="checkbox" name="permissions[{{ group.id }}][{{ permissionName }}]" {% if permission is not null and permission.hasPermission(permissionName) %}checked="checked"{% endif %} />
+		                    <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %} />
 		                </td>
 	                {% endfor %}
 	            </tr>
