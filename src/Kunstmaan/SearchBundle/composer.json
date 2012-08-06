@@ -15,7 +15,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.1.*",
+        "symfony/symfony": "2.0.*",
         "kunstmaan/admin-bundle": "dev-master",
         "kunstmaan/view-bundle": "dev-master",
         "exercise/elastica-bundle": "2.0.*"
