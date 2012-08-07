@@ -22,11 +22,6 @@ class Group implements RoleInterface, GroupInterface
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Permission", mappedBy="refGroup")
-     */
-    protected $permissions;
-
-    /**
      * @ORM\Column(type="string")
      */
     protected $name;
@@ -41,11 +36,6 @@ class Group implements RoleInterface, GroupInterface
      * @ORM\ManyToMany(targetEntity="Role")
      */
     protected $rolescollection;
-
-    public function getPermissions()
-    {
-        return $this->permissions;
-    }
 
     /**
      * Get id
@@ -64,11 +54,16 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Returns an ARRAY of Role objects with the default Role object appended.
+     * 
      * @return array
      */
     public function getRoles()
     {
-        return $this->roles->toArray();
+        $result = array();
+        foreach ($this->roles as $role) {
+            $result[] = $role->getRole();
+        }
+        return $result;
     }
 
     /**
@@ -110,13 +105,15 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Adds a Role OBJECT to the ArrayCollection. Can't type hint due to interface so throws Exception.
-     * @throws Exception
+     * 
+     * @throws InvalidArgumentException
+     * 
      * @param Role $role
      */
     public function addRole($role)
     {
         if (!$role instanceof Role) {
-            throw new \Exception("addRole takes a Role object as the parameter");
+            throw new \InvalidArgumentException("addRole takes a Role object as the parameter");
         }
 
         if (!$this->hasRole($role->getRole())) {
@@ -126,6 +123,7 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Pass a string, remove the Role object from collection.
+     * 
      * @param string $role
      */
     public function removeRole($role)
@@ -139,6 +137,7 @@ class Group implements RoleInterface, GroupInterface
     /**
      * Pass an ARRAY of Role objects and will clear the collection and re-set it with new Roles.
      * Type hinted array due to interface.
+     * 
      * @param array $roles Of Role objects.
      */
     public function setRoles(array $roles)
@@ -160,7 +159,6 @@ class Group implements RoleInterface, GroupInterface
 
     public function __construct($name = '', $roles = array())
     {
-        $this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->roles = new ArrayCollection();
         $this->name = $name;
     }

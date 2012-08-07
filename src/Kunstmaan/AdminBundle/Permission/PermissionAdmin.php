@@ -71,7 +71,7 @@ class PermissionAdmin
     /**
      * @param Role $role
      *
-     * @return Permission
+     * @return MaskBuilder|null
      */
     public function getPermission($role)
     {

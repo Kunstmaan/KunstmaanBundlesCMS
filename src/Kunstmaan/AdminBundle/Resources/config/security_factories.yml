@@ -1,0 +1,5 @@
+services:
+    kunstmaan.security.authentication.factory.guest:
+        class:  Kunstmaan\AdminBundle\DependencyInjection\Security\Factory\GuestUserFactory
+        tags:
+            - { name: security.listener.factory }        

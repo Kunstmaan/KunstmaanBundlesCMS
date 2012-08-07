@@ -2,39 +2,28 @@
 
 namespace Kunstmaan\AdminBundle\Permission;
 
-use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+
+use Kunstmaan\AdminBundle\Entity\User;
 
 class Manager
 {
 
-    public function getCurrentUser($user, $em) {
-        if(! $user instanceof User) {
-            $user = $em->getRepository('KunstmaanAdminBundle:User')->findOneBy(array('username' => 'guest'));
+    private $em;
+    
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+    
+    public function getCurrentUser($user) 
+    {
+        if (!$user instanceof User) {
+            $user = $this->em->getRepository('KunstmaanAdminBundle:User')->findOneBy(array('username' => 'guest'));
         }
 
         return $user;
     }
 
-    public function hasPermision($entity, $user, $permission, EntityManager $em)
-    {
-        $user = $this->getCurrentUser($user, $em);
-        try {
-            $result = $em->getRepository('KunstmaanAdminBundle:Permission')->getPermission(
-                ClassLookup::getClass($entity),
-                $entity->getId(),
-                $user->getGroupIds(),
-                $permission,
-                $em
-            );
-            //catch NoResultException, if we have one of those we don't have the correct permission
-        } catch(NoResultException $e) {
-            return false;
-        }
-
-        //permission found, so return true
-        return true;
-    }
 }

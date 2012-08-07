@@ -25,6 +25,7 @@ services:
         
     kunstmaan_admin.permissionmanager:
         class: Kunstmaan\AdminBundle\Permission\Manager
+        arguments: ["@doctrine.orm.entity_manager"]        
 
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
@@ -41,29 +42,27 @@ services:
             
     form.type.urlchooser:
         class: Kunstmaan\AdminBundle\Form\Type\URLChooserType
-        arguments:
-            - @doctrine.orm.entity_manager
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: urlchooser }
             
     kunstmaan_admin.handler.log:
         class: Kunstmaan\AdminBundle\Modules\LogHandler
-        arguments:
-            - @service_container 
+        arguments: ["@service_container"]
         tags:
             - { name: log_handler }
 
     kunstmaan_login_listener:
         class: Kunstmaan\AdminBundle\Modules\LoginListener
-        arguments: [@security.context, @doctrine]
+        arguments: ["@security.context", "@doctrine"]
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }
             
     kunstmaan_logout_listener:
         class: Kunstmaan\AdminBundle\Modules\LogoutListener
-        arguments:  [@security.context, @doctrine]
+        arguments:  ["@security.context", "@doctrine"]
         tags:
-            - { name: 'monolog.logger' channel: 'security' }
+            - { name: 'monolog.logger', channel: 'security' }
             
     kunstmaan.twig.locale:
         class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
@@ -79,6 +78,18 @@ services:
         
     security.acl.object_identity_retrieval_strategy:
         class: Kunstmaan\AdminBundle\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy
-        arguments:
-            - @doctrine.orm.entity_manager
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    kunstmaan.acl.helper:
+        class: Kunstmaan\AdminBundle\Util\Helper\AclHelper
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+    kunstmaan.guest.security.authentication.listener:
+        class: Kunstmaan\AdminBundle\Component\Security\Http\Firewall\GuestUserListener
+        arguments: ["@security.context", "user_provider", "provider_key", "@logger"]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
         
+    kunstmaan.guest.security.authentication.provider:
+        class: Kunstmaan\AdminBundle\Component\Security\Authentication\Provider\GuestUserProvider
+        arguments: [""]
