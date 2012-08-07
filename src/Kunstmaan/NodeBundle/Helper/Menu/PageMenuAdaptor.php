@@ -19,15 +19,18 @@ use Kunstmaan\AdminNodeBundle\Entity\Node;
  */
 class PageMenuAdaptor implements MenuAdaptorInterface
 {
-    private $container;
+    private $em;
+    private $permissionManager;
+    private $securityContext;
+    private $aclHelper;
     private $nodemenu;
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct($container)
+    public function __construct($em, $permissionManager, $securityContext, $aclHelper)
     {
-        $this->container = $container;
+        $this->em = $em;
+        $this->permissionManager = $permissionManager;
+        $this->securityContext = $securityContext;
+        $this->aclHelper = $aclHelper;        
     }
 
     /**
@@ -43,9 +46,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         if (is_null($this->nodemenu)) {
             $node = null;
             if ($request->attributes->get('_route') == 'KunstmaanAdminNodeBundle_pages_edit') {
-                $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->attributes->get('id'));
+                $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
-            $this->nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true, true);
+            $this->nodemenu = new NodeMenu($this->em, $this->permissionManager, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, 'write', true, true);
         }
         if (is_null($parent)) {
             $menuitem = new TopMenuItem($menu);
@@ -61,7 +64,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
 
             $currentId = $request->attributes->get('id');
             if (isset($currentId)) {
-                $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($currentId);
+                $currentNode = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($currentId);
                 if (!is_null($currentNode)) {
                     $parentNodes = $currentNode->getParents();
                 } else {
@@ -97,14 +100,13 @@ class PageMenuAdaptor implements MenuAdaptorInterface
 
         } else if ('KunstmaanAdminNodeBundle_pages_edit' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
-            $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
-            $nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true, true);
-
+            $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
+            $nodemenu = new NodeMenu($this->em, $this->permissionManager, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, 'write', true, true);
             $childNodes = $nodemenu->getCurrent()->getChildren();
 
             $currentId = $request->attributes->get('id');
             if (isset($currentId)) {
-                $currentNode = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($currentId);
+                $currentNode = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($currentId);
                 if (!is_null($currentNode)) {
                     $parentNodes = $currentNode->getParents();
                 } else {

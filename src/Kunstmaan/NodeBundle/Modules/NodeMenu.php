@@ -18,28 +18,37 @@ use Knp\Menu\FactoryInterface;
 class NodeMenu
 {
     private $em;
+    private $permissionManager;
+    private $securityContext;
+    private $aclHelper;    
     private $lang;
     private $topNodeMenuItems = array();
     private $breadCrumb = array();
-    private $container = null;
     private $includeoffline = false;
+    private $includehiddenfromnav = false;
     private $permission = null;
     private $user = null;
 
     /**
-     * @param ContainerInterface $container            The container
-     * @param string             $lang                 The language
-     * @param Node               $currentNode          The node
-     * @param string             $permission           The permission
-     * @param boolean            $includeoffline       Include offline pages
-     * @param boolean            $includehiddenfromnav Include hidden pages
+     * @param EntityManager             $em                   The entity manager
+     * @param Manager                   $permissionManager    The permission manager
+     * @param SecurityContextInterface  $securityContext      The security context
+     * @param AclHelper                 $aclHelper            The ACL helper
+     * @param string                    $lang                 The language
+     * @param Node                      $currentNode          The node
+     * @param string                    $permission           The permission
+     * @param boolean                   $includeoffline       Include offline pages
+     * @param boolean                   $includehiddenfromnav Include hidden pages
      */
-    public function __construct($container, $lang, Node $currentNode = null, $permission = 'read', $includeoffline = false, $includehiddenfromnav = false)
+    public function __construct($em, $permissionManager, $securityContext, $aclHelper, $lang, Node $currentNode = null, $permission = 'READ', $includeoffline = false, $includehiddenfromnav = false)
     {
-        $this->container = $container;
-        $this->em = $this->container->get('doctrine.orm.entity_manager');
+        $this->em = $em;
+        $this->permissionManager = $permissionManager;
+        $this->securityContext = $securityContext;
+        $this->aclHelper = $aclHelper;
         $this->lang = $lang;
         $this->includeoffline = $includeoffline;
+        $this->includehiddenfromnav = $includehiddenfromnav;
         $this->permission = $permission;
         $tempNode = $currentNode;
 
@@ -51,28 +60,26 @@ class NodeMenu
         }
         $parentNodeMenuItem = null;
         foreach ($nodeBreadCrumb as $nodeBreadCrumbItem) {
-            $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($lang, $this->includeoffline);
+            $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeoffline);
             if (!is_null($nodeTranslation)) {
-                $nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $nodeTranslation, $lang, $parentNodeMenuItem, $this);
+                $nodeMenuItem = new NodeMenuItem($nodeBreadCrumbItem, $nodeTranslation, $parentNodeMenuItem, $this);
                 $this->breadCrumb[] = $nodeMenuItem;
                 $parentNodeMenuItem = $nodeMenuItem;
             }
         }
 
-        $permissionManager = $container->get('kunstmaan_admin.permissionmanager');
-        $this->user = $this->container->get('security.context')->getToken()->getUser();
-
-        $this->user = $permissionManager->getCurrentUser($this->user, $this->em);
+        $this->user = $this->securityContext->getToken()->getUser();
+        $this->user = $this->permissionManager->getCurrentUser($this->user);
 
         //topNodes
-        $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($this->lang, $this->user, $permission, $includehiddenfromnav);
+        $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($this->lang, $permission, $this->aclHelper, $includehiddenfromnav);
         foreach ($topNodes as $topNode) {
-            $nodeTranslation = $topNode->getNodeTranslation($lang, $this->includeoffline);
+            $nodeTranslation = $topNode->getNodeTranslation($this->lang, $this->includeoffline);
             if (!is_null($nodeTranslation)) {
                 if (sizeof($this->breadCrumb)>0 && $this->breadCrumb[0]->getNode()->getId() == $topNode->getId()) {
                     $this->topNodeMenuItems[] = $this->breadCrumb[0];
                 } else {
-                    $this->topNodeMenuItems[] = new NodeMenuItem($this->em, $topNode, $nodeTranslation, $lang, null, $this);
+                    $this->topNodeMenuItems[] = new NodeMenuItem($topNode, $nodeTranslation, null, $this);
                 }
             }
         }
@@ -204,11 +211,11 @@ class NodeMenu
                 }
                 $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeoffline);
                 if (!is_null($nodeTranslation)) {
-                    $nodeMenuItem = new NodeMenuItem($this->em, $nodeBreadCrumbItem, $nodeTranslation, $this->lang, $parentNodeMenuItem, $this);
+                    $nodeMenuItem = new NodeMenuItem($nodeBreadCrumbItem, $nodeTranslation, $parentNodeMenuItem, $this);
                     $parentNodeMenuItem = $nodeMenuItem;
                 }
             }
-            //$resultNodeMenuItem = new NodeMenuItem($this->em, $node, $nodeTranslation, $this->lang, $parentNodeMenuItem, $this);
+            
             return $nodeMenuItem;
         }
 
@@ -255,4 +262,37 @@ class NodeMenu
         return $this->user;
     }
 
+    public function getEntityManager()
+    {
+        return $this->em;
+    }
+
+    public function getPermissionManager()
+    {
+        return $this->permissionManager;
+    }
+    
+    public function getSecurityContext()
+    {
+        return $this->securityContext;
+    }
+
+    public function getAclHelper()
+    {
+        return $this->aclHelper;
+    }
+
+    public function getLang()
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIncludeHiddenFromNav()
+    {
+        return $this->includehiddenfromnav;
+    }
+    
 }

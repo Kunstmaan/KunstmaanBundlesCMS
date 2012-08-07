@@ -45,11 +45,13 @@ class PagesController extends Controller
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'write', true);
-        $nodeMenu = new NodeMenu($this->container, $locale, null, 'write', true, true);
-
+        $permissionManager = $this->container->get('kunstmaan_admin.permissionmanager');
+        $securityContext = $this->container->get('security.context');
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'WRITE', $aclHelper, true);        
+        $nodeMenu = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, null, 'WRITE', true, true);
         $request    = $this->getRequest();
-        $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'write', $locale), $em);
+        $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'WRITE', $locale), $em);
         $adminlist->bindRequest($request);
 
         return array(
@@ -175,6 +177,8 @@ class PagesController extends Controller
         $aclProvider = $this->container->get('security.acl.provider');
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
+        $permissionManager = $this->container->get('kunstmaan_admin.permissionmanager');
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
 
         $saveasdraft = $request->get("saveasdraft");
         $saveandpublish = $request->get("saveandpublish");
@@ -202,7 +206,9 @@ class PagesController extends Controller
 
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if (!$nodeTranslation) {
-            return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => new NodeMenu($this->container, $locale, $node, 'write', true, true)));
+            $nodeMenu = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, $node, 'WRITE', true, true);
+            
+            return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
         }
 
         $nodeVersions = $nodeTranslation->getNodeVersions();
@@ -251,8 +257,7 @@ class PagesController extends Controller
             return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));
         }
 
-        $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'write');
-
+        $topnodes    = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'WRITE', $aclHelper);
         $formfactory = $this->container->get('form.factory');
         $formbuilder = $this->createFormBuilder();
 
@@ -337,7 +342,7 @@ class PagesController extends Controller
             }
         }
 
-        $nodeMenu = new NodeMenu($this->container, $locale, $node, 'write', true, true);
+        $nodeMenu = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, $node, 'WRITE', true, true);
 
         $viewVariables = array(
             'topnodes'          => $topnodes,
@@ -352,9 +357,9 @@ class PagesController extends Controller
             'draft'             => $draft,
             'draftNodeVersion'  => $draftNodeVersion,
             'subaction'         => $subaction,
-            'currenttab'		=> $currenttab,
+            'currenttab'	=> $currenttab,
         );
-        if ($this->get('security.context')->isGranted('ROLE_PERMISSIONMANAGER')) {
+        if ($securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
             $viewVariables['permissionadmin'] = $permissionadmin;
         }
 
@@ -484,12 +489,13 @@ class PagesController extends Controller
      */
     public function ckselectlinkAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $request = $this->getRequest();
-        $locale = $request->getSession()->getLocale();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read');
-        $nodeMenu = new NodeMenu($this->container, $locale, null, 'read', true, true);
+        $request    = $this->getRequest();
+        $locale     = $request->getSession()->getLocale();
+        $aclHelper  = $this->container->get('kunstmaan.acl.helper');
+        $permissionManager = $this->container->get('kunstmaan_admin.permissionmanager');
+        $securityContext = $this->container->get('security.context');        
+        $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'READ', $aclHelper);
+        $nodeMenu   = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, null, 'READ', true, true);
 
         return array(
             'topnodes'    => $topnodes,

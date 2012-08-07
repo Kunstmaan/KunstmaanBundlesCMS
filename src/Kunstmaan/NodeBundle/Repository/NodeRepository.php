@@ -15,16 +15,16 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class NodeRepository extends EntityRepository
 {
     /**
-     * @param string  $lang                 The locale
-     * @param User    $user                 The user
-     * @param string  $permission           The pemission (read, write, ...)
-     * @param boolean $includehiddenfromnav include the hiddenfromnav nodes or not
+     * @param string    $lang                 The locale
+     * @param string    $permission           The permission (read, write, ...)
+     * @param AclHelper $aclHelper
+     * @param boolean   $includehiddenfromnav include the hiddenfromnav nodes or not
      *
      * @return array
      */
-    public function getTopNodes($lang, $user, $permission, $includehiddenfromnav = false)
+    public function getTopNodes($lang, $permission, $aclHelper, $includehiddenfromnav = false)
     {
-        return $this->getChildNodes(null, $lang, $user, $permission, $includehiddenfromnav);
+        return $this->getChildNodes(null, $lang, $permission, $aclHelper, $includehiddenfromnav);
     }
 
     /**
@@ -124,43 +124,43 @@ class NodeRepository extends EntityRepository
     }
 
     /**
-     * @param integer $parentid             The parent id
-     * @param string  $lang                 The locale
-     * @param User    $user                 The user
-     * @param string  $permission           The permission (read, write, ...)
-     * @param boolean $includehiddenfromnav Include hiddenfromnav nodes or not
-     *
+     * @param integer   $parentid             The parent id
+     * @param string    $lang                 The locale
+     * @param string    $permission           The permission (read, write, ...)
+     * @param AclHelper $aclHelper
+     * @param boolean   $includehiddenfromnav Include hiddenfromnav nodes or not
+     * 
      * @return array:
      */
-    public function getChildNodes($parentid, $lang, $user, $permission, $includehiddenfromnav = false)
+    public function getChildNodes($parentid, $lang, $permission, $aclHelper, $includehiddenfromnav = false)
     {
-        $qb = $this->createQueryBuilder('b')->select('b')->innerJoin("b.nodeTranslations", "t")->where('b.deleted = 0');
+        $qb = $this->createQueryBuilder('b')
+                ->select('b')
+                ->innerJoin('b.nodeTranslations', 't')
+                ->where('b.deleted = 0');
 
         if (!$includehiddenfromnav) {
             $qb->andWhere('b.hiddenfromnav != true');
         }
 
-        $qb->andWhere('b.id IN (
-	            SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
-	    )')->andWhere("t.lang = :lang");
+        $qb->andWhere('t.lang = :lang');
 
         if (is_null($parentid)) {
-            $qb->andWhere("b.parent is NULL");
+            $qb->andWhere('b.parent is NULL');
         } else {
-            $qb->andWhere("b.parent = :parent")->setParameter("parent", $parentid);
+            $qb->andWhere('b.parent = :parent')
+                    ->setParameter('parent', $parentid);
         }
 
-        $qb->addOrderBy('t.weight', 'ASC')->addOrderBy('t.title', 'ASC')->setParameter(1, 'Kunstmaan\\AdminNodeBundle\\Entity\\Node')->setParameter(2, '%|' . $permission . ':1|%');
+        $qb->addOrderBy('t.weight', 'ASC')
+                ->addOrderBy('t.title', 'ASC');
+        $qb->setParameter('lang', $lang);
 
-        $groupIds = $user->getGroupIds();
-        if (!empty($groupIds)) {
-            $qb->setParameter(3, $groupIds);
-        } else {
-            $qb->setParameter(3, null);
-        }
-        $qb->setParameter("lang", $lang);
-
-        $result = $qb->getQuery()->getResult();
+        $query = $aclHelper->apply($qb);
+        
+        // die($query->getSql());
+        
+        $result = $query->getResult();
 
         return $result;
     }
@@ -170,7 +170,10 @@ class NodeRepository extends EntityRepository
      */
     public function getAllTopNodes()
     {
-        $qb = $this->createQueryBuilder('b')->select('b')->where('b.deleted = 0')->andWhere("b.parent IS NULL");
+        $qb = $this->createQueryBuilder('b')
+                ->select('b')
+                ->where('b.deleted = 0')
+                ->andWhere('b.parent IS NULL');
 
         $result = $qb->getQuery()->getResult();
 
