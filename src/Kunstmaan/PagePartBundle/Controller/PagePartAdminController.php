@@ -58,13 +58,16 @@ class PagePartAdminController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read', TRUE);
-        $nodeMenu = new NodeMenu($this->container, $locale, null, 'read', FALSE, TRUE);
+        $permissionManager = $this->container->get('kunstmaan_admin.permissionmanager');
+        $securityContext = $this->container->get('security.context');
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'read', $aclHelper, true);
+        
+        $nodeMenu = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, null, 'read', false, true);
 
         return array(
-                'topnodes'      => $topnodes,
-                'nodemenu' 	    => $nodeMenu,
+            'topnodes'      => $topnodes,
+            'nodemenu' 	    => $nodeMenu,
         );
     }
 }
