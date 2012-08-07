@@ -94,7 +94,9 @@ class SlugController extends Controller
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
-        $nodeMenu = new NodeMenu($this->container, $locale, $node);
+        $permissionManager = $this->container->get('kunstmaan_admin.permissionmanager');
+        $aclHelper  = $this->container->get('kunstmaan.acl.helper');        
+        $nodeMenu = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, $node);
 
         if ($page instanceof DynamicRoutingPageInterface) {
             $page->setLocale($locale);
