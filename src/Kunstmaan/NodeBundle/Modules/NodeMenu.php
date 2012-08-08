@@ -2,15 +2,15 @@
 
 namespace Kunstmaan\AdminNodeBundle\Modules;
 
-use Kunstmaan\AdminBundle\Entity\User;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Translation\Translator;
 
+use Knp\Menu\FactoryInterface;
+
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Symfony\Component\Translation\Translator;
-use Knp\Menu\FactoryInterface;
 
 /**
  * NodeMenu
@@ -18,7 +18,6 @@ use Knp\Menu\FactoryInterface;
 class NodeMenu
 {
     private $em;
-    private $permissionManager;
     private $securityContext;
     private $aclHelper;    
     private $lang;
@@ -31,7 +30,6 @@ class NodeMenu
 
     /**
      * @param EntityManager             $em                   The entity manager
-     * @param Manager                   $permissionManager    The permission manager
      * @param SecurityContextInterface  $securityContext      The security context
      * @param AclHelper                 $aclHelper            The ACL helper
      * @param string                    $lang                 The language
@@ -40,10 +38,9 @@ class NodeMenu
      * @param boolean                   $includeoffline       Include offline pages
      * @param boolean                   $includehiddenfromnav Include hidden pages
      */
-    public function __construct($em, $permissionManager, $securityContext, $aclHelper, $lang, Node $currentNode = null, $permission = 'READ', $includeoffline = false, $includehiddenfromnav = false)
+    public function __construct($em, $securityContext, $aclHelper, $lang, Node $currentNode = null, $permission = 'READ', $includeoffline = false, $includehiddenfromnav = false)
     {
         $this->em = $em;
-        $this->permissionManager = $permissionManager;
         $this->securityContext = $securityContext;
         $this->aclHelper = $aclHelper;
         $this->lang = $lang;
@@ -69,7 +66,6 @@ class NodeMenu
         }
 
         $this->user = $this->securityContext->getToken()->getUser();
-        $this->user = $this->permissionManager->getCurrentUser($this->user);
 
         //topNodes
         $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($this->lang, $permission, $this->aclHelper, $includehiddenfromnav);
@@ -267,11 +263,6 @@ class NodeMenu
         return $this->em;
     }
 
-    public function getPermissionManager()
-    {
-        return $this->permissionManager;
-    }
-    
     public function getSecurityContext()
     {
         return $this->securityContext;

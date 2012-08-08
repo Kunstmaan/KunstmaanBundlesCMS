@@ -20,15 +20,13 @@ use Kunstmaan\AdminNodeBundle\Entity\Node;
 class PageMenuAdaptor implements MenuAdaptorInterface
 {
     private $em;
-    private $permissionManager;
     private $securityContext;
     private $aclHelper;
     private $nodemenu;
 
-    public function __construct($em, $permissionManager, $securityContext, $aclHelper)
+    public function __construct($em, $securityContext, $aclHelper)
     {
         $this->em = $em;
-        $this->permissionManager = $permissionManager;
         $this->securityContext = $securityContext;
         $this->aclHelper = $aclHelper;        
     }
@@ -48,7 +46,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             if ($request->attributes->get('_route') == 'KunstmaanAdminNodeBundle_pages_edit') {
                 $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
-            $this->nodemenu = new NodeMenu($this->em, $this->permissionManager, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, 'write', true, true);
+            $this->nodemenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, 'write', true, true);
         }
         if (is_null($parent)) {
             $menuitem = new TopMenuItem($menu);
@@ -101,7 +99,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         } else if ('KunstmaanAdminNodeBundle_pages_edit' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
             $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
-            $nodemenu = new NodeMenu($this->em, $this->permissionManager, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, 'write', true, true);
+            $nodemenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, 'write', true, true);
             $childNodes = $nodemenu->getCurrent()->getChildren();
 
             $currentId = $request->attributes->get('id');

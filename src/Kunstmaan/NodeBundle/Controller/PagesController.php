@@ -16,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\EditCommand;
 use Kunstmaan\AdminBundle\Entity\DeleteCommand;
-use Kunstmaan\AdminBundle\Entity\Permission;
 use Kunstmaan\AdminBundle\Form\NodeInfoAdminType;
 use Kunstmaan\AdminBundle\Form\PageAdminType;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
@@ -45,11 +44,10 @@ class PagesController extends Controller
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $permissionManager = $this->container->get('kunstmaan_admin.permissionmanager');
         $securityContext = $this->container->get('security.context');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
         $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'WRITE', $aclHelper, true);        
-        $nodeMenu = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, null, 'WRITE', true, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'WRITE', true, true);
         $request    = $this->getRequest();
         $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'WRITE', $locale), $em);
         $adminlist->bindRequest($request);
@@ -177,7 +175,6 @@ class PagesController extends Controller
         $aclProvider = $this->container->get('security.acl.provider');
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
-        $permissionManager = $this->container->get('kunstmaan_admin.permissionmanager');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
 
         $saveasdraft = $request->get("saveasdraft");
@@ -206,7 +203,7 @@ class PagesController extends Controller
 
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if (!$nodeTranslation) {
-            $nodeMenu = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, $node, 'WRITE', true, true);
+            $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'WRITE', true, true);
             
             return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
         }
@@ -342,7 +339,7 @@ class PagesController extends Controller
             }
         }
 
-        $nodeMenu = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, $node, 'WRITE', true, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'WRITE', true, true);
 
         $viewVariables = array(
             'topnodes'          => $topnodes,
@@ -492,10 +489,9 @@ class PagesController extends Controller
         $request    = $this->getRequest();
         $locale     = $request->getSession()->getLocale();
         $aclHelper  = $this->container->get('kunstmaan.acl.helper');
-        $permissionManager = $this->container->get('kunstmaan_admin.permissionmanager');
         $securityContext = $this->container->get('security.context');        
         $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'READ', $aclHelper);
-        $nodeMenu   = new NodeMenu($em, $permissionManager, $securityContext, $aclHelper, $locale, null, 'READ', true, true);
+        $nodeMenu   = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'READ', true, true);
 
         return array(
             'topnodes'    => $topnodes,
