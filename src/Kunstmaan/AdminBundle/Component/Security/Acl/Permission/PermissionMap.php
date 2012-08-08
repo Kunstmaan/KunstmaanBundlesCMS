@@ -11,7 +11,7 @@ class PermissionMap implements PermissionMapInterface
 {
     const PERMISSION_VIEW        = 'VIEW';
     const PERMISSION_EDIT        = 'EDIT';
-    const PERMISSION_CREATE      = 'CREATE';
+    // const PERMISSION_CREATE      = 'CREATE';
     const PERMISSION_DELETE      = 'DELETE';
     const PERMISSION_PUBLISH     = 'PUBLISH';
     
@@ -24,11 +24,11 @@ class PermissionMap implements PermissionMapInterface
                     self::PERMISSION_EDIT => array(
                                     MaskBuilder::MASK_EDIT,
                     ),
-
+                    /*
                     self::PERMISSION_CREATE => array(
                                     MaskBuilder::MASK_CREATE,
                     ),
-
+                    */
                     self::PERMISSION_DELETE => array(
                                     MaskBuilder::MASK_DELETE,
                     ),
