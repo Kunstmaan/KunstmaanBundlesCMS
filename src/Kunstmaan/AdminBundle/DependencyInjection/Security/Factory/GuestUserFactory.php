@@ -21,10 +21,12 @@ class GuestUserFactory implements SecurityFactoryInterface
     
     public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
     {
-        $providerId = 'security.authentication.provider.kunstmaan.guest.'.$id;
+        // We don't need a custom provider yet, so use pre-authenticated provider...
+        $providerId = 'security.authentication.provider.pre_authenticated.'.$id;
         $container
-            ->setDefinition($providerId, new DefinitionDecorator('kunstmaan.guest.security.authentication.provider'))
+            ->setDefinition($providerId, new DefinitionDecorator('security.authentication.provider.pre_authenticated'))
             ->replaceArgument(0, new Reference($userProvider))
+            ->addArgument($id)
         ;
 
         $listenerId = 'security.authentication.listener.kunstmaan.guest.'.$id;
