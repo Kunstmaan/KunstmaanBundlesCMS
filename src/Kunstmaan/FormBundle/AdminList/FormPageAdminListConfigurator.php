@@ -107,7 +107,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
 	        		SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)')
 	        ->addOrderBy('n.sequencenumber', 'DESC');
         
-        $result = $this->aclHelper->apply($queryBuilder, array($this->permission));
+        $result = $this->aclHelper->apply($querybuilder, array($this->permission));
         
         return $result;
     }

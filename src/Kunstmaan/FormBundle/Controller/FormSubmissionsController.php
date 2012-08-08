@@ -40,7 +40,7 @@ class FormSubmissionsController extends Controller
         $request = $this->getRequest();
         $securityContext = $this->container->get('security.context');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-        $formpagesadminlist = $this->get('adminlist.factory')->createList(new FormPageAdminListConfigurator($securityContext, 'READ', $aclHelper), $em);
+        $formpagesadminlist = $this->get('adminlist.factory')->createList(new FormPageAdminListConfigurator($securityContext, 'VIEW', $aclHelper), $em);
         $formpagesadminlist->bindRequest($request);
 
         return array('adminlist' => $formpagesadminlist);
