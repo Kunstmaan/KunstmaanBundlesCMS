@@ -23,10 +23,6 @@ services:
         tags:
             -  { name: twig.extension }
         
-    kunstmaan_admin.permissionmanager:
-        class: Kunstmaan\AdminBundle\Permission\Manager
-        arguments: ["@doctrine.orm.entity_manager"]        
-
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
 
