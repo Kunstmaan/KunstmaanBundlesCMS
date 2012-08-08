@@ -38,7 +38,7 @@ class NodeMenu
      * @param boolean                   $includeoffline       Include offline pages
      * @param boolean                   $includehiddenfromnav Include hidden pages
      */
-    public function __construct($em, $securityContext, $aclHelper, $lang, Node $currentNode = null, $permission = 'READ', $includeoffline = false, $includehiddenfromnav = false)
+    public function __construct($em, $securityContext, $aclHelper, $lang, Node $currentNode = null, $permission = 'VIEW', $includeoffline = false, $includehiddenfromnav = false)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;

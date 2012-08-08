@@ -40,10 +40,4 @@ interface HasNodeInterface
      */
     public function setParent(HasNodeInterface $hasNode);
 
-    /**
-     * Return an array containing all possible permissions for the page
-     * @abstract
-     * @return array
-     */
-    public function getPossiblePermissions();
 }

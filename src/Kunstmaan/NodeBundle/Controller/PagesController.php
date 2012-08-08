@@ -46,10 +46,10 @@ class PagesController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         $securityContext = $this->container->get('security.context');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'WRITE', $aclHelper, true);        
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'WRITE', true, true);
+        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'EDIT', $aclHelper, true);        
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'EDIT', true, true);
         $request    = $this->getRequest();
-        $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'WRITE', $locale), $em);
+        $adminlist  = $this->get("adminlist.factory")->createList(new PageAdminListConfigurator($user, 'EDIT', $locale), $em);
         $adminlist->bindRequest($request);
 
         return array(
@@ -203,7 +203,7 @@ class PagesController extends Controller
 
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if (!$nodeTranslation) {
-            $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'WRITE', true, true);
+            $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'EDIT', true, true);
             
             return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
         }
@@ -254,7 +254,7 @@ class PagesController extends Controller
             return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));
         }
 
-        $topnodes    = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'WRITE', $aclHelper);
+        $topnodes    = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'EDIT', $aclHelper);
         $formfactory = $this->container->get('form.factory');
         $formbuilder = $this->createFormBuilder();
 
@@ -339,7 +339,7 @@ class PagesController extends Controller
             }
         }
 
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'WRITE', true, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'EDIT', true, true);
 
         $viewVariables = array(
             'topnodes'          => $topnodes,
@@ -490,8 +490,8 @@ class PagesController extends Controller
         $locale     = $request->getSession()->getLocale();
         $aclHelper  = $this->container->get('kunstmaan.acl.helper');
         $securityContext = $this->container->get('security.context');        
-        $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'READ', $aclHelper);
-        $nodeMenu   = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'READ', true, true);
+        $topnodes   = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'VIEW', $aclHelper);
+        $nodeMenu   = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'VIEW', true, true);
 
         return array(
             'topnodes'    => $topnodes,
