@@ -38,8 +38,9 @@ class FormSubmissionsController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $formpagesadminlist = $this->get("adminlist.factory")->createList(new FormPageAdminListConfigurator($user, 'read'), $em);
+        $securityContext = $this->container->get('security.context');
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        $formpagesadminlist = $this->get('adminlist.factory')->createList(new FormPageAdminListConfigurator($securityContext, 'READ', $aclHelper), $em);
         $formpagesadminlist->bindRequest($request);
 
         return array('adminlist' => $formpagesadminlist);

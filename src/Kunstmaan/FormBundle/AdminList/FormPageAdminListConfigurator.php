@@ -2,13 +2,12 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Entity\Permission;
-
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminBundle\Util\Helper\AclHelper;
 
 /**
  * Adminlist for form pages
@@ -16,17 +15,20 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
+    protected $securityContext;
     protected $permission;
-    protected $user;
+    protected $aclHelper;
 
     /**
-     * @param mixed      $user       The User
-     * @param Permission $permission The permission
+     * @param SecurityContextInterface  $securityContext    The security context
+     * @param string                    $permission         The permission
+     * @param AclHelper                 $aclHelper          The ACL helper
      */
-    public function __construct($user, $permission)
+    public function __construct($securityContext, $permission, $aclHelper)
     {
-        $this->permission   = $permission;
-        $this->user         = $user;
+        $this->securityContext = $securityContext;
+        $this->permission      = $permission;
+        $this->aclHelper       = $aclHelper;
     }
 
     /**
@@ -49,8 +51,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * {@inheritdoc}
      */
-	public function getEditUrlFor($item)
-	{
+    public function getEditUrlFor($item)
+    {
     	return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array( 'nodetranslationid' => $item->getId()));
     }
 
@@ -102,15 +104,12 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
         parent::adaptQueryBuilder($querybuilder);
         $querybuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
 	        ->andWhere('n.id IN (
-	        		SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3))')
-	        ->andWhere('n.id IN (
 	        		SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)')
-	        ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
-	        ->setParameter(2, '%|'.$this->permission.':1|%')
-	        ->setParameter(3, $this->user->getGroupIds())
 	        ->addOrderBy('n.sequencenumber', 'DESC');
-
-        return $querybuilder;
+        
+        $result = $this->aclHelper->apply($queryBuilder, array($this->permission));
+        
+        return $result;
     }
 
     /**
