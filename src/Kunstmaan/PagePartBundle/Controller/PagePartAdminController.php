@@ -60,9 +60,9 @@ class PagePartAdminController extends Controller
         $locale = $request->getSession()->getLocale();
         $securityContext = $this->container->get('security.context');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'read', $aclHelper, true);
+        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'VIEW', $aclHelper, true);
         
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'read', false, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'VIEW', false, true);
 
         return array(
             'topnodes'      => $topnodes,
