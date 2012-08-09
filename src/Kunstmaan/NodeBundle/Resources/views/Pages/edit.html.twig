@@ -17,6 +17,11 @@
 {% endblock %}
 
 {% block messages %}
+        {% if not draft and nodeTranslation.isOnline %}
+	<div class="alert alert-block">
+            <strong>{{ "Warning" | trans }}: </strong>{{ "Changes you save will be performed on the live page" | trans }}
+        </div>
+	{% endif %}       
 	{% if form_has_errors_recursive(form) %}
 	<div class="alert alert-error">
 		<strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
@@ -54,14 +59,7 @@
         <!--=========Actions=========-->
         <!--Sub Actions-->
         <div class="sub_actions">
-        	{% if not draft %}
-	        	{% if nodeTranslation.online %}
-		        	<a href="#" data-toggle="modal" data-target="#unpub">Unpublish</a>
-		            {% else %}
-					<a href="#" data-toggle="modal" data-target="#pub">Publish</a>
-	        	{% endif %}
-        	{% endif %}
-            <a href="#" data-toggle="modal" data-target="#versions">Versions</a>
+            <a href="#" data-toggle="modal" data-target="#versions">{{ 'form.versions' | trans }}</a>
         </div>
 
 
@@ -69,53 +67,73 @@
         {% set nodemenuCurrent = nodemenu.current %}
         {% set pagePossibleChildPages = page.possibleChildPageTypes %}
         <div class="main_actions">
-			{% if draft %}
-                            {% if is_granted('EDIT', node) %}
-				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
-				<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
-                            {% endif %}
-				<a class="btn" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
-			{% else %}
-                            {% if is_granted('EDIT', node) %}
-				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
-				<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
-                            {% endif %}
-				<a class="btn" href="{{ path('_slug_preview', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
-                            {% if is_granted('EDIT', node) and pagePossibleChildPages is not empty %}
-                                    <button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
-                            {% endif %}
-                            {% if is_granted('DELETE', node) %}
-				<button type="button" onClick="oldEdited = isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
-                            {% endif %}
-			{% endif %}
+            {% set isFirst = true %}
+            {% if draft %}
+                {% if is_granted('EDIT', node) %}
+                    <button type="submit" onClick="isEdited=false" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>                                
+                {% endif %}
+                {% if is_granted('PUBLISH', node) %}
+                    <button type="submit" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
+                {% endif %}
+                    <a class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+            {% else %}
+                {% if is_granted('EDIT', node) and is_granted('PUBLISH', node) %}
+                    <button type="submit" onClick="isEdited=false" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" name="save" value="save">{{ 'form.save' | trans }}</button>
+                {% endif %}
+                {% if nodeTranslation.online and is_granted('UNPUBLISH', node) %}
+                    <a href="#" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" data-toggle="modal" data-target="#unpub">{{ 'form.unpublish' | trans }}</a>
+                {% elseif not nodeTranslation.online and is_granted('PUBLISH', node) %}
+                    <a href="#" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" data-toggle="modal" data-target="#pub">{{ 'form.publish' | trans }}</a>
+                {% endif %}
+                {% if is_granted('EDIT', node) %}
+                    <button type="submit" onClick="isEdited=false" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
+                {% endif %}
+                    <a class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" href="{{ path('_slug_preview', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
+                {% if is_granted('EDIT', node) and pagePossibleChildPages is not empty %}
+                        <button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}">Add subpage</button>
+                {% endif %}
+                {% if is_granted('DELETE', node) %}
+                    <button type="button" onClick="oldEdited = isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}">Delete</button>
+                {% endif %}
+            {% endif %}
         </div>
         
         
         
         <!--Scroll Actions-->
         <div class="main_actions top" id="main_actions_top">
-			<div class="pull-right">
-				{% if draft %}
-                                    {% if is_granted('EDIT', node) %}
-					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
-					<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
-                                    {% endif %}
-					<a class="btn" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
-				{% else %}
-                                    {% if is_granted('EDIT', node) %}
-					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
-					<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
-                                    {% endif %}
-					<a class="btn" href="{{ path('_slug_preview', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
-                                    {% if is_granted('EDIT', node) and pagePossibleChildPages is not empty %}
-                                            <button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
-                                    {% endif %}
-                                    {% if is_granted('DELETE', node) %}
-					<button type="button" onClick="oldEdited=isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
-                                    {% endif %}
-				{% endif %}
-				<a class="btn up">&#9650;</a>
-			</div>
+            <div class="pull-right">
+                {% set isFirst = true %}
+                {% if draft %}
+                    {% if is_granted('EDIT', node) %}
+                        <button type="submit" onClick="isEdited=false" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
+                    {% endif %}
+                    {% if is_granted('PUBLISH', node) %}
+                        <button type="submit" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
+                    {% endif %}
+                        <a class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
+                {% else %}
+                    {% if is_granted('EDIT', node) and is_granted('PUBLISH', node) %}
+                        <button type="submit" onClick="isEdited=false" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" name="save" value="save">{{ 'form.save' | trans }}</button>
+                    {% endif %}
+                    {% if nodeTranslation.online and is_granted('UNPUBLISH', node) %}
+                        <a href="#" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" data-toggle="modal" data-target="#unpub">{{ 'form.unpublish' | trans }}</a>
+                    {% elseif not nodeTranslation.online and is_granted('PUBLISH', node) %}
+                        <a href="#" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" data-toggle="modal" data-target="#pub">{{ 'form.publish' | trans }}</a>
+                    {% endif %}
+                    {% if is_granted('EDIT', node) %}
+                        <button type="submit" onClick="isEdited=false" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
+                    {% endif %}
+                        <a class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}" href="{{ path('_slug_preview', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
+                    {% if is_granted('EDIT', node) and pagePossibleChildPages is not empty %}
+                        <button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}">Add subpage</button>
+                    {% endif %}
+                    {% if is_granted('DELETE', node) %}
+                        <button type="button" onClick="oldEdited = isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn{% if isFirst %} btn-primary{% set isFirst = false %}{% endif %}">Delete</button>
+                    {% endif %}
+                {% endif %}
+                <a class="btn up">&#9650;</a>
+            </div>
         </div>
         
         
