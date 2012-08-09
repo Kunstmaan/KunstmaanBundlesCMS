@@ -62,6 +62,10 @@
 	        	{% endif %}
         	{% endif %}
             <a href="#" data-toggle="modal" data-target="#versions">Versions</a>
+            {% set extraSubActionsTemplate = page.extrasubactionstemplate | default('') %}
+            {% if extraSubActionsTemplate is not empty %}
+                {% include extraSubActionsTemplate with {'page': page, 'nodeTranslation': nodeTranslation, 'node': node} %}
+            {% endif %}
         </div>
 
 
