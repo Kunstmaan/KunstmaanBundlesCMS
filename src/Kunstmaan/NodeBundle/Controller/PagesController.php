@@ -274,6 +274,11 @@ class PagesController extends Controller
 
         $delete = $request->get('delete');
         if (is_string($delete) && $delete == 'true') {
+            // Check with Acl
+            if (false === $securityContext->isGranted('DELETE', $node)) {
+                throw new AccessDeniedException();
+            }
+
             //remove node and page
             $nodeparent = $node->getParent();
             $node->setDeleted(true);

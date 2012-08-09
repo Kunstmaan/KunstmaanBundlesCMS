@@ -125,7 +125,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
      */
     public function isOnline()
     {
-        return true;
+        return false;
     }
 
     /**

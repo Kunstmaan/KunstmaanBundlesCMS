@@ -38,7 +38,7 @@ class NodeTranslation extends AbstractEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $online;
+    protected $online = false;
 
     /**
      * @ORM\Column(type="string")

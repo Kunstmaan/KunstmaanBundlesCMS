@@ -18,7 +18,6 @@ class NodeTranslationAdminType extends AbstractType
     {
         $builder->add('id', 'hidden');
         $builder->add('node', 'entity_id', array('class' => 'Kunstmaan\AdminNodeBundle\Entity\Node'));
-        $builder->add('online', 'checkbox', array('required' => false));
         $builder->add('slug');
         $builder->add('weight', 'choice', array(
                 'choices'=>array_combine(range(-50,50), range(-50,50)),
