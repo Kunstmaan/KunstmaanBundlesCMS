@@ -82,7 +82,7 @@ class AdminList
             return $query->getSingleScalarResult();
         } else {
             $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
-            $this->configurator->adaptNativeCountQueryBuilder($queryBuilder, $params);
+            $queryBuilder =$this->configurator->adaptNativeCountQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
             $stmt = $queryBuilder->execute();
     
@@ -109,7 +109,7 @@ class AdminList
             return $query->getResult();
         } else {
             $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
-            $this->configurator->adaptNativeItemsQueryBuilder($queryBuilder, $params);
+            $queryBuilder = $this->configurator->adaptNativeItemsQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
             if (!is_null($this->orderBy)) {
                 $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
