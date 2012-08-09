@@ -133,7 +133,7 @@ LEFT JOIN {$database}.acl_security_identities s ON (
 s.id = e.security_identity_id
 )
 WHERE c.class_type = {$rootEntities}
-AND s.identifier = {$INString}
+AND (s.identifier = {$INString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
 

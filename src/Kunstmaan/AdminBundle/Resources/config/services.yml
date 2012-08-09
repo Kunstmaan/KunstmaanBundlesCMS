@@ -80,6 +80,10 @@ services:
         class: Kunstmaan\AdminBundle\Util\Helper\AclHelper
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
 
+    kunstmaan.acl.native.helper:
+        class: Kunstmaan\AdminBundle\Util\Helper\AclNativeHelper
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
     kunstmaan.guest.security.authentication.listener:
         class: Kunstmaan\AdminBundle\Component\Security\Http\Firewall\GuestUserListener
         arguments: ["@security.context", "user_provider", "provider_key", "@logger"]
