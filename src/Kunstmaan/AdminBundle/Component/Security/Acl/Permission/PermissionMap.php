@@ -9,33 +9,38 @@ use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
  */
 class PermissionMap implements PermissionMapInterface
 {
-    const PERMISSION_VIEW        = 'VIEW';
-    const PERMISSION_EDIT        = 'EDIT';
-    // const PERMISSION_CREATE      = 'CREATE';
-    const PERMISSION_DELETE      = 'DELETE';
-    const PERMISSION_PUBLISH     = 'PUBLISH';
-    
+    const PERMISSION_VIEW       = 'VIEW';
+    const PERMISSION_EDIT       = 'EDIT';
+    // const PERMISSION_CREATE     = 'CREATE';
+    const PERMISSION_DELETE     = 'DELETE';
+    const PERMISSION_PUBLISH    = 'PUBLISH';
+    const PERMISSION_UNPUBLISH  = 'UNPUBLISH';
+
     private $map = array(
-                    self::PERMISSION_VIEW => array(
-                                    MaskBuilder::MASK_VIEW,
-                                    // MaskBuilder::MASK_EDIT,
-                    ),
+        self::PERMISSION_VIEW    => array(
+            MaskBuilder::MASK_VIEW,
+            // MaskBuilder::MASK_EDIT,
+        ),
 
-                    self::PERMISSION_EDIT => array(
-                                    MaskBuilder::MASK_EDIT,
-                    ),
-                    /*
-                    self::PERMISSION_CREATE => array(
-                                    MaskBuilder::MASK_CREATE,
-                    ),
-                    */
-                    self::PERMISSION_DELETE => array(
-                                    MaskBuilder::MASK_DELETE,
-                    ),
+        self::PERMISSION_EDIT    => array(
+            MaskBuilder::MASK_EDIT,
+        ),
+        /*
+        self::PERMISSION_CREATE => array(
+            MaskBuilder::MASK_CREATE,
+        ),
+        */
+        self::PERMISSION_DELETE  => array(
+            MaskBuilder::MASK_DELETE,
+        ),
 
-                    self::PERMISSION_PUBLISH => array(
-                                    MaskBuilder::MASK_PUBLISH,
-                    ),
+        self::PERMISSION_PUBLISH => array(
+            MaskBuilder::MASK_PUBLISH,
+        ),
+
+        self::PERMISSION_UNPUBLISH => array(
+            MaskBuilder::MASK_UNPUBLISH,
+        ),
     );
 
     /**
@@ -57,7 +62,7 @@ class PermissionMap implements PermissionMapInterface
     {
         return isset($this->map[$permission]);
     }
-    
+
     public function getPossiblePermissions()
     {
         return array_keys($this->map);

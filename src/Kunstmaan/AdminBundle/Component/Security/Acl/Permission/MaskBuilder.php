@@ -22,6 +22,7 @@ class MaskBuilder
     const MASK_EDIT         = 4;          // 1 << 2
     const MASK_DELETE       = 8;          // 1 << 3
     const MASK_PUBLISH      = 16;         // 1 << 4
+    const MASK_UNPUBLISH    = 32;         // 1 << 5
     const MASK_IDDQD        = 1073741823; // 1 << 0 | 1 << 1 | ... | 1 << 30
 
     const CODE_VIEW         = 'V';
@@ -29,6 +30,7 @@ class MaskBuilder
     const CODE_EDIT         = 'E';
     const CODE_DELETE       = 'D';
     const CODE_PUBLISH      = 'P';
+    const CODE_UNPUBLISH    = 'U';
 
     const ALL_OFF           = '................................';
     const OFF               = '.';
