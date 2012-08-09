@@ -185,4 +185,9 @@ abstract class AbstractFormPage extends AbstractPage
 		return "main";
 	}
 
+    public function getExtraSubActionsTemplate()
+    {
+        return "KunstmaanFormBundle:AbstractFormPage:extrasubactions.html.twig";
+    }
+
 }
