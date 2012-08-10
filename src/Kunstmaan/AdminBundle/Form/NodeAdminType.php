@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
 
-class PageAdminType extends AbstractType
+class NodeAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
