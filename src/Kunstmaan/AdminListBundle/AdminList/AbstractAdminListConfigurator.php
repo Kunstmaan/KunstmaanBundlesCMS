@@ -9,6 +9,11 @@ abstract class AbstractAdminListConfigurator
     private $exportFields = array();
     private $customActions = array();
     private $listActions = array();
+    private $type = null;
+    private $listTemplate = 'KunstmaanAdminListBundle:Default:list.html.twig';
+    private $addTemplate = 'KunstmaanAdminListBundle:Default:add.html.twig';
+    private $editTemplate = 'KunstmaanAdminListBundle:Default:edit.html.twig';
+    private $deleteTemplate = 'KunstmaanAdminListBundle:Default:delete.html.twig';
 
     abstract function buildFields();
     abstract function getEditUrlFor($item);
@@ -17,10 +22,37 @@ abstract class AbstractAdminListConfigurator
     abstract function getIndexUrlFor();
     abstract function getRepositoryName();
 
+    /**
+     * @param entity $entity
+     *
+     * @throws \Exception
+     * @return AbstractType
+     */
+    public function getAdminType($entity)
+    {
+        if (!is_null($this->type)) {
+            return $this->type;
+        }
+
+        if (method_exists($entity, "getAdminType")) {
+            return $entity->getAdminType();
+        }
+
+        throw new \Exception("you need to implement the getAdminType method in " . get_class($this) . " or " . get_class($entity));
+    }
+
+    /**
+     * @param AbstractType $type
+     */
+    public function setAdminType(AbstractType $type)
+    {
+        $this->type = $type;
+    }
+
     public function buildFilters(AdminListFilter $builder)
     {
     }
-    
+
     public function buildActions()
     {
     }
@@ -106,6 +138,11 @@ abstract class AbstractAdminListConfigurator
         $this->customActions[] = new SimpleAction($url, $icon, $label, $template);
     }
 
+    public function addCustomAction($customaction)
+    {
+        $this->customActions[] = $customaction;
+    }
+
     public function hasCustomActions()
     {
         return !empty($this->customActions);
@@ -188,20 +225,60 @@ abstract class AbstractAdminListConfigurator
     {
         $this->listActions[] = $listAction;
     }
-    
+
     public function useNativeQuery()
     {
         return false;
     }
-    
+
     function adaptNativeCountQueryBuilder($querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native count query builder!');
     }
-    
+
     function adaptNativeItemsQueryBuilder($querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native items query builder!');
     }
-    
+
+    public function getListTemplate() {
+        return $this->listTemplate;
+    }
+
+    public function setListTemplate($template) {
+        $this->listTemplate = $template;
+    }
+
+    public function getAddTemplate() {
+        return $this->addTemplate;
+    }
+
+    public function setAddTemplate($template) {
+        $this->addTemplate = $template;
+    }
+
+    public function getEditTemplate() {
+        return $this->editTemplate;
+    }
+
+    public function setEditTemplate($template) {
+        $this->editTemplate = $template;
+    }
+
+    public function getDeleteTemplate() {
+        return $this->deleteTemplate;
+    }
+
+    public function setDeleteTemplate($template) {
+        $this->deleteTemplate = $template;
+    }
+
+    /**
+     * You can override this method to do some custom things you need to do when adding an entity
+     * @param entity $entity
+     */
+    public function decorateNewEntity($entity) {
+        return $entity;
+    }
+
 }
