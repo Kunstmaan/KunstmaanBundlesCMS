@@ -11,17 +11,20 @@ class {{ entity_class }}AdminType extends AbstractType {
 
     private $container;
 
-    public function __construct(Container $container){
+    public function __construct(Container $container)
+    {
         $this->container = $container;
     }
 
-    public function buildForm(FormBuilder $builder, array $options) {
+    public function buildForm(FormBuilder $builder, array $options) 
+    {
     	{%- for field in fields %}
 			$builder->add('{{ field }}');
         {%- endfor %}
     }
 
-    function getName() {
+    function getName() 
+    {
         return "{{ entity_class }}";
     }
 }
