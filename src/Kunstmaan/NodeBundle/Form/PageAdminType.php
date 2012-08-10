@@ -2,6 +2,10 @@
 // src/Blogger/BlogBundle/Form/EnquiryType.php
 
 namespace Kunstmaan\AdminNodeBundle\Form;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
+
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
@@ -11,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
  */
 class PageAdminType extends AbstractType
 {
+
     /**
      * {@inheritdoc}
      */
@@ -18,6 +23,16 @@ class PageAdminType extends AbstractType
     {
         $builder->add('title');
         $builder->add('pageTitle');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\AdminNodeBundle\Entity\AbstractPage',
+        );
     }
 
     /**
