@@ -63,7 +63,7 @@ class ApplyAclCommand extends ContainerAwareCommand
             $changeset->setPid(getmypid());
             $changeset->setStatus(AclChangeset::STATUS_RUNNING);
             $this->em->persist($changeset);
-            // $this->em->flush();
+            $this->em->flush();
 
             $this->permissionAdmin->applyAclChangeset($changeset->getNode(), $changeset->getChangeset());
 
@@ -73,7 +73,6 @@ class ApplyAclCommand extends ContainerAwareCommand
 
             $hasPending = $aclRepo->hasPendingChangesets();
         } while($hasPending);
-        sleep(30);
     }
 
     private function isRunning()
