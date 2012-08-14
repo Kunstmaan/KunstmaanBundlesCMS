@@ -200,11 +200,9 @@ class PagesController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $securityContext = $this->container->get('security.context');
         $user = $securityContext->getToken()->getUser();
-        $aclProvider = $this->container->get('security.acl.provider');
         $request = $this->getRequest();
         $locale = $request->getSession()->getLocale();
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-
         $saveasdraft = $request->get('saveasdraft');
         $saveandpublish = $request->get('saveandpublish');
 
@@ -326,7 +324,8 @@ class PagesController extends Controller
             $permissionadmin = $this->container->get('kunstmaan_admin.permissionadmin');
             // @todo Fetch permissionmap from page?
             $permissionMap = $this->container->get('security.acl.permission.map');
-            $permissionadmin->initialize($node, $em, $aclProvider, $permissionMap);
+            $shellHelper = $this->container->get('kunstmaan.shell_helper');
+            $permissionadmin->initialize($node, $permissionMap, $shellHelper);
         }
         $form = $formbuilder->getForm();
         if ($request->getMethod() == 'POST') {
@@ -431,7 +430,6 @@ class PagesController extends Controller
         $em->persist($nodenewpage);
         $em->flush();
                 
-        $securityContext = $this->container->get('security.context');
         $aclProvider = $this->container->get('security.acl.provider');
         
         $parentIdentity = ObjectIdentity::fromDomainObject($nodeparent);

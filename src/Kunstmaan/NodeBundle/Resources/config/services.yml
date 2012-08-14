@@ -12,3 +12,6 @@ services:
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan.acl.helper"]
         tags:
             -  { name: admin_menu.adaptor }
+
+    kunstmaan.shell_helper:
+        class: Kunstmaan\AdminNodeBundle\Helper\ShellHelper
