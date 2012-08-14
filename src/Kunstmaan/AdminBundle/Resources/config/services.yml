@@ -25,6 +25,7 @@ services:
         
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "%kernel.environment%"]
 
     permissionsadmin.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension

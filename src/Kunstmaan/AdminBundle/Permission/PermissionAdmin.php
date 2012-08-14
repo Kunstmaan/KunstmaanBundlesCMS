@@ -2,21 +2,19 @@
 
 namespace Kunstmaan\AdminBundle\Permission;
 
-use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
-
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionHelper;
-
 use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
 
 use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
-
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * PermissionAdmin
@@ -24,32 +22,47 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 class PermissionAdmin
 {
 
-    protected $request       = null;
-    protected $resource      = null;
-    protected $em            = null;
-    protected $aclProvider   = null;
-    protected $permissionMap = null;
-    protected $permissions   = null;
+    protected $request          = null;
+    protected $resource         = null;
+    protected $em               = null;
+    protected $securityContext  = null;
+    protected $aclProvider      = null;
+    protected $shellHelper      = null;
+    protected $permissionMap    = null;
+    protected $permissions      = null;
+    protected $currentEnv       = 'dev';
 
     /**
-     * @param object        $resource            The object which has the permissions
-     * @param EntityManager $em                  The EntityManager
-     * @param array         $possiblePermissions Possible permissions
+     * @param EntityManager             $em                 The EntityManager
+     * @param SecurityContextInterface  $securityContext    The security context
+     * @param AclProviderInterface      $aclProvider        The ACL provider
      */
-    public function initialize($resource, EntityManager $em, AclProviderInterface $aclProvider, PermissionMapInterface $permissionMap)
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclProviderInterface $aclProvider, $currentEnv)
     {
-        $this->em            = $em;
-        $this->resource      = $resource;
-        $this->aclProvider   = $aclProvider;
+        $this->em = $em;
+        $this->securityContext = $securityContext;
+        $this->aclProvider = $aclProvider;
+        $this->currentEnv = $currentEnv;
+    }
+
+    /**
+     * @param object                    $resource           The object which has the permissions
+     * @param PermissionMapInterface    $permissionMap      The permission map to use
+     * @param ShellHelper               $shellHelper        The shell helper class to use
+     */
+    public function initialize($resource, PermissionMapInterface $permissionMap, $shellHelper)
+    {
+        $this->resource = $resource;
         $this->permissionMap = $permissionMap;
-        $this->permissions   = array();
+        $this->shellHelper = $shellHelper;
+        $this->permissions = array();
         
         // Init permissions
         try {
             $objectIdentity = ObjectIdentity::fromDomainObject($this->resource);
-            $acl = $aclProvider->findAcl($objectIdentity);
-            $aces = $acl->getObjectAces();
-            foreach ($aces as $ace) {
+            $acl = $this->aclProvider->findAcl($objectIdentity);
+            $objectAces = $acl->getObjectAces();
+            foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
                 if ($securityIdentity instanceof RoleSecurityIdentity) {
                     $this->permissions[$securityIdentity->getRole()] = new MaskBuilder($ace->getMask());
@@ -117,14 +130,14 @@ class PermissionAdmin
         } catch (AclNotFoundException $e) {
             $acl = $this->aclProvider->createAcl($objectIdentity);
         }
-        
+
         foreach ($postPermissions as $role => $permissions) {
             $mask = new MaskBuilder();
             foreach ($permissions as $permission => $value) {
                 $mask->add($permission);
             }
             
-            $index = PermissionHelper::getObjectAceIndex($acl, $role);
+            $index = $this->getObjectAceIndex($acl, $role);
             if (false !== $index) {
                 $acl->updateObjectAce($index, $mask->get());
             } else {
@@ -136,7 +149,7 @@ class PermissionAdmin
         // Process removed Aces
         foreach ($this->permissions as $role => $permission) {
             if (!isset($postPermissions[$role])) {
-                $index = PermissionHelper::getObjectAceIndex($acl, $role);
+                $index = $this->getObjectAceIndex($acl, $role);
                 if (false !== $index) {
                     $acl->updateObjectAce($index, 0);
                 }
@@ -144,7 +157,105 @@ class PermissionAdmin
         }
         
         $this->aclProvider->updateAcl($acl);
-        
+
+        // Apply recursively (on request)
+        $applyRecursive = $request->request->get('applyRecursive');
+        if ($applyRecursive) {
+            // Serialize changes & store them in DB
+            $changes = $request->request->get('permissionChanges');
+            $user = $this->securityContext->getToken()->getUser();
+            $aclChangeset = new AclChangeset();
+            $aclChangeset->setNode($this->resource);
+            $aclChangeset->setChangeset($changes);
+            $aclChangeset->setUser($user);
+            $this->em->persist($aclChangeset);
+            $this->em->flush();
+
+            // Launch acl command
+            $cmd = '/home/projects/clubbrugge/data/current/app/console kuma:acl:apply';
+            if (!empty($this->currentEnv)) {
+                $cmd .= ' --env=' . $this->currentEnv;
+            }
+            $this->shellHelper->runInBackground($cmd);
+        }
+
         return true;
     }
+
+    public function applyAclChangeset($node, $changeset)
+    {
+        // Iterate over children and apply recursively
+        foreach ($node->getChildren() as $child) {
+            $this->applyAclChangeset($child, $changeset);
+        }
+
+        // Apply ACL modifications to node
+        $objectIdentity = ObjectIdentity::fromDomainObject($node);
+        try {
+            $acl = $this->aclProvider->findAcl($objectIdentity);
+        } catch (AclNotFoundException $e) {
+            $acl = $this->aclProvider->createAcl($objectIdentity);
+        }
+
+        // Process permissions in changeset
+        foreach ($changeset as $role => $roleChanges) {
+            $index = $this->getObjectAceIndex($acl, $role);
+            $mask = 0;
+            if (false !== $index) {
+                $mask = $this->getObjectAce($acl, $role);
+            }
+            foreach($roleChanges as $type => $permissions) {
+                $maskChange = new MaskBuilder();
+                foreach ($permissions as $permission) {
+                    $maskChange->add($permission);
+                }
+                switch ($type) {
+                    case 'ADD':
+                        $mask = $mask | $maskChange->get();
+                        break;
+                    case 'DEL':
+                        $mask = $mask & ~$maskChange->get();
+                        break;
+                }
+            }
+            if (false !== $index) {
+                $acl->updateObjectAce($index, $mask);
+            } else {
+                $securityIdentity = new RoleSecurityIdentity($role);
+                $acl->insertObjectAce($securityIdentity, $mask);
+            }
+        }
+        $this->aclProvider->updateAcl($acl);
+    }
+
+    private function getObjectAceIndex($acl, $role)
+    {
+        $objectAces = $acl->getObjectAces();
+        foreach ($objectAces as $index => $ace) {
+            $securityIdentity = $ace->getSecurityIdentity();
+            if ($securityIdentity instanceof RoleSecurityIdentity) {
+                if ($securityIdentity->getRole() == $role) {
+                    return $index;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private function getObjectAce($acl, $role)
+    {
+        $objectAces = $acl->getObjectAces();
+        foreach ($objectAces as $index => $ace) {
+            $securityIdentity = $ace->getSecurityIdentity();
+            if ($securityIdentity instanceof RoleSecurityIdentity) {
+                if ($securityIdentity->getRole() == $role) {
+                    return $ace->getMask();
+                }
+            }
+        }
+
+        return false;
+    }
+
 }
