@@ -1,3 +1,4 @@
+{% if recursiveSupport %}
 <div id="permissionChangesInfo"></div>
 <div id="permissionChangesModal" class="modal hide">
     <div class="modal-header">
@@ -6,6 +7,7 @@
     </div>
     <div class="modal-body"></div>
 </div>
+{% endif %}
 
 <div class="permissionscontainer">
 {% spaceless %}
@@ -27,7 +29,7 @@
 	                {% set permission = permissionadmin.getPermission(role) %}
 	                {% for permissionName in permissionadmin.getPossiblePermissions() %}
 		                <td>
-		                    <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %} onchange="permissionChange('{{ role.getRole() }}', '{{ permissionName }}', this, {% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %})"/>
+		                    <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %}{% if recursiveSupport %} onchange="permissionChange('{{ role.getRole() }}', '{{ permissionName }}', this, {% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %}){% endif %}"/>
 		                </td>
 	                {% endfor %}
 	            </tr>
@@ -37,6 +39,7 @@
 {% endspaceless %}
 </div>
 
+{% if recursiveSupport %}
 <script type="text/javascript">
     var changes = new Array();
     changes['add'] = new Array();
@@ -107,3 +110,4 @@
         }
     }
 </script>
+{% endif %}
