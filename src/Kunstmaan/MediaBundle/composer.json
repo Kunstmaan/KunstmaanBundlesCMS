@@ -19,7 +19,8 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "kunstmaan/adminlist-bundle": "2.0.*",
         "kunstmaan/admin-bundle": "2.0.*",
-        "liip/imagine-bundle": "*"
+        "liip/imagine-bundle": "*",
+        "knplabs/gaufrette": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
