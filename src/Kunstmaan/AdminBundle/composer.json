@@ -15,10 +15,10 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "doctrine/orm": "2.2.*",
-        "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "symfony/symfony": "2.1.*",
-        "friendsofsymfony/user-bundle": "dev-master",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-fixtures-bundle": "2.1.*",
+        "friendsofsymfony/user-bundle": "*",
         "kunstmaan/adminlist-bundle": "2.0.*",
         "kunstmaan/adminnode-bundle": "2.0.*"
     },
