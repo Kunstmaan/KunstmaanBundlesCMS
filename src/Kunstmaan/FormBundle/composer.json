@@ -20,7 +20,8 @@
         "kunstmaan/adminnode-bundle": "2.0.*",
         "kunstmaan/admin-bundle": "2.0.*",
         "kunstmaan/pagepart-bundle": "2.0.*",
-        "ddeboer/data-import-bundle": "dev-master"
+        "ddeboer/data-import-bundle": "*",
+        "gedmo/doctrine-extensions": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\FormBundle": "" }
