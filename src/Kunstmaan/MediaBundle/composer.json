@@ -20,7 +20,7 @@
         "kunstmaan/adminlist-bundle": "2.0.*",
         "kunstmaan/admin-bundle": "2.0.*",
         "liip/imagine-bundle": "*",
-        "knplabs/gaufrette": "*"
+        "knplabs/knp-gaufrette-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
