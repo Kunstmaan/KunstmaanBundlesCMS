@@ -16,7 +16,8 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "kunstmaan/adminnode-bundle": "2.0.*",
-        "kunstmaan/admin-bundle": "2.0.*"
+        "kunstmaan/admin-bundle": "2.0.*",
+        "gedmo/doctrine-extensions": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\ViewBundle": "" }
