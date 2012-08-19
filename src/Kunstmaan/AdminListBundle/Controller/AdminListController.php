@@ -23,7 +23,7 @@ abstract class AdminListController extends Controller {
 	 * @return array
 	 */
 	public function indexAction() {
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
 		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
 		$adminlist->bindRequest($request);
@@ -42,13 +42,13 @@ abstract class AdminListController extends Controller {
 	 */
 	public function exportAction($_format) {
 
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
 		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
 		$adminlist->bindRequest($request);
 		$entities = $adminlist->getItems(array());
-		
-		
+
+
 
 		$response = new Response();
 		$filename = sprintf('entries.%s', $_format);
@@ -71,7 +71,7 @@ abstract class AdminListController extends Controller {
 	 */
 	public function addAction() {
 
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
 		$entityName = $this->getAdminListConfiguration()->getRepositoryName();
 		$classMetaData = $em->getClassMetadata($entityName);
@@ -132,7 +132,7 @@ abstract class AdminListController extends Controller {
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|multitype:unknown \Symfony\Component\Form\FormView
 	 */
 	public function deleteAction($entity_id) {
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 
 		$request = $this->getRequest();
 		$helper = $em->getRepository($this->getAdminListConfiguration()->getRepositoryName())->findOneById($entity_id);
