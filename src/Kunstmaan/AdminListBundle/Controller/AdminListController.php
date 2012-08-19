@@ -47,8 +47,8 @@ abstract class AdminListController extends Controller {
 		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
 		$adminlist->bindRequest($request);
 		$entities = $adminlist->getItems(array());
-		
-		
+
+
 
 		$response = new Response();
 		$filename = sprintf('entries.%s', $_format);
@@ -95,9 +95,11 @@ abstract class AdminListController extends Controller {
 	 * @Route("/{entity_id}/edit", requirements={"entity_id" = "\d+"}, name="KunstmaanAdminListBundle_admin_edit")
 	 * @Method({"GET", "POST"})
 	 * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
-	 * @return array
-	 */
-	public function editAction($entity_id) {
+     * @param $entity_id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function editAction($entity_id) {
 
 		$em = $this->getDoctrine()->getEntityManager();
 
@@ -128,10 +130,11 @@ abstract class AdminListController extends Controller {
 	 * @Route("/{entity_id}/delete", requirements={"entity_id" = "\d+"}, name="KunstmaanAdminListBundle_admin_delete")
 	 * @Method({"GET", "POST"})
 	 * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
-	 * @param integer $entity_id
-	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|multitype:unknown \Symfony\Component\Form\FormView
-	 */
-	public function deleteAction($entity_id) {
+     * @param $entity_id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function deleteAction($entity_id) {
 		$em = $this->getDoctrine()->getEntityManager();
 
 		$request = $this->getRequest();
