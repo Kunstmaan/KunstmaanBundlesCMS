@@ -7,7 +7,7 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use Kunstmaan\AdminBundle\Form\PageAdminType;
+use Kunstmaan\AdminNodeBundle\Form\PageAdminType;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -47,10 +47,14 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
      * Set title
      *
      * @param string $title
+     *
+     * @return AbstractPage
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**

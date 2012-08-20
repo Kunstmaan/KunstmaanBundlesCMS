@@ -2,12 +2,13 @@
 
 namespace Kunstmaan\AdminNodeBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class SEOType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden');
         $builder->add('metaauthor');
@@ -29,5 +30,12 @@ class SEOType extends AbstractType
     public function getName()
     {
         return 'seo';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\AdminNodeBundle\Entity\Seo',
+        );
     }
 }

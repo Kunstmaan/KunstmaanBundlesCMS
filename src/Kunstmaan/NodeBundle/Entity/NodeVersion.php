@@ -196,7 +196,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * @ORM\preUpdate
+     * @ORM\PreUpdate
      */
     public function setUpdatedValue()
     {

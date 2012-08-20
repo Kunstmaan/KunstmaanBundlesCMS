@@ -2,8 +2,9 @@
 
 namespace Kunstmaan\AdminNodeBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class NodeTranslationAdminType extends AbstractType
 {
@@ -14,7 +15,7 @@ class NodeTranslationAdminType extends AbstractType
         $this->container = $container;
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden');
         $builder->add('node', 'entity_id', array('class' => 'Kunstmaan\AdminNodeBundle\Entity\Node'));
@@ -28,5 +29,12 @@ class NodeTranslationAdminType extends AbstractType
     public function getName()
     {
         return 'nodetranslation';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\AdminNodeBundle\Entity\NodeTranslation',
+        );
     }
 }

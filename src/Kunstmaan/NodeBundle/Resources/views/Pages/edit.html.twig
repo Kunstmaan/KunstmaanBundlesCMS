@@ -7,7 +7,7 @@
         	oldEdited = false;
 
         window.onbeforeunload = doUnload;
-		
+
         function doUnload(){
             if(isEdited){
                 return 'You haven\'t saved this page, are you sure you want to close it?';
@@ -50,7 +50,7 @@
 
 {% block content %}
     <form id="pageadminform" class="form-horizontal" action="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
-        
+
         <!--=========Actions=========-->
         <!--Sub Actions-->
         <div class="sub_actions">
@@ -83,9 +83,9 @@
 				<button type="button" onClick="oldEdited = isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
 			{% endif %}
         </div>
-        
-        
-        
+
+
+
         <!--Scroll Actions-->
         <div class="main_actions top" id="main_actions_top">
 			<div class="pull-right">
@@ -105,19 +105,19 @@
 				<a class="btn up">&#9650;</a>
 			</div>
         </div>
-        
-        
-        
-        
 
-        
+
+
+
+
+
         <!--=========Tabs=========-->
         <ul class="nav nav-tabs">
             {% set alreadyexiststab = false %}
             {% for pagepartadmin in pagepartadmins %}
                 {% set pagepartstab = 'pageparts'~loop.index %}
-                
-				
+
+
 				{% if form['pagepartadmin_'~pagepartadmin.context] is defined %}
 					{% if alreadyexiststab %}
 						{% set form_errors_recursive = form_errors_recursive([form['pagepartadmin_'~pagepartadmin.context]]) %}
@@ -131,8 +131,8 @@
 						{% set form_errors_recursive = form_errors_recursive([form.main, form.node, form.nodetranslation]) %}
 					{% endif %}
 				{% endif %}
-                
-                
+
+
                 {% set alreadyexiststab = true %}
                 <li onClick="jQuery('#currenttab').val('pageparts{{ loop.index }}');" {% if currenttab == pagepartstab %} class="active" {% endif %}>
                     <a href="#pageparts{{ loop.index }}" data-toggle="tab">
@@ -182,13 +182,13 @@
                 </a>
             </li>
         </ul>
-        
-        
+
+
         <div class="tab-content">
             <input type="hidden" name="currenttab" id="currenttab" value="{{ currenttab }}">
             {% for pagepartadmin in pagepartadmins %}
                 {% set pagepartstab = 'pageparts'~loop.index %}
-                
+
                 <!--Tab-->
                 <div class="{% if currenttab == pagepartstab %}active{% endif %} tab-pane" id="pageparts{{ loop.index }}">
                     {% if loop.index == 1 %}
@@ -227,7 +227,7 @@
                     {{ permissionsadmin_widget(permissionadmin, form) }}
                 </div>
             {% endif %}
-            
+
 			<!--Tab-->
             <div class="tab-pane" id="children">
                 <table class="table table-bordered table-striped">
@@ -251,7 +251,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <!--Tab-->
 			{% set seoform = form.seo %}
             <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
@@ -272,8 +272,8 @@
             </div>
         </div>
         {{ form_rest(form) }}
-    
-    
+
+
 	    <!--MODALS-->
 	    <div id="unpub" class="modal hide fade">
 	    	<div class="modal-header">
@@ -290,7 +290,7 @@
 		    	</div>
 	        </div>
 	    </div>
-	    
+
 	    <div id="pub" class="modal hide fade">
 	        <div class="modal-header">
 	            <button class="close" data-dismiss="modal">&times;</button>
@@ -306,7 +306,7 @@
 		    	</div>
 	        </div>
 	    </div>
-	    
+
 	    <div id="quitpagemodal" class="modal hide fade">
 	        <div class="modal-header">
 	            <button class="close" data-dismiss="modal">&times;</button>
@@ -322,7 +322,7 @@
 		    	</div>
 	        </div>
 	    </div>
-	    
+
 	    <div id="versions" class="modal hide fade">
 	        <div class="modal-header">
 	            <button class="close" data-dismiss="modal">&times;</button>
@@ -351,7 +351,7 @@
 	            </table>
 	        </div>
 	    </div>
-	    
+
 		{% if pagePossibleChildPages is not empty %}
 		<div id="add-subpage-modal" class="modal hide fade">
 			<div class="modal-header">
@@ -386,7 +386,7 @@
 			</div>
 		</div>
 		{% endif %}
-	    
+
 		<div id="delete-page-modal" class="modal hide fade">
 			<div class="modal-header">
 				<button class="close" data-dismiss="modal">&times;</button>
@@ -409,7 +409,7 @@
 			</div>
 		</div>
     </form>
-    
-    
-    
+
+
+
 {% endblock %}

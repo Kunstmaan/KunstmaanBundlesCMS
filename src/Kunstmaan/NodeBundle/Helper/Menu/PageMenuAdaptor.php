@@ -45,7 +45,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             if ($request->attributes->get('_route') == 'KunstmaanAdminNodeBundle_pages_edit') {
                 $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
-            $this->nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true, true);
+            $this->nodemenu = new NodeMenu($this->container, $request->getLocale(), $node, 'write', true, true);
         }
         if (is_null($parent)) {
             $menuitem = new TopMenuItem($menu);
@@ -98,7 +98,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         } else if ('KunstmaanAdminNodeBundle_pages_edit' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
             $node = $this->container->get("doctrine")->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
-            $nodemenu = new NodeMenu($this->container, $request->getSession()->getLocale(), $node, 'write', true, true);
+            $nodemenu = new NodeMenu($this->container, $request->getLocale(), $node, 'write', true, true);
 
             $childNodes = $nodemenu->getCurrent()->getChildren();
 

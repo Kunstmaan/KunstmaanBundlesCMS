@@ -15,9 +15,10 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.0.*",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/admin-bundle": "*"
+        "symfony/symfony": "2.1.*",
+        "kunstmaan/adminlist-bundle": "2.0.*",
+        "kunstmaan/admin-bundle": "2.0.*",
+        "gedmo/doctrine-extensions": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminNodeBundle": "" }
