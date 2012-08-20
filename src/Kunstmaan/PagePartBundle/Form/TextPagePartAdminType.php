@@ -2,12 +2,13 @@
 
 namespace Kunstmaan\PagePartBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class TextPagePartAdminType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('content', 'textarea', array('required' => false, 'attr' => array( 'rows'=>32, 'cols'=>600, 'class' => 'rich_editor' )))
@@ -25,4 +26,5 @@ class TextPagePartAdminType extends AbstractType
     {
         return 'kunstmaan_pagepartbundle_textpageparttype';
     }
+
 }

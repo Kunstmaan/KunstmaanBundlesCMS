@@ -2,7 +2,8 @@
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 class PagePartAdmin {
@@ -52,9 +53,9 @@ class PagePartAdmin {
             }
             $this->em->flush();
         }
-        
+
     }
-    
+
     public function postBindRequest($request)
     {
     	$addpagepart = $this->request->request->get("addpagepart_".$this->getContext());
@@ -158,10 +159,10 @@ class PagePartAdmin {
         return "no name";
     }
 
-    public function adaptForm(FormBuilder $formbuilder, $formfactory, array $options = array()){
+    public function adaptForm(FormBuilderInterface $formbuilder, $formfactory, array $options = array()){
         $pagepartrefs = $this->getPagePartRefs();
         if(sizeof($pagepartrefs) > 0) {
-        	$ppformbuilder = $formbuilder->getFormFactory()->createNamedBuilder('form', 'pagepartadmin_'.$this->getContext());
+        	$ppformbuilder = $formbuilder->getFormFactory()->createNamedBuilder('pagepartadmin_'.$this->getContext(), 'form');
         	$data = $formbuilder->getData();
         	for($i = 0; $i < sizeof($pagepartrefs); $i++) {
         		$pagepartref = $pagepartrefs[$i];

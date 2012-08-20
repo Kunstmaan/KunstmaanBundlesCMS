@@ -2,14 +2,22 @@
 
 namespace Kunstmaan\PagePartBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class ToTopPagePartAdminType extends AbstractType {
-    public function buildForm(FormBuilder $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
     }
 
     public function getName() {
         return 'kunstmaan_pagepartbundle_totoppageparttype';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart',
+        );
     }
 }
