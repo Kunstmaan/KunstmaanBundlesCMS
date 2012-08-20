@@ -3,7 +3,10 @@
 namespace Kunstmaan\AdminListBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormView;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
 class AdminListTwigExtension extends \Twig_Extension {
 
@@ -12,6 +15,9 @@ class AdminListTwigExtension extends \Twig_Extension {
      */
     protected $environment;
 
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     /**
@@ -47,14 +53,14 @@ class AdminListTwigExtension extends \Twig_Extension {
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param FormView $view The view to render
-     * @param string $basepath
-     * @param array $urlparams
-     * @param array $addparams
-     * @param array $queryparams
+     * @param AdminList        $view        The view to render
+     * @param string           $basepath    The base path
+     * @param array            $urlparams   Additional url params
+     * @param array            $addparams   Add params
+     * @param array            $queryparams Query params
      * @return string The html markup
      */
-    public function renderWidget( FormView $view, $basepath, array $urlparams = array(), array $addparams = array(), array $queryparams = array())
+    public function renderWidget(AdminList $view, $basepath, array $urlparams = array(), array $addparams = array(), array $queryparams = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
         return $template->render(array(
@@ -74,12 +80,15 @@ class AdminListTwigExtension extends \Twig_Extension {
      */
     public function routerParams()
     {
+        /** @var Router $router  */
         $router = $this->container->get('router');
         $request = $this->container->get('request');
 
         $routeName = $request->attributes->get('_route');
         $routeParams = $request->query->all();
-        foreach ($router->getRouteCollection()->get($routeName)->compile()->getVariables() as $variable) {
+        $routeCollection = $router->getRouteCollection();
+        $compiledRouteConnection = $routeCollection->get($routeName)->compile();
+        foreach ($compiledRouteConnection->getVariables() as $variable) {
             $routeParams[$variable] = $request->attributes->get($variable);
         }
 

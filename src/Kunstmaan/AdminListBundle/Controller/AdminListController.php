@@ -3,17 +3,21 @@
 namespace Kunstmaan\AdminListBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 abstract class AdminListController extends Controller {
 
-	public abstract function getAdminListConfiguration();
+    /**
+     * @return Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator
+     */
+    public abstract function getAdminListConfiguration();
 
 	public abstract function getAdminType();
 
@@ -25,6 +29,7 @@ abstract class AdminListController extends Controller {
 	public function indexAction() {
 		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
+        /** @var Kunstmaan\AdminListBundle\AdminList\AdminList $adminlist  */
 		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
 		$adminlist->bindRequest($request);
 
@@ -44,7 +49,8 @@ abstract class AdminListController extends Controller {
 
 		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
-		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
+		/** @var Kunstmaan\AdminListBundle\AdminList\AdminList $adminlist  */
+        $adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
 		$adminlist->bindRequest($request);
 		$entities = $adminlist->getItems(array());
 

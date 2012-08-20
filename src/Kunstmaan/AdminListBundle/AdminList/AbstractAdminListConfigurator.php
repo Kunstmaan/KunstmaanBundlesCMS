@@ -1,26 +1,33 @@
 <?php
-
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 abstract class AbstractAdminListConfigurator
 {
 
+    /**
+     * @var Field[]
+     */
     private $fields = array();
     private $exportFields = array();
     private $customActions = array();
     private $listActions = array();
 
     abstract function buildFields();
+
     abstract function getEditUrlFor($item);
+
     abstract function getAddUrlFor($params = array());
+
     abstract function getDeleteUrlFor($item);
+
     abstract function getIndexUrlFor();
+
     abstract function getRepositoryName();
 
     public function buildFilters(AdminListFilter $builder)
     {
     }
-    
+
     public function buildActions()
     {
     }
@@ -188,20 +195,20 @@ abstract class AbstractAdminListConfigurator
     {
         $this->listActions[] = $listAction;
     }
-    
+
     public function useNativeQuery()
     {
         return false;
     }
-    
+
     function adaptNativeCountQueryBuilder($querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native count query builder!');
     }
-    
+
     function adaptNativeItemsQueryBuilder($querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native items query builder!');
     }
-    
+
 }

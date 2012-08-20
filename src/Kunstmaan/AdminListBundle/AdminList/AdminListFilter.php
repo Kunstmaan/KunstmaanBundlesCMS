@@ -1,19 +1,8 @@
 <?php
-
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\Form\Exception\CircularReferenceException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -26,6 +15,9 @@ class AdminListFilter
      */
     private $filterdefinitions = array();
 
+    /**
+     * @var Filter[]
+     */
     private $currentfilters = array();
 
     private $currentparameters = array();
