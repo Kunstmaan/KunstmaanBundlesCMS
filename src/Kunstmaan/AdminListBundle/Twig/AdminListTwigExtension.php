@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminListBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormView;
 
 class AdminListTwigExtension extends \Twig_Extension {
 
@@ -46,12 +47,14 @@ class AdminListTwigExtension extends \Twig_Extension {
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param FormView        $view      The view to render
-     * @param array           $variables Additional variables passed to the template
-     *
+     * @param FormView $view The view to render
+     * @param string $basepath
+     * @param array $urlparams
+     * @param array $addparams
+     * @param array $queryparams
      * @return string The html markup
      */
-    public function renderWidget( $view, $basepath, array $urlparams = array(), array $addparams = array(), array $queryparams = array())
+    public function renderWidget( FormView $view, $basepath, array $urlparams = array(), array $addparams = array(), array $queryparams = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
         return $template->render(array(
