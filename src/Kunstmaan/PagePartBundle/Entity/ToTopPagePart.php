@@ -1,7 +1,6 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType;
 
@@ -15,7 +14,9 @@ class ToTopPagePart extends AbstractPagePart
 {
 
     /**
-     * {@inheritdoc}
+     * @assert () == 'ToTopPagePart'
+     *
+     * @return string
      */
     public function __toString()
     {
@@ -23,7 +24,10 @@ class ToTopPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     *
+     * @assert () == 'KunstmaanPagePartBundle:ToTopPagePart:view.html.twig'
+     *
+     * @return string
      */
     public function getDefaultView()
     {
@@ -31,7 +35,9 @@ class ToTopPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @assert () == 'KunstmaanPagePartBundle:ToTopPagePart:view.html.twig'
+     *
+     * @return string
      */
     public function getElasticaView()
     {
@@ -39,7 +45,7 @@ class ToTopPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return ToTopPagePartAdminType
      */
     public function getDefaultAdminType()
     {

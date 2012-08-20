@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
+use Symfony\Component\Form\FormView;
+
 class PagePartAdminTwigExtension extends \Twig_Extension
 {
     /**
@@ -10,7 +12,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
     protected $environment;
 
     /**
-     * {@inheritdoc}
+     * @param \Twig_Environment $environment
      */
     public function initRuntime(\Twig_Environment $environment)
     {
@@ -21,6 +23,9 @@ class PagePartAdminTwigExtension extends \Twig_Extension
     {
     }
 
+    /**
+     * @return array
+     */
     public function getFunctions() {
         return array(
             'pagepartadmin_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
@@ -40,12 +45,13 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param FormView $view      The view to render
-     * @param array    $variables Additional variables passed to the template
+     * @param \Symfony\Component\Form\FormView $view The view to render
+     * @param null                             $form
+     * @param array                            $parameters Additional variables passed to the template
      *
      * @return string The html markup
      */
-    public function renderWidget( $view , $form = null , array $parameters = array())
+    public function renderWidget(FormView $view , $form = null , array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig");
 
@@ -55,6 +61,9 @@ class PagePartAdminTwigExtension extends \Twig_Extension
         )));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'pagepartadmin_twig_extension';

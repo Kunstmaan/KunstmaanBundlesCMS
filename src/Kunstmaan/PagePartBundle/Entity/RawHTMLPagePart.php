@@ -1,7 +1,6 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
 
@@ -36,15 +35,19 @@ class RawHTMLPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @assert () == "RawHTMLPagePart " . htmlentities($this->object->getContent())
+     *
+     * @return string
      */
     public function __toString()
     {
-        return "TextPagePart " . $this->getContent();
+        return "RawHTMLPagePart " . htmlentities($this->getContent());
     }
 
     /**
-     * {@inheritdoc}
+     * @assert () == 'KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig'
+     *
+     * @return string
      */
     public function getDefaultView()
     {
@@ -52,7 +55,9 @@ class RawHTMLPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @assert () == 'KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig'
+     *
+     * @return string
      */
     public function getElasticaView()
     {
@@ -60,7 +65,7 @@ class RawHTMLPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return RawHTMLPagePartAdminType
      */
     public function getDefaultAdminType()
     {

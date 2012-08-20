@@ -1,15 +1,15 @@
 <script>
 	if(typeof window.FileChosenCallback == 'undefined') {
-    	window.FileChosenCallback = new Array();
+    	window.FileChosenCallback = [];
 	}
 	if(typeof window.LinkChosenCallback == 'undefined') {
-    	window.LinkChosenCallback = new Array();
+    	window.LinkChosenCallback = [];
 	}
 	if(typeof window.SlideChosenCallback == 'undefined') {
-    	window.SlideChosenCallback = new Array();
+    	window.SlideChosenCallback = [];
 	}
 	if(typeof window.VideoChosenCallback == 'undefined') {
-    	window.VideoChosenCallback = new Array();
+    	window.VideoChosenCallback = [];
 	}
 </script>
 
@@ -28,13 +28,13 @@
 	    {% endfor %}
 	  </select>
 	</div>
-		
-    
+
+
     {% for pagepartref in pagepartadmin.pagepartrefs %}
     	{% set pagepart = pagepartadmin.getPagePart(pagepartref) %}
 		<input type="hidden" id="{{pagepartref.id}}_deleted" name="{{pagepartref.id}}_deleted" value="" />
     	<section class="draggable" id="{{pagepartref.id}}_container" >
-	        
+
 	        <script>
 	            function delete_{{pagepartref.id}}(){
 	            	isEdited = true;
@@ -52,9 +52,9 @@
 	                return false;
 	            }
 	        </script>
-	        
+
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
-			
+
         	<div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="pagepart">
             	<a id="{{pagepartadmin.context}}pagepart{{ loop.index }}" ></a>
             	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
@@ -62,7 +62,7 @@
             		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
 					<button class="del red" data-toggle="modal" data-target="#delete-pagepart-modal{{pagepartref.id}}"><i class="icon-trash"></i></button>
 					{% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}
-						<button class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</button>	
+						<button class="bleu" onclick="return edit_{{pagepartref.id}}()">Edit</button>
 					{% endif %}
             	</div>
             	{% if (editpagepart is defined and editpagepart == loop.index) or form_has_errors_recursive(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) %}
@@ -83,7 +83,7 @@
                         {% endif %}
                     </div>
             </div>
-            
+
             <div class="new_pagepart">
               <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '{%if loop.index !=1 or loop.length >= 1 %}{{ loop.index-1 }}{%else%}-1{% endif %}')">
 	            <option value="">Add a pagepart</option>
@@ -92,8 +92,8 @@
 	            {% endfor %}
               </select>
             </div>
-            
-            
+
+
             <!--Del modal-->
 			<div id="delete-pagepart-modal{{pagepartref.id}}" class="modal hide fade">
 				<div class="modal-header">
@@ -119,7 +119,7 @@
 	    		{% for pagePartType in pagepartadmin.possiblePagePartTypes %}
 	    			<option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
 	    		{% endfor %}
-	    	</select>    						
+	    	</select>
 	    </div>
 	    -->
     {% endfor %}
@@ -144,7 +144,7 @@
 		$(this).removeClass('small').addClass('big').html('Hide Properties');
         return false;
     }
-    
+
     $(document).ready(function () {
     	$('#parts_{{pagepartadmin.context}}').sortable({
     		iframeFix: true,
@@ -173,7 +173,7 @@
                     }
             		CKEDITOR.replace( $(this).attr('id'), config);
     			});
-    			
+
     			$('.draggable').css('opacity', "1");
     		}
     	});

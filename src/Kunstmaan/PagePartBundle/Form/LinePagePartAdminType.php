@@ -1,9 +1,8 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Form;
-
 use Symfony\Component\Form\FormBuilderInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -12,24 +11,30 @@ use Symfony\Component\Form\AbstractType;
 class LinePagePartAdminType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array                                        $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     }
 
     /**
-     * {@inheritdoc}
+     * @assert () == 'kunstmaan_pagepartbundle_linepageparttype'
+     *
+     * @return string
      */
     public function getName()
     {
         return 'kunstmaan_pagepartbundle_linepageparttype';
     }
 
-    public function getDefaultOptions(array $options)
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-                'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinePagePart',
-        );
+        $resolver->setDefaults(array(
+                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinePagePart',
+                               ));
     }
 }

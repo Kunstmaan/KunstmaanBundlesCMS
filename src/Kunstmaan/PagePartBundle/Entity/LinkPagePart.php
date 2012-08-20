@@ -1,7 +1,6 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
 
@@ -78,7 +77,7 @@ class LinkPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function __toString()
     {
@@ -86,7 +85,7 @@ class LinkPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDefaultView()
     {
@@ -94,7 +93,7 @@ class LinkPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getElasticaView()
     {
@@ -102,7 +101,7 @@ class LinkPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return LinkPagePartAdminType
      */
     public function getDefaultAdminType()
     {
