@@ -12,157 +12,155 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-abstract class AdminListController extends Controller {
+/**
+ * AdminListController
+ */
+abstract class AdminListController extends Controller
+{
 
     /**
-     * @return Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator
+     * @param AbstractAdminListConfigurator $configurator
+     *
+     * @return array
      */
-    public abstract function getAdminListConfiguration();
+    protected function doIndexAction(AbstractAdminListConfigurator $configurator)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $adminlist = $this->get("adminlist.factory")->createList($configurator, $em);
+        $adminlist->bindRequest($request);
 
-	public abstract function getAdminType();
+        return new Response($this->renderView($configurator->getListTemplate(), array('adminlist' => $adminlist, 'adminlistconfigurator' => $configurator, 'addparams' => array())));
+    }
 
-	/**
-	 * @Route("/", name="KunstmaanAdminListBundle_admin_index")
-	 * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-	 * @return array
-	 */
-	public function indexAction() {
-		$em = $this->getDoctrine()->getManager();
-		$request = $this->getRequest();
-        /** @var Kunstmaan\AdminListBundle\AdminList\AdminList $adminlist  */
-		$adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
-		$adminlist->bindRequest($request);
+    /**
+     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
+     * @param string                        $_format      The format to export to
+     *
+     * @return array
+     */
+    protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $adminlist = $this->get("adminlist.factory")->createList($configurator, $em);
+        $adminlist->bindRequest($request);
+        $entities = $adminlist->getItems(array());
 
-		return array(
-			'adminlist' => $adminlist,
-		    'adminlistconfiguration' => $this->getAdminListConfiguration(),
-			'addparams' => array()
-		);
-	}
+        $response = new Response();
+        $filename = sprintf('entries.%s', $_format);
+        $template = sprintf("KunstmaanAdminListBundle:Default:export.%s.twig", $_format);
+        $response->headers->set('Content-Type', sprintf('text/%s', $_format));
+        $response->headers->set('Content-Disposition', sprintf('attachment; filename=%s', $filename));
+        $response->setContent($this->renderView($template, array(
+            "entities" => $entities,
+            "adminlist" => $adminlist,
+            "queryparams" => array()
+        )));
 
-	/**
-	 * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="KunstmaanAdminListBundle_admin_export")
-	 * @Method({"GET", "POST"})
-	 * @return array
-	 */
-	public function exportAction($_format) {
+        return $response;
+    }
 
-		$em = $this->getDoctrine()->getManager();
-		$request = $this->getRequest();
-		/** @var Kunstmaan\AdminListBundle\AdminList\AdminList $adminlist  */
-        $adminlist = $this->get("adminlist.factory")->createList($this->getAdminListConfiguration(), $em);
-		$adminlist->bindRequest($request);
-		$entities = $adminlist->getItems(array());
+    /**
+     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
+     * @param string                        $type         The type to add
+     *
+     * @return array
+     */
+    protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $entityName = null;
+        if (isset($type)) {
+            $entityName = $type;
+        } else {
+            $entityName = $configurator->getRepositoryName();
+        }
 
+        $classMetaData = $em->getClassMetadata($entityName);
+        // Creates a new instance of the mapped class, without invoking the constructor.
+        $classname = $classMetaData->getName();
+        $helper = new $classname();
+        $helper = $configurator->decorateNewEntity($helper);
+        $form = $this->createForm($configurator->getAdminType($helper), $helper);
 
+        if ('POST' == $request->getMethod()) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em->persist($helper);
+                $em->flush();
+                $indexUrl = $configurator->getIndexUrlFor();
 
-		$response = new Response();
-		$filename = sprintf('entries.%s', $_format);
-		$template = sprintf("KunstmaanAdminListBundle:Default:export.%s.twig", $_format);
-		$response->headers->set('Content-Type', sprintf('text/%s', $_format));
-		$response->headers->set('Content-Disposition', sprintf('attachment; filename=%s', $filename));
-		$response->setContent($this->renderView($template, array(
-			"entities" => $entities,
-			"adminlist" => $adminlist,
-			"queryparams" => array()
-		)));
-		return $response;
-	}
-
-	/**
-	 * @Route("/add", name="KunstmaanAdminListBundle_admin_add")
-	 * @Method({"GET", "POST"})
-	 * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
-	 * @return array
-	 */
-	public function addAction() {
-
-		$em = $this->getDoctrine()->getManager();
-		$request = $this->getRequest();
-		$entityName = $this->getAdminListConfiguration()->getRepositoryName();
-		$classMetaData = $em->getClassMetadata($entityName);
-		// Creates a new instance of the mapped class, without invoking the constructor.
-		$helper = $classMetaData->newInstance();
-		$form = $this->createForm($this->getAdminType(), $helper);
-
-		if ('POST' == $request->getMethod()) {
-			$form->bindRequest($request);
-			if ($form->isValid()) {
-				$em->persist($helper);
-				$em->flush();
-                $indexUrl = $this->getAdminListConfiguration()->getIndexUrlFor();
                 return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
-			}
-		}
-		return array('form' => $form->createView(), 'adminlistconfiguration' => $this->getAdminListConfiguration(),);
-	}
+            }
+        }
 
-	/**
-	 * @Route("/{entity_id}/edit", requirements={"entity_id" = "\d+"}, name="KunstmaanAdminListBundle_admin_edit")
-	 * @Method({"GET", "POST"})
-	 * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
-     * @param $entity_id
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+        return new Response($this->renderView($configurator->getAddTemplate(), array('form' => $form->createView(), 'adminlistconfigurator' => $configurator)));
+    }
+
+    /**
+     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
+     * @param string                        $entityid     The id of the entity that will be edited
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($entity_id) {
+    protected function doEditAction(AbstractAdminListConfigurator $configurator, $entityid)
+    {
 
-		$em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
-		$request = $this->getRequest();
-		$helper = $em->getRepository($this->getAdminListConfiguration()->getRepositoryName())->findOneById($entity_id);
-		if ($helper == NULL) {
-			throw new NotFoundHttpException("Entity not found.");
-		}
-		$form = $this->createForm($this->getAdminType(), $helper);
+        $request = $this->getRequest();
+        $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityid);
+        if ($helper == null) {
+            throw new NotFoundHttpException("Entity not found.");
+        }
+        $form = $this->createForm($configurator->getAdminType($helper), $helper);
 
-		if ('POST' == $request->getMethod()) {
-			$form->bindRequest($request);
-			if ($form->isValid()) {
-				$em->persist($helper);
-				$em->flush();
-                $indexUrl = $this->getAdminListConfiguration()->getIndexUrlFor();
-				return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
-			}
-		}
-		return array(
-			'form' => $form->createView(),
-		        'adminlistconfiguration' => $this->getAdminListConfiguration(),
-			'entity' => $helper
-		);
-	}
+        if ('POST' == $request->getMethod()) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em->persist($helper);
+                $em->flush();
+                $indexUrl = $configurator->getIndexUrlFor();
 
-	/**
-	 * @Route("/{entity_id}/delete", requirements={"entity_id" = "\d+"}, name="KunstmaanAdminListBundle_admin_delete")
-	 * @Method({"GET", "POST"})
-	 * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
-     * @param $entity_id
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    public function deleteAction($entity_id) {
-		$em = $this->getDoctrine()->getManager();
-
-		$request = $this->getRequest();
-		$helper = $em->getRepository($this->getAdminListConfiguration()->getRepositoryName())->findOneById($entity_id);
-		if ($helper == NULL) {
-			throw new NotFoundHttpException("Entity not found.");
-		}
-		$form = $this->createFormBuilder($helper)->add('id', "hidden")->getForm();
-
-		if ('POST' == $request->getMethod()) {
-			$form->bindRequest($request);
-			if ($form->isValid()) {
-				$em->remove($helper);
-				$em->flush();
-                $indexUrl = $this->getAdminListConfiguration()->getIndexUrlFor();
                 return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
-			}
-		}
-		return array(
-			'form' => $form->createView(),
-			'entity' => $helper,
-			'adminlistconfiguration' => $this->getAdminListConfiguration()
-		);
-	}
+            }
+        }
+
+        $configurator->buildActions();
+
+        return new Response($this->renderView($configurator->getEditTemplate(), array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator)));
+    }
+
+    /**
+     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
+     * @param integer                       $entityid     The id to delete
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    protected function doDeleteAction(AbstractAdminListConfigurator $configurator, $entityid)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $request = $this->getRequest();
+        $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityid);
+        if ($helper == null) {
+            throw new NotFoundHttpException("Entity not found.");
+        }
+        $form = $this->createFormBuilder($helper)->add('id', "hidden")->getForm();
+
+        if ('POST' == $request->getMethod()) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em->remove($helper);
+                $em->flush();
+                $indexUrl = $configurator->getIndexUrlFor();
+
+                return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
+            }
+        }
+
+        return new Response($this->renderView($configurator->getDeleteTemplate(), array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator)));
+    }
 }

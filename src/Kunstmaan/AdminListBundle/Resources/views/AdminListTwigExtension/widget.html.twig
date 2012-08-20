@@ -45,7 +45,7 @@
 	                {% endif %}
 	                {% if adminlist.canDelete(item) %}
 	                    {% if adminlist.getDeleteUrlFor(item)["action"] is defined %}
-	                        {% render adminlist.getDeleteUrlFor(item)["action"] with {'entity_id': item.id} %}
+	                        {% render adminlist.getDeleteUrlFor(item)["action"] with adminlist.getDeleteUrlFor(item)["params"] %}
 	                    {% elseif adminlist.getDeleteUrlFor(item)["path"] is defined %}
 	                        <a href="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="danger"><i class="icon-remove-sign"></i>Delete</a>
 	                    {% endif %}

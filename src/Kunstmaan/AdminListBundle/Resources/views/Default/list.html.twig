@@ -18,10 +18,10 @@
 {% endblock %}
 
 {% block content %}
-	{% if extraparams is defined %}
-		{{ adminlist_widget(adminlist, app.request.attributes.get('_route'), extraparams) }}
+	{% if adminlist.getIndexUrlFor()['params'] is defined %}
+		{{ adminlist_widget(adminlist, adminlist.getIndexUrlFor()["path"], adminlist.getIndexUrlFor()['params']) }}
 	{% else %}
-		{{ adminlist_widget(adminlist, app.request.attributes.get('_route')) }}
+		{{ adminlist_widget(adminlist, adminlist.getIndexUrlFor()["path"], adminlist.getIndexUrlFor()) }}
 	{% endif %}
 
     {% if adminlist.hasListActions %}

@@ -3,12 +3,55 @@
 
 {% block content %}
     <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }}>
-        <fieldset>
+        <div class="main_actions">
+            <button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
+            <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrlFor()["path"], adminlistconfigurator.getIndexUrlFor()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+            {% if adminlistconfigurator.hasCustomActions() %}
+                {% for customAction in adminlistconfigurator.getCustomActions() %}
+                    {% if customAction.template is not null %}
+                        {% include customAction.template with {'row': entity, 'item': entity} %}
+                    {% else %}
+                        <a class="btn" href="{{ path(customAction.getUrlFor(entity)["path"], customAction.getUrlFor(entity)[("params")] ) }}">
+                        {% if customAction.getIcon(entity) is not null %}
+                            <img src="{{ asset(customAction.getIcon(entity)) }}" alt="{{ customAction.getLabel(entity) }}"/>
+                        {% else %}
+                            {{ customAction.getLabel(entity) }}
+                        {% endif %}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!--Scroll Actions-->
+        <div class="main_actions top" id="main_actions_top">
+			<div class="pull-right">
+				<button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
+                <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrlFor()["path"], adminlistconfigurator.getIndexUrlFor()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+
+                {% if adminlistconfigurator.hasCustomActions() %}
+                    {% for customAction in adminlistconfigurator.getCustomActions() %}
+                        {% if customAction.template is not null %}
+                            {% include customAction.template with {'row': entity, 'item': entity} %}
+                        {% else %}
+                            <a class="btn" href="{{ path(customAction.getUrlFor(entity)["path"], customAction.getUrlFor(entity)[("params")] ) }}">
+                            {% if customAction.getIcon(entity) is not null %}
+                                <img src="{{ asset(customAction.getIcon(entity)) }}" alt="{{ customAction.getLabel(entity) }}"/>
+                            {% else %}
+                                {{ customAction.getLabel(entity) }}
+                            {% endif %}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+				<a class="btn up">&#9650;</a>
+			</div>
+        </div>
+        <div style="clear:both;">
+            &nbsp;
+        </div>
+        <fieldset class="properties">
         	{{ form_widget(form) }}
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
-                <button type="reset" onclick="window.location = '{{ path(adminlistconfiguration.getIndexUrlFor()["path"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
-            </div>
         </fieldset>
     </form>
 {% endblock %}
