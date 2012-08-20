@@ -15,12 +15,13 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "doctrine/orm": "2.1.*",
-        "doctrine/doctrine-fixtures-bundle": "2.0.*",
-        "symfony/symfony": "2.0.*",
-        "friendsofsymfony/user-bundle": "1.2.*",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/adminnode-bundle": "*"
+        "symfony/symfony": "2.1.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-fixtures-bundle": "2.1.*",
+        "friendsofsymfony/user-bundle": "*",
+        "knplabs/knp-menu-bundle": "*",
+        "kunstmaan/adminlist-bundle": "2.0.*",
+        "kunstmaan/adminnode-bundle": "2.0.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }

@@ -2,12 +2,13 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
-class PageAdminType extends AbstractType
+use Symfony\Component\Form\AbstractType;
+
+class NodeAdminType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
     }

@@ -4,12 +4,12 @@ namespace Kunstmaan\AdminBundle\Modules;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Bundle\DoctrineBundle\Registry as Doctrine;
+use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Kunstmaan\AdminBundle\Entity\LogItem;
 
 /**
  * logout listener to log the logout
- * 
+ *
  * @author kristof van cauwenbergh
  *
  */
@@ -17,7 +17,7 @@ class LoginListener
 {
 	private $context;
 	private $em;
-	
+
 	/**
 	* Constructor
 	*
@@ -29,7 +29,7 @@ class LoginListener
 		$this->context = $context;
 		$this->em = $doctrine->getEntityManager();
 	}
-	
+
 	/**
 	* Do the magic.
 	*
@@ -38,7 +38,7 @@ class LoginListener
 	public function onSecurityInteractiveLogin(Event $event)
 	{
 		$user = $this->context->getToken()->getUser();
-	
+
 		$logitem = new LogItem();
 		$logitem->setStatus("info");
 		$logitem->setUser($user);

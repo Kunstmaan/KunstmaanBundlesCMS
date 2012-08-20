@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminBundle\Entity\Permission;
 
-use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 /**

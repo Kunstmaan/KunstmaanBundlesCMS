@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Form\Type;
 
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityChoiceList;
 use Symfony\Bridge\Doctrine\Form\EventListener\MergeCollectionListener;
@@ -22,7 +21,7 @@ class URLChooserType extends AbstractType {
 		return $options;
 	}
 
-	public function getParent(array $options) {
+	public function getParent() {
 		return 'text';
 	}
 
