@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Helper\Menu;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -22,7 +23,7 @@ class MenuBuilder
     /**
      * @param FactoryInterface $factory
      */
-    public function __construct(Translator $translator, ContainerInterface $container)
+    public function __construct(TranslatorInterface $translator, ContainerInterface $container)
     {
         $this->translator = $translator;
         $this->container = $container;
