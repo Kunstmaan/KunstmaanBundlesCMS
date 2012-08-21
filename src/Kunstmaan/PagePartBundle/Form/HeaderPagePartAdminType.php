@@ -1,9 +1,8 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Form;
-
 use Symfony\Component\Form\FormBuilderInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -12,30 +11,32 @@ use Symfony\Component\Form\AbstractType;
 class HeaderPagePartAdminType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array                                        $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('niv', 'choice', array(
-            'choices'   => array('1' => 'Header 1', '2' => 'Header 2', '3' => 'Header 3', '4' => 'Header 4', '5' => 'Header 5', '6' => 'Header 6' ),
-            'required'  => false,
-        ));
-        $builder
-            ->add('title', null, array('required' => false));
+        $builder->add('niv', 'choice', array('choices' => array('1' => 'Header 1', '2' => 'Header 2', '3' => 'Header 3', '4' => 'Header 4', '5' => 'Header 5', '6' => 'Header 6'), 'required' => false,));
+        $builder->add('title', null, array('required' => false));
     }
 
     /**
-     * {@inheritdoc}
+     * @assert () == 'kunstmaan_pagepartbundle_headerpageparttype'
+     *
+     * @return string
      */
     public function getName()
     {
         return 'kunstmaan_pagepartbundle_headerpageparttype';
     }
 
-    public function getDefaultOptions(array $options)
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-                'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-        );
+        $resolver->setDefaults(array(
+                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+                               ));
     }
 }

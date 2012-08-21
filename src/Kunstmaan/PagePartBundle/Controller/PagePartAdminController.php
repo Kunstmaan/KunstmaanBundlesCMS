@@ -19,8 +19,8 @@ class PagePartAdminController extends Controller
     /**
      * Moves a PagePartRef in a certain direction.
      *
-     * @param $id       the id of the pagepartref
-     * @param $steps    amount of steps to move, 1 for one up, -1 for one down
+     * @param integer $id       the id of the pagepartref
+     * @param integer $steps    amount of steps to move, 1 for one up, -1 for one down
      */
     private function movePagePartRef($id, $steps)
     {
@@ -47,7 +47,7 @@ class PagePartAdminController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param integer $id
      */
     public function moveUpAction($id)
     {
@@ -55,7 +55,7 @@ class PagePartAdminController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param integer $id
      */
     public function moveDownAction($id)
     {

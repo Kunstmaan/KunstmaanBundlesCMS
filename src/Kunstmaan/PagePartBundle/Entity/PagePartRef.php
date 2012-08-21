@@ -1,8 +1,8 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityManager;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\PagePartBundle\Repository\PagePartRefRepository")
@@ -58,7 +58,6 @@ class PagePartRef
      */
     protected $updated;
 
-
     public function __construct()
     {
         $this->setCreated(new \DateTime());
@@ -76,9 +75,7 @@ class PagePartRef
     }
 
     /**
-     * Set id
-     *
-     * @param string $id
+     * @param integer $num
      */
     public function setId($num)
     {
@@ -96,9 +93,7 @@ class PagePartRef
     }
 
     /**
-     * Set pageId
-     *
-     * @param string $refId
+     * @param integer $id
      */
     public function setPageId($id)
     {
@@ -208,7 +203,7 @@ class PagePartRef
     /**
      * Get created
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -218,9 +213,9 @@ class PagePartRef
     /**
      * Set created
      *
-     * @param datetime $created
+     * @param \DateTime $created
      */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
     }
@@ -228,7 +223,7 @@ class PagePartRef
     /**
      * Get updated
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -238,9 +233,9 @@ class PagePartRef
     /**
      * Set updated
      *
-     * @param datetime $updated
+     * @param \DateTime $updated
      */
-    public function setUpdated($updated)
+    public function setUpdated(\DateTime $updated)
     {
         $this->updated = $updated;
     }
@@ -253,16 +248,21 @@ class PagePartRef
         $this->setUpdated(new \DateTime());
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return "pagepartref in context " . $this->getContext();
     }
 
-    public function getDefaultAdminType(){
-        return new PagePartRefAdminType();
-    }
-
-    public function getPagePart($em){
+    /**
+     * @param \Doctrine\ORM\EntityManager $em
+     *
+     * @return \Kunstmaan\PagePartBundle\Helper\PagePartInterface
+     */
+    public function getPagePart(EntityManager $em)
+    {
         return $em->getRepository($this->getPagePartEntityname())->find($this->getPagePartId());
     }
 }

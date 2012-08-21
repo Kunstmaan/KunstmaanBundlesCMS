@@ -1,11 +1,8 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
-
 use Symfony\Component\Validator\Constraints\NotBlank;
-
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
@@ -74,7 +71,7 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function __toString()
     {
@@ -82,7 +79,7 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDefaultView()
     {
@@ -90,7 +87,7 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getElasticaView()
     {
@@ -98,7 +95,7 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return HeaderPagePartAdminType
      */
     public function getDefaultAdminType()
     {

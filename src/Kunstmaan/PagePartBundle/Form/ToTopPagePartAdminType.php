@@ -1,23 +1,37 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Form;
-
 use Symfony\Component\Form\FormBuilderInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
-class ToTopPagePartAdminType extends AbstractType {
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+class ToTopPagePartAdminType extends AbstractType
+{
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array                                        $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
     }
 
-    public function getName() {
+    /**
+     * @assert () == 'kunstmaan_pagepartbundle_totoppageparttype'
+     *
+     * @return string
+     */
+    public function getName()
+    {
         return 'kunstmaan_pagepartbundle_totoppageparttype';
     }
 
-    public function getDefaultOptions(array $options)
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-                'data_class' => 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart',
-        );
+        $resolver->setDefaults(array(
+                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart',
+                               ));
     }
 }

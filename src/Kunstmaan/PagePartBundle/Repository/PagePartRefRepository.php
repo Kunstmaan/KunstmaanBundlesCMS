@@ -3,13 +3,24 @@
 namespace Kunstmaan\PagePartBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
+use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 class PagePartRefRepository extends EntityRepository
 {
 
-    public function addPagePart($page, $pagepart, $sequencenumber, $context = "main")
+    /**
+     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage     $page
+     * @param \Kunstmaan\PagePartBundle\Helper\PagePartInterface $pagepart
+     * @param integer                                            $sequencenumber
+     * @param string                                             $context
+     *
+     * @return \Kunstmaan\PagePartBundle\Entity\PagePartRef
+     */
+    public function addPagePart(AbstractPage $page, PagePartInterface $pagepart, $sequencenumber, $context = "main")
     {
         $pagepartrefs = $this->getPagePartRefs($page);
         foreach ($pagepartrefs as $pagepartref) {
@@ -33,12 +44,24 @@ class PagePartRefRepository extends EntityRepository
         return $pagepartref;
     }
 
-    public function getPagePartRefs($page, $context = "main")
+    /**
+     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page
+     * @param string                                         $context
+     *
+     * @return PagePartRef[]
+     */
+    public function getPagePartRefs(AbstractPage $page, $context = "main")
     {
         return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => ClassLookup::getClass($page), 'context' => $context), array('sequencenumber' => 'ASC'));
     }
 
-    public function getPageParts($page, $context = "main")
+    /**
+     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page
+     * @param string                                         $context
+     *
+     * @return PagePartInterface[]
+     */
+    public function getPageParts(AbstractPage $page, $context = "main")
     {
         $pagepartrefs = $this->getPagePartRefs($page, $context);
         $result = array();
@@ -49,7 +72,13 @@ class PagePartRefRepository extends EntityRepository
         return $result;
     }
 
-    public function copyPageParts($em, $frompage, $topage, $context = "main")
+    /**
+     * @param \Doctrine\ORM\EntityManager                    $em
+     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $frompage
+     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $topage
+     * @param string                                         $context
+     */
+    public function copyPageParts(EntityManager $em, AbstractPage $frompage, AbstractPage $topage, $context = "main")
     {
         $frompageparts = $this->getPageParts($frompage, $context);
         $sequencenumber = 1;
@@ -63,7 +92,14 @@ class PagePartRefRepository extends EntityRepository
         }
     }
 
-    public function countPagePartsOfType($page, $pagepart_classname, $context = 'main')
+    /**
+     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page
+     * @param string                                         $pagepart_classname
+     * @param string                                         $context
+     *
+     * @return mixed
+     */
+    public function countPagePartsOfType(AbstractPage $page, $pagepart_classname, $context = 'main')
     {
         $em = $this->getEntityManager();
         $page_classname = ClassLookup::getClass($page);
@@ -73,7 +109,7 @@ class PagePartRefRepository extends EntityRepository
 				   AND pp.pageId = :pageId
 				   AND pp.pagePartEntityname = :pagePartEntityname
 				   AND pp.context = :context';
-        
+
         return $em->createQuery($sql)
                 ->setParameter('pageEntityname', $page_classname)
                 ->setParameter('pageId', $page->getId())
@@ -84,20 +120,21 @@ class PagePartRefRepository extends EntityRepository
     /**
      * Test if entity has pageparts for the specified context
      *
-     * @param mixed $page
-     * @param string $context
-     * @return boolean
+     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page
+     * @param string                                         $context
+     *
+     * @return bool
      */
-    public function hasPageParts($page, $context = 'main')
+    public function hasPageParts(AbstractPage $page, $context = 'main')
     {
         $em = $this->getEntityManager();
         $page_classname = ClassLookup::getClass($page);
-        
+
         $sql = 'SELECT COUNT(pp.id) FROM KunstmaanPagePartBundle:PagePartRef pp
 				 WHERE pp.pageEntityname = :pageEntityname
 				   AND pp.pageId = :pageId
 				   AND pp.context = :context';
-        
+
         return $em->createQuery($sql)
                 ->setParameter('pageEntityname', $page_classname)
                 ->setParameter('pageId', $page->getId())

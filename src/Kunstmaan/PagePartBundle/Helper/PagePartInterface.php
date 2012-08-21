@@ -14,14 +14,14 @@ interface PagePartInterface
 	/**
 	 * Returns the view used in the frontend
 	 * @abstract
-	 * @return mixed
+	 * @return string
 	 */
     public function getDefaultView();
 
 	/**
 	 * Returns the view used in the backend
 	 * @abstract
-	 * @return mixed
+	 * @return string
 	 */
 	public function getAdminView();
 
