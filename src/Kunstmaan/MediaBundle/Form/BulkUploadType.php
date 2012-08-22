@@ -2,8 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class BulkUploadType extends AbstractType
 {
@@ -15,7 +16,7 @@ class BulkUploadType extends AbstractType
         $this->accept = $accept;
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('files','file',array(
                           "required" => FALSE,

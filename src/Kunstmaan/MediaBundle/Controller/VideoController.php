@@ -60,7 +60,7 @@ class VideoController extends Controller
         $form = $formbuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
             if ($form->isValid()){
                 $video->setUuid($video->getContent());
 

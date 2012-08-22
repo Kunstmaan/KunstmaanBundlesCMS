@@ -72,7 +72,7 @@ If we want to make Folders able to upload pdf's, we add a method to upload a pdf
     	$form = $this->createForm(new MediaType(), $helper);
     
     	if ('POST' == $request->getMethod()) {
-    		$form->bindRequest($request);
+    		$form->bind($request);
     		if ($form->isValid()){
     			if ($helper->getMedia()!=null) {
     				$file = new Pdf();

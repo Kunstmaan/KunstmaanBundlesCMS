@@ -2,8 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\MediaBundle\Entity\File;
 
 class FolderType extends AbstractType
@@ -17,7 +18,7 @@ class FolderType extends AbstractType
         $this->gallery = $gallery;
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $gallery = $this->gallery;
         $type = $this;
@@ -30,13 +31,13 @@ class FolderType extends AbstractType
                                   if($type->getEntityName()=="Kunstmaan\MediaBundle\Entity\Folder"){
                                   	$qb->where("gallery instance of 'Kunstmaan\MediaBundle\Entity\Folder'");
                                   }
-                                  
+
                                   if($gallery != null){
                                       $ids = "gallery.id != ". $gallery->getId();
                                       $ids .= $type->addChildren($gallery);
                                       $qb->andwhere($ids);
                                     }
-                       
+
                                     return $qb;
                               }
         ));

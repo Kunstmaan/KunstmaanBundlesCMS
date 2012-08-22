@@ -419,6 +419,8 @@ class ExtensionGuesser
         'video/vnd.sealed.swf' => 'sswf',
         'video/vnd.sealedmedia.softseal.mov' => 'smov',
         'video/vnd.vivo' => 'vivo',
+        'video/webm' => 'webm',
+        'video/mp4' => 'mp4',
         'video/x-fli' => 'fli',
         'video/x-ms-asf' => 'asf',
         'video/x-ms-wmv' => 'wmv',
