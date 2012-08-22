@@ -19,10 +19,10 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "kunstmaan/adminlist-bundle": "dev-master",
         "kunstmaan/admin-bundle": "dev-master",
-        "stof/doctrine-extensions-bundle": "dev-master"
+        "stof/doctrine-extensions-bundle": "dev-master",
         "liip/imagine-bundle": "*",
         "knplabs/knp-gaufrette-bundle": "*",
-        "gedmo/doctrine-extensions": "*",
+        "gedmo/doctrine-extensions": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
