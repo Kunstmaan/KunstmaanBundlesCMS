@@ -18,7 +18,9 @@
         "symfony/symfony": "2.0.*",
         "doctrine/doctrine-fixtures-bundle": "2.0.*",
         "kunstmaan/adminlist-bundle": "dev-master",
-        "kunstmaan/admin-bundle": "dev-master"
+        "kunstmaan/admin-bundle": "dev-master",
+        "gedmo/doctrine-extensions": "dev-master",
+        "stof/doctrine-extensions-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
