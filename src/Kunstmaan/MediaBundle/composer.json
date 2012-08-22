@@ -21,7 +21,7 @@
         "kunstmaan/admin-bundle": "2.0.*",
         "liip/imagine-bundle": "*",
         "knplabs/knp-gaufrette-bundle": "*",
-        "gedmo/doctrine-extensions": "*",
+        "gedmo/doctrine-extensions": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
