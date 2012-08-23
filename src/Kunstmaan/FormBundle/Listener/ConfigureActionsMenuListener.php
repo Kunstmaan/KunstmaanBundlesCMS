@@ -42,7 +42,7 @@ class ConfigureActionsMenuListener
             $page = $activeNodeVersion->getRef($this->em);
             if ($page instanceof AbstractFormPage) {
                 $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
-                $menu->addChild('Form submissions', array('uri' => $this->router->generate('KunstmaanFormBundle_formsubmissions_list', array('nodetranslationid' => $activeNodeTranslation->getId()))));
+                $menu->addChild('subaction.formsubmissions', array('uri' => $this->router->generate('KunstmaanFormBundle_formsubmissions_list', array('nodetranslationid' => $activeNodeTranslation->getId()))));
             }
         }
     }
