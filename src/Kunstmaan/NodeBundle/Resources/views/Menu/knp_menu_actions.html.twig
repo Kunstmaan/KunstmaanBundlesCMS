@@ -35,7 +35,16 @@
 {% endblock %}
 
 {% block linkElement %}
-    {% import 'knp_menu.html.twig' as macros %}
-    {% set renderType = item.getExtra('renderType', 'a') %}
+    {%- import 'knp_menu.html.twig' as macros -%}
+    {%- set renderType = item.getExtra('renderType', 'a') -%}
     <{{ renderType }} {{ ('a' == renderType ? 'href="' ~ (item.uri | default('#')) ~ '"' : '') | raw }}{{ macros.attributes(item.linkAttributes) }}>{{ block('label') }}</{{ renderType }}>
+{% endblock %}
+
+{% block label %}
+    {%- set label = item.getExtra('translate', true) ? item.label|trans : item.label  %}
+    {%- if options.allow_safe_labels and item.getExtra('safe_label', false) %}
+        {{ label|raw }}
+    {%- else %}
+        {{ label }}
+    {%- endif %}
 {% endblock %}

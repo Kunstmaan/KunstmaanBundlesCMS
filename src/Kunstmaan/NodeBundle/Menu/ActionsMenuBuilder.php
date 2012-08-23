@@ -64,13 +64,13 @@ class ActionsMenuBuilder
             $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
             if ('draft' != $activeNodeVersion->getType()) {
                 if ($activeNodeTranslation->isOnline()) {
-                    $menu->addChild('Unpublish', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#unpub')));
+                    $menu->addChild('subaction.unpublish', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#unpub')));
                 }
                 else {
-                    $menu->addChild('Publish', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#pub')));
+                    $menu->addChild('subaction.unpublish', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#pub')));
                 }
             }
-            $menu->addChild('Versions', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#versions')));
+            $menu->addChild('subaction.versions', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#versions')));
         }
 
         $this->dispatcher->dispatch(Events::CONFIGURE_SUB_ACTION_MENU, new ConfigureActionMenuEvent($this->factory, $menu, $activeNodeVersion));
@@ -93,22 +93,22 @@ class ActionsMenuBuilder
             $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
 
             if ('draft' == $activeNodeVersion->getType()) {
-                $menu->addChild('form.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn btn-primary', 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
-                $menu->addChild('form.publish', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn', 'value' => 'saveandpublish', 'name' => 'saveandpublish'), 'extras' => array('renderType' => 'button')));
-                $menu->addChild('Preview', array('uri' => $this->router->generate('_slug_draft', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
+                $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn btn-primary', 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
+                $menu->addChild('action.publish', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn', 'value' => 'saveandpublish', 'name' => 'saveandpublish'), 'extras' => array('renderType' => 'button')));
+                $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_draft', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
             }
             else {
-                $menu->addChild('form.save', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn btn-primary', 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
-                $menu->addChild('form.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn', 'value' => 'saveasdraft', 'name' => 'saveasdraft'), 'extras' => array('renderType' => 'button')));
-                $menu->addChild('Preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
+                $menu->addChild('action.save', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn btn-primary', 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
+                $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn', 'value' => 'saveasdraft', 'name' => 'saveasdraft'), 'extras' => array('renderType' => 'button')));
+                $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
 
                 $page               = $activeNodeVersion->getRef($this->em);
                 $possibleChildPages = $page->getPossibleChildPageTypes();
                 if (!empty($possibleChildPages)) {
-                    $menu->addChild('Add subpage', array('linkAttributes' => array('type' => 'button', 'class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#add-subpage-modal'), 'extras' => array('renderType' => 'button')));
+                    $menu->addChild('action.addsubpage', array('linkAttributes' => array('type' => 'button', 'class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#add-subpage-modal'), 'extras' => array('renderType' => 'button')));
                 }
             }
-            $menu->addChild('Delete', array('linkAttributes' => array('type' => 'button', 'class' => 'btn', 'onClick' => 'oldEdited = isEdited; isEdited=false', 'data-toggle' => 'modal', 'data-target' => '#delete-page-modal'), 'extras' => array('renderType' => 'button')));
+            $menu->addChild('action.delete', array('linkAttributes' => array('type' => 'button', 'class' => 'btn', 'onClick' => 'oldEdited = isEdited; isEdited=false', 'data-toggle' => 'modal', 'data-target' => '#delete-page-modal'), 'extras' => array('renderType' => 'button')));
         }
 
         $this->dispatcher->dispatch(Events::CONFIGURE_ACTION_MENU, new ConfigureActionMenuEvent($this->factory, $menu, $activeNodeVersion));
