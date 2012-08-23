@@ -17,7 +17,8 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.0.*",
         "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/admin-bundle": "*"
+        "kunstmaan/admin-bundle": "*",
+        "knplabs/knp-menu-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminNodeBundle": "" }
