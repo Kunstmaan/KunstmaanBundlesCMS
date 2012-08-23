@@ -4,7 +4,7 @@ namespace {{ namespace }}\Controller;
 
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 
-use {{ namespace }}\Form\{{ entity_class }}AdminType;
+use {{ namespace }}\Form\{{ entity_class }}AdminListType;
 
 use Symfony\Component\HttpFoundation\Response;
 
