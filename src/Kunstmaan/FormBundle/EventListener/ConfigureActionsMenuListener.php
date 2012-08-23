@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\FormBundle\Listener;
+namespace Kunstmaan\FormBundle\EventListener;
 
 use Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;

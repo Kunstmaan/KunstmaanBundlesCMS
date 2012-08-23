@@ -14,7 +14,7 @@ services:
             - { name: form.type, alias: entity_id }
 
     form.configure_sub_actions_menu_listener:
-        class: Kunstmaan\FormBundle\Listener\ConfigureActionsMenuListener
+        class: Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener
         arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
           - { name: kernel.event_listener, event: adminnode.configureSubActionMenu, method: onSubActionMenuConfigure }
