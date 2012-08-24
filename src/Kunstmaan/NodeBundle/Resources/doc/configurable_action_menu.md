@@ -1,6 +1,6 @@
 Configurable Action Menu
 ========================
-Configuring the action or sub action menu of pages is symply a matter of connecting an event listener
+Configuring the action or sub action menu of pages is simply a matter of connecting an event listener
 to the *KunstmaanAdminNodeBundle/Helper/Event/Events::CONFIGURE_ACTION_MENU* or the
 *KunstmaanAdminNodeBundle/Helper/Event/Events::CONFIGURE_SUB_ACTION_MENU* event:
 
