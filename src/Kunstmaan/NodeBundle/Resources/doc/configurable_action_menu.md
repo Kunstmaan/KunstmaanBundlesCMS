@@ -26,7 +26,6 @@ public function onSubActionMenuConfigure(ConfigureActionMenuEvent $event)
     $activeNodeVersion = $event->getActiveNodeVersion();
 
     if (!is_null($activeNodeVersion)) {
-        $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
         $menu->addChild('subaction.hello_world', array('uri' => $this->router->generate('AcmeMainBundle_Hello_World')));
     }
 }
