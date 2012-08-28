@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Component\Security\Acl\Domain;
 
-use Kunstmaan\AdminBundle\Tests\Fixtures\TestEntity;
 use Kunstmaan\AdminBundle\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy;
 
 class ObjectIdentityRetrievalStrategyTest extends \PHPUnit_Framework_TestCase
