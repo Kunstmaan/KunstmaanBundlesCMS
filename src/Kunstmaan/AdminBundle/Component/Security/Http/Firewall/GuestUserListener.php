@@ -9,8 +9,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 
 /**
- * Description of GuestUserListener
- *
+ * Maps anonymous user to guest user (copies roles from guest user on DB)
  */
 class GuestUserListener implements ListenerInterface
 {

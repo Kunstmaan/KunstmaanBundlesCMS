@@ -53,7 +53,7 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Returns an ARRAY of Role objects with the default Role object appended.
+     * Returns an array of strings (needed because Symfony ACL doesn't support using RoleInterface yet)
      * 
      * @return array
      */
@@ -68,6 +68,7 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Returns the true ArrayCollection of Roles.
+     *
      * @return Doctrine\Common\Collections\ArrayCollection
      */
     public function getRolesCollection()
@@ -77,7 +78,9 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Pass a string, get the desired Role object or null.
+     *
      * @param string $role
+     *
      * @return Role|null
      */
     public function getRole($role = null)
@@ -92,7 +95,9 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Pass a string, checks if we have that Role. Same functionality as getRole() except returns a real boolean.
+     *
      * @param string $role
+     *
      * @return boolean
      */
     public function hasRole($role)
