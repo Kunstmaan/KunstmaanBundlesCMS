@@ -19,11 +19,9 @@ class {{ entity_class }}AdminType extends AbstractType
 
     public function buildForm(FormBuilder $builder, array $options) 
     {
-        $builder
-    	{%- for field in fields %}
-			->add('{{ field }}');
-        {%- endfor %}
-        ;
+{% for field in fields %}
+        $builder->add('{{ field }}');
+{% endfor %}
     }
 
     function getName() 
