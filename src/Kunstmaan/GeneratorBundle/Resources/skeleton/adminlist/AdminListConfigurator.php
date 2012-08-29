@@ -15,7 +15,8 @@ use {{ namespace }}\Entity\{{ entity_class }};
 /**
  * The {{ entity_class }} admin list configurator
  */
-class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigurator {
+class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigurator
+{
 
     private $em;
     
@@ -29,11 +30,11 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
      */
     public function buildFields() 
     {
+        $this
         {%- for field in fields %}
-        $this->addField('{{ field }}', '{{ field }}', true);
-    
-    
+            ->addField('{{ field }}', '{{ field }}', true)
         {%- endfor %}
+        ;
     }
     
     /**
@@ -41,11 +42,11 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	 */
 	public function buildFilters(AdminListFilter $builder) 
 	{
+        $builder
 		{%- for field in fields %}
-			$builder->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}');
-
-
+			->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}')
         {%- endfor %}
+        ;
 	}
 
     /**

@@ -7,7 +7,8 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class {{ entity_class }}AdminType extends AbstractType {
+class {{ entity_class }}AdminType extends AbstractType
+{
 
     private $container;
 
@@ -18,9 +19,11 @@ class {{ entity_class }}AdminType extends AbstractType {
 
     public function buildForm(FormBuilder $builder, array $options) 
     {
+        $builder
     	{%- for field in fields %}
-			$builder->add('{{ field }}');
+			->add('{{ field }}');
         {%- endfor %}
+        ;
     }
 
     function getName() 

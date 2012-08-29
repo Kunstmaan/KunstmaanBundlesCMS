@@ -25,7 +25,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * The {{ entity_class }} admin list controller
  */
-class {{ entity_class }}AdminListController extends AdminListController {
+class {{ entity_class }}AdminListController extends AdminListController
+{
 
     public function getAdminListConfiguration()
     {
