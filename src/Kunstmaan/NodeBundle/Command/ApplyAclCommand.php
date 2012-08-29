@@ -54,7 +54,7 @@ class ApplyAclCommand extends ContainerAwareCommand
         $hasPending = true;
         do {
             /**
-             * @var AclChangeset
+             * @var AclChangeset $changeset
              */
             $changeset = $aclRepo->findNewChangeset();
             if (is_null($changeset)) {

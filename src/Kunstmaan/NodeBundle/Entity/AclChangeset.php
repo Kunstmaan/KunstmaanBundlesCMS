@@ -16,10 +16,10 @@ use Doctrine\Common\Annotations\Annotation;
 class AclChangeset extends AbstractEntity
 {
 
-    const STATUS_NEW        = 0;
-    const STATUS_RUNNING    = 1;
-    const STATUS_FINISHED   = 2;
-    const STATUS_FAILED     = 3;
+    const STATUS_NEW      = 0;
+    const STATUS_RUNNING  = 1;
+    const STATUS_FINISHED = 2;
+    const STATUS_FAILED   = 3;
 
     /**
      * @ORM\ManyToOne(targetEntity="Node")
@@ -58,21 +58,28 @@ class AclChangeset extends AbstractEntity
      */
     protected $lastModified;
 
+    /**
+     * Constructor, sets default status to STATUS_NEW & timestamps to current datetime
+     */
     public function __construct()
     {
-        $this->status = self::STATUS_NEW;
+        $this->status       = self::STATUS_NEW;
         $this->lastModified = $this->created = new \DateTime('now');
     }
 
     /**
+     * Set ACL changeset
+     *
      * @param array $changeset the changeset to apply
      */
-    public function setChangeset($changeset)
+    public function setChangeset(array $changeset)
     {
         $this->changeset = $changeset;
     }
 
     /**
+     * Get ACL changeset
+     *
      * @return array
      */
     public function getChangeset()
@@ -81,6 +88,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Set timestamp of creation
+     *
      * @param DateTime $created
      */
     public function setCreated($created)
@@ -89,6 +98,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Get timestamp of creation
+     *
      * @return DateTime
      */
     public function getCreated()
@@ -97,6 +108,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Set timestamp of last modification
+     *
      * @param DateTime  $lastModified
      */
     public function setLastModified($lastModified)
@@ -105,6 +118,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Get timestamp of last modification
+     *
      * @return DateTime
      */
     public function getLastModified()
@@ -113,6 +128,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Set root Node
+     *
      * @param Node $node
      */
     public function setNode($node)
@@ -121,6 +138,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Get root Node
+     *
      * @return Node
      */
     public function getNode()
@@ -129,6 +148,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Set status, every change in status will trigger last modified to be updated
+     *
      * @param integer $status
      */
     public function setStatus($status)
@@ -138,6 +159,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Get status
+     *
      * @return integer
      */
     public function getStatus()
@@ -146,6 +169,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Set process id
+     *
      * @param integer $pid
      */
     public function setPid($pid)
@@ -154,6 +179,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Get process id
+     *
      * @return integer
      */
     public function getPid()
@@ -162,6 +189,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Set user
+     *
      * @param User $user
      */
     public function setUser($user)
@@ -170,6 +199,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Get user
+     *
      * @return User
      */
     public function getUser()
