@@ -38,6 +38,17 @@ class Group implements RoleInterface, GroupInterface
     protected $rolescollection;
 
     /**
+     * Constructor
+     *
+     * @param string $name Name of the group
+     */
+    public function __construct($name = '')
+    {
+        $this->name = $name;
+        $this->roles = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -47,6 +58,11 @@ class Group implements RoleInterface, GroupInterface
         return $this->id;
     }
 
+    /**
+     * Get string representation of object
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
@@ -63,6 +79,7 @@ class Group implements RoleInterface, GroupInterface
         foreach ($this->roles as $role) {
             $result[] = $role->getRole();
         }
+
         return $result;
     }
 
@@ -85,7 +102,7 @@ class Group implements RoleInterface, GroupInterface
      */
     public function getRole($role = null)
     {
-        foreach ($this->getRoles() as $roleItem) {
+        foreach ($this->roles as $roleItem) {
             if ($role == $roleItem->getRole()) {
                 return $roleItem;
             }
@@ -94,7 +111,7 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Pass a string, checks if we have that Role. Same functionality as getRole() except returns a real boolean.
+     * Pass a string, checks if we have that Role. Same functionality as getRole() except it returns a boolean.
      *
      * @param string $role
      *
@@ -109,7 +126,7 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Adds a Role OBJECT to the ArrayCollection. Can't type hint due to interface so throws Exception.
+     * Adds a Role object to the ArrayCollection. Can't type hint due to interface so throws Exception.
      * 
      * @throws InvalidArgumentException
      * 
@@ -141,9 +158,8 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Pass an ARRAY of Role objects and will clear the collection and re-set it with new Roles.
-     * Type hinted array due to interface.
-     * 
-     * @param array $roles Of Role objects.
+     *
+     * @param Role[] $roles array of Role objects.
      */
     public function setRoles(array $roles)
     {
@@ -155,24 +171,29 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Directly set the ArrayCollection of Roles. Type hinted as Collection which is the parent of (Array|Persistent)Collection.
-     * @param Doctrine\Common\Collections\Collection $role
+     *
+     * @param Doctrine\Common\Collections\Collection $collection
      */
     public function setRolesCollection(Collection $collection)
     {
         $this->roles = $collection;
     }
 
-    public function __construct($name = '', $roles = array())
-    {
-        $this->roles = new ArrayCollection();
-        $this->name = $name;
-    }
-
+    /**
+     * Return the name of the group
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Set the name of the group
+     *
+     * @param string $name New name of the group
+     */
     public function setName($name)
     {
         $this->name = $name;
