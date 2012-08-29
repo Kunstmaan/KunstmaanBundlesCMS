@@ -15,10 +15,10 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.0.*",
-        "kunstmaan/adminlist-bundle": "dev-master",
-        "kunstmaan/adminnode-bundle": "dev-master",
-        "kunstmaan/admin-bundle": "dev-master",
-        "kunstmaan/pagepart-bundle": "dev-master",
+        "kunstmaan/adminlist-bundle": "1.3.*",
+        "kunstmaan/adminnode-bundle": "1.3.*",
+        "kunstmaan/admin-bundle": "1.3.*",
+        "kunstmaan/pagepart-bundle": "1.3.*",
         "ddeboer/data-import-bundle": "dev-master"
     },
     "autoload": {
