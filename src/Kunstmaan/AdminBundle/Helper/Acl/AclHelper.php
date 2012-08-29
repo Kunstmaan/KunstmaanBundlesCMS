@@ -1,5 +1,6 @@
 <?php
-namespace Kunstmaan\AdminBundle\Util\Helper;
+
+namespace Kunstmaan\AdminBundle\Helper\Acl;
 
 use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
 
@@ -45,8 +46,6 @@ class AclHelper
 
         $whereQueryParts = $queryBuilder->getDQLPart('where');
         if (empty($whereQueryParts)) {
-            $fromQueryParts = $queryBuilder->getDQLPart('from');
-            $firstFromQueryAlias = $fromQueryParts[0]->getAlias();
             $queryBuilder->where('1 = 1'); // this will help in cases where no where query is specified, where query is required to walk in where clause
         }
 
@@ -59,7 +58,7 @@ class AclHelper
         }
         $query->setHint('acl.mask', $builder->get());
 
-        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Kunstmaan\AdminBundle\Util\Doctrine\SqlWalker\AclWalker');
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Kunstmaan\AdminBundle\Helper\Acl\AclWalker');
         $entities = $queryBuilder->getRootEntities();
         $query->setHint('acl.root.entities', $entities);
 

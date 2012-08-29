@@ -75,11 +75,11 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
 
     kunstmaan.acl.helper:
-        class: Kunstmaan\AdminBundle\Util\Helper\AclHelper
+        class: Kunstmaan\AdminBundle\Helper\Acl\AclHelper
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
 
     kunstmaan.acl.native.helper:
-        class: Kunstmaan\AdminBundle\Util\Helper\AclNativeHelper
+        class: Kunstmaan\AdminBundle\Helper\Acl\AclNativeHelper
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
 
     kunstmaan.guest.security.authentication.listener:
