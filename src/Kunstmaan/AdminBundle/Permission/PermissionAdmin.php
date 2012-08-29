@@ -8,10 +8,10 @@ use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
 use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -22,26 +22,30 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class PermissionAdmin
 {
 
-    protected $request          = null;
-    protected $resource         = null;
-    protected $em               = null;
-    protected $securityContext  = null;
-    protected $aclProvider      = null;
-    protected $shellHelper      = null;
-    protected $permissionMap    = null;
-    protected $permissions      = null;
-    protected $currentEnv       = 'dev';
+    protected $request              = null;
+    protected $resource             = null;
+    protected $em                   = null;
+    protected $securityContext      = null;
+    protected $aclProvider          = null;
+    protected $oidRetrievalStrategy = null;
+    protected $shellHelper          = null;
+    protected $permissionMap        = null;
+    protected $permissions          = null;
+    protected $currentEnv           = 'dev';
 
     /**
-     * @param EntityManager             $em                 The EntityManager
-     * @param SecurityContextInterface  $securityContext    The security context
-     * @param AclProviderInterface      $aclProvider        The ACL provider
+     * @param EntityManager                             $em                     The EntityManager
+     * @param SecurityContextInterface                  $securityContext        The security context
+     * @param AclProviderInterface                      $aclProvider            The ACL provider
+     * @param ObjectIdentityRetrievalStrategyInterface  $oidRetrievalStrategy   The object retrieval strategy
+     * @param string                                    $currentEnv             The current environment
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclProviderInterface $aclProvider, $currentEnv)
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy, $currentEnv)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
         $this->aclProvider = $aclProvider;
+        $this->oidRetrievalStrategy = $oidRetrievalStrategy;
         $this->currentEnv = $currentEnv;
     }
 
@@ -59,7 +63,7 @@ class PermissionAdmin
         
         // Init permissions
         try {
-            $objectIdentity = ObjectIdentity::fromDomainObject($this->resource);
+            $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
             $acl = $this->aclProvider->findAcl($objectIdentity);
             $objectAces = $acl->getObjectAces();
             foreach ($objectAces as $ace) {
@@ -74,7 +78,7 @@ class PermissionAdmin
     }
 
     /**
-     * @return array
+     * @return MaskBuilder[]
      */
     public function getPermissions()
     {
@@ -124,7 +128,7 @@ class PermissionAdmin
         $this->request = $request;
 
         $postPermissions = $request->request->get('permissions');
-        $objectIdentity = ObjectIdentity::fromDomainObject($this->resource);
+        $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
         try {
             $acl = $this->aclProvider->findAcl($objectIdentity);
         } catch (AclNotFoundException $e) {
@@ -190,7 +194,7 @@ class PermissionAdmin
         }
 
         // Apply ACL modifications to node
-        $objectIdentity = ObjectIdentity::fromDomainObject($node);
+        $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($node);
         try {
             $acl = $this->aclProvider->findAcl($objectIdentity);
         } catch (AclNotFoundException $e) {

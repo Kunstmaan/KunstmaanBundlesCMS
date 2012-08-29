@@ -23,15 +23,6 @@ services:
         tags:
             -  { name: twig.extension }
         
-    kunstmaan_admin.permissionadmin:
-        class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "%kernel.environment%"]
-
-    permissionsadmin.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
-        tags:
-            -  { name: twig.extension }
-            
     localeswitcher.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
         tags:
@@ -61,10 +52,16 @@ services:
         tags:
             - { name: 'monolog.logger', channel: 'security' }
             
+    permissionsadmin.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
+        tags:
+            -  { name: twig.extension }
+
     kunstmaan.twig.locale:
         class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
         tags:
             - { name: twig.extension }
+
     kunstmaan.twig.formtools:
         class: Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension
         tags:
@@ -94,3 +91,8 @@ services:
     kunstmaan.guest.security.authentication.provider:
         class: Kunstmaan\AdminBundle\Component\Security\Authentication\Provider\GuestUserProvider
         arguments: [""]
+
+    kunstmaan_admin.permissionadmin:
+        class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "%kernel.environment%"]
+
