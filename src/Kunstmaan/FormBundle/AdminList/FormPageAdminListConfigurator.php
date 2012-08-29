@@ -7,7 +7,7 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
-use Kunstmaan\AdminBundle\Util\Helper\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Acl\AclHelper;
 
 /**
  * Adminlist for form pages
