@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 use Kunstmaan\AdminBundle\Helper\Acl\AclHelper;
 
@@ -20,9 +19,9 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     protected $aclHelper;
 
     /**
-     * @param SecurityContextInterface  $securityContext    The security context
-     * @param string                    $permission         The permission
-     * @param AclHelper                 $aclHelper          The ACL helper
+     * @param SecurityContextInterface $securityContext The security context
+     * @param string                   $permission      The permission
+     * @param AclHelper                $aclHelper       The ACL helper
      */
     public function __construct($securityContext, $permission, $aclHelper)
     {
@@ -45,7 +44,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFields()
     {
-    	$this->addField("title", "Title", true);
+        $this->addField("title", "Title", true);
     }
 
     /**
@@ -53,7 +52,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function getEditUrlFor($item)
     {
-    	return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array( 'nodetranslationid' => $item->getId()));
+        return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array( 'nodetranslationid' => $item->getId()));
     }
 
     /**
@@ -69,7 +68,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function canAdd()
     {
-    	return false;
+        return false;
     }
 
     /**
@@ -77,7 +76,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function getAddUrlFor($params=array())
     {
-    	return "";
+        return "";
     }
 
     /**
@@ -103,12 +102,12 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     {
         parent::adaptQueryBuilder($querybuilder);
         $querybuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-	        ->andWhere('n.id IN (
-	        		SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)')
-	        ->addOrderBy('n.sequencenumber', 'DESC');
-        
+            ->andWhere('n.id IN (
+                    SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)')
+            ->addOrderBy('n.sequencenumber', 'DESC');
+
         $result = $this->aclHelper->apply($querybuilder, array($this->permission));
-        
+
         return $result;
     }
 
@@ -119,6 +118,5 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     {
         return array();
     }
-
 
 }
