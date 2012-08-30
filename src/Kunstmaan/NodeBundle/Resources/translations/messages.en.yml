@@ -1,0 +1,12 @@
+subaction:
+    unpublish: "Unpublish"
+    publish: "Publish"
+    versions: "Versions"
+
+action:
+    saveasdraft: "Save as draft"
+    publish: "Publish"
+    preview: "Preview"
+    save: "Save"
+    delete: "Delete"
+    addsubpage: "Add subpage"

@@ -232,6 +232,8 @@ class PagesController extends Controller
             }
         }
 
+        $this->get('admin_node.actions_menu_builder')->setActiveNodeVersion($nodeVersion);
+
         $addpage = $request->get("addpage");
         $addpagetitle = $request->get("addpagetitle");
         if (is_string($addpage) && $addpage != '') {

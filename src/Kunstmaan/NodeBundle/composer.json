@@ -12,11 +12,13 @@
             "email": "support@kunstmaan.be"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.0.*",
         "kunstmaan/adminlist-bundle": "1.3.*",
-        "kunstmaan/admin-bundle": "1.3.*"
+        "kunstmaan/admin-bundle": "1.3.*",
+        "knplabs/knp-menu-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminNodeBundle": "" }

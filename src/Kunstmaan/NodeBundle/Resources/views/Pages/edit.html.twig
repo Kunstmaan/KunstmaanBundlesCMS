@@ -53,63 +53,13 @@
         
         <!--=========Actions=========-->
         <!--Sub Actions-->
-        <div class="sub_actions">
-        	{% if not draft %}
-	        	{% if nodeTranslation.online %}
-		        	<a href="#" data-toggle="modal" data-target="#unpub">Unpublish</a>
-		            {% else %}
-					<a href="#" data-toggle="modal" data-target="#pub">Publish</a>
-	        	{% endif %}
-        	{% endif %}
-            <a href="#" data-toggle="modal" data-target="#versions">Versions</a>
-        </div>
-
+        {{ knp_menu_render('sub_actions', { 'template': 'KunstmaanAdminNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
 
         <!--Main Actions-->
-        {% set nodemenuCurrent = nodemenu.current %}
-        {% set pagePossibleChildPages = page.possibleChildPageTypes %}
-        <div class="main_actions">
-			{% if draft %}
-				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
-				<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
-				<a class="btn" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
-			{% else %}
-				<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
-				<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
-				<a class="btn" href="{{ path('_slug_preview', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
-				{% if pagePossibleChildPages is not empty %}
-					<button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
-				{% endif %}
-				<button type="button" onClick="oldEdited = isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
-			{% endif %}
-        </div>
-        
-        
-        
-        <!--Scroll Actions-->
-        <div class="main_actions top" id="main_actions_top">
-			<div class="pull-right">
-				{% if draft %}
-					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.saveasdraft' | trans }}</button>
-					<button type="submit" class="btn" name="saveandpublish" value="saveandpublish">{{ 'form.publish' | trans }}</button>
-					<a class="btn" href="{{ path('_slug_draft', { 'url': nodemenuCurrent.slug }) }}" target="_blank">Preview</a>
-				{% else %}
-					<button type="submit" onClick="isEdited=false" class="btn btn-primary" name="save" value="save">{{ 'form.save' | trans }}</button>
-					<button type="submit" onClick="isEdited=false" class="btn" name="saveasdraft" value="saveasdraft">{{ 'form.saveasdraft' | trans }}</button>
-					<a class="btn" href="{{ path('_slug_preview', { 'url': nodemenuCurrent.url }) }}" target="_blank">Preview</a>
-					{% if pagePossibleChildPages is not empty %}
-						<button type="button" data-toggle="modal" data-target="#add-subpage-modal" class="btn">Add subpage</button>
-					{% endif %}
-					<button type="button" onClick="oldEdited=isEdited; isEdited=false" data-toggle="modal" data-target="#delete-page-modal" class="btn">Delete</button>
-				{% endif %}
-				<a class="btn up">&#9650;</a>
-			</div>
-        </div>
-        
-        
-        
-        
+        {{ knp_menu_render('actions', { 'template': 'KunstmaanAdminNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
 
+        <!--Scroll Actions-->
+        {{ knp_menu_render('top_actions', { 'template': 'KunstmaanAdminNodeBundle:Menu:knp_menu_top_actions.html.twig'}) }}
         
         <!--=========Tabs=========-->
         <ul class="nav nav-tabs">
@@ -351,7 +301,8 @@
 	            </table>
 	        </div>
 	    </div>
-	    
+
+        {% set pagePossibleChildPages = page.possibleChildPageTypes %}
 		{% if pagePossibleChildPages is not empty %}
 		<div id="add-subpage-modal" class="modal hide fade">
 			<div class="modal-header">
