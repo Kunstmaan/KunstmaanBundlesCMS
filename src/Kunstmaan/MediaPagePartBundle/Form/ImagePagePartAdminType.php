@@ -2,11 +2,12 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class ImagePagePartAdminType extends AbstractType {
-    public function buildForm(FormBuilder $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('link', 'url', array('required' => false));
         $builder->add('openinnewwindow', 'checkbox', array('required' => false));
         $builder->add('alttext', null, array('required' => false));
@@ -15,5 +16,12 @@ class ImagePagePartAdminType extends AbstractType {
 
     public function getName() {
         return 'kunstmaan_mediabundle_imagepageparttype';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
+        );
     }
 }

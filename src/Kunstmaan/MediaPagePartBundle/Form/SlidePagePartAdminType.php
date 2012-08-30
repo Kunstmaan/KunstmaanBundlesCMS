@@ -2,12 +2,13 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\EntityRepository;
 
 class SlidePagePartAdminType extends AbstractType {
-    public function buildForm(FormBuilder $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser_slidechooser'));
         /*$builder->add('media', 'entity', array(
             'required'  => false,
@@ -22,5 +23,12 @@ class SlidePagePartAdminType extends AbstractType {
 
     public function getName() {
         return 'kunstmaan_mediabundle_slidepageparttype';
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart',
+        );
     }
 }
