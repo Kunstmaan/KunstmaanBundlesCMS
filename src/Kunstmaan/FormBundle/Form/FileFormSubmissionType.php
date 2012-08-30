@@ -1,9 +1,10 @@
 <?php
 namespace Kunstmaan\FormBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 class FileFormSubmissionType extends AbstractType
 {
@@ -19,7 +20,7 @@ class FileFormSubmissionType extends AbstractType
 	/**
 	 * {@inheritdoc}
 	 */
-	public function buildForm(FormBuilder $builder, array $options)
+	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder->add('file', 'file', array(
 			'label' => $this->label,

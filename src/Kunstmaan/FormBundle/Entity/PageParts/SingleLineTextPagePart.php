@@ -2,20 +2,21 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\CallbackValidator;
-use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
  * A single line pagepart
- * 
+ *
  * @ORM\Entity
  * @ORM\Table(name="form_singlelinetextpagepart")
  */
@@ -75,7 +76,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     /**
      * {@inheritdoc}
      */
-    public function adaptForm(FormBuilder $formBuilder, &$fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, &$fields)
     {
         $sfsf = new StringFormSubmissionField();
         $sfsf->setFieldName("field_" . $this->getUniqueId());

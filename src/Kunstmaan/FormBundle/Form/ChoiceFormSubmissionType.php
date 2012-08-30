@@ -1,9 +1,10 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Form;
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 /**
  * ChoiceFormSubmissionType
@@ -35,9 +36,8 @@ class ChoiceFormSubmissionType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		// Symfony\Component\Form\Extension\Core\Type\ChoiceType
         $builder->add('value', 'choice', array(
 			'label' => $this->label,
 			'expanded' => $this->expanded,

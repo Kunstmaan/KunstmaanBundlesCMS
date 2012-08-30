@@ -8,7 +8,6 @@ use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-use Symfony\Component\Form\FormBuilder;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;

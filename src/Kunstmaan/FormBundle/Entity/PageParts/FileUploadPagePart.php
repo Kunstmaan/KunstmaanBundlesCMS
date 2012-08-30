@@ -1,12 +1,13 @@
 <?php
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
 
@@ -25,7 +26,7 @@ class FileUploadPagePart extends AbstractFormPagePart
 	 * @param FormBuilder $formBuilder The formbuilder
 	 * @param array       &$fields     The fields
 	 */
-	public function adaptForm(FormBuilder $formBuilder, &$fields)
+	public function adaptForm(FormBuilderInterface $formBuilder, &$fields)
 	{
 		$ffsf = new FileFormSubmissionField();
 		$ffsf->setFieldName("field_" . $this->getUniqueId());

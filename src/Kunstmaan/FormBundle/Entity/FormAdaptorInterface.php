@@ -1,7 +1,7 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Form adaptor Interface
@@ -14,11 +14,11 @@ interface FormAdaptorInterface
      * @param FormBuilder $formBuilder The formbuilder
      * @param array       &$fields     The fields
      */
-    public function adaptForm(FormBuilder $formBuilder, &$fields);
+    public function adaptForm(FormBuilderInterface $formBuilder, &$fields);
 
     /**
      * Returns a unique id
-     * 
+     *
      * @return string
      */
     public function getUniqueId();

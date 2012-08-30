@@ -6,7 +6,6 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Symfony\Component\Form\AbstractType;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
-use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 

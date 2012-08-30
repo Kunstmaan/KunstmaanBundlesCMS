@@ -2,9 +2,10 @@
 
 namespace Kunstmaan\FormBundle\Form;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
 
 /**
  * ChoicePagePartAdminType
@@ -14,7 +15,7 @@ class ChoicePagePartAdminType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('label', null, array('required' => false))
