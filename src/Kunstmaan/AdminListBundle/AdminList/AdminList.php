@@ -23,7 +23,7 @@ class AdminList
 
     protected $queryparams = array();
 
-    function __construct(AbstractAdminListConfigurator $configurator, $em, $queryparams = array())
+    public function __construct(AbstractAdminListConfigurator $configurator, $em, $queryparams = array())
     {
         $this->configurator = $configurator;
         $this->em = $em;
@@ -69,7 +69,7 @@ class AdminList
     {
         return $this->configurator->getExportFields();
     }
-    
+
     public function getCount($params = array())
     {
         if (!$this->configurator->useNativeQuery()) {
@@ -78,14 +78,14 @@ class AdminList
             $this->configurator->adaptQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
             $query = $queryBuilder->getQuery();
-    
+
             return $query->getSingleScalarResult();
         } else {
             $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
             $queryBuilder =$this->configurator->adaptNativeCountQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
             $stmt = $queryBuilder->execute();
-    
+
             return $stmt->fetchColumn();
         }
     }
@@ -105,7 +105,7 @@ class AdminList
                 $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
             }
             $query = $queryBuilder->getQuery();
-            
+
             return $query->getResult();
         } else {
             $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
@@ -117,7 +117,7 @@ class AdminList
             $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
             $queryBuilder->setMaxResults($this->configurator->getLimit());
             $stmt = $queryBuilder->execute();
-            
+
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
     }
@@ -156,12 +156,14 @@ class AdminList
     {
         return $this->configurator->canDelete($item);
     }
-    
-    public function canExport() {
+
+    public function canExport()
+    {
         return $this->configurator->canExport();
     }
-    
-    public function getExportUrlFor(){
+
+    public function getExportUrlFor()
+    {
         return $this->configurator->getExportUrlFor();
     }
 
@@ -185,12 +187,14 @@ class AdminList
         return $this->orderDirection;
     }
 
-    public function getCustomActions() {
-    	return $this->configurator->getCustomActions();
+    public function getCustomActions()
+    {
+        return $this->configurator->getCustomActions();
     }
 
-    public function hasCustomActions() {
-    	return $this->configurator->hasCustomActions();
+    public function hasCustomActions()
+    {
+        return $this->configurator->hasCustomActions();
     }
 
     public function hasListActions()
