@@ -15,11 +15,11 @@ class ShellHelper
 
         return $pid;
     }
-    
+
     public function isProcessRunning($pid)
     {
         exec("ps $pid", $processState);
-        
+
         return (count($processState) >= 2);
     }
 
@@ -27,10 +27,10 @@ class ShellHelper
     {
         if ($this->isProcessRunning($pid)) {
             exec("kill -KILL $pid");
-            
+
             return true;
         }
-        
+
         return false;
     }
 

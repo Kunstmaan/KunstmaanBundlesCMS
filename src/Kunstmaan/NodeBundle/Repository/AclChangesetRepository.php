@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityRepository;
 
 use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
 
-
 /**
  * ACL changeset repository
  */

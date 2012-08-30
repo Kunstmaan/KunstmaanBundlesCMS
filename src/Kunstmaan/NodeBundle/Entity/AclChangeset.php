@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminNodeBundle\Entity;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\AclChangesetRepository")
@@ -110,7 +109,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set timestamp of last modification
      *
-     * @param DateTime  $lastModified
+     * @param DateTime $lastModified
      */
     public function setLastModified($lastModified)
     {

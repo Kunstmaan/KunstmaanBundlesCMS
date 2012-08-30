@@ -5,9 +5,6 @@ namespace Kunstmaan\AdminNodeBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 
 use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
 
@@ -72,7 +69,7 @@ class ApplyAclCommand extends ContainerAwareCommand
             $this->em->flush();
 
             $hasPending = $aclRepo->hasPendingChangesets();
-        } while($hasPending);
+        } while ($hasPending);
     }
 
     private function isRunning()
