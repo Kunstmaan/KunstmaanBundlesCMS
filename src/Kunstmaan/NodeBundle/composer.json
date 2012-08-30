@@ -18,7 +18,8 @@
         "symfony/symfony": "2.1.*",
         "kunstmaan/adminlist-bundle": "dev-master",
         "kunstmaan/admin-bundle": "dev-master",
-        "gedmo/doctrine-extensions": "*"
+        "gedmo/doctrine-extensions": "*",
+		"knplabs/knp-menu-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminNodeBundle": "" }

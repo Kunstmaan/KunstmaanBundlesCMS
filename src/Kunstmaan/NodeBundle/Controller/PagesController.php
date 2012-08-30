@@ -136,7 +136,6 @@ class PagesController extends Controller
      *
      * @Route("/{id}/unpublish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminNodeBundle_pages_edit_unpublish")
      * @Template()
-     *
      * @return RedirectResponse
      */
     public function unpublishAction($id)
@@ -152,6 +151,7 @@ class PagesController extends Controller
         $editcommand = new EditCommand($em, $user);
         $editcommand->execute("unpublished page \"" . $nodeTranslation->getTitle() . "\" on locale: " . $locale, array('entity'=> $nodeTranslation));
 
+        return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id'=>$node->getId())));
         return $this->redirect($this->generateUrl("KunstmaanAdminNodeBundle_pages_edit", array('id'=>$node->getId())));
     }
 
@@ -231,6 +231,8 @@ class PagesController extends Controller
                 $subaction = "draft";
             }
         }
+
+        $this->get('admin_node.actions_menu_builder')->setActiveNodeVersion($nodeVersion);
 
         $addpage = $request->get("addpage");
         $addpagetitle = $request->get("addpagetitle");
