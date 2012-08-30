@@ -20,7 +20,7 @@ class SearchPageController extends Controller
 
     	$em = $this->getDoctrine()->getEntityManager();
     	$request = $this->getRequest();
-    	$locale = $request->getSession()->getLocale();
+    	$locale = $request->getLocale();
     	$nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug($slug, null);
     	if($nodeTranslation){
     		$page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
@@ -32,11 +32,11 @@ class SearchPageController extends Controller
     	$homepage = $this->getHomepage($node);
     	$children = $homepage->getChildren();
    		foreach($children as $child){
-		    if($child->getNodeTranslation($request->getSession()->getLocale()) && ClassLookup::getClassName($child->getNodeTranslation($request->getSession()->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
+		    if($child->getNodeTranslation($request->getLocale()) && ClassLookup::getClassName($child->getNodeTranslation($request->getSession()->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
    		}
 
    		if($searchpage){
-   			return $this->redirect($this->generateUrl('_slug', array('url' => $searchpage->getNodeTranslation($request->getSession()->getLocale())->getUrl(), 'query' => $query)));
+   			return $this->redirect($this->generateUrl('_slug', array('url' => $searchpage->getNodeTranslation($request->getLocale())->getUrl(), 'query' => $query)));
    		}else {
    			throw $this->createNotFoundException('No searchpage found');
    		}
