@@ -18,7 +18,7 @@ class GuestUserFactory implements SecurityFactoryInterface
     protected $options = array(
         'username' => 'guest',
     );
-    
+
     public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
     {
         // We don't need a custom provider yet, so use pre-authenticated provider...
@@ -36,26 +36,26 @@ class GuestUserFactory implements SecurityFactoryInterface
             ->replaceArgument(2, $id)
         ;
 
-        return array($providerId, $listenerId, $defaultEntryPoint);        
+        return array($providerId, $listenerId, $defaultEntryPoint);
     }
-    
+
     public function addConfiguration(NodeDefinition $node)
     {
-     
+
         $builder = $node->children();
-        
+
         foreach ($this->options as $name => $default) {
             if (is_bool($default)) {
                 $builder->booleanNode($name)->defaultValue($default);
             } else {
                 $builder->scalarNode($name)->defaultValue($default);
             }
-        }        
+        }
     }
 
     public function getKey()
     {
-        return 'guest-user';    
+        return 'guest-user';
     }
 
     public function getPosition()

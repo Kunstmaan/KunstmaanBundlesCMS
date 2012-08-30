@@ -31,13 +31,13 @@ class GuestUserListener implements ListenerInterface
         if (null !== $this->context->getToken()) {
             return;
         }
-        
+
         // Map anonymous login to guest user roles
         $user = $this->provider->loadUserByUsername('guest');
         $roles = $user->getRoles();
-        
+
         $token = new AnonymousToken($this->providerKey, 'guest', $roles);
         $this->context->setToken($token);
     }
-    
+
 }

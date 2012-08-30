@@ -14,8 +14,8 @@ use Doctrine\ORM\QueryBuilder;
  */
 class AclHelper
 {
-    
-    function __construct($em, $securityContext)
+
+    public function __construct($em, $securityContext)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
@@ -37,7 +37,7 @@ class AclHelper
      * This will clone the original query and apply the ACL constraints
      *
      * @param QueryBuilder $queryBuilder
-     * @param array $permissions
+     * @param array        $permissions
      *
      * @return type
      */
@@ -80,7 +80,7 @@ class AclHelper
      * This will only check permissions on the first entity added in the from clause, it will not check permissions
      * By default the number of rows returned are 10 starting from 0
      *
-     * @param Query $query
+     * @param Query        $query
      * @param QueryBuilder $queryBuilder
      *
      * @return String Sql
@@ -119,7 +119,7 @@ class AclHelper
                     $uR[] = '"' . $role . '"';
                 }
             }
-            $INString = implode(' OR s.identifier = ', (array) $uR);            
+            $INString = implode(' OR s.identifier = ', (array) $uR);
         }
 
         $selectQuery = <<<SELECTQUERY
@@ -138,5 +138,5 @@ SELECTQUERY;
 
         return $selectQuery;
     }
-    
+
 }

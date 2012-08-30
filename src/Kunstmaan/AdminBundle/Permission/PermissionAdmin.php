@@ -7,7 +7,6 @@ use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
 
 use Doctrine\ORM\EntityManager;
 
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
@@ -34,11 +33,11 @@ class PermissionAdmin
     protected $currentEnv           = 'dev';
 
     /**
-     * @param EntityManager                             $em                     The EntityManager
-     * @param SecurityContextInterface                  $securityContext        The security context
-     * @param AclProviderInterface                      $aclProvider            The ACL provider
-     * @param ObjectIdentityRetrievalStrategyInterface  $oidRetrievalStrategy   The object retrieval strategy
-     * @param string                                    $currentEnv             The current environment
+     * @param EntityManager                            $em                   The EntityManager
+     * @param SecurityContextInterface                 $securityContext      The security context
+     * @param AclProviderInterface                     $aclProvider          The ACL provider
+     * @param ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy The object retrieval strategy
+     * @param string                                   $currentEnv           The current environment
      */
     public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy, $currentEnv)
     {
@@ -50,9 +49,9 @@ class PermissionAdmin
     }
 
     /**
-     * @param object                    $resource           The object which has the permissions
-     * @param PermissionMapInterface    $permissionMap      The permission map to use
-     * @param ShellHelper               $shellHelper        The shell helper class to use
+     * @param object                 $resource      The object which has the permissions
+     * @param PermissionMapInterface $permissionMap The permission map to use
+     * @param ShellHelper            $shellHelper   The shell helper class to use
      */
     public function initialize($resource, PermissionMapInterface $permissionMap, $shellHelper)
     {
@@ -60,7 +59,7 @@ class PermissionAdmin
         $this->permissionMap = $permissionMap;
         $this->shellHelper = $shellHelper;
         $this->permissions = array();
-        
+
         // Init permissions
         try {
             $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
@@ -140,7 +139,7 @@ class PermissionAdmin
             foreach ($permissions as $permission => $value) {
                 $mask->add($permission);
             }
-            
+
             $index = $this->getObjectAceIndex($acl, $role);
             if (false !== $index) {
                 $acl->updateObjectAce($index, $mask->get());
@@ -149,7 +148,7 @@ class PermissionAdmin
                 $acl->insertObjectAce($securityIdentity, $mask->get());
             }
         }
-        
+
         // Process removed Aces
         foreach ($this->permissions as $role => $permission) {
             if (!isset($postPermissions[$role])) {
@@ -159,7 +158,7 @@ class PermissionAdmin
                 }
             }
         }
-        
+
         $this->aclProvider->updateAcl($acl);
 
         // Apply recursively (on request)
@@ -208,7 +207,7 @@ class PermissionAdmin
             if (false !== $index) {
                 $mask = $this->getObjectAce($acl, $role);
             }
-            foreach($roleChanges as $type => $permissions) {
+            foreach ($roleChanges as $type => $permissions) {
                 $maskChange = new MaskBuilder();
                 foreach ($permissions as $permission) {
                     $maskChange->add($permission);

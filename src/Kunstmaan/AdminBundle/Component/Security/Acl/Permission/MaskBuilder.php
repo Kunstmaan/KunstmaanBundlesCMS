@@ -41,7 +41,7 @@ class MaskBuilder
     /**
      * Constructor
      *
-     * @param integer $mask optional; defaults to 0
+     * @param  integer $mask optional; defaults to 0
      * @return void
      */
     public function __construct($mask = 0)
@@ -56,7 +56,7 @@ class MaskBuilder
     /**
      * Adds a mask to the permission
      *
-     * @param mixed $mask
+     * @param  mixed       $mask
      * @return MaskBuilder
      */
     public function add($mask)
@@ -109,7 +109,7 @@ class MaskBuilder
     /**
      * Removes a mask from the permission
      *
-     * @param mixed $mask
+     * @param  mixed       $mask
      * @return MaskBuilder
      */
     public function remove($mask)
@@ -140,12 +140,12 @@ class MaskBuilder
     /**
      * Returns the code for the passed mask
      *
-     * @param integer $mask
+     * @param  integer                   $mask
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @return string
      */
-    static public function getCode($mask)
+    public static function getCode($mask)
     {
         if (!is_int($mask)) {
             throw new \InvalidArgumentException('$mask must be an integer.');
@@ -168,7 +168,7 @@ class MaskBuilder
 
         throw new \InvalidArgumentException(sprintf('The mask "%d" is not supported.', $mask));
     }
-    
+
     public function has($mask)
     {
         if (is_string($mask) && defined($name = 'static::MASK_'.strtoupper($mask))) {
@@ -176,7 +176,7 @@ class MaskBuilder
         } elseif (!is_int($mask)) {
             throw new \InvalidArgumentException('$mask must be an integer.');
         }
-        
+
         return ($this->mask & $mask) != 0;
     }
 }

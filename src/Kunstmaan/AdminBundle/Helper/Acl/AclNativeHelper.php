@@ -13,8 +13,8 @@ use Doctrine\DBAL\Query\QueryBuilder;
  */
 class AclNativeHelper
 {
-    
-    function __construct($em, $securityContext)
+
+    public function __construct($em, $securityContext)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
@@ -36,7 +36,7 @@ class AclNativeHelper
      * This will clone the original query and apply the ACL constraints
      *
      * @param QueryBuilder $queryBuilder
-     * @param array $permissions
+     * @param array        $permissions
      *
      * @return type
      */
