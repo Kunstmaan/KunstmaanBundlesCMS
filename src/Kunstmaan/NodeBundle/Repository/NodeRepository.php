@@ -6,7 +6,6 @@ use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * NodeRepository
@@ -129,7 +128,7 @@ class NodeRepository extends EntityRepository
      * @param string    $permission           The permission (read, write, ...)
      * @param AclHelper $aclHelper
      * @param boolean   $includehiddenfromnav Include hiddenfromnav nodes or not
-     * 
+     *
      * @return array:
      */
     public function getChildNodes($parentid, $lang, $permission, $aclHelper, $includehiddenfromnav = false)
@@ -155,14 +154,9 @@ class NodeRepository extends EntityRepository
         $qb->addOrderBy('t.weight', 'ASC')
                 ->addOrderBy('t.title', 'ASC');
         $qb->setParameter('lang', $lang);
+        $query = $aclHelper->apply($qb, array($permission));
 
-        $query = $aclHelper->apply($qb);
-        
-        // die($query->getSql());
-        
-        $result = $query->getResult();
-
-        return $result;
+        return $query->getResult();
     }
 
     /**
