@@ -45,6 +45,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     public function buildFields()
     {
         $this->addField("title", "Title", true);
+        $this->addField("lang", "Language", true);
+        $this->addField("url", "Form path", true);
     }
 
     /**
