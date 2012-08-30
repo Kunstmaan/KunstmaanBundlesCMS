@@ -106,6 +106,33 @@ elements for users that have a specific permission :
 In this example we check if the user has the DELETE permission for the node object, and only display the Delete button
 if he has.
 
+## QueryBuilder support
+If you want to perform queries for entities that have ACL attached to them (ie. to display them in a list, but limited
+to those entities for which you have a specific permission) you can use the AclHelper. There is one important caveat
+though : the domain object used for the permission check should be the root entity of the QueryBuilder you provide.
+
+To adapt a query in an EntityRepository method you could use:
+```php
+public function findAllWithPermission(AclHelper $aclHelper, array $permissions)
+{
+    $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.deleted = 0');
+    $query = $aclHelper->apply($qb, $permissions);
+
+    return $query->getResult();
+}
+
+```
+
+The AclHelper is provided as a service, so to call the above method to check the VIEW permission in a controller
+you could use :
+```php
+$aclHelper = $this->get('kunstmaan.acl.helper');
+$em = $this->getDoctrine()->getEntityManager();
+$items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, array('view'));
+```
+
 ## References
 
 - [How to use Access Control Lists (ACLs)](http://symfony.com/doc/current/cookbook/security/acl.html)
