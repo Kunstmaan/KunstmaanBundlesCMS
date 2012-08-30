@@ -8,3 +8,6 @@ formsubmissions:
     title: Form submissions for page
   edit:
     title: Form submission for page
+
+subaction:
+    formsubmissions: "Submissions"
