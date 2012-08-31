@@ -64,6 +64,6 @@ class TocPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $this->object->getDefaultAdminType();
+        $this->assertInstanceOf('Kunstmaan\PagePartBundle\Form\TocPagePartAdminType', $this->object->getDefaultAdminType());
     }
 }

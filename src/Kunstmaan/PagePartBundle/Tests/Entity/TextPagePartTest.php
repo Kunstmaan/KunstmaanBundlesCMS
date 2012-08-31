@@ -74,6 +74,6 @@ class TextPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $this->object->getDefaultAdminType();
+        $this->assertInstanceOf('Kunstmaan\PagePartBundle\Form\TextPagePartAdminType', $this->object->getDefaultAdminType());
     }
 }
