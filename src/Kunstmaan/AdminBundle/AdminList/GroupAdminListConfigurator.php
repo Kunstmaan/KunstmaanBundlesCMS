@@ -3,39 +3,66 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
-class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
+class GroupAdminListConfigurator extends AbstractAdminListConfigurator
+{
 
-	public function buildFilters(AdminListFilter $builder){
+    /**
+     * @param AdminListFilter $builder
+     */
+    public function buildFilters(AdminListFilter $builder)
+    {
         $builder->add('name', new StringFilterType("name"), "Name");
     }
 
-	public function buildFields()
+    public function buildFields()
     {
-    	$this->addField("name", "Name", true);
-    	$this->addField("roles", "Roles", false);
+        $this->addField("name", "Name", true);
+        $this->addField("roles", "Roles", false);
     }
 
-    public function getAddUrlFor($params=array()) {
-    	return array(
-    			'group' => array('path' => 'KunstmaanAdminBundle_settings_groups_add', 'params'=> $params)
-    	);
-
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getAddUrlFor($params = array())
+    {
+        return array(
+            'group' => array('path' => 'KunstmaanAdminBundle_settings_groups_add', 'params'=> $params)
+        );
     }
 
-    public function getEditUrlFor($item) {
-    	return array('path' => 'KunstmaanAdminBundle_settings_groups_edit', 'params' => array( 'group_id' => $item->getId()));
+    /**
+     * @param $item
+     *
+     * @return array
+     */
+    public function getEditUrlFor($item)
+    {
+        return array(
+            'path'   => 'KunstmaanAdminBundle_settings_groups_edit',
+            'params' => array('group_id' => $item->getId())
+        );
     }
 
+    /**
+     * @return array
+     */
     public function getIndexUrlFor()
     {
         return array('path' => 'KunstmaanAdminBundle_settings_groups');
     }
 
-    public function getDeleteUrlFor($item) {
+    /**
+     * @param $item
+     *
+     * @return array
+     */
+    public function getDeleteUrlFor($item)
+    {
         return array(
             'path'      => 'KunstmaanAdminBundle_settings_groups_delete',
             'params'    => array(
@@ -44,11 +71,22 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator{
         );
     }
 
-    public function getAdminType($item) {
+    /**
+     * @param \Kunstmaan\AdminListBundle\AdminList\entity $item
+     *
+     * @return \Kunstmaan\AdminListBundle\AdminList\AbstractType|null
+     */
+    public function getAdminType($item)
+    {
         return null;
     }
 
-    public function getRepositoryName() {
+    /**
+     * @return string
+     */
+    public function getRepositoryName()
+    {
         return 'KunstmaanAdminBundle:Group';
     }
+
 }

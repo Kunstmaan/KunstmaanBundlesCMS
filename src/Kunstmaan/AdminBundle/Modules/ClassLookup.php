@@ -12,6 +12,7 @@ class ClassLookup
     public static function getClassName($object)
     {
     	$classname = explode('\\', ClassLookup::getClass($object));
-    	return array_pop($classname);;
+
+    	return array_pop($classname);
     }
 }

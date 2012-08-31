@@ -2,10 +2,10 @@
 
 /*
  * Copyright (c) 2012 Kunstmaan (http://www.kunstmaan.be)
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * @author Wim Vandersmissen <wim.vandersmissen@kunstmaan.be>
  * @license http://opensource.org/licenses/MIT MIT License
  */
@@ -19,6 +19,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use Doctrine\ORM\EntityManager;
+
 use Kunstmaan\AdminBundle\Entity\User;
 
 class CreateUserCommand extends ContainerAwareCommand
@@ -26,7 +28,7 @@ class CreateUserCommand extends ContainerAwareCommand
     protected function configure()
     {
         parent::configure();
-        
+
         $this->setName('kuma:user:create')
             ->setDescription('Create a user.')
             ->setDefinition(array(
@@ -61,16 +63,19 @@ You can create an inactive user (will not be able to log in):
 EOT
             );
     }
-    
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /* @var EntityManager */
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
         $superadmin = $input->getOption('super-admin');
         $inactive = $input->getOption('inactive');
         $groupOption = $input->getOption('group');
-        
+
         $command = $this->getApplication()->find('fos:user:create');
         $arguments = array(
             'command'       => 'fos:user:create',
@@ -80,12 +85,11 @@ EOT
             '--super-admin' => $superadmin,
             '--inactive'    => $inactive,
         );
-        
+
         $input = new ArrayInput($arguments);
         $returnCode = $command->run($input, $output);
 
         // Fetch user that was just created
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');        
         $user = $em->getRepository('KunstmaanAdminBundle:User')->findOneBy(array('username' => $username));
 
         // Attach groups
@@ -94,12 +98,12 @@ EOT
             $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupname));
             $user->getGroups()->add($group);
         }
-        
+
         // Persist
         $em->persist($user);
         $em->flush();
-        
-        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', 
+
+        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>',
                 $input->getArgument('username'),
                 $groupOption));
     }
@@ -113,11 +117,11 @@ EOT
             $username = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose a username:',
-                function($username)
-                {
+                function($username) {
                     if (empty($username)) {
                         throw new \Exception('Username can not be empty');
                     }
+
                     return $username;
                 }
             );
@@ -128,11 +132,11 @@ EOT
             $email = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose an email:',
-                function($email)
-                {
+                function($email) {
                     if (empty($email)) {
                         throw new \Exception('Email can not be empty');
                     }
+
                     return $email;
                 }
             );
@@ -143,11 +147,11 @@ EOT
             $password = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose a password:',
-                function($password)
-                {
+                function($password) {
                     if (empty($password)) {
                         throw new \Exception('Password can not be empty');
                     }
+
                     return $password;
                 }
             );
@@ -158,15 +162,15 @@ EOT
             $group = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please enter the group(s) the user should be a member of:',
-                function($group)
-                {
+                function($group) {
                     if (empty($group)) {
                         throw new \Exception('Groups can not be empty');
                     }
+
                     return $group;
                 }
             );
             $input->setOption('group', $group);
         }
-    }    
+    }
 }

@@ -3,40 +3,78 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
-class RoleAdminListConfigurator extends AbstractAdminListConfigurator{
+class RoleAdminListConfigurator extends AbstractAdminListConfigurator
+{
 
-    public function buildFilters(AdminListFilter $builder) {
+    /**
+     * @param \Kunstmaan\AdminListBundle\AdminList\AdminListFilter $builder
+     */
+    public function buildFilters(AdminListFilter $builder)
+    {
         $builder->add('role', new StringFilterType("role"), "Role");
     }
 
-    public function buildFields() {
-    	$this->addField("role", "Role", true);
+    /**
+     *
+     */
+    public function buildFields()
+    {
+        $this->addField("role", "Role", true);
     }
 
-    public function getAddUrlFor($params=array()) {
-    	return array(
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getAddUrlFor($params = array())
+    {
+        return array(
             'role' => array('path' => 'KunstmaanAdminBundle_settings_roles_add', 'params' => $params)
-    	);
+        );
     }
 
-    public function getEditUrlFor($item) {
-    	return array('path' => 'KunstmaanAdminBundle_settings_roles_edit', 'params' => array('role_id' => $item->getId()));
+    /**
+     * @param $item
+     *
+     * @return array
+     */
+    public function getEditUrlFor($item)
+    {
+        return array(
+            'path'   => 'KunstmaanAdminBundle_settings_roles_edit',
+            'params' => array('role_id' => $item->getId())
+        );
     }
 
+    /**
+     * @return array
+     */
     public function getIndexUrlFor()
     {
         return array('path' => 'KunstmaanAdminBundle_settings_roles');
     }
 
-    public function getAdminType($item) {
+    /**
+     * @param \Kunstmaan\AdminListBundle\AdminList\entity $item
+     *
+     * @return \Kunstmaan\AdminListBundle\AdminList\AbstractType|null
+     */
+    public function getAdminType($item)
+    {
         return null;
     }
 
-    public function getDeleteUrlFor($item) {
+    /**
+     * @param $item
+     *
+     * @return array
+     */
+    public function getDeleteUrlFor($item)
+    {
         return array(
             'path'      => 'KunstmaanAdminBundle_settings_roles_delete',
             'params'    => array(
@@ -45,7 +83,11 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator{
         );
     }
 
-    public function getRepositoryName() {
+    /**
+     * @return string
+     */
+    public function getRepositoryName()
+    {
         return 'KunstmaanAdminBundle:Role';
     }
 
