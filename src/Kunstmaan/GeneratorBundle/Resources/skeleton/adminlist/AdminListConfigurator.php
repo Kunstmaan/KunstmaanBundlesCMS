@@ -15,34 +15,34 @@ use {{ namespace }}\Entity\{{ entity_class }};
 /**
  * The {{ entity_class }} admin list configurator
  */
-class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigurator {
+class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigurator
+{
 
     private $em;
     
-    public function __construct(EntityManager $em) {
+    public function __construct(EntityManager $em) 
+    {
         $this->em = $em;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildFields() {
-        {%- for field in fields %}
+    public function buildFields() 
+    {
+{% for field in fields %}
         $this->addField('{{ field }}', '{{ field }}', true);
-    
-    
-        {%- endfor %}
+{% endfor %}
     }
     
     /**
 	 * {@inheritdoc}
 	 */
-	public function buildFilters(AdminListFilter $builder) {
-		{%- for field in fields %}
-			$builder->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}');
-
-
-        {%- endfor %}
+	public function buildFilters(AdminListFilter $builder) 
+	{
+{% for field in fields %}
+		$builder->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}');
+{% endfor %}
 	}
 
     /**
@@ -104,14 +104,16 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	/**
 	 * @return string
 	 */
-	public function canExport() {
+	public function canExport() 
+	{
 	    return true;
 	}
 	
 	/**
 	 *
 	 */
-	public function getExportUrlFor() {
+	public function getExportUrlFor() 
+	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}_export', 'params' => array('_format' => 'csv'));
 	}
 
