@@ -5,7 +5,7 @@ use Kunstmaan\SearchBundle\Entity\IndexableInterface;
 use Elastica_Document;
 use RuntimeException;
 use FOQ\ElasticaBundle\Transformer\ModelToElasticaAutoTransformer;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 class NodeTransformer extends ModelToElasticaAutoTransformer
 {
