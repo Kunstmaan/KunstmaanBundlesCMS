@@ -20,6 +20,7 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "*",
         "knplabs/knp-menu-bundle": "*",
+        "monolog/monolog": "dev-master",
         "kunstmaan/adminlist-bundle": "dev-master",
         "kunstmaan/adminnode-bundle": "dev-master"
     },
