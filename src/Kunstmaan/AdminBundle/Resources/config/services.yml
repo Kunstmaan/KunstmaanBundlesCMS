@@ -1,76 +1,74 @@
 parameters:
-#    kunstmaan_admin.example.class: Kunstmaan\AdminBundle\Example
-    admin_menu.menubuilder.class: Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder
+    admin.menubuilder.class: Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder
 
 services:
-    admin_menu.menubuilder:
-        class: %admin_menu.menubuilder.class%
-        arguments: ["@translator", "@service_container"]
+    admin.menubuilder:
+        class: %admin.menubuilder.class%
+        arguments: ["@translator", "@request"]
+        scope: request
         
-    admin_menu.adaptor.settings:
+    admin.menu.adaptor.settings:
         class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
         tags:
-            -  { name: admin_menu.adaptor }
+            -  { name: 'admin.menu.adaptor' }
         
-    admin_menu.adaptor.modules:
+    admin.menu.adaptor.modules:
         class: Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor
         tags:
-            -  { name: admin_menu.adaptor }
+            -  { name: 'admin.menu.adaptor' }
 
-    admin_menu.twig.extension:
-        class: Kunstmaan\AdminBundle\Helper\Menu\MenuTwigExtension
-        arguments: ["@doctrine.orm.entity_manager", "@admin_menu.menubuilder"]
+    admin.menu.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\Extension\MenuTwigExtension
+        arguments: ["@admin.menubuilder"]
         tags:
-            -  { name: twig.extension }
+            -  { name: 'twig.extension' }
         
-    kunstmaan_admin.permissionmanager:
+    admin.permissionmanager:
         class: Kunstmaan\AdminBundle\Permission\Manager
 
-    kunstmaan_admin.permissionadmin:
+    admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
 
-    permissionsadmin.twig.extension:
+    admin.permissions.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
         tags:
-            -  { name: twig.extension }
+            -  { name: 'twig.extension' }
             
-    localeswitcher.twig.extension:
+    admin.localeswitcher.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
         tags:
-            -  { name: twig.extension }
+            -  { name: 'twig.extension' }
             
-    form.type.urlchooser:
+    admin.form.type.urlchooser:
         class: Kunstmaan\AdminBundle\Form\Type\URLChooserType
-        arguments:
-            - @doctrine.orm.entity_manager
         tags:
-            - { name: form.type, alias: urlchooser }
+            - { name: 'form.type', alias: 'urlchooser' }
             
-    kunstmaan_admin.handler.log:
-        class: Kunstmaan\AdminBundle\Modules\LogHandler
-        arguments:
-            - @service_container 
+    admin.handler.log:
+        class: Kunstmaan\AdminBundle\Helper\LogHandler
+        arguments: ["@monolog.logger.doctrine", "@security.context", "@doctrine.orm.entity_manager"]
         tags:
-            - { name: log_handler }
+            - { name: 'log_handler' }
 
-    kunstmaan_login_listener:
-        class: Kunstmaan\AdminBundle\Modules\LoginListener
-        arguments: [@security.context, @doctrine]
+    admin.login.listener:
+        class: Kunstmaan\AdminBundle\EventListener\LoginListener
+        arguments: ["@security.context", "@doctrine.orm.entity_manager"]
         tags:
-            - { name: kernel.event_listener, event: security.interactive_login }
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
             
-    kunstmaan_logout_listener:
-        class: Kunstmaan\AdminBundle\Modules\LogoutListener
-        arguments:  [@security.context, @doctrine]
+    admin.logout.listener:
+        class: Kunstmaan\AdminBundle\EventListener\LogoutListener
+        arguments:  ["@security.context", "@doctrine.orm.entity_manager"]
         tags:
             - { name: 'monolog.logger', channel: 'security' }
             
-    kunstmaan.twig.locale:
+    admin.locale.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
         tags:
-            - { name: twig.extension }
-    kunstmaan.twig.formtools:
+            - { name: 'twig.extension' }
+
+    admin.formtools.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension
         tags:
-            - { name: twig.extension }
+            - { name: 'twig.extension' }
  

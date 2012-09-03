@@ -36,7 +36,6 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        // your own logic
         $this->groups = new ArrayCollection();
     }
 
@@ -53,7 +52,7 @@ class User extends BaseUser
     /**
      * Set id
      *
-     * @param id integer
+     * @param integer $id
      */
     public function setId($id)
     {
@@ -98,6 +97,7 @@ class User extends BaseUser
      *         $securityContext->isGranted('ROLE_USER');
      *
      * @param string $role
+     *
      * @return Boolean
      */
     public function hasRole($role)
@@ -106,12 +106,12 @@ class User extends BaseUser
             foreach ($this->getRoles() as $r) {
                 if (is_string($r) && $r === $role) {
                     return true;
-                }
-                if (is_object($r) && $r instanceof Role && $r->getRole() === $role) {
+                } else if (is_object($r) && $r instanceof Role && $r->getRole() === $role) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 }

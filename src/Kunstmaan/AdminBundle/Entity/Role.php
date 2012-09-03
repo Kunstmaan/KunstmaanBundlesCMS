@@ -31,6 +31,7 @@ class Role implements RoleInterface
 
     /**
      * Populate the role field
+     *
      * @param string $role ROLE_FOO etc
      */
     public function __construct($role)
@@ -40,6 +41,7 @@ class Role implements RoleInterface
 
     /**
      * Return the role field.
+     *
      * @return string
      */
     public function getRole()
@@ -49,6 +51,7 @@ class Role implements RoleInterface
 
     /**
      * Return the role field.
+     *
      * @return string
      */
     public function __toString()
@@ -68,6 +71,7 @@ class Role implements RoleInterface
 
     /**
      * Modify the role field.
+     *
      * @param string $role ROLE_FOO etc
      */
     public function setRole($role)

@@ -2,20 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
-use Symfony\Component\Form\FormBuilderInterface;
-
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class GroupType extends AbstractType
 {
-    private $container;
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name');
@@ -24,6 +19,9 @@ class GroupType extends AbstractType
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'group';

@@ -10,13 +10,13 @@ class MenuCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->hasDefinition('admin_menu.menubuilder')) {
+        if (false === $container->hasDefinition('admin.menubuilder')) {
             return;
         }
 
-        $definition = $container->getDefinition('admin_menu.menubuilder');
+        $definition = $container->getDefinition('admin.menubuilder');
         
-        foreach ($container->findTaggedServiceIds('admin_menu.adaptor') as $id => $attributes) {
+        foreach ($container->findTaggedServiceIds('admin.menu.adaptor') as $id => $attributes) {
             $definition->addMethodCall('addAdaptMenu', array(new Reference($id)));
         }
     }

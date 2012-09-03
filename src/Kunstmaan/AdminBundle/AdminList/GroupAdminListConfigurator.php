@@ -6,6 +6,11 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
+use Symfony\Component\Form\AbstractType;
+
+/**
+ * @todo We should probably combine Admin & AdminList into 1 bundle, or move this to the AdminList bundle to prevent circular references...
+ */
 class GroupAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
@@ -36,7 +41,7 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -44,7 +49,7 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator
     {
         return array(
             'path'   => 'KunstmaanAdminBundle_settings_groups_edit',
-            'params' => array('group_id' => $item->getId())
+            'params' => array('groupId' => $item->getId())
         );
     }
 
@@ -57,7 +62,7 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -66,15 +71,15 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator
         return array(
             'path'      => 'KunstmaanAdminBundle_settings_groups_delete',
             'params'    => array(
-                'group_id'    => $item->getId()
+                'groupId'    => $item->getId()
             )
         );
     }
 
     /**
-     * @param \Kunstmaan\AdminListBundle\AdminList\entity $item
+     * @param mixed $item
      *
-     * @return \Kunstmaan\AdminListBundle\AdminList\AbstractType|null
+     * @return AbstractType|null
      */
     public function getAdminType($item)
     {

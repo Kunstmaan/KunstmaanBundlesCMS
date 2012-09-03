@@ -2,23 +2,27 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Symfony\Component\Form\AbstractType;
-
 /**
- * class to define the form to upload a picture
  *
  */
 class TextPartType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content', 'textarea', array( 'required' => false, 'attr' => array( 'class' => 'rich_editor' )))
-        ;
+            ->add('content', 'textarea', array('required' => false, 'attr' => array('class' => 'rich_editor')));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'kunstmaan_adminbundle_textparttype';

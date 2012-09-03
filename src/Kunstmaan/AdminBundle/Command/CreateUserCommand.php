@@ -66,13 +66,13 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /* @var EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
-        $superadmin = $input->getOption('super-admin');
+        $superAdmin = $input->getOption('super-admin');
         $inactive = $input->getOption('inactive');
         $groupOption = $input->getOption('group');
 
@@ -82,23 +82,23 @@ EOT
             'username'      => $username,
             'email'         => $email,
             'password'      => $password,
-            '--super-admin' => $superadmin,
+            '--super-admin' => $superAdmin,
             '--inactive'    => $inactive,
         );
 
         $input = new ArrayInput($arguments);
-        $returnCode = $command->run($input, $output);
+        $command->run($input, $output);
 
         // Fetch user that was just created
+        /* @var User $user */
         $user = $em->getRepository('KunstmaanAdminBundle:User')->findOneBy(array('username' => $username));
 
         // Attach groups
-        $groupnames = explode(',', $groupOption);
-        foreach ($groupnames as $groupname) {
-            $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupname));
+        $groupNames = explode(',', $groupOption);
+        foreach ($groupNames as $groupName) {
+            $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
             $user->getGroups()->add($group);
         }
-
         // Persist
         $em->persist($user);
         $em->flush();

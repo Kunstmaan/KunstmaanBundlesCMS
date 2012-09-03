@@ -30,7 +30,7 @@ abstract class AbstractEntity
     /**
      * Set id
      * 
-     * @param int $id The unique identifier
+     * @param integer $id The unique identifier
      */
     public function setId($id)
     {

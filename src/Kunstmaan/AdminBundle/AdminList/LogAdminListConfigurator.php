@@ -2,16 +2,20 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
+/**
+ * @todo We should probably combine Admin & AdminList into 1 bundle, or move this to the AdminList bundle to prevent circular references...
+ */
 class LogAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
     /**
-     * @param \Kunstmaan\AdminListBundle\AdminList\AdminListFilter $builder
+     * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
     {
@@ -59,7 +63,7 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -77,7 +81,7 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -87,7 +91,7 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return bool
      */
@@ -97,9 +101,9 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param \Kunstmaan\AdminListBundle\AdminList\entity $item
+     * @param mixed $item
      *
-     * @return \Kunstmaan\AdminListBundle\AdminList\AbstractType|null
+     * @return AbstractType|null
      */
     public function getAdminType($item)
     {

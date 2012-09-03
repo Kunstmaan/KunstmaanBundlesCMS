@@ -16,10 +16,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class DynamicRoutingPage extends AbstractPage implements DynamicRoutingPageInterface
 {
-    private $routes = NULL;
+    /* @var RouteCollection $routes */
+    private $routes = null;
+    /* @var RequestContext $context */
     private $context;
+    /* @var UrlMatcher $matcher */
     private $matcher;
+    /* @var UrlGenerator $generator */
     private $generator;
+    /* @var string $locale */
     protected $locale;
     
     /**
@@ -59,6 +64,7 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
      * Match slug against route collection
      *
      * @param string $slug
+     *
      * @return array|false Matching controller info
      */
     public function match($slug)
@@ -66,7 +72,14 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
         return $this->getMatcher()->match($slug);
     }
 
-    public function generate($name, $parameters = array(), $absolute = FALSE)
+    /**
+     * @param string $name Route name
+     * @param array $parameters
+     * @param bool  $absolute
+     *
+     * @return null|string
+     */
+    public function generate($name, $parameters = array(), $absolute = false)
     {
         return $this->getGenerator()->generate($name, $parameters, $absolute);
     }
@@ -104,11 +117,21 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
         return $this->generator;
     }
 
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     */
     public function setLocale($locale)
     {
         $this->locale = $locale;
     }
 
+    /**
+     * Get locale
+     *
+     * @return string
+     */
     public function getLocale()
     {
         return $this->locale;

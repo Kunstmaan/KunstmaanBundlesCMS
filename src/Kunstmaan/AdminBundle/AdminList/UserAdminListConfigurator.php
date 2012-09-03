@@ -2,17 +2,19 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
-
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
+use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 
+/**
+ * @todo We should probably combine Admin & AdminList into 1 bundle, or move this to the AdminList bundle to prevent circular references...
+ */
 class UserAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
     /**
-     * @param \Kunstmaan\AdminListBundle\AdminList\AdminListFilter $builder
+     * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
     {
@@ -47,7 +49,7 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -55,7 +57,7 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     {
         return array(
             'path'   => 'KunstmaanAdminBundle_settings_users_edit',
-            'params' => array('user_id' => $item->getId())
+            'params' => array('userId' => $item->getId())
         );
     }
 
@@ -68,9 +70,9 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param \Kunstmaan\AdminListBundle\AdminList\entity $item
+     * @param mixed $item
      *
-     * @return \Kunstmaan\AdminListBundle\AdminList\AbstractType|null
+     * @return AbstractType|null
      */
     public function getAdminType($item)
     {
@@ -78,7 +80,7 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -87,7 +89,7 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
         return array(
             'path'      => 'KunstmaanAdminBundle_settings_users_delete',
             'params'    => array(
-                'user_id'    => $item->getId()
+                'userId'    => $item->getId()
             )
         );
     }

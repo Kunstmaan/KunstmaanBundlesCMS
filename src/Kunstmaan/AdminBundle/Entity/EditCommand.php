@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\User as Baseuser;
+use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="editcommand")
  *
+ * @todo This should be removed when refactoring (logging should happen via a Listener)
+ * @deprecated
  */
 class EditCommand extends Command
 {
@@ -30,7 +32,7 @@ class EditCommand extends Command
      */
     protected $user;
 
-    public function __construct(EntityManager $em, Baseuser $user)
+    public function __construct(EntityManager $em, User $user)
     {
         $this->em = $em;
         $this->user = $user;
@@ -67,13 +69,19 @@ class EditCommand extends Command
         $this->id = $id;
     }
 
+    /**
+     * @return User
+     */
     public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser($channel)
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
     {
-        $this->user = $channel;
+        $this->user = $user;
     }
 }

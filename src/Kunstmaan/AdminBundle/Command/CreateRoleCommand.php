@@ -47,19 +47,18 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /* @var EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $rolename = strtoupper($input->getArgument('role'));
-        if ('ROLE_' != substr($rolename, 0, 5)) {
-            $rolename = 'ROLE_' . $rolename;
+        $roleName = strtoupper($input->getArgument('role'));
+        if ('ROLE_' != substr($roleName, 0, 5)) {
+            $roleName = 'ROLE_' . $roleName;
         }
 
-        $role = new Role($rolename);
-
+        $role = new Role($roleName);
         $em->persist($role);
         $em->flush();
 
-        $output->writeln(sprintf('Created role <comment>%s</comment>', $rolename));
+        $output->writeln(sprintf('Created role <comment>%s</comment>', $roleName));
     }
 }

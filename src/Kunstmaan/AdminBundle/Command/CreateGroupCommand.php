@@ -21,6 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Entity\Role;
 
 class CreateGroupCommand extends ContainerAwareCommand
 {
@@ -53,28 +54,27 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /* @var EntityManager */
+        /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $groupName = $input->getArgument('group');
+        $roleNames = $input->getOption('role');
+        $group = new Group($groupName);
 
-        $groupname = $input->getArgument('group');
-        $rolenames = $input->getOption('role');
-
-        $group = new Group($groupname);
-
-        if (!empty($rolenames)) {
+        if (!empty($roleNames)) {
             // Roles were provided, so attach them to the group
-            $rolenames = explode(',', strtoupper($rolenames));
-            foreach ($rolenames as $rolename) {
-                if ('ROLE_' != substr($rolename, 0, 5)) {
-                    $rolename = 'ROLE_' . $rolename;
+            $roleNames = explode(',', strtoupper($roleNames));
+            foreach ($roleNames as $roleName) {
+                if ('ROLE_' != substr($roleName, 0, 5)) {
+                    $roleName = 'ROLE_' . $roleName;
                 }
-                $role = $em->getRepository('KunstmaanAdminBundle:Role')->findOneBy(array('role' => $rolename));
+                /* @var Role $role */
+                $role = $em->getRepository('KunstmaanAdminBundle:Role')->findOneBy(array('role' => $roleName));
                 $group->addRole($role);
             }
         }
         $em->persist($group);
         $em->flush();
 
-        $output->writeln(sprintf('Created group <comment>%s</comment>', $groupname));
+        $output->writeln(sprintf('Created group <comment>%s</comment>', $groupName));
     }
 }

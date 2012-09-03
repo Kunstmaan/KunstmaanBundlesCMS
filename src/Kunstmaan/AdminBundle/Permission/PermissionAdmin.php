@@ -5,8 +5,7 @@ namespace Kunstmaan\AdminBundle\Permission;
 use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminBundle\Entity\Permission;
-
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 /**
  * PermissionAdmin

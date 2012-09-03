@@ -56,21 +56,33 @@ class ErrorLogItem extends LogItem
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
     public function getChannel()
     {
         return $this->channel;
     }
 
+    /**
+     * @param string $channel
+     */
     public function setChannel($channel)
     {
         $this->channel = $channel;
     }
 
+    /**
+     * @return string
+     */
     public function getLevel()
     {
         return $this->level;
     }
 
+    /**
+     * @param string $level
+     */
     public function setLevel($level)
     {
         $this->level = $level;

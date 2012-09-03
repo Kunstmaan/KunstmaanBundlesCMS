@@ -1,16 +1,22 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Modules;
+namespace Kunstmaan\AdminBundle\Helper;
 
 class Slugifier
 {
-    public static function slugify($text, $useDefault = true)
+    /**
+     * @param string $text    Text to slugify
+     * @param string $default Default return value (override when slugify would return an empty string)
+     *
+     * @return string
+     */
+    public static function slugify($text, $default = 'n-a')
     {
         $text = preg_replace('#[^\\pL\d]+#u', '-', $text); // replace non letter or digits by -
         $text = trim($text, '-'); //trim
 
         // transliterate
-        if (function_exists('iconv')){
+        if (function_exists('iconv')) {
             $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
         }
 
@@ -18,10 +24,7 @@ class Slugifier
         $text = preg_replace('#[^-\w]+#', '', $text); // remove unwanted characters
 
         if (empty($text)) {
-            if($useDefault) {
-                return 'n-a';
-            }
-            return '';
+            return empty($default) ? '' : $default;
         }
 
         return $text;

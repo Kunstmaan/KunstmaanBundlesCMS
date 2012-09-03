@@ -6,11 +6,14 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
+/**
+ * @todo We should probably combine Admin & AdminList into 1 bundle, or move this to the AdminList bundle to prevent circular references...
+ */
 class RoleAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
     /**
-     * @param \Kunstmaan\AdminListBundle\AdminList\AdminListFilter $builder
+     * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
     {
@@ -38,7 +41,7 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -46,7 +49,7 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
     {
         return array(
             'path'   => 'KunstmaanAdminBundle_settings_roles_edit',
-            'params' => array('role_id' => $item->getId())
+            'params' => array('roleId' => $item->getId())
         );
     }
 
@@ -59,9 +62,9 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param \Kunstmaan\AdminListBundle\AdminList\entity $item
+     * @param mixed $item
      *
-     * @return \Kunstmaan\AdminListBundle\AdminList\AbstractType|null
+     * @return AbstractType|null
      */
     public function getAdminType($item)
     {
@@ -69,7 +72,7 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -78,7 +81,7 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
         return array(
             'path'      => 'KunstmaanAdminBundle_settings_roles_delete',
             'params'    => array(
-                'role_id'    => $item->getId()
+                'roleId'    => $item->getId()
             )
         );
     }

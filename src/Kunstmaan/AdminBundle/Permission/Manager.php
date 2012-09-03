@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Permission;
 use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 class Manager
 {

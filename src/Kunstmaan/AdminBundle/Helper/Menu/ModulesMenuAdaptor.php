@@ -20,15 +20,14 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if (is_null($parent)) {
-            $menuitem = new TopMenuItem($menu);
-            $menuitem->setRoute('KunstmaanAdminBundle_modules');
-            $menuitem->setInternalname("Modules");
-            $menuitem->setParent($parent);
-            if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                $menuitem->setActive(true);
+            $menuItem = new TopMenuItem($menu);
+            $menuItem->setRoute('KunstmaanAdminBundle_modules');
+            $menuItem->setInternalname("Modules");
+            $menuItem->setParent($parent);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
             }
-            $children[] = $menuitem;
+            $children[] = $menuItem;
         }
     }
-
 }
