@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
 use Kunstmaan\MediaBundle\Helper\Event\Events;
 use Kunstmaan\MediaBundle\Form\BulkUploadType;

@@ -5,7 +5,7 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Form\FolderType;
-use Kunstmaan\AdminBundle\Modules\Slugifier;
+use Kunstmaan\AdminBundle\Helper\Slugifier;
 use Kunstmaan\MediaBundle\Helper\FolderStrategy;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;

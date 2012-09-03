@@ -2,9 +2,9 @@ parameters:
 #    kunstmaan_westtoerapp.example.class: Kunstmaan\WesttoerAppBundle\Example
 
 services:
-    admin_menu.adaptor.media:
+    media.menu.adaptor:
         class: Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            -  { name: admin_menu.adaptor }
+            -  { name: 'admin.menu.adaptor' }
             
