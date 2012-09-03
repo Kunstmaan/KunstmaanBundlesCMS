@@ -53,14 +53,13 @@
 	                {% if adminlist.hasCustomActions() %}
 	                    {% for customAction in adminlist.getCustomActions() %}
 	                        {% if customAction.template is not null %}
-	                            {% include customAction.template with {'row': item, 'item': item} %}
+	                            {% include customAction.template with {'row': item, 'item': item, 'action': customAction} %}
 	                        {% else %}
 	                            <a href="{{ path(customAction.getUrlFor(item)["path"], customAction.getUrlFor(item)[("params")] ) }}">
 	                            {% if customAction.getIcon(item) is not null %}
 	                                <img src="{{ asset(customAction.getIcon(item)) }}" alt="{{ customAction.getLabel(item) }}"/>
-	                            {% else %}
-	                                {{ customAction.getLabel(item) }}
-	                            {% endif %}
+                                {% endif %}
+	                            {{ customAction.getLabel(item) }}
 	                            </a>
 	                        {% endif %}
 	                    {% endfor %}
