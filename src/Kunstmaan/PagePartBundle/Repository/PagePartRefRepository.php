@@ -7,7 +7,7 @@ use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 class PagePartRefRepository extends EntityRepository
 {

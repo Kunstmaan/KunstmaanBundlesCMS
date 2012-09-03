@@ -38,7 +38,7 @@ class PagePartAdminTypeTestCase extends WebTestCase
     protected function setUp()
     {
         $formFactoryBuilderInterface = Forms::createFormFactoryBuilder();
-        $formFactoryBuilderInterface->addType(new URLChooserType($this->getMock( 'Doctrine\ORM\EntityManger')));
+        $formFactoryBuilderInterface->addType(new URLChooserType());
         $formFactoryBuilderInterface->addTypeGuesser(new DoctrineOrmTypeGuesser($this->getMock('Doctrine\Common\Persistence\ManagerRegistry')));
         $this->factory = $formFactoryBuilderInterface->getFormFactory();
         $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
