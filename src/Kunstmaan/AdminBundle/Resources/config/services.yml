@@ -23,17 +23,6 @@ services:
         tags:
             -  { name: 'twig.extension' }
         
-    admin.permissionmanager:
-        class: Kunstmaan\AdminBundle\Permission\Manager
-
-    admin.permissionadmin:
-        class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
-
-    admin.permissions.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
-        tags:
-            -  { name: 'twig.extension' }
-            
     admin.localeswitcher.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
         tags:
@@ -72,3 +61,36 @@ services:
         tags:
             - { name: 'twig.extension' }
  
+    admin.permissions.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
+        tags:
+            -  { name: 'twig.extension' }
+
+    security.acl.permission.map:
+        class: Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap
+        
+    security.acl.object_identity_retrieval_strategy:
+        class: Kunstmaan\AdminBundle\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    admin.acl.helper:
+        class: Kunstmaan\AdminBundle\Helper\Acl\AclHelper
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+    admin.acl.native.helper:
+        class: Kunstmaan\AdminBundle\Helper\Acl\AclNativeHelper
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+    admin.guest.security.authentication.listener:
+        class: Kunstmaan\AdminBundle\Component\Security\Http\Firewall\GuestUserListener
+        arguments: ["@security.context", "user_provider", "provider_key", "@logger"]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+        
+    admin.guest.security.authentication.provider:
+        class: Kunstmaan\AdminBundle\Component\Security\Authentication\Provider\GuestUserProvider
+        arguments: [""]
+
+    admin.permissionadmin:
+        class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "%kernel.environment%"]

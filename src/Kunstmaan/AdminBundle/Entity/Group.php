@@ -22,11 +22,6 @@ class Group implements RoleInterface, GroupInterface
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Permission", mappedBy="refGroup")
-     */
-    protected $permissions;
-
-    /**
      * @ORM\Column(type="string")
      */
     protected $name;
@@ -42,9 +37,15 @@ class Group implements RoleInterface, GroupInterface
      */
     protected $rolescollection;
 
-    public function getPermissions()
+    /**
+     * Constructor
+     *
+     * @param string $name Name of the group
+     */
+    public function __construct($name = '')
     {
-        return $this->permissions;
+        $this->name = $name;
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -57,22 +58,34 @@ class Group implements RoleInterface, GroupInterface
         return $this->id;
     }
 
+    /**
+     * Get string representation of object
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
     }
 
     /**
-     * Returns an ARRAY of Role objects with the default Role object appended.
+     * Returns an array of strings (needed because Symfony ACL doesn't support using RoleInterface yet)
+     * 
      * @return array
      */
     public function getRoles()
     {
-        return $this->roles->toArray();
+        $result = array();
+        foreach ($this->roles as $role) {
+            $result[] = $role->getRole();
+        }
+
+        return $result;
     }
 
     /**
      * Returns the true ArrayCollection of Roles.
+     *
      * @return Doctrine\Common\Collections\ArrayCollection
      */
     public function getRolesCollection()
@@ -82,12 +95,14 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Pass a string, get the desired Role object or null.
+     *
      * @param string $role
+     *
      * @return Role|null
      */
     public function getRole($role = null)
     {
-        foreach ($this->getRoles() as $roleItem) {
+        foreach ($this->roles as $roleItem) {
             if ($role == $roleItem->getRole()) {
                 return $roleItem;
             }
@@ -96,8 +111,10 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Pass a string, checks if we have that Role. Same functionality as getRole() except returns a real boolean.
+     * Pass a string, checks if we have that Role. Same functionality as getRole() except it returns a boolean.
+     *
      * @param string $role
+     *
      * @return boolean
      */
     public function hasRole($role)
@@ -109,14 +126,16 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Adds a Role OBJECT to the ArrayCollection. Can't type hint due to interface so throws Exception.
-     * @throws Exception
+     * Adds a Role object to the ArrayCollection. Can't type hint due to interface so throws Exception.
+     * 
+     * @throws InvalidArgumentException
+     * 
      * @param Role $role
      */
     public function addRole($role)
     {
         if (!$role instanceof Role) {
-            throw new \Exception("addRole takes a Role object as the parameter");
+            throw new \InvalidArgumentException("addRole takes a Role object as the parameter");
         }
 
         if (!$this->hasRole($role->getRole())) {
@@ -126,6 +145,7 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Pass a string, remove the Role object from collection.
+     * 
      * @param string $role
      */
     public function removeRole($role)
@@ -138,8 +158,8 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Pass an ARRAY of Role objects and will clear the collection and re-set it with new Roles.
-     * Type hinted array due to interface.
-     * @param array $roles Of Role objects.
+     *
+     * @param Role[] $roles array of Role objects.
      */
     public function setRoles(array $roles)
     {
@@ -151,25 +171,29 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Directly set the ArrayCollection of Roles. Type hinted as Collection which is the parent of (Array|Persistent)Collection.
-     * @param Doctrine\Common\Collections\Collection $role
+     *
+     * @param Doctrine\Common\Collections\Collection $collection
      */
     public function setRolesCollection(Collection $collection)
     {
         $this->roles = $collection;
     }
 
-    public function __construct($name = '', $roles = array())
-    {
-        $this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->roles = new ArrayCollection();
-        $this->name = $name;
-    }
-
+    /**
+     * Return the name of the group
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Set the name of the group
+     *
+     * @param string $name New name of the group
+     */
     public function setName($name)
     {
         $this->name = $name;
