@@ -32,7 +32,7 @@ class SettingsController extends Controller
     public function indexAction()
     {
         /* @var EntityManager */
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         /* @var Request */
         $request = $this->getRequest();
         /* @var AdminList */
@@ -51,7 +51,7 @@ class SettingsController extends Controller
     public function usersAction()
     {
         /* @var EntityManager */
-        $em        = $this->getDoctrine()->getEntityManager();
+        $em        = $this->getDoctrine()->getManager();
         /* @var Request */
         $request   = $this->getRequest();
         /* @var AdminList */
@@ -71,7 +71,7 @@ class SettingsController extends Controller
     public function adduserAction()
     {
         /* @var EntityManager */
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         /* @var Request */
         $request = $this->getRequest();
         $helper  = new User();

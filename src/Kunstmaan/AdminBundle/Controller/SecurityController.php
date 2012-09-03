@@ -19,7 +19,7 @@ class SecurityController extends BaseController
         /* @var Request */
         $request = $this->container->get('request');
         /* @var EntityManager */
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         /* @var Session */
         $session = $request->getSession();
 
