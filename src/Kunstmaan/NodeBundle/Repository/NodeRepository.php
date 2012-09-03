@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminNodeBundle\Repository;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 

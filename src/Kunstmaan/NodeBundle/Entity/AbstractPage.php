@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminBundle\Entity\PageInterface;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

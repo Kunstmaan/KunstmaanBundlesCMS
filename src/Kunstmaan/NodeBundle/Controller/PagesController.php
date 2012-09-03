@@ -12,14 +12,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Kunstmaan\AdminNodeBundle\Helper\Event\Events;
 use Kunstmaan\AdminNodeBundle\Helper\Event\PageEvent;
 
-use Kunstmaan\AdminBundle\Modules\PrepersistListener;
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 use Kunstmaan\AdminBundle\Form\PageAdminType;
 use Kunstmaan\AdminNodeBundle\AdminList\PageAdminListConfigurator;
 use Kunstmaan\AdminBundle\Form\NodeInfoAdminType;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\AdminBundle\Entity\Permission;
-use Kunstmaan\AdminBundle\Modules\Slugifier;
+use Kunstmaan\AdminBundle\Helper\Slugifier;
 use Kunstmaan\AdminNodeBundle\Form\SEOType;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\EditCommand;

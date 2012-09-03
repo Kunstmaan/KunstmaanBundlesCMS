@@ -2,12 +2,11 @@
 // src/Blogger/BlogBundle/Form/EnquiryType.php
 
 namespace Kunstmaan\AdminNodeBundle\Form;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
 
 /**

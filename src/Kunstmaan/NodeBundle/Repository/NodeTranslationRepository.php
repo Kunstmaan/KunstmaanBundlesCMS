@@ -7,8 +7,8 @@ use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
-use Kunstmaan\AdminBundle\Modules\Slugifier;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\Slugifier;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -195,7 +195,7 @@ class NodeTranslationRepository extends EntityRepository
         $nodeTranslation->setNode($node);
         $nodeTranslation->setLang($lang);
         $nodeTranslation->setTitle($hasNode->__toString());
-        $nodeTranslation->setSlug(Slugifier::slugify($hasNode->__toString(), false));
+        $nodeTranslation->setSlug(Slugifier::slugify($hasNode->__toString(), ''));
         $nodeTranslation->setOnline($hasNode->isOnline());
 
         $addcommand = new AddCommand($em, $owner);

@@ -1,17 +1,17 @@
 parameters:
 
 services:
-    nodetranslation.listener:
+    admin_node.nodetranslation.listener:
         class: Kunstmaan\AdminNodeBundle\Listener\NodeTranslationListener
         tags:
-            - { name: doctrine.event_listener, event: onFlush, method: onFlush }
-            - { name: doctrine.event_listener, event: postFlush, method: postFlush }
+            - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
+            - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
 
-    admin_menu.adaptor.pages:
+    admin_node.menu.adaptor.pages:
         class: Kunstmaan\AdminNodeBundle\Helper\Menu\PageMenuAdaptor
         arguments: ["@service_container"]
         tags:
-            -  { name: admin_menu.adaptor }
+            -  { name: 'admin.menu.adaptor' }
 
     admin_node.actions_menu_builder:
             class: Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder
@@ -24,7 +24,7 @@ services:
         arguments: ["@request"]
         scope: request # needed as we have the request as a dependency here
         tags:
-            - { name: knp_menu.menu, alias: sub_actions } # The alias is what is used to retrieve the menu
+            - { name: 'knp_menu.menu', alias: 'sub_actions' } # The alias is what is used to retrieve the menu
 
     admin_node.menu.actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
@@ -33,7 +33,7 @@ services:
         arguments: ["@request"]
         scope: request # needed as we have the request as a dependency here
         tags:
-            - { name: knp_menu.menu, alias: actions } # The alias is what is used to retrieve the menu
+            - { name: 'knp_menu.menu', alias: 'actions' } # The alias is what is used to retrieve the menu
 
     admin_node.menu.top_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
