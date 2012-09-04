@@ -158,7 +158,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Set created
      *
-     * @param datetime $created
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {
@@ -168,7 +168,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get created
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -178,7 +178,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Set updated
      *
-     * @param datetime $updated
+     * @param \DateTime $updated
      */
     public function setUpdated($updated)
     {
@@ -188,7 +188,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get updated
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdated()
     {

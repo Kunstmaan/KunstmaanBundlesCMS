@@ -9,7 +9,7 @@ services:
 
     admin_node.menu.adaptor.pages:
         class: Kunstmaan\AdminNodeBundle\Helper\Menu\PageMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan.acl.helper"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@admin.acl.helper"]
         tags:
             -  { name: 'admin.menu.adaptor' }
 

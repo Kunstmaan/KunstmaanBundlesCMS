@@ -1,18 +1,19 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
-use Kunstmaan\SearchBundle\Entity\IndexableInterface;
-
+use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
+use Kunstmaan\SearchBundle\Entity\IndexableInterface;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * NodeTranslation
@@ -77,17 +78,17 @@ class NodeTranslation extends AbstractEntity
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $weight;
-    
+
     public function __construct()
     {
-        $this->nodeVersions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->seo = new SEO();
+        $this->nodeVersions = new ArrayCollection();
+        $this->seo          = new SEO();
     }
 
     /**
      * Set node
      *
-     * @param integer $node
+     * @param Node $node
      */
     public function setNode($node)
     {
@@ -97,7 +98,7 @@ class NodeTranslation extends AbstractEntity
     /**
      * Get Node
      *
-     * @return integer
+     * @return Node
      */
     public function getNode()
     {
@@ -190,20 +191,22 @@ class NodeTranslation extends AbstractEntity
         return $slug;
     }
 
+    /**
+     * @return string
+     */
     public function getSlugPart()
     {
-        $slug = "";
+        $slug       = "";
         $parentNode = $this->getNode()->getParent();
         if ($parentNode != null) {
             $nodeTranslation = $parentNode->getNodeTranslation($this->lang);
             if ($nodeTranslation != null) {
-                $parentslug = $nodeTranslation->getSlugPart();
-                if (!empty($parentslug)) {
-                    $slug = rtrim($parentslug, "/") . "/";
+                $parentSlug = $nodeTranslation->getSlugPart();
+                if (!empty($parentSlug)) {
+                    $slug = rtrim($parentSlug, "/") . "/";
                 }
             }
         }
-
         $slug = $slug . $this->getSlug();
 
         return $slug;
@@ -219,12 +222,18 @@ class NodeTranslation extends AbstractEntity
         return $this->slug;
     }
 
-    public function getParentSlug($node)
+    /**
+     * @param Node $node
+     *
+     * @return string
+     */
+    public function getParentSlug(Node $node)
     {
-        $parentslug = $node->getParent()->getNodeTranslation($this->lang)->getSlug();
-        if (!empty($parentslug)) {
-            return $parentslug . "/";
+        $parentSlug = $node->getParent()->getNodeTranslation($this->lang)->getSlug();
+        if (!empty($parentSlug)) {
+            return $parentSlug . "/";
         }
+
         return "";
     }
 
@@ -260,6 +269,11 @@ class NodeTranslation extends AbstractEntity
         $this->nodeVersions = $nodeVersions;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return NodeVersion|null
+     */
     public function getNodeVersion($type)
     {
         $nodeVersions = $this->getNodeVersions();
@@ -290,20 +304,39 @@ class NodeTranslation extends AbstractEntity
         }
     }
 
-    public function getDefaultAdminType($container)
+    /**
+     * @return NodeTranslationAdminType
+     */
+    public function getDefaultAdminType()
     {
-        return new NodeTranslationAdminType($container);
+        return new NodeTranslationAdminType();
     }
 
-    public function getRef($em, $type = "public")
+    /**
+     * @param EntityManager $em
+     * @param string        $type
+     *
+     * @return object|null
+     */
+    public function getRef(EntityManager $em, $type = "public")
     {
         $nodeVersion = $this->getNodeVersion($type);
         if ($nodeVersion) {
             return $em->getRepository($nodeVersion->getRefEntityname())->find($nodeVersion->getRefId());
         }
+
         return null;
     }
 
+    /**
+     * @param $container
+     * @param $entity
+     * @param $field
+     *
+     * @return IndexableInterface|null
+     *
+     * @todo Refactor this without injecting the container
+     */
     public function getSearchContentForNode($container, $entity, $field)
     {
         $page = $entity->getRef($container->get('doctrine')->getEntityManager());
@@ -316,7 +349,7 @@ class NodeTranslation extends AbstractEntity
 
     public function getParentsAndSelfForNode($container, $entity, $field)
     {
-        $node = $entity->getNode();
+        $node    = $entity->getNode();
         $results = array();
         if ($node->getParent() == null) {
             $parents[] = $node->getId();
@@ -327,7 +360,13 @@ class NodeTranslation extends AbstractEntity
         return 'start ' . implode(' ', $parents) . ' stop';
     }
 
-    public function getAllParentsForNode($node, $results)
+    /**
+     * @param Node  $node
+     * @param array $results
+     *
+     * @return array
+     */
+    public function getAllParentsForNode(Node $node, $results)
     {
         $parentNode = $node->getParent();
         if (is_object($parentNode)) {
@@ -342,11 +381,11 @@ class NodeTranslation extends AbstractEntity
     /**
      * Returns the date the first nodeversion was created
      *
-     * @return mixed
+     * @return \DateTime
      */
     public function getCreated()
     {
-        $versions = $this->getNodeVersions();
+        $versions     = $this->getNodeVersions();
         $firstVersion = $versions->first();
 
         return $firstVersion->getCreated();
@@ -359,7 +398,7 @@ class NodeTranslation extends AbstractEntity
      */
     public function getUpdated()
     {
-        $versions = $this->getNodeVersions();
+        $versions    = $this->getNodeVersions();
         $lastVersion = $versions->last();
 
         return $lastVersion->getUpdated();
@@ -384,12 +423,12 @@ class NodeTranslation extends AbstractEntity
     {
         return $this->url;
     }
-    
+
     public function setWeight($weight)
     {
         $this->weight = $weight;
     }
-    
+
     public function getWeight()
     {
         return $this->weight;
