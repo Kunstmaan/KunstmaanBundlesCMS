@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Helper\Acl;
+namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -58,7 +58,7 @@ class AclHelper
         }
         $query->setHint('acl.mask', $builder->get());
 
-        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Kunstmaan\AdminBundle\Helper\Acl\AclWalker');
+        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclWalker');
         $entities = $queryBuilder->getRootEntities();
         $query->setHint('acl.root.entities', $entities);
 

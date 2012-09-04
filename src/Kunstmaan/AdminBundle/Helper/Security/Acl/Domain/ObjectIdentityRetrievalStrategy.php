@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\AdminBundle\Component\Security\Acl\Domain;
+namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Domain;
 
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Exception\InvalidDomainObjectException;
@@ -20,7 +20,7 @@ use Doctrine\ORM\EntityManager;
 class ObjectIdentityRetrievalStrategy implements ObjectIdentityRetrievalStrategyInterface
 {
     /**
-     * @var \Doctrine\ORM\EntityManager $em
+     * @var EntityManager $em
      */
     private $em;
 

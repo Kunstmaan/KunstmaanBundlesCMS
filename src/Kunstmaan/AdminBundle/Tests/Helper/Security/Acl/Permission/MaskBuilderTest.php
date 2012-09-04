@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Tests\Component\Security\Acl\Permission;
+namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 
 class MaskBuilderTest extends \PHPUnit_Framework_TestCase
 {

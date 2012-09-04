@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Kunstmaan\AdminBundle\Component\Security\Acl\Permission;
+namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
 /**
  * This class allows you to build cumulative permissions easily, or convert

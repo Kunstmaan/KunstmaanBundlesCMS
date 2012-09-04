@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Component\Security\Http\Firewall;
+namespace Kunstmaan\AdminBundle\Helper\Security\Http\Firewall;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;

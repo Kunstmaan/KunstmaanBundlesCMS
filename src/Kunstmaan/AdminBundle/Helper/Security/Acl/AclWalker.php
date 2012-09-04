@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Helper\Acl;
+namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\SqlWalker;

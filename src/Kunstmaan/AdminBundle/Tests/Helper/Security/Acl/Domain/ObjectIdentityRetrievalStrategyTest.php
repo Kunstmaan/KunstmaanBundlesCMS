@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Tests\Component\Security\Acl\Domain;
+namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Domain;
 
-use Kunstmaan\AdminBundle\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Domain\ObjectIdentityRetrievalStrategy;
 
 class ObjectIdentityRetrievalStrategyTest extends \PHPUnit_Framework_TestCase
 {

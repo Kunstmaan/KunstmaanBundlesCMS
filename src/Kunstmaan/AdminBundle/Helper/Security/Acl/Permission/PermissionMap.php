@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Component\Security\Acl\Permission;
+namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
 use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 

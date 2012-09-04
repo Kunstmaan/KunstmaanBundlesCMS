@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Tests\Component\Security\Http\Firewall;
+namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Http\Firewall;
 
-use Kunstmaan\AdminBundle\Component\Security\Http\Firewall\GuestUserListener;
+use Kunstmaan\AdminBundle\Helper\Security\Http\Firewall\GuestUserListener;
 
 class GuestUserListenerTest extends \PHPUnit_Framework_TestCase
 {

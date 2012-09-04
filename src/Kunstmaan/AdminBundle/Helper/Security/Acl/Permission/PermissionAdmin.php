@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Permission;
+namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
 
 use Doctrine\ORM\EntityManager;

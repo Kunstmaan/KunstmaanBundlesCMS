@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Helper\Acl;
+namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 

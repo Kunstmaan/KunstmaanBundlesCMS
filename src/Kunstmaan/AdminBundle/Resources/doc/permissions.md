@@ -16,8 +16,8 @@ Without this you will not be able to use ACL permission support.
 
 
 ## MaskBuilder
-Since we use a specific set of permissions, we created a custom MaskBuilder (Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder) and
-PermissionMap (Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap) that support these permissions.
+Since we use a specific set of permissions, we created a custom MaskBuilder (Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder) and
+PermissionMap (Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap) that support these permissions.
 
 _Note:_ The CREATE permission has been commented out since we don't use this just yet, but might do so in the near future.
 
