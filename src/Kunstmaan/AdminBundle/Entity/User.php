@@ -32,7 +32,6 @@ class User extends BaseUser
      */
     protected $groups;
 
-
     public function __construct()
     {
         parent::__construct();
@@ -98,7 +97,7 @@ class User extends BaseUser
      *
      * @param string $role
      *
-     * @return Boolean
+     * @return boolean
      */
     public function hasRole($role)
     {

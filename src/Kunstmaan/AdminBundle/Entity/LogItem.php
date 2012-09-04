@@ -43,17 +43,11 @@ class LogItem
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $createdat;
-
-    /**
-     * @todo Why the //?
-     * //@ORM\ManyToOne(targetEntity="Command")
-     */
-    //protected $command;
+    protected $createdAt;
 
     public function __construct()
     {
-        $this->createdat = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -76,43 +70,67 @@ class LogItem
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
     public function getStatus()
     {
         return $this->status;
     }
 
-    public function setStatus($channel)
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
     {
-        $this->status = $channel;
+        $this->status = $status;
     }
 
+    /**
+     * @return User
+     */
     public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser($channel)
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user)
     {
-        $this->user = $channel;
+        $this->user = $user;
     }
 
+    /**
+     * @return string
+     */
     public function getMessage()
     {
         return $this->message;
     }
 
+    /**
+     * @param string $message
+     */
     public function setMessage($message)
     {
         $this->message = $message;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
-        return $this->createdat;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt($createdat)
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt)
     {
-        $this->createdat = $createdat;
+        $this->createdAt = $createdAt;
     }
 }
