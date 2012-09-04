@@ -87,30 +87,4 @@ class User extends BaseUser
         return $this->groups;
     }
 
-    /**
-     * Never use this to check if this user has access to anything!
-     *
-     * Use the SecurityContext, or an implementation of AccessDecisionManager
-     * instead, e.g.
-     *
-     *         $securityContext->isGranted('ROLE_USER');
-     *
-     * @param string $role
-     *
-     * @return boolean
-     */
-    public function hasRole($role)
-    {
-        if (isset($role)) {
-            foreach ($this->getRoles() as $r) {
-                if (is_string($r) && $r === $role) {
-                    return true;
-                } else if (is_object($r) && $r instanceof Role && $r->getRole() === $role) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 }
