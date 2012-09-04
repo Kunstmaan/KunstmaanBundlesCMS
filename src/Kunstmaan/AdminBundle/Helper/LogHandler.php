@@ -16,6 +16,9 @@ use Symfony\Bridge\Monolog\Logger as MonologLogger;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+/**
+ * @todo Is this still in use?
+ */
 class LogHandler extends AbstractProcessingHandler
 {
     private $initialized = false;
@@ -23,6 +26,13 @@ class LogHandler extends AbstractProcessingHandler
     private $securityContext;
     private $em;
 
+    /**
+     * @param MonologLogger            $logger
+     * @param SecurityContextInterface $context
+     * @param EntityManager            $em
+     * @param integer                  $level
+     * @param boolean                  $bubble
+     */
     public function __construct(
         MonologLogger $logger,
         SecurityContextInterface $context,
@@ -36,6 +46,9 @@ class LogHandler extends AbstractProcessingHandler
         $this->em              = $em;
     }
 
+    /**
+     * @param array $record
+     */
     protected function write(array $record)
     {
         if (!$this->initialized) {
@@ -71,6 +84,9 @@ class LogHandler extends AbstractProcessingHandler
         $this->logger->popHandler();
     }
 
+    /**
+     *
+     */
     private function initialize()
     {
         $this->initialized = true;

@@ -127,6 +127,24 @@ class PermissionAdmin
         $this->request = $request;
 
         $postPermissions = $request->request->get('permissions');
+        $acl = $this->processAclChanges($postPermissions);
+        $this->aclProvider->updateAcl($acl);
+
+        // Apply recursively (on request)
+        $applyRecursive = $request->request->get('applyRecursive');
+        if ($applyRecursive) {
+            // Serialize changes & store them in DB
+            $changes = $request->request->get('permissionChanges');
+            $user = $this->securityContext->getToken()->getUser();
+            $this->createAclChangeSet($this->resource, $changes, $user);
+            $this->launchAclChangeSet();
+        }
+
+        return true;
+    }
+
+    public function processAclChanges($postPermissions)
+    {
         $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
         try {
             $acl = $this->aclProvider->findAcl($objectIdentity);
@@ -159,30 +177,27 @@ class PermissionAdmin
             }
         }
 
-        $this->aclProvider->updateAcl($acl);
+        return $acl;
+    }
 
-        // Apply recursively (on request)
-        $applyRecursive = $request->request->get('applyRecursive');
-        if ($applyRecursive) {
-            // Serialize changes & store them in DB
-            $changes = $request->request->get('permissionChanges');
-            $user = $this->securityContext->getToken()->getUser();
-            $aclChangeset = new AclChangeset();
-            $aclChangeset->setNode($this->resource);
-            $aclChangeset->setChangeset($changes);
-            $aclChangeset->setUser($user);
-            $this->em->persist($aclChangeset);
-            $this->em->flush();
+    public function createAclChangeSet($node, $changes, $user)
+    {
+        $aclChangeset = new AclChangeset();
+        $aclChangeset->setNode($node);
+        $aclChangeset->setChangeset($changes);
+        $aclChangeset->setUser($user);
+        $this->em->persist($aclChangeset);
+        $this->em->flush();
+    }
 
-            // Launch acl command
-            $cmd = '/home/projects/clubbrugge/data/current/app/console kuma:acl:apply';
-            if (!empty($this->currentEnv)) {
-                $cmd .= ' --env=' . $this->currentEnv;
-            }
-            $this->shellHelper->runInBackground($cmd);
+    public function launchAclChangeSet()
+    {
+        // Launch acl command
+        $cmd = '/home/projects/clubbrugge/data/current/app/console kuma:acl:apply';
+        if (!empty($this->currentEnv)) {
+            $cmd .= ' --env=' . $this->currentEnv;
         }
-
-        return true;
+        $this->shellHelper->runInBackground($cmd);
     }
 
     public function applyAclChangeset($node, $changeset)
