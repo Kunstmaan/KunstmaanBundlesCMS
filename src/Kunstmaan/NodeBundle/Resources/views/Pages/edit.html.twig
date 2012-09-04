@@ -17,6 +17,11 @@
 {% endblock %}
 
 {% block messages %}
+        {% if not draft and nodeTranslation.isOnline %}
+	<div class="alert alert-block">
+            <strong>{{ "Warning" | trans }}: </strong>{{ "Changes you save will be performed on the live page" | trans }}
+        </div>
+	{% endif %}       
 	{% if form_has_errors_recursive(form) %}
 	<div class="alert alert-error">
 		<strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}

@@ -256,7 +256,7 @@ class NodeVersion extends AbstractEntity
     /**
      * @param EntityManager $em
      *
-     * @return Entity
+     * @return object
      */
     public function getRef(EntityManager $em)
     {

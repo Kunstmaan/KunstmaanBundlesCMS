@@ -8,13 +8,6 @@ use Symfony\Component\Form\AbstractType;
 
 class NodeAdminType extends AbstractType
 {
-    protected $container;
-
-    public function __construct($container)
-    {
-        $this->container = $container;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden');
