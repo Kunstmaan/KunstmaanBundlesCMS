@@ -14,7 +14,6 @@ class URLChooserType extends AbstractType {
 
 	public function __construct($objectManager) {
 		$this->objectManager = $objectManager;
-		error_log(get_class($this->objectManager));
 	}
 
 	public function getDefaultOptions(array $options) {
