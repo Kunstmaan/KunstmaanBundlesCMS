@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
+use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
+
 abstract class AbstractAdminListConfigurator
 {
 
@@ -96,7 +99,7 @@ abstract class AbstractAdminListConfigurator
         }
     }
 
-    function adaptQueryBuilder($querybuilder, $params = array())
+    function adaptQueryBuilder(ORMQueryBuilder $querybuilder, $params = array())
     {
         $querybuilder->where('1=1');
     }
@@ -193,13 +196,19 @@ abstract class AbstractAdminListConfigurator
     {
         return false;
     }
-    
-    function adaptNativeCountQueryBuilder($querybuilder, $params = array())
+
+    /**
+     * @param \Doctrine\DBAL\Query\QueryBuilder $querybuilder
+     * @param array                             $params
+     *
+     * @throws \Exception
+     */
+    function adaptNativeCountQueryBuilder(DBALQueryBuilder $querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native count query builder!');
     }
     
-    function adaptNativeItemsQueryBuilder($querybuilder, $params = array())
+    function adaptNativeItemsQueryBuilder(DBALQueryBuilder $querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native items query builder!');
     }
