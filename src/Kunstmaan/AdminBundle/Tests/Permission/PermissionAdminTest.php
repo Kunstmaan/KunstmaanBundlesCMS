@@ -13,6 +13,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     protected $mockSecurityContext;
     protected $mockAclProvider;
     protected $mockOidRetrievalStrategy;
+    protected $mockKernel;
 
     /**
      * @var PermissionAdmin $object
@@ -30,9 +31,10 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $this->mockSecurityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $this->mockAclProvider = $this->getMock('Symfony\Component\Security\Acl\Model\AclProviderInterface');
-        $this->mockOidRetrievalStrategy= $this->getMock('Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface');
+        $this->mockOidRetrievalStrategy = $this->getMock('Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface');
+        $this->mockKernel = $this->getMock('Symfony\Component\HttpKernel\KernelInterface');
 
-        $this->object = new PermissionAdmin($this->mockEntityManager, $this->mockSecurityContext, $this->mockAclProvider, $this->mockOidRetrievalStrategy, 'test');
+        $this->object = new PermissionAdmin($this->mockEntityManager, $this->mockSecurityContext, $this->mockAclProvider, $this->mockOidRetrievalStrategy, $this->mockKernel);
     }
 
     /**
@@ -105,7 +107,9 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAllRoles()
     {
-        $roleRepo = $this->getMock('Doctrine\ORM\EntityRepository');
+        $roleRepo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
         $roleRepo->expects($this->once())
             ->method('findAll')
             ->will($this->returnValue(null));
