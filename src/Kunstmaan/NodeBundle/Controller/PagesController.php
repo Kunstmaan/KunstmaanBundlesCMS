@@ -219,13 +219,7 @@ class PagesController extends Controller
             throw new AccessDeniedException();
         }
 
-        // Force draft subaction when user has no publish rights
-        if (false === $securityContext->isGranted('PUBLISH', $node)) {
-            $subaction = 'draft';
-        }
-
         $draft = ($subaction == 'draft');
-
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if (!$nodeTranslation) {
             $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'EDIT', true, true);
