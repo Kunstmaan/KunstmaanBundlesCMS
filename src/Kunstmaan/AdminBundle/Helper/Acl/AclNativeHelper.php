@@ -5,22 +5,37 @@ namespace Kunstmaan\AdminBundle\Helper\Acl;
 use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
 
 use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\EntityManager;
+
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * AclHelper
+ * AclNativeHelper
  *
  * Based on https://gist.github.com/1363377
  */
 class AclNativeHelper
 {
+    private $em              = null;
+    private $securityContext = null;
+    private $aclConnection   = null;
 
-    public function __construct($em, $securityContext)
+    /**
+     * @param EntityManager            $em
+     * @param SecurityContextInterface $securityContext
+     */
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
         $this->aclConnection = $em->getConnection();
     }
 
+    /**
+     * @param QueryBuilder $query
+     *
+     * @return QueryBuilder
+     */
     protected function cloneQuery(QueryBuilder $query)
     {
         $aclAppliedQuery = clone $query;
@@ -36,11 +51,14 @@ class AclNativeHelper
      * This will clone the original query and apply the ACL constraints
      *
      * @param QueryBuilder $queryBuilder
-     * @param array        $permissions
+     * @param string       $linkAlias       Alias of the root entity table
+     * @param string       $linkField       Unique id field name of the root entity table
+     * @param array        $permissions     Array of permissions to check for (will be combined in a mask)
+     * @param string       $rootEntity      Class name of root entity (defaults to Node)
      *
      * @return type
      */
-    public function apply(QueryBuilder $queryBuilder, $linkTable, $linkField, array $permissions = array("VIEW"), $rootEntity = 'Kunstmaan\AdminNodeBundle\Entity\Node')
+    public function apply(QueryBuilder $queryBuilder, $linkAlias, $linkField, array $permissions = array("VIEW"), $rootEntity = 'Kunstmaan\AdminNodeBundle\Entity\Node')
     {
         $database = $this->aclConnection->getDatabase();
         $rootEntity = '"' . str_replace('\\', '\\\\', $rootEntity) . '"';
@@ -92,7 +110,7 @@ AND (s.identifier = {$INString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
 
-        $query->join($linkTable, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkTable . '.' . $linkField);
+        $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
 
         return $query;
     }

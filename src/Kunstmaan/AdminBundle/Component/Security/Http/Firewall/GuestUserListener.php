@@ -16,14 +16,12 @@ class GuestUserListener implements ListenerInterface
     private $context;
     private $provider;
     private $providerKey;
-    private $logger;
 
-    public function __construct(SecurityContextInterface $context, UserProviderInterface $provider, $providerKey, $logger = null)
+    public function __construct(SecurityContextInterface $context, UserProviderInterface $provider, $providerKey)
     {
         $this->context = $context;
         $this->provider = $provider;
         $this->providerKey = $providerKey;
-        $this->logger = $logger;
     }
 
     public function handle(GetResponseEvent $event)

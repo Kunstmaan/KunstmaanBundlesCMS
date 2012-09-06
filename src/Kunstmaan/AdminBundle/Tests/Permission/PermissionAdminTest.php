@@ -105,10 +105,18 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAllRoles()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $roleRepo = $this->getMock('Doctrine\ORM\EntityRepository');
+        $roleRepo->expects($this->once())
+            ->method('findAll')
+            ->will($this->returnValue(null));
+
+        $this->mockEntityManager
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with('KunstmaanAdminBundle:Role')
+            ->will($this->returnValue($roleRepo));
+
+        $this->assertNull($this->object->getAllRoles());
     }
 
     /**
