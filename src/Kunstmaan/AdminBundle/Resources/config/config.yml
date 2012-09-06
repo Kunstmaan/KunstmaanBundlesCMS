@@ -32,4 +32,8 @@ monolog:
             type: service
             id: kunstmaan_admin.handler.log
             
-            
+security:
+    acl:
+        permission:
+            map:
+                class: Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap
