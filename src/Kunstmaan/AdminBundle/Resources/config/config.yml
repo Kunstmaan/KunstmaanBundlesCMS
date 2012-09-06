@@ -31,9 +31,6 @@ monolog:
         doctrine:
             type: service
             id: kunstmaan_admin.handler.log
-            
-security:
-    acl:
-        permission:
-            map:
-                class: Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap
+
+parameters:
+    security.acl.permission.map.class: Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap
