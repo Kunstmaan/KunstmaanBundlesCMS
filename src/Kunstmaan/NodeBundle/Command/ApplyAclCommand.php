@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
+use Kunstmaan\AdminBundle\Permission\PermissionAdmin;
 
 /**
  */
@@ -42,13 +43,12 @@ class ApplyAclCommand extends ContainerAwareCommand
     {
         $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $this->shellHelper = $this->getContainer()->get('kunstmaan.shell_helper');
-        $this->permissionAdmin = $this->getContainer()->get('kunstmaan_admin.permissionadmin');
+        /* @var PermissionAdmin $permissionAdmin */
+        $permissionAdmin = $this->getContainer()->get('kunstmaan_admin.permissionadmin');
 
         // Check if another ACL apply process is currently running & do nothing if it is
         if ($this->isRunning()) return;
-
         $aclRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:AclChangeset');
-        $hasPending = true;
         do {
             /**
              * @var AclChangeset $changeset
@@ -62,7 +62,7 @@ class ApplyAclCommand extends ContainerAwareCommand
             $this->em->persist($changeset);
             $this->em->flush();
 
-            $this->permissionAdmin->applyAclChangeset($changeset->getNode(), $changeset->getChangeset());
+            $permissionAdmin->applyAclChangeset($changeset->getNode(), $changeset->getChangeset());
 
             $changeset->setStatus(AclChangeset::STATUS_FINISHED);
             $this->em->persist($changeset);
