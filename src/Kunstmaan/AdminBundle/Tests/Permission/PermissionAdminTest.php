@@ -103,7 +103,6 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\AdminBundle\Permission\PermissionAdmin::getAllRoles
-     * @covers Kunstmaan\AdminBundle\Permission\PermissionAdmin::initialize
      */
     public function testGetAllRoles()
     {
@@ -125,6 +124,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\AdminBundle\Permission\PermissionAdmin::getPossiblePermissions
+     * @covers Kunstmaan\AdminBundle\Permission\PermissionAdmin::initialize
      */
     public function testGetPossiblePermissions()
     {
