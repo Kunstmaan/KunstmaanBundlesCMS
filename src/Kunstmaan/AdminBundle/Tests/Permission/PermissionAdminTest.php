@@ -103,7 +103,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\AdminBundle\Permission\PermissionAdmin::getAllRoles
-     * @todo   Implement testGetAllRoles().
+     * @covers Kunstmaan\AdminBundle\Permission\PermissionAdmin::initialize
      */
     public function testGetAllRoles()
     {
@@ -125,14 +125,24 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\AdminBundle\Permission\PermissionAdmin::getPossiblePermissions
-     * @todo   Implement testGetPossiblePermissions().
      */
     public function testGetPossiblePermissions()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->mockOidRetrievalStrategy
+            ->expects($this->once())
+            ->method('getObjectIdentity')
+            ->will($this->throwException(new \Symfony\Component\Security\Acl\Exception\AclNotFoundException()));
+        $permissions = array('PERMISSION1', 'PERMISSION2');
+        $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMapInterface');
+        $permissionMap
+            ->expects($this->any())
+            ->method('getPossiblePermissions')
+            ->will($this->returnValue($permissions));
+        $shellHelper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->object->initialize(null, $permissionMap, $shellHelper);
+        $this->assertEquals($permissions, $this->object->getPossiblePermissions());
     }
 
     /**

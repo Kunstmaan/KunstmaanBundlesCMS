@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Permission;
 use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
 use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMapInterface;
 
 use Doctrine\ORM\EntityManager;
 
@@ -13,7 +14,6 @@ use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
-use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
