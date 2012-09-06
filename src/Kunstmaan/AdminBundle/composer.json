@@ -16,6 +16,7 @@
         "php": ">=5.3.3",
         "doctrine/orm": "2.1.*",
         "doctrine/doctrine-fixtures-bundle": "2.0.*",
+        "doctrine/data-fixtures": "dev-master",
         "symfony/symfony": "2.0.*",
         "friendsofsymfony/user-bundle": "1.2.*",
         "kunstmaan/adminlist-bundle": "1.3.*",
