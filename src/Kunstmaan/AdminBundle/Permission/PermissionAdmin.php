@@ -130,6 +130,10 @@ class PermissionAdmin
     {
         $changes = $request->request->get('permissionChanges');
 
+        if (empty($changes)) {
+            return true;
+        }
+
         // Just apply the changes to the current node (non recursively)
         $this->applyAclChangeset($this->resource, $changes, false);
 
