@@ -9,6 +9,7 @@ use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMapInterfa
 
 use Doctrine\ORM\EntityManager;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
@@ -25,7 +26,6 @@ class PermissionAdmin
     const ADD       = 'ADD';
     const DELETE    = 'DEL';
 
-    protected $request              = null;
     protected $resource             = null;
     protected $em                   = null;
     protected $securityContext      = null;
@@ -126,50 +126,17 @@ class PermissionAdmin
      *
      * @return boolean
      */
-    public function bindRequest($request)
+    public function bindRequest(Request $request)
     {
-        $this->request = $request;
+        $changes = $request->request->get('permissionChanges');
 
-        $postPermissions = $request->request->get('permissions');
-        $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
-        try {
-            $acl = $this->aclProvider->findAcl($objectIdentity);
-        } catch (AclNotFoundException $e) {
-            $acl = $this->aclProvider->createAcl($objectIdentity);
-        }
-
-        foreach ($postPermissions as $role => $permissions) {
-            $mask = new MaskBuilder();
-            foreach ($permissions as $permission => $value) {
-                $mask->add($permission);
-            }
-
-            $index = $this->getObjectAceIndex($acl, $role);
-            if (false !== $index) {
-                $acl->updateObjectAce($index, $mask->get());
-            } else {
-                $securityIdentity = new RoleSecurityIdentity($role);
-                $acl->insertObjectAce($securityIdentity, $mask->get());
-            }
-        }
-
-        // Process removed Aces
-        foreach ($this->permissions as $role => $permission) {
-            if (!isset($postPermissions[$role])) {
-                $index = $this->getObjectAceIndex($acl, $role);
-                if (false !== $index) {
-                    $acl->updateObjectAce($index, 0);
-                }
-            }
-        }
-
-        $this->aclProvider->updateAcl($acl);
+        // Just apply the changes to the current node (non recursively)
+        $this->applyAclChangeset($this->resource, $changes, false);
 
         // Apply recursively (on request)
         $applyRecursive = $request->request->get('applyRecursive');
         if ($applyRecursive) {
             // Serialize changes & store them in DB
-            $changes = $request->request->get('permissionChanges');
             $user = $this->securityContext->getToken()->getUser();
             $aclChangeset = new AclChangeset();
             $aclChangeset->setNode($this->resource);
@@ -188,11 +155,13 @@ class PermissionAdmin
         return true;
     }
 
-    public function applyAclChangeset($node, $changeset)
+    public function applyAclChangeset($node, $changeset, $recursive = true)
     {
-        // Iterate over children and apply recursively
-        foreach ($node->getChildren() as $child) {
-            $this->applyAclChangeset($child, $changeset);
+        if ($recursive) {
+            // Iterate over children and apply recursively
+            foreach ($node->getChildren() as $child) {
+                $this->applyAclChangeset($child, $changeset);
+            }
         }
 
         // Apply ACL modifications to node
