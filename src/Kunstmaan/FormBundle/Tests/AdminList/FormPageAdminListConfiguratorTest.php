@@ -11,9 +11,6 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
 {
     const PERMISSION_VIEW = 'view';
 
-    protected $securityContext;
-    protected $aclHelper;
-
     /**
      * @var FormPageAdminListConfigurator
      */
@@ -25,14 +22,7 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->securityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
-
-        $this->aclHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Acl\AclHelper')
-            ->setMethods(array('apply'))
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->object = new FormPageAdminListConfigurator($this->securityContext, self::PERMISSION_VIEW, $this->aclHelper);
+        $this->object = new FormPageAdminListConfigurator(self::PERMISSION_VIEW);
     }
 
     /**
@@ -61,11 +51,6 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnSelf());
 
         $params = array();
-
-        $this->aclHelper->expects($this->once())
-            ->method('apply')
-            ->with($queryBuilder, array(self::PERMISSION_VIEW))
-            ->will($this->returnValue($queryBuilder));
 
         $this->object->adaptQueryBuilder($queryBuilder, $params);
     }
