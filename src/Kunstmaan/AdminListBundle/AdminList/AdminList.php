@@ -124,7 +124,7 @@ class AdminList
             return $query->getResult();
         } else {
             $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
-            $queryBuilder = $this->configurator->adaptNativeItemsQueryBuilder($queryBuilder, $params);
+            $this->configurator->adaptNativeItemsQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
             if (!is_null($this->orderBy)) {
                 $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");

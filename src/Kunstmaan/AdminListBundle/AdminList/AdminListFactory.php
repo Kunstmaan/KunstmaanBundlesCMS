@@ -6,8 +6,8 @@ use Kunstmaan\AdminBundle\Helper\Acl\AclHelper;
 
 class AdminListFactory
 {
-    public function createList(AbstractAdminListConfigurator $configurator, $em, $queryparams = array(), $aclHelper = null)
+    public function createList(AbstractAdminListConfigurator $configurator, $em, $queryparams = array())
     {
-        return new AdminList($configurator, $em, $queryparams, $aclHelper);
+        return new AdminList($configurator, $em, $queryparams);
     }
 }
