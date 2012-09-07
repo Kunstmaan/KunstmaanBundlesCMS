@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminNodeBundle\Helper\Menu;
 
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent;
 use Kunstmaan\AdminNodeBundle\Helper\Event\Events;
 use Doctrine\ORM\EntityManager;
@@ -96,23 +97,23 @@ class ActionsMenuBuilder
             $node = $activeNodeTranslation->getNode();
 
             if ('draft' == $activeNodeVersion->getType()) {
-                if ($this->context->isGranted('EDIT', $node)) {
+                if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
                     $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn btn-primary', 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
                 }
-                if ($this->context->isGranted('PUBLISH', $node)) {
+                if ($this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
                     $menu->addChild('action.publish', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn', 'value' => 'saveandpublish', 'name' => 'saveandpublish'), 'extras' => array('renderType' => 'button')));
                 }
                 $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_draft', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
             } else {
-                if ($this->context->isGranted('EDIT', $node) && $this->context->isGranted('PUBLISH', $node)) {
+                if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
                     $menu->addChild('action.save', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn btn-primary', 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
                 }
-                if ($activeNodeTranslation->isOnline() &&  $this->context->isGranted('UNPUBLISH', $node)) {
+                if ($activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
                     $menu->addChild('action.unpublish', array('linkAttributes' => array('class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#unpub')));
-                } elseif (!$activeNodeTranslation->isOnline() &&  $this->context->isGranted('PUBLISH', $node)) {
+                } elseif (!$activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
                     $menu->addChild('action.publish', array('linkAttributes' => array('class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#pub')));
                 }
-                if ($this->context->isGranted('EDIT', $node)) {
+                if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
                     $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn', 'value' => 'saveasdraft', 'name' => 'saveasdraft'), 'extras' => array('renderType' => 'button')));
                 }
                 $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
@@ -124,7 +125,7 @@ class ActionsMenuBuilder
                     $menu->addChild('action.addsubpage', array('linkAttributes' => array('type' => 'button', 'class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#add-subpage-modal'), 'extras' => array('renderType' => 'button')));
                 }
             }
-            if ($this->context->isGranted('DELETE', $node)) {
+            if ($this->context->isGranted(PermissionMap::PERMISSION_DELETE, $node)) {
                 $menu->addChild('action.delete', array('linkAttributes' => array('type' => 'button', 'class' => 'btn', 'onClick' => 'oldEdited = isEdited; isEdited=false', 'data-toggle' => 'modal', 'data-target' => '#delete-page-modal'), 'extras' => array('renderType' => 'button')));
             }
         }

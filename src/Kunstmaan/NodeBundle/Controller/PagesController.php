@@ -2,16 +2,16 @@
 
 namespace Kunstmaan\AdminNodeBundle\Controller;
 
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\EditCommand;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
@@ -40,10 +40,10 @@ class PagesController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         $securityContext = $this->container->get('security.context');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'EDIT', $aclHelper, true);
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, 'EDIT', true, true);
+        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_EDIT, $aclHelper, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_EDIT, true, true);
         $request    = $this->getRequest();
-        $adminlist  = $this->get('adminlist.factory')->createList(new PageAdminListConfigurator($user, 'EDIT', $locale), $em);
+        $adminlist  = $this->get('adminlist.factory')->createList(new PageAdminListConfigurator($user, PermissionMap::PERMISSION_EDIT, $locale), $em);
         $adminlist->bindRequest($request);
 
         return array(
@@ -72,7 +72,7 @@ class PagesController extends Controller
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
 
         // Check with Acl
-        if (false === $securityContext->isGranted('EDIT', $node)) {
+        if (false === $securityContext->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
             throw new AccessDeniedException();
         }
 
@@ -102,7 +102,7 @@ class PagesController extends Controller
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
 
         // Check with Acl
-        if (false === $securityContext->isGranted('EDIT', $node)) {
+        if (false === $securityContext->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
             throw new AccessDeniedException();
         }
 
@@ -135,7 +135,7 @@ class PagesController extends Controller
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
 
         // Check with Acl
-        if (false === $securityContext->isGranted('PUBLISH', $node)) {
+        if (false === $securityContext->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
             throw new AccessDeniedException();
         }
 
@@ -166,7 +166,7 @@ class PagesController extends Controller
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
 
         // Check with Acl
-        if (false === $securityContext->isGranted('UNPUBLISH', $node)) {
+        if (false === $securityContext->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
             throw new AccessDeniedException();
         }
 
@@ -215,14 +215,14 @@ class PagesController extends Controller
         $node = $em->getRepository('KunstmaanAdminNodeBundle:Node')->find($id);
 
         // Check with Acl
-        if (false === $securityContext->isGranted('EDIT', $node)) {
+        if (false === $securityContext->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
             throw new AccessDeniedException();
         }
 
         $draft = ($subaction == 'draft');
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         if (!$nodeTranslation) {
-            $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'EDIT', true, true);
+            $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
 
             return $this->render('KunstmaanAdminNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
         }
@@ -260,7 +260,7 @@ class PagesController extends Controller
         $delete = $request->get('delete');
         if (is_string($delete) && $delete == 'true') {
             // Check with Acl
-            if (false === $securityContext->isGranted('DELETE', $node)) {
+            if (false === $securityContext->isGranted(PermissionMap::PERMISSION_DELETE, $node)) {
                 throw new AccessDeniedException();
             }
 
@@ -275,7 +275,7 @@ class PagesController extends Controller
             return $this->redirect($this->generateUrl('KunstmaanAdminNodeBundle_pages_edit', array('id'=>$nodeparent->getId(), 'currenttab' => $currenttab)));
         }
 
-        $topnodes    = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, 'EDIT', $aclHelper);
+        $topnodes    = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_EDIT, $aclHelper);
         $formfactory = $this->container->get('form.factory');
         $formbuilder = $this->createFormBuilder();
 
@@ -361,7 +361,7 @@ class PagesController extends Controller
             }
         }
 
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, 'EDIT', true, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
 
         $viewVariables = array(
             'topnodes'          => $topnodes,
