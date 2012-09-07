@@ -1,10 +1,13 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Repository;
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\AdminNodeBundle\Entity\Node;
+
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -154,7 +157,7 @@ class NodeRepository extends EntityRepository
         $qb->addOrderBy('t.weight', 'ASC')
                 ->addOrderBy('t.title', 'ASC');
         $qb->setParameter('lang', $lang);
-        $query = $aclHelper->apply($qb, array($permission));
+        $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
 
         return $query->getResult();
     }
