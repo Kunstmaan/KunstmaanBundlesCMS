@@ -4,6 +4,7 @@ namespace Kunstmaan\FormBundle\Controller;
 
 use Ddeboer\DataImportBundle\Writer\CsvWriter;
 
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 
@@ -31,9 +32,8 @@ class FormSubmissionsController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $securityContext = $this->container->get('security.context');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-        $formpagesadminlist = $this->get('adminlist.factory')->createList(new FormPageAdminListConfigurator($securityContext, 'VIEW'), $em);
+        $formpagesadminlist = $this->get('adminlist.factory')->createList(new FormPageAdminListConfigurator(PermissionMap::PERMISSION_VIEW), $em);
         $formpagesadminlist->setAclHelper($aclHelper);
         $formpagesadminlist->bindRequest($request);
 
