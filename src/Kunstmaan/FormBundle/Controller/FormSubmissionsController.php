@@ -33,7 +33,8 @@ class FormSubmissionsController extends Controller
         $request = $this->getRequest();
         $securityContext = $this->container->get('security.context');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-        $formpagesadminlist = $this->get('adminlist.factory')->createList(new FormPageAdminListConfigurator($securityContext, 'VIEW', $aclHelper), $em);
+        $formpagesadminlist = $this->get('adminlist.factory')->createList(new FormPageAdminListConfigurator($securityContext, 'VIEW'), $em);
+        $formpagesadminlist->setAclHelper($aclHelper);
         $formpagesadminlist->bindRequest($request);
 
         return array('adminlist' => $formpagesadminlist);
@@ -54,7 +55,9 @@ class FormSubmissionsController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
         $adminlist = $this->get("adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($nodeTranslation), $em);
+        $adminlist->setAclHelper($aclHelper);
         $adminlist->bindRequest($request);
 
         return array('nodetranslation' => $nodeTranslation, 'adminlist' => $adminlist);
@@ -91,7 +94,6 @@ class FormSubmissionsController extends Controller
     public function exportAction($nodetranslationid)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $request = $this->getRequest();
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
 
         $tmpFilename = tempnam('/tmp', 'cb_csv_');

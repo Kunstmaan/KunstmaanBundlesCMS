@@ -6,6 +6,7 @@ use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminBundle\Helper\Acl\AclHelper;
 
 /**
@@ -21,13 +22,12 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * @param SecurityContextInterface $securityContext The security context
      * @param string                   $permission      The permission
-     * @param AclHelper                $aclHelper       The ACL helper
      */
-    public function __construct($securityContext, $permission, $aclHelper)
+    public function __construct($securityContext, $permission)
     {
         $this->securityContext = $securityContext;
         $this->permission      = $permission;
-        $this->aclHelper       = $aclHelper;
+        $this->setPermissionDefinition(new PermissionDefinition(array($permission), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n'));
     }
 
     /**
@@ -107,10 +107,6 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
             ->andWhere('n.id IN (
                     SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)')
             ->addOrderBy('n.sequencenumber', 'DESC');
-
-        $result = $this->aclHelper->apply($querybuilder, array($this->permission));
-
-        return $result;
     }
 
     /**
