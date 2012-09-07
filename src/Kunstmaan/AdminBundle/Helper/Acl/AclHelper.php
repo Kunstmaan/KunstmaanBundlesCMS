@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\Acl;
 
 use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -17,9 +18,8 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class AclHelper
 {
-    private $em              = null;
+    private $em = null;
     private $securityContext = null;
-    private $aclConnection   = null;
 
     /**
      * @param EntityManager            $em
@@ -29,7 +29,6 @@ class AclHelper
     {
         $this->em              = $em;
         $this->securityContext = $securityContext;
-        $this->aclConnection   = $em->getConnection();
     }
 
     /**
@@ -51,15 +50,13 @@ class AclHelper
     /**
      * This will clone the original query and apply the ACL constraints
      *
-     * @param QueryBuilder $queryBuilder
-     * @param array        $permissions
-     * @param string       $rootEntity    Optional parameter used in cases where you want to specify the root entity
+     * @param QueryBuilder          $queryBuilder
+     * @param PermissionDefinition  $permissionDef
      *
      * @return Query
      */
-    public function apply(QueryBuilder $queryBuilder, array $permissions = array("VIEW"), $rootEntity = null)
+    public function apply(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
     {
-
         $whereQueryParts = $queryBuilder->getDQLPart('where');
         if (empty($whereQueryParts)) {
             $queryBuilder->where(
@@ -70,29 +67,21 @@ class AclHelper
         $query = $this->cloneQuery($queryBuilder->getQuery());
 
         $builder = new MaskBuilder();
-        foreach ($permissions as $permission) {
+        foreach ($permissionDef->getPermissions() as $permission) {
             $mask = constant(get_class($builder) . '::MASK_' . strtoupper($permission));
             $builder->add($mask);
         }
         $query->setHint('acl.mask', $builder->get());
         $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Kunstmaan\AdminBundle\Helper\Acl\AclWalker');
 
-        $rootEntities = $queryBuilder->getRootEntities();
-        $rootAliases  = $queryBuilder->getRootAliases();
-        if (is_null($rootEntity)) {
-            $rootEntity = $rootEntities[0];
-            $rootAlias = $rootAliases[0];
-        } else {
-            $rootAlias = null;
-            foreach($rootEntities as $index => $entity) {
-                if ($entity == $rootEntity) {
-                    $rootAlias = $rootAliases[$index];
-                    break;
-                }
-            }
-            if (is_null($rootAlias)) {
-                throw new \InvalidArgumentException("Invalid root entity specified!");
-            }
+        $rootEntity = $permissionDef->getEntity();
+        $rootAlias  = $permissionDef->getAlias();
+        // If either alias or entity was not specified - use default from QueryBuilder
+        if (empty($rootEntity) || empty($rootAlias)) {
+            $rootEntities = $queryBuilder->getRootEntities();
+            $rootAliases  = $queryBuilder->getRootAliases();
+            $rootEntity   = $rootEntities[0];
+            $rootAlias    = $rootAliases[0];
         }
 
         $query->setHint('acl.root.entity', $rootEntity);
@@ -119,16 +108,17 @@ class AclHelper
      */
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
-        $database     = $this->aclConnection->getDatabase();
-        $mask         = $query->getHint('acl.mask');
-        $rootEntity   = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
+        $aclConnection = $this->em->getConnection();
+        $database      = $aclConnection->getDatabase();
+        $mask          = $query->getHint('acl.mask');
+        $rootEntity    = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
         $token = $this->securityContext->getToken(); // for now lets imagine we will have token i.e user is logged in
-        $user = $token->getUser();
+        $user  = $token->getUser();
 
         if (is_object($user)) {
             $userRoles = $user->getRoles();
-            $uR = array();
+            $uR        = array();
             foreach ($userRoles as $role) {
                 // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
                 if ($role !== 'ROLE_USER') {
@@ -143,7 +133,7 @@ class AclHelper
             ) . '-' . $user->getUserName() . '"';
         } else {
             $userRoles = $token->getRoles();
-            $uR = array();
+            $uR        = array();
             foreach ($userRoles as $role) {
                 $role = $role->getRole();
                 if ($role !== 'ROLE_USER') {
@@ -157,8 +147,8 @@ class AclHelper
 SELECT DISTINCT o.object_identifier as id FROM {$database}.acl_object_identities as o
 INNER JOIN {$database}.acl_classes c ON c.id = o.class_id
 LEFT JOIN {$database}.acl_entries e ON (
-e.class_id = o.class_id AND (e.object_identity_id = o.id OR {$this->aclConnection->getDatabasePlatform(
-        )->getIsNullExpression('e.object_identity_id')})
+    e.class_id = o.class_id AND (e.object_identity_id = o.id
+    OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
 )
 LEFT JOIN {$database}.acl_security_identities s ON (
 s.id = e.security_identity_id
