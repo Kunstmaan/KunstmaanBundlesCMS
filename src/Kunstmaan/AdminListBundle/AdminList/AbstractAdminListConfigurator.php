@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
-use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
-
 abstract class AbstractAdminListConfigurator
 {
 
@@ -12,6 +9,7 @@ abstract class AbstractAdminListConfigurator
     private $exportFields = array();
     private $customActions = array();
     private $listActions = array();
+    private $permissionDefinition = null;
 
     abstract function buildFields();
     abstract function getEditUrlFor($item);
@@ -99,7 +97,7 @@ abstract class AbstractAdminListConfigurator
         }
     }
 
-    function adaptQueryBuilder(ORMQueryBuilder $querybuilder, $params = array())
+    function adaptQueryBuilder($querybuilder, $params = array())
     {
         $querybuilder->where('1=1');
     }
@@ -203,14 +201,24 @@ abstract class AbstractAdminListConfigurator
      *
      * @throws \Exception
      */
-    function adaptNativeCountQueryBuilder(DBALQueryBuilder $querybuilder, $params = array())
+    function adaptNativeCountQueryBuilder($querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native count query builder!');
     }
     
-    function adaptNativeItemsQueryBuilder(DBALQueryBuilder $querybuilder, $params = array())
+    function adaptNativeItemsQueryBuilder($querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native items query builder!');
     }
-    
+
+    public function setPermissionDefinition($permissionDefinition)
+    {
+        $this->permissionDefinition = $permissionDefinition;
+    }
+
+    public function getPermissionDefinition()
+    {
+        return $this->permissionDefinition;
+    }
+
 }

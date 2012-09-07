@@ -2,9 +2,12 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-class AdminListFactory {
+use Kunstmaan\AdminBundle\Helper\Acl\AclHelper;
 
-    public function createList(AbstractAdminListConfigurator $configurator, $em, $queryparams = array()){
-        return new AdminList($configurator, $em, $queryparams);
+class AdminListFactory
+{
+    public function createList(AbstractAdminListConfigurator $configurator, $em, $queryparams = array(), $aclHelper = null)
+    {
+        return new AdminList($configurator, $em, $queryparams, $aclHelper);
     }
 }

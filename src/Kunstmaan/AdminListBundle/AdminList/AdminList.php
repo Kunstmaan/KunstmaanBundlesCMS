@@ -23,6 +23,8 @@ class AdminList
 
     protected $queryparams = array();
 
+    protected $aclHelper = null;
+
     public function __construct(AbstractAdminListConfigurator $configurator, $em, $queryparams = array())
     {
         $this->configurator = $configurator;
@@ -72,18 +74,26 @@ class AdminList
 
     public function getCount($params = array())
     {
+        $permissionDef = $this->configurator->getPermissionDefinition();
         if (!$this->configurator->useNativeQuery()) {
             $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
             $queryBuilder = $queryBuilder->select("count(b.id)");
             $this->configurator->adaptQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
-            $query = $queryBuilder->getQuery();
+            if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
+                $query = $this->aclHelper->apply($queryBuilder, $permissionDef);
+            } else {
+                $query = $queryBuilder->getQuery();
+            }
 
             return $query->getSingleScalarResult();
         } else {
             $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
-            $queryBuilder =$this->configurator->adaptNativeCountQueryBuilder($queryBuilder, $params);
+            $this->configurator->adaptNativeCountQueryBuilder($queryBuilder, $params);
             $this->adminlistfilter->adaptQueryBuilder($queryBuilder);
+            if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
+                $queryBuilder = $this->aclHelper->apply($queryBuilder, $permissionDef);
+            }
             $stmt = $queryBuilder->execute();
 
             return $stmt->fetchColumn();
@@ -92,6 +102,7 @@ class AdminList
 
     public function getItems($params = array())
     {
+        $permissionDef = $this->configurator->getPermissionDefinition();
         if (!$this->configurator->useNativeQuery()) {
             $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
             $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
@@ -104,7 +115,11 @@ class AdminList
                 }
                 $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
             }
-            $query = $queryBuilder->getQuery();
+            if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
+                $query = $this->aclHelper->apply($queryBuilder, $permissionDef);
+            } else {
+                $query = $queryBuilder->getQuery();
+            }
 
             return $query->getResult();
         } else {
@@ -116,6 +131,9 @@ class AdminList
             }
             $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
             $queryBuilder->setMaxResults($this->configurator->getLimit());
+            if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
+                $queryBuilder = $this->aclHelper->apply($queryBuilder, $permissionDef);
+            }
             $stmt = $queryBuilder->execute();
 
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -206,4 +224,18 @@ class AdminList
     {
         return $this->configurator->getListActions();
     }
+
+    /**
+     * @param $aclHelper
+     */
+    public function setAclHelper($aclHelper)
+    {
+        $this->aclHelper = $aclHelper;
+    }
+
+    public function getAclHelper()
+    {
+        return $this->aclHelper;
+    }
+
 }
