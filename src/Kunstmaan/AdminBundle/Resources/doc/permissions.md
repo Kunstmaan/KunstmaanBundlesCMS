@@ -84,7 +84,7 @@ To check if the current user has access to a specific domain object, you use the
 
 $securityContext = $this->get('security.context');
 
-if (false === $securityContext->isGranted('VIEW', $entity))
+if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $entity))
 {
     throw new AccessDeniedException();
 }
@@ -111,18 +111,21 @@ If you want to perform queries for entities that have ACL attached to them (ie. 
 to those entities for which you have a specific permission) you can use the AclHelper. There is one important caveat
 though : the domain object used for the permission check should be the root entity of the QueryBuilder you provide.
 
+The basic configuration is set in a PermissionDefinition object. You should at least specify an array of permissions,
+and can optionally also specify the root entity class name and the querybuilder alias of the root entity table. If
+you don't specify the latter variables, the querybuilders' first root entity and alias will be used.
+
 To adapt a query in an EntityRepository method you could use:
 ```php
-public function findAllWithPermission(AclHelper $aclHelper, array $permissions)
+public function findAllWithPermission(AclHelper $aclHelper, PermissionDefinition $permissionDef)
 {
     $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->where('b.deleted = 0');
-    $query = $aclHelper->apply($qb, $permissions);
+    $query = $aclHelper->apply($qb, $permissionDef);
 
     return $query->getResult();
 }
-
 ```
 
 The AclHelper is provided as a service, so to call the above method to check the VIEW permission in a controller
