@@ -10,6 +10,7 @@ use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap;
 
 class SlugController extends Controller
 {
@@ -86,7 +87,7 @@ class SlugController extends Controller
         }
 
         $securityContext = $this->get('security.context');
-        if (false === $securityContext->isGranted('VIEW', $node)) {
+        if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
