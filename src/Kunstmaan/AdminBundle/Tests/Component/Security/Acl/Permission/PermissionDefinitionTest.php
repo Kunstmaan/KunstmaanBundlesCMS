@@ -45,9 +45,7 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(null, null, null),
-            array(array(), null, null),
-            array(array('EDIT'), 'test', null),
-            array(array('EDIT'), null, 'test'),
+            array(array(), null, null)
         );
     }
 

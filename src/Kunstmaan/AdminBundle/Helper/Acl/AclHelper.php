@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
@@ -159,6 +160,42 @@ AND e.mask & {$mask} > 0
 SELECTQUERY;
 
         return $selectQuery;
+    }
+
+    /**
+     * Returns valid IDs for a specific entity with ACL restrictions for current user applied
+     *
+     * @param PermissionDefinition $permissionDef
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getAllowedEntityIds(PermissionDefinition $permissionDef)
+    {
+        $rootEntity = $permissionDef->getEntity();
+        if (empty($rootEntity)) {
+            throw new \InvalidArgumentException("You have to provide an entity class name!");
+        }
+        $builder = new MaskBuilder();
+        foreach ($permissionDef->getPermissions() as $permission) {
+            $mask = constant(get_class($builder) . '::MASK_' . strtoupper($permission));
+            $builder->add($mask);
+        }
+
+        $query = new Query($this->em);
+        $query->setHint('acl.mask', $builder->get());
+        $query->setHint('acl.root.entity', $rootEntity);
+        $sql = $this->getPermittedAclIdsSQLForUser($query);
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id');
+        $nativeQuery = $this->em->createNativeQuery($sql, $rsm);
+
+        $transform = function($item) {
+            return $item['id'];
+        };
+        $result = array_map($transform, $nativeQuery->getScalarResult());
+
+        return $result;
     }
 
 }

@@ -17,12 +17,9 @@ class PermissionDefinition
      */
     public function __construct($permissions, $entity = null, $alias = null)
     {
-        if ((!empty($alias) && empty($entity)) || (empty($alias) && !empty($entity))) {
-            throw new \InvalidArgumentException("You have to either specify both entity and alias or none of them!");
-        }
         $this->setPermissions($permissions);
-        $this->entity      = $entity;
-        $this->alias       = $alias;
+        $this->entity = $entity;
+        $this->alias  = $alias;
     }
 
     /**
