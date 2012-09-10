@@ -133,8 +133,27 @@ you could use :
 ```php
 $aclHelper = $this->get('kunstmaan.acl.helper');
 $em = $this->getDoctrine()->getEntityManager();
-$items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, array('view'));
+$permissionDef = new PermissionDefinition(array('view'));
+$items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, $permissionDef);
 ```
+
+## PermissionDefinition
+The permission definition object allows you to define the settings to be used by the ACL helper. Per default
+the (ORM based) AclHelper will check the QueryBuilder passed to it to determine the first root entity and
+the corresponding alias. You can override this by providing *both* a root entity name and alias, ie. :
+
+```php
+$permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n');
+```
+
+In the previous example, you force the Node object to be used as ACL root entity and make sure the 'n' alias
+(that you defined in the QueryBuilder that you wish to modify) will be used to apply the ACL permissions.
+
+The native AclHelper (called AclNativeHelper) will *always* need a root entity and alias set, because the
+DBAL QueryBuilder doesn't know about your entities.
+
+One important thing to note is that ACL permissions currently can only be applied to entities with a single
+unique primary key (so in fact there's no support for composite keys).
 
 ## References
 
