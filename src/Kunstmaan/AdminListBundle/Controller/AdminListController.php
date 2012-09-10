@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminListBundle\Controller;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
 use Symfony\Component\HttpFoundation\Response;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

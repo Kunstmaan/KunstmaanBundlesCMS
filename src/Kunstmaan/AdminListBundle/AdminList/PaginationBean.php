@@ -5,6 +5,11 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 class PaginationBean {
 
     /**
+     * @var string
+     */
+    protected $currentUrl;
+
+    /**
      * @var int current displayed page
      */
     protected $currentPage;

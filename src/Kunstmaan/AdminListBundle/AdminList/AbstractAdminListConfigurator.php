@@ -1,10 +1,12 @@
 <?php
-
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 abstract class AbstractAdminListConfigurator
 {
 
+    /**
+     * @var Field[]
+     */
     private $fields = array();
     private $exportFields = array();
     private $customActions = array();
