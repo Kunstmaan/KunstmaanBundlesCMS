@@ -6,7 +6,7 @@ use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
+use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
 
 class PagePartAdminController extends Controller
 {
