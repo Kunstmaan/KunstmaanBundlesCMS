@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\EditCommand;
-use Kunstmaan\AdminBundle\Helper\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminNodeBundle\AdminList\PageAdminListConfigurator;
