@@ -5,77 +5,73 @@
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
 
 <div class="table_overflow_fix">
-	<table class="table table-striped table-bordered responsive">
-	    <thead>
-		    <tr>
-		        {% for column in adminlist.columns%}
-		            {% set columnName = column.fieldName%}
-		            {% set columnkey = column.fieldheader%}
-		            {% set orderDirection = "DESC" %}
-		            {% set extraHeaderClass = "" %}
-		            {% if ( columnName == adminlist.orderBy )%}
-		                {% if adminlist.orderDirection == "DESC" %}
-		                    {% set orderDirection = "ASC" %}
-		                    {% set extraHeaderClass = "headerSortDown" %}
-		                {% else %}
-		                    {% set extraHeaderClass = "headerSortUp" %}
-		                {% endif %}
-		            {% endif %}
-		            <th {% if adminlist.hasSort(columnName) %} class="header {{extraHeaderClass}}" onclick="window.location = '{{ path(basepath, extraparams|merge({ 'orderBy': columnName, "orderDirection": orderDirection }))}}'"{% endif %}>{{ columnkey | trans }}</th>
-		        {% endfor %}
-		        <th>{{ 'form.actions'|trans }}</th>
-		    </tr>
-	    </thead>
-	    <tbody>
-	    {% for item in adminlist.items(queryparams) %}
-	        <tr>
-	            {% for column in adminlist.columns%}
-	                {% set columnName = column.fieldName%}
-	                {% set template = column.template%}
-	                {% if template is not null %}
-	                    <td>{% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getValue(item, columnName)} %}</td>
-	                {% else %}
-	                    <td>{{adminlist.getStringValue(item, columnName)}}</td>
-	                {% endif %}
-	            {% endfor %}
-	            <td class="actions">
-	            	{% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
-	                {% if adminlist.canEdit(item) %}
-	                    <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><i class="icon-edit"></i>Edit</a>
-	                {% endif %}
-	                {% if adminlist.canDelete(item) %}
-	                    {% if adminlist.getDeleteUrlFor(item)["action"] is defined %}
-	                        {% render adminlist.getDeleteUrlFor(item)["action"] with adminlist.getDeleteUrlFor(item)["params"] %}
-	                    {% elseif adminlist.getDeleteUrlFor(item)["path"] is defined %}
-	                        <a href="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="danger"><i class="icon-remove-sign"></i>Delete</a>
-	                    {% endif %}
-	                {% endif %}
-	                {% if adminlist.hasCustomActions() %}
-	                    {% for customAction in adminlist.getCustomActions() %}
-	                        {% if customAction.template is not null %}
-	                            {% include customAction.template with {'row': item, 'item': item, 'action': customAction} %}
-	                        {% else %}
-	                            <a href="{{ path(customAction.getUrlFor(item)["path"], customAction.getUrlFor(item)[("params")] ) }}">
-	                            {% if customAction.getIcon(item) is not null %}
-	                                <img src="{{ asset(customAction.getIcon(item)) }}" alt="{{ customAction.getLabel(item) }}"/>
-                                {% endif %}
-	                            {{ customAction.getLabel(item) }}
-	                            </a>
-	                        {% endif %}
-	                    {% endfor %}
-	                {% endif %}
-	            </td>
-	        </tr>
-	    {% endfor %}
-	    </tbody>
-	</table>
+    <table class="table table-striped table-bordered responsive">
+        <thead>
+        <tr>
+            {% for column in adminlist.columns%}
+            {% set columnName = column.fieldName%}
+            {% set columnkey = column.fieldheader%}
+            {% set orderDirection = "DESC" %}
+            {% set extraHeaderClass = "" %}
+            {% if ( columnName == adminlist.orderBy )%}
+                {% if adminlist.orderDirection == "DESC" %}
+                    {% set orderDirection = "ASC" %}
+                    {% set extraHeaderClass = "headerSortDown" %}
+                {% else %}
+                    {% set extraHeaderClass = "headerSortUp" %}
+                {% endif %}
+            {% endif %}
+            <th {% if adminlist.hasSort(columnName) %} class="header {{extraHeaderClass}}" onclick="window.location = '{{ path(basepath, extraparams|merge({ 'orderBy': columnName, "orderDirection": orderDirection }))}}'"{% endif %}>{{ columnkey | trans }}</th>
+            {% endfor %}
+            <th>{{ 'form.actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in adminlist.items(queryparams) %}
+        <tr>
+            {% for column in adminlist.columns%}
+            {% set columnName = column.fieldName%}
+            {% set template = column.template%}
+            {% if template is not null %}
+                <td>{% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getValue(item, columnName)} %}</td>
+            {% else %}
+                <td>{{adminlist.getStringValue(item, columnName)}}</td>
+            {% endif %}
+            {% endfor %}
+            <td class="actions">
+                {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
+                {% if adminlist.canEdit(item) %}
+                    <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><i class="icon-edit"></i>Edit</a>
+                {% endif %}
+                {% if adminlist.canDelete(item) %}
+                    <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="danger"><i class="icon-remove-sign"></i>Delete</a>
+                {% endif %}
+                {% if adminlist.hasCustomActions() %}
+                    {% for customAction in adminlist.getCustomActions() %}
+                    {% if customAction.template is not null %}
+                        {% include customAction.template with {'row': item, 'item': item, 'action': customAction} %}
+                    {% else %}
+                        <a href="{{ path(customAction.getUrlFor(item)["path"], customAction.getUrlFor(item)[("params")] ) }}">
+                            {% if customAction.getIcon(item) is not null %}
+                                <img src="{{ asset(customAction.getIcon(item)) }}" alt="{{ customAction.getLabel(item) }}"/>
+                            {% endif %}
+                            {{ customAction.getLabel(item) }}
+                        </a>
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% if adminlist.canAdd() %}
     <select onchange="location = this.options[this.selectedIndex].value;">
         <option>{{ 'form.add' | trans }}</option>
         {% for key,add in adminlist.getAddUrlFor(addparams) %}
-            <option value="{{ path(add["path"], add[("params")]) }}">{{ key }}</option>
+        <option value="{{ path(add["path"], add[("params")]) }}">{{ key }}</option>
         {% endfor %}
     </select>
 {% endif %}
