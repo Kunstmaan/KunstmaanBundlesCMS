@@ -9,6 +9,7 @@ abstract class AbstractAdminListConfigurator
     private $exportFields = array();
     private $customActions = array();
     private $listActions = array();
+    private $permissionDefinition = null;
 
     abstract function buildFields();
     abstract function getEditUrlFor($item);
@@ -193,7 +194,13 @@ abstract class AbstractAdminListConfigurator
     {
         return false;
     }
-    
+
+    /**
+     * @param \Doctrine\DBAL\Query\QueryBuilder $querybuilder
+     * @param array                             $params
+     *
+     * @throws \Exception
+     */
     function adaptNativeCountQueryBuilder($querybuilder, $params = array())
     {
         throw new \Exception('You have to implement the native count query builder!');
@@ -203,5 +210,15 @@ abstract class AbstractAdminListConfigurator
     {
         throw new \Exception('You have to implement the native items query builder!');
     }
-    
+
+    public function setPermissionDefinition($permissionDefinition)
+    {
+        $this->permissionDefinition = $permissionDefinition;
+    }
+
+    public function getPermissionDefinition()
+    {
+        return $this->permissionDefinition;
+    }
+
 }
