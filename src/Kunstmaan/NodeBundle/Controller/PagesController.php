@@ -77,8 +77,8 @@ class PagesController extends Controller
     }
 
     /**
-     * @param integer $id            The node id
-     * @param string  $otherlanguage The locale from where the version must be copied
+     * @param int    $id            The node id
+     * @param string $otherlanguage The locale from where the version must be copied
      *
      * @Route("/copyfromotherlanguage/{id}/{otherlanguage}", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminNodeBundle_pages_copyfromotherlanguage")
      * @Template()
@@ -105,7 +105,7 @@ class PagesController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @Route("/{id}/createemptypage", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminNodeBundle_pages_createemptypage")
      * @Template()
@@ -136,7 +136,7 @@ class PagesController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @Route("/{id}/publish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminNodeBundle_pages_edit_publish")
      * @Template()
@@ -164,7 +164,7 @@ class PagesController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @Route("/{id}/unpublish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanAdminNodeBundle_pages_edit_unpublish")
      * @Template()
@@ -191,8 +191,8 @@ class PagesController extends Controller
     }
 
     /**
-     * @param integer $id        The node id
-     * @param string  $subaction The subaction (draft|public)
+     * @param int    $id        The node id
+     * @param string $subaction The subaction (draft|public)
      *
      * @Route("/{id}/{subaction}", requirements={"_method" = "GET|POST", "id" = "\d+"}, defaults={"subaction" = "public"}, name="KunstmaanAdminNodeBundle_pages_edit")
      * @Template()

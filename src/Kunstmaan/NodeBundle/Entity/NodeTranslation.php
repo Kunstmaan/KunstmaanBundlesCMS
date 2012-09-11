@@ -124,7 +124,7 @@ class NodeTranslation extends AbstractEntity
     /**
      * Is online
      *
-     * @return boolean
+     * @return bool
      */
     public function isOnline()
     {
@@ -134,7 +134,7 @@ class NodeTranslation extends AbstractEntity
     /**
      * Set online
      *
-     * @param boolean $online
+     * @param bool $online
      */
     public function setOnline($online)
     {

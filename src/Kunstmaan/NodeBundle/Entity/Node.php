@@ -79,7 +79,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isHiddenFromNav()
     {
@@ -87,7 +87,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getHiddenFromNav()
     {
@@ -95,7 +95,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param boolean $hiddenFromNav
+     * @param bool $hiddenFromNav
      */
     public function setHiddenFromNav($hiddenFromNav)
     {
@@ -145,7 +145,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param boolean $includeOffline
+     * @param bool $includeOffline
      *
      * @return ArrayCollection
      */
@@ -172,8 +172,8 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param string  $lang
-     * @param boolean $includeOffline
+     * @param string $lang
+     * @param bool   $includeOffline
      *
      * @return NodeTranslation|null
      */
@@ -245,7 +245,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param integer $sequencenumber
+     * @param int $sequencenumber
      */
     public function setSequencenumber($sequencenumber)
     {
@@ -253,7 +253,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getSequencenumber()
     {
@@ -277,7 +277,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeleted()
     {
@@ -285,7 +285,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param boolean $deleted
+     * @param bool $deleted
      */
     public function setDeleted($deleted)
     {

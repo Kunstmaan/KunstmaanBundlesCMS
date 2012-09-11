@@ -149,7 +149,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set status, every change in status will trigger last modified to be updated
      *
-     * @param integer $status
+     * @param int $status
      */
     public function setStatus($status)
     {
@@ -160,7 +160,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get status
      *
-     * @return integer
+     * @return int
      */
     public function getStatus()
     {
@@ -170,7 +170,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set process id
      *
-     * @param integer $pid
+     * @param int $pid
      */
     public function setPid($pid)
     {
@@ -180,7 +180,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get process id
      *
-     * @return integer
+     * @return int
      */
     public function getPid()
     {

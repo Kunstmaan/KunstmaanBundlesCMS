@@ -83,7 +83,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     }
 
     /**
-     * @param integer        $currentId
+     * @param int            $currentId
      * @param MenuBuilder    $menu
      * @param MenuItem[]     $children
      * @param NodeMenuItem[] $nodes

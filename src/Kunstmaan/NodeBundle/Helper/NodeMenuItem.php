@@ -65,7 +65,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -110,7 +110,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getOnline()
     {
@@ -199,7 +199,7 @@ class NodeMenuItem
     }
 
     /**
-     * @param boolean $includehiddenfromnav
+     * @param bool $includehiddenfromnav
      *
      * @return NodeMenuItem[]
      */
@@ -280,7 +280,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {

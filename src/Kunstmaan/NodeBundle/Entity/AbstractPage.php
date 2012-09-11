@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use Doctrine\Common\Annotations\Annotation;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -126,7 +125,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isOnline()
     {

@@ -1,15 +1,15 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
-use Doctrine\ORM\Mapping\Entity;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
-use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 
 /**
@@ -76,7 +76,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Set nodeTranslation
      *
-     * @param integer $nodeTranslation
+     * @param NodeTranslation $nodeTranslation
      */
     public function setNodeTranslation($nodeTranslation)
     {
@@ -86,7 +86,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get NodeTranslation
      *
-     * @return integer
+     * @return NodeTranslation
      */
     public function getNodeTranslation()
     {
@@ -116,7 +116,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get version
      *
-     * @return integer
+     * @return string
      */
     public function getVersion()
     {
@@ -204,7 +204,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get refId
      *
-     * @return integer
+     * @return int
      */
     public function getRefId()
     {
@@ -214,7 +214,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Set refId
      *
-     * @param string $refId
+     * @param int $refId
      */
     public function setRefId($refId)
     {

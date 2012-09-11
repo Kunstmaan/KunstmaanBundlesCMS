@@ -30,8 +30,8 @@ class NodeMenu
      * @param string                   $lang                 The language
      * @param Node                     $currentNode          The node
      * @param string                   $permission           The permission
-     * @param boolean                  $includeOffline       Include offline pages
-     * @param boolean                  $includeHiddenFromNav Include hidden pages
+     * @param bool                     $includeOffline       Include offline pages
+     * @param bool                     $includeHiddenFromNav Include hidden pages
      */
     public function __construct($em, $securityContext, $aclHelper, $lang, Node $currentNode = null, $permission = 'VIEW', $includeOffline = false, $includeHiddenFromNav = false)
     {
@@ -97,7 +97,7 @@ class NodeMenu
     }
 
     /**
-     * @param integer $depth
+     * @param int $depth
      *
      * @return NodeMenuItem|null
      */
@@ -230,7 +230,7 @@ class NodeMenu
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isIncludeOffline()
     {
@@ -274,7 +274,7 @@ class NodeMenu
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isIncludeHiddenFromNav()
     {

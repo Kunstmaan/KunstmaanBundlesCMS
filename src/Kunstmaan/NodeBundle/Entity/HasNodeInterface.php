@@ -11,7 +11,7 @@ interface HasNodeInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId();
 
@@ -26,7 +26,7 @@ interface HasNodeInterface
     public function getPageTitle();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isOnline();
 

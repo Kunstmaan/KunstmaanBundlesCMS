@@ -49,7 +49,7 @@ class AclChangesetRepository extends EntityRepository
     /**
      * Check if there are pending changesets
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPendingChangesets()
     {
