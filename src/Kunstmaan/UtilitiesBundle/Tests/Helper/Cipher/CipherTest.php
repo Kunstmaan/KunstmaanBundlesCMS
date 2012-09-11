@@ -8,6 +8,7 @@ class CipherTest extends \PHPUnit_Framework_TestCase
 {
 
     const SECRET = "secret";
+    const CONTENT = "This is a random sentence which will be encrypted and then decrypted!";
 
     /*
      * @var Cipher
@@ -39,10 +40,33 @@ class CipherTest extends \PHPUnit_Framework_TestCase
      */
     public function testEncryptDecrypt()
     {
-        $content = "This is a random sentence which will be encrypted and then decrypted!";
-        $encryptedValue = $this->cipher->encrypt($content);
-        $this->assertNotEquals($content, $encryptedValue);
+        $encryptedValue = $this->cipher->encrypt(self::CONTENT);
+        $this->assertNotEquals(self::CONTENT, $encryptedValue);
         $decryptedValue = $this->cipher->decrypt($encryptedValue);
+        $this->assertEquals($decryptedValue, self::CONTENT);
+    }
+
+    /**
+     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher::urlSafeEncrypt
+     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher::urlSafeDecrypt
+     */
+    public function testUrlSafeEncryptDecrypt()
+    {
+        $encryptedValue = $this->cipher->urlSafeEncrypt(self::CONTENT);
+        $this->assertNotEquals(self::CONTENT, $encryptedValue);
+        $decryptedValue = $this->cipher->urlSafeDecrypt($encryptedValue);
+        $this->assertEquals($decryptedValue, self::CONTENT);
+    }
+
+    /**
+     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher::hex2bin
+     */
+    public function testHex2bin()
+    {
+        $hexValue = bin2hex(self::CONTENT);
+        $this->assertNotEquals(self::CONTENT, $hexValue);
+        $binValue = $this->cipher->hex2bin($hexValue);
+        $this->assertEquals($binValue, self::CONTENT);
     }
 
 }

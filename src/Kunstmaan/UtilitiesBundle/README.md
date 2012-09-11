@@ -1,5 +1,5 @@
 KunstmaanUtilitiesBundle by Kunstmaan
-=================================
+============================
 
 About
 -----
@@ -31,6 +31,20 @@ Add the KunstmaanUtilitiesBundle to your AppKernel.php file:
 ```
 new Kunstmaan\UtilitiesBundle\KunstmaanUtilitiesBundle(),
 ```
+
+Utilities
+---------
+
+#Cipher
+Cipher is a helpful service to encrypt and decrypt string values. To start using cypher you must first register the service:
+
+```
+utilities.cipher:
+    class: 'Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher'
+    arguments: ['<YOUR_SECRET_HERE>']
+```
+
+More information can be found here in *Resources\doc\cipher.md*
 
 Contact
 -------

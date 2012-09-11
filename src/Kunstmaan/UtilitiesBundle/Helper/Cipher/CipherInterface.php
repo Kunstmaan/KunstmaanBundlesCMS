@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
 
 interface CipherInterface

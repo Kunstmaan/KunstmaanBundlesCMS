@@ -19,15 +19,6 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('kunstmaan_utilities');
-        $rootNode
-            ->children()
-                ->arrayNode('cipher')
-                    ->children()
-                        ->scalarNode('secret')->isRequired()->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
 
         return $treeBuilder;
     }
