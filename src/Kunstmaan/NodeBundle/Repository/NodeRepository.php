@@ -1,10 +1,14 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Repository;
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
+
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -17,19 +21,19 @@ class NodeRepository extends EntityRepository
      * @param string    $lang                 The locale
      * @param string    $permission           The permission (read, write, ...)
      * @param AclHelper $aclHelper
-     * @param boolean   $includehiddenfromnav include the hiddenfromnav nodes or not
+     * @param bool   $includeHiddenFromNav include the hiddenfromnav nodes or not
      *
-     * @return array
+     * @return Node[]
      */
-    public function getTopNodes($lang, $permission, $aclHelper, $includehiddenfromnav = false)
+    public function getTopNodes($lang, $permission, $aclHelper, $includeHiddenFromNav = false)
     {
-        return $this->getChildNodes(null, $lang, $permission, $aclHelper, $includehiddenfromnav);
+        return $this->getChildNodes(null, $lang, $permission, $aclHelper, $includeHiddenFromNav);
     }
 
     /**
      * @param HasNodeInterface $hasNode
      *
-     * @return Node|NULL
+     * @return Node|null
      */
     public function getNodeFor(HasNodeInterface $hasNode)
     {
@@ -45,10 +49,10 @@ class NodeRepository extends EntityRepository
     }
 
     /**
-     * @param integer $id         The id
-     * @param string  $entityName The classname
+     * @param int $id         The id
+     * @param string  $entityName The class name
      *
-     * @return Node|NULL
+     * @return Node|null
      */
     public function getNodeForIdAndEntityname($id, $entityName)
     {
@@ -64,19 +68,19 @@ class NodeRepository extends EntityRepository
      * @param Node   $parentNode The parent node (may be null)
      * @param string $slug       The slug
      *
-     * @return Node|NULL
+     * @return Node|null
      */
     public function getNodeForSlug($parentNode, $slug)
     {
-        $slugparts = explode("/", $slug);
+        $slugParts = explode("/", $slug);
         $result = null;
-        foreach ($slugparts as $slugpart) {
+        foreach ($slugParts as $slugPart) {
             if ($parentNode) {
-                if ($r = $this->findOneBy(array('slug' => $slugpart, 'parent.parent' => $parentNode->getId()))) {
+                if ($r = $this->findOneBy(array('slug' => $slugPart, 'parent.parent' => $parentNode->getId()))) {
                     $result = $r;
                 }
             } else {
-                if ($r = $this->findOneBy(array('slug' => $slugpart))) {
+                if ($r = $this->findOneBy(array('slug' => $slugPart))) {
                     $result = $r;
                 }
             }
@@ -91,19 +95,20 @@ class NodeRepository extends EntityRepository
      * @param Baseuser         $owner        The user
      * @param string           $internalName The internal name (may be null)
      *
-     * @throws \Exception
-     * @return \Kunstmaan\AdminNodeBundle\Entity\Node
+     * @throws \InvalidArgumentException
+     *
+     * @return Node
      */
     public function createNodeFor(HasNodeInterface $hasNode, $lang, Baseuser $owner, $internalName = null)
     {
         $em = $this->getEntityManager();
-        $classname = ClassLookup::getClass($hasNode);
+        $className = ClassLookup::getClass($hasNode);
         if (!$hasNode->getId() > 0) {
-            throw new \Exception("the entity of class " . $classname . " has no id, maybe you forgot to flush first");
+            throw new \InvalidArgumentException("the entity of class " . $className . " has no id, maybe you forgot to flush first");
         }
-        $entityrepo = $em->getRepository($classname);
+
         $node = new Node();
-        $node->setRefEntityname($classname);
+        $node->setRefEntityname($className);
         $node->setDeleted(false);
         $node->setInternalName($internalName);
         $parent = $hasNode->getParent();
@@ -123,44 +128,44 @@ class NodeRepository extends EntityRepository
     }
 
     /**
-     * @param integer   $parentid             The parent id
+     * @param int $parentId             The parent id
      * @param string    $lang                 The locale
      * @param string    $permission           The permission (read, write, ...)
      * @param AclHelper $aclHelper
-     * @param boolean   $includehiddenfromnav Include hiddenfromnav nodes or not
+     * @param bool $includeHiddenFromNav Include nodes hidden from navigation or not
      *
-     * @return array:
+     * @return Node[]
      */
-    public function getChildNodes($parentid, $lang, $permission, $aclHelper, $includehiddenfromnav = false)
+    public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
     {
         $qb = $this->createQueryBuilder('b')
                 ->select('b')
                 ->innerJoin('b.nodeTranslations', 't')
                 ->where('b.deleted = 0');
 
-        if (!$includehiddenfromnav) {
+        if (!$includeHiddenFromNav) {
             $qb->andWhere('b.hiddenfromnav != true');
         }
 
         $qb->andWhere('t.lang = :lang');
 
-        if (is_null($parentid)) {
+        if (is_null($parentId)) {
             $qb->andWhere('b.parent is NULL');
         } else {
             $qb->andWhere('b.parent = :parent')
-                    ->setParameter('parent', $parentid);
+                    ->setParameter('parent', $parentId);
         }
 
         $qb->addOrderBy('t.weight', 'ASC')
                 ->addOrderBy('t.title', 'ASC');
         $qb->setParameter('lang', $lang);
-        $query = $aclHelper->apply($qb, array($permission));
+        $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
 
         return $query->getResult();
     }
 
     /**
-     * @return array:
+     * @return Node[]
      */
     public function getAllTopNodes()
     {

@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminNodeBundle\Helper\Menu;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
@@ -59,7 +60,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             if ($request->attributes->get('_route') == 'KunstmaanAdminNodeBundle_pages_edit') {
                 $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
-            $this->nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, 'EDIT', true, true);
+            $this->nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, PermissionMap::PERMISSION_EDIT, true, true);
         }
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
@@ -95,7 +96,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
      * @param MenuItem $parent
      * @param Request $request
      */
-    public function processNodes($currentId, MenuBuilder $menu, array &$children, array $nodes, MenuItem $parent = null, Request $request = null)
+    private function processNodes($currentId, MenuBuilder $menu, array &$children, array $nodes, MenuItem $parent = null, Request $request = null)
     {
         if (isset($currentId)) {
             /* @var Node $currentNode */
@@ -131,4 +132,5 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $children[] = $menuItem;
         }
     }
+
 }

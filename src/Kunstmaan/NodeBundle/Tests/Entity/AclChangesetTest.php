@@ -32,6 +32,15 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminNodeBundle\Entity\AclChangeset::__construct
+     */
+    public function test__construct()
+    {
+        $object = new AclChangeset();
+        $this->assertEquals(AclChangeset::STATUS_NEW, $object->getStatus());
+    }
+
+    /**
      * @covers Kunstmaan\AdminNodeBundle\Entity\AclChangeset::setChangeset
      * @covers Kunstmaan\AdminNodeBundle\Entity\AclChangeset::getChangeset
      */
