@@ -1,4 +1,4 @@
-KunstmaanUtilitiesBundle by Kunstmaan
+KunstmaanUtilitiesBundle by Kunstmaan ![image](http://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle.png)
 ============================
 
 About
