@@ -14,7 +14,7 @@ Installation instructions
 -------------------------
 Installation is straightforward, add the following lines to your deps file:
 
-```
+```yaml
 [KunstmaanUtilitiesBundle]
     git=https://github.com/Kunstmaan/KunstmaanUtilitiesBundle.git
     target=/bundles/Kunstmaan/UtilitiesBundle
@@ -22,13 +22,13 @@ Installation is straightforward, add the following lines to your deps file:
 
 Register the Kunstmaan namespace in your autoload.php file:
 
-```
+```php
 'Kunstmaan'        => __DIR__.'/../vendor/bundles'
 ```
 
 Add the KunstmaanUtilitiesBundle to your AppKernel.php file:
 
-```
+```php
 new Kunstmaan\UtilitiesBundle\KunstmaanUtilitiesBundle(),
 ```
 
@@ -38,13 +38,13 @@ Utilities
 #Cipher
 Cipher is a helpful service to encrypt and decrypt string values. To start using cypher you must first register the service:
 
-```
+```yaml
 utilities.cipher:
     class: 'Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher'
     arguments: ['<YOUR_SECRET_HERE>']
 ```
 
-More information can be found here in *Resources\doc\cipher.md*
+More information can be found here in [Resources\doc\cipher.md](https://github.com/Kunstmaan/KunstmaanUtilitiesBundle/blob/master/Resources/doc/cipher.md)
 
 Contact
 -------
