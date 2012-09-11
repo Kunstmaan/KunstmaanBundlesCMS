@@ -255,7 +255,7 @@ class PagesController extends Controller
             $page = $nodeVersion->getRef($this->em);
         }
 
-        $this->get('admin_node.actions_menu_builder')->setActiveNodeVersion($nodeVersion);
+        $this->get('kunstmaan_adminnode.actions_menu_builder')->setActiveNodeVersion($nodeVersion);
         $addPage = $request->get("addpage");
         $addPageTitle = $request->get("addpagetitle");
 
