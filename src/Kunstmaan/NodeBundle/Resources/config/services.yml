@@ -8,14 +8,17 @@ services:
             - { name: doctrine.event_listener, event: postFlush, method: postFlush }
 
     admin_menu.adaptor.pages:
-        class: Kunstmaan\AdminNodeBundle\Helper\Menu\PageMenuAdaptor
-        arguments: ["@service_container"]
+        class: Kunstmaan\AdminNodeBundle\Helper\Menu\PageMenuAdaptor        
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan.acl.helper"]
         tags:
             -  { name: admin_menu.adaptor }
 
+    kunstmaan.shell_helper:
+        class: Kunstmaan\AdminNodeBundle\Helper\ShellHelper
+
     admin_node.actions_menu_builder:
             class: Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder
-            arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager", "@router", "@event_dispatcher"]
+            arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager", "@router", "@event_dispatcher", "@security.context"]
 
     admin_node.menu.sub_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class

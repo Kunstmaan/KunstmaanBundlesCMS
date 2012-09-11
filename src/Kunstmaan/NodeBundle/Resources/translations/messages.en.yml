@@ -1,11 +1,10 @@
 subaction:
-    unpublish: "Unpublish"
-    publish: "Publish"
     versions: "Versions"
 
 action:
     saveasdraft: "Save as draft"
     publish: "Publish"
+    unpublish: "Unpublish"
     preview: "Preview"
     save: "Save"
     delete: "Delete"

@@ -52,21 +52,19 @@ class NodeMenuItem
     private $menu;
 
     /**
-     * @param EntityManager   $em              The entitymanager
      * @param Node            $node            The node
      * @param NodeTranslation $nodeTranslation The nodetranslation
-     * @param string          $lang            The locale
      * @param NodeMenuItem    $parent          The parent nodemenuitem
      * @param NodeMenu        $menu            The menu
      */
-    public function __construct($em, Node $node, NodeTranslation $nodeTranslation, $lang, $parent, NodeMenu $menu)
-    {
-        $this->em = $em;
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent, NodeMenu $menu)
+    {        
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
-        $this->lang = $lang;
         $this->parent = $parent;
         $this->menu = $menu;
+        $this->em = $menu->getEntityManager();
+        $this->lang = $menu->getLang();
     }
 
     /**
@@ -213,11 +211,11 @@ class NodeMenuItem
         if (is_null($this->lazyChildren)) {
             $this->lazyChildren = array();
             $nodeRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:Node');
-            $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getUser(), $this->menu->getPermission(), true);
+            $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getPermission(), $this->menu->getAclHelper(), true);
             foreach ($children as $child) {
                 $nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
                 if (!is_null($nodeTranslation)) {
-                    $this->lazyChildren[] = new NodeMenuItem($this->em, $child, $nodeTranslation, $this->lang, $this, $this->menu);
+                    $this->lazyChildren[] = new NodeMenuItem($child, $nodeTranslation, $this, $this->menu);
                 }
             }
         }

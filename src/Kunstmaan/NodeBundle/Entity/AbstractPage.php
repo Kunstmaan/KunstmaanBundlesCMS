@@ -1,28 +1,23 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
-use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 
+use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Entity\PageInterface;
+use Kunstmaan\AdminBundle\Form\PageAdminType;
+use Kunstmaan\AdminBundle\Modules\ClassLookup;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use Kunstmaan\AdminBundle\Form\PageAdminType;
-
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
-use Kunstmaan\FormBundle\Entity\FormSubmission;
-
-use Doctrine\ORM\EntityManager;
-
-
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminBundle\Entity\PageInterface;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
+
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * The Abstract ORM Page
@@ -63,7 +58,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
         return $this->title;
     }
 
-        /**
+    /**
      * Set pagetitle
      *
      * @param string $title
@@ -80,9 +75,9 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
      */
     public function getPageTitle()
     {
-        if(isset($this->pageTitle) && (!is_null($this->pageTitle)) && (!empty($this->pageTitle))){
+        if (isset($this->pageTitle) && (!is_null($this->pageTitle)) && (!empty($this->pageTitle))) {
             return $this->pageTitle;
-        }else{
+        } else {
             return $this->getTitle();
         }
     }
@@ -102,8 +97,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     {
         $this->parent = $parent;
     }
-
-    protected $possiblePermissions = array('read', 'write', 'delete');
 
 
     /**
@@ -127,15 +120,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
      */
     public function isOnline()
     {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPossiblePermissions()
-    {
-        return $this->possiblePermissions;
+        return false;
     }
 
     /**
