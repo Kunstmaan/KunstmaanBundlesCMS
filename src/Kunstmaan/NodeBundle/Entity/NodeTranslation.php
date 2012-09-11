@@ -4,16 +4,12 @@ namespace Kunstmaan\AdminNodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
 use Kunstmaan\SearchBundle\Entity\IndexableInterface;
 
-use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * NodeTranslation

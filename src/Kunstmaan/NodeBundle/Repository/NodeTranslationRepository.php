@@ -107,9 +107,9 @@ class NodeTranslationRepository extends EntityRepository
             $qb->andWhere('b.url = :url');
             $qb->setParameter('url', $urlSlug);
         }
-        
+
         $result = $qb->getQuery()->getOneOrNullResult();
-        
+
         return $result;
     }
 
@@ -150,7 +150,7 @@ class NodeTranslationRepository extends EntityRepository
                 ->setParameter('slug', $slugpart)
                 ->setParameter('parent', $parentNode->getNode()->getId());
             $result = $qb->getQuery()->getOneOrNullResult();
-            
+
             return $result;
         } else {
             /* if parent is null we should look for slugs that have no parent */
@@ -168,7 +168,7 @@ class NodeTranslationRepository extends EntityRepository
                 $qb->setParameter('slug', $slugpart);
             }
             $result = $qb->getQuery()->getOneOrNullResult();
-            
+
             return $result;
         }
     }

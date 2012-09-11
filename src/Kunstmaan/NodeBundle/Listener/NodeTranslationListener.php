@@ -7,7 +7,6 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 
 /**
  * Listens to doctrine postFlush event and updates
@@ -15,9 +14,9 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
  */
 class NodeTranslationListener
 {
-    
+
     private $nodeTranslations = array();
-    
+
     /**
      * onFlush doctrine event - collect all nodetranslations in scheduled entity updates here
      *
@@ -28,7 +27,7 @@ class NodeTranslationListener
     public function onFlush(OnFlushEventArgs $args)
     {
         $em = $args->getEntityManager();
-        
+
         // Collect all nodetranslations that are updated
         foreach ($em->getUnitOfWork()->getScheduledEntityUpdates() as $entity) {
             if ($entity instanceof NodeTranslation) {
@@ -36,7 +35,7 @@ class NodeTranslationListener
             }
         }
     }
-    
+
     /**
      * PostUpdate doctrine event - updates the nodetranslation urls if needed
      *
@@ -45,21 +44,21 @@ class NodeTranslationListener
     public function postFlush(PostFlushEventArgs $args)
     {
         $em = $args->getEntityManager();
-        
+
         foreach ($this->nodeTranslations as $entity) {
             if ($entity instanceof NodeTranslation) {
                 $entity = $this->updateUrl($entity);
-            
+
                 if ($entity != false) {
                     $em->persist($entity);
                     $em->flush();
-            
+
                     $this->updateNodeChildren($entity, $em);
                 }
             }
         }
     }
-    
+
     /**
      * Checks if a nodetranslation has children and update their url
      * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation $node

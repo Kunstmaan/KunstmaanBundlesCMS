@@ -25,10 +25,9 @@ class ConfigureActionMenuEvent extends Event
      */
     private $activeNodeVersion;
 
-
     /**
-     * @param \Knp\Menu\FactoryInterface $factory
-     * @param \Knp\Menu\ItemInterface $menu
+     * @param \Knp\Menu\FactoryInterface                    $factory
+     * @param \Knp\Menu\ItemInterface                       $menu
      * @param \Kunstmaan\AdminNodeBundle\Entity\NodeVersion $activeNodeVersion
      */
     public function __construct(FactoryInterface $factory, ItemInterface $menu, NodeVersion $activeNodeVersion)

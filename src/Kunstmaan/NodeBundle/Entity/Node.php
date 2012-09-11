@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminNodeBundle\Entity;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;

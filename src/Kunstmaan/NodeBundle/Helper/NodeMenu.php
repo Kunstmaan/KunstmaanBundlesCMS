@@ -2,11 +2,6 @@
 
 namespace Kunstmaan\AdminNodeBundle\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Translation\Translator;
-
-use Knp\Menu\FactoryInterface;
-
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
@@ -19,7 +14,7 @@ class NodeMenu
 {
     private $em;
     private $securityContext;
-    private $aclHelper;    
+    private $aclHelper;
     private $lang;
     private $topNodeMenuItems = array();
     private $breadCrumb = array();
@@ -29,14 +24,14 @@ class NodeMenu
     private $user = null;
 
     /**
-     * @param EntityManager             $em                   The entity manager
-     * @param SecurityContextInterface  $securityContext      The security context
-     * @param AclHelper                 $aclHelper            The ACL helper
-     * @param string                    $lang                 The language
-     * @param Node                      $currentNode          The node
-     * @param string                    $permission           The permission
-     * @param boolean                   $includeOffline       Include offline pages
-     * @param boolean                   $includeHiddenFromNav Include hidden pages
+     * @param EntityManager            $em                   The entity manager
+     * @param SecurityContextInterface $securityContext      The security context
+     * @param AclHelper                $aclHelper            The ACL helper
+     * @param string                   $lang                 The language
+     * @param Node                     $currentNode          The node
+     * @param string                   $permission           The permission
+     * @param boolean                  $includeOffline       Include offline pages
+     * @param boolean                  $includeHiddenFromNav Include hidden pages
      */
     public function __construct($em, $securityContext, $aclHelper, $lang, Node $currentNode = null, $permission = 'VIEW', $includeOffline = false, $includeHiddenFromNav = false)
     {
@@ -147,9 +142,9 @@ class NodeMenu
         if (!is_null($parent)) {
             if ($parent instanceof NodeTranslation) {
                 $parent = $parent->getNode();
-            } else if ($parent instanceof NodeMenuItem) {
+            } elseif ($parent instanceof NodeMenuItem) {
                 $parent = $parent->getNode();
-            } else if ($parent instanceof HasNodeInterface) {
+            } elseif ($parent instanceof HasNodeInterface) {
                 $parent = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($parent);
             }
             $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName, 'parent' => $parent->getId()));
@@ -211,7 +206,7 @@ class NodeMenu
                     $parentNodeMenuItem = $nodeMenuItem;
                 }
             }
-            
+
             return $nodeMenuItem;
         }
 
@@ -285,5 +280,5 @@ class NodeMenu
     {
         return $this->includeHiddenFromNav;
     }
-    
+
 }

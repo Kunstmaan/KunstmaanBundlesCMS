@@ -3,11 +3,8 @@
 namespace Kunstmaan\AdminNodeBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Kunstmaan\AdminBundle\Entity\Group;
 
 class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
 {
@@ -29,10 +26,10 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
         $batchSize = 20;
         $i =0;
         $q = $em->createQuery('SELECT t FROM Kunstmaan\AdminNodeBundle\Entity\NodeTranslation t WHERE t.weight IS NULL');
-        
-        $iterableResult = $q->iterate(); 
-        
-        while (($row = $iterableResult->next()) !== false){
+
+        $iterableResult = $q->iterate();
+
+        while (($row = $iterableResult->next()) !== false) {
             $nodeTranslation = $row[0];
             if ($nodeTranslation->getWeight() == null) {
                 $output->writeln('- editing node: '. $nodeTranslation->getTitle());
@@ -43,14 +40,14 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
             }
             if (($i % $batchSize) == 0) {
                 $output->writeln('FLUSHING!');
-                $em->flush(); 
+                $em->flush();
                 $em->clear();
             }
         }
-        
-        $output->writeln('FLUSHING!'); 
-            $em->flush(); 
-            $em->clear(); 
+
+        $output->writeln('FLUSHING!');
+            $em->flush();
+            $em->clear();
 
         $output->writeln('Updated all nodes');
     }

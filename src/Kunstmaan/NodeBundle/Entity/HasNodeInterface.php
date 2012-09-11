@@ -24,7 +24,7 @@ interface HasNodeInterface
      * @return string
      */
     public function getPageTitle();
-    
+
     /**
      * @return boolean
      */

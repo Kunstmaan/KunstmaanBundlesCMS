@@ -6,18 +6,14 @@ use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\PageInterface;
 use Kunstmaan\AdminBundle\Form\PageAdminType;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
-
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * The Abstract ORM Page
@@ -140,7 +136,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     /**
      * @return array
      */
-    public abstract function getPossibleChildPageTypes();
+    abstract public function getPossibleChildPageTypes();
 
     /**
      * @param EntityManager $em

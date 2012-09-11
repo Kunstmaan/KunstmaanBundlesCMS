@@ -3,9 +3,6 @@
 
 namespace Kunstmaan\AdminNodeBundle\Form;
 
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 

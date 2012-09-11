@@ -186,6 +186,7 @@ class SEO extends AbstractEntity
     public function setOgDescription($ogDescription)
     {
         $this->ogDescription = $ogDescription;
+
         return $this;
     }
 
@@ -205,6 +206,7 @@ class SEO extends AbstractEntity
     public function setOgImage($ogImage)
     {
         $this->ogImage = $ogImage;
+
         return $this;
     }
 
@@ -224,6 +226,7 @@ class SEO extends AbstractEntity
     public function setOgTitle($ogTitle)
     {
         $this->ogTitle = $ogTitle;
+
         return $this;
     }
 
@@ -243,6 +246,7 @@ class SEO extends AbstractEntity
     public function setOgType($ogType)
     {
         $this->ogType = $ogType;
+
         return $this;
     }
 

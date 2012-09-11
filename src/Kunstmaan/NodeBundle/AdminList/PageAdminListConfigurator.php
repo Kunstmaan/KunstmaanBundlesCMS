@@ -70,18 +70,17 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
         return false;
     }
 
-    function getDeleteUrlFor($item)
+    public function getDeleteUrlFor($item)
     {
         return array();
     }
-
 
     public function getRepositoryName()
     {
         return 'KunstmaanAdminNodeBundle:NodeTranslation';
     }
 
-    function adaptQueryBuilder($queryBuilder, $params = array())
+    public function adaptQueryBuilder($queryBuilder, $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder);
 

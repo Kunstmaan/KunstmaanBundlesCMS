@@ -27,7 +27,6 @@ class PageEvent extends Event
      */
     protected $nodeTranslation;
 
-
     /**
      * @param Node             $node            The node
      * @param NodeTranslation  $nodeTranslation The nodetranslation

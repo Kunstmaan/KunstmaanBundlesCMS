@@ -11,16 +11,10 @@ use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Translation\Translator;
 
 use Doctrine\ORM\EntityManager;
-
-use Knp\Menu\FactoryInterface;
-use Knp\Menu\ItemInterface as KnpMenu;
 
 /**
  * The Page Menu Adaptor
@@ -47,10 +41,10 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
      *
-     * @param MenuBuilder $menu      The MenuBuilder
+     * @param MenuBuilder $menu The MenuBuilder
      * @param MenuItem[]  &$children The current children
-     * @param MenuItem    $parent    The parent Menu item
-     * @param Request     $request   The Request
+     * @param MenuItem $parent  The parent Menu item
+     * @param Request  $request The Request
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
@@ -76,7 +70,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $topNodes = $this->nodeMenu->getTopNodes();
                 $currentId = $request->attributes->get('id');
                 $this->processNodes($currentId, $menu, $children, $topNodes, $parent, $request);
-            } else if ('KunstmaanAdminNodeBundle_pages_edit' == $parent->getRoute()) {
+            } elseif ('KunstmaanAdminNodeBundle_pages_edit' == $parent->getRoute()) {
                 $parentRouteParams = $parent->getRouteparams();
                 /* @var Node $node */
                 $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
@@ -89,12 +83,12 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     }
 
     /**
-     * @param integer $currentId
-     * @param MenuBuilder $menu
-     * @param MenuItem[] $children
+     * @param integer        $currentId
+     * @param MenuBuilder    $menu
+     * @param MenuItem[]     $children
      * @param NodeMenuItem[] $nodes
-     * @param MenuItem $parent
-     * @param Request $request
+     * @param MenuItem       $parent
+     * @param Request        $request
      */
     private function processNodes($currentId, MenuBuilder $menu, array &$children, array $nodes, MenuItem $parent = null, Request $request = null)
     {

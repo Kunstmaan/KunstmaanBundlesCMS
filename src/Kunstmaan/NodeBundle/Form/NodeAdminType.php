@@ -11,7 +11,7 @@ class NodeAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden');
-       	$builder->add('hiddenfromnav', "checkbox");
+           $builder->add('hiddenfromnav', "checkbox");
     }
 
     public function getName()

@@ -6,9 +6,6 @@ use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Symfony\Component\Translation\Translator;
-use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 
 /**
@@ -58,7 +55,7 @@ class NodeMenuItem
      * @param NodeMenu        $menu            The menu
      */
     public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent, NodeMenu $menu)
-    {        
+    {
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
         $this->parent = $parent;
@@ -220,8 +217,7 @@ class NodeMenuItem
             }
         }
 
-        return array_filter($this->lazyChildren, function ($entry) use ($includehiddenfromnav)
-        {
+        return array_filter($this->lazyChildren, function ($entry) use ($includehiddenfromnav) {
             if ($entry->getNode()->isHiddenFromNav() && !$includehiddenfromnav) {
                 return false;
             }
