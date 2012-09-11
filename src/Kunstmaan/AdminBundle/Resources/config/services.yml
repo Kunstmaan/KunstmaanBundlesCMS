@@ -23,17 +23,6 @@ services:
         tags:
             -  { name: twig.extension }
         
-    kunstmaan_admin.permissionmanager:
-        class: Kunstmaan\AdminBundle\Permission\Manager
-
-    kunstmaan_admin.permissionadmin:
-        class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
-
-    permissionsadmin.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
-        tags:
-            -  { name: twig.extension }
-            
     localeswitcher.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
         tags:
@@ -41,36 +30,66 @@ services:
             
     form.type.urlchooser:
         class: Kunstmaan\AdminBundle\Form\Type\URLChooserType
-        arguments:
-            - @doctrine.orm.entity_manager
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: urlchooser }
             
     kunstmaan_admin.handler.log:
         class: Kunstmaan\AdminBundle\Modules\LogHandler
-        arguments:
-            - @service_container 
+        arguments: ["@service_container"]
         tags:
             - { name: log_handler }
 
     kunstmaan_login_listener:
         class: Kunstmaan\AdminBundle\Modules\LoginListener
-        arguments: [@security.context, @doctrine]
+        arguments: ["@security.context", "@doctrine"]
         tags:
             - { name: kernel.event_listener, event: security.interactive_login }
             
     kunstmaan_logout_listener:
         class: Kunstmaan\AdminBundle\Modules\LogoutListener
-        arguments:  [@security.context, @doctrine]
+        arguments:  ["@security.context", "@doctrine"]
         tags:
-            - { name: 'monolog.logger' channel: 'security' }
+            - { name: 'monolog.logger', channel: 'security' }
             
+    permissionsadmin.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
+        tags:
+            -  { name: twig.extension }
+
     kunstmaan.twig.locale:
         class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
         tags:
             - { name: twig.extension }
+
     kunstmaan.twig.formtools:
         class: Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension
         tags:
             - { name: twig.extension }
- 
+            
+    security.acl.object_identity_retrieval_strategy:
+        class: Kunstmaan\AdminBundle\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    kunstmaan.acl.helper:
+        class: Kunstmaan\AdminBundle\Helper\Acl\AclHelper
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+    kunstmaan.acl.native.helper:
+        class: Kunstmaan\AdminBundle\Helper\Acl\AclNativeHelper
+        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+
+    kunstmaan.guest.security.authentication.listener:
+        class: Kunstmaan\AdminBundle\Component\Security\Http\Firewall\GuestUserListener
+        arguments: ["@security.context", "user_provider", "provider_key"]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+        
+    kunstmaan.guest.security.authentication.provider:
+        class: Kunstmaan\AdminBundle\Component\Security\Authentication\Provider\GuestUserProvider
+        arguments: [""]
+
+    kunstmaan_admin.permissionadmin:
+        class: Kunstmaan\AdminBundle\Permission\PermissionAdmin
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@kernel"]
+

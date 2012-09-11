@@ -28,10 +28,12 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
     public function renderWidget($permissionadmin , $form , array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminBundle:PermissionsAdminTwigExtension:widget.html.twig");
-        return $template->render(array_merge($parameters, array(
+
+        return $template->render(array_merge(array(
             'form'              => $form,
-            'permissionadmin'   => $permissionadmin
-        )));
+            'permissionadmin'   => $permissionadmin,
+            'recursiveSupport'  => true
+        ), $parameters));
     }
 
     public function getName()
