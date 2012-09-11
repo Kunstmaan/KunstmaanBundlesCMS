@@ -104,8 +104,6 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
                 ->andWhere('n.id = ?1')
                 ->setParameter(1, $this->nodeTranslation->getNode()->getId())
                 ->addOrderBy('b.created', 'DESC');
-
-        return $querybuilder;
     }
 
     /**

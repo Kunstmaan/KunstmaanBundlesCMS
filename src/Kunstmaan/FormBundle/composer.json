@@ -20,6 +20,7 @@
         "kunstmaan/adminnode-bundle": "1.3.*",
         "kunstmaan/admin-bundle": "1.3.*",
         "kunstmaan/pagepart-bundle": "1.3.*",
+        "ddeboer/data-import": "dev-master",
         "ddeboer/data-import-bundle": "dev-master"
     },
     "autoload": {

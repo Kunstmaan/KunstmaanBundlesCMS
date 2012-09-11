@@ -2,13 +2,11 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Entity\Permission;
-
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition;
 
 /**
  * Adminlist for form pages
@@ -16,17 +14,14 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
-    protected $permission;
-    protected $user;
-
     /**
-     * @param mixed      $user       The User
-     * @param Permission $permission The permission
+     * @param string $permission The permission
      */
-    public function __construct($user, $permission)
+    public function __construct($permission)
     {
-        $this->permission   = $permission;
-        $this->user         = $user;
+        $this->setPermissionDefinition(
+            new PermissionDefinition(array($permission), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n')
+        );
     }
 
     /**
@@ -43,7 +38,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFields()
     {
-    	$this->addField("title", "Title", true);
+        $this->addField("title", "Title", true);
         $this->addField("lang", "Language", true);
         $this->addField("url", "Form path", true);
     }
@@ -51,9 +46,12 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * {@inheritdoc}
      */
-	public function getEditUrlFor($item)
-	{
-    	return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array( 'nodetranslationid' => $item->getId()));
+    public function getEditUrlFor($item)
+    {
+        return array(
+            'path'   => 'KunstmaanFormBundle_formsubmissions_list',
+            'params' => array('nodetranslationid' => $item->getId())
+        );
     }
 
     /**
@@ -69,15 +67,15 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function canAdd()
     {
-    	return false;
+        return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAddUrlFor($params=array())
+    public function getAddUrlFor($params = array())
     {
-    	return "";
+        return "";
     }
 
     /**
@@ -99,20 +97,15 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * {@inheritdoc}
      */
-    public function adaptQueryBuilder($querybuilder, $params=array())
+    public function adaptQueryBuilder($queryBuilder, $params = array())
     {
-        parent::adaptQueryBuilder($querybuilder);
-        $querybuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-	        ->andWhere('n.id IN (
-	        		SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3))')
-	        ->andWhere('n.id IN (
-	        		SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)')
-	        ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
-	        ->setParameter(2, '%|'.$this->permission.':1|%')
-	        ->setParameter(3, $this->user->getGroupIds())
-	        ->addOrderBy('n.sequencenumber', 'DESC');
-
-        return $querybuilder;
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->andWhere(
+            'n.id IN (
+                    SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)'
+        )
+            ->addOrderBy('n.sequencenumber', 'DESC');
     }
 
     /**
@@ -122,6 +115,5 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     {
         return array();
     }
-
 
 }

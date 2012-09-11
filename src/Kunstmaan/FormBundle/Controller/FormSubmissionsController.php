@@ -4,17 +4,11 @@ namespace Kunstmaan\FormBundle\Controller;
 
 use Ddeboer\DataImportBundle\Writer\CsvWriter;
 
-use Kunstmaan\AdminBundle\Entity\User;
-use Kunstmaan\AdminBundle\Entity\Group;
-use Kunstmaan\AdminBundle\Form\EditUserType;
-use Kunstmaan\AdminBundle\Form\EditGroupType;
-use Kunstmaan\AdminBundle\Form\UserType;
-use Kunstmaan\AdminBundle\Form\GroupType;
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -38,8 +32,9 @@ class FormSubmissionsController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $formpagesadminlist = $this->get("adminlist.factory")->createList(new FormPageAdminListConfigurator($user, 'read'), $em);
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        $formpagesadminlist = $this->get('adminlist.factory')->createList(new FormPageAdminListConfigurator(PermissionMap::PERMISSION_VIEW), $em);
+        $formpagesadminlist->setAclHelper($aclHelper);
         $formpagesadminlist->bindRequest($request);
 
         return array('adminlist' => $formpagesadminlist);
@@ -60,7 +55,9 @@ class FormSubmissionsController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->getRequest();
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
         $adminlist = $this->get("adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($nodeTranslation), $em);
+        $adminlist->setAclHelper($aclHelper);
         $adminlist->bindRequest($request);
 
         return array('nodetranslation' => $nodeTranslation, 'adminlist' => $adminlist);
@@ -97,13 +94,12 @@ class FormSubmissionsController extends Controller
     public function exportAction($nodetranslationid)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $request = $this->getRequest();
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
 
         $tmpFilename = tempnam('/tmp', 'cb_csv_');
         $file = new \SplFileObject($tmpFilename);
         $writer = new CsvWriter($file);
-        
+
         $qb = $em->createQueryBuilder()
                 ->select('fs')
                 ->from('KunstmaanFormBundle:FormSubmission', 'fs')
@@ -114,10 +110,10 @@ class FormSubmissionsController extends Controller
         $iterableResult = $qb->getQuery()->iterate();
         $isHeaderWritten = false;
         $translator = $this->get('translator');
-        
+
         foreach ($iterableResult AS $row) {
             $submission = $row[0];
-            
+
             // Write header info
             if (!$isHeaderWritten) {
                 $header = array($translator->trans("Id"), $translator->trans("Date"), $translator->trans("Language"));
@@ -127,7 +123,7 @@ class FormSubmissionsController extends Controller
                 $writer->writeItem($header);
                 $isHeaderWritten = true;
             }
-            
+
             // Write row data
             $data = array($submission->getId(), $submission->getCreated()->format('d/m/Y H:i:s'), $submission->getLang());
             foreach ($submission->getFields() as $field) {
@@ -137,12 +133,12 @@ class FormSubmissionsController extends Controller
             $em->detach($submission);
         }
         $writer->finish();
-                
+
         $response = new Response(file_get_contents($tmpFilename));
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="form-submissions.csv"');
         unlink($tmpFilename);
-        
+
         return $response;
     }
 
