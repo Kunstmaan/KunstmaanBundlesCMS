@@ -32,7 +32,7 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition::__construct
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::__construct
      * @dataProvider constructorData
      * @expectedException \InvalidArgumentException
      */
@@ -50,8 +50,8 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition::setAlias
-     * @covers Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition::getAlias
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setAlias
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getAlias
      */
     public function testSetGetAlias()
     {
@@ -60,8 +60,8 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition::setEntity
-     * @covers Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition::getEntity
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setEntity
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getEntity
      */
     public function testSetGetEntity()
     {
@@ -70,8 +70,8 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition::setPermissions
-     * @covers Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition::getPermissions
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setPermissions
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getPermissions
      */
     public function testSetGetPermissions()
     {
@@ -80,7 +80,7 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition::setPermissions
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setPermissions
      * @dataProvider permissionsData
      * @expectedException \InvalidArgumentException
      */

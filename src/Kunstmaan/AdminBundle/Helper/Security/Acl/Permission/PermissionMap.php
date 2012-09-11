@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMapInterface;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 
 /**
  * Standard Kunstmaan permission map, based on BasicPermissionMap

@@ -66,9 +66,6 @@ services:
         tags:
             -  { name: 'twig.extension' }
 
-    security.acl.permission.map:
-        class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap
-
 # This should no longer be necessary (only needed for Symfony 2.0)
 #    security.acl.object_identity_retrieval_strategy:
 #        class: Kunstmaan\AdminBundle\Helper\Security\Acl\Domain\ObjectIdentityRetrievalStrategy

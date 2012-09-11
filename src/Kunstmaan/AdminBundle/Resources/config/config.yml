@@ -33,4 +33,4 @@ monolog:
             id: kunstmaan_admin.handler.log
 
 parameters:
-    security.acl.permission.map.class: Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap
+    security.acl.permission.map.class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap
