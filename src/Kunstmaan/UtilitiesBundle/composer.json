@@ -1,0 +1,24 @@
+{
+    "name": "kunstmaan/utilities-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 KunstmaanUtilitiesBundle",
+    "keywords": [],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanUtilitiesBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.0.*"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\UtilitiesBundle": "" }
+    },
+    "target-dir": "Kunstmaan/UtilitiesBundle"
+}

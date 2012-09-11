@@ -1,0 +1,7 @@
+parameters:
+  kunstmaan_utilities.cipher.class: Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher
+
+services:
+  utilities.cipher:
+    class: %kunstmaan_utilities.cipher.class%
+    arguments: [%utilities.cipher.secret%]
