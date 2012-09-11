@@ -1,67 +1,67 @@
 parameters:
-    admin.menubuilder.class: Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder
+    kunstmaan_admin.menubuilder.class: Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder
 
 services:
-    admin.menubuilder:
-        class: %admin.menubuilder.class%
+    kunstmaan_admin.menubuilder:
+        class: %kunstmaan_admin.menubuilder.class%
         arguments: ["@translator", "@request"]
         scope: request
         
-    admin.menu.adaptor.settings:
+    kunstmaan_admin.menu.adaptor.settings:
         class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
         tags:
-            -  { name: 'admin.menu.adaptor' }
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
         
-    admin.menu.adaptor.modules:
+    kunstmaan_admin.menu.adaptor.modules:
         class: Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor
         tags:
-            -  { name: 'admin.menu.adaptor' }
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    admin.menu.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\MenuTwigExtension
-        arguments: ["@admin.menubuilder"]
-        tags:
-            -  { name: 'twig.extension' }
-        
-    admin.localeswitcher.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
-        tags:
-            -  { name: 'twig.extension' }
-            
-    admin.form.type.urlchooser:
+    kunstmaan_admin.form.type.urlchooser:
         class: Kunstmaan\AdminBundle\Form\Type\URLChooserType
         tags:
             - { name: 'form.type', alias: 'urlchooser' }
             
-    admin.handler.log:
+    kunstmaan_admin.handler.log:
         class: Kunstmaan\AdminBundle\Helper\LogHandler
         arguments: ["@monolog.logger.doctrine", "@security.context", "@doctrine.orm.entity_manager"]
         tags:
             - { name: 'log_handler' }
 
-    admin.login.listener:
+    kunstmaan_admin.login.listener:
         class: Kunstmaan\AdminBundle\EventListener\LoginListener
         arguments: ["@security.context", "@doctrine.orm.entity_manager"]
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
             
-    admin.logout.listener:
+    kunstmaan_admin.logout.listener:
         class: Kunstmaan\AdminBundle\EventListener\LogoutListener
         arguments:  ["@security.context", "@doctrine.orm.entity_manager"]
         tags:
             - { name: 'monolog.logger', channel: 'security' }
             
-    admin.locale.twig.extension:
+    kunstmaan_admin.menu.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\Extension\MenuTwigExtension
+        arguments: ["@kunstmaan.admin.menubuilder"]
+        tags:
+            -  { name: 'twig.extension' }
+
+    kunstmaan_admin.localeswitcher.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
+        tags:
+            -  { name: 'twig.extension' }
+
+    kunstmaan_admin.locale.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
         tags:
             - { name: 'twig.extension' }
 
-    admin.formtools.twig.extension:
+    kunstmaan_admin.formtools.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension
         tags:
             - { name: 'twig.extension' }
  
-    admin.permissions.twig.extension:
+    kunstmaan_admin.permissions.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
         tags:
             -  { name: 'twig.extension' }
@@ -71,24 +71,24 @@ services:
 #        class: Kunstmaan\AdminBundle\Helper\Security\Acl\Domain\ObjectIdentityRetrievalStrategy
 #        arguments: ["@doctrine.orm.entity_manager"]
 
-    admin.acl.helper:
+    kunstmaan_admin.acl.helper:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
 
-    admin.acl.native.helper:
+    kunstmaan_admin.acl.native.helper:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
 
-    admin.guest.security.authentication.listener:
+    kunstmaan_admin.guest.security.authentication.listener:
         class: Kunstmaan\AdminBundle\Helper\Security\Http\Firewall\GuestUserListener
         arguments: ["@security.context", "user_provider", "provider_key"]
         tags:
             - { name: 'monolog.logger', channel: 'security' }
         
-    admin.guest.security.authentication.provider:
+    kunstmaan_admin.guest.security.authentication.provider:
         class: Kunstmaan\AdminBundle\Helper\Security\Authentication\Provider\GuestUserProvider
         arguments: [""]
 
-    admin.permissionadmin:
+    kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@kernel"]

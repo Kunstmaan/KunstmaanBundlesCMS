@@ -131,16 +131,10 @@ public function findAllWithPermission(AclHelper $aclHelper, PermissionDefinition
 The AclHelper is provided as a service, so to call the above method to check the VIEW permission in a controller
 you could use :
 ```php
-<<<<<<< HEAD
-$aclHelper = $this->get('admin.acl.helper');
+$aclHelper = $this->get('kunstmaan_admin.acl.helper');
 $em = $this->getDoctrine()->getManager();
-$items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, array('view'));
-=======
-$aclHelper = $this->get('kunstmaan.acl.helper');
-$em = $this->getDoctrine()->getEntityManager();
 $permissionDef = new PermissionDefinition(array('view'));
 $items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, $permissionDef);
->>>>>>> 1.3
 ```
 
 ## PermissionDefinition
