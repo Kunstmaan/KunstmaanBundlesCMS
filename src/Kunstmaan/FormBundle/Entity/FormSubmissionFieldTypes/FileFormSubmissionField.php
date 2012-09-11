@@ -2,95 +2,128 @@
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\Form;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Sluggable\Util\Urlizer;
 
 /**
- * FileFormSubmissionField
+ * This class represents a file form submission field
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- * @ORM\Table(name="form_fileformsubmissionfield")
+ * @ORM\Table(name="kuma_file_form_submission_fields")
  */
 class FileFormSubmissionField extends FormSubmissionField
 {
 
-	/**
-	 * The file name
-	 * @ORM\Column(name="ffsf_value", type="string")
-	 */
-	protected $file_name;
+    /**
+     * The file name
+     * @ORM\Column(name="ffsf_value", type="string")
+     */
+    protected $fileName;
 
-	/**
-	 * non-persistent storage of upload file
-	 * @Assert\File(maxSize="6000000")
-	 */
-	public $file;
+    /**
+     * non-persistent storage of upload file
+     * @Assert\File(maxSize="6000000")
+     */
+    public $file;
 
-	public function __toString()
-	{
-		return !empty($this->file_name) ? $this->file_name : "";
-	}
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return !empty($this->fileName) ? $this->fileName : "";
+    }
 
-	public function isNull()
-	{
-		return null === $this->file && empty($this->file_name);
-	}
+    /**
+     * @return bool
+     */
+    public function isNull()
+    {
+        return null === $this->file && empty($this->fileName);
+    }
 
-	public function upload($uploadDir)
-	{
-		// the file property can be empty if the field is not required
-		if (null === $this->file) {
-			return;
-		}
+    /**
+     * @param string $uploadDir
+     */
+    public function upload($uploadDir)
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->file) {
+            return;
+        }
 
-		// sanitize filename for security
-		$safeFileName = $this->getSafeFileName($this->file);
+        // sanitize filename for security
+        $safeFileName = $this->getSafeFileName($this->file);
 
-		// move takes the target directory and then the target filename to move to
-		$this->file->move($uploadDir, $safeFileName);
+        // move takes the target directory and then the target filename to move to
+        $this->file->move($uploadDir, $safeFileName);
 
-		// set the path property to the filename where you'ved saved the file
-		$this->file_name = $safeFileName;
+        // set the path property to the filename where you'ved saved the file
+        $this->fileName = $safeFileName;
 
-		// clean up the file property as you won't need it anymore
-		$this->file = null;
-	}
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+    }
 
-	public function onValidPost($form, $formbuilder, $request, $container)
-	{
-		// do nothing by default
-		$uploadDir = $container->getParameter('formsubmission_rootdir');
-		$this->upload($uploadDir);
-	}
+    /**
+     * @param Form               $form        the Form
+     * @param FormBuilder        $formBuilder the FormBuilder
+     * @param Request            $request     the Request
+     * @param ContainerInterface $container   the Container
+     */
+    public function onValidPost(Form $form, FormBuilder $formBuilder, Request $request, ContainerInterface $container)
+    {
+        // do nothing by default
+        $uploadDir = $container->getParameter('formsubmission_rootdir');
+        $this->upload($uploadDir);
+    }
 
-	public function getSafeFileName($file)
-	{
-		$fileExtension = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-		$mimeTypeExtension = $file->guessExtension();
-		$newExtension = !empty($mimeTypeExtension) ? $mimeTypeExtension : $fileExtension;
+    /**
+     * @param File $file
+     *
+     * @return string
+     */
+    public function getSafeFileName(File $file)
+    {
+        $fileExtension = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
+        $mimeTypeExtension = $file->guessExtension();
+        $newExtension = !empty($mimeTypeExtension) ? $mimeTypeExtension : $fileExtension;
 
-		$baseName = !empty($fileExtension) ? basename($this->file->getClientOriginalName(), $fileExtension) : $this->file->getClientOriginalName();
-		$safeBaseName = Urlizer::urlize($baseName);
+        $baseName = !empty($fileExtension) ? basename($this->file->getClientOriginalName(), $fileExtension) : $this->file->getClientOriginalName();
+        $safeBaseName = Urlizer::urlize($baseName);
 
-		return $safeBaseName.(!empty($newExtension) ? '.'.$newExtension : '');
-	}
+        return $safeBaseName . (!empty($newExtension) ? '.' . $newExtension : '');
+    }
 
-	public function setFileName($file_name)
-	{
-		$this->file_name = $file_name;
-	}
+    /**
+     * @param string $fileName
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+    }
 
-	public function getFileName()
-	{
-		return $this->file_name;
-	}
+    /**
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
 
-	public function getSubmissionTemplate()
-	{
-		return "KunstmaanFormBundle:FileUploadPagePart:submission.html.twig";
-	}
+    /**
+     * @return string
+     */
+    public function getSubmissionTemplate()
+    {
+        return "KunstmaanFormBundle:FileUploadPagePart:submission.html.twig";
+    }
 
 }

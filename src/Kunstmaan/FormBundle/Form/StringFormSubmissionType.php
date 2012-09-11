@@ -5,10 +5,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\MinLength;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * StringFormSubmissionType
@@ -51,4 +47,3 @@ class StringFormSubmissionType extends AbstractType
         return 'kunstmaan_formbundle_stringformsubmissiontype';
     }
 }
-

@@ -5,8 +5,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormInterface;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Util\PropertyPath;
 
@@ -58,6 +56,7 @@ class OneEntityToIdTransformer implements DataTransformerInterface
 
         if ($this->property) {
             $propertyPath = new PropertyPath($this->property);
+
             return $propertyPath->getValue($data);
         }
 

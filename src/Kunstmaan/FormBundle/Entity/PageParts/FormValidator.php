@@ -35,4 +35,3 @@ class FormValidator implements FormValidatorInterface
         return call_user_func($this->callback, $form, $this->object, $this->uniqueid);
     }
 }
-

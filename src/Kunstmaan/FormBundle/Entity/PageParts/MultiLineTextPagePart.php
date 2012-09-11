@@ -9,9 +9,7 @@ use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
  * Multi line text pagepart
@@ -90,24 +88,22 @@ class MultiLineTextPagePart extends AbstractFormPagePart
         $formBuilder->setData($data);
         if ($this->getRequired()) {
             $formBuilder->addValidator(
-				new FormValidator($sfsf, $this,
-					function (FormInterface $form, $sfsf, $thiss)
-					{
-						$value = $sfsf->getValue();
+                new FormValidator($sfsf, $this,
+                    function (FormInterface $form, $sfsf, $thiss) {
+                        $value = $sfsf->getValue();
                         if (is_null($value) || !is_string($value) || empty($value)) {
-							$errormsg = $thiss->getErrormessageRequired();
-							$v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-							$v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
-						}
-					}
-			));
+                            $errormsg = $thiss->getErrormessageRequired();
+                            $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
+                            $v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
+                        }
+                    }
+            ));
         }
         if ($this->getRegex()) {
             $formBuilder
                     ->addValidator(
                         new FormValidator($sfsf, $this,
-                            function (FormInterface $form, $sfsf, $thiss)
-                                    {
+                            function (FormInterface $form, $sfsf, $thiss) {
                                         $value = $sfsf->getValue();
                                         if (!is_null($value) && is_string($value) && !preg_match('/' . $thiss->getRegex() . '/', $value)) {
                                             $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');

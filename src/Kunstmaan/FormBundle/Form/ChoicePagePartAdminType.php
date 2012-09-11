@@ -4,7 +4,6 @@ namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -24,7 +23,7 @@ class ChoicePagePartAdminType extends AbstractType
             ->add('expanded', 'checkbox', array('required' => false))
             ->add('multiple', 'checkbox', array('required' => false))
             ->add('choices', 'textarea', array('required' => false))
-			->add('empty_value', 'text', array('required' => false));
+            ->add('empty_value', 'text', array('required' => false));
     }
 
     /**
@@ -35,4 +34,3 @@ class ChoicePagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_choicepageparttype';
     }
 }
-

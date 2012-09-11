@@ -3,18 +3,13 @@
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * TextFormSubmissionField
- * 
+ * This class represents a text form submission field
+ *
  * @ORM\Entity
- * @ORM\Table(name="form_textformsubmissionfield")
+ * @ORM\Table(name="kuma_text_form_submission_fields")
  */
 class TextFormSubmissionField extends FormSubmissionField
 {
@@ -41,7 +36,7 @@ class TextFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * @return \Kunstmaan\FormBundle\Form\TextFormSubmissionType
+     * @return TextFormSubmissionType
      */
     public function getDefaultAdminType()
     {
@@ -49,12 +44,13 @@ class TextFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function __toString()
     {
-		$value = $this->getValue();
-		return !empty($value) ? $value : "";
+        $value = $this->getValue();
+
+        return !empty($value) ? $value : "";
     }
 
 }

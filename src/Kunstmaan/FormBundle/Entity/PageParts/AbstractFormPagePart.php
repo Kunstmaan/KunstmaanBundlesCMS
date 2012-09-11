@@ -5,12 +5,8 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
-use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
-use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
  * An abstract Form Pagepart
@@ -18,7 +14,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
 
-	const ERROR_REQUIRED_FIELD = "field.required";
+    const ERROR_REQUIRED_FIELD = "field.required";
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -99,9 +95,9 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
         return $this->getDefaultView();
     }
 
-	public function getAdminView()
-	{
-		return "KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig";
-	}
+    public function getAdminView()
+    {
+        return "KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig";
+    }
 
 }

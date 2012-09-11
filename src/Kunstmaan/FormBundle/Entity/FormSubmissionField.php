@@ -2,12 +2,11 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\Form;
 
 /**
  * The formsubmission field
@@ -17,10 +16,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- 		"string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
-		"text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
-		"choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
-		"file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField"
+         "string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
+        "text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
+        "choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
+        "file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField"
  * })
  */
 class FormSubmissionField
@@ -124,8 +123,14 @@ class FormSubmissionField
         return "FormSubmission Field";
     }
 
-	public function onValidPost($form, $formbuilder, $request, $container)
-	{
-		// do nothing by default
-	}
+    /**
+     * @param Form               $form        the Form
+     * @param FormBuilder        $formBuilder the FormBuilder
+     * @param Request            $request     the Request
+     * @param ContainerInterface $container   the Container
+     */
+    public function onValidPost(Form $form, FormBuilder $formBuilder, Request $request, ContainerInterface $container)
+    {
+        // do nothing by default
+    }
 }

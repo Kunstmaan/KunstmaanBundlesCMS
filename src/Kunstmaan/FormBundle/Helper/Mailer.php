@@ -14,7 +14,7 @@ class Mailer
 
     private $mailer;
     private $templating;
-	private $container;
+    private $container;
 
     /**
      * @param \Swift_Mailer $mailer     The mailer service
@@ -24,7 +24,7 @@ class Mailer
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
-		$this->container = $container;
+        $this->container = $container;
     }
 
     /**
@@ -37,12 +37,12 @@ class Mailer
     {
         $toArr = explode("\r\n", $to);
         $message = \Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);
-		$message->setBody(
-			$this->templating->render('KunstmaanFormBundle:Mailer:mail.html.twig', array(
-				'submission' => $submission,
-				'host' => $this->container->get('request')->getScheme().'://'.$this->container->get('request')->getHttpHost()
-			)
-		), 'text/html');
+        $message->setBody(
+            $this->templating->render('KunstmaanFormBundle:Mailer:mail.html.twig', array(
+                'submission' => $submission,
+                'host' => $this->container->get('request')->getScheme().'://'.$this->container->get('request')->getHttpHost()
+            )
+        ), 'text/html');
         $this->mailer->send($message);
     }
 }

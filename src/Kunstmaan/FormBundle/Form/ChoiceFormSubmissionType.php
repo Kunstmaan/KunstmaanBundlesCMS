@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -16,7 +15,7 @@ class ChoiceFormSubmissionType extends AbstractType
     private $expanded;
     private $multiple;
     private $choices;
-	private $empty_value;
+    private $empty_value;
 
     /**
      * @param string  $label    The label
@@ -30,7 +29,7 @@ class ChoiceFormSubmissionType extends AbstractType
         $this->expanded = $expanded;
         $this->multiple = $multiple;
         $this->choices = $choices;
-		$this->empty_value = $empty_value;
+        $this->empty_value = $empty_value;
     }
 
     /**
@@ -39,13 +38,13 @@ class ChoiceFormSubmissionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('value', 'choice', array(
-			'label' => $this->label,
-			'expanded' => $this->expanded,
-			'multiple' => $this->multiple,
-			'choices' => $this->choices,
-			'empty_value' => $this->empty_value,
-			'empty_data' => null
-		));
+            'label' => $this->label,
+            'expanded' => $this->expanded,
+            'multiple' => $this->multiple,
+            'choices' => $this->choices,
+            'empty_value' => $this->empty_value,
+            'empty_data' => null
+        ));
     }
 
     /**
@@ -56,4 +55,3 @@ class ChoiceFormSubmissionType extends AbstractType
         return 'kunstmaan_formbundle_choiceformsubmissiontype';
     }
 }
-

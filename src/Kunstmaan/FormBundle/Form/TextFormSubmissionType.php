@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -46,4 +45,3 @@ class TextFormSubmissionType extends AbstractType
         return 'kunstmaan_formbundle_stringformsubmissiontype';
     }
 }
-

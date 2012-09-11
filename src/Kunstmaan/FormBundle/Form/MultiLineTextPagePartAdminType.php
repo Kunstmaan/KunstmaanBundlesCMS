@@ -32,4 +32,3 @@ class MultiLineTextPagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_singlelinetextpageparttype';
     }
 }
-

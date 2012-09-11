@@ -28,4 +28,3 @@ class SubmitButtonPagePartAdminType extends AbstractType
         return 'kunstmaan_formbundle_singlelinetextpageparttype';
     }
 }
-

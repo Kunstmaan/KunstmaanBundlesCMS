@@ -21,7 +21,7 @@ class ConfigureActionsMenuListener
     private $router;
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
+     * @param \Doctrine\ORM\EntityManager       $em
      * @param \Symfony\Component\Routing\Router $router
      */
     public function __construct(EntityManager $em, Router $router)

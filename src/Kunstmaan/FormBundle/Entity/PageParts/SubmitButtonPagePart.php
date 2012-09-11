@@ -3,11 +3,9 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Symfony\Component\Form\AbstractType;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
  * A submit button
@@ -58,12 +56,12 @@ class SubmitButtonPagePart extends AbstractPagePart
         return "KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig";
     }
 
-	public function getAdminView()
-	{
-		return "KunstmaanFormBundle:SubmitButtonPagePart:view-admin.html.twig";
-	}
+    public function getAdminView()
+    {
+        return "KunstmaanFormBundle:SubmitButtonPagePart:view-admin.html.twig";
+    }
 
-	/**
+    /**
      * @return string
      */
     public function getElasticaView()

@@ -2,37 +2,39 @@
 
 {% block content %}
 
-	<table class="bordered-table zebra-striped">
-		<thead>
-			<th width="30%">Label</th>
-			<th width="70%">Value</th>
-		</thead>
-		<body>
-			<tr>
-				<td>Date</td>
-				<td>{{ formsubmission.created|date }}</td>
-			</tr>
-			<tr>
-				<td>Lang</td>
-				<td>{{ formsubmission.lang }}</td>
-			</tr>
-			<tr>
-				<td>ipAddress</td>
-				<td>{{ formsubmission.ipAddress }}</td>
-			</tr>
-			{% for field in formsubmission.fields  %}
-				<tr>
-					<td><strong>{{ field.label }}</strong></td>
-					<td>
-						{% if (field.submissionTemplate is defined) %}
-							{% include field.submissionTemplate with {'resource' : field, 'host' : ''} %}
-						{% else %}
-							{{ field }}
-						{% endif %}
-					</td>
-				</tr>
-			{% endfor %}
-		</body>
-	</table>
+    <table class="bordered-table zebra-striped">
+        <thead>
+            <tr>
+                <th width="30%">Label</th>
+                <th width="70%">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Date</td>
+                <td>{{ formsubmission.created|date }}</td>
+            </tr>
+            <tr>
+                <td>Lang</td>
+                <td>{{ formsubmission.lang }}</td>
+            </tr>
+            <tr>
+                <td>ipAddress</td>
+                <td>{{ formsubmission.ipAddress }}</td>
+            </tr>
+            {% for field in formsubmission.fields %}
+                <tr>
+                    <td><strong>{{ field.label }}</strong></td>
+                    <td>
+                        {% if (field.submissionTemplate is defined) %}
+                            {% include field.submissionTemplate with {'resource' : field, 'host' : ''} %}
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
