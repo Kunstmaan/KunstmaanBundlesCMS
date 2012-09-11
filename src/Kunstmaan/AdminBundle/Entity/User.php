@@ -41,7 +41,7 @@ class User extends BaseUser
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -51,7 +51,7 @@ class User extends BaseUser
     /**
      * Set id
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {

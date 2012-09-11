@@ -124,7 +124,7 @@ class PermissionAdmin
     /**
      * @param Request $request
      *
-     * @return boolean
+     * @return bool
      */
     public function bindRequest(Request $request)
     {

@@ -68,7 +68,7 @@ class PermissionMap implements PermissionMapInterface
      *
      * @param string $permission
      *
-     * @return boolean
+     * @return bool
      */
     public function contains($permission)
     {

@@ -53,7 +53,7 @@ class LogItem
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -63,7 +63,7 @@ class LogItem
     /**
      * Set id
      *
-     * @param id integer
+     * @param int $id
      */
     public function setId($id)
     {

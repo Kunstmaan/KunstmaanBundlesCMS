@@ -19,7 +19,7 @@ abstract class AbstractEntity
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -29,7 +29,7 @@ abstract class AbstractEntity
     /**
      * Set id
      *
-     * @param integer $id The unique identifier
+     * @param int $id The unique identifier
      */
     public function setId($id)
     {

@@ -29,8 +29,8 @@ class LogHandler extends AbstractProcessingHandler
      * @param MonologLogger            $logger
      * @param SecurityContextInterface $context
      * @param EntityManager            $em
-     * @param integer                  $level
-     * @param boolean                  $bubble
+     * @param int                      $level
+     * @param bool                     $bubble
      */
     public function __construct(
         MonologLogger $logger,

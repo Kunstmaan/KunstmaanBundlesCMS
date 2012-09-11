@@ -176,7 +176,7 @@ class MenuItem
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {
@@ -184,7 +184,7 @@ class MenuItem
     }
 
     /**
-     * @param boolean $active
+     * @param bool $active
      */
     public function setActive($active)
     {
@@ -192,7 +192,7 @@ class MenuItem
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getAppearInNavigation()
     {
@@ -200,7 +200,7 @@ class MenuItem
     }
 
     /**
-     * @param boolean $appearInNavigation
+     * @param bool $appearInNavigation
      */
     public function setAppearInNavigation($appearInNavigation)
     {
@@ -208,7 +208,7 @@ class MenuItem
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getWeight()
     {
@@ -216,7 +216,7 @@ class MenuItem
     }
 
     /**
-     * @param integer $weight
+     * @param int $weight
      */
     public function setWeight($weight)
     {

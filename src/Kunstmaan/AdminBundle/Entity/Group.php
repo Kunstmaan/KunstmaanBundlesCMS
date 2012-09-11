@@ -51,7 +51,7 @@ class Group implements RoleInterface, GroupInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -116,7 +116,7 @@ class Group implements RoleInterface, GroupInterface
      *
      * @param string $role
      *
-     * @return boolean
+     * @return bool
      */
     public function hasRole($role)
     {

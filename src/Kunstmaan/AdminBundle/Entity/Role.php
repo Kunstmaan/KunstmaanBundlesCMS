@@ -62,7 +62,7 @@ class Role implements RoleInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

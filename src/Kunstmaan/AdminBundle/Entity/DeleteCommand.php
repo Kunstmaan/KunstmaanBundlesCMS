@@ -52,7 +52,7 @@ class DeleteCommand extends Command
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -62,7 +62,7 @@ class DeleteCommand extends Command
     /**
      * Set id
      *
-     * @param id integer
+     * @param int $id
      */
     public function setId($id)
     {

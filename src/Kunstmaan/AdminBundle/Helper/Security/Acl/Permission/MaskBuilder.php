@@ -41,7 +41,7 @@ class MaskBuilder
     /**
      * Constructor
      *
-     * @param integer $mask optional; defaults to 0
+     * @param int $mask optional; defaults to 0
      */
     public function __construct($mask = 0)
     {
@@ -75,7 +75,7 @@ class MaskBuilder
     /**
      * Returns the mask of this permission
      *
-     * @return integer
+     * @return int
      */
     public function get()
     {
@@ -141,7 +141,7 @@ class MaskBuilder
     /**
      * Returns the code for the passed mask
      *
-     * @param integer $mask
+     * @param int $mask
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
@@ -175,11 +175,11 @@ class MaskBuilder
     /**
      * Checks if a specific permission or mask value is set in the current mask
      *
-     * @param string|integer $mask
+     * @param string|int $mask
      *
      * @throws \InvalidArgumentException
      *
-     * @return boolean
+     * @return bool
      */
     public function has($mask)
     {

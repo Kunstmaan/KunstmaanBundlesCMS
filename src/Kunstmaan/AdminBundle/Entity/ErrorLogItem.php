@@ -39,7 +39,7 @@ class ErrorLogItem extends LogItem
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -49,7 +49,7 @@ class ErrorLogItem extends LogItem
     /**
      * Set id
      *
-     * @param id integer
+     * @param int $id
      */
     public function setId($id)
     {

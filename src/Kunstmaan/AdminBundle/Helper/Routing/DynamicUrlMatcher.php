@@ -27,7 +27,7 @@ class DynamicUrlMatcher extends UrlMatcher
      *
      * @param string $pathinfo
      *
-     * @return boolean
+     * @return bool
      */
     public function match($pathinfo)
     {
