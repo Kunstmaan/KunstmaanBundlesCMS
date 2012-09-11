@@ -41,7 +41,7 @@ abstract class Command
         $this->em->flush();
     }
 
-    abstract function executeimpl($options);
+    abstract public function executeimpl($options);
 
     public function remove()
     {
@@ -51,5 +51,5 @@ abstract class Command
         $this->em->flush();
     }
 
-    abstract function removeimpl();
+    abstract public function removeimpl();
 }

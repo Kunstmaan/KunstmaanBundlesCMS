@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
-
 class LocaleSwitcherTwigExtension extends \Twig_Extension
 {
     /**
@@ -18,12 +17,12 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
         $this->environment = $environment;
     }
 
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             'localeswitcher_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
         );
     }
-
 
     public function renderWidget($localeswitcher, $route, array $parameters = array())
     {
@@ -31,12 +30,13 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
         $locales=array();
         $help=strtok($localeswitcher, "|");
         while ($help !== false) {
-        	$locales[] = $help;
-        	$help = strtok("|");
+            $locales[] = $help;
+            $help = strtok("|");
         }
+
         return $template->render(array_merge($parameters, array(
             'locales'   => $locales,
-        	'route'		=> $route
+            'route'		=> $route
         )));
     }
 

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
-
 class AdminPermissionsTwigExtension extends \Twig_Extension
 {
     /**
@@ -18,12 +17,12 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
         $this->environment = $environment;
     }
 
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             'permissionsadmin_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
         );
     }
-
 
     public function renderWidget($permissionadmin , $form , array $parameters = array())
     {

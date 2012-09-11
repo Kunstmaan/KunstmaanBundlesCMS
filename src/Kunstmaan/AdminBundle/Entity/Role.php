@@ -79,4 +79,3 @@ class Role implements RoleInterface
         $this->role = $role;
     }
 }
-

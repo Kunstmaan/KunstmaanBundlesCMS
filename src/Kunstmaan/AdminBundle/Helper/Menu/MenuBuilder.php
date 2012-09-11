@@ -6,8 +6,6 @@ use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-use Knp\Menu\FactoryInterface;
-
 class MenuBuilder
 {
     private $translator;

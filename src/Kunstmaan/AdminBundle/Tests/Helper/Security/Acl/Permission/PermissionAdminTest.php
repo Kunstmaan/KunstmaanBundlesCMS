@@ -104,7 +104,6 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($object->getPermission('ROLE_UNKNOWN'));
     }
 
-
     /**
      * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::__construct
      * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getAllRoles

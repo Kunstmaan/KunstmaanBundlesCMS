@@ -70,7 +70,7 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Returns an array of strings (needed because Symfony ACL doesn't support using RoleInterface yet)
-     * 
+     *
      * @return array
      */
     public function getRoles()
@@ -107,6 +107,7 @@ class Group implements RoleInterface, GroupInterface
                 return $roleItem;
             }
         }
+
         return null;
     }
 
@@ -122,14 +123,15 @@ class Group implements RoleInterface, GroupInterface
         if ($this->getRole($role)) {
             return true;
         }
+
         return false;
     }
 
     /**
      * Adds a Role object to the ArrayCollection. Can't type hint due to interface so throws Exception.
-     * 
+     *
      * @throws InvalidArgumentException
-     * 
+     *
      * @param Role $role
      */
     public function addRole($role)
@@ -145,7 +147,7 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * Pass a string, remove the Role object from collection.
-     * 
+     *
      * @param string $role
      */
     public function removeRole($role)

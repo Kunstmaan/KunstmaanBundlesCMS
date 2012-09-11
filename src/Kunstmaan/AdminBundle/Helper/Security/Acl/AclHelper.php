@@ -53,8 +53,8 @@ class AclHelper
     /**
      * This will clone the original query and apply the ACL constraints
      *
-     * @param QueryBuilder          $queryBuilder
-     * @param PermissionDefinition  $permissionDef
+     * @param QueryBuilder         $queryBuilder
+     * @param PermissionDefinition $permissionDef
      *
      * @return Query
      */

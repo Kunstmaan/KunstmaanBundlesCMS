@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,7 +28,7 @@ abstract class AbstractEntity
 
     /**
      * Set id
-     * 
+     *
      * @param integer $id The unique identifier
      */
     public function setId($id)

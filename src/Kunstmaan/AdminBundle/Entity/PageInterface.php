@@ -10,5 +10,4 @@ use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 interface PageInterface extends HasNodeInterface
 {
 
-
 }

@@ -11,5 +11,5 @@ interface PermissionMapInterface extends BasePermissionMapInterface
      *
      * @return array
      */
-    function getPossiblePermissions();
+    public function getPossiblePermissions();
 }

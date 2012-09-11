@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
-use Symfony\Component\Locale\Locale;
-
 class FormToolsExtension extends \Twig_Extension
 {
 
@@ -70,4 +68,3 @@ class FormToolsExtension extends \Twig_Extension
     }
 
 }
-

@@ -10,7 +10,6 @@ use FOS\UserBundle\Controller\SecurityController as BaseController;
 use Kunstmaan\AdminBundle\Entity\LogItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session;
-use Doctrine\ORM\EntityManager;
 
 class SecurityController extends BaseController
 {

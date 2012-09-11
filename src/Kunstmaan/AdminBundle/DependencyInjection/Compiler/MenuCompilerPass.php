@@ -15,7 +15,7 @@ class MenuCompilerPass implements CompilerPassInterface
         }
 
         $definition = $container->getDefinition('admin.menubuilder');
-        
+
         foreach ($container->findTaggedServiceIds('admin.menu.adaptor') as $id => $attributes) {
             $definition->addMethodCall('addAdaptMenu', array(new Reference($id)));
         }

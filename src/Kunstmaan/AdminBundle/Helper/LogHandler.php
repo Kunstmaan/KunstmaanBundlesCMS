@@ -13,7 +13,6 @@ use Monolog\Handler\NullHandler;
 use Monolog\Handler\AbstractProcessingHandler;
 
 use Symfony\Bridge\Monolog\Logger as MonologLogger;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**

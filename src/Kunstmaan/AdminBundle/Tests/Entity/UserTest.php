@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
-use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 

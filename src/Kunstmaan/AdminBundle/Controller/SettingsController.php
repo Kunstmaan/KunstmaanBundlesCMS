@@ -18,7 +18,6 @@ use Kunstmaan\AdminBundle\AdminList\LogAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use FOS\UserBundle\Util\UserManipulator;

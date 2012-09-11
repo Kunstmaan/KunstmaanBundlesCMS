@@ -41,7 +41,7 @@ class MaskBuilder
     /**
      * Constructor
      *
-     * @param  integer $mask optional; defaults to 0
+     * @param integer $mask optional; defaults to 0
      */
     public function __construct($mask = 0)
     {
@@ -55,7 +55,7 @@ class MaskBuilder
     /**
      * Adds a mask to the permission
      *
-     * @param  mixed       $mask
+     * @param mixed $mask
      *
      * @return MaskBuilder
      */
@@ -109,7 +109,7 @@ class MaskBuilder
     /**
      * Removes a mask from the permission
      *
-     * @param  mixed       $mask
+     * @param mixed $mask
      *
      * @return MaskBuilder
      */
@@ -141,7 +141,7 @@ class MaskBuilder
     /**
      * Returns the code for the passed mask
      *
-     * @param  integer                   $mask
+     * @param integer $mask
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException

@@ -6,12 +6,9 @@ use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 use Kunstmaan\AdminBundle\Helper\Routing\DynamicUrlMatcher;
 
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class DynamicRoutingPage extends AbstractPage implements DynamicRoutingPageInterface
@@ -26,7 +23,7 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
     private $generator;
     /* @var string $locale */
     protected $locale;
-    
+
     /**
      * Routes should be defined here
      */
@@ -57,6 +54,7 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
         if (!$this->routes) {
             $this->initRoutes();
         }
+
         return $this->routes;
     }
 
@@ -73,9 +71,9 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
     }
 
     /**
-     * @param string $name Route name
-     * @param array $parameters
-     * @param bool  $absolute
+     * @param string $name       Route name
+     * @param array  $parameters
+     * @param bool   $absolute
      *
      * @return null|string
      */
@@ -92,6 +90,7 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
         if (!$this->context) {
             $this->context = new RequestContext();
         }
+
         return $this->context;
     }
 
@@ -103,6 +102,7 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
         if (!$this->matcher) {
             $this->matcher = new DynamicUrlMatcher($this->getRoutes(), $this->getContext());
         }
+
         return $this->matcher;
     }
 
@@ -114,6 +114,7 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
         if (!$this->generator) {
             $this->generator = new UrlGenerator($this->getRoutes(), $this->getContext());
         }
+
         return $this->generator;
     }
 

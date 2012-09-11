@@ -33,7 +33,7 @@ class AclNativeHelper
     /**
      * This will clone the original query and apply the ACL constraints
      *
-     * @param QueryBuilder $queryBuilder
+     * @param QueryBuilder         $queryBuilder
      * @param PermissionDefinition $permissionDef
      *
      * @return type
@@ -69,7 +69,7 @@ class AclNativeHelper
                     $uR[] = '"' . $role . '"';
                 }
             }
-            $INString = implode(' OR s.identifier = ', (array)$uR);
+            $INString = implode(' OR s.identifier = ', (array) $uR);
             $INString .= ' OR s.identifier = "' . str_replace(
                 '\\',
                 '\\\\',
@@ -83,7 +83,7 @@ class AclNativeHelper
                     $uR[] = '"' . $role . '"';
                 }
             }
-            $INString = implode(' OR s.identifier = ', (array)$uR);
+            $INString = implode(' OR s.identifier = ', (array) $uR);
         }
 
         $joinTableQuery = <<<SELECTQUERY

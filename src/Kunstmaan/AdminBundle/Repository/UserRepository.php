@@ -14,6 +14,7 @@ class UserRepository extends EntityRepository
         if (!$user) {
             throw new NotFoundHttpException('The id given for the user is not valid.');
         }
+
         return $user;
     }
 
@@ -30,7 +31,7 @@ class UserRepository extends EntityRepository
         } else {
             $roles = array($role);
         }
-        
+
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('u')
             ->from('KunstmaanAdminBundle:User', 'u')
@@ -41,8 +42,8 @@ class UserRepository extends EntityRepository
             ->andWhere('u.expired=0')
             ->andWhere('r.role IN (:roles)')
             ->setParameter('roles', $roles);
-        
+
         return $qb->getQuery()->getResult();
     }
-    
+
 }

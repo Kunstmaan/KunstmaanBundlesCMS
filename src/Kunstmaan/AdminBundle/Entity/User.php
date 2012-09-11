@@ -47,7 +47,7 @@ class User extends BaseUser
     {
         return $this->id;
     }
-    
+
     /**
      * Set id
      *
@@ -55,7 +55,7 @@ class User extends BaseUser
      */
     public function setId($id)
     {
-    	$this->id = $id;
+        $this->id = $id;
     }
 
     /**
@@ -68,8 +68,8 @@ class User extends BaseUser
         $groups = $this->groups;
 
         $groupIds = array();
-        if(count($groups) > 0) {
-            foreach($groups as $group) {
+        if (count($groups) > 0) {
+            foreach ($groups as $group) {
                 $groupIds[] = $group->getId();
             }
         }
@@ -79,7 +79,7 @@ class User extends BaseUser
 
     /**
      * Gets the groups the user belongs to.
-     * 
+     *
      * @return ArrayCollection
      */
     public function getGroups()

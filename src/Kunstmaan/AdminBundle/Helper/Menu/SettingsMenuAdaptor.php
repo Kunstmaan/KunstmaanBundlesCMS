@@ -7,12 +7,7 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Translation\Translator;
-
-use Knp\Menu\FactoryInterface;
-use Knp\Menu\ItemInterface as KnpMenu;
 
 /**
  * The Settings Menu Adaptor
@@ -23,10 +18,10 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
      *
-     * @param MenuBuilder $menu      The MenuBuilder
+     * @param MenuBuilder $menu The MenuBuilder
      * @param MenuItem[]  &$children The current children
-     * @param MenuItem    $parent    The parent Menu item
-     * @param Request     $request   The Request
+     * @param MenuItem $parent  The parent Menu item
+     * @param Request  $request The Request
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
@@ -40,7 +35,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
-        } else if ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+        } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             $menuItem = new MenuItem($menu);
             $menuItem->setRoute('KunstmaanAdminBundle_settings_users');
             $menuItem->setInternalname('Users');
