@@ -15,7 +15,7 @@ Installation instructions
 Installation is straightforward, add the following lines to your deps file:
 
 ```
-[KunstmaanFormBundle]
+[KunstmaanUtilitiesBundle]
     git=https://github.com/Kunstmaan/KunstmaanUtilitiesBundle.git
     target=/bundles/Kunstmaan/UtilitiesBundle
 ```
