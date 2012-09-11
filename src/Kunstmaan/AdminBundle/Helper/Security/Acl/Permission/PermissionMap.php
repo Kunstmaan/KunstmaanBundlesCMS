@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMapInterface;
 
 /**
  * Standard Kunstmaan permission map, based on BasicPermissionMap
@@ -44,7 +44,15 @@ class PermissionMap implements PermissionMapInterface
     );
 
     /**
-     * {@inheritDoc}
+     * Returns an array of bitmasks.
+     *
+     * The security identity must have been granted access to at least one of
+     * these bitmasks.
+     *
+     * @param string $permission
+     * @param object $object
+     *
+     * @return array may return null if permission/object combination is not supported
      */
     public function getMasks($permission, $object)
     {
@@ -56,13 +64,22 @@ class PermissionMap implements PermissionMapInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Whether this map contains the given permission
+     *
+     * @param string $permission
+     *
+     * @return boolean
      */
     public function contains($permission)
     {
         return isset($this->map[$permission]);
     }
 
+    /**
+     * Returns the array of permissions.
+     *
+     * @return array
+     */
     public function getPossiblePermissions()
     {
         return array_keys($this->map);

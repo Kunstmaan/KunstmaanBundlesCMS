@@ -84,7 +84,7 @@ services:
 
     admin.guest.security.authentication.listener:
         class: Kunstmaan\AdminBundle\Helper\Security\Http\Firewall\GuestUserListener
-        arguments: ["@security.context", "user_provider", "provider_key", "@logger"]
+        arguments: ["@security.context", "user_provider", "provider_key"]
         tags:
             - { name: 'monolog.logger', channel: 'security' }
         
@@ -94,4 +94,4 @@ services:
 
     admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "%kernel.environment%"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@kernel"]

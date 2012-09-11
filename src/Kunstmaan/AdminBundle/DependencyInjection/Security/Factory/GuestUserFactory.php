@@ -9,9 +9,7 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Description of GuestUserFactory
- *
- * @author wim
+ * Security factory used to inject GuestUserListener
  */
 class GuestUserFactory implements SecurityFactoryInterface
 {

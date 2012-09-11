@@ -84,7 +84,7 @@ To check if the current user has access to a specific domain object, you use the
 
 $securityContext = $this->get('security.context');
 
-if (false === $securityContext->isGranted('VIEW', $entity))
+if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $entity))
 {
     throw new AccessDeniedException();
 }
@@ -111,27 +111,55 @@ If you want to perform queries for entities that have ACL attached to them (ie. 
 to those entities for which you have a specific permission) you can use the AclHelper. There is one important caveat
 though : the domain object used for the permission check should be the root entity of the QueryBuilder you provide.
 
+The basic configuration is set in a PermissionDefinition object. You should at least specify an array of permissions,
+and can optionally also specify the root entity class name and the querybuilder alias of the root entity table. If
+you don't specify the latter variables, the querybuilders' first root entity and alias will be used.
+
 To adapt a query in an EntityRepository method you could use:
 ```php
-public function findAllWithPermission(AclHelper $aclHelper, array $permissions)
+public function findAllWithPermission(AclHelper $aclHelper, PermissionDefinition $permissionDef)
 {
     $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->where('b.deleted = 0');
-    $query = $aclHelper->apply($qb, $permissions);
+    $query = $aclHelper->apply($qb, $permissionDef);
 
     return $query->getResult();
 }
-
 ```
 
 The AclHelper is provided as a service, so to call the above method to check the VIEW permission in a controller
 you could use :
 ```php
+<<<<<<< HEAD
 $aclHelper = $this->get('admin.acl.helper');
 $em = $this->getDoctrine()->getManager();
 $items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, array('view'));
+=======
+$aclHelper = $this->get('kunstmaan.acl.helper');
+$em = $this->getDoctrine()->getEntityManager();
+$permissionDef = new PermissionDefinition(array('view'));
+$items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, $permissionDef);
+>>>>>>> 1.3
 ```
+
+## PermissionDefinition
+The permission definition object allows you to define the settings to be used by the ACL helper. Per default
+the (ORM based) AclHelper will check the QueryBuilder passed to it to determine the first root entity and
+the corresponding alias. You can override this by providing *both* a root entity name and alias, ie. :
+
+```php
+$permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n');
+```
+
+In the previous example, you force the Node object to be used as ACL root entity and make sure the 'n' alias
+(that you defined in the QueryBuilder that you wish to modify) will be used to apply the ACL permissions.
+
+The native AclHelper (called AclNativeHelper) will *always* need a root entity and alias set, because the
+DBAL QueryBuilder doesn't know about your entities.
+
+One important thing to note is that ACL permissions currently can only be applied to entities with a single
+unique primary key (so in fact there's no support for composite keys).
 
 ## References
 

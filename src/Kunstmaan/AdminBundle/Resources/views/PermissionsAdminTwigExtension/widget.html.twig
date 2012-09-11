@@ -10,6 +10,7 @@
 {% endif %}
 
 <div class="permissionscontainer">
+    <div id="permissionChanges"></div>
 {% spaceless %}
     <table class="table table-bordered table-striped">
         <thead>
@@ -29,7 +30,7 @@
 	                {% set permission = permissionadmin.getPermission(role) %}
 	                {% for permissionName in permissionadmin.getPossiblePermissions() %}
 		                <td>
-		                    <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %}{% if recursiveSupport %} onchange="permissionChange('{{ role.getRole() }}', '{{ permissionName }}', this, {% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %}){% endif %}"/>
+		                    <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %} onchange="permissionChange('{{ role.getRole() }}', '{{ permissionName }}', this, {% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %})"/>
 		                </td>
 	                {% endfor %}
 	            </tr>
@@ -39,7 +40,6 @@
 {% endspaceless %}
 </div>
 
-{% if recursiveSupport %}
 <script type="text/javascript">
     var changes = new Array();
     changes['add'] = new Array();
@@ -68,7 +68,23 @@
                 changes['del'].push(role + '.' + permission);
             }
         }
-
+        // Add hidden fields
+        html = '';
+        if (changes['add'].length > 0) {
+            for (var i=0; i<changes['add'].length; i++) {
+                var params = changes['add'][i].split('.');
+                html = html + '<input type="hidden" name="permissionChanges[' + params[0] + '][ADD][]" value="' + params[1] + '">';
+            }
+        }
+        if (changes['del'].length > 0) {
+            for (var i=0; i<changes['del'].length; i++) {
+                var params = changes['del'][i].split('.');
+                html = html + '<input type="hidden" name="permissionChanges[' + params[0] + '][DEL][]" value="' + params[1] + '">';
+            }
+        }
+        var fieldsBody = jQuery("#permissionChanges");
+        fieldsBody.html(html);
+{% if recursiveSupport %}
         // Display changes in div?
         html = '';
         if (changes['add'].length > 0) {
@@ -76,8 +92,7 @@
             html = html + '<ul>';
             for (var i=0; i<changes['add'].length; i++) {
                 var params = changes['add'][i].split('.');
-                html = html + '<li><strong>' + params[0] + '</strong> : ' + params[1] +
-                        '<input type="hidden" name="permissionChanges[' + params[0] + '][ADD][]" value="' + params[1] + '"></li>';
+                html = html + '<li><strong>' + params[0] + '</strong> : ' + params[1] + '</li>';
             }
             html = html + '</ul>';
             html = html + '</p>';
@@ -88,8 +103,7 @@
             html = html + '<ul>';
             for (var i=0; i<changes['del'].length; i++) {
                 var params = changes['del'][i].split('.');
-                html = html + '<li><strong>' + params[0] + '</strong> : ' + params[1] +
-                        '<input type="hidden" name="permissionChanges[' + params[0] + '][DEL][]" value="' + params[1] + '"></li>';
+                html = html + '<li><strong>' + params[0] + '</strong> : ' + params[1] + '</li>';
             }
             html = html + '</ul>';
             html = html + '</p>';
@@ -108,6 +122,6 @@
             jQuery("#permissionChangesInfo").removeClass('alert alert-info')
             jQuery("#permissionChangesInfo").hide();
         }
+{% endif %}
     }
 </script>
-{% endif %}

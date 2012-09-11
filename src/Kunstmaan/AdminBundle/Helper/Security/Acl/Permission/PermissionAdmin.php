@@ -3,15 +3,18 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
+use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
 
 use Doctrine\ORM\EntityManager;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
-use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
@@ -20,8 +23,9 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class PermissionAdmin
 {
+    const ADD       = 'ADD';
+    const DELETE    = 'DEL';
 
-    protected $request              = null;
     protected $resource             = null;
     protected $em                   = null;
     protected $securityContext      = null;
@@ -30,22 +34,22 @@ class PermissionAdmin
     protected $shellHelper          = null;
     protected $permissionMap        = null;
     protected $permissions          = null;
-    protected $currentEnv           = 'dev';
+    protected $kernel               = null;
 
     /**
      * @param EntityManager                            $em                   The EntityManager
      * @param SecurityContextInterface                 $securityContext      The security context
      * @param AclProviderInterface                     $aclProvider          The ACL provider
      * @param ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy The object retrieval strategy
-     * @param string                                   $currentEnv           The current environment
+     * @param KernelInterface                          $kernel               The app kernel
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy, $currentEnv)
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy, KernelInterface $kernel)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
         $this->aclProvider = $aclProvider;
         $this->oidRetrievalStrategy = $oidRetrievalStrategy;
-        $this->currentEnv = $currentEnv;
+        $this->kernel = $kernel;
     }
 
     /**
@@ -53,7 +57,7 @@ class PermissionAdmin
      * @param PermissionMapInterface $permissionMap The permission map to use
      * @param ShellHelper            $shellHelper   The shell helper class to use
      */
-    public function initialize($resource, PermissionMapInterface $permissionMap, $shellHelper)
+    public function initialize($resource, PermissionMapInterface $permissionMap, ShellHelper $shellHelper)
     {
         $this->resource = $resource;
         $this->permissionMap = $permissionMap;
@@ -85,7 +89,7 @@ class PermissionAdmin
     }
 
     /**
-     * @param Role $role
+     * @param Role|string $role
      *
      * @return MaskBuilder|null
      */
@@ -122,62 +126,27 @@ class PermissionAdmin
      *
      * @return boolean
      */
-    public function bindRequest($request)
+    public function bindRequest(Request $request)
     {
-        $this->request = $request;
+        $changes = $request->request->get('permissionChanges');
 
-        $postPermissions = $request->request->get('permissions');
-        $acl = $this->processAclChanges($postPermissions);
-        $this->aclProvider->updateAcl($acl);
+        if (empty($changes)) {
+            return true;
+        }
+
+        // Just apply the changes to the current node (non recursively)
+        $this->applyAclChangeset($this->resource, $changes, false);
 
         // Apply recursively (on request)
         $applyRecursive = $request->request->get('applyRecursive');
         if ($applyRecursive) {
             // Serialize changes & store them in DB
-            $changes = $request->request->get('permissionChanges');
             $user = $this->securityContext->getToken()->getUser();
             $this->createAclChangeSet($this->resource, $changes, $user);
             $this->launchAclChangeSet();
         }
 
         return true;
-    }
-
-    public function processAclChanges($postPermissions)
-    {
-        $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
-        try {
-            $acl = $this->aclProvider->findAcl($objectIdentity);
-        } catch (AclNotFoundException $e) {
-            $acl = $this->aclProvider->createAcl($objectIdentity);
-        }
-
-        foreach ($postPermissions as $role => $permissions) {
-            $mask = new MaskBuilder();
-            foreach ($permissions as $permission => $value) {
-                $mask->add($permission);
-            }
-
-            $index = $this->getObjectAceIndex($acl, $role);
-            if (false !== $index) {
-                $acl->updateObjectAce($index, $mask->get());
-            } else {
-                $securityIdentity = new RoleSecurityIdentity($role);
-                $acl->insertObjectAce($securityIdentity, $mask->get());
-            }
-        }
-
-        // Process removed Aces
-        foreach ($this->permissions as $role => $permission) {
-            if (!isset($postPermissions[$role])) {
-                $index = $this->getObjectAceIndex($acl, $role);
-                if (false !== $index) {
-                    $acl->updateObjectAce($index, 0);
-                }
-            }
-        }
-
-        return $acl;
     }
 
     public function createAclChangeSet($node, $changes, $user)
@@ -193,18 +162,19 @@ class PermissionAdmin
     public function launchAclChangeSet()
     {
         // Launch acl command
-        $cmd = '/home/projects/clubbrugge/data/current/app/console kuma:acl:apply';
-        if (!empty($this->currentEnv)) {
-            $cmd .= ' --env=' . $this->currentEnv;
-        }
+        $cmd = 'php ' . $this->kernel->getRootDir() . '/console kuma:acl:apply';
+        $cmd .= ' --env=' . $this->kernel->getEnvironment();
+
         $this->shellHelper->runInBackground($cmd);
     }
 
-    public function applyAclChangeset($node, $changeset)
+    public function applyAclChangeset($node, $changeset, $recursive = true)
     {
-        // Iterate over children and apply recursively
-        foreach ($node->getChildren() as $child) {
-            $this->applyAclChangeset($child, $changeset);
+        if ($recursive) {
+            // Iterate over children and apply recursively
+            foreach ($node->getChildren() as $child) {
+                $this->applyAclChangeset($child, $changeset);
+            }
         }
 
         // Apply ACL modifications to node
@@ -220,7 +190,7 @@ class PermissionAdmin
             $index = $this->getObjectAceIndex($acl, $role);
             $mask = 0;
             if (false !== $index) {
-                $mask = $this->getObjectAce($acl, $role);
+                $mask = $this->getMaskAtIndex($acl, $index);
             }
             foreach ($roleChanges as $type => $permissions) {
                 $maskChange = new MaskBuilder();
@@ -228,10 +198,10 @@ class PermissionAdmin
                     $maskChange->add($permission);
                 }
                 switch ($type) {
-                    case 'ADD':
+                    case self::ADD:
                         $mask = $mask | $maskChange->get();
                         break;
-                    case 'DEL':
+                    case self::DELETE:
                         $mask = $mask & ~$maskChange->get();
                         break;
                 }
@@ -261,16 +231,13 @@ class PermissionAdmin
         return false;
     }
 
-    private function getObjectAce($acl, $role)
+    private function getMaskAtIndex($acl, $index)
     {
         $objectAces = $acl->getObjectAces();
-        foreach ($objectAces as $index => $ace) {
-            $securityIdentity = $ace->getSecurityIdentity();
-            if ($securityIdentity instanceof RoleSecurityIdentity) {
-                if ($securityIdentity->getRole() == $role) {
-                    return $ace->getMask();
-                }
-            }
+        $ace = $objectAces[$index];
+        $securityIdentity = $ace->getSecurityIdentity();
+        if ($securityIdentity instanceof RoleSecurityIdentity) {
+            return $ace->getMask();
         }
 
         return false;
