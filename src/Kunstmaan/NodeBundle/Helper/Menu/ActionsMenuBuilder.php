@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminNodeBundle\Helper\Menu;
 
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent;
 use Kunstmaan\AdminNodeBundle\Helper\Event\Events;
 use Doctrine\ORM\EntityManager;

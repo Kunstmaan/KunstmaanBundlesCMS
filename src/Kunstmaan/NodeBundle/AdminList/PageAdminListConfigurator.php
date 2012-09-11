@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminNodeBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
