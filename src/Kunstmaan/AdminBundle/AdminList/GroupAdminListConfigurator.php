@@ -9,7 +9,7 @@ use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * @todo We should probably combine Admin & AdminList into 1 bundle, or move this to the AdminList bundle to prevent circular references...
+ * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
 class GroupAdminListConfigurator extends AbstractAdminListConfigurator
 {

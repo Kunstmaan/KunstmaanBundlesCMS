@@ -8,7 +8,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 
 /**
- * @todo We should probably combine Admin & AdminList into 1 bundle, or move this to the AdminList bundle to prevent circular references...
+ * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
 class UserAdminListConfigurator extends AbstractAdminListConfigurator
 {
