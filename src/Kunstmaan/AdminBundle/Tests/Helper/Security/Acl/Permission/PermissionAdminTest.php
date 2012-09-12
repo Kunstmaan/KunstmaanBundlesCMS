@@ -165,27 +165,51 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::bindRequest
-     * @todo   Implement testBindRequest().
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::createAclChangeset
      */
-    public function testBindRequest()
+    public function testCreateAclChangeset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $em = $this->getEntityManager();
+        $em->expects($this->once())
+            ->method('persist')
+            ->with($this->isInstanceOf('Kunstmaan\AdminNodeBundle\Entity\AclChangeset'));
+        $em->expects($this->once())
+            ->method('flush');
+        $context = $this->getSecurityContext();
+        $aclProvider = $this->getAclProvider();
+        $retrievalStrategy = $this->getOidRetrievalStrategy();
+        $kernel = $this->getKernel();
+
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $kernel);
+        $node = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Entity\Node')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $user = $this->getMockBuilder('Kunstmaan\AdminBundle\Entity\User')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $object->createAclChangeSet($node, array(), $user);
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::applyAclChangeset
-     * @todo   Implement testApplyAclChangeset().
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::launchAclChangeset
      */
-    public function testApplyAclChangeset()
+    public function testLaunchAclChangeset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $em = $this->getEntityManager();
+        $context = $this->getSecurityContext();
+        $aclProvider = $this->getAclProvider();
+        $retrievalStrategy = $this->getOidRetrievalStrategy();
+        $kernel = $this->getKernel();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $kernel);
+
+        $helper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $helper->expects($this->once())
+            ->method('runInBackground');
+
+        $object->launchAclChangeSet($helper);
     }
 
     public function getEntityManager()

@@ -31,7 +31,6 @@ class PermissionAdmin
     protected $securityContext      = null;
     protected $aclProvider          = null;
     protected $oidRetrievalStrategy = null;
-    protected $shellHelper          = null;
     protected $permissionMap        = null;
     protected $permissions          = null;
     protected $kernel               = null;
@@ -55,13 +54,11 @@ class PermissionAdmin
     /**
      * @param object                 $resource      The object which has the permissions
      * @param PermissionMapInterface $permissionMap The permission map to use
-     * @param ShellHelper            $shellHelper   The shell helper class to use
      */
-    public function initialize($resource, PermissionMapInterface $permissionMap, ShellHelper $shellHelper)
+    public function initialize($resource, PermissionMapInterface $permissionMap)
     {
         $this->resource = $resource;
         $this->permissionMap = $permissionMap;
-        $this->shellHelper = $shellHelper;
         $this->permissions = array();
 
         // Init permissions
@@ -123,10 +120,11 @@ class PermissionAdmin
 
     /**
      * @param Request $request
+     * @param ShellHelper $shellHelper The shell helper
      *
      * @return bool
      */
-    public function bindRequest(Request $request)
+    public function bindRequest(Request $request, ShellHelper $shellHelper)
     {
         $changes = $request->request->get('permissionChanges');
 
@@ -143,7 +141,7 @@ class PermissionAdmin
             // Serialize changes & store them in DB
             $user = $this->securityContext->getToken()->getUser();
             $this->createAclChangeSet($this->resource, $changes, $user);
-            $this->launchAclChangeSet();
+            $this->launchAclChangeSet($shellHelper);
         }
 
         return true;
@@ -159,13 +157,16 @@ class PermissionAdmin
         $this->em->flush();
     }
 
-    public function launchAclChangeSet()
+    /**
+     * @param ShellHelper $shellHelper
+     */
+    public function launchAclChangeSet(ShellHelper $shellHelper)
     {
         // Launch acl command
         $cmd = 'php ' . $this->kernel->getRootDir() . '/console kuma:acl:apply';
         $cmd .= ' --env=' . $this->kernel->getEnvironment();
 
-        $this->shellHelper->runInBackground($cmd);
+        $shellHelper->runInBackground($cmd);
     }
 
     public function applyAclChangeset($node, $changeset, $recursive = true)
