@@ -2,22 +2,34 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form\Type;
 
+use Doctrine\Common\Persistence\ObjectManager;
+
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Collections\Collection;
 
+/**
+ * IdToMediaTransformer
+ */
 class IdToMediaTransformer implements DataTransformerInterface
 {
     private $objectManager;
     private $currentValueContainer;
 
-    public function __construct($objectManager, $currentValueContainer)
+    /**
+     * @param ObjectManager         $objectManager         The object manager
+     * @param CurrentValueContainer $currentValueContainer The currentvaluecontainer
+     */
+    public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer)
     {
         $this->objectManager = $objectManager;
            $this->currentValueContainer = $currentValueContainer;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function transform($entity)
     {
         if (null === $entity || '' === $entity) {
@@ -39,6 +51,9 @@ class IdToMediaTransformer implements DataTransformerInterface
 
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function reverseTransform($key)
     {
         if ('' === $key || null === $key ) {

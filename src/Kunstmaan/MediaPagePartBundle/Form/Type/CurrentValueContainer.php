@@ -2,14 +2,30 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form\Type;
 
-class CurrentValueContainer  {
+/**
+ * CurrentValueContainer
+ */
+class CurrentValueContainer
+{
+
+    /**
+     * @var object
+     */
     private $currentValue;
 
-    public function getCurrentValue() {
+    /**
+     * @return object
+     */
+    public function getCurrentValue()
+    {
         return $this->currentValue;
     }
 
-    public function setCurrentValue($currentValue) {
+    /**
+     * @param object $currentValue
+     */
+    public function setCurrentValue($currentValue)
+    {
         $this->currentValue = $currentValue;
     }
 }
