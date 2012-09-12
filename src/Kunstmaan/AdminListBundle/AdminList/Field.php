@@ -3,35 +3,45 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 /**
- * @author kristof
  */
-class Field {
-
-	private $fieldheader;
-    private $fieldname;
+class Field
+{
+    private $header;
+    private $name;
     private $sort;
     private $template;
-    
-	public function __construct($fieldname, $fieldheader, $sort = false, $template = null){
-		$this->fieldname = $fieldname;
-		$this->fieldheader = $fieldheader;
-		$this->sort = $sort;
-		$this->template = $template;
-	}
-	
-	public function getFieldname(){
-		return $this->fieldname;
-	}
-	
-	public function getFieldheader(){
-		return $this->fieldheader;
-	}
-	
-	public function isSortable(){
-		return $this->sort;
-	}
-	
-	public function getTemplate(){
-	    return $this->template;
-	}
+
+    /**
+     * @param string $name
+     * @param string $header
+     * @param bool   $sort
+     * @param string $template
+     */
+    public function __construct($name, $header, $sort = false, $template = null)
+    {
+        $this->name     = $name;
+        $this->header   = $header;
+        $this->sort     = $sort;
+        $this->template = $template;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getHeader()
+    {
+        return $this->header;
+    }
+
+    public function isSortable()
+    {
+        return $this->sort;
+    }
+
+    public function getTemplate()
+    {
+        return $this->template;
+    }
 }

@@ -13,42 +13,51 @@ class AdminListFilter
      * The children of the form
      * @var array
      */
-    private $filterdefinitions = array();
+    private $filterDefinitions = array();
 
     /**
      * @var Filter[]
      */
-    private $currentfilters = array();
+    private $currentFilters = array();
 
     private $currentparameters = array();
 
+    /**
+     * @param       $colname
+     * @param null  $type
+     * @param null  $filtername
+     * @param array $options
+     *
+     * @return AdminListFilter
+     */
     public function add($colname, $type = null, $filtername = null, array $options = array())
     {
-        $this->filterdefinitions[$colname] = array('type' => $type, 'options' => $options, 'filtername' => $filtername);
+        $this->filterDefinitions[$colname] = array('type' => $type, 'options' => $options, 'filtername' => $filtername);
+
         return $this;
     }
 
     public function get($colname)
     {
-        return $this->filterdefinitions[$colname];
+        return $this->filterDefinitions[$colname];
     }
 
     public function remove($colname)
     {
-        if (isset($this->filterdefinitions[$colname])) {
-            unset($this->filterdefinitions[$colname]);
+        if (isset($this->filterDefinitions[$colname])) {
+            unset($this->filterDefinitions[$colname]);
         }
         return $this;
     }
 
     public function has($colname)
     {
-        return isset($this->filterdefinitions[$colname]);
+        return isset($this->filterDefinitions[$colname]);
     }
 
-    public function getFilterdefinitions()
+    public function getFilterDefinitions()
     {
-        return $this->filterdefinitions;
+        return $this->filterDefinitions;
     }
 
     public function bindRequest($request)
@@ -61,7 +70,7 @@ class AdminListFilter
             foreach ($filter_columnnames as $filter_columnname) {
                 $uniqueid = $uniqueids[$index];
                 $filter = new Filter($filter_columnname, $this->get($filter_columnname), $uniqueid);
-                $this->currentfilters[] = $filter;
+                $this->currentFilters[] = $filter;
                 $filter->bindRequest($request);
                 $index++;
             }
@@ -73,15 +82,15 @@ class AdminListFilter
         return $this->currentparameters;
     }
 
-    public function getCurrentfilters()
+    public function getCurrentFilters()
     {
-        return $this->currentfilters;
+        return $this->currentFilters;
     }
 
     public function adaptQueryBuilder($querybuilder)
     {
         $expressions = array();
-        foreach ($this->currentfilters as $filter) {
+        foreach ($this->currentFilters as $filter) {
             $filter->adaptQueryBuilder($querybuilder, $expressions);
         }
         if (sizeof($expressions) > 0) {
