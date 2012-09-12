@@ -12,37 +12,26 @@ use Monolog\Logger;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\AbstractProcessingHandler;
 
-use Symfony\Bridge\Monolog\Logger as MonologLogger;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @todo Is this still in use?
  */
 class LogHandler extends AbstractProcessingHandler
 {
-    private $initialized = false;
-    private $logger;
-    private $securityContext;
-    private $em;
+    /* @var ContainerInterface $container */
+    private $container;
 
     /**
-     * @param MonologLogger            $logger
-     * @param SecurityContextInterface $context
-     * @param EntityManager            $em
-     * @param int                      $level
-     * @param bool                     $bubble
+     * @param ContainerInterface $container
+     * @param int                $level
+     * @param bool               $bubble
      */
-    public function __construct(
-        MonologLogger $logger,
-        SecurityContextInterface $context,
-        EntityManager $em,
-        $level = Logger::ERROR,
-        $bubble = true
-    ) {
+    public function __construct(ContainerInterface $container, $level = Logger::ERROR, $bubble = true)
+    {
         parent::__construct($level, $bubble);
-        $this->logger          = $logger;
-        $this->securityContext = $context;
-        $this->em              = $em;
+        $this->container = $container;
     }
 
     /**
@@ -50,14 +39,14 @@ class LogHandler extends AbstractProcessingHandler
      */
     protected function write(array $record)
     {
-        if (!$this->initialized) {
-            $this->initialize();
-        }
-        $this->logger->pushHandler(new NullHandler());
+        $logger = $this->container->get('monolog.logger.doctrine');
+        $logger->pushHandler(new NullHandler());
         try {
-            $token = $this->securityContext->getToken();
+            /* @var TokenInterface $token */
+            $token = $this->container->get('security.context')->getToken();
             $user  = null;
             if (isset($token)) {
+                /* @var User $user */
                 $user = $token->getUser();
             }
 
@@ -69,9 +58,11 @@ class LogHandler extends AbstractProcessingHandler
             $logItem->setChannel($record['channel']);
             $logItem->setLevel($record['level']);
             $logItem->setMessage($record['formatted']);
-            if ($this->em->isOpen()) {
-                $this->em->persist($logItem);
-                $this->em->flush();
+            /* @var EntityManager $em */
+            $em = $this->container->get('doctrine')->getEntityManager();
+            if ($em->isOpen()) {
+                $em->persist($logItem);
+                $em->flush();
             }
         } catch (\PDOException $e) {
             // catching the exception during fullreload: errorlogitem table not found
@@ -80,14 +71,6 @@ class LogHandler extends AbstractProcessingHandler
             // catching the exception during fullreload: The EntityManager is closed
             // TODO do something useful
         }
-        $this->logger->popHandler();
-    }
-
-    /**
-     *
-     */
-    private function initialize()
-    {
-        $this->initialized = true;
+        $logger->popHandler();
     }
 }

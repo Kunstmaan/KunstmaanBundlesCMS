@@ -2,28 +2,29 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MenuBuilder
 {
+    /* @var TranslatorInterface $translator */
     private $translator;
-    /* @var MenuAdaptorInterface[] */
+    /* @var MenuAdaptorInterface[] $adaptors */
     private $adaptors = array();
     private $topmenuitems = null;
-    private $request;
+    /* @var ContainerInterface $container */
+    private $container;
 
     private $currentCache = null;
 
     /**
      * @param TranslatorInterface $translator
-     * @param Request             $request
+     * @param ContainerInterface  $container
      */
-    public function __construct(TranslatorInterface $translator, Request $request)
+    public function __construct(TranslatorInterface $translator, ContainerInterface $container)
     {
         $this->translator = $translator;
-        $this->request    = $request;
+        $this->container  = $container;
     }
 
     /**
@@ -97,9 +98,10 @@ class MenuBuilder
     public function getTopChildren()
     {
         if (is_null($this->topmenuitems)) {
+            $request = $this->container->get('request');
             $this->topmenuitems = array();
             foreach ($this->adaptors as $menuadaptor) {
-                $menuadaptor->adaptChildren($this, $this->topmenuitems, null, $this->request);
+                $menuadaptor->adaptChildren($this, $this->topmenuitems, null, $request);
             }
         }
 
@@ -116,9 +118,10 @@ class MenuBuilder
         if ($parent == null) {
             return $this->getTopChildren();
         }
+        $request = $this->container->get('request');
         $result = array();
         foreach ($this->adaptors as $menuadaptor) {
-            $menuadaptor->adaptChildren($this, $result, $parent, $this->request);
+            $menuadaptor->adaptChildren($this, $result, $parent, $request);
         }
 
         return $result;

@@ -4,9 +4,8 @@ parameters:
 services:
     kunstmaan_admin.menubuilder:
         class: %kunstmaan_admin.menubuilder.class%
-        arguments: ["@translator", "@request"]
-        scope: request
-        
+        arguments: ["@translator", "@service_container"]
+
     kunstmaan_admin.menu.adaptor.settings:
         class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
         tags:
@@ -24,7 +23,7 @@ services:
             
     kunstmaan_admin.handler.log:
         class: Kunstmaan\AdminBundle\Helper\LogHandler
-        arguments: ["@monolog.logger.doctrine", "@security.context", "@doctrine.orm.entity_manager"]
+        arguments: ["@service_container"]
         tags:
             - { name: 'log_handler' }
 
