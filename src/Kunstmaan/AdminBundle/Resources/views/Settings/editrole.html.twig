@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_roles_edit', { 'role_id' : role.id }) }}" method="post" {{ form_enctype(form) }}>
+    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_roles_edit', { 'roleId' : role.id }) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
     	{{ form_errors(form) }}
         <div class="control-group">
