@@ -119,7 +119,7 @@ class PermissionAdmin
     }
 
     /**
-     * @param Request $request
+     * @param Request     $request
      * @param ShellHelper $shellHelper The shell helper
      *
      * @return bool
