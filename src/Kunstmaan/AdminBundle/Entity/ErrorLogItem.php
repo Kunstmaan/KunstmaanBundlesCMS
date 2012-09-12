@@ -7,10 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * omnext errorlogitem
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity
- * @ORM\Table(name="kuma_errorlogitem")
+ * @ORM\Table(name="kuma_error_log_items")
  */
 class ErrorLogItem extends LogItem
 {

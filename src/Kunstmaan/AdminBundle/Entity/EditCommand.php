@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * omnext edit command
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_edit_commands")
  *
@@ -29,6 +27,7 @@ class EditCommand extends Command
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 

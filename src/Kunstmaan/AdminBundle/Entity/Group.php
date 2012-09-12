@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="kuma_group")
+ * @ORM\Table(name="kuma_groups")
  */
 class Group implements RoleInterface, GroupInterface
 {
@@ -28,14 +28,12 @@ class Group implements RoleInterface, GroupInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="Role")
-     * @ORM\JoinTable(name="user_user_group_roles")
+     * @ORM\JoinTable(name="kuma_groups_roles",
+     *      joinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
      */
     protected $roles;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Role")
-     */
-    protected $rolescollection;
 
     /**
      * Constructor
