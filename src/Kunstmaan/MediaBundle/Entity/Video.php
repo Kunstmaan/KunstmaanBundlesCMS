@@ -13,17 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Video extends Media
 {
 
+    /**
+     * @var string
+     */
     const CONTEXT = "kunstmaan_media_code";
 
     /**
+     * @var string
      * @ORM\Column(type="string")
      */
     protected $type;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Get context
@@ -35,11 +34,20 @@ class Video extends Media
         return $this::CONTEXT;
     }
 
+    /**
+     * @param string $format  format
+     * @param array  $options options
+     *
+     * @return string
+     */
     public function show($format = null, $options = array())
     {
         return '';
     }
 
+    /**
+     * @return string
+     */
     public function getCode()
     {
         return $this->metadata['uuid'];
@@ -47,8 +55,7 @@ class Video extends Media
 
     /**
      * Set slidetype
-     *
-     * @param string $slidetype
+     * @param string $type
      */
     public function setType($type)
     {

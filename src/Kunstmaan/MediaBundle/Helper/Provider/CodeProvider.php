@@ -6,11 +6,17 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 use Kunstmaan\MediaBundle\Helper\Provider\AbstractVideoProvider;
 
+/**
+ * CodeProvider
+ */
 class CodeProvider extends AbstractVideoProvider
 {
     /* @var string */
     protected $template = '';
 
+    /**
+     * @param Media $media
+     */
     public function prepareMedia(Media $media)
     {
         parent::prepareMedia($media);
@@ -21,10 +27,15 @@ class CodeProvider extends AbstractVideoProvider
         $media->setMetadata($metadata);
     }
 
+    /**
+     * @param Media $media
+     *
+     * @return array|null
+     */
     protected function getMetadata(Media $media)
     {
         if (!$media->getContent()) {
-            return NULL;
+            return null;
         }
 
         return array("content" => $media->getContent());

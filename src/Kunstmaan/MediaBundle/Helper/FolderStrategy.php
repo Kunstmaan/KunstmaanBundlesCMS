@@ -2,10 +2,15 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Symfony\Component\Locale\Exception\NotImplementedException;
+
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\MediaList\MediaListConfigurator;
 
+/**
+ * FolderStrategy
+ */
 class FolderStrategy implements GalleryStrategyInterface
 {
 
@@ -26,13 +31,18 @@ class FolderStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Entity\Media
+     * @return null
      */
-    public function getNewBulkUploadMediaInstance() {
+    public function getNewBulkUploadMediaInstance()
+    {
         return null;
     }
 
-    public function getBulkUploadAccept() {
+    /**
+     * @return null
+     */
+    public function getBulkUploadAccept()
+    {
         return null;
     }
 
@@ -57,26 +67,27 @@ class FolderStrategy implements GalleryStrategyInterface
     /**
      * @return null
      */
-    function getFormType()
+    public function getFormType()
     {
-        return NULL;
+        return null;
     }
 
     /**
      * @return null
      */
-    function getFormHelper()
+    public function getFormHelper()
     {
-        return NULL;
+        return null;
     }
 
     /**
-     * @return MediaList\MediaListConfigurator
+     * @param Folder $folder
+     *
+     * @return void
      */
-    function getListConfigurator($folder)
+    public function getListConfigurator(Folder $folder)
     {
-        return new MediaListConfigurator($folder);
+        throw new NotImplementedException("you should override the getListConfigurator in your Strategy class " . get_class($this));
     }
 }
 
-?>

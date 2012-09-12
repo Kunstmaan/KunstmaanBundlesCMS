@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Entity;
 
+use Kunstmaan\MediaBundle\Helper\FolderStrategy;
+
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Helper\ImageGalleryStrategy;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,11 +18,9 @@ use Doctrine\ORM\Mapping as ORM;
 class ImageGallery extends Folder
 {
 
-    public function __construct(EntityManager $em)
-    {
-        parent::__construct($em);
-    }
-
+    /**
+     * @return ImageGalleryStrategy
+     */
     public function getStrategy()
     {
         return new ImageGalleryStrategy();

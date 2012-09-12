@@ -2,11 +2,13 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Twig;
 
+use Kunstmaan\MediaBundle\Helper\MediaHelper;
+
 use Kunstmaan\MediaBundle\Helper\ExtensionHelper;
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
- * @author Benjamin Dulau <benjamin.dulau@anonymation.com>
+ * MediaExtension
  */
 class MediaExtension extends \Twig_Extension
 {
@@ -15,6 +17,9 @@ class MediaExtension extends \Twig_Extension
      */
     protected $helper;
 
+    /**
+     * @param MediaHelper $helper
+     */
     public function __construct(MediaHelper $helper)
     {
         $this->helper = $helper;
@@ -32,6 +37,13 @@ class MediaExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @param Media  $media   The media
+     * @param string $format  The format
+     * @param array  $options The options
+     *
+     * @return Media
+     */
     public function getMedia(Media $media, $format = null, array $options = array())
     {
         return $this->helper->getMedia($media, $format, $options);

@@ -2,47 +2,55 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Event;
 
+use Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata;
+
+use Kunstmaan\MediaBundle\Entity\Media;
+
 use Symfony\Component\EventDispatcher\Event;
 
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 
+/**
+ * MediaEvent
+ */
 class MediaEvent extends Event
 {
 
     /**
-     * @var \Kunstmaan\MediaBundle\Entity\Media
+     * @var Media
      */
     protected $media;
 
     /**
-     * @var \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata
+     * @var AbstractMediaMetadata
      */
     protected $metadata;
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
-     * @param \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata $metadata
+     * @param Media                 $media    Media
+     * @param AbstractMediaMetadata $metadata Metadata
      */
-    public function __construct(\Kunstmaan\MediaBundle\Entity\Media $media, \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata $metadata = null)
+    public function __construct(Media $media, AbstractMediaMetadata $metadata = null)
     {
         $this->media    = $media;
         $this->metadata = $metadata;
     }
 
     /**
-     * @param $media
+     * @param Media $media
      *
      * @return MediaEvent
      */
-    public function setMedia($media)
+    public function setMedia(Media $media)
     {
         $this->media = $media;
+
         return $this;
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Entity\Media
+     * @return Media
      */
     public function getMedia()
     {
@@ -50,18 +58,19 @@ class MediaEvent extends Event
     }
 
     /**
-     * @param $metadata
+     * @param AbstractMediaMetadata $metadata
      *
      * @return MediaEvent
      */
-    public function setMetadata($metadata)
+    public function setMetadata(AbstractMediaMetadata $metadata)
     {
         $this->metadata = $metadata;
+
         return $this;
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata
+     * @return AbstractMediaMetadata
      */
     public function getMetadata()
     {

@@ -17,33 +17,31 @@ class AviaryController extends Controller
 {
 
     /**
-     * @Route("/aviary/{gallery_id}/{image_id}", requirements={"gallery_id" = "\d+", "image_id" = "\d+"}, name="KunstmaanMediaBundle_aviary")
+     * @param int $galleryId The id of the Gallery
+     * @param int $imageId   The id of the image
      *
-     * @param $gallery_id
-     * @param $image_id
+     * @Route("/aviary/{galleryId}/{imageId}", requirements={"galleryId" = "\d+", "imageId" = "\d+"}, name="KunstmaanMediaBundle_aviary")
      * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
      */
-    public function indexAction($gallery_id, $image_id)
+    public function indexAction($galleryId, $imageId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
 
         $helper = new MediaHelper();
         $helper->getMediaFromUrl($this->getRequest()->get('url'));
 
-        $hulp = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($image_id, $em);
+        $hulp = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($imageId);
         $picture = new Image();
         $picture->setOriginal($hulp);
         $picture->setName($hulp->getName()."-edited");
         $picture->setContent($helper->getMedia());
-
         $picture->setGallery($gallery);
 
         $em->persist($picture);
         $em->flush();
 
         return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
-
     }
 }

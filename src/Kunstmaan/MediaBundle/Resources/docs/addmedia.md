@@ -65,7 +65,7 @@ If we want to make Folders able to upload pdf's, we add a method to upload a pdf
     public function pdfcreateAction($gallery_id)
     {
     	$em = $this->getDoctrine()->getEntityManager();
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id);
     
     	$request = $this->getRequest();
     	$helper = new MediaHelper();
@@ -80,7 +80,7 @@ If we want to make Folders able to upload pdf's, we add a method to upload a pdf
     				$file->setContent($helper->getMedia());
     				$file->setGallery($gallery);
     
-    				$em->getRepository('KunstmaanMediaBundle:Media')->save($file, $em);
+    				$em->getRepository('KunstmaanMediaBundle:Media')->save($file);
     
     				return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
     			}

@@ -30,9 +30,8 @@ class KunstmaanMediaExtension extends Extension
     /**
      * Loads configuration
      *
-     * @param array            $configs
-     * @param ContainerBuilder $container
-     * @return void
+     * @param array            $configs   Configuration
+     * @param ContainerBuilder $container Container
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -56,16 +55,21 @@ class KunstmaanMediaExtension extends Extension
         $this->initManipulators($config, $manager, $container);
         $this->initProviders($config, $manager, $container);
         $this->initContexts($config, $manager, $container);
-        
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
     }
 
+    /**
+     * @param array            $config    The config
+     * @param Definition       $manager   The definition
+     * @param ContainerBuilder $container The container
+     */
     private function initCdns(array $config, Definition $manager, ContainerBuilder $container)
     {
         $cdnList = $config['cdn'];
-        foreach($cdnList as $name => $options) {
+        foreach ($cdnList as $name => $options) {
             $id = $options['id'];
             if (!$container->hasDefinition($id)) {
                 continue;
@@ -84,10 +88,15 @@ class KunstmaanMediaExtension extends Extension
         }
     }
 
+    /**
+     * @param array            $config    The config
+     * @param Definition       $manager   The definition
+     * @param ContainerBuilder $container The container
+     */
     private function initFilesystem(array $config, Definition $manager, ContainerBuilder $container)
     {
         $filesystemList = $config['filesystem'];
-        foreach($filesystemList as $name => $options) {
+        foreach ($filesystemList as $name => $options) {
             $id = $options['id'];
             if (!$container->hasDefinition($id)) {
                 continue;
@@ -106,10 +115,15 @@ class KunstmaanMediaExtension extends Extension
         }
     }
 
+    /**
+     * @param array            $config    The config
+     * @param Definition       $manager   The definition
+     * @param ContainerBuilder $container The container
+     */
     private function initGenerators(array $config, Definition $manager, ContainerBuilder $container)
     {
         $pathGeneratorList = $config['generator']['path'];
-        foreach($pathGeneratorList as $name => $options) {
+        foreach ($pathGeneratorList as $name => $options) {
             $id = $options['id'];
             if (!$container->hasDefinition($id)) {
                 continue;
@@ -121,7 +135,7 @@ class KunstmaanMediaExtension extends Extension
         }
 
         $uuidGeneratorList = $config['generator']['uuid'];
-        foreach($uuidGeneratorList as $name => $options) {
+        foreach ($uuidGeneratorList as $name => $options) {
             $id = $options['id'];
             if (!$container->hasDefinition($id)) {
                 continue;
@@ -133,10 +147,15 @@ class KunstmaanMediaExtension extends Extension
         }
     }
 
+    /**
+     * @param array            $config    The config
+     * @param Definition       $manager   The definition
+     * @param ContainerBuilder $container The container
+     */
     private function initManipulators(array $config, Definition $manager, ContainerBuilder $container)
     {
         $manipulatorList = $config['manipulator'];
-        foreach($manipulatorList as $name => $options) {
+        foreach ($manipulatorList as $name => $options) {
             $id = $options['id'];
             if (!$container->hasDefinition($id)) {
                 continue;
@@ -153,10 +172,15 @@ class KunstmaanMediaExtension extends Extension
         }
     }
 
+    /**
+     * @param array            $config    The config
+     * @param Definition       $manager   The definition
+     * @param ContainerBuilder $container The container
+     */
     private function initProviders(array $config, Definition $manager, ContainerBuilder $container)
     {
         $providerList = $config['provider'];
-        foreach($providerList as $name => $options) {
+        foreach ($providerList as $name => $options) {
             $id = $options['id'];
             if (!$container->hasDefinition($id)) {
                 continue;
@@ -176,8 +200,7 @@ class KunstmaanMediaExtension extends Extension
                     $cdnId = $config['cdn'][$cdn]['id'];
                     $def->replaceArgument(1, new Reference($cdnId));
                 }
-            }
-            else {
+            } else {
                 $def->replaceArgument(1, new Reference($this->defaultCdn));
             }
 
@@ -188,8 +211,7 @@ class KunstmaanMediaExtension extends Extension
                     $filesystemId = $config['filesystem'][$filesystem]['id'];
                     $def->replaceArgument(2, new Reference($filesystemId));
                 }
-            }
-            else {
+            } else {
                 $def->replaceArgument(2, new Reference($this->defaultFilesystem));
             }
 
@@ -213,10 +235,15 @@ class KunstmaanMediaExtension extends Extension
         }
     }
 
+    /**
+     * @param array            $config    The configuration
+     * @param Definition       $manager   The definition
+     * @param ContainerBuilder $container The container
+     */
     private function initContexts(array $config, Definition $manager, ContainerBuilder $container)
     {
         $contextList = $config['contexts'];
-        foreach($contextList as $name => $options) {
+        foreach ($contextList as $name => $options) {
             $context = new Definition('Kunstmaan\MediaBundle\Entity\MediaContext');
             $context->addArgument($name);
 
@@ -228,13 +255,12 @@ class KunstmaanMediaExtension extends Extension
                     $providerId = $config['provider'][$provider]['id'];
                     $context->addMethodCall('setProvider', array(new Reference($providerId)));
                 }
-            }
-            else {
+            } else {
                 $context->addMethodCall('setProvider', array(new Reference($providerId)));
             }
 
             // Formats
-            foreach($options['formats'] as $formatName => $params) {
+            foreach ($options['formats'] as $formatName => $params) {
                 $context->addMethodCall('addFormat', array($formatName, $params));
             }
 
@@ -247,6 +273,9 @@ class KunstmaanMediaExtension extends Extension
         }
     }
 
+    /**
+     * @return string
+     */
     public function getAlias()
     {
         return 'kunstmaan_media';

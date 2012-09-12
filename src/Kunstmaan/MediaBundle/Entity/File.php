@@ -14,12 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
 class File extends Media
 {
 
+    /**
+     * @var string
+     */
     const CONTEXT = "kunstmaan_media_file";
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Get context

@@ -2,33 +2,67 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+
+use Kunstmaan\MediaBundle\Entity\Folder;
+
+use Symfony\Component\Form\AbstractType;
+
 use Doctrine\ORM\EntityManager;
 
+/**
+ * GalleryStrategyInterface
+ */
 interface GalleryStrategyInterface
 {
-
-    function getName();
-
-    /**
-     * @return \Kunstmaan\MediaBundle\Entity\Media
-     */
-    function getNewBulkUploadMediaInstance();
 
     /**
      * @return string
      */
-    function getBulkUploadAccept();
+    public function getName();
 
-    function getNewGallery(EntityManager $em);
+    /**
+     * @return \Kunstmaan\MediaBundle\Entity\Media
+     */
+    public function getNewBulkUploadMediaInstance();
 
-    function getGalleryClassName();
+    /**
+     * @return string
+     */
+    public function getBulkUploadAccept();
 
-    function getType();
+    /**
+     * @param EntityManager $em
+     *
+     * @return Folder
+     */
+    public function getNewGallery(EntityManager $em);
 
-    function getFormType();
+    /**
+     * @return string
+     */
+    public function getGalleryClassName();
 
-    function getFormHelper();
+    /**
+     * @return string
+     */
+    public function getType();
 
-    function getListConfigurator($folder);
+    /**
+     * @return AbstractType
+     */
+    public function getFormType();
+
+    /**
+     * @return mixed
+     */
+    public function getFormHelper();
+
+    /**
+     * @param Folder $folder
+     *
+     * @return AbstractAdminListConfigurator
+     */
+    public function getListConfigurator(Folder $folder);
 
 }

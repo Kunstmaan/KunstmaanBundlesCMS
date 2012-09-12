@@ -8,12 +8,15 @@ use Kunstmaan\MediaBundle\Helper\Cdn\CdnInterface;
 use Kunstmaan\MediaBundle\Helper\Provider\ProviderInterface;
 use Gaufrette\Filesystem;
 
+/**
+ * MediaManager
+ */
 class MediaManager
 {
     /* @var array */
     protected $contexts = array();
 
-    /* @var array */
+    /* @var ProviderInterface[] */
     protected $providers = array();
 
     /* @var ProviderInterface */
@@ -33,8 +36,8 @@ class MediaManager
 
 
     /**
-     * @param string       $name
-     * @param MediaContext $context
+     * @param string       $name    The context name
+     * @param MediaContext $context Media context
      *
      * @return void
      */
@@ -60,7 +63,7 @@ class MediaManager
     /**
      * @param string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function hasContext($name)
     {
@@ -92,8 +95,8 @@ class MediaManager
     }
 
     /**
-     * @param $name
-     * @param Cdn\CdnInterface $cdn
+     * @param string           $name name
+     * @param Cdn\CdnInterface $cdn  cdn
      */
     public function addCdn($name, CdnInterface $cdn)
     {
@@ -101,7 +104,7 @@ class MediaManager
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return mixed
      * @throws \InvalidArgumentException
@@ -116,7 +119,7 @@ class MediaManager
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return bool
      */
@@ -142,7 +145,7 @@ class MediaManager
     }
 
     /**
-     * @param ProviderInterface
+     * @param ProviderInterface $defaultProvider
      */
     public function setDefaultProvider(ProviderInterface $defaultProvider)
     {
@@ -174,8 +177,8 @@ class MediaManager
     }
 
     /**
-     * @param $name
-     * @param Provider\ProviderInterface $provider
+     * @param string            $name     The name
+     * @param ProviderInterface $provider The provider
      */
     public function addProvider($name, ProviderInterface $provider)
     {
@@ -183,9 +186,9 @@ class MediaManager
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
-     * @return mixed
+     * @return ProviderInterface
      * @throws \InvalidArgumentException
      */
     public function getProvider($name)
@@ -198,7 +201,7 @@ class MediaManager
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return bool
      */
@@ -208,7 +211,7 @@ class MediaManager
     }
 
     /**
-     * @param Filesystem
+     * @param Filesystem $defaultFilesystem
      */
     public function setDefaultFilesystem(Filesystem $defaultFilesystem)
     {
@@ -240,8 +243,8 @@ class MediaManager
     }
 
     /**
-     * @param $name
-     * @param \Gaufrette\Filesystem $filesystem
+     * @param string     $name       The name
+     * @param Filesystem $filesystem The filesystem
      */
     public function addFilesystem($name, Filesystem $filesystem)
     {
@@ -249,9 +252,9 @@ class MediaManager
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
-     * @return mixed
+     * @return FileSystem
      * @throws \InvalidArgumentException
      */
     public function getFilesystem($name)
@@ -264,7 +267,7 @@ class MediaManager
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return bool
      */
@@ -283,18 +286,17 @@ class MediaManager
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
-     * @param bool $new
+     * @param Media $media The media
+     * @param bool  $new   Is new
      */
-    public function saveMedia(Media $media, $new = FALSE)
+    public function saveMedia(Media $media, $new = false)
     {
         $context = $this->getContext($media->getContext());
         $context->getProvider()->setFormats($context->getFormats());
 
         if ($new) {
             $context->getProvider()->saveMedia($media);
-        }
-        else {
+        } else {
             $context->getProvider()->updateMedia($media);
         }
     }

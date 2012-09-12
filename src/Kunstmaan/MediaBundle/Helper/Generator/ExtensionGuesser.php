@@ -442,7 +442,8 @@ class ExtensionGuesser
      * The extension is retrieved through the $defaultExtensions array.
      * If the mime type is unknown, returns null.
      *
-     * @param  string $mimeType  The mime type to get the extension for
+     * @param string $mimeType The mime type to get the extension for
+     *
      * @return string            The extension or NULL
      */
     public static function guess($mimeType)

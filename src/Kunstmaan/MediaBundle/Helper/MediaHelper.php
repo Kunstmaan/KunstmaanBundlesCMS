@@ -2,17 +2,29 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Kunstmaan\MediaBundle\Entity\Media;
+
 use Symfony\Component\HttpFoundation\File\File as SystemFile;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
+/**
+ * MediaHelper
+ */
 class MediaHelper
 {
 
+    /**
+     * @var Media
+     */
     protected $media;
+
+    /**
+     * @var string
+     */
     protected $path;
 
     /**
-     * @return mixed
+     * @return Media
      */
     public function getMedia()
     {
@@ -20,15 +32,15 @@ class MediaHelper
     }
 
     /**
-     * @param $media
+     * @param Media $media
      */
-    public function setMedia($media)
+    public function setMedia(Media $media)
     {
         $this->media = $media;
     }
 
     /**
-     * @param $mediaurl
+     * @param string $mediaurl
      *
      * @throws \Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException
      */
@@ -54,22 +66,20 @@ class MediaHelper
 
         $this->setMedia($upload);
 
-        if ($this->getMedia() == NULL) {
+        if ($this->getMedia() == null) {
             unlink($path);
             throw new AccessDeniedException("can't link file");
         }
     }
 
     /**
-     *
+     * __destruct
      */
     public function __destruct()
     {
-        if ($this->path != NULL) {
+        if ($this->path != null) {
             unlink($this->path);
         }
     }
 
 }
-
-?>

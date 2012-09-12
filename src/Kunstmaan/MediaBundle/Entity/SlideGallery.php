@@ -16,11 +16,9 @@ use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
 class SlideGallery extends Folder
 {
 
-    public function __construct(EntityManager $em)
-    {
-        parent::__construct($em);
-    }
-
+    /**
+     * @return SlideGalleryStrategy
+     */
     public function getStrategy()
     {
         return new SlideGalleryStrategy();

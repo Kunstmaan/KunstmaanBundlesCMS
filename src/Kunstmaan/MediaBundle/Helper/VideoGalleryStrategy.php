@@ -8,6 +8,9 @@ use Kunstmaan\MediaBundle\Form\VideoType;
 use Kunstmaan\MediaBundle\Helper\MediaList\VideoListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Video;
 
+/**
+ * VideoGalleryStrategy
+ */
 class VideoGalleryStrategy implements GalleryStrategyInterface
 {
 
@@ -30,11 +33,16 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return \Kunstmaan\MediaBundle\Entity\Media
      */
-    public function getNewBulkUploadMediaInstance() {
+    public function getNewBulkUploadMediaInstance()
+    {
         return null;
     }
 
-    public function getBulkUploadAccept() {
+    /**
+     * @return null
+     */
+    public function getBulkUploadAccept()
+    {
         return null;
     }
 
@@ -59,26 +67,26 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return \Kunstmaan\MediaBundle\Form\VideoType
      */
-    function getFormType()
+    public function getFormType()
     {
         return new VideoType();
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Entity\Video
+     * @return Video
      */
-    function getFormHelper()
+    public function getFormHelper()
     {
         return new Video();
     }
 
     /**
-     * @return MediaList\VideoListConfigurator
+     * @param Folder $folder
+     *
+     * @return VideoListConfigurator
      */
-    function getListConfigurator($folder)
+    public function getListConfigurator($folder)
     {
         return new VideoListConfigurator($folder);
     }
 }
-
-?>

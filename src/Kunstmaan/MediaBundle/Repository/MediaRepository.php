@@ -8,13 +8,15 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 
+/**
+ * MediaRepository
+ */
 class MediaRepository extends EntityRepository
 {
     /**
      * @param \Kunstmaan\MediaBundle\Entity\Media $media
-     * @param \Doctrine\ORM\EntityManager $em
      */
-    public function save(Media $media, EntityManager $em)
+    public function save(Media $media)
     {
         $em->persist($media);
         $em->flush();
@@ -22,9 +24,8 @@ class MediaRepository extends EntityRepository
 
     /**
      * @param \Kunstmaan\MediaBundle\Entity\Media $media
-     * @param \Doctrine\ORM\EntityManager $em
      */
-    public function delete(Media $media, EntityManager $em)
+    public function delete(Media $media)
     {
         $media->setDeleted(true);
         $em->persist($media);
@@ -32,31 +33,30 @@ class MediaRepository extends EntityRepository
     }
 
     /**
-     * @param $media_id
-     * @param \Doctrine\ORM\EntityManager $em
+     * @param int $mediaId
      *
      * @return object
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function getMedia($media_id, EntityManager $em)
+    public function getMedia($mediaId)
     {
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->find($media_id);
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->find($mediaId);
         if (!$media) {
             throw new EntityNotFoundException('The id given for the media is not valid.');
         }
+
         return $media;
     }
 
     /**
-     * @param $picture_id
-     * @param \Doctrine\ORM\EntityManager $em
+     * @param integer $pictureId
      *
      * @return object
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function getPicture($picture_id, EntityManager $em)
+    public function getPicture($pictureId)
     {
-        $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($picture_id);
+        $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($pictureId);
         if (!$picture) {
             throw new EntityNotFoundException('Unable to find image.');
         }

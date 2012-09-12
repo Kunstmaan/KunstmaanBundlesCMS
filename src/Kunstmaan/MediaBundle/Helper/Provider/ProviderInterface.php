@@ -4,6 +4,9 @@ namespace Kunstmaan\MediaBundle\Helper\Provider;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 
+/**
+ * ProviderInterface
+ */
 interface ProviderInterface
 {
     /**
@@ -19,8 +22,8 @@ interface ProviderInterface
     public function getName();
 
     /**
-     * @param string $name
-     * @param array  $format
+     * @param string $name   The name
+     * @param array  $format The format
      *
      * @return void
      */
@@ -29,7 +32,7 @@ interface ProviderInterface
     /**
      * @param string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFormat($name);
 
@@ -53,12 +56,12 @@ interface ProviderInterface
     public function setFormats(array $formats);
 
     /**
-     * @param Media $media
-     * @param string $format
+     * @param Media  $media  The media
+     * @param string $format The format
      *
      * @return string
      */
-    public function getMediaUrl(Media $media, $format = NULL);
+    public function getMediaUrl(Media $media, $format = null);
 
     /**
      * @param \Ano\Bundle\MediaBundle\Model\Media $media
@@ -94,18 +97,18 @@ interface ProviderInterface
     public function getTemplate();
 
     /**
-     * @param \Ano\Bundle\MediaBundle\Model\Media $media
-     * @param string $format
-     * @param array $options
+     * @param Media  $media   The media
+     * @param string $format  The format
+     * @param array  $options The options
      *
-     * @return void
+     * @return string
      */
-    public function renderRaw(Media $media, $format = NULL, array $options = array());
+    public function renderRaw(Media $media, $format = null, array $options = array());
 
     /**
-     * @param \Ano\Bundle\MediaBundle\Model\Media $media
-     * @param string $format
-     * @param array $options
+     * @param Media  $media   The media
+     * @param string $format  The format
+     * @param array  $options The options
      *
      * @return array Merged options
      */

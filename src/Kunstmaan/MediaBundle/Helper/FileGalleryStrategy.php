@@ -8,6 +8,9 @@ use Kunstmaan\MediaBundle\Helper\MediaList\FileListConfigurator;
 use Kunstmaan\MediaBundle\Form\MediaType;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
 
+/**
+ * FileGalleryStrategy
+ */
 class FileGalleryStrategy implements GalleryStrategyInterface
 {
 
@@ -30,11 +33,16 @@ class FileGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return \Kunstmaan\MediaBundle\Entity\Media
      */
-    public function getNewBulkUploadMediaInstance() {
+    public function getNewBulkUploadMediaInstance()
+    {
         return new File();
     }
 
-    public function getBulkUploadAccept() {
+    /**
+     * @return null
+     */
+    public function getBulkUploadAccept()
+    {
         return null;
     }
 
@@ -60,7 +68,7 @@ class FileGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return \Kunstmaan\MediaBundle\Form\MediaType
      */
-    function getFormType()
+    public function getFormType()
     {
         return new MediaType();
     }
@@ -68,18 +76,18 @@ class FileGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return MediaHelper
      */
-    function getFormHelper()
+    public function getFormHelper()
     {
         return new MediaHelper();
     }
 
     /**
-     * @return MediaList\FileListConfigurator
+     * @param Folder $folder
+     *
+     * @return FileListConfigurator
      */
-    function getListConfigurator($folder)
+    public function getListConfigurator(Folder $folder)
     {
         return new FileListConfigurator($folder);
     }
 }
-
-?>

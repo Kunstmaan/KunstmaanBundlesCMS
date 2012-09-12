@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
 use Kunstmaan\MediaBundle\Helper\Event\Events;
@@ -18,21 +20,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
 /**
- * picture controller.
- *
+ * SlideController
  */
 class SlideController extends Controller
 {
     /**
-     * @Route("/{media_id}/edit", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_slide_edit")
+     * @param int $mediaId
+     *
+     * @Route("/{mediaId}/edit", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_slide_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     *
+     * @return array|RedirectResponse
      */
-    public function editAction($media_id)
+    public function editAction($mediaId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $slide = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
+        $slide = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         $slide->setContent($slide->getUuid());
         $request = $this->getRequest();
 
@@ -47,7 +52,7 @@ class SlideController extends Controller
 
             $result = $repo->findByMedia($slide->getId());
 
-            if(!empty($result)) {
+            if (!empty($result)) {
                 $metadata = $result[0];
             } else {
                 $metadata = new $metadataClass();
@@ -62,10 +67,10 @@ class SlideController extends Controller
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
-            if ($form->isValid()){
+            if ($form->isValid()) {
                 $slide->setUuid($slide->getContent());
 
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide);
 
                 if (isset($metadata)) {
                     $metadata->setMedia($slide);
@@ -74,12 +79,12 @@ class SlideController extends Controller
                 }
 
                 $dispatcher = $this->get('event_dispatcher');
-                if ($dispatcher->hasListeners(Events::postEdit)) {
+                if ($dispatcher->hasListeners(Events::POSTEDIT)) {
                     $event = new MediaEvent($slide, $metadata);
-                    $dispatcher->dispatch(Events::postEdit, $event);
+                    $dispatcher->dispatch(Events::POSTEDIT, $event);
                 }
 
-                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $slide->getId() )));
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $slide->getId() )));
             }
         }
 
@@ -90,10 +95,16 @@ class SlideController extends Controller
         );
     }
 
+    /**
+     * @param string $context
+     *
+     * @return AbstractMediaMetadata
+     */
     private function getMetadataClass($context = File::CONTEXT)
     {
         $mediaManager = $this->get('kunstmaan_media.manager');
         $imageContext = $mediaManager->getContext($context);
+
         return $imageContext->getMetadataClass();
     }
 }

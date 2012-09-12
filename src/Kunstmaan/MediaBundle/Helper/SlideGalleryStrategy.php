@@ -2,12 +2,17 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Kunstmaan\MediaBundle\Entity\Media;
+
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\SlideGallery;
 use Kunstmaan\MediaBundle\Helper\MediaList\SlideListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Slide;
 use Kunstmaan\MediaBundle\Form\SlideType;
 
+/**
+ * SlideGalleryStrategy
+ */
 class SlideGalleryStrategy implements GalleryStrategyInterface
 {
 
@@ -28,13 +33,18 @@ class SlideGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Entity\Media
+     * @return Media
      */
-    public function getNewBulkUploadMediaInstance() {
+    public function getNewBulkUploadMediaInstance()
+    {
         return null;
     }
 
-    public function getBulkUploadAccept() {
+    /**
+     * @return string
+     */
+    public function getBulkUploadAccept()
+    {
         return null;
     }
 
@@ -57,28 +67,28 @@ class SlideGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Form\SlideType
+     * @return SlideType
      */
-    function getFormType()
+    public function getFormType()
     {
         return new SlideType();
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Entity\Slide
+     * @return Slide
      */
-    function getFormHelper()
+    public function getFormHelper()
     {
         return new Slide();
     }
 
     /**
-     * @return MediaList\SlideListConfigurator
+     * @param Folder $folder
+     *
+     * @return SlideListConfigurator
      */
-    function getListConfigurator($folder)
+    public function getListConfigurator($folder)
     {
         return new SlideListConfigurator($folder);
     }
 }
-
-?>

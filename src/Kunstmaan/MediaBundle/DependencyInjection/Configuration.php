@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
      *     cdn: ano_media.cdn.remote_server
      *
      * @param ArrayNodeDefinition $node
+     *
      * @return void
      */
     private function addCdnSection(ArrayNodeDefinition $node)
@@ -51,7 +52,9 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->beforeNormalization()
-                            ->ifTrue(function($v) { return !is_array($v); })
+                            ->ifTrue(function($v) {
+                                return !is_array($v);
+                            })
                             ->thenInvalid('The kunstmaan_media.cdn config "%s" must be an array.')
                         ->end()
                         ->addDefaultsIfNotSet()
@@ -88,6 +91,7 @@ class Configuration implements ConfigurationInterface
      *             cdn: local #optional
      *
      * @param ArrayNodeDefinition $node
+     *
      * @return void
      */
     private function addProviderSection(ArrayNodeDefinition $node)
@@ -100,7 +104,9 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->beforeNormalization()
-                            ->ifTrue(function($v) { return !is_array($v); })
+                            ->ifTrue(function($v) {
+                                return !is_array($v);
+                            })
                             ->thenInvalid('The kunstmaan_media.provider config "%s" must be an array.')
                         ->end()
                         ->addDefaultsIfNotSet()
@@ -129,6 +135,7 @@ class Configuration implements ConfigurationInterface
      *                 id: ano_media.generator.uuid.default
      *
      * @param ArrayNodeDefinition $node
+     *
      * @return void
      */
     private function addGeneratorSection(ArrayNodeDefinition $node)
@@ -142,7 +149,9 @@ class Configuration implements ConfigurationInterface
                             ->useAttributeAsKey('name')
                             ->prototype('array')
                                 ->beforeNormalization()
-                                    ->ifTrue(function($v) { return !is_array($v); })
+                                    ->ifTrue(function($v) {
+                                        return !is_array($v);
+                                    })
                                     ->thenInvalid('The kunstmaan_media.generator.path config "%s" must be an array.')
                                 ->end()
                                 ->addDefaultsIfNotSet()
@@ -162,7 +171,9 @@ class Configuration implements ConfigurationInterface
                             ->useAttributeAsKey('name')
                             ->prototype('array')
                                 ->beforeNormalization()
-                                    ->ifTrue(function($v) { return !is_array($v); })
+                                    ->ifTrue(function($v) {
+                                        return !is_array($v);
+                                    })
                                     ->thenInvalid('The kunstmaan_media.generator.uuid config "%s" must be an array.')
                                 ->end()
                                 ->addDefaultsIfNotSet()
@@ -193,6 +204,7 @@ class Configuration implements ConfigurationInterface
      *             id: ano_media.util.image.manipulator.imagine
      *
      * @param ArrayNodeDefinition $node
+     *
      * @return void
      */
     private function addManipulatorSection(ArrayNodeDefinition $node)
@@ -204,7 +216,9 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->beforeNormalization()
-                            ->ifTrue(function($v) { return !is_array($v); })
+                            ->ifTrue(function($v) {
+                                return !is_array($v);
+                            })
                             ->thenInvalid('The kunstmaan_media.manipulator config "%s" must be an array.')
                         ->end()
                         ->addDefaultsIfNotSet()
@@ -236,6 +250,7 @@ class Configuration implements ConfigurationInterface
      *                 create: true
      *
      * @param ArrayNodeDefinition $node
+     *
      * @return void
      */
     private function addFilesystemSection(ArrayNodeDefinition $node)
@@ -247,7 +262,9 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->beforeNormalization()
-                            ->ifTrue(function($v) { return !is_array($v); })
+                            ->ifTrue(function($v) {
+                                return !is_array($v);
+                            })
                             ->thenInvalid('The kunstmaan_media.filesystem config "%s" must be an array.')
                         ->end()
                         ->addDefaultsIfNotSet()
@@ -290,6 +307,7 @@ class Configuration implements ConfigurationInterface
      *                 large:  { width: 200, height: 200 }
      *
      * @param ArrayNodeDefinition $node
+     *
      * @return void
      */
     private function addContextsSection(ArrayNodeDefinition $node)
@@ -301,7 +319,9 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->beforeNormalization()
-                            ->ifTrue(function($v) { return !is_array($v); })
+                            ->ifTrue(function($v) {
+                                return !is_array($v);
+                            })
                             ->thenInvalid('The kunstmaan_media.contexts config "%s" must be an array.')
                         ->end()
                         ->children()

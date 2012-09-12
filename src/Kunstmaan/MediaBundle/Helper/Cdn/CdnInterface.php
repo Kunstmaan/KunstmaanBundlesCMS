@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Cdn;
 
+/**
+ * CdnInterface
+ */
 interface CdnInterface
 {
     /**
@@ -10,6 +13,7 @@ interface CdnInterface
      * + the internal media relative path
      *
      * @param string $path
+     *
      * @return void
      */
     public function getFullPath($path);
@@ -18,6 +22,7 @@ interface CdnInterface
      * Ask the CDN to flush the resource
      *
      * @param string $resource
+     *
      * @return void
      */
     public function flush($resource);

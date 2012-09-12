@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
+/**
+ * ImageProvider
+ */
 class ImageProvider extends FileProvider
 {
     /* @var \Ano\Bundle\MediaBundle\Util\Image\ImageManipulatorInterface */
@@ -39,12 +42,15 @@ class ImageProvider extends FileProvider
         $this->generateFormats($media);
     }
 
+    /**
+     * @param Media $media
+     */
     public function generateFormats(Media $media)
     {
         $originalFile = $this->getOriginalFile($media);
 
         foreach ($this->formats as $format => $options) {
-            $this->imageManipulator->resize($media, $originalFile, $this->filesystem->get($this->generateRelativePath($media, $format), TRUE), $options);
+            $this->imageManipulator->resize($media, $originalFile, $this->filesystem->get($this->generateRelativePath($media, $format), true), $options);
         }
     }
 
@@ -56,6 +62,9 @@ class ImageProvider extends FileProvider
         return $options;
     }
 
+    /**
+     * @param ImageManipulatorInterface $imageManipulator
+     */
     public function setImageManipulator(ImageManipulatorInterface $imageManipulator)
     {
         $this->imageManipulator = $imageManipulator;

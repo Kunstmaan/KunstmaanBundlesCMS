@@ -21,54 +21,70 @@ abstract class Media extends AbstractEntity
 {
 
     /**
+     * @var string
      * @ORM\Column(type="string", unique=true, length=255)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $uuid;
 
     /**
+     * @var string
      * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
+     * @var string
      * @ORM\Column(type="string")
      */
     protected $contentType;
 
     /**
+     * @var array
      * @ORM\Column(type="array")
      */
     protected $metadata;
 
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
+     * @var \DateTime
      * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
 
     /**
+     * @var Folder
      * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
      * @ORM\JoinColumn(name="gallery_id", referencedColumnName="id")
      */
     protected $gallery;
 
+    /**
+     * @var mixed
+     */
     protected $content;
 
     /**
+     * @var int
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $filesize;
 
     /**
+     * @var bool
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
 
+    /**
+     * constructor
+     */
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
@@ -83,17 +99,27 @@ abstract class Media extends AbstractEntity
      */
     public abstract function getContext();
 
+    /**
+     * @return string
+     */
     public function getFileSize()
     {
         $size = $this->filesize;
-        if ($size < 1024) return $size . "b";
-        else {
+        if ($size < 1024) {
+            return $size . "b";
+        } else {
             $help = $size / 1024;
-            if ($help < 1024) return round($help, 1) . "kb";
-            else return round(($help / 1024), 1) . "mb";
+            if ($help < 1024) {
+                return round($help, 1) . "kb";
+            } else {
+                return round(($help / 1024), 1) . "mb";
+            }
         }
     }
 
+    /**
+     * @param int $filesize
+     */
     public function setFileSize($filesize)
     {
         $this->filesize = $filesize;
@@ -169,6 +195,7 @@ abstract class Media extends AbstractEntity
         $contentType = $this->contentType;
         $array       = explode("/", $contentType);
         $contentType = end($array);
+
         return $contentType;
     }
 
@@ -274,7 +301,7 @@ abstract class Media extends AbstractEntity
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeleted()
     {
@@ -282,20 +309,29 @@ abstract class Media extends AbstractEntity
     }
 
     /**
-     * @param boolean $deleted
+     * @param bool $deleted
      */
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return $this->show();
     }
 
 
-    public function show($format = NULL, $options = array())
+    /**
+     * @param string $format  format
+     * @param array  $options options
+     *
+     * @return string
+     */
+    public function show($format = null, $options = array())
     {
         $path = $this->getContext() . "/";
         $path = $path . $this->getUuid();
@@ -307,6 +343,9 @@ abstract class Media extends AbstractEntity
         return $path;
     }
 
+    /**
+     * @return string
+     */
     public function getClassType()
     {
         $class = explode('\\', get_class($this));

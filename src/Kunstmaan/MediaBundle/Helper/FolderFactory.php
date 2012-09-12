@@ -8,6 +8,9 @@ use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
 use Kunstmaan\MediaBundle\Entity\Folder;
 
+/**
+ * FolderFactory
+ */
 class FolderFactory
 {
 
@@ -27,17 +30,16 @@ class FolderFactory
     }
 
     /**
+     * @param string $type
+     *
      * @static
      *
-     * @param $type
-     *
-     * @return mixed
+     * @return Folder
      */
     public static function getTypeFolder($type)
     {
         $typearray = FolderFactory::getTypeArray();
+
         return $typearray[$type];
     }
 }
-
-?>

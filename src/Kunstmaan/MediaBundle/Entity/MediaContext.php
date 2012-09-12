@@ -4,15 +4,24 @@ namespace Kunstmaan\MediaBundle\Entity;
 
 use Kunstmaan\MediaBundle\Helper\Provider\ProviderInterface;
 
+/**
+ * MediaContext
+ */
 class MediaContext
 {
-    /* @var string */
+    /**
+     *  @var string
+     */
     protected $name;
 
-    /* @var ProviderInterface */
+    /**
+     * @var ProviderInterface
+     */
     protected $provider;
 
-    /* @var array */
+    /**
+     * @var array
+     */
     protected $formats = array();
 
 
@@ -21,7 +30,10 @@ class MediaContext
      */
     protected $metadataClass;
 
-
+    /**
+     * constructor
+     * @param string $name
+     */
     public function __construct($name)
     {
         $this->setName($name);
@@ -44,7 +56,7 @@ class MediaContext
     }
 
     /**
-     * @param \Ano\Bundle\MediaBundle\Provider\ProviderInterface $provider
+     * @param ProviderInterface $provider
      */
     public function setProvider(ProviderInterface $provider)
     {
@@ -52,7 +64,7 @@ class MediaContext
     }
 
     /**
-     * @return \Ano\Bundle\MediaBundle\Provider\ProviderInterface
+     * @return ProviderInterface
      */
     public function getProvider()
     {
@@ -60,8 +72,8 @@ class MediaContext
     }
 
     /**
-     * @param string $name
-     * @param array $format
+     * @param string $name   The name
+     * @param array  $format The format
      *
      * @return void
      */
@@ -73,7 +85,7 @@ class MediaContext
     /**
      * @param string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFormat($name)
     {
@@ -83,11 +95,11 @@ class MediaContext
     /**
      * @param string $name
      *
-     * @return string|boolean
+     * @return string|bool
      */
     public function getFormat($name)
     {
-        return $this->hasFormat($name) ? $this->formats[$name] : FALSE;
+        return $this->hasFormat($name) ? $this->formats[$name] : false;
     }
 
     /**
@@ -100,12 +112,14 @@ class MediaContext
 
     /**
      * Set metadataClass
+     * @param AbstractMediaMetadata $metadataClass
      *
-     * @param \Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata $metadataClass
+     * @return MediaContext
      */
-    public function setMetadataClass($metadataClass)
+    public function setMetadataClass(AbstractMediaMetadata $metadataClass)
     {
         $this->metadataClass = $metadataClass;
+
         return $this;
     }
 

@@ -2,6 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata;
+
+use Symfony\Component\BrowserKit\Response;
+
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
 use Kunstmaan\MediaBundle\Helper\Event\Events;
@@ -27,17 +31,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * MediaController
+ */
 class MediaController extends Controller
 {
 
     /**
-     * @Route("/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_media_show")
+     * @param int $mediaId
+     *
+     * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_show")
+     *
+     * @return Response
      */
-    public function showAction($media_id)
+    public function showAction($mediaId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $media     = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
+        $media     = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         $gallery   = $media->getGallery();
 
         $mediaManager = $this->get('kunstmaan_media.manager');
@@ -45,42 +56,50 @@ class MediaController extends Controller
         $metadataClass = $mediaContext->getMetadataClass();
 
         return $this->render('KunstmaanMediaBundle:' . $media->getClassType() . ':show.html.twig', array(
-                                                                                                        'media'     => $media,
-                                                                                                        'gallery'   => $gallery,
-                                                                                                        'hasmetadata' => (isset($metadataClass) ? TRUE : FALSE)
-                                                                                                   ));
+            'media'     => $media,
+            'gallery'   => $gallery,
+            'hasmetadata' => (isset($metadataClass) ? true : false)
+        ));
     }
 
     /**
-     * @Route("/delete/{media_id}", requirements={"media_id" = "\d+"}, name="KunstmaanMediaBundle_media_delete")
+     * @param int $mediaId
+     *
+     * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_delete")
+     *
+     * @return RedirectResponse
      */
-    public function deleteAction($media_id)
+    public function deleteAction($mediaId)
     {
-        $em      = $this->getDoctrine()->getEntityManager();
-        $media   = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
+        $em      = $this->getDoctrine()->getManager();
+        $media   = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         $gallery = $media->getGallery();
 
-        $em->getRepository('KunstmaanMediaBundle:Media')->delete($media, $em);
+        $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
 
         return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
-                                                                                                'slug' => $gallery->getSlug()
-                                                                                           )));
+            'slug' => $gallery->getSlug()
+        )));
     }
 
     /**
-     * @Route("bulkupload/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_bulkupload")
+     * @param int $galleryId
+     *
+     * @Route("bulkupload/{galleryId}", requirements={"galleryId" = "\d+"}, name="KunstmaanMediaBundle_folder_bulkupload")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanMediaBundle:File:bulkupload.html.twig")
+     *
+     * @return array|RedirectResponse
      */
-    public function bulkUploadAction($gallery_id)
+    public function bulkUploadAction($galleryId)
     {
         $em      = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
         $strategy = $gallery->getStrategy();
 
         $newMediaInstance = $strategy->getNewBulkUploadMediaInstance();
 
-        if(is_null($newMediaInstance)) {
+        if (is_null($newMediaInstance)) {
             throw new \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException("This type of gallery doesn't support multiple file upload.");
         }
 
@@ -101,14 +120,14 @@ class MediaController extends Controller
                     $media->setContent($file);
                     $media->setGallery($gallery);
 
-                    $em->getRepository('KunstmaanMediaBundle:Media')->save($media, $em);
+                    $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
                 }
 
                 return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array(
-                                                                                                        'id'  => $gallery->getId(),
-                                                                                                        'slug' => $gallery->getSlug()
-                                                                                                   )));
+                    'id'  => $gallery->getId(),
+                    'slug' => $gallery->getSlug()
+                )));
             }
         }
 
@@ -123,14 +142,18 @@ class MediaController extends Controller
     }
 
     /**
+     * @param int $galleryId
+     *
      * @Route("filecreate/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_filecreate")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanMediaBundle:File:create.html.twig")
+     *
+     * @return array|RedirectResponse
      */
-    public function filecreateAction($gallery_id)
+    public function filecreateAction($galleryId)
     {
         $em      = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
 
         $request = $this->getRequest();
         $helper  = new MediaHelper();
@@ -153,13 +176,13 @@ class MediaController extends Controller
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
-                if ($helper->getMedia() != NULL) {
+                if ($helper->getMedia() != null) {
                     $file = new File();
                     $file->setName($helper->getMedia()->getClientOriginalName());
                     $file->setContent($helper->getMedia());
                     $file->setGallery($gallery);
 
-                    $em->getRepository('KunstmaanMediaBundle:Media')->save($file, $em);
+                    $em->getRepository('KunstmaanMediaBundle:Media')->save($file);
 
                     if (isset($metadata)) {
                         $metadata->setMedia($file);
@@ -168,9 +191,9 @@ class MediaController extends Controller
                     }
 
                     $dispatcher = $this->get('event_dispatcher');
-                    if ($dispatcher->hasListeners(Events::postCreate)) {
+                    if ($dispatcher->hasListeners(Events::POSTCREATE)) {
                         $event = new MediaEvent($file, isset($metadata)? $metadata : null);
-                        $dispatcher->dispatch(Events::postCreate, $event);
+                        $dispatcher->dispatch(Events::POSTCREATE, $event);
                     }
 
                     return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
@@ -187,14 +210,18 @@ class MediaController extends Controller
     }
 
     /**
-     * @Route("imagecreate/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_imagecreate")
+     * @param int $galleryId
+     *
+     * @Route("imagecreate/{galleryId}", requirements={"galleryId" = "\d+"}, name="KunstmaanMediaBundle_folder_imagecreate")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanMediaBundle:Image:create.html.twig")
+     *
+     * @return array|RedirectResponse
      */
-    public function imagecreateAction($gallery_id)
+    public function imagecreateAction($galleryId)
     {
         $em      = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
 
         $request       = $this->getRequest();
         $picturehelper = new MediaHelper();
@@ -217,13 +244,13 @@ class MediaController extends Controller
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
-                if ($picturehelper->getMedia() != NULL) {
+                if ($picturehelper->getMedia() != null) {
                     $picture = new Image();
                     $picture->setName($picturehelper->getMedia()->getClientOriginalName());
                     $picture->setContent($picturehelper->getMedia());
                     $picture->setGallery($gallery);
 
-                    $em->getRepository('KunstmaanMediaBundle:Media')->save($picture, $em);
+                    $em->getRepository('KunstmaanMediaBundle:Media')->save($picture);
 
                     if (isset($metadata)) {
                         $metadata->setMedia($picture);
@@ -232,14 +259,14 @@ class MediaController extends Controller
                     }
 
                     $dispatcher = $this->get('event_dispatcher');
-                    if ($dispatcher->hasListeners(Events::postCreate)) {
+                    if ($dispatcher->hasListeners(Events::POSTCREATE)) {
                         $event = new MediaEvent($picture, isset($metadata)? $metadata : null);
-                        $dispatcher->dispatch(Events::postCreate, $event);
+                        $dispatcher->dispatch(Events::POSTCREATE, $event);
                     }
 
-                    return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
-                                                                                                                                              'slug' => $gallery->getSlug()
-                                                                                                                                         )));
+                    return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
+                        'slug' => $gallery->getSlug()
+                    )));
                 }
             }
         }
@@ -251,14 +278,18 @@ class MediaController extends Controller
     }
 
     /**
-     * @Route("videocreate/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_videocreate")
+     * @param int $galleryId
+     *
+     * @Route("videocreate/{galleryId}", requirements={"galleryId" = "\d+"}, name="KunstmaanMediaBundle_folder_videocreate")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanMediaBundle:Video:create.html.twig")
+     *
+     * @return array|RedirectResponse
      */
-    public function videocreateAction($gallery_id)
+    public function videocreateAction($galleryId)
     {
-        $em      = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $em      = $this->getDoctrine()->getManager();
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
 
         $request = $this->getRequest();
         $video   = new Video();
@@ -283,7 +314,7 @@ class MediaController extends Controller
             if ($form->isValid()) {
                 $video->setGallery($gallery);
 
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($video, $em);
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($video);
 
                 if (isset($metadata)) {
                     $metadata->setMedia($video);
@@ -292,14 +323,14 @@ class MediaController extends Controller
                 }
 
                 $dispatcher = $this->get('event_dispatcher');
-                if ($dispatcher->hasListeners(Events::postCreate)) {
+                if ($dispatcher->hasListeners(Events::POSTCREATE)) {
                     $event = new MediaEvent($video, isset($metadata)? $metadata : null);
-                    $dispatcher->dispatch(Events::postCreate, $event);
+                    $dispatcher->dispatch(Events::POSTCREATE, $event);
                 }
 
-                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
-                                                                                                                                          'slug' => $gallery->getSlug()
-                                                                                                                                     )));
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
+                    'slug' => $gallery->getSlug()
+                )));
             }
         }
 
@@ -310,15 +341,19 @@ class MediaController extends Controller
     }
 
     /**
-     * @Route("slidecreate/{gallery_id}", requirements={"gallery_id" = "\d+"}, name="KunstmaanMediaBundle_folder_slidecreate")
+     * @param int $galleryId
+     *
+     * @Route("slidecreate/{galleryId}", requirements={"galleryId" = "\d+"}, name="KunstmaanMediaBundle_folder_slidecreate")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanMediaBundle:Slide:create.html.twig")
+     *
+     * @return array|RedirectResponse
      */
-    public function slidecreateAction($gallery_id)
+    public function slidecreateAction($galleryId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
 
         $request = $this->getRequest();
         $slide   = new Slide();
@@ -343,7 +378,7 @@ class MediaController extends Controller
             if ($form->isValid()) {
                 $slide->setGallery($gallery);
 
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide);
 
                 if (isset($metadata)) {
                     $metadata->setMedia($picture);
@@ -352,14 +387,14 @@ class MediaController extends Controller
                 }
 
                 $dispatcher = $this->get('event_dispatcher');
-                if ($dispatcher->hasListeners(Events::postCreate)) {
+                if ($dispatcher->hasListeners(Events::POSTCREATE)) {
                     $event = new MediaEvent($slide, isset($metadata)? $metadata : null);
-                    $dispatcher->dispatch(Events::postCreate, $event);
+                    $dispatcher->dispatch(Events::POSTCREATE, $event);
                 }
 
-                return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
-                                                                                                                                          'slug' => $gallery->getSlug()
-                                                                                                                                     )));
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id'  => $gallery->getId(),
+                    'slug' => $gallery->getSlug()
+                )));
             }
         }
 
@@ -369,10 +404,16 @@ class MediaController extends Controller
         );
     }
 
+    /**
+     * @param string $context
+     *
+     * @return AbstractMediaMetadata
+     */
     private function getMetadataClass($context = File::CONTEXT)
     {
         $mediaManager = $this->get('kunstmaan_media.manager');
         $imageContext = $mediaManager->getContext($context);
+
         return $imageContext->getMetadataClass();
     }
 

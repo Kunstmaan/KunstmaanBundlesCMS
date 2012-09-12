@@ -2,18 +2,26 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Cdn;
 
+/**
+ * RemoteServerCdn
+ */
 class RemoteServerCdn implements CdnInterface
 {
-    /* @var string */
+    /**
+     * @var string
+     */
     protected $baseUrl;
 
+    /**
+     * @param string $baseUrl
+     */
     public function __construct($baseUrl)
     {
         $this->baseUrl = $baseUrl;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getFullPath($path)
     {

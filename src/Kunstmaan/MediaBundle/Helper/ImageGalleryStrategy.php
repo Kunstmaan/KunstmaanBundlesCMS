@@ -2,11 +2,16 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Kunstmaan\MediaBundle\Entity\Folder;
+
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\Image;
 use Kunstmaan\MediaBundle\Entity\ImageGallery;
 use Kunstmaan\MediaBundle\Form\MediaType;
 
+/**
+ * ImageGalleryStrategy
+ */
 class ImageGalleryStrategy implements GalleryStrategyInterface
 {
 
@@ -29,11 +34,16 @@ class ImageGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return \Kunstmaan\MediaBundle\Entity\Media
      */
-    public function getNewBulkUploadMediaInstance() {
+    public function getNewBulkUploadMediaInstance()
+    {
         return new Image();
     }
 
-    public function getBulkUploadAccept() {
+    /**
+     * @return string
+     */
+    public function getBulkUploadAccept()
+    {
         return 'image/*';
     }
 
@@ -56,9 +66,9 @@ class ImageGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Form\MediaType
+     * @return MediaType
      */
-    function getFormType()
+    public function getFormType()
     {
         return new MediaType();
     }
@@ -66,18 +76,18 @@ class ImageGalleryStrategy implements GalleryStrategyInterface
     /**
      * @return MediaHelper
      */
-    function getFormHelper()
+    public function getFormHelper()
     {
         return new MediaHelper();
     }
 
     /**
+     * @param Folder $folder
+     *
      * @return null
      */
-    function getListConfigurator($folder)
+    public function getListConfigurator(Folder $folder)
     {
-        return NULL;
+        return null;
     }
 }
-
-?>

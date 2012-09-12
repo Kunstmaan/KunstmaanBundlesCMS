@@ -6,26 +6,46 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
 
+/**
+ * BulkUploadType
+ */
 class BulkUploadType extends AbstractType
 {
 
+    /**
+     * @var string
+     */
     protected $accept;
 
-    function __construct($accept = null)
+    /**
+     * contructor
+     * @param string $accept
+     */
+    public function __construct($accept = null)
     {
         $this->accept = $accept;
     }
 
+    /**
+     * Builds the form.
+     *
+     * This method is called for each type in the hierarchy starting form the
+     * top most type. Type extensions can further modify the form.
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     *
+     * @see FormTypeExtensionInterface::buildForm()
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('files','file',array(
-                          "required" => FALSE,
-                          "attr" => array(
-                              "accept" => $this->accept,
-                              "multiple" => "multiple",
-                          )
-                     )
-                );
+        $builder->add('files', 'file', array(
+                  "required" => false,
+                  "attr" => array(
+                      "accept" => $this->accept,
+                      "multiple" => "multiple",
+                  )
+             )
+        );
     }
 
     /**
@@ -33,7 +53,7 @@ class BulkUploadType extends AbstractType
      *
      * @return string The name of this type
      */
-    function getName()
+    public function getName()
     {
         return "kunstmaan_mediabundle_bulkupload";
     }

@@ -14,11 +14,15 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Fixtures that make a general media-folder for a project
  * and for every type of media a folder in that media-folder
- *
- * @author Kristof Van Cauwenbergh
  */
 class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
+
+    /**
+     * Load data fixtures with the passed EntityManager
+     *
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $gal = new Folder($manager);
@@ -42,95 +46,100 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($gal);
         $manager->flush();
 
-            $subgal = new ImageGallery($manager);
-            $subgal->setParent($gal);
-            $subgal->setName('Images');
-            $subgal->setTranslatableLocale('en');
-            $subgal->setCanDelete(false);
-            $subgal->setRel("image");
-            $subgal->setSequencenumber(1);
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal = new ImageGallery($manager);
+        $subgal->setParent($gal);
+        $subgal->setName('Images');
+        $subgal->setTranslatableLocale('en');
+        $subgal->setCanDelete(false);
+        $subgal->setRel("image");
+        $subgal->setSequencenumber(1);
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal->setTranslatableLocale('nl');
-            $manager->refresh($subgal);
-            $subgal->setName('Afbeeldingen');
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal->setTranslatableLocale('nl');
+        $manager->refresh($subgal);
+        $subgal->setName('Afbeeldingen');
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal->setTranslatableLocale('fr');
-            $manager->refresh($subgal);
-            $subgal->setName('Images');
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal->setTranslatableLocale('fr');
+        $manager->refresh($subgal);
+        $subgal->setName('Images');
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal = new VideoGallery($manager);
-            $subgal->setParent($gal);
-            $subgal->setName('Videos');
-            $subgal->setTranslatableLocale('en');
-            $subgal->setCanDelete(false);
-            $subgal->setRel("video");
-            $subgal->setSequencenumber(2);
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal = new VideoGallery($manager);
+        $subgal->setParent($gal);
+        $subgal->setName('Videos');
+        $subgal->setTranslatableLocale('en');
+        $subgal->setCanDelete(false);
+        $subgal->setRel("video");
+        $subgal->setSequencenumber(2);
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal->setTranslatableLocale('nl');
-            $manager->refresh($subgal);
-            $subgal->setName('Video\'s');
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal->setTranslatableLocale('nl');
+        $manager->refresh($subgal);
+        $subgal->setName('Video\'s');
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal->setTranslatableLocale('fr');
-            $manager->refresh($subgal);
-            $subgal->setName('Vidéos');
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal->setTranslatableLocale('fr');
+        $manager->refresh($subgal);
+        $subgal->setName('Vidéos');
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal = new SlideGallery($manager);
-            $subgal->setParent($gal);
-            $subgal->setName('Slides');
-            $subgal->setTranslatableLocale('en');
-            $subgal->setCanDelete(false);
-            $subgal->setRel("slideshow");
-            $subgal->setSequencenumber(3);
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal = new SlideGallery($manager);
+        $subgal->setParent($gal);
+        $subgal->setName('Slides');
+        $subgal->setTranslatableLocale('en');
+        $subgal->setCanDelete(false);
+        $subgal->setRel("slideshow");
+        $subgal->setSequencenumber(3);
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal->setTranslatableLocale('nl');
-            $manager->refresh($subgal);
-            $subgal->setName('Presentaties');
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal->setTranslatableLocale('nl');
+        $manager->refresh($subgal);
+        $subgal->setName('Presentaties');
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal->setTranslatableLocale('fr');
-            $manager->refresh($subgal);
-            $subgal->setName('Presentations');
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal->setTranslatableLocale('fr');
+        $manager->refresh($subgal);
+        $subgal->setName('Presentations');
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal = new FileGallery($manager);
-            $subgal->setParent($gal);
-            $subgal->setName('Files');
-            $subgal->setTranslatableLocale('en');
-            $subgal->setCanDelete(false);
-            $subgal->setRel("files");
-            $subgal->setSequencenumber(4);
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal = new FileGallery($manager);
+        $subgal->setParent($gal);
+        $subgal->setName('Files');
+        $subgal->setTranslatableLocale('en');
+        $subgal->setCanDelete(false);
+        $subgal->setRel("files");
+        $subgal->setSequencenumber(4);
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal->setTranslatableLocale('nl');
-            $manager->refresh($subgal);
-            $subgal->setName('Bestanden');
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal->setTranslatableLocale('nl');
+        $manager->refresh($subgal);
+        $subgal->setName('Bestanden');
+        $manager->persist($subgal);
+        $manager->flush();
 
-            $subgal->setTranslatableLocale('fr');
-            $manager->refresh($subgal);
-            $subgal->setName('Fichiers');
-            $manager->persist($subgal);
-            $manager->flush();
+        $subgal->setTranslatableLocale('fr');
+        $manager->refresh($subgal);
+        $subgal->setName('Fichiers');
+        $manager->persist($subgal);
+        $manager->flush();
     }
 
+    /**
+     * Get the order of this fixture
+     *
+     * @return int
+     */
     public function getOrder()
     {
         return 1;

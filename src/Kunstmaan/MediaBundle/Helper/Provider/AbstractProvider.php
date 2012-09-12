@@ -9,6 +9,9 @@ use Kunstmaan\MediaBundle\Helper\Generator\PathGeneratorInterface;
 use Kunstmaan\MediaBundle\Helper\Generator\UuidGeneratorInterface;
 use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
+/**
+ * AbstractProvider
+ */
 abstract class AbstractProvider implements ProviderInterface
 {
     /* @var array */
@@ -32,6 +35,13 @@ abstract class AbstractProvider implements ProviderInterface
     /* @var string */
     protected $template;
 
+    /**
+     * @param string                 $name          The name
+     * @param CdnInterface           $cdn           The cdn
+     * @param Filesystem             $filesystem    The filesystem
+     * @param PathGeneratorInterface $pathGenerator The path generator
+     * @param UuidGeneratorInterface $uuidGenerator The uuid generator
+     */
     public function __construct($name, CdnInterface $cdn, Filesystem $filesystem, PathGeneratorInterface $pathGenerator, UuidGeneratorInterface $uuidGenerator)
     {
         $this->name          = $name;
@@ -43,8 +53,8 @@ abstract class AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @param string $name
-     * @param array $format
+     * @param string $name   The name
+     * @param array  $format The format
      *
      * @return void
      */
@@ -56,7 +66,7 @@ abstract class AbstractProvider implements ProviderInterface
     /**
      * @param string $name
      *
-     * @return boolean
+     * @return booln
      */
     public function hasFormat($name)
     {
@@ -66,11 +76,11 @@ abstract class AbstractProvider implements ProviderInterface
     /**
      * @param string $name
      *
-     * @return string|boolean
+     * @return string|bool
      */
     public function getFormat($name)
     {
-        return $this->hasFormat($name) ? $this->formats[$name] : FALSE;
+        return $this->hasFormat($name) ? $this->formats[$name] : false;
     }
 
     /**
@@ -162,15 +172,24 @@ abstract class AbstractProvider implements ProviderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @param Media  $media   The media
+     * @param string $format  The format
+     * @param array  $options The options
+     *
+     * @return string
      */
-    public function renderRaw(Media $media, $format = NULL, array $options = array())
+    public function renderRaw(Media $media, $format = null, array $options = array())
     {
         return $this->getMediaUrl($media, $format);
     }
 
-
-    public function generateRelativePath(Media $media, $format = NULL)
+    /**
+     * @param Media  $media  The media
+     * @param string $format The format
+     *
+     * @return string
+     */
+    public function generateRelativePath(Media $media, $format = null)
     {
         return sprintf('%s/%s_%s.%s', $this->generatePath($media), $media->getUuid(), $format, ExtensionGuesser::guess($media->getContentType()));
     }

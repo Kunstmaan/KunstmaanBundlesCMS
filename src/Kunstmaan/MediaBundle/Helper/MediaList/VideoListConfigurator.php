@@ -2,42 +2,72 @@
 
 namespace Kunstmaan\MediaBundle\Helper\MediaList;
 
+use Doctrine\ORM\QueryBuilder;
+
+use Kunstmaan\MediaBundle\Entity\Video;
+
+use Kunstmaan\MediaBundle\Entity\Folder;
+
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 
+/**
+ * VideoListConfigurator
+ */
 class VideoListConfigurator extends AbstractAdminListConfigurator
 {
 
+    /**
+     * @var Folder
+     */
     private $folder;
 
-    public function __construct($folder){
+    /**
+     * @param Folder $folder
+     */
+    public function __construct(Folder $folder)
+    {
         $this->folder = $folder;
     }
 
-    public function buildFilters(AdminListFilter $builder)
+    /**
+     * @param AdminListFilter $filters
+     */
+    public function buildFilters(AdminListFilter $filters)
     {
-        $builder->add('name', new StringFilterType("name"), "form.name");
-        $builder->add('type', new StringFilterType("type"), "form.type");
-        $builder->add('createdAt', new DateFilterType("createdAt"), "form.createdat");
-        $builder->add('updatedAt', new DateFilterType("updatedAt"), "form.updatedat");
+        $filters->add('name', new StringFilterType("name"), "form.name");
+        $filters->add('type', new StringFilterType("type"), "form.type");
+        $filters->add('createdAt', new DateFilterType("createdAt"), "form.createdat");
+        $filters->add('updatedAt', new DateFilterType("updatedAt"), "form.updatedat");
     }
 
+    /**
+     * buildFields
+     */
     public function buildFields()
     {
-        $this->addField("name", "form.name", TRUE);
-        $this->addField("type", "form.type", TRUE);
-        $this->addField("createdAt", "form.createdat", TRUE);
-        $this->addField("updatedAt", "form.updatedat", TRUE);
+        $this->addField("name", "form.name", true);
+        $this->addField("type", "form.type", true);
+        $this->addField("createdAt", "form.createdat", true);
+        $this->addField("updatedAt", "form.updatedat", true);
     }
 
+    /**
+     * @return bool
+     */
     public function canAdd()
     {
         return false;
     }
 
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
     public function getAddUrlFor($params = array())
     {
         return array(
@@ -50,31 +80,52 @@ class VideoListConfigurator extends AbstractAdminListConfigurator
         );
     }
 
-    public function getEditUrlFor($item)
+    /**
+     * @param Video $item
+     *
+     * @return array
+     */
+    public function getEditUrlFor(Video $item)
     {
         return array('path'   => 'KunstmaanMediaBundle_media_show',
                      'params' => array('media_id' => $item->getId())
         );
     }
 
+    /**
+     * @return array
+     */
     public function getIndexUrlFor()
     {
         return array('path' => 'KunstmaanMediaBundle_folder_show', 'params' => array('id' => $this->folder->getId()));
     }
 
+    /**
+     * @return string
+     */
     public function getRepositoryName()
     {
         return 'KunstmaanMediaBundle:Video';
     }
 
-    function adaptQueryBuilder($querybuilder, $params = array())
+
+    /**
+     * @param QueryBuilder $querybuilder The query builder
+     * @param array        $params       Custom parameters
+     */
+    public function adaptQueryBuilder(QueryBuilder $querybuilder, $params = array())
     {
         parent::adaptQueryBuilder($querybuilder);
         $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
         $querybuilder->andwhere("b.deleted != true");
     }
 
-    function getDeleteUrlFor($item)
+    /**
+     * @param Video $item
+     *
+     * @return array
+     */
+    public function getDeleteUrlFor($item)
     {
         return array(
             'path'      => 'KunstmaanMediaBundle_media_delete',

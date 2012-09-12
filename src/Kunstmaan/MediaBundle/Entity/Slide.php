@@ -21,11 +21,6 @@ class Slide extends Media
      */
     protected $type;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Get context
      *
@@ -36,12 +31,22 @@ class Slide extends Media
         return $this::CONTEXT;
     }
 
+    /**
+     * @param string $format  format
+     * @param array  $options options
+     *
+     * @return string
+     */
     public function show($format=null, $options = array())
     {
         return '<script src="http://speakerdeck.com/embed/'. $this->metadata['uuid'] .'.js"></script>';
     }
 
-    public function getCode(){
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
         return $this->metadata['uuid'];
     }
 
@@ -58,7 +63,7 @@ class Slide extends Media
     /**
      * Get slidetype
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {

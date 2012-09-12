@@ -22,10 +22,9 @@ abstract class Extension extends BaseExtension
     /**
      * Dynamically remaps parameters from the config values
      *
-     * @param array            $config
-     * @param ContainerBuilder $container
-     * @param array            $namespaces
-     * @return void
+     * @param array            $config     Configuration
+     * @param ContainerBuilder $container  The Container
+     * @param array            $namespaces namespaces
      */
     protected function remapParametersNamespaces(array $config, ContainerBuilder $container, array $namespaces)
     {
@@ -51,11 +50,9 @@ abstract class Extension extends BaseExtension
     }
 
     /**
-     *
-     * @param array            $config
-     * @param ContainerBuilder $container
-     * @param array            $map
-     * @return void
+     * @param array            $config    Configuration
+     * @param ContainerBuilder $container Container
+     * @param array            $map       names
      */
     protected function remapParameters(array $config, ContainerBuilder $container, array $map)
     {

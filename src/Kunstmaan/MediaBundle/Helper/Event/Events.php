@@ -2,10 +2,11 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Event;
 
+/**
+ * Events
+ */
 class Events
 {
-
-    private function __construct() {}
 
     /**
      * The postEdit event occurs for a given page, after the update method.
@@ -14,7 +15,7 @@ class Events
      *
      * @var string
      */
-    const postEdit = 'media.postEdit';
+    const POSTEDIT = 'media.postEdit';
 
     /**
      * The postCreate event occurs for a given page, after the create method.
@@ -23,6 +24,6 @@ class Events
      *
      * @var string
      */
-    const postCreate = 'media.postCreate';
+    const POSTCREATE = 'media.postCreate';
 
 }

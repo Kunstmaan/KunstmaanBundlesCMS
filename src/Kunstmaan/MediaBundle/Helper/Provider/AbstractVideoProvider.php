@@ -6,8 +6,14 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\File;
 use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
+/**
+ * AbstractVideoProvider
+ */
 abstract class AbstractVideoProvider extends AbstractProvider
 {
+    /**
+     * @param Media $media
+     */
     abstract protected function getMetadata(Media $media);
 
     /**
@@ -15,7 +21,7 @@ abstract class AbstractVideoProvider extends AbstractProvider
      */
     public function prepareMedia(Media $media)
     {
-        if (NULL == $media->getUuid()) {
+        if (null == $media->getUuid()) {
             $uuid = $this->uuidGenerator->generateUuid($media);
             $media->setUuid($uuid);
         }
@@ -57,7 +63,7 @@ abstract class AbstractVideoProvider extends AbstractProvider
     /**
      * {@inheritDoc}
      */
-    public function getMediaUrl(Media $media, $format = NULL)
+    public function getMediaUrl(Media $media, $format = null)
     {
         $path = $this->generateRelativePath($media, $format);
 

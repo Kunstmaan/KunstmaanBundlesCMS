@@ -5,30 +5,38 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
+/**
+ * AbstractMediaMetadata
+ */
 abstract class AbstractMediaMetadata extends AbstractEntity
 {
 
     /**
+     * @var Media
      * @ORM\OneToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $media;
 
+    /**
+     * getDefaultAdminType
+     */
     public abstract function getDefaultAdminType();
 
     /**
-     * @param $media
+     * @param Media $media
      *
-     * @return \AbstractMediaMetadata
+     * @return AbstractMediaMetadata
      */
-    public function setMedia($media)
+    public function setMedia(Media $media)
     {
         $this->media = $media;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return Media
      */
     public function getMedia()
     {

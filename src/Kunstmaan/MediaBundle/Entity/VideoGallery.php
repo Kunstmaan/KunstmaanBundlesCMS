@@ -16,11 +16,9 @@ use Kunstmaan\MediaBundle\Helper\VideoGalleryStrategy;
 class VideoGallery extends Folder
 {
 
-    public function __construct(EntityManager $em)
-    {
-        parent::__construct($em);
-    }
-
+    /**
+     * @return VideoGalleryStrategy
+     */
     public function getStrategy()
     {
         return new VideoGalleryStrategy();

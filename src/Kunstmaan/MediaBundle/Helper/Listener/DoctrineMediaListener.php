@@ -8,21 +8,35 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
+/**
+ * DoctrineMediaListener
+ */
 class DoctrineMediaListener
 {
-    /* @var MediaManager */
+    /**
+     * @var MediaManager
+     */
     private $mediaManager;
 
+    /**
+     * @param MediaManager $mediaManager
+     */
     public function __construct(MediaManager $mediaManager)
     {
         $this->mediaManager = $mediaManager;
     }
 
+    /**
+     * @param LifecycleEventArgs $eventArgs
+     */
     public function prePersist(LifecycleEventArgs $eventArgs)
     {
         $this->prepareMedia($eventArgs->getEntity());
     }
 
+    /**
+     * @param PreUpdateEventArgs $eventArgs
+     */
     public function preUpdate(PreUpdateEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
@@ -38,16 +52,25 @@ class DoctrineMediaListener
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $eventArgs
+     */
     public function postPersist(LifecycleEventArgs $eventArgs)
     {
         $this->saveMedia($eventArgs->getEntity(), true);
     }
 
+    /**
+     * @param LifecycleEventArgs $eventArgs
+     */
     public function postUpdate(LifecycleEventArgs $eventArgs)
     {
         $this->saveMedia($eventArgs->getEntity());
     }
 
+    /**
+     * @param LifecycleEventArgs $eventArgs
+     */
     public function preRemove(LifecycleEventArgs $eventArgs)
     {
         $entity = $eventArgs->getEntity();
@@ -58,6 +81,11 @@ class DoctrineMediaListener
         $this->mediaManager->removeMedia($entity);
     }
 
+    /**
+     * @param object $entity
+     *
+     * @return bool
+     */
     private function prepareMedia($entity)
     {
         if (!$entity instanceof Media) {
@@ -69,6 +97,10 @@ class DoctrineMediaListener
         return true;
     }
 
+    /**
+     * @param object $entity The entity
+     * @param bool   $new    Is new
+     */
     private function saveMedia($entity, $new = false)
     {
         if (!$entity instanceof Media) {

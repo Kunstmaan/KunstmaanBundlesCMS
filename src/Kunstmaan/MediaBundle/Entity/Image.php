@@ -1,7 +1,6 @@
 <?php
 
 namespace Kunstmaan\MediaBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -28,6 +27,9 @@ class Image extends Media
      */
     protected $edits;
 
+    /**
+     * construct
+     */
     public function __construct()
     {
         parent::__construct();
@@ -94,6 +96,9 @@ class Image extends Media
         $this->edits[] = $edits;
     }
 
+    /**
+     * @return string
+     */
     public function __tostring()
     {
         return $this->getName();

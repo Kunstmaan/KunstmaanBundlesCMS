@@ -16,11 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
 class FileGallery extends Folder
 {
 
-    public function __construct(EntityManager $em)
-    {
-        parent::__construct($em);
-    }
-
+    /**
+     * @return FileGalleryStrategy
+     */
     public function getStrategy()
     {
         return new FileGalleryStrategy();
