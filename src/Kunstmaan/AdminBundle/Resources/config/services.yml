@@ -42,7 +42,7 @@ services:
             
     kunstmaan_admin.menu.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\MenuTwigExtension
-        arguments: ["@kunstmaan.admin.menubuilder"]
+        arguments: ["@kunstmaan_admin.menubuilder"]
         tags:
             -  { name: 'twig.extension' }
 

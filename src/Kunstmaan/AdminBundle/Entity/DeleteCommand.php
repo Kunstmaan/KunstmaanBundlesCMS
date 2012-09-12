@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * omnext delete command
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity
- * @ORM\Table(name="deletecommand")
+ * @ORM\Table(name="kuma_delete_commands")
  *
  * @todo This should be removed when refactoring (logging should happen via a Listener)
  * @deprecated

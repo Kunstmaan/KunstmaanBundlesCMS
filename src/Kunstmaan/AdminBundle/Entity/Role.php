@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  * Role Entity
  *
  * @ORM\Entity
- * @ORM\Table( name="user_group_roles" )
+ * @ORM\Table( name="kuma_roles" )
  *
  * @author James Morris <james@jmoz.co.uk>
  * @package AdminBundle

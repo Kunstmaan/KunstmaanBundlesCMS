@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Entity
- * @ORM\Table(name="errorlogitem")
+ * @ORM\Table(name="kuma_errorlogitem")
  */
 class ErrorLogItem extends LogItem
 {

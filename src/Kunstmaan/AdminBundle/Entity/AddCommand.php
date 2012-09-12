@@ -9,10 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * omnext addcommand
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity
- * @ORM\Table(name="addcommand")
+ * @ORM\Table(name="kuma_add_commands")
  *
  * @todo This should be removed when refactoring (logging should happen via a Listener)
  * @deprecated

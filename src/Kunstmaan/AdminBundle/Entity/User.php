@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\UserRepository")
- * @ORM\Table(name="user")
+ * @ORM\Table(name="kuma_users")
  */
 class User extends BaseUser
 {
@@ -25,7 +25,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="Kunstmaan\AdminBundle\Entity\Group")
-     * @ORM\JoinTable(name="user_user_group",
+     * @ORM\JoinTable(name="kuma_users_groups",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
      * )

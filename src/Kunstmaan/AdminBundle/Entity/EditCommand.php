@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Kristof Van Cauwenbergh
  *
  * @ORM\Entity
- * @ORM\Table(name="editcommand")
+ * @ORM\Table(name="kuma_edit_commands")
  *
  * @todo This should be removed when refactoring (logging should happen via a Listener)
  * @deprecated

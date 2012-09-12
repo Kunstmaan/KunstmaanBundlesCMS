@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user_group")
+ * @ORM\Table(name="kuma_group")
  */
 class Group implements RoleInterface, GroupInterface
 {

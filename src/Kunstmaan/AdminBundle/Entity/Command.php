@@ -9,8 +9,6 @@ use Kunstmaan\AdminBundle\Entity\LogItem;
 /**
  * omnext command
  *
- * @author Kristof Van Cauwenbergh
- *
  * @todo This should be removed when refactoring (logging should happen via a Listener)
  * @deprecated
  */
