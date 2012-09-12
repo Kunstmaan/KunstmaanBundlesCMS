@@ -8,8 +8,6 @@ use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 class SlugController extends Controller
 {
@@ -127,8 +125,7 @@ class SlugController extends Controller
                 $redirect = $page->service($this->container, $request, $renderContext);
                 if (!empty($redirect)) {
                     return $redirect;
-                }
-                else if (!$exactMatch && !$hasView) {
+                } elseif (!$exactMatch && !$hasView) {
                     // If it was a dynamic routing page and no view and no service implementation -> 404
                     throw $this->createNotFoundException('No page found for slug ' . $url);
                 }

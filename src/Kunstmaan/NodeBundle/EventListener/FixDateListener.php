@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\ViewBundle\EventListener;
 
-use Gedmo\Exception\RuntimeException;
-
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;

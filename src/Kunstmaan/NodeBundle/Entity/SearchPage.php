@@ -2,23 +2,19 @@
 
 namespace Kunstmaan\ViewBundle\Entity;
 use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 
 use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\ViewBundle\Form\SearchPageAdminType;
-use Kunstmaan\AdminNodeBundle\Entity\HasNode;
 use Doctrine\ORM\EntityManager;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\SearchBundle\Entity\SearchedFor;
 
 /**
  * The default search page
- * 
+ *
  * @ORM\Entity
  * @ORM\Table(name="searchpage")
  * @ORM\HasLifecycleCallbacks()
@@ -66,7 +62,7 @@ class SearchPage extends AbstractPage implements DeepCloneableInterface
     /**
      * {@inheritdoc}
      */
-    public function service($container, Request $request, &$result)
+    public function service(ContainerInterface $container, Request $request, &$result)
     {
         $query = $request->get("query");
 

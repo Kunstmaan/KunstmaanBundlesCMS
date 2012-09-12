@@ -2,13 +2,6 @@
 
 namespace Kunstmaan\ViewBundle\Helper;
 
-use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
-
 /**
  *  a context for rendering pages through service methods
  */
