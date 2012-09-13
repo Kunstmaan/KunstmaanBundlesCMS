@@ -70,20 +70,15 @@ abstract class AbstractAdminListConfigurator
 
     /**
      * @param AdminListFilter $builder
-     *
-     * @return AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        return $this;
+
     }
 
-    /**
-     * @return AbstractAdminListConfigurator
-     */
     public function buildActions()
     {
-        return $this;
+
     }
 
     /**
