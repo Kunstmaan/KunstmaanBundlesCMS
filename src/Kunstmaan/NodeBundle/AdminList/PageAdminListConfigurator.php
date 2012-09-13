@@ -26,6 +26,9 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
         );
     }
 
+    /**
+     * @param AdminListFilter $builder
+     */
     public function buildFilters(AdminListFilter $builder)
     {
         $builder->add('title', new StringFilter("title"), "Title");
