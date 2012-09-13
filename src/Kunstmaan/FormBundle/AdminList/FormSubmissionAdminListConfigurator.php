@@ -28,28 +28,19 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
 
     /**
      * @param AdminListFilter $builder
-     *
-     * @return AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
         $builder->add('created', new DateFilter("created"), "Date");
         $builder->add('lang', new BooleanFilter("lang"), "Language");
         $builder->add('ipAddress', new StringFilter("ipAddress"), "IP Address");
-
-        return $this;
     }
 
-    /**
-     * @return FormSubmissionAdminListConfigurator
-     */
     public function buildFields()
     {
         $this->addField("created", "Date", true);
         $this->addField("lang", "Language", true);
         $this->addField("ipAddress", "ipAddress", true);
-
-        return $this;
     }
 
     /**

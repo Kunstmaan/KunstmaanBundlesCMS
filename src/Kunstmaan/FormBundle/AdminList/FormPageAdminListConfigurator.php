@@ -27,27 +27,18 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
 
     /**
      * @param AdminListFilter $builder
-     *
-     * @return AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
         $builder->add('title', new StringFilter("title"), "Title");
         $builder->add('online', new BooleanFilter("online"), "Online");
-
-        return $this;
     }
 
-    /**
-     * @return AbstractAdminListConfigurator
-     */
     public function buildFields()
     {
         $this->addField("title", "Title", true);
         $this->addField("lang", "Language", true);
         $this->addField("url", "Form path", true);
-
-        return $this;
     }
 
     /**
