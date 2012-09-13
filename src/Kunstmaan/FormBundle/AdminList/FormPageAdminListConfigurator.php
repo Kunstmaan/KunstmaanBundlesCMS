@@ -6,8 +6,8 @@ use Kunstmaan\AdminBundle\Entity\Permission;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 
 /**
  * Adminlist for form pages
@@ -33,8 +33,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('title', new StringFilterType("title"), "Title");
-        $builder->add('online', new BooleanFilterType("online"), "Online");
+        $builder->add('title', new StringFilter("title"), "Title");
+        $builder->add('online', new BooleanFilter("online"), "Online");
     }
 
     /**
@@ -110,8 +110,6 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
             ->setParameter(2, '%|'.$this->permission.':1|%')
             ->setParameter(3, $this->user->getGroupIds())
             ->addOrderBy('n.sequencenumber', 'DESC');
-
-        return $querybuilder;
     }
 
     /**

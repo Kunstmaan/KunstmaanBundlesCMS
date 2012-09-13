@@ -4,9 +4,9 @@ namespace Kunstmaan\FormBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 /**
@@ -30,9 +30,9 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('created', new DateFilterType("created"), "Date");
-        $builder->add('lang', new BooleanFilterType("lang"), "Language");
-        $builder->add('ipAddress', new StringFilterType("ipAddress"), "IP Address");
+        $builder->add('created', new DateFilter("created"), "Date");
+        $builder->add('lang', new BooleanFilter("lang"), "Language");
+        $builder->add('ipAddress', new StringFilter("ipAddress"), "IP Address");
     }
 
     /**
@@ -104,8 +104,6 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
                 ->andWhere('n.id = ?1')
                 ->setParameter(1, $this->nodeTranslation->getNode()->getId())
                 ->addOrderBy('b.created', 'DESC');
-
-        return $querybuilder;
     }
 
     /**
