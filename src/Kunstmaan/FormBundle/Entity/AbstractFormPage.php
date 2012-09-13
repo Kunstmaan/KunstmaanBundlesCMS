@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
 
 /**
  * The Abstract ORM FormPage

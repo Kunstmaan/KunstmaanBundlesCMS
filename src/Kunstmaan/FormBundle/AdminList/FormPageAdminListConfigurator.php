@@ -29,26 +29,34 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param AdminListFilter $builder
+     *
+     * @return AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
         $builder->add('title', new StringFilter("title"), "Title");
         $builder->add('online', new BooleanFilter("online"), "Online");
+
+        return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @return AbstractAdminListConfigurator
      */
     public function buildFields()
     {
         $this->addField("title", "Title", true);
         $this->addField("lang", "Language", true);
         $this->addField("url", "Form path", true);
+
+        return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @param $item
+     *
+     * @return array
      */
     public function getEditUrlFor($item)
     {
@@ -56,7 +64,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function getIndexUrlFor()
     {
@@ -64,7 +72,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @return bool
      */
     public function canAdd()
     {
@@ -72,7 +80,9 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $params
+     *
+     * @return string
      */
     public function getAddUrlFor($params=array())
     {
@@ -80,7 +90,9 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param $item
+     *
+     * @return bool
      */
     public function canDelete($item)
     {
@@ -88,7 +100,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getRepositoryName()
     {
@@ -96,7 +108,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Doctrine\ORM\QueryBuilder $querybuilder
+     * @param array                      $params
      */
     public function adaptQueryBuilder($querybuilder, $params=array())
     {
@@ -113,7 +126,9 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param $item
+     *
+     * @return array
      */
     public function getDeleteUrlFor($item)
     {
