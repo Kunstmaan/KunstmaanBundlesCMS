@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
@@ -10,7 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 /**
- * The form submssions admin list configurator
+ * The form submissions admin list configurator
  */
 class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
 {
@@ -40,33 +41,37 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     *
+     * @return FormSubmissionAdminListConfigurator
      */
     public function buildFields()
     {
         $this->addField("created", "Date", true);
         $this->addField("lang", "Language", true);
         $this->addField("ipAddress", "ipAddress", true);
+
+        return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @param $item
+     *
+     * @return array
      */
     public function getEditUrlFor($item)
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodetranslationid' => $this->nodeTranslation->getId(), 'submissionid' => $item->getId()));
+        return array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId()));
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function getIndexUrlFor()
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array('nodetranslationid' => $this->nodeTranslation->getId()));
+        return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()));
     }
 
     /**
-     * {@inheritdoc}
+     * @return bool
      */
     public function canAdd()
     {
@@ -74,7 +79,9 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $params
+     *
+     * @return string
      */
     public function getAddUrlFor($params = array())
     {
@@ -82,7 +89,9 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param $item
+     *
+     * @return bool
      */
     public function canDelete($item)
     {
@@ -90,7 +99,7 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getRepositoryName()
     {
@@ -98,31 +107,40 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param array                      $params
      */
-    public function adaptQueryBuilder($querybuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, $params = array())
     {
-        parent::adaptQueryBuilder($querybuilder);
-        $querybuilder
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder
                 ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-                ->andWhere('n.id = ?1')
-                ->setParameter(1, $this->nodeTranslation->getNode()->getId())
+                ->andWhere('n.id = :node')
+                ->setParameter('node', $this->nodeTranslation->getNode()->getId())
                 ->addOrderBy('b.created', 'DESC');
     }
 
     /**
-     * {@inheritdoc}
+     * @param $item
+     *
+     * @return array
      */
     public function getDeleteUrlFor($item)
     {
         return array();
     }
 
+    /**
+     * @return array|string
+     */
     public function getExportUrlFor()
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => array('nodetranslationid' => $this->nodeTranslation->getId()));
+        return array('path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()));
     }
 
+    /**
+     * @return bool
+     */
     public function canExport()
     {
         return true;
