@@ -5,9 +5,9 @@ namespace Kunstmaan\AdminNodeBundle\AdminList;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 
 class PageAdminListConfigurator extends AbstractAdminListConfigurator
 {
@@ -28,10 +28,10 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
 
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('title', new StringFilterType("title"), "Title");
-        $builder->add('online', new BooleanFilterType("online"), "Online");
-        $builder->add('created', new DateFilterType("created"), "Created At");
-        $builder->add('updated', new DateFilterType("updated"), "Updated At");
+        $builder->add('title', new StringFilter("title"), "Title");
+        $builder->add('online', new BooleanFilter("online"), "Online");
+        $builder->add('created', new DateFilter("created"), "Created At");
+        $builder->add('updated', new DateFilter("updated"), "Updated At");
     }
 
     public function buildFields()

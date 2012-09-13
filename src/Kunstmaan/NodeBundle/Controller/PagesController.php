@@ -319,9 +319,7 @@ class PagesController extends Controller
             // @todo Fetch permissionmap from page?
             /* @var PermissionMap $permissionMap */
             $permissionMap = $this->container->get('security.acl.permission.map');
-            /* @var ShellHelper $shellHelper */
-            $shellHelper = $this->container->get('kunstmaan_adminnode.shell_helper');
-            $permissionAdmin->initialize($node, $permissionMap, $shellHelper);
+            $permissionAdmin->initialize($node, $permissionMap);
         }
         $form = $formBuilder->getForm();
         if ($request->getMethod() == 'POST') {
@@ -330,7 +328,9 @@ class PagesController extends Controller
                 $pagePartAdmin->bindRequest($request);
             }
             if ($this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
-                $permissionAdmin->bindRequest($request);
+                /* @var ShellHelper $shellHelper */
+                $shellHelper = $this->container->get('kunstmaan_adminnode.shell_helper');
+                $permissionAdmin->bindRequest($request, $shellHelper);
             }
             if ($form->isValid()) {
                 foreach ($pagePartAdmins as $pagePartAdmin) {
