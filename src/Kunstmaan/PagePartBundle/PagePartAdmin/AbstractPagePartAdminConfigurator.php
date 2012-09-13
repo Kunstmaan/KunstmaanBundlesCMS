@@ -7,15 +7,15 @@ abstract class AbstractPagePartAdminConfigurator
     /**
      * @return array
      */
-    abstract function getPossiblePagePartTypes();
+    abstract public function getPossiblePagePartTypes();
 
     /**
      * @return string
      */
-    abstract function getName();
+    abstract public function getName();
 
     /**
      * @return string
      */
-    abstract function getDefaultContext();
+    abstract public function getDefaultContext();
 }

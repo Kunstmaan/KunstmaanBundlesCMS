@@ -105,10 +105,10 @@ class PagePartRefRepository extends EntityRepository
         $page_classname = ClassLookup::getClass($page);
 
         $sql = 'SELECT COUNT(pp.id) FROM KunstmaanPagePartBundle:PagePartRef pp
-				 WHERE pp.pageEntityname = :pageEntityname
-				   AND pp.pageId = :pageId
-				   AND pp.pagePartEntityname = :pagePartEntityname
-				   AND pp.context = :context';
+                 WHERE pp.pageEntityname = :pageEntityname
+                   AND pp.pageId = :pageId
+                   AND pp.pagePartEntityname = :pagePartEntityname
+                   AND pp.context = :context';
 
         return $em->createQuery($sql)
                 ->setParameter('pageEntityname', $page_classname)
@@ -131,9 +131,9 @@ class PagePartRefRepository extends EntityRepository
         $page_classname = ClassLookup::getClass($page);
 
         $sql = 'SELECT COUNT(pp.id) FROM KunstmaanPagePartBundle:PagePartRef pp
-				 WHERE pp.pageEntityname = :pageEntityname
-				   AND pp.pageId = :pageId
-				   AND pp.context = :context';
+                 WHERE pp.pageEntityname = :pageEntityname
+                   AND pp.pageId = :pageId
+                   AND pp.context = :context';
 
         return $em->createQuery($sql)
                 ->setParameter('pageEntityname', $page_classname)

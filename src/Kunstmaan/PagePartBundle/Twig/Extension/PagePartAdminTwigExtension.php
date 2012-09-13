@@ -26,7 +26,8 @@ class PagePartAdminTwigExtension extends \Twig_Extension
     /**
      * @return array
      */
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             'pagepartadmin_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
         );
@@ -45,7 +46,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param \Symfony\Component\Form\FormView $view The view to render
+     * @param \Symfony\Component\Form\FormView $view       The view to render
      * @param null                             $form
      * @param array                            $parameters Additional variables passed to the template
      *

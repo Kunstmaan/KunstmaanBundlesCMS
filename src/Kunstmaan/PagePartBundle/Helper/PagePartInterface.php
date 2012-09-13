@@ -4,26 +4,25 @@ namespace  Kunstmaan\PagePartBundle\Helper;
 
 use Symfony\Component\Form\AbstractType;
 
-
 /**
  * PagePartInterface
  */
 interface PagePartInterface
 {
 
-	/**
-	 * Returns the view used in the frontend
-	 * @abstract
-	 * @return string
-	 */
+    /**
+     * Returns the view used in the frontend
+     * @abstract
+     * @return string
+     */
     public function getDefaultView();
 
-	/**
-	 * Returns the view used in the backend
-	 * @abstract
-	 * @return string
-	 */
-	public function getAdminView();
+    /**
+     * Returns the view used in the backend
+     * @abstract
+     * @return string
+     */
+    public function getAdminView();
 
     /**
      * @return string

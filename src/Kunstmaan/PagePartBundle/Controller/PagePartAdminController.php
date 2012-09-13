@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +12,11 @@ use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
 class PagePartAdminController extends Controller
 {
 
+    /**
+     * Index
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction()
     {
         return $this->render('KunstmaanPagePartBundle:PagePartAdmin:index.html.twig');
@@ -19,35 +25,37 @@ class PagePartAdminController extends Controller
     /**
      * Moves a PagePartRef in a certain direction.
      *
-     * @param integer $id       the id of the pagepartref
-     * @param integer $steps    amount of steps to move, 1 for one up, -1 for one down
+     * @param integer $id    the id of the pagepartref
+     * @param integer $steps amount of steps to move, 1 for one up, -1 for one down
      */
     private function movePagePartRef($id, $steps)
     {
         $em = $this->getDoctrine()->getManager();
         /** @var PagePartRefRepository $repo  */
         $repo = $em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-        /** @var PagePartRef $pagepartref  */
-        $pagepartref = $repo->find($id);
-        /** @var PagePartRef[] $pagepartrefs  */
-        $pagepartrefs = $repo->findBy(array('context' => $pagepartref->getContext(),
-                                            'pageId' => $pagepartref->getPageId(),
-                                            'pageEntityname' => $pagepartref->getPageEntityName()));
-        foreach ($pagepartrefs as &$ppref) {
-            if ($ppref->getSequenceNumber() + $steps == $pagepartref->getSequenceNumber()) {
-                $ppref->setSequenceNumber($pagepartref->getSequenceNumber());
-                $em->persist($ppref);
+        /** @var PagePartRef $pagePartRef  */
+        $pagePartRef = $repo->find($id);
+        /** @var PagePartRef[] $pagePartRefs  */
+        $pagePartRefs = $repo->findBy(array('context' => $pagePartRef->getContext(),
+                                            'pageId' => $pagePartRef->getPageId(),
+                                            'pageEntityname' => $pagePartRef->getPageEntityName()));
+        foreach ($pagePartRefs as &$ppRef) {
+            if ($ppRef->getSequenceNumber() + $steps == $pagePartRef->getSequenceNumber()) {
+                $ppRef->setSequenceNumber($pagePartRef->getSequenceNumber());
+                $em->persist($ppRef);
             }
         }
-        if ($pagepartref->getSequenceNumber() > 1) {
-            $pagepartref->setSequenceNumber($pagepartref->getSequenceNumber() - 1);
-            $em->persist($pagepartref);
+        if ($pagePartRef->getSequenceNumber() > 1) {
+            $pagePartRef->setSequenceNumber($pagePartRef->getSequenceNumber() - 1);
+            $em->persist($pagePartRef);
         }
         $em->flush();
     }
 
     /**
-     * @param integer $id
+     * Move a page part up
+     *
+     * @param int $id
      */
     public function moveUpAction($id)
     {
@@ -55,7 +63,9 @@ class PagePartAdminController extends Controller
     }
 
     /**
-     * @param integer $id
+     * Move a page part down
+     *
+     * @param int $id
      */
     public function moveDownAction($id)
     {
@@ -63,18 +73,21 @@ class PagePartAdminController extends Controller
     }
 
     /**
+     * Select a link
+     *
      * @Route   ("/pageparts/selecturl", name="KunstmaanPagePartBundle_selecturl")
      * @Template()
      */
-    public function selectlinkAction()
+    public function selectLinkAction()
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $topnodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, $user, 'read', true);
-        $nodeMenu = new NodeMenu($this->container, $locale, null, 'read', false, true);
+        $securityContext = $this->container->get('security.context');
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        $topNodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, false, true);
 
-        return array('topnodes' => $topnodes, 'nodemenu' => $nodeMenu,);
+        return array('topnodes' => $topNodes, 'nodemenu' => $nodeMenu);
     }
 }

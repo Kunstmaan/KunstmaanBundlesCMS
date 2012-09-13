@@ -8,7 +8,6 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Bundle\DoctrineBundle\Registry;
@@ -52,7 +51,7 @@ class PagePartAdmin
      * @param null|string                                    $context
      * @param Container                                      $container
      */
-    function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, AbstractPage $page, $context = null, Container $container)
+    public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, AbstractPage $page, $context = null, Container $container)
     {
         $this->configurator = $configurator;
         $this->em = $em;

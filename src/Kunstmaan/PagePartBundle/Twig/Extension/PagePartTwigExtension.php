@@ -71,6 +71,7 @@ class PagePartTwigExtension extends \Twig_Extension
         /** @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $pageparts = $entityRepository->getPageParts($page, $context);
+
         return $pageparts;
     }
 

@@ -3,7 +3,6 @@ namespace Kunstmaan\PagePartBundle\Tests\Form;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser;
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Form\Type\URLChooserType;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
