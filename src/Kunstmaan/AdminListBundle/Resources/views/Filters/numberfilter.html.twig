@@ -11,9 +11,9 @@
 <input type="text" name="{{nameprefix}}value{{namesuffix}}" id="{{nameprefix}}value{{namesuffix}}"
        {% if data.value is defined %}
             value="{{data.value}}"
-        {% endif %}        
+        {% endif %}
         />
-        
+
 <script>
 	synctextfieldvisibility = function(){
 		if($('#{{nameprefix}}comparator{{namesuffix}}').val() == 'isnull' || $('#{{nameprefix}}comparator{{namesuffix}}').val() == 'isnotnull'){

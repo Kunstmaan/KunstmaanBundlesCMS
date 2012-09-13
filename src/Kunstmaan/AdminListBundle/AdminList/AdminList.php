@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 /**
  *
  * @todo Create a base (abstract) class with 2 descendants - one with only ORM and one with only native DBAL support?
- *       If we do this we will have to adapt the factory as well...
+ *       If we do this we will have to adapt the factory & filter as well...
  */
 class AdminList
 {

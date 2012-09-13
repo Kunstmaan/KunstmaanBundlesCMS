@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-interface ListActionInterface {
-
+interface ListActionInterface
+{
     public function getUrl();
 
     public function getLabel();

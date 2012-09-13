@@ -2,42 +2,53 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-class Filter {
-    protected $columnname = null;
+use Symfony\Component\HttpFoundation\Request;
 
-    protected $filterdefinition = null;
+class Filter
+{
+    /* @var string $columnName */
+    protected $columnName = null;
 
-    protected $uniqueid = null;
+    protected $filterDefinition = null;
+
+    protected $uniqueId = null;
 
     protected $data = array();
 
-    function __construct($columnname, $filterdefinition, $uniqueid) {
-        $this->columnname = $columnname;
-        $this->filterdefinition = $filterdefinition;
-        $this->uniqueid = $uniqueid;
+    public function __construct($columnName, $filterDefinition, $uniqueId)
+    {
+        $this->columnName       = $columnName;
+        $this->filterDefinition = $filterDefinition;
+        $this->uniqueId         = $uniqueId;
     }
 
-    function bindRequest($request){
-        $this->filterdefinition['type']->bindRequest($request, $this->data, $this->uniqueid);
+    public function bindRequest(Request $request)
+    {
+        $this->filterDefinition['type']->bindRequest($request, $this->data, $this->uniqueId);
     }
 
-    function adaptQueryBuilder($querybuilder, &$expressions){
-        $this->filterdefinition['type']->adaptQueryBuilder($querybuilder, $expressions, $this->data, $this->uniqueid);
+    public function adaptQueryBuilder($querybuilder, &$expressions)
+    {
+        $this->filterDefinition['type']->adaptQueryBuilder($querybuilder, $expressions, $this->data, $this->uniqueId);
     }
 
-    public function getColumnname() {
-        return $this->columnname;
+    public function getColumnName()
+    {
+        return $this->columnName;
     }
 
-    public function getData(){
+    public function getData()
+    {
         return $this->data;
     }
 
-    public function getType(){
-        return $this->filterdefinition['type'];
+    public function getType()
+    {
+        return $this->filterDefinition['type'];
     }
 
-    public function getUniqueid(){
-        return $this->uniqueid;
+    public function getUniqueId()
+    {
+        return $this->uniqueId;
     }
 }

@@ -22,17 +22,17 @@ abstract class AbstractAdminListConfigurator
     /* @var PermissionDefinition $permissionDefinition */
     private $permissionDefinition = null;
 
-    abstract function buildFields();
+    abstract public function buildFields();
 
-    abstract function getEditUrlFor($item);
+    abstract public function getEditUrlFor($item);
 
-    abstract function getAddUrlFor($params = array());
+    abstract public function getAddUrlFor($params = array());
 
-    abstract function getDeleteUrlFor($item);
+    abstract public function getDeleteUrlFor($item);
 
-    abstract function getIndexUrlFor();
+    abstract public function getIndexUrlFor();
 
-    abstract function getRepositoryName();
+    abstract public function getRepositoryName();
 
     /**
      * @param entity $entity
@@ -95,14 +95,14 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param string     $name
-     * @param string     $header
-     * @param string     $sort
-     * @param string     $template
+     * @param string $name
+     * @param string $header
+     * @param string $sort
+     * @param string $template
      *
      * @return AbstractAdminListConfigurator
      */
-    function addField($name, $header, $sort, $template = null)
+    public function addField($name, $header, $sort, $template = null)
     {
         $this->fields[] = new Field($name, $header, $sort, $template);
 
@@ -110,14 +110,14 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param string     $name
-     * @param string     $header
-     * @param string     $sort
-     * @param string     $template
+     * @param string $name
+     * @param string $header
+     * @param string $sort
+     * @param string $template
      *
      * @return AbstractAdminListConfigurator
      */
-    function addExportField($name, $header, $sort, $template = null)
+    public function addExportField($name, $header, $sort, $template = null)
     {
         $this->exportFields[] = new Field($name, $header, $sort, $template);
 
@@ -161,7 +161,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @return int
      */
-    function getLimit()
+    public function getLimit()
     {
         return 10;
     }
@@ -169,7 +169,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @return array
      */
-    function getSortFields()
+    public function getSortFields()
     {
         $array = array();
         foreach ($this->getFields() as $field) {
@@ -184,7 +184,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @return Field[]
      */
-    function getFields()
+    public function getFields()
     {
         return $this->fields;
     }
@@ -192,7 +192,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @return Field[]
      */
-    function getExportFields()
+    public function getExportFields()
     {
         if (empty($this->exportFields)) {
             return $this->fields;
@@ -204,7 +204,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @param $array
      */
-    function configureListFields(&$array)
+    public function configureListFields(&$array)
     {
         foreach ($this->getFields() as $field) {
             $array[$field->getHeader()] = $field->getName();
@@ -215,16 +215,16 @@ abstract class AbstractAdminListConfigurator
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param array                      $params
      */
-    function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $queryBuilder, $params = array())
+    public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $queryBuilder, $params = array())
     {
         $queryBuilder->where('1=1');
     }
 
     /**
-     * @param string      $label
-     * @param string      $url
-     * @param string      $icon
-     * @param string      $template
+     * @param string $label
+     * @param string $url
+     * @param string $icon
+     * @param string $template
      *
      * @return AbstractAdminListConfigurator
      */
@@ -285,7 +285,7 @@ abstract class AbstractAdminListConfigurator
      *
      * @return mixed
      */
-    function getValue($item, $columnName)
+    public function getValue($item, $columnName)
     {
         if (is_array($item)) {
             if (isset($item[$columnName])) {
@@ -326,7 +326,7 @@ abstract class AbstractAdminListConfigurator
      *
      * @return string
      */
-    function getStringValue($item, $columnName)
+    public function getStringValue($item, $columnName)
     {
         $result = $this->getValue($item, $columnName);
         if (is_bool($result)) {
@@ -381,7 +381,7 @@ abstract class AbstractAdminListConfigurator
      *
      * @throws \RuntimeException
      */
-    function adaptNativeCountQueryBuilder($querybuilder, $params = array())
+    public function adaptNativeCountQueryBuilder($querybuilder, $params = array())
     {
         throw new \RuntimeException('You have to implement the native count query builder!');
     }
@@ -392,7 +392,7 @@ abstract class AbstractAdminListConfigurator
      *
      * @throws \RuntimeException
      */
-    function adaptNativeItemsQueryBuilder($querybuilder, $params = array())
+    public function adaptNativeItemsQueryBuilder($querybuilder, $params = array())
     {
         throw new \RuntimeException('You have to implement the native items query builder!');
     }

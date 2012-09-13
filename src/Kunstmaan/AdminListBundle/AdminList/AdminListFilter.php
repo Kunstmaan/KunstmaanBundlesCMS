@@ -1,11 +1,6 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Symfony\Component\Form\Exception\FormException;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 class AdminListFilter
 {
 
@@ -15,44 +10,43 @@ class AdminListFilter
      */
     private $filterDefinitions = array();
 
-    /**
-     * @var Filter[]
-     */
+    /* @var Filter[] */
     private $currentFilters = array();
 
-    private $currentparameters = array();
+    private $currentParameters = array();
 
     /**
-     * @param       $colname
-     * @param null  $type
-     * @param null  $filtername
-     * @param array $options
+     * @param string $columnName
+     * @param string $type
+     * @param string $filterName
+     * @param array  $options
      *
      * @return AdminListFilter
      */
-    public function add($colname, $type = null, $filtername = null, array $options = array())
+    public function add($columnName, $type = null, $filterName = null, array $options = array())
     {
-        $this->filterDefinitions[$colname] = array('type' => $type, 'options' => $options, 'filtername' => $filtername);
+        $this->filterDefinitions[$columnName] = array('type' => $type, 'options' => $options, 'filtername' => $filterName);
 
         return $this;
     }
 
-    public function get($colname)
+    public function get($columnName)
     {
-        return $this->filterDefinitions[$colname];
+        return $this->filterDefinitions[$columnName];
     }
 
-    public function remove($colname)
+    public function remove($columnName)
     {
-        if (isset($this->filterDefinitions[$colname])) {
-            unset($this->filterDefinitions[$colname]);
+        if (isset($this->filterDefinitions[$columnName])) {
+            unset($this->filterDefinitions[$columnName]);
         }
+
         return $this;
     }
 
-    public function has($colname)
+    public function has($columnName)
     {
-        return isset($this->filterDefinitions[$colname]);
+        return isset($this->filterDefinitions[$columnName]);
     }
 
     public function getFilterDefinitions()
@@ -62,14 +56,14 @@ class AdminListFilter
 
     public function bindRequest($request)
     {
-        $this->currentparameters = $request->query->all();
-        $filter_columnnames = $request->query->get('filter_columnname');
-        if (isset($filter_columnnames)) {
-            $uniqueids = $request->query->get('filter_uniquefilterid');
+        $this->currentParameters = $request->query->all();
+        $filterColumnNames = $request->query->get('filter_columnname');
+        if (isset($filterColumnNames)) {
+            $uniqueIds = $request->query->get('filter_uniquefilterid');
             $index = 0;
-            foreach ($filter_columnnames as $filter_columnname) {
-                $uniqueid = $uniqueids[$index];
-                $filter = new Filter($filter_columnname, $this->get($filter_columnname), $uniqueid);
+            foreach ($filterColumnNames as $filterColumnName) {
+                $uniqueId = $uniqueIds[$index];
+                $filter = new Filter($filterColumnName, $this->get($filterColumnName), $uniqueId);
                 $this->currentFilters[] = $filter;
                 $filter->bindRequest($request);
                 $index++;
@@ -77,9 +71,9 @@ class AdminListFilter
         }
     }
 
-    public function getCurrentparameters()
+    public function getCurrentParameters()
     {
-        return $this->currentparameters;
+        return $this->currentParameters;
     }
 
     public function getCurrentFilters()

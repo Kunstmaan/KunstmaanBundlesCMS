@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Helper\Acl\AclHelper;
 use Doctrine\ORM\EntityManager;
 
 class AdminListFactory
