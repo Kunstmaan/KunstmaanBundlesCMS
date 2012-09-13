@@ -27,7 +27,7 @@ class FormSubmissionsMenuAdaptor implements MenuAdaptorInterface
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuitem = new TopMenuItem($menu);
             $menuitem->setRoute('KunstmaanFormBundle_formsubmissions');
-            $menuitem->setInternalname('Form submissions');
+            $menuitem->setInternalName('Form submissions');
             $menuitem->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                 $menuitem->setActive(true);
