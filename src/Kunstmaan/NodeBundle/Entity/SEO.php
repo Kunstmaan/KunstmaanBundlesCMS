@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminNodeBundle\Form\SEOType;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * SEO settings
  *
  * @ORM\Entity
- * @ORM\Table(name="seoinformation")
+ * @ORM\Table(name="kuma_seo")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class SEO extends AbstractEntity
@@ -26,29 +27,29 @@ class SEO extends AbstractEntity
     protected $id;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
      */
-    protected $metadescription;
+    protected $metaDescription;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="meta_author", type="string", nullable=true)
      */
-    protected $metaauthor;
+    protected $metaAuthor;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="meta_keywords", type="string", nullable=true)
      */
-    protected $metakeywords;
+    protected $metaKeywords;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="meta_robots", type="string", nullable=true)
      */
-    protected $metarobots;
+    protected $metaRobots;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="meta_revised", type="string", nullable=true)
      */
-    protected $metarevised;
+    protected $metaRevised;
 
     /**
      * @ORM\Column(name="og_type", type="string", nullable=true)
@@ -67,12 +68,12 @@ class SEO extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
-     * @ORM\JoinColumn(name="og_image", referencedColumnName="id")
+     * @ORM\JoinColumn(name="og_image_id", referencedColumnName="id")
      */
     protected $ogImage;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(name="extra_metadata", type="text", nullable=true)
      */
     protected $extraMetadata;
 
@@ -83,87 +84,107 @@ class SEO extends AbstractEntity
     public $cimKeyword;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMetaAuthor()
     {
-        return $this->metaauthor;
+        return $this->metaAuthor;
     }
 
     /**
-     * @param $meta
+     * @param string $meta
+     *
+     * @return SEO
      */
     public function setMetaAuthor($meta)
     {
-        $this->metaauthor = $meta;
+        $this->metaAuthor = $meta;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMetaDescription()
     {
-        return $this->metadescription;
+        return $this->metaDescription;
     }
 
     /**
-     * @param $meta
+     * @param string $meta
+     *
+     * @return SEO
      */
     public function setMetaDescription($meta)
     {
-        $this->metadescription = $meta;
+        $this->metaDescription = $meta;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMetaKeywords()
     {
-        return $this->metakeywords;
+        return $this->metaKeywords;
     }
 
     /**
-     * @param $meta
+     * @param string $meta
+     *
+     * @return SEO
      */
     public function setMetaKeywords($meta)
     {
-        $this->metakeywords = $meta;
+        $this->metaKeywords = $meta;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMetaRobots()
     {
-        return $this->metarobots;
+        return $this->metaRobots;
     }
 
     /**
-     * @param $meta
+     * @param string $meta
+     *
+     * @return SEO
      */
     public function setMetaRobots($meta)
     {
-        $this->metarobots = $meta;
+        $this->metaRobots = $meta;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMetaRevised()
     {
-        return $this->metarevised;
+        return $this->metaRevised;
     }
 
     /**
-     * @param $meta
+     * @param string $meta
+     *
+     * @return SEO
      */
     public function setMetaRevised($meta)
     {
-        $this->metarevised = $meta;
+        $this->metaRevised = $meta;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getExtraMetadata()
     {
@@ -171,15 +192,19 @@ class SEO extends AbstractEntity
     }
 
     /**
-     * @param $extraMetadata
+     * @param string $extraMetadata
+     *
+     * @return SEO
      */
     public function setExtraMetadata($extraMetadata)
     {
         $this->extraMetadata = $extraMetadata;
+
+        return $this;
     }
 
     /**
-     * @param $ogDescription
+     * @param string $ogDescription
      *
      * @return SEO
      */
@@ -268,6 +293,8 @@ class SEO extends AbstractEntity
 
     /**
      * @param string $cimKeyword
+     *
+     * @return SEO
      */
     public function setCimKeyword($cimKeyword)
     {
@@ -276,6 +303,16 @@ class SEO extends AbstractEntity
             $cimKeyword = substr($cimKeyword, 0, 24);
         }
         $this->cimKeyword = $cimKeyword;
+
+        return $this;
+    }
+
+    /**
+     * @return SEOType
+     */
+    public function getDefaultAdminType()
+    {
+        return new SEOType();
     }
 
 }

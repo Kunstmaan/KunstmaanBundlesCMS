@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\AclChangesetRepository")
- * @ORM\Table(name="acl_changeset")
+ * @ORM\Table(name="kuma_acl_changesets")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
@@ -89,7 +89,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set timestamp of creation
      *
-     * @param DateTime $created
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {
@@ -99,7 +99,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get timestamp of creation
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -109,7 +109,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set timestamp of last modification
      *
-     * @param DateTime $lastModified
+     * @param \DateTime $lastModified
      */
     public function setLastModified($lastModified)
     {
@@ -119,7 +119,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get timestamp of last modification
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastModified()
     {

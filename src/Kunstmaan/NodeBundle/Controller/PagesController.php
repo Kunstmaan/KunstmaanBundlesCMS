@@ -123,7 +123,7 @@ class PagesController extends Controller
             throw new AccessDeniedException();
         }
 
-        $entityName = $node->getRefEntityname();
+        $entityName = $node->getRefEntityName();
         $myLanguagePage = new $entityName();
         $myLanguagePage->setTitle('New page');
 
@@ -238,7 +238,7 @@ class PagesController extends Controller
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $draftNodeVersion = $nodeTranslation->getNodeVersion('draft');
 
-        $page = $this->em->getRepository($nodeVersion->getRefEntityname())->find($nodeVersion->getRefId());
+        $page = $this->em->getRepository($nodeVersion->getRefEntityName())->find($nodeVersion->getRefId());
 
         if ((!$draft && is_string($saveAsDraft) && $saveAsDraft != '') || ($draft && is_null($draftNodeVersion))) {
             $publicPage = $page->deepClone($this->em);

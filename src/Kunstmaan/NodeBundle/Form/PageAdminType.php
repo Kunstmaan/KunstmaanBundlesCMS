@@ -11,9 +11,9 @@ use Symfony\Component\Form\AbstractType;
  */
 class PageAdminType extends AbstractType
 {
-
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,7 +23,9 @@ class PageAdminType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $options
+     *
+     * @return array
      */
     public function getDefaultOptions(array $options)
     {
@@ -33,7 +35,7 @@ class PageAdminType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {

@@ -23,7 +23,7 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Node")
-     * @ORM\JoinColumn(name="node", referencedColumnName="id")
+     * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
     protected $node;
 
@@ -54,13 +54,13 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="NodeVersion")
-     * @ORM\JoinColumn(name="publicNodeVersion", referencedColumnName="id")
+     * @ORM\JoinColumn(name="public_node_version_id", referencedColumnName="id")
      */
     protected $publicNodeVersion;
 
     /**
      * @ORM\OneToOne(targetEntity="SEO", cascade={"all"})
-     * @ORM\JoinColumn(name="seo", referencedColumnName="id")
+     * @ORM\JoinColumn(name="seo_id", referencedColumnName="id")
      */
     protected $seo;
 
@@ -85,10 +85,14 @@ class NodeTranslation extends AbstractEntity
      * Set node
      *
      * @param Node $node
+     *
+     * @return NodeTranslation
      */
     public function setNode($node)
     {
         $this->node = $node;
+
+        return $this;
     }
 
     /**
@@ -105,10 +109,14 @@ class NodeTranslation extends AbstractEntity
      * Set lang
      *
      * @param string $lang
+     *
+     * @return NodeTranslation
      */
     public function setLang($lang)
     {
         $this->lang = $lang;
+
+        return $this;
     }
 
     /**
@@ -135,20 +143,28 @@ class NodeTranslation extends AbstractEntity
      * Set online
      *
      * @param bool $online
+     *
+     * @return NodeTranslation
      */
     public function setOnline($online)
     {
         $this->online = $online;
+
+        return $this;
     }
 
     /**
      * Set title
      *
      * @param string $title
+     *
+     * @return NodeTranslation
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -165,10 +181,14 @@ class NodeTranslation extends AbstractEntity
      * Set slug
      *
      * @param string $slug
+     *
+     * @return NodeTranslation
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**
@@ -235,10 +255,14 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @param NodeVersion $publicNodeVersion
+     *
+     * @return NodeTranslation
      */
     public function setPublicNodeVersion($publicNodeVersion)
     {
         $this->publicNodeVersion = $publicNodeVersion;
+
+        return $this;
     }
 
     /**
@@ -259,10 +283,14 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @param NodeVersion[] $nodeVersions
+     *
+     * @return NodeTranslation
      */
     public function setNodeVersions($nodeVersions)
     {
         $this->nodeVersions = $nodeVersions;
+
+        return $this;
     }
 
     /**
@@ -286,13 +314,20 @@ class NodeTranslation extends AbstractEntity
      * Add nodeVersion
      *
      * @param NodeVersion $nodeVersion
+     *
+     * @return NodeTranslation
      */
     public function addNodeVersion(NodeVersion $nodeVersion)
     {
         $this->nodeVersions[] = $nodeVersion;
         $nodeVersion->setNodeTranslation($this);
+
+        return $this;
     }
 
+    /**
+     * Disable lazy loading of node versions
+     */
     public function disableNodeVersionsLazyLoading()
     {
         if (is_object($this->nodeVersions)) {
@@ -318,7 +353,7 @@ class NodeTranslation extends AbstractEntity
     {
         $nodeVersion = $this->getNodeVersion($type);
         if ($nodeVersion) {
-            return $em->getRepository($nodeVersion->getRefEntityname())->find($nodeVersion->getRefId());
+            return $em->getRepository($nodeVersion->getRefEntityName())->find($nodeVersion->getRefId());
         }
 
         return null;
@@ -375,7 +410,7 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * Returns the date the first nodeversion was created
+     * Returns the date the first node version was created
      *
      * @return \DateTime
      */
@@ -388,7 +423,7 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * Returns the date the last nodeversion was updated
+     * Returns the date the last node version was updated
      *
      * @return mixed
      */
@@ -400,31 +435,61 @@ class NodeTranslation extends AbstractEntity
         return $lastVersion->getUpdated();
     }
 
+    /**
+     * @param SEO $seo
+     *
+     * @return NodeTranslation
+     */
     public function setSEO($seo)
     {
         $this->seo = $seo;
+
+        return $this;
     }
 
+    /**
+     * @return SEO
+     */
     public function getSEO()
     {
         return $this->seo;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return NodeTranslation
+     */
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return $this->url;
     }
 
+    /**
+     * @param int $weight
+     *
+     * @return NodeTranslation
+     */
     public function setWeight($weight)
     {
         $this->weight = $weight;
+
+        return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getWeight()
     {
         return $this->weight;

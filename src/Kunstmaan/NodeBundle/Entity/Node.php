@@ -13,7 +13,7 @@ use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
  * Node
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeRepository")
- * @ORM\Table(name="node")
+ * @ORM\Table(name="kuma_nodes")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
@@ -22,18 +22,18 @@ class Node extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Node", inversedBy="children")
-     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, name="sequence_number")
      */
-    protected $sequencenumber;
+    protected $sequenceNumber;
 
     /**
      * @ORM\OneToMany(targetEntity="Node", mappedBy="parent")
-     * @ORM\OrderBy({"sequencenumber" = "ASC"})
+     * @ORM\OrderBy({"sequenceNumber" = "ASC"})
      */
     protected $children;
 
@@ -43,27 +43,22 @@ class Node extends AbstractEntity
     protected $nodeTranslations;
 
     /**
-     * @ORM\Column(type="array", nullable=false)
-     */
-    protected $roles;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="hidden_from_nav")
      */
     protected $hiddenFromNav;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, name="ref_entity_name")
      */
-    protected $refEntityname;
+    protected $refEntityName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, name="internal_name")
      */
     protected $internalName;
 
@@ -261,22 +256,6 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param array $roles
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
      * @return bool
      */
     public function isDeleted()
@@ -293,27 +272,27 @@ class Node extends AbstractEntity
     }
 
     /**
-     * Set refEntityname
+     * Set class name of referenced entity
      *
-     * @param string $refEntityname
+     * @param string $refEntityName
      */
-    public function setRefEntityname($refEntityname)
+    public function setRefEntityName($refEntityName)
     {
-        $this->refEntityname = $refEntityname;
+        $this->refEntityName = $refEntityName;
     }
 
     /**
-     * Get refEntityname
+     * Get class name of referenced entity
      *
      * @return string
      */
-    public function getRefEntityname()
+    public function getRefEntityName()
     {
-        return $this->refEntityname;
+        return $this->refEntityName;
     }
 
     /**
-     * Set internalName
+     * Set internal name
      *
      * @param string $internalName
      */
@@ -323,7 +302,7 @@ class Node extends AbstractEntity
     }
 
     /**
-     * Get internalName
+     * Get internal name
      *
      * @return string
      */
@@ -333,8 +312,6 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param $container
-     *
      * @return NodeAdminType
      */
     public function getDefaultAdminType()
@@ -360,6 +337,6 @@ class Node extends AbstractEntity
 
     public function __toString()
     {
-        return "node " . $this->getId() . ", refEntityname: " . $this->getRefEntityname();
+        return "node " . $this->getId() . ", refEntityName: " . $this->getRefEntityName();
     }
 }
