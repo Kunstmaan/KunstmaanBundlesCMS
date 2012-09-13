@@ -87,7 +87,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem = new TopMenuItem($menu);
                 $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
                 $menuitem->setRouteparams(array('id' => $gallery->getId(), 'slug' => $gallery->getSlug()));
-                $menuitem->setInternalname($gallery->getName());
+                $menuitem->setInternalName($gallery->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($gallery->getRel());
                 if (isset($currentGallery) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
@@ -132,7 +132,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
                 $menuitem->setRouteparams(array('id' => $gallery->getId(), 'slug' => $gallery->getSlug()));
-                $menuitem->setInternalname($gallery->getName());
+                $menuitem->setInternalName($gallery->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($gallery->getRel());
                 if (isset($currentGallery) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
@@ -153,7 +153,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             foreach ($allRoutes as $name => $route) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute($route);
-                $menuitem->setInternalname($name);
+                $menuitem->setInternalName($name);
                 $menuitem->setParent($parent);
                 $menuitem->setAppearInNavigation(false);
                 if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
