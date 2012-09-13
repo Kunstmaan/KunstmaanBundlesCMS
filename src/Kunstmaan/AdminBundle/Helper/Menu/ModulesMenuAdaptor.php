@@ -21,9 +21,9 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
     {
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
-            $menuItem->setRoute('KunstmaanAdminBundle_modules');
-            $menuItem->setInternalname("Modules");
-            $menuItem->setParent($parent);
+            $menuItem->setRoute('KunstmaanAdminBundle_modules')
+                     ->setInternalName("Modules")
+                     ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
             }

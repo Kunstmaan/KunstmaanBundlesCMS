@@ -27,46 +27,46 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     {
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
-            $menuItem->setRoute('KunstmaanAdminBundle_settings');
-            $menuItem->setInternalname('Settings');
-            $menuItem->setParent($parent);
-            $menuItem->setRole("settings");
+            $menuItem->setRoute('KunstmaanAdminBundle_settings')
+                     ->setInternalName('Settings')
+                     ->setParent($parent)
+                     ->setRole("settings");
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
         } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             $menuItem = new MenuItem($menu);
-            $menuItem->setRoute('KunstmaanAdminBundle_settings_users');
-            $menuItem->setInternalname('Users');
-            $menuItem->setParent($parent);
+            $menuItem->setRoute('KunstmaanAdminBundle_settings_users')
+                     ->setInternalName('Users')
+                     ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
 
             $menuItem = new MenuItem($menu);
-            $menuItem->setRoute('KunstmaanAdminBundle_settings_groups');
-            $menuItem->setInternalname('Groups');
-            $menuItem->setParent($parent);
+            $menuItem->setRoute('KunstmaanAdminBundle_settings_groups')
+                     ->setInternalName('Groups')
+                     ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
 
             $menuItem = new MenuItem($menu);
-            $menuItem->setRoute('KunstmaanAdminBundle_settings_roles');
-            $menuItem->setInternalname('Roles');
-            $menuItem->setParent($parent);
+            $menuItem->setRoute('KunstmaanAdminBundle_settings_roles')
+                     ->setInternalName('Roles')
+                     ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
 
             $menuItem = new MenuItem($menu);
-            $menuItem->setRoute('KunstmaanAdminBundle_settings_logs');
-            $menuItem->setInternalname('Logs');
-            $menuItem->setParent($parent);
+            $menuItem->setRoute('KunstmaanAdminBundle_settings_logs')
+                     ->setInternalName('Logs')
+                     ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
             }
@@ -74,20 +74,20 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
         } else {
             if ('KunstmaanAdminBundle_settings_users' == $parent->getRoute()) {
                 $menuItem = new MenuItem($menu);
-                $menuItem->setRoute('KunstmaanAdminBundle_settings_users_add');
-                $menuItem->setInternalname('Add user');
-                $menuItem->setParent($parent);
-                $menuItem->setAppearInNavigation(false);
+                $menuItem->setRoute('KunstmaanAdminBundle_settings_users_add')
+                         ->setInternalName('Add user')
+                         ->setParent($parent)
+                         ->setAppearInNavigation(false);
                 if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                     $menuItem->setActive(true);
                 }
                 $children[] = $menuItem;
 
                 $menuItem = new MenuItem($menu);
-                $menuItem->setRoute('KunstmaanAdminBundle_settings_users_edit');
-                $menuItem->setInternalname('Edit user');
-                $menuItem->setParent($parent);
-                $menuItem->setAppearInNavigation(false);
+                $menuItem->setRoute('KunstmaanAdminBundle_settings_users_edit')
+                         ->setInternalName('Edit user')
+                         ->setParent($parent)
+                         ->setAppearInNavigation(false);
                 if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                     $menuItem->setActive(true);
                 }
@@ -95,20 +95,20 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
             } else {
                 if ('KunstmaanAdminBundle_settings_groups' == $parent->getRoute()) {
                     $menuItem = new MenuItem($menu);
-                    $menuItem->setRoute('KunstmaanAdminBundle_settings_groups_add');
-                    $menuItem->setInternalname('Add group');
-                    $menuItem->setParent($parent);
-                    $menuItem->setAppearInNavigation(false);
+                    $menuItem->setRoute('KunstmaanAdminBundle_settings_groups_add')
+                             ->setInternalName('Add group')
+                             ->setParent($parent)
+                             ->setAppearInNavigation(false);
                     if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                         $menuItem->setActive(true);
                     }
                     $children[] = $menuItem;
 
                     $menuItem = new MenuItem($menu);
-                    $menuItem->setRoute('KunstmaanAdminBundle_settings_groups_edit');
-                    $menuItem->setInternalname('Edit group');
-                    $menuItem->setParent($parent);
-                    $menuItem->setAppearInNavigation(false);
+                    $menuItem->setRoute('KunstmaanAdminBundle_settings_groups_edit')
+                             ->setInternalName('Edit group')
+                             ->setParent($parent)
+                             ->setAppearInNavigation(false);
                     if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                         $menuItem->setActive(true);
                     }
@@ -116,20 +116,20 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                 } else {
                     if ('KunstmaanAdminBundle_settings_roles' == $parent->getRoute()) {
                         $menuItem = new MenuItem($menu);
-                        $menuItem->setRoute('KunstmaanAdminBundle_settings_roles_add');
-                        $menuItem->setInternalname('Add role');
-                        $menuItem->setParent($parent);
-                        $menuItem->setAppearInNavigation(false);
+                        $menuItem->setRoute('KunstmaanAdminBundle_settings_roles_add')
+                                 ->setInternalName('Add role')
+                                 ->setParent($parent)
+                                 ->setAppearInNavigation(false);
                         if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                             $menuItem->setActive(true);
                         }
                         $children[] = $menuItem;
 
                         $menuItem = new MenuItem($menu);
-                        $menuItem->setRoute('KunstmaanAdminBundle_settings_roles_edit');
-                        $menuItem->setInternalname('Edit role');
-                        $menuItem->setParent($parent);
-                        $menuItem->setAppearInNavigation(false);
+                        $menuItem->setRoute('KunstmaanAdminBundle_settings_roles_edit')
+                                 ->setInternalName('Edit role')
+                                 ->setParent($parent)
+                                 ->setAppearInNavigation(false);
                         if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                             $menuItem->setActive(true);
                         }

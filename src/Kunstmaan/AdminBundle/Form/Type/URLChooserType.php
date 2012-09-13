@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormTypeInterface;
 
 class URLChooserType extends AbstractType
 {
@@ -18,7 +17,7 @@ class URLChooserType extends AbstractType
     }
 
     /**
-     * @return null|string|FormTypeInterface
+     * @return string
      */
     public function getParent()
     {

@@ -9,6 +9,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
+    /**
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $user1 = new User();
@@ -35,6 +38,9 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
     }
 
+    /**
+     * @return int
+     */
     public function getOrder()
     {
         return 3;

@@ -23,15 +23,15 @@ class DynamicUrlMatcher extends UrlMatcher
     /**
      * Check if url exists
      *
-     * @todo Check if there's a better solution then this hack...
+     * @todo Check if there's a better solution then this ugly hack...
      *
-     * @param string $pathinfo
+     * @param string $pathInfo
      *
      * @return bool
      */
-    public function match($pathinfo)
+    public function match($pathInfo)
     {
-        if ($ret = $this->matchCollection($pathinfo, $this->routesCopy)) {
+        if ($ret = $this->matchCollection($pathInfo, $this->routesCopy)) {
             return $ret;
         }
 

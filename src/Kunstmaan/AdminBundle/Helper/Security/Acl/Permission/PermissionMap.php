@@ -19,7 +19,6 @@ class PermissionMap implements PermissionMapInterface
     private $map = array(
         self::PERMISSION_VIEW    => array(
             MaskBuilder::MASK_VIEW,
-            // MaskBuilder::MASK_EDIT,
         ),
 
         self::PERMISSION_EDIT    => array(

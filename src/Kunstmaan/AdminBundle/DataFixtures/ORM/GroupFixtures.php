@@ -9,6 +9,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
+    /**
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $group1 = new Group("Administrators");
@@ -28,6 +31,9 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('guests-group', $group2);
     }
 
+    /**
+     * @return int
+     */
     public function getOrder()
     {
         return 2;

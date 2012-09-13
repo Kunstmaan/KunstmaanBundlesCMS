@@ -17,13 +17,21 @@ class GuestUserListener implements ListenerInterface
     private $provider;
     private $providerKey;
 
+    /**
+     * @param \Symfony\Component\Security\Core\SecurityContextInterface   $context
+     * @param \Symfony\Component\Security\Core\User\UserProviderInterface $provider
+     * @param string                                                      $providerKey
+     */
     public function __construct(SecurityContextInterface $context, UserProviderInterface $provider, $providerKey)
     {
-        $this->context = $context;
-        $this->provider = $provider;
+        $this->context     = $context;
+        $this->provider    = $provider;
         $this->providerKey = $providerKey;
     }
 
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     */
     public function handle(GetResponseEvent $event)
     {
         if (null !== $this->context->getToken()) {
@@ -31,7 +39,7 @@ class GuestUserListener implements ListenerInterface
         }
 
         // Map anonymous login to guest user roles
-        $user = $this->provider->loadUserByUsername('guest');
+        $user  = $this->provider->loadUserByUsername('guest');
         $roles = $user->getRoles();
 
         $token = new AnonymousToken($this->providerKey, 'guest', $roles);

@@ -15,9 +15,6 @@ use Monolog\Handler\AbstractProcessingHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-/**
- * @todo Is this still in use?
- */
 class LogHandler extends AbstractProcessingHandler
 {
     /* @var ContainerInterface $container */

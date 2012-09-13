@@ -6,6 +6,9 @@ use Symfony\Component\Locale\Locale;
 
 class DateByLocaleExtension extends \Twig_Extension
 {
+    /**
+     * @return array
+     */
     public function getFilters()
     {
         return array(
@@ -13,11 +16,22 @@ class DateByLocaleExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'TwigLocaleExtension';
     }
 
+    /**
+     * @param        $date
+     * @param string $locale
+     * @param string $dateType
+     * @param string $timeType
+     *
+     * @return string
+     */
     public static function localeDateFilter($date, $locale="nl", $dateType = 'medium', $timeType = 'none')
     {
         $values = array(
@@ -28,13 +42,13 @@ class DateByLocaleExtension extends \Twig_Extension
             'full' => \IntlDateFormatter::FULL,
          );
 
-        $dateFormater = \IntlDateFormatter::create(
+        $dateFormatter = \IntlDateFormatter::create(
             $locale,
             $values[$dateType],
             $values[$timeType],
              'Europe/Brussels'
         );
 
-        return $dateFormater->format($date);
+        return $dateFormatter->format($date);
     }
 }

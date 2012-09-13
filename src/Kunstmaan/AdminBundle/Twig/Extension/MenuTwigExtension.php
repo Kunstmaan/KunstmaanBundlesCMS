@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 
 class MenuTwigExtension extends \Twig_Extension
 {
+    /* @var MenuBuilder $menuBuilder */
     protected $menuBuilder;
 
     /**

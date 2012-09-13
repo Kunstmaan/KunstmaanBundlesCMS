@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Security\Acl\Model\AclInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
 use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
@@ -147,7 +148,12 @@ class PermissionAdmin
         return true;
     }
 
-    public function createAclChangeSet($node, $changes, $user)
+    /**
+     * @param Node  $node
+     * @param array $changes
+     * @param User  $user
+     */
+    public function createAclChangeSet(Node $node, $changes, User $user)
     {
         $aclChangeset = new AclChangeset();
         $aclChangeset->setNode($node);
@@ -169,6 +175,11 @@ class PermissionAdmin
         $shellHelper->runInBackground($cmd);
     }
 
+    /**
+     * @param Node  $node
+     * @param array $changeset
+     * @param bool  $recursive
+     */
     public function applyAclChangeset($node, $changeset, $recursive = true)
     {
         if ($recursive) {
@@ -217,7 +228,13 @@ class PermissionAdmin
         $this->aclProvider->updateAcl($acl);
     }
 
-    private function getObjectAceIndex($acl, $role)
+    /**
+     * @param AclInterface $acl
+     * @param string       $role
+     *
+     * @return bool|int
+     */
+    private function getObjectAceIndex(AclInterface $acl, $role)
     {
         $objectAces = $acl->getObjectAces();
         foreach ($objectAces as $index => $ace) {
@@ -232,7 +249,13 @@ class PermissionAdmin
         return false;
     }
 
-    private function getMaskAtIndex($acl, $index)
+    /**
+     * @param AclInterface $acl
+     * @param int          $index
+     *
+     * @return bool|int
+     */
+    private function getMaskAtIndex(AclInterface $acl, $index)
     {
         $objectAces = $acl->getObjectAces();
         $ace = $objectAces[$index];

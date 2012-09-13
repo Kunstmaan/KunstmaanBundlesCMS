@@ -5,11 +5,11 @@ namespace Kunstmaan\AdminBundle\Helper\Menu;
 class MenuItem
 {
     private $menu;
-    private $internalname;
+    private $internalName;
     private $role;
     private $parent;
     private $route;
-    private $routeparams = array();
+    private $routeParams = array();
     private $active = false;
     private $children = null;
     private $attributes = array();
@@ -36,17 +36,21 @@ class MenuItem
     /**
      * @return string
      */
-    public function getInternalname()
+    public function getInternalName()
     {
-        return $this->internalname;
+        return $this->internalName;
     }
 
     /**
-     * @param string $internalname
+     * @param string $internalName
+     *
+     * @return MenuItem
      */
-    public function setInternalname($internalname)
+    public function setInternalName($internalName)
     {
-        $this->internalname = $internalname;
+        $this->internalName = $internalName;
+
+        return $this;
     }
 
     /**
@@ -59,10 +63,14 @@ class MenuItem
 
     /**
      * @param string $role
+     *
+     * @return MenuItem
      */
     public function setRole($role)
     {
         $this->role = $role;
+
+        return $this;
     }
 
     /**
@@ -75,10 +83,14 @@ class MenuItem
 
     /**
      * @param MenuItem $parent
+     *
+     * @return MenuItem
      */
     public function setParent(MenuItem $parent = null)
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     /**
@@ -92,27 +104,35 @@ class MenuItem
     /**
      * @param string $route
      * @param array  $params
+     *
+     * @return MenuItem
      */
     public function setRoute($route, $params = array())
     {
         $this->route       = $route;
-        $this->routeparams = $params;
+        $this->routeParams = $params;
+
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function getRouteparams()
+    public function getRouteParams()
     {
-        return $this->routeparams;
+        return $this->routeParams;
     }
 
     /**
-     * @param array $routeparams
+     * @param array $routeParams
+     *
+     * @return MenuItem
      */
-    public function setRouteparams($routeparams)
+    public function setRouteParams($routeParams)
     {
-        $this->routeparams = $routeparams;
+        $this->routeParams = $routeParams;
+
+        return $this;
     }
 
     /**
@@ -161,10 +181,14 @@ class MenuItem
 
     /**
      * @param array $attributes
+     *
+     * @return MenuItem
      */
     public function addAttributes($attributes)
     {
         $this->attributes = array_merge($this->attributes, $attributes);
+
+        return $this;
     }
 
     /**
@@ -185,10 +209,14 @@ class MenuItem
 
     /**
      * @param bool $active
+     *
+     * @return MenuItem
      */
     public function setActive($active)
     {
         $this->active = $active;
+
+        return $this;
     }
 
     /**
@@ -201,10 +229,14 @@ class MenuItem
 
     /**
      * @param bool $appearInNavigation
+     *
+     * @return MenuItem
      */
     public function setAppearInNavigation($appearInNavigation)
     {
         $this->appearInNavigation = $appearInNavigation;
+
+        return $this;
     }
 
     /**
@@ -217,10 +249,14 @@ class MenuItem
 
     /**
      * @param int $weight
+     *
+     * @return MenuItem
      */
     public function setWeight($weight)
     {
         $this->weight = $weight;
+
+        return $this;
     }
 
 }

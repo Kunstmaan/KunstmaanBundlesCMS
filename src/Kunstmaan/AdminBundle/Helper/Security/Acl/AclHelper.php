@@ -169,6 +169,8 @@ SELECTQUERY;
      * @param PermissionDefinition $permissionDef
      *
      * @throws \InvalidArgumentException
+     *
+     * @return array
      */
     public function getAllowedEntityIds(PermissionDefinition $permissionDef)
     {

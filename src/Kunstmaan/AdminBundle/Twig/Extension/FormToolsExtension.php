@@ -5,6 +5,9 @@ namespace Kunstmaan\AdminBundle\Twig\Extension;
 class FormToolsExtension extends \Twig_Extension
 {
 
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
@@ -13,11 +16,19 @@ class FormToolsExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'FormToolsExtension';
     }
 
+    /**
+     * @param \Symfony\Component\Form\FormView $formView
+     *
+     * @return bool
+     */
     public function hasErrorMessages(\Symfony\Component\Form\FormView $formView)
     {
         $errors = array();
@@ -36,6 +47,12 @@ class FormToolsExtension extends \Twig_Extension
         return false;
     }
 
+    /**
+     * @param FormView[] $formViews
+     * @param array      $errors
+     *
+     * @return array
+     */
     public function getErrorMessages($formViews, &$errors = array())
     {
         if (is_array($formViews)) {

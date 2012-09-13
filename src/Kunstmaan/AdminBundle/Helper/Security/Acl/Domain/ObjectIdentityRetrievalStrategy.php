@@ -16,6 +16,8 @@ use Doctrine\ORM\EntityManager;
  * @link http://stackoverflow.com/questions/7476552/doctrine-2-proxy-classes-breaking-symfony2-acl
  *
  * NOTE: This is only needed for Symfony 2.0, in Symfony 2.1 this should no longer be necessary!
+ *
+ * @deprecated
  */
 class ObjectIdentityRetrievalStrategy implements ObjectIdentityRetrievalStrategyInterface
 {

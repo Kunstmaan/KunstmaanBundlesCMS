@@ -17,6 +17,15 @@ class GuestUserFactory implements SecurityFactoryInterface
         'username' => 'guest',
     );
 
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param                                                         $id
+     * @param                                                         $config
+     * @param                                                         $userProvider
+     * @param                                                         $defaultEntryPoint
+     *
+     * @return array
+     */
     public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
     {
         // We don't need a custom provider yet, so use pre-authenticated provider...
@@ -37,6 +46,9 @@ class GuestUserFactory implements SecurityFactoryInterface
         return array($providerId, $listenerId, $defaultEntryPoint);
     }
 
+    /**
+     * @param \Symfony\Component\Config\Definition\Builder\NodeDefinition $node
+     */
     public function addConfiguration(NodeDefinition $node)
     {
 
@@ -51,11 +63,17 @@ class GuestUserFactory implements SecurityFactoryInterface
         }
     }
 
+    /**
+     * @return string
+     */
     public function getKey()
     {
         return 'guest-user';
     }
 
+    /**
+     * @return string
+     */
     public function getPosition()
     {
         return 'pre_auth';

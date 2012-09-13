@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kristof Van Cauwenbergh
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\LogItemRepository")
+ * @ORM\Entity
  * @ORM\Table(name="kuma_log_items")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")

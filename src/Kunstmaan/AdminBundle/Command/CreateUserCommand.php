@@ -25,6 +25,9 @@ use Kunstmaan\AdminBundle\Entity\User;
 
 class CreateUserCommand extends ContainerAwareCommand
 {
+    /**
+     * Configures the current command.
+     */
     protected function configure()
     {
         parent::configure();
@@ -64,6 +67,14 @@ EOT
             );
     }
 
+    /**
+     * Executes the current command.
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /* @var EntityManager $em */
@@ -109,7 +120,12 @@ EOT
     }
 
     /**
-     * @see Command
+     * Interacts with the user.
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @throws \InvalidArgumentException
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
@@ -119,7 +135,7 @@ EOT
                 'Please choose a username:',
                 function($username) {
                     if (empty($username)) {
-                        throw new \Exception('Username can not be empty');
+                        throw new \InvalidArgumentException('Username can not be empty');
                     }
 
                     return $username;
@@ -134,7 +150,7 @@ EOT
                 'Please choose an email:',
                 function($email) {
                     if (empty($email)) {
-                        throw new \Exception('Email can not be empty');
+                        throw new \InvalidArgumentException('Email can not be empty');
                     }
 
                     return $email;
@@ -149,7 +165,7 @@ EOT
                 'Please choose a password:',
                 function($password) {
                     if (empty($password)) {
-                        throw new \Exception('Password can not be empty');
+                        throw new \InvalidArgumentException('Password can not be empty');
                     }
 
                     return $password;
@@ -164,7 +180,7 @@ EOT
                 'Please enter the group(s) the user should be a member of:',
                 function($group) {
                     if (empty($group)) {
-                        throw new \Exception('Groups can not be empty');
+                        throw new \InvalidArgumentException('Groups can not be empty');
                     }
 
                     return $group;

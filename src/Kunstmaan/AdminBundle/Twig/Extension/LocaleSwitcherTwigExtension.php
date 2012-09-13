@@ -4,19 +4,20 @@ namespace Kunstmaan\AdminBundle\Twig\Extension;
 
 class LocaleSwitcherTwigExtension extends \Twig_Extension
 {
-    /**
-     * @var \Twig_Environment
-     */
+    /* @var \Twig_Environment */
     protected $environment;
 
     /**
-     * {@inheritdoc}
+     * @param \Twig_Environment $environment
      */
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
     }
 
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
@@ -24,11 +25,18 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
         );
     }
 
-    public function renderWidget($localeswitcher, $route, array $parameters = array())
+    /**
+     * @param       $localeSwitcher
+     * @param       $route
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function renderWidget($localeSwitcher, $route, array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminBundle:LocaleSwitcherTwigExtension:widget.html.twig");
         $locales=array();
-        $help=strtok($localeswitcher, "|");
+        $help=strtok($localeSwitcher, "|");
         while ($help !== false) {
             $locales[] = $help;
             $help = strtok("|");
@@ -40,6 +48,9 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
         )));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'localeswitcher_twig_extension';

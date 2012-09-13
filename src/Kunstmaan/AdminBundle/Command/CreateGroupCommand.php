@@ -25,6 +25,9 @@ use Kunstmaan\AdminBundle\Entity\Role;
 
 class CreateGroupCommand extends ContainerAwareCommand
 {
+    /**
+     * Configures the current command.
+     */
     protected function configure()
     {
         parent::configure();
@@ -52,6 +55,14 @@ EOT
             );
     }
 
+    /**
+     * Executes the current command.
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /* @var EntityManager $em */
