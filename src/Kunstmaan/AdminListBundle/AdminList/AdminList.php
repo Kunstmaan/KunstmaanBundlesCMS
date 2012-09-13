@@ -159,7 +159,6 @@ class AdminList
                 }
                 $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
             }
-            $query = $queryBuilder->getQuery();
             if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
                 $query = $this->aclHelper->apply($queryBuilder, $permissionDef);
             } else {

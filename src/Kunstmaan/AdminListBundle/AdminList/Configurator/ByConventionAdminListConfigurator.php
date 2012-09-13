@@ -94,7 +94,7 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
     }
 
     /**
-     * @param null $suffix
+     * @param string $suffix
      *
      * @return string
      */

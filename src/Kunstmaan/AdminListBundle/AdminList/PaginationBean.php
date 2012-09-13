@@ -69,6 +69,9 @@ class PaginationBean
         $this->calculateRange();
     }
 
+    /**
+     * Calculate range based on current page.
+     */
     private function calculateRange()
     {
         $startRange = $this->currentPage - floor($this->midRange/2);
@@ -87,6 +90,9 @@ class PaginationBean
         $this->range = range($startRange, $endRange);
     }
 
+    /**
+     * Set default values
+     */
     private function setDefaults()
     {
         //If currentPage is set to null or is set to 0 or less
@@ -104,6 +110,9 @@ class PaginationBean
         }
     }
 
+    /**
+     * Get number of pages
+     */
     private function getInternalNumPages()
     {
         //If limit is set to 0 or set to number bigger then total items count
@@ -120,6 +129,9 @@ class PaginationBean
         }
     }
 
+    /**
+     * Calculate offset based on current page.
+     */
     private function calculateOffset()
     {
         //Calculet offset for items based on current page number

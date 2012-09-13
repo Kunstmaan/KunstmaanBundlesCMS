@@ -9,6 +9,12 @@ class SimpleAction implements ListActionInterface
     private $label;
     private $template;
 
+    /**
+     * @param string $url
+     * @param string $icon
+     * @param string $label
+     * @param string $template
+     */
     public function __construct($url, $icon, $label, $template = null)
     {
         $this->url = $url;
@@ -17,21 +23,33 @@ class SimpleAction implements ListActionInterface
         $this->template = $template;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return $this->url;
     }
 
+    /**
+     * @return string
+     */
     public function getIcon()
     {
         return $this->icon;
     }
 
+    /**
+     * @return string
+     */
     public function getLabel()
     {
         return $this->label;
     }
 
+    /**
+     * @return string
+     */
     public function getTemplate()
     {
         return $this->template;

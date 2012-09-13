@@ -107,12 +107,12 @@ abstract class AbstractAdminListConfigurator
     /**
      * @param string $name
      * @param string $header
-     * @param string $sort
+     * @param bool   $sort
      * @param string $template
      *
      * @return AbstractAdminListConfigurator
      */
-    public function addExportField($name, $header, $sort, $template = null)
+    public function addExportField($name, $header, $sort = false, $template = null)
     {
         $this->exportFields[] = new Field($name, $header, $sort, $template);
 
@@ -225,9 +225,7 @@ abstract class AbstractAdminListConfigurator
      */
     public function addSimpleAction($label, $url, $icon, $template = null)
     {
-        $this->customActions[] = new SimpleAction($url, $icon, $label, $template);
-
-        return $this;
+        return $this->addCustomAction(new SimpleAction($url, $icon, $label, $template));
     }
 
     /**
