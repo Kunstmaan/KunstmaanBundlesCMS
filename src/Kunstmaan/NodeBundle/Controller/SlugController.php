@@ -2,9 +2,13 @@
 
 namespace Kunstmaan\ViewBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
 use Kunstmaan\AdminBundle\Entity\DynamicRoutingPageInterface;
-use Kunstmaan\ViewBundle\Helper\RenderContext;
+use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
+use Kunstmaan\ViewBundle\Helper\RenderContext;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -21,7 +25,7 @@ class SlugController extends Controller
      */
     public function slugAction($url = null, $preview = false, $draft = false)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
 
@@ -29,17 +33,17 @@ class SlugController extends Controller
             $locale = $request->getLocale();
         }
 
-        $requiredlocales = $this->container->getParameter('requiredlocales');
+        $requiredLocales = $this->container->getParameter('requiredlocales');
 
-        $localesarray = explode('|', $requiredlocales);
+        $localesArray = explode('|', $requiredLocales);
 
-        if (!empty($localesarray[0])) {
-            $fallback = $localesarray[0];
+        if (!empty($localesArray[0])) {
+            $fallback = $localesArray[0];
         } else {
             $fallback = $this->container->getParameter('locale');
         }
 
-        if (!in_array($locale, $localesarray)) {
+        if (!in_array($locale, $localesArray)) {
             if (empty($url)) {
                 $url = $locale;
             } else {
@@ -83,57 +87,54 @@ class SlugController extends Controller
             throw $this->createNotFoundException("The requested page is not online");
         }
 
-        $currentUser = $this->get('security.context')->getToken()->getUser();
-
-        $permissionManager = $this->get('kunstmaan_admin.permissionmanager');
-        $canViewPage = $permissionManager->hasPermision($node, $currentUser, 'read', $em);
-
-        if ($canViewPage) {
-            $nodeMenu = new NodeMenu($this->container, $locale, $node);
-
-            if ($page instanceof DynamicRoutingPageInterface) {
-                $page->setLocale($locale);
-                $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
-                if (false === $slugPart) {
-                    $slugPart = '/';
-                }
-                $path = $page->match($slugPart);
-                if ($path) {
-                    $path['nodeTranslationId'] = $nodeTranslation->getId();
-
-                    return $this->forward($path['_controller'], $path, $request->query->all());
-                }
-            }
-
-            //render page
-            $pageparts = array();
-            if ($exactMatch && method_exists($page, 'getPagePartAdminConfigurations')) {
-                foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
-                    $context = $pagePartAdminConfiguration->getDefaultContext();
-                    $pageparts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
-                }
-            }
-            $renderContext = new RenderContext(
-                    array('nodetranslation' => $nodeTranslation, 'slug' => $url, 'page' => $page, 'resource' => $page, 'pageparts' => $pageparts, 'nodemenu' => $nodeMenu,
-                            'locales' => $localesarray));
-            $hasView = false;
-            if (method_exists($page, 'getDefaultView')) {
-                $renderContext->setView($page->getDefaultView());
-                $hasView = true;
-            }
-            if (method_exists($page, 'service')) {
-                $redirect = $page->service($this->container, $request, $renderContext);
-                if (!empty($redirect)) {
-                    return $redirect;
-                } elseif (!$exactMatch && !$hasView) {
-                    // If it was a dynamic routing page and no view and no service implementation -> 404
-                    throw $this->createNotFoundException('No page found for slug ' . $url);
-                }
-            }
-
-            return $this->render($renderContext->getView(), (array) $renderContext);
+        $securityContext = $this->get('security.context');
+        if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
-        throw $this->createNotFoundException('You do not have sufficient rights to access this page.');
+        $aclHelper  = $this->container->get('kunstmaan.acl.helper');
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node);
+
+        if ($page instanceof DynamicRoutingPageInterface) {
+            $page->setLocale($locale);
+            $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
+            if (false === $slugPart) {
+                $slugPart = '/';
+            }
+            $path = $page->match($slugPart);
+            if ($path) {
+                $path['nodeTranslationId'] = $nodeTranslation->getId();
+
+                return $this->forward($path['_controller'], $path, $request->query->all());
+            }
+        }
+
+        //render page
+        $pageParts = array();
+        if ($exactMatch && method_exists($page, 'getPagePartAdminConfigurations')) {
+            foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
+                $context = $pagePartAdminConfiguration->getDefaultContext();
+                $pageParts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
+            }
+        }
+        $renderContext = new RenderContext(
+                array('nodetranslation' => $nodeTranslation, 'slug' => $url, 'page' => $page, 'resource' => $page, 'pageparts' => $pageParts, 'nodemenu' => $nodeMenu,
+                        'locales' => $localesArray));
+        $hasView = false;
+        if (method_exists($page, 'getDefaultView')) {
+            $renderContext->setView($page->getDefaultView());
+            $hasView = true;
+        }
+        if (method_exists($page, 'service')) {
+            $redirect = $page->service($this->container, $request, $renderContext);
+            if (!empty($redirect)) {
+                return $redirect;
+            } elseif (!$exactMatch && !$hasView) {
+                // If it was a dynamic routing page and no view and no service implementation -> 404
+                throw $this->createNotFoundException('No page found for slug ' . $url);
+            }
+        }
+
+        return $this->render($renderContext->getView(), (array) $renderContext);
     }
 }
