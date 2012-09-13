@@ -4,8 +4,8 @@ namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 
 /**
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
@@ -18,9 +18,9 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('username', new StringFilterType("username"), "Username");
-        $builder->add('email', new StringFilterType("email"), "E-Mail");
-        $builder->add('enabled', new BooleanFilterType("enabled"), "Enabled");
+        $builder->add('username', new StringFilter("username"), "Username");
+        $builder->add('email', new StringFilter("email"), "E-Mail");
+        $builder->add('enabled', new BooleanFilter("enabled"), "Enabled");
     }
 
     /**
