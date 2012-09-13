@@ -25,21 +25,33 @@ class Field
         $this->template = $template;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getHeader()
     {
         return $this->header;
     }
 
+    /**
+     * @return bool
+     */
     public function isSortable()
     {
         return $this->sort;
     }
 
+    /**
+     * @return string
+     */
     public function getTemplate()
     {
         return $this->template;

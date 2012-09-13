@@ -1,6 +1,8 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\AdminList;
-class SimpleAction implements ActionInterface
+
+class SimpleAction implements ListActionInterface
 {
     private $url;
     private $icon;
@@ -15,17 +17,17 @@ class SimpleAction implements ActionInterface
         $this->template = $template;
     }
 
-    public function getUrlFor($item)
+    public function getUrl()
     {
         return $this->url;
     }
 
-    public function getIcon($item)
+    public function getIcon()
     {
         return $this->icon;
     }
 
-    public function getLabel($item)
+    public function getLabel()
     {
         return $this->label;
     }

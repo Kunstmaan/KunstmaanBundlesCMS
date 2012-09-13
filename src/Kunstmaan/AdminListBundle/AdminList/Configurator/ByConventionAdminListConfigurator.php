@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
@@ -25,6 +26,11 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
     protected $entityName;
     protected $controllerPath;
 
+    /**
+     * @param string $bundleName
+     * @param string $entityName
+     * @param string $controllerPath
+     */
     public function __construct($bundleName, $entityName, $controllerPath = null)
     {
         $this->bundleName = $bundleName;
@@ -32,6 +38,11 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
         $this->controllerPath = $controllerPath;
     }
 
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
     public function getAddUrlFor($params = array())
     {
         return array(
@@ -40,6 +51,11 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
         );
     }
 
+    /**
+     * @param object $item
+     *
+     * @return array
+     */
     public function getEditUrlFor($item)
     {
         return array(
@@ -48,6 +64,11 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
             ));
     }
 
+    /**
+     * @param object $item
+     *
+     * @return array
+     */
     public function getDeleteUrlFor($item)
     {
         return array(
@@ -56,16 +77,27 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
         );
     }
 
+    /**
+     * @return string
+     */
     public function getIndexUrlFor()
     {
         return $this->getPathByConvention();
     }
 
+    /**
+     * @return string
+     */
     public function getRepositoryName()
     {
         return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
     }
 
+    /**
+     * @param null $suffix
+     *
+     * @return string
+     */
     public function getPathByConvention($suffix = null)
     {
         if (empty($suffix)) {
@@ -75,21 +107,33 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
         return sprintf('%s_admin_%ss_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
     }
 
+    /**
+     * @return string
+     */
     public function getControllerPathByConvention()
     {
         return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
     }
 
+    /**
+     * @return string
+     */
     public function getBundleName()
     {
         return $this->bundleName;
     }
 
+    /**
+     * @return string
+     */
     public function getEntityName()
     {
         return $this->entityName;
     }
 
+    /**
+     * @return string
+     */
     public function getControllerPath()
     {
         if (!empty($this->controllerPath)) {

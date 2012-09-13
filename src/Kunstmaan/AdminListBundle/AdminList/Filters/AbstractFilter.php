@@ -14,6 +14,10 @@ abstract class AbstractFilter implements AdminListFilterInterface
     protected $columnName = null;
     protected $alias = null;
 
+    /**
+     * @param string $columnName
+     * @param string $alias
+     */
     public function __construct($columnName, $alias = "b")
     {
         $this->columnName = $columnName;
