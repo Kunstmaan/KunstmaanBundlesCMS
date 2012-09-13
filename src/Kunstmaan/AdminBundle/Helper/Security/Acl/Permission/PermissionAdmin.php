@@ -3,9 +3,10 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-use Symfony\Component\Security\Acl\Model\AclInterface;
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
+use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
 
 use Doctrine\ORM\EntityManager;
@@ -14,9 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -153,7 +156,7 @@ class PermissionAdmin
      * @param array $changes
      * @param User  $user
      */
-    public function createAclChangeSet(Node $node, $changes, User $user)
+    public function createAclChangeSet(Node $node, $changes, UserInterface $user)
     {
         $aclChangeset = new AclChangeset();
         $aclChangeset->setNode($node);
