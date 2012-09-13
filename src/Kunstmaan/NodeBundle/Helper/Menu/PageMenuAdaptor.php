@@ -59,7 +59,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
             $menuItem->setRoute('KunstmaanAdminNodeBundle_pages');
-            $menuItem->setInternalname("Pages");
+            $menuItem->setInternalName("Pages");
             $menuItem->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
@@ -106,7 +106,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $menuItem = new MenuItem($menu);
             $menuItem->setRoute('KunstmaanAdminNodeBundle_pages_edit');
             $menuItem->setRouteparams(array('id' => $child->getId()));
-            $menuItem->setInternalname($child->getTitle());
+            $menuItem->setInternalName($child->getTitle());
             $menuItem->setParent($parent);
             $menuItem->setRole('page');
             $menuItem->setWeight($child->getNodeTranslation()->getWeight());
