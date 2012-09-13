@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +19,7 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('name', new StringFilterType("name"), "Name");
+        $builder->add('name', new StringFilter("name"), "Name");
     }
 
     public function buildFields()

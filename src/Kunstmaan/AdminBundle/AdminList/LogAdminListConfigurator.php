@@ -3,8 +3,8 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
 /**
@@ -18,10 +18,10 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('user', new StringFilterType("user"), "User");
-        $builder->add('status', new StringFilterType("status"), "Status");
-        $builder->add('message', new StringFilterType("message"), "Message");
-        $builder->add('createdat', new DateFilterType("createdat"), "Created At");
+        $builder->add('user', new StringFilter("user"), "User");
+        $builder->add('status', new StringFilter("status"), "Status");
+        $builder->add('message', new StringFilter("message"), "Message");
+        $builder->add('createdat', new DateFilter("createdat"), "Created At");
     }
 
     /**
