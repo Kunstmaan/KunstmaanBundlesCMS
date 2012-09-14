@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Kunstmaan\AdminBundle\Permission\PermissionAdmin;
-use Kunstmaan\AdminNodeBundle\Entity\AclChangeset;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
+use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
 
 /**

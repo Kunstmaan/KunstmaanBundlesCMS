@@ -29,13 +29,14 @@ class InitAclCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $aclProvider = $this->getContainer()->get('security.acl.provider');
+        $oidStrategy = $this->getContainer()->get('security.acl.object_identity_retrieval_strategy');
 
         // Fetch all nodes & grant access
         $nodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->findAll();
         $count = 0;
         foreach ($nodes as $node) {
             $count++;
-            $objectIdentity = ObjectIdentity::fromDomainObject($node);
+            $objectIdentity = $oidStrategy->getObjectIdentity($node);
             try {
                 $acl = $aclProvider->findAcl($objectIdentity);
                 $aclProvider->deleteAcl($objectIdentity);

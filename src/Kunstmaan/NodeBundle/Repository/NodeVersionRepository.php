@@ -21,7 +21,7 @@ class NodeVersionRepository extends EntityRepository
      */
     public function getNodeVersionFor(HasNodeInterface $hasNode)
     {
-        return $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityname' => ClassLookup::getClass($hasNode)));
+        return $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityName' => ClassLookup::getClass($hasNode)));
     }
 
     /**
