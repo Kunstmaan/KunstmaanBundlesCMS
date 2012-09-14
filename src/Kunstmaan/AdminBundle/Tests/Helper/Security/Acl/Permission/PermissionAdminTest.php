@@ -39,13 +39,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitialize()
     {
-        $object = $this->getPermissionAdmin();
-        $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
-        $shellHelper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $object->initialize(null, $permissionMap, $shellHelper);
+        $object = $this->getInitializedPermissionAdmin();
 
         $this->assertEquals(array('ROLE_TEST' => new MaskBuilder(1)), $object->getPermissions());
     }
@@ -56,13 +50,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPermissionWithString()
     {
-        $object = $this->getPermissionAdmin();
-        $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
-        $shellHelper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $object->initialize(null, $permissionMap, $shellHelper);
+        $object = $this->getInitializedPermissionAdmin();
 
         $this->assertEquals(new MaskBuilder(1), $object->getPermission('ROLE_TEST'));
     }
@@ -73,13 +61,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPermissionWithRoleObject()
     {
-        $object = $this->getPermissionAdmin();
-        $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
-        $shellHelper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $object->initialize(null, $permissionMap, $shellHelper);
+        $object = $this->getInitializedPermissionAdmin();
 
         $role = $this->getMock('Symfony\Component\Security\Core\Role\RoleInterface');
         $role->expects($this->once())
@@ -94,13 +76,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPermissionWithUnknownRole()
     {
-        $object = $this->getPermissionAdmin();
-        $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
-        $shellHelper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $object = $this->getInitializedPermissionAdmin();
 
-        $object->initialize(null, $permissionMap, $shellHelper);
         $this->assertNull($object->getPermission('ROLE_UNKNOWN'));
     }
 
@@ -125,8 +102,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $context = $this->getSecurityContext();
         $aclProvider = $this->getAclProvider();
         $retrievalStrategy = $this->getOidRetrievalStrategy();
-        $kernel = $this->getKernel();
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $kernel);
+        $dispatcher = $this->getEventDispatcher();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
 
         $this->assertNull($object->getAllRoles());
     }
@@ -146,9 +123,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getObjectIdentity')
             ->will($this->throwException(new \Symfony\Component\Security\Acl\Exception\AclNotFoundException()));
-        $kernel = $this->getKernel();
-
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $kernel);
+        $dispatcher = $this->getEventDispatcher();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
 
         $permissions = array('PERMISSION1', 'PERMISSION2');
         $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
@@ -159,8 +135,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $shellHelper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
             ->disableOriginalConstructor()
             ->getMock();
-
-        $object->initialize(null, $permissionMap, $shellHelper);
+        $entity = $this->getEntity();
+        $object->initialize($entity, $permissionMap, $shellHelper);
         $this->assertEquals($permissions, $object->getPossiblePermissions());
     }
 
@@ -172,15 +148,15 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $em = $this->getEntityManager();
         $em->expects($this->once())
             ->method('persist')
-            ->with($this->isInstanceOf('Kunstmaan\AdminNodeBundle\Entity\AclChangeset'));
+            ->with($this->isInstanceOf('Kunstmaan\AdminBundle\Entity\AclChangeset'));
         $em->expects($this->once())
             ->method('flush');
         $context = $this->getSecurityContext();
         $aclProvider = $this->getAclProvider();
         $retrievalStrategy = $this->getOidRetrievalStrategy();
-        $kernel = $this->getKernel();
+        $dispatcher = $this->getEventDispatcher();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
 
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $kernel);
         $node = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Entity\Node')
             ->disableOriginalConstructor()
             ->getMock();
@@ -189,27 +165,6 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $object->createAclChangeSet($node, array(), $user);
-    }
-
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::launchAclChangeset
-     */
-    public function testLaunchAclChangeset()
-    {
-        $em = $this->getEntityManager();
-        $context = $this->getSecurityContext();
-        $aclProvider = $this->getAclProvider();
-        $retrievalStrategy = $this->getOidRetrievalStrategy();
-        $kernel = $this->getKernel();
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $kernel);
-
-        $helper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $helper->expects($this->once())
-            ->method('runInBackground');
-
-        $object->launchAclChangeSet($helper);
     }
 
     public function getEntityManager()
@@ -234,9 +189,9 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface');
     }
 
-    public function getKernel()
+    public function getEventDispatcher()
     {
-        return $this->getMock('Symfony\Component\HttpKernel\KernelInterface');
+        return $this->getMock('Symfony\Component\EventDispatcher\EventDispatcher');
     }
 
     public function getPermissionAdmin()
@@ -278,9 +233,23 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getObjectIdentity')
             ->will($this->returnValue($objectIdentity));
-        $kernel = $this->getKernel();
+        $dispatcher = $this->getEventDispatcher();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
 
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $kernel);
+        return $object;
+    }
+
+    public function getEntity()
+    {
+        return $this->getMockForAbstractClass('Kunstmaan\AdminBundle\Entity\AbstractEntity');
+    }
+
+    public function getInitializedPermissionAdmin()
+    {
+        $object = $this->getPermissionAdmin();
+        $entity = $this->getEntity();
+        $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
+        $object->initialize($entity, $permissionMap);
 
         return $object;
     }

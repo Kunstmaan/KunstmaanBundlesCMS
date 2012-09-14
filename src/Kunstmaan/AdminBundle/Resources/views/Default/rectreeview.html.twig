@@ -3,7 +3,7 @@
 #}
 <li id="{{ menuitem.internalname }}"
 {#
-sequence="{{ node.node.getSequencenumber() }}"
+sequence="{{ node.node.getSequenceNumber() }}"
 #}
 class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is not null and currentMenuItem.internalname == menuitem.internalname  %}active{% endif %}
 {#
