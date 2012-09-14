@@ -213,27 +213,6 @@
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    <!--Inline-->
-    <script type=text/javascript>
-        $(document).ready(function () {
-            init_tree("{{ path('KunstmaanAdminNodeBundle_pages_movenodes') }}", "{% if mediabundleisset is defined %}{{ path('KunstmaanMediaBundle_folder_movenodes') }}{% else %}/movenodes{% endif %}");
-        });
-
-        {% include "KunstmaanAdminBundle:Default:ckeditor.js.twig" %}
-        jQuery(document).ready(function(){
-            jQuery('textarea.rich_editor').each(function(item){
-                var config = {};
-                if($(this).attr('height')){
-                    config.height = $(this).attr('height');
-                }
-                if($(this).attr('noparagraphs')){
-                    config.enterMode = CKEDITOR.ENTER_BR;
-                        config.shiftEnterMode = CKEDITOR.ENTER_P;
-                }
-                CKEDITOR.replace( $(this).attr('id'), config);
-            });
-        });
-    </script>
     <!--Extra-->
     {% block extrajavascript %}{% endblock %}  
 </body>
