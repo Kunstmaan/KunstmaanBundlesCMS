@@ -33,6 +33,16 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminBundle\Entity\User::__construct
+     */
+    public function test__construct()
+    {
+        $object = new User();
+        $object->setId(1);
+        $this->assertEquals(1, $object->getId());
+    }
+
+    /**
      * @covers Kunstmaan\AdminBundle\Entity\User::getId
      * @covers Kunstmaan\AdminBundle\Entity\User::setId
      */

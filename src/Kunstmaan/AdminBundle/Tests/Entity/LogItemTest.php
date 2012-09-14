@@ -32,6 +32,16 @@ class LogItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminBundle\Entity\LogItem::__construct
+     */
+    public function test__construct()
+    {
+        $object = new LogItem();
+        $object->setId(1);
+        $this->assertEquals(1, $object->getId());
+    }
+
+    /**
      * @covers Kunstmaan\AdminBundle\Entity\LogItem::getId
      * @covers Kunstmaan\AdminBundle\Entity\LogItem::setId
      */

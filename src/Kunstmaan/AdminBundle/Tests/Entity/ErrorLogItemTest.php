@@ -32,6 +32,16 @@ class ErrorLogItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminBundle\Entity\ErrorLogItem::__construct
+     */
+    public function test__construct()
+    {
+        $object = new ErrorLogItem();
+        $object->setId(1);
+        $this->assertEquals(1, $object->getId());
+    }
+
+    /**
      * @covers Kunstmaan\AdminBundle\Entity\ErrorLogItem::getId
      * @covers Kunstmaan\AdminBundle\Entity\ErrorLogItem::setId
      */
