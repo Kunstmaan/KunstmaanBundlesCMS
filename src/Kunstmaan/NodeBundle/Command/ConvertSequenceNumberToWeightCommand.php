@@ -33,7 +33,7 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
             $nodeTranslation = $row[0];
             if ($nodeTranslation->getWeight() == null) {
                 $output->writeln('- editing node: '. $nodeTranslation->getTitle());
-                $nodeTranslation->setWeight($nodeTranslation->getNode()->getSequencenumber());
+                $nodeTranslation->setWeight($nodeTranslation->getNode()->getSequenceNumber());
                 $em->persist($nodeTranslation);
 
                 ++$i;

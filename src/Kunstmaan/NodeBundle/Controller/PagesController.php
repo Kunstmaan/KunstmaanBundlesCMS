@@ -482,23 +482,23 @@ class PagesController extends Controller
         $afterPosition = $request->get('afterposition');
 
         foreach ($parent->getChildren() as $child) {
-            if ($child->getSequencenumber() == $fromPosition) {
-                if ($child->getSequencenumber() > $afterPosition) {
-                    $child->setSequencenumber($afterPosition + 1);
+            if ($child->getSequenceNumber() == $fromPosition) {
+                if ($child->getSequenceNumber() > $afterPosition) {
+                    $child->setSequenceNumber($afterPosition + 1);
                     $em->persist($child);
                 } else {
-                    $child->setSequencenumber($afterPosition);
+                    $child->setSequenceNumber($afterPosition);
                     $em->persist($child);
                 }
             } else {
-                if ($child->getSequencenumber() > $fromPosition && $child->getSequencenumber() <= $afterPosition) {
-                    $newPos = $child->getSequencenumber()-1;
-                    $child->setSequencenumber($newPos);
+                if ($child->getSequenceNumber() > $fromPosition && $child->getSequenceNumber() <= $afterPosition) {
+                    $newPos = $child->getSequenceNumber()-1;
+                    $child->setSequenceNumber($newPos);
                     $em->persist($child);
                 } else {
-                    if ($child->getSequencenumber() < $fromPosition && $child->getSequencenumber() > $afterPosition) {
-                        $newPos = $child->getSequencenumber()+1;
-                        $child->setSequencenumber($newPos);
+                    if ($child->getSequenceNumber() < $fromPosition && $child->getSequenceNumber() > $afterPosition) {
+                        $newPos = $child->getSequenceNumber()+1;
+                        $child->setSequenceNumber($newPos);
                         $em->persist($child);
                     }
                 }

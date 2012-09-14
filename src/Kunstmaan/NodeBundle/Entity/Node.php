@@ -240,19 +240,19 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param int $sequencenumber
+     * @param int $sequenceNumber
      */
-    public function setSequencenumber($sequencenumber)
+    public function setSequenceNumber($sequenceNumber)
     {
-        $this->sequencenumber = $sequencenumber;
+        $this->sequenceNumber = $sequenceNumber;
     }
 
     /**
      * @return int
      */
-    public function getSequencenumber()
+    public function getSequenceNumber()
     {
-        return $this->sequencenumber;
+        return $this->sequenceNumber;
     }
 
     /**
@@ -324,13 +324,13 @@ class Node extends AbstractEntity
      */
     public function preInsert()
     {
-        if (!$this->sequencenumber) {
+        if (!$this->sequenceNumber) {
             $parent = $this->getParent();
             if ($parent) {
                 $count                = $parent->getChildren()->count();
-                $this->sequencenumber = $count + 1;
+                $this->sequenceNumber = $count + 1;
             } else {
-                $this->sequencenumber = 1;
+                $this->sequenceNumber = 1;
             }
         }
     }

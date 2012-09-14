@@ -5,9 +5,11 @@ namespace Kunstmaan\AdminNodeBundle\AdminList;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+
+use Doctrine\ORM\QueryBuilder;
 
 class PageAdminListConfigurator extends AbstractAdminListConfigurator
 {
@@ -83,7 +85,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
         return 'KunstmaanAdminNodeBundle:NodeTranslation';
     }
 
-    public function adaptQueryBuilder($queryBuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder);
 
