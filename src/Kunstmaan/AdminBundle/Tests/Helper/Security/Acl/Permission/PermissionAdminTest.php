@@ -132,11 +132,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getPossiblePermissions')
             ->will($this->returnValue($permissions));
-        $shellHelper = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Helper\ShellHelper')
-            ->disableOriginalConstructor()
-            ->getMock();
         $entity = $this->getEntity();
-        $object->initialize($entity, $permissionMap, $shellHelper);
+        $object->initialize($entity, $permissionMap);
         $this->assertEquals($permissions, $object->getPossiblePermissions());
     }
 
@@ -157,14 +154,12 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $dispatcher = $this->getEventDispatcher();
         $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
 
-        $node = $this->getMockBuilder('Kunstmaan\AdminNodeBundle\Entity\Node')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $entity = $this->getEntity();
         $user = $this->getMockBuilder('Kunstmaan\AdminBundle\Entity\User')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $object->createAclChangeSet($node, array(), $user);
+        $object->createAclChangeSet($entity, array(), $user);
     }
 
     public function getEntityManager()
