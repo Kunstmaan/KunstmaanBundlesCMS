@@ -2,6 +2,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\HttpFoundation\Request;
+use Kunstmaan\AdminListBundle\AdminList\Filters\AdminListFilterInterface;
 
 class AdminListFilter
 {
@@ -16,16 +17,24 @@ class AdminListFilter
     private $currentParameters = array();
 
     /**
-     * @param string $columnName
-     * @param Filter $type
-     * @param string $filterName
-     * @param array  $options
+     * @param string                   $columnName
+     * @param AdminListFilterInterface $type
+     * @param string                   $filterName
+     * @param array                    $options
      *
      * @return AdminListFilter
      */
-    public function add($columnName, Filter $type = null, $filterName = null, array $options = array())
-    {
-        $this->filterDefinitions[$columnName] = array('type' => $type, 'options' => $options, 'filtername' => $filterName);
+    public function add(
+        $columnName,
+        AdminListFilterInterface $type = null,
+        $filterName = null,
+        array $options = array()
+    ) {
+        $this->filterDefinitions[$columnName] = array(
+            'type'       => $type,
+            'options'    => $options,
+            'filtername' => $filterName
+        );
 
         return $this;
     }
@@ -78,10 +87,10 @@ class AdminListFilter
     public function bindRequest(Request $request)
     {
         $this->currentParameters = $request->query->all();
-        $filterColumnNames = $request->query->get('filter_columnname');
+        $filterColumnNames       = $request->query->get('filter_columnname');
         if (isset($filterColumnNames)) {
             $uniqueIds = $request->query->get('filter_uniquefilterid');
-            $index = 0;
+            $index     = 0;
             foreach ($filterColumnNames as $filterColumnName) {
                 $uniqueId = $uniqueIds[$index];
                 $filter = new Filter($filterColumnName, $this->get($filterColumnName), $uniqueId);
