@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Listener;
+namespace Kunstmaan\AdminNodeBundle\EventListener;
 
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
