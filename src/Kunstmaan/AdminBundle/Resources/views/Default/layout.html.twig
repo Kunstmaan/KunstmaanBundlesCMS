@@ -214,6 +214,13 @@
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <!--Extra-->
-    {% block extrajavascript %}{% endblock %}  
+    {% block extrajavascript %}
+    <!--Inline-->
+    <script type=text/javascript>
+        $(document).ready(function () {
+            init_tree("/movepages", "/movenodes");
+        });
+    </script>
+    {% endblock %}
 </body>
 </html>

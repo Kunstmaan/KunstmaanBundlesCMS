@@ -17,7 +17,7 @@ class SecurityController extends BaseController
     {
         /* @var Request $request */
         $request = $this->container->get('request');
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->container->get('doctrine')->getManager();
         $session = $request->getSession();
 
         // get the error if any (works with forward and redirect -- see below)
