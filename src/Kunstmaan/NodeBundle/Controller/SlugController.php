@@ -5,8 +5,8 @@ namespace Kunstmaan\ViewBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 use Kunstmaan\AdminBundle\Entity\DynamicRoutingPageInterface;
-use Kunstmaan\AdminBundle\Component\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\AdminNodeBundle\Modules\NodeMenu;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
 use Kunstmaan\ViewBundle\Helper\RenderContext;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -92,7 +92,7 @@ class SlugController extends Controller
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
-        $aclHelper  = $this->container->get('kunstmaan.acl.helper');
+        $aclHelper  = $this->container->get('kunstmaan_admin.acl.helper');
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node);
 
         if ($page instanceof DynamicRoutingPageInterface) {

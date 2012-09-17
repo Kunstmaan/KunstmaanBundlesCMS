@@ -17,7 +17,7 @@ class SearchPageController extends Controller
     {
         $query = $this->getRequest()->get("query");
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug($slug, null);
@@ -31,7 +31,7 @@ class SearchPageController extends Controller
         $homepage = $this->getHomepage($node);
         $children = $homepage->getChildren();
            foreach ($children as $child) {
-            if($child->getNodeTranslation($request->getLocale()) && ClassLookup::getClassName($child->getNodeTranslation($request->getSession()->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
+            if($child->getNodeTranslation($request->getLocale()) && ClassLookup::getClassName($child->getNodeTranslation($request->getLocale())->getRef($em)) == "SearchPage") $searchpage = $child;
            }
 
            if ($searchpage) {
