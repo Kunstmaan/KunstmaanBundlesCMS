@@ -1,9 +1,11 @@
 <?php
 
 namespace Kunstmaan\GeneratorBundle\Generator;
+
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\Mapping\ClassMetadata;
+
 
 /**
  * Generated the controller for the AdminList
@@ -40,7 +42,11 @@ class AdminListControllerGenerator extends \Sensio\Bundle\GeneratorBundle\Genera
         $parts = explode('\\', $entity);
         array_pop($parts);
 
-        $parameters = array('namespace' => $bundle->getNamespace(), 'bundle' => $bundle, 'entity_class' => $entityClass,);
+        $parameters = array(
+            'namespace'         => $bundle->getNamespace(),
+            'bundle'            => $bundle,
+            'entity_class'      => $entityClass,
+        );
 
         $this->renderFile($this->skeletonDir, 'EntityAdminListController.php', $dirPath . '/' . $entity . 'AdminListController.php', $parameters);
 

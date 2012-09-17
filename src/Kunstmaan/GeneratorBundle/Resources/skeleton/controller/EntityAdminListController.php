@@ -4,7 +4,7 @@ namespace {{ namespace }}\Controller;
 
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 
-use {{ namespace }}\Form\{{ entity_class }}AdminListType;
+use {{ namespace }}\Form\{{ entity_class }}AdminType;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,16 +25,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * The {{ entity_class }} admin list controller
  */
-class {{ entity_class }}AdminListController extends AdminListController
-{
+class {{ entity_class }}AdminListController extends AdminListController {
 
-    public function getAdminListConfiguration()
-    {
+    public function getAdminListConfiguration(){
         return new {{ entity_class }}AdminListConfigurator($this->getDoctrine()->getEntityManager());
     }
 
-    public function getAdminType()
-    {
+    public function getAdminType(){
         return new {{ entity_class }}AdminType($this->container);
     }
 
@@ -86,8 +83,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @return array
      */
-    public function deleteAction($entity_id) 
-    {
+    public function deleteAction($entity_id) {
         return parent::deleteAction($entity_id);
     }
 
@@ -96,8 +92,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      * @Method({"GET", "POST"})
      * @return array
      */
-    public function exportAction($_format) 
-    {
+    public function exportAction($_format) {
         return parent::exportAction($_format);
 	}
 }

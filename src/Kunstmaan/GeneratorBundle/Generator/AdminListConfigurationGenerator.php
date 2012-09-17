@@ -1,10 +1,12 @@
 <?php
 
 namespace Kunstmaan\GeneratorBundle\Generator;
+
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\Mapping\ClassMetadata;
+
 
 /**
  * Generates a KunstmaanAdminList
@@ -40,7 +42,12 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
         $parts = explode('\\', $entity);
         array_pop($parts);
 
-        $parameters = array('namespace' => $bundle->getNamespace(), 'bundle' => $bundle, 'entity_class' => $entityClass, 'fields' => $this->getFieldsFromMetadata($metadata));
+        $parameters = array(
+            'namespace'         => $bundle->getNamespace(),
+            'bundle'            => $bundle,
+            'entity_class'      => $entityClass,
+            'fields'            => $this->getFieldsFromMetadata($metadata)
+        );
 
         $this->renderFile($this->skeletonDir, 'AdminListConfigurator.php', $dirPath . '/' . $entity . 'AdminListConfigurator.php', $parameters);
 

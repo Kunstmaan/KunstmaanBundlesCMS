@@ -38,29 +38,29 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         /* Content page */
 
         $classname = 'ContentPage';
-        $classPath = $dirPath . '/ContentPage.php';
+        $classPath = $dirPath . '/' . $classname . '.php';
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, 'ContentPage.php', $classPath, $parameters);
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
         /* Form page */
 
         $classname = 'FormPage';
-        $classPath = $dirPath . '/FormPage.php';
+        $classPath = $dirPath . '/' . $classname . '.php';
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, 'FormPage.php', $classPath, $parameters);
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
         /* Home page */
 
         $classname = 'HomePage';
-        $classPath = $dirPath . '/HomePage.php';
+        $classPath = $dirPath . '/' . $classname . '.php';
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, 'HomePage.php', $classPath, $parameters);
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
         $output->writeln('Generating entities : <info>OK</info>');
 
@@ -74,31 +74,106 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         /* Content page */
 
         $classname = 'ContentPageAdminType';
-        $classPath = $dirPath . '/ContentPageAdminType.php';
+        $classPath = $dirPath . '/' . $classname . '.php';
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, 'ContentPageAdminType.php', $classPath, $parameters);
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
         /* Form page */
 
         $classname = 'FormPageAdminType';
-        $classPath = $dirPath . '/FormPageAdminType.php';
+        $classPath = $dirPath . '/' . $classname . '.php';
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, 'FormPageAdminType.php', $classPath, $parameters);
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
         /* Home page */
 
         $classname = 'HomePageAdminType';
-        $classPath = $dirPath . '/HomePageAdminType.php';
+        $classPath = $dirPath . '/' . $classname . '.php';
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, 'HomePageAdminType.php', $classPath, $parameters);
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
         $output->writeln('Generating forms : <info>OK</info>');
+
+        /*
+         * PagePart Configurators
+         */
+
+        $dirPath = $bundle->getPath() . '/PagePartAdmin';
+        $fullSkeletonDir = $this->skeletonDir . '/pagepartadmin';
+
+        /* Banner */
+
+        $classname = 'BannerPagePartAdminConfigurator';
+        $classPath = $dirPath . '/' . $classname . '.php';
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        }
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
+
+        /* Content page */
+
+        $classname = 'ContentPagePagePartAdminConfigurator';
+        $classPath = $dirPath . '/' . $classname . '.php';
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        }
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
+
+        /* Form page */
+
+        $classname = 'FormPagePagePartAdminConfigurator';
+        $classPath = $dirPath . '/' . $classname . '.php';
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        }
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
+
+        $output->writeln('Generating forms : <info>OK</info>');
+
+        /* Home page */
+
+        $classname = 'HomePagePagePartAdminConfigurator';
+        $classPath = $dirPath . '/' . $classname . '.php';
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        }
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
+
+        $output->writeln('Generating PagePart Configurators : <info>OK</info>');
+
+        /*
+         * Fixtures
+         */
+
+        $dirPath = $bundle->getPath() . '/DataFixtures/ORM';
+        $fullSkeletonDir = $this->skeletonDir . '/datafixtures/orm';
+
+        /* Default Site Fixtures */
+
+        $classname = 'DefaultSiteFixtures';
+        $classPath = $dirPath . '/' . $classname . '.php';
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        }
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
+
+        /* Group Fixtures */
+
+        $classname = 'GroupFixtures';
+        $classPath = $dirPath . '/' . $classname . '.php';
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        }
+        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
+
+        $output->writeln('Generating Fixtures : <info>OK</info>');
+
     }
 
 }
