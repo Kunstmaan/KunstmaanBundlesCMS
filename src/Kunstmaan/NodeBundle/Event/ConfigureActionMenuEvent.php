@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Helper\Event;
+namespace Kunstmaan\AdminNodeBundle\Event;
 
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\EventDispatcher\Event;
@@ -13,8 +13,8 @@ class ConfigureActionMenuEvent extends Event
     /**
      * @var \Knp\Menu\FactoryInterface
      */
-
     private $factory;
+
     /**
      * @var \Knp\Menu\ItemInterface
      */

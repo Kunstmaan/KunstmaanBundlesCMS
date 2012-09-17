@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminNodeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
-use Kunstmaan\AdminBundle\Helper\Event\ApplyAclChangesetEvent;
+use Kunstmaan\AdminBundle\Event\ApplyAclChangesetEvent;
 use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
 
 class ApplyAclChangesetListener

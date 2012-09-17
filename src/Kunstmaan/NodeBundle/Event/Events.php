@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Helper\Event;
+namespace Kunstmaan\AdminNodeBundle\Event;
 
 /**
  * Events

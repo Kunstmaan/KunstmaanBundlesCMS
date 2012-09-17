@@ -3,8 +3,8 @@
 namespace Kunstmaan\AdminNodeBundle\Helper\Menu;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent;
-use Kunstmaan\AdminNodeBundle\Helper\Event\Events;
+use Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent;
+use Kunstmaan\AdminNodeBundle\Event\Events;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

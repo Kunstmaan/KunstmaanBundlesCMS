@@ -23,8 +23,8 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminNodeBundle\AdminList\PageAdminListConfigurator;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Form\SEOType;
-use Kunstmaan\AdminNodeBundle\Helper\Event\Events;
-use Kunstmaan\AdminNodeBundle\Helper\Event\PageEvent;
+use Kunstmaan\AdminNodeBundle\Event\Events;
+use Kunstmaan\AdminNodeBundle\Event\PageEvent;
 use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
 
 /**

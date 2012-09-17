@@ -18,7 +18,7 @@ and in the listener function you can now modify the menu:
 
 ```php
 /**
- * @param \Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent $event
+ * @param \Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent $event
  */
 public function onSubActionMenuConfigure(ConfigureActionMenuEvent $event)
 {

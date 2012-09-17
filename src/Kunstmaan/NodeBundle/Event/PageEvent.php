@@ -1,30 +1,25 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Helper\Event;
-
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+namespace Kunstmaan\AdminNodeBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 /**
  * PageEvent
  */
 class PageEvent extends Event
 {
-    /**
-     * @var
-     */
+    /* @var HasNodeInterface $page */
     protected $page;
-    /**
-     * @var \Kunstmaan\AdminNodeBundle\Entity\Node
-     */
+
+    /* @var Node $node */
     protected $node;
-    /**
-     * @var \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
-     */
+
+    /* @var NodeTranslation $nodeTranslation */
     protected $nodeTranslation;
 
     /**
@@ -52,7 +47,7 @@ class PageEvent extends Event
     }
 
     /**
-     * @return \Kunstmaan\AdminNodeBundle\Entity\Node
+     * @return Node
      */
     public function getNode()
     {
@@ -72,7 +67,7 @@ class PageEvent extends Event
     }
 
     /**
-     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
+     * @return NodeTranslation
      */
     public function getNodeTranslation()
     {
@@ -98,5 +93,4 @@ class PageEvent extends Event
     {
         return $this->page;
     }
-
 }
