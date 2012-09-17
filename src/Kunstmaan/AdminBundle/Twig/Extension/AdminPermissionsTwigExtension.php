@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
+use Symfony\Component\Form\FormView;
 
 class AdminPermissionsTwigExtension extends \Twig_Extension
 {
@@ -34,13 +35,13 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin $permissionAdmin
-     * @param Form                                                                  $form
-     * @param array                                                                 $parameters
+     * @param PermissionAdmin $permissionAdmin
+     * @param FormView        $form
+     * @param array           $parameters
      *
      * @return string
      */
-    public function renderWidget(PermissionAdmin $permissionAdmin, Form $form , array $parameters = array())
+    public function renderWidget(PermissionAdmin $permissionAdmin, FormView $form , array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminBundle:PermissionsAdminTwigExtension:widget.html.twig");
 
