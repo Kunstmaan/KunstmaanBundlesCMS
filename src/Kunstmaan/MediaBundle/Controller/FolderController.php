@@ -49,7 +49,7 @@ class FolderController extends Controller
         $itemlist = "";
         $listconfigurator = $gallery->getStrategy()->getListConfigurator($gallery);
         if (isset($listconfigurator) && $listconfigurator != null) {
-            $itemlist = $this->get("adminlist.factory")->createList($listconfigurator, $em, array("gallery" => $gallery->getId()));
+            $itemlist = $this->get("kunstmaan_adminlist.factory")->createList($listconfigurator, $em, array("gallery" => $gallery->getId()));
             $itemlist->bindRequest($this->getRequest());
         }
 
@@ -100,7 +100,7 @@ class FolderController extends Controller
      */
     public function editAction($galleryId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
 
         $request = $this->getRequest();
@@ -137,21 +137,19 @@ class FolderController extends Controller
     public function createAction($type)
     {
         $gallery = FolderFactory::getTypeFolder($type);
-
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $form = $this->createForm(new FolderType($gallery->getStrategy()->getGalleryClassName()), $gallery);
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getEntityManager();
                 $em->getRepository('KunstmaanMediaBundle:Folder')->save($gallery);
 
                 return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
             }
         }
 
-        $em = $this->getDoctrine()->getEntityManager();
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
                                        ->getAllFoldersByType();
 
@@ -175,7 +173,7 @@ class FolderController extends Controller
     {
             $request = $this->getRequest();
 
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id);
 
             $gallery = $parent->getStrategy()->getNewGallery($em);
@@ -185,7 +183,6 @@ class FolderController extends Controller
             if ('POST' == $request->getMethod()) {
                 $form->bind($request);
                 if ($form->isValid()) {
-                    $em = $this->getDoctrine()->getEntityManager();
                     $em->getRepository('KunstmaanMediaBundle:Folder')->save($gallery);
 
                     return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
@@ -212,7 +209,7 @@ class FolderController extends Controller
     public function movenodesAction()
     {
         $request = $this->getRequest();
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $parentid = $request->get('parentid');
         $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($parentid);

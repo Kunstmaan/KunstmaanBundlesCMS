@@ -34,7 +34,7 @@ class VideoController extends Controller
      */
     public function editAction($mediaId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $video = $em->getRepository('KunstmaanMediaBundle:Media')->find($mediaId);
         $video->setContent($video->getUuid());

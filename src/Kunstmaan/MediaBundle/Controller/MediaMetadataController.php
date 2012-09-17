@@ -32,7 +32,7 @@ class MediaMetadataController extends Controller
      */
     public function editAction($mediaId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         $request = $this->getRequest();

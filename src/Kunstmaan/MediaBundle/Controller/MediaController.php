@@ -93,7 +93,7 @@ class MediaController extends Controller
      */
     public function bulkUploadAction($galleryId)
     {
-        $em      = $this->getDoctrine()->getEntityManager();
+        $em      = $this->getDoctrine()->getManager();
         $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
         $strategy = $gallery->getStrategy();
 
@@ -152,7 +152,7 @@ class MediaController extends Controller
      */
     public function filecreateAction($galleryId)
     {
-        $em      = $this->getDoctrine()->getEntityManager();
+        $em      = $this->getDoctrine()->getManager();
         $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
 
         $request = $this->getRequest();
@@ -220,7 +220,7 @@ class MediaController extends Controller
      */
     public function imagecreateAction($galleryId)
     {
-        $em      = $this->getDoctrine()->getEntityManager();
+        $em      = $this->getDoctrine()->getManager();
         $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
 
         $request       = $this->getRequest();
