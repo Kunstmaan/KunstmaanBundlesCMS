@@ -43,8 +43,8 @@ class AclHelper
     {
         $aclAppliedQuery = clone $query;
         $params          = $query->getParameters();
-        foreach ($params as $key => $param) {
-            $aclAppliedQuery->setParameter($key, $param);
+        foreach ($params as $param) {
+            $aclAppliedQuery->setParameter($param->getName(), $param->getValue(), $param->getType());
         }
 
         return $aclAppliedQuery;
