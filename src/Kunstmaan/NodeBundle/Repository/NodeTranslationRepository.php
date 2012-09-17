@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminNodeBundle\Repository;
 
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
@@ -223,25 +224,18 @@ class NodeTranslationRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $rsm = new ResultSetMapping();
-        $rsm->addEntityResult('Kunstmaan\AdminNodeBundle\Entity\NodeTranslation', 'nt');
-        $rsm->addFieldResult('nt', 'id', 'id');
-        $rsm->addMetaResult('nt', 'node', 'node');
-        $rsm->addFieldResult('nt', 'lang', 'lang');
-        $rsm->addFieldResult('nt', 'online', 'online');
-        $rsm->addFieldResult('nt', 'title', 'title');
-        $rsm->addFieldResult('nt', 'slug', 'slug');
-        $rsm->addFieldResult('nt', 'url', 'url');
-        $rsm->addMetaResult('nt', 'publicNodeVersion', 'publicNodeVersion');
-        $rsm->addMetaResult('nt', 'seo', 'seo');
+        $rsm = new ResultSetMappingBuilder($em);
+        $rsm->addRootEntityFromClassMetadata('Kunstmaan\AdminNodeBundle\Entity\NodeTranslation', 'nt');
 
         $query = $em
             ->createNativeQuery(
-                'select nt.id, nt.node, nt.lang, nt.online, nt.title, nt.slug, nt.url, nt.publicNodeVersion, nt.seo from nodetranslation nt
-                            join node n on n.id = nt.node
-                            where n.deleted = 0 and nt.lang = ? and locate(url, ?) = 1 order by length(url) desc limit 1', $rsm);
-        $query->setParameter(1, $locale);
-        $query->setParameter(2, $urlSlug);
+                'select nt.*
+                    from kuma_node_translations nt
+                    join kuma_nodes n on n.id = nt.node_id
+                    where n.deleted = 0 and nt.lang = :lang and locate(nt.url, :url) = 1
+                    order by length(nt.url) desc limit 1', $rsm);
+        $query->setParameter('lang', $locale);
+        $query->setParameter('url', $urlSlug);
         $translation = $query->getOneOrNullResult();
 
         return $translation;
