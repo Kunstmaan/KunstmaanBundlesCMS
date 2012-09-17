@@ -36,7 +36,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminList */
-        $adminList = $this->get("adminlist.factory")->createList(new UserAdminListConfigurator(), $em);
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new UserAdminListConfigurator(), $em);
         $adminList->bindRequest($request);
 
         return array(
@@ -53,7 +53,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminList */
-        $adminList = $this->get("adminlist.factory")->createList(new UserAdminListConfigurator(), $em);
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new UserAdminListConfigurator(), $em);
         $adminList->bindRequest($request);
 
         return array(
@@ -153,7 +153,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("adminlist.factory")->createList(new GroupAdminListConfigurator(), $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new GroupAdminListConfigurator(), $em);
         $adminlist->bindRequest($request);
 
         return array(
@@ -245,7 +245,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("adminlist.factory")->createList(new SearchedForAdminListConfigurator(), $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new SearchedForAdminListConfigurator(), $em);
         $adminlist->bindRequest($request);
 
         return array(
@@ -262,7 +262,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("adminlist.factory")->createList(new LogAdminListConfigurator(), $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new LogAdminListConfigurator(), $em);
         $adminlist->bindRequest($request);
 
         return array(
@@ -279,7 +279,7 @@ class SettingsController extends Controller
         $em        = $this->getDoctrine()->getManager();
         $request   = $this->getRequest();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("adminlist.factory")->createList(new RoleAdminListConfigurator(), $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator(), $em);
         $adminlist->bindRequest($request);
 
         return array(
