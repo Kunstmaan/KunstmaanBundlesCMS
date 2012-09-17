@@ -215,7 +215,8 @@ class NodeTranslation extends AbstractEntity
         $slug       = "";
         $parentNode = $this->getNode()->getParent();
         if ($parentNode != null) {
-            $nodeTranslation = $parentNode->getNodeTranslation($this->lang);
+            $nodeTranslation = $parentNode->getNodeTranslation($this->lang, true);
+
             if ($nodeTranslation != null) {
                 $parentSlug = $nodeTranslation->getSlugPart();
                 if (!empty($parentSlug)) {
@@ -239,21 +240,6 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param Node $node
-     *
-     * @return string
-     */
-    public function getParentSlug(Node $node)
-    {
-        $parentSlug = $node->getParent()->getNodeTranslation($this->lang)->getSlug();
-        if (!empty($parentSlug)) {
-            return $parentSlug . "/";
-        }
-
-        return "";
-    }
-
-    /**
      * @param NodeVersion $publicNodeVersion
      *
      * @return NodeTranslation
@@ -274,7 +260,7 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @return NodeVersion[]
+     * @return ArrayCollection
      */
     public function getNodeVersions()
     {
@@ -282,7 +268,7 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param NodeVersion[] $nodeVersions
+     * @param ArrayCollection $nodeVersions
      *
      * @return NodeTranslation
      */
@@ -357,56 +343,6 @@ class NodeTranslation extends AbstractEntity
         }
 
         return null;
-    }
-
-    /**
-     * @param $container
-     * @param $entity
-     * @param $field
-     *
-     * @return IndexableInterface|null
-     *
-     * @todo Refactor this without injecting the container
-     */
-    public function getSearchContentForNode($container, $entity, $field)
-    {
-        $page = $entity->getRef($container->get('doctrine')->getEntityManager());
-        if ($page instanceof IndexableInterface) {
-            return $page;
-        }
-
-        return null;
-    }
-
-    public function getParentsAndSelfForNode($container, $entity, $field)
-    {
-        $node    = $entity->getNode();
-        $results = array();
-        if ($node->getParent() == null) {
-            $parents[] = $node->getId();
-        } else {
-            $parents = $this->getAllParentsForNode($node, $results);
-        }
-
-        return 'start ' . implode(' ', $parents) . ' stop';
-    }
-
-    /**
-     * @param Node  $node
-     * @param array $results
-     *
-     * @return array
-     */
-    public function getAllParentsForNode(Node $node, $results)
-    {
-        $parentNode = $node->getParent();
-        if (is_object($parentNode)) {
-            $results[] = $parentNode->getId();
-
-            return $this->getAllParentsForNode($parentNode, $results);
-        } else {
-            return $results;
-        }
     }
 
     /**
