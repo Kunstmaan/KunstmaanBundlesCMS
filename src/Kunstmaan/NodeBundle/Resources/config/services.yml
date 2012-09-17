@@ -13,7 +13,7 @@ services:
         class: Kunstmaan\AdminNodeBundle\Helper\Menu\PageMenuAdaptor
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper"]
         tags:
-            -  { name: 'admin.menu.adaptor' }
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_adminnode.shell_helper:
         class: "%kunstmaan_adminnode.shell_helper.class%"
