@@ -96,7 +96,7 @@ class NodeTranslationRepository extends EntityRepository
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
             ->where("n.deleted != 1 AND b.lang = :lang")
-            ->addOrderBy('n.sequencenumber', 'DESC')
+            ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1)
             ->setParameter('lang', $locale);
@@ -144,7 +144,7 @@ class NodeTranslationRepository extends EntityRepository
                 ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
                 ->where('b.slug = :slug and n.parent = :parent')
                 ->andWhere('n.deleted != 1')
-                ->addOrderBy('n.sequencenumber', 'DESC')
+                ->addOrderBy('n.sequenceNumber', 'DESC')
                 ->setFirstResult(0)
                 ->setMaxResults(1)
                 ->setParameter('slug', $slugpart)
@@ -158,7 +158,7 @@ class NodeTranslationRepository extends EntityRepository
                     ->select('t')
                     ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
                     ->where('n.deleted != 1 and n.parent IS NULL')
-                    ->addOrderBy('n.sequencenumber', 'DESC')
+                    ->addOrderBy('n.sequenceNumber', 'DESC')
                     ->setFirstResult(0)
                     ->setMaxResults(1);
             if (empty($slugpart)) {

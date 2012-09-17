@@ -197,7 +197,7 @@
                     {#
                         {% for child in page.children %}
                             <tr>
-                                <td>{{ child.sequencenumber }}</td>
+                                <td>{{ child.sequenceNumber }}</td>
                                 <td><a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': child.id, 'entityname': 'KunstmaanAdminBundle:Page' }) }}">{{ child.title }}</a></td>
                                 <td>Page</td>
                             </tr>
@@ -211,11 +211,11 @@
 			{% set seoform = form.seo %}
             <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
                 <fieldset class="properties">
-                    {{ form_row(seoform.metaauthor) }}
-                    {{ form_row(seoform.metadescription) }}
-                	{{ form_row(seoform.metakeywords) }}
-                	{{ form_row(seoform.metarobots) }}
-                	{{ form_row(seoform.metarevised) }}
+                    {{ form_row(seoform.metaAuthor) }}
+                    {{ form_row(seoform.metaDescription) }}
+                	{{ form_row(seoform.metaKeywords) }}
+                	{{ form_row(seoform.metaRobots) }}
+                	{{ form_row(seoform.metaRevised) }}
                     {{ form_row(seoform.ogType) }}
                     {{ form_row(seoform.ogTitle) }}
                     {{ form_row(seoform.ogDescription) }}
