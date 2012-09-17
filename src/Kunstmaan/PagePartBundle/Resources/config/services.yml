@@ -8,15 +8,15 @@ services:
     kunstmaan_pagepart.pageparts:
         class: Kunstmaan\PagePartBundle\PagePartAdmin\Builder
 
-    pagepartadmin.factory:
+    kunstmaan_pagepartadmin.factory:
         class: Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory
 
-    pagepartadmin.twig.extension:
+    kunstmaan_pagepartadmin.twig.extension:
         class: Kunstmaan\PagePartBundle\Twig\Extension\PagePartAdminTwigExtension
         tags:
             -  { name: twig.extension }
 
-    pageparts.twig.extension:
+    kunstmaan_pageparts.twig.extension:
             class: Kunstmaan\PagePartBundle\Twig\Extension\PagePartTwigExtension
             arguments:
                 - @doctrine.orm.entity_manager
