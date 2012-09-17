@@ -19,7 +19,6 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
         $group1->addRole($this->getReference('permissionmanager-role'));
         $group1->addRole($this->getReference('admin-role'));
         $manager->persist($group1);
-        $manager->flush();
 
         $group2 = new Group('Guests');
         $group2->setName("Guests");

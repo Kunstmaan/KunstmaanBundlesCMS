@@ -16,15 +16,12 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         $role1 = new Role('ROLE_PERMISSIONMANAGER');
         $manager->persist($role1);
-        $manager->flush();
 
         $role2 = new Role('ROLE_ADMIN');
         $manager->persist($role2);
-        $manager->flush();
 
         $role3 = new Role('ROLE_SUPER_ADMIN');
         $manager->persist($role3);
-        $manager->flush();
 
         $role4 = new Role('ROLE_GUEST');
         $manager->persist($role4);
