@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FormBundle\EventListener;
 
-use Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent;
+use Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Router;
@@ -31,7 +31,7 @@ class ConfigureActionsMenuListener
     }
 
     /**
-     * @param \Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent $event
+     * @param \Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent $event
      */
     public function onSubActionMenuConfigure(ConfigureActionMenuEvent $event)
     {
