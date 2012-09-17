@@ -7,12 +7,6 @@ services:
         class: Kunstmaan\FormBundle\Helper\Mailer
         arguments: [@mailer, @templating, @service_container]
 
-    kunstmaan_form.entity_id.type:
-        class: Kunstmaan\FormBundle\Form\EntityIdType
-        arguments: ["@doctrine"]
-        tags:
-            - { name: 'form.type', alias: 'entity_id' }
-
     kunstmaan_form.configure_sub_actions_menu_listener:
         class: Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener
         arguments: ["@doctrine.orm.entity_manager", "@router"]
