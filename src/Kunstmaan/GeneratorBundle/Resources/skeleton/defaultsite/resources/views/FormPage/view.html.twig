@@ -1,0 +1,18 @@
+{% extends '{{ bundle.getName() }}:Page:layout.html.twig' %}
+{{ "{% extends '{{ bundle.getName() }}:Page:layout.html.twig' %}" }}
+
+{% block content %}
+	{% if thanks is defined and thanks %}
+		{{ "{{ page.thanks|raw }}" }}
+	{% else %}
+		{% form_theme frontendform '{{ "{{ bundle.getName() }}:Form:fields.html.twig" }}' %}
+		<form action="{{ "{{ path('_slug', { 'slug': nodemenu.current.slug }) }}" }} method="post" {{ "{{ form_enctype(frontendform) }}" }} novalidate="true">
+			{% if pageparts["main"] is defined %}
+				{% for pagepart in pageparts["main"] %}
+                    {{ "{% include pagepart.defaultview with {'resource': pagepart} %}" }}
+				{% endfor %}
+			{% endif %}
+            {{ "{{ form_rest(frontendform) }} " }}
+		</form>
+	{% endif %}
+{% endblock %}

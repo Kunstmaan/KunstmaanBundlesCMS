@@ -1,0 +1,8 @@
+{% block content %}
+	{% if pageparts is not empty %}
+		{% for pagepart in pageparts %}
+			        {% include pagepart.defaultview with {'resource': pagepart} %}
+			    {% endfor %}
+	{% endif %}    
+{% endblock %}
+				

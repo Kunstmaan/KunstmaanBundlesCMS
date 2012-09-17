@@ -174,6 +174,63 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $output->writeln('Generating Fixtures : <info>OK</info>');
 
+        /*
+         * Assets
+         */
+
+        $fullSkeletonDir = $this->skeletonDir . '/resources/public/css';
+
+         $this->filesystem->copy($fullSkeletonDir. '/style.css', $dirPath . '/Resources/public/css/style.css', $parameters);
+
+        $fullSkeletonDir = $this->skeletonDir . '/resources/public/js';
+
+         $this->filesystem->copy($fullSkeletonDir. '/script.js', $dirPath . '/Resources/public/js/script.js' );
+         $this->filesystem->copy($fullSkeletonDir. '/libs/boxsizing.htc', $dirPath . '/Resources/public/js/libs/boxsizing.htc' );
+         $this->filesystem->copy($fullSkeletonDir. '/libs/jquery-1.8.1.min.js', $dirPath . '/Resources/public/js/libs/jquery-1.8.1.min.js' );
+         $this->filesystem->copy($fullSkeletonDir. '/libs/modernizr-2.6.2.min.js', $dirPath . '/Resources/public/js/libs/modernizr-2.6.2.min.js' );
+         $this->filesystem->copy($fullSkeletonDir. '/libs/respond.min.js', $dirPath . '/Resources/public/js/libs/respond.min.js' );
+
+        $fullSkeletonDir = $this->skeletonDir . '/resources/public/sass';
+
+         $this->filesystem->copy($fullSkeletonDir. '/_480.scss', $dirPath . '/Resources/public/sass/_480.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/_768.scss', $dirPath . '/Resources/public/sass/_768.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/_1024.scss', $dirPath . '/Resources/public/sass/_1024.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/_debug.scss', $dirPath . '/Resources/public/sass/_debug.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/_fallbacks.scss', $dirPath . '/Resources/public/sass/_fallbacks.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/_main.scss', $dirPath . '/Resources/public/sass/_main.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/_mixins.scss', $dirPath . '/Resources/public/sass/_mixins.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/_normalizer.scss', $dirPath . '/Resources/public/sass/_normalizer.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/_print.scss', $dirPath . '/Resources/public/sass/_print.scss' );
+         $this->filesystem->copy($fullSkeletonDir. '/style.scss', $dirPath . '/Resources/public/sass/style.scss' );
+
+        $fullSkeletonDir = $this->skeletonDir . '/resources/public';
+
+         $this->filesystem->copy($fullSkeletonDir. '/apple-touch-icon-57x57-precomposed.png', $dirPath . '/Resources/public/apple-touch-icon-57x57-precomposed.png' );
+         $this->filesystem->copy($fullSkeletonDir. '/apple-touch-icon-72x72-precomposed.png', $dirPath . '/Resources/public/apple-touch-icon-72x72-precomposed.png' );
+         $this->filesystem->copy($fullSkeletonDir. '/apple-touch-icon-114x114-precomposed.png', $dirPath . '/Resources/public/apple-touch-icon-114x114-precomposed.png' );
+         $this->filesystem->copy($fullSkeletonDir. '/apple-touch-icon-precomposed.png', $dirPath . '/Resources/public/apple-touch-icon-precomposed.png' );
+         $this->filesystem->copy($fullSkeletonDir. '/apple-touch-icon.png', $dirPath . '/Resources/public/apple-touch-icon.png' );
+         $this->filesystem->copy($fullSkeletonDir. '/favicon.ico', $dirPath . '/Resources/public/favicon.ico' );
+
+        $output->writeln('Generating Assets : <info>OK</info>');
+
+        /*
+         * Twig Templates
+         */
+
+        $fullSkeletonDir = $this->skeletonDir . '/resources/views';
+
+        $this->renderFile($fullSkeletonDir, 'ContentPage/view.html.twig', $dirPath . '/Resources/views/ContentPage/view.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'Elastica/ContentPage.elastica.twig', $dirPath . '/Resources/views/Elastica/ContentPage.elastica.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'Elastica/FormPage.elastica.twig', $dirPath . '/Resources/views/Elastica/FormPage.elastica.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'Elastica/HomePage.elastica.twig', $dirPath . '/Resources/views/Elastica/HomePage.elastica.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'Form/fields.html.twig', $dirPath . '/Resources/views/Form/fields.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'FormPage/view.html.twig', $dirPath . '/Resources/views/FormPage/view.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'HomePage/view.html.twig', $dirPath . '/Resources/views/HomePage/view.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'Page/layout.html.twig', $dirPath . '/Resources/views/Page/layout.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'layout.html.twig', $dirPath . '/Resources/views/layout.html.twig', $parameters);
+
+        $output->writeln('Generating Twig Templates : <info>OK</info>');
     }
 
 }
