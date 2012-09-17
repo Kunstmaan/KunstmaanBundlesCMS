@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminNodeBundle\Repository;
 
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
@@ -12,7 +11,7 @@ use Kunstmaan\AdminBundle\Helper\Slugifier;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * NodeRepository
@@ -22,6 +21,7 @@ class NodeTranslationRepository extends EntityRepository
 {
     /**
      * Get all childs of a given node
+     *
      * @param Node $node
      *
      * @return array
@@ -38,23 +38,25 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getOnlineNodes()
     {
-        $qb = $this->createQueryBuilder('b')
-            ->select('b')
-            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where("n.deleted != 1 AND b.online = 1");
-
-        return $qb;
+        return $this->createQueryBuilder('b')
+                   ->select('b')
+                   ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+                   ->where('n.deleted != 1 AND b.online = 1');
     }
 
     /**
      * Get the nodetranslation for a node
+     *
      * @param HasNodeInterface $hasNode
      *
      * @return NodeTranslation
      */
     public function getNodeTranslationFor(HasNodeInterface $hasNode)
     {
-        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
+        $nodeVersion = $this->getEntityManager()
+            ->getRepository('KunstmaanAdminNodeBundle:NodeVersion')
+            ->getNodeVersionFor($hasNode);
+
         if (!is_null($nodeVersion)) {
             return $nodeVersion->getNodeTranslation();
         }
@@ -63,11 +65,12 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * Get the nodetranslation for a given slug string
-     * @param string               $slug       The slug
-     * @param NodeTranslation|NULL $parentNode The parentnode
+     * Get the node translation for a given slug string
      *
-     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|NULL|object
+     * @param string               $slug       The slug
+     * @param NodeTranslation|null $parentNode The parentnode
+     *
+     * @return NodeTranslation|null
      */
     public function getNodeTranslationForSlug($slug, NodeTranslation $parentNode = null)
     {
@@ -75,28 +78,29 @@ class NodeTranslationRepository extends EntityRepository
             return $this->getNodeTranslationForSlugPart(null, $slug);
         }
 
-        $slugparts = explode("/", $slug);
-        $result = $parentNode;
-        foreach ($slugparts as $slugpart) {
-            $result = $this->getNodeTranslationForSlugPart($result, $slugpart);
+        $slugParts = explode('/', $slug);
+        $result    = $parentNode;
+        foreach ($slugParts as $slugPart) {
+            $result = $this->getNodeTranslationForSlugPart($result, $slugPart);
         }
 
         return $result;
     }
 
     /**
-     * Get the nodetranslation for a given url
+     * Get the node translation for a given url
+     *
      * @param string $urlSlug The full url
      * @param string $locale  The locale
      *
-     * @return NodeTranslation|null|object
+     * @return NodeTranslation|null
      */
     public function getNodeTranslationForUrl($urlSlug, $locale)
     {
         $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where("n.deleted != 1 AND b.lang = :lang")
+            ->where('n.deleted != 1 AND b.lang = :lang')
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1)
@@ -109,17 +113,15 @@ class NodeTranslationRepository extends EntityRepository
             $qb->setParameter('url', $urlSlug);
         }
 
-        $result = $qb->getQuery()->getOneOrNullResult();
-
-        return $result;
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
-     * Get all parent nodes
+     * Get all top node translations
      *
-     * @return array
+     * @return NodeTranslation[]
      */
-    public function getParentNodeTranslations()
+    public function getTopNodeTranslations()
     {
         $qb = $this->createQueryBuilder('b')
             ->select('b')
@@ -131,67 +133,62 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * Returns the nodetranslation for a given slug
-     * @param NodeTranslation|null $parentNode The parentNode
-     * @param string               $slugpart   The slug part
+     * Returns the node translation for a given slug
      *
-     * @return null|object
+     * @param NodeTranslation|null $parentNode The parentNode
+     * @param string               $slugPart   The slug part
+     *
+     * @return NodeTranslation|null
      */
-    private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugpart = "")
+    private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugPart = '')
     {
-        if ($parentNode != null) {
-            $qb = $this->createQueryBuilder('b')
-                ->select('b')
-                ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-                ->where('b.slug = :slug and n.parent = :parent')
-                ->andWhere('n.deleted != 1')
-                ->addOrderBy('n.sequenceNumber', 'DESC')
-                ->setFirstResult(0)
-                ->setMaxResults(1)
-                ->setParameter('slug', $slugpart)
-                ->setParameter('parent', $parentNode->getNode()->getId());
-            $result = $qb->getQuery()->getOneOrNullResult();
+        $qb = $this->createQueryBuilder('t')
+            ->select('t')
+            ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
+            ->where('n.deleted != 1')
+            ->addOrderBy('n.sequenceNumber', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(1);
 
-            return $result;
+        if ($parentNode != null) {
+            $qb->andWhere('t.slug = :slug')
+               ->andWhere('n.parent = :parent')
+               ->setParameter('slug', $slugPart)
+               ->setParameter('parent', $parentNode->getNode()->getId());
         } else {
             /* if parent is null we should look for slugs that have no parent */
-            $qb = $this->createQueryBuilder('t')
-                    ->select('t')
-                    ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
-                    ->where('n.deleted != 1 and n.parent IS NULL')
-                    ->addOrderBy('n.sequenceNumber', 'DESC')
-                    ->setFirstResult(0)
-                    ->setMaxResults(1);
-            if (empty($slugpart)) {
+            $qb->andWhere('n.parent IS NULL');
+            if (empty($slugPart)) {
                 $qb->andWhere('t.slug is NULL');
             } else {
                 $qb->andWhere('t.slug = :slug');
-                $qb->setParameter('slug', $slugpart);
+                $qb->setParameter('slug', $slugPart);
             }
-            $result = $qb->getQuery()->getOneOrNullResult();
-
-            return $result;
         }
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
-     * Create a nodetranslation for a given node
+     * Create a node translation for a given node
+     *
      * @param HasNodeInterface $hasNode The hasNode
      * @param string           $lang    The locale
      * @param Node             $node    The node
      * @param Baseuser         $owner   The user
      *
-     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation
-     * @throws \Exception
+     * @throws \InvalidArgumentException
+     *
+     * @return NodeTranslation
      */
     public function createNodeTranslationFor(HasNodeInterface $hasNode, $lang, Node $node, Baseuser $owner)
     {
-        $em = $this->getEntityManager();
-        $classname = ClassLookup::getClass($hasNode);
+        $em        = $this->getEntityManager();
+        $className = ClassLookup::getClass($hasNode);
         if (!$hasNode->getId() > 0) {
-            throw new \Exception("the entity of class " . $classname . " has no id, maybe you forgot to flush first");
+            throw new \InvalidArgumentException("The entity of class " . $className . " has no id, maybe you forgot to flush first");
         }
-        $entityrepo = $em->getRepository($classname);
+
         $nodeTranslation = new NodeTranslation();
         $nodeTranslation->setNode($node);
         $nodeTranslation->setLang($lang);
@@ -199,10 +196,15 @@ class NodeTranslationRepository extends EntityRepository
         $nodeTranslation->setSlug(Slugifier::slugify($hasNode->__toString(), ''));
         $nodeTranslation->setOnline($hasNode->isOnline());
 
-        $addcommand = new AddCommand($em, $owner);
-        $addcommand->execute("new translation for page \"" . $nodeTranslation->getTitle() . "\" with locale: " . $lang, array('entity' => $nodeTranslation));
+        $addCommand = new AddCommand($em, $owner);
+        $addCommand->execute(
+            "new translation for page \"" . $nodeTranslation->getTitle() . "\" with locale: " . $lang,
+            array('entity' => $nodeTranslation)
+        );
 
-        $nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->createNodeVersionFor($hasNode, $nodeTranslation, $owner);
+        $nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')
+            ->createNodeVersionFor($hasNode, $nodeTranslation, $owner);
+        
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
         $em->persist($nodeTranslation);
         $em->flush();
@@ -229,11 +231,13 @@ class NodeTranslationRepository extends EntityRepository
 
         $query = $em
             ->createNativeQuery(
-                'select nt.*
+            'select nt.*
                     from kuma_node_translations nt
                     join kuma_nodes n on n.id = nt.node_id
                     where n.deleted = 0 and nt.lang = :lang and locate(nt.url, :url) = 1
-                    order by length(nt.url) desc limit 1', $rsm);
+                    order by length(nt.url) desc limit 1',
+            $rsm
+        );
         $query->setParameter('lang', $locale);
         $query->setParameter('url', $urlSlug);
         $translation = $query->getOneOrNullResult();
