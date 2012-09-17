@@ -1,8 +1,9 @@
+{{ "
 {% block field_row %}
 	{% spaceless %}
-	<div class="group {% if errors|length > 0 %}error{% endif %}">
+	<div class='group {% if errors|length > 0 %}error{% endif %}'>
 	    {{ form_label(form) }}
-	    <div class="input">
+	    <div class='input'>
 	        {{ form_widget(form) }}
 	        {{ form_errors(form) }}
 	    </div>
@@ -13,7 +14,7 @@
 {% block field_errors %}
 {% spaceless %}
     {% if errors|length > 0 %}
-    <span class="help-inline">
+    <span class='help-inline'>
         {% for error in errors %}
             {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}<br />
         {% endfor %}
@@ -26,7 +27,7 @@
 {% spaceless %}
     {% if expanded %}
         <div {{ block('widget_container_attributes') }}>
-        <ul class="inputs-list">
+        <ul class='inputs-list'>
         {% for child in form %}
         	<li>
         		<label>
@@ -38,15 +39,15 @@
         </ul>
         </div>
     {% else %}
-    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple='multiple'{% endif %}>
         {% if empty_value is not none %}
-            <option value="">{{ empty_value|trans({}, translation_domain) }}</option>
+            <option value=''>{{ empty_value|trans({}, translation_domain) }}</option>
         {% endif %}
         {% if preferred_choices|length > 0 %}
             {% set options = preferred_choices %}
             {{ block('widget_choice_options') }}
             {% if choices|length > 0 and separator is not none %}
-                <option disabled="disabled">{{ separator }}</option>
+                <option disabled='disabled'>{{ separator }}</option>
             {% endif %}
         {% endif %}
         {% set options = choices %}
@@ -56,3 +57,4 @@
 {% endspaceless %}
 {% endblock choice_widget %}
 
+" }}
