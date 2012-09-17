@@ -1,20 +1,20 @@
 services:
-    admin_menu.adaptor.forms:
+    kunstmaan_form.menu.adaptor.forms:
         class: Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor
         tags:
             -  { name: admin_menu.adaptor }
-    form.mailer:
+    kunstmaan_form.mailer:
         class: Kunstmaan\FormBundle\Helper\Mailer
         arguments: [@mailer, @templating, @service_container]
 
-    entity_id.type:
+    kunstmaan_form.entity_id.type:
         class: Kunstmaan\FormBundle\Form\EntityIdType
-        arguments: [@doctrine]
+        arguments: ["@doctrine"]
         tags:
-            - { name: form.type, alias: entity_id }
+            - { name: 'form.type', alias: 'entity_id' }
 
-    form.configure_sub_actions_menu_listener:
+    kunstmaan_form.configure_sub_actions_menu_listener:
         class: Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener
         arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
-          - { name: kernel.event_listener, event: adminnode.configureSubActionMenu, method: onSubActionMenuConfigure }
+          - { name: 'kernel.event_listener', event: 'kunstmaan_adminnode.configureSubActionMenu', method: 'onSubActionMenuConfigure' }
