@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Helper\Event;
+namespace Kunstmaan\AdminBundle\Event;
 
 /**
  * Defines constants used by events in the AdminBundle

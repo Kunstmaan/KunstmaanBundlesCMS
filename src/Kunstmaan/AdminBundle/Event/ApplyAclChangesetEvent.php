@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Helper\Event;
+namespace Kunstmaan\AdminBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
