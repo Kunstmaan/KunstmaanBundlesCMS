@@ -5,8 +5,8 @@ namespace Kunstmaan\MediaBundle\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Doctrine\ORM\EntityRepository;
-use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
-use Kunstmaan\MediaBundle\Helper\Event\Events;
+use Kunstmaan\MediaBundle\Event\MediaEvent;
+use Kunstmaan\MediaBundle\Event\Events;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Event;
+namespace Kunstmaan\MediaBundle\Event;
 
 /**
  * Events

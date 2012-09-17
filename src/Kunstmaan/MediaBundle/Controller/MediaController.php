@@ -7,8 +7,8 @@ use Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata;
 use Symfony\Component\BrowserKit\Response;
 
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
-use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
-use Kunstmaan\MediaBundle\Helper\Event\Events;
+use Kunstmaan\MediaBundle\Event\MediaEvent;
+use Kunstmaan\MediaBundle\Event\Events;
 use Kunstmaan\MediaBundle\Form\BulkUploadType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
