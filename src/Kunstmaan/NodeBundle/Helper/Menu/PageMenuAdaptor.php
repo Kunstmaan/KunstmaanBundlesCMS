@@ -54,7 +54,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             if ($request->attributes->get('_route') == 'KunstmaanAdminNodeBundle_pages_edit') {
                 $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
-            $this->nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, PermissionMap::PERMISSION_EDIT, true, true);
+            $this->nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getLocale(), $node, PermissionMap::PERMISSION_EDIT, true, true);
         }
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
@@ -74,7 +74,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $parentRouteParams = $parent->getRouteparams();
                 /* @var Node $node */
                 $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneById($parentRouteParams['id']);
-                $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getSession()->getLocale(), $node, 'EDIT', true, true);
+                $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getLocale(), $node, 'EDIT', true, true);
                 $childNodes = $nodeMenu->getCurrent()->getChildren();
                 $currentId = $request->attributes->get('id');
                 $this->processNodes($currentId, $menu, $children, $childNodes, $parent, $request);

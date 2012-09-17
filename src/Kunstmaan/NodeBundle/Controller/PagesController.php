@@ -17,6 +17,7 @@ use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\EditCommand;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminNodeBundle\AdminList\PageAdminListConfigurator;
@@ -328,9 +329,7 @@ class PagesController extends Controller
                 $pagePartAdmin->bindRequest($request);
             }
             if ($this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
-                /* @var ShellHelper $shellHelper */
-                $shellHelper = $this->container->get('kunstmaan_adminnode.shell_helper');
-                $permissionAdmin->bindRequest($request, $shellHelper);
+                $permissionAdmin->bindRequest($request);
             }
             if ($form->isValid()) {
                 foreach ($pagePartAdmins as $pagePartAdmin) {

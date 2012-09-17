@@ -199,11 +199,11 @@ class NodeMenuItem
     }
 
     /**
-     * @param bool $includehiddenfromnav
+     * @param bool $includeHiddenFromNav
      *
      * @return NodeMenuItem[]
      */
-    public function getChildren($includehiddenfromnav = true)
+    public function getChildren($includeHiddenFromNav = true)
     {
         if (is_null($this->lazyChildren)) {
             $this->lazyChildren = array();
@@ -217,8 +217,8 @@ class NodeMenuItem
             }
         }
 
-        return array_filter($this->lazyChildren, function ($entry) use ($includehiddenfromnav) {
-            if ($entry->getNode()->isHiddenFromNav() && !$includehiddenfromnav) {
+        return array_filter($this->lazyChildren, function ($entry) use ($includeHiddenFromNav) {
+            if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
                 return false;
             }
 

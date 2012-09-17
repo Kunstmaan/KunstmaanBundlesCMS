@@ -27,7 +27,9 @@ class NodeRepository extends EntityRepository
      */
     public function getTopNodes($lang, $permission, $aclHelper, $includeHiddenFromNav = false)
     {
-        return $this->getChildNodes(null, $lang, $permission, $aclHelper, $includeHiddenFromNav);
+        $result = $this->getChildNodes(null, $lang, $permission, $aclHelper, $includeHiddenFromNav);
+
+        return $result;
     }
 
     /**
@@ -138,25 +140,23 @@ class NodeRepository extends EntityRepository
     public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
     {
         $qb = $this->createQueryBuilder('b')
-                ->select('b')
-                ->innerJoin('b.nodeTranslations', 't')
-                ->where('b.deleted = 0');
+                   ->select('b')
+                   ->innerJoin('b.nodeTranslations', 't')
+                   ->where('b.deleted = 0');
 
         if (!$includeHiddenFromNav) {
-            $qb->andWhere('b.hiddenfromnav != true');
+            $qb->andWhere('b.hiddenFromNav != true');
         }
-
         $qb->andWhere('t.lang = :lang');
 
         if (is_null($parentId)) {
             $qb->andWhere('b.parent is NULL');
         } else {
             $qb->andWhere('b.parent = :parent')
-                    ->setParameter('parent', $parentId);
+               ->setParameter('parent', $parentId);
         }
-
         $qb->addOrderBy('t.weight', 'ASC')
-                ->addOrderBy('t.title', 'ASC');
+           ->addOrderBy('t.title', 'ASC');
         $qb->setParameter('lang', $lang);
         $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
 
@@ -169,9 +169,9 @@ class NodeRepository extends EntityRepository
     public function getAllTopNodes()
     {
         $qb = $this->createQueryBuilder('b')
-                ->select('b')
-                ->where('b.deleted = 0')
-                ->andWhere('b.parent IS NULL');
+                   ->select('b')
+                   ->where('b.deleted = 0')
+                   ->andWhere('b.parent IS NULL');
 
         $result = $qb->getQuery()->getResult();
 

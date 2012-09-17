@@ -4,8 +4,8 @@ namespace Kunstmaan\AdminNodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminBundle\Form\PageAdminType;
 use Kunstmaan\AdminNodeBundle\Entity\PageInterface;
+use Kunstmaan\AdminNodeBundle\Form\PageAdminType;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;

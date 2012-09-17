@@ -15,7 +15,7 @@ class Events
      *
      * @var string
      */
-    const POSTEDIT = 'adminnode.postEdit';
+    const POSTEDIT = 'kunstmaan_adminnode.postEdit';
 
     /**
      * This event will be triggered when creating the menu for the page sub actions.
@@ -23,7 +23,7 @@ class Events
      *
      * @var string
      */
-    const CONFIGURE_SUB_ACTION_MENU = 'adminnode.configureSubActionMenu';
+    const CONFIGURE_SUB_ACTION_MENU = 'kunstmaan_adminnode.configureSubActionMenu';
 
     /**
      * This event will be triggered when creating the menu for the page actions.
@@ -31,6 +31,6 @@ class Events
      *
      * @var string
      */
-    const CONFIGURE_ACTION_MENU = 'adminnode.configureActionMenu';
+    const CONFIGURE_ACTION_MENU = 'kunstmaan_adminnode.configureActionMenu';
 
 }
