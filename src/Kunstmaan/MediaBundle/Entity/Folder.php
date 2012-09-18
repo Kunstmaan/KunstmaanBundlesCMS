@@ -645,7 +645,7 @@ class Folder extends AbstractEntity
      */
     public function prePersist()
     {
-        $this->setSlug(\Kunstmaan\AdminBundle\Modules\Slugifier::slugify($this->getName()));
+        $this->setSlug(Slugifier::slugify($this->getName()));
     }
 
     /**
