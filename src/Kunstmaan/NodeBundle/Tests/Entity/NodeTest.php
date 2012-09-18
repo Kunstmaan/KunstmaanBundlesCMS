@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminNodeBundle\Tests\Entity;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -190,13 +191,15 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setRef
      * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setRefEntityName
      * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getRefEntityName
      */
-    public function testSetRefEntityName()
+    public function testSetRefAndGetRefEntityName()
     {
-        $this->object->setRefEntityName('TheReferencedEntity');
-        $this->assertEquals('TheReferencedEntity', $this->object->getRefEntityName());
+        $entity = new TestEntity();
+        $this->object->setRef($entity);
+        $this->assertEquals('Kunstmaan\AdminNodeBundle\Tests\Entity\TestEntity', $this->object->getRefEntityName());
     }
 
     /**
@@ -223,8 +226,20 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     public function test__toString()
     {
         $this->object->setId(1);
-        $this->object->setRefEntityName('TheReferencedEntity');
+        $this->object->setRef(new TestEntity());
 
-        $this->assertEquals('node 1, refEntityName: TheReferencedEntity', $this->object->__toString());
+        $this->assertEquals('node 1, refEntityName: Kunstmaan\AdminNodeBundle\Tests\Entity\TestEntity', $this->object->__toString());
     }
+}
+
+class TestEntity extends AbstractEntity
+{
+    /**
+     * @param int $id
+     */
+    public function __construct($id = 0)
+    {
+        $this->setId($id);
+    }
+
 }
