@@ -29,12 +29,12 @@ class GenerateDefaultSiteCommand extends GenerateDoctrineCommand
     protected function configure()
     {
         $this
-            ->setDefinition(array(new InputOption('bundle', '', InputOption::VALUE_REQUIRED, 'The bundle to generate the default website in'),))
+            ->setDefinition(array(new InputOption('namespance', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the default website in'),))
             ->setDescription('Generates a basic website based on Kunstmaan bundles with default templates')
             ->setHelp(<<<EOT
 The <info>kuma:generate:site</info> command generates an website using the Kunstmaan bundles
 
-<info>php app/console kuma:generate:default-site Bundle</info>
+<info>php app/console kuma:generate:default-site --namespace=Namespace\NamedBundle</info>
 EOT
         )
             ->setName('kuma:generate:default-site');
@@ -47,13 +47,13 @@ EOT
     {
         $dialog = $this->getDialogHelper();
 
-        foreach (array('bundle') as $option) {
+        foreach (array('namespace') as $option) {
             if (null === $input->getOption($option)) {
                 throw new \RuntimeException(sprintf('The "%s" option must be provided.', $option));
             }
         }
 
-        $bundle = $input->getOption('bundle');
+        $bundle = $input->getOption('namespace');
         $bundle = $this
             ->getApplication()
             ->getKernel()

@@ -48,7 +48,7 @@ app/console kuma:generate:bundle
 Generate a default website using the Kunstmaan bundles :
 
 ```
-app/console kuma:generate:default-site --bundle=Company\NamedBundle
+app/console kuma:generate:default-site --namespace=Namespace\NamedBundle
 ```
 
 Generate a KunstmaanAdminList for an Entity :
