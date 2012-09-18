@@ -7,12 +7,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * ChoicePagePartAdminType
+ * This class represents the type for the ChoicePagePart
  */
 class ChoicePagePartAdminType extends AbstractType
 {
+
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -27,7 +29,7 @@ class ChoicePagePartAdminType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {

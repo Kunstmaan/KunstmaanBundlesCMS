@@ -2,16 +2,20 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
+
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
+use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * The Abstract ORM FormPage
@@ -109,7 +113,7 @@ abstract class AbstractFormPage extends AbstractPage
      * @param Request            $request   The Request
      * @param array              &$result   The Result array
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|void
+     * @return RedirectResponse|null
      */
     public function service(ContainerInterface $container, Request $request, &$result)
     {
@@ -117,10 +121,13 @@ abstract class AbstractFormPage extends AbstractPage
         if (!empty($thanksParam)) {
             $result["thanks"] = true;
         } else {
+            /* @var $formbuilder FormBuilderInterface */
             $formbuilder = $container->get('form.factory')->createBuilder('form');
+            /* @var $em EntityManager */
             $em = $container->get('doctrine')->getEntityManager();
-            $pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($this, $this->getFormElementsContext());
+            /* @var $fields FormSubmissionField[] */
             $fields = array();
+            $pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($this, $this->getFormElementsContext());
             foreach ($pageparts as $pagepart) {
                 if ($pagepart instanceof FormAdaptorInterface) {
                     $pagepart->adaptForm($formbuilder, $fields);
@@ -130,29 +137,32 @@ abstract class AbstractFormPage extends AbstractPage
             if ($request->getMethod() == 'POST') {
                 $form->bind($request);
                 if ($form->isValid()) {
-                    $formsubmission = new FormSubmission();
-                    $formsubmission->setIpAddress($request->getClientIp());
-                    $formsubmission->setNode($em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this));
-                    $formsubmission->setLang($locale = $request->getLocale());
-                    $em->persist($formsubmission);
-                    foreach ($fields as &$field) {
-                        $field->setSubmission($formsubmission);
+                    $formSubmission = new FormSubmission();
+                    $formSubmission->setIpAddress($request->getClientIp());
+                    $formSubmission->setNode($em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this));
+                    $formSubmission->setLang($locale = $request->getLocale());
+                    $em->persist($formSubmission);
+                    foreach ($fields as $field) {
+                        $field->setSubmission($formSubmission);
                         $field->onValidPost($form, $formbuilder, $request, $container);
                         $em->persist($field);
                     }
                     $em->flush();
-                    $em->refresh($formsubmission);
+                    $em->refresh($formSubmission);
 
                     $from = $this->getFromEmail();
                     $to = $this->getToEmail();
                     $subject = $this->getSubject();
                     if (!empty($from) && !empty($to) && !empty($subject)) {
-                        $container->get('form.mailer')->sendContactMail($formsubmission, $from, $to, $subject);
+                        $container->get('form.mailer')->sendContactMail($formSubmission, $from, $to, $subject);
                     }
+
+                    /* @var $nodeTranslation NodeTranslation */
+                    $nodeTranslation = $result['nodetranslation'];
 
                     return new RedirectResponse($container->get('router')->generate('_slug', array(
                         'url' => $result['slug'],
-                        '_locale' => $result['nodetranslation']->getLang(),
+                        '_locale' => $nodeTranslation->getLang(),
                         'thanks' => true
                     )));
                 }
@@ -160,6 +170,8 @@ abstract class AbstractFormPage extends AbstractPage
             $result["frontendform"] = $form->createView();
             $result["frontendformobject"] = $form;
         }
+
+        return null;
     }
 
     /**
@@ -173,7 +185,7 @@ abstract class AbstractFormPage extends AbstractPage
     abstract public function getDefaultView();
 
     /**
-     * {@inheritdoc}
+     * @return AbstractFormPageAdminType
      */
     public function getDefaultAdminType()
     {

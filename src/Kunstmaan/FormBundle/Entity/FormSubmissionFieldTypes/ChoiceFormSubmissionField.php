@@ -99,7 +99,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * @param boolean $expanded
+     * @param bool $expanded
      */
     public function setExpanded($expanded)
     {
@@ -107,7 +107,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getExpanded()
     {
@@ -115,7 +115,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * @param boolean $multiple
+     * @param bool $multiple
      */
     public function setMultiple($multiple)
     {
@@ -123,7 +123,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getMultiple()
     {

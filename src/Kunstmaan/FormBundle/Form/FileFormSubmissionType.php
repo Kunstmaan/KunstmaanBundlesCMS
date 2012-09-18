@@ -2,14 +2,27 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
 
+/**
+ * This class represents the type for the file FileFormSubmissionField
+ */
 class FileFormSubmissionType extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected $label;
+
+    /**
+     * @var bool
+     */
     protected $required;
 
+    /**
+     * @param string $label    The label
+     * @param bool   $required Is required
+     */
     public function __construct($label, $required)
     {
         $this->label = $label;
@@ -17,7 +30,8 @@ class FileFormSubmissionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options An array with options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,7 +42,7 @@ class FileFormSubmissionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {

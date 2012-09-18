@@ -7,12 +7,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * SingleLineTextPagePartAdminType
+ * This class represents the type for the SubleLineTextPagePart
  */
 class SingleLineTextPagePartAdminType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,7 +26,7 @@ class SingleLineTextPagePartAdminType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {

@@ -11,14 +11,25 @@ use Symfony\Component\Form\FormInterface;
 class FormValidator implements FormValidatorInterface
 {
 
+    /**
+     * @var mixed The callback function
+     */
     private $callback;
+
+    /**
+     * @var mixed
+     */
     private $object;
+
+    /**
+     * @var string
+     */
     private $uniqueid;
 
     /**
-     * @param mixed    $object   The object to call on
-     * @param string   $uniqueid The unique ID
-     * @param function $callback The callback
+     * @param mixed  $object   The object to call on
+     * @param string $uniqueid The unique ID
+     * @param mixed  $callback The callback function
      */
     public function __construct($object, $uniqueid, $callback)
     {
@@ -28,7 +39,9 @@ class FormValidator implements FormValidatorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormInterface $form
+     *
+     * @return mixed
      */
     public function validate(FormInterface $form)
     {

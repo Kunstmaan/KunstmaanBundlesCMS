@@ -11,7 +11,8 @@ use Symfony\Component\Form\AbstractType;
 class AbstractFormPageAdminType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,6 +23,11 @@ class AbstractFormPageAdminType extends AbstractType
         $builder->add('to_email');
     }
 
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
     public function getDefaultOptions(array $options)
     {
         return array(
@@ -30,7 +36,7 @@ class AbstractFormPageAdminType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {

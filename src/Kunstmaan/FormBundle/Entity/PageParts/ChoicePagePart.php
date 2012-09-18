@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use ArrayObject;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
@@ -15,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * A choice pagepart
  *
  * @ORM\Entity
- * @ORM\Table(name="form_choicepagepart")
+ * @ORM\Table(name="kuma_choice_page_parts")
  */
 class ChoicePagePart extends AbstractFormPagePart
 {
@@ -36,12 +37,12 @@ class ChoicePagePart extends AbstractFormPagePart
     protected $choices;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", name="empty_value", nullable=true)
      */
-    protected $empty_value;
+    protected $emptyValue;
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDefaultView()
     {
@@ -49,9 +50,10 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $formBuilder The form builder
+     * @param ArrayObject          $fields      The fields
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, &$fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
     {
         $choices = explode("\n", $this->getChoices());
 
@@ -71,11 +73,12 @@ class ChoicePagePart extends AbstractFormPagePart
         if ($this->getRequired()) {
             $formBuilder->addValidator(
                 new FormValidator($cfsf, $this,
-                    function (FormInterface $form, $cfsf, $thiss) {
+                    function (FormInterface $form, ChoiceFormSubmissionField $cfsf, ChoicePagePart $thiss) {
                         if ($cfsf->isNull()) {
-                            $errormsg = $thiss->getErrormessageRequired();
+                            $errormsg = $thiss->getErrorMessageRequired();
                             $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                            $v->addError(new FormError( empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
+                            $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
+                            $v->addError($formError);
                         }
                     }
                 ));
@@ -84,7 +87,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return ChoicePagePartAdminType
      */
     public function getDefaultAdminType()
     {
@@ -92,7 +95,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * @param boolean $expanded
+     * @param bool $expanded
      */
     public function setExpanded($expanded)
     {
@@ -100,7 +103,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getExpanded()
     {
@@ -108,7 +111,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * @param boolean $multiple
+     * @param bool $multiple
      */
     public function setMultiple($multiple)
     {
@@ -140,23 +143,23 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Set empty_value
+     * Set emptyValue
      *
      * @param string $emptyValue
      */
     public function setEmptyValue($emptyValue)
     {
-        $this->empty_value = $emptyValue;
+        $this->emptyValue = $emptyValue;
     }
 
     /**
-     * Get empty_value
+     * Get emptyValue
      *
      * @return string
      */
     public function getEmptyValue()
     {
-        return $this->empty_value;
+        return $this->emptyValue;
     }
 
 }

@@ -7,11 +7,14 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionFie
 use Symfony\Component\Form\AbstractType;
 
 /**
- * StringFormSubmissionType
+ * The type for the StringFormSubmissionField
  */
 class StringFormSubmissionType extends AbstractType
 {
 
+    /**
+     * @var string
+     */
     private $label;
 
     /**
@@ -23,7 +26,8 @@ class StringFormSubmissionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,6 +36,11 @@ class StringFormSubmissionType extends AbstractType
         ));
     }
 
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
     public function getDefaultOptions(array $options)
     {
         return array(
@@ -40,7 +49,7 @@ class StringFormSubmissionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {

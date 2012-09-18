@@ -6,10 +6,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * TextFormSubmissionType
+ * This class represents the type for the TextFormSubmissionField
  */
 class TextFormSubmissionType extends AbstractType
 {
+
+    /**
+     * @var string
+     */
     private $label;
 
     /**
@@ -21,15 +25,24 @@ class TextFormSubmissionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-                ->add('value', 'textarea',
-                    array('label' => $this->label, 'attr' => array('rows' => '6')));
+        $builder->add('value', 'textarea', array(
+            'label' => $this->label,
+            'attr' => array(
+                'rows' => '6'
+            )
+        ));
     }
 
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
     public function getDefaultOptions(array $options)
     {
         return array(
@@ -38,7 +51,7 @@ class TextFormSubmissionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {
