@@ -25,7 +25,7 @@ $ composer require kunstmaan/form-bundle
 Add the KunstmaanFormBundle to your AppKernel.php file:
 
 ```
-new Kunstmaan\AdminBundle\KunstmaanFormBundle(),
+new Kunstmaan\FormBundle\KunstmaanFormBundle(),
 ```
 
 Contact
