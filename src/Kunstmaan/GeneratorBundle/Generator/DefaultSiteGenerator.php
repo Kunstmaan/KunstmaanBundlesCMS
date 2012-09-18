@@ -39,10 +39,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     public function generateTemplates($bundle, $parameters, $output)
-    { /*
-        * Twig Templates
-        */
-
+    {
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/resources/views';
 
@@ -60,10 +57,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     public function generateAssets($bundle, $parameters, $output)
-    { /*
-        * Assets
-        */
-
+    {
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/resources/public/css';
 
@@ -100,14 +94,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->filesystem->copy($fullSkeletonDir . '/favicon.ico', $dirPath . '/Resources/public/favicon.ico');
 
         $output->writeln('Generating Assets : <info>OK</info>');
-        return $fullSkeletonDir;
     }
 
     public function generateFixtures($bundle, $parameters, $output)
-    { /*
-        * Fixtures
-        */
-
+    {
         $dirPath = $bundle->getPath() . '/DataFixtures/ORM';
         $fullSkeletonDir = $this->skeletonDir . '/datafixtures/orm';
 
@@ -120,24 +110,11 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         }
         $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
-        /* Group Fixtures */
-
-        $classname = 'GroupFixtures';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
-        }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
-
         $output->writeln('Generating Fixtures : <info>OK</info>');
-        return array($dirPath, $fullSkeletonDir);
     }
 
     public function generatePagepartConfigs($bundle, $parameters, $output)
-    { /*
-        * PagePart Configurators
-        */
-
+    {
         $dirPath = $bundle->getPath() . '/PagePartAdmin';
         $fullSkeletonDir = $this->skeletonDir . '/pagepartadmin';
 
@@ -180,14 +157,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
         $output->writeln('Generating PagePart Configurators : <info>OK</info>');
-        return array($dirPath, $fullSkeletonDir, $classname, $classPath);
     }
 
     public function generateForm($bundle, $parameters, $output)
-    { /*
-        * FORM
-        */
-
+    {
         $dirPath = $bundle->getPath() . '/Form';
         $fullSkeletonDir = $this->skeletonDir . '/form';
 
@@ -219,15 +192,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
         $output->writeln('Generating forms : <info>OK</info>');
-        return array($dirPath, $fullSkeletonDir, $classname, $classPath);
     }
 
     public function generateEntities($bundle, $parameters, $output)
     {
-        /*
-         *  ENTITIES
-         */
-
         $dirPath = $bundle->getPath() . '/Entity';
         $fullSkeletonDir = $this->skeletonDir . '/entity';
 
