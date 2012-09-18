@@ -17,9 +17,6 @@ use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 
 /**
  * Generates a default website based on Kunstmaan bundles
- *
- * @author Kenny Debrauwer <kenny.debrauwer@kunstmaan.be>
- *
  */
 class GenerateDefaultSiteCommand extends GenerateDoctrineCommand
 {

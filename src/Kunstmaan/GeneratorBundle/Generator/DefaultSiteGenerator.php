@@ -8,6 +8,9 @@ use Symfony\Component\DependencyInjection\Container;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 
+/**
+ * Generates a default website using several Kunstmaan bundles using default templates and assets
+ */
 class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {
 

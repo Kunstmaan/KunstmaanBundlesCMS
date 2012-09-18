@@ -8,10 +8,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 
 
 /**
- * Generated the controller for the AdminList
- *
- * @author Kenny Debrauwer <kenny.debrauwer@kunstmaan.be>
- *
+ * Generates the controller for an AdminList
  */
 class AdminListControllerGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {

@@ -17,10 +17,7 @@ use Kunstmaan\GeneratorBundle\Generator\AdminListTypeGenerator;
 use Kunstmaan\GeneratorBundle\Generator\AdminListControllerGenerator;
 
 /**
- * Generates an KunstmaanAdminList
- *
- * @author Kenny Debrauwer <kenny.debrauwer@kunstmaan.be>
- *
+ * Generates a KunstmaanAdminList
  */
 class GenerateAdminListCommand extends GenerateDoctrineCommand
 {

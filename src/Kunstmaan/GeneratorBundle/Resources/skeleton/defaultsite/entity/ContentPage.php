@@ -19,7 +19,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\DemoBundle\Form\ContentPageAdminType;
+use {{ namespace }}\Form\ContentPageAdminType;
 use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\SearchBundle\Entity\Indexable;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;

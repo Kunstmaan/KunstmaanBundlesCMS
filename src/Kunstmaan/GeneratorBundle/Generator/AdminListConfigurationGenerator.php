@@ -9,10 +9,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 
 
 /**
- * Generates a KunstmaanAdminList
- *
- * @author Kenny Debrauwer <kenny.debrauwer@kunstmaan.be>
- *
+ * Generates the configuration for an AdminList
  */
 class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {
