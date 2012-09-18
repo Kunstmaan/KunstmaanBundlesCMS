@@ -12,22 +12,14 @@ View screenshots and more on our [github page](http://kunstmaan.github.com/Kunst
 
 Installation requirements
 -------------------------
-You should be able to get Symfony 2 up and running before you can install the KunstmaanAdminBundle.
+You should be able to get Symfony 2.1 up and running before you can install the KunstmaanAdminBundle.
 
 Installation instructions
 -------------------------
-Installation is straightforward, add the following lines to your deps file:
+Assuming you have installed composer.phar or composer binary:
 
-```
-[KunstmaanAdminBundle]
-    git=https://github.com/Kunstmaan/KunstmaanAdminBundle.git
-    target=/bundles/Kunstmaan/AdminBundle
-```
-
-Register the Kunstmaan namespace in your autoload.php file:
-
-```
-'Kunstmaan'        => __DIR__.'/../vendor/bundles'
+``` bash
+$ composer require kunstmaan/admin-bundle
 ```
 
 Add the KunstmaanAdminBundle to your AppKernel.php file:
