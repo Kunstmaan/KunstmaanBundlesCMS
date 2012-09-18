@@ -34,8 +34,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateFixtures($bundle, $parameters, $output);
         $this->generateAssets($bundle, $parameters, $output);
         $this->generateTemplates($bundle, $parameters, $output);
-
-
     }
 
     public function generateTemplates($bundle, $parameters, $output)

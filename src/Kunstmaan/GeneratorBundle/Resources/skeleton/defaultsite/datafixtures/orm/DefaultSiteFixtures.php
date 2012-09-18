@@ -7,7 +7,6 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use {{ namespace }}\Entity\HomePage;
 use {{ namespace }}\Entity\ContentPage;
 use {{ namespace }}\Entity\FormPage;
-use Kunstmaan\ViewBundle\Entity\SearchPage;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminBundle\Entity\Permission;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
@@ -34,13 +33,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $tocpage = $this->createTocPage($manager, "Toc", $pagepartspage);
 
         $formpage = $this->createFormPage($manager, "Form", $pagepartspage);
-
-        $search = $this->createSearchPage($manager, "Search", $homepage);
     }
 
     private function initPermissions($manager, Node $node)
     {
-        $superadminGroup = $this->getReference('superadministrators-group');
+        $superadminGroup = $this->getReference('superadmin-group');
         $adminGroup = $manager
             ->getRepository('KunstmaanAdminBundle:Group')
             ->findOneBy(array('name' => 'Administrators'));
@@ -229,7 +226,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
     private function createFormPage($manager, $title, $parent)
     {
-        $page = FormPage();
+        $page = new FormPage();
         $page->setParent($parent);
         $page->setTitle($title);
         $page->setThanks("<p>We have received your submissions.</p>");
@@ -297,21 +294,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             }
         }
         $this->initPermissions($manager, $node);
-        return $page;
-    }
-
-    private function createSearchPage($manager, $title, $parent)
-    {
-        $page = new SearchPage();
-        $page->setParent($parent);
-        $page->setTitle($title);
-        $manager->persist($page);
-        $manager->flush();
-        $node = $manager
-            ->getRepository('KunstmaanAdminNodeBundle:Node')
-            ->createNodeFor($page, 'en', $this->adminuser);
-        $this->initPermissions($manager, $node);
-
         return $page;
     }
 
