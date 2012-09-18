@@ -3,7 +3,6 @@
 namespace Kunstmaan\MediaBundle\Helper\Provider;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 use Kunstmaan\MediaBundle\Helper\Provider\AbstractVideoProvider;
 
 /**

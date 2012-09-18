@@ -2,11 +2,13 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Kunstmaan\MediaBundle\Entity\Folder;
+
 use Kunstmaan\MediaBundle\Entity\Media;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\SlideGallery;
-use Kunstmaan\MediaBundle\Helper\MediaList\SlideListConfigurator;
+use Kunstmaan\MediaBundle\AdminList\SlideListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Slide;
 use Kunstmaan\MediaBundle\Form\SlideType;
 
@@ -49,13 +51,11 @@ class SlideGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     *
      * @return \Kunstmaan\MediaBundle\Entity\SlideGallery
      */
-    public function getNewGallery(EntityManager $em)
+    public function getNewGallery()
     {
-        return new SlideGallery($em);
+        return new SlideGallery();
     }
 
     /**
@@ -87,7 +87,7 @@ class SlideGalleryStrategy implements GalleryStrategyInterface
      *
      * @return SlideListConfigurator
      */
-    public function getListConfigurator($folder)
+    public function getListConfigurator(Folder $folder)
     {
         return new SlideListConfigurator($folder);
     }

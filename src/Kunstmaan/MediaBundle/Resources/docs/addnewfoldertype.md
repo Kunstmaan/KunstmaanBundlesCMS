@@ -105,7 +105,7 @@ class PdfGalleryStrategy implements GalleryStrategyInterface{
     }
 
     function getListConfigurator(){
-        return new \Kunstmaan\MediaBundle\Helper\MediaList\FileListConfigurator();
+        return new \Kunstmaan\MediaBundle\AdminList\FileListConfigurator();
     }
 }
 

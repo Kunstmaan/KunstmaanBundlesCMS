@@ -1,12 +1,4 @@
 <?php
-
-/**
- * This file is part of the AnoSystemBundle
- *
- * (c) anonymation <contact@anonymation.com>
- *
- */
-
 namespace Kunstmaan\MediaBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension as BaseExtension;

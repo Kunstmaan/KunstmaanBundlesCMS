@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 use Kunstmaan\MediaBundle\Entity\Media;
 
 use Symfony\Component\HttpFoundation\File\File as SystemFile;
@@ -14,7 +16,7 @@ class MediaHelper
 {
 
     /**
-     * @var Media
+     * @var File
      */
     protected $media;
 
@@ -24,7 +26,7 @@ class MediaHelper
     protected $path;
 
     /**
-     * @return Media
+     * @return UploadedFile
      */
     public function getMedia()
     {
@@ -32,9 +34,9 @@ class MediaHelper
     }
 
     /**
-     * @param Media $media
+     * @param File $media
      */
-    public function setMedia(Media $media)
+    public function setMedia(File $media)
     {
         $this->media = $media;
     }
@@ -51,18 +53,18 @@ class MediaHelper
         $info     = pathinfo($url['path']);
         $filename = $info['filename'] . "." . $info['extension'];
         $path     = sys_get_temp_dir() . "/" . $filename;
-        $savefile = fopen($path, 'w');
+        $saveFile = fopen($path, 'w');
 
         $this->path = $path;
 
-        curl_setopt($ch, CURLOPT_FILE, $savefile);
+        curl_setopt($ch, CURLOPT_FILE, $saveFile);
         curl_exec($ch);
         curl_close($ch);
         chmod($path, 777);
 
         $upload = new SystemFile($path);
 
-        fclose($savefile);
+        fclose($saveFile);
 
         $this->setMedia($upload);
 

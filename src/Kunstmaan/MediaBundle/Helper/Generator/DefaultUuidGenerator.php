@@ -10,7 +10,9 @@ use Kunstmaan\MediaBundle\Entity\Media;
 class DefaultUuidGenerator implements UuidGeneratorInterface
 {
     /**
-     * {@inheritdoc}
+     * @param Media $media
+     *
+     * @return string
      */
     public function generateUuid(Media $media)
     {

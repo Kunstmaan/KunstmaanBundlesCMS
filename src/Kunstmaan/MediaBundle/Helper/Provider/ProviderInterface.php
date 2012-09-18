@@ -64,28 +64,28 @@ interface ProviderInterface
     public function getMediaUrl(Media $media, $format = null);
 
     /**
-     * @param \Ano\Bundle\MediaBundle\Model\Media $media
+     * @param Media $media
      *
      * @return void
      */
     public function prepareMedia(Media $media);
 
     /**
-     * @param \Ano\Bundle\MediaBundle\Model\Media $media
+     * @param Media $media
      *
      * @return void
      */
     public function saveMedia(Media $media);
 
     /**
-     * @param \Ano\Bundle\MediaBundle\Model\Media $media
+     * @param Media $media
      *
      * @return void
      */
     public function updateMedia(Media $media);
 
     /**
-     * @param \Ano\Bundle\MediaBundle\Model\Media $media
+     * @param Media $media
      *
      * @return void
      */

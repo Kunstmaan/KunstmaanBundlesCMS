@@ -3,10 +3,11 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Kunstmaan\MediaBundle\Entity\File;
 
 use Doctrine\ORM\EntityRepository;
-use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
-use Kunstmaan\MediaBundle\Helper\Event\Events;
+use Kunstmaan\MediaBundle\Event\MediaEvent;
+use Kunstmaan\MediaBundle\Event\Events;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -14,7 +15,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata;
+
 use Kunstmaan\MediaBundle\Entity\Media;
+
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 
 /**
  * MediaMetadataController
@@ -24,7 +29,7 @@ class MediaMetadataController extends Controller
     /**
      * @param int $mediaId
      *
-     * @Route("/{mediaId}/edit", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_metadata_edit")
+     * @Route("/{mediaId}/edit", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_meta_data_edit")
      * @Method({"GET", "POST"})
      * @Template()
      *
@@ -32,10 +37,11 @@ class MediaMetadataController extends Controller
      */
     public function editAction($mediaId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+
+        /* @var Media $media */
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
 
         $metadataClass = $this->getMetadataClass($media->getContext());
         if (isset($metadataClass)) {
@@ -44,6 +50,8 @@ class MediaMetadataController extends Controller
 
             $result = $repo->findByMedia($media->getId());
 
+            /* @var AbstractMediaMetadata $metadata */
+            $metadata = null;
             if (!empty($result)) {
                 $metadata = $result[0];
             } else {
@@ -53,7 +61,7 @@ class MediaMetadataController extends Controller
             $form = $this->createForm($metadata->getDefaultAdminType(), $metadata);
         } else {
             // return to show
-            return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $media->getId() )));
+            return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'mediaId' => $media->getId() )));
         }
 
         if ('POST' == $request->getMethod()) {
@@ -67,12 +75,12 @@ class MediaMetadataController extends Controller
                 }
 
                 $dispatcher = $this->get('event_dispatcher');
-                if ($dispatcher->hasListeners(Events::POSTEDIT)) {
+                if ($dispatcher->hasListeners(Events::POST_EDIT)) {
                     $event = new MediaEvent($media, isset($metadata)? $metadata : null);
-                    $dispatcher->dispatch(Events::POSTEDIT, $event);
+                    $dispatcher->dispatch(Events::POST_EDIT, $event);
                 }
 
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $media->getId() )));
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'mediaId' => $media->getId() )));
             }
         }
 
@@ -90,6 +98,7 @@ class MediaMetadataController extends Controller
      */
     private function getMetadataClass($context = File::CONTEXT)
     {
+        /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.manager');
         $imageContext = $mediaManager->getContext($context);
 

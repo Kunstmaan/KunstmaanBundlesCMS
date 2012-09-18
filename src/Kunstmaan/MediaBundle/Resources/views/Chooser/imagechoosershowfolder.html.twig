@@ -4,7 +4,7 @@
 
 {% block subbreadcrumb %}{%  set galstype = 'media.menu.'~gallery.type~'s' %}
     {% for parent in gallery.parents %}
-    <li><a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>
+    <li><a href="{{ path('KunstmaanMediaBundle_image_chooser_show', { 'folderId': parent.id, 'slug': parent.slug }) }}">{{ parent.name | trans }}</a></li>
     {% endfor %}
 	<li class="active">{{ gallery.name | trans }}</li>
 {% endblock %}
@@ -14,16 +14,16 @@
 
 {% block content %}
 	{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}
-	
-	<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
-	
+
+	<h1>{{ gallery.name | trans }}{% if gallery.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_image_chooser_show', { 'folderId': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a></small>{% endif %}</h1>
+
 	<section class="map-list">
         <table class="table">
         	<tbody>
 		        {% for child in gallery.children %}
 		        	{% if child.hasImages() %}
 		            <tr>
-		            	<td><a href="{{ path('KunstmaanMediaBundle_imagechooser_show', { 'id' :child.id, 'slug' : child.slug }) }}">{{ child.name | trans }}</td>
+		            	<td><a href="{{ path('KunstmaanMediaBundle_image_chooser_show', { 'folderId' :child.id, 'slug' : child.slug }) }}">{{ child.name | trans }}</td>
 		            </tr>
 		            {% endif %}
 		        {% endfor %}
@@ -34,7 +34,7 @@
 		<ul class="thumbnails" id="file-list">
 		    {% for media in gallery.getImages %}
 		        <li>
-		            <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+		            <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
 		                <img src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
 		                <p class="img_name">{{ media.name }}</p>
 		            </a>

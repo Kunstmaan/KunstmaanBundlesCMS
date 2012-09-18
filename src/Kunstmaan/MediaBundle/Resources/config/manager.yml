@@ -1,0 +1,6 @@
+parameters:
+    kunstmaan_media.manager.class: 'Kunstmaan\MediaBundle\Helper\MediaManager'
+    
+services:
+    kunstmaan_media.manager:
+        class: %kunstmaan_media.manager.class%

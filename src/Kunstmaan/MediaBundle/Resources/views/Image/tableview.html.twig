@@ -1,13 +1,13 @@
-<section> 
+<section>
 	<ul class="thumbnails" id="file-list">
     {% for media in gallery.files %}
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
         <li>
-            <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : media.id }) }}">
+            <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
                 <img src="{{ asset(upload_dir~media.show('medium')) }}" alt="{{ media.name }}" />
                 <p class="img_name">{{ media.name }}</p>
             </a>
-            <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
+            <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
          	<span class="helper">Click to edit</span>
          </li>
     {% else %}
@@ -17,8 +17,8 @@
     {% endfor %}
     </ul>
 </section>
-<script type="text/javascript"> 
+<script type="text/javascript">
 	$(document).ready(function () {
 		initDel();
 	});
-</script> 
+</script>

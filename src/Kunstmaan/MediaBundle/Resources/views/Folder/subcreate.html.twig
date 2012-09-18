@@ -17,5 +17,5 @@
 <div class="page-header">
     <h1>{{ subnewgallery |trans({'%gallery%' : parent.name}) }}</h1>
   </div>
-   {% include 'KunstmaanMediaBundle:Gallery:subform.html.twig' with { 'form': subform, 'id' : parent.id } %}
+   {% include 'KunstmaanMediaBundle:Gallery:subform.html.twig' with { 'form': subform, 'folderId' : parent.id } %}
 {% endblock %}

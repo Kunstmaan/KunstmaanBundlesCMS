@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Event;
+namespace Kunstmaan\MediaBundle\Event;
 
 /**
  * Events
@@ -15,7 +15,7 @@ class Events
      *
      * @var string
      */
-    const POSTEDIT = 'media.postEdit';
+    const POST_EDIT = 'media.postEdit';
 
     /**
      * The postCreate event occurs for a given page, after the create method.
@@ -24,6 +24,6 @@ class Events
      *
      * @var string
      */
-    const POSTCREATE = 'media.postCreate';
+    const POST_CREATE = 'media.postCreate';
 
 }

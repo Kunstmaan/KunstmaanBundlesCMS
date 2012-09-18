@@ -14,7 +14,7 @@ interface CdnInterface
      *
      * @param string $path
      *
-     * @return void
+     * @return string
      */
     public function getFullPath($path);
 

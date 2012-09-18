@@ -13,7 +13,9 @@ use Gaufrette\File;
  */
 class ImagineImageManipulator implements ImageManipulatorInterface
 {
-    /* @var \Imagine\ImagineInterface */
+    /**
+     * @var ImagineInterface
+     */
     protected $imagine;
 
     /**
@@ -67,7 +69,8 @@ class ImagineImageManipulator implements ImageManipulatorInterface
         }
 
         $image = $this->imagine->load($fromFile->getContent());
-        $output = $image->thumbnail(new Box($width, $height), $mode)->get(ExtensionGuesser::guess($media->getContentType()), $options);
+        $manipulatorInterface = $image->thumbnail(new Box($width, $height), $mode);
+        $output = $manipulatorInterface->get(ExtensionGuesser::guess($media->getContentType()), $options);
 
         $toFile->setContent($output);
     }

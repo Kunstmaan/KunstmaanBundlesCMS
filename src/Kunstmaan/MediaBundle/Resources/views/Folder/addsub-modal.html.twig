@@ -1,5 +1,5 @@
 <div id="addsub-modal" class="modal hide fade">
-    <form action="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }  ) }}" method="post" {{ form_enctype(subform) }}>
+    <form action="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : gallery.id }  ) }}" method="post" {{ form_enctype(subform) }}>
         <div class="modal-header">
         	<button class="close" data-dismiss="modal">&times;</button>
             <h3>{{ 'media.gallery.sub.add' | trans }}</h3>

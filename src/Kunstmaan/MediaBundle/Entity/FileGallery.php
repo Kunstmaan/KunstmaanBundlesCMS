@@ -7,10 +7,10 @@ use Kunstmaan\MediaBundle\Helper\FileGalleryStrategy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class that defines a Media object from the AnoBundle in the database
+ * FileGallery
  *
  * @ORM\Entity
- * @ORM\Table(name="media_gallery_file")
+ * @ORM\Table(name="kuma_media_file_galleries")
  * @ORM\HasLifecycleCallbacks
  */
 class FileGallery extends Folder

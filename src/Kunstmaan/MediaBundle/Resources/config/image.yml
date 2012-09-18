@@ -1,0 +1,7 @@
+parameters:
+    kunstmaan_media.util.image.manipulator.imagine.class: 'Kunstmaan\MediaBundle\Helper\Manipulator\ImagineImageManipulator'
+    
+services:
+    kunstmaan_media.util.image.manipulator.imagine:
+        class: %kunstmaan_media.util.image.manipulator.imagine.class%
+        arguments: ["@liip_imagine"]

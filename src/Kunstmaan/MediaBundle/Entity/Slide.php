@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class that defines a slide in the system
  *
  * @ORM\Entity
- * @ORM\Table(name="media_slide")
+ * @ORM\Table(name="kuma_media_slides")
  */
 class Slide extends Media
 {
@@ -17,6 +17,8 @@ class Slide extends Media
     const CONTEXT = "kunstmaan_media_code";
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $type;
@@ -54,10 +56,14 @@ class Slide extends Media
      * Set slidetype
      *
      * @param string $slidetype
+     *
+     * @return Slide
      */
     public function setType($slidetype)
     {
         $this->type = $slidetype;
+
+        return $this;
     }
 
     /**

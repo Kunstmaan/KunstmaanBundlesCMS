@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
 
 /**
- * Class that defines a Media object from the AnoBundle in the database
+ * SlideGallery
  *
  * @ORM\Entity
- * @ORM\Table(name="media_gallery_slide")
+ * @ORM\Table(name="kuma_media_slide_galleries")
  * @ORM\HasLifecycleCallbacks
  */
 class SlideGallery extends Folder

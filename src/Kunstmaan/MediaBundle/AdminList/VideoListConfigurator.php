@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\MediaList;
+namespace Kunstmaan\MediaBundle\AdminList;
 
 use Doctrine\ORM\QueryBuilder;
 
@@ -12,7 +12,6 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 
 /**
  * VideoListConfigurator
@@ -85,7 +84,7 @@ class VideoListConfigurator extends AbstractAdminListConfigurator
      *
      * @return array
      */
-    public function getEditUrlFor(Video $item)
+    public function getEditUrlFor($item)
     {
         return array('path'   => 'KunstmaanMediaBundle_media_show',
                      'params' => array('media_id' => $item->getId())
@@ -110,14 +109,14 @@ class VideoListConfigurator extends AbstractAdminListConfigurator
 
 
     /**
-     * @param QueryBuilder $querybuilder The query builder
+     * @param QueryBuilder $queryBuilder The query builder
      * @param array        $params       Custom parameters
      */
-    public function adaptQueryBuilder(QueryBuilder $querybuilder, $params = array())
+    public function adaptQueryBuilder($queryBuilder, $params = array())
     {
-        parent::adaptQueryBuilder($querybuilder);
-        $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
-        $querybuilder->andwhere("b.deleted != true");
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder->andwhere($queryBuilder->expr()->eq("b.gallery", $params['gallery']));
+        $queryBuilder->andwhere("b.deleted != true");
     }
 
     /**

@@ -6,7 +6,7 @@ use Symfony\Component\Locale\Exception\NotImplementedException;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\Folder;
-use Kunstmaan\MediaBundle\Helper\MediaList\MediaListConfigurator;
+use Kunstmaan\MediaBundle\AdminList\MediaListConfigurator;
 
 /**
  * FolderStrategy
@@ -47,13 +47,11 @@ class FolderStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     *
-     * @return \Kunstmaan\MediaBundle\Entity\Folder
+     * @return Folder
      */
-    public function getNewGallery(EntityManager $em)
+    public function getNewGallery()
     {
-        return new Folder($em);
+        return new Folder();
     }
 
     /**
@@ -83,11 +81,11 @@ class FolderStrategy implements GalleryStrategyInterface
     /**
      * @param Folder $folder
      *
-     * @return void
+     * @return MediaListConfigurator
      */
     public function getListConfigurator(Folder $folder)
     {
-        throw new NotImplementedException("you should override the getListConfigurator in your Strategy class " . get_class($this));
+        return new MediaListConfigurator($folder);
     }
 }
 

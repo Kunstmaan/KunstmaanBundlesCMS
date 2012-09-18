@@ -4,6 +4,7 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * AbstractMediaMetadata
@@ -20,6 +21,8 @@ abstract class AbstractMediaMetadata extends AbstractEntity
 
     /**
      * getDefaultAdminType
+     *
+     * @return AbstractType
      */
     public abstract function getDefaultAdminType();
 

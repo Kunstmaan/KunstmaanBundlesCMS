@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class that defines a picture in the system
  *
  * @ORM\Entity
- * @ORM\Table(name="media_file")
+ * @ORM\Table(name="kuma_media_files")
  */
 class File extends Media
 {

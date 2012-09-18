@@ -4,7 +4,6 @@ namespace Kunstmaan\MediaBundle\Helper\Provider;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\File;
-use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
 /**
  * AbstractVideoProvider

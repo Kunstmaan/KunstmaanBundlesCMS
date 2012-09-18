@@ -48,13 +48,11 @@ class ImageGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     *
      * @return \Kunstmaan\MediaBundle\Entity\ImageGallery
      */
-    public function getNewGallery(EntityManager $em)
+    public function getNewGallery()
     {
-        return new ImageGallery($em);
+        return new ImageGallery();
     }
 
     /**

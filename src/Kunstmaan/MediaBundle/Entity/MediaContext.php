@@ -24,14 +24,12 @@ class MediaContext
      */
     protected $formats = array();
 
-
     /**
      * @var AbstractMediaMetadata
      */
     protected $metadataClass;
 
     /**
-     * constructor
      * @param string $name
      */
     public function __construct($name)
@@ -41,10 +39,14 @@ class MediaContext
 
     /**
      * @param string $name
+     *
+     * @return MediaContext
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -57,10 +59,14 @@ class MediaContext
 
     /**
      * @param ProviderInterface $provider
+     *
+     * @return MediaContext
      */
     public function setProvider(ProviderInterface $provider)
     {
         $this->provider = $provider;
+
+        return $this;
     }
 
     /**
@@ -75,11 +81,13 @@ class MediaContext
      * @param string $name   The name
      * @param array  $format The format
      *
-     * @return void
+     * @return MediaContext
      */
     public function addFormat($name, array $format)
     {
         $this->formats[$name] = $format;
+
+        return $this;
     }
 
     /**

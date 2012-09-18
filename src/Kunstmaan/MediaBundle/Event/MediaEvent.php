@@ -1,12 +1,11 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Event;
+namespace Kunstmaan\MediaBundle\Event;
 
 use Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata;
+use Symfony\Component\EventDispatcher\Event;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
-use Symfony\Component\EventDispatcher\Event;
 
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Entity\Node;

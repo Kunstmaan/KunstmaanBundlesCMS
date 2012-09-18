@@ -1,19 +1,15 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
-
-
-
 {% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}
-
 
 {% block header %}
 	{% if gallery.type != "folder" %}
 		{% if adminmenu.current %}
 			<h1>
-				{{ adminmenu.current.internalname | trans }} 
+				{{ adminmenu.current.internalname | trans }}
 				{% if gallery.parent %}
 					<small>
-						{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a>
+						{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a>
 					</small>
 				{% endif %}
 			</h1>
@@ -27,12 +23,6 @@
 	{% endif %}
 {% endblock %}
 
-
-
-
-
-
-
 {% block content %}
 
     {%  if gallery.type != "folder" %}
@@ -40,44 +30,41 @@
         <!--Main-->
         <div class="main_actions">
             {%  set addmediatype = 'media.'~gallery.type~'.add' %}
-            <a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ '_create', { 'folderId' : gallery.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>
             <!--<button class="btn btn-primary" data-toggle="modal" data-target="#upload-image-modal">{{ 'media.bulkupload.bulkupload' |trans }}</button>-->
             {% if gallery.strategy.getNewBulkUploadMediaInstance() is not null %}
-                <a href="{{ path('KunstmaanMediaBundle_folder_bulkupload', { 'gallery_id' : gallery.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
+                <a href="{{ path('KunstmaanMediaBundle_folder_bulk_upload', { 'folderId' : gallery.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
             {% endif %}
-            <a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : gallery.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
             {% if gallery.canDelete %}
-                <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn">{{ 'media.gallery.delete' |trans }}</a>
+                <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : gallery.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn">{{ 'media.gallery.delete' |trans }}</a>
             {% endif %}
         </div>
-        
+
 		<!--Scroll-->
         <div id="main_actions_top" class="main_actions top">
             <div class="pull-right">
                 {%  set addmediatype = 'media.'~gallery.type~'.add' %}
-                <a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ 'create', { 'gallery_id' : gallery.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>
+                <a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ '_create', { 'folderId' : gallery.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>
                 {% if gallery.strategy.getNewBulkUploadMediaInstance() is not null %}
-                    <a href="{{ path('KunstmaanMediaBundle_folder_bulkupload', { 'gallery_id' : gallery.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
+                    <a href="{{ path('KunstmaanMediaBundle_folder_bulk_upload', { 'folderId' : gallery.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
                 {% endif %}
-                <a href="{{ path('KunstmaanMediaBundle_folder_subcreate', { 'id' : gallery.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
+                <a href="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : gallery.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
                 {% if gallery.canDelete %}
-                    <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'gallery_id' : gallery.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn">{{ 'media.gallery.delete' |trans }}</a>
+                    <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : gallery.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn">{{ 'media.gallery.delete' |trans }}</a>
                 {% endif %}
                 <a class="btn up">&#9650;</a>
             </div>
         </div>
     {% endif %}
 
-
-
-
     <!--=========Tabs=========-->
-    <ul class="nav nav-tabs"> 
+    <ul class="nav nav-tabs">
         {%  set galstype = 'media.menu.'~gallery.type~'s' %}
         <li class="active"><a href="#imagegallery" data-toggle="tab">{{ galstype|trans|capitalize }}</a></li>
         <li><a href="#properties" data-toggle="tab">{{ 'media.folder.properties' | trans }}</a></li>
     </ul>
-    
+
     <div class="tab-content">
         <div class="tab-pane active" id="imagegallery">
             <section class="map-list">
@@ -86,7 +73,7 @@
                         {% for child in gallery.children %}
                             <tr>
                                 <td>
-                                	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id' :child.id, 'slug' : child.slug }) }}" class="item">{{ child.name }}</a>
+                                	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id, 'slug' : child.slug }) }}" class="item">{{ child.name }}</a>
                                 </td>
                             </tr>
                         {% else %}
@@ -99,27 +86,17 @@
                     </tbody>
                 </table>
             </section>
-        
+
             {%  set FolderTypelist = 'media.'~gallery.type~'.list' %}
             {% include 'KunstmaanMediaBundle:' ~ gallery.type|capitalize ~ ':tableview.html.twig' %}
        </div>
-       <div class="tab-pane" id="properties"> 
+       <div class="tab-pane" id="properties">
        		{% include 'KunstmaanMediaBundle:Folder:editform.html.twig' %}
         </div>
     </div>
-    
-    
-    
-    
-    
-    
-    
     <!--=========Modals=========-->
     {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
     {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
     {# include 'KunstmaanMediaBundle:Image:create-modal.html.twig' #}
-    
-    
-    
-    
+
 {% endblock %}

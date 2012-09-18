@@ -2,9 +2,11 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Kunstmaan\MediaBundle\Entity\Folder;
+
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\File;
-use Kunstmaan\MediaBundle\Helper\MediaList\FileListConfigurator;
+use Kunstmaan\MediaBundle\AdminList\FileListConfigurator;
 use Kunstmaan\MediaBundle\Form\MediaType;
 use Kunstmaan\MediaBundle\Entity\FileGallery;
 
@@ -47,13 +49,11 @@ class FileGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     *
      * @return \Kunstmaan\MediaBundle\Entity\FileGallery
      */
-    public function getNewGallery(EntityManager $em)
+    public function getNewGallery()
     {
-        return new FileGallery($em);
+        return new FileGallery();
     }
 
 

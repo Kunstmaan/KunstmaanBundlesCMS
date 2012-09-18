@@ -18,6 +18,8 @@ class MediaRepository extends EntityRepository
      */
     public function save(Media $media)
     {
+        $em = $this->getEntityManager();
+
         $em->persist($media);
         $em->flush();
     }
@@ -27,6 +29,8 @@ class MediaRepository extends EntityRepository
      */
     public function delete(Media $media)
     {
+        $em = $this->getEntityManager();
+
         $media->setDeleted(true);
         $em->persist($media);
         $em->flush();
@@ -40,6 +44,8 @@ class MediaRepository extends EntityRepository
      */
     public function getMedia($mediaId)
     {
+        $em = $this->getEntityManager();
+
         $media = $em->getRepository('KunstmaanMediaBundle:Media')->find($mediaId);
         if (!$media) {
             throw new EntityNotFoundException('The id given for the media is not valid.');
@@ -56,6 +62,8 @@ class MediaRepository extends EntityRepository
      */
     public function getPicture($pictureId)
     {
+        $em = $this->getEntityManager();
+
         $picture = $em->getRepository('KunstmaanMediaBundle:Image')->find($pictureId);
         if (!$picture) {
             throw new EntityNotFoundException('Unable to find image.');

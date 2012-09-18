@@ -4,6 +4,7 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\Image;
+use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Symfony\Component\HttpFoundation\File\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,31 +18,33 @@ class AviaryController extends Controller
 {
 
     /**
-     * @param int $galleryId The id of the Gallery
-     * @param int $imageId   The id of the image
+     * @param int $folderId The id of the Folder
+     * @param int $imageId  The id of the image
      *
-     * @Route("/aviary/{galleryId}/{imageId}", requirements={"galleryId" = "\d+", "imageId" = "\d+"}, name="KunstmaanMediaBundle_aviary")
-     * @return \Symfony\Bundle\FrameworkBundle\Controller\Response
+     * @Route("/aviary/{folderId}/{imageId}", requirements={"folderId" = "\d+", "imageId" = "\d+"}, name="KunstmaanMediaBundle_aviary")
+     * @return RedirectResponse
      */
-    public function indexAction($galleryId, $imageId)
+    public function indexAction($folderId, $imageId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($galleryId);
+        /* @var Folder $folder */
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
         $helper = new MediaHelper();
         $helper->getMediaFromUrl($this->getRequest()->get('url'));
 
-        $hulp = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($imageId);
+        /* @var Image $media */
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($imageId);
         $picture = new Image();
-        $picture->setOriginal($hulp);
-        $picture->setName($hulp->getName()."-edited");
+        $picture->setOriginal($media);
+        $picture->setName($media->getName()."-edited");
         $picture->setContent($helper->getMedia());
-        $picture->setGallery($gallery);
+        $picture->setGallery($folder);
 
         $em->persist($picture);
         $em->flush();
 
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
+        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId' => $folder->getId(), 'slug' => $folder->getSlug())));
     }
 }

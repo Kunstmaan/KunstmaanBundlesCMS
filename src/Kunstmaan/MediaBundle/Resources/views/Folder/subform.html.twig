@@ -1,4 +1,4 @@
-<form action="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ 'gallery_subcreate', { 'id' : parent.id }  ) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('KunstmaanMediaBundle_' ~ gallery.type ~ '_gallery_sub_create', { 'folderId' : parent.id }  ) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
         <div class="clearfix">
             {{ form_errors(form) }}

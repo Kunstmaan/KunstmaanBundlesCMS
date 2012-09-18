@@ -1,6 +1,6 @@
 {% form_theme form 'KunstmaanMediaBundle:Form:fields.html.twig' %}
 
-<form action="{{ path('KunstmaanMediaBundle_folder_slidecreate', { 'gallery_id' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('KunstmaanMediaBundle_folder_slide_create', { 'folderId' : gallery.id } ) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
 
         {{ form_widget(form.media) }}
@@ -13,7 +13,7 @@
 
         <div class="actions">
             <input class="btn primary type" type="submit" value="{{ 'media.slide.add' | trans }}">
-            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'id' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : gallery.id, 'slug' : gallery.slug } ) }}'" type="reset" class="btn" value="{{ 'form.cancel' | trans }}" />
         </div>
     </fieldset>
 </form>

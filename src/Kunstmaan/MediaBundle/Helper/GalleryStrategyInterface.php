@@ -32,11 +32,9 @@ interface GalleryStrategyInterface
     public function getBulkUploadAccept();
 
     /**
-     * @param EntityManager $em
-     *
      * @return Folder
      */
-    public function getNewGallery(EntityManager $em);
+    public function getNewGallery();
 
     /**
      * @return string

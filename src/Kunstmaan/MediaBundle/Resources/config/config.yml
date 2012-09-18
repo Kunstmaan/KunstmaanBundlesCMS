@@ -12,10 +12,6 @@ services:
         class: Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor
         arguments: ["@knp_menu.factory"]
 
-#    kunstmaan.provider.speakerdeck:
- #       class: %kunstmaan_media.provider.speakerdeck.class%
-  #      parent: kunstmaan_media.provider.abstract
-
 kunstmaan_media:
     cdn:
         local:

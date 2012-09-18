@@ -3,20 +3,23 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Kunstmaan\MediaBundle\Entity\File;
 
 use Doctrine\ORM\EntityRepository;
-use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
-use Kunstmaan\MediaBundle\Helper\Event\Events;
+use Kunstmaan\MediaBundle\Event\MediaEvent;
+use Kunstmaan\MediaBundle\Event\Events;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Kunstmaan\MediaBundle\Form\VideoType;
 use Kunstmaan\MediaBundle\Entity\Video;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 
 /**
  * Video controller.
@@ -34,15 +37,16 @@ class VideoController extends Controller
      */
     public function editAction($mediaId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $video = $em->getRepository('KunstmaanMediaBundle:Media')->find($mediaId);
-        $video->setContent($video->getUuid());
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
 
-        $formbuilder = $this->createFormBuilder();
-        $formbuilder->add('media', new VideoType());
-        $bindingarray = array('media' => $video);
+        /* @var Video $video */
+        $video = $em->getRepository('KunstmaanMediaBundle:Media')->find($mediaId);
+        $video->setContent($video->getUuid());
+
+        $formBuilder = $this->createFormBuilder();
+        $formBuilder->add('media', new VideoType());
+        $bindingArray = array('media' => $video);
 
         $metadataClass = $this->getMetadataClass(Video::CONTEXT);
         if (isset($metadataClass)) {
@@ -51,18 +55,20 @@ class VideoController extends Controller
 
             $result = $repo->findByMedia($video->getId());
 
+            /* @var AbstractMediaMetadata $metadata */
+            $metadata = null;
             if (!empty($result)) {
                 $metadata = $result[0];
             } else {
                 $metadata = new $metadataClass();
             }
 
-            $formbuilder->add('metadata', $metadata->getDefaultAdminType());
-            $bindingarray['metadata'] = $metadata;
+            $formBuilder->add('metadata', $metadata->getDefaultAdminType());
+            $bindingArray['metadata'] = $metadata;
         }
 
-        $formbuilder->setData($bindingarray);
-        $form = $formbuilder->getForm();
+        $formBuilder->setData($bindingArray);
+        $form = $formBuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
@@ -78,12 +84,12 @@ class VideoController extends Controller
                 }
 
                 $dispatcher = $this->get('event_dispatcher');
-                if ($dispatcher->hasListeners(Events::POSTEDIT)) {
+                if ($dispatcher->hasListeners(Events::POST_EDIT)) {
                     $event = new MediaEvent($video, $metadata);
-                    $dispatcher->dispatch(Events::POSTEDIT, $event);
+                    $dispatcher->dispatch(Events::POST_EDIT, $event);
                 }
 
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $video->getId() )));
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'mediaId' => $video->getId() )));
             }
         }
 
@@ -101,6 +107,7 @@ class VideoController extends Controller
      */
     private function getMetadataClass($context = File::CONTEXT)
     {
+        /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.manager');
         $imageContext = $mediaManager->getContext($context);
 

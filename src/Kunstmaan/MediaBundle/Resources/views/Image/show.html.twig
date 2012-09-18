@@ -10,15 +10,15 @@
 
 
 	<!--=========Actions=========-->
-	
+
 	<!--Main-->
     <div class="main_actions">
         <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.image.edit' | trans }}</button>
         {% if hasmetadata %}
-            <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn">{{ 'media.image.editmetadata' | trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_media_metadata_edit', { 'mediaId': media.id}) }}" class="btn">{{ 'media.image.editmetadata' | trans }}</a>
         {% endif %}
-        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
-        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
+        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
+        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
     </div>
 
 	<!--Scroll-->
@@ -26,10 +26,10 @@
         <div class="pull-right">
             <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.image.edit' | trans }}</button>
             {% if hasmetadata %}
-            <a href="{{ path('KunstmaanMediaBundle_metadata_edit', { 'media_id': media.id}) }}" class="btn">{{ 'media.image.editmetadata' | trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_media_metadata_edit', { 'mediaId': media.id}) }}" class="btn">{{ 'media.image.editmetadata' | trans }}</a>
             {% endif %}
-            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'media_id': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
-            <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'id': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
             <a class="btn up">&#9650;</a>
         </div>
     </div>
@@ -45,7 +45,7 @@
 
     <div class="tab-content">
         <div class="tab-pane active" id="imagegallery">
-			
+
 			<div class="properties">
 				<dl>
 				    <dt>Name:</dt>
@@ -58,10 +58,10 @@
 				    	<dd>{{ media.updatedat|date|escape }}</dd>
 				</dl>
 			</div>
-			
-			
-			
-           
+
+
+
+
 
             <p><img id="editimage" class="thumbnail" src="{{ asset(upload_dir~media.show()) }}" alt="{{ media.name }}" /></p>
 
@@ -77,7 +77,7 @@
                     onSave: function(imageID, newURL) {
                         var img = document.getElementById(imageID);
                         img.src = newURL;
-                        window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'gallery_id' : gallery.id, 'image_id' : media.id }) }}?url='+newURL;
+                        window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'folderId' : gallery.id, 'imageId' : media.id }) }}?url='+newURL;
                     }
 
                 });
@@ -98,7 +98,7 @@
             <ul class="thumbnails">
                 {% for image in media.edits %}
                 <li >
-                    <a href="{{ path('KunstmaanMediaBundle_media_show',  { 'media_id' : image.id }) }}" class="thumbnail">
+                    <a href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : image.id }) }}" class="thumbnail">
                         <img  src="{{ asset(upload_dir~image.show('medium')) }}" alt="{{ image.name }}" />
                     </a>
                 </li>
@@ -108,11 +108,11 @@
             </ul>
         </div>
     </div>
-    
-    
-    
+
+
+
     <!--=========Modals=========-->
     {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
-    
+
 
 {% endblock %}

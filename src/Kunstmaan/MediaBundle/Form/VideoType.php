@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
@@ -39,5 +41,17 @@ class VideoType extends AbstractType
     public function getName()
     {
         return 'kunstmaan_mediabundle_videotype';
+    }
+
+    /**
+     * Sets the default options for this type.
+     *
+     * @param OptionsResolverInterface $resolver The resolver for the options.
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+                'data_class' => 'Kunstmaan\MediaBundle\Entity\Video',
+        ));
     }
 }

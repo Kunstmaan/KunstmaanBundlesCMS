@@ -17,7 +17,7 @@ use Gedmo\Translatable\Translatable;
  * Class that defines a folder from the MediaBundle in the database
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
- * @ORM\Table(name="media_folder")
+ * @ORM\Table(name="kuma_media_folders")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({ "folder"="Folder", "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
@@ -29,6 +29,7 @@ class Folder extends AbstractEntity
 
     /**
      * @var string
+     *
      * @Gedmo\Translatable
      * @ORM\Column(type="string")
      */
@@ -36,6 +37,7 @@ class Folder extends AbstractEntity
 
     /**
      * @var string
+     *
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
@@ -44,19 +46,22 @@ class Folder extends AbstractEntity
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $slug;
 
     /**
      * @var Folder
+     *
      * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children", fetch="EAGER")
-     * @ORM\JoinColumn(name="parent", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      */
     protected $parent;
 
     /**
      * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="LAZY")
      * @ORM\OrderBy({"sequencenumber" = "ASC"})
      */
@@ -64,42 +69,49 @@ class Folder extends AbstractEntity
 
     /**
      * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Media", mappedBy="gallery")
      */
     protected $files;
 
     /**
      * @var \DateTime
+     *
      * @ORM\Column(type="datetime")
      */
     protected $created;
 
     /**
      * @var \DateTime
+     *
      * @ORM\Column(type="datetime")
      */
     protected $updated;
 
     /**
      * @var bool
+     *
      * @ORM\Column(type="boolean")
      */
     protected $candelete;
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $rel;
 
     /**
      * @var int
+     *
      * @ORM\Column(type="integer")
      */
     protected $sequencenumber;
 
     /**
      * @var bool
+     *
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
@@ -119,11 +131,15 @@ class Folder extends AbstractEntity
 
     /**
      * @param string $name
+     *
+     * @return Folder
      */
     public function setName($name)
     {
         $this->name = $name;
         $this->setSlug($this->name);
+
+        return $this;
     }
 
     /**
@@ -136,20 +152,28 @@ class Folder extends AbstractEntity
 
     /**
      * @param string $locale
+     *
+     * @return Folder
      */
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+
+        return $this;
     }
 
     /**
      * Set slug
      *
      * @param string $slug
+     *
+     * @return Folder
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**
@@ -164,10 +188,14 @@ class Folder extends AbstractEntity
 
     /**
      * @param bool $bool
+     *
+     * @return Folder
      */
     public function setCanDelete($bool)
     {
         $this->candelete = $bool;
+
+        return $this;
     }
 
     /**
@@ -180,10 +208,14 @@ class Folder extends AbstractEntity
 
     /**
      * @param string $rel
+     *
+     * @return Folder
      */
     public function setRel($rel)
     {
         $this->rel = $rel;
+
+        return $this;
     }
 
     /**
@@ -198,10 +230,14 @@ class Folder extends AbstractEntity
      * Set created
      *
      * @param \DateTime $created
+     *
+     * @return Folder
      */
     public function setCreated($created)
     {
         $this->created = $created;
+
+        return $this;
     }
 
     /**
@@ -218,10 +254,14 @@ class Folder extends AbstractEntity
      * Set updated
      *
      * @param \DateTime $updated
+     *
+     * @return Folder
      */
     public function setUpdated($updated)
     {
         $this->updated = $updated;
+
+        return $this;
     }
 
     /**
@@ -238,10 +278,14 @@ class Folder extends AbstractEntity
      * Set parent
      *
      * @param Folder $parent
+     *
+     * @return Folder
      */
     public function setParent(Folder $parent)
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     /**
@@ -270,30 +314,38 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * Add children
+     * Add folder
      *
-     * @param Kunstmaan\MediaBundle\Entity\Gallery $children
+     * @param Folder $folder
+     *
+     * @return Folder
      */
-    public function addGallery(Folder $children)
+    public function addGallery(Folder $folder)
     {
-        $this->children[] = $children;
+        $this->children[] = $folder;
+
+        return $this;
     }
 
     /**
      * Add a child
      *
      * @param Folder $child
+     *
+     * @return Folder
      */
     public function addChild(Folder $child)
     {
         $this->children[] = $child;
         $child->setParent($this);
+
+        return $this;
     }
 
     /**
      * @param bool $includeDeleted
      *
-     * @return ArrayCollection|bool
+     * @return Folder[]
      */
     public function getChildren($includeDeleted = false)
     {
@@ -301,7 +353,7 @@ class Folder extends AbstractEntity
             return $this->children;
         }
 
-        return $this->children->filter( function ($entry) {
+        return $this->children->filter( function (Folder $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }
@@ -326,10 +378,14 @@ class Folder extends AbstractEntity
 
     /**
      * @param array $children
+     *
+     * @return Folder
      */
     public function setChildren($children)
     {
         $this->children = $children;
+
+        return $this;
     }
 
     /**
@@ -342,10 +398,14 @@ class Folder extends AbstractEntity
 
     /**
      * @param int $sequencenumber
+     *
+     * @return Folder
      */
     public function setSequencenumber($sequencenumber)
     {
         $this->sequencenumber = $sequencenumber;
+
+        return $this;
     }
 
     /**
@@ -358,30 +418,28 @@ class Folder extends AbstractEntity
 
     /**
      * @param bool $deleted
+     *
+     * @return Folder
      */
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
-    }
 
-    /**
-     * disableChildrenLazyLoading
-     */
-    public function disableChildrenLazyLoading()
-    {
-        if (is_object($this->children)) {
-            $this->children->setInitialized(true);
-        }
+        return $this;
     }
 
     /**
      * Add file
      *
      * @param Media $file
+     *
+     * @return Folder
      */
     public function addMedia(Media $file)
     {
         $this->files[] = $file;
+
+        return $this;
     }
 
     /**
@@ -397,7 +455,7 @@ class Folder extends AbstractEntity
             return $this->files;
         }
 
-        return $this->files->filter( function ($entry) {
+        return $this->files->filter( function (File $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }
@@ -539,13 +597,8 @@ class Folder extends AbstractEntity
      */
     public function hasActive($id)
     {
-        $bool = false;
         foreach ($this->getChildren() as $child) {
-            $bool = $child->hasActive($id);
-            if ($bool == true) {
-                return true;
-            }
-            if ($child->getId() == $id) {
+            if ($child->hasActive($id) || $child->getId() == $id) {
                 return true;
             }
         }
@@ -562,13 +615,13 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * @param Gallery $gallery
+     * @param Folder $folder
      *
      * @return FolderType
      */
-    public function getFormType($gallery = null)
+    public function getFormType(Folder $folder = null)
     {
-        return new FolderType($this->getStrategy()->getGalleryClassName(), $gallery);
+        return new FolderType($this->getStrategy()->getGalleryClassName(), $folder);
     }
 
     /**

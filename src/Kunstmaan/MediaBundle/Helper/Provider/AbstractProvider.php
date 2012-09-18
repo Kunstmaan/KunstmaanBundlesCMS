@@ -66,7 +66,7 @@ abstract class AbstractProvider implements ProviderInterface
     /**
      * @param string $name
      *
-     * @return booln
+     * @return bool
      */
     public function hasFormat($name)
     {
@@ -148,7 +148,7 @@ abstract class AbstractProvider implements ProviderInterface
     }
 
     /**
-     * @return \Ano\Bundle\MediaBundle\Cdn\CdnInterface
+     * @return CdnInterface
      */
     public function getCdn()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\SearchBundle\Tests\Controller;
+namespace Kunstmaan\MediaBundle\Tests\Controller;
 
 /**
  * DefaultControllerTest

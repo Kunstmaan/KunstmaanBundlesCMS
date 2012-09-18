@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\Listener;
+namespace Kunstmaan\MediaBundle\EventListener;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;

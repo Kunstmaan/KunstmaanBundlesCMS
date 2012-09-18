@@ -22,16 +22,16 @@ class FolderType extends AbstractType
     /**
      * @var Folder
      */
-    public $gallery;
+    public $folder;
 
     /**
-     * @param string $name    The name
-     * @param Folder $gallery The gallery
+     * @param string $name   The name
+     * @param Folder $folder The folder
      */
-    public function __construct($name, Folder $gallery = null)
+    public function __construct($name, Folder $folder = null)
     {
         $this->entityname = $name;
-        $this->gallery = $gallery;
+        $this->folder = $folder;
     }
 
     /**
@@ -48,21 +48,21 @@ class FolderType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $gallery = $this->gallery;
+        $folder = $this->folder;
         $type = $this;
         $builder
             ->add('name')
             ->add('parent', 'entity', array( 'class' => $this->getEntityName(), 'required' => false,
-              'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use($gallery, $type) {
+              'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use($folder, $type) {
                   $qb = $er->createQueryBuilder('gallery');
 
                   if ($type->getEntityName()=="Kunstmaan\MediaBundle\Entity\Folder") {
                       $qb->where("gallery instance of 'Kunstmaan\MediaBundle\Entity\Folder'");
                   }
 
-                  if ($gallery != null) {
-                      $ids = "gallery.id != ". $gallery->getId();
-                      $ids .= $type->addChildren($gallery);
+                  if ($folder != null) {
+                      $ids = "gallery.id != ". $folder->getId();
+                      $ids .= $type->addChildren($folder);
                       $qb->andwhere($ids);
                   }
 
@@ -90,14 +90,14 @@ class FolderType extends AbstractType
     }
 
     /**
-     * @param Folder $gallery
+     * @param Folder $folder
      *
      * @return string
      */
-    public function addChildren(Folder $gallery)
+    public function addChildren(Folder $folder)
     {
         $ids = "";
-        foreach ($gallery->getChildren() as $child) {
+        foreach ($folder->getChildren() as $child) {
             $ids .= " and gallery.id != " . $child->getId();
             $ids .= $this->addChildren($child);
         }

@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Class that defines a picture in the system
  *
  * @ORM\Entity
- * @ORM\Table(name="media_image")
+ * @ORM\Table(name="kuma_media_images")
  */
 class Image extends Media
 {
@@ -17,12 +17,16 @@ class Image extends Media
     const CONTEXT = "kunstmaan_media_image";
 
     /**
+     * @var Image
+     *
      * @ORM\ManyToOne(targetEntity="Image", inversedBy="edits")
-     * @ORM\JoinColumn(name="original", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @ORM\JoinColumn(name="original_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $original;
 
     /**
+     * @var Image[]
+     *
      * @ORM\OneToMany(targetEntity="Image", mappedBy="original", cascade={"persist"})
      */
     protected $edits;
@@ -49,17 +53,21 @@ class Image extends Media
     /**
      * Set original
      *
-     * @param Kunstmaan\MediaBundle\Entity\Image $original
+     * @param Image $original
+     *
+     * @return Image
      */
     public function setOriginal(Image $original)
     {
         $this->original = $original;
+
+        return $this;
     }
 
     /**
      * Get original
      *
-     * @return Kunstmaan\MediaBundle\Entity\Image
+     * @return Image
      */
     public function getOriginal()
     {
@@ -69,17 +77,21 @@ class Image extends Media
     /**
      * Add edits
      *
-     * @param Kunstmaan\MediaBundle\Entity\Image $edits
+     * @param Image $edits
+     *
+     * @return Image
      */
     public function addEdits(Image $edits)
     {
         $this->edits[] = $edits;
+
+        return $this;
     }
 
     /**
      * Get edits
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getEdits()
     {
@@ -89,11 +101,15 @@ class Image extends Media
     /**
      * Add edits
      *
-     * @param Kunstmaan\MediaBundle\Entity\Image $edits
+     * @param Image $edits
+     *
+     * @return Image
      */
     public function addImage(Image $edits)
     {
         $this->edits[] = $edits;
+
+        return $this;
     }
 
     /**

@@ -1,6 +1,6 @@
 {% form_theme form 'KunstmaanMediaBundle:Form:fields.html.twig' %}
 
-<form action="{{ path('KunstmaanMediaBundle_slide_edit', { 'media_id' : media.id } ) }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('KunstmaanMediaBundle_slide_edit', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(form) }}>
     <fieldset>
 
         {{ form_errors(form) }}
@@ -15,7 +15,7 @@
 
         <div class="actions">
             <input class="btn primary type" type="submit" value="{{ 'media.slide.edit' | trans }}">
-            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_media_show', { 'media_id' : media.id } ) }}'" type="reset" class="btn" value="{{  'form.cancel' | trans }}" />
+            <input onclick="window.location = '{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}'" type="reset" class="btn" value="{{  'form.cancel' | trans }}" />
         </div>
     </fieldset>
 </form>

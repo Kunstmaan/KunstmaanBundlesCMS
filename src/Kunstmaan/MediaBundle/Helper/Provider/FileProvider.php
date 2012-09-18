@@ -19,6 +19,8 @@ class FileProvider extends AbstractProvider
 
     /**
      * @param Media $media
+     *
+     * @throws \RuntimeException when the file does not exist
      */
     public function prepareMedia(Media $media)
     {

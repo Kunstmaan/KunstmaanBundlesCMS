@@ -6,14 +6,15 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Manipulator\ImageManipulatorInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
 
 /**
  * ImageProvider
  */
 class ImageProvider extends FileProvider
 {
-    /* @var \Ano\Bundle\MediaBundle\Util\Image\ImageManipulatorInterface */
+    /**
+     * @var ImageManipulatorInterface
+     */
     protected $imageManipulator;
 
 

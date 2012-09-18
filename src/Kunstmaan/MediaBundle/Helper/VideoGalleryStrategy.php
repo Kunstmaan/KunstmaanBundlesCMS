@@ -2,10 +2,12 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Kunstmaan\MediaBundle\Entity\Folder;
+
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\VideoGallery;
 use Kunstmaan\MediaBundle\Form\VideoType;
-use Kunstmaan\MediaBundle\Helper\MediaList\VideoListConfigurator;
+use Kunstmaan\MediaBundle\AdminList\VideoListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Video;
 
 /**
@@ -47,13 +49,11 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     *
      * @return \Kunstmaan\MediaBundle\Entity\VideoGallery
      */
-    public function getNewGallery(EntityManager $em)
+    public function getNewGallery()
     {
-        return new VideoGallery($em);
+        return new VideoGallery();
     }
 
     /**
@@ -85,7 +85,7 @@ class VideoGalleryStrategy implements GalleryStrategyInterface
      *
      * @return VideoListConfigurator
      */
-    public function getListConfigurator($folder)
+    public function getListConfigurator(Folder $folder)
     {
         return new VideoListConfigurator($folder);
     }

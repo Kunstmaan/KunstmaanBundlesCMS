@@ -6,12 +6,9 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Config\Definition\Processor;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
-
-use Kunstmaan\MediaBundle\Entity\MediaContext;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -40,10 +37,10 @@ class KunstmaanMediaExtension extends Extension
 
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         foreach (array('provider', 'cdn', 'filesystem', 'generator', 'image', 'manager', 'orm') as $basename) {
-            $loader->load(sprintf('%s.xml', $basename));
+            $loader->load(sprintf('%s.yml', $basename));
         }
 
         $manager = $container->getDefinition('kunstmaan_media.manager');

@@ -2,17 +2,15 @@
 
 namespace Kunstmaan\MediaBundle\Entity;
 
-use Kunstmaan\MediaBundle\Helper\FolderStrategy;
-
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Helper\ImageGalleryStrategy;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class that defines a Media object from the AnoBundle in the database
+ * ImageGallery
  *
  * @ORM\Entity
- * @ORM\Table(name="media_gallery_image")
+ * @ORM\Table(name="kuma_media_image_galleries")
  * @ORM\HasLifecycleCallbacks
  */
 class ImageGallery extends Folder

@@ -1,4 +1,4 @@
-{{ adminlist_widget(itemlist, "KunstmaanMediaBundle_folder_show", { 'id': gallery.id, 'slug': gallery.slug }, { 'gallery_id' : gallery.id }, { 'gallery' : gallery.id }) }}
+{{ adminlist_widget(itemlist, "KunstmaanMediaBundle_folder_show", { 'folderId': gallery.id, 'slug': gallery.slug }, { 'folderId' : gallery.id }, { 'gallery' : gallery.id }) }}
 
 <!--<table class="bordered-table zebra-striped">
     <thead>
@@ -17,10 +17,10 @@
 
             <tr>
                 <td>
-                    <a href="{# path('KunstmaanMediaBundle_slide_edit', { 'media_id': media.id }) }}"><img src="{# asset('images/general/edit.png') }}" alt="edit" /></a>
-                    <a href="{# path('KunstmaanMediaBundle_' ~ gallery.type ~ '_delete', { 'media_id': media.id }) }}" data-controls-modal="sure-modal-{# media.id }}" data-backdrop="true" data keyboard="true"><img src="{# asset('images/general/delete.png') }}" alt="delete" /></a>
+                    <a href="{# path('KunstmaanMediaBundle_slide_edit', { 'mediaId': media.id }) }}"><img src="{# asset('images/general/edit.png') }}" alt="edit" /></a>
+                    <a href="{# path('KunstmaanMediaBundle_' ~ gallery.type ~ '_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{# media.id }}" data-backdrop="true" data keyboard="true"><img src="{# asset('images/general/delete.png') }}" alt="delete" /></a>
                 </td>
-                <td><a href="{# path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'media_id' : media.id }) }}">{# media.name }}</a></td>
+                <td><a href="{# path('KunstmaanMediaBundle_' ~ gallery.type ~ '_show',  { 'mediaId' : media.id }) }}">{# media.name }}</a></td>
                 <td>{# media.type }}</td>
                 <td>{# media.createdat|date|escape }}</td>
                 <td>{# media.updatedat|date|escape }}</td>

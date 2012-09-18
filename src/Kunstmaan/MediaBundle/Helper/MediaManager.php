@@ -49,7 +49,9 @@ class MediaManager
     /**
      * @param string $name
      *
-     * @return \Ano\Bundle\MediaBundle\Model\MediaContext
+     * @return MediaContext
+     *
+     * @throws \InvalidArgumentException when there is no context for this name
      */
     public function getContext($name)
     {
@@ -193,7 +195,7 @@ class MediaManager
      */
     public function getProvider($name)
     {
-        if (!$this->hadProvider($name)) {
+        if (!$this->hasProvider($name)) {
             throw new \InvalidArgumentException(sprintf('Provider "%s" doesn\'t exist', $name));
         }
 
@@ -259,7 +261,7 @@ class MediaManager
      */
     public function getFilesystem($name)
     {
-        if (!$this->hadFilesystem($name)) {
+        if (!$this->hasFilesystem($name)) {
             throw new \InvalidArgumentException(sprintf('Filesystem "%s" doesn\'t exist', $name));
         }
 

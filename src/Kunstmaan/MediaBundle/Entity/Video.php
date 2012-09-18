@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class that defines a video in the system
  *
  * @ORM\Entity
- * @ORM\Table(name="media_video")
+ * @ORM\Table(name="kuma_media_videos")
  */
 class Video extends Media
 {
@@ -20,6 +20,7 @@ class Video extends Media
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $type;
@@ -56,10 +57,14 @@ class Video extends Media
     /**
      * Set slidetype
      * @param string $type
+     *
+     * @return Video
      */
     public function setType($type)
     {
         $this->type = $type;
+
+        return $this;
     }
 
     /**

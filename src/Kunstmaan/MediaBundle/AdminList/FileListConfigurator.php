@@ -1,25 +1,22 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\MediaList;
+namespace Kunstmaan\MediaBundle\AdminList;
 
 use Doctrine\ORM\QueryBuilder;
 
-use Kunstmaan\MediaBundle\Entity\Slide;
+use Kunstmaan\MediaBundle\Entity\File;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
 
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 
 /**
- * SlideListConfigurator
+ * FileListConfigurator
  */
-class SlideListConfigurator extends AbstractAdminListConfigurator
+class FileListConfigurator extends AbstractAdminListConfigurator
 {
-
     /**
      * @var Folder
      */
@@ -39,9 +36,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
     public function buildFilters(AdminListFilter $filters)
     {
         $filters->add('name', new StringFilterType("name"), "form.name");
-        $filters->add('type', new StringFilterType("type"), "form.type");
-        $filters->add('createdAt', new DateFilterType("createdAt"), "form.createdat");
-        $filters->add('updatedAt', new DateFilterType("updatedAt"), "form.updatedat");
+        $filters->add('contentType', new StringFilterType("contentType"), "form.type");
     }
 
     /**
@@ -50,7 +45,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
     public function buildFields()
     {
         $this->addField("name", "form.name", true);
-        $this->addField("type", "form.type", true);
+        $this->addField("contentType", "form.type", true);
         $this->addField("createdAt", "form.createdat", true);
         $this->addField("updatedAt", "form.updatedat", true);
     }
@@ -71,27 +66,23 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
     public function getAddUrlFor($params = array())
     {
         return array(
-            'slide' => array(
-                'path'   => 'KunstmaanMediaBundle_folder_slidecreate',
-                'params' => array(
-                    'gallery_id' => $params['gallery_id']
-                )
+            'file' => array(
+                'path'   => 'KunstmaanMediaBundle_folder_filecreate',
+                'params' => array('gallery_id' => $params['gallery_id'])
             )
         );
     }
 
     /**
-     * @param Slide $item
+     * @param File $item
      *
      * @return array
      */
-    public function getEditUrlFor(Slide $item)
+    public function getEditUrlFor($item)
     {
         return array(
             'path'   => 'KunstmaanMediaBundle_media_show',
-            'params' => array(
-                'media_id' => $item->getId()
-            )
+            'params' => array('media_id' => $item->getId())
         );
     }
 
@@ -108,22 +99,22 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
      */
     public function getRepositoryName()
     {
-        return 'KunstmaanMediaBundle:Slide';
+        return 'KunstmaanMediaBundle:File';
     }
 
     /**
      * @param QueryBuilder $querybuilder The query builder
      * @param array        $params       Custom parameters
      */
-    public function adaptQueryBuilder(QueryBuilder $querybuilder, $params = array())
+    public function adaptQueryBuilder($querybuilder, $params = array())
     {
-        parent::adaptQueryBuilder($querybuilder);
+        parent::adaptQueryBuilder($querybuilder, $params);
         $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
         $querybuilder->andwhere("b.deleted != true");
     }
 
     /**
-     * @param Slide $item
+     * @param File $item
      *
      * @return array
      */

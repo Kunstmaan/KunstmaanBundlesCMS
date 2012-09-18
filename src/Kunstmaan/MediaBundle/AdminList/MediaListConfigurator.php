@@ -1,23 +1,20 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Helper\MediaList;
-
-use Doctrine\ORM\QueryBuilder;
-
-use Kunstmaan\MediaBundle\Entity\File;
+namespace Kunstmaan\MediaBundle\AdminList;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Doctrine\ORM\QueryBuilder;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 
 /**
- * FileListConfigurator
+ * MediaListConfigurator
  */
-class FileListConfigurator extends AbstractAdminListConfigurator
+class MediaListConfigurator extends AbstractAdminListConfigurator
 {
+
     /**
      * @var Folder
      */
@@ -37,7 +34,7 @@ class FileListConfigurator extends AbstractAdminListConfigurator
     public function buildFilters(AdminListFilter $filters)
     {
         $filters->add('name', new StringFilterType("name"), "form.name");
-        $filters->add('contentType', new StringFilterType("contentType"), "form.type");
+        $filters->add('classtype', new StringFilterType("classtype"), "form.type");
     }
 
     /**
@@ -46,7 +43,7 @@ class FileListConfigurator extends AbstractAdminListConfigurator
     public function buildFields()
     {
         $this->addField("name", "form.name", true);
-        $this->addField("contentType", "form.type", true);
+        $this->addField("classtype", "form.type", true);
         $this->addField("createdAt", "form.createdat", true);
         $this->addField("updatedAt", "form.updatedat", true);
     }
@@ -67,23 +64,45 @@ class FileListConfigurator extends AbstractAdminListConfigurator
     public function getAddUrlFor($params = array())
     {
         return array(
-            'file' => array(
+            'image' => array(
+                'path'   => 'KunstmaanMediaBundle_folder_imagecreate',
+                'params' => array(
+                    'gallery_id' => $params['gallery_id']
+                )
+            ),
+            'file'  => array(
                 'path'   => 'KunstmaanMediaBundle_folder_filecreate',
-                'params' => array('gallery_id' => $params['gallery_id'])
+                'params' => array(
+                    'gallery_id' => $params['gallery_id']
+                )
+            ),
+            'slide' => array(
+                'path'   => 'KunstmaanMediaBundle_folder_slidecreate',
+                'params' => array(
+                    'gallery_id' => $params['gallery_id']
+                )
+            ),
+            'video' => array(
+                'path'   => 'KunstmaanMediaBundle_folder_videocreate',
+                'params' => array(
+                    'gallery_id' => $params['gallery_id']
+                )
             )
         );
     }
 
     /**
-     * @param File $item
+     * @param Folder $item
      *
      * @return array
      */
-    public function getEditUrlFor(File $item)
+    public function getEditUrlFor($item)
     {
         return array(
             'path'   => 'KunstmaanMediaBundle_media_show',
-            'params' => array('media_id' => $item->getId())
+            'params' => array(
+                'media_id' => $item->getId()
+            )
         );
     }
 
@@ -100,22 +119,22 @@ class FileListConfigurator extends AbstractAdminListConfigurator
      */
     public function getRepositoryName()
     {
-        return 'KunstmaanMediaBundle:File';
+        return 'KunstmaanMediaBundle:Media';
     }
 
     /**
-     * @param QueryBuilder $querybuilder The query builder
+     * @param QueryBuilder $queryBuilder The query builder
      * @param array        $params       Custom parameters
      */
-    public function adaptQueryBuilder(QueryBuilder $querybuilder, $params = array())
+    public function adaptQueryBuilder($queryBuilder, $params = array())
     {
-        parent::adaptQueryBuilder($querybuilder, $params);
-        $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
-        $querybuilder->andwhere("b.deleted != true");
+        parent::adaptQueryBuilder($queryBuilder, $params);
+        $queryBuilder->andwhere($queryBuilder->expr()->eq("b.gallery", $params['gallery']));
+        $queryBuilder->andwhere("b.deleted != true");
     }
 
     /**
-     * @param File $item
+     * @param Folder $item
      *
      * @return array
      */

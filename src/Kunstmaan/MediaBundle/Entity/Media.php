@@ -8,10 +8,10 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Assetic\Asset\FileAsset;
 
 /**
- * Class that defines a Media object from the AnoBundle in the database
+ * Media
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\MediaRepository")
- * @ORM\Table(name="media")
+ * @ORM\Table(name="kuma_media")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"media" = "Media", "image" = "Image", "file" = "File", "slide" = "Slide" , "video" = "Video"})
@@ -22,6 +22,7 @@ abstract class Media extends AbstractEntity
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string", unique=true, length=255)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -29,18 +30,21 @@ abstract class Media extends AbstractEntity
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     *
+     * @ORM\Column(type="string", name="content_type")
      */
     protected $contentType;
 
     /**
      * @var array
+     *
      * @ORM\Column(type="array")
      */
     protected $metadata;
@@ -48,18 +52,20 @@ abstract class Media extends AbstractEntity
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at")
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     *
+     * @ORM\Column(type="datetime", name="updated_at")
      */
     protected $updatedAt;
 
     /**
      * @var Folder
+     *
      * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
      * @ORM\JoinColumn(name="gallery_id", referencedColumnName="id")
      */
@@ -72,12 +78,14 @@ abstract class Media extends AbstractEntity
 
     /**
      * @var int
+     *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $filesize;
 
     /**
      * @var bool
+     *
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
@@ -222,7 +230,7 @@ abstract class Media extends AbstractEntity
     /**
      * Set createdAt
      *
-     * @param datetime $createdAt
+     * @param \DateTime $createdAt
      */
     public function setCreatedAt($createdAt)
     {
@@ -232,7 +240,7 @@ abstract class Media extends AbstractEntity
     /**
      * Get createdAt
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -242,7 +250,7 @@ abstract class Media extends AbstractEntity
     /**
      * Set updatedAt
      *
-     * @param datetime $updatedAt
+     * @param \DateTime $updatedAt
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -252,7 +260,7 @@ abstract class Media extends AbstractEntity
     /**
      * Get updatedAt
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -283,17 +291,17 @@ abstract class Media extends AbstractEntity
     /**
      * Set gallery
      *
-     * @param Kunstmaan\MediaBundle\Entity\Gallery $gallery
+     * @param Folder $folder
      */
-    public function setGallery(Folder $gallery)
+    public function setGallery(Folder $folder)
     {
-        $this->gallery = $gallery;
+        $this->gallery = $folder;
     }
 
     /**
      * Get gallery
      *
-     * @return Kunstmaan\MediaBundle\Entity\Folder
+     * @return Folder
      */
     public function getGallery()
     {

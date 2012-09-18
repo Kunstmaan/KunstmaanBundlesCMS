@@ -11,7 +11,9 @@ class DefaultPathGenerator implements PathGeneratorInterface
 {
 
     /**
-     * {@inheritdoc}
+     * @param Media $media
+     *
+     * @return string
      */
     public function generatePath(Media $media)
     {

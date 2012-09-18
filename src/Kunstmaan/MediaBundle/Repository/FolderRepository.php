@@ -13,38 +13,38 @@ use Doctrine\ORM\EntityNotFoundException;
 class FolderRepository extends EntityRepository
 {
     /**
-     * @param Folder $gallery The gallery
+     * @param Folder $folder The gallery
      */
-    public function save(Folder $gallery)
+    public function save(Folder $folder)
     {
         $em = $this->getEntityManager();
 
-        $em->persist($gallery);
+        $em->persist($folder);
         $em->flush();
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Folder $gallery
+     * @param Folder $folder
      */
-    public function delete(Folder $gallery)
+    public function delete(Folder $folder)
     {
         $em = $this->getEntityManager();
 
-        $this->deleteFiles($gallery, $em);
-        $this->deleteChildren($gallery, $em);
-        $gallery->setDeleted(true);
-        $em->persist($gallery);
+        $this->deleteFiles($folder, $em);
+        $this->deleteChildren($folder, $em);
+        $folder->setDeleted(true);
+        $em->persist($folder);
         $em->flush();
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Folder $gallery
+     * @param Folder $folder
      */
-    public function deleteFiles(Folder $gallery)
+    public function deleteFiles(Folder $folder)
     {
         $em = $this->getEntityManager();
 
-        foreach ($gallery->getFiles() as $item) {
+        foreach ($folder->getFiles() as $item) {
             $item->setDeleted(true);
             $em->persist($item);
             $em->remove($item);
@@ -52,13 +52,13 @@ class FolderRepository extends EntityRepository
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Folder $gallery
+     * @param Folder $folder
      */
-    public function deleteChildren(Folder $gallery)
+    public function deleteChildren(Folder $folder)
     {
         $em = $this->getEntityManager();
 
-        foreach ($gallery->getChildren() as $child) {
+        foreach ($folder->getChildren() as $child) {
             $this->deleteFiles($child, $em);
             $this->deleteChildren($child, $em);
             $child->setDeleted(true);
@@ -108,6 +108,8 @@ class FolderRepository extends EntityRepository
      */
     public function getFolder($folderId)
     {
+        $em = $this->getEntityManager();
+
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->find($folderId);
         if (!$folder) {
             throw new EntityNotFoundException('The id given for the folder is not valid.');
