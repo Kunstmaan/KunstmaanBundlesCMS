@@ -8,13 +8,22 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Collections\Collection;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * IdToMediaTransformer
  */
 class IdToMediaTransformer implements DataTransformerInterface
 {
+    /**
+     * @var ObjectManager
+     */
     private $objectManager;
+
+    /**
+     *
+     * @var CurrentValueContainer
+     */
     private $currentValueContainer;
 
     /**
@@ -28,7 +37,12 @@ class IdToMediaTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param Media $entity The value in the original representation
+     *
+     * @return mixed The value in the transformed representation
+     *
+     * @throws UnexpectedTypeException when the argument is not an object
+     * @throws \InvalidArgumentException when the parameter is a collection
      */
     public function transform($entity)
     {
@@ -52,7 +66,12 @@ class IdToMediaTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $key
+     *
+     * @return Media
+     *
+     * @throws UnexpectedTypeException when the parameter is not numeric
+     * @throws TransformationFailedException when the media item cannot be loaded/found
      */
     public function reverseTransform($key)
     {

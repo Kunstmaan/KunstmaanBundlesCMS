@@ -5,25 +5,27 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\VideoPagePartAdminType;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * VideoPagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="pagepart_video")
+ * @ORM\Table(name="kuma_media_video_page_parts")
  */
 class VideoPagePart extends AbstractPagePart
 {
 
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
     public $media;
 
     /**
      * Get media
      *
-     * @return Kunstmaan\MediaBundle\Entity\Media
+     * @return Media
      */
     public function getMedia()
     {
@@ -33,7 +35,7 @@ class VideoPagePart extends AbstractPagePart
     /**
      * Set media
      *
-     * @param Kunstmaan\MediaBundle\Entity\Media $media
+     * @param Media $media
      */
     public function setMedia($media)
     {
@@ -41,7 +43,7 @@ class VideoPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function __toString()
     {
@@ -53,7 +55,7 @@ class VideoPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDefaultView()
     {
@@ -61,7 +63,7 @@ class VideoPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getElasticaView()
     {
@@ -69,7 +71,7 @@ class VideoPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return VideoPagePartAdminType
      */
     public function getDefaultAdminType()
     {

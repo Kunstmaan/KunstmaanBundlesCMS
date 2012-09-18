@@ -5,25 +5,27 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * SlidePagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="pagepart_slide")
+ * @ORM\Table(name="kuma_media_slide_page_parts")
  */
 class SlidePagePart extends AbstractPagePart
 {
 
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
     public $media;
 
     /**
      * Get media
      *
-     * @return Kunstmaan\MediaBundle\Entity\Media
+     * @return Media
      */
     public function getMedia()
     {
@@ -33,7 +35,7 @@ class SlidePagePart extends AbstractPagePart
     /**
      * Set media
      *
-     * @param Kunstmaan\MediaBundle\Entity\Media $media
+     * @param Media $media
      */
     public function setMedia($media)
     {
@@ -41,7 +43,19 @@ class SlidePagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
+     */
+    public function __toString()
+    {
+        if ($this->getMedia()) {
+            return $this->getMedia()->getUrl();
+        }
+
+        return "";
+    }
+
+    /**
+     * @return string
      */
     public function getDefaultView()
     {
@@ -49,7 +63,7 @@ class SlidePagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getElasticaView()
     {
@@ -57,7 +71,7 @@ class SlidePagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return SlidePagePartAdminType
      */
     public function getDefaultAdminType()
     {

@@ -5,12 +5,13 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * ImagePagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="pagepart_image")
+ * @ORM\Table(name="kuma_media_image_page_parts")
  */
 class ImagePagePart extends AbstractPagePart
 {
@@ -21,17 +22,18 @@ class ImagePagePart extends AbstractPagePart
     protected $link;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true, name="open_in_new_window")
      */
-    protected $openinnewwindow;
+    protected $openInNewWindow;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, name="alt_text")
      */
-    protected $alttext;
+    protected $altText;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
     public $media;
 
@@ -42,7 +44,7 @@ class ImagePagePart extends AbstractPagePart
      */
     public function getOpenInNewWindow()
     {
-        return $this->openinnewwindow;
+        return $this->openInNewWindow;
     }
 
     /**
@@ -52,7 +54,7 @@ class ImagePagePart extends AbstractPagePart
      */
     public function setOpenInNewWindow($link)
     {
-        $this->openinnewwindow = $link;
+        $this->openInNewWindow = $link;
     }
 
     /**
@@ -78,17 +80,17 @@ class ImagePagePart extends AbstractPagePart
     /**
      * Set alt text
      *
-     * @param string $alttext
+     * @param string $altText
      */
-    public function setAlttext($alttext)
+    public function setAlttext($altText)
     {
-        $this->alttext = $alttext;
+        $this->altText = $altText;
     }
 
     /**
      * Get media
      *
-     * @return Kunstmaan\MediaBundle\Entity\Media
+     * @return Media
      */
     public function getMedia()
     {
@@ -98,7 +100,7 @@ class ImagePagePart extends AbstractPagePart
     /**
      * Set media
      *
-     * @param Kunstmaan\MediaBundle\Entity\Media $media
+     * @param Media $media
      */
     public function setMedia($media)
     {
@@ -112,11 +114,11 @@ class ImagePagePart extends AbstractPagePart
      */
     public function getAlttext()
     {
-        return $this->alttext;
+        return $this->altText;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function __toString()
     {
@@ -128,7 +130,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDefaultView()
     {
@@ -136,7 +138,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getElasticaView()
     {
@@ -144,7 +146,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return ImagePagePartAdminType
      */
     public function getDefaultAdminType()
     {

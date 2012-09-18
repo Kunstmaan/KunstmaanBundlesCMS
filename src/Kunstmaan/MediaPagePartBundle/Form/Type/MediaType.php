@@ -8,11 +8,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
 
+use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * MediaType
  */
 class MediaType extends AbstractType
 {
+
+    /**
+     * @var ObjectManager
+     */
     protected $objectManager;
 
     /**

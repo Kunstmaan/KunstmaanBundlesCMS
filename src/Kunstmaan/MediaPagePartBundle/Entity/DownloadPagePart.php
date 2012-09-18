@@ -6,25 +6,27 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * DownloadPagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="pagepart_download")
+ * @ORM\Table(name="kuma_media_download_page_parts")
  */
 class DownloadPagePart extends AbstractPagePart
 {
 
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
     public $media;
 
     /**
      * Get media
      *
-     * @return Kunstmaan\MediaBundle\Entity\Media
+     * @return Media
      */
     public function getMedia()
     {
@@ -34,7 +36,7 @@ class DownloadPagePart extends AbstractPagePart
     /**
      * Set media
      *
-     * @param Kunstmaan\MediaBundle\Entity\Media $media
+     * @param Media $media
      */
     public function setMedia($media)
     {
@@ -42,7 +44,7 @@ class DownloadPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function __toString()
     {
@@ -54,7 +56,7 @@ class DownloadPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDefaultView()
     {
@@ -62,7 +64,7 @@ class DownloadPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getElasticaView()
     {
@@ -70,7 +72,7 @@ class DownloadPagePart extends AbstractPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @return DownloadPagePartAdminType
      */
     public function getDefaultAdminType()
     {
