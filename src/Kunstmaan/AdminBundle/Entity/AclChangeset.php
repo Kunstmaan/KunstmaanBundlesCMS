@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -133,7 +134,7 @@ class AclChangeset extends AbstractEntity
     /**
      * @param int $refId
      */
-    public function setRefId($refId)
+    protected function setRefId($refId)
     {
         $this->refId = $refId;
     }
@@ -149,7 +150,7 @@ class AclChangeset extends AbstractEntity
     /**
      * @param string $refEntityName
      */
-    public function setRefEntityName($refEntityName)
+    protected function setRefEntityName($refEntityName)
     {
         $this->refEntityName = $refEntityName;
     }
@@ -160,6 +161,17 @@ class AclChangeset extends AbstractEntity
     public function getRefEntityName()
     {
         return $this->refEntityName;
+    }
+
+    /**
+     * Set reference entity
+     *
+     * @param AbstractEntity $entity
+     */
+    public function setRef(AbstractEntity $entity)
+    {
+        $this->setRefId($entity->getId());
+        $this->setRefEntityName(ClassLookup::getClass($entity));
     }
 
     /**

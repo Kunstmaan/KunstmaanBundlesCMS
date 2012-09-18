@@ -167,8 +167,7 @@ class PermissionAdmin
     public function createAclChangeSet(AbstractEntity $entity, $changes, UserInterface $user)
     {
         $aclChangeset = new AclChangeset();
-        $aclChangeset->setRefId($entity->getId());
-        $aclChangeset->setRefEntityName(ClassLookup::getClass($entity));
+        $aclChangeset->setRef($entity);
         $aclChangeset->setChangeset($changes);
         $aclChangeset->setUser($user);
         $this->em->persist($aclChangeset);
