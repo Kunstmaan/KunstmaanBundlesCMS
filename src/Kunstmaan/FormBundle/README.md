@@ -12,28 +12,20 @@ View screenshots and more on our [github page](http://kunstmaan.github.com/Kunst
 
 Installation requirements
 -------------------------
-You should be able to get Symfony 2 up and running before you can install the KunstmaanFormBundle.
+You should be able to get Symfony 2.1 up and running before you can install the KunstmaanFormBundle.
 
 Installation instructions
 -------------------------
-Installation is straightforward, add the following lines to your deps file:
+Assuming you have installed composer.phar or composer binary:
 
-```
-[KunstmaanFormBundle]
-    git=https://github.com/Kunstmaan/KunstmaanFormBundle.git
-    target=/bundles/Kunstmaan/FormBundle
-```
-
-Register the Kunstmaan namespace in your autoload.php file:
-
-```
-'Kunstmaan'        => __DIR__.'/../vendor/bundles'
+``` bash
+$ composer require kunstmaan/form-bundle
 ```
 
 Add the KunstmaanFormBundle to your AppKernel.php file:
 
 ```
-new Kunstmaan\FormBundle\KunstmaanFormBundle(),
+new Kunstmaan\AdminBundle\KunstmaanFormBundle(),
 ```
 
 Contact
