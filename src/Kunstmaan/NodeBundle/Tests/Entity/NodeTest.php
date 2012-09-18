@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminNodeBundle\Tests\Entity;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -230,16 +229,4 @@ class NodeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('node 1, refEntityName: Kunstmaan\AdminNodeBundle\Tests\Entity\TestEntity', $this->object->__toString());
     }
-}
-
-class TestEntity extends AbstractEntity
-{
-    /**
-     * @param int $id
-     */
-    public function __construct($id = 0)
-    {
-        $this->setId($id);
-    }
-
 }

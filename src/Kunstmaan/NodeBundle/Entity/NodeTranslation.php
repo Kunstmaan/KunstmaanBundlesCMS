@@ -5,7 +5,6 @@ namespace Kunstmaan\AdminNodeBundle\Entity;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
-use Kunstmaan\SearchBundle\Entity\IndexableInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;

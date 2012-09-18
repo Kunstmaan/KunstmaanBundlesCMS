@@ -3,12 +3,12 @@
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 
 /**
  * NodeVersion
@@ -20,6 +20,9 @@ use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
  */
 class NodeVersion extends AbstractEntity
 {
+
+    const DRAFT_VERSION     = 'draft';
+    const PUBLIC_VERSION    = 'public';
 
     /**
      * @ORM\ManyToOne(targetEntity="NodeTranslation")
@@ -240,7 +243,7 @@ class NodeVersion extends AbstractEntity
      *
      * @return NodeVersion
      */
-    public function setRefId($refId)
+    protected function setRefId($refId)
     {
         $this->refId = $refId;
 
@@ -248,13 +251,13 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Set refEntityname
+     * Set reference entity name
      *
      * @param string $refEntityName
      *
      * @return NodeVersion
      */
-    public function setRefEntityName($refEntityName)
+    protected function setRefEntityName($refEntityName)
     {
         $this->refEntityName = $refEntityName;
 
@@ -262,7 +265,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Get refEntityname
+     * Get reference entity name
      *
      * @return string
      */
@@ -272,11 +275,20 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * @return NodeAdminType
+     * @return null
      */
     public function getDefaultAdminType()
     {
         return null;
+    }
+
+    /**
+     * @param AbstractEntity $entity
+     */
+    public function setRef(AbstractEntity $entity)
+    {
+        $this->setRefId($entity->getId());
+        $this->setRefEntityName(ClassLookup::getClass($entity));
     }
 
     /**
