@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -91,10 +92,14 @@ class Node extends AbstractEntity
 
     /**
      * @param bool $hiddenFromNav
+     *
+     * @return Node
      */
     public function setHiddenFromNav($hiddenFromNav)
     {
         $this->hiddenFromNav = $hiddenFromNav;
+
+        return $this;
     }
 
     /**
@@ -115,21 +120,29 @@ class Node extends AbstractEntity
 
     /**
      * @param ArrayCollection $children
+     *
+     * @return Node
      */
     public function setChildren($children)
     {
         $this->children = $children;
+
+        return $this;
     }
 
     /**
      * Add children
      *
      * @param Node $child
+     *
+     * @return Node
      */
     public function addNode(Node $child)
     {
         $this->children[] = $child;
         $child->setParent($this);
+
+        return $this;
     }
 
     public function disableChildrenLazyLoading()
@@ -160,10 +173,14 @@ class Node extends AbstractEntity
 
     /**
      * @param ArrayCollection $nodeTranslations
+     *
+     * @return Node
      */
     public function setNodeTranslations($nodeTranslations)
     {
         $this->nodeTranslations = $nodeTranslations;
+
+        return $this;
     }
 
     /**
@@ -189,12 +206,16 @@ class Node extends AbstractEntity
      *
      * @param NodeTranslation $nodeTranslation
      *
+     * @return Node
+     *
      * @todo Shouldn't we add a check to prevent adding duplicates here?
      */
     public function addNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $this->nodeTranslations[] = $nodeTranslation;
         $nodeTranslation->setNode($this);
+
+        return $this;
     }
 
     public function disableNodeTranslationsLazyLoading()
@@ -208,10 +229,14 @@ class Node extends AbstractEntity
      * Set parent
      *
      * @param Node $parent
+     *
+     * @return Node
      */
     public function setParent($parent)
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     /**
@@ -241,10 +266,14 @@ class Node extends AbstractEntity
 
     /**
      * @param int $sequenceNumber
+     *
+     * @return Node
      */
     public function setSequenceNumber($sequenceNumber)
     {
         $this->sequenceNumber = $sequenceNumber;
+
+        return $this;
     }
 
     /**
@@ -265,10 +294,28 @@ class Node extends AbstractEntity
 
     /**
      * @param bool $deleted
+     *
+     * @return Node
      */
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Set referenced entity
+     *
+     * @param AbstractEntity $entity
+     *
+     * @return Node
+     */
+    public function setRef(AbstractEntity $entity)
+    {
+        $this->setRefEntityName(ClassLookup::getClass($entity));
+
+        return $this;
     }
 
     /**
@@ -276,7 +323,7 @@ class Node extends AbstractEntity
      *
      * @param string $refEntityName
      */
-    public function setRefEntityName($refEntityName)
+    protected function setRefEntityName($refEntityName)
     {
         $this->refEntityName = $refEntityName;
     }
@@ -295,10 +342,14 @@ class Node extends AbstractEntity
      * Set internal name
      *
      * @param string $internalName
+     *
+     * @return Node
      */
     public function setInternalName($internalName)
     {
         $this->internalName = $internalName;
+
+        return $this;
     }
 
     /**
