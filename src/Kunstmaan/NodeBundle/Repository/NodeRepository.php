@@ -104,13 +104,11 @@ class NodeRepository extends EntityRepository
     public function createNodeFor(HasNodeInterface $hasNode, $lang, Baseuser $owner, $internalName = null)
     {
         $em = $this->getEntityManager();
-        $className = ClassLookup::getClass($hasNode);
-        if (!$hasNode->getId() > 0) {
-            throw new \InvalidArgumentException("the entity of class " . $className . " has no id, maybe you forgot to flush first");
-        }
-
         $node = new Node();
-        $node->setRefEntityname($className);
+        $node->setRef($hasNode);
+        if (!$hasNode->getId() > 0) {
+            throw new \InvalidArgumentException("the entity of class " . $node->getRefEntityName() . " has no id, maybe you forgot to flush first");
+        }
         $node->setDeleted(false);
         $node->setInternalName($internalName);
         $parent = $hasNode->getParent();
