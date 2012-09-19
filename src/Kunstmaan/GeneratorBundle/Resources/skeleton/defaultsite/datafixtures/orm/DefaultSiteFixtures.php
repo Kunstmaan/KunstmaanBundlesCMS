@@ -37,7 +37,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
     private function initPermissions($manager, Node $node)
     {
-        $superadminGroup = $this->getReference('superadmin-group');
+        $superadminGroup = $this->getReference('admins-group');
         $adminGroup = $manager
             ->getRepository('KunstmaanAdminBundle:Group')
             ->findOneBy(array('name' => 'Administrators'));
