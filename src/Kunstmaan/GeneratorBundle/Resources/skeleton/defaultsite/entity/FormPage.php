@@ -2,32 +2,28 @@
 
 namespace {{ namespace }}\Entity;
 
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
-use Symfony\Component\HttpFoundation\Request;
-
-use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
-use Kunstmaan\FormBundle\Entity\FormSubmission;
-
-use {{ namespace }}\PagePartAdmin\FormPagePagePartAdminConfigurator;
-
-use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
-
-use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
-
-use Kunstmaan\AdminNodeBundle\Entity\HasNode;
-
-use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\AdminBundle\Entity\DeepCloneableIFace;
-
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
-use {{ namespace }}\Form\ContentPageAdminType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Kunstmaan\AdminBundle\Entity\DeepCloneableIFace;
 use Kunstmaan\AdminBundle\Entity\PageIFace;
-use Kunstmaan\SearchBundle\Entity\Indexable;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\AdminNodeBundle\Entity\HasNode;
+use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
+use Kunstmaan\FormBundle\Entity\FormSubmission;
+use Kunstmaan\SearchBundle\Entity\Indexable;
+
+use {{ namespace }}\Form\ContentPageAdminType;
+use {{ namespace }}\PagePartAdmin\FormPagePagePartAdminConfigurator;
+use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
+use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
 
 /**
  * FormPage
@@ -123,7 +119,7 @@ class FormPage extends AbstractPage
         return array(new FormPagePagePartAdminConfigurator(), new BannerPagePartAdminConfigurator());
     }
 
-    public function service($container, Request $request, &$result)
+    public function service(ContainerInterface $container, Request $request, &$result)
     {
         $formbuilder = $container
             ->get('form.factory')
