@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
-        "kunstmaan/admin-bundle": "dev-master"
+        "kunstmaan/admin-bundle": "dev-code_cleanup"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminListBundle": "" }
