@@ -2,14 +2,17 @@
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Gedmo\Sluggable\Util\Urlizer;
+
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This class represents a file form submission field
@@ -30,6 +33,7 @@ class FileFormSubmissionField extends FormSubmissionField
     /**
      * non-persistent storage of upload file
      * @Assert\File(maxSize="6000000")
+     * @var $file UploadedFile
      */
     public $file;
 
@@ -73,24 +77,23 @@ class FileFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * @param Form               $form        the Form
-     * @param FormBuilder        $formBuilder the FormBuilder
-     * @param Request            $request     the Request
-     * @param ContainerInterface $container   the Container
+     * @param Form                 $form        the Form
+     * @param FormBuilderInterface $formBuilder the FormBuilder
+     * @param Request              $request     the Request
+     * @param ContainerInterface   $container   the Container
      */
-    public function onValidPost(Form $form, FormBuilder $formBuilder, Request $request, ContainerInterface $container)
+    public function onValidPost(Form $form, FormBuilderInterface $formBuilder, Request $request, ContainerInterface $container)
     {
-        // do nothing by default
-	$uploadDir = $container->getParameter('form_submission_rootdir');
+        $uploadDir = $container->getParameter('form_submission_rootdir');
         $this->upload($uploadDir);
     }
 
     /**
-     * @param File $file
+     * @param UploadedFile $file
      *
      * @return string
      */
-    public function getSafeFileName(File $file)
+    public function getSafeFileName(UploadedFile $file)
     {
         $fileExtension = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
         $mimeTypeExtension = $file->guessExtension();

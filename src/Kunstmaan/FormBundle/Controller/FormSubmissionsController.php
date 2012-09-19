@@ -34,7 +34,7 @@ class FormSubmissionsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-	/* @var $adminList AdminList */
+        /* @var $adminList AdminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList(new FormPageAdminListConfigurator(PermissionMap::PERMISSION_VIEW), $em);
         $adminList->setAclHelper($aclHelper);
         $adminList->bindRequest($request);
@@ -59,7 +59,7 @@ class FormSubmissionsController extends Controller
         $request = $this->getRequest();
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodeTranslationId);
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-	/* @var $adminList AdminList */
+        /* @var $adminList AdminList */
         $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($nodeTranslation), $em);
         $adminList->setAclHelper($aclHelper);
         $adminList->bindRequest($request);
@@ -101,27 +101,27 @@ class FormSubmissionsController extends Controller
     public function exportAction($nodeTranslationId)
     {
         $em = $this->getDoctrine()->getManager();
-	/* @var $nodeTranslation NodeTranslation */
+        /* @var $nodeTranslation NodeTranslation */
         $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodeTranslationId);
 
         $tmpFilename = tempnam('/tmp', 'cb_csv_');
         $file = new \SplFileObject($tmpFilename);
         $writer = new CsvWriter($file);
 
-	/* @var $qb QueryBuilder */
-	$qb = $em->createQueryBuilder();
-	$qb->select('fs')
-	   ->from('KunstmaanFormBundle:FormSubmission', 'fs')
-	   ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
-	   ->andWhere('n.id = :node')
-	   ->setParameter('node', $nodeTranslation->getNode()->getId())
-	   ->addOrderBy('fs.created', 'DESC');
+        /* @var $qb QueryBuilder */
+        $qb = $em->createQueryBuilder();
+        $qb->select('fs')
+           ->from('KunstmaanFormBundle:FormSubmission', 'fs')
+           ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
+           ->andWhere('n.id = :node')
+           ->setParameter('node', $nodeTranslation->getNode()->getId())
+           ->addOrderBy('fs.created', 'DESC');
         $iterableResult = $qb->getQuery()->iterate();
         $isHeaderWritten = false;
         $translator = $this->get('translator');
 
         foreach ($iterableResult as $row) {
-	    /* @var $submission FormSubmission */
+            /* @var $submission FormSubmission */
             $submission = $row[0];
 
             // Write header info
@@ -137,7 +137,7 @@ class FormSubmissionsController extends Controller
             // Write row data
             $data = array($submission->getId(), $submission->getCreated()->format('d/m/Y H:i:s'), $submission->getLang());
             foreach ($submission->getFields() as $field) {
-		$data[] = mb_convert_encoding($field->__toString(), 'ISO-8859-1', 'UTF-8');
+            $data[] = mb_convert_encoding($field->__toString(), 'ISO-8859-1', 'UTF-8');
             }
             $writer->writeItem($data);
             $em->detach($submission);

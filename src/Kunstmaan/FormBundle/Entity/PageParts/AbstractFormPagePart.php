@@ -1,11 +1,11 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

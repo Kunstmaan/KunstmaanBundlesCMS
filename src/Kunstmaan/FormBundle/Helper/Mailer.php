@@ -42,15 +42,15 @@ class Mailer
     public function sendContactMail(FormSubmission $submission, $from, $to, $subject)
     {
         $toArr = explode("\r\n", $to);
-	/* @var $message Swift_Mime_Message */
-	$message = Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);
+        /* @var $message Swift_Mime_Message */
+        $message = Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);
         $message->setBody(
-	    $this->templating->render(
-		'KunstmaanFormBundle:Mailer:mail.html.twig', array(
-		    'submission' => $submission,
-		    'host' => $this->container->get('request')->getScheme().'://'.$this->container->get('request')->getHttpHost()
-		)
-	    ), 'text/html');
+            $this->templating->render(
+                'KunstmaanFormBundle:Mailer:mail.html.twig', array(
+                    'submission' => $submission,
+                    'host' => $this->container->get('request')->getScheme().'://'.$this->container->get('request')->getHttpHost()
+                )
+            ), 'text/html');
         $this->mailer->send($message);
     }
 }

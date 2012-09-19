@@ -113,7 +113,7 @@ abstract class AbstractFormPage extends AbstractPage
      * @param Request            $request   The Request
      * @param array              &$result   The Result array
      *
-     * @return RedirectResponse|null
+     * @return null|RedirectResponse|void
      */
     public function service(ContainerInterface $container, Request $request, &$result)
     {

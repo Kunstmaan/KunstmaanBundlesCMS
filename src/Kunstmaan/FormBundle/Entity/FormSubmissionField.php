@@ -5,7 +5,7 @@ namespace Kunstmaan\FormBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
 
 /**
@@ -108,7 +108,7 @@ class FormSubmissionField
     }
 
     /**
-     * @param string $formSubmission
+     * @param FormSubmission $formSubmission
      */
     public function setSubmission(FormSubmission $formSubmission)
     {
@@ -124,12 +124,12 @@ class FormSubmissionField
     }
 
     /**
-     * @param Form               $form        the Form
-     * @param FormBuilder        $formBuilder the FormBuilder
-     * @param Request            $request     the Request
-     * @param ContainerInterface $container   the Container
+     * @param Form                 $form        the Form
+     * @param FormBuilderInterface $formBuilder the FormBuilder
+     * @param Request              $request     the Request
+     * @param ContainerInterface   $container   the Container
      */
-    public function onValidPost(Form $form, FormBuilder $formBuilder, Request $request, ContainerInterface $container)
+    public function onValidPost(Form $form, FormBuilderInterface $formBuilder, Request $request, ContainerInterface $container)
     {
         // do nothing by default
     }
