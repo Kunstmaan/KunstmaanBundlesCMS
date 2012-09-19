@@ -29,7 +29,7 @@ class GenerateDefaultSiteCommand extends GenerateDoctrineCommand
     protected function configure()
     {
         $this
-            ->setDefinition(array(new InputOption('namespance', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the default website in'),))
+            ->setDefinition(array(new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the default website in'),))
             ->setDescription('Generates a basic website based on Kunstmaan bundles with default templates')
             ->setHelp(<<<EOT
 The <info>kuma:generate:site</info> command generates an website using the Kunstmaan bundles
