@@ -16,10 +16,10 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
-        "kunstmaan/adminlist-bundle": "dev-master",
-        "kunstmaan/adminnode-bundle": "dev-master",
-        "kunstmaan/admin-bundle": "dev-master",
-        "kunstmaan/pagepart-bundle": "dev-master",
+        "kunstmaan/adminlist-bundle": "*",
+        "kunstmaan/adminnode-bundle": "*",
+        "kunstmaan/admin-bundle": "*",
+        "kunstmaan/pagepart-bundle": "*",
         "ddeboer/data-import-bundle": "*",
         "gedmo/doctrine-extensions": "*",
         "gregwar/form-bundle": "dev-master"
