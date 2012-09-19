@@ -8,9 +8,12 @@ use {{ namespace }}\Entity\HomePage;
 use {{ namespace }}\Entity\ContentPage;
 use {{ namespace }}\Entity\FormPage;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminBundle\Entity\Permission;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 
 class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -37,39 +40,29 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
     private function initPermissions($manager, Node $node)
     {
-        $superadminGroup = $this->getReference('admins-group');
-        $adminGroup = $manager
-            ->getRepository('KunstmaanAdminBundle:Group')
-            ->findOneBy(array('name' => 'Administrators'));
-        $guestGroup = $manager
-            ->getRepository('KunstmaanAdminBundle:Group')
-            ->findOneBy(array('name' => 'Guests'));
+        $aclProvider = $this->container->get('security.acl.provider');
+        $oidStrategy = $this->container->get('security.acl.object_identity_retrieval_strategy');
+        $objectIdentity = $oidStrategy->getObjectIdentity($node);
+        try {
+            $acl = $aclProvider->findAcl($objectIdentity);
+            $aclProvider->deleteAcl($objectIdentity);
+        } catch (AclNotFoundException $e) {
+            // Do nothing
+        }
+        $acl = $aclProvider->createAcl($objectIdentity);
 
-        //Page 1
-        //----------------------------------
-        $page1Permission1 = new Permission();
-        $page1Permission1->setRefId($node->getId());
-        $page1Permission1->setRefEntityname(ClassLookup::getClass($node));
-        $page1Permission1->setRefGroup($superadminGroup);
-        $page1Permission1->setPermissions('|read:1|write:1|delete:1|');
-        $manager->persist($page1Permission1);
-        $manager->flush();
+        $securityIdentity = new RoleSecurityIdentity('ROLE_GUEST');
+        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_VIEW);
 
-        $page1Permission2 = new Permission();
-        $page1Permission2->setRefId($node->getId());
-        $page1Permission2->setRefEntityname(ClassLookup::getClass($node));
-        $page1Permission2->setRefGroup($adminGroup);
-        $page1Permission2->setPermissions('|read:1|write:1|delete:1|');
-        $manager->persist($page1Permission2);
-        $manager->flush();
+        $securityIdentity = new RoleSecurityIdentity('ROLE_ADMIN');
+        $acl->insertObjectAce(
+            $securityIdentity,
+            MaskBuilder::MASK_VIEW | MaskBuilder::MASK_EDIT | MaskBuilder::MASK_PUBLISH | MaskBuilder::MASK_UNPUBLISH
+        );
 
-        $page1Permission3 = new Permission();
-        $page1Permission3->setRefId($node->getId());
-        $page1Permission3->setRefEntityname(ClassLookup::getClass($node));
-        $page1Permission3->setRefGroup($guestGroup);
-        $page1Permission3->setPermissions('|read:1|write:0|delete:0|');
-        $manager->persist($page1Permission3);
-        $manager->flush();
+        $securityIdentity = new RoleSecurityIdentity('ROLE_SUPER_ADMIN');
+        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_IDDQD);
+        $aclProvider->updateAcl($acl);
     }
 
     private function createHomePage($manager, $title)
