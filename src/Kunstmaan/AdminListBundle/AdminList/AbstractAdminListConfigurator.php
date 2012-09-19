@@ -2,6 +2,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\Form\AbstractType;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 
 abstract class AbstractAdminListConfigurator
@@ -22,16 +23,40 @@ abstract class AbstractAdminListConfigurator
     /* @var PermissionDefinition $permissionDefinition */
     private $permissionDefinition = null;
 
+    /**
+     * Build the fields
+     */
     abstract public function buildFields();
 
-    abstract public function getEditUrlFor($item);
+    /**
+     * @param AbstractEntity $item
+     *
+     * @return array
+     */
+    abstract public function getEditUrlFor(AbstractEntity $item);
 
-    abstract public function getAddUrlFor($params = array());
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    abstract public function getAddUrlFor(array $params = array());
 
-    abstract public function getDeleteUrlFor($item);
+    /**
+     * @param AbstractEntity $item
+     *
+     * @return array
+     */
+    abstract public function getDeleteUrlFor(AbstractEntity $item);
 
+    /**
+     * @return array
+     */
     abstract public function getIndexUrlFor();
 
+    /**
+     * @return string
+     */
     abstract public function getRepositoryName();
 
     /**
@@ -120,11 +145,11 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param AbstractEntity $item
      *
      * @return bool
      */
-    public function canDelete($item)
+    public function canDelete(AbstractEntity $item)
     {
         return true;
     }
@@ -210,7 +235,7 @@ abstract class AbstractAdminListConfigurator
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param array                      $params
      */
-    public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $queryBuilder, $params = array())
+    public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $queryBuilder, array $params = array())
     {
         $queryBuilder->where('1=1');
     }
