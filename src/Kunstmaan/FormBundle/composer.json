@@ -24,7 +24,7 @@
         "gedmo/doctrine-extensions": "*",
         "gregwar/form-bundle": "dev-master",
         "swiftmailer/swiftmailer": "dev-master",
-        "sensio/framework-extra-bundle": "2.1.*"
+        "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\FormBundle": "" }
