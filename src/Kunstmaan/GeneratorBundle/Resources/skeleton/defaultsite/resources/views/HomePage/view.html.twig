@@ -1,5 +1,4 @@
-{{ "
-{% extends '" ~ bundle.getName() ~ ":Page:layout.html.twig' %}
+{% extends ':Page:layout.html.twig' %}
 {% block title page.title %}
 {% block intro %}
 	<div class='welcome'>
@@ -11,5 +10,3 @@
 		{% include pagepart.defaultview with {'resource': pagepart} %}
 	{% endfor %}
 {% endblock %}
-
-" }}

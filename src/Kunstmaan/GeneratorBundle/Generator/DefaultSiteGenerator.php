@@ -44,15 +44,20 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/resources/views';
 
-        $this->renderFile($fullSkeletonDir, 'ContentPage/view.html.twig', $dirPath . '/Resources/views/ContentPage/view.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, 'Elastica/ContentPage.elastica.twig', $dirPath . '/Resources/views/Elastica/ContentPage.elastica.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, 'Elastica/FormPage.elastica.twig', $dirPath . '/Resources/views/Elastica/FormPage.elastica.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, 'Elastica/HomePage.elastica.twig', $dirPath . '/Resources/views/Elastica/HomePage.elastica.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, 'Form/fields.html.twig', $dirPath . '/Resources/views/Form/fields.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, 'FormPage/view.html.twig', $dirPath . '/Resources/views/FormPage/view.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, 'HomePage/view.html.twig', $dirPath . '/Resources/views/HomePage/view.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, 'Page/layout.html.twig', $dirPath . '/Resources/views/Page/layout.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, 'layout.html.twig', $dirPath . '/Resources/views/layout.html.twig', $parameters);
+        $this->filesystem->copy($fullSkeletonDir, 'ContentPage/view.html.twig', $dirPath . '/Resources/views/ContentPage/view.html.twig');
+        $this->filesystem->copy($fullSkeletonDir, 'Default/index.html.twig', $dirPath . '/Resources/views/ContentPage/index.html.twig');
+        $this->filesystem->copy($fullSkeletonDir, 'Elastica/ContentPage.elastica.twig', $dirPath . '/Resources/views/Elastica/ContentPage.elastica.twig');
+        $this->filesystem->copy($fullSkeletonDir, 'Elastica/FormPage.elastica.twig', $dirPath . '/Resources/views/Elastica/FormPage.elastica.twig');
+        $this->filesystem->copy($fullSkeletonDir, 'Elastica/HomePage.elastica.twig', $dirPath . '/Resources/views/Elastica/HomePage.elastica.twig');
+        $this->filesystem->copy($fullSkeletonDir, 'Form/fields.html.twig', $dirPath . '/Resources/views/Form/fields.html.twig');
+        $this->filesystem->copy($fullSkeletonDir, 'FormPage/view.html.twig', $dirPath . '/Resources/views/FormPage/view.html.twig');
+        $this->filesystem->copy($fullSkeletonDir, 'HomePage/view.html.twig', $dirPath . '/Resources/views/HomePage/view.html.twig');
+        $this->filesystem->copy($fullSkeletonDir, 'Page/layout.html.twig', $dirPath . '/Resources/views/Page/layout.html.twig');
+
+        $this->filesystem->copy($fullSkeletonDir . 'Layout/layout.html.twig', $dirPath . '/Resources/views/Layout/layout.html.twig');
+        $this->renderFile($fullSkeletonDir, 'Layout/_css.html.twig', $dirPath . '/Resources/views/Layout/_css.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'Layout/_js_footer.html.twig', $dirPath . '/Resources/views/Layout/_js_footer.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, 'Layout/_js_header.html.twig', $dirPath . '/Resources/views/Layout/_js_header.html.twig', $parameters);
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');
     }

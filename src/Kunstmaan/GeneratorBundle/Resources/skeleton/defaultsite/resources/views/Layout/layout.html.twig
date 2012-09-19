@@ -1,4 +1,3 @@
-{{ "
 <!doctype html>
     <!--[if lt IE 7]> <html class='no-js lt-ie9 lt-ie8 lt-ie7' lang='nl' xmlns:og='http://opengraphprotocol.org/schema/' xmlns:fb='http://www.facebook.com/2008/fbml'> <![endif]-->
     <!--[if IE 7]>    <html class='no-js lt-ie9 lt-ie8' lang='nl' xmlns:og='http://opengraphprotocol.org/schema/' xmlns:fb='http://www.facebook.com/2008/fbml'> <![endif]-->
@@ -41,22 +40,17 @@
         <meta property='fb:admins' content=''/>
         <meta property='og:description' content=''/>
 
-        <!-- favicon -->
-        <link rel='icon' href='@" ~ bundle.getName() ~ "/Resources/public/favicon.ico' type='image/x-icon' />
-        <link rel='shortcut icon' href='@" ~ bundle.getName() ~ "/Resources/public/favicon.ico' type='image/x-icon' />
-        <link rel='apple-touch-icon' href='@" ~ bundle.getName() ~ "/Resources/public/apple-touch-icon.png' />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144x144.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
+        {% include '::_css.html.twig' %}
 
-        <link rel='stylesheet' href='{{ asset('@" ~ bundle.getName() ~ "/Resources/public/css/style.css') }}' type='text/css'>
-        {% javascripts
-                        '@" ~ bundle.getName() ~ "/Resources/public/js/libs/jquery-1.6.2.min.js'
-                        '@" ~ bundle.getName() ~ "/Resources/public/js/libs/*'
-                        '@" ~ bundle.getName() ~ "/Resources/public/js/*'
-                        filter='yui_js'
-                        output='frontend/js.css'
-        %}
-        <script src='{{ asset_url }}'></script>
-        {% endjavascripts %}
+        {% include '::_js_header.html.twig' %}
+
     </head>
 
     <body>
@@ -67,8 +61,53 @@
         <![endif]-->
         <header>
 
-       </header>
+            <nav>
+                <ul class="clearfix">
+                    {% for node in nodemenu.topnodes %}
+                        <li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a>
+                            <ul class="clearfix">
+                                {% for node in node.children %}
+                                    <li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a>
+                                        <ul>
+                                            {% for node in node.children %}
+                                                <li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </header>
 
+
+        {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+        {% if activeSubnode is not null %}
+            <div class="subnav">
+                <ul>
+                    {% for node in activeSubnode.children %}
+                        <li><a href="{{ path('_slug', { 'slug': node.slug }) }}" {% if(node.active) %} class="active" {% endif %}>{{ node.title }}</a>
+                            {% if(node.active) %}
+                                <ul>
+                                    {% for node in node.children %}
+                                        <li><a href="{{ path('_slug', { 'slug': node.slug }) }}" {% if(node.active) %} class="active" {% endif %} >{{ node.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <div class="breadcrumb">
+            <ul class="clearfix">
+                {% for node in nodemenu.breadCrumb %}
+                    <li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
 
         {% block intro %}
         {% endblock %}
@@ -100,13 +139,7 @@
 
         </footer>
 
-        <!-- latest jQuery -->
-        <script src='@" ~ bundle.getName() ~ "/Resources/public/js/libs/jquery-1.8.1.min.js'></script>
-
-        <!-- Optionals -->
-
-        <!-- Script -->
-        <script src='@" ~ bundle.getName() ~ "/Resources/public/js/script.js'></script>
+        {% include '::_js_footer.html.twig' %}
 
         <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
         mathiasbynens.be/notes/async-analytics-snippet -->
@@ -120,4 +153,3 @@
         </script>
     </body>
 </html>
-" }}
