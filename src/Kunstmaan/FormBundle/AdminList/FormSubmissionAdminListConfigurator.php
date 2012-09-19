@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
@@ -36,6 +37,9 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
         $builder->add('ipAddress', new StringFilter("ipAddress"), "IP Address");
     }
 
+    /**
+     * Build the fields
+     */
     public function buildFields()
     {
         $this->addField("created", "Date", true);
@@ -44,11 +48,11 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param AbstractEntity $item
      *
      * @return array
      */
-    public function getEditUrlFor($item)
+    public function getEditUrlFor(AbstractEntity $item)
     {
         return array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId()));
     }
@@ -74,17 +78,17 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @return string
      */
-    public function getAddUrlFor($params = array())
+    public function getAddUrlFor(array $params = array())
     {
         return "";
     }
 
     /**
-     * @param $item
+     * @param AbstractEntity $item
      *
      * @return bool
      */
-    public function canDelete($item)
+    public function canDelete(AbstractEntity $item)
     {
         return false;
     }
@@ -98,10 +102,10 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param array                      $params
+     * @param QueryBuilder $queryBuilder The query builder
+     * @param array        $params       The parameters
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder);
         $queryBuilder
@@ -112,11 +116,11 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param AbstractEntity $item
      *
      * @return array
      */
-    public function getDeleteUrlFor($item)
+    public function getDeleteUrlFor(AbstractEntity $item)
     {
         return array();
     }

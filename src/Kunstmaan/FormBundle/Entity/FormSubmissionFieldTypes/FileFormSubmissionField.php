@@ -81,7 +81,7 @@ class FileFormSubmissionField extends FormSubmissionField
     public function onValidPost(Form $form, FormBuilder $formBuilder, Request $request, ContainerInterface $container)
     {
         // do nothing by default
-        $uploadDir = $container->getParameter('formsubmission_rootdir');
+	$uploadDir = $container->getParameter('form_submission_rootdir');
         $this->upload($uploadDir);
     }
 

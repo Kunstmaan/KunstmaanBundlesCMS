@@ -3,9 +3,11 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Doctrine\ORM\QueryBuilder;
 
@@ -34,6 +36,9 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
         $builder->add('online', new BooleanFilter("online"), "Online");
     }
 
+    /**
+     * Build the fields
+     */
     public function buildFields()
     {
         $this->addField("title", "Title", true);
@@ -42,11 +47,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param AbstractEntity $item
      *
      * @return array
      */
-    public function getEditUrlFor($item)
+    public function getEditUrlFor(AbstractEntity $item)
     {
         return array(
             'path'   => 'KunstmaanFormBundle_formsubmissions_list',
@@ -75,17 +80,17 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @return string
      */
-    public function getAddUrlFor($params = array())
+    public function getAddUrlFor(array $params = array())
     {
         return "";
     }
 
     /**
-     * @param $item
+     * @param AbstractEntity $item
      *
      * @return bool
      */
-    public function canDelete($item)
+    public function canDelete(AbstractEntity $item)
     {
         return false;
     }
@@ -99,10 +104,10 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param QueryBuilder $querybuilder
-     * @param array        $params
+     * @param QueryBuilder $queryBuilder The query builder
+     * @param array        $params       The parameters
      */
-    public function adaptQueryBuilder($queryBuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder);
         $queryBuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
@@ -113,11 +118,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param AbstractEntity $item
      *
      * @return array
      */
-    public function getDeleteUrlFor($item)
+    public function getDeleteUrlFor(AbstractEntity $item)
     {
         return array();
     }

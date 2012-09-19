@@ -145,7 +145,7 @@ class FormSubmission
     }
 
     /**
-     * @return array;
+     * @return FormSubmissionField[];
      */
     public function getFields()
     {

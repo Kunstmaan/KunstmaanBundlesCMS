@@ -22,7 +22,8 @@
         "kunstmaan/pagepart-bundle": "*",
         "ddeboer/data-import-bundle": "*",
         "gedmo/doctrine-extensions": "*",
-        "gregwar/form-bundle": "dev-master"
+	"gregwar/form-bundle": "dev-master",
+	"swiftmailer/swiftmailer": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\FormBundle": "" }
