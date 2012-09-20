@@ -80,7 +80,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getAddUrlFor($params = array())
+	public function getAddUrlFor(array $params = array())
 	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}_add', 'params' => array());
 	}
@@ -120,7 +120,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	/**
 	 * {@inheritdoc}
 	 */
-    public function adaptQueryBuilder($querybuilder, $params=array())
+    public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $querybuilder, array $params=array())
     {
         parent::adaptQueryBuilder($querybuilder);
 		return $querybuilder;
