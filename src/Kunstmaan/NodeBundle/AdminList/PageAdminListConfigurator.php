@@ -124,7 +124,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder The query builder
      * @param array                      $params       Some extra parameters
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder);
 
