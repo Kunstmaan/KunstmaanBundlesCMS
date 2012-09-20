@@ -8,30 +8,42 @@ use Symfony\Component\Form\AbstractType;
 
 class SEOType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
-        $builder->add('metaauthor');
-        $builder->add('metadescription');
-        $builder->add('metakeywords');
-        $builder->add('metarobots');
-        $builder->add('metarevised');
-        $builder->add('ogType', null, array('label' => 'OG type'));
-        $builder->add('ogTitle', null, array('label' => 'OG title'));
-        $builder->add('ogDescription', null, array('label' => 'OG description'));
-        $builder->add('ogImage', 'media', array(
-            'pattern' => 'KunstmaanMediaBundle_chooser_imagechooser',
-            'label' => 'OG image'
-        ));
-        $builder->add('extraMetadata', 'textarea');
-        $builder->add('cimKeyword', 'text', array('required' => true, 'max_length' => 24));
+        $builder->add('id', 'hidden')
+                ->add('metaAuthor')
+                ->add('metaDescription')
+                ->add('metaKeywords')
+                ->add('metaRobots')
+                ->add('metaRevised')
+                ->add('ogType', null, array('label' => 'OG type'))
+                ->add('ogTitle', null, array('label' => 'OG title'))
+                ->add('ogDescription', null, array('label' => 'OG description'))
+                ->add('ogImage', 'media', array(
+                    'pattern' => 'KunstmaanMediaBundle_chooser_image_chooser',
+                    'label' => 'OG image'
+                ))
+                ->add('extraMetadata', 'textarea')
+                ->add('cimKeyword', 'text', array('required' => true, 'max_length' => 24));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'seo';
     }
 
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
     public function getDefaultOptions(array $options)
     {
         return array(

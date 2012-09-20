@@ -1,28 +1,18 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
+
 use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
+use Kunstmaan\AdminNodeBundle\Entity\PageInterface;
 use Kunstmaan\AdminNodeBundle\Form\PageAdminType;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-
-use Kunstmaan\FormBundle\Entity\FormSubmission;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\EntityManager;
-
-
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminBundle\Entity\PageInterface;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The Abstract ORM Page
@@ -37,10 +27,13 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     protected $title;
 
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string",nullable=true,name="page_title")
      */
     protected $pageTitle;
 
+    /**
+     * @var HasNodeInterface $parent
+     */
     protected $parent;
 
     /**
@@ -67,14 +60,18 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
         return $this->title;
     }
 
-        /**
+    /**
      * Set pagetitle
      *
      * @param string $title
+     *
+     * @return AbstractPage
      */
     public function setPageTitle($pageTitle)
     {
         $this->pageTitle = $pageTitle;
+
+        return $this;
     }
 
     /**
@@ -84,15 +81,15 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
      */
     public function getPageTitle()
     {
-        if(isset($this->pageTitle) && (!is_null($this->pageTitle)) && (!empty($this->pageTitle))){
+        if (!empty($this->pageTitle)) {
             return $this->pageTitle;
-        }else{
+        } else {
             return $this->getTitle();
         }
     }
 
     /**
-     * {@inheritdoc}
+     * @return HasNodeInterface
      */
     public function getParent()
     {
@@ -100,15 +97,16 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     }
 
     /**
-     * {@inheritdoc}
+     * @param HasNodeInterface $parent
+     *
+     * @return AbstractPage
      */
     public function setParent(HasNodeInterface $parent)
     {
         $this->parent = $parent;
+
+        return $this;
     }
-
-    protected $possiblePermissions = array('read', 'write', 'delete');
-
 
     /**
      * @return string
@@ -127,44 +125,38 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     }
 
     /**
-     * {@inheritdoc}
+     * @return bool
      */
     public function isOnline()
     {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPossiblePermissions()
-    {
-        return $this->possiblePermissions;
+        return false;
     }
 
     /**
      * @return array
      */
-    public abstract function getPossibleChildPageTypes();
+    abstract public function getPossibleChildPageTypes();
 
     /**
-     * {@inheritdoc}
+     * @param EntityManager $em
+     *
+     * @return AbstractPage
      */
     public function deepClone(EntityManager $em)
     {
-        $newpage = clone $this;
-        $newpage->setId(null);
-        $em->persist($newpage);
+        $newPage = clone $this;
+        $newPage->setId(null);
+        $em->persist($newPage);
         $em->flush();
 
         if (method_exists($this, 'getPagePartAdminConfigurations')) {
-            $ppconfigurations = $this->getPagePartAdminConfigurations();
-            foreach ($ppconfigurations as $ppconfiguration) {
-                $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($em, $this, $newpage, $ppconfiguration->getDefaultContext());
+            $ppConfigurations = $this->getPagePartAdminConfigurations();
+            foreach ($ppConfigurations as $ppConfiguration) {
+                $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($em, $this, $newPage, $ppConfiguration->getDefaultContext());
             }
         }
 
-        return $newpage;
+        return $newPage;
     }
 
     /**
@@ -172,7 +164,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
      * @param Request            $request   The Request
      * @param array              &$result   The Result array
      */
-    public function service($container, Request $request, &$result)
+    public function service(ContainerInterface $container, Request $request, &$result)
     {
     }
 

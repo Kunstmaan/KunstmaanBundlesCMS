@@ -1,14 +1,11 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Modules;
+namespace Kunstmaan\AdminNodeBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Symfony\Component\Translation\Translator;
-use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 
 /**
@@ -52,25 +49,23 @@ class NodeMenuItem
     private $menu;
 
     /**
-     * @param EntityManager   $em              The entitymanager
      * @param Node            $node            The node
      * @param NodeTranslation $nodeTranslation The nodetranslation
-     * @param string          $lang            The locale
      * @param NodeMenuItem    $parent          The parent nodemenuitem
      * @param NodeMenu        $menu            The menu
      */
-    public function __construct($em, Node $node, NodeTranslation $nodeTranslation, $lang, $parent, NodeMenu $menu)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent, NodeMenu $menu)
     {
-        $this->em = $em;
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
-        $this->lang = $lang;
         $this->parent = $parent;
         $this->menu = $menu;
+        $this->em = $menu->getEntityManager();
+        $this->lang = $menu->getLang();
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -115,7 +110,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getOnline()
     {
@@ -204,27 +199,26 @@ class NodeMenuItem
     }
 
     /**
-     * @param boolean $includehiddenfromnav
+     * @param bool $includeHiddenFromNav
      *
      * @return NodeMenuItem[]
      */
-    public function getChildren($includehiddenfromnav = true)
+    public function getChildren($includeHiddenFromNav = true)
     {
         if (is_null($this->lazyChildren)) {
             $this->lazyChildren = array();
             $nodeRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:Node');
-            $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getUser(), $this->menu->getPermission(), true);
+            $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getPermission(), $this->menu->getAclHelper(), true);
             foreach ($children as $child) {
                 $nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
                 if (!is_null($nodeTranslation)) {
-                    $this->lazyChildren[] = new NodeMenuItem($this->em, $child, $nodeTranslation, $this->lang, $this, $this->menu);
+                    $this->lazyChildren[] = new NodeMenuItem($child, $nodeTranslation, $this, $this->menu);
                 }
             }
         }
 
-        return array_filter($this->lazyChildren, function ($entry) use ($includehiddenfromnav)
-        {
-            if ($entry->getNode()->isHiddenFromNav() && !$includehiddenfromnav) {
+        return array_filter($this->lazyChildren, function ($entry) use ($includeHiddenFromNav) {
+            if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
                 return false;
             }
 
@@ -286,7 +280,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {

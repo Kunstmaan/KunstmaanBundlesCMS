@@ -1,12 +1,15 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Repository;
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
+use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * NodeRepository
@@ -15,22 +18,24 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class NodeRepository extends EntityRepository
 {
     /**
-     * @param string  $lang                 The locale
-     * @param User    $user                 The user
-     * @param string  $permission           The pemission (read, write, ...)
-     * @param boolean $includehiddenfromnav include the hiddenfromnav nodes or not
+     * @param string    $lang                 The locale
+     * @param string    $permission           The permission (read, write, ...)
+     * @param AclHelper $aclHelper
+     * @param bool      $includeHiddenFromNav include the hiddenfromnav nodes or not
      *
-     * @return array
+     * @return Node[]
      */
-    public function getTopNodes($lang, $user, $permission, $includehiddenfromnav = false)
+    public function getTopNodes($lang, $permission, $aclHelper, $includeHiddenFromNav = false)
     {
-        return $this->getChildNodes(null, $lang, $user, $permission, $includehiddenfromnav);
+        $result = $this->getChildNodes(null, $lang, $permission, $aclHelper, $includeHiddenFromNav);
+
+        return $result;
     }
 
     /**
      * @param HasNodeInterface $hasNode
      *
-     * @return Node|NULL
+     * @return Node|null
      */
     public function getNodeFor(HasNodeInterface $hasNode)
     {
@@ -46,14 +51,14 @@ class NodeRepository extends EntityRepository
     }
 
     /**
-     * @param integer $id         The id
-     * @param string  $entityName The classname
+     * @param int    $id         The id
+     * @param string $entityName The class name
      *
-     * @return Node|NULL
+     * @return Node|null
      */
     public function getNodeForIdAndEntityname($id, $entityName)
     {
-        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $id, 'refEntityname' => $entityName));
+        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $id, 'refEntityName' => $entityName));
         if ($nodeVersion) {
             return $nodeVersion->getNodeTranslation()->getNode();
         }
@@ -65,19 +70,19 @@ class NodeRepository extends EntityRepository
      * @param Node   $parentNode The parent node (may be null)
      * @param string $slug       The slug
      *
-     * @return Node|NULL
+     * @return Node|null
      */
     public function getNodeForSlug($parentNode, $slug)
     {
-        $slugparts = explode("/", $slug);
+        $slugParts = explode("/", $slug);
         $result = null;
-        foreach ($slugparts as $slugpart) {
+        foreach ($slugParts as $slugPart) {
             if ($parentNode) {
-                if ($r = $this->findOneBy(array('slug' => $slugpart, 'parent.parent' => $parentNode->getId()))) {
+                if ($r = $this->findOneBy(array('slug' => $slugPart, 'parent.parent' => $parentNode->getId()))) {
                     $result = $r;
                 }
             } else {
-                if ($r = $this->findOneBy(array('slug' => $slugpart))) {
+                if ($r = $this->findOneBy(array('slug' => $slugPart))) {
                     $result = $r;
                 }
             }
@@ -92,27 +97,25 @@ class NodeRepository extends EntityRepository
      * @param Baseuser         $owner        The user
      * @param string           $internalName The internal name (may be null)
      *
-     * @throws \Exception
-     * @return \Kunstmaan\AdminNodeBundle\Entity\Node
+     * @throws \InvalidArgumentException
+     *
+     * @return Node
      */
     public function createNodeFor(HasNodeInterface $hasNode, $lang, Baseuser $owner, $internalName = null)
     {
         $em = $this->getEntityManager();
-        $classname = ClassLookup::getClass($hasNode);
-        if (!$hasNode->getId() > 0) {
-            throw new \Exception("the entity of class " . $classname . " has no id, maybe you forgot to flush first");
-        }
-        $entityrepo = $em->getRepository($classname);
         $node = new Node();
-        $node->setRefEntityname($classname);
+        $node->setRef($hasNode);
+        if (!$hasNode->getId() > 0) {
+            throw new \InvalidArgumentException("the entity of class " . $node->getRefEntityName() . " has no id, maybe you forgot to flush first");
+        }
         $node->setDeleted(false);
         $node->setInternalName($internalName);
         $parent = $hasNode->getParent();
         if ($parent) {
-            $parentNodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityname' => ClassLookup::getClass($parent)));
+            $parentNodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityName' => ClassLookup::getClass($parent)));
             if ($parentNodeVersion) {
                 $node->setParent($parentNodeVersion->getNodeTranslation()->getNode());
-                $node->setRoles($parentNodeVersion->getNodeTranslation()->getNode()->getRoles());
             }
         }
         $em->persist($node);
@@ -124,53 +127,49 @@ class NodeRepository extends EntityRepository
     }
 
     /**
-     * @param integer $parentid             The parent id
-     * @param string  $lang                 The locale
-     * @param User    $user                 The user
-     * @param string  $permission           The permission (read, write, ...)
-     * @param boolean $includehiddenfromnav Include hiddenfromnav nodes or not
+     * @param int       $parentId             The parent id
+     * @param string    $lang                 The locale
+     * @param string    $permission           The permission (read, write, ...)
+     * @param AclHelper $aclHelper
+     * @param bool      $includeHiddenFromNav Include nodes hidden from navigation or not
      *
-     * @return array:
+     * @return Node[]
      */
-    public function getChildNodes($parentid, $lang, $user, $permission, $includehiddenfromnav = false)
+    public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
     {
-        $qb = $this->createQueryBuilder('b')->select('b')->innerJoin("b.nodeTranslations", "t")->where('b.deleted = 0');
+        $qb = $this->createQueryBuilder('b')
+                   ->select('b')
+                   ->innerJoin('b.nodeTranslations', 't')
+                   ->where('b.deleted = 0');
 
-        if (!$includehiddenfromnav) {
-            $qb->andWhere('b.hiddenfromnav != true');
+        if (!$includeHiddenFromNav) {
+            $qb->andWhere('b.hiddenFromNav != true');
         }
+        $qb->andWhere('t.lang = :lang');
 
-        $qb->andWhere('b.id IN (
-	            SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3)
-	    )')->andWhere("t.lang = :lang");
-
-        if (is_null($parentid)) {
-            $qb->andWhere("b.parent is NULL");
+        if (is_null($parentId)) {
+            $qb->andWhere('b.parent is NULL');
         } else {
-            $qb->andWhere("b.parent = :parent")->setParameter("parent", $parentid);
+            $qb->andWhere('b.parent = :parent')
+               ->setParameter('parent', $parentId);
         }
+        $qb->addOrderBy('t.weight', 'ASC')
+           ->addOrderBy('t.title', 'ASC');
+        $qb->setParameter('lang', $lang);
+        $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
 
-        $qb->addOrderBy('t.weight', 'ASC')->addOrderBy('t.title', 'ASC')->setParameter(1, 'Kunstmaan\\AdminNodeBundle\\Entity\\Node')->setParameter(2, '%|' . $permission . ':1|%');
-
-        $groupIds = $user->getGroupIds();
-        if (!empty($groupIds)) {
-            $qb->setParameter(3, $groupIds);
-        } else {
-            $qb->setParameter(3, null);
-        }
-        $qb->setParameter("lang", $lang);
-
-        $result = $qb->getQuery()->getResult();
-
-        return $result;
+        return $query->getResult();
     }
 
     /**
-     * @return array:
+     * @return Node[]
      */
     public function getAllTopNodes()
     {
-        $qb = $this->createQueryBuilder('b')->select('b')->where('b.deleted = 0')->andWhere("b.parent IS NULL");
+        $qb = $this->createQueryBuilder('b')
+                   ->select('b')
+                   ->where('b.deleted = 0')
+                   ->andWhere('b.parent IS NULL');
 
         $result = $qb->getQuery()->getResult();
 

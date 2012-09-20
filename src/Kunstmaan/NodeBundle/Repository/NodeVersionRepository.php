@@ -2,12 +2,10 @@
 
 namespace Kunstmaan\AdminNodeBundle\Repository;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 
 /**
@@ -23,7 +21,7 @@ class NodeVersionRepository extends EntityRepository
      */
     public function getNodeVersionFor(HasNodeInterface $hasNode)
     {
-        return $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityname' => ClassLookup::getClass($hasNode)));
+        return $this->findOneBy(array('refId' => $hasNode->getId(), 'refEntityName' => ClassLookup::getClass($hasNode)));
     }
 
     /**
@@ -38,18 +36,12 @@ class NodeVersionRepository extends EntityRepository
     public function createNodeVersionFor(HasNodeInterface $hasNode, NodeTranslation $nodeTranslation, $owner, $type = "public")
     {
         $em = $this->getEntityManager();
-        $classname = ClassLookup::getClass($hasNode);
-        if (!$hasNode->getId() > 0) {
-            throw new \Exception("the entity of class " . $classname . " has no id, maybe you forgot to flush first");
-        }
-        $entityrepo = $em->getRepository($classname);
         $nodeVersion = new NodeVersion();
         $nodeVersion->setNodeTranslation($nodeTranslation);
         $nodeVersion->setType($type);
         $nodeVersion->setVersion($nodeTranslation->getNodeVersions()->count() + 1);
         $nodeVersion->setOwner($owner);
-        $nodeVersion->setRefId($hasNode->getId());
-        $nodeVersion->setRefEntityname($classname);
+        $nodeVersion->setRef($hasNode);
 
         $addcommand = new AddCommand($em, $owner);
         $addcommand->execute("new version for page \"" . $nodeTranslation->getTitle() . "\" with locale: " . $nodeTranslation->getLang(), array('entity' => $nodeVersion));

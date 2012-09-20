@@ -1,18 +1,20 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
+
 use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
 
 /**
  * Node
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeRepository")
- * @ORM\Table(name="node")
+ * @ORM\Table(name="kuma_nodes")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
@@ -21,18 +23,18 @@ class Node extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Node", inversedBy="children")
-     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, name="sequence_number")
      */
-    protected $sequencenumber;
+    protected $sequenceNumber;
 
     /**
      * @ORM\OneToMany(targetEntity="Node", mappedBy="parent")
-     * @ORM\OrderBy({"sequencenumber" = "ASC"})
+     * @ORM\OrderBy({"sequenceNumber" = "ASC"})
      */
     protected $children;
 
@@ -42,27 +44,22 @@ class Node extends AbstractEntity
     protected $nodeTranslations;
 
     /**
-     * @ORM\Column(type="array", nullable=false)
-     */
-    protected $roles;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="hidden_from_nav")
      */
-    protected $hiddenfromnav;
+    protected $hiddenFromNav;
 
     /**
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, name="ref_entity_name")
      */
-    protected $refEntityname;
+    protected $refEntityName;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true, name="internal_name")
      */
     protected $internalName;
 
@@ -71,52 +68,81 @@ class Node extends AbstractEntity
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->nodeTranslations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->deleted = false;
-        $this->hiddenfromnav = false;
+        $this->children         = new ArrayCollection();
+        $this->nodeTranslations = new ArrayCollection();
+        $this->deleted          = false;
+        $this->hiddenFromNav    = false;
     }
 
+    /**
+     * @return bool
+     */
     public function isHiddenFromNav()
     {
-        return $this->hiddenfromnav;
+        return $this->hiddenFromNav;
     }
 
+    /**
+     * @return bool
+     */
     public function getHiddenFromNav()
     {
-        return $this->hiddenfromnav;
+        return $this->hiddenFromNav;
     }
 
-    public function setHiddenFromNav($var)
+    /**
+     * @param bool $hiddenFromNav
+     *
+     * @return Node
+     */
+    public function setHiddenFromNav($hiddenFromNav)
     {
-        $this->hiddenfromnav = $var;
+        $this->hiddenFromNav = $hiddenFromNav;
+
+        return $this;
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getChildren()
     {
-        return $this->children->filter(function ($entry)
-                {
-                    if ($entry->isDeleted()) {
-                        return false;
-                    }
-                    return true;
-                });
+        return $this->children->filter(
+            function ($entry) {
+                if ($entry->isDeleted()) {
+                    return false;
+                }
+
+                return true;
+            }
+        );
     }
 
+    /**
+     * @param ArrayCollection $children
+     *
+     * @return Node
+     */
     public function setChildren($children)
     {
         $this->children = $children;
+
+        return $this;
     }
 
     /**
      * Add children
      *
-     * @param \Kunstmaan\AdminNodeBundle\Entity\Node $child
+     * @param Node $child
+     *
+     * @return Node
      */
     public function addNode(Node $child)
     {
-        $this->children[] = $children;
+        $this->children[] = $child;
         $child->setParent($this);
+
+        return $this;
     }
 
     public function disableChildrenLazyLoading()
@@ -126,33 +152,52 @@ class Node extends AbstractEntity
         }
     }
 
-    public function getNodeTranslations($includeoffline = false)
+    /**
+     * @param bool $includeOffline
+     *
+     * @return ArrayCollection
+     */
+    public function getNodeTranslations($includeOffline = false)
     {
         return $this->nodeTranslations
-                ->filter(function ($entry) use ($includeoffline)
-                {
-                    if ($includeoffline || $entry->isOnline()) {
-                        return true;
-                    }
-                    
-                    return false;
-                });
+            ->filter(
+            function ($entry) use ($includeOffline) {
+                if ($includeOffline || $entry->isOnline()) {
+                    return true;
+                }
+
+                return false;
+            }
+        );
     }
 
+    /**
+     * @param ArrayCollection $nodeTranslations
+     *
+     * @return Node
+     */
     public function setNodeTranslations($nodeTranslations)
     {
         $this->nodeTranslations = $nodeTranslations;
+
+        return $this;
     }
 
-    public function getNodeTranslation($lang, $includeoffline = false)
+    /**
+     * @param string $lang
+     * @param bool   $includeOffline
+     *
+     * @return NodeTranslation|null
+     */
+    public function getNodeTranslation($lang, $includeOffline = false)
     {
-        $nodeTranslations = $this->getNodeTranslations($includeoffline);
+        $nodeTranslations = $this->getNodeTranslations($includeOffline);
         foreach ($nodeTranslations as $nodeTranslation) {
             if ($lang == $nodeTranslation->getLang()) {
                 return $nodeTranslation;
             }
         }
-        
+
         return null;
     }
 
@@ -160,11 +205,17 @@ class Node extends AbstractEntity
      * Add nodeTranslation
      *
      * @param NodeTranslation $nodeTranslation
+     *
+     * @return Node
+     *
+     * @todo Shouldn't we add a check to prevent adding duplicates here?
      */
     public function addNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $this->nodeTranslations[] = $nodeTranslation;
         $nodeTranslation->setNode($this);
+
+        return $this;
     }
 
     public function disableNodeTranslationsLazyLoading()
@@ -177,68 +228,64 @@ class Node extends AbstractEntity
     /**
      * Set parent
      *
-     * @param integer $parent
+     * @param Node $parent
+     *
+     * @return Node
      */
     public function setParent($parent)
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
     /**
      * Get parent
      *
-     * @return integer
+     * @return Node
      */
     public function getParent()
     {
         return $this->parent;
     }
 
+    /**
+     * @return Node[]
+     */
     public function getParents()
     {
-        $parent = $this->getParent();
+        $parent  = $this->getParent();
         $parents = array();
         while ($parent != null) {
             $parents[] = $parent;
-            $parent = $parent->getParent();
+            $parent    = $parent->getParent();
         }
+
         return array_reverse($parents);
     }
 
     /**
-     * @param integer $sequencenumber
+     * @param int $sequenceNumber
+     *
+     * @return Node
      */
-    public function setSequencenumber($sequencenumber)
+    public function setSequenceNumber($sequenceNumber)
     {
-        $this->sequencenumber = $sequencenumber;
+        $this->sequenceNumber = $sequenceNumber;
+
+        return $this;
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getSequencenumber()
+    public function getSequenceNumber()
     {
-        return $this->sequencenumber;
+        return $this->sequenceNumber;
     }
 
     /**
-     * @param array $roles
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @return boolean
+     * @return bool
      */
     public function isDeleted()
     {
@@ -246,45 +293,67 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param boolean $deleted
+     * @param bool $deleted
+     *
+     * @return Node
      */
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
+
+        return $this;
     }
 
     /**
-     * Set refEntityname
+     * Set referenced entity
      *
-     * @param string $refEntityname
+     * @param AbstractEntity $entity
+     *
+     * @return Node
      */
-    public function setRefEntityname($refEntityname)
+    public function setRef(AbstractEntity $entity)
     {
-        $this->refEntityname = $refEntityname;
+        $this->setRefEntityName(ClassLookup::getClass($entity));
+
+        return $this;
     }
 
     /**
-     * Get refEntityname
+     * Set class name of referenced entity
+     *
+     * @param string $refEntityName
+     */
+    protected function setRefEntityName($refEntityName)
+    {
+        $this->refEntityName = $refEntityName;
+    }
+
+    /**
+     * Get class name of referenced entity
      *
      * @return string
      */
-    public function getRefEntityname()
+    public function getRefEntityName()
     {
-        return $this->refEntityname;
+        return $this->refEntityName;
     }
 
     /**
-     * Set internalName
+     * Set internal name
      *
      * @param string $internalName
+     *
+     * @return Node
      */
     public function setInternalName($internalName)
     {
         $this->internalName = $internalName;
+
+        return $this;
     }
 
     /**
-     * Get internalName
+     * Get internal name
      *
      * @return string
      */
@@ -293,9 +362,12 @@ class Node extends AbstractEntity
         return $this->internalName;
     }
 
-    public function getDefaultAdminType($container)
+    /**
+     * @return NodeAdminType
+     */
+    public function getDefaultAdminType()
     {
-        return new NodeAdminType($container);
+        return new NodeAdminType();
     }
 
     /**
@@ -303,18 +375,19 @@ class Node extends AbstractEntity
      */
     public function preInsert()
     {
-        if (!$this->sequencenumber) {
+        if (!$this->sequenceNumber) {
             $parent = $this->getParent();
             if ($parent) {
-                $count = $parent->getChildren()->count();
-                $this->sequencenumber = $count + 1;
+                $count                = $parent->getChildren()->count();
+                $this->sequenceNumber = $count + 1;
             } else {
-                $this->sequencenumber = 1;
+                $this->sequenceNumber = 1;
             }
         }
     }
-    
-    public function __toString(){
-        return "node ".$this->getId() . ", refEntityname: ". $this->getRefEntityname();
+
+    public function __toString()
+    {
+        return "node " . $this->getId() . ", refEntityName: " . $this->getRefEntityName();
     }
 }

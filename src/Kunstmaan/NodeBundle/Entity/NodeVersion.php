@@ -1,33 +1,32 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
-use Doctrine\ORM\Mapping\Entity;
 
 use Doctrine\ORM\EntityManager;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 /**
  * NodeVersion
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeVersionRepository")
- * @ORM\Table(name="nodeversion")
+ * @ORM\Table(name="kuma_node_versions")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class NodeVersion extends AbstractEntity
 {
 
+    const DRAFT_VERSION     = 'draft';
+    const PUBLIC_VERSION    = 'public';
+
     /**
      * @ORM\ManyToOne(targetEntity="NodeTranslation")
-     * @ORM\JoinColumn(name="nodetranslation", referencedColumnName="id")
+     * @ORM\JoinColumn(name="node_translation_id", referencedColumnName="id")
      */
     protected $nodeTranslation;
 
@@ -57,14 +56,14 @@ class NodeVersion extends AbstractEntity
     protected $updated;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="bigint", name="ref_id")
      */
     protected $refId;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="ref_entity_name")
      */
-    protected $refEntityname;
+    protected $refEntityName;
 
     /**
      * Constructor
@@ -78,17 +77,21 @@ class NodeVersion extends AbstractEntity
     /**
      * Set nodeTranslation
      *
-     * @param integer $nodeTranslation
+     * @param NodeTranslation $nodeTranslation
+     *
+     * @return NodeVersion
      */
-    public function setNodeTranslation($nodeTranslation)
+    public function setNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $this->nodeTranslation = $nodeTranslation;
+
+        return $this;
     }
 
     /**
      * Get NodeTranslation
      *
-     * @return integer
+     * @return NodeTranslation
      */
     public function getNodeTranslation()
     {
@@ -109,16 +112,20 @@ class NodeVersion extends AbstractEntity
      * Set type
      *
      * @param string $type
+     *
+     * @return NodeVersion
      */
     public function setType($type)
     {
         $this->type = $type;
+
+        return $this;
     }
 
     /**
      * Get version
      *
-     * @return integer
+     * @return string
      */
     public function getVersion()
     {
@@ -129,20 +136,28 @@ class NodeVersion extends AbstractEntity
      * Set version
      *
      * @param string $version
+     *
+     * @return NodeVersion
      */
     public function setVersion($version)
     {
         $this->version = $version;
+
+        return $this;
     }
 
     /**
      * Set owner
      *
      * @param string $owner
+     *
+     * @return NodeVersion
      */
     public function setOwner($owner)
     {
         $this->owner = $owner;
+
+        return $this;
     }
 
     /**
@@ -158,17 +173,21 @@ class NodeVersion extends AbstractEntity
     /**
      * Set created
      *
-     * @param datetime $created
+     * @param \DateTime $created
+     *
+     * @return NodeVersion
      */
     public function setCreated($created)
     {
         $this->created = $created;
+
+        return $this;
     }
 
     /**
      * Get created
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -178,17 +197,21 @@ class NodeVersion extends AbstractEntity
     /**
      * Set updated
      *
-     * @param datetime $updated
+     * @param \DateTime $updated
+     *
+     * @return NodeVersion
      */
     public function setUpdated($updated)
     {
         $this->updated = $updated;
+
+        return $this;
     }
 
     /**
      * Get updated
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdated()
     {
@@ -198,7 +221,7 @@ class NodeVersion extends AbstractEntity
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedValue()
+    public function preUpdate()
     {
         $this->setUpdated(new \DateTime());
     }
@@ -206,7 +229,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get refId
      *
-     * @return integer
+     * @return int
      */
     public function getRefId()
     {
@@ -216,50 +239,65 @@ class NodeVersion extends AbstractEntity
     /**
      * Set refId
      *
-     * @param string $refId
+     * @param int $refId
+     *
+     * @return NodeVersion
      */
-    public function setRefId($refId)
+    protected function setRefId($refId)
     {
         $this->refId = $refId;
+
+        return $this;
     }
 
     /**
-     * Set refEntityname
+     * Set reference entity name
      *
-     * @param string $refEntityname
+     * @param string $refEntityName
+     *
+     * @return NodeVersion
      */
-    public function setRefEntityname($refEntityname)
+    protected function setRefEntityName($refEntityName)
     {
-        $this->refEntityname = $refEntityname;
+        $this->refEntityName = $refEntityName;
+
+        return $this;
     }
 
     /**
-     * Get refEntityname
+     * Get reference entity name
      *
      * @return string
      */
-    public function getRefEntityname()
+    public function getRefEntityName()
     {
-        return $this->refEntityname;
+        return $this->refEntityName;
     }
 
     /**
-     * @param ContainerInterface $container
-     *
-     * @return NodeAdminType
+     * @return null
      */
-    public function getDefaultAdminType(ContainerInterface $container)
+    public function getDefaultAdminType()
     {
-        return new NodeAdminType($container);
+        return null;
+    }
+
+    /**
+     * @param AbstractEntity $entity
+     */
+    public function setRef(AbstractEntity $entity)
+    {
+        $this->setRefId($entity->getId());
+        $this->setRefEntityName(ClassLookup::getClass($entity));
     }
 
     /**
      * @param EntityManager $em
      *
-     * @return Entity
+     * @return object
      */
     public function getRef(EntityManager $em)
     {
-        return $em->getRepository($this->getRefEntityname())->find($this->getRefId());
+        return $em->getRepository($this->getRefEntityName())->find($this->getRefId());
     }
 }

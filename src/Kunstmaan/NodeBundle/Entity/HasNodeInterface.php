@@ -11,7 +11,7 @@ interface HasNodeInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId();
 
@@ -24,9 +24,9 @@ interface HasNodeInterface
      * @return string
      */
     public function getPageTitle();
-    
+
     /**
-     * @return boolean
+     * @return bool
      */
     public function isOnline();
 
@@ -40,10 +40,4 @@ interface HasNodeInterface
      */
     public function setParent(HasNodeInterface $hasNode);
 
-    /**
-     * Return an array containing all possible permissions for the page
-     * @abstract
-     * @return array
-     */
-    public function getPossiblePermissions();
 }

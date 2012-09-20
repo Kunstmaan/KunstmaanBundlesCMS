@@ -2,6 +2,7 @@
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
 {% block extrajavascript %}
+    {{ parent() }}
      <script type="text/javascript">
         var isEdited = false,
         	oldEdited = false;
@@ -17,6 +18,11 @@
 {% endblock %}
 
 {% block messages %}
+        {% if not draft and nodeTranslation.isOnline %}
+	<div class="alert alert-block">
+            <strong>{{ "Warning" | trans }}: </strong>{{ "Changes you save will be performed on the live page" | trans }}
+        </div>
+	{% endif %}
 	{% if form_has_errors_recursive(form) %}
 	<div class="alert alert-error">
 		<strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
@@ -60,7 +66,7 @@
 
         <!--Scroll Actions-->
         {{ knp_menu_render('top_actions', { 'template': 'KunstmaanAdminNodeBundle:Menu:knp_menu_top_actions.html.twig'}) }}
-        
+
         <!--=========Tabs=========-->
         <ul class="nav nav-tabs">
             {% set alreadyexiststab = false %}
@@ -192,7 +198,7 @@
                     {#
                         {% for child in page.children %}
                             <tr>
-                                <td>{{ child.sequencenumber }}</td>
+                                <td>{{ child.sequenceNumber }}</td>
                                 <td><a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': child.id, 'entityname': 'KunstmaanAdminBundle:Page' }) }}">{{ child.title }}</a></td>
                                 <td>Page</td>
                             </tr>
@@ -206,11 +212,11 @@
 			{% set seoform = form.seo %}
             <div class="{% if currenttab == 'seo' %}active{% endif %} tab-pane" id="seo">
                 <fieldset class="properties">
-                    {{ form_row(seoform.metaauthor) }}
-                    {{ form_row(seoform.metadescription) }}
-                	{{ form_row(seoform.metakeywords) }}
-                	{{ form_row(seoform.metarobots) }}
-                	{{ form_row(seoform.metarevised) }}
+                    {{ form_row(seoform.metaAuthor) }}
+                    {{ form_row(seoform.metaDescription) }}
+                	{{ form_row(seoform.metaKeywords) }}
+                	{{ form_row(seoform.metaRobots) }}
+                	{{ form_row(seoform.metaRevised) }}
                     {{ form_row(seoform.ogType) }}
                     {{ form_row(seoform.ogTitle) }}
                     {{ form_row(seoform.ogDescription) }}

@@ -1,24 +1,20 @@
 <?php
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
-use Kunstmaan\SearchBundle\Entity\IndexableInterface;
-
-use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
+use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityManager;
 
 /**
  * NodeTranslation
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeTranslationRepository")
- * @ORM\Table(name="nodetranslation")
+ * @ORM\Table(name="kuma_node_translations")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class NodeTranslation extends AbstractEntity
@@ -26,7 +22,7 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Node")
-     * @ORM\JoinColumn(name="node", referencedColumnName="id")
+     * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
     protected $node;
 
@@ -38,7 +34,7 @@ class NodeTranslation extends AbstractEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $online;
+    protected $online = false;
 
     /**
      * @ORM\Column(type="string")
@@ -57,13 +53,13 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="NodeVersion")
-     * @ORM\JoinColumn(name="publicNodeVersion", referencedColumnName="id")
+     * @ORM\JoinColumn(name="public_node_version_id", referencedColumnName="id")
      */
     protected $publicNodeVersion;
 
     /**
      * @ORM\OneToOne(targetEntity="SEO", cascade={"all"})
-     * @ORM\JoinColumn(name="seo", referencedColumnName="id")
+     * @ORM\JoinColumn(name="seo_id", referencedColumnName="id")
      */
     protected $seo;
 
@@ -77,27 +73,31 @@ class NodeTranslation extends AbstractEntity
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $weight;
-    
+
     public function __construct()
     {
-        $this->nodeVersions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->seo = new SEO();
+        $this->nodeVersions = new ArrayCollection();
+        $this->seo          = new SEO();
     }
 
     /**
      * Set node
      *
-     * @param integer $node
+     * @param Node $node
+     *
+     * @return NodeTranslation
      */
     public function setNode($node)
     {
         $this->node = $node;
+
+        return $this;
     }
 
     /**
      * Get Node
      *
-     * @return integer
+     * @return Node
      */
     public function getNode()
     {
@@ -108,10 +108,14 @@ class NodeTranslation extends AbstractEntity
      * Set lang
      *
      * @param string $lang
+     *
+     * @return NodeTranslation
      */
     public function setLang($lang)
     {
         $this->lang = $lang;
+
+        return $this;
     }
 
     /**
@@ -127,7 +131,7 @@ class NodeTranslation extends AbstractEntity
     /**
      * Is online
      *
-     * @return boolean
+     * @return bool
      */
     public function isOnline()
     {
@@ -137,21 +141,29 @@ class NodeTranslation extends AbstractEntity
     /**
      * Set online
      *
-     * @param boolean $online
+     * @param bool $online
+     *
+     * @return NodeTranslation
      */
     public function setOnline($online)
     {
         $this->online = $online;
+
+        return $this;
     }
 
     /**
      * Set title
      *
      * @param string $title
+     *
+     * @return NodeTranslation
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -168,10 +180,14 @@ class NodeTranslation extends AbstractEntity
      * Set slug
      *
      * @param string $slug
+     *
+     * @return NodeTranslation
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**
@@ -190,20 +206,23 @@ class NodeTranslation extends AbstractEntity
         return $slug;
     }
 
+    /**
+     * @return string
+     */
     public function getSlugPart()
     {
-        $slug = "";
+        $slug       = "";
         $parentNode = $this->getNode()->getParent();
         if ($parentNode != null) {
-            $nodeTranslation = $parentNode->getNodeTranslation($this->lang);
+            $nodeTranslation = $parentNode->getNodeTranslation($this->lang, true);
+
             if ($nodeTranslation != null) {
-                $parentslug = $nodeTranslation->getSlugPart();
-                if (!empty($parentslug)) {
-                    $slug = rtrim($parentslug, "/") . "/";
+                $parentSlug = $nodeTranslation->getSlugPart();
+                if (!empty($parentSlug)) {
+                    $slug = rtrim($parentSlug, "/") . "/";
                 }
             }
         }
-
         $slug = $slug . $this->getSlug();
 
         return $slug;
@@ -219,21 +238,16 @@ class NodeTranslation extends AbstractEntity
         return $this->slug;
     }
 
-    public function getParentSlug($node)
-    {
-        $parentslug = $node->getParent()->getNodeTranslation($this->lang)->getSlug();
-        if (!empty($parentslug)) {
-            return $parentslug . "/";
-        }
-        return "";
-    }
-
     /**
      * @param NodeVersion $publicNodeVersion
+     *
+     * @return NodeTranslation
      */
     public function setPublicNodeVersion($publicNodeVersion)
     {
         $this->publicNodeVersion = $publicNodeVersion;
+
+        return $this;
     }
 
     /**
@@ -245,7 +259,7 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @return NodeVersion[]
+     * @return ArrayCollection
      */
     public function getNodeVersions()
     {
@@ -253,13 +267,22 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param NodeVersion[] $nodeVersions
+     * @param ArrayCollection $nodeVersions
+     *
+     * @return NodeTranslation
      */
     public function setNodeVersions($nodeVersions)
     {
         $this->nodeVersions = $nodeVersions;
+
+        return $this;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return NodeVersion|null
+     */
     public function getNodeVersion($type)
     {
         $nodeVersions = $this->getNodeVersions();
@@ -276,13 +299,20 @@ class NodeTranslation extends AbstractEntity
      * Add nodeVersion
      *
      * @param NodeVersion $nodeVersion
+     *
+     * @return NodeTranslation
      */
     public function addNodeVersion(NodeVersion $nodeVersion)
     {
         $this->nodeVersions[] = $nodeVersion;
         $nodeVersion->setNodeTranslation($this);
+
+        return $this;
     }
 
+    /**
+     * Disable lazy loading of node versions
+     */
     public function disableNodeVersionsLazyLoading()
     {
         if (is_object($this->nodeVersions)) {
@@ -290,106 +320,111 @@ class NodeTranslation extends AbstractEntity
         }
     }
 
-    public function getDefaultAdminType($container)
+    /**
+     * @return NodeTranslationAdminType
+     */
+    public function getDefaultAdminType()
     {
-        return new NodeTranslationAdminType($container);
-    }
-
-    public function getRef($em, $type = "public")
-    {
-        $nodeVersion = $this->getNodeVersion($type);
-        if ($nodeVersion) {
-            return $em->getRepository($nodeVersion->getRefEntityname())->find($nodeVersion->getRefId());
-        }
-        return null;
-    }
-
-    public function getSearchContentForNode($container, $entity, $field)
-    {
-        $page = $entity->getRef($container->get('doctrine')->getEntityManager());
-        if ($page instanceof IndexableInterface) {
-            return $page;
-        }
-
-        return null;
-    }
-
-    public function getParentsAndSelfForNode($container, $entity, $field)
-    {
-        $node = $entity->getNode();
-        $results = array();
-        if ($node->getParent() == null) {
-            $parents[] = $node->getId();
-        } else {
-            $parents = $this->getAllParentsForNode($node, $results);
-        }
-
-        return 'start ' . implode(' ', $parents) . ' stop';
-    }
-
-    public function getAllParentsForNode($node, $results)
-    {
-        $parentNode = $node->getParent();
-        if (is_object($parentNode)) {
-            $results[] = $parentNode->getId();
-
-            return $this->getAllParentsForNode($parentNode, $results);
-        } else {
-            return $results;
-        }
+        return new NodeTranslationAdminType();
     }
 
     /**
-     * Returns the date the first nodeversion was created
+     * @param EntityManager $em
+     * @param string        $type
      *
-     * @return mixed
+     * @return object|null
+     */
+    public function getRef(EntityManager $em, $type = "public")
+    {
+        $nodeVersion = $this->getNodeVersion($type);
+        if ($nodeVersion) {
+            return $em->getRepository($nodeVersion->getRefEntityName())->find($nodeVersion->getRefId());
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the date the first node version was created
+     *
+     * @return \DateTime
      */
     public function getCreated()
     {
-        $versions = $this->getNodeVersions();
+        $versions     = $this->getNodeVersions();
         $firstVersion = $versions->first();
 
         return $firstVersion->getCreated();
     }
 
     /**
-     * Returns the date the last nodeversion was updated
+     * Returns the date the last node version was updated
      *
      * @return mixed
      */
     public function getUpdated()
     {
-        $versions = $this->getNodeVersions();
+        $versions    = $this->getNodeVersions();
         $lastVersion = $versions->last();
 
         return $lastVersion->getUpdated();
     }
 
+    /**
+     * @param SEO $seo
+     *
+     * @return NodeTranslation
+     */
     public function setSEO($seo)
     {
         $this->seo = $seo;
+
+        return $this;
     }
 
+    /**
+     * @return SEO
+     */
     public function getSEO()
     {
         return $this->seo;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return NodeTranslation
+     */
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
         return $this->url;
     }
-    
+
+    /**
+     * @param int $weight
+     *
+     * @return NodeTranslation
+     */
     public function setWeight($weight)
     {
         $this->weight = $weight;
+
+        return $this;
     }
-    
+
+    /**
+     * @return int
+     */
     public function getWeight()
     {
         return $this->weight;

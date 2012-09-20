@@ -7,7 +7,6 @@ use Kunstmaan\AdminNodeBundle\Tests\Stubs\TestRepository;
 use Knp\Menu\Silex\RouterAwareFactory;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -32,7 +31,12 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $em = $this->getMockedEntityManager();
         $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
-        $this->builder = new ActionsMenuBuilder($factory, $em, $router, $dispatcher);
+        $context = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $context->expects($this->any())
+            ->method('isGranted')
+            ->will($this->returnValue(true));
+
+        $this->builder = new ActionsMenuBuilder($factory, $em, $router, $dispatcher, $context);
     }
 
     /**
@@ -48,13 +52,14 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(new TestRepository()));
         $emMock->expects($this->any())
             ->method('getClassMetadata')
-            ->will($this->returnValue((object)array('name' => 'aClass')));
+            ->will($this->returnValue((object) array('name' => 'aClass')));
         $emMock->expects($this->any())
             ->method('persist')
             ->will($this->returnValue(null));
         $emMock->expects($this->any())
             ->method('flush')
             ->will($this->returnValue(null));
+
         return $emMock;  // it tooks 13 lines to achieve mock!
     }
 
@@ -76,23 +81,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $nodeVersion->setNodeTranslation($nodeTranslation);
         $this->builder->setActiveNodeVersion($nodeVersion);
 
-        $nodeVersion->setType('public');
-        $nodeTranslation->setOnline(true);
         $menu = $this->builder->createSubActionsMenu();
-        $this->assertNotNull($menu->getChild('subaction.unpublish'));
-        $this->assertNull($menu->getChild('subaction.publish'));
-        $this->assertNotNull($menu->getChild('subaction.versions'));
-
-        $nodeTranslation->setOnline(false);
-        $menu = $this->builder->createSubActionsMenu();
-        $this->assertNotNull($menu->getChild('subaction.publish'));
-        $this->assertNull($menu->getChild('subaction.unpublish'));
-        $this->assertNotNull($menu->getChild('subaction.versions'));
-
-        $nodeVersion->setType('draft');
-        $menu = $this->builder->createSubActionsMenu();
-        $this->assertNull($menu->getChild('subaction.publish'));
-        $this->assertNull($menu->getChild('subaction.unpublish'));
         $this->assertNotNull($menu->getChild('subaction.versions'));
 
         $this->assertEquals($menu->getChildrenAttribute('class'), 'sub_actions');
@@ -117,11 +106,23 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.delete'));
 
         $nodeVersion->setType('public');
+        $nodeTranslation->setOnline(false);
+        $menu = $this->builder->createActionsMenu();
+        $this->assertNotNull($menu->getChild('action.save'));
+        $this->assertNotNull($menu->getChild('action.saveasdraft'));
+        $this->assertNotNull($menu->getChild('action.preview'));
+        $this->assertNotNull($menu->getChild('action.publish'));
+        $this->assertNull($menu->getChild('action.unpublish'));
+        $this->assertNotNull($menu->getChild('action.delete'));
+
+        $nodeVersion->setType('public');
+        $nodeTranslation->setOnline(true);
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.publish'));
+        $this->assertNotNull($menu->getChild('action.unpublish'));
         $this->assertNotNull($menu->getChild('action.delete'));
 
         $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions');
