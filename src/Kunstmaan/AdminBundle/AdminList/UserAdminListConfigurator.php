@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
@@ -42,7 +43,7 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @return array
      */
-    public function getAddUrlFor($params = array())
+    public function getAddUrlFor(array $params = array())
     {
         return array(
             'user' => array('path' => 'KunstmaanAdminBundle_settings_users_add', 'params'=> $params)
@@ -51,11 +52,11 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param mixed $item
+     * @param AbstractEntity $item
      *
      * @return array
      */
-    public function getEditUrlFor($item)
+    public function getEditUrlFor(AbstractEntity $item)
     {
         return array(
             'path'   => 'KunstmaanAdminBundle_settings_users_edit',
@@ -82,11 +83,11 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param mixed $item
+     * @param AbstractEntity $item
      *
      * @return array
      */
-    public function getDeleteUrlFor($item)
+    public function getDeleteUrlFor(AbstractEntity $item)
     {
         return array(
             'path'      => 'KunstmaanAdminBundle_settings_users_delete',

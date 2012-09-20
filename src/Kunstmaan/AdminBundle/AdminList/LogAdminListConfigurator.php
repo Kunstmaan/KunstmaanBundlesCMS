@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
@@ -50,7 +51,7 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @return array
      */
-    public function getAddUrlFor($params = array())
+    public function getAddUrlFor(array $params = array())
     {
         return array();
     }
@@ -64,11 +65,11 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param mixed $item
+     * @param AbstractEntity $item
      *
      * @return array
      */
-    public function getEditUrlFor($item)
+    public function getEditUrlFor(AbstractEntity $item)
     {
         return array();
     }
@@ -82,21 +83,21 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param mixed $item
+     * @param AbstractEntity $item
      *
      * @return array
      */
-    public function getDeleteUrlFor($item)
+    public function getDeleteUrlFor(AbstractEntity $item)
     {
         return array();
     }
 
     /**
-     * @param mixed $item
+     * @param AbstractEntity $item
      *
      * @return bool
      */
-    public function canDelete($item)
+    public function canDelete(AbstractEntity $item)
     {
         return false;
     }
