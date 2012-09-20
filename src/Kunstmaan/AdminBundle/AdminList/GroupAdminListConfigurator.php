@@ -38,7 +38,7 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @return array
      */
-    public function getAddUrlFor($params = array())
+    public function getAddUrlFor(array $params = array())
     {
         return array(
             'group' => array('path' => 'KunstmaanAdminBundle_settings_groups_add', 'params'=> $params)

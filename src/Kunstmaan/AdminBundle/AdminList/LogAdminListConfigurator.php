@@ -50,7 +50,7 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @return array
      */
-    public function getAddUrlFor($params = array())
+    public function getAddUrlFor(array $params = array())
     {
         return array();
     }
