@@ -7,10 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * omnext errorlogitem
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity
- * @ORM\Table(name="errorlogitem")
+ * @ORM\Table(name="kuma_error_log_items")
  */
 class ErrorLogItem extends LogItem
 {
@@ -31,15 +29,10 @@ class ErrorLogItem extends LogItem
      */
     protected $level;
 
-    public function __construct()
-    {
-        $this->createdat = new \DateTime();
-    }
-
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -49,28 +42,40 @@ class ErrorLogItem extends LogItem
     /**
      * Set id
      *
-     * @param id integer
+     * @param int $id
      */
     public function setId($id)
     {
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
     public function getChannel()
     {
         return $this->channel;
     }
 
+    /**
+     * @param string $channel
+     */
     public function setChannel($channel)
     {
         $this->channel = $channel;
     }
 
+    /**
+     * @return string
+     */
     public function getLevel()
     {
         return $this->level;
     }
 
+    /**
+     * @param string $level
+     */
     public function setLevel($level)
     {
         $this->level = $level;

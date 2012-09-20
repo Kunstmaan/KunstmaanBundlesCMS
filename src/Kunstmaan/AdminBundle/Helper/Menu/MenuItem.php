@@ -1,156 +1,265 @@
 <?php
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
-use Symfony\Component\Translation\Translator;
 
-use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
-
+/**
+ * MenuItem
+ */
 class MenuItem
 {
     private $menu;
-    private $internalname;
+    private $internalName;
     private $role;
     private $parent;
     private $route;
-    private $routeparams = array();
+    private $routeParams = array();
     private $active = false;
     private $children = null;
     private $attributes = array();
     private $appearInNavigation;
-    private $weight = -50; 
+    private $weight = -50;
 
+    /**
+     * @param MenuBuilder $menu
+     */
     public function __construct(MenuBuilder $menu)
     {
-        $this->menu = $menu;
+        $this->menu               = $menu;
         $this->appearInNavigation = true;
     }
 
+    /**
+     * @return MenuBuilder
+     */
     public function getMenu()
     {
         return $this->menu;
     }
 
-    public function getInternalname()
+    /**
+     * @return string
+     */
+    public function getInternalName()
     {
-        return $this->internalname;
+        return $this->internalName;
     }
 
-    public function setInternalname($internalname)
+    /**
+     * @param string $internalName
+     *
+     * @return MenuItem
+     */
+    public function setInternalName($internalName)
     {
-        $this->internalname = $internalname;
+        $this->internalName = $internalName;
+
+        return $this;
     }
-    
+
+    /**
+     * @return string
+     */
     public function getRole()
     {
         return $this->role;
     }
-    
+
+    /**
+     * @param string $role
+     *
+     * @return MenuItem
+     */
     public function setRole($role)
     {
         $this->role = $role;
+
+        return $this;
     }
 
+    /**
+     * @return MenuItem|null
+     */
     public function getParent()
     {
         return $this->parent;
     }
 
-    public function setParent($parent)
+    /**
+     * @param MenuItem $parent
+     *
+     * @return MenuItem
+     */
+    public function setParent(MenuItem $parent = null)
     {
         $this->parent = $parent;
+
+        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getRoute()
     {
         return $this->route;
     }
 
+    /**
+     * @param string $route  The route
+     * @param array  $params The route parameters
+     *
+     * @return MenuItem
+     */
     public function setRoute($route, $params = array())
     {
-        $this->route = $route;
-        $this->routeparams = $params;
+        $this->route       = $route;
+        $this->routeParams = $params;
+
+        return $this;
     }
 
-    public function getRouteparams()
+    /**
+     * @return array
+     */
+    public function getRouteParams()
     {
-        return $this->routeparams;
+        return $this->routeParams;
     }
 
-    public function setRouteparams($routeparams)
+    /**
+     * @param array $routeParams
+     *
+     * @return MenuItem
+     */
+    public function setRouteParams($routeParams)
     {
-        $this->routeparams = $routeparams;
+        $this->routeParams = $routeParams;
+
+        return $this;
     }
 
+    /**
+     * @return MenuItem[]
+     */
     public function getChildren()
     {
         if (is_null($this->children)) {
             $children = $this->menu->getChildren($this);
         }
+
         return $children;
     }
-    
+
+    /**
+     * @return MenuItem[]
+     */
     public function getNavigationChildren()
     {
-        $result = array();
+        $result   = array();
         $children = $this->getChildren();
-        foreach($children as $child){
-            if($child->getAppearInNavigation()){
+        foreach ($children as $child) {
+            if ($child->getAppearInNavigation()) {
                 $result[] = $child;
             }
         }
+
         return $result;
     }
 
+    /**
+     * @return TopMenuItem[]
+     */
     public function getTopChildren()
     {
-        $result = array();
+        $result   = array();
         $children = $this->getChildren();
         foreach ($children as $child) {
             if ($child instanceof TopMenuItem) {
                 $result[] = $child;
             }
         }
+
         return $result;
     }
-    
+
+    /**
+     * @param array $attributes
+     *
+     * @return MenuItem
+     */
     public function addAttributes($attributes)
     {
         $this->attributes = array_merge($this->attributes, $attributes);
+
+        return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getAttributes()
     {
         return $this->attributes;
     }
 
+    /**
+     * @return bool
+     */
     public function getActive()
     {
         return $this->active;
     }
 
+    /**
+     * @param bool $active
+     *
+     * @return MenuItem
+     */
     public function setActive($active)
     {
         $this->active = $active;
+
+        return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getAppearInNavigation()
     {
         return $this->appearInNavigation;
     }
 
+    /**
+     * @param bool $appearInNavigation
+     *
+     * @return MenuItem
+     */
     public function setAppearInNavigation($appearInNavigation)
     {
         $this->appearInNavigation = $appearInNavigation;
+
+        return $this;
     }
-    
-    public function getWeight(){
+
+    /**
+     * @return int
+     */
+    public function getWeight()
+    {
         return $this->weight;
     }
-    
-    public function setWeight($weight){
+
+    /**
+     * @param int $weight
+     *
+     * @return MenuItem
+     */
+    public function setWeight($weight)
+    {
         $this->weight = $weight;
+
+        return $this;
     }
-    
 
 }

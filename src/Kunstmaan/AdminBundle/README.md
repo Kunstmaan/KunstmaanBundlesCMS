@@ -39,4 +39,3 @@ You can also clone the project with Git by running:
 ```
 $ git clone git://github.com/Kunstmaan/KunstmaanAdminBundle
 ```
-

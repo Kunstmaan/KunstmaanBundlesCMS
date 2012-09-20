@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,7 +19,7 @@ abstract class AbstractEntity
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -29,7 +28,7 @@ abstract class AbstractEntity
 
     /**
      * Set id
-     * 
+     *
      * @param int $id The unique identifier
      */
     public function setId($id)

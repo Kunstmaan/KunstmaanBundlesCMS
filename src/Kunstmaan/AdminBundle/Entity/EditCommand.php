@@ -2,18 +2,18 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\User as Baseuser;
+use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * omnext edit command
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity
- * @ORM\Table(name="editcommand")
+ * @ORM\Table(name="kuma_edit_commands")
  *
+ * @todo This should be removed when refactoring (logging should happen via a Listener)
+ * @deprecated This will be removed
  */
 class EditCommand extends Command
 {
@@ -27,21 +27,32 @@ class EditCommand extends Command
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
-    public function __construct(EntityManager $em, Baseuser $user)
+    /**
+     * @param EntityManager $em   The entity manger
+     * @param User          $user The user
+     */
+    public function __construct(EntityManager $em, User $user)
     {
         $this->em = $em;
         $this->user = $user;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function executeimpl($options)
     {
         $this->em->persist($options['entity']);
         $this->em->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function removeimpl()
     {
         // TODO extra actions
@@ -50,7 +61,7 @@ class EditCommand extends Command
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -60,20 +71,26 @@ class EditCommand extends Command
     /**
      * Set id
      *
-     * @param id integer
+     * @param int $id
      */
     public function setId($id)
     {
         $this->id = $id;
     }
 
+    /**
+     * @return User
+     */
     public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser($channel)
+    /**
+     * @param User $user
+     */
+    public function setUser($user)
     {
-        $this->user = $channel;
+        $this->user = $user;
     }
 }

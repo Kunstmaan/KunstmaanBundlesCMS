@@ -2,10 +2,10 @@
 
 /*
  * Copyright (c) 2012 Kunstmaan (http://www.kunstmaan.be)
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * @author Wim Vandersmissen <wim.vandersmissen@kunstmaan.be>
  * @license http://opensource.org/licenses/MIT MIT License
  */
@@ -19,14 +19,22 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use Doctrine\ORM\EntityManager;
+
 use Kunstmaan\AdminBundle\Entity\User;
 
+/**
+ * CreateUserCommand
+ */
 class CreateUserCommand extends ContainerAwareCommand
 {
+    /**
+     * Configures the current command.
+     */
     protected function configure()
     {
         parent::configure();
-        
+
         $this->setName('kuma:user:create')
             ->setDescription('Create a user.')
             ->setDefinition(array(
@@ -61,51 +69,66 @@ You can create an inactive user (will not be able to log in):
 EOT
             );
     }
-    
+
+    /**
+     * Executes the current command.
+     *
+     * @param InputInterface  $input  The input
+     * @param OutputInterface $output The output
+     *
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /* @var EntityManager $em */
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
-        $superadmin = $input->getOption('super-admin');
+        $superAdmin = $input->getOption('super-admin');
         $inactive = $input->getOption('inactive');
         $groupOption = $input->getOption('group');
-        
+
         $command = $this->getApplication()->find('fos:user:create');
         $arguments = array(
             'command'       => 'fos:user:create',
             'username'      => $username,
             'email'         => $email,
             'password'      => $password,
-            '--super-admin' => $superadmin,
+            '--super-admin' => $superAdmin,
             '--inactive'    => $inactive,
         );
-        
+
         $input = new ArrayInput($arguments);
-        $returnCode = $command->run($input, $output);
+        $command->run($input, $output);
 
         // Fetch user that was just created
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');        
+        /* @var User $user */
         $user = $em->getRepository('KunstmaanAdminBundle:User')->findOneBy(array('username' => $username));
 
         // Attach groups
-        $groupnames = explode(',', $groupOption);
-        foreach ($groupnames as $groupname) {
-            $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupname));
+        $groupNames = explode(',', $groupOption);
+        foreach ($groupNames as $groupName) {
+            $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
             $user->getGroups()->add($group);
         }
-        
         // Persist
         $em->persist($user);
         $em->flush();
-        
-        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', 
-                $input->getArgument('username'),
-                $groupOption));
+
+        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), $groupOption));
     }
 
     /**
-     * @see Command
+     * Interacts with the user.
+     *
+     * @param InputInterface  $input  The input
+     * @param OutputInterface $output The output
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
@@ -113,11 +136,11 @@ EOT
             $username = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose a username:',
-                function($username)
-                {
+                function($username) {
                     if (empty($username)) {
-                        throw new \Exception('Username can not be empty');
+                        throw new \InvalidArgumentException('Username can not be empty');
                     }
+
                     return $username;
                 }
             );
@@ -128,11 +151,11 @@ EOT
             $email = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose an email:',
-                function($email)
-                {
+                function($email) {
                     if (empty($email)) {
-                        throw new \Exception('Email can not be empty');
+                        throw new \InvalidArgumentException('Email can not be empty');
                     }
+
                     return $email;
                 }
             );
@@ -143,11 +166,11 @@ EOT
             $password = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose a password:',
-                function($password)
-                {
+                function($password) {
                     if (empty($password)) {
-                        throw new \Exception('Password can not be empty');
+                        throw new \InvalidArgumentException('Password can not be empty');
                     }
+
                     return $password;
                 }
             );
@@ -158,15 +181,15 @@ EOT
             $group = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please enter the group(s) the user should be a member of:',
-                function($group)
-                {
+                function($group) {
                     if (empty($group)) {
-                        throw new \Exception('Groups can not be empty');
+                        throw new \InvalidArgumentException('Groups can not be empty');
                     }
+
                     return $group;
                 }
             );
             $input->setOption('group', $group);
         }
-    }    
+    }
 }

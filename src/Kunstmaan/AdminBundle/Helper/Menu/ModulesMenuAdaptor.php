@@ -7,6 +7,9 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * ModulesMenuAdaptor
+ */
 class ModulesMenuAdaptor implements MenuAdaptorInterface
 {
     /**
@@ -20,15 +23,14 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if (is_null($parent)) {
-            $menuitem = new TopMenuItem($menu);
-            $menuitem->setRoute('KunstmaanAdminBundle_modules');
-            $menuitem->setInternalname("Modules");
-            $menuitem->setParent($parent);
-            if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                $menuitem->setActive(true);
+            $menuItem = new TopMenuItem($menu);
+            $menuItem->setRoute('KunstmaanAdminBundle_modules')
+                     ->setInternalName("Modules")
+                     ->setParent($parent);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
             }
-            $children[] = $menuitem;
+            $children[] = $menuItem;
         }
     }
-
 }

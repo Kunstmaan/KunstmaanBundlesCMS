@@ -4,19 +4,36 @@ namespace Kunstmaan\AdminBundle\Twig\Extension;
 
 use Symfony\Component\Locale\Locale;
 
-class DateByLocaleExtension extends \Twig_Extension {
-    
-    public function getFilters() {
+class DateByLocaleExtension extends \Twig_Extension
+{
+    /**
+     * @return array
+     */
+    public function getFilters()
+    {
         return array(
             'localeDate' => new \Twig_Filter_Function('\Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension::localeDateFilter')
         );
     }
-    
-    public function getName() {
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
         return 'TwigLocaleExtension';
     }
-    
-    public static function localeDateFilter($date, $locale="nl", $dateType = 'medium', $timeType = 'none') {
+
+    /**
+     * @param        $date
+     * @param string $locale
+     * @param string $dateType
+     * @param string $timeType
+     *
+     * @return string
+     */
+    public static function localeDateFilter($date, $locale="nl", $dateType = 'medium', $timeType = 'none')
+    {
         $values = array(
             'none' => \IntlDateFormatter::NONE,
             'short' => \IntlDateFormatter::SHORT,
@@ -24,15 +41,14 @@ class DateByLocaleExtension extends \Twig_Extension {
             'long' => \IntlDateFormatter::LONG,
             'full' => \IntlDateFormatter::FULL,
          );
-        
-        $dateFormater = \IntlDateFormatter::create(
+
+        $dateFormatter = \IntlDateFormatter::create(
             $locale,
             $values[$dateType],
             $values[$timeType],
-         	'Europe/Brussels'
+             'Europe/Brussels'
         );
-        
-        return $dateFormater->format($date);
+
+        return $dateFormatter->format($date);
     }
 }
-

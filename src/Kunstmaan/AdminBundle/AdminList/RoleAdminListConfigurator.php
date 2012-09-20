@@ -3,49 +3,96 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
-class RoleAdminListConfigurator extends AbstractAdminListConfigurator{
+/**
+ * RoleAdminListConfigurator
+ *
+ * @todo We should probably move this to the AdminList bundle to prevent circular references...
+ */
+class RoleAdminListConfigurator extends AbstractAdminListConfigurator
+{
 
-    public function buildFilters(AdminListFilter $builder) {
-        $builder->add('role', new StringFilterType("role"), "Role");
+    /**
+     * @param AdminListFilter $builder
+     */
+    public function buildFilters(AdminListFilter $builder)
+    {
+        $builder->add('role', new StringFilter("role"), "Role");
     }
 
-    public function buildFields() {
-    	$this->addField("role", "Role", true);
+    /**
+     * Configure the visible columns
+     */
+    public function buildFields()
+    {
+        $this->addField("role", "Role", true);
     }
 
-    public function getAddUrlFor($params=array()) {
-    	return array(
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getAddUrlFor($params = array())
+    {
+        return array(
             'role' => array('path' => 'KunstmaanAdminBundle_settings_roles_add', 'params' => $params)
-    	);
+        );
     }
 
-    public function getEditUrlFor($item) {
-    	return array('path' => 'KunstmaanAdminBundle_settings_roles_edit', 'params' => array('role_id' => $item->getId()));
+    /**
+     * @param mixed $item
+     *
+     * @return array
+     */
+    public function getEditUrlFor($item)
+    {
+        return array(
+            'path'   => 'KunstmaanAdminBundle_settings_roles_edit',
+            'params' => array('roleId' => $item->getId())
+        );
     }
 
+    /**
+     * @return array
+     */
     public function getIndexUrlFor()
     {
         return array('path' => 'KunstmaanAdminBundle_settings_roles');
     }
 
-    public function getAdminType($item) {
+    /**
+     * @param mixed $item
+     *
+     * @return AbstractType|null
+     */
+    public function getAdminType($item)
+    {
         return null;
     }
 
-    public function getDeleteUrlFor($item) {
+    /**
+     * @param mixed $item
+     *
+     * @return array
+     */
+    public function getDeleteUrlFor($item)
+    {
         return array(
             'path'      => 'KunstmaanAdminBundle_settings_roles_delete',
             'params'    => array(
-                'role_id'    => $item->getId()
+                'roleId'    => $item->getId()
             )
         );
     }
 
-    public function getRepositoryName() {
+    /**
+     * @return string
+     */
+    public function getRepositoryName()
+    {
         return 'KunstmaanAdminBundle:Role';
     }
 

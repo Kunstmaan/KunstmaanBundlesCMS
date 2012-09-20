@@ -2,14 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\User as Baseuser;
+use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\LogItem;
 
 /**
  * omnext command
  *
- * @author Kristof Van Cauwenbergh
+ * @todo This should be removed when refactoring (logging should happen via a Listener)
+ * @deprecated This will be removed
  */
 abstract class Command
 {
@@ -17,17 +18,23 @@ abstract class Command
     protected $em;
     protected $user;
 
-    public function __construct(EntityManager $em, Baseuser $user)
+    /**
+     * @param EntityManager $em   The entity manager
+     * @param User          $user The user
+     */
+    public function __construct(EntityManager $em, User $user)
     {
         $this->em = $em;
         $this->user = $user;
     }
 
+    /**
+     * @param string $message The message
+     * @param array  $options The options
+     */
     public function execute($message = "command executed", $options = array())
     {
         $this->executeimpl($options);
-
-        $message = $message;
 
         $logitem = new LogItem();
         $logitem->setStatus("info");
@@ -40,8 +47,14 @@ abstract class Command
         $this->em->flush();
     }
 
-    abstract function executeimpl($options);
+    /**
+     * @param array $options
+     */
+    abstract public function executeimpl($options);
 
+    /**
+     * remove
+     */
     public function remove()
     {
         $this->removeimpl();
@@ -50,5 +63,8 @@ abstract class Command
         $this->em->flush();
     }
 
-    abstract function removeimpl();
+    /**
+     * remove impl
+     */
+    abstract public function removeimpl();
 }

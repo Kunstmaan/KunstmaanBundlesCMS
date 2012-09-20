@@ -13,7 +13,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * Generates the configuration tree builder.
+     *
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
      */
     public function getConfigTreeBuilder()
     {
@@ -23,7 +25,6 @@ class Configuration implements ConfigurationInterface
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
-
         return $treeBuilder;
     }
 }

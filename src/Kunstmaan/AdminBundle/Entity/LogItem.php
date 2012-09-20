@@ -7,10 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * omnext logitem
  *
- * @author Kristof Van Cauwenbergh
- *
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\LogItemRepository")
- * @ORM\Table(name="logitem")
+ * @ORM\Entity
+ * @ORM\Table(name="kuma_log_items")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"logitem" = "LogItem", "errorlogitem" = "ErrorLogItem"})
@@ -37,29 +35,27 @@ class LogItem
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at")
      */
-    protected $createdat;
+    protected $createdAt;
 
     /**
-     * @todo Why the //?
-     * //@ORM\ManyToOne(targetEntity="Command")
+     * constructor
      */
-    //protected $command;
-
     public function __construct()
     {
-        $this->createdat = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,50 +65,74 @@ class LogItem
     /**
      * Set id
      *
-     * @param id integer
+     * @param int $id
      */
     public function setId($id)
     {
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
     public function getStatus()
     {
         return $this->status;
     }
 
-    public function setStatus($channel)
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
     {
-        $this->status = $channel;
+        $this->status = $status;
     }
 
+    /**
+     * @return User
+     */
     public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser($channel)
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user)
     {
-        $this->user = $channel;
+        $this->user = $user;
     }
 
+    /**
+     * @return string
+     */
     public function getMessage()
     {
         return $this->message;
     }
 
+    /**
+     * @param string $message
+     */
     public function setMessage($message)
     {
         $this->message = $message;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
-        return $this->createdat;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt($createdat)
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt)
     {
-        $this->createdat = $createdat;
+        $this->createdAt = $createdAt;
     }
 }

@@ -2,10 +2,10 @@
 
 /*
  * Copyright (c) 2012 Kunstmaan (http://www.kunstmaan.be)
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * @author Wim Vandersmissen <wim.vandersmissen@kunstmaan.be>
  * @license http://opensource.org/licenses/MIT MIT License
  */
@@ -18,14 +18,23 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Kunstmaan\AdminBundle\Entity\Group;
+use Doctrine\ORM\EntityManager;
 
+use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\Entity\Role;
+
+/**
+ * CreateGroupCommand
+ */
 class CreateGroupCommand extends ContainerAwareCommand
 {
+    /**
+     * Configures the current command.
+     */
     protected function configure()
     {
         parent::configure();
-        
+
         $this->setName('kuma:group:create')
             ->setDescription('Create a user group.')
             ->setDefinition(array(
@@ -37,7 +46,7 @@ The <info>kuma:group:create</info> command creates a group:
 
   <info>php app/console kuma:group:create Administrators</info>
 
-You can specify a list of roles to attach to this group by specifying the 
+You can specify a list of roles to attach to this group by specifying the
 optional --roles parameter, providing a comma separated list of roles :
 
   <info>php app/console kuma:group:create --role=admin,guest Administrators</info>
@@ -48,30 +57,38 @@ sure the roles already exist!
 EOT
             );
     }
-    
+
+    /**
+     * Executes the current command.
+     *
+     * @param InputInterface  $input  The input
+     * @param OutputInterface $output The output
+     *
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $groupname = $input->getArgument('group');
-
+        /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        
-        $rolenames = $input->getOption('role');        
-        $group = new Group($groupname);
+        $groupName = $input->getArgument('group');
+        $roleNames = $input->getOption('role');
+        $group = new Group($groupName);
 
-        if (!empty($rolenames)) {
+        if (!empty($roleNames)) {
             // Roles were provided, so attach them to the group
-            $rolenames = explode(',', strtoupper($rolenames));
-            foreach($rolenames as $rolename) {
-                if ('ROLE_' != substr($rolename, 0, 5)) {
-                    $rolename = 'ROLE_' . $rolename;
+            $roleNames = explode(',', strtoupper($roleNames));
+            foreach ($roleNames as $roleName) {
+                if ('ROLE_' != substr($roleName, 0, 5)) {
+                    $roleName = 'ROLE_' . $roleName;
                 }
-                $role = $em->getRepository('KunstmaanAdminBundle:Role')->findOneBy(array('role' => $rolename));
+                /* @var Role $role */
+                $role = $em->getRepository('KunstmaanAdminBundle:Role')->findOneBy(array('role' => $roleName));
                 $group->addRole($role);
             }
         }
         $em->persist($group);
         $em->flush();
-        
-        $output->writeln(sprintf('Created group <comment>%s</comment>', $groupname));
+
+        $output->writeln(sprintf('Created group <comment>%s</comment>', $groupName));
     }
 }

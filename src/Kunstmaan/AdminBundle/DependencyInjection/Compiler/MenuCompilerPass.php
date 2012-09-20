@@ -6,17 +6,25 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * MenuCompilerPass
+ */
 class MenuCompilerPass implements CompilerPassInterface
 {
+    /**
+     * You can modify the container here before it is dumped to PHP code.
+     *
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->hasDefinition('admin_menu.menubuilder')) {
+        if (false === $container->hasDefinition('kunstmaan_admin.menubuilder')) {
             return;
         }
 
-        $definition = $container->getDefinition('admin_menu.menubuilder');
-        
-        foreach ($container->findTaggedServiceIds('admin_menu.adaptor') as $id => $attributes) {
+        $definition = $container->getDefinition('kunstmaan_admin.menubuilder');
+
+        foreach ($container->findTaggedServiceIds('kunstmaan_admin.menu.adaptor') as $id => $attributes) {
             $definition->addMethodCall('addAdaptMenu', array(new Reference($id)));
         }
     }

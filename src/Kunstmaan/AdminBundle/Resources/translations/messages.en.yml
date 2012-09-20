@@ -54,6 +54,7 @@ form:
   add: Add New
   save: Save
   publish: Publish
+  unpublish: Unpublish
   saveasdraft: Save as draft
   name: Name
   type: Type
@@ -69,7 +70,8 @@ form:
   actions: Actions
   addfilter: Add filter
   choosetypefilter: Filter at
-    
+  versions: Versions
+  
 omnext:
   home: Home
   title: Welcome!

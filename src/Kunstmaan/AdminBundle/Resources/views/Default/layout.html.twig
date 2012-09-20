@@ -31,7 +31,7 @@
 	    output='generated-css/style.css'
 	    filter='cssrewrite'
 	%}
-	<link rel="stylesheet" href="{{ asset_url }}" />
+	<link rel="stylesheet" href="{{ asset_url }}?v=2" />
 	<!--Customizable color brand-->
 	<style type="text/css">
 	    {% if titlecolor is not defined or titlecolor is empty %}
@@ -108,7 +108,7 @@
 							{% set attribs = app.request.attributes.all %}
 							{{ localeswitcher_widget(requiredlocales, route) }}
 							<li {% if route == 'KunstmaanAdminBundle_settings_users_edit' %}class="active"{% endif %}>
-								<a href="{{ path('KunstmaanAdminBundle_settings_users_edit', { 'user_id' : app.user.id }) }}">{{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}</a>
+								<a href="{{ path('KunstmaanAdminBundle_settings_users_edit', { 'userId' : app.user.id }) }}">{{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}</a>
 							</li>
 							<li>
 								<a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
@@ -213,28 +213,14 @@
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <!--Extra-->
+    {% block extrajavascript %}
     <!--Inline-->
     <script type=text/javascript>
         $(document).ready(function () {
-            init_tree("{{ path('KunstmaanAdminNodeBundle_pages_movenodes') }}", "{% if mediabundleisset is defined %}{{ path('KunstmaanMediaBundle_folder_movenodes') }}{% else %}/movenodes{% endif %}");
-        });
-
-        {% include "KunstmaanAdminBundle:Default:ckeditor.js.twig" %}
-        jQuery(document).ready(function(){
-            jQuery('textarea.rich_editor').each(function(item){
-                var config = {};
-                if($(this).attr('height')){
-                    config.height = $(this).attr('height');
-                }
-                if($(this).attr('noparagraphs')){
-                    config.enterMode = CKEDITOR.ENTER_BR;
-                        config.shiftEnterMode = CKEDITOR.ENTER_P;
-                }
-                CKEDITOR.replace( $(this).attr('id'), config);
-            });
+            init_tree("/movepages", "/movenodes");
         });
     </script>
-    <!--Extra-->
-    {% block extrajavascript %}{% endblock %}  
+    {% endblock %}
 </body>
 </html>

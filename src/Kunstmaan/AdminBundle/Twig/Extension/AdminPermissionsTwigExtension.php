@@ -2,38 +2,59 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
+use Symfony\Component\Form\FormView;
 
 class AdminPermissionsTwigExtension extends \Twig_Extension
 {
-    /**
-     * @var \Twig_Environment
-     */
+    /* @var \Twig_Environment */
     protected $environment;
 
     /**
-     * {@inheritdoc}
+     * Initializes the runtime environment.
+     *
+     * This is where you can load some file that contains filter functions for instance.
+     *
+     * @param Twig_Environment $environment The current Twig_Environment instance
      */
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
     }
 
-    public function getFunctions() {
+    /**
+     * Returns a list of functions to add to the existing list.
+     *
+     * @return array An array of functions
+     */
+    public function getFunctions()
+    {
         return array(
             'permissionsadmin_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
         );
     }
 
-
-    public function renderWidget($permissionadmin , $form , array $parameters = array())
+    /**
+     * @param PermissionAdmin $permissionAdmin
+     * @param FormView        $form
+     * @param array           $parameters
+     *
+     * @return string
+     */
+    public function renderWidget(PermissionAdmin $permissionAdmin, FormView $form , array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminBundle:PermissionsAdminTwigExtension:widget.html.twig");
-        return $template->render(array_merge($parameters, array(
+
+        return $template->render(array_merge(array(
             'form'              => $form,
-            'permissionadmin'   => $permissionadmin
-        )));
+            'permissionadmin'   => $permissionAdmin,
+            'recursiveSupport'  => true
+        ), $parameters));
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'permissionsadmin_twig_extension';

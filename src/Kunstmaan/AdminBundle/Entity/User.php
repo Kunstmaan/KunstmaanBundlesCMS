@@ -9,10 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * omnext user, can have different roles
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\UserRepository")
- * @ORM\Table(name="user")
+ * @ORM\Table(name="kuma_users")
  */
 class User extends BaseUser
 {
@@ -25,39 +23,40 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="Kunstmaan\AdminBundle\Entity\Group")
-     * @ORM\JoinTable(name="user_user_group",
+     * @ORM\JoinTable(name="kuma_users_groups",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
      * )
      */
     protected $groups;
 
-
+    /**
+     * constructor
+     */
     public function __construct()
     {
         parent::__construct();
-        // your own logic
         $this->groups = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     /**
      * Set id
      *
-     * @param id integer
+     * @param int $id
      */
     public function setId($id)
     {
-    	$this->id = $id;
+        $this->id = $id;
     }
 
     /**
@@ -70,8 +69,8 @@ class User extends BaseUser
         $groups = $this->groups;
 
         $groupIds = array();
-        if(count($groups) > 0) {
-            foreach($groups as $group) {
+        if (count($groups) > 0) {
+            foreach ($groups as $group) {
                 $groupIds[] = $group->getId();
             }
         }
@@ -81,7 +80,7 @@ class User extends BaseUser
 
     /**
      * Gets the groups the user belongs to.
-     * 
+     *
      * @return ArrayCollection
      */
     public function getGroups()
@@ -89,29 +88,4 @@ class User extends BaseUser
         return $this->groups;
     }
 
-    /**
-     * Never use this to check if this user has access to anything!
-     *
-     * Use the SecurityContext, or an implementation of AccessDecisionManager
-     * instead, e.g.
-     *
-     *         $securityContext->isGranted('ROLE_USER');
-     *
-     * @param string $role
-     * @return Boolean
-     */
-    public function hasRole($role)
-    {
-        if (isset($role)) {
-            foreach ($this->getRoles() as $r) {
-                if (is_string($r) && $r === $role) {
-                    return true;
-                }
-                if (is_object($r) && $r instanceof Role && $r->getRole() === $role) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }
