@@ -102,14 +102,12 @@ class FileFormSubmissionField extends FormSubmissionField
     /**
      * Create a safe file name for the uploaded file, so that it can be saved safely on the disk.
      *
-     * @param UploadedFile $file
-     *
      * @return string
      */
-    public function getSafeFileName(UploadedFile $file)
+    public function getSafeFileName()
     {
         $fileExtension = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $mimeTypeExtension = $file->guessExtension();
+        $mimeTypeExtension = $this->file->guessExtension();
         $newExtension = !empty($mimeTypeExtension) ? $mimeTypeExtension : $fileExtension;
 
         $baseName = !empty($fileExtension) ? basename($this->file->getClientOriginalName(), $fileExtension) : $this->file->getClientOriginalName();

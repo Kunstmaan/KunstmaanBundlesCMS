@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
+
 use ArrayObject;
 
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,7 +30,7 @@ class ChoicePagePart extends AbstractFormPagePart
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $expanded;
+    protected $expanded = false;
 
     /**
      * If true, the user will be able to select multiple options (as opposed to choosing just one option).
@@ -38,7 +39,7 @@ class ChoicePagePart extends AbstractFormPagePart
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $multiple;
+    protected $multiple = false;
 
     /**
      * The choices that should be used by this field. The choices can be entered separated by a new line.

@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
+use ArrayObject;
 use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
@@ -155,7 +156,7 @@ abstract class AbstractFormPage extends AbstractPage
             /* @var $em EntityManager */
             $em = $container->get('doctrine')->getEntityManager();
             /* @var $fields FormSubmissionField[] */
-            $fields = array();
+            $fields = new ArrayObject();
             $pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($this, $this->getFormElementsContext());
             foreach ($pageparts as $pagepart) {
                 if ($pagepart instanceof FormAdaptorInterface) {
