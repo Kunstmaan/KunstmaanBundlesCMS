@@ -195,11 +195,13 @@ class AdminList
     }
 
     /**
+     * @param mixed $item
+     *
      * @return bool
      */
-    public function canEdit()
+    public function canEdit($item)
     {
-        return $this->configurator->canEdit();
+        return $this->configurator->canEdit($item);
     }
 
     /**
