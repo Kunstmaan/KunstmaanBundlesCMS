@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\FormBundle\EventListener;
 
+use Doctrine\ORM\EntityManager;
+
 use Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
-
-use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Routing\Router;
 

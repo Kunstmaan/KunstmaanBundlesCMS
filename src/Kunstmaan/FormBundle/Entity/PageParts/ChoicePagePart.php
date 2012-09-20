@@ -1,15 +1,16 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
-
-use Symfony\Component\Form\FormBuilderInterface;
 use ArrayObject;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
-use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
-use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
+
+use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
+use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
+use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

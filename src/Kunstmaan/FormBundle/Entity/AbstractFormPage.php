@@ -5,11 +5,11 @@ namespace Kunstmaan\FormBundle\Entity;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
+use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;

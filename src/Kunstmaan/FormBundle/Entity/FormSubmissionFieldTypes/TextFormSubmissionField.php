@@ -1,8 +1,10 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

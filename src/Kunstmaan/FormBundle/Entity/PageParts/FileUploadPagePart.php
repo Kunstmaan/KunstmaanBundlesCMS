@@ -4,18 +4,18 @@ namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormError;
+use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 
 /**
  * The file upload page part can be used to create forms with the possibility to upload files.

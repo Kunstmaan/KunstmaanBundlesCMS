@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 

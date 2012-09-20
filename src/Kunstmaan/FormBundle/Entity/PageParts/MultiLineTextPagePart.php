@@ -2,15 +2,17 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use ArrayObject;
+
+use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
+
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * The multi-line text page part can be used to create forms with multi-line text fields.

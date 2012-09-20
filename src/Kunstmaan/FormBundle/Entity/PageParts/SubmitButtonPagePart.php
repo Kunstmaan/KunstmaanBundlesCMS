@@ -3,8 +3,10 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-use Symfony\Component\Form\AbstractType;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
+
+use Symfony\Component\Form\AbstractType;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

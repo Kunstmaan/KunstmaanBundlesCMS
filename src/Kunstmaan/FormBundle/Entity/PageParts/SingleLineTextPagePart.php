@@ -3,14 +3,15 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-use Symfony\Component\Form\FormBuilderInterface;
 
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormError;
 
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormError;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;

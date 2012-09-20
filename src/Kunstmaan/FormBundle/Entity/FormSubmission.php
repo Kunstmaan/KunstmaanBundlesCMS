@@ -6,8 +6,8 @@ use DateTime;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * The form submission
