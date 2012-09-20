@@ -2,9 +2,14 @@
 
 namespace Kunstmaan\FormBundle\Helper;
 
-use Kunstmaan\FormBundle\Entity\FormSubmission;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_Mime_Message;
 
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Kunstmaan\FormBundle\Entity\FormSubmission;
 
 /**
  * The form mailer
@@ -14,17 +19,18 @@ class Mailer
 
     private $mailer;
     private $templating;
-	private $container;
+    private $container;
 
     /**
-     * @param \Swift_Mailer $mailer     The mailer service
-     * @param TwigEngine    $templating The templating service
+     * @param Swift_Mailer       $mailer     The mailer service
+     * @param TwigEngine         $templating The templating service
+     * @param ContainerInterface $container  The container
      */
-    public function __construct($mailer, $templating, $container)
+    public function __construct(Swift_Mailer $mailer, TwigEngine $templating, ContainerInterface $container)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
-		$this->container = $container;
+        $this->container = $container;
     }
 
     /**
@@ -36,13 +42,15 @@ class Mailer
     public function sendContactMail(FormSubmission $submission, $from, $to, $subject)
     {
         $toArr = explode("\r\n", $to);
-        $message = \Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);
-		$message->setBody(
-			$this->templating->render('KunstmaanFormBundle:Mailer:mail.html.twig', array(
-				'submission' => $submission,
-				'host' => $this->container->get('request')->getScheme().'://'.$this->container->get('request')->getHttpHost()
-			)
-		), 'text/html');
+        /* @var $message Swift_Mime_Message */
+        $message = Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);
+        $message->setBody(
+            $this->templating->render(
+                'KunstmaanFormBundle:Mailer:mail.html.twig', array(
+                    'submission' => $submission,
+                    'host' => $this->container->get('request')->getScheme().'://'.$this->container->get('request')->getHttpHost()
+                )
+            ), 'text/html');
         $this->mailer->send($message);
     }
 }

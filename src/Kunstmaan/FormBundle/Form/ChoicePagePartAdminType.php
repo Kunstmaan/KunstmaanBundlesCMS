@@ -4,16 +4,17 @@ namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * ChoicePagePartAdminType
+ * This class represents the type for the ChoicePagePart
  */
 class ChoicePagePartAdminType extends AbstractType
 {
+
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,15 +25,14 @@ class ChoicePagePartAdminType extends AbstractType
             ->add('expanded', 'checkbox', array('required' => false))
             ->add('multiple', 'checkbox', array('required' => false))
             ->add('choices', 'textarea', array('required' => false))
-			->add('empty_value', 'text', array('required' => false));
+            ->add('empty_value', 'text', array('required' => false));
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {
         return 'kunstmaan_formbundle_choicepageparttype';
     }
 }
-

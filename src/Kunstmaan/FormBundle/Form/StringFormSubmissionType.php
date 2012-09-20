@@ -1,21 +1,19 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Form;
-use Symfony\Component\Form\FormBuilderInterface;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\MinLength;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Collection;
 
 /**
- * StringFormSubmissionType
+ * The type for the StringFormSubmissionField
  */
 class StringFormSubmissionType extends AbstractType
 {
 
+    /**
+     * @var string
+     */
     private $label;
 
     /**
@@ -27,7 +25,8 @@ class StringFormSubmissionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -36,6 +35,11 @@ class StringFormSubmissionType extends AbstractType
         ));
     }
 
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
     public function getDefaultOptions(array $options)
     {
         return array(
@@ -44,11 +48,10 @@ class StringFormSubmissionType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {
         return 'kunstmaan_formbundle_stringformsubmissiontype';
     }
 }
-

@@ -2,19 +2,18 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
+use DateTime;
+
 use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
-use Gedmo\Mapping\Annotation as Gedmo;
+
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * The form submission
  *
  * @ORM\Entity
- * @ORM\Table(name="form_formsubmission")
+ * @ORM\Table(name="kuma_form_submissions")
  * @ORM\HasLifecycleCallbacks()
  */
 class FormSubmission
@@ -27,13 +26,13 @@ class FormSubmission
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="ip_address")
      */
     protected $ipAddress;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kunstmaan\AdminNodeBundle\Entity\Node")
-     * @ORM\JoinColumn(name="node", referencedColumnName="id")
+     * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
     protected $node;
 
@@ -48,7 +47,7 @@ class FormSubmission
     protected $created;
 
     /**
-     * @ORM\OneToMany(targetEntity="FormSubmissionField", mappedBy="formsubmission")
+     * @ORM\OneToMany(targetEntity="FormSubmissionField", mappedBy="formSubmission")
      */
     protected $fields;
 
@@ -57,8 +56,8 @@ class FormSubmission
      */
     public function __construct()
     {
-        $this->fields = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setCreated(new \DateTime());
+        $this->fields = new ArrayCollection();
+        $this->setCreated(new DateTime());
     }
 
     /**
@@ -146,7 +145,7 @@ class FormSubmission
     }
 
     /**
-     * @return array;
+     * @return FormSubmissionField[];
      */
     public function getFields()
     {

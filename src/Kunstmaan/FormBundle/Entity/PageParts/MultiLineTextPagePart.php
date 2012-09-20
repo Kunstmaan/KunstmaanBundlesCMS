@@ -3,21 +3,20 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use ArrayObject;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
  * Multi line text pagepart
  *
  * @ORM\Entity
- * @ORM\Table(name="form_multilinetextpagepart")
+ * @ORM\Table(name="kuma_multi_line_text_page_parts")
  */
 class MultiLineTextPagePart extends AbstractFormPagePart
 {
@@ -28,9 +27,9 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     protected $regex;
 
     /**
-     * @ORM\Column(type="string", name="errormessage_regex", nullable=true)
+     * @ORM\Column(type="string", name="error_message_regex", nullable=true)
      */
-    protected $errormessageRegex;
+    protected $errorMessageRegex;
 
     /**
      * @param string $regex
@@ -49,23 +48,23 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * @param string $errormessageRegex
+     * @param string $errorMessageRegex
      */
-    public function setErrormessageRegex($errormessageRegex)
+    public function setErrorMessageRegex($errorMessageRegex)
     {
-        $this->errormessageRegex = $errormessageRegex;
+        $this->errorMessageRegex = $errorMessageRegex;
     }
 
     /**
      * @return string
      */
-    public function getErrormessageRegex()
+    public function getErrorMessageRegex()
     {
-        return $this->errormessageRegex;
+        return $this->errorMessageRegex;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDefaultView()
     {
@@ -73,15 +72,16 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $formBuilder The form builder
+     * @param ArrayObject          $fields      The fields
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, &$fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
     {
-        $sfsf = new TextFormSubmissionField();
-        $sfsf->setFieldName("field_" . $this->getUniqueId());
-        $sfsf->setLabel($this->getLabel());
+        $mfsf = new TextFormSubmissionField();
+        $mfsf->setFieldName("field_" . $this->getUniqueId());
+        $mfsf->setLabel($this->getLabel());
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $sfsf;
+        $data['formwidget_' . $this->getUniqueId()] = $mfsf;
         $label = $this->getLabel();
         if ($this->getRequired()) {
             $label = $label . ' *';
@@ -90,36 +90,35 @@ class MultiLineTextPagePart extends AbstractFormPagePart
         $formBuilder->setData($data);
         if ($this->getRequired()) {
             $formBuilder->addValidator(
-				new FormValidator($sfsf, $this,
-					function (FormInterface $form, $sfsf, $thiss)
-					{
-						$value = $sfsf->getValue();
+                new FormValidator($mfsf, $this,
+                    function (FormInterface $form, TextFormSubmissionField $sfsf, MultiLineTextPagePart $thiss) {
+                        $value = $sfsf->getValue();
                         if (is_null($value) || !is_string($value) || empty($value)) {
-							$errormsg = $thiss->getErrormessageRequired();
-							$v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-							$v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
-						}
-					}
-			));
+                            $errormsg = $thiss->getErrorMessageRequired();
+                            $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
+                            $v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
+                        }
+                    }
+                )
+            );
         }
         if ($this->getRegex()) {
             $formBuilder
                     ->addValidator(
-                        new FormValidator($sfsf, $this,
-                            function (FormInterface $form, $sfsf, $thiss)
-                                    {
+                        new FormValidator($mfsf, $this,
+                            function (FormInterface $form, TextFormSubmissionField $sfsf, MultiLineTextPagePart $thiss) {
                                         $value = $sfsf->getValue();
                                         if (!is_null($value) && is_string($value) && !preg_match('/' . $thiss->getRegex() . '/', $value)) {
                                             $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                                            $v->addError(new FormError($thiss->getErrormessageRegex()));
+                                            $v->addError(new FormError($thiss->getErrorMessageRegex()));
                                         }
                             }));
         }
-        $fields[] = $sfsf;
+        $fields[] = $mfsf;
     }
 
     /**
-     * {@inheritdoc}
+     * @return MultiLineTextPagePartAdminType
      */
     public function getDefaultAdminType()
     {

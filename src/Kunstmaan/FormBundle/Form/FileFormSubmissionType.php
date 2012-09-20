@@ -2,37 +2,50 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
 
+/**
+ * This class represents the type for the file FileFormSubmissionField
+ */
 class FileFormSubmissionType extends AbstractType
 {
-	protected $label;
-	protected $required;
+    /**
+     * @var string
+     */
+    protected $label;
 
-	public function __construct($label, $required)
-	{
-		$this->label = $label;
-		$this->required = $required;
-	}
+    /**
+     * @var bool
+     */
+    protected $required;
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->add('file', 'file', array(
-			'label' => $this->label,
-			'required' => $this->required
-		));
-	}
+    /**
+     * @param string $label    The label
+     * @param bool   $required Is required
+     */
+    public function __construct($label, $required)
+    {
+        $this->label = $label;
+        $this->required = $required;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getName()
-	{
-		return 'kunstmaan_formbundle_fileformsubmissiontype';
-	}
+    /**
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options An array with options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('file', 'file', array(
+            'label' => $this->label,
+            'required' => $this->required
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'kunstmaan_formbundle_fileformsubmissiontype';
+    }
 }

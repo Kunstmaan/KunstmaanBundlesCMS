@@ -2,19 +2,18 @@
 
 namespace Kunstmaan\FormBundle\Controller;
 
-use Ddeboer\DataImportBundle\Writer\CsvWriter;
+use Ddeboer\DataImport\Writer\CsvWriter;
 
-use Kunstmaan\AdminBundle\Entity\User;
-use Kunstmaan\AdminBundle\Entity\Group;
-use Kunstmaan\AdminBundle\Form\EditUserType;
-use Kunstmaan\AdminBundle\Form\EditGroupType;
-use Kunstmaan\AdminBundle\Form\UserType;
-use Kunstmaan\AdminBundle\Form\GroupType;
+use Doctrine\ORM\QueryBuilder;
+
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
+use Kunstmaan\FormBundle\Entity\FormSubmission;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -36,88 +35,99 @@ class FormSubmissionsController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        $formpagesadminlist = $this->get("adminlist.factory")->createList(new FormPageAdminListConfigurator($user, 'read'), $em);
-        $formpagesadminlist->bindRequest($request);
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        /* @var $adminList AdminList */
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(new FormPageAdminListConfigurator(PermissionMap::PERMISSION_VIEW), $em);
+        $adminList->setAclHelper($aclHelper);
+        $adminList->bindRequest($request);
 
-        return array('adminlist' => $formpagesadminlist);
+        return array('adminlist' => $adminList);
     }
 
     /**
      * The list
-     * @param int $nodetranslationid
      *
-     * @Route("/list/{nodetranslationid}", requirements={"nodetranslationid" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list")
+     * @param int $nodeTranslationId
+     *
+     * @Route("/list/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list")
      * @Method({"GET", "POST"})
      * @Template()
      *
      * @return array
      */
-    public function listAction($nodetranslationid)
+    public function listAction($nodeTranslationId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
-        $adminlist = $this->get("adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($nodeTranslation), $em);
-        $adminlist->bindRequest($request);
+        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        /* @var $adminList AdminList */
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($nodeTranslation), $em);
+        $adminList->setAclHelper($aclHelper);
+        $adminList->bindRequest($request);
 
-        return array('nodetranslation' => $nodeTranslation, 'adminlist' => $adminlist);
+        return array('nodetranslation' => $nodeTranslation, 'adminlist' => $adminList);
     }
 
     /**
      * The edit action
-     * @param int $nodetranslationid The node translation id
-     * @param int $submissionid      The submission id
      *
-     * @Route("/list/{nodetranslationid}/{submissionid}", requirements={"nodetranslationid" = "\d+", "submissionid" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit")
+     * @param int $nodeTranslationId The node translation id
+     * @param int $submissionId      The submission id
+     *
+     * @Route("/list/{nodeTranslationId}/{submissionId}", requirements={"nodeTranslationId" = "\d+", "submissionId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit")
      * @Method({"GET", "POST"})
      * @Template()
      *
      * @return array
      */
-    public function editAction($nodetranslationid, $submissionid)
+    public function editAction($nodeTranslationId, $submissionId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $request = $this->getRequest();
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
-        $formSubmission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionid);
+        $em = $this->getDoctrine()->getManager();
+        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $formSubmission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
 
         return array('nodetranslation' => $nodeTranslation, 'formsubmission' => $formSubmission,);
     }
 
     /**
      * Export as CSV
-     * @param int $nodetranslationid
      *
-     * @Route("/export/{nodetranslationid}", requirements={"nodetranslationid" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_export")
+     * @param int $nodeTranslationId
+     *
+     * @Route("/export/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_export")
      * @Method({"GET"})
+     *
+     * @return Response
      */
-    public function exportAction($nodetranslationid)
+    public function exportAction($nodeTranslationId)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $request = $this->getRequest();
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodetranslationid);
+        $em = $this->getDoctrine()->getManager();
+        /* @var $nodeTranslation NodeTranslation */
+        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodeTranslationId);
 
         $tmpFilename = tempnam('/tmp', 'cb_csv_');
         $file = new \SplFileObject($tmpFilename);
         $writer = new CsvWriter($file);
-        
-        $qb = $em->createQueryBuilder()
-                ->select('fs')
-                ->from('KunstmaanFormBundle:FormSubmission', 'fs')
-                ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
-                ->andWhere('n.id = ?1')
-                ->setParameter(1, $nodeTranslation->getNode()->getId())
-                ->addOrderBy('fs.created', 'DESC');
+
+        /* @var $qb QueryBuilder */
+        $qb = $em->createQueryBuilder();
+        $qb->select('fs')
+           ->from('KunstmaanFormBundle:FormSubmission', 'fs')
+           ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
+           ->andWhere('n.id = :node')
+           ->setParameter('node', $nodeTranslation->getNode()->getId())
+           ->addOrderBy('fs.created', 'DESC');
         $iterableResult = $qb->getQuery()->iterate();
         $isHeaderWritten = false;
         $translator = $this->get('translator');
-        
-        foreach ($iterableResult AS $row) {
+
+        foreach ($iterableResult as $row) {
+            /* @var $submission FormSubmission */
             $submission = $row[0];
-            
+
             // Write header info
             if (!$isHeaderWritten) {
                 $header = array($translator->trans("Id"), $translator->trans("Date"), $translator->trans("Language"));
@@ -127,22 +137,22 @@ class FormSubmissionsController extends Controller
                 $writer->writeItem($header);
                 $isHeaderWritten = true;
             }
-            
+
             // Write row data
             $data = array($submission->getId(), $submission->getCreated()->format('d/m/Y H:i:s'), $submission->getLang());
             foreach ($submission->getFields() as $field) {
-                $data[] = mb_convert_encoding($field->getValue(), 'ISO-8859-1', 'UTF-8');
+            $data[] = mb_convert_encoding($field->__toString(), 'ISO-8859-1', 'UTF-8');
             }
             $writer->writeItem($data);
             $em->detach($submission);
         }
         $writer->finish();
-                
+
         $response = new Response(file_get_contents($tmpFilename));
         $response->headers->set('Content-Type', 'text/csv');
         $response->headers->set('Content-Disposition', 'attachment; filename="form-submissions.csv"');
         unlink($tmpFilename);
-        
+
         return $response;
     }
 

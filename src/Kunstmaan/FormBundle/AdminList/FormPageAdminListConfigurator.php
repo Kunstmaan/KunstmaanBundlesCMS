@@ -2,13 +2,14 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Entity\Permission;
-
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Adminlist for form pages
@@ -16,48 +17,50 @@ use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
 class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
-    protected $permission;
-    protected $user;
-
     /**
-     * @param mixed      $user       The User
-     * @param Permission $permission The permission
+     * @param string $permission The permission
      */
-    public function __construct($user, $permission)
+    public function __construct($permission)
     {
-        $this->permission   = $permission;
-        $this->user         = $user;
+        $this->setPermissionDefinition(
+            new PermissionDefinition(array($permission), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n')
+        );
     }
 
     /**
-     * {@inheritdoc}
+     * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('title', new StringFilterType("title"), "Title");
-        $builder->add('online', new BooleanFilterType("online"), "Online");
+        $builder->add('title', new StringFilter("title"), "Title");
+        $builder->add('online', new BooleanFilter("online"), "Online");
     }
 
     /**
-     * {@inheritdoc}
+     * Configure the visible columns
      */
     public function buildFields()
     {
-    	$this->addField("title", "Title", true);
+        $this->addField("title", "Title", true);
         $this->addField("lang", "Language", true);
         $this->addField("url", "Form path", true);
     }
 
     /**
-     * {@inheritdoc}
+     * @param AbstractEntity $item
+     *
+     * @return array
      */
-	public function getEditUrlFor($item)
-	{
-    	return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array( 'nodetranslationid' => $item->getId()));
+    public function getEditUrlFor(AbstractEntity $item)
+    {
+        return array(
+            'path'   => 'KunstmaanFormBundle_formsubmissions_list',
+            'params' => array('nodeTranslationId' => $item->getId())
+        );
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function getIndexUrlFor()
     {
@@ -65,31 +68,35 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @return bool
      */
     public function canAdd()
-    {
-    	return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAddUrlFor($params=array())
-    {
-    	return "";
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function canDelete($item)
     {
         return false;
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $params
+     *
+     * @return string
+     */
+    public function getAddUrlFor(array $params = array())
+    {
+        return "";
+    }
+
+    /**
+     * @param AbstractEntity $item
+     *
+     * @return bool
+     */
+    public function canDelete(AbstractEntity $item)
+    {
+        return false;
+    }
+
+    /**
+     * @return string
      */
     public function getRepositoryName()
     {
@@ -97,31 +104,27 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param QueryBuilder $queryBuilder The query builder
+     * @param array        $params       The parameters
      */
-    public function adaptQueryBuilder($querybuilder, $params=array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
     {
-        parent::adaptQueryBuilder($querybuilder);
-        $querybuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-	        ->andWhere('n.id IN (
-	        		SELECT p.refId FROM Kunstmaan\AdminBundle\Entity\Permission p WHERE p.refEntityname = ?1 AND p.permissions LIKE ?2 AND p.refGroup IN(?3))')
-	        ->andWhere('n.id IN (
-	        		SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)')
-	        ->setParameter(1, 'Kunstmaan\AdminNodeBundle\Entity\Node')
-	        ->setParameter(2, '%|'.$this->permission.':1|%')
-	        ->setParameter(3, $this->user->getGroupIds())
-	        ->addOrderBy('n.sequencenumber', 'DESC');
-
-        return $querybuilder;
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->andWhere(
+                'n.id IN (SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)'
+            )
+            ->addOrderBy('n.sequenceNumber', 'DESC');
     }
 
     /**
-     * {@inheritdoc}
+     * @param AbstractEntity $item
+     *
+     * @return array
      */
-    public function getDeleteUrlFor($item)
+    public function getDeleteUrlFor(AbstractEntity $item)
     {
         return array();
     }
-
 
 }

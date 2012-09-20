@@ -2,27 +2,32 @@
 
 namespace Kunstmaan\FormBundle\EventListener;
 
-use Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent;
+use Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
+
 use Doctrine\ORM\EntityManager;
+
 use Symfony\Component\Routing\Router;
 
+/**
+ * An event listener to add a formsubmissions link to the submenu of nodes.
+ */
 class ConfigureActionsMenuListener
 {
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
     /**
-     * @var \Symfony\Component\Routing\Router
+     * @var Router
      */
     private $router;
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     * @param \Symfony\Component\Routing\Router $router
+     * @param EntityManager $em     The entity manager
+     * @param Router        $router The router
      */
     public function __construct(EntityManager $em, Router $router)
     {
@@ -31,7 +36,7 @@ class ConfigureActionsMenuListener
     }
 
     /**
-     * @param \Kunstmaan\AdminNodeBundle\Helper\Event\ConfigureActionMenuEvent $event
+     * @param ConfigureActionMenuEvent $event
      */
     public function onSubActionMenuConfigure(ConfigureActionMenuEvent $event)
     {

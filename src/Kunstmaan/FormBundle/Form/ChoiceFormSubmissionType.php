@@ -3,57 +3,76 @@
 namespace Kunstmaan\FormBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * ChoiceFormSubmissionType
+ * This class represents the type for the ChoiceFormSubmissionField
  */
 class ChoiceFormSubmissionType extends AbstractType
 {
 
+    /**
+     * @var string
+     */
     private $label;
-    private $expanded;
-    private $multiple;
-    private $choices;
-	private $empty_value;
 
     /**
-     * @param string  $label    The label
-     * @param boolean $expanded Expanded or not
-     * @param boolean $multiple Multiple or not
-     * @param array   $choices  The choices array
+     * @var bool
      */
-    public function __construct($label, $expanded, $multiple, $choices, $empty_value = null)
+    private $expanded;
+
+    /**
+     * @var bool
+     */
+    private $multiple;
+
+    /**
+     * @var array
+     */
+    private $choices;
+
+    /**
+     * @var array
+     */
+    private $emptyValue;
+
+    /**
+     * @param string $label      The label
+     * @param bool   $expanded   Expanded or not
+     * @param bool   $multiple   Multiple or not
+     * @param array  $choices    The choices array
+     * @param array  $emptyValue The empty value
+     */
+    public function __construct($label, $expanded, $multiple, array $choices, array $emptyValue = null)
     {
         $this->label = $label;
         $this->expanded = $expanded;
         $this->multiple = $multiple;
         $this->choices = $choices;
-		$this->empty_value = $empty_value;
+        $this->emptyValue = $emptyValue;
     }
 
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('value', 'choice', array(
-			'label' => $this->label,
-			'expanded' => $this->expanded,
-			'multiple' => $this->multiple,
-			'choices' => $this->choices,
-			'empty_value' => $this->empty_value,
-			'empty_data' => null
-		));
+            'label' => $this->label,
+            'expanded' => $this->expanded,
+            'multiple' => $this->multiple,
+            'choices' => $this->choices,
+            'empty_value' => $this->emptyValue,
+            'empty_data' => null
+        ));
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {
         return 'kunstmaan_formbundle_choiceformsubmissiontype';
     }
 }
-

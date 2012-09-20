@@ -6,10 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-use Symfony\Component\Translation\Translator;
-use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Knp\Menu\ItemInterface as KnpMenu;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 
 /**
@@ -31,7 +27,7 @@ class FormSubmissionsMenuAdaptor implements MenuAdaptorInterface
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuitem = new TopMenuItem($menu);
             $menuitem->setRoute('KunstmaanFormBundle_formsubmissions');
-            $menuitem->setInternalname('Form submissions');
+            $menuitem->setInternalName('Form submissions');
             $menuitem->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                 $menuitem->setActive(true);

@@ -2,25 +2,24 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Form;
 
 /**
  * The formsubmission field
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\FormBundle\Repository\FormSubmissionFieldRepository")
- * @ORM\Table(name="form_formsubmissionfield")
+ * @ORM\Table(name="kuma_form_submission_fields")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- 		"string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
-		"text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
-		"choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
-		"file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField"
+        "string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
+        "text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
+        "choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
+        "file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField"
  * })
  */
 class FormSubmissionField
@@ -44,9 +43,9 @@ class FormSubmissionField
 
     /**
      * @ORM\ManyToOne(targetEntity="FormSubmission", inversedBy="fields")
-     * @ORM\JoinColumn(name="formsubmission", referencedColumnName="id")
+     * @ORM\JoinColumn(name="form_submission_id", referencedColumnName="id")
      */
-    protected $formsubmission;
+    protected $formSubmission;
 
     /**
      * Get id
@@ -105,15 +104,15 @@ class FormSubmissionField
      */
     public function getSubmission()
     {
-        return $this->formsubmission;
+        return $this->formSubmission;
     }
 
     /**
-     * @param string $formsubmission
+     * @param FormSubmission $formSubmission
      */
-    public function setSubmission(FormSubmission $formsubmission)
+    public function setSubmission(FormSubmission $formSubmission)
     {
-        $this->formsubmission = $formsubmission;
+        $this->formSubmission = $formSubmission;
     }
 
     /**
@@ -124,8 +123,14 @@ class FormSubmissionField
         return "FormSubmission Field";
     }
 
-	public function onValidPost($form, $formbuilder, $request, $container)
-	{
-		// do nothing by default
-	}
+    /**
+     * @param Form                 $form        the Form
+     * @param FormBuilderInterface $formBuilder the FormBuilder
+     * @param Request              $request     the Request
+     * @param ContainerInterface   $container   the Container
+     */
+    public function onValidPost(Form $form, FormBuilderInterface $formBuilder, Request $request, ContainerInterface $container)
+    {
+        // do nothing by default
+    }
 }

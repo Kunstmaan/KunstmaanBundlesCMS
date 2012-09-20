@@ -1,16 +1,12 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
-use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
-use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
  * An abstract Form Pagepart
@@ -18,7 +14,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
 
-	const ERROR_REQUIRED_FIELD = "field.required";
+    const ERROR_REQUIRED_FIELD = "field.required";
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -31,12 +27,12 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     protected $required;
 
     /**
-     * @ORM\Column(type="string", name="errormessage_required", nullable=true)
+     * @ORM\Column(type="string", name="error_message_required", nullable=true)
      */
-    protected $errormessageRequired;
+    protected $errorMessageRequired;
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getUniqueId()
     {
@@ -60,7 +56,7 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
-     * @param boolean $required
+     * @param bool $required
      */
     public function setRequired($required)
     {
@@ -68,7 +64,7 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getRequired()
     {
@@ -76,32 +72,35 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
-     * @param string $errormessageRequired
+     * @param string $errorMessageRequired
      */
-    public function setErrormessageRequired($errormessageRequired)
+    public function setErrorMessageRequired($errorMessageRequired)
     {
-        $this->errormessageRequired = $errormessageRequired;
+        $this->errorMessageRequired = $errorMessageRequired;
     }
 
     /**
      * @return string
      */
-    public function getErrormessageRequired()
+    public function getErrorMessageRequired()
     {
-        return $this->errormessageRequired;
+        return $this->errorMessageRequired;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getElasticaView()
     {
         return $this->getDefaultView();
     }
 
-	public function getAdminView()
-	{
-		return "KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig";
-	}
+    /**
+     * @return string
+     */
+    public function getAdminView()
+    {
+        return "KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig";
+    }
 
 }

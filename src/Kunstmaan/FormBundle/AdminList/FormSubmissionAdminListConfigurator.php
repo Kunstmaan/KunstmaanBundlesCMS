@@ -3,14 +3,16 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
 /**
- * The form submssions admin list configurator
+ * The form submissions admin list configurator
  */
 class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
 {
@@ -26,17 +28,17 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('created', new DateFilterType("created"), "Date");
-        $builder->add('lang', new BooleanFilterType("lang"), "Language");
-        $builder->add('ipAddress', new StringFilterType("ipAddress"), "IP Address");
+        $builder->add('created', new DateFilter("created"), "Date");
+        $builder->add('lang', new BooleanFilter("lang"), "Language");
+        $builder->add('ipAddress', new StringFilter("ipAddress"), "IP Address");
     }
 
     /**
-     * {@inheritdoc}
+     * Configure the visible columns
      */
     public function buildFields()
     {
@@ -46,23 +48,25 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param AbstractEntity $item
+     *
+     * @return array
      */
-    public function getEditUrlFor($item)
+    public function getEditUrlFor(AbstractEntity $item)
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodetranslationid' => $this->nodeTranslation->getId(), 'submissionid' => $item->getId()));
+        return array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId()));
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function getIndexUrlFor()
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array('nodetranslationid' => $this->nodeTranslation->getId()));
+        return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()));
     }
 
     /**
-     * {@inheritdoc}
+     * @return bool
      */
     public function canAdd()
     {
@@ -70,23 +74,27 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $params
+     *
+     * @return string
      */
-    public function getAddUrlFor($params = array())
+    public function getAddUrlFor(array $params = array())
     {
         return "";
     }
 
     /**
-     * {@inheritdoc}
+     * @param AbstractEntity $item
+     *
+     * @return bool
      */
-    public function canDelete($item)
+    public function canDelete(AbstractEntity $item)
     {
         return false;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getRepositoryName()
     {
@@ -94,33 +102,40 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @param QueryBuilder $queryBuilder The query builder
+     * @param array        $params       The parameters
      */
-    public function adaptQueryBuilder($querybuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
     {
-        parent::adaptQueryBuilder($querybuilder);
-        $querybuilder
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder
                 ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-                ->andWhere('n.id = ?1')
-                ->setParameter(1, $this->nodeTranslation->getNode()->getId())
+                ->andWhere('n.id = :node')
+                ->setParameter('node', $this->nodeTranslation->getNode()->getId())
                 ->addOrderBy('b.created', 'DESC');
-
-        return $querybuilder;
     }
 
     /**
-     * {@inheritdoc}
+     * @param AbstractEntity $item
+     *
+     * @return array
      */
-    public function getDeleteUrlFor($item)
+    public function getDeleteUrlFor(AbstractEntity $item)
     {
         return array();
     }
 
+    /**
+     * @return array|string
+     */
     public function getExportUrlFor()
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => array('nodetranslationid' => $this->nodeTranslation->getId()));
+        return array('path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()));
     }
 
+    /**
+     * @return bool
+     */
     public function canExport()
     {
         return true;
