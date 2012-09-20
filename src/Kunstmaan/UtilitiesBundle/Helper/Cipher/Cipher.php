@@ -25,6 +25,7 @@ class Cipher implements CipherInterface
      * Encrypt the given value to an unreadable string.
      *
      * @param string $value
+     *
      * @return string
      */
     public function encrypt($value)
@@ -36,6 +37,7 @@ class Cipher implements CipherInterface
      * Decrypt the given value so that it's readable again.
      *
      * @param string $value
+     *
      * @return string
      */
     public function decrypt($value)
@@ -47,6 +49,7 @@ class Cipher implements CipherInterface
      * Encrypt the given value so that it's unreadable and that it can be used in an url.
      *
      * @param string $value
+     *
      * @return string
      */
     public function urlSafeEncrypt($value)
@@ -58,6 +61,7 @@ class Cipher implements CipherInterface
      * Decrypt the given value so that it's readable again.
      *
      * @param string $value
+     *
      * @return string
      */
     public function urlSafeDecrypt($value)
@@ -69,21 +73,24 @@ class Cipher implements CipherInterface
      * Decodes a hexadecimally encoded binary string.
      * PHP version >= 5.4 has a function for this by default.
      *
-     * @param String $hex_string
+     * @param String $hexString
+     *
      * @return string
      */
-    function hex2bin($hex_string) {
+    private function hex2bin($hexString)
+    {
         $pos = 0;
         $result = '';
-        while ($pos < strlen($hex_string)) {
-            if (strpos(" \t\n\r", $hex_string{$pos}) !== FALSE) {
+        while ($pos < strlen($hexString)) {
+            if (strpos(" \t\n\r", $hexString{$pos}) !== false) {
                 $pos++;
             } else {
-                $code = hexdec(substr($hex_string, $pos, 2));
+                $code = hexdec(substr($hexString, $pos, 2));
                 $pos = $pos + 2;
                 $result .= chr($code);
             }
         }
+
         return $result;
     }
 

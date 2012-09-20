@@ -4,6 +4,9 @@ namespace Kunstmaan\UtilitiesBundle\Tests\Helper\Cipher;
 
 use Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher;
 
+/**
+ * CipherTest
+ */
 class CipherTest extends \PHPUnit_Framework_TestCase
 {
 

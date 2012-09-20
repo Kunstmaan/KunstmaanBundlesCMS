@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
 
+/**
+ * CipherInterface
+ */
 interface CipherInterface
 {
 
@@ -9,6 +12,7 @@ interface CipherInterface
      * Encrypt the given value to an unreadable string.
      *
      * @param string $value
+     *
      * @return string
      */
     public function encrypt($value);
@@ -17,6 +21,7 @@ interface CipherInterface
      * Decrypt the given value so that it's readable again.
      *
      * @param string $value
+     *
      * @return string
      */
     public function decrypt($value);
@@ -25,6 +30,7 @@ interface CipherInterface
      * Encrypt the given value so that it's unreadable and that it can be used in an url.
      *
      * @param string $value
+     *
      * @return string
      */
     public function urlSafeEncrypt($value);
@@ -33,6 +39,7 @@ interface CipherInterface
      * Decrypt the given value so that it's readable again.
      *
      * @param string $value
+     *
      * @return string
      */
     public function urlSafeDecrypt($value);
