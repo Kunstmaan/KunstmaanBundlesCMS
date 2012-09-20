@@ -5,6 +5,9 @@ namespace Kunstmaan\PagePartBundle\Twig\Extension;
 use Symfony\Component\Form\FormView;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 
+/**
+ * PagePartAdminTwigExtension
+ */
 class PagePartAdminTwigExtension extends \Twig_Extension
 {
     /**
@@ -18,10 +21,6 @@ class PagePartAdminTwigExtension extends \Twig_Extension
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
-    }
-
-    public function __construct()
-    {
     }
 
     /**
@@ -48,7 +47,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *     {{ pagepartadmin_widget(ppAdmin, {'separator': '+++++'}) }}
      *
      * @param PagePartAdmin $ppAdmin    The pagepart admin to render
-     * @param null          $form
+     * @param Form          $form       The form
      * @param array         $parameters Additional variables passed to the template
      *
      * @return string The html markup

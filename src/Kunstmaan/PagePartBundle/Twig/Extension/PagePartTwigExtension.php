@@ -7,6 +7,9 @@ use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 
+/**
+ * PagePartTwigExtension
+ */
 class PagePartTwigExtension extends \Twig_Extension
 {
 
@@ -17,6 +20,9 @@ class PagePartTwigExtension extends \Twig_Extension
      */
     protected $environment;
 
+    /**
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
@@ -42,16 +48,16 @@ class PagePartTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page
-     * @param string                                         $context
-     * @param array                                          $parameters
+     * @param AbstractPage $page       The page
+     * @param string       $context    The pagepart context
+     * @param array        $parameters Some extra parameters
      *
      * @return string
      */
     public function renderWidget(AbstractPage $page, $context = "main", array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanViewBundle:GetPagepartsTwigExtension:widget.html.twig");
-        /** @var $entityRepository PagePartRefRepository */
+        /* @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $pageparts = $entityRepository->getPageParts($page, $context);
 
@@ -61,14 +67,14 @@ class PagePartTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page
-     * @param string                                         $context
+     * @param AbstractPage $page    The page
+     * @param string       $context The pagepart context
      *
      * @return PagePartInterface[]
      */
     public function getPageParts(AbstractPage $page, $context = "main")
     {
-        /** @var $entityRepository PagePartRefRepository */
+        /**@var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $pageparts = $entityRepository->getPageParts($page, $context);
 

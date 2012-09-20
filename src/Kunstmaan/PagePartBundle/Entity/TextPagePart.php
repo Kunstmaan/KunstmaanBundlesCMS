@@ -8,7 +8,7 @@ use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
  * Class that defines a text page part object to add to a page
  *
  * @ORM\Entity
- * @ORM\Table(name="textpagepart")
+ * @ORM\Table(name="kuma_text_page_parts")
  */
 class TextPagePart extends AbstractPagePart
 {

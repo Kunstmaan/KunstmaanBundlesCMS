@@ -1,6 +1,10 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
+
+/**
+ * AbstractPagePartAdminConfigurator
+ */
 abstract class AbstractPagePartAdminConfigurator
 {
 

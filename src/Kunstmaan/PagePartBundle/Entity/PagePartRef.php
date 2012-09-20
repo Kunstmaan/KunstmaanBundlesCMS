@@ -5,8 +5,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManager;
 
 /**
+ * Reference between a page and a pagepart
+ *
  * @ORM\Entity(repositoryClass="Kunstmaan\PagePartBundle\Repository\PagePartRefRepository")
- * @ORM\Table(name="pagepartref")
+ * @ORM\Table(name="kuma_page_part_refs")
  * @ORM\HasLifecycleCallbacks()
  */
 class PagePartRef
@@ -58,6 +60,9 @@ class PagePartRef
      */
     protected $updated;
 
+    /**
+     * The constructor
+     */
     public function __construct()
     {
         $this->setCreated(new \DateTime());

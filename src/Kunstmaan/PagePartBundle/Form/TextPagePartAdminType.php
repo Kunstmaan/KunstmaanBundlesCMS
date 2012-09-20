@@ -5,6 +5,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
+/**
+ * TextPagePartAdminType
+ */
 class TextPagePartAdminType extends AbstractType
 {
     /**

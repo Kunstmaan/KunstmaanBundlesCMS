@@ -8,7 +8,7 @@ use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
  * LinkPagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="linkpagepart")
+ * @ORM\Table(name="kuma_link_page_parts")
  */
 class LinkPagePart extends AbstractPagePart
 {

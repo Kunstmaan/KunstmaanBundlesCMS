@@ -8,7 +8,7 @@ use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
  * TocPagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="tocpagepart")
+ * @ORM\Table(name="kuma_toc_page_parts")
  */
 class TocPagePart extends AbstractPagePart
 {

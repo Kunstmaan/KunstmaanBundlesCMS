@@ -8,7 +8,7 @@ use Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType;
  * ToTopPagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="totoppagepart")
+ * @ORM\Table(name="kuma_to_top_page_parts")
  */
 class ToTopPagePart extends AbstractPagePart
 {
@@ -24,7 +24,6 @@ class ToTopPagePart extends AbstractPagePart
     }
 
     /**
-     *
      * @assert () == 'KunstmaanPagePartBundle:ToTopPagePart:view.html.twig'
      *
      * @return string

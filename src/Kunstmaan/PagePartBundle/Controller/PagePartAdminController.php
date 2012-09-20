@@ -9,6 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
 
+/**
+ * Controller for the pagepart administration
+ */
 class PagePartAdminController extends Controller
 {
 
@@ -77,6 +80,8 @@ class PagePartAdminController extends Controller
      *
      * @Route   ("/pageparts/selecturl", name="KunstmaanPagePartBundle_selecturl")
      * @Template()
+     *
+     * @return array
      */
     public function selectLinkAction()
     {

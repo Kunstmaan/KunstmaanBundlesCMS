@@ -8,7 +8,7 @@ use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
  * LinePagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="linepagepart")
+ * @ORM\Table(name="kuma_line_page_parts")
  */
 class LinePagePart extends AbstractPagePart
 {

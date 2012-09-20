@@ -1,6 +1,10 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
+
+/**
+ * Builder
+ */
 class Builder
 {
 

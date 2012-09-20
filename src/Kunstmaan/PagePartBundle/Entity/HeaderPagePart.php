@@ -10,7 +10,7 @@ use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
  * Class that defines a header page part object to add to a page
  *
  * @ORM\Entity
- * @ORM\Table(name="headerpagepart")
+ * @ORM\Table(name="kuma_header_page_parts")
  */
 class HeaderPagePart extends AbstractPagePart
 {

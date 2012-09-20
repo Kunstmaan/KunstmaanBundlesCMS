@@ -12,6 +12,9 @@ use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
+/**
+ * PagePartAdmin
+ */
 class PagePartAdmin
 {
     /**
@@ -45,13 +48,13 @@ class PagePartAdmin
     protected $container = null;
 
     /**
-     * @param AbstractPagePartAdminConfigurator              $configurator
-     * @param \Doctrine\ORM\EntityManager                    $em
-     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page
-     * @param null|string                                    $context
-     * @param Container                                      $container
+     * @param AbstractPagePartAdminConfigurator              $configurator The configurator
+     * @param \Doctrine\ORM\EntityManager                    $em           The entity manager
+     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page         The page
+     * @param null|string                                    $context      The context
+     * @param Container                                      $container    The container
      */
-    public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, AbstractPage $page, $context = null, Container $container)
+    public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, AbstractPage $page, $context = null, Container $container = null)
     {
         $this->configurator = $configurator;
         $this->em = $em;
@@ -69,7 +72,7 @@ class PagePartAdmin
     }
 
     /**
-     * @param $request
+     * @param Request $request
      */
     public function preBindRequest(Request $request)
     {
@@ -87,6 +90,9 @@ class PagePartAdmin
         }
     }
 
+    /**
+     * @param Request $request
+     */
     public function postBindRequest(Request $request)
     {
         $addpagepart = $request->request->get("addpagepart_" . $this->getContext());
@@ -101,6 +107,9 @@ class PagePartAdmin
         }
     }
 
+    /**
+     * @param Request $request
+     */
     public function bindRequest(Request $request)
     {
         { //re-order pageparts

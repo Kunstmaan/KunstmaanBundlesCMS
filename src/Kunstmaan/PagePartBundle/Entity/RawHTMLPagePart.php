@@ -8,7 +8,7 @@ use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
  * Class that defines a raw html page part object to add to a page
  *
  * @ORM\Entity
- * @ORM\Table(name="rawhtmlpagepart")
+ * @ORM\Table(name="kuma_raw_html_page_parts")
  */
 class RawHTMLPagePart extends AbstractPagePart
 {
