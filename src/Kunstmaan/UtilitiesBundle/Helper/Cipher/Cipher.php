@@ -77,7 +77,7 @@ class Cipher implements CipherInterface
      *
      * @return string
      */
-    private function hex2bin($hexString)
+    public function hex2bin($hexString)
     {
         $pos = 0;
         $result = '';
