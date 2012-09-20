@@ -126,7 +126,7 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
      * @param QueryBuilder $queryBuilder The query builder
      * @param array        $params       Custom parameters
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder, $params);
         $queryBuilder->andwhere($queryBuilder->expr()->eq("b.gallery", $params['gallery']));

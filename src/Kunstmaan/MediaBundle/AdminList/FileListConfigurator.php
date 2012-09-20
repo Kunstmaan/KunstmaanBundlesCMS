@@ -106,7 +106,7 @@ class FileListConfigurator extends AbstractAdminListConfigurator
      * @param QueryBuilder $querybuilder The query builder
      * @param array        $params       Custom parameters
      */
-    public function adaptQueryBuilder(QueryBuilder $querybuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $querybuilder, array $params = array())
     {
         parent::adaptQueryBuilder($querybuilder, $params);
         $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
