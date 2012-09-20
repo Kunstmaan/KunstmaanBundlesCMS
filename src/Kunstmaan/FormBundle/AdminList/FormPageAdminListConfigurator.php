@@ -7,7 +7,6 @@ use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Doctrine\ORM\QueryBuilder;
 
@@ -47,11 +46,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    public function getEditUrlFor(AbstractEntity $item)
+    public function getEditUrlFor($item)
     {
         return array(
             'path'   => 'KunstmaanFormBundle_formsubmissions_list',
@@ -86,11 +85,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return bool
      */
-    public function canDelete(AbstractEntity $item)
+    public function canDelete($item)
     {
         return false;
     }
@@ -118,11 +117,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    public function getDeleteUrlFor(AbstractEntity $item)
+    public function getDeleteUrlFor($item)
     {
         return array();
     }

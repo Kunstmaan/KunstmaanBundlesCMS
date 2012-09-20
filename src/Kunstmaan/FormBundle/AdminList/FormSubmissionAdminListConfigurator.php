@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
@@ -48,11 +47,11 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    public function getEditUrlFor(AbstractEntity $item)
+    public function getEditUrlFor($item)
     {
         return array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId()));
     }
@@ -84,11 +83,11 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return bool
      */
-    public function canDelete(AbstractEntity $item)
+    public function canDelete($item)
     {
         return false;
     }
@@ -116,11 +115,11 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    public function getDeleteUrlFor(AbstractEntity $item)
+    public function getDeleteUrlFor($item)
     {
         return array();
     }
