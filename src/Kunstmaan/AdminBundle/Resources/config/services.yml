@@ -16,11 +16,6 @@ services:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    kunstmaan_admin.form.type.urlchooser:
-        class: Kunstmaan\AdminBundle\Form\Type\URLChooserType
-        tags:
-            - { name: 'form.type', alias: 'urlchooser' }
-            
     kunstmaan_admin.handler.log:
         class: Kunstmaan\AdminBundle\Helper\LogHandler
         arguments: ["@service_container"]

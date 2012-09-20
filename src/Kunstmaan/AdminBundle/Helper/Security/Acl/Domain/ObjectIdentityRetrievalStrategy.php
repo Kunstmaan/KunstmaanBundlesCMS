@@ -26,13 +26,22 @@ class ObjectIdentityRetrievalStrategy implements ObjectIdentityRetrievalStrategy
      */
     private $em;
 
+    /**
+     * Constructor
+     *
+     * @param EntityManager $em
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
     /**
-     * {@inheritDoc}
+     * Retrieves the object identity from a domain object
+     *
+     * @param object $domainObject
+     *
+     * @return ObjectIdentityInterface
      */
     public function getObjectIdentity($domainObject)
     {
@@ -47,6 +56,14 @@ class ObjectIdentityRetrievalStrategy implements ObjectIdentityRetrievalStrategy
         }
     }
 
+    /**
+     * Retrieves the object identity from an ORM proxy object
+     *
+     * @param object $domainObject
+     *
+     * @return ObjectIdentity
+     * @throws InvalidDomainObjectException
+     */
     private function fromDomainObject($domainObject)
     {
         if (!is_object($domainObject)) {

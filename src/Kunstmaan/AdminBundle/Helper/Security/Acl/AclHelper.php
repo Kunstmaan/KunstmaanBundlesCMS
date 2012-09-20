@@ -5,9 +5,10 @@ namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -19,11 +20,18 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class AclHelper
 {
+    /* @var EntityManager $em */
     private $em = null;
+
+    /* @var SecurityContextInterface $securityContext */
     private $securityContext = null;
+
+    /* @var QuoteStrategy $quoteStrategy */
     private $quoteStrategy = null;
 
     /**
+     * Constructor.
+     *
      * @param EntityManager            $em              The entity manager
      * @param SecurityContextInterface $securityContext The security context
      */
@@ -35,6 +43,8 @@ class AclHelper
     }
 
     /**
+     * Clone specified query with parameters.
+     *
      * @param Query $query
      *
      * @return Query
@@ -51,7 +61,7 @@ class AclHelper
     }
 
     /**
-     * This will clone the original query and apply the ACL constraints
+     * Apply the ACL constraints to the specified query builder, using the permission definition
      *
      * @param QueryBuilder         $queryBuilder  The query builder
      * @param PermissionDefinition $permissionDef The permission definition

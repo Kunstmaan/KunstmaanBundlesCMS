@@ -1,24 +1,12 @@
 <?php
 
 namespace Kunstmaan\AdminBundle\Repository;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
-
-    public function getUser($user_id, EntityManager $em)
-    {
-        $user = $em->getRepository('KunstmaanAdminBundle:User')->find($user_id);
-        if (!$user) {
-            throw new NotFoundHttpException('The id given for the user is not valid.');
-        }
-
-        return $user;
-    }
-
     /**
+     * Get user(s) that have the specified role(s)
      *
      * @param string|array $role The role(s) for which you want to retrieve the users
      *

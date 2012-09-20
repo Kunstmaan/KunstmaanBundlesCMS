@@ -8,9 +8,11 @@ namespace Kunstmaan\AdminBundle\Helper;
 class ClassLookup
 {
     /**
+     * Get full class name of object (ie. class name including full namespace)
+     *
      * @param mixed $object
      *
-     * @return string
+     * @return string|false
      */
     public static function getClass($object)
     {
@@ -18,14 +20,16 @@ class ClassLookup
     }
 
     /**
+     * Get class name of object (ie. class name without namespace)
+     *
      * @param mixed $object
      *
      * @return string
      */
     public static function getClassName($object)
     {
-        $classname = explode('\\', ClassLookup::getClass($object));
+        $className = explode('\\', ClassLookup::getClass($object));
 
-        return array_pop($classname);
+        return array_pop($className);
     }
 }

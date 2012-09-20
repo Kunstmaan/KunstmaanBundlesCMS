@@ -11,6 +11,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class GroupType extends AbstractType
 {
     /**
+     * Builds the form.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -23,6 +25,8 @@ class GroupType extends AbstractType
     }
 
     /**
+     * Returns the name of this type.
+     *
      * @return string
      */
     public function getName()

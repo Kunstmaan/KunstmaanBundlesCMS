@@ -8,9 +8,12 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 
 /**
  * DynamicUrlMatcher
+ *
+ * @todo Check if there's a better solution then this ugly hack...
  */
 class DynamicUrlMatcher extends UrlMatcher
 {
+    /* @var RouteCollection $routesCopy */
     private $routesCopy;
 
     /**
@@ -27,8 +30,6 @@ class DynamicUrlMatcher extends UrlMatcher
      * Check if url exists
      *
      * @param string $pathInfo
-     *
-     * @todo Check if there's a better solution then this ugly hack...
      *
      * @return bool
      */

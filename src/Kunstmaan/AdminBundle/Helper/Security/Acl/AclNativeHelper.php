@@ -17,10 +17,15 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class AclNativeHelper
 {
+    /* @var EntityManager $em */
     private $em = null;
+
+    /* @var SecurityContextInterface $securityContext */
     private $securityContext = null;
 
     /**
+     * Constructor.
+     *
      * @param EntityManager            $em              The entity manager
      * @param SecurityContextInterface $securityContext The security context
      */
@@ -31,7 +36,7 @@ class AclNativeHelper
     }
 
     /**
-     * This will clone the original query and apply the ACL constraints
+     * Apply the ACL constraints to the specified query builder, using the permission definition
      *
      * @param QueryBuilder         $queryBuilder  The query builder
      * @param PermissionDefinition $permissionDef The permission definition

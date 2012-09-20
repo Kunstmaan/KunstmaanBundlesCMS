@@ -10,6 +10,8 @@ class MenuTwigExtension extends \Twig_Extension
     protected $menuBuilder;
 
     /**
+     * Constructor
+     *
      * @param MenuBuilder $menuBuilder
      */
     public function __construct(MenuBuilder $menuBuilder)
@@ -18,6 +20,8 @@ class MenuTwigExtension extends \Twig_Extension
     }
 
     /**
+     * Get Twig functions defined in this extension.
+     *
      * @return array
      */
     public function getFunctions()
@@ -28,6 +32,8 @@ class MenuTwigExtension extends \Twig_Extension
     }
 
     /**
+     * Return the admin menu MenuBuilder.
+     *
      * @return MenuBuilder
      */
     public function getAdminMenu()
@@ -36,6 +42,8 @@ class MenuTwigExtension extends \Twig_Extension
     }
 
     /**
+     * Get the Twig extension name.
+     *
      * @return string
      */
     public function getName()

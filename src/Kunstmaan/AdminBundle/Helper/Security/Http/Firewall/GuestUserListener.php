@@ -13,8 +13,13 @@ use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
  */
 class GuestUserListener implements ListenerInterface
 {
+    /* @var SecurityContextInterface $context */
     private $context;
+
+    /* @var UserProviderInterface $provider */
     private $provider;
+
+    /* @var string $providerKey */
     private $providerKey;
 
     /**
@@ -30,6 +35,8 @@ class GuestUserListener implements ListenerInterface
     }
 
     /**
+     * Handle response event (anonymous login).
+     *
      * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
      */
     public function handle(GetResponseEvent $event)

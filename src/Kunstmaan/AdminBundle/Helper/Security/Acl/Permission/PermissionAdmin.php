@@ -5,6 +5,7 @@ namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\Event\ApplyAclChangesetEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
@@ -31,16 +32,33 @@ class PermissionAdmin
     const ADD    = 'ADD';
     const DELETE = 'DEL';
 
+    /* @var AbstractEntity $resource */
     protected $resource = null;
+
+    /* @var EntityManager $em */
     protected $em = null;
+
+    /* @var SecurityContextInterface $securityContext */
     protected $securityContext = null;
+
+    /* @var AclProviderInterface $aclProvider */
     protected $aclProvider = null;
+
+    /* @var ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy */
     protected $oidRetrievalStrategy = null;
+
+    /* @var PermissionMap $permissionMap */
     protected $permissionMap = null;
+
+    /* @var array $permissions */
     protected $permissions = null;
+
+    /* @var EventDispatcherInterface $eventDispatcher */
     protected $eventDispatcher = null;
 
     /**
+     * Constructor
+     *
      * @param EntityManager                            $em                   The EntityManager
      * @param SecurityContextInterface                 $securityContext      The security context
      * @param AclProviderInterface                     $aclProvider          The ACL provider
@@ -63,6 +81,8 @@ class PermissionAdmin
     }
 
     /**
+     * Initialize permission admin with specified entity.
+     *
      * @param AbstractEntity         $resource      The object which has the permissions
      * @param PermissionMapInterface $permissionMap The permission map to use
      */
@@ -89,6 +109,8 @@ class PermissionAdmin
     }
 
     /**
+     * Get permissions.
+     *
      * @return MaskBuilder[]
      */
     public function getPermissions()
@@ -97,6 +119,8 @@ class PermissionAdmin
     }
 
     /**
+     * Get permission for specified role.
+     *
      * @param RoleInterface|string $role
      *
      * @return MaskBuilder|null
@@ -114,7 +138,9 @@ class PermissionAdmin
     }
 
     /**
-     * @return array
+     * Get all roles.
+     *
+     * @return Role[]
      */
     public function getAllRoles()
     {
@@ -122,6 +148,8 @@ class PermissionAdmin
     }
 
     /**
+     * Get possible permissions.
+     *
      * @return array
      */
     public function getPossiblePermissions()
@@ -130,6 +158,8 @@ class PermissionAdmin
     }
 
     /**
+     * Handle form entry of permission changes.
+     *
      * @param Request $request
      *
      * @return bool
@@ -158,6 +188,8 @@ class PermissionAdmin
     }
 
     /**
+     * Create a new ACL changeset.
+     *
      * @param AbstractEntity $entity  The entity
      * @param array          $changes The changes
      * @param User           $user    The user
@@ -177,6 +209,8 @@ class PermissionAdmin
     }
 
     /**
+     * Apply the specified ACL changeset.
+     *
      * @param AbstractEntity $entity    The entity
      * @param array          $changeset The changeset
      * @param bool           $recursive The recursive
@@ -234,6 +268,8 @@ class PermissionAdmin
     }
 
     /**
+     * Get current object ACE index for specified role.
+     *
      * @param AclInterface $acl
      * @param string       $role
      *
@@ -255,6 +291,8 @@ class PermissionAdmin
     }
 
     /**
+     * Get object ACE mask at specified index.
+     *
      * @param AclInterface $acl
      * @param int          $index
      *
