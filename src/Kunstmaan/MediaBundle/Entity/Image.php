@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Class that defines a picture in the system
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_images")
+ * @ORM\Table(name="kuma_images")
  */
 class Image extends Media
 {

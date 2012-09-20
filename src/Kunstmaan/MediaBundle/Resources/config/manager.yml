@@ -3,4 +3,4 @@ parameters:
     
 services:
     kunstmaan_media.manager:
-        class: %kunstmaan_media.manager.class%
+        class: "%kunstmaan_media.manager.class%"

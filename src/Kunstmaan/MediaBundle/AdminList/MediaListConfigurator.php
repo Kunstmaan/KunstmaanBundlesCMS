@@ -7,7 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 
 /**
  * MediaListConfigurator
@@ -33,12 +33,12 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $filters)
     {
-        $filters->add('name', new StringFilterType("name"), "form.name");
-        $filters->add('classtype', new StringFilterType("classtype"), "form.type");
+        $filters->add('name', new StringFilter("name"), "form.name");
+        $filters->add('classtype', new StringFilter("classtype"), "form.type");
     }
 
     /**
-     * buildFields
+     * Configure the visible columns
      */
     public function buildFields()
     {
@@ -126,7 +126,7 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
      * @param QueryBuilder $queryBuilder The query builder
      * @param array        $params       Custom parameters
      */
-    public function adaptQueryBuilder($queryBuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder, $params);
         $queryBuilder->andwhere($queryBuilder->expr()->eq("b.gallery", $params['gallery']));

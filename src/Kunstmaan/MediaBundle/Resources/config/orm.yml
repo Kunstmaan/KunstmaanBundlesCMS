@@ -3,7 +3,7 @@ parameters:
     
 services:
     kunstmaan_media.listener.doctrine:
-        class: %kunstmaan_media.listener.doctrine.class%
+        class: "%kunstmaan_media.listener.doctrine.class%"
         arguments: ["@kunstmaan_media.manager"]
         tags:
             - { name: 'doctrine.event_listener', event: 'prePersist' }

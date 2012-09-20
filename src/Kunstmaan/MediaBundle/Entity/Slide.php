@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class that defines a slide in the system
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_slides")
+ * @ORM\Table(name="kuma_slides")
  */
 class Slide extends Media
 {

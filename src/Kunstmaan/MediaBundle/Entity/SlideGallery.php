@@ -10,7 +10,7 @@ use Kunstmaan\MediaBundle\Helper\SlideGalleryStrategy;
  * SlideGallery
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_slide_galleries")
+ * @ORM\Table(name="kuma_slide_galleries")
  * @ORM\HasLifecycleCallbacks
  */
 class SlideGallery extends Folder

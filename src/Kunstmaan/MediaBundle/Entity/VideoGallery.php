@@ -10,7 +10,7 @@ use Kunstmaan\MediaBundle\Helper\VideoGalleryStrategy;
  * VideoGallery
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_video_galleries")
+ * @ORM\Table(name="kuma_video_galleries")
  * @ORM\HasLifecycleCallbacks
  */
 class VideoGallery extends Folder

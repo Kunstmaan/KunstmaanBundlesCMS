@@ -4,6 +4,6 @@ parameters:
     
 services:
     kunstmaan_media.generator.path.default:
-        class: %kunstmaan_media.generator.path.default.class%
+        class: "%kunstmaan_media.generator.path.default.class%"
     kunstmaan_media.generator.uuid.default:
-        class: %kunstmaan_media.generator.uuid.default.class%
+        class: "%kunstmaan_media.generator.uuid.default.class%"

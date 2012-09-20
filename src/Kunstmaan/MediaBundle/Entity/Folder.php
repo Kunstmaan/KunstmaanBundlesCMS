@@ -17,7 +17,7 @@ use Gedmo\Translatable\Translatable;
  * Class that defines a folder from the MediaBundle in the database
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
- * @ORM\Table(name="kuma_media_folders")
+ * @ORM\Table(name="kuma_folders")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({ "folder"="Folder", "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})

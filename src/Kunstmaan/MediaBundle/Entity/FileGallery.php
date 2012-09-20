@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * FileGallery
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_file_galleries")
+ * @ORM\Table(name="kuma_file_galleries")
  * @ORM\HasLifecycleCallbacks
  */
 class FileGallery extends Folder

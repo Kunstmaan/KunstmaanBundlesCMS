@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class that defines a video in the system
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_videos")
+ * @ORM\Table(name="kuma_videos")
  */
 class Video extends Media
 {

@@ -1,7 +1,7 @@
 services:
     kunstmaan_media.filesystem.adapter.local:
         class: 'Gaufrette\Adapter\Local'
-        arguments: [%kunstmaan_media.filesystem.local.base_path%, %kunstmaan_media.filesystem.local.create%]
+        arguments: ["%kunstmaan_media.filesystem.local.base_path%", "%kunstmaan_media.filesystem.local.create%"]
     kunstmaan_media.filesystem.adapter.ftp:
         class: 'Gaufrette\Adapter\Ftp'
     kunstmaan_media.filesystem.local:

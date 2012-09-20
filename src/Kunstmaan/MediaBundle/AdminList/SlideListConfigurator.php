@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\AdminList;
 
+use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+
 use Doctrine\ORM\QueryBuilder;
 
 use Kunstmaan\MediaBundle\Entity\Slide;
@@ -11,7 +13,7 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 
 /**
  * SlideListConfigurator
@@ -37,14 +39,14 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $filters)
     {
-        $filters->add('name', new StringFilterType("name"), "form.name");
-        $filters->add('type', new StringFilterType("type"), "form.type");
-        $filters->add('createdAt', new DateFilterType("createdAt"), "form.createdat");
-        $filters->add('updatedAt', new DateFilterType("updatedAt"), "form.updatedat");
+        $filters->add('name', new StringFilter("name"), "form.name");
+        $filters->add('type', new StringFilter("type"), "form.type");
+        $filters->add('createdAt', new DateFilter("createdAt"), "form.createdat");
+        $filters->add('updatedAt', new DateFilter("updatedAt"), "form.updatedat");
     }
 
     /**
-     * buildFields
+     * Configure the visible columns
      */
     public function buildFields()
     {
@@ -114,7 +116,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
      * @param QueryBuilder $queryBuilder The query builder
      * @param array        $params       Custom parameters
      */
-    public function adaptQueryBuilder($queryBuilder, $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder);
         $queryBuilder->andwhere($queryBuilder->expr()->eq("b.gallery", $params['gallery']));

@@ -6,18 +6,18 @@ parameters:
     
 services:
     kunstmaan_media.provider.abstract:
-        class: %kunstmaan_media.provider.abstract.class%
+        class: "%kunstmaan_media.provider.abstract.class%"
         abstract: true
         arguments: ['@kunstmaan_media.provider.abstract', null, null, null, null]
     kunstmaan_media.provider.image:
-        class: %kunstmaan_media.provider.image.class%
+        class: "%kunstmaan_media.provider.image.class%"
         parent: 'kunstmaan_media.provider.abstract'
         call:
             method: 'setImageManipulator'
             arguments: [null]
     kunstmaan_media.provider.file:
-        class: %kunstmaan_media.provider.file.class%
+        class: "%kunstmaan_media.provider.file.class%"
         parent: 'kunstmaan_media.provider.abstract'
     kunstmaan_media.provider.code:
-        class: %kunstmaan_media.provider.code.class%
+        class: "%kunstmaan_media.provider.code.class%"
         parent: 'kunstmaan_media.provider.abstract'

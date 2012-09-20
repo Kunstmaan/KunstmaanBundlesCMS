@@ -45,7 +45,7 @@ class FolderController extends Controller
         $listConfigurator = $folder->getStrategy()->getListConfigurator($folder);
         if (isset($listConfigurator) && $listConfigurator != null) {
             /* @var AdminList $itemList */
-            $itemList = $this->get("adminlist.factory")->createList($listConfigurator, $em, array("gallery" => $folder->getId()));
+            $itemList = $this->get("kunstmaan_adminlist.factory")->createList($listConfigurator, $em, array("gallery" => $folder->getId()));
             $itemList->bindRequest($this->getRequest());
         }
         $sub = $folder->getStrategy()->getNewGallery();

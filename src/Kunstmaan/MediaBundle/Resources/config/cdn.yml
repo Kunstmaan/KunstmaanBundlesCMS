@@ -3,5 +3,5 @@ parameters:
     
 services:
     kunstmaan_media.cdn.remote_server:
-        class: %kunstmaan_media.cdn.remote_server.class%
-        arguments: [%kunstmaan_media.cdn.remote_server.base_url%]
+        class: "%kunstmaan_media.cdn.remote_server.class%"
+        arguments: ["%kunstmaan_media.cdn.remote_server.base_url%"]

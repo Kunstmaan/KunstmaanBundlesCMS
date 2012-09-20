@@ -18,7 +18,7 @@ kunstmaan_media:
             default: true
             id: kunstmaan_media.cdn.remote_server
             options:
-                base_url: %cdnpath% # instellen in parameters.ini
+                base_url: "%cdnpath%" # instellen in parameters.ini
 
     provider:
         image:  # So we need the image provider here
@@ -36,7 +36,7 @@ kunstmaan_media:
                 default: true
                 id: kunstmaan_media.filesystem.local
                 options:
-                    base_path: %kernel.root_dir%/../web%kunstmaan_media.upload_dir%
+                    base_path: "%kernel.root_dir%/../web%kunstmaan_media.upload_dir%"
                     create: true  #creates the directory if it doesn't exist yet
 
     contexts:
