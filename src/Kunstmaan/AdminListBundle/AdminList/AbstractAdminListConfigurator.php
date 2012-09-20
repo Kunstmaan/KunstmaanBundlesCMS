@@ -69,6 +69,8 @@ abstract class AbstractAdminListConfigurator
     abstract public function buildFields();
 
     /**
+     * Return the url to edit the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return array
@@ -76,6 +78,8 @@ abstract class AbstractAdminListConfigurator
     abstract public function getEditUrlFor(AbstractEntity $item);
 
     /**
+     * Configure the types of items you can add
+     *
      * @param array $params
      *
      * @return array
@@ -83,6 +87,8 @@ abstract class AbstractAdminListConfigurator
     abstract public function getAddUrlFor(array $params = array());
 
     /**
+     * Get the delete url for the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return array
@@ -90,11 +96,15 @@ abstract class AbstractAdminListConfigurator
     abstract public function getDeleteUrlFor(AbstractEntity $item);
 
     /**
+     * Return the url to list all the items
+     *
      * @return array
      */
     abstract public function getIndexUrlFor();
 
     /**
+     * Configure the repository name of the items that will be listed
+     *
      * @return string
      */
     abstract public function getRepositoryName();
@@ -134,6 +144,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
+     * Configure the fields you can filter on
+     *
      * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
@@ -185,6 +197,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
+     * Configure if it's possible to delete the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return bool
@@ -195,6 +209,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
+     * Configure if it's possible to add new items
+     *
      * @return bool
      */
     public function canAdd()
@@ -203,6 +219,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
+     * Configure if it's possible to export the listed items
+     *
      * @return bool
      */
     public function canExport()
@@ -211,6 +229,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
+     * Get the url to export the listed items
+     *
      * @return string
      */
     public function getExportUrlFor()
@@ -262,6 +282,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
+     * Make some modifications to the default created query builder
+     *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder The query builder
      * @param array                      $params       Some extra parameters
      */
