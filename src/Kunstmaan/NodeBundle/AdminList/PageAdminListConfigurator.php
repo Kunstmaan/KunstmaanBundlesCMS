@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\AdminNodeBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
@@ -56,11 +54,11 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    public function getEditUrlFor(AbstractEntity $item)
+    public function getEditUrlFor($item)
     {
         return array(
             'path'   => 'KunstmaanAdminNodeBundle_pages_edit',
@@ -95,21 +93,21 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return bool
      */
-    public function canDelete(AbstractEntity $item)
+    public function canDelete($item)
     {
         return false;
     }
 
     /**
-     * @param AbstractEntity $item
+     * @param $item
      *
      * @return array
      */
-    public function getDeleteUrlFor(AbstractEntity $item)
+    public function getDeleteUrlFor($item)
     {
         return array();
     }
