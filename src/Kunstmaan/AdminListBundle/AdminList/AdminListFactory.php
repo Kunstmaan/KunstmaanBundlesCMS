@@ -2,9 +2,19 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-class AdminListFactory {
+use Doctrine\ORM\EntityManager;
 
-    public function createList(AbstractAdminListConfigurator $configurator, $em, $queryparams = array()){
-        return new AdminList($configurator, $em, $queryparams);
+class AdminListFactory
+{
+    /**
+     * @param AbstractAdminListConfigurator $configurator
+     * @param EntityManager                 $em
+     * @param array                         $queryparams
+     *
+     * @return AdminList
+     */
+    public function createList(AbstractAdminListConfigurator $configurator, EntityManager $em, $queryParams = array())
+    {
+        return new AdminList($configurator, $em, $queryParams);
     }
 }

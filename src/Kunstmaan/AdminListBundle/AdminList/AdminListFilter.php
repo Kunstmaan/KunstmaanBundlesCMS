@@ -1,92 +1,134 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Symfony\Component\Form\Exception\FormException;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Kunstmaan\AdminListBundle\AdminList\Filters\AdminListFilterInterface;
 
 class AdminListFilter
 {
 
-    /**
-     * The children of the form
-     * @var array
-     */
-    private $filterdefinitions = array();
+    /* @var array */
+    private $filterDefinitions = array();
+
+    /* @var Filter[] */
+    private $currentFilters = array();
+
+    /* @var array */
+    private $currentParameters = array();
 
     /**
-     * @var Filter[]
+     * @param string                   $columnName
+     * @param AdminListFilterInterface $type
+     * @param string                   $filterName
+     * @param array                    $options
+     *
+     * @return AdminListFilter
      */
-    private $currentfilters = array();
+    public function add(
+        $columnName,
+        AdminListFilterInterface $type = null,
+        $filterName = null,
+        array $options = array()
+    ) {
+        $this->filterDefinitions[$columnName] = array(
+            'type'       => $type,
+            'options'    => $options,
+            'filtername' => $filterName
+        );
 
-    private $currentparameters = array();
-
-    public function add($colname, $type = null, $filtername = null, array $options = array())
-    {
-        $this->filterdefinitions[$colname] = array('type' => $type, 'options' => $options, 'filtername' => $filtername);
         return $this;
     }
 
-    public function get($colname)
+    /**
+     * @param string $columnName
+     *
+     * @return mixed
+     */
+    public function get($columnName)
     {
-        return $this->filterdefinitions[$colname];
+        return $this->filterDefinitions[$columnName];
     }
 
-    public function remove($colname)
+    /**
+     * @param string $columnName
+     *
+     * @return AdminListFilter
+     */
+    public function remove($columnName)
     {
-        if (isset($this->filterdefinitions[$colname])) {
-            unset($this->filterdefinitions[$colname]);
+        if (isset($this->filterDefinitions[$columnName])) {
+            unset($this->filterDefinitions[$columnName]);
         }
+
         return $this;
     }
 
-    public function has($colname)
+    /**
+     * @param string $columnName
+     *
+     * @return bool
+     */
+    public function has($columnName)
     {
-        return isset($this->filterdefinitions[$colname]);
+        return isset($this->filterDefinitions[$columnName]);
     }
 
-    public function getFilterdefinitions()
+    /**
+     * @return array
+     */
+    public function getFilterDefinitions()
     {
-        return $this->filterdefinitions;
+        return $this->filterDefinitions;
     }
 
-    public function bindRequest($request)
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function bindRequest(Request $request)
     {
-        $this->currentparameters = $request->query->all();
-        $filter_columnnames = $request->query->get('filter_columnname');
-        if (isset($filter_columnnames)) {
-            $uniqueids = $request->query->get('filter_uniquefilterid');
-            $index = 0;
-            foreach ($filter_columnnames as $filter_columnname) {
-                $uniqueid = $uniqueids[$index];
-                $filter = new Filter($filter_columnname, $this->get($filter_columnname), $uniqueid);
-                $this->currentfilters[] = $filter;
+        $this->currentParameters = $request->query->all();
+        $filterColumnNames       = $request->query->get('filter_columnname');
+        if (isset($filterColumnNames)) {
+            $uniqueIds = $request->query->get('filter_uniquefilterid');
+            $index     = 0;
+            foreach ($filterColumnNames as $filterColumnName) {
+                $uniqueId = $uniqueIds[$index];
+                $filter = new Filter($filterColumnName, $this->get($filterColumnName), $uniqueId);
+                $this->currentFilters[] = $filter;
                 $filter->bindRequest($request);
                 $index++;
             }
         }
     }
 
-    public function getCurrentparameters()
+    /**
+     * @return array
+     */
+    public function getCurrentParameters()
     {
-        return $this->currentparameters;
+        return $this->currentParameters;
     }
 
-    public function getCurrentfilters()
+    /**
+     * @return Filter[]
+     */
+    public function getCurrentFilters()
     {
-        return $this->currentfilters;
+        return $this->currentFilters;
     }
 
-    public function adaptQueryBuilder($querybuilder)
+    /**
+     * @param \Doctrine\DBAL\Query\QueryBuilder|\Doctrine\ORM\QueryBuilder $queryBuilder
+     */
+    public function adaptQueryBuilder($queryBuilder)
     {
         $expressions = array();
-        foreach ($this->currentfilters as $filter) {
-            $filter->adaptQueryBuilder($querybuilder, $expressions);
+        foreach ($this->currentFilters as $filter) {
+            $filter->adaptQueryBuilder($queryBuilder, $expressions);
         }
         if (sizeof($expressions) > 0) {
             foreach ($expressions as $expression) {
-                $querybuilder->andWhere($expression);
+                $queryBuilder->andWhere($expression);
             }
         }
     }

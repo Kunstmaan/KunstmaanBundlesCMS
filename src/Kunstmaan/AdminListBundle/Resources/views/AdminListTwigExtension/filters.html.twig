@@ -1,5 +1,5 @@
 {% if filter.filterdefinitions|length > 0 %}
-    
+
     <form action="{{ path(basepath, extraparams) }}">
     	<div class="filter_lists">
     		<label for="filter_on_off" class="status all">Show all</label>
@@ -50,7 +50,7 @@
     		</div>
     	</div>
     </form>
-    
+
 	<div id="filterdummyline" class="hidden">
 		<select class="filterdummy filterselect" name="columnname[]" onchange="updateOptions(this, {startDate: '{{ datePicker_startDate }}'})">
 		    {% for columnname, value in filter.filterdefinitions %}
@@ -68,11 +68,11 @@
 			<button class="remove_filter" type="button" onclick="return removeFilter(this, false)"><i class="icon-remove-sign"></i></button>
 		{% endif %}
 	</div>
-    
+
     {% for columnname, value in filter.filterdefinitions %}
     <div id="filterdummyoptions_{{columnname|replace({'.': '_'})}}" class="hidden">
         {% include value.type.template with {'filtertype': value.type, 'nameprefix': '', 'namesuffix': ''} %}
     </div>
     {% endfor %}
-    
+
 {% endif %}

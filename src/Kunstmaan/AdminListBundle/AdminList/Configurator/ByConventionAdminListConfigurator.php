@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
@@ -14,75 +15,131 @@ use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
  * eg. /src/FullBundleName/Controller/Subfolder/EntityController
  * -> $controllerPath = 'Subfolder\\Entity'
  */
-abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfigurator {
+abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfigurator
+{
+    const SUFFIX_ADD = 'add';
+    const SUFFIX_EDIT = 'edit';
+    const SUFFIX_EXPORT = 'export';
+    const SUFFIX_DELETE = 'delete';
 
-	const SUFFIX_ADD = 'add';
-	const SUFFIX_EDIT = 'edit';
-	const SUFFIX_EXPORT = 'export';
-	const SUFFIX_DELETE = 'delete';
+    protected $bundleName;
+    protected $entityName;
+    protected $controllerPath;
 
-	protected $bundleName;
-	protected $entityName;
-	protected $controllerPath;
+    /**
+     * @param string $bundleName     The bundle name
+     * @param string $entityName     The class name of the entity (not the full classname)
+     * @param string $controllerPath The path of the controller
+     */
+    public function __construct($bundleName, $entityName, $controllerPath = null)
+    {
+        $this->bundleName = $bundleName;
+        $this->entityName = $entityName;
+        $this->controllerPath = $controllerPath;
+    }
 
-	function __construct($bundleName, $entityName, $controllerPath = null) {
-		$this->bundleName = $bundleName;
-		$this->entityName = $entityName;
-		$this->controllerPath = $controllerPath;
-	}
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getAddUrlFor($params = array())
+    {
+        return array(
+            strtolower($this->getEntityName()) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
+                'params' => $params)
+        );
+    }
 
-	public function getAddUrlFor($params = array()) {
-		return array(
-			strtolower($this->getEntityName()) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
-				'params' => $params)
-		);
-	}
+    /**
+     * @param object $item
+     *
+     * @return array
+     */
+    public function getEditUrlFor($item)
+    {
+        return array(
+            'path'		=> $this->getPathByConvention($this::SUFFIX_EDIT),
+            'params'	=> array('entity_id' => $item->getId()
+            ));
+    }
 
-	public function getEditUrlFor($item) {
-		return array(
-			'path'		=> $this->getPathByConvention($this::SUFFIX_EDIT),
-			'params'	=> array('entity_id' => $item->getId()
-			));
-	}
+    /**
+     * @param object $item
+     *
+     * @return array
+     */
+    public function getDeleteUrlFor($item)
+    {
+        return array(
+            'action' => sprintf('%s:delete', $this->getControllerPath()),
+            'path' => $this->getPathByConvention($this::SUFFIX_DELETE)
+        );
+    }
 
-	public function getDeleteUrlFor($item) {
-		return array(
-			'action' => sprintf('%s:delete', $this->getControllerPath()),
-			'path' => $this->getPathByConvention($this::SUFFIX_DELETE)
-		);
-	}
+    /**
+     * @return string
+     */
+    public function getIndexUrlFor()
+    {
+        return $this->getPathByConvention();
+    }
 
-	public function getIndexUrlFor() {
-		return $this->getPathByConvention();
-	}
+    /**
+     * @return string
+     */
+    public function getRepositoryName()
+    {
+        return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+    }
 
-	public function getRepositoryName() {
-		return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
-	}
+    /**
+     * @param string $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (empty($suffix)) {
+            return sprintf('%s_admin_%ss', $this->getBundleName(), strtolower($this->getEntityName()));
+        }
 
-	public function getPathByConvention($suffix = null) {
-		if (empty($suffix)) {
-			return sprintf('%s_admin_%ss', $this->getBundleName(), strtolower($this->getEntityName()));
-		}
-		return sprintf('%s_admin_%ss_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
-	}
+        return sprintf('%s_admin_%ss_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
+    }
 
-	public function getControllerPathByConvention() {
-		return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
-	}
+    /**
+     * @return string
+     */
+    public function getControllerPathByConvention()
+    {
+        return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+    }
 
-	public function getBundleName() {
-		return $this->bundleName;
-	}
+    /**
+     * @return string
+     */
+    public function getBundleName()
+    {
+        return $this->bundleName;
+    }
 
-	public function getEntityName() {
-		return $this->entityName;
-	}
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
 
-	public function getControllerPath() {
-		if (!empty($this->controllerPath)) {
-			return sprintf('%s:%s', $this->getBundleName(), $this->controllerPath);
-		}
-		return $this->getControllerPathByConvention();
-	}
+    /**
+     * @return string
+     */
+    public function getControllerPath()
+    {
+        if (!empty($this->controllerPath)) {
+            return sprintf('%s:%s', $this->getBundleName(), $this->controllerPath);
+        }
+
+        return $this->getControllerPathByConvention();
+    }
 }

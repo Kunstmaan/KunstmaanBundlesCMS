@@ -8,9 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * AdminListController
@@ -25,9 +23,9 @@ abstract class AdminListController extends Controller
      */
     protected function doIndexAction(AbstractAdminListConfigurator $configurator)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $adminlist = $this->get("adminlist.factory")->createList($configurator, $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
         $adminlist->bindRequest($request);
 
         return new Response($this->renderView($configurator->getListTemplate(), array('adminlist' => $adminlist, 'adminlistconfigurator' => $configurator, 'addparams' => array())));
@@ -41,9 +39,9 @@ abstract class AdminListController extends Controller
      */
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $adminlist = $this->get("adminlist.factory")->createList($configurator, $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
         $adminlist->bindRequest($request);
         $entities = $adminlist->getItems(array());
 
@@ -69,7 +67,7 @@ abstract class AdminListController extends Controller
      */
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $entityName = null;
         if (isset($type)) {
@@ -108,7 +106,7 @@ abstract class AdminListController extends Controller
     protected function doEditAction(AbstractAdminListConfigurator $configurator, $entityid)
     {
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $request = $this->getRequest();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityid);
@@ -141,7 +139,7 @@ abstract class AdminListController extends Controller
      */
     protected function doDeleteAction(AbstractAdminListConfigurator $configurator, $entityid)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $request = $this->getRequest();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityid);

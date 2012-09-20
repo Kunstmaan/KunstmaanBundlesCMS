@@ -17,7 +17,7 @@
 <form id="adminlist-delete-{{ entity.id }}" action="{{ path(adminlistconfigurator.getDeleteUrlFor(entity)["path"], adminlistconfigurator.getDeleteUrlFor(entity)["params"]) }}" method="post" {{ form_enctype(form) }} class="form-inline form-horizontal" style="display: inline-block;margin-bottom:0">
 	{{ form_widget(form) }}
 	{{ form_rest(form) }}
-	<button type="submit" data-toggle="modal" data-target="delete-modal-{{ entity.id }}">
+	<button type="submit" data-toggle="modal" data-target="#delete-modal-{{ entity.id }}">
 		<i class="icon-trash icon-white"></i> {{ 'form.delete' | trans }}
 	</button>
 </form>

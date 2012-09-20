@@ -6,7 +6,7 @@
 {% for item in adminlist.items(queryparams) %}
 
 {% for column in adminlist.exportColumns -%}
-	{%- set columnName = column.fieldName -%}
+	{%- set columnName = column.name -%}
 	{%- set template = column.template -%}
 	{{- quote|raw -}}{{- adminlist.getStringValue(item, columnName) -}}{{- quote|raw -}}
 	{%- if not loop.last -%},{%- endif -%}

@@ -5,11 +5,10 @@ namespace Kunstmaan\AdminListBundle\Twig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
-class AdminListTwigExtension extends \Twig_Extension {
-
+class AdminListTwigExtension extends \Twig_Extension
+{
     /**
      * @var \Twig_Environment
      */
@@ -33,7 +32,8 @@ class AdminListTwigExtension extends \Twig_Extension {
         $this->container = $container;
     }
 
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             'adminlist_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
             'my_router_params' => new \Twig_Function_Method($this, 'routerParams')
@@ -53,23 +53,24 @@ class AdminListTwigExtension extends \Twig_Extension {
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param AdminList        $view        The view to render
-     * @param string           $basepath    The base path
-     * @param array            $urlparams   Additional url params
-     * @param array            $addparams   Add params
-     * @param array            $queryparams Query params
-     * @return string The html markup
+     * @param  AdminList $view        The view to render
+     * @param  string    $basepath    The base path
+     * @param  array     $urlparams   Additional url params
+     * @param  array     $addparams   Add params
+     * @param  array     $queryparams Query params
+     * @return string    The html markup
      */
     public function renderWidget(AdminList $view, $basepath, array $urlparams = array(), array $addparams = array(), array $queryparams = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
+
         return $template->render(array(
             'pagination' => $view->getPaginationBean(),
             'filter' =>$view->getAdminListFilter(),
             'basepath' => $basepath,
-			'addparams' => $addparams,
+            'addparams' => $addparams,
             'extraparams' => $urlparams,
-        	'queryparams' => $queryparams,
+            'queryparams' => $queryparams,
             'adminlist' => $view
         ));
     }
@@ -101,4 +102,3 @@ class AdminListTwigExtension extends \Twig_Extension {
     }
 
 }
-

@@ -3,4 +3,4 @@ parameters:
 
 twig:
     globals:
-        datePicker_startDate: %datePicker_startDate%                
+        datePicker_startDate: %datePicker_startDate%
