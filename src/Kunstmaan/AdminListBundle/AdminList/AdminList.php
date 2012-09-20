@@ -195,11 +195,13 @@ class AdminList
     }
 
     /**
+     * @param mixed $item
+     *
      * @return bool
      */
-    public function canEdit()
+    public function canEdit($item)
     {
-        return $this->configurator->canEdit();
+        return $this->configurator->canEdit($item);
     }
 
     /**
@@ -239,11 +241,11 @@ class AdminList
     }
 
     /**
-     * @param $params
+     * @param array $params
      *
      * @return array
      */
-    public function getAddUrlFor($params)
+    public function getAddUrlFor(array $params)
     {
         return $this->configurator->getAddUrlFor($params);
     }

@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 use Symfony\Component\Form\AbstractType;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 
 /**
@@ -71,11 +70,11 @@ abstract class AbstractAdminListConfigurator
     /**
      * Return the url to edit the given $item
      *
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    abstract public function getEditUrlFor(AbstractEntity $item);
+    abstract public function getEditUrlFor($item);
 
     /**
      * Configure the types of items you can add
@@ -89,11 +88,11 @@ abstract class AbstractAdminListConfigurator
     /**
      * Get the delete url for the given $item
      *
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    abstract public function getDeleteUrlFor(AbstractEntity $item);
+    abstract public function getDeleteUrlFor($item);
 
     /**
      * Return the url to list all the items
@@ -160,9 +159,11 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
+     * @param mixed $item
+     *
      * @return bool
      */
-    public function canEdit()
+    public function canEdit($item)
     {
         return true;
     }
@@ -199,11 +200,11 @@ abstract class AbstractAdminListConfigurator
     /**
      * Configure if it's possible to delete the given $item
      *
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return bool
      */
-    public function canDelete(AbstractEntity $item)
+    public function canDelete($item)
     {
         return true;
     }
