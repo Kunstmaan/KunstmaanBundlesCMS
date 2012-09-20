@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Kunstmaan\SearchBundle\Helper\SearchedForAdminListConfigurator;
+use Kunstmaan\SearchBundle\AdminList\SearchedForAdminListConfigurator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\Group;
