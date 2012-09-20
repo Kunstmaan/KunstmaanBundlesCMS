@@ -4,8 +4,8 @@ namespace Kunstmaan\SearchBundle\Helper;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Doctrine\ORM\PersistentCollection;
 use Kunstmaan\ViewBundle\Entity\SearchPage;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterDefinitions\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
 /**
@@ -19,10 +19,13 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
-        $builder->add('query', new StringFilterType("query"), "Query");
-        $builder->add('createdat', new DateFilterType('createdat'), "Created At");
+        $builder->add('query', new StringFilter("query"), "Query");
+        $builder->add('createdat', new DateFilter('createdat'), "Created At");
     }
 
+    /**
+     * Configure the visible columns
+     */
     public function buildFields()
     {
         $this->addField("query", "Query", true);
