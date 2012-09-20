@@ -38,7 +38,7 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * Build the fields
+     * Configure the visible columns
      */
     public function buildFields()
     {
