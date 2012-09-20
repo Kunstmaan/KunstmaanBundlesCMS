@@ -19,26 +19,26 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 {
 
     private $em;
-    
-    public function __construct(EntityManager $em) 
+
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
     /**
-     * {@inheritdoc}
+     * Configure the visible columns
      */
-    public function buildFields() 
+    public function buildFields()
     {
 {% for field in fields %}
         $this->addField('{{ field }}', '{{ field }}', true);
 {% endfor %}
     }
-    
+
     /**
 	 * {@inheritdoc}
 	 */
-	public function buildFilters(AdminListFilter $builder) 
+	public function buildFilters(AdminListFilter $builder)
 	{
 {% for field in fields %}
 		$builder->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}');
@@ -60,7 +60,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}', 'params' => array());
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -68,7 +68,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}_edit', 'params' => array('id' => $item->getId()));
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -76,7 +76,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return true;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -84,7 +84,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}_add', 'params' => array());
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -92,7 +92,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 		return true;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -100,19 +100,19 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return array('action' => '{{ bundle.getName() }}:{{ entity_class }}:delete', 'path' => '{{ bundle.getName() }}_{{ entity_class }}_delete', 'params' => array('id' => $item->getId()));
 	}
-	
+
 	/**
 	 * @return string
 	 */
-	public function canExport() 
+	public function canExport()
 	{
 	    return true;
 	}
-	
+
 	/**
 	 *
 	 */
-	public function getExportUrlFor() 
+	public function getExportUrlFor()
 	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}_export', 'params' => array('_format' => 'csv'));
 	}
