@@ -18,11 +18,11 @@ class GuestUserFactory implements SecurityFactoryInterface
     );
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param                                                         $id
-     * @param                                                         $config
-     * @param                                                         $userProvider
-     * @param                                                         $defaultEntryPoint
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container         The container
+     * @param int                                                     $id                The id
+     * @param mixed                                                   $config            The configuration
+     * @param mided                                                   $userProvider      The user provider
+     * @param mixed                                                   $defaultEntryPoint The default entry point
      *
      * @return array
      */
@@ -33,15 +33,13 @@ class GuestUserFactory implements SecurityFactoryInterface
         $container
             ->setDefinition($providerId, new DefinitionDecorator('security.authentication.provider.pre_authenticated'))
             ->replaceArgument(0, new Reference($userProvider))
-            ->addArgument($id)
-        ;
+            ->addArgument($id);
 
         $listenerId = 'security.authentication.listener.kunstmaan.guest.'.$id;
         $listener = $container
             ->setDefinition($listenerId, new DefinitionDecorator('kunstmaan.guest.security.authentication.listener'))
             ->replaceArgument(1, new Reference($userProvider))
-            ->replaceArgument(2, $id)
-        ;
+            ->replaceArgument(2, $id);
 
         return array($providerId, $listenerId, $defaultEntryPoint);
     }

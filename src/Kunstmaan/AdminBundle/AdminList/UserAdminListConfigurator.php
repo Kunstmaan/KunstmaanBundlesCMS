@@ -8,6 +8,8 @@ use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 
 /**
+ * UserAdminListConfigurator
+ *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
 class UserAdminListConfigurator extends AbstractAdminListConfigurator
@@ -24,7 +26,7 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     *
+     * Configure the visible columns
      */
     public function buildFields()
     {

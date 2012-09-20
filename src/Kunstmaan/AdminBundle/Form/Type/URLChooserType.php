@@ -4,6 +4,9 @@ namespace Kunstmaan\AdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 
+/**
+ * URLChooserType
+ */
 class URLChooserType extends AbstractType
 {
     /**

@@ -7,8 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * omnext logitem
  *
- * @author Kristof Van Cauwenbergh
- *
  * @ORM\Entity
  * @ORM\Table(name="kuma_log_items")
  * @ORM\InheritanceType("JOINED")
@@ -46,6 +44,9 @@ class LogItem
      */
     protected $createdAt;
 
+    /**
+     * constructor
+     */
     public function __construct()
     {
         $this->createdAt = new \DateTime();

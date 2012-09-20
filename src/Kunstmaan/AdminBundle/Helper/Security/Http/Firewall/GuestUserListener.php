@@ -18,9 +18,9 @@ class GuestUserListener implements ListenerInterface
     private $providerKey;
 
     /**
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface   $context
-     * @param \Symfony\Component\Security\Core\User\UserProviderInterface $provider
-     * @param string                                                      $providerKey
+     * @param SecurityContextInterface $context     The security context
+     * @param UserProviderInterface    $provider    The user provider
+     * @param string                   $providerKey The provider key
      */
     public function __construct(SecurityContextInterface $context, UserProviderInterface $provider, $providerKey)
     {

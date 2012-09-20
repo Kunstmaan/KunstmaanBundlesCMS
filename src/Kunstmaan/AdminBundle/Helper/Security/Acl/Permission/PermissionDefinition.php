@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
+/**
+ * PermissionDefinition
+ */
 class PermissionDefinition
 {
     private $entity = null;

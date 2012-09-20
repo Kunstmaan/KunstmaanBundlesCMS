@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kuma_edit_commands")
  *
  * @todo This should be removed when refactoring (logging should happen via a Listener)
- * @deprecated
+ * @deprecated This will be removed
  */
 class EditCommand extends Command
 {
@@ -31,18 +31,28 @@ class EditCommand extends Command
      */
     protected $user;
 
+    /**
+     * @param EntityManager $em   The entity manger
+     * @param User          $user The user
+     */
     public function __construct(EntityManager $em, User $user)
     {
         $this->em = $em;
         $this->user = $user;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function executeimpl($options)
     {
         $this->em->persist($options['entity']);
         $this->em->flush();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function removeimpl()
     {
         // TODO extra actions

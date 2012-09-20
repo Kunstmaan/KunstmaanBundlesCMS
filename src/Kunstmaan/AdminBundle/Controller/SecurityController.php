@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+
 use Symfony\Component\Security\Core\SecurityContext;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -11,12 +13,20 @@ use Kunstmaan\AdminBundle\Entity\LogItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session;
 
+/**
+ * The controller for login
+ */
 class SecurityController extends BaseController
 {
+
+    /**
+     * @return string
+     */
     public function loginAction()
     {
         /* @var Request $request */
         $request = $this->container->get('request');
+        /* @var EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
         $session = $request->getSession();
 

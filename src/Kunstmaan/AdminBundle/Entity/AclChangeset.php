@@ -8,6 +8,8 @@ use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * AclChangeset
+ *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\AclChangesetRepository")
  * @ORM\Table(name="kuma_acl_changesets")
  * @ORM\HasLifecycleCallbacks()

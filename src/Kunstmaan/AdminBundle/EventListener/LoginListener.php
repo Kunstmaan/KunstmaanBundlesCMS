@@ -21,8 +21,8 @@ class LoginListener
     /**
      * Constructor
      *
-     * @param SecurityContext $context
-     * @param EntityManager   $em
+     * @param SecurityContext $context The security context
+     * @param EntityManager   $em      The entity manager
      */
     public function __construct(SecurityContext $context, EntityManager $em)
     {

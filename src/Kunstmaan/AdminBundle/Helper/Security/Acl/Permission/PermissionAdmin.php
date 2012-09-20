@@ -54,7 +54,8 @@ class PermissionAdmin
         AclProviderInterface $aclProvider,
         ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy,
         EventDispatcherInterface $eventDispatcher
-    ) {
+    )
+    {
         $this->em                   = $em;
         $this->securityContext      = $securityContext;
         $this->aclProvider          = $aclProvider;
@@ -158,9 +159,9 @@ class PermissionAdmin
     }
 
     /**
-     * @param AbstractEntity $entity
-     * @param array          $changes
-     * @param User           $user
+     * @param AbstractEntity $entity  The entity
+     * @param array          $changes The changes
+     * @param User           $user    The user
      *
      * @return AclChangeset
      */
@@ -177,9 +178,9 @@ class PermissionAdmin
     }
 
     /**
-     * @param AbstractEntity $entity
-     * @param array          $changeset
-     * @param bool           $recursive
+     * @param AbstractEntity $entity    The entity
+     * @param array          $changeset The changeset
+     * @param bool           $recursive The recursive
      */
     public function applyAclChangeset(AbstractEntity $entity, $changeset, $recursive = true)
     {

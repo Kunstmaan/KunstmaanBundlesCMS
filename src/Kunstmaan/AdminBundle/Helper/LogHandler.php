@@ -15,15 +15,20 @@ use Monolog\Handler\AbstractProcessingHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
+/**
+ * LogHandler
+ */
 class LogHandler extends AbstractProcessingHandler
 {
-    /* @var ContainerInterface $container */
+    /**
+     * @var ContainerInterface $container
+     */
     private $container;
 
     /**
-     * @param ContainerInterface $container
-     * @param int                $level
-     * @param bool               $bubble
+     * @param ContainerInterface $container The container
+     * @param int                $level     The log level
+     * @param bool               $bubble    Bubble or not
      */
     public function __construct(ContainerInterface $container, $level = Logger::ERROR, $bubble = true)
     {

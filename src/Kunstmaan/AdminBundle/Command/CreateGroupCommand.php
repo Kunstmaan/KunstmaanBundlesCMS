@@ -23,6 +23,9 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
 
+/**
+ * CreateGroupCommand
+ */
 class CreateGroupCommand extends ContainerAwareCommand
 {
     /**
@@ -58,8 +61,8 @@ EOT
     /**
      * Executes the current command.
      *
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param InputInterface  $input  The input
+     * @param OutputInterface $output The output
      *
      * @return int
      */

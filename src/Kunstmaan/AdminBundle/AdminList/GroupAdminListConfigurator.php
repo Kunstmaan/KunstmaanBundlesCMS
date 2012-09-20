@@ -9,6 +9,8 @@ use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Symfony\Component\Form\AbstractType;
 
 /**
+ * GroupAdminListConfigurator
+ *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
 class GroupAdminListConfigurator extends AbstractAdminListConfigurator
@@ -22,6 +24,9 @@ class GroupAdminListConfigurator extends AbstractAdminListConfigurator
         $builder->add('name', new StringFilter("name"), "Name");
     }
 
+    /**
+     * Configure the visible columns
+     */
     public function buildFields()
     {
         $this->addField("name", "Name", true);

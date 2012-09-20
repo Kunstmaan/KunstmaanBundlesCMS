@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Group
+ *
  * @ORM\Entity
  * @ORM\Table(name="kuma_groups")
  */
@@ -128,9 +130,9 @@ class Group implements RoleInterface, GroupInterface
     /**
      * Adds a Role object to the ArrayCollection. Can't type hint due to interface so throws Exception.
      *
-     * @throws InvalidArgumentException
-     *
      * @param Role $role
+     *
+     * @throws InvalidArgumentException
      */
     public function addRole($role)
     {

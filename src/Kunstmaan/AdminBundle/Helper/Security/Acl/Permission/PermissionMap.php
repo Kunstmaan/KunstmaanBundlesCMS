@@ -48,8 +48,8 @@ class PermissionMap implements PermissionMapInterface
      * The security identity must have been granted access to at least one of
      * these bitmasks.
      *
-     * @param string $permission
-     * @param object $object
+     * @param string $permission The permission
+     * @param object $object     The object
      *
      * @return array may return null if permission/object combination is not supported
      */

@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
+/**
+ * MenuItem
+ */
 class MenuItem
 {
     private $menu;
@@ -102,8 +105,8 @@ class MenuItem
     }
 
     /**
-     * @param string $route
-     * @param array  $params
+     * @param string $route  The route
+     * @param array  $params The route parameters
      *
      * @return MenuItem
      */

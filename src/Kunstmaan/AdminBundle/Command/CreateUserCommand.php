@@ -23,6 +23,9 @@ use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminBundle\Entity\User;
 
+/**
+ * CreateUserCommand
+ */
 class CreateUserCommand extends ContainerAwareCommand
 {
     /**
@@ -70,8 +73,8 @@ EOT
     /**
      * Executes the current command.
      *
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param InputInterface  $input  The input
+     * @param OutputInterface $output The output
      *
      * @return int
      */
@@ -114,18 +117,18 @@ EOT
         $em->persist($user);
         $em->flush();
 
-        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>',
-                $input->getArgument('username'),
-                $groupOption));
+        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), $groupOption));
     }
 
     /**
      * Interacts with the user.
      *
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param InputInterface  $input  The input
+     * @param OutputInterface $output The output
      *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {

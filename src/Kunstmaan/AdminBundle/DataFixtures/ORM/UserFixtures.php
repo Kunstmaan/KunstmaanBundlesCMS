@@ -7,6 +7,9 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Fixture for creating the admin and guest user
+ */
 class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**

@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Helper;
 
+/**
+ * Slugifier
+ */
 class Slugifier
 {
     /**

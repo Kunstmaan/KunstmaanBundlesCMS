@@ -10,7 +10,7 @@ use Kunstmaan\AdminBundle\Entity\LogItem;
  * omnext command
  *
  * @todo This should be removed when refactoring (logging should happen via a Listener)
- * @deprecated
+ * @deprecated This will be removed
  */
 abstract class Command
 {
@@ -18,12 +18,20 @@ abstract class Command
     protected $em;
     protected $user;
 
+    /**
+     * @param EntityManager $em   The entity manager
+     * @param User          $user The user
+     */
     public function __construct(EntityManager $em, User $user)
     {
         $this->em = $em;
         $this->user = $user;
     }
 
+    /**
+     * @param string $message The message
+     * @param array  $options The options
+     */
     public function execute($message = "command executed", $options = array())
     {
         $this->executeimpl($options);
@@ -39,8 +47,14 @@ abstract class Command
         $this->em->flush();
     }
 
+    /**
+     * @param array $options
+     */
     abstract public function executeimpl($options);
 
+    /**
+     * remove
+     */
     public function remove()
     {
         $this->removeimpl();
@@ -49,5 +63,8 @@ abstract class Command
         $this->em->flush();
     }
 
+    /**
+     * remove impl
+     */
     abstract public function removeimpl();
 }

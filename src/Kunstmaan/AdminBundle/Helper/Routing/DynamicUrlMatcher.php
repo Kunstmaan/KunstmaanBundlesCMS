@@ -6,13 +6,16 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 
+/**
+ * DynamicUrlMatcher
+ */
 class DynamicUrlMatcher extends UrlMatcher
 {
     private $routesCopy;
 
     /**
-     * @param RouteCollection $routes
-     * @param RequestContext  $context
+     * @param RouteCollection $routes  The route collection
+     * @param RequestContext  $context The request context
      */
     public function __construct(RouteCollection $routes, RequestContext $context)
     {
@@ -23,9 +26,9 @@ class DynamicUrlMatcher extends UrlMatcher
     /**
      * Check if url exists
      *
-     * @todo Check if there's a better solution then this ugly hack...
-     *
      * @param string $pathInfo
+     *
+     * @todo Check if there's a better solution then this ugly hack...
      *
      * @return bool
      */

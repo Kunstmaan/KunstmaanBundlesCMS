@@ -23,6 +23,8 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use FOS\UserBundle\Util\UserManipulator;
 
 /**
+ * The settings controller
+ *
  * @todo We should probably combine Admin & AdminList into 1 bundle, or move this controller to the AdminList bundle to prevent circular references...
  */
 class SettingsController extends Controller
@@ -30,6 +32,8 @@ class SettingsController extends Controller
     /**
      * @Route("/", name="KunstmaanAdminBundle_settings")
      * @Template()
+     *
+     * @return array
      */
     public function indexAction()
     {
@@ -47,6 +51,8 @@ class SettingsController extends Controller
     /**
      * @Route("/users", name="KunstmaanAdminBundle_settings_users")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     *
+     * @return array
      */
     public function usersAction()
     {
@@ -65,6 +71,8 @@ class SettingsController extends Controller
      * @Route("/users/add", name="KunstmaanAdminBundle_settings_users_add")
      * @Method({"GET", "POST"})
      * @Template()
+     *
+     * @return array
      */
     public function addUserAction()
     {
@@ -93,9 +101,13 @@ class SettingsController extends Controller
     }
 
     /**
+     * @param int $userId
+     *
      * @Route("/users/{userId}/edit", requirements={"userId" = "\d+"}, name="KunstmaanAdminBundle_settings_users_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     *
+     * @return array
      */
     public function editUserAction($userId)
     {
@@ -128,8 +140,12 @@ class SettingsController extends Controller
     }
 
     /**
+     * @param int $userId
+     *
      * @Route("/users/{userId}/delete", requirements={"userId" = "\d+"}, name="KunstmaanAdminBundle_settings_users_delete")
      * @Method({"GET", "POST"})
+     *
+     * @return array
      */
     public function deleteUserAction($userId)
     {
@@ -147,6 +163,8 @@ class SettingsController extends Controller
     /**
      * @Route("/groups", name="KunstmaanAdminBundle_settings_groups")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     *
+     * @return array
      */
     public function groupsAction()
     {
@@ -165,6 +183,8 @@ class SettingsController extends Controller
      * @Route("/groups/add", name="KunstmaanAdminBundle_settings_groups_add")
      * @Method({"GET", "POST"})
      * @Template()
+     *
+     * @return array
      */
     public function addGroupAction()
     {
@@ -189,9 +209,13 @@ class SettingsController extends Controller
     }
 
     /**
+     * @param int $groupId
+     *
      * @Route("/groups/{groupId}/edit", requirements={"groupId" = "\d+"}, name="KunstmaanAdminBundle_settings_groups_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     *
+     * @return array
      */
     public function editGroupAction($groupId)
     {
@@ -218,9 +242,13 @@ class SettingsController extends Controller
     }
 
     /**
+     * @param int $groupId
+     *
      * @Route("/groups/{groupId}/delete", requirements={"groupId" = "\d+"}, name="KunstmaanAdminBundle_settings_groups_delete")
      * @Method({"GET", "POST"})
      * @Template()
+     *
+     * @return RedirectResponse
      */
     public function deleteGroupAction($groupId)
     {
@@ -239,6 +267,8 @@ class SettingsController extends Controller
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
      * @todo This method should be moved to KunstmaanSearchBundle
+     *
+     * @return array
      */
     public function searchesAction()
     {
@@ -256,6 +286,8 @@ class SettingsController extends Controller
     /**
      * @Route   ("/logs", name="KunstmaanAdminBundle_settings_logs")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     *
+     * @return array
      */
     public function logAction()
     {
@@ -273,6 +305,8 @@ class SettingsController extends Controller
     /**
      * @Route   ("/roles", name="KunstmaanAdminBundle_settings_roles")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     *
+     * @return array
      */
     public function rolesAction()
     {
@@ -291,6 +325,8 @@ class SettingsController extends Controller
      * @Route("/roles/add", name="KunstmaanAdminBundle_settings_roles_add")
      * @Method({"GET", "POST"})
      * @Template()
+     *
+     * @return array|RedirectResponse
      */
     public function addRoleAction()
     {
@@ -315,9 +351,13 @@ class SettingsController extends Controller
     }
 
     /**
+     * @param int $roleId
+     *
      * @Route("/roles/{roleId}/edit", requirements={"roleId" = "\d+"}, name="KunstmaanAdminBundle_settings_roles_edit")
      * @Method({"GET", "POST"})
      * @Template()
+     *
+     * @return array|RedirectResponse
      */
     public function editRoleAction($roleId)
     {
@@ -344,8 +384,12 @@ class SettingsController extends Controller
     }
 
     /**
+     * @param int $roleId
+     *
      * @Route ("/roles/{roleId}/delete", requirements={"roleId" = "\d+"}, name="KunstmaanAdminBundle_settings_roles_delete")
      * @Method({"GET", "POST"})
+     *
+     * @return RedirectResponse
      */
     public function deleteRoleAction($roleId)
     {

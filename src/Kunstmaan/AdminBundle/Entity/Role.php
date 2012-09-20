@@ -10,9 +10,6 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  *
  * @ORM\Entity
  * @ORM\Table( name="kuma_roles" )
- *
- * @author James Morris <james@jmoz.co.uk>
- * @package AdminBundle
  */
 class Role implements RoleInterface
 {

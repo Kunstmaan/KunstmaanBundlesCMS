@@ -24,8 +24,8 @@ class AclHelper
     private $quoteStrategy = null;
 
     /**
-     * @param EntityManager            $em
-     * @param SecurityContextInterface $securityContext
+     * @param EntityManager            $em              The entity manager
+     * @param SecurityContextInterface $securityContext The security context
      */
     public function __construct(EntityManager $em, SecurityContextInterface $securityContext)
     {
@@ -53,8 +53,8 @@ class AclHelper
     /**
      * This will clone the original query and apply the ACL constraints
      *
-     * @param QueryBuilder         $queryBuilder
-     * @param PermissionDefinition $permissionDef
+     * @param QueryBuilder         $queryBuilder  The query builder
+     * @param PermissionDefinition $permissionDef The permission definition
      *
      * @return Query
      */
@@ -127,8 +127,8 @@ class AclHelper
                     $uR[] = '"' . $role . '"';
                 }
             }
-            $INString = implode(' OR s.identifier = ', $uR);
-            $INString .= ' OR s.identifier = "' . str_replace(
+            $inString = implode(' OR s.identifier = ', $uR);
+            $inString .= ' OR s.identifier = "' . str_replace(
                 '\\',
                 '\\\\',
                 get_class($user)
@@ -142,7 +142,7 @@ class AclHelper
                     $uR[] = '"' . $role . '"';
                 }
             }
-            $INString = implode(' OR s.identifier = ', $uR);
+            $inString = implode(' OR s.identifier = ', $uR);
         }
 
         $selectQuery = <<<SELECTQUERY
@@ -156,7 +156,7 @@ LEFT JOIN {$database}.acl_security_identities s ON (
 s.id = e.security_identity_id
 )
 WHERE c.class_type = {$rootEntity}
-AND (s.identifier = {$INString})
+AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
 

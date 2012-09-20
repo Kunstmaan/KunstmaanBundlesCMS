@@ -14,9 +14,6 @@ use Kunstmaan\AdminBundle\Entity\User;
 
 /**
  * login listener to log the logout
- *
- * @author kristof van cauwenbergh
- *
  */
 class LogoutListener implements LogoutSuccessHandlerInterface
 {
@@ -26,8 +23,8 @@ class LogoutListener implements LogoutSuccessHandlerInterface
     /**
      * Constructor
      *
-     * @param SecurityContext $context
-     * @param EntityManager   $em
+     * @param SecurityContext $context The security context
+     * @param EntityManager   $em      The entity manager
      */
     public function __construct(SecurityContext $context, EntityManager $em)
     {
@@ -39,6 +36,8 @@ class LogoutListener implements LogoutSuccessHandlerInterface
      * Do the magic.
      *
      * @param Request $request
+     *
+     * @return RedirectResponse
      */
     public function onLogoutSuccess(Request $request)
     {

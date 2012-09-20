@@ -30,6 +30,9 @@ class User extends BaseUser
      */
     protected $groups;
 
+    /**
+     * constructor
+     */
     public function __construct()
     {
         parent::__construct();

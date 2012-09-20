@@ -5,6 +5,9 @@ namespace Kunstmaan\AdminBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * GroupType
+ */
 class GroupType extends AbstractType
 {
     /**

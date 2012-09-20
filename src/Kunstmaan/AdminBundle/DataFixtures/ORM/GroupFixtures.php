@@ -7,6 +7,9 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Fixture for creating the basic groups
+ */
 class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**

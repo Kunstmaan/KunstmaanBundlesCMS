@@ -2,10 +2,13 @@
 
 namespace Kunstmaan\AdminBundle\Helper;
 
+/**
+ * Helper for looking up the classname, not the ORM proxy
+ */
 class ClassLookup
 {
     /**
-     * @param $object
+     * @param mixed $object
      *
      * @return string
      */
@@ -15,7 +18,7 @@ class ClassLookup
     }
 
     /**
-     * @param $object
+     * @param mixed $object
      *
      * @return string
      */
