@@ -21,8 +21,8 @@
         "friendsofsymfony/user-bundle": "*",
         "knplabs/knp-menu-bundle": "*",
         "monolog/monolog": "dev-master",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/adminnode-bundle": "*"
+        "kunstmaan/adminlist-bundle": "dev-master",
+        "kunstmaan/adminnode-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
