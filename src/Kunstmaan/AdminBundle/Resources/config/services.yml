@@ -33,12 +33,6 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
             
-    kunstmaan_admin.logout.listener:
-        class: Kunstmaan\AdminBundle\EventListener\LogoutListener
-        arguments:  ["@security.context", "@doctrine.orm.entity_manager"]
-        tags:
-            - { name: 'monolog.logger', channel: 'security' }
-            
     kunstmaan_admin.menu.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\MenuTwigExtension
         arguments: ["@kunstmaan_admin.menubuilder"]

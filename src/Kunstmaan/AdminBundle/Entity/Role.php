@@ -47,7 +47,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * Return the role field.
+     * Return the string representation of the role entity.
      *
      * @return string
      */

@@ -20,6 +20,8 @@ class SecurityController extends BaseController
 {
 
     /**
+     * Handle login action
+     *
      * @return string
      */
     public function loginAction()

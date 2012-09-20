@@ -4,18 +4,22 @@ namespace Kunstmaan\AdminBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 use Kunstmaan\AdminBundle\Entity\LogItem;
 use Kunstmaan\AdminBundle\Entity\User;
 
 /**
- * logout listener to log the logout
+ * Login listener to log login actions
  */
 class LoginListener
 {
+    /* @var SecurityContext $context */
     private $context;
+
+    /* @var EntityManager $em */
     private $em;
 
     /**
@@ -31,20 +35,22 @@ class LoginListener
     }
 
     /**
-     * Do the magic.
+     * Handle login event.
      *
-     * @param Event $event
+     * @param InteractiveLoginEvent $event
      */
-    public function onSecurityInteractiveLogin(Event $event)
+    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
         /* @var User $user */
         $user = $this->context->getToken()->getUser();
 
-        $logItem = new LogItem();
-        $logItem->setStatus("info");
-        $logItem->setUser($user);
-        $logItem->setMessage($user . " succesfully logged in to the cms");
-        $this->em->persist($logItem);
-        $this->em->flush();
+        if ($user instanceof UserInterface) {
+            $logItem = new LogItem();
+            $logItem->setStatus("info");
+            $logItem->setUser($user);
+            $logItem->setMessage($user . " succesfully logged in to the cms");
+            $this->em->persist($logItem);
+            $this->em->flush();
+        }
     }
 }

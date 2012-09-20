@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * omnext logitem
+ * Log item
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_log_items")
@@ -45,7 +45,7 @@ class LogItem
     protected $createdAt;
 
     /**
-     * constructor
+     * Constructor
      */
     public function __construct()
     {
@@ -73,6 +73,8 @@ class LogItem
     }
 
     /**
+     * Get status
+     *
      * @return string
      */
     public function getStatus()
@@ -81,6 +83,8 @@ class LogItem
     }
 
     /**
+     * Set status
+     *
      * @param string $status
      */
     public function setStatus($status)
@@ -89,6 +93,8 @@ class LogItem
     }
 
     /**
+     * Get user
+     *
      * @return User
      */
     public function getUser()
@@ -97,6 +103,8 @@ class LogItem
     }
 
     /**
+     * Set user
+     *
      * @param User $user
      */
     public function setUser(User $user)
@@ -105,6 +113,8 @@ class LogItem
     }
 
     /**
+     * Get log message
+     *
      * @return string
      */
     public function getMessage()
@@ -113,6 +123,8 @@ class LogItem
     }
 
     /**
+     * Set log message
+     *
      * @param string $message
      */
     public function setMessage($message)
@@ -121,6 +133,8 @@ class LogItem
     }
 
     /**
+     * Get creation timestamp
+     *
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -129,6 +143,8 @@ class LogItem
     }
 
     /**
+     * Set creation timestamp
+     *
      * @param \DateTime $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt)

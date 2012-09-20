@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Event\ApplyAclChangesetEvent;
 use Kunstmaan\AdminBundle\Event\Events;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 
