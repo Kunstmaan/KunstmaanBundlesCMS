@@ -4,6 +4,9 @@ namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\LinePagePart;
 
+/**
+ * LinePagePartTest
+ */
 class LinePagePartTest extends \PHPUnit_Framework_TestCase
 {
     /**

@@ -37,10 +37,7 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
      */
     public function testGetName()
     {
-        $this->assertEquals(
-          'kunstmaan_pagepartbundle_textpageparttype',
-          $this->object->getName()
-        );
+        $this->assertEquals('kunstmaan_pagepartbundle_textpageparttype', $this->object->getName());
     }
 
     /**

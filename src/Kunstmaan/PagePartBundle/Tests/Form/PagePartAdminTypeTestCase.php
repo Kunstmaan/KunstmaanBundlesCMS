@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilder;
 
+/**
+ * PagePartAdminTypeTestCase
+ */
 class PagePartAdminTypeTestCase extends WebTestCase
 {
     /**
