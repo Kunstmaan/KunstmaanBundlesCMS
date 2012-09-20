@@ -1,8 +1,3 @@
-KunstmaanViewBundle_searchpage:
-    resource: "@KunstmaanViewBundle/Controller/SearchPageController.php"
-    type:     annotation
-    prefix:   /
-
 KunstmaanViewBundle_slug:
     resource: "@KunstmaanViewBundle/Controller/SlugController.php"
     type:     annotation

@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\ViewBundle\Twig\Extension;
 
+/**
+ * A Twig extension for highlighting words in text
+ */
 class TrimHighlightTwigExtension extends \Twig_Extension
 {
     /**
@@ -16,6 +19,9 @@ class TrimHighlightTwigExtension extends \Twig_Extension
         $this->environment = $environment;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getFilters()
     {
         return array(
@@ -23,14 +29,22 @@ class TrimHighlightTwigExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @param string $sentence
+     *
+     * @return string
+     */
     public function trimhighlight($sentence)
     {
-        $trimmed_spaces = ltrim($sentence);
-        $trimmed = ltrim($trimmed_spaces, ".");
+        $trimmedSpaces = ltrim($sentence);
+        $trimmed = ltrim($trimmedSpaces, ".");
 
         return $trimmed;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'trimhightlight_twig_extension';

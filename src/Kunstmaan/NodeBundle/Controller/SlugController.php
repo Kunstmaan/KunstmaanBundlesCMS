@@ -13,15 +13,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+/**
+ * This controller is for showing frontend pages based on slugs
+ */
 class SlugController extends Controller
 {
 
     /**
+     * @param string $url     The url
+     * @param bool   $preview Show in preview mode
+     * @param bool   $draft   Show the draft version or not
+     *
      * @Route("/")
      * @Route("/draft/{url}", requirements={"url" = ".+"}, defaults={"preview" = true, "draft" = true}, name="_slug_draft")
      * @Route("/preview/{url}", requirements={"url" = ".+"}, defaults={"preview" = true}, name="_slug_preview")
      * @Route("/{url}", requirements={"url" = ".+"}, name="_slug")
      * @Template()
+     *
+     * @throws AccessDeniedHttpException
+     * @return unknown
      */
     public function slugAction($url = null, $preview = false, $draft = false)
     {
@@ -117,9 +127,14 @@ class SlugController extends Controller
                 $pageParts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
             }
         }
-        $renderContext = new RenderContext(
-                array('nodetranslation' => $nodeTranslation, 'slug' => $url, 'page' => $page, 'resource' => $page, 'pageparts' => $pageParts, 'nodemenu' => $nodeMenu,
-                        'locales' => $localesArray));
+        $renderContext = new RenderContext(array(
+                'nodetranslation' => $nodeTranslation,
+                'slug' => $url,
+                'page' => $page,
+                'resource' => $page,
+                'pageparts' => $pageParts,
+                'nodemenu' => $nodeMenu,
+                'locales' => $localesArray));
         $hasView = false;
         if (method_exists($page, 'getDefaultView')) {
             $renderContext->setView($page->getDefaultView());
