@@ -2,6 +2,7 @@
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
 {% block extrajavascript %}
+    {{ parent() }}
      <script type="text/javascript">
         var isEdited = false,
         	oldEdited = false;
@@ -21,7 +22,7 @@
 	<div class="alert alert-block">
             <strong>{{ "Warning" | trans }}: </strong>{{ "Changes you save will be performed on the live page" | trans }}
         </div>
-	{% endif %}       
+	{% endif %}
 	{% if form_has_errors_recursive(form) %}
 	<div class="alert alert-error">
 		<strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
@@ -65,7 +66,7 @@
 
         <!--Scroll Actions-->
         {{ knp_menu_render('top_actions', { 'template': 'KunstmaanAdminNodeBundle:Menu:knp_menu_top_actions.html.twig'}) }}
-        
+
         <!--=========Tabs=========-->
         <ul class="nav nav-tabs">
             {% set alreadyexiststab = false %}

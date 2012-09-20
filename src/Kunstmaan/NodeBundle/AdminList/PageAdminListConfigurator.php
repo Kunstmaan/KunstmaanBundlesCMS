@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
@@ -11,6 +13,9 @@ use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 
 use Doctrine\ORM\QueryBuilder;
 
+/**
+ * PageAdminListConfigurator
+ */
 class PageAdminListConfigurator extends AbstractAdminListConfigurator
 {
     protected $locale;
@@ -39,6 +44,9 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
         $builder->add('updated', new DateFilter("updated"), "Updated At");
     }
 
+    /**
+     * Configure the visible columns
+     */
     public function buildFields()
     {
         $this->addField("title", "Title", true);
@@ -47,7 +55,12 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
         $this->addField("online", "Online", true);
     }
 
-    public function getEditUrlFor($item)
+    /**
+     * @param AbstractEntity $item
+     *
+     * @return array
+     */
+    public function getEditUrlFor(AbstractEntity $item)
     {
         return array(
             'path'   => 'KunstmaanAdminNodeBundle_pages_edit',
@@ -55,36 +68,64 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
         );
     }
 
+    /**
+     * @return array
+     */
     public function getIndexUrlFor()
     {
         return array('path' => 'KunstmaanAdminNodeBundle_pages');
     }
 
+    /**
+     * @return bool
+     */
     public function canAdd()
     {
         return false;
     }
 
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
     public function getAddUrlFor($params = array())
     {
         return "";
     }
 
-    public function canDelete($item)
+    /**
+     * @param AbstractEntity $item
+     *
+     * @return bool
+     */
+    public function canDelete(AbstractEntity $item)
     {
         return false;
     }
 
-    public function getDeleteUrlFor($item)
+    /**
+     * @param AbstractEntity $item
+     *
+     * @return array
+     */
+    public function getDeleteUrlFor(AbstractEntity $item)
     {
         return array();
     }
 
+    /**
+     * @return string
+     */
     public function getRepositoryName()
     {
         return 'KunstmaanAdminNodeBundle:NodeTranslation';
     }
 
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder The query builder
+     * @param array                      $params       Some extra parameters
+     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder, $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder);
