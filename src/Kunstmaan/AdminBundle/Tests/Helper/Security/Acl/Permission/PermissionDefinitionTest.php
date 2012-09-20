@@ -33,20 +33,11 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::__construct
-     * @dataProvider constructorData
      * @expectedException \InvalidArgumentException
      */
-    public function test__constructThrowsExceptionWithInvalidParameters($permissions, $entity, $alias)
+    public function test__constructThrowsExceptionWithInvalidParameters()
     {
-        new PermissionDefinition($permissions, $entity, $alias);
-    }
-
-    public static function constructorData()
-    {
-        return array(
-            array(null, null, null),
-            array(array(), null, null)
-        );
+        new PermissionDefinition(array(), null, null);
     }
 
     /**
@@ -81,21 +72,11 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setPermissions
-     * @dataProvider permissionsData
      * @expectedException \InvalidArgumentException
      */
-    public function testSetPermissionsWithInvalidData($permissions)
+    public function testSetPermissionsWithInvalidData()
     {
-        $this->object->setPermissions($permissions);
-    }
-
-    public static function permissionsData()
-    {
-        return array(
-            array(null),
-            array(array()),
-            array(''),
-        );
+        $this->object->setPermissions(array());
     }
 
 }
