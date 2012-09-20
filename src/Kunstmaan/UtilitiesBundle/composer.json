@@ -15,7 +15,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.0.*"
+        "symfony/symfony": "2.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\UtilitiesBundle": "" }
