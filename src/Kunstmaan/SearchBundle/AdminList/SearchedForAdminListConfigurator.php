@@ -103,7 +103,7 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
      * @param $querybuilder
      * @param array $params
      */
-    public function adaptQueryBuilder($querybuilder, $params = array())
+    public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $querybuilder, array $params = array())
     {
         parent::adaptQueryBuilder($querybuilder);
         //not needed to change something here yet but already
