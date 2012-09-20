@@ -29,7 +29,7 @@ class ImagePagePartAdminType extends AbstractType
         $builder->add('link', 'url', array('required' => false));
         $builder->add('openinnewwindow', 'checkbox', array('required' => false));
         $builder->add('alttext', null, array('required' => false));
-        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser_imagechooser'));
+        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser_image_chooser'));
     }
 
     /**

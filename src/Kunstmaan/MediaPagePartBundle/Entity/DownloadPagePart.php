@@ -12,7 +12,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
  * DownloadPagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_download_page_parts")
+ * @ORM\Table(name="kuma_download_page_parts")
  */
 class DownloadPagePart extends AbstractPagePart
 {

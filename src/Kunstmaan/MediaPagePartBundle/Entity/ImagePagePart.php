@@ -11,7 +11,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
  * ImagePagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_image_page_parts")
+ * @ORM\Table(name="kuma_image_page_parts")
  */
 class ImagePagePart extends AbstractPagePart
 {

@@ -11,7 +11,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
  * VideoPagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_video_page_parts")
+ * @ORM\Table(name="kuma_video_page_parts")
  */
 class VideoPagePart extends AbstractPagePart
 {

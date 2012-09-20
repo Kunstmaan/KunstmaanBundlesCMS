@@ -11,7 +11,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
  * SlidePagePart
  *
  * @ORM\Entity
- * @ORM\Table(name="kuma_media_slide_page_parts")
+ * @ORM\Table(name="kuma_slide_page_parts")
  */
 class SlidePagePart extends AbstractPagePart
 {
