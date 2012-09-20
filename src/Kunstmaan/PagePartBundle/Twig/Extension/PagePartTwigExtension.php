@@ -56,7 +56,7 @@ class PagePartTwigExtension extends \Twig_Extension
      */
     public function renderWidget(AbstractPage $page, $context = "main", array $parameters = array())
     {
-        $template = $this->environment->loadTemplate("KunstmaanViewBundle:GetPagepartsTwigExtension:widget.html.twig");
+        $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
         /* @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $pageparts = $entityRepository->getPageParts($page, $context);
