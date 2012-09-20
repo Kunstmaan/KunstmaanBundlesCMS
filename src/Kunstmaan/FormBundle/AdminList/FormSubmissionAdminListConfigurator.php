@@ -2,21 +2,25 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
 
+use Doctrine\ORM\QueryBuilder;
+
 /**
- * The form submissions admin list configurator
+ * Adminlist configuration to list all the form submissions for a given NodeTranslation
  */
 class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
+    /**
+     * @var NodeTranslation
+     */
     protected $nodeTranslation;
 
     /**
@@ -28,6 +32,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure the fields you can filter on
+     *
      * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
@@ -48,6 +54,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Return the url to edit the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return array
@@ -58,6 +66,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Return the url to list all the items
+     *
      * @return array
      */
     public function getIndexUrlFor()
@@ -66,6 +76,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure if it's possible to add new items
+     *
      * @return bool
      */
     public function canAdd()
@@ -74,6 +86,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure the types of items you can add
+     *
      * @param array $params
      *
      * @return string
@@ -84,6 +98,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure if it's possible to delete the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return bool
@@ -94,6 +110,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure the repository name of the items that will be listed
+     *
      * @return string
      */
     public function getRepositoryName()
@@ -102,6 +120,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Make some modifications to the default created query builder
+     *
      * @param QueryBuilder $queryBuilder The query builder
      * @param array        $params       The parameters
      */
@@ -116,6 +136,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Get the delete url for the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return array
@@ -126,6 +148,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Get the url to export the listed items
+     *
      * @return array|string
      */
     public function getExportUrlFor()
@@ -134,6 +158,8 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure if it's possible to export the listed items
+     *
      * @return bool
      */
     public function canExport()

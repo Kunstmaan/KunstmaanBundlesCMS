@@ -23,16 +23,22 @@ class SingleLineTextPagePart extends AbstractFormPagePart
 {
 
     /**
+     * If set the entered value will be matched with this regular expression
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $regex;
 
     /**
+     * If a regular expression is set and it doesn't match with the given value, this error message will be shown
+     *
      * @ORM\Column(type="string", name="error_essage_regex", nullable=true)
      */
     protected $errorMessageRegex;
 
     /**
+     * Set the regular expression to match the entered value against
+     *
      * @param string $regex
      */
     public function setRegex($regex)
@@ -41,6 +47,8 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Get the current regular expression
+     *
      * @return string
      */
     public function getRegex()
@@ -49,6 +57,8 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Set the error message which will be shown when the entered value doesn't match the regular expression
+     *
      * @param string $errorMessageRegex
      */
     public function setErrorMessageRegex($errorMessageRegex)
@@ -57,6 +67,8 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Get the current error message which will be shown when the entered value doesn't match the regular expression
+     *
      * @return string
      */
     public function getErrorMessageRegex()
@@ -65,6 +77,8 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Returns the frontend view
+     *
      * @return string
      */
     public function getDefaultView()
@@ -73,6 +87,8 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Modify the form with the fields of the current page part
+     *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
      */
@@ -120,6 +136,8 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Returns the default backend form type for this page part
+     *
      * @return SingleLineTextPagePartAdminType
      */
     public function getDefaultAdminType()

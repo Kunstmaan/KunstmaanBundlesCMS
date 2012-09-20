@@ -8,7 +8,7 @@ use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * A submit button
+ * This pagepart adds a submit button to the forms
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_submit_button_page_parts")
@@ -17,12 +17,15 @@ class SubmitButtonPagePart extends AbstractPagePart
 {
 
     /**
+     * The label on the submit button
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $label;
 
     /**
      * Set the label
+     *
      * @param int $label
      */
     public function setLabel($label)
@@ -41,6 +44,8 @@ class SubmitButtonPagePart extends AbstractPagePart
     }
 
     /**
+     * Return a string representation of this page part
+     *
      * @return string
      */
     public function __toString()
@@ -49,6 +54,8 @@ class SubmitButtonPagePart extends AbstractPagePart
     }
 
     /**
+     * Return the frontend view
+     *
      * @return string
      */
     public function getDefaultView()
@@ -57,6 +64,8 @@ class SubmitButtonPagePart extends AbstractPagePart
     }
 
     /**
+     * Return the backend view
+     *
      * @return string
      */
     public function getAdminView()
@@ -65,6 +74,8 @@ class SubmitButtonPagePart extends AbstractPagePart
     }
 
     /**
+     * Return the search view
+     *
      * @return string
      */
     public function getElasticaView()
@@ -73,6 +84,8 @@ class SubmitButtonPagePart extends AbstractPagePart
     }
 
     /**
+     * Returns the default form type for this FormSubmissionField
+     *
      * @return SubmitButtonPagePartAdminType
      */
     public function getDefaultAdminType()

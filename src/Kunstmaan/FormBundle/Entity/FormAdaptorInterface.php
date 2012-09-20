@@ -11,7 +11,7 @@ interface FormAdaptorInterface
 {
 
     /**
-     * Adapt the form here
+     * Modify the given FormBuilderInterface
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields

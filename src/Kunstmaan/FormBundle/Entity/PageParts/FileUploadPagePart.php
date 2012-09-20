@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
 
 /**
- * File upload form pagepart
+ * The file upload page part can be used to create forms with the possibility to upload files.
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
@@ -28,6 +28,8 @@ class FileUploadPagePart extends AbstractFormPagePart
 {
 
     /**
+     * Modify the form with the fields of the current page part
+     *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
      */
@@ -75,6 +77,8 @@ class FileUploadPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Returns the default backend form type for this page part
+     *
      * @return FileUploadPagePartAdminType
      */
     public function getDefaultAdminType()

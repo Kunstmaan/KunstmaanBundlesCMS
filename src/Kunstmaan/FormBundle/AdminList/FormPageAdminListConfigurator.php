@@ -3,22 +3,22 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * Adminlist for form pages
+ * Adminlist configuration to list all the form pages
  */
 class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
     /**
-     * @param string $permission The permission
+     * @param string $permission The permission you need to view the form pages
      */
     public function __construct($permission)
     {
@@ -28,6 +28,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure the fields you can filter on
+     *
      * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
@@ -47,6 +49,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Return the url to edit the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return array
@@ -60,6 +64,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Return the url to list all the items
+     *
      * @return array
      */
     public function getIndexUrlFor()
@@ -68,6 +74,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure if it's possible to add new items
+     *
      * @return bool
      */
     public function canAdd()
@@ -76,9 +84,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure the types of items you can add
+     *
      * @param array $params
      *
-     * @return string
+     * @return array
      */
     public function getAddUrlFor(array $params = array())
     {
@@ -86,6 +96,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure if it's possible to delete the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return bool
@@ -96,6 +108,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure the repository name of the items that will be listed
+     *
      * @return string
      */
     public function getRepositoryName()
@@ -104,6 +118,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Make some modifications to the default created query builder
+     *
      * @param QueryBuilder $queryBuilder The query builder
      * @param array        $params       The parameters
      */
@@ -118,6 +134,8 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Get the delete url for the given $item
+     *
      * @param AbstractEntity $item
      *
      * @return array
