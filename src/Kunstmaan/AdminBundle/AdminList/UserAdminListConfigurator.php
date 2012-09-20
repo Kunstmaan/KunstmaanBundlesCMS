@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
@@ -16,6 +17,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
     /**
+     * Build filters for admin list
+     *
      * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
@@ -33,11 +36,13 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
         $this->addField("username", "Username", true);
         $this->addField("email", "E-Mail", true);
         $this->addField("enabled", "Enabled", true);
-        $this->addField("lastlogin", "Last Login", false);
+        $this->addField("lastLogin", "Last Login", false);
         $this->addField("groups", "Groups", false);
     }
 
     /**
+     * Configure add action(s) of admin list
+     *
      * @param array $params
      *
      * @return array
@@ -51,6 +56,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure edit action(s) of admin list
+     *
      * @param mixed $item
      *
      * @return array
@@ -64,6 +71,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure index action of admin list
+     *
      * @return array
      */
     public function getIndexUrlFor()
@@ -72,6 +81,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Get admin type of entity
+     *
      * @param mixed $item
      *
      * @return AbstractType|null
@@ -82,6 +93,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure delete action(s) of admin list
+     *
      * @param mixed $item
      *
      * @return array
@@ -97,6 +110,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Get repository name
+     *
      * @return string
      */
     public function getRepositoryName()
