@@ -36,6 +36,8 @@ class ConfigureActionsMenuListener
     }
 
     /**
+     * Configure the form submissions link on top of the form in the sub action menu
+     *
      * @param ConfigureActionMenuEvent $event
      */
     public function onSubActionMenuConfigure(ConfigureActionMenuEvent $event)
