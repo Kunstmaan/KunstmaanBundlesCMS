@@ -1,12 +1,22 @@
 <?php
 namespace Kunstmaan\SearchBundle\Transformers;
 
+use Doctrine\Common\Persistence\ObjectManager;
+
 use FOQ\ElasticaBundle\Doctrine\ORM\ElasticaToModelTransformer;
 
+/**
+ * ElasticaTransformer
+ */
 class ElasticaTransformer extends ElasticaToModelTransformer
 {
 
-    public function __construct($objectManager, $objectClass, array $options = array())
+    /**
+     * @param ObjectManager $objectManager The object manager
+     * @param string        $objectClass   The class
+     * @param array         $options       Options
+     */
+    public function __construct(ObjectManager $objectManager, $objectClass, array $options = array())
     {
         $this->objectManager = $objectManager;
         $this->objectClass = $objectClass;
@@ -18,6 +28,7 @@ class ElasticaTransformer extends ElasticaToModelTransformer
      * model objects fetched from the doctrine repository
      *
      * @param array $elasticaObjects an array of elastica objects
+     *
      * @return array
      **/
     public function transform(array $elasticaObjects)

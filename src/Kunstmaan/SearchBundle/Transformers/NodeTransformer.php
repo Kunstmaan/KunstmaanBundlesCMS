@@ -1,17 +1,25 @@
 <?php
 namespace Kunstmaan\SearchBundle\Transformers;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use Kunstmaan\SearchBundle\Entity\IndexableInterface;
 use Elastica_Document;
 use RuntimeException;
 use FOQ\ElasticaBundle\Transformer\ModelToElasticaAutoTransformer;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
+/**
+ * NodeTransformer
+ */
 class NodeTransformer extends ModelToElasticaAutoTransformer
 {
     // Contains the Symfony2 DependencyInjection container
     protected $container;
 
+    /**
+     * @param array $options
+     */
     public function __construct(array $options = array())
     {
         $this->container = $options['container'];
@@ -21,8 +29,9 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
     /**
      * Transforms a given object into an instance of an Elastica_Document
      *
-     * @param $object
-     * @param array $fields
+     * @param mixed $object The object
+     * @param array $fields The fields
+     *
      * @return \Elastica_Document
      */
     public function transform($object, array $fields)
@@ -55,13 +64,14 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
     /**
      * Handles the 'normal' parameters via the getter method of the entity
      *
-     * @param $container
-     * @param $object
-     * @param $field
+     * @param ContainerInterface $container The container
+     * @param mixed              $object    The object
+     * @param string             $field     The field
+     *
      * @return array|string
      * @throws RuntimeException
      */
-    protected function getNormalField($container, $object, $field)
+    protected function getNormalField(ContainerInterface $container, $object, $field)
     {
         $class = ClassLookup::getClass($object);
         $getter = 'get' . ucfirst($field);
@@ -76,14 +86,15 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
      * Handles the special way of getting the data. Will instanciate a given class and call a method to receive
      * output.
      *
-     * @param $container
-     * @param $object
-     * @param $field
-     * @param $mappingSettings
+     * @param ContainerInterface $container       The container
+     * @param mixed              $object          The object
+     * @param string             $field           The field
+     * @param array              $mappingSettings The mapping settings
+     *
      * @throws \RuntimeException
      * @return mixed
      */
-    protected function getHandlerField($container, $object, $field, $mappingSettings)
+    protected function getHandlerField(ContainerInterface $container, $object, $field, array $mappingSettings)
     {
         //basic checks
         if (!class_exists($mappingSettings['handlerclass'])) {

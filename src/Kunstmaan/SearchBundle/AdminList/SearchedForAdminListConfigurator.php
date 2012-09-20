@@ -52,15 +52,18 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * @param mixed $item
+     *
      * @return bool
      */
-    public function canEdit()
+    public function canEdit($item)
     {
         return false;
     }
 
     /**
-     * @param $item
+     * @param mixed $item
+     *
      * @return array
      */
     public function getEditUrlFor($item)
@@ -68,13 +71,17 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
         return array();
     }
 
+    /**
+     * @return array
+     */
     public function getIndexUrlFor()
     {
         return array('path' => 'KunstmaanAdminBundle_settings_searches');
     }
 
     /**
-     * @param $item
+     * @param mixed $item
+     *
      * @return bool
      */
     public function canDelete($item)
@@ -83,7 +90,8 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
+     *
      * @return null
      */
     public function getAdminType($item)
@@ -100,8 +108,8 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $querybuilder
-     * @param array $params
+     * @param \Doctrine\ORM\QueryBuilder $querybuilder The query builder
+     * @param array                      $params       Extra parameters
      */
     public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $querybuilder, array $params = array())
     {
@@ -110,8 +118,9 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
-     * @param $columnName
+     * @param mixed  $item       The item
+     * @param string $columnName The column name
+     *
      * @return string
      */
     public function getValue($item, $columnName)
@@ -143,9 +152,9 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      */
-    function getDeleteUrlFor($item)
+    public function getDeleteUrlFor($item)
     {
         // TODO: Implement getDeleteUrlFor() method.
     }
