@@ -51,11 +51,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * Return the url to edit the given $item
      *
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    public function getEditUrlFor(AbstractEntity $item)
+    public function getEditUrlFor($item)
     {
         return array(
             'path'   => 'KunstmaanFormBundle_formsubmissions_list',
@@ -98,11 +98,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * Configure if it's possible to delete the given $item
      *
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return bool
      */
-    public function canDelete(AbstractEntity $item)
+    public function canDelete($item)
     {
         return false;
     }
@@ -136,11 +136,11 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * Get the delete url for the given $item
      *
-     * @param AbstractEntity $item
+     * @param mixed $item
      *
      * @return array
      */
-    public function getDeleteUrlFor(AbstractEntity $item)
+    public function getDeleteUrlFor($item)
     {
         return array();
     }
