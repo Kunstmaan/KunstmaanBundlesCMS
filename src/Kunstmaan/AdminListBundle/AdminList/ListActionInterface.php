@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+/**
+ * ListActionInterface
+ */
 interface ListActionInterface
 {
     /**

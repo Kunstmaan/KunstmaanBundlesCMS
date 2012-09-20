@@ -2,23 +2,39 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Doctrine\ORM\QueryBuilder;
+
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Filter
+ */
 class Filter
 {
-    /* @var string $columnName */
+    /**
+     * @var string $columnName
+     */
     protected $columnName = null;
 
+    /**
+     * @var array
+     */
     protected $filterDefinition = null;
 
+    /**
+     * @var string
+     */
     protected $uniqueId = null;
 
+    /**
+     * @var array
+     */
     protected $data = array();
 
     /**
-     * @param string $columnName
-     * @param array  $filterDefinition
-     * @param string $uniqueId
+     * @param string $columnName       The column name
+     * @param array  $filterDefinition The filter configuration
+     * @param string $uniqueId         The unique id
      */
     public function __construct($columnName, $filterDefinition, $uniqueId)
     {
@@ -36,10 +52,10 @@ class Filter
     }
 
     /**
-     * @param $querybuilder
-     * @param array $expressions
+     * @param QueryBuilder $querybuilder The query builder
+     * @param array        &$expressions The expressions
      */
-    public function adaptQueryBuilder($querybuilder, &$expressions)
+    public function adaptQueryBuilder(QueryBuilder $querybuilder, &$expressions)
     {
         $this->filterDefinition['type']->adaptQueryBuilder($querybuilder, $expressions, $this->data, $this->uniqueId);
     }
@@ -68,6 +84,9 @@ class Filter
         return $this->filterDefinition['type'];
     }
 
+    /**
+     * @return string
+     */
     public function getUniqueId()
     {
         return $this->uniqueId;

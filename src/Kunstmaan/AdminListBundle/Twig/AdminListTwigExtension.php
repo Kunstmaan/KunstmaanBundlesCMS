@@ -7,6 +7,9 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Router;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
+/**
+ * AdminListTwigExtension
+ */
 class AdminListTwigExtension extends \Twig_Extension
 {
     /**
@@ -20,6 +23,14 @@ class AdminListTwigExtension extends \Twig_Extension
     protected $container;
 
     /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function initRuntime(\Twig_Environment $environment)
@@ -27,11 +38,11 @@ class AdminListTwigExtension extends \Twig_Extension
         $this->environment = $environment;
     }
 
-    public function __construct($container)
-    {
-        $this->container = $container;
-    }
-
+    /**
+     * Returns a list of functions to add to the existing list.
+     *
+     * @return array An array of functions
+     */
     public function getFunctions()
     {
         return array(
@@ -53,11 +64,12 @@ class AdminListTwigExtension extends \Twig_Extension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param  AdminList $view        The view to render
-     * @param  string    $basepath    The base path
-     * @param  array     $urlparams   Additional url params
-     * @param  array     $addparams   Add params
-     * @param  array     $queryparams Query params
+     * @param AdminList $view        The view to render
+     * @param string    $basepath    The base path
+     * @param array     $urlparams   Additional url params
+     * @param array     $addparams   Add params
+     * @param array     $queryparams Query params
+     *
      * @return string    The html markup
      */
     public function renderWidget(AdminList $view, $basepath, array $urlparams = array(), array $addparams = array(), array $queryparams = array())
@@ -78,10 +90,12 @@ class AdminListTwigExtension extends \Twig_Extension
     /**
      * Emulating the symfony 2.1.x $request->attributes->get('_route_params') feature.
      * Code based on PagerfantaBundle's twig extension.
+     *
+     * @return array
      */
     public function routerParams()
     {
-        /** @var Router $router  */
+        /* @var Router $router  */
         $router = $this->container->get('router');
         $request = $this->container->get('request');
 
@@ -96,6 +110,11 @@ class AdminListTwigExtension extends \Twig_Extension
         return $routeParams;
     }
 
+    /**
+     * Returns the name of the extension.
+     *
+     * @return string The extension name
+     */
     public function getName()
     {
         return 'adminlist_twig_extension';

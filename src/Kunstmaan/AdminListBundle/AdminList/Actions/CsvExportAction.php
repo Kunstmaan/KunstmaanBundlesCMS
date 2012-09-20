@@ -4,6 +4,9 @@ namespace Kunstmaan\AdminListBundle\AdminList\Actions;
 
 use Kunstmaan\AdminListBundle\AdminList\ListActionInterface;
 
+/**
+ * CsvExportAction
+ */
 class CsvExportAction implements ListActionInterface
 {
 

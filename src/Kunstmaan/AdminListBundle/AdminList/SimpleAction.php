@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+/**
+ * SimpleAction
+ */
 class SimpleAction implements ListActionInterface
 {
     private $url;
@@ -10,10 +13,10 @@ class SimpleAction implements ListActionInterface
     private $template;
 
     /**
-     * @param string $url
-     * @param string $icon
-     * @param string $label
-     * @param string $template
+     * @param string $url      The url
+     * @param string $icon     The icon
+     * @param string $label    The label
+     * @param string $template The template
      */
     public function __construct($url, $icon, $label, $template = null)
     {

@@ -2,11 +2,14 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+
 use Doctrine\DBAL\Query\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 
 /**
+ * AdminList
  *
  * @todo Create a base (abstract) class with 2 descendants - one with only ORM and one with only native DBAL support?
  *       If we do this we will have to adapt the factory & filter as well...
@@ -14,35 +17,55 @@ use Doctrine\ORM\EntityManager;
 class AdminList
 {
 
-    /* @var Request $request */
+    /**
+     * @var Request $request
+     */
     protected $request = null;
 
-    /* @var AbstractAdminListConfigurator $configurator */
+    /**
+     * @var AbstractAdminListConfigurator $configurator
+     */
     protected $configurator = null;
 
-    /* @var EntityManager $em */
+    /**
+     * @var EntityManager $em
+     */
     protected $em = null;
 
-    /* @var int $page */
+    /**
+     * @var int $page
+     */
     protected $page = 1;
 
-    /* @var AdminListFilter $adminListFilter */
+    /**
+     * @var AdminListFilter $adminListFilter
+     */
     protected $adminListFilter = 1;
 
-    /* @var string $orderBy */
+    /**
+     * @var string $orderBy
+     */
     protected $orderBy = null;
 
-    /* @var string $orderDirection */
+    /**
+     * @var string $orderDirection
+     */
     protected $orderDirection = null;
 
+    /**
+     * @var array
+     */
     protected $queryParams = array();
 
+    /**
+     * @var AclHelper
+     */
     protected $aclHelper = null;
 
     /**
-     * @param AbstractAdminListConfigurator $configurator
-     * @param EntityManager                 $em
-     * @param array                         $queryParams
+     * @param AbstractAdminListConfigurator $configurator The configurator
+     * @param EntityManager                 $em           The entity manager
+     * @param array                         $queryParams  The query parameters
      */
     public function __construct(AbstractAdminListConfigurator $configurator, EntityManager $em, $queryParams = array())
     {
@@ -195,11 +218,13 @@ class AdminList
     }
 
     /**
+     * @param mixed $item
+     *
      * @return bool
      */
-    public function canEdit()
+    public function canEdit($item)
     {
-        return $this->configurator->canEdit();
+        return $this->configurator->canEdit($item);
     }
 
     /**
@@ -219,7 +244,7 @@ class AdminList
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -229,7 +254,7 @@ class AdminList
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
@@ -249,7 +274,7 @@ class AdminList
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return bool
      */
@@ -275,8 +300,8 @@ class AdminList
     }
 
     /**
-     * @param object|array $object
-     * @param string       $attribute
+     * @param object|array $object    The object
+     * @param string       $attribute The attribute
      *
      * @return mixed
      */
@@ -286,8 +311,8 @@ class AdminList
     }
 
     /**
-     * @param object|array $object
-     * @param string       $attribute
+     * @param object|array $object    The object
+     * @param string       $attribute The attribute
      *
      * @return string
      */
@@ -345,13 +370,16 @@ class AdminList
     }
 
     /**
-     * @param $aclHelper
+     * @param AclHelper $aclHelper
      */
-    public function setAclHelper($aclHelper)
+    public function setAclHelper(AclHelper $aclHelper)
     {
         $this->aclHelper = $aclHelper;
     }
 
+    /**
+     * @return AclHelper
+     */
     public function getAclHelper()
     {
         return $this->aclHelper;

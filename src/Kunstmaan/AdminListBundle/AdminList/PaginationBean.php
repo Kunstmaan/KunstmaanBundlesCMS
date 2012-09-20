@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+/**
+ * PaginationBean
+ */
 class PaginationBean
 {
     /**
@@ -45,10 +48,10 @@ class PaginationBean
     protected $range;
 
     /**
-     * @param int $itemsCount
-     * @param int $currentPage
-     * @param int $limit
-     * @param int $midRange
+     * @param int $itemsCount  Total item count
+     * @param int $currentPage The current page
+     * @param int $limit       Limit on one page
+     * @param int $midRange    The midrange
      */
     public function __construct($itemsCount, $currentPage = 1, $limit = 20, $midRange = 7)
     {

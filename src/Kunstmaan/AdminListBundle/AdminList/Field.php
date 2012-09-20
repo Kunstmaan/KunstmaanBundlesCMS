@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 /**
+ * Field
  */
 class Field
 {
@@ -12,10 +13,10 @@ class Field
     private $template;
 
     /**
-     * @param string $name
-     * @param string $header
-     * @param bool   $sort
-     * @param string $template
+     * @param string $name     The name
+     * @param string $header   The header
+     * @param bool   $sort     Sort or not
+     * @param string $template The template
      */
     public function __construct($name, $header, $sort = false, $template = null)
     {
