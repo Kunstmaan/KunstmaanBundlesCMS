@@ -190,7 +190,7 @@ abstract class AbstractAdminListConfigurator
      *
      * @return bool
      */
-    public function canDelete(mixed $item)
+    public function canDelete($item)
     {
         return true;
     }
