@@ -17,6 +17,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
     /**
+     * Build filters for admin list
+     *
      * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
@@ -34,11 +36,13 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
         $this->addField("username", "Username", true);
         $this->addField("email", "E-Mail", true);
         $this->addField("enabled", "Enabled", true);
-        $this->addField("lastlogin", "Last Login", false);
+        $this->addField("lastLogin", "Last Login", false);
         $this->addField("groups", "Groups", false);
     }
 
     /**
+     * Configure add action(s) of admin list
+     *
      * @param array $params
      *
      * @return array
@@ -52,11 +56,13 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * Configure edit action(s) of admin list
+     *
+     * @param mixed $item
      *
      * @return array
      */
-    public function getEditUrlFor(AbstractEntity $item)
+    public function getEditUrlFor($item)
     {
         return array(
             'path'   => 'KunstmaanAdminBundle_settings_users_edit',
@@ -65,6 +71,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure index action of admin list
+     *
      * @return array
      */
     public function getIndexUrlFor()
@@ -73,6 +81,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Get admin type of entity
+     *
      * @param mixed $item
      *
      * @return AbstractType|null
@@ -83,11 +93,13 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * Configure delete action(s) of admin list
+     *
+     * @param mixed $item
      *
      * @return array
      */
-    public function getDeleteUrlFor(AbstractEntity $item)
+    public function getDeleteUrlFor($item)
     {
         return array(
             'path'      => 'KunstmaanAdminBundle_settings_users_delete',
@@ -98,6 +110,8 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Get repository name
+     *
      * @return string
      */
     public function getRepositoryName()

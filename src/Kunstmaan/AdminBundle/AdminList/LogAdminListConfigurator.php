@@ -17,6 +17,8 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
 {
 
     /**
+     * Build filters for admin list
+     *
      * @param AdminListFilter $builder
      */
     public function buildFilters(AdminListFilter $builder)
@@ -39,6 +41,8 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Determine if the user can add items
+     *
      * @return bool
      */
     public function canAdd()
@@ -47,6 +51,8 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Configure add action(s) of admin list
+     *
      * @param array $params
      *
      * @return array
@@ -57,24 +63,32 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Determine if the user can edit the specified item
+     *
+     * @param mixed $item
+     *
      * @return bool
      */
-    public function canEdit()
+    public function canEdit($item)
     {
         return false;
     }
 
     /**
-     * @param AbstractEntity $item
+     * Configure edit action(s) of admin list
+     *
+     * @param mixed $item
      *
      * @return array
      */
-    public function getEditUrlFor(AbstractEntity $item)
+    public function getEditUrlFor($item)
     {
         return array();
     }
 
     /**
+     * Configure index action of admin list
+     *
      * @return array
      */
     public function getIndexUrlFor()
@@ -83,26 +97,32 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AbstractEntity $item
+     * Configure delete action(s) of admin list
+     *
+     * @param mixed $item
      *
      * @return array
      */
-    public function getDeleteUrlFor(AbstractEntity $item)
+    public function getDeleteUrlFor($item)
     {
         return array();
     }
 
     /**
-     * @param AbstractEntity $item
+     * Determine if the user can delete the specified item
+     *
+     * @param mixed $item
      *
      * @return bool
      */
-    public function canDelete(AbstractEntity $item)
+    public function canDelete($item)
     {
         return false;
     }
 
     /**
+     * Get admin type of entity
+     *
      * @param mixed $item
      *
      * @return AbstractType|null
@@ -113,6 +133,8 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
+     * Get repository name
+     *
      * @return string
      */
     public function getRepositoryName()
