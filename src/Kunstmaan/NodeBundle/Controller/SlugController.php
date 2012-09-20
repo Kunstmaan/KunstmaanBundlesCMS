@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\ViewBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 use Kunstmaan\AdminBundle\Entity\DynamicRoutingPageInterface;
@@ -9,7 +11,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
 use Kunstmaan\ViewBundle\Helper\RenderContext;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -20,6 +21,8 @@ class SlugController extends Controller
 {
 
     /**
+     * Handle slug action.
+     *
      * @param string $url     The url
      * @param bool   $preview Show in preview mode
      * @param bool   $draft   Show the draft version or not
@@ -31,7 +34,8 @@ class SlugController extends Controller
      * @Template()
      *
      * @throws AccessDeniedHttpException
-     * @return unknown
+     *
+     * @return Response|array
      */
     public function slugAction($url = null, $preview = false, $draft = false)
     {

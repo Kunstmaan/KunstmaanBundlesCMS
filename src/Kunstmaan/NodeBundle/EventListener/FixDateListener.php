@@ -8,14 +8,15 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* this fixes the bug with date vs Date headers
-*
-*/
+ * Fixes bug with date vs Date headers
+ */
 class FixDateListener
 {
    /**
-* @param GetResponseEvent $event
-*/
+    * Make sure response has a timestamp
+    *
+    * @param GetResponseEvent $event
+    */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();
