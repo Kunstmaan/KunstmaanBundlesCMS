@@ -239,11 +239,11 @@ class AdminList
     }
 
     /**
-     * @param $params
+     * @param array $params
      *
      * @return array
      */
-    public function getAddUrlFor($params)
+    public function getAddUrlFor(array $params)
     {
         return $this->configurator->getAddUrlFor($params);
     }

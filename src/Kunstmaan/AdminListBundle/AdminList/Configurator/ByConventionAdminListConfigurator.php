@@ -43,7 +43,7 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
      *
      * @return array
      */
-    public function getAddUrlFor($params = array())
+    public function getAddUrlFor(array $params = array())
     {
         return array(
             strtolower($this->getEntityName()) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
