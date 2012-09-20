@@ -1,30 +1,70 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Doctrine\DBAL\Query\QueryBuilder;
+
 use Symfony\Component\Form\AbstractType;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 
+/**
+ * AbstractAdminListConfigurator
+ */
 abstract class AbstractAdminListConfigurator
 {
-    /* @var Field[] $fields */
+
+    /**
+     * @var Field[]
+     */
     private $fields = array();
-    /* @var Field[] $exportFields */
+
+    /**
+     * @var Field[]
+     */
     private $exportFields = array();
-    /* @var ActionInterface[] $customActions */
+
+    /**
+     * @var ActionInterface[]
+     */
     private $customActions = array();
-    /* @var ListActionInterface[] $listActions */
+
+    /**
+     * @var ListActionInterface[] $listActions
+     */
     private $listActions = array();
+
+    /**
+     * @var unknown_type
+     */
     private $type = null;
+
+    /**
+     * @var string
+     */
     private $listTemplate = 'KunstmaanAdminListBundle:Default:list.html.twig';
+
+    /**
+     * @var string
+     */
     private $addTemplate = 'KunstmaanAdminListBundle:Default:add.html.twig';
+
+    /**
+     * @var string
+     */
     private $editTemplate = 'KunstmaanAdminListBundle:Default:edit.html.twig';
+
+    /**
+     * @var string
+     */
     private $deleteTemplate = 'KunstmaanAdminListBundle:Default:delete.html.twig';
-    /* @var PermissionDefinition $permissionDefinition */
+
+    /**
+     * @var PermissionDefinition $permissionDefinition
+     */
     private $permissionDefinition = null;
 
     /**
-     * Build the fields
+     * Configure the visible columns
      */
     abstract public function buildFields();
 
@@ -98,12 +138,13 @@ abstract class AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
-
     }
 
+    /**
+     * configure the actions for each line
+     */
     public function buildActions()
     {
-
     }
 
     /**
@@ -115,10 +156,10 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param string $name
-     * @param string $header
-     * @param string $sort
-     * @param string $template
+     * @param string $name     The field name
+     * @param string $header   The header title
+     * @param string $sort     Sortable column or not
+     * @param string $template The template
      *
      * @return AbstractAdminListConfigurator
      */
@@ -130,16 +171,15 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param string $name
-     * @param string $header
-     * @param bool   $sort
-     * @param string $template
+     * @param string $name     The field name
+     * @param string $header   The header title
+     * @param string $template The template
      *
      * @return AbstractAdminListConfigurator
      */
-    public function addExportField($name, $header, $sort = false, $template = null)
+    public function addExportField($name, $header, $template = null)
     {
-        $this->exportFields[] = new Field($name, $header, $sort, $template);
+        $this->exportFields[] = new Field($name, $header, false, $template);
 
         return $this;
     }
@@ -222,18 +262,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param $array
-     */
-    public function configureListFields(&$array)
-    {
-        foreach ($this->getFields() as $field) {
-            $array[$field->getHeader()] = $field->getName();
-        }
-    }
-
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param array                      $params
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder The query builder
+     * @param array                      $params       Some extra parameters
      */
     public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $queryBuilder, array $params = array())
     {
@@ -241,10 +271,10 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param string $label
-     * @param string $url
-     * @param string $icon
-     * @param string $template
+     * @param string $label    The label, only used when the template equals null
+     * @param string $url      The action url
+     * @param string $icon     The icon, only used when the template equals null
+     * @param string $template The template, when not specified the label is shown
      *
      * @return AbstractAdminListConfigurator
      */
@@ -298,8 +328,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param array|object $item
-     * @param string       $columnName
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
      *
      * @return mixed
      */
@@ -339,8 +369,8 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param array|object $item
-     * @param string       $columnName
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
      *
      * @return string
      */
@@ -394,23 +424,23 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $querybuilder
-     * @param array                             $params
+     * @param \Doctrine\DBAL\Query\QueryBuilder $querybuilder The DBAL query builder
+     * @param array                             $params       Some extra parameters
      *
      * @throws \RuntimeException
      */
-    public function adaptNativeCountQueryBuilder($querybuilder, $params = array())
+    public function adaptNativeCountQueryBuilder(\Doctrine\DBAL\Query\QueryBuilder $querybuilder, $params = array())
     {
         throw new \RuntimeException('You have to implement the native count query builder!');
     }
 
     /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $querybuilder
-     * @param array                             $params
+     * @param \Doctrine\DBAL\Query\QueryBuilder $querybuilder The DBAL query builder
+     * @param array                             $params       Some extra parameters
      *
      * @throws \RuntimeException
      */
-    public function adaptNativeItemsQueryBuilder($querybuilder, $params = array())
+    public function adaptNativeItemsQueryBuilder(\Doctrine\DBAL\Query\QueryBuilder $querybuilder, $params = array())
     {
         throw new \RuntimeException('You have to implement the native items query builder!');
     }
@@ -497,8 +527,9 @@ abstract class AbstractAdminListConfigurator
 
     /**
      * You can override this method to do some custom things you need to do when adding an entity
+     * @param mided $entity
      *
-     * @param object $entity
+     * @return mixed
      */
     public function decorateNewEntity($entity)
     {

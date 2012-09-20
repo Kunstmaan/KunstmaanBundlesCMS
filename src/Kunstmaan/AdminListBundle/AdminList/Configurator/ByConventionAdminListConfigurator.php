@@ -27,9 +27,9 @@ abstract class ByConventionAdminListConfigurator extends AbstractAdminListConfig
     protected $controllerPath;
 
     /**
-     * @param string $bundleName
-     * @param string $entityName
-     * @param string $controllerPath
+     * @param string $bundleName     The bundle name
+     * @param string $entityName     The class name of the entity (not the full classname)
+     * @param string $controllerPath The path of the controller
      */
     public function __construct($bundleName, $entityName, $controllerPath = null)
     {
