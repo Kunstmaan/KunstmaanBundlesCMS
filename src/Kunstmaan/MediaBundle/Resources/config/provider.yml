@@ -12,9 +12,8 @@ services:
     kunstmaan_media.provider.image:
         class: "%kunstmaan_media.provider.image.class%"
         parent: 'kunstmaan_media.provider.abstract'
-        call:
-            method: 'setImageManipulator'
-            arguments: [null]
+        calls:
+            - [setImageManipulator, [null]]
     kunstmaan_media.provider.file:
         class: "%kunstmaan_media.provider.file.class%"
         parent: 'kunstmaan_media.provider.abstract'

@@ -455,7 +455,7 @@ class Folder extends AbstractEntity
             return $this->files;
         }
 
-        return $this->files->filter( function (File $entry) {
+        return $this->files->filter( function (Media $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }
@@ -471,7 +471,7 @@ class Folder extends AbstractEntity
      */
     public function getImages()
     {
-        return $this->getFiles()->filter( function ($file) {
+        return $this->getFiles()->filter( function (Media $file) {
             if ($file instanceof Image) {
                 return true;
             }
@@ -502,7 +502,7 @@ class Folder extends AbstractEntity
      */
     public function getFilesOnly()
     {
-        return $this->getFiles()->filter( function ($file) {
+        return $this->getFiles()->filter( function (Media $file) {
             if ($file instanceof File) {
                 return true;
             }
@@ -533,7 +533,7 @@ class Folder extends AbstractEntity
      */
     public function getSlidesOnly()
     {
-        return $this->getFiles()->filter( function ($file) {
+        return $this->getFiles()->filter( function (Media $file) {
             if ($file instanceof Slide) {
                 return true;
             }
@@ -564,7 +564,7 @@ class Folder extends AbstractEntity
      */
     public function getVideosOnly()
     {
-        return $this->getFiles()->filter( function ($file) {
+        return $this->getFiles()->filter( function (Media $file) {
             if ($file instanceof Video) {
                 return true;
             }
@@ -672,7 +672,7 @@ class Folder extends AbstractEntity
         if (!$this->sequencenumber) {
             $parent = $this->getParent();
             if ($parent) {
-                $count                = $parent->getChildren()->count();
+                $count = $parent->getChildren()->count();
                 $this->sequencenumber = $count + 1;
             } else {
                 $this->sequencenumber = 1;

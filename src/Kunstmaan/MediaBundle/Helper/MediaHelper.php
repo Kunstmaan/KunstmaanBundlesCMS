@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
+use Symfony\Component\HttpFoundation\File\File;
+
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Kunstmaan\MediaBundle\Entity\Media;
