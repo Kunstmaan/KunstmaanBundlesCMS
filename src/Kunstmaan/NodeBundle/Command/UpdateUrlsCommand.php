@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Command;
+namespace Kunstmaan\NodeBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,7 +31,7 @@ class UpdateUrlsCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $mainNodes = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getTopNodeTranslations();
+        $mainNodes = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getTopNodeTranslations();
         if (count($mainNodes)) {
             foreach ($mainNodes as $mainNode) {
                 $mainNode->setUrl('');

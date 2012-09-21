@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Command;
+namespace Kunstmaan\NodeBundle\Command;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 
@@ -39,7 +39,7 @@ class InitAclCommand extends ContainerAwareCommand
         $oidStrategy = $this->getContainer()->get('security.acl.object_identity_retrieval_strategy');
 
         // Fetch all nodes & grant access
-        $nodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->findAll();
+        $nodes = $em->getRepository('KunstmaanNodeBundle:Node')->findAll();
         $count = 0;
         foreach ($nodes as $node) {
             $count++;

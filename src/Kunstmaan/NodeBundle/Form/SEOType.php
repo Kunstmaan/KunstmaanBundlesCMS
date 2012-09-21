@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Form;
+namespace Kunstmaan\NodeBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -50,7 +50,7 @@ class SEOType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-                'data_class' => 'Kunstmaan\AdminNodeBundle\Entity\Seo',
+                'data_class' => 'Kunstmaan\NodeBundle\Entity\Seo',
         );
     }
 }

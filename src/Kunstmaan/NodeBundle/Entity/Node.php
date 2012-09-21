@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
@@ -8,12 +8,12 @@ use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Kunstmaan\AdminNodeBundle\Form\NodeAdminType;
+use Kunstmaan\NodeBundle\Form\NodeAdminType;
 
 /**
  * Node
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeRepository")
  * @ORM\Table(name="kuma_nodes")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")

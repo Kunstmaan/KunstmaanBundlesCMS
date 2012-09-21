@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\EventListener;
+namespace Kunstmaan\NodeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Kunstmaan\AdminBundle\Event\ApplyAclChangesetEvent;
-use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
+use Kunstmaan\NodeBundle\Helper\ShellHelper;
 
 /**
  * ApplyAclChangesetListener

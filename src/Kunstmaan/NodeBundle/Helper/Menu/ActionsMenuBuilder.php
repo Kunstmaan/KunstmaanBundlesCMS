@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Helper\Menu;
+namespace Kunstmaan\NodeBundle\Helper\Menu;
 
-use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent;
-use Kunstmaan\AdminNodeBundle\Event\Events;
+use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
+use Kunstmaan\NodeBundle\Event\Events;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -26,7 +26,7 @@ class ActionsMenuBuilder
     private $factory;
 
     /**
-     * @var \Kunstmaan\AdminNodeBundle\Entity\NodeVersion
+     * @var \Kunstmaan\NodeBundle\Entity\NodeVersion
      */
     private $activeNodeVersion;
 
@@ -173,7 +173,7 @@ class ActionsMenuBuilder
     /**
      * Get activeNodeVersion
      *
-     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeVersion
+     * @return \Kunstmaan\NodeBundle\Entity\NodeVersion
      */
     public function getActiveNodeVersion()
     {

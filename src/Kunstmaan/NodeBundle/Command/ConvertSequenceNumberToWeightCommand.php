@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Command;
+namespace Kunstmaan\NodeBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,7 +20,7 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
 
         $this->setName('kuma:nodes:convertsequencenumbertoweight')
             ->setDescription('Set all the nodetranslations weights based on the nodes sequencenumber')
-            ->setHelp("The <info>AdminNode:nodetranslations:updateweights</info> will loop over all nodetranslation and set their weight based on the nodes sequencenumber.");
+            ->setHelp("The <info>Node:nodetranslations:updateweights</info> will loop over all nodetranslation and set their weight based on the nodes sequencenumber.");
     }
 
     /**
@@ -34,7 +34,7 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
 
         $batchSize = 20;
         $i =0;
-        $q = $em->createQuery('SELECT t FROM Kunstmaan\AdminNodeBundle\Entity\NodeTranslation t WHERE t.weight IS NULL');
+        $q = $em->createQuery('SELECT t FROM Kunstmaan\NodeBundle\Entity\NodeTranslation t WHERE t.weight IS NULL');
 
         $iterableResult = $q->iterate();
 

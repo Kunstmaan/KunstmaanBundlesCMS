@@ -2,7 +2,7 @@ Upgrade Instructions
 ====================
 
 ## To v2.0+
-The AdminNode services now all have kunstmaan_adminnode as prefix.
+The Node services now all have kunstmaan_node as prefix.
 
 ## All versions up to v1.3.6 -> v1.3.6+
 

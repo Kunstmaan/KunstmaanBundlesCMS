@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Tests\Controller;
+namespace Kunstmaan\NodeBundle\Tests\Controller;
 
 /**
  * DefaultControllerTest

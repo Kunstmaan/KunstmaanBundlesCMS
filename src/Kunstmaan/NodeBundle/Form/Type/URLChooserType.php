@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Form\Type;
+namespace Kunstmaan\NodeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Repository;
+namespace Kunstmaan\NodeBundle\Repository;
 
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -39,7 +39,7 @@ class NodeRepository extends EntityRepository
      */
     public function getNodeFor(HasNodeInterface $hasNode)
     {
-        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
+        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
         if (!is_null($nodeVersion)) {
             $nodeTranslation = $nodeVersion->getNodeTranslation();
             if (!is_null($nodeTranslation)) {
@@ -58,7 +58,7 @@ class NodeRepository extends EntityRepository
      */
     public function getNodeForIdAndEntityname($id, $entityName)
     {
-        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $id, 'refEntityName' => $entityName));
+        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(array('refId' => $id, 'refEntityName' => $entityName));
         if ($nodeVersion) {
             return $nodeVersion->getNodeTranslation()->getNode();
         }
@@ -113,7 +113,7 @@ class NodeRepository extends EntityRepository
         $node->setInternalName($internalName);
         $parent = $hasNode->getParent();
         if ($parent) {
-            $parentNodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityName' => ClassLookup::getClass($parent)));
+            $parentNodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityName' => ClassLookup::getClass($parent)));
             if ($parentNodeVersion) {
                 $node->setParent($parentNodeVersion->getNodeTranslation()->getNode());
             }
@@ -121,7 +121,7 @@ class NodeRepository extends EntityRepository
         $em->persist($node);
         $em->flush();
         $em->refresh($node);
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->createNodeTranslationFor($hasNode, $lang, $node, $owner);
+        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($hasNode, $lang, $node, $owner);
 
         return $node;
     }

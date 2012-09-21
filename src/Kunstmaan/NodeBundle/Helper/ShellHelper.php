@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Helper;
+namespace Kunstmaan\NodeBundle\Helper;
 
 /**
  * ShellHelper

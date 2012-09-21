@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\AdminList;
+namespace Kunstmaan\NodeBundle\AdminList;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
@@ -27,7 +27,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     {
         $this->locale = $locale;
         $this->setPermissionDefinition(
-            new PermissionDefinition(array($permission), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n')
+            new PermissionDefinition(array($permission), 'Kunstmaan\NodeBundle\Entity\Node', 'n')
         );
     }
 
@@ -61,7 +61,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     public function getEditUrlFor($item)
     {
         return array(
-            'path'   => 'KunstmaanAdminNodeBundle_pages_edit',
+            'path'   => 'KunstmaanNodeBundle_pages_edit',
             'params' => array('id' => $item->getNode()->getId())
         );
     }
@@ -71,7 +71,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function getIndexUrlFor()
     {
-        return array('path' => 'KunstmaanAdminNodeBundle_pages');
+        return array('path' => 'KunstmaanNodeBundle_pages');
     }
 
     /**
@@ -117,7 +117,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function getRepositoryName()
     {
-        return 'KunstmaanAdminNodeBundle:NodeTranslation';
+        return 'KunstmaanNodeBundle:NodeTranslation';
     }
 
     /**

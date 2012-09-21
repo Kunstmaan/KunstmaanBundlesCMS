@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
 use Symfony\Component\Routing\RouteCollection;
 

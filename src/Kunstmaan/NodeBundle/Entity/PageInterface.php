@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 /**
  * The Page Interface

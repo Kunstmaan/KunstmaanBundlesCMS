@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\AdminBundle\Helper\Routing\DynamicUrlMatcher;
 
 use Symfony\Component\Routing\Generator\UrlGenerator;

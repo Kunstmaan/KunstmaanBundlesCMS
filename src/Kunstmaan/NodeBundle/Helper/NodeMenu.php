@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Helper;
+namespace Kunstmaan\NodeBundle\Helper;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 
@@ -9,9 +9,9 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 use Kunstmaan\AdminBundle\Entity\User;
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * NodeMenu
@@ -111,7 +111,7 @@ class NodeMenu
         $this->user = $this->securityContext->getToken()->getUser();
 
         //topNodes
-        $topNodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($this->lang, $permission, $this->aclHelper, $includeHiddenFromNav);
+        $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->lang, $permission, $this->aclHelper, $includeHiddenFromNav);
         foreach ($topNodes as $topNode) {
             $nodeTranslation = $topNode->getNodeTranslation($this->lang, $this->includeOffline);
             if (!is_null($nodeTranslation)) {
@@ -174,7 +174,7 @@ class NodeMenu
      */
     public function getNodeBySlug(NodeTranslation $parentNode, $slug)
     {
-        return $this->em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForSlug($slug, $parentNode);
+        return $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationForSlug($slug, $parentNode);
     }
 
     /**
@@ -193,11 +193,11 @@ class NodeMenu
             } elseif ($parent instanceof NodeMenuItem) {
                 $parent = $parent->getNode();
             } elseif ($parent instanceof HasNodeInterface) {
-                $parent = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($parent);
+                $parent = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($parent);
             }
-            $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName, 'parent' => $parent->getId()));
+            $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneBy(array('internalName' => $internalName, 'parent' => $parent->getId()));
             if (is_null($node)) {
-                $nodes = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findBy(array('internalName' => $internalName));
+                $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findBy(array('internalName' => $internalName));
                 foreach ($nodes as $n) {
                     $p = $n;
                     while (is_null($node) && !is_null($p->getParent())) {
@@ -211,7 +211,7 @@ class NodeMenu
                 }
             }
         } else {
-            $node = $this->em->getRepository('KunstmaanAdminNodeBundle:Node')->findOneBy(array('internalName' => $internalName));
+            $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneBy(array('internalName' => $internalName));
         }
         if (!is_null($node)) {
             $nodeTranslation = $node->getNodeTranslation($this->lang, $this->includeOffline);

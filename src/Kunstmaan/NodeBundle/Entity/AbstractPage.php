@@ -1,13 +1,13 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
 use JMS\SecurityExtraBundle\Security\Util\String;
 
 use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminNodeBundle\Entity\PageInterface;
-use Kunstmaan\AdminNodeBundle\Form\PageAdminType;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Form\PageAdminType;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;

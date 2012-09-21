@@ -1,13 +1,13 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
 use JMS\SecurityExtraBundle\Security\Util\String;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminNodeBundle\Form\SEOType;
+use Kunstmaan\NodeBundle\Form\SEOType;
 
 use Doctrine\ORM\Mapping as ORM;
 

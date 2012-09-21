@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle;
+namespace Kunstmaan\NodeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanAdminNodeBundle
+ * KunstmaanNodeBundle
  */
-class KunstmaanAdminNodeBundle extends Bundle
+class KunstmaanNodeBundle extends Bundle
 {
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Event;
+namespace Kunstmaan\NodeBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * PageEvent

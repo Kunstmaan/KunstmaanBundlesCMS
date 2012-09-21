@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
 use JMS\SecurityExtraBundle\Security\Util\String;
 
@@ -10,12 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * NodeVersion
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeVersionRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeVersionRepository")
  * @ORM\Table(name="kuma_node_versions")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")

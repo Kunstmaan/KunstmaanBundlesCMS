@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\EventListener;
+namespace Kunstmaan\NodeBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 
 use Doctrine\ORM\Event\PostFlushEventArgs;
 
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * Listens to doctrine postFlush event and updates
@@ -88,9 +88,9 @@ class NodeTranslationListener
 
     /**
      * Update the url for a nodetranslation
-     * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation $node
+     * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $node
      *
-     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation|bool
+     * @return \Kunstmaan\NodeBundle\Entity\NodeTranslation|bool
      */
     private function updateUrl(NodeTranslation $node)
     {

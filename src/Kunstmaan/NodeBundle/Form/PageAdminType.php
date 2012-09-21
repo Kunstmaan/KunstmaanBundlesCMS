@@ -1,7 +1,7 @@
 <?php
 // src/Blogger/BlogBundle/Form/EnquiryType.php
 
-namespace Kunstmaan\AdminNodeBundle\Form;
+namespace Kunstmaan\NodeBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
@@ -30,7 +30,7 @@ class PageAdminType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-                'data_class' => 'Kunstmaan\AdminNodeBundle\Entity\AbstractPage',
+                'data_class' => 'Kunstmaan\NodeBundle\Entity\AbstractPage',
         );
     }
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Helper;
+namespace Kunstmaan\NodeBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 /**
  * NodeMenuItem
@@ -207,7 +207,7 @@ class NodeMenuItem
     {
         if (is_null($this->lazyChildren)) {
             $this->lazyChildren = array();
-            $nodeRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:Node');
+            $nodeRepo = $this->em->getRepository('KunstmaanNodeBundle:Node');
             $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getPermission(), $this->menu->getAclHelper(), true);
             foreach ($children as $child) {
                 $nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());

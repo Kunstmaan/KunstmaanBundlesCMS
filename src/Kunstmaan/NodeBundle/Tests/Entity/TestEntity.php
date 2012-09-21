@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Tests\Entity;
+namespace Kunstmaan\NodeBundle\Tests\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 

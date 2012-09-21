@@ -38,13 +38,13 @@
 		{{ adminmenu.current.internalname | trans }}
 		{% if draft %}
 			<small>
-				Draft version (Go to <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)
+				Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)
 			</small>
 		{% else %}
 			<small>
 				Public version
 				{% if draftNodeVersion is not null %}
-					(Go to <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
+					(Go to <a href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
 				{% endif %}
 			</small>
 		{% endif %}
@@ -55,17 +55,17 @@
 
 
 {% block content %}
-    <form id="pageadminform" class="form-horizontal" action="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+    <form id="pageadminform" class="form-horizontal" action="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
 
         <!--=========Actions=========-->
         <!--Sub Actions-->
-        {{ knp_menu_render('sub_actions', { 'template': 'KunstmaanAdminNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
+        {{ knp_menu_render('sub_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
 
         <!--Main Actions-->
-        {{ knp_menu_render('actions', { 'template': 'KunstmaanAdminNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
+        {{ knp_menu_render('actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
 
         <!--Scroll Actions-->
-        {{ knp_menu_render('top_actions', { 'template': 'KunstmaanAdminNodeBundle:Menu:knp_menu_top_actions.html.twig'}) }}
+        {{ knp_menu_render('top_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_top_actions.html.twig'}) }}
 
         <!--=========Tabs=========-->
         <ul class="nav nav-tabs">
@@ -199,7 +199,7 @@
                         {% for child in page.children %}
                             <tr>
                                 <td>{{ child.sequenceNumber }}</td>
-                                <td><a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': child.id, 'entityname': 'KunstmaanAdminBundle:Page' }) }}">{{ child.title }}</a></td>
+                                <td><a href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': child.id, 'entityname': 'KunstmaanAdminBundle:Page' }) }}">{{ child.title }}</a></td>
                                 <td>Page</td>
                             </tr>
                         {% endfor %}
@@ -241,7 +241,7 @@
 	        </div>
 	        <div class="modal-footer">
 	        	<div class="btn_group">
-		            <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
+		            <a href="{{ path('KunstmaanNodeBundle_pages_edit_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
 		            <button class="btn" data-dismiss="modal">Cancel</button>
 		    	</div>
 	        </div>
@@ -257,7 +257,7 @@
 	        </div>
 	        <div class="modal-footer">
 	            <div class="btn_group">
-		            <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit_publish', { 'id': node.id}) }}" class="btn btn-danger">Publish</a>
+		            <a href="{{ path('KunstmaanNodeBundle_pages_edit_publish', { 'id': node.id}) }}" class="btn btn-danger">Publish</a>
 		            <button class="btn" data-dismiss="modal">Cancel</button>
 		    	</div>
 	        </div>
@@ -297,7 +297,7 @@
 	                <tbody>
 	                    {% for nodeVersion in nodeVersions %}
 	                    <tr>
-	                        <td>{# <a href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}"> #}{{ nodeVersion.version }}{# </a> #}</td>
+	                        <td>{# <a href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}"> #}{{ nodeVersion.version }}{# </a> #}</td>
 	                        <td>{{ nodeVersion.type }}</td>
 	                        <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
 	                        <td>{{ nodeVersion.owner }}</td>
@@ -318,7 +318,7 @@
 			<div class="modal-body">
 				<script type="text/javascript">
 					function doAddpage(link){
-						link.href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" + "?addpage="+jQuery('#addpage_type').val() + "&addpagetitle=" + jQuery('#addpage_title').val();
+						link.href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" + "?addpage="+jQuery('#addpage_type').val() + "&addpagetitle=" + jQuery('#addpage_title').val();
 						return true;
 					}
 				</script>
@@ -352,7 +352,7 @@
 			<div class="modal-body">
 				<script type="text/javascript">
 					function doDeletepage(link){
-						link.href="{{ path('KunstmaanAdminNodeBundle_pages_edit', { 'id': node.id}) }}" + "?delete=true";
+						link.href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id}) }}" + "?delete=true";
 						return true;
 					}
 				</script>

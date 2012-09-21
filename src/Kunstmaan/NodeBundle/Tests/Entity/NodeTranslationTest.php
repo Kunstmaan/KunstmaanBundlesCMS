@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Tests\Entity;
+namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminNodeBundle\Entity\SEO;
-use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\SEO;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -36,8 +36,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setNode
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getNode
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setNode
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getNode
      */
     public function testSetGetNode()
     {
@@ -47,8 +47,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setLang
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getLang
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setLang
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getLang
      */
     public function testSetGetLang()
     {
@@ -57,8 +57,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setOnline
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::isOnline
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setOnline
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::isOnline
      */
     public function testSetIsOnline()
     {
@@ -67,8 +67,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setTitle
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getTitle
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setTitle
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getTitle
      */
     public function testSetGetTitle()
     {
@@ -77,8 +77,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setSlug
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getSlug
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setSlug
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getSlug
      */
     public function testSetGetSlug()
     {
@@ -87,9 +87,9 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::__construct
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getFullSlug
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getSlugPart
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::__construct
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getFullSlug
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getSlugPart
      */
     public function testGetFullSlug()
     {
@@ -106,8 +106,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::__construct
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getFullSlug
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::__construct
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getFullSlug
      */
     public function testGetFullSlugWithEmptySlug()
     {
@@ -121,8 +121,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setPublicNodeVersion
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getPublicNodeVersion
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setPublicNodeVersion
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getPublicNodeVersion
      */
     public function testSetGetPublicNodeVersion()
     {
@@ -132,8 +132,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setNodeVersions
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getNodeVersions
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setNodeVersions
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersions
      */
     public function testSetGetNodeVersions()
     {
@@ -149,8 +149,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::addNodeVersion
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getNodeVersion
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::addNodeVersion
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersion
      */
     public function testAddGetNodeVersion()
     {
@@ -165,7 +165,7 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getNodeVersion
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersion
      */
     public function testGetNonExistentNodeVersion()
     {
@@ -173,15 +173,15 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getDefaultAdminType
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
-        $this->assertInstanceOf('Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType', $this->object->getDefaultAdminType());
+        $this->assertInstanceOf('Kunstmaan\NodeBundle\Form\NodeTranslationAdminType', $this->object->getDefaultAdminType());
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getRef
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getRef
      * @todo   Implement testGetRef().
      */
     public function testGetRef()
@@ -191,7 +191,7 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getCreated
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getCreated
      * @todo   Implement testGetCreated().
      */
     public function testGetCreated()
@@ -201,7 +201,7 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getUpdated
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getUpdated
      * @todo   Implement testGetUpdated().
      */
     public function testGetUpdated()
@@ -211,8 +211,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setSEO
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getSEO
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setSEO
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getSEO
      */
     public function testSetGetSEO()
     {
@@ -222,8 +222,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setUrl
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getUrl
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setUrl
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getUrl
      */
     public function testSetGetUrl()
     {
@@ -232,8 +232,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::setWeight
-     * @covers Kunstmaan\AdminNodeBundle\Entity\NodeTranslation::getWeight
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setWeight
+     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getWeight
      */
     public function testSetGetWeight()
     {

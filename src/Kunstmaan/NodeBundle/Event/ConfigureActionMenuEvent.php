@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Event;
+namespace Kunstmaan\NodeBundle\Event;
 
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\EventDispatcher\Event;
-use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Knp\Menu\ItemInterface;
 
 /**
@@ -24,7 +24,7 @@ class ConfigureActionMenuEvent extends Event
     private $menu;
 
     /**
-     * @var \Kunstmaan\AdminNodeBundle\Entity\NodeVersion
+     * @var \Kunstmaan\NodeBundle\Entity\NodeVersion
      */
     private $activeNodeVersion;
 
@@ -59,7 +59,7 @@ class ConfigureActionMenuEvent extends Event
     /**
      * Get activeNodeVersion
      *
-     * @return \Kunstmaan\AdminNodeBundle\Entity\NodeVersion
+     * @return \Kunstmaan\NodeBundle\Entity\NodeVersion
      */
     public function getActiveNodeVersion()
     {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
 use JMS\SecurityExtraBundle\Security\Util\String;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManager;
 /**
  * NodeTranslation
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminNodeBundle\Repository\NodeTranslationRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeTranslationRepository")
  * @ORM\Table(name="kuma_node_translations")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */

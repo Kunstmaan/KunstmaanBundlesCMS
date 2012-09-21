@@ -4,10 +4,10 @@
     <!--Inline-->
     <script type=text/javascript>
         $(document).ready(function () {
-            init_tree("{{ path('KunstmaanAdminNodeBundle_pages_movenodes') }}", "{% if mediabundleisset is defined %}{{ path('KunstmaanMediaBundle_folder_movenodes') }}{% else %}/movenodes{% endif %}");
+            init_tree("{{ path('KunstmaanNodeBundle_pages_movenodes') }}", "{% if mediabundleisset is defined %}{{ path('KunstmaanMediaBundle_folder_movenodes') }}{% else %}/movenodes{% endif %}");
         });
 
-        {% include "KunstmaanAdminNodeBundle:Default:ckeditor.js.twig" %}
+        {% include "KunstmaanNodeBundle:Default:ckeditor.js.twig" %}
         jQuery(document).ready(function(){
             jQuery('textarea.rich_editor').each(function(item){
                 var config = {};

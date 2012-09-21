@@ -1,10 +1,10 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Repository;
+namespace Kunstmaan\NodeBundle\Repository;
 
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminBundle\Helper\Slugifier;
@@ -54,7 +54,7 @@ class NodeTranslationRepository extends EntityRepository
     public function getNodeTranslationFor(HasNodeInterface $hasNode)
     {
         $nodeVersion = $this->getEntityManager()
-            ->getRepository('KunstmaanAdminNodeBundle:NodeVersion')
+            ->getRepository('KunstmaanNodeBundle:NodeVersion')
             ->getNodeVersionFor($hasNode);
 
         if (!is_null($nodeVersion)) {
@@ -202,7 +202,7 @@ class NodeTranslationRepository extends EntityRepository
             array('entity' => $nodeTranslation)
         );
 
-        $nodeVersion = $em->getRepository('KunstmaanAdminNodeBundle:NodeVersion')
+        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')
             ->createNodeVersionFor($hasNode, $nodeTranslation, $owner);
 
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
@@ -227,7 +227,7 @@ class NodeTranslationRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         $rsm = new ResultSetMappingBuilder($em);
-        $rsm->addRootEntityFromClassMetadata('Kunstmaan\AdminNodeBundle\Entity\NodeTranslation', 'nt');
+        $rsm->addRootEntityFromClassMetadata('Kunstmaan\NodeBundle\Entity\NodeTranslation', 'nt');
 
         $query = $em
             ->createNativeQuery(

@@ -1,61 +1,61 @@
 parameters:
-    kunstmaan_adminnode.shell_helper.class: 'Kunstmaan\AdminNodeBundle\Helper\ShellHelper'
-    kunstmaan_adminnode.apply_acl_changeset.listener.class: 'Kunstmaan\AdminNodeBundle\EventListener\ApplyAclChangesetListener'
+    kunstmaan_node.shell_helper.class: 'Kunstmaan\NodeBundle\Helper\ShellHelper'
+    kunstmaan_node.apply_acl_changeset.listener.class: 'Kunstmaan\NodeBundle\EventListener\ApplyAclChangesetListener'
 
 services:
-    kunstmaan_adminnode.nodetranslation.listener:
-        class: Kunstmaan\AdminNodeBundle\EventListener\NodeTranslationListener
+    kunstmaan_node.nodetranslation.listener:
+        class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
             - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
 
-    kunstmaan_adminnode.menu.adaptor.pages:
-        class: Kunstmaan\AdminNodeBundle\Helper\Menu\PageMenuAdaptor
+    kunstmaan_node.menu.adaptor.pages:
+        class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    kunstmaan_adminnode.shell_helper:
-        class: "%kunstmaan_adminnode.shell_helper.class%"
+    kunstmaan_node.shell_helper:
+        class: "%kunstmaan_node.shell_helper.class%"
         
-    kunstmaan_adminnode.form.type.urlchooser:
-        class: Kunstmaan\AdminNodeBundle\Form\Type\URLChooserType
+    kunstmaan_node.form.type.urlchooser:
+        class: Kunstmaan\NodeBundle\Form\Type\URLChooserType
         tags:
             - { name: 'form.type', alias: 'urlchooser' }
 
-    kunstmaan_adminnode.actions_menu_builder:
-        class: Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder
+    kunstmaan_node.actions_menu_builder:
+        class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder
         arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager", "@router", "@event_dispatcher", "@security.context"]
 
-    kunstmaan_adminnode.menu.sub_actions:
+    kunstmaan_node.menu.sub_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_adminnode.actions_menu_builder
+        factory_service: kunstmaan_node.actions_menu_builder
         factory_method: createSubActionsMenu
         arguments: ["@request"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'sub_actions' } # The alias is what is used to retrieve the menu
 
-    kunstmaan_adminnode.menu.actions:
+    kunstmaan_node.menu.actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_adminnode.actions_menu_builder
+        factory_service: kunstmaan_node.actions_menu_builder
         factory_method: createActionsMenu
         arguments: ["@request"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'actions' } # The alias is what is used to retrieve the menu
 
-    kunstmaan_adminnode.menu.top_actions:
+    kunstmaan_node.menu.top_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_adminnode.actions_menu_builder
+        factory_service: kunstmaan_node.actions_menu_builder
         factory_method: createTopActionsMenu
         arguments: ["@request"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'top_actions' } # The alias is what is used to retrieve the menu
 
-    kunstmaan_adminnode.apply_acl_changeset.listener:
-        class: "%kunstmaan_adminnode.apply_acl_changeset.listener.class%"
-        arguments: ["@kunstmaan_adminnode.shell_helper", "@kernel"]
+    kunstmaan_node.apply_acl_changeset.listener:
+        class: "%kunstmaan_node.apply_acl_changeset.listener.class%"
+        arguments: ["@kunstmaan_node.shell_helper", "@kernel"]
         tags:
             - { name: 'kernel.event_listener', event: 'kunstmaan_admin.applyAclChangeset', method: 'onApplyAclChangeset' }

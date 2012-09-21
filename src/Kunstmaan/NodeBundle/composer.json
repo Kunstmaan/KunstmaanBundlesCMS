@@ -1,9 +1,9 @@
 {
-    "name": "kunstmaan/adminnode-bundle",
+    "name": "kunstmaan/node-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 KunstmaanAdminNodeBundle",
+    "description": "Symfony2 KunstmaanNodeBundle",
     "keywords": [],
-    "homepage": "https://github.com/Kunstmaan/KunstmaanAdminNodeBundle",
+    "homepage": "https://github.com/Kunstmaan/KunstmaanNodeBundle",
     "license": "MIT",
     "authors": [
         {
@@ -22,7 +22,7 @@
 		"knplabs/knp-menu-bundle": "*"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\AdminNodeBundle": "" }
+        "psr-0": { "Kunstmaan\\NodeBundle": "" }
     },
-    "target-dir": "Kunstmaan/AdminNodeBundle"
+    "target-dir": "Kunstmaan/NodeBundle"
 }

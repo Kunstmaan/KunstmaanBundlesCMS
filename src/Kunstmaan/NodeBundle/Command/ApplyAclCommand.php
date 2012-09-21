@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Command;
+namespace Kunstmaan\NodeBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
-use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
+use Kunstmaan\NodeBundle\Helper\ShellHelper;
 
 /**
  * ApplyAclCommand
@@ -43,7 +43,7 @@ class ApplyAclCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $this->shellHelper = $this->getContainer()->get('kunstmaan_adminnode.shell_helper');
+        $this->shellHelper = $this->getContainer()->get('kunstmaan_node.shell_helper');
         /* @var PermissionAdmin $permissionAdmin */
         $permissionAdmin = $this->getContainer()->get('kunstmaan_admin.permissionadmin');
 
@@ -51,7 +51,7 @@ class ApplyAclCommand extends ContainerAwareCommand
         if ($this->isRunning()) {
             return;
         }
-        $aclRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:AclChangeset');
+        $aclRepo = $this->em->getRepository('KunstmaanNodeBundle:AclChangeset');
         do {
             /* @var AclChangeset $changeset */
             $changeset = $aclRepo->findNewChangeset();
@@ -80,7 +80,7 @@ class ApplyAclCommand extends ContainerAwareCommand
     {
         // Check if we have records in running state, if so read PID & check if process is active
         /* @var AclChangeset $runningAclChangeset */
-        $runningAclChangeset = $this->em->getRepository('KunstmaanAdminNodeBundle:AclChangeset')->findRunningChangeset();
+        $runningAclChangeset = $this->em->getRepository('KunstmaanNodeBundle:AclChangeset')->findRunningChangeset();
         if (!is_null($runningAclChangeset)) {
             // Found running process, check if PID is still running
             if (!$this->shellHelper->isProcessRunning($runningAclChangeset->getPid())) {

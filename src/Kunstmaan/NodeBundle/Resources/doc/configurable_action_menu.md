@@ -1,8 +1,8 @@
 Configurable Action Menu
 ========================
 Configuring the action or sub action menu of pages is simply a matter of connecting an event listener
-to the *KunstmaanAdminNodeBundle/Helper/Event/Events::CONFIGURE_ACTION_MENU* or the
-*KunstmaanAdminNodeBundle/Helper/Event/Events::CONFIGURE_SUB_ACTION_MENU* event:
+to the *KunstmaanNodeBundle/Helper/Event/Events::CONFIGURE_ACTION_MENU* or the
+*KunstmaanNodeBundle/Helper/Event/Events::CONFIGURE_SUB_ACTION_MENU* event:
 
 ```yaml
 # src/Acme/MainBundle/Resources/config/services.yml
@@ -11,14 +11,14 @@ services:
         class: Acme\MainBundle\EventListener\ConfigureActionsMenuListener
         arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
-            - { name: 'kernel.event_listener', event: 'kunstmaan_adminnode.configureSubActionMenu', method: 'onSubActionMenuConfigure' }
+            - { name: 'kernel.event_listener', event: 'kunstmaan_node.configureSubActionMenu', method: 'onSubActionMenuConfigure' }
 ```
 
 and in the listener function you can now modify the menu:
 
 ```php
 /**
- * @param \Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent $event
+ * @param \Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent $event
  */
 public function onSubActionMenuConfigure(ConfigureActionMenuEvent $event)
 {

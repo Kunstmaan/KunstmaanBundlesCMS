@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\DependencyInjection;
+namespace Kunstmaan\NodeBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class KunstmaanAdminNodeExtension extends Extension
+class KunstmaanNodeExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -26,7 +26,7 @@ class KunstmaanAdminNodeExtension extends Extension
 
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
-            array('KunstmaanAdminNodeBundle:Form:formWidgets.html.twig')
+            array('KunstmaanNodeBundle:Form:formWidgets.html.twig')
         ));
 
         $loader->load('services.yml');

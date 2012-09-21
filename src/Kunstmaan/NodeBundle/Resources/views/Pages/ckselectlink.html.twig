@@ -5,18 +5,18 @@
 			var ckurl = "";
 	    </script>
 	{% endblock %}
-    
+
     {% block extraparamsinbody %}
     	id="smallWindow"
     {% endblock %}
-    
+
   {% block body %}
   	<header>
 		<div class="topbar" data-dropdown="dropdown">
 			<div class="topbar-inner">
 				<div class="container-fluid">
 					<a class="brand" href="#">{{ websitetitle | trans }}</a>
-					<nav>	
+					<nav>
 						<ul class="nav secondary-nav">
 							{% set route = app.request.attributes.get('_route') %}
 							{{ localeswitcher_widget(requiredlocales, route) }}
@@ -39,12 +39,12 @@
 <div id="tree" class="tree">
         <ul>
             {% for node in nodemenu.topnodes %}
-                {% include 'KunstmaanAdminNodeBundle:Pages:ckrectreeview.html.twig' %}
+                {% include 'KunstmaanNodeBundle:Pages:ckrectreeview.html.twig' %}
             {% endfor %}
         </ul>
-    </div>  
+    </div>
     </aside>
-    	    
+
 	    <!--=========Content=========-->
 	    <div class="content">
 	    	<div class="well">
@@ -55,7 +55,7 @@
 			    		{
 			    		  var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
 			    		  var match = window.location.search.match(reParam) ;
-			    		 
+
 			    		  return (match && match.length > 1) ? match[1] : '' ;
 			    		}
 		    			var funcNum = getUrlParam('CKEditorFuncNum');
@@ -64,6 +64,6 @@
 
 		    	</div>
 	    	</div>
-	    </div> 
+	    </div>
 	   </div>
 		{% endblock %}

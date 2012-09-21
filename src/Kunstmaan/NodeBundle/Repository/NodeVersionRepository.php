@@ -1,9 +1,9 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Repository;
-use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
+namespace Kunstmaan\NodeBundle\Repository;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\AddCommand;

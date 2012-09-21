@@ -1,12 +1,12 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Tests\Helper\Menu;
+namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 
-use Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder;
-use Kunstmaan\AdminNodeBundle\Tests\Stubs\TestRepository;
+use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
+use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Knp\Menu\Silex\RouterAwareFactory;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -23,7 +23,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      *
-     * @covers Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder::__construct
+     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::__construct
      */
     protected function setUp()
     {
@@ -72,7 +72,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder::createSubActionsMenu
+     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createSubActionsMenu
      */
     public function testCreateSubActionsMenu()
     {
@@ -88,7 +88,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
+     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
      */
     public function testCreateActionsMenu()
     {
@@ -129,7 +129,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder::createTopActionsMenu
+     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createTopActionsMenu
      */
     public function testCreateTopActionsMenu()
     {
@@ -144,8 +144,8 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder::setActiveNodeVersion
-     * @covers Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder::getActiveNodeVersion
+     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::setActiveNodeVersion
+     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::getActiveNodeVersion
      */
     public function testSetGetActiveNodeVersion()
     {

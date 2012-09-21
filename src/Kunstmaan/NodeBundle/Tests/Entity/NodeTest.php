@@ -1,9 +1,9 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Tests\Entity;
+namespace Kunstmaan\NodeBundle\Tests\Entity;
 
-use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -34,9 +34,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::isHiddenFromNav
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getHiddenFromNav
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setHiddenFromNav
+     * @covers Kunstmaan\NodeBundle\Entity\Node::isHiddenFromNav
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getHiddenFromNav
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setHiddenFromNav
      */
     public function testIsGetSetHiddenFromNav()
     {
@@ -47,9 +47,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::__construct
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getChildren
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setChildren
+     * @covers Kunstmaan\NodeBundle\Entity\Node::__construct
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getChildren
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setChildren
      */
     public function testGetSetChildren()
     {
@@ -64,8 +64,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getChildren
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setChildren
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getChildren
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setChildren
      */
     public function testGetSetChildrenWithDeletedChildren()
     {
@@ -83,9 +83,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::addNode
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setParent
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getParent
+     * @covers Kunstmaan\NodeBundle\Entity\Node::addNode
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setParent
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getParent
      */
     public function testAddNode()
     {
@@ -96,8 +96,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getNodeTranslations
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setNodeTranslations
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getNodeTranslations
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setNodeTranslations
      */
     public function testGetSetNodeTranslations()
     {
@@ -112,8 +112,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::addNodeTranslation
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getNodeTranslations
+     * @covers Kunstmaan\NodeBundle\Entity\Node::addNodeTranslation
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getNodeTranslations
      */
     public function testGetNodeTranslationsWithOfflineNodes()
     {
@@ -130,8 +130,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::addNodeTranslation
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getNodeTranslation
+     * @covers Kunstmaan\NodeBundle\Entity\Node::addNodeTranslation
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getNodeTranslation
      */
     public function testGetNodeTranslation()
     {
@@ -153,7 +153,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getParents
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getParents
      */
     public function testGetParents()
     {
@@ -169,8 +169,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setSequenceNumber
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getSequenceNumber
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setSequenceNumber
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getSequenceNumber
      */
     public function testSetGetSequenceNumber()
     {
@@ -179,8 +179,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::isDeleted
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setDeleted
+     * @covers Kunstmaan\NodeBundle\Entity\Node::isDeleted
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setDeleted
      */
     public function testIsSetDeleted()
     {
@@ -190,20 +190,20 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setRef
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setRefEntityName
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getRefEntityName
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setRef
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setRefEntityName
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getRefEntityName
      */
     public function testSetRefAndGetRefEntityName()
     {
         $entity = new TestEntity();
         $this->object->setRef($entity);
-        $this->assertEquals('Kunstmaan\AdminNodeBundle\Tests\Entity\TestEntity', $this->object->getRefEntityName());
+        $this->assertEquals('Kunstmaan\NodeBundle\Tests\Entity\TestEntity', $this->object->getRefEntityName());
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::setInternalName
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getInternalName
+     * @covers Kunstmaan\NodeBundle\Entity\Node::setInternalName
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getInternalName
      */
     public function testSetInternalName()
     {
@@ -212,21 +212,21 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::getDefaultAdminType
+     * @covers Kunstmaan\NodeBundle\Entity\Node::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
-        $this->assertInstanceOf('Kunstmaan\AdminNodeBundle\Form\NodeAdminType', $this->object->getDefaultAdminType());
+        $this->assertInstanceOf('Kunstmaan\NodeBundle\Form\NodeAdminType', $this->object->getDefaultAdminType());
     }
 
     /**
-     * @covers Kunstmaan\AdminNodeBundle\Entity\Node::__toString
+     * @covers Kunstmaan\NodeBundle\Entity\Node::__toString
      */
     public function test__toString()
     {
         $this->object->setId(1);
         $this->object->setRef(new TestEntity());
 
-        $this->assertEquals('node 1, refEntityName: Kunstmaan\AdminNodeBundle\Tests\Entity\TestEntity', $this->object->__toString());
+        $this->assertEquals('node 1, refEntityName: Kunstmaan\NodeBundle\Tests\Entity\TestEntity', $this->object->__toString());
     }
 }

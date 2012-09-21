@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminNodeBundle\Form;
+namespace Kunstmaan\NodeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,7 +36,7 @@ class NodeAdminType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'Kunstmaan\AdminNodeBundle\Entity\Node',
+            'data_class' => 'Kunstmaan\NodeBundle\Entity\Node',
         );
     }
 }
