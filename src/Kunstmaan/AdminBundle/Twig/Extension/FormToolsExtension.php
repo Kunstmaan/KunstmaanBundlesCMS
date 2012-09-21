@@ -61,7 +61,7 @@ class FormToolsExtension extends \Twig_Extension
      *
      * @return array
      */
-    public function getErrorMessages(array $formViews, array &$errors = array())
+    public function getErrorMessages($formViews, array &$errors = array())
     {
         if (is_array($formViews)) {
             foreach ($formViews as $formView) {
