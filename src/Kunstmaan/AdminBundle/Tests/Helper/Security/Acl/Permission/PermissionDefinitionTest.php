@@ -66,8 +66,8 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetPermissions()
     {
-        $this->object->setPermissions(array('EDIT', 'VIEW'));
-        $this->assertEquals(array('EDIT', 'VIEW'), $this->object->getPermissions());
+        $this->object->setPermissions(array('EDIT', 'VIEW', 'DELETE'));
+        $this->assertEquals(array('EDIT', 'VIEW', 'DELETE'), $this->object->getPermissions());
     }
 
     /**
