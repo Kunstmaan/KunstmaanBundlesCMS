@@ -8,7 +8,7 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
@@ -50,7 +50,7 @@ class PagePartAdmin
     /**
      * @param AbstractPagePartAdminConfigurator              $configurator The configurator
      * @param \Doctrine\ORM\EntityManager                    $em           The entity manager
-     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $page         The page
+     * @param \Kunstmaan\NodeBundle\Entity\AbstractPage $page         The page
      * @param null|string                                    $context      The context
      * @param Container                                      $container    The container
      */

@@ -5,7 +5,7 @@ namespace Kunstmaan\PagePartBundle\Twig\Extension;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 /**
  * PagePartTwigExtension

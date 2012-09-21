@@ -1,7 +1,7 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 
