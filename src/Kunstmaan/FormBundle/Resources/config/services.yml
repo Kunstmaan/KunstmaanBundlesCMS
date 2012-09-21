@@ -11,4 +11,4 @@ services:
         class: Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener
         arguments: ["@doctrine.orm.entity_manager", "@router"]
         tags:
-          - { name: 'kernel.event_listener', event: 'kunstmaan_adminnode.configureSubActionMenu', method: 'onSubActionMenuConfigure' }
+          - { name: 'kernel.event_listener', event: 'kunstmaan_node.configureSubActionMenu', method: 'onSubActionMenuConfigure' }

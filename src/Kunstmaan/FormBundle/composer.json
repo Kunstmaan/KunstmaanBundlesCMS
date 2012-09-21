@@ -17,7 +17,7 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "kunstmaan/adminlist-bundle": "dev-master",
-        "kunstmaan/adminnode-bundle": "dev-master",
+        "kunstmaan/node-bundle": "dev-master",
         "kunstmaan/admin-bundle": "dev-master",
         "kunstmaan/pagepart-bundle": "dev-master",
         "ddeboer/data-import-bundle": "*",
