@@ -16,6 +16,8 @@ class ApplyAclChangesetEvent extends Event
     protected $aclChangeset;
 
     /**
+     * Constructor
+     *
      * @param AclChangeset $aclChangeset
      */
     public function __construct(AclChangeset $aclChangeset)
@@ -24,6 +26,8 @@ class ApplyAclChangesetEvent extends Event
     }
 
     /**
+     * Get ACL changeset
+     *
      * @return AclChangeset
      */
     public function getAclChangeset()

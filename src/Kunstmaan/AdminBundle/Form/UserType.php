@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -11,6 +12,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class UserType extends AbstractType
 {
     /**
+     * Builds the form.
+     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -29,6 +32,8 @@ class UserType extends AbstractType
     }
 
     /**
+     * Returns the name of this type.
+     *
      * @return string
      */
     public function getName()
@@ -37,29 +42,14 @@ class UserType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * Sets the default options and allowed values for this type.
      *
-     * @return array
+     * @param OptionsResolverInterface $resolver
      */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-            'password_required' => false,
-        );
+        $resolver->setDefaults(array('password_required' => false));
+        $resolver->addAllowedValues(array('password_required' => array(true, false)));
     }
 
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    public function getAllowedOptionValues(array $options)
-    {
-        return array(
-            'password_required' => array(
-                true,
-                false
-            ),
-        );
-    }
 }

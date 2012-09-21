@@ -35,6 +35,8 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
     }
 
     /**
+     * Renders the permission admin widget.
+     *
      * @param PermissionAdmin $permissionAdmin
      * @param FormView        $form
      * @param array           $parameters
@@ -53,6 +55,8 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
     }
 
     /**
+     * Get the Twig extension name.
+     *
      * @return string
      */
     public function getName()

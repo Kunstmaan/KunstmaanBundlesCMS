@@ -16,11 +16,6 @@ services:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    kunstmaan_admin.form.type.urlchooser:
-        class: Kunstmaan\AdminBundle\Form\Type\URLChooserType
-        tags:
-            - { name: 'form.type', alias: 'urlchooser' }
-            
     kunstmaan_admin.handler.log:
         class: Kunstmaan\AdminBundle\Helper\LogHandler
         arguments: ["@service_container"]
@@ -32,12 +27,6 @@ services:
         arguments: ["@security.context", "@doctrine.orm.entity_manager"]
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
-            
-    kunstmaan_admin.logout.listener:
-        class: Kunstmaan\AdminBundle\EventListener\LogoutListener
-        arguments:  ["@security.context", "@doctrine.orm.entity_manager"]
-        tags:
-            - { name: 'monolog.logger', channel: 'security' }
             
     kunstmaan_admin.menu.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\Extension\MenuTwigExtension
@@ -64,11 +53,6 @@ services:
         class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
         tags:
             -  { name: 'twig.extension' }
-
-# This should no longer be necessary (only needed for Symfony 2.0)
-#    security.acl.object_identity_retrieval_strategy:
-#        class: Kunstmaan\AdminBundle\Helper\Security\Acl\Domain\ObjectIdentityRetrievalStrategy
-#        arguments: ["@doctrine.orm.entity_manager"]
 
     kunstmaan_admin.acl.helper:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper

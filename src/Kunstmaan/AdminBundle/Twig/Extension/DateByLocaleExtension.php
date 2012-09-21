@@ -7,6 +7,8 @@ use Symfony\Component\Locale\Locale;
 class DateByLocaleExtension extends \Twig_Extension
 {
     /**
+     * Get Twig filters defined in this extension.
+     *
      * @return array
      */
     public function getFilters()
@@ -17,6 +19,8 @@ class DateByLocaleExtension extends \Twig_Extension
     }
 
     /**
+     * Get the Twig extension name.
+     *
      * @return string
      */
     public function getName()
@@ -25,6 +29,8 @@ class DateByLocaleExtension extends \Twig_Extension
     }
 
     /**
+     * A date formatting filter for Twig, renders the date using the specified parameters.
+     *
      * @param        $date
      * @param string $locale
      * @param string $dateType

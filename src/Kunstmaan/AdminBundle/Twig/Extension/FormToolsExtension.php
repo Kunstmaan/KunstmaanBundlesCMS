@@ -2,10 +2,14 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
+use Symfony\Component\Form\FormView;
+
 class FormToolsExtension extends \Twig_Extension
 {
 
     /**
+     * Get Twig functions defined in this extension.
+     *
      * @return array
      */
     public function getFunctions()
@@ -17,6 +21,8 @@ class FormToolsExtension extends \Twig_Extension
     }
 
     /**
+     * Get the Twig extension name.
+     *
      * @return string
      */
     public function getName()
@@ -25,14 +31,14 @@ class FormToolsExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $formView
+     * Return if there are error messages.
+     *
+     * @param FormView $formView
      *
      * @return bool
      */
-    public function hasErrorMessages(\Symfony\Component\Form\FormView $formView)
+    public function hasErrorMessages(FormView $formView)
     {
-        $errors = array();
-
         foreach ($formView->get('errors') as $error) {
             return true;
         }
@@ -48,12 +54,14 @@ class FormToolsExtension extends \Twig_Extension
     }
 
     /**
+     * Get the error messages.
+     *
      * @param FormView[] $formViews
      * @param array      $errors
      *
      * @return array
      */
-    public function getErrorMessages($formViews, &$errors = array())
+    public function getErrorMessages(array $formViews, array &$errors = array())
     {
         if (is_array($formViews)) {
             foreach ($formViews as $formView) {
@@ -61,7 +69,7 @@ class FormToolsExtension extends \Twig_Extension
             }
         } else {
             /**
-             * @var \Symfony\Component\Form\FormView $formViews
+             * @var FormView $formViews
              */
             foreach ($formViews->get('errors') as $error) {
 

@@ -12,15 +12,21 @@ class MenuBuilder
 {
     /* @var TranslatorInterface $translator */
     private $translator;
+
     /* @var MenuAdaptorInterface[] $adaptors */
     private $adaptors = array();
-    private $topmenuitems = null;
+
+    /* @var TopMenuItem[] $topMenuItems */
+    private $topMenuItems = null;
+
     /* @var ContainerInterface $container */
     private $container;
 
     private $currentCache = null;
 
     /**
+     * Constructor
+     *
      * @param TranslatorInterface $translator The translator
      * @param ContainerInterface  $container  The container
      *
@@ -33,6 +39,8 @@ class MenuBuilder
     }
 
     /**
+     * Add menu adaptor
+     *
      * @param MenuAdaptorInterface $adaptor
      */
     public function addAdaptMenu(MenuAdaptorInterface $adaptor)
@@ -41,6 +49,8 @@ class MenuBuilder
     }
 
     /**
+     * Get current menu item
+     *
      * @return MenuItem|null
      */
     public function getCurrent()
@@ -67,6 +77,8 @@ class MenuBuilder
     }
 
     /**
+     * Get breadcrumb path for current menu item
+     *
      * @return MenuItem[]
      */
     public function getBreadCrumb()
@@ -82,6 +94,8 @@ class MenuBuilder
     }
 
     /**
+     * Get top parent menu of current menu item
+     *
      * @return TopMenuItem|null
      */
     public function getLowestTopChild()
@@ -98,22 +112,26 @@ class MenuBuilder
     }
 
     /**
+     * Get all top menu items
+     *
      * @return MenuItem[]
      */
     public function getTopChildren()
     {
-        if (is_null($this->topmenuitems)) {
+        if (is_null($this->topMenuItems)) {
             $request = $this->container->get('request');
-            $this->topmenuitems = array();
-            foreach ($this->adaptors as $menuadaptor) {
-                $menuadaptor->adaptChildren($this, $this->topmenuitems, null, $request);
+            $this->topMenuItems = array();
+            foreach ($this->adaptors as $menuAdaptor) {
+                $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
             }
         }
 
-        return $this->topmenuitems;
+        return $this->topMenuItems;
     }
 
     /**
+     * Get immediate children of the specified menu item
+     *
      * @param MenuItem $parent
      *
      * @return MenuItem[]
@@ -125,8 +143,8 @@ class MenuBuilder
         }
         $request = $this->container->get('request');
         $result = array();
-        foreach ($this->adaptors as $menuadaptor) {
-            $menuadaptor->adaptChildren($this, $result, $parent, $request);
+        foreach ($this->adaptors as $menuAdaptor) {
+            $menuAdaptor->adaptChildren($this, $result, $parent, $request);
         }
 
         return $result;

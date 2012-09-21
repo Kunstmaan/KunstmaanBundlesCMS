@@ -37,6 +37,8 @@ abstract class AbstractEntity
     }
 
     /**
+     * Return string representation of entity
+     *
      * @return string
      */
     public function __toString()

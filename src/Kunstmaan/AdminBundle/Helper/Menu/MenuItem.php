@@ -7,28 +7,52 @@ namespace Kunstmaan\AdminBundle\Helper\Menu;
  */
 class MenuItem
 {
+    /* @var MenuBuilder $menu */
     private $menu;
+
+    /* @var string $internalName */
     private $internalName;
+
+    /* @var string $role */
     private $role;
+
+    /* @var MenuItem $parent */
     private $parent;
+
+    /* @var string $route */
     private $route;
+
+    /* @var array $routeParams */
     private $routeParams = array();
+
+    /* @var boolean $active */
     private $active = false;
+
+    /* @var MenuItem[] $children */
     private $children = null;
+
+    /* @var array $attributes */
     private $attributes = array();
-    private $appearInNavigation;
+
+    /* @var boolean $appearInNavigation */
+    private $appearInNavigation = true;
+
+    /* @var int $weight */
     private $weight = -50;
 
     /**
+     * Constructor
+     *
      * @param MenuBuilder $menu
      */
     public function __construct(MenuBuilder $menu)
     {
-        $this->menu               = $menu;
-        $this->appearInNavigation = true;
+        $this->menu = $menu;
     }
 
     /**
+     * Get menu builder
+     *
      * @return MenuBuilder
      */
     public function getMenu()
@@ -37,6 +61,8 @@ class MenuItem
     }
 
     /**
+     * Get internal name
+     *
      * @return string
      */
     public function getInternalName()
@@ -45,6 +71,8 @@ class MenuItem
     }
 
     /**
+     * Set internal name
+     *
      * @param string $internalName
      *
      * @return MenuItem
@@ -57,6 +85,8 @@ class MenuItem
     }
 
     /**
+     * Get role
+     *
      * @return string
      */
     public function getRole()
@@ -65,6 +95,8 @@ class MenuItem
     }
 
     /**
+     * Set role
+     *
      * @param string $role
      *
      * @return MenuItem
@@ -77,6 +109,8 @@ class MenuItem
     }
 
     /**
+     * Get parent menu item
+     *
      * @return MenuItem|null
      */
     public function getParent()
@@ -85,6 +119,8 @@ class MenuItem
     }
 
     /**
+     * Set parent menu item
+     *
      * @param MenuItem $parent
      *
      * @return MenuItem
@@ -97,6 +133,8 @@ class MenuItem
     }
 
     /**
+     * Get route for menu item
+     *
      * @return string
      */
     public function getRoute()
@@ -105,12 +143,14 @@ class MenuItem
     }
 
     /**
+     * Set route and parameters for menu item
+     *
      * @param string $route  The route
      * @param array  $params The route parameters
      *
      * @return MenuItem
      */
-    public function setRoute($route, $params = array())
+    public function setRoute($route, array $params = array())
     {
         $this->route       = $route;
         $this->routeParams = $params;
@@ -119,6 +159,8 @@ class MenuItem
     }
 
     /**
+     * Get route parameters for menu item
+     *
      * @return array
      */
     public function getRouteParams()
@@ -127,11 +169,13 @@ class MenuItem
     }
 
     /**
+     * Set route parameters
+     *
      * @param array $routeParams
      *
      * @return MenuItem
      */
-    public function setRouteParams($routeParams)
+    public function setRouteParams(array $routeParams = array())
     {
         $this->routeParams = $routeParams;
 
@@ -139,18 +183,22 @@ class MenuItem
     }
 
     /**
+     * Get children of current menu item
+     *
      * @return MenuItem[]
      */
     public function getChildren()
     {
         if (is_null($this->children)) {
-            $children = $this->menu->getChildren($this);
+            $this->children = $this->menu->getChildren($this);
         }
 
-        return $children;
+        return $this->children;
     }
 
     /**
+     * Get children of current menu item that have the appearInNavigation flag set
+     *
      * @return MenuItem[]
      */
     public function getNavigationChildren()
@@ -167,6 +215,8 @@ class MenuItem
     }
 
     /**
+     * Return top children of current menu item
+     *
      * @return TopMenuItem[]
      */
     public function getTopChildren()
@@ -183,6 +233,8 @@ class MenuItem
     }
 
     /**
+     * Add attributes
+     *
      * @param array $attributes
      *
      * @return MenuItem
@@ -195,6 +247,8 @@ class MenuItem
     }
 
     /**
+     * Get attributes
+     *
      * @return array
      */
     public function getAttributes()
@@ -203,6 +257,8 @@ class MenuItem
     }
 
     /**
+     * Get menu item active state
+     *
      * @return bool
      */
     public function getActive()
@@ -211,6 +267,8 @@ class MenuItem
     }
 
     /**
+     * Set menu item active state
+     *
      * @param bool $active
      *
      * @return MenuItem
@@ -223,6 +281,8 @@ class MenuItem
     }
 
     /**
+     * Get appearInNavigation flag
+     *
      * @return bool
      */
     public function getAppearInNavigation()
@@ -231,6 +291,8 @@ class MenuItem
     }
 
     /**
+     * Set appearInNavigation flag
+     *
      * @param bool $appearInNavigation
      *
      * @return MenuItem
@@ -243,6 +305,8 @@ class MenuItem
     }
 
     /**
+     * Get weight
+     *
      * @return int
      */
     public function getWeight()
@@ -251,6 +315,8 @@ class MenuItem
     }
 
     /**
+     * Set weight
+     *
      * @param int $weight
      *
      * @return MenuItem

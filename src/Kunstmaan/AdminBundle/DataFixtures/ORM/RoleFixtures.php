@@ -13,6 +13,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
+     * Load data fixtures with the passed EntityManager.
+     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -37,6 +39,8 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
+     * Get the order of this fixture
+     *
      * @return int
      */
     public function getOrder()

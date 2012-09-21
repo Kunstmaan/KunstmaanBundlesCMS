@@ -8,6 +8,8 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     protected $environment;
 
     /**
+     * Initializes the runtime environment.
+     *
      * @param \Twig_Environment $environment
      */
     public function initRuntime(\Twig_Environment $environment)
@@ -16,6 +18,8 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     }
 
     /**
+     * Get Twig functions defined in this extension.
+     *
      * @return array
      */
     public function getFunctions()
@@ -26,6 +30,8 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     }
 
     /**
+     * Render locale switcher widget.
+     *
      * @param       $localeSwitcher
      * @param       $route
      * @param array $parameters
@@ -49,6 +55,8 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     }
 
     /**
+     * Get the Twig extension name.
+     *
      * @return string
      */
     public function getName()

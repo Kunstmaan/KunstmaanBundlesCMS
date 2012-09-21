@@ -7,18 +7,25 @@ namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
  */
 class PermissionDefinition
 {
+    /* @var string $entity */
     private $entity = null;
+
+    /* @var string $alias */
     private $alias = null;
+
+    /* @var array $permissions */
     private $permissions = array();
 
     /**
+     * Constructor
+     *
      * @param array       $permissions Set of permissions (strings)
      * @param string|null $entity      Class name of entity for which to check permissions
      * @param string|null $alias       DQL alias of entity table
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($permissions, $entity = null, $alias = null)
+    public function __construct(array $permissions, $entity = null, $alias = null)
     {
         $this->setPermissions($permissions);
         $this->entity = $entity;
@@ -26,6 +33,8 @@ class PermissionDefinition
     }
 
     /**
+     * Set alias.
+     *
      * @param string $alias
      */
     public function setAlias($alias)
@@ -34,6 +43,8 @@ class PermissionDefinition
     }
 
     /**
+     * Get alias.
+     *
      * @return string
      */
     public function getAlias()
@@ -42,6 +53,8 @@ class PermissionDefinition
     }
 
     /**
+     * Set entity.
+     *
      * @param string $entity
      */
     public function setEntity($entity)
@@ -50,6 +63,8 @@ class PermissionDefinition
     }
 
     /**
+     * Get entity.
+     *
      * @return string
      */
     public function getEntity()
@@ -58,11 +73,13 @@ class PermissionDefinition
     }
 
     /**
+     * Set permissions.
+     *
      * @param array $permissions
      *
      * @throws \InvalidArgumentException
      */
-    public function setPermissions($permissions)
+    public function setPermissions(array $permissions)
     {
         if (!is_array($permissions) || empty($permissions)) {
             throw new \InvalidArgumentException("You have to provide at least one permission!");
@@ -71,6 +88,8 @@ class PermissionDefinition
     }
 
     /**
+     * Get permissions.
+     *
      * @return array
      */
     public function getPermissions()

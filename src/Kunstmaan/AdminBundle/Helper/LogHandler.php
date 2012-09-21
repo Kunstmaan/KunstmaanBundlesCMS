@@ -26,6 +26,8 @@ class LogHandler extends AbstractProcessingHandler
     private $container;
 
     /**
+     * Constructor
+     *
      * @param ContainerInterface $container The container
      * @param int                $level     The log level
      * @param bool               $bubble    Bubble or not
@@ -37,6 +39,8 @@ class LogHandler extends AbstractProcessingHandler
     }
 
     /**
+     * Write a record using the monolog logger service.
+     *
      * @param array $record
      */
     protected function write(array $record)

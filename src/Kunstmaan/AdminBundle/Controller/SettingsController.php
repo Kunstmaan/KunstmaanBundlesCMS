@@ -30,6 +30,8 @@ use FOS\UserBundle\Util\UserManipulator;
 class SettingsController extends Controller
 {
     /**
+     * Default index
+     *
      * @Route("/", name="KunstmaanAdminBundle_settings")
      * @Template()
      *
@@ -49,6 +51,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * List users
+     *
      * @Route("/users", name="KunstmaanAdminBundle_settings_users")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
@@ -68,6 +72,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Add a user
+     *
      * @Route("/users/add", name="KunstmaanAdminBundle_settings_users_add")
      * @Method({"GET", "POST"})
      * @Template()
@@ -101,6 +107,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Edit a user
+     *
      * @param int $userId
      *
      * @Route("/users/{userId}/edit", requirements={"userId" = "\d+"}, name="KunstmaanAdminBundle_settings_users_edit")
@@ -140,6 +148,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Delete a user
+     *
      * @param int $userId
      *
      * @Route("/users/{userId}/delete", requirements={"userId" = "\d+"}, name="KunstmaanAdminBundle_settings_users_delete")
@@ -161,6 +171,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * List groups
+     *
      * @Route("/groups", name="KunstmaanAdminBundle_settings_groups")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
@@ -180,6 +192,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Add a group
+     *
      * @Route("/groups/add", name="KunstmaanAdminBundle_settings_groups_add")
      * @Method({"GET", "POST"})
      * @Template()
@@ -209,6 +223,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Edit a group
+     *
      * @param int $groupId
      *
      * @Route("/groups/{groupId}/edit", requirements={"groupId" = "\d+"}, name="KunstmaanAdminBundle_settings_groups_edit")
@@ -242,6 +258,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Delete a group
+     *
      * @param int $groupId
      *
      * @Route("/groups/{groupId}/delete", requirements={"groupId" = "\d+"}, name="KunstmaanAdminBundle_settings_groups_delete")
@@ -263,10 +281,12 @@ class SettingsController extends Controller
     }
 
     /**
+     * Display searches
+     *
      * @Route   ("/searches", name="KunstmaanAdminBundle_settings_searches")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
-     * @todo This method should be moved to KunstmaanSearchBundle
+     * @todo This method should be moved to KunstmaanSearchBundle & injected into the menu
      *
      * @return array
      */
@@ -284,6 +304,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Display logs
+     *
      * @Route   ("/logs", name="KunstmaanAdminBundle_settings_logs")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
@@ -303,6 +325,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * List roles
+     *
      * @Route   ("/roles", name="KunstmaanAdminBundle_settings_roles")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
@@ -322,6 +346,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Add a role
+     *
      * @Route("/roles/add", name="KunstmaanAdminBundle_settings_roles_add")
      * @Method({"GET", "POST"})
      * @Template()
@@ -351,6 +377,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Edit a role
+     *
      * @param int $roleId
      *
      * @Route("/roles/{roleId}/edit", requirements={"roleId" = "\d+"}, name="KunstmaanAdminBundle_settings_roles_edit")
@@ -384,6 +412,8 @@ class SettingsController extends Controller
     }
 
     /**
+     * Delete a role
+     *
      * @param int $roleId
      *
      * @Route ("/roles/{roleId}/delete", requirements={"roleId" = "\d+"}, name="KunstmaanAdminBundle_settings_roles_delete")

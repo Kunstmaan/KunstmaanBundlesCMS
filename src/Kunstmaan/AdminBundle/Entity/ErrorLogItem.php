@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * omnext errorlogitem
+ * Errorlog item
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_error_log_items")
@@ -50,6 +50,8 @@ class ErrorLogItem extends LogItem
     }
 
     /**
+     * Get channel
+     *
      * @return string
      */
     public function getChannel()
@@ -58,6 +60,8 @@ class ErrorLogItem extends LogItem
     }
 
     /**
+     * Set channel
+     *
      * @param string $channel
      */
     public function setChannel($channel)
@@ -66,6 +70,8 @@ class ErrorLogItem extends LogItem
     }
 
     /**
+     * Get level
+     *
      * @return string
      */
     public function getLevel()
@@ -74,6 +80,8 @@ class ErrorLogItem extends LogItem
     }
 
     /**
+     * Set level
+     *
      * @param string $level
      */
     public function setLevel($level)

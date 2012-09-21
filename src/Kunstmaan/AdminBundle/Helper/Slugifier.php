@@ -8,6 +8,8 @@ namespace Kunstmaan\AdminBundle\Helper;
 class Slugifier
 {
     /**
+     * Slugify a string
+     *
      * @param string $text    Text to slugify
      * @param string $default Default return value (override when slugify would return an empty string)
      *

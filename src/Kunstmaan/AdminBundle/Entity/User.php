@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * omnext user, can have different roles
+ * User entity
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\UserRepository")
  * @ORM\Table(name="kuma_users")
@@ -31,7 +31,7 @@ class User extends BaseUser
     protected $groups;
 
     /**
-     * constructor
+     * Constructor
      */
     public function __construct()
     {

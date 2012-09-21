@@ -134,6 +134,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Set reference entity id
+     *
      * @param int $refId
      */
     protected function setRefId($refId)
@@ -142,6 +144,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Get reference entity id
+     *
      * @return int
      */
     public function getRefId()
@@ -150,6 +154,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Set reference entity name
+     *
      * @param string $refEntityName
      */
     protected function setRefEntityName($refEntityName)
@@ -158,6 +164,8 @@ class AclChangeset extends AbstractEntity
     }
 
     /**
+     * Get reference entity name
+     *
      * @return string
      */
     public function getRefEntityName()
