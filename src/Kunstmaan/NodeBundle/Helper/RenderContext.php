@@ -3,17 +3,17 @@
 namespace Kunstmaan\ViewBundle\Helper;
 
 /**
- *  a context for rendering pages through service methods
+ * A context for rendering pages through service methods
  */
 class RenderContext extends \ArrayObject
 {
 
-    /**
-     * @var string
-     */
+    /* @var string $view */
     private $view;
 
     /**
+     * Get view.
+     *
      * @return string
      */
     public function getView()
@@ -22,6 +22,8 @@ class RenderContext extends \ArrayObject
     }
 
     /**
+     * Set view.
+     *
      * @param string $view
      */
     public function setView($view)
