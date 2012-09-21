@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 /**
@@ -16,10 +16,10 @@ class PagePartRefRepository extends EntityRepository
 {
 
     /**
-     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage     $page           The page
-     * @param \Kunstmaan\PagePartBundle\Helper\PagePartInterface $pagepart       The pagepart
-     * @param integer                                            $sequencenumber The sequence numer
-     * @param string                                             $context        The context
+     * @param AbstractPage      $page           The page
+     * @param PagePartInterface $pagepart       The pagepart
+     * @param integer           $sequencenumber The sequence numer
+     * @param string            $context        The context
      *
      * @return \Kunstmaan\PagePartBundle\Entity\PagePartRef
      */
