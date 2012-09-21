@@ -231,13 +231,13 @@ class NodeTranslationRepository extends EntityRepository
 
         $query = $em
             ->createNativeQuery(
-            'select nt.*
-                    from kuma_node_translations nt
-                    join kuma_nodes n on n.id = nt.node_id
-                    where n.deleted = 0 and nt.lang = :lang and locate(nt.url, :url) = 1
-                    order by length(nt.url) desc limit 1',
-            $rsm
-        );
+                'select nt.*
+                from kuma_node_translations nt
+                join kuma_nodes n on n.id = nt.node_id
+                where n.deleted = 0 and nt.lang = :lang and locate(nt.url, :url) = 1
+                order by length(nt.url) desc limit 1',
+                $rsm
+            );
         $query->setParameter('lang', $locale);
         $query->setParameter('url', $urlSlug);
         $translation = $query->getOneOrNullResult();

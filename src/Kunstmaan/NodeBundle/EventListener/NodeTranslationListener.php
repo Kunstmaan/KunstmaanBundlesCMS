@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\EventListener;
 
+use Doctrine\ORM\EntityManager;
+
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
 use Doctrine\ORM\Event\PostFlushEventArgs;
@@ -61,10 +63,10 @@ class NodeTranslationListener
 
     /**
      * Checks if a nodetranslation has children and update their url
-     * @param \Kunstmaan\AdminNodeBundle\Entity\NodeTranslation $node
-     * @param $em
+     * @param NodeTranslation $node The node
+     * @param EntityManager   $em   The entity manager
      */
-    private function updateNodeChildren(NodeTranslation $node, $em)
+    private function updateNodeChildren(NodeTranslation $node, EntityManager $em)
     {
         $children = $node->getNode()->getChildren();
         if (count($children) > 0) {

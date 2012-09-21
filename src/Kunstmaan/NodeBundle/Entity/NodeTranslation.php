@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
+use JMS\SecurityExtraBundle\Security\Util\String;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 use Kunstmaan\AdminNodeBundle\Form\NodeTranslationAdminType;
@@ -21,37 +23,51 @@ class NodeTranslation extends AbstractEntity
 {
 
     /**
+     * @var Node
+     *
      * @ORM\ManyToOne(targetEntity="Node")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
     protected $node;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $lang;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean")
      */
     protected $online = false;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $title;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $slug;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $url;
 
     /**
+     * @var NodeVersion
+     *
      * @ORM\ManyToOne(targetEntity="NodeVersion")
      * @ORM\JoinColumn(name="public_node_version_id", referencedColumnName="id")
      */
@@ -64,16 +80,23 @@ class NodeTranslation extends AbstractEntity
     protected $seo;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
      * @ORM\OrderBy({"version" = "DESC"})
      */
     protected $nodeVersions;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $weight;
 
+    /**
+     * contructor
+     */
     public function __construct()
     {
         $this->nodeVersions = new ArrayCollection();
@@ -329,8 +352,8 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @param EntityManager $em
-     * @param string        $type
+     * @param EntityManager $em   The entity manager
+     * @param string        $type The type
      *
      * @return object|null
      */

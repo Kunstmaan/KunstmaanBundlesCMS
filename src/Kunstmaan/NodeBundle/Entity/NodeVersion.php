@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
+use JMS\SecurityExtraBundle\Security\Util\String;
+
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,42 +27,58 @@ class NodeVersion extends AbstractEntity
     const PUBLIC_VERSION    = 'public';
 
     /**
+     * @var NodeTranslation
+     *
      * @ORM\ManyToOne(targetEntity="NodeTranslation")
      * @ORM\JoinColumn(name="node_translation_id", referencedColumnName="id")
      */
     protected $nodeTranslation;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $type;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="bigint")
      */
     protected $version;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      */
     protected $owner;
 
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(type="datetime")
      */
     protected $created;
 
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(type="datetime")
      */
     protected $updated;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="bigint", name="ref_id")
      */
     protected $refId;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", name="ref_entity_name")
      */
     protected $refEntityName;

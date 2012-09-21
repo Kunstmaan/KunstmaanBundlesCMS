@@ -187,9 +187,7 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     public function testGetRef()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -199,9 +197,7 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     public function testGetCreated()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -211,9 +207,7 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     public function testGetUpdated()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -247,6 +241,14 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(10, $this->object->getWeight());
     }
 
+    /**
+     * @param string $lang   The locale
+     * @param string $title  The title
+     * @param string $slug   The slug
+     * @param int    $nodeId The node id
+     *
+     * @return Node
+     */
     private function getNodeWithTranslation($lang, $title, $slug, $nodeId = null)
     {
         $node = new Node();

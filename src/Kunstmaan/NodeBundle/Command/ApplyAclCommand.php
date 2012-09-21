@@ -11,6 +11,7 @@ use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminNodeBundle\Helper\ShellHelper;
 
 /**
+ * ApplyAclCommand
  */
 class ApplyAclCommand extends ContainerAwareCommand
 {
@@ -24,16 +25,21 @@ class ApplyAclCommand extends ContainerAwareCommand
     /* @var Node $rootNode */
     private $rootNode;
 
+    /**
+     * Configures the command.
+     */
     protected function configure()
     {
         parent::configure();
 
         $this->setName('kuma:acl:apply')
             ->setDescription('Apply ACL changeset.')
-            ->setHelp("The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.")
-        ;
+            ->setHelp("The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.");
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -42,7 +48,9 @@ class ApplyAclCommand extends ContainerAwareCommand
         $permissionAdmin = $this->getContainer()->get('kunstmaan_admin.permissionadmin');
 
         // Check if another ACL apply process is currently running & do nothing if it is
-        if ($this->isRunning()) return;
+        if ($this->isRunning()) {
+            return;
+        }
         $aclRepo = $this->em->getRepository('KunstmaanAdminNodeBundle:AclChangeset');
         do {
             /* @var AclChangeset $changeset */
@@ -65,6 +73,9 @@ class ApplyAclCommand extends ContainerAwareCommand
         } while ($hasPending);
     }
 
+    /**
+     * @return boolean
+     */
     private function isRunning()
     {
         // Check if we have records in running state, if so read PID & check if process is active

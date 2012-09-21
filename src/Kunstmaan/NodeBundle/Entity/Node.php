@@ -22,43 +22,61 @@ class Node extends AbstractEntity
 {
 
     /**
+     * @var Node
+     *
      * @ORM\ManyToOne(targetEntity="Node", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parent;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=false, name="sequence_number")
+     *
+     * @deprecated nodes are sorted by the nodetranslation's weight field
      */
     protected $sequenceNumber;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Node", mappedBy="parent")
      * @ORM\OrderBy({"sequenceNumber" = "ASC"})
      */
     protected $children;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="NodeTranslation", mappedBy="node")
      */
     protected $nodeTranslations;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", name="hidden_from_nav")
      */
     protected $hiddenFromNav;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=false, name="ref_entity_name")
      */
     protected $refEntityName;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=true, name="internal_name")
      */
     protected $internalName;
@@ -145,6 +163,9 @@ class Node extends AbstractEntity
         return $this;
     }
 
+    /**
+     * disableChildrenLazyLoading
+     */
     public function disableChildrenLazyLoading()
     {
         if (is_object($this->children)) {
@@ -160,15 +181,14 @@ class Node extends AbstractEntity
     public function getNodeTranslations($includeOffline = false)
     {
         return $this->nodeTranslations
-            ->filter(
-            function ($entry) use ($includeOffline) {
+            ->filter(function ($entry) use ($includeOffline) {
                 if ($includeOffline || $entry->isOnline()) {
                     return true;
                 }
 
                 return false;
             }
-        );
+            );
     }
 
     /**
@@ -184,8 +204,8 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @param string $lang
-     * @param bool   $includeOffline
+     * @param string $lang           The locale
+     * @param bool   $includeOffline Include offline pages or not
      *
      * @return NodeTranslation|null
      */
@@ -218,6 +238,9 @@ class Node extends AbstractEntity
         return $this;
     }
 
+    /**
+     * disableNodeTranslationsLazyLoading
+     */
     public function disableNodeTranslationsLazyLoading()
     {
         if (is_object($this->nodeTranslations)) {
@@ -386,6 +409,9 @@ class Node extends AbstractEntity
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return "node " . $this->getId() . ", refEntityName: " . $this->getRefEntityName();

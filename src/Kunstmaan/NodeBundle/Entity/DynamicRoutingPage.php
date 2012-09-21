@@ -11,17 +11,30 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * DynamicRoutingPage
+ */
 abstract class DynamicRoutingPage extends AbstractPage implements DynamicRoutingPageInterface
 {
-    /* @var RouteCollection $routes */
+    /**
+     * @var RouteCollection $routes
+     */
     private $routes = null;
-    /* @var RequestContext $context */
+    /**
+     * @var RequestContext $context
+     */
     private $context;
-    /* @var UrlMatcher $matcher */
+    /**
+     * @var UrlMatcher $matcher
+     */
     private $matcher;
-    /* @var UrlGenerator $generator */
+    /**
+     * @var UrlGenerator $generator
+     */
     private $generator;
-    /* @var string $locale */
+    /**
+     * @var string $locale
+     */
     protected $locale;
 
     /**
@@ -63,7 +76,7 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
      *
      * @param string $slug
      *
-     * @return array|false Matching controller info
+     * @return bool Matching controller info
      */
     public function match($slug)
     {
@@ -72,12 +85,12 @@ abstract class DynamicRoutingPage extends AbstractPage implements DynamicRouting
 
     /**
      * @param string $name       Route name
-     * @param array  $parameters
-     * @param bool   $absolute
+     * @param array  $parameters Parameters
+     * @param bool   $absolute   Absolute url
      *
      * @return null|string
      */
-    public function generate($name, $parameters = array(), $absolute = false)
+    public function generate($name, array $parameters = array(), $absolute = false)
     {
         return $this->getGenerator()->generate($name, $parameters, $absolute);
     }

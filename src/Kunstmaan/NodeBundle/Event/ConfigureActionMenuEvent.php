@@ -7,6 +7,9 @@ use Symfony\Component\EventDispatcher\Event;
 use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
 use Knp\Menu\ItemInterface;
 
+/**
+ * ConfigureActionMenuEvent
+ */
 class ConfigureActionMenuEvent extends Event
 {
 
@@ -26,9 +29,9 @@ class ConfigureActionMenuEvent extends Event
     private $activeNodeVersion;
 
     /**
-     * @param \Knp\Menu\FactoryInterface                    $factory
-     * @param \Knp\Menu\ItemInterface                       $menu
-     * @param \Kunstmaan\AdminNodeBundle\Entity\NodeVersion $activeNodeVersion
+     * @param FactoryInterface $factory           The factory
+     * @param ItemInterface    $menu              The menu
+     * @param NodeVersion      $activeNodeVersion The nodeversion
      */
     public function __construct(FactoryInterface $factory, ItemInterface $menu, NodeVersion $activeNodeVersion)
     {

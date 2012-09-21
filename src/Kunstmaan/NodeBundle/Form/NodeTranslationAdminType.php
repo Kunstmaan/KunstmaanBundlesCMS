@@ -5,6 +5,9 @@ namespace Kunstmaan\AdminNodeBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * NodeTranslationAdminType
+ */
 class NodeTranslationAdminType extends AbstractType
 {
     /**

@@ -20,7 +20,7 @@ class NodeRepository extends EntityRepository
     /**
      * @param string    $lang                 The locale
      * @param string    $permission           The permission (read, write, ...)
-     * @param AclHelper $aclHelper
+     * @param AclHelper $aclHelper            The acl helper
      * @param bool      $includeHiddenFromNav include the hiddenfromnav nodes or not
      *
      * @return Node[]
@@ -130,7 +130,7 @@ class NodeRepository extends EntityRepository
      * @param int       $parentId             The parent id
      * @param string    $lang                 The locale
      * @param string    $permission           The permission (read, write, ...)
-     * @param AclHelper $aclHelper
+     * @param AclHelper $aclHelper            The acl helper
      * @param bool      $includeHiddenFromNav Include nodes hidden from navigation or not
      *
      * @return Node[]

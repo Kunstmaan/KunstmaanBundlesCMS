@@ -32,17 +32,29 @@ use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
  */
 class PagesController extends Controller
 {
-    /* @var EntityManager $em */
+    /**
+     * @var EntityManager $em */
     private $em;
-    /* @var string $locale */
+    /**
+     * @var string $locale */
+
     private $locale;
-    /* @var SecurityContextInterface $securityContext */
+    /**
+     * @var SecurityContextInterface $securityContext */
+
     private $securityContext;
-    /* @var User $user */
+    /**
+     * @var User $user */
+
     private $user;
-    /* @var AclHelper $aclHelper */
+    /**
+     * @var AclHelper $aclHelper */
+
     private $aclHelper;
 
+    /**
+     * init
+     */
     private function init()
     {
         $this->em = $this->getDoctrine()->getManager();

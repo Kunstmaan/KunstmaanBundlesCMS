@@ -2,6 +2,10 @@
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
+use JMS\SecurityExtraBundle\Security\Util\String;
+
+use Kunstmaan\MediaBundle\Entity\Media;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminNodeBundle\Form\SEOType;
 
@@ -20,6 +24,8 @@ class SEO extends AbstractEntity
 {
 
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -27,57 +33,79 @@ class SEO extends AbstractEntity
     protected $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="meta_description", type="text", nullable=true)
      */
     protected $metaDescription;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="meta_author", type="string", nullable=true)
      */
     protected $metaAuthor;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="meta_keywords", type="string", nullable=true)
      */
     protected $metaKeywords;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="meta_robots", type="string", nullable=true)
      */
     protected $metaRobots;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="meta_revised", type="string", nullable=true)
      */
     protected $metaRevised;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="og_type", type="string", nullable=true)
      */
     protected $ogType;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="og_title", type="string", nullable=true)
      */
     protected $ogTitle;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="og_description", type="text", nullable=true)
      */
     protected $ogDescription;
 
     /**
+     * @var Media
+     *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="og_image_id", referencedColumnName="id")
      */
     protected $ogImage;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="extra_metadata", type="text", nullable=true)
      */
     protected $extraMetadata;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="cim_keyword", type="string", length=24, nullable=true)
      * @Assert\Regex(pattern="/^[a-zA-Z0-9\/]*$/")
      */
@@ -224,11 +252,11 @@ class SEO extends AbstractEntity
     }
 
     /**
-     * @param $ogImage
+     * @param Media $ogImage
      *
      * @return SEO
      */
-    public function setOgImage($ogImage)
+    public function setOgImage(Media $ogImage)
     {
         $this->ogImage = $ogImage;
 
@@ -244,7 +272,7 @@ class SEO extends AbstractEntity
     }
 
     /**
-     * @param $ogTitle
+     * @param string $ogTitle
      *
      * @return SEO
      */
@@ -264,7 +292,7 @@ class SEO extends AbstractEntity
     }
 
     /**
-     * @param $ogType
+     * @param string $ogType
      *
      * @return SEO
      */

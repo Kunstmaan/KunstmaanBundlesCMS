@@ -16,6 +16,10 @@ use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
  */
 class InitAclCommand extends ContainerAwareCommand
 {
+
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         parent::configure();
@@ -25,6 +29,9 @@ class InitAclCommand extends ContainerAwareCommand
             ->setHelp("The <info>kuma:init:acl</info> will create basic ACL entries for the nodes of the current project");
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');

@@ -4,6 +4,9 @@ namespace Kunstmaan\AdminNodeBundle\Tests\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
+/**
+ * TestEntity
+ */
 class TestEntity extends AbstractEntity
 {
     /**

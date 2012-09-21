@@ -2,6 +2,12 @@
 
 namespace Kunstmaan\AdminNodeBundle\Helper;
 
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+
+use Doctrine\ORM\EntityManager;
+
+use Symfony\Component\Security\Core\SecurityContextInterface;
+
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminNodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminNodeBundle\Entity\Node;
@@ -12,15 +18,57 @@ use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
  */
 class NodeMenu
 {
+
+    /**
+     * @var EntityManager
+     */
     private $em;
+
+    /**
+     * @var SecurityContextInterface
+     */
     private $securityContext;
+
+    /**
+     * @var AclHelper
+     */
     private $aclHelper;
+
+    /**
+     *
+     * @var string
+     */
     private $lang;
+
+    /**
+     *
+     * @var array
+     */
     private $topNodeMenuItems = array();
+
+    /**
+     * @var array
+     */
     private $breadCrumb = array();
+
+    /**
+     * @var bool
+     */
     private $includeOffline = false;
+
+    /**
+     * @var bool
+     */
     private $includeHiddenFromNav = false;
+
+    /**
+     * @var string
+     */
     private $permission = null;
+
+    /**
+     * @var mixed
+     */
     private $user = null;
 
     /**
@@ -33,7 +81,7 @@ class NodeMenu
      * @param bool                     $includeOffline       Include offline pages
      * @param bool                     $includeHiddenFromNav Include hidden pages
      */
-    public function __construct($em, $securityContext, $aclHelper, $lang, Node $currentNode = null, $permission = 'VIEW', $includeOffline = false, $includeHiddenFromNav = false)
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $lang, Node $currentNode = null, $permission = 'VIEW', $includeOffline = false, $includeHiddenFromNav = false)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
@@ -253,21 +301,33 @@ class NodeMenu
         return $this->user;
     }
 
+    /**
+     * @return EntityManager
+     */
     public function getEntityManager()
     {
         return $this->em;
     }
 
+    /**
+     * @return SecurityContextInterface
+     */
     public function getSecurityContext()
     {
         return $this->securityContext;
     }
 
+    /**
+     * @return AclHelper
+     */
     public function getAclHelper()
     {
         return $this->aclHelper;
     }
 
+    /**
+     * @return string
+     */
     public function getLang()
     {
         return $this->lang;

@@ -17,6 +17,11 @@ services:
 
     kunstmaan_adminnode.shell_helper:
         class: "%kunstmaan_adminnode.shell_helper.class%"
+        
+    kunstmaan_adminnode.form.type.urlchooser:
+        class: Kunstmaan\AdminNodeBundle\Form\Type\URLChooserType
+        tags:
+            - { name: 'form.type', alias: 'urlchooser' }
 
     kunstmaan_adminnode.actions_menu_builder:
         class: Kunstmaan\AdminNodeBundle\Helper\Menu\ActionsMenuBuilder
@@ -50,7 +55,7 @@ services:
             - { name: 'knp_menu.menu', alias: 'top_actions' } # The alias is what is used to retrieve the menu
 
     kunstmaan_adminnode.apply_acl_changeset.listener:
-        class: %kunstmaan_adminnode.apply_acl_changeset.listener.class%
+        class: "%kunstmaan_adminnode.apply_acl_changeset.listener.class%"
         arguments: ["@kunstmaan_adminnode.shell_helper", "@kernel"]
         tags:
             - { name: 'kernel.event_listener', event: 'kunstmaan_admin.applyAclChangeset', method: 'onApplyAclChangeset' }

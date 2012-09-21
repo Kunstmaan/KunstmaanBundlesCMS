@@ -6,6 +6,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
 
+/**
+ * SEOType
+ */
 class SEOType extends AbstractType
 {
     /**

@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\Helper\Menu;
 
+use Kunstmaan\AdminNodeBundle\Entity\NodeVersion;
+
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\AdminNodeBundle\Event\Events;
@@ -12,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Knp\Menu\FactoryInterface;
 
+/**
+ * ActionsMenuBuilder
+ */
 class ActionsMenuBuilder
 {
 
@@ -46,11 +51,11 @@ class ActionsMenuBuilder
     private $context;
 
     /**
-     * @param FactoryInterface         $factory
-     * @param EntityManager            $em
-     * @param RouterInterface          $router
-     * @param EventDispatcherInterface $dispatcher
-     * @param SecurityContextInterface $context
+     * @param FactoryInterface         $factory    The factory
+     * @param EntityManager            $em         The entity manager
+     * @param RouterInterface          $router     The router
+     * @param EventDispatcherInterface $dispatcher The event dispatcher
+     * @param SecurityContextInterface $context    The security context
      */
     public function __construct(FactoryInterface $factory, EntityManager $em, RouterInterface $router, EventDispatcherInterface $dispatcher, SecurityContextInterface $context)
     {
@@ -154,9 +159,11 @@ class ActionsMenuBuilder
     /**
      * Set activeNodeVersion
      *
-     * @param \Kunstmaan\AdminNodeBundle\Entity\NodeVersion $activeNodeVersion
+     * @param NodeVersion $activeNodeVersion
+     *
+     * @return ActionsMenuBuilder
      */
-    public function setActiveNodeVersion($activeNodeVersion)
+    public function setActiveNodeVersion(NodeVersion $activeNodeVersion)
     {
         $this->activeNodeVersion = $activeNodeVersion;
 

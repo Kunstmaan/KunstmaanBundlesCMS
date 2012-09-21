@@ -27,9 +27,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private $nodeMenu;
 
     /**
-     * @param EntityManager            $em
-     * @param SecurityContextInterface $securityContext
-     * @param AclHelper                $aclHelper
+     * @param EntityManager            $em              The entity manager
+     * @param SecurityContextInterface $securityContext The security context
+     * @param AclHelper                $aclHelper       The acl helper
      */
     public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper)
     {
@@ -41,10 +41,10 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
      *
-     * @param MenuBuilder $menu The MenuBuilder
-     * @param MenuItem[]  &$children The current children
-     * @param MenuItem $parent  The parent Menu item
-     * @param Request  $request The Request
+     * @param MenuBuilder $menu      The menu builder
+     * @param MenuItem[]  &$children The children array that may be adapted
+     * @param MenuItem    $parent    The parent menu item
+     * @param Request     $request   The Ruquest
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
@@ -83,12 +83,12 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     }
 
     /**
-     * @param int            $currentId
-     * @param MenuBuilder    $menu
-     * @param MenuItem[]     $children
-     * @param NodeMenuItem[] $nodes
-     * @param MenuItem       $parent
-     * @param Request        $request
+     * @param int            $currentId The current id
+     * @param MenuBuilder    $menu      The menu builder
+     * @param MenuItem[]     &$children The children array that may be adapted
+     * @param NodeMenuItem[] $nodes     The nodes
+     * @param MenuItem       $parent    The parent menu item
+     * @param Request        $request   The request
      */
     private function processNodes($currentId, MenuBuilder $menu, array &$children, array $nodes, MenuItem $parent = null, Request $request = null)
     {

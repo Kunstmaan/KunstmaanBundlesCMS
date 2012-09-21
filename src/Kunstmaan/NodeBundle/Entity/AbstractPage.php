@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminNodeBundle\Entity;
 
+use JMS\SecurityExtraBundle\Security\Util\String;
+
 use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminNodeBundle\Entity\PageInterface;
@@ -21,18 +23,22 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
 {
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
     protected $title;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string",nullable=true,name="page_title")
      */
     protected $pageTitle;
 
     /**
-     * @var HasNodeInterface $parent
+     * @var HasNodeInterface
      */
     protected $parent;
 
@@ -63,7 +69,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     /**
      * Set pagetitle
      *
-     * @param string $title
+     * @param string $pageTitle
      *
      * @return AbstractPage
      */

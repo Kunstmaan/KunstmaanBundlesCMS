@@ -103,7 +103,7 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */

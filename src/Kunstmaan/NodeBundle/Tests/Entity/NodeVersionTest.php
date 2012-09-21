@@ -102,9 +102,7 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     public function testPreUpdate()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
@@ -137,8 +135,6 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     public function testGetRef()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 }
