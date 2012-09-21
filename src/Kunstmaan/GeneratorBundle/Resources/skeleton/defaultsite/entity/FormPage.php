@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 use Kunstmaan\AdminBundle\Entity\DeepCloneableIFace;
 use Kunstmaan\AdminBundle\Entity\PageIFace;

@@ -18,6 +18,7 @@ use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     private $adminuser = null;
+    private $container = null;
 
     public function load(ObjectManager $manager)
     {

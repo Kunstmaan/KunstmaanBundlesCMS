@@ -28,4 +28,21 @@ class GeneratorUtils
 
         return $fields;
     }
+
+    /**
+     * Prepend the string in the file
+     *
+     * @param $string Text to be added in front of the file
+     * @param $filename File to prepend in
+     */
+    public static function prepend($string, $filename) {
+        $context = stream_context_create();
+        $fp = fopen($filename, 'r', 1, $context);
+        $tmpname = md5($string);
+        file_put_contents($tmpname, $string);
+        file_put_contents($tmpname, $fp, FILE_APPEND);
+        fclose($fp);
+        unlink($filename);
+        rename($tmpname, $filename);
+    }
 }
