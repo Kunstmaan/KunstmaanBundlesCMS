@@ -6,8 +6,8 @@ use DateTime;
 
 use Kunstmaan\AdminNodeBundle\Entity\Node;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * The form submission
@@ -19,6 +19,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class FormSubmission
 {
     /**
+     * This id of the form submission
+     *
      * @ORM\Id
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -26,27 +28,37 @@ class FormSubmission
     protected $id;
 
     /**
+     * The ip address which created this form submission
+     *
      * @ORM\Column(type="string", name="ip_address")
      */
     protected $ipAddress;
 
     /**
+     * Link to the node of the form which created this form submission
+     *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\AdminNodeBundle\Entity\Node")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
     protected $node;
 
     /**
+     * The language of the form submission
+     *
      * @ORM\Column(type="string")
      */
     protected $lang;
 
     /**
+     * The date when the form submission was created
+     *
      * @ORM\Column(type="datetime")
      */
     protected $created;
 
     /**
+     * The extra fields with their value, which where configured on the form which created this submission
+     *
      * @ORM\OneToMany(targetEntity="FormSubmissionField", mappedBy="formSubmission")
      */
     protected $fields;
@@ -81,6 +93,8 @@ class FormSubmission
     }
 
     /**
+     * Get the ip address which submitted this form submission
+     *
      * @return string
      */
     public function getIpAddress()
@@ -89,6 +103,8 @@ class FormSubmission
     }
 
     /**
+     * Set the ip address
+     *
      * @param string $ipAddress
      */
     public function setIpAddress($ipAddress)
@@ -97,6 +113,8 @@ class FormSubmission
     }
 
     /**
+     * Get the node of the form which created this form submission
+     *
      * @return Node
      */
     public function getNode()
@@ -105,6 +123,8 @@ class FormSubmission
     }
 
     /**
+     * Set the node of the form which created this form submission
+     *
      * @param Node $node
      */
     public function setNode($node)
@@ -113,6 +133,8 @@ class FormSubmission
     }
 
     /**
+     * Sets the language of this form submission
+     *
      * @param string $lang
      */
     public function setLang($lang)
@@ -121,6 +143,8 @@ class FormSubmission
     }
 
     /**
+     * Get the language of this form submission
+     *
      * @return string
      */
     public function getLang()
@@ -129,6 +153,8 @@ class FormSubmission
     }
 
     /**
+     * Set the date when the form submission was created
+     *
      * @param datetime $created
      */
     public function setCreated($created)
@@ -137,6 +163,8 @@ class FormSubmission
     }
 
     /**
+     * Get the date when this form submission was created
+     *
      * @return datetime
      */
     public function getCreated()
@@ -145,6 +173,8 @@ class FormSubmission
     }
 
     /**
+     * Returns the list of fields with their values
+     *
      * @return FormSubmissionField[];
      */
     public function getFields()
@@ -153,6 +183,8 @@ class FormSubmission
     }
 
     /**
+     * A string representation of this form submission
+     *
      * @return string;
      */
     public function __toString()

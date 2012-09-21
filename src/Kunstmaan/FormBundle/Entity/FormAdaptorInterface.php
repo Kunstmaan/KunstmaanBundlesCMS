@@ -1,8 +1,10 @@
 <?php
 
 namespace Kunstmaan\FormBundle\Entity;
-use Symfony\Component\Form\FormBuilderInterface;
+
 use ArrayObject;
+
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Form adaptor Interface
@@ -11,7 +13,7 @@ interface FormAdaptorInterface
 {
 
     /**
-     * Adapt the form here
+     * Modify the given FormBuilderInterface
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields

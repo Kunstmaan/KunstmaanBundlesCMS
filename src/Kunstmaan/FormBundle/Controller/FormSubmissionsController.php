@@ -21,12 +21,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * The formsubmissions admin controller
+ * The controller which will handle everything related with form pages and form submissions
  */
 class FormSubmissionsController extends Controller
 {
     /**
-     * The index action
+     * The index action will use an admin list to list all the form pages
      *
      * @Route("/", name="KunstmaanFormBundle_formsubmissions")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
@@ -47,7 +47,7 @@ class FormSubmissionsController extends Controller
     }
 
     /**
-     * The list
+     * The list action will use an admin list to list all the form submissions related to the given $nodeTranslationId
      *
      * @param int $nodeTranslationId
      *
@@ -72,7 +72,7 @@ class FormSubmissionsController extends Controller
     }
 
     /**
-     * The edit action
+     * The edit action will be used to edit a given submission
      *
      * @param int $nodeTranslationId The node translation id
      * @param int $submissionId      The submission id
@@ -93,7 +93,7 @@ class FormSubmissionsController extends Controller
     }
 
     /**
-     * Export as CSV
+     * Export as CSV of all the form submissions for the given $nodeTranslationId
      *
      * @param int $nodeTranslationId
      *

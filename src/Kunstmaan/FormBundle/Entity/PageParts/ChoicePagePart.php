@@ -2,18 +2,21 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use ArrayObject;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
-use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
-use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
+
+use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
+use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
+use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * A choice pagepart
+ * The choice page part can be used to create forms with single or multiple choices. This can be
+ * represented by a select box, input box or check boxes.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_choice_page_parts")
@@ -22,16 +25,25 @@ class ChoicePagePart extends AbstractFormPagePart
 {
 
     /**
+     * If set to true, radio buttons or checkboxes will be rendered (depending on the multiple value). If false,
+     * a select element will be rendered.
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $expanded;
+    protected $expanded = false;
 
     /**
+     * If true, the user will be able to select multiple options (as opposed to choosing just one option).
+     * Depending on the value of the expanded option, this will render either a select tag or checkboxes
+     * if true and a select tag or radio buttons if false. The returned value will be an array.
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $multiple;
+    protected $multiple = false;
 
     /**
+     * The choices that should be used by this field. The choices can be entered separated by a new line.
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $choices;
@@ -42,6 +54,8 @@ class ChoicePagePart extends AbstractFormPagePart
     protected $emptyValue;
 
     /**
+     * Returns the view used in the frontend
+     *
      * @return string
      */
     public function getDefaultView()
@@ -50,6 +64,8 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
+     * Modify the form with the fields of the current page part
+     *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
      */
@@ -87,6 +103,8 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
+     * Returns the default backend form type for this FormSubmissionField
+     *
      * @return ChoicePagePartAdminType
      */
     public function getDefaultAdminType()
@@ -95,6 +113,8 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
+     * Set the expanded value, default this is false
+     *
      * @param bool $expanded
      */
     public function setExpanded($expanded)
@@ -103,6 +123,8 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
+     * Get the expanded value
+     *
      * @return bool
      */
     public function getExpanded()
@@ -111,6 +133,8 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
+     * Set the multple value, default this is false
+     *
      * @param bool $multiple
      */
     public function setMultiple($multiple)
@@ -119,6 +143,8 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
+     * Get the current multiple value
+     *
      * @return boolean
      */
     public function getMultiple()
@@ -127,6 +153,8 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
+     * Set the choices for this pagepart
+     *
      * @param array $choices
      */
     public function setChoices($choices)
@@ -135,6 +163,8 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
+     * Get the current choices
+     *
      * @return array
      */
     public function getChoices()

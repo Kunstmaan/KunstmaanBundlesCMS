@@ -2,18 +2,20 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use ArrayObject;
+
+use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
+
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Multi line text pagepart
+ * The multi-line text page part can be used to create forms with multi-line text fields.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_multi_line_text_page_parts")
@@ -22,16 +24,22 @@ class MultiLineTextPagePart extends AbstractFormPagePart
 {
 
     /**
+     * If set the entered value will be matched with this regular expression
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $regex;
 
     /**
+     * If a regular expression is set and it doesn't match with the given value, this error message will be shown
+     *
      * @ORM\Column(type="string", name="error_message_regex", nullable=true)
      */
     protected $errorMessageRegex;
 
     /**
+     * Set the regular expression to match the entered value against
+     *
      * @param string $regex
      */
     public function setRegex($regex)
@@ -40,6 +48,8 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Get the current regular expression
+     *
      * @return string
      */
     public function getRegex()
@@ -48,6 +58,8 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Set the error message which will be shown when the entered value doesn't match the regular expression
+     *
      * @param string $errorMessageRegex
      */
     public function setErrorMessageRegex($errorMessageRegex)
@@ -56,6 +68,8 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Get the current error message which will be shown when the entered value doesn't match the regular expression
+     *
      * @return string
      */
     public function getErrorMessageRegex()
@@ -64,6 +78,8 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Returns the frontend view
+     *
      * @return string
      */
     public function getDefaultView()
@@ -72,6 +88,8 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Modify the form with the fields of the current page part
+     *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
      */
@@ -118,6 +136,8 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
+     * Returns the default backend form type for this page part
+     *
      * @return MultiLineTextPagePartAdminType
      */
     public function getDefaultAdminType()

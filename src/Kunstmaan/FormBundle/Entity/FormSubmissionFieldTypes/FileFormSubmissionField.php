@@ -1,21 +1,22 @@
 <?php
+
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 
 use Gedmo\Sluggable\Util\Urlizer;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * This class represents a file form submission field
+ * The ChoiceFormSubmissionField can be used to store files to a FormSubmission
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
@@ -26,18 +27,22 @@ class FileFormSubmissionField extends FormSubmissionField
 
     /**
      * The file name
+     *
      * @ORM\Column(name="ffsf_value", type="string")
      */
     protected $fileName;
 
     /**
-     * non-persistent storage of upload file
+     * Non-persistent storage of upload file
+     *
      * @Assert\File(maxSize="6000000")
      * @var $file UploadedFile
      */
     public $file;
 
     /**
+     * A string representation of the current value
+     *
      * @return string
      */
     public function __toString()
@@ -46,6 +51,8 @@ class FileFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Checks if a file has been uploaded
+     *
      * @return bool
      */
     public function isNull()
@@ -54,6 +61,8 @@ class FileFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Move the file to the given uploadDir and save the filename
+     *
      * @param string $uploadDir
      */
     public function upload($uploadDir)
@@ -77,6 +86,8 @@ class FileFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * This function will be triggered if the form was successfully posted.
+     *
      * @param Form                 $form        the Form
      * @param FormBuilderInterface $formBuilder the FormBuilder
      * @param Request              $request     the Request
@@ -89,14 +100,14 @@ class FileFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * @param UploadedFile $file
+     * Create a safe file name for the uploaded file, so that it can be saved safely on the disk.
      *
      * @return string
      */
-    public function getSafeFileName(UploadedFile $file)
+    public function getSafeFileName()
     {
         $fileExtension = pathinfo($this->file->getClientOriginalName(), PATHINFO_EXTENSION);
-        $mimeTypeExtension = $file->guessExtension();
+        $mimeTypeExtension = $this->file->guessExtension();
         $newExtension = !empty($mimeTypeExtension) ? $mimeTypeExtension : $fileExtension;
 
         $baseName = !empty($fileExtension) ? basename($this->file->getClientOriginalName(), $fileExtension) : $this->file->getClientOriginalName();
@@ -106,6 +117,8 @@ class FileFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Set the filename for the uploaded file
+     *
      * @param string $fileName
      */
     public function setFileName($fileName)
@@ -114,6 +127,8 @@ class FileFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Returns the filename of the uploaded file
+     *
      * @return string
      */
     public function getFileName()
@@ -122,6 +137,8 @@ class FileFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Return the template for this field
+     *
      * @return string
      */
     public function getSubmissionTemplate()

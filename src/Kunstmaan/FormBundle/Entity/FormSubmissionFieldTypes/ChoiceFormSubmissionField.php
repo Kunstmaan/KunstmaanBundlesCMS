@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -7,7 +8,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 
 /**
- * This class represents a choice submission field.
+ * The ChoiceFormSubmissionField can be used to store one or more selected choices to a FormSubmission
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_choice_form_submission_fields")
@@ -21,21 +22,33 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     protected $value;
 
     /**
+     * If set to true, radio buttons or checkboxes will be rendered (depending on the multiple value). If false,
+     * a select element will be rendered.
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $expanded = false;
 
     /**
+     * If true, the user will be able to select multiple options (as opposed to choosing just one option).
+     * Depending on the value of the expanded option, this will render either a select tag or checkboxes
+     * if true and a select tag or radio buttons if false. The returned value will be an array.
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $multiple = false;
 
     /**
+     * The choices that should be used by this field. The choices option is an array, where the array key
+     * is the item value and the array value is the item's label.
+     *
      * @ORM\Column(type="array", nullable=true)
      */
     protected $choices = array();
 
     /**
+     * Returns the default form type for this FormSubmissionField
+     *
      * @return ChoiceFormSubmissionType
      */
     public function getDefaultAdminType()
@@ -44,6 +57,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Returns a string representation of this FormSubmissionField
+     *
      * @return array|string
      */
     public function __toString()
@@ -68,6 +83,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Checks if the value of this field is null
+     *
      * @return bool
      */
     public function isNull()
@@ -83,6 +100,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Get the value of this field
+     *
      * @return array
      */
     public function getValue()
@@ -91,6 +110,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Set the value of this field
+     *
      * @param array $values
      */
     public function setValue($values = array())
@@ -99,6 +120,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Set the expanded value
+     *
      * @param bool $expanded
      */
     public function setExpanded($expanded)
@@ -107,6 +130,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Returns the current expanded value, by default this will be false
+     *
      * @return bool
      */
     public function getExpanded()
@@ -115,6 +140,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Set the multiple value
+     *
      * @param bool $multiple
      */
     public function setMultiple($multiple)
@@ -123,6 +150,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Returns the current multiple value, by default this will be false
+     *
      * @return bool
      */
     public function getMultiple()
@@ -131,6 +160,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Set the possible choices for this field
+     *
      * @param array $choices
      */
     public function setChoices($choices)
@@ -139,6 +170,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
+     * Get the possible choices for this field
+     *
      * @return array
      */
     public function getChoices()

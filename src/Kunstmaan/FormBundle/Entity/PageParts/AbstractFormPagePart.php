@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * An abstract Form Pagepart
+ * Abstract version of a form page part
  */
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
@@ -17,21 +17,29 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     const ERROR_REQUIRED_FIELD = "field.required";
 
     /**
+     * The label
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $label;
 
     /**
+     * If set to true, you are obligated to fill in this page part
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $required;
 
     /**
+     * Error message shows when the page part is required and nothing is filled in
+     *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      */
     protected $errorMessageRequired;
 
     /**
+     * Returns a unique id for the current page part
+     *
      * @return string
      */
     public function getUniqueId()
@@ -40,6 +48,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
+     * Set the label used for this page part
+     *
      * @param int $label
      */
     public function setLabel($label)
@@ -48,6 +58,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
+     * Get the label used for this page part
+     *
      * @return string
      */
     public function getLabel()
@@ -56,6 +68,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
+     * Sets the required valud of this page part
+     *
      * @param bool $required
      */
     public function setRequired($required)
@@ -64,6 +78,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
+     * Check if the page part is required
+     *
      * @return bool
      */
     public function getRequired()
@@ -72,6 +88,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
+     * Sets the message shown when the page part is required and no value was entered
+     *
      * @param string $errorMessageRequired
      */
     public function setErrorMessageRequired($errorMessageRequired)
@@ -80,6 +98,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
+     * Get the error message that will be shown when the page part is required and no value was entered
+     *
      * @return string
      */
     public function getErrorMessageRequired()
@@ -88,6 +108,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
+     * Returns the view for searches
+     *
      * @return string
      */
     public function getElasticaView()
@@ -96,6 +118,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
+     * Returns the view used in the backend
+     *
      * @return string
      */
     public function getAdminView()

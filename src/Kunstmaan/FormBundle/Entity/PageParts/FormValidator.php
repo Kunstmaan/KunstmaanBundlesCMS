@@ -39,6 +39,8 @@ class FormValidator implements FormValidatorInterface
     }
 
     /**
+     * Validates the given form
+     *
      * @param FormInterface $form
      *
      * @return mixed
