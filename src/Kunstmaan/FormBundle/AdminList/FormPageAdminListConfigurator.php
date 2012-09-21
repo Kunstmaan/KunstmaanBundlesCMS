@@ -23,7 +23,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     public function __construct($permission)
     {
         $this->setPermissionDefinition(
-            new PermissionDefinition(array($permission), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n')
+            new PermissionDefinition(array($permission), 'Kunstmaan\NodeBundle\Entity\Node', 'n')
         );
     }
 
@@ -114,7 +114,7 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function getRepositoryName()
     {
-        return 'KunstmaanAdminNodeBundle:NodeTranslation';
+        return 'KunstmaanNodeBundle:NodeTranslation';
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Kunstmaan\FormBundle\Entity;
 
 use DateTime;
 
-use Kunstmaan\AdminNodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\Node;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -37,7 +37,7 @@ class FormSubmission
     /**
      * Link to the node of the form which created this form submission
      *
-     * @ORM\ManyToOne(targetEntity="Kunstmaan\AdminNodeBundle\Entity\Node")
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\NodeBundle\Entity\Node")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
     protected $node;

@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
@@ -61,7 +61,7 @@ class FormSubmissionsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
         /* @var $adminList AdminList */
         $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($nodeTranslation), $em);
@@ -86,7 +86,7 @@ class FormSubmissionsController extends Controller
     public function editAction($nodeTranslationId, $submissionId)
     {
         $em = $this->getDoctrine()->getManager();
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
         $formSubmission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
 
         return array('nodetranslation' => $nodeTranslation, 'formsubmission' => $formSubmission,);
@@ -106,7 +106,7 @@ class FormSubmissionsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         /* @var $nodeTranslation NodeTranslation */
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
 
         $tmpFilename = tempnam('/tmp', 'cb_csv_');
         $file = new \SplFileObject($tmpFilename);

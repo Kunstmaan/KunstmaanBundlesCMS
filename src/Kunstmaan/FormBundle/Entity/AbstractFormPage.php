@@ -6,8 +6,8 @@ use Doctrine\ORM\EntityManager;
 use ArrayObject;
 use Doctrine\ORM\Mapping as ORM;
 
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
@@ -169,7 +169,7 @@ abstract class AbstractFormPage extends AbstractPage
                 if ($form->isValid()) {
                     $formSubmission = new FormSubmission();
                     $formSubmission->setIpAddress($request->getClientIp());
-                    $formSubmission->setNode($em->getRepository('KunstmaanAdminNodeBundle:Node')->getNodeFor($this));
+                    $formSubmission->setNode($em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($this));
                     $formSubmission->setLang($locale = $request->getLocale());
                     $em->persist($formSubmission);
                     foreach ($fields as $field) {

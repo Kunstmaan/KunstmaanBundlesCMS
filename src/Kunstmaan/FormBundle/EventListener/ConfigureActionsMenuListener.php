@@ -4,7 +4,7 @@ namespace Kunstmaan\FormBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\AdminNodeBundle\Event\ConfigureActionMenuEvent;
+use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 
 use Symfony\Component\Routing\Router;

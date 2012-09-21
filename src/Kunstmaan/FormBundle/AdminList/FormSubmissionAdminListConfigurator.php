@@ -8,7 +8,7 @@ use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 use Doctrine\ORM\QueryBuilder;
 
