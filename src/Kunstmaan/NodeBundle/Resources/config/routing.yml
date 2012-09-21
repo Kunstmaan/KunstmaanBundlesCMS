@@ -1,4 +1,9 @@
-KunstmaanAdminBundle_pages:
+KunstmaanNodeBundle_pages:
     resource: "@KunstmaanNodeBundle/Controller/PagesController.php"
     type:     annotation
     prefix:   /admin/pages
+
+KunstmaanNodeBundle_slug:
+    resource: "@KunstmaanNodeBundle/Controller/SlugController.php"
+    type:     annotation
+    prefix:   /
