@@ -26,7 +26,7 @@ class KunstmaanMediaPagePartExtension extends Extension
 
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
-            array('KunstmaanMediaPagePartBundle:Form:fields.html.twig')
+            array('KunstmaanMediaPagePartBundle:Form:formWidgets.html.twig')
         ));
 
         $loader->load('services.yml');
