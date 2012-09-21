@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\ViewBundle\Controller;
+namespace Kunstmaan\NodeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Kunstmaan\AdminBundle\Entity\DynamicRoutingPageInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
-use Kunstmaan\ViewBundle\Helper\RenderContext;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

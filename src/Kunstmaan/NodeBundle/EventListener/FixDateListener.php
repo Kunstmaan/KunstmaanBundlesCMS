@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\ViewBundle\EventListener;
+namespace Kunstmaan\NodeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 

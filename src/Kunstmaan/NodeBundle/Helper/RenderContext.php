@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\ViewBundle\Helper;
+namespace Kunstmaan\NodeBundle\Helper;
 
 /**
  * A context for rendering pages through service methods
