@@ -7,8 +7,8 @@ use Symfony\Component\EventDispatcher\Event;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 
-use Kunstmaan\AdminNodeBundle\Entity\NodeTranslation;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\Node;
 
 /**
  * MediaEvent
