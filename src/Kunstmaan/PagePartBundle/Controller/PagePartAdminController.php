@@ -7,7 +7,7 @@ use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 
 /**
  * Controller for the pagepart administration
@@ -90,7 +90,7 @@ class PagePartAdminController extends Controller
         $locale = $request->getLocale();
         $securityContext = $this->container->get('security.context');
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
-        $topNodes = $em->getRepository('KunstmaanAdminNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
+        $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, false, true);
 
         return array('topnodes' => $topNodes, 'nodemenu' => $nodeMenu);

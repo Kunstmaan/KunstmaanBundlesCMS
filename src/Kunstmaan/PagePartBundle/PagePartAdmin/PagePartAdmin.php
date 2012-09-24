@@ -48,11 +48,11 @@ class PagePartAdmin
     protected $container = null;
 
     /**
-     * @param AbstractPagePartAdminConfigurator              $configurator The configurator
-     * @param \Doctrine\ORM\EntityManager                    $em           The entity manager
-     * @param \Kunstmaan\NodeBundle\Entity\AbstractPage $page         The page
-     * @param null|string                                    $context      The context
-     * @param Container                                      $container    The container
+     * @param AbstractPagePartAdminConfigurator $configurator The configurator
+     * @param EntityManager                     $em           The entity manager
+     * @param AbstractPage                      $page         The page
+     * @param null|string                       $context      The context
+     * @param Container                         $container    The container
      */
     public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, AbstractPage $page, $context = null, Container $container = null)
     {

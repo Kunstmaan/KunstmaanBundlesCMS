@@ -76,10 +76,10 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager                    $em       The entity manager
-     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $frompage The page from where you copy the pageparts
-     * @param \Kunstmaan\AdminNodeBundle\Entity\AbstractPage $topage   The page to where you want to copy the pageparts
-     * @param string                                         $context  The pagepart context
+     * @param EntityManager $em       The entity manager
+     * @param AbstractPage  $frompage The page from where you copy the pageparts
+     * @param AbstractPage  $topage   The page to where you want to copy the pageparts
+     * @param string        $context  The pagepart context
      */
     public function copyPageParts(EntityManager $em, AbstractPage $frompage, AbstractPage $topage, $context = "main")
     {
