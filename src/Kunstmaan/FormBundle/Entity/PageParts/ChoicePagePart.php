@@ -49,9 +49,27 @@ class ChoicePagePart extends AbstractFormPagePart
     protected $choices;
 
     /**
+     * This option determines whether or not a special "empty" option (e.g. "Choose an option")
+     * will appear at the top of a select widget. This option only applies if both the expanded and
+     * multiple options are set to false.
+     *
      * @ORM\Column(type="string", name="empty_value", nullable=true)
      */
     protected $emptyValue;
+
+    /**
+     * If set to true, you are obligated to fill in this page part
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $required = false;
+
+    /**
+     * Error message shows when the page part is required and nothing is filled in
+     *
+     * @ORM\Column(type="string", name="error_message_required", nullable=true)
+     */
+    protected $errorMessageRequired;
 
     /**
      * Returns the view used in the frontend
@@ -190,6 +208,46 @@ class ChoicePagePart extends AbstractFormPagePart
     public function getEmptyValue()
     {
         return $this->emptyValue;
+    }
+
+    /**
+     * Sets the required valud of this page part
+     *
+     * @param bool $required
+     */
+    public function setRequired($required)
+    {
+        $this->required = $required;
+    }
+
+    /**
+     * Check if the page part is required
+     *
+     * @return bool
+     */
+    public function getRequired()
+    {
+        return $this->required;
+    }
+
+    /**
+     * Sets the message shown when the page part is required and no value was entered
+     *
+     * @param string $errorMessageRequired
+     */
+    public function setErrorMessageRequired($errorMessageRequired)
+    {
+        $this->errorMessageRequired = $errorMessageRequired;
+    }
+
+    /**
+     * Get the error message that will be shown when the page part is required and no value was entered
+     *
+     * @return string
+     */
+    public function getErrorMessageRequired()
+    {
+        return $this->errorMessageRequired;
     }
 
 }

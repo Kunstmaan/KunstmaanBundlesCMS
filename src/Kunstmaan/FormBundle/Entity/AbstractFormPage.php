@@ -2,21 +2,24 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
 use ArrayObject;
+
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This is an abstract ORM form page. With this page it's possible to create forms using a mix of form page parts and
@@ -137,71 +140,42 @@ abstract class AbstractFormPage extends AbstractPage
     }
 
     /**
+     * @param RouterInterface $router  The router
+     * @param RenderContext   $context The render context
+     *
+     * @return string
+     */
+    public function generateThankYouUrl(RouterInterface $router, RenderContext $context)
+    {
+        /* @var $nodeTranslation NodeTranslation */
+        $nodeTranslation = $context['nodetranslation'];
+
+        return $router->generate('_slug', array(
+            'url' => $result['slug'],
+            '_locale' => $nodeTranslation->getLang(),
+            'thanks' => true
+        ));
+    }
+
+    /**
      * This service function will handle the creation of the form and submitting the form
      *
      * @param ContainerInterface $container The Container
      * @param Request            $request   The Request
-     * @param array              &$result   The Result array
+     * @param RenderContext      $context   The Render context
      *
      * @return null|RedirectResponse|void
      */
-    public function service(ContainerInterface $container, Request $request, &$result)
+    public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
         $thanksParam = $request->get('thanks');
         if (!empty($thanksParam)) {
             $result["thanks"] = true;
-        } else {
-            /* @var $formbuilder FormBuilderInterface */
-            $formbuilder = $container->get('form.factory')->createBuilder('form');
-            /* @var $em EntityManager */
-            $em = $container->get('doctrine')->getEntityManager();
-            /* @var $fields FormSubmissionField[] */
-            $fields = new ArrayObject();
-            $pageparts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($this, $this->getFormElementsContext());
-            foreach ($pageparts as $pagepart) {
-                if ($pagepart instanceof FormAdaptorInterface) {
-                    $pagepart->adaptForm($formbuilder, $fields);
-                }
-            }
-            $form = $formbuilder->getForm();
-            if ($request->getMethod() == 'POST') {
-                $form->bind($request);
-                if ($form->isValid()) {
-                    $formSubmission = new FormSubmission();
-                    $formSubmission->setIpAddress($request->getClientIp());
-                    $formSubmission->setNode($em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($this));
-                    $formSubmission->setLang($locale = $request->getLocale());
-                    $em->persist($formSubmission);
-                    foreach ($fields as $field) {
-                        $field->setSubmission($formSubmission);
-                        $field->onValidPost($form, $formbuilder, $request, $container);
-                        $em->persist($field);
-                    }
-                    $em->flush();
-                    $em->refresh($formSubmission);
 
-                    $from = $this->getFromEmail();
-                    $to = $this->getToEmail();
-                    $subject = $this->getSubject();
-                    if (!empty($from) && !empty($to) && !empty($subject)) {
-                        $container->get('kunstmaan_form.mailer')->sendContactMail($formSubmission, $from, $to, $subject);
-                    }
-
-                    /* @var $nodeTranslation NodeTranslation */
-                    $nodeTranslation = $result['nodetranslation'];
-
-                    return new RedirectResponse($container->get('router')->generate('_slug', array(
-                        'url' => $result['slug'],
-                        '_locale' => $nodeTranslation->getLang(),
-                        'thanks' => true
-                    )));
-                }
-            }
-            $result["frontendform"] = $form->createView();
-            $result["frontendformobject"] = $form;
+            return null;
         }
 
-        return null;
+        return $container->get('kunstmaan_form.form_handler')->handleForm($this, $request, $context);
     }
 
     /**
