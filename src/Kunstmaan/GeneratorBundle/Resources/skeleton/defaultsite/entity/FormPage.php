@@ -18,6 +18,7 @@ use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNode;
 use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\SearchBundle\Entity\Indexable;
 
@@ -120,7 +121,7 @@ class FormPage extends AbstractPage
         return array(new FormPagePagePartAdminConfigurator(), new BannerPagePartAdminConfigurator());
     }
 
-    public function service(ContainerInterface $container, Request $request, &$result)
+    public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
         $formbuilder = $container
             ->get('form.factory')
