@@ -4,9 +4,14 @@ namespace Kunstmaan\AdminBundle\Twig\Extension;
 
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 
+/**
+ * MenuTwigExtension
+ */
 class MenuTwigExtension extends \Twig_Extension
 {
-    /* @var MenuBuilder $menuBuilder */
+    /**
+     * @var MenuBuilder $menuBuilder
+     */
     protected $menuBuilder;
 
     /**
