@@ -51,7 +51,7 @@ This page part type adds the possibility to add submit buttons to your forms. Fo
 ## Creating your own page parts
 It is possible to create your own page parts by extending from `Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart`. When doing this there are a few methods you need to implement:
 
-```
+```php
 public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields);
 ```
 The adaptForm function is used to add the necessary fields to the form used in the frontend. When adding fields to the form there are a few types of fields you can choose from: 
@@ -63,12 +63,12 @@ The adaptForm function is used to add the necessary fields to the form used in t
 
 This is also the place to add validation to the form.
 
-```
+```php
 public function getDefaultView()
 ```
 This function needs to return the path to the view for this page part, in this view you can access the created form view by using the `frontendform` variable. You can also access the form object by using the `frontendformobject` variable.
 
-```
+```php
 public function getDefaultAdminType()
 ```
 This function needs to return a class that extends `Symfony\Component\Form\AbstractType` and is used for the configuration of the page part in the backend.
