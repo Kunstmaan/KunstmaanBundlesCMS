@@ -15,13 +15,27 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * The multi-line text page part can be used to create forms with multi-line text fields.
+ * The multi-line text page part can be used to create forms with multi-line text fields
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_multi_line_text_page_parts")
  */
 class MultiLineTextPagePart extends AbstractFormPagePart
 {
+
+    /**
+     * If set to true, you are obligated to fill in this page part
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $required = false;
+
+    /**
+     * Error message shows when the page part is required and nothing is filled in
+     *
+     * @ORM\Column(type="string", name="error_message_required", nullable=true)
+     */
+    protected $errorMessageRequired;
 
     /**
      * If set the entered value will be matched with this regular expression
@@ -85,6 +99,46 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     public function getDefaultView()
     {
         return "KunstmaanFormBundle:MultiLineTextPagePart:view.html.twig";
+    }
+
+    /**
+     * Sets the required valud of this page part
+     *
+     * @param bool $required
+     */
+    public function setRequired($required)
+    {
+        $this->required = $required;
+    }
+
+    /**
+     * Check if the page part is required
+     *
+     * @return bool
+     */
+    public function getRequired()
+    {
+        return $this->required;
+    }
+
+    /**
+     * Sets the message shown when the page part is required and no value was entered
+     *
+     * @param string $errorMessageRequired
+     */
+    public function setErrorMessageRequired($errorMessageRequired)
+    {
+        $this->errorMessageRequired = $errorMessageRequired;
+    }
+
+    /**
+     * Get the error message that will be shown when the page part is required and no value was entered
+     *
+     * @return string
+     */
+    public function getErrorMessageRequired()
+    {
+        return $this->errorMessageRequired;
     }
 
     /**

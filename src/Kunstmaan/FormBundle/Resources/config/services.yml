@@ -1,14 +1,23 @@
+parameters:
+  kunstmaan_form.form_mailer.class: 'Kunstmaan\FormBundle\Helper\FormMailer'
+  kunstmaan_form.form_handler.class: 'Kunstmaan\FormBundle\Helper\FormHandler'
+
 services:
-    kunstmaan_form.menu.adaptor.forms:
-        class: Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor
-        tags:
-            -  { name: admin_menu.adaptor }
-    kunstmaan_form.mailer:
-        class: Kunstmaan\FormBundle\Helper\Mailer
-        arguments: [@mailer, @templating, @service_container]
+  kunstmaan_form.menu.adaptor.forms:
+    class: Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor
+    tags:
+      -  { name: admin_menu.adaptor }
+
+    kunstmaan_form.form_mailer:
+      class: %kunstmaan_form.form_mailer.class%
+      arguments: [@mailer, @templating, @service_container]
+
+    kunstmaan_form.form_handler:
+      class: %kunstmaan_form.form_handler.class%
+      arguments: [@service_container]
 
     kunstmaan_form.configure_sub_actions_menu_listener:
-        class: Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener
-        arguments: ["@doctrine.orm.entity_manager", "@router"]
-        tags:
-          - { name: 'kernel.event_listener', event: 'kunstmaan_node.configureSubActionMenu', method: 'onSubActionMenuConfigure' }
+      class: Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener
+      arguments: ["@doctrine.orm.entity_manager", "@router"]
+      tags:
+        - { name: 'kernel.event_listener', event: 'kunstmaan_node.configureSubActionMenu', method: 'onSubActionMenuConfigure' }

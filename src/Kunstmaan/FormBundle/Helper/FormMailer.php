@@ -14,7 +14,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 /**
  * The form mailer
  */
-class Mailer
+class FormMailer implements FormMailerInterface
 {
 
     private $mailer;

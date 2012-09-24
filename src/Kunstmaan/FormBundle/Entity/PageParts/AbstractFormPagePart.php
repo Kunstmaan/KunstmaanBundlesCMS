@@ -24,20 +24,6 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     protected $label;
 
     /**
-     * If set to true, you are obligated to fill in this page part
-     *
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    protected $required;
-
-    /**
-     * Error message shows when the page part is required and nothing is filled in
-     *
-     * @ORM\Column(type="string", name="error_message_required", nullable=true)
-     */
-    protected $errorMessageRequired;
-
-    /**
      * Returns a unique id for the current page part
      *
      * @return string
@@ -65,46 +51,6 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * Sets the required valud of this page part
-     *
-     * @param bool $required
-     */
-    public function setRequired($required)
-    {
-        $this->required = $required;
-    }
-
-    /**
-     * Check if the page part is required
-     *
-     * @return bool
-     */
-    public function getRequired()
-    {
-        return $this->required;
-    }
-
-    /**
-     * Sets the message shown when the page part is required and no value was entered
-     *
-     * @param string $errorMessageRequired
-     */
-    public function setErrorMessageRequired($errorMessageRequired)
-    {
-        $this->errorMessageRequired = $errorMessageRequired;
-    }
-
-    /**
-     * Get the error message that will be shown when the page part is required and no value was entered
-     *
-     * @return string
-     */
-    public function getErrorMessageRequired()
-    {
-        return $this->errorMessageRequired;
     }
 
     /**

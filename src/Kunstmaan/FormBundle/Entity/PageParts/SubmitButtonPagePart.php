@@ -10,7 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * This pagepart adds a submit button to the forms
+ * This page part adds a submit button to the forms
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_submit_button_page_parts")
