@@ -2,24 +2,24 @@
 
 namespace {{ namespace }}\Entity;
 
-use Kunstmaan\AdminNodeBundle\Entity\AbstractPage;
-use {{ namespace }}\PagePartAdmin\HomePagePagePartAdminConfigurator;
-
-use Kunstmaan\AdminNodeBundle\Entity\HasNode;
-
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 
-use Kunstmaan\AdminBundle\Entity\DeepCloneableIFace;
-
 use Gedmo\Mapping\Annotation as Gedmo;
+
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Collections\ArrayCollection;
-use {{ namespace }}\Form\HomePageAdminType;
+
+use Kunstmaan\AdminBundle\Entity\DeepCloneableIFace;
 use Kunstmaan\AdminBundle\Entity\PageIFace;
-use Kunstmaan\SearchBundle\Entity\Indexable;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\HasNode;
+use Kunstmaan\SearchBundle\Entity\Indexable;
+
+use {{ namespace }}\Form\HomePageAdminType;
+use {{ namespace }}\PagePartAdmin\HomePagePagePartAdminConfigurator;
 
 /**
  * HomePage
