@@ -49,7 +49,7 @@
 
         ~~~CSS~~~
 
-        ~~~JS~~~
+        ~~~TOP_JS~~~
 
     </head>
 
@@ -64,13 +64,13 @@
             <nav>
                 <ul class="clearfix">
                     {% for node in nodemenu.topnodes %}
-                        <li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a>
+                        <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
                             <ul class="clearfix">
                                 {% for node in node.children %}
-                                    <li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a>
+                                    <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
                                         <ul>
                                             {% for node in node.children %}
-                                                <li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a></li>
+                                                <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
                                             {% endfor %}
                                         </ul>
                                     </li>
@@ -82,29 +82,10 @@
             </nav>
         </header>
 
-
-        {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-        {% if activeSubnode is not null %}
-            <div class="subnav">
-                <ul>
-                    {% for node in activeSubnode.children %}
-                        <li><a href="{{ path('_slug', { 'slug': node.slug }) }}" {% if(node.active) %} class="active" {% endif %}>{{ node.title }}</a>
-                            {% if(node.active) %}
-                                <ul>
-                                    {% for node in node.children %}
-                                        <li><a href="{{ path('_slug', { 'slug': node.slug }) }}" {% if(node.active) %} class="active" {% endif %} >{{ node.title }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
         <div class="breadcrumb">
             <ul class="clearfix">
                 {% for node in nodemenu.breadCrumb %}
-                    <li><a href="{{ path('_slug', { 'slug': node.slug }) }}">{{ node.title }}</a></li>
+                    <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -139,7 +120,7 @@
 
         </footer>
 
-        {% include '::_js_footer.html.twig' %}
+        ~~~FOOTER_JS~~~
 
         <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
         mathiasbynens.be/notes/async-analytics-snippet -->
