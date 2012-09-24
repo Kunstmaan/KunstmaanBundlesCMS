@@ -23,7 +23,7 @@
         "kunstmaan/node-bundle": "*",
         "kunstmaan/form-bundle": "*",
         "kunstmaan/pagepart-bundle": "*",
-        "kunstmaan/mediapagepart-bundle": "*"
+        "kunstmaan/media-pagepart-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
