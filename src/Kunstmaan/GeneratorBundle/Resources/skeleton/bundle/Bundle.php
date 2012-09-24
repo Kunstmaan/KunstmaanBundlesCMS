@@ -8,6 +8,6 @@ class {{ bundle }} extends Bundle
 {
     public function getParent()
     {
-        return 'KunstmaanViewBundle';
+        return 'KunstmaanNodeBundle';
     }
 }
