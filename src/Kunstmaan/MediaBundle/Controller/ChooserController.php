@@ -74,7 +74,7 @@ class ChooserController extends Controller
         /* @var Folder $firstGallery */
         $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
 
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_imagechooser_show", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
+        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_image_chooser_show_folder", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
     }
 
     /**
@@ -90,7 +90,7 @@ class ChooserController extends Controller
         /* @var Folder $firstGallery */
         $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
 
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_filechooser_show", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
+        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_file_chooser_show_folder", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
     }
 
     /**
@@ -106,7 +106,7 @@ class ChooserController extends Controller
         /* @var Folder $firstGallery */
         $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
 
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_slidechooser_show", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
+        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_slide_chooser_show_folder", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
     }
 
     /**
@@ -122,23 +122,23 @@ class ChooserController extends Controller
         /* @var Folder $firstGallery */
         $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
 
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_videochooser_show", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
+        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_video_chooser_show_folder", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
     }
 
     /**
-     * @param int $id
+     * @param int $folderId
      *
-     * @Route("/filechooser/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_file_chooser_show_folder")
+     * @Route("/filechooser/{folderId}/{slug}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_file_chooser_show_folder")
      * @Template()
      *
      * @return array
      */
-    public function fileChooserShowFolderAction($id)
+    public function fileChooserShowFolderAction($folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id);
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         /* @var array $galleries */
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
@@ -149,19 +149,19 @@ class ChooserController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $folderId
      *
-     * @Route("/imagechooser/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_image_chooser_show_folder")
+     * @Route("/imagechooser/{folderId}/{slug}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_image_chooser_show_folder")
      * @Template()
      *
      * @return array
      */
-    public function imageChooserShowFolderAction($id)
+    public function imageChooserShowFolderAction($folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id);
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         /* @var array $galleries */
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
@@ -172,19 +172,19 @@ class ChooserController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $folderId
      *
-     * @Route("/slidechooser/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_slide_chooser_show_folder")
+     * @Route("/slidechooser/{folderId}/{slug}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_slide_chooser_show_folder")
      * @Template()
      *
      * @return array
      */
-    public function slideChooserShowFolderAction($id)
+    public function slideChooserShowFolderAction($folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id);
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         /* @var array $galleries */
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
@@ -195,19 +195,19 @@ class ChooserController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int $folderId
      *
-     * @Route("/videochooser/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_video_chooser_show_folder")
+     * @Route("/videochooser/{folderId}/{slug}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_video_chooser_show_folder")
      * @Template()
      *
      * @return array
      */
-    public function videoChooserShowFolderAction($id)
+    public function videoChooserShowFolderAction($folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id);
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         /* @var array $galleries */
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
