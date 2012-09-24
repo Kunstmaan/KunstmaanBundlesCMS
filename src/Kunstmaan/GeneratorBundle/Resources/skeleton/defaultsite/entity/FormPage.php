@@ -31,7 +31,7 @@ use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
  * FormPage
  *
  * @ORM\Entity()
- * @ORM\Table(name="demo_formpage")
+ * @ORM\Table(name="formpage")
  * @ORM\HasLifecycleCallbacks()
  */
 class FormPage extends AbstractPage

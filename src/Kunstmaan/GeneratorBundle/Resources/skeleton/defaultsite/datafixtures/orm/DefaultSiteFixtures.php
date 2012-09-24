@@ -17,7 +17,7 @@ use {{ namespace }}\Entity\ContentPage;
 use {{ namespace }}\Entity\FormPage;
 use {{ namespace }}\Entity\HomePage;
 
-class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface
+class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     private $adminuser = null;
     private $container = null;
@@ -296,6 +296,18 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     public function getOrder()
     {
         return 51;
+    }
+
+    /**
+     * Sets the Container.
+     *
+     * @param ContainerInterface $container A ContainerInterface instance
+     *
+     * @api
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 
 }
