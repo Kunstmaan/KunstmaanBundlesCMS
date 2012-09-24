@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 use Kunstmaan\AdminBundle\Entity\DynamicRoutingPageInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\AdminNodeBundle\Helper\NodeMenu;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -71,11 +71,11 @@ class SlugController extends Controller
             }
         }
 
-        $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getNodeTranslationForUrl($url, $locale);
+        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationForUrl($url, $locale);
         $exactMatch = true;
         if (!$nodeTranslation) {
             // Lookup node by best match for url
-            $nodeTranslation = $em->getRepository('KunstmaanAdminNodeBundle:NodeTranslation')->getBestMatchForUrl($url, $locale);
+            $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getBestMatchForUrl($url, $locale);
             $exactMatch = false;
         }
         if ($nodeTranslation) {
