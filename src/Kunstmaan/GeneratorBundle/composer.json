@@ -20,7 +20,7 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "*",
         "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/adminnode-bundle": "*",
+        "kunstmaan/node-bundle": "*",
         "kunstmaan/form-bundle": "*",
         "kunstmaan/pagepart-bundle": "*",
         "kunstmaan/mediapagepart-bundle": "*"

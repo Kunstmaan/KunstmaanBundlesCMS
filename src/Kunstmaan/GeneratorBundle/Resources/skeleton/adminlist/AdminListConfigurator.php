@@ -15,34 +15,34 @@ use {{ namespace }}\Entity\{{ entity_class }};
 /**
  * The {{ entity_class }} admin list configurator
  */
-class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigurator {
+class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigurator
+{
 
     private $em;
-    
-    public function __construct(EntityManager $em) {
+
+    public function __construct(EntityManager $em)
+    {
         $this->em = $em;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function buildFields() {
-        {%- for field in fields %}
-        $this->addField('{{ field }}', '{{ field }}', true);
-    
-    
+    * {@inheritdoc}
+    */
+    public function buildFields()
+    {
+        {% for field in fields %}
+            $this->addField('{{ field }}', '{{ field }}', true);
         {%- endfor %}
     }
-    
+
     /**
 	 * {@inheritdoc}
 	 */
-	public function buildFilters(AdminListFilter $builder) {
-		{%- for field in fields %}
-			$builder->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}');
-
-
-        {%- endfor %}
+	public function buildFilters(AdminListFilter $builder)
+	{
+        {% for field in fields %}
+		    $builder->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}');
+        {% endfor %}
 	}
 
     /**
@@ -60,7 +60,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}', 'params' => array());
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -68,7 +68,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}_edit', 'params' => array('id' => $item->getId()));
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -76,15 +76,15 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return true;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getAddUrlFor($params = array())
+	public function getAddUrlFor(array $params = array())
 	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}_add', 'params' => array());
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -92,7 +92,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 		return true;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -100,25 +100,27 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	{
 	    return array('action' => '{{ bundle.getName() }}:{{ entity_class }}:delete', 'path' => '{{ bundle.getName() }}_{{ entity_class }}_delete', 'params' => array('id' => $item->getId()));
 	}
-	
+
 	/**
 	 * @return string
 	 */
-	public function canExport() {
+	public function canExport()
+	{
 	    return true;
 	}
-	
+
 	/**
 	 *
 	 */
-	public function getExportUrlFor() {
+	public function getExportUrlFor()
+	{
 	    return array('path' => '{{ bundle.getName() }}_{{ entity_class }}_export', 'params' => array('_format' => 'csv'));
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-    public function adaptQueryBuilder($querybuilder, $params=array())
+    public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $querybuilder, array $params=array())
     {
         parent::adaptQueryBuilder($querybuilder);
 		return $querybuilder;

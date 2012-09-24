@@ -16,18 +16,10 @@ You should be able to get Symfony 2 up and running before you can install the Ku
 
 Installation instructions
 -------------------------
-Installation is straightforward, add the following lines to your deps file:
+Assuming you have installed composer.phar or composer binary:
 
-```
-[KunstmaanGeneratorBundle]
-    git=https://github.com/Kunstmaan/KunstmaanGeneratorBundle.git
-    target=/bundles/Kunstmaan/GeneratorBundle
-```
-
-Register the Kunstmaan namespace in your autoload.php file:
-
-```
-'Kunstmaan'        => __DIR__.'/../vendor/bundles',
+``` bash
+$ composer require kunstmaan/generator-bundle
 ```
 
 Add the KunstmaanGeneratorBundle to your AppKernel.php file:

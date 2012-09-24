@@ -2,22 +2,18 @@
 
 namespace {{ namespace }}\Controller;
 
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 
+use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
 use {{ namespace }}\Form\{{ entity_class }}AdminType;
 
 use Symfony\Component\HttpFoundation\Response;
-
-use Kunstmaan\AdminBundle\Form\EditUserType;
-use Kunstmaan\AdminBundle\Form\EditGroupType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Kunstmaan\AdminBundle\Entity\User;
-use Kunstmaan\AdminBundle\Entity\Group;
-use Kunstmaan\AdminBundle\Form\UserType;
-use Kunstmaan\AdminBundle\Form\GroupType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
-use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -25,13 +21,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * The {{ entity_class }} admin list controller
  */
-class {{ entity_class }}AdminListController extends AdminListController {
+class {{ entity_class }}AdminListController extends AdminListController
+{
 
-    public function getAdminListConfiguration(){
-        return new {{ entity_class }}AdminListConfigurator($this->getDoctrine()->getEntityManager());
+    public function getAdminListConfiguration()
+    {
+        return new {{ entity_class }}AdminListConfigurator($this->getDoctrine()->getManager());
     }
 
-    public function getAdminType(){
+    public function getAdminType()
+    {
         return new {{ entity_class }}AdminType($this->container);
     }
 
@@ -45,7 +44,7 @@ class {{ entity_class }}AdminListController extends AdminListController {
     {
     	return parent::indexAction();
     }
-    
+
     /**
      * The add action
      * 
@@ -73,7 +72,7 @@ class {{ entity_class }}AdminListController extends AdminListController {
     {
     	return parent::editAction($id);
     }
-    
+
     /**
      * @param integer $id
      *
@@ -83,7 +82,8 @@ class {{ entity_class }}AdminListController extends AdminListController {
      *
      * @return array
      */
-    public function deleteAction($entity_id) {
+    public function deleteAction($entity_id)
+    {
         return parent::deleteAction($entity_id);
     }
 
@@ -92,7 +92,8 @@ class {{ entity_class }}AdminListController extends AdminListController {
      * @Method({"GET", "POST"})
      * @return array
      */
-    public function exportAction($_format) {
+    public function exportAction($_format)
+    {
         return parent::exportAction($_format);
 	}
 }
