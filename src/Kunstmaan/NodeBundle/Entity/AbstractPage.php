@@ -7,6 +7,7 @@ use JMS\SecurityExtraBundle\Security\Util\String;
 use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -168,9 +169,9 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     /**
      * @param ContainerInterface $container The Container
      * @param Request            $request   The Request
-     * @param array              &$result   The Result array
+     * @param RenderContext      $context   The Render context
      */
-    public function service(ContainerInterface $container, Request $request, &$result)
+    public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
     }
 
