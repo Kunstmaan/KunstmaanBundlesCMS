@@ -13,6 +13,12 @@
         }
     ],
     "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/Gregwar/FormBundle"
+        } 
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
