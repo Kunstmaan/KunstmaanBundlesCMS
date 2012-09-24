@@ -75,7 +75,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($homepage);
         $manager->flush();
         $node = $manager
-            ->getRepository('KunstmaanNodebundle:Node')
+            ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($homepage, 'en', $this->adminuser);
         $this->initPermissions($manager, $node);
 
@@ -90,7 +90,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($page);
         $manager->flush();
         $node = $manager
-            ->getRepository('KunstmaanNodebundle:Node')
+            ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($page, 'en', $this->adminuser);
         $this->initPermissions($manager, $node);
         return $page;
@@ -104,7 +104,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($headerpage);
         $manager->flush();
         $node = $manager
-            ->getRepository('KunstmaanNodebundle:Node')
+            ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($headerpage, 'en', $this->adminuser);
         $this->initPermissions($manager, $node);
         for ($i = 1; $i <= 6; $i++) {
@@ -127,7 +127,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($textpage);
         $manager->flush();
         $node = $manager
-            ->getRepository('KunstmaanNodebundle:Node')
+            ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($textpage, 'en', $this->adminuser);
         $this->initPermissions($manager, $node);
         {
@@ -159,7 +159,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($textpage);
         $manager->flush();
         $node = $manager
-            ->getRepository('KunstmaanNodebundle:Node')
+            ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($textpage, 'en', $this->adminuser);
         $this->initPermissions($manager, $node);
         {
@@ -230,7 +230,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
         $manager->refresh($page);
         $node = $manager
-            ->getRepository('KunstmaanNodebundle:Node')
+            ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($page, 'en', $this->adminuser);
         $manager->persist($node);
         $manager->flush();
