@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
@@ -39,13 +38,13 @@ class FormHandler implements FormHandlerInterface
     }
 
     /**
-     * @param AbstractFormPage $page    The form page
-     * @param Request          $request The request
-     * @param RenderContext    $context The render context
+     * @param FormPageInterface $page    The form page
+     * @param Request           $request The request
+     * @param RenderContext     $context The render context
      *
      * @return RedirectResponse|void|null
      */
-    public function handleForm(AbstractFormPage $page, Request $request, RenderContext $context)
+    public function handleForm(FormPageInterface $page, Request $request, RenderContext $context)
     {
         /* @var $em EntityManager */
         $em = $this->container->get('doctrine.orm.entity_manager');

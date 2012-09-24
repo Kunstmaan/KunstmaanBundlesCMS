@@ -37,6 +37,7 @@ class AbstractFormPagePartTest extends \PHPUnit_Framework_TestCase
     public function testGetUniqueId()
     {
         $object = $this->object;
+        $object->getUniqueId();
     }
 
     /**
@@ -49,30 +50,6 @@ class AbstractFormPagePartTest extends \PHPUnit_Framework_TestCase
         $value = "Some label";
         $object->setLabel($value);
         $this->assertEquals($value, $object->getLabel());
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::setRequired
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getRequired
-     */
-    public function testSetGetRequired()
-    {
-        $object = $this->object;
-        $this->assertFalse($object->getRequired());
-        $object->setRequired(true);
-        $this->assertTrue($object->getRequired());
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::setErrorMessageRequired
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getErrorMessageRequired
-     */
-    public function testSetGetErrorMessageRequired()
-    {
-        $object = $this->object;
-        $message = "Some error message";
-        $object->setErrorMessageRequired($message);
-        $this->assertEquals($message, $object->getErrorMessageRequired());
     }
 
     /**

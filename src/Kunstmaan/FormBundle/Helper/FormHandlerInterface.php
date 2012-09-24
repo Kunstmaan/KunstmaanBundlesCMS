@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FormBundle\Helper;
 
-use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +14,12 @@ interface FormHandlerInterface
 {
 
     /**
-     * @param AbstractFormPage $page    The form page
-     * @param Request          $request The request
-     * @param RenderContext    $context The render context
+     * @param FormPageInterface $page    The form page
+     * @param Request           $request The request
+     * @param RenderContext     $context The render context
      *
      * @return RedirectResponse|void|null
      */
-    public function handleForm(AbstractFormPage $page, Request $request, RenderContext $context);
+    public function handleForm(FormPageInterface $page, Request $request, RenderContext $context);
 
 }

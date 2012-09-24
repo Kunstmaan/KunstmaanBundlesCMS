@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\Entity;
 
 use ArrayObject;
+use Kunstmaan\FormBundle\Helper\FormPageInterface;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Furthermore it's possible to configure an administrative email to be send when a form is submitted with in it an
  * overview of all the submitted fields.
  */
-abstract class AbstractFormPage extends AbstractPage
+abstract class AbstractFormPage extends AbstractPage implements FormPageInterface
 {
     /**
      * The thank you text to be shown when the form was successfully submitted
@@ -140,6 +141,8 @@ abstract class AbstractFormPage extends AbstractPage
     }
 
     /**
+     * Generate the url of the thank you page
+     *
      * @param RouterInterface $router  The router
      * @param RenderContext   $context The render context
      *
@@ -151,7 +154,7 @@ abstract class AbstractFormPage extends AbstractPage
         $nodeTranslation = $context['nodetranslation'];
 
         return $router->generate('_slug', array(
-            'url' => $result['slug'],
+            'url' => $context['slug'],
             '_locale' => $nodeTranslation->getLang(),
             'thanks' => true
         ));
@@ -203,6 +206,8 @@ abstract class AbstractFormPage extends AbstractPage
     }
 
     /**
+     * Get the page part context used for the form
+     *
      * @return string
      */
     public function getFormElementsContext()
