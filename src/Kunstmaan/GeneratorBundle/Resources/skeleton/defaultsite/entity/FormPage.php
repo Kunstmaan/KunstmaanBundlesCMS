@@ -145,7 +145,7 @@ class FormPage extends AbstractPage
                 $formsubmission = new FormSubmission();
                 $formsubmission->setIpAddress($request->getClientIp());
                 $formsubmission->setNode($em
-                    ->getRepository('KunstmaanAdminNodeBundle:Node')
+                    ->getRepository('KunstmaanNodeBundle:Node')
                     ->getNodeFor($this));
                 $formsubmission->setLang($locale = $request
                     ->getSession()
