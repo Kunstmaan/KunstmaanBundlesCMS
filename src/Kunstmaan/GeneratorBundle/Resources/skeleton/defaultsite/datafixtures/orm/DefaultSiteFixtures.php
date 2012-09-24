@@ -4,16 +4,18 @@ namespace {{ namespace }}\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use {{ namespace }}\Entity\HomePage;
-use {{ namespace }}\Entity\ContentPage;
-use {{ namespace }}\Entity\FormPage;
-use Kunstmaan\AdminNodeBundle\Entity\Node;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\NodeBundle\Entity\Node;
+
+use {{ namespace }}\Entity\ContentPage;
+use {{ namespace }}\Entity\FormPage;
+use {{ namespace }}\Entity\HomePage;
 
 class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
