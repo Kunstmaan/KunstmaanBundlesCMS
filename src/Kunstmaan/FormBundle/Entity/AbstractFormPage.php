@@ -182,20 +182,6 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Returns the page part configurations which specify which page parts can be added to this form
-     *
-     * @return array
-     */
-    abstract public function getPagePartAdminConfigurations();
-
-    /**
-     * Returns the default view of this form
-     *
-     * @return string
-     */
-    abstract public function getDefaultView();
-
-    /**
      * Returns the default backend form type for this form
      *
      * @return AbstractFormPageAdminType

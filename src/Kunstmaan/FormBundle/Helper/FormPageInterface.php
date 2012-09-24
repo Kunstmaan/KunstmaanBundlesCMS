@@ -49,4 +49,18 @@ interface FormPageInterface
      * @return string
      */
     public function getFormElementsContext();
+
+    /**
+     * Returns the page part configurations which specify which page parts can be added to this form
+     *
+     * @return array
+     */
+    public function getPagePartAdminConfigurations();
+
+    /**
+     * Returns the default view of this form
+     *
+     * @return string
+     */
+    public function getDefaultView();
 }
