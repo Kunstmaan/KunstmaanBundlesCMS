@@ -25,7 +25,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->skeletonDir = $skeletonDir;
     }
 
-    public function generate($bundle, OutputInterface $output)
+    public function generate($bundle, OutputInterface $output, $rootDir)
     {
 
         $parameters = array(
@@ -38,10 +38,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generatePagepartConfigs($bundle, $parameters, $output);
         $this->generateFixtures($bundle, $parameters, $output);
         $this->generateAssets($bundle, $parameters, $output);
-        $this->generateTemplates($bundle, $parameters, $output);
+        $this->generateTemplates($bundle, $parameters, $output, $rootDir);
     }
 
-    public function generateTemplates($bundle, $parameters, $output)
+    public function generateTemplates($bundle, $parameters, $output, $rootDir)
     {
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/resources/views';
@@ -62,9 +62,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->filesystem->copy($fullSkeletonDir . '/HomePage/view.html.twig', $dirPath . '/Resources/views/HomePage/view.html.twig');
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/HomePage/view.html.twig');
 
-
-
         $this->filesystem->copy($fullSkeletonDir . '/Layout/layout.html.twig', $dirPath . '/Resources/views/Layout/layout.html.twig');
+        GeneratorUtils::replace("~~~CSS~~~", "{% include '" . $bundle->getName() .":Layout:_css.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
+        GeneratorUtils::replace("~~~JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_header.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
+
         $this->renderFile($fullSkeletonDir, '/Layout/_css.html.twig', $dirPath . '/Resources/views/Layout/_css.html.twig', $parameters);
         $this->renderFile($fullSkeletonDir, '/Layout/_js_footer.html.twig', $dirPath . '/Resources/views/Layout/_js_footer.html.twig', $parameters);
         $this->renderFile($fullSkeletonDir, '/Layout/_js_header.html.twig', $dirPath . '/Resources/views/Layout/_js_header.html.twig', $parameters);
@@ -74,6 +75,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->filesystem->copy($fullSkeletonDir . '/Elastica/HomePage.elastica.twig', $dirPath . '/Resources/views/Elastica/HomePage.elastica.twig');
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');
+
+        GeneratorUtils::replace("[ \"KunstmaanAdminBundle\"", "[ \"KunstmaanAdminBundle\", \"". $bundle->getName()  ."\"", $rootDir . '/config/config.yml');
+
+        $output->writeln('Configure assetic : <info>OK</info>');
     }
 
     public function generateAssets($bundle, $parameters, $output)

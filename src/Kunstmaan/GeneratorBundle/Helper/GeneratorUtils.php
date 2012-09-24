@@ -45,4 +45,20 @@ class GeneratorUtils
         unlink($filename);
         rename($tmpname, $filename);
     }
+
+    /**
+     * Find and replace the string in the file
+     *
+     * @param $toreplace Text to be replaced
+     * @param $replace_text Text as replacement
+     * @param $filename File to replace in
+     */
+    public static function replace($to_replace, $replace_text, $filename) {
+        $content = @file_get_contents($filename);
+        if($content) {
+            $content = str_replace($to_replace, $replace_text, $content);
+            file_put_contents($filename, $content);
+        }
+
+    }
 }

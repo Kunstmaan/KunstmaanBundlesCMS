@@ -59,9 +59,10 @@ EOT
             ->getKernel()
             ->getBundle($bundle);
         $dialog->writeSection($output, 'Site Generation');
+        $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
         $siteGenerator = $this->getSiteGenerator();
-        $siteGenerator->generate($bundle, $output);
+        $siteGenerator->generate($bundle, $output, $rootDir);
 
     }
 
