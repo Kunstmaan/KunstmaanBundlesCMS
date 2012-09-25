@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Filters;
 
-use Doctrine\ORM\QueryBuilder;
-
 use Symfony\Component\HttpFoundation\Request;
+use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 
 /**
  * AbstractFilter
@@ -20,7 +19,7 @@ abstract class AbstractFilter implements AdminListFilterInterface
      * @param string $columnName The column name
      * @param string $alias      The alias
      */
-    public function __construct($columnName, $alias = "b")
+    public function __construct($columnName, $alias = 'b')
     {
         $this->columnName = $columnName;
         $this->alias      = $alias;
@@ -34,12 +33,11 @@ abstract class AbstractFilter implements AdminListFilterInterface
     abstract public function bindRequest(Request $request, &$data, $uniqueId);
 
     /**
-     * @param QueryBuilder $queryBuilder The query builder
-     * @param array        &$expressions The expression
-     * @param array        $data         Data
-     * @param string       $uniqueId     The identifier
+     * @param ProviderInterface $provider The provider
+     * @param array             $data     Data
+     * @param string            $uniqueId The identifier
      */
-    abstract public function adaptQueryBuilder(QueryBuilder $queryBuilder, &$expressions, $data, $uniqueId);
+    abstract public function apply(ProviderInterface $provider, $data, $uniqueId);
 
     /**
      * @return string

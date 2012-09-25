@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Filters;
 
-use Doctrine\ORM\QueryBuilder;
-
 use Symfony\Component\HttpFoundation\Request;
+use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 
 /**
  * AdminListFilterInterface
@@ -19,12 +18,11 @@ interface AdminListFilterInterface
     public function bindRequest(Request $request, &$data, $uniqueId);
 
     /**
-     * @param QueryBuilder $queryBuilder The query builder
-     * @param array        &$expressions The expressions
-     * @param array        $data         The data
-     * @param string       $uniqueId     The unique identifier
+     * @param ProviderInterface $provider The provider
+     * @param array             $data     Data
+     * @param string            $uniqueId The identifier
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, &$expressions, $data, $uniqueId);
+    public function apply(ProviderInterface $provider, $data, $uniqueId);
 
     /**
      * @return string

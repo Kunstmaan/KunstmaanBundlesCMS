@@ -68,11 +68,10 @@ class AdminListTwigExtension extends \Twig_Extension
      * @param string    $basepath    The base path
      * @param array     $urlparams   Additional url params
      * @param array     $addparams   Add params
-     * @param array     $queryparams Query params
      *
      * @return string    The html markup
      */
-    public function renderWidget(AdminList $view, $basepath, array $urlparams = array(), array $addparams = array(), array $queryparams = array())
+    public function renderWidget(AdminList $view, $basepath, array $urlparams = array(), array $addparams = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
 
@@ -82,7 +81,6 @@ class AdminListTwigExtension extends \Twig_Extension
             'basepath' => $basepath,
             'addparams' => $addparams,
             'extraparams' => $urlparams,
-            'queryparams' => $queryparams,
             'adminlist' => $view
         ));
     }

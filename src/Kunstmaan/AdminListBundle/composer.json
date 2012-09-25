@@ -13,9 +13,16 @@
         }
     ],
     "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/wimvds/Pagerfanta"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
+        "white-october/pagerfanta-bundle": "*",
         "kunstmaan/admin-bundle": "*"
     },
     "autoload": {

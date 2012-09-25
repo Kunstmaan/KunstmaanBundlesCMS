@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,9 +11,6 @@ use Doctrine\ORM\EntityManager;
 
 /**
  * AdminList
- *
- * @todo Create a base (abstract) class with 2 descendants - one with only ORM and one with only native DBAL support?
- *       If we do this we will have to adapt the factory & filter as well...
  */
 class AdminList
 {
@@ -28,63 +26,22 @@ class AdminList
     protected $configurator = null;
 
     /**
-     * @var EntityManager $em
-     */
-    protected $em = null;
-
-    /**
-     * @var int $page
-     */
-    protected $page = 1;
-
-    /**
-     * @var AdminListFilter $adminListFilter
-     */
-    protected $adminListFilter = 1;
-
-    /**
-     * @var string $orderBy
-     */
-    protected $orderBy = null;
-
-    /**
-     * @var string $orderDirection
-     */
-    protected $orderDirection = null;
-
-    /**
-     * @var array
-     */
-    protected $queryParams = array();
-
-    /**
-     * @var AclHelper
-     */
-    protected $aclHelper = null;
-
-    /**
      * @param AbstractAdminListConfigurator $configurator The configurator
-     * @param EntityManager                 $em           The entity manager
-     * @param array                         $queryParams  The query parameters
      */
-    public function __construct(AbstractAdminListConfigurator $configurator, EntityManager $em, $queryParams = array())
+    public function __construct(AbstractAdminListConfigurator $configurator)
     {
         $this->configurator = $configurator;
-        $this->em           = $em;
-        $adminListFilter    = new AdminListFilter();
-        $this->configurator->buildFilters($adminListFilter);
+        $this->configurator->buildFilters();
         $this->configurator->buildFields();
         $this->configurator->buildActions();
-        $this->adminListFilter = $adminListFilter;
-        $this->queryParams     = $queryParams;
     }
 
     /**
-     * @return PaginationBean
+     * @return AbstractAdminListConfigurator|null
      */
-    public function getPaginationBean()
+    public function getConfigurator()
     {
-        return new PaginationBean($this->getCount($this->queryParams), $this->page, $this->configurator->getLimit());
+        return $this->configurator;
     }
 
     /**
@@ -92,7 +49,7 @@ class AdminList
      */
     public function getAdminListFilter()
     {
-        return $this->adminListFilter;
+        return $this->configurator->getAdminListFilter();
     }
 
     /**
@@ -100,17 +57,7 @@ class AdminList
      */
     public function bindRequest(Request $request)
     {
-        $this->page = $request->query->get("page");
-        if (is_null($this->page)) {
-            $this->page = 1;
-        }
-        if (!is_null($request->query->get("orderBy"))) {
-            $this->orderBy = $request->query->get("orderBy");
-        }
-        if (!is_null($request->query->get("orderDirection"))) {
-            $this->orderDirection = $request->query->get("orderDirection");
-        }
-        $this->adminListFilter->bindRequest($request);
+        $this->configurator->bindRequest($request);
     }
 
     /**
@@ -130,36 +77,11 @@ class AdminList
     }
 
     /**
-     * @param array $params
-     *
      * @return int
      */
-    public function getCount($params = array())
+    public function getCount()
     {
-        $permissionDef = $this->configurator->getPermissionDefinition();
-        if (!$this->configurator->useNativeQuery()) {
-            $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
-            $queryBuilder = $queryBuilder->select("count(b.id)");
-            $this->configurator->adaptQueryBuilder($queryBuilder, $params);
-            $this->adminListFilter->adaptQueryBuilder($queryBuilder);
-            if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
-                $query = $this->aclHelper->apply($queryBuilder, $permissionDef);
-            } else {
-                $query = $queryBuilder->getQuery();
-            }
-
-            return $query->getSingleScalarResult();
-        } else {
-            $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
-            $this->configurator->adaptNativeCountQueryBuilder($queryBuilder, $params);
-            $this->adminListFilter->adaptQueryBuilder($queryBuilder);
-            if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
-                $queryBuilder = $this->aclHelper->apply($queryBuilder, $permissionDef);
-            }
-            $stmt = $queryBuilder->execute();
-
-            return $stmt->fetchColumn();
-        }
+        return $this->configurator->getCount();
     }
 
     /**
@@ -167,44 +89,9 @@ class AdminList
      *
      * @return array|null
      */
-    public function getItems($params = array())
+    public function getItems()
     {
-        $permissionDef = $this->configurator->getPermissionDefinition();
-        if (!$this->configurator->useNativeQuery()) {
-            $queryBuilder = $this->em->getRepository($this->configurator->getRepositoryName())->createQueryBuilder('b');
-            $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
-            $queryBuilder->setMaxResults($this->configurator->getLimit());
-            $this->configurator->adaptQueryBuilder($queryBuilder, $params);
-            $this->adminListFilter->adaptQueryBuilder($queryBuilder);
-            if (!is_null($this->orderBy)) {
-                if (!strpos($this->orderBy, '.')) {
-                    $this->orderBy = 'b.' . $this->orderBy;
-                }
-                $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
-            }
-            if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
-                $query = $this->aclHelper->apply($queryBuilder, $permissionDef);
-            } else {
-                $query = $queryBuilder->getQuery();
-            }
-
-            return $query->getResult();
-        } else {
-            $queryBuilder = new \Doctrine\DBAL\Query\QueryBuilder($this->em->getConnection());
-            $this->configurator->adaptNativeItemsQueryBuilder($queryBuilder, $params);
-            $this->adminListFilter->adaptQueryBuilder($queryBuilder);
-            if (!is_null($this->orderBy)) {
-                $queryBuilder->orderBy($this->orderBy, ($this->orderDirection == "DESC") ? 'DESC' : "ASC");
-            }
-            $queryBuilder->setFirstResult(($this->page - 1) * $this->configurator->getLimit());
-            $queryBuilder->setMaxResults($this->configurator->getLimit());
-            if (!is_null($permissionDef) && !is_null($this->aclHelper)) {
-                $queryBuilder = $this->aclHelper->apply($queryBuilder, $permissionDef);
-            }
-            $stmt = $queryBuilder->execute();
-
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        }
+        return $this->configurator->getItems();
     }
 
     /**
@@ -326,7 +213,7 @@ class AdminList
      */
     public function getOrderBy()
     {
-        return $this->orderBy;
+        return $this->configurator->getOrderBy();
     }
 
     /**
@@ -334,7 +221,7 @@ class AdminList
      */
     public function getOrderDirection()
     {
-        return $this->orderDirection;
+        return $this->configurator->getOrderDirection();
     }
 
     /**
@@ -370,18 +257,10 @@ class AdminList
     }
 
     /**
-     * @param AclHelper $aclHelper
+     * @return Pagerfanta
      */
-    public function setAclHelper(AclHelper $aclHelper)
+    public function getPagerfanta()
     {
-        $this->aclHelper = $aclHelper;
-    }
-
-    /**
-     * @return AclHelper
-     */
-    public function getAclHelper()
-    {
-        return $this->aclHelper;
+        return $this->configurator->getPagerfanta();
     }
 }

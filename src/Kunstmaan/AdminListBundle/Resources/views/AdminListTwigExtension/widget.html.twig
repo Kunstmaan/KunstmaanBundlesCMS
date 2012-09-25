@@ -2,7 +2,7 @@
 
 
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
-{% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
+{{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
 
 <div class="table_overflow_fix">
 	<table class="table table-striped table-bordered responsive">
@@ -27,7 +27,7 @@
 		    </tr>
 	    </thead>
 	    <tbody>
-	    {% for item in adminlist.items(queryparams) %}
+	    {% for item in adminlist.getItems() %}
 	        <tr>
 	            {% for column in adminlist.columns %}
 	                {% set columnName = column.name %}
@@ -81,4 +81,4 @@
     </select>
 {% endif %}
 
-{% include 'KunstmaanAdminListBundle:AdminListTwigExtension:pagination.html.twig' %}
+{{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}

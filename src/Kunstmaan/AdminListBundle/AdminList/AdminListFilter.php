@@ -81,7 +81,7 @@ class AdminListFilter
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      */
     public function bindRequest(Request $request)
     {
@@ -115,21 +115,4 @@ class AdminListFilter
     {
         return $this->currentFilters;
     }
-
-    /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder|\Doctrine\ORM\QueryBuilder $queryBuilder
-     */
-    public function adaptQueryBuilder($queryBuilder)
-    {
-        $expressions = array();
-        foreach ($this->currentFilters as $filter) {
-            $filter->adaptQueryBuilder($queryBuilder, $expressions);
-        }
-        if (sizeof($expressions) > 0) {
-            foreach ($expressions as $expression) {
-                $queryBuilder->andWhere($expression);
-            }
-        }
-    }
-
 }

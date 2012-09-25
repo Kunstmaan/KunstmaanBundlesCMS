@@ -1,66 +1,50 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Doctrine\DBAL\Query\QueryBuilder;
-
 use Symfony\Component\Form\AbstractType;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Symfony\Component\HttpFoundation\Request;
+use Pagerfanta\Pagerfanta;
 
-/**
- * AbstractAdminListConfigurator
- */
-abstract class AbstractAdminListConfigurator
+abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface
 {
-
-    /**
-     * @var Field[]
-     */
+    /* @var Field[] $fields */
     private $fields = array();
 
-    /**
-     * @var Field[]
-     */
+    /* @var Field[] $exportFields */
     private $exportFields = array();
 
-    /**
-     * @var ActionInterface[]
-     */
+    /* @var ActionInterface[] $customActions */
     private $customActions = array();
 
-    /**
-     * @var ListActionInterface[] $listActions
-     */
+    /* @var ListActionInterface[] $listActions */
     private $listActions = array();
 
-    /**
-     * @var unknown_type
-     */
+    /* @var AbstractType $type */
     private $type = null;
 
-    /**
-     * @var string
-     */
+    /* @var string $listTemplate */
     private $listTemplate = 'KunstmaanAdminListBundle:Default:list.html.twig';
 
-    /**
-     * @var string
-     */
+    /* @var string $addTemplate */
     private $addTemplate = 'KunstmaanAdminListBundle:Default:add.html.twig';
 
-    /**
-     * @var string
-     */
+    /* @var string $editTemplate */
     private $editTemplate = 'KunstmaanAdminListBundle:Default:edit.html.twig';
 
-    /**
-     * @var string
-     */
+    /* @var string $deleteTemplate */
     private $deleteTemplate = 'KunstmaanAdminListBundle:Default:delete.html.twig';
 
-    /**
-     * @var PermissionDefinition $permissionDefinition
-     */
-    private $permissionDefinition = null;
+    /* @var AdminListFilter $adminListFilter */
+    private $adminListFilter = null;
+
+    /* @var int $page */
+    protected $page = 1;
+
+    /* @var string $orderBy */
+    protected $orderBy = '';
+
+    /* @var string $orderDirection */
+    protected $orderDirection = '';
 
     /**
      * Configure the visible columns
@@ -70,7 +54,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * Return the url to edit the given $item
      *
-     * @param mixed $item
+     * @param object|array $item
      *
      * @return array
      */
@@ -88,7 +72,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * Get the delete url for the given $item
      *
-     * @param mixed $item
+     * @param object|array $item
      *
      * @return array
      */
@@ -102,14 +86,7 @@ abstract class AbstractAdminListConfigurator
     abstract public function getIndexUrlFor();
 
     /**
-     * Configure the repository name of the items that will be listed
-     *
-     * @return string
-     */
-    abstract public function getRepositoryName();
-
-    /**
-     * @param entity $entity
+     * @param object $entity
      *
      * @throws \InvalidArgumentException
      *
@@ -144,10 +121,8 @@ abstract class AbstractAdminListConfigurator
 
     /**
      * Configure the fields you can filter on
-     *
-     * @param AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
     }
 
@@ -159,7 +134,7 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param mixed $item
+     * @param object|array $item
      *
      * @return bool
      */
@@ -200,7 +175,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * Configure if it's possible to delete the given $item
      *
-     * @param mixed $item
+     * @param object|array $item
      *
      * @return bool
      */
@@ -220,7 +195,7 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * Configure if it's possible to export the listed items
+     * Configure if it's possible to add new items
      *
      * @return bool
      */
@@ -236,7 +211,7 @@ abstract class AbstractAdminListConfigurator
      */
     public function getExportUrlFor()
     {
-        return "";
+        return '';
     }
 
     /**
@@ -283,17 +258,6 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * Make some modifications to the default created query builder
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder The query builder
-     * @param array                      $params       Some extra parameters
-     */
-    public function adaptQueryBuilder(\Doctrine\ORM\QueryBuilder $queryBuilder, array $params = array())
-    {
-        $queryBuilder->where('1=1');
-    }
-
-    /**
      * @param string $label    The label, only used when the template equals null
      * @param string $url      The action url
      * @param string $icon     The icon, only used when the template equals null
@@ -307,11 +271,11 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param ActionInterface $customAction
+     * @param ListActionInterface $customAction
      *
      * @return AbstractAdminListConfigurator
      */
-    public function addCustomAction(ActionInterface $customAction)
+    public function addCustomAction(ListActionInterface $customAction)
     {
         $this->customActions[] = $customAction;
 
@@ -363,26 +327,25 @@ abstract class AbstractAdminListConfigurator
                 return $item[$columnName];
             } else {
                 return '';
-                // return sprintf("undefined column %s", $columnName);
             }
         }
         $methodName = $columnName;
         if (method_exists($item, $methodName)) {
             $result = $item->$methodName();
         } else {
-            $methodName = "get" . $columnName;
+            $methodName = 'get' . $columnName;
             if (method_exists($item, $methodName)) {
                 $result = $item->$methodName();
             } else {
-                $methodName = "is" . $columnName;
+                $methodName = 'is' . $columnName;
                 if (method_exists($item, $methodName)) {
                     $result = $item->$methodName();
                 } else {
-                    $methodName = "has" . $columnName;
+                    $methodName = 'has' . $columnName;
                     if (method_exists($item, $methodName)) {
                         $result = $item->$methodName();
                     } else {
-                        return sprintf("undefined function [get/is/has]%s()", $columnName);
+                        return sprintf('undefined function [get/is/has]%s()', $columnName);
                     }
                 }
             }
@@ -401,14 +364,16 @@ abstract class AbstractAdminListConfigurator
     {
         $result = $this->getValue($item, $columnName);
         if (is_bool($result)) {
-            return $result ? "true" : "false";
+            return $result ? 'true' : 'false';
         }
         if ($result instanceof \DateTime) {
+            // @todo Get rid of hardcoded date format below?
             return $result->format('Y-m-d H:i:s');
         } else {
             if ($result instanceof \Doctrine\ORM\PersistentCollection) {
                 $results = "";
                 foreach ($result as $entry) {
+                    // @todo Check where this is used, a PersistentCollection doesn't always have entities with a name property!!
                     $results[] = $entry->getName();
                 }
                 if (empty($results)) {
@@ -429,43 +394,13 @@ abstract class AbstractAdminListConfigurator
     /**
      * @param ListActionInterface $listAction
      *
-     * @return AbstractAdminListConfigurator
+     * @return AdminListConfiguratorInterface
      */
     public function addListAction(ListActionInterface $listAction)
     {
         $this->listActions[] = $listAction;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function useNativeQuery()
-    {
-        return false;
-    }
-
-    /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $querybuilder The DBAL query builder
-     * @param array                             $params       Some extra parameters
-     *
-     * @throws \RuntimeException
-     */
-    public function adaptNativeCountQueryBuilder(\Doctrine\DBAL\Query\QueryBuilder $querybuilder, $params = array())
-    {
-        throw new \RuntimeException('You have to implement the native count query builder!');
-    }
-
-    /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $querybuilder The DBAL query builder
-     * @param array                             $params       Some extra parameters
-     *
-     * @throws \RuntimeException
-     */
-    public function adaptNativeItemsQueryBuilder(\Doctrine\DBAL\Query\QueryBuilder $querybuilder, $params = array())
-    {
-        throw new \RuntimeException('You have to implement the native items query builder!');
     }
 
     /**
@@ -479,7 +414,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @param string $template
      *
-     * @return AbstractAdminListConfigurator
+     * @return AdminListConfiguratorInterface
      */
     public function setListTemplate($template)
     {
@@ -499,7 +434,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @param string $template
      *
-     * @return AbstractAdminListConfigurator
+     * @return AdminListConfiguratorInterface
      */
     public function setAddTemplate($template)
     {
@@ -519,7 +454,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @param string $template
      *
-     * @return AbstractAdminListConfigurator
+     * @return AdminListConfiguratorInterface
      */
     public function setEditTemplate($template)
     {
@@ -539,7 +474,7 @@ abstract class AbstractAdminListConfigurator
     /**
      * @param string $template
      *
-     * @return AbstractAdminListConfigurator
+     * @return AdminListConfiguratorInterface
      */
     public function setDeleteTemplate($template)
     {
@@ -550,7 +485,8 @@ abstract class AbstractAdminListConfigurator
 
     /**
      * You can override this method to do some custom things you need to do when adding an entity
-     * @param mided $entity
+     *
+     * @param object $entity
      *
      * @return mixed
      */
@@ -560,23 +496,69 @@ abstract class AbstractAdminListConfigurator
     }
 
     /**
-     * @param PermissionDefinition $permissionDefinition
-     *
-     * @return AbstractAdminListConfigurator
+     * @return AdminListFilter
      */
-    public function setPermissionDefinition(PermissionDefinition $permissionDefinition)
+    public function getAdminListFilter()
     {
-        $this->permissionDefinition = $permissionDefinition;
+        if (is_null($this->adminListFilter)) {
+            $this->adminListFilter = new AdminListFilter();
+        }
 
-        return $this;
+        return $this->adminListFilter;
     }
 
     /**
-     * @return PermissionDefinition|null
+     * Bind current request.
+     *
+     * @param Request $request
      */
-    public function getPermissionDefinition()
+    public function bindRequest(Request $request)
     {
-        return $this->permissionDefinition;
+        $this->page = $request->query->get('page');
+        if (is_null($this->page)) {
+            $this->page = 1;
+        }
+        if (!is_null($request->query->get('orderBy'))) {
+            $this->orderBy = $request->query->get('orderBy');
+        }
+        if (!is_null($request->query->get('orderDirection'))) {
+            $this->orderDirection = $request->query->get('orderDirection');
+        }
+        $this->adminListFilter->bindRequest($request);
     }
 
+    /**
+     * Return current page.
+     *
+     * @return int
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * Return current sorting column.
+     *
+     * @return string
+     */
+    public function getOrderBy()
+    {
+        return $this->orderBy;
+    }
+
+    /**
+     * Return current sorting direction.
+     *
+     * @return string
+     */
+    public function getOrderDirection()
+    {
+        return $this->orderDirection;
+    }
+
+    /**
+     * @return Pagerfanta
+     */
+    abstract function getPagerfanta();
 }

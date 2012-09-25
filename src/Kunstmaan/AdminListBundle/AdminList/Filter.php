@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,6 +59,14 @@ class Filter
     public function adaptQueryBuilder(QueryBuilder $querybuilder, &$expressions)
     {
         $this->filterDefinition['type']->adaptQueryBuilder($querybuilder, $expressions, $this->data, $this->uniqueId);
+    }
+
+    /**
+     * Apply the filter
+     */
+    public function applyFilter(ProviderInterface $provider)
+    {
+        $this->filterDefinition['type']->applyFilter($provider, $this->data, $this->uniqueId);
     }
 
     /**
