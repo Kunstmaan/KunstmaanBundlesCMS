@@ -89,7 +89,7 @@ class VideoListConfigurator extends AbstractAdminListConfigurator
     public function getEditUrlFor($item)
     {
         return array('path'   => 'KunstmaanMediaBundle_media_show',
-                     'params' => array('media_id' => $item->getId())
+                     'params' => array('mediaId' => $item->getId())
         );
     }
 
@@ -131,7 +131,7 @@ class VideoListConfigurator extends AbstractAdminListConfigurator
         return array(
             'path'      => 'KunstmaanMediaBundle_media_delete',
             'params'    => array(
-                'media_id'    => $item->getId()
+                'mediaId'    => $item->getId()
             )
         );
     }

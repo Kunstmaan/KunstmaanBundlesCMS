@@ -91,7 +91,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
         return array(
             'path'   => 'KunstmaanMediaBundle_media_show',
             'params' => array(
-                'media_id' => $item->getId()
+                'mediaId' => $item->getId()
             )
         );
     }
@@ -133,7 +133,7 @@ class SlideListConfigurator extends AbstractAdminListConfigurator
         return array(
             'path'      => 'KunstmaanMediaBundle_media_delete',
             'params'    => array(
-                'media_id'    => $item->getId()
+                'mediaId'    => $item->getId()
             )
         );
     }
