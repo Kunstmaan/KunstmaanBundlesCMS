@@ -13,9 +13,9 @@ use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 class NumberFilter extends AbstractFilter
 {
     /**
-     * @param Request $request  The request
+     * @param Request $request The request
      * @param array   &$data    The data
-     * @param string  $uniqueId The unique identifier
+     * @param string $uniqueId The unique identifier
      */
     public function bindRequest(Request $request, &$data, $uniqueId)
     {
@@ -28,9 +28,9 @@ class NumberFilter extends AbstractFilter
     }
 
     /**
-     * @param ProviderInterface $provider     The provider
-     * @param array             $data         The data
-     * @param string            $uniqueId     The unique identifier
+     * @param ProviderInterface $provider The provider
+     * @param array             $data     The data
+     * @param string            $uniqueId The unique identifier
      */
     public function apply(ProviderInterface $provider, $data, $uniqueId)
     {
@@ -60,9 +60,11 @@ class NumberFilter extends AbstractFilter
                     break;
                 case 'isnull':
                     $qb->andWhere($qb->expr()->isNull($this->alias . '.' . $this->columnName));
+
                     return;
                 case 'isnotnull':
                     $qb->andWhere($qb->expr()->isNotNull($this->alias . '.' . $this->columnName));
+
                     return;
             }
             $qb->setParameter('var_' . $uniqueId, $data['value']);

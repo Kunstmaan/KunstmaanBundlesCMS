@@ -560,5 +560,5 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @return Pagerfanta
      */
-    abstract function getPagerfanta();
+    abstract public function getPagerfanta();
 }

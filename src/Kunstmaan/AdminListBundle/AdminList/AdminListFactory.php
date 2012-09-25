@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
-
 /**
  * AdminListFactory
  */

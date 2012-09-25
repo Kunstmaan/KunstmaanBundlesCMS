@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 class DateFilter extends AbstractORMFilter
 {
     /**
-     * @param Request $request  The request
+     * @param Request $request The request
      * @param array   &$data    The data
-     * @param string  $uniqueId The unique identifier
+     * @param string $uniqueId The unique identifier
      */
     public function bindRequest(Request $request, &$data, $uniqueId)
     {
@@ -25,8 +25,8 @@ class DateFilter extends AbstractORMFilter
     }
 
     /**
-     * @param array             $data     The data
-     * @param string            $uniqueId The unique identifier
+     * @param array  $data     The data
+     * @param string $uniqueId The unique identifier
      */
     public function apply($data, $uniqueId)
     {

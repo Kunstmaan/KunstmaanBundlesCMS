@@ -13,9 +13,9 @@ use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 class DateFilter extends AbstractFilter
 {
     /**
-     * @param Request $request  The request
+     * @param Request $request The request
      * @param array   &$data    The data
-     * @param string  $uniqueId The unique identifier
+     * @param string $uniqueId The unique identifier
      */
     public function bindRequest(Request $request, &$data, $uniqueId)
     {
@@ -28,9 +28,9 @@ class DateFilter extends AbstractFilter
     }
 
     /**
-     * @param ProviderInterface $provider     The provider
-     * @param array             $data         The data
-     * @param string            $uniqueId     The unique identifier
+     * @param ProviderInterface $provider The provider
+     * @param array             $data     The data
+     * @param string            $uniqueId The unique identifier
      */
     public function apply(ProviderInterface $provider, $data, $uniqueId)
     {

@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**

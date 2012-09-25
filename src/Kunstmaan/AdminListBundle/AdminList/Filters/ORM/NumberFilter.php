@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 class NumberFilter extends AbstractORMFilter
 {
     /**
-     * @param Request $request  The request
+     * @param Request $request The request
      * @param array   &$data    The data
-     * @param string  $uniqueId The unique identifier
+     * @param string $uniqueId The unique identifier
      */
     public function bindRequest(Request $request, &$data, $uniqueId)
     {
@@ -25,8 +25,8 @@ class NumberFilter extends AbstractORMFilter
     }
 
     /**
-     * @param array             $data         The data
-     * @param string            $uniqueId     The unique identifier
+     * @param array  $data     The data
+     * @param string $uniqueId The unique identifier
      */
     public function apply($data, $uniqueId)
     {
@@ -52,9 +52,11 @@ class NumberFilter extends AbstractORMFilter
                     break;
                 case 'isnull':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->isNull($this->alias . '.' . $this->columnName));
+
                     return;
                 case 'isnotnull':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->isNotNull($this->alias . '.' . $this->columnName));
+
                     return;
             }
             $this->queryBuilder->setParameter('var_' . $uniqueId, $data['value']);

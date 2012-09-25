@@ -2,12 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManager;
 
 /**
  * AdminList

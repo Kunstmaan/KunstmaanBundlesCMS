@@ -4,8 +4,6 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
-use Symfony\Component\HttpFoundation\Request;
-
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
