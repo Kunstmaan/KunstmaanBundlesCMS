@@ -52,8 +52,8 @@ class FormHandler implements FormHandlerInterface
         $formBuilder = $this->container->get('form.factory')->createBuilder('form');
         /* @var $router RouterInterface */
         $router = $this->container->get('router');
-        /* @var $fields FormSubmissionField[] */
-        $fields = array();
+        /* @var $fields ArrayObject */
+        $fields = new ArrayObject();
         $pageParts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $page->getFormElementsContext());
         foreach ($pageParts as $pagePart) {
             if ($pagePart instanceof FormAdaptorInterface) {
