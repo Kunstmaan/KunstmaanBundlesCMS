@@ -58,6 +58,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $this->filesystem->copy($fullSkeletonDir . '/FormPage/view.html.twig', $dirPath . '/Resources/views/FormPage/view.html.twig');
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/FormPage/view.html.twig');
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/views/FormPage/view.html.twig');
 
         $this->filesystem->copy($fullSkeletonDir . '/HomePage/view.html.twig', $dirPath . '/Resources/views/HomePage/view.html.twig');
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/HomePage/view.html.twig');

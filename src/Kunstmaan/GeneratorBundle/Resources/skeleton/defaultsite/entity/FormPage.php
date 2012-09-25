@@ -163,7 +163,7 @@ class FormPage extends AbstractPage
                 return;
             }
         }
-        $result["frontendform"] = $form->createView();
+        $context["frontendform"] = $form->createView();
     }
 
     public function getDefaultView()
