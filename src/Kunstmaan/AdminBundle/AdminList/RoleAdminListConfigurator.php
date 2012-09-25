@@ -21,6 +21,7 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
+        parent::buildFilters($builder);
         $builder->add('role', new StringFilter("role"), "Role");
     }
 

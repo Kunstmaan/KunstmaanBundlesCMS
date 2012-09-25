@@ -22,6 +22,7 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFilters(AdminListFilter $builder)
     {
+        parent::buildFilters($builder);
         $builder->add('user', new StringFilter("user"), "User");
         $builder->add('status', new StringFilter("status"), "Status");
         $builder->add('message', new StringFilter("message"), "Message");

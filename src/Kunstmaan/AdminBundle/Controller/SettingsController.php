@@ -42,7 +42,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new UserAdminListConfigurator(), $em);
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new UserAdminListConfigurator($em));
         $adminList->bindRequest($request);
 
         return array(
@@ -63,7 +63,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new UserAdminListConfigurator(), $em);
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new UserAdminListConfigurator($em));
         $adminList->bindRequest($request);
 
         return array(

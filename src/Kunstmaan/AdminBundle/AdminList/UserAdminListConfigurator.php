@@ -2,17 +2,17 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\DoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 
 /**
  * UserAdminListConfigurator
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class UserAdminListConfigurator extends AbstractAdminListConfigurator
+class UserAdminListConfigurator extends DoctrineORMAdminListConfigurator
 {
 
     /**
@@ -20,8 +20,9 @@ class UserAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @param AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
+        $builder = $this->getAdminListFilter();
         $builder->add('username', new StringFilter("username"), "Username");
         $builder->add('email', new StringFilter("email"), "E-Mail");
         $builder->add('enabled', new BooleanFilter("enabled"), "Enabled");

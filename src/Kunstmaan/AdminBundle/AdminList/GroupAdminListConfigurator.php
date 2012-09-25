@@ -3,7 +3,8 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\DoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
 use Symfony\Component\Form\AbstractType;
@@ -13,17 +14,15 @@ use Symfony\Component\Form\AbstractType;
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class GroupAdminListConfigurator extends AbstractAdminListConfigurator
+class GroupAdminListConfigurator extends DoctrineORMAdminListConfigurator
 {
 
     /**
      * Build filters for admin list
-     *
-     * @param AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        $builder->add('name', new StringFilter("name"), "Name");
+        $this->getAdminListFilter()->add('name', new StringFilter("name"), "Name");
     }
 
     /**
