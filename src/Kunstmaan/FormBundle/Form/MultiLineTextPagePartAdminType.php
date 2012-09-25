@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -31,5 +32,10 @@ class MultiLineTextPagePartAdminType extends AbstractType
     public function getName()
     {
         return 'kunstmaan_formbundle_singlelinetextpageparttype';
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart'));
     }
 }
