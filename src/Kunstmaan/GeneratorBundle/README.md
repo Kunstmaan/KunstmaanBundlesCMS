@@ -31,10 +31,22 @@ $bundles[] = new Kunstmaan\GeneratorBundle\KunstmaanGeneratorBundle();
 Use
 ---
 
+Generate a Bundle :
+
+```
+app/console kuma:generate:bundle
+```
+
+Generate a default website using the Kunstmaan bundles :
+
+```
+app/console kuma:generate:default-site --namespace=Namespace\NamedBundle
+```
+
 Generate a KunstmaanAdminList for an Entity :
 
 ```
- app/console kuma:generate:adminlist --entity=Bundle:Entity
+app/console kuma:generate:adminlist --entity=Bundle:Entity
 ```
 
 Contact

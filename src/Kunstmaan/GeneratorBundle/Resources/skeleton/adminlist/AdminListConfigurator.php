@@ -26,13 +26,13 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
     }
 
     /**
-     * Configure the visible columns
-     */
+    * {@inheritdoc}
+    */
     public function buildFields()
     {
-{% for field in fields %}
-        $this->addField('{{ field }}', '{{ field }}', true);
-{% endfor %}
+        {% for field in fields %}
+            $this->addField('{{ field }}', '{{ field }}', true);
+        {%- endfor %}
     }
 
     /**
@@ -40,9 +40,9 @@ class {{ entity_class }}AdminListConfigurator extends AbstractAdminListConfigura
 	 */
 	public function buildFilters(AdminListFilter $builder)
 	{
-{% for field in fields %}
-		$builder->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}');
-{% endfor %}
+        {% for field in fields %}
+		    $builder->add('{{ field }}', new StringFilterType('{{ field }}'), '{{ field }}');
+        {% endfor %}
 	}
 
     /**

@@ -1,0 +1,67 @@
+@media print {
+	
+	//General
+	*{ 
+		background: transparent !important; 
+		color: black !important; 
+		box-shadow: none !important; 
+		text-shadow: none !important; 
+		filter: none !important; 
+		-ms-filter: none !important; 
+	} 
+	body{
+		font-size: 0.75em;
+	}
+	a, a:visited{ 
+		text-decoration: underline; 
+	}
+	a:link:after, a:visited:after{
+		content: " (" attr(href) ")";
+		font-size: smaller;
+	}
+	
+	
+	//Links
+	a[href^="/"]:after{
+		content: "(#{$site-url}" attr(href) ")";
+		font-size: smaller;
+	}
+	abbr[title]:after{ 
+		content: " (" attr(title) ")";
+	}
+	.ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after{ 
+		content: "";
+	} 
+	pre, blockquote{ 
+		border: 1px solid #999; 
+		page-break-inside: avoid;
+	}
+	thead{ 
+		display: table-header-group;
+	} 
+	tr, img{
+		page-break-inside: avoid;
+	}
+	img{
+		max-width: 100% !important;
+	}
+	@page{
+		margin: 0.5cm;
+	}
+	p, h2, h3{
+		orphans: 3; 
+		widows: 3;
+	}
+	h2, h3{ 
+		page-break-after: avoid; 
+	}
+	
+		
+	//Flash
+	object:after{
+		content: "Flash/video content. Head to #{$site-url} to view this content.";
+		display: block;
+		font-weight: bold;
+		margin-bottom: 1.5em;
+	}	
+}

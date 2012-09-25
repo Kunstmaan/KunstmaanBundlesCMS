@@ -1,0 +1,10 @@
+{{ "
+    {% javascripts
+        '@" ~ bundle.getName() ~ "/Resources/public/js/libs/*'
+        '@" ~ bundle.getName() ~ "/Resources/public/js/*'
+        filter='yui_js'
+        output='frontend/js.css'
+    %}
+        <script src='{{ asset_url }}'></script>
+    {% endjavascripts %}
+" }}

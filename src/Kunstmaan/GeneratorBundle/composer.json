@@ -19,7 +19,11 @@
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "*",
-        "kunstmaan/adminlist-bundle": "*"
+        "kunstmaan/adminlist-bundle": "*",
+        "kunstmaan/node-bundle": "*",
+        "kunstmaan/form-bundle": "*",
+        "kunstmaan/pagepart-bundle": "*",
+        "kunstmaan/media-pagepart-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
