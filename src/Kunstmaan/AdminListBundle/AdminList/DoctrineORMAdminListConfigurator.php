@@ -40,9 +40,9 @@ abstract class DoctrineORMAdminListConfigurator extends AbstractAdminListConfigu
         return $this->pagerfanta;
     }
 
-    public function adaptQueryBuilder(array $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
-        $this->queryBuilder->where('1=1');
+        $queryBuilder->where('1=1');
     }
 
     public function getCount()
@@ -64,12 +64,17 @@ abstract class DoctrineORMAdminListConfigurator extends AbstractAdminListConfigu
             // Apply filters
             $filters = $this->getAdminListFilter()->getCurrentFilters();
             foreach ($filters as $filter) {
-                $filter->applyFilter($this->queryBuilder);
+                $filter->getType()->setQueryBuilder($this->queryBuilder);
+                $filter->getType()->apply($filter->getData(), $filter->getUniqueId());
             }
 
             // Apply sorting
             if (!empty($this->orderBy)) {
-                $this->queryBuilder->orderBy($this->orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
+                $orderBy = $this->orderBy;
+                if (!strpos($orderBy, '.')) {
+                    $orderBy = 'b.' . $orderBy;
+                }
+                $this->queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
             }
 
             // @todo Apply ACL restrictions here?

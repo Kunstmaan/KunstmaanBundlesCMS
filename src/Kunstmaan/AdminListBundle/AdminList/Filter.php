@@ -53,23 +53,6 @@ class Filter
     }
 
     /**
-     * @param QueryBuilder $querybuilder The query builder
-     * @param array        &$expressions The expressions
-     */
-    public function adaptQueryBuilder(QueryBuilder $querybuilder, &$expressions)
-    {
-        $this->filterDefinition['type']->adaptQueryBuilder($querybuilder, $expressions, $this->data, $this->uniqueId);
-    }
-
-    /**
-     * Apply the filter
-     */
-    public function applyFilter(ProviderInterface $provider)
-    {
-        $this->filterDefinition['type']->applyFilter($provider, $this->data, $this->uniqueId);
-    }
-
-    /**
      * @return string
      */
     public function getColumnName()

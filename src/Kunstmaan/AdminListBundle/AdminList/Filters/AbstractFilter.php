@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Filters;
 
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 
 /**
  * AbstractFilter
@@ -33,11 +32,10 @@ abstract class AbstractFilter implements AdminListFilterInterface
     abstract public function bindRequest(Request $request, &$data, $uniqueId);
 
     /**
-     * @param ProviderInterface $provider The provider
      * @param array             $data     Data
      * @param string            $uniqueId The identifier
      */
-    abstract public function apply(ProviderInterface $provider, $data, $uniqueId);
+    abstract public function apply($data, $uniqueId);
 
     /**
      * @return string

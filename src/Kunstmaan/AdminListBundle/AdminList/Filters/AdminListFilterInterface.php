@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Filters;
 
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 
 /**
  * AdminListFilterInterface
@@ -18,11 +17,10 @@ interface AdminListFilterInterface
     public function bindRequest(Request $request, &$data, $uniqueId);
 
     /**
-     * @param ProviderInterface $provider The provider
      * @param array             $data     Data
      * @param string            $uniqueId The identifier
      */
-    public function apply(ProviderInterface $provider, $data, $uniqueId);
+    public function apply($data, $uniqueId);
 
     /**
      * @return string

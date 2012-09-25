@@ -3,14 +3,11 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Filters\ORM;
 
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminListBundle\AdminList\Filters\AbstractFilter;
-use Kunstmaan\AdminListBundle\AdminList\Provider\DoctrineORMProvider;
-use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 
 /**
  * DateFilter
  */
-class DateFilter extends AbstractFilter
+class DateFilter extends AbstractORMFilter
 {
     /**
      * @param Request $request  The request
@@ -28,29 +25,23 @@ class DateFilter extends AbstractFilter
     }
 
     /**
-     * @param ProviderInterface $provider The provider
      * @param array             $data     The data
      * @param string            $uniqueId The unique identifier
      */
-    public function apply(ProviderInterface $provider, $data, $uniqueId)
+    public function apply($data, $uniqueId)
     {
-        if (!$provider instanceof DoctrineORMProvider) {
-            throw new \InvalidArgumentException('You have to provide a DoctrineORMProvider to apply the ORM BooleanFilter!');
-        }
-        /* @var DoctrineORMProvider $provider */
-        $qb = $provider->getQueryBuilder();
         if (isset($data['value']) && isset($data['comparator'])) {
             /* @todo get rid of hardcoded date formats below! */
             $date = \DateTime::createFromFormat('d/m/Y', $data['value'])->format('Y-m-d');
             switch ($data['comparator']) {
                 case 'before':
-                    $qb->andWhere($qb->expr()->lte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'after':
-                    $qb->andWhere($qb->expr()->gt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
             }
-            $qb->setParameter('var_' . $uniqueId, $date);
+            $this->queryBuilder->setParameter('var_' . $uniqueId, $date);
         }
     }
 

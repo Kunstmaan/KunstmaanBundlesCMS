@@ -3,14 +3,11 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Filters\ORM;
 
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminListBundle\AdminList\Filters\AbstractFilter;
-use Kunstmaan\AdminListBundle\AdminList\Provider\DoctrineORMProvider;
-use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 
 /**
  * BooleanFilter
  */
-class BooleanFilter extends AbstractFilter
+class BooleanFilter extends AbstractORMFilter
 {
     /**
      * @param Request $request  The request
@@ -23,24 +20,18 @@ class BooleanFilter extends AbstractFilter
     }
 
     /**
-     * @param ProviderInterface $provider The provider
      * @param array             $data     The data
      * @param string            $uniqueId The unique identifier
      */
-    public function apply(ProviderInterface $provider, $data, $uniqueId)
+    public function apply($data, $uniqueId)
     {
-        if (!$provider instanceof DoctrineORMProvider) {
-            throw new \InvalidArgumentException('You have to provide a DoctrineORMProvider to apply the ORM BooleanFilter!');
-        }
-        /* @var DoctrineORMProvider $provider */
-        $qb = $provider->getQueryBuilder();
         if (isset($data['value'])) {
             switch ($data['value']) {
                 case 'true':
-                    $qb->andWhere($qb->expr()->eq($this->alias . '.' . $this->columnName, 'true'));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->eq($this->alias . '.' . $this->columnName, 'true'));
                     break;
                 case 'false':
-                    $qb->andWhere($qb->expr()->eq($this->alias . '.' . $this->columnName, 'false'));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->eq($this->alias . '.' . $this->columnName, 'false'));
                     break;
             }
         }
