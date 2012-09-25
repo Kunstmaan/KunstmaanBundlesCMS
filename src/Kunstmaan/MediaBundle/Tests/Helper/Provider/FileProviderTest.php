@@ -19,7 +19,7 @@ class FileProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FileProvider;
+        //$this->object = new FileProvider;
     }
 
     /**

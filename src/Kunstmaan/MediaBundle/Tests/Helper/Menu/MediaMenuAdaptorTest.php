@@ -19,7 +19,7 @@ class MediaMenuAdaptorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new MediaMenuAdaptor;
+        //$this->object = new MediaMenuAdaptor;
     }
 
     /**

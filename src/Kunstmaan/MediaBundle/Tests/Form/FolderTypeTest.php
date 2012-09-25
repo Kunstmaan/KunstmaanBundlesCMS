@@ -1,6 +1,8 @@
 <?php
 namespace Kunstmaan\MediaBundle\Tests\Form;
 
+use Kunstmaan\MediaBundle\Entity\Folder;
+
 use Kunstmaan\MediaBundle\Form\FolderType;
 
 /**
@@ -14,12 +16,18 @@ class FolderTypeTest extends \PHPUnit_Framework_TestCase
     protected $object;
 
     /**
+     * @var Folder
+     */
+    protected $folder;
+
+    /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp()
     {
-        $this->object = new FolderType;
+        $this->folder = new Folder();
+        $this->object = new FolderType("test", $this->folder);
     }
 
     /**

@@ -19,7 +19,7 @@ class AbstractProviderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Provider\AbstractProvider');
+        //$this->object = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Provider\AbstractProvider');
     }
 
     /**
