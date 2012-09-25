@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Kunstmaan\SearchBundle\AdminList\SearchedForAdminListConfigurator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\Group;
@@ -183,7 +182,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new GroupAdminListConfigurator(), $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new GroupAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -281,29 +280,6 @@ class SettingsController extends Controller
     }
 
     /**
-     * Display searches
-     *
-     * @Route   ("/searches", name="KunstmaanAdminBundle_settings_searches")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-     *
-     * @todo This method should be moved to KunstmaanSearchBundle & injected into the menu
-     *
-     * @return array
-     */
-    public function searchesAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-        /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new SearchedForAdminListConfigurator(), $em);
-        $adminlist->bindRequest($request);
-
-        return array(
-            'adminlist' => $adminlist,
-        );
-    }
-
-    /**
      * Display logs
      *
      * @Route   ("/logs", name="KunstmaanAdminBundle_settings_logs")
@@ -316,7 +292,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new LogAdminListConfigurator(), $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new LogAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -337,7 +313,7 @@ class SettingsController extends Controller
         $em        = $this->getDoctrine()->getManager();
         $request   = $this->getRequest();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator(), $em);
+        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(

@@ -3,15 +3,15 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\DoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 
 /**
  * RoleAdminListConfigurator
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class RoleAdminListConfigurator extends AbstractAdminListConfigurator
+class RoleAdminListConfigurator extends DoctrineORMAdminListConfigurator
 {
 
     /**
@@ -19,10 +19,9 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @param AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        parent::buildFilters($builder);
-        $builder->add('role', new StringFilter("role"), "Role");
+        $this->getAdminListFilter()->add('role', new StringFilter("role"), "Role");
     }
 
     /**

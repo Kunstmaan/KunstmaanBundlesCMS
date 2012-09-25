@@ -3,16 +3,17 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\AdminListBundle\AdminList\DoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 
 /**
  * LogAdminListConfigurator
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class LogAdminListConfigurator extends AbstractAdminListConfigurator
+class LogAdminListConfigurator extends DoctrineORMAdminListConfigurator
 {
 
     /**
@@ -20,13 +21,13 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @param AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        parent::buildFilters($builder);
-        $builder->add('user', new StringFilter("user"), "User");
-        $builder->add('status', new StringFilter("status"), "Status");
-        $builder->add('message', new StringFilter("message"), "Message");
-        $builder->add('createdat', new DateFilter("createdat"), "Created At");
+        $builder = $this->getAdminListFilter();
+        $builder->add('u.username', new StringFilter('username', 'u'), 'User');
+        $builder->add('status', new StringFilter('status'), 'Status');
+        $builder->add('message', new StringFilter('message'), 'Message');
+        $builder->add('createdAt', new DateFilter('createdAt'), 'Created At');
     }
 
     /**
@@ -34,10 +35,10 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField("user", "User", true);
-        $this->addField("status", "Status", true);
-        $this->addField("message", "Message", true);
-        $this->addField("createdat", "Created At", true);
+        $this->addField('u.username', 'User', true);
+        $this->addField('status', 'Status', true);
+        $this->addField('message', 'Message', true);
+        $this->addField('createdAt', 'Created At', true);
     }
 
     /**
@@ -131,6 +132,21 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     {
         return null;
     }
+
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        $queryBuilder->leftJoin('b.user', 'u');
+    }
+
+    public function getValue($item, $columnName)
+    {
+        if ('u.username' == $columnName) {
+            return $item->getUser()->getUsername();
+        }
+
+        return parent::getValue($item, $columnName);
+    }
+
 
     /**
      * Get repository name
