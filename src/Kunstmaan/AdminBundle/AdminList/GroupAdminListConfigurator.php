@@ -2,10 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\DoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
 use Symfony\Component\Form\AbstractType;
 

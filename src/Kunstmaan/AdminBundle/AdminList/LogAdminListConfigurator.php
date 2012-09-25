@@ -147,7 +147,6 @@ class LogAdminListConfigurator extends DoctrineORMAdminListConfigurator
         return parent::getValue($item, $columnName);
     }
 
-
     /**
      * Get repository name
      *
