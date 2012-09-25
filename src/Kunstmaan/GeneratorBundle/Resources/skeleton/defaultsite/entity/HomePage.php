@@ -72,22 +72,6 @@ class HomePage extends AbstractPage
     /**
      * {@inheritdoc}
      */
-    public function deepClone(EntityManager $em)
-    {
-        $newpage = new HomePage();
-        $newpage->setTitle($this->getTitle());
-        $em->persist($newpage);
-        $em->flush();
-        $em
-            ->getRepository('KunstmaanPagePartBundle:PagePartRef')
-            ->copyPageParts($em, $this, $newpage, $context = "main");
-
-        return $newpage;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getPagePartAdminConfigurations()
     {
         return array(new HomePagePagePartAdminConfigurator());

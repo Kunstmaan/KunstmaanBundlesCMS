@@ -49,7 +49,7 @@ class ContentPage extends AbstractPage
 
         $classname = ClassLookup::getClassName($this);
 
-        $view = 'KunstmaanDemoBundle:Elastica:' . $classname . '.elastica.twig';
+        $view = '{{ bundle.getName() }}:Elastica:' . $classname . '.elastica.twig';
 
         $temp = $renderer->render($view, array('page' => $this, 'pageparts' => $pageparts));
 
@@ -64,22 +64,6 @@ class ContentPage extends AbstractPage
         $array[] = array('name' => 'ContentPage', 'class'=> "{{ namespace }}\Entity\ContentPage");
 
         return $array;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function deepClone(EntityManager $em)
-    {
-        $newpage = new ContentPage();
-        $newpage->setTitle($this->getTitle());
-        $em->persist($newpage);
-        $em->flush();
-        $em
-            ->getRepository('KunstmaanPagePartBundle:PagePartRef')
-            ->copyPageParts($em, $this, $newpage, $context = "main");
-
-        return $newpage;
     }
 
     /**

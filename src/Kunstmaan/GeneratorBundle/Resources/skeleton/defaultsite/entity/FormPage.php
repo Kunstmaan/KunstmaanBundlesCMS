@@ -17,9 +17,10 @@ use Kunstmaan\AdminBundle\Entity\PageIFace;
 use Kunstmaan\AdminBundle\Modules\ClassLookup;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNode;
+use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\FormBundle\Entity\FormAdaptorIFace;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\SearchBundle\Entity\Indexable;
 
 use {{ namespace }}\Form\ContentPageAdminType;
@@ -34,7 +35,7 @@ use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
  * @ORM\Table(name="formpage")
  * @ORM\HasLifecycleCallbacks()
  */
-class FormPage extends AbstractPage
+class FormPage extends AbstractFormPage
 {
 
     public function setThanks($thanks)
@@ -54,7 +55,7 @@ class FormPage extends AbstractPage
 
     public function getDefaultAdminType()
     {
-        return new ContentPageAdminType();
+        return new FormPageAdminType();
     }
 
     public function isOnline()
@@ -100,70 +101,9 @@ class FormPage extends AbstractPage
         return $array;
     }
 
-    public function deepClone(EntityManager $em)
-    {
-        $newpage = new ContentPage();
-        $newpage->setTitle($this->getTitle());
-        $em->persist($newpage);
-        $em->flush();
-        $em
-            ->getRepository('KunstmaanPagePartBundle:PagePartRef')
-            ->copyPageParts($em, $this, $newpage, "main");
-        $em
-            ->getRepository('KunstmaanPagePartBundle:PagePartRef')
-            ->copyPageParts($em, $this, $newpage, "banners");
-
-        return $newpage;
-    }
-
     public function getPagePartAdminConfigurations()
     {
         return array(new FormPagePagePartAdminConfigurator(), new BannerPagePartAdminConfigurator());
-    }
-
-    public function service(ContainerInterface $container, Request $request, RenderContext $context)
-    {
-        $formbuilder = $container
-            ->get('form.factory')
-            ->createBuilder('form');
-        $em = $container
-            ->get('doctrine')
-            ->getEntityManager();
-        $pageparts = $em
-            ->getRepository('KunstmaanPagePartBundle:PagePartRef')
-            ->getPageParts($this, "main");
-        $fields = array();
-        foreach ($pageparts as $pagepart) {
-            if ($pagepart instanceof FormAdaptorIFace) {
-                $pagepart->adaptForm($formbuilder, $fields);
-            }
-        }
-        $form = $formbuilder->getForm();
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            if ($form->isValid()) {
-                $formsubmission = new FormSubmission();
-                $formsubmission->setIpAddress($request->getClientIp());
-                $formsubmission->setNode($em
-                    ->getRepository('KunstmaanNodeBundle:Node')
-                    ->getNodeFor($this));
-                $formsubmission->setLang($locale = $request
-                    ->getSession()
-                    ->getLocale());
-                $em->persist($formsubmission);
-                $em->flush();
-                foreach ($fields as &$field) {
-                    $field->setSubmission($formsubmission);
-                    $em->persist($field);
-                }
-                $em->flush();
-                $result["thanks"] = true;
-
-                return;
-            }
-        }
-        $context["frontendform"] = $form->createView();
     }
 
     public function getDefaultView()
