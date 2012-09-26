@@ -3,14 +3,11 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Filters\DBAL;
 
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminListBundle\AdminList\Filters\AbstractFilter;
-use Kunstmaan\AdminListBundle\AdminList\Provider\DoctrineDBALProvider;
-use Kunstmaan\AdminListBundle\AdminList\Provider\ProviderInterface;
 
 /**
  * BooleanFilter
  */
-class BooleanFilter extends AbstractFilter
+class BooleanFilter extends AbstractDBALFilter
 {
     /**
      * @param Request $request The request
@@ -23,17 +20,12 @@ class BooleanFilter extends AbstractFilter
     }
 
     /**
-     * @param ProviderInterface $provider The provider
-     * @param array             $data     The data
-     * @param string            $uniqueId The unique identifier
+     * @param array  $data     The data
+     * @param string $uniqueId The unique identifier
      */
-    public function apply(ProviderInterface $provider, $data, $uniqueId)
+    public function apply($data, $uniqueId)
     {
-        if (!$provider instanceof DoctrineDBALProvider) {
-            throw new \InvalidArgumentException('You have to provide a DoctrineDBALProvider to apply the DBAL BooleanFilter!');
-        }
-        /* @var DoctrineDBALProvider $provider */
-        $qb = $provider->getQueryBuilder();
+        $qb = $this->getQueryBuilder();
         if (isset($data['value'])) {
             switch ($data['value']) {
                 case 'true':

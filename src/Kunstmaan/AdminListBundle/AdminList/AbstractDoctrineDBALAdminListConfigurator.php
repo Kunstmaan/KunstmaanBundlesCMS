@@ -1,16 +1,16 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Adapter\DoctrineDBALAdapter;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 use Pagerfanta\Pagerfanta;
-use Pagerfanta\Adapter\Doctrine;
 
 abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminListConfigurator
 {
-    /* @var EntityManager $em */
-    private $em;
+    /* @var Connection $connection */
+    private $connection = null;
 
     /* @var QueryBuilder $qb */
     private $queryBuilder = null;
@@ -18,9 +18,12 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     /* @var Pagerfanta $pagerfanta */
     private $pagerfanta = null;
 
-    public function __construct(EntityManager $em)
+    /* @var string countField */
+    private $countField = 'b.id';
+
+    public function __construct(Connection $connection)
     {
-        $this->em = $em;
+        $this->connection = $connection;
     }
 
     /**
@@ -29,7 +32,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter = new DoctrineORMAdapter($this->getQueryBuilder());
+            $adapter = new DoctrineDBALAdapter($this->getQueryBuilder(), $this->getCountField());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setCurrentPage($this->getPage());
             $this->pagerfanta->setMaxPerPage($this->getLimit());
@@ -56,28 +59,55 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getQueryBuilder()
     {
         if (is_null($this->queryBuilder)) {
-            $this->queryBuilder = $this->em->getRepository($this->getRepositoryName())->createQueryBuilder('b');
+            $this->queryBuilder = new QueryBuilder($this->connection);
             $this->adaptQueryBuilder($this->queryBuilder);
 
             // Apply filters
             $filters = $this->getAdminListFilter()->getCurrentFilters();
             foreach ($filters as $filter) {
-                $filter->applyFilter($this->queryBuilder);
+                $filter->getType()->setQueryBuilder($this->queryBuilder);
+                $filter->getType()->apply($filter->getData(), $filter->getUniqueId());
             }
 
             // Apply sorting
             if (!empty($this->orderBy)) {
-                $this->queryBuilder->orderBy($this->orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
+                $orderBy = $this->orderBy;
+                if (!strpos($orderBy, '.')) {
+                    $orderBy = 'b.' . $orderBy;
+                }
+                $this->queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
             }
 
-            // @todo Apply ACL restrictions here?
+            // Apply ACL restrictions (if applicable)
+            if (!is_null($this->permissionDef) && !is_null($this->aclHelper)) {
+                $this->queryBuilder = $this->aclHelper->apply($this->queryBuilder, $this->permissionDef);
+            }
         }
 
         return $this->queryBuilder;
     }
 
     /**
+     * Set count field (must include table alias!)
+     *
+     * @param string $countField
+     *
+     * @return AbstractDoctrineDBALAdminListConfigurator
+     */
+    public function setCountField($countField)
+    {
+        $this->countField = $countField;
+
+        return $this;
+    }
+
+    /**
+     * Get current count field (including table alias)
+     *
      * @return string
      */
-    abstract public function getRepositoryName();
+    public function getCountField()
+    {
+        return $this->countField;
+    }
 }
