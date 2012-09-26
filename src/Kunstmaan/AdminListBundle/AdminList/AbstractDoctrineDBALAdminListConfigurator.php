@@ -7,7 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\Doctrine;
 
-abstract class DoctrineDBALAdminListConfigurator extends AbstractAdminListConfigurator
+abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminListConfigurator
 {
     /* @var EntityManager $em */
     private $em;
