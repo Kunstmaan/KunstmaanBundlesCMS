@@ -4,6 +4,9 @@ namespace Kunstmaan\AdminBundle\Twig\Extension;
 
 use Symfony\Component\Locale\Locale;
 
+/**
+ * DateByLocaleExtension
+ */
 class DateByLocaleExtension extends \Twig_Extension
 {
     /**
@@ -31,10 +34,10 @@ class DateByLocaleExtension extends \Twig_Extension
     /**
      * A date formatting filter for Twig, renders the date using the specified parameters.
      *
-     * @param        $date
-     * @param string $locale
-     * @param string $dateType
-     * @param string $timeType
+     * @param mixed  $date     Unix timestamp to format
+     * @param string $locale   The locale
+     * @param string $dateType The date type
+     * @param string $timeType The time type
      *
      * @return string
      */
@@ -51,9 +54,7 @@ class DateByLocaleExtension extends \Twig_Extension
         $dateFormatter = \IntlDateFormatter::create(
             $locale,
             $values[$dateType],
-            $values[$timeType],
-             'Europe/Brussels'
-        );
+            $values[$timeType], 'Europe/Brussels');
 
         return $dateFormatter->format($date);
     }

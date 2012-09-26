@@ -143,7 +143,7 @@ the (ORM based) AclHelper will check the QueryBuilder passed to it to determine 
 the corresponding alias. You can override this by providing *both* a root entity name and alias, ie. :
 
 ```php
-$permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n');
+$permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 ```
 
 In the previous example, you force the Node object to be used as ACL root entity and make sure the 'n' alias

@@ -5,9 +5,14 @@ namespace Kunstmaan\AdminBundle\Twig\Extension;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Symfony\Component\Form\FormView;
 
+/**
+ * AdminPermissionsTwigExtension
+ */
 class AdminPermissionsTwigExtension extends \Twig_Extension
 {
-    /* @var \Twig_Environment */
+    /**
+     * @var \Twig_Environment
+     */
     protected $environment;
 
     /**
@@ -37,9 +42,9 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
     /**
      * Renders the permission admin widget.
      *
-     * @param PermissionAdmin $permissionAdmin
-     * @param FormView        $form
-     * @param array           $parameters
+     * @param PermissionAdmin $permissionAdmin The permission admin
+     * @param FormView        $form            The form
+     * @param array           $parameters      Extra parameters
      *
      * @return string
      */
