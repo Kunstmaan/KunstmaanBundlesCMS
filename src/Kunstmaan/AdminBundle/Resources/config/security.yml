@@ -1,5 +1,0 @@
-security:
-    acl:
-        connection: default        
-    factories:
-        - "%kernel.root_dir%/../vendor/bundles/Kunstmaan/AdminBundle/Resources/config/security_factories.yml"
