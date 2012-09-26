@@ -270,8 +270,8 @@ class PermissionAdmin
     /**
      * Get current object ACE index for specified role.
      *
-     * @param AclInterface $acl
-     * @param string       $role
+     * @param AclInterface $acl  The AclInterface
+     * @param string       $role The role
      *
      * @return bool|int
      */
@@ -293,8 +293,8 @@ class PermissionAdmin
     /**
      * Get object ACE mask at specified index.
      *
-     * @param AclInterface $acl
-     * @param int          $index
+     * @param AclInterface $acl   The acl interface
+     * @param int          $index The index
      *
      * @return bool|int
      */

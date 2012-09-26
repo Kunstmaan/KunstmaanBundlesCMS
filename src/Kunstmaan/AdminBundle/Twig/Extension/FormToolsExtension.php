@@ -4,6 +4,9 @@ namespace Kunstmaan\AdminBundle\Twig\Extension;
 
 use Symfony\Component\Form\FormView;
 
+/**
+ * FormToolsExtension
+ */
 class FormToolsExtension extends \Twig_Extension
 {
 
@@ -56,8 +59,8 @@ class FormToolsExtension extends \Twig_Extension
     /**
      * Get the error messages.
      *
-     * @param object|FormView[] $formViews
-     * @param array             $errors
+     * @param FormView[]|FormView $formViews The form views
+     * @param array               &$errors   The errors
      *
      * @return array
      */

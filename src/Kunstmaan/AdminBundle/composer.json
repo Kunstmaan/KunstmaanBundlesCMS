@@ -22,7 +22,7 @@
         "knplabs/knp-menu-bundle": "*",
         "monolog/monolog": "dev-master",
         "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/adminnode-bundle": "*"
+        "kunstmaan/node-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }

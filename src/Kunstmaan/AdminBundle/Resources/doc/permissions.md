@@ -143,7 +143,7 @@ the (ORM based) AclHelper will check the QueryBuilder passed to it to determine 
 the corresponding alias. You can override this by providing *both* a root entity name and alias, ie. :
 
 ```php
-$permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\AdminNodeBundle\Entity\Node', 'n');
+$permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 ```
 
 In the previous example, you force the Node object to be used as ACL root entity and make sure the 'n' alias
@@ -154,6 +154,18 @@ DBAL QueryBuilder doesn't know about your entities.
 
 One important thing to note is that ACL permissions currently can only be applied to entities with a single
 unique primary key (so in fact there's no support for composite keys).
+
+## Enable the GuestUserListener
+
+To enable the GuestUserListener, which will remap the default anonymous user to a guest user (including default
+ guest user roles), you have to add the following to the security.yml of your project :
+
+```
+security:
+    firewalls:
+        main:
+            guest_user: true
+```
 
 ## References
 

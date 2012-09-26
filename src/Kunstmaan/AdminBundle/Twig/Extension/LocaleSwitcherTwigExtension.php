@@ -2,9 +2,14 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
+/**
+ * LocaleSwitcherTwigExtension
+ */
 class LocaleSwitcherTwigExtension extends \Twig_Extension
 {
-    /* @var \Twig_Environment */
+    /**
+     * @var \Twig_Environment
+     */
     protected $environment;
 
     /**
@@ -32,9 +37,9 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     /**
      * Render locale switcher widget.
      *
-     * @param       $localeSwitcher
-     * @param       $route
-     * @param array $parameters
+     * @param string $localeSwitcher The locale switcher
+     * @param string $route          The route
+     * @param array  $parameters     The route parameters
      *
      * @return string
      */

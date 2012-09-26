@@ -68,10 +68,6 @@ services:
         tags:
             - { name: 'monolog.logger', channel: 'security' }
         
-    kunstmaan_admin.guest.security.authentication.provider:
-        class: Kunstmaan\AdminBundle\Helper\Security\Authentication\Provider\GuestUserProvider
-        arguments: [""]
-
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@event_dispatcher"]
