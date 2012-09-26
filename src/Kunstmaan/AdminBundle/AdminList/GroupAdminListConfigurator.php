@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\DoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
 
 use Symfony\Component\Form\AbstractType;
 
@@ -12,7 +12,7 @@ use Symfony\Component\Form\AbstractType;
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class GroupAdminListConfigurator extends DoctrineORMAdminListConfigurator
+class GroupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
 
     /**

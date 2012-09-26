@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\AdminListBundle\AdminList\DoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\DateFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 
@@ -13,7 +13,7 @@ use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class LogAdminListConfigurator extends DoctrineORMAdminListConfigurator
+class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
 
     /**
@@ -141,7 +141,11 @@ class LogAdminListConfigurator extends DoctrineORMAdminListConfigurator
     public function getValue($item, $columnName)
     {
         if ('u.username' == $columnName) {
-            return $item->getUser()->getUsername();
+            $user = $item->getUser();
+            if (!is_null($user)) {
+                return $user->getUsername();
+            }
+            return '';
         }
 
         return parent::getValue($item, $columnName);
