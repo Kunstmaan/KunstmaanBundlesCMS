@@ -3,28 +3,33 @@
 namespace Kunstmaan\NodeBundle\AdminList;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 
 use Doctrine\ORM\QueryBuilder;
 
 /**
  * PageAdminListConfigurator
  */
-class PageAdminListConfigurator extends AbstractAdminListConfigurator
+class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
     protected $locale;
     protected $permission;
 
     /**
-     * @param string $locale     The current locale
-     * @param string $permission The permission
+     * @param EntityManager $em         The entity manager
+     * @param AclHelper     $aclHelper  The ACL helper
+     * @param string        $locale     The current locale
+     * @param string        $permission The permission
      */
-    public function __construct($locale, $permission)
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission)
     {
+        parent::__construct($em, $aclHelper);
         $this->locale = $locale;
         $this->setPermissionDefinition(
             new PermissionDefinition(array($permission), 'Kunstmaan\NodeBundle\Entity\Node', 'n')
@@ -32,10 +37,11 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AdminListFilter $builder
+     * Configure filters
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
+        $builder = $this->getAdminListFilter();
         $builder->add('title', new StringFilter("title"), "Title");
         $builder->add('online', new BooleanFilter("online"), "Online");
         $builder->add('created', new DateFilter("created"), "Created At");
@@ -121,10 +127,9 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder The query builder
-     * @param array                      $params       Some extra parameters
+     * @param QueryBuilder $queryBuilder The query builder
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         parent::adaptQueryBuilder($queryBuilder);
 

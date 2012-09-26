@@ -78,8 +78,7 @@ class PagesController extends Controller
         $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_EDIT, $this->aclHelper, true);
         $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, null, PermissionMap::PERMISSION_EDIT, true, true);
         /* @var AdminList $adminlist */
-        $adminlist  = $this->get('kunstmaan_adminlist.factory')->createList(new PageAdminListConfigurator($this->locale, PermissionMap::PERMISSION_EDIT), $this->em);
-        $adminlist->setAclHelper($this->aclHelper);
+        $adminlist  = $this->get('kunstmaan_adminlist.factory')->createList(new PageAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT));
         $adminlist->bindRequest($this->getRequest());
 
         return array(
