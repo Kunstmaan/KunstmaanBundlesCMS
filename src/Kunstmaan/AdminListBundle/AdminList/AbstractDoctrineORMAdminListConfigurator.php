@@ -2,6 +2,8 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Doctrine\ORM\QueryBuilder;
 
 use Pagerfanta\Pagerfanta;
@@ -12,16 +14,28 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /* @var EntityManager $em */
     private $em;
 
-    /* @var QueryBuilder $qb */
-    private $queryBuilder = null;
+    /* @var Query $query */
+    private $query = null;
 
     /* @var Pagerfanta $pagerfanta */
     private $pagerfanta = null;
 
-    public function __construct(EntityManager $em)
+    /* @var PermissionDefinition $permissionDef */
+    private $permissionDef = null;
+
+    /* @var AclHelper $aclHelper */
+    private $aclHelper = null;
+
+    public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
         $this->em = $em;
+        $this->aclHelper = $aclHelper;
     }
+
+    /**
+     * @return string
+     */
+    abstract public function getRepositoryName();
 
     /**
      * @return Pagerfanta
@@ -29,7 +43,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter = new DoctrineORMAdapter($this->getQueryBuilder());
+            $adapter = new DoctrineORMAdapter($this->getQuery());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setCurrentPage($this->getPage());
             $this->pagerfanta->setMaxPerPage($this->getLimit());
@@ -53,16 +67,16 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         return $this->getPagerfanta()->getCurrentPageResults();
     }
 
-    public function getQueryBuilder()
+    public function getQuery()
     {
-        if (is_null($this->queryBuilder)) {
-            $this->queryBuilder = $this->em->getRepository($this->getRepositoryName())->createQueryBuilder('b');
-            $this->adaptQueryBuilder($this->queryBuilder);
+        if (is_null($this->query)) {
+            $queryBuilder = $this->em->getRepository($this->getRepositoryName())->createQueryBuilder('b');
+            $this->adaptQueryBuilder($queryBuilder);
 
             // Apply filters
             $filters = $this->getAdminListFilter()->getCurrentFilters();
             foreach ($filters as $filter) {
-                $filter->getType()->setQueryBuilder($this->queryBuilder);
+                $filter->getType()->setQueryBuilder($queryBuilder);
                 $filter->getType()->apply($filter->getData(), $filter->getUniqueId());
             }
 
@@ -72,17 +86,42 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
                 if (!strpos($orderBy, '.')) {
                     $orderBy = 'b.' . $orderBy;
                 }
-                $this->queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
+                $queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
             }
 
-            // @todo Apply ACL restrictions here?
+            // Apply ACL restrictions (if applicable)
+            if (!is_null($this->permissionDef) && !is_null($this->aclHelper)) {
+                $this->query = $this->aclHelper->apply($queryBuilder, $this->permissionDef);
+            } else {
+                $this->query = $queryBuilder->getQuery();
+            }
         }
 
-        return $this->queryBuilder;
+        return $this->query;
     }
 
     /**
-     * @return string
+     * Get current permission definition.
+     *
+     * @return PermissionDefinition|null
      */
-    abstract public function getRepositoryName();
+    public function getPermissionDefinition()
+    {
+        return $this->permissionDef;
+    }
+
+    /**
+     * Set permission definition.
+     *
+     * @param PermissionDefinition $permissionDef
+     *
+     * @return AbstractAdminListConfigurator|AbstractDoctrineORMAdminListConfigurator
+     */
+    public function setPermissionDefinition(PermissionDefinition $permissionDef)
+    {
+        $this->permissionDef = $permissionDef;
+
+        return $this;
+    }
+
 }

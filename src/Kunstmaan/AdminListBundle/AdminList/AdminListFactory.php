@@ -7,6 +7,7 @@ namespace Kunstmaan\AdminListBundle\AdminList;
  */
 class AdminListFactory
 {
+
     /**
      * @param AdminListConfiguratorInterface $configurator The configurator
      *
