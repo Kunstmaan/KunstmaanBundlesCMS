@@ -48,18 +48,26 @@ class BooleanFilterTest extends ORMFilterTestCase
 
     /**
      * @covers Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter::apply
+     * @dataProvider applyDataProvider
      */
-    public function testApply()
+    public function testApplyTrue($value)
     {
         $qb = $this->getQueryBuilder();
         $qb->select('b')
             ->from('Entity', 'b');
         $this->object->setQueryBuilder($qb);
-        $this->object->apply(array('value' => 'true'), 'boolean');
+        $this->object->apply(array('value' => $value), 'boolean');
 
-        $this->assertEquals('SELECT b FROM Entity b WHERE b.boolean = true', $qb->getDQL());
+        $this->assertEquals("SELECT b FROM Entity b WHERE b.boolean = $value", $qb->getDQL());
     }
 
+    public static function applyDataProvider()
+    {
+        return array(
+            array('true'),
+            array('false'),
+        );
+    }
     /**
      * @covers Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter::getTemplate
      */

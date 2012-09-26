@@ -18,10 +18,6 @@ class NumberFilter extends AbstractDBALFilter
     {
         $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
         $data['value']      = $request->query->get('filter_value_' . $uniqueId);
-        $value2             = $request->query->get('filter_value2_' . $uniqueId);
-        if (isset($value2)) {
-            $data['value2'] = $value2;
-        }
     }
 
     /**
