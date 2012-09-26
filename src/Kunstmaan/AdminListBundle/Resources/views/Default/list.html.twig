@@ -1,5 +1,15 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
+{% block extracss %}
+    {{ parent() }}
+    {% stylesheets '@KunstmaanAdminListBundle/Resources/public/css/*'
+       output='generated-css/adminlist-style.css'
+       filter='cssrewrite'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block extra_actions_header %}
 	{% if adminlist.canExport() %}
 		<div class="extra_actions_header">
