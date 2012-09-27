@@ -71,6 +71,7 @@ class FormHandler implements FormHandlerInterface
                 $formSubmission->setLang($locale = $request->getLocale());
                 $em->persist($formSubmission);
 
+                /* @var $field FormSubmissionField */
                 foreach ($fields as $field) {
                     $field->setSubmission($formSubmission);
                     $field->onValidPost($form, $formBuilder, $request, $this->container);
