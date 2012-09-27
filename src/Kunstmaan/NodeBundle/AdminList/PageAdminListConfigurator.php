@@ -6,7 +6,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\DateFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
@@ -42,10 +41,10 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFilters()
     {
         $builder = $this->getAdminListFilter();
-        $builder->add('title', new StringFilter("title"), "Title");
-        $builder->add('online', new BooleanFilter("online"), "Online");
-        $builder->add('created', new DateFilter("created"), "Created At");
-        $builder->add('updated', new DateFilter("updated"), "Updated At");
+        $builder->add('title', new StringFilter("title"), "Title")
+            ->add('online', new BooleanFilter("online"), "Online")
+            ->add('created', new DateFilter("created"), "Created At")
+            ->add('updated', new DateFilter("updated"), "Updated At");
     }
 
     /**
@@ -53,10 +52,10 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField("title", "Title", true);
-        $this->addField("created", "Created At", true);
-        $this->addField("updated", "Updated At", true);
-        $this->addField("online", "Online", true);
+        $this->addField("title", "Title", true)
+            ->addField("created", "Created At", true)
+            ->addField("updated", "Updated At", true)
+            ->addField("online", "Online", true);
     }
 
     /**
@@ -73,14 +72,6 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * @return array
-     */
-    public function getIndexUrlFor()
-    {
-        return array('path' => 'KunstmaanNodeBundle_pages');
-    }
-
-    /**
      * @return bool
      */
     public function canAdd()
@@ -89,17 +80,9 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * @param array $params
+     * Return if current user can delete the specified item
      *
-     * @return array
-     */
-    public function getAddUrlFor(array $params = array())
-    {
-        return "";
-    }
-
-    /**
-     * @param mixed $item
+     * @param array|object $item
      *
      * @return bool
      */
@@ -108,11 +91,6 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         return false;
     }
 
-    /**
-     * @param mixed $item
-     *
-     * @return array
-     */
     public function getDeleteUrlFor($item)
     {
         return array();
@@ -121,9 +99,43 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     /**
      * @return string
      */
-    public function getRepositoryName()
+    public function getBundleName()
     {
-        return 'KunstmaanNodeBundle:NodeTranslation';
+        return 'KunstmaanNodeBundle';
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return 'NodeTranslation';
+    }
+
+    /**
+     * Override path convention (because settings is a virtual admin subtree)
+     *
+     * @param string $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (empty($suffix)) {
+            return sprintf('%s_pages', $this->getBundleName());
+        }
+
+        return sprintf('%s_pages_%s', $this->getBundleName(), $suffix);
+    }
+
+    /**
+     * Override controller path (because actions for different entities are defined in a single Settings controller).
+     *
+     * @return string
+     */
+    public function getControllerPath()
+    {
+        return 'KunstmaanNodeBundle:Pages';
     }
 
     /**
