@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,9 +27,15 @@ class UserType extends AbstractType
                 'invalid_message' => "The passwords don't match!"));
         $builder->add('email');
         $builder->add('enabled', 'checkbox', array('required' => false));
-        $builder->add('groups', null, array(
-            'expanded'  => false //change to true to expand to checkboxes
-        ));
+        $builder->add('groups', 'entity', array(
+                'class' => 'KunstmaanAdminBundle:Group',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('g')
+                        ->orderBy('g.name', 'ASC');
+                },
+                'multiple' => true,
+                'expanded' => false,
+            ));
     }
 
     /**

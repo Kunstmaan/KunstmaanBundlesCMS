@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_users_edit', { 'userId' : user.id }) }}" method="post" {{ form_enctype(form) }}>
+    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_users_edit', { 'id' : user.id }) }}" method="post" {{ form_enctype(form) }}>
 	    <fieldset>
 	    	{{ form_errors(form) }}
 	        <div class="control-group">

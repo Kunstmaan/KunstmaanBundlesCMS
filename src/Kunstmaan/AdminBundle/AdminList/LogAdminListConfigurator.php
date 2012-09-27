@@ -52,18 +52,6 @@ class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Configure add action(s) of admin list
-     *
-     * @param array $params
-     *
-     * @return array
-     */
-    public function getAddUrlFor(array $params = array())
-    {
-        return array();
-    }
-
-    /**
      * Determine if the user can edit the specified item
      *
      * @param mixed $item
@@ -73,40 +61,6 @@ class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function canEdit($item)
     {
         return false;
-    }
-
-    /**
-     * Configure edit action(s) of admin list
-     *
-     * @param mixed $item
-     *
-     * @return array
-     */
-    public function getEditUrlFor($item)
-    {
-        return array();
-    }
-
-    /**
-     * Configure index action of admin list
-     *
-     * @return array
-     */
-    public function getIndexUrlFor()
-    {
-        return array('path' => 'KunstmaanAdminBundle_settings_logs');
-    }
-
-    /**
-     * Configure delete action(s) of admin list
-     *
-     * @param mixed $item
-     *
-     * @return array
-     */
-    public function getDeleteUrlFor($item)
-    {
-        return array();
     }
 
     /**
@@ -145,6 +99,7 @@ class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
             if (!is_null($user)) {
                 return $user->getUsername();
             }
+
             return '';
         }
 
@@ -152,12 +107,22 @@ class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Get repository name
+     * Get bundle name
      *
      * @return string
      */
-    public function getRepositoryName()
+    public function getBundleName()
     {
-        return 'KunstmaanAdminBundle:LogItem';
+        return 'KunstmaanAdminBundle';
+    }
+
+    /**
+     * Get entity name
+     *
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return 'LogItem';
     }
 }
