@@ -10,7 +10,6 @@ abstract class ORMFilterTestCase extends \PHPUnit_Framework_TestCase
 {
     protected function getQueryBuilder()
     {
-        // $emMock = $this->getMock('Doctrine\ORM\EntityManager', array(), array(), '', false);
         $config = new \Doctrine\ORM\Configuration();
         $config->setProxyDir(\sys_get_temp_dir());
         $config->setProxyNamespace('KunstmaanTests\Proxy');

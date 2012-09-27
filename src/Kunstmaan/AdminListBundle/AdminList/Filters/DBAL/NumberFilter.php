@@ -26,37 +26,36 @@ class NumberFilter extends AbstractDBALFilter
      */
     public function apply($data, $uniqueId)
     {
-        $qb = $this->getQueryBuilder();
         if (isset($data['value']) && isset($data['comparator'])) {
             switch ($data['comparator']) {
                 case 'eq':
-                    $qb->andWhere($qb->expr()->eq($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->eq($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'neq':
-                    $qb->andWhere($qb->expr()->neq($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->neq($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'lt':
-                    $qb->andWhere($qb->expr()->lt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'lte':
-                    $qb->andWhere($qb->expr()->lte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'gt':
-                    $qb->andWhere($qb->expr()->gt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'gte':
-                    $qb->andWhere($qb->expr()->gte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'isnull':
-                    $qb->andWhere($qb->expr()->isNull($this->alias . '.' . $this->columnName));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->isNull($this->alias . '.' . $this->columnName));
 
                     return;
                 case 'isnotnull':
-                    $qb->andWhere($qb->expr()->isNotNull($this->alias . '.' . $this->columnName));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->isNotNull($this->alias . '.' . $this->columnName));
 
                     return;
             }
-            $qb->setParameter('var_' . $uniqueId, $data['value']);
+            $this->queryBuilder->setParameter('var_' . $uniqueId, $data['value']);
         }
     }
 

@@ -26,19 +26,18 @@ class DateFilter extends AbstractDBALFilter
      */
     public function apply($data, $uniqueId)
     {
-        $qb = $this->getQueryBuilder();
         if (isset($data['value']) && isset($data['comparator'])) {
             /* @todo get rid of hardcoded date formats below! */
             $date = \DateTime::createFromFormat('d/m/Y', $data['value'])->format('Y-m-d');
             switch ($data['comparator']) {
                 case 'before':
-                    $qb->andWhere($qb->expr()->lte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'after':
-                    $qb->andWhere($qb->expr()->gt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
                     break;
             }
-            $qb->setParameter('var_' . $uniqueId, $date);
+            $this->queryBuilder->setParameter('var_' . $uniqueId, $date);
         }
     }
 
