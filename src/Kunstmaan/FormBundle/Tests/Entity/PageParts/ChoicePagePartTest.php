@@ -7,6 +7,8 @@ use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 /**
  * Tests for ChoicePagePart
  */
@@ -63,6 +65,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $fields = new ArrayObject();
 
         $this->assertTrue(sizeof($fields) == 0);
+        /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields);
         $this->assertTrue(sizeof($fields) > 0);
     }

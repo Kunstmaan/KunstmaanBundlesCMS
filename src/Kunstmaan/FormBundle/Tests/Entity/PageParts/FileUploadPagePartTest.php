@@ -7,6 +7,9 @@ use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilder;
+
 /**
  * Tests for FileUploadPagePart
  */
@@ -53,6 +56,7 @@ class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
         $fields = new ArrayObject();
 
         $this->assertTrue(sizeof($fields) == 0);
+        /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields);
         $this->assertTrue(sizeof($fields) > 0);
     }

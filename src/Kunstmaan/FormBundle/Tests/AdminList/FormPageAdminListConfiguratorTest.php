@@ -4,6 +4,8 @@ namespace Kunstmaan\FormBundle\Tests\AdminList;
 
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * This test tests the FormPageAdminListConfigurator
  */
@@ -52,6 +54,7 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
 
         $params = array();
 
+        /* @var $queryBuilder QueryBuilder */
         $this->object->adaptQueryBuilder($queryBuilder, $params);
     }
 

@@ -7,6 +7,8 @@ use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 
+use Symfony\Component\Form\FormBuilderInterface;;
+
 /**
  * Tests for SingleLineTextPagePart
  */
@@ -89,6 +91,7 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
         $fields = new ArrayObject();
 
         $this->assertTrue(sizeof($fields) == 0);
+        /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields);
         $this->assertTrue(sizeof($fields) > 0);
     }

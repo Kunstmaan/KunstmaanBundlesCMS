@@ -7,6 +7,8 @@ use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 /**
  * Tests for MultiLineTextPagePart
  */
@@ -88,6 +90,7 @@ class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
         $fields = new ArrayObject();
 
         $this->assertTrue(sizeof($fields) == 0);
+        /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields);
         $this->assertTrue(sizeof($fields) > 0);
     }
