@@ -53,16 +53,6 @@ class AbstractFormPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getElasticaView
-     */
-    public function testGetElasticaView()
-    {
-        $stringValue = $this->object->getElasticaView();
-        $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
-    }
-
-    /**
      * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getAdminView
      */
     public function testGetAdminView()

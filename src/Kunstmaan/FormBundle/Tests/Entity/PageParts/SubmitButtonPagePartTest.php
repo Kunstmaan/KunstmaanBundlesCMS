@@ -75,16 +75,6 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getElasticaView
-     */
-    public function testGetElasticaView()
-    {
-        $stringValue = $this->object->getElasticaView();
-        $this->assertNotNull($stringValue);
-        $this->assertTrue(is_string($stringValue));
-    }
-
-    /**
      * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()

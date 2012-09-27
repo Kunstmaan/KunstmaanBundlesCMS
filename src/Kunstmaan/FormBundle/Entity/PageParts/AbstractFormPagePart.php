@@ -54,16 +54,6 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
-     * Returns the view for searches
-     *
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * Returns the view used in the backend
      *
      * @return string

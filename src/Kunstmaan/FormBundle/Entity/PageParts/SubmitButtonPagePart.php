@@ -76,16 +76,6 @@ class SubmitButtonPagePart extends AbstractPagePart
     }
 
     /**
-     * Return the search view
-     *
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * Returns the default form type for this FormSubmissionField
      *
      * @return SubmitButtonPagePartAdminType
