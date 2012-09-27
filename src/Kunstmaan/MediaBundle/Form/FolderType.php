@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Kunstmaan\MediaBundle\Entity\Folder;
 
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,22 +17,15 @@ use Kunstmaan\MediaBundle\Entity\File;
 class FolderType extends AbstractType
 {
     /**
-     * @var string
-     */
-    protected $entityname;
-
-    /**
      * @var Folder
      */
     public $folder;
 
     /**
-     * @param string $name   The name
      * @param Folder $folder The folder
      */
-    public function __construct($name, Folder $folder = null)
+    public function __construct(Folder $folder = null)
     {
-        $this->entityname = $name;
         $this->folder = $folder;
     }
 
@@ -52,16 +47,15 @@ class FolderType extends AbstractType
         $type = $this;
         $builder
             ->add('name')
-            ->add('parent', 'entity', array( 'class' => $this->getEntityName(), 'required' => false,
+            ->add('rel', 'choice', array(
+                'choices'   => array('media' => 'media', 'image' => 'image', 'slideshow' => 'slideshow', 'video' => 'video'),
+                ))
+            ->add('parent', 'entity', array( 'class' => 'Kunstmaan\MediaBundle\Entity\Folder', 'required' => false,
               'query_builder' => function(\Doctrine\ORM\EntityRepository $er) use($folder, $type) {
-                  $qb = $er->createQueryBuilder('gallery');
+                  $qb = $er->createQueryBuilder('folder');
 
-                  if ($type->getEntityName()=="Kunstmaan\MediaBundle\Entity\Folder") {
-                      $qb->where("gallery instance of 'Kunstmaan\MediaBundle\Entity\Folder'");
-                  }
-
-                  if ($folder != null) {
-                      $ids = "gallery.id != ". $folder->getId();
+                  if ($folder != null && $folder->getId() != null) {
+                      $ids = "folder.id != ". $folder->getId();
                       $ids .= $type->addChildren($folder);
                       $qb->andwhere($ids);
                   }
@@ -82,14 +76,6 @@ class FolderType extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    public function getEntityName()
-    {
-        return $this->entityname;
-    }
-
-    /**
      * @param Folder $folder
      *
      * @return string
@@ -98,10 +84,22 @@ class FolderType extends AbstractType
     {
         $ids = "";
         foreach ($folder->getChildren() as $child) {
-            $ids .= " and gallery.id != " . $child->getId();
+            $ids .= " and folder.id != " . $child->getId();
             $ids .= $this->addChildren($child);
         }
 
         return $ids;
+    }
+
+    /**
+     * Sets the default options for this type.
+     *
+     * @param OptionsResolverInterface $resolver The resolver for the options.
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+                'data_class' => 'Kunstmaan\MediaBundle\Entity\Folder',
+        ));
     }
 }

@@ -18,9 +18,6 @@ use Gedmo\Translatable\Translatable;
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
  * @ORM\Table(name="kuma_folders")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({ "folder"="Folder", "imagegallery" = "ImageGallery", "filegallery" = "FileGallery", "slidegallery" = "SlideGallery" , "videogallery" = "VideoGallery"})
  * @ORM\HasLifecycleCallbacks
  * @Gedmo\Loggable
  */
@@ -70,9 +67,9 @@ class Folder extends AbstractEntity
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="gallery")
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="folder")
      */
-    protected $files;
+    protected $media;
 
     /**
      * @var \DateTime
@@ -87,13 +84,6 @@ class Folder extends AbstractEntity
      * @ORM\Column(type="datetime")
      */
     protected $updated;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $candelete;
 
     /**
      * @var string
@@ -122,10 +112,9 @@ class Folder extends AbstractEntity
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->files    = new ArrayCollection();
+        $this->media    = new ArrayCollection();
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
-        $this->setCanDelete(true);
         $this->deleted = false;
     }
 
@@ -184,26 +173,6 @@ class Folder extends AbstractEntity
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * @param bool $bool
-     *
-     * @return Folder
-     */
-    public function setCanDelete($bool)
-    {
-        $this->candelete = $bool;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function canDelete()
-    {
-        return $this->candelete;
     }
 
     /**
@@ -437,157 +406,31 @@ class Folder extends AbstractEntity
      */
     public function addMedia(Media $file)
     {
-        $this->files[] = $file;
+        $this->media[] = $media;
 
         return $this;
     }
 
     /**
-     * Get files
+     * Get media
      *
      * @param bool $includeDeleted
      *
      * @return ArrayCollection
      */
-    public function getFiles($includeDeleted = false)
+    public function getMedia($includeDeleted = false)
     {
         if ($includeDeleted) {
-            return $this->files;
+            return $this->media;
         }
 
-        return $this->files->filter( function (Media $entry) {
+        return $this->media->filter( function (Media $entry) {
             if ($entry->isDeleted()) {
                 return false;
             }
 
             return true;
         });
-    }
-
-    /**
-     * Get images
-     *
-     * @return ArrayCollection
-     */
-    public function getImages()
-    {
-        return $this->getFiles()->filter( function (Media $file) {
-            if ($file instanceof Image) {
-                return true;
-            }
-
-            return false;
-        });
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasImages()
-    {
-        if (count($this->getImages()) > 0) {
-            return true;
-        }
-        foreach ($this->getChildren() as $child) {
-            if ($child->hasImages()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getFilesOnly()
-    {
-        return $this->getFiles()->filter( function (Media $file) {
-            if ($file instanceof File) {
-                return true;
-            }
-
-            return false;
-        });
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasFiles()
-    {
-        if (count($this->getFilesOnly()) > 0) {
-            return true;
-        }
-        foreach ($this->getChildren() as $child) {
-            if ($child->hasFiles()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getSlidesOnly()
-    {
-        return $this->getFiles()->filter( function (Media $file) {
-            if ($file instanceof Slide) {
-                return true;
-            }
-
-            return false;
-        });
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasSlides()
-    {
-        if (count($this->getSlidesOnly()) > 0) {
-            return true;
-        }
-        foreach ($this->getChildren() as $child) {
-            if ($child->hasSlides()) {
-                return true;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getVideosOnly()
-    {
-        return $this->getFiles()->filter( function (Media $file) {
-            if ($file instanceof Video) {
-                return true;
-            }
-
-            return false;
-        });
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasVideos()
-    {
-        if (count($this->getVideosOnly()) > 0) {
-            return true;
-        }
-        foreach ($this->getChildren() as $child) {
-            if ($child->hasVideos()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -604,32 +447,6 @@ class Folder extends AbstractEntity
         }
 
         return false;
-    }
-
-    /**
-     * @return FolderStrategy
-     */
-    public function getStrategy()
-    {
-        return new FolderStrategy();
-    }
-
-    /**
-     * @param Folder $folder
-     *
-     * @return FolderType
-     */
-    public function getFormType(Folder $folder = null)
-    {
-        return new FolderType($this->getStrategy()->getGalleryClassName(), $folder);
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->getStrategy()->getType();
     }
 
     /**

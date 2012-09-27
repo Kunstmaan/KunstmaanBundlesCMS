@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\MediaBundle\AdminList\MediaListConfigurator;
+
 use Symfony\Component\HttpFoundation\Response;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
@@ -39,25 +41,26 @@ class FolderController extends Controller
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+        $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
 
         $itemList = "";
-        $listConfigurator = $folder->getStrategy()->getListConfigurator($folder);
+        $listConfigurator = new MediaListConfigurator($folder);
         if (isset($listConfigurator) && $listConfigurator != null) {
             /* @var AdminList $itemList */
-            $itemList = $this->get("kunstmaan_adminlist.factory")->createList($listConfigurator, $em, array("gallery" => $folder->getId()));
+            $itemList = $this->get("kunstmaan_adminlist.factory")->createList($listConfigurator, $em, array("folder" => $folder->getId()));
             $itemList->bindRequest($this->getRequest());
         }
-        $sub = $folder->getStrategy()->getNewGallery();
+        $sub = new Folder();
         $sub->setParent($folder);
-        $subForm = $this->createForm(new SubFolderType(), $sub);
-        $editForm = $this->createForm($folder->getFormType($folder), $folder);
+        $subForm = $this->createForm(new FolderType($sub), $sub);
+        $editForm = $this->createForm(new FolderType($folder), $folder);
 
         return array(
+            'mediamanager'  => $this->get('kunstmaan_media.media_manager'),
             'subform'       => $subForm->createView(),
             'editform'      => $editForm->createView(),
-            'gallery'       => $folder,
-            'galleries'     => $galleries,
+            'folder'        => $folder,
+            'folders'       => $folders,
             'itemlist'      => $itemList
         );
     }
@@ -112,29 +115,26 @@ class FolderController extends Controller
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
         return array(
-            'gallery' => $folder,
+            'folder' => $folder,
             'form' => $form->createView(),
             'galleries'     => $galleries
         );
     }
 
     /**
-     * @param string $type
-     *
-     * @Route("{type}/create", name="KunstmaanMediaBundle_folder_create")
+     * @Route("/create", name="KunstmaanMediaBundle_folder_create")
      * @Method({"GET", "POST"})
      * @Template()
      *
      * @return Response
      */
-    public function createAction($type)
+    public function createAction()
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
 
-        /* @var Folder $folder */
-        $folder = FolderFactory::getTypeFolder($type);
-        $form = $this->createForm(new FolderType($folder->getStrategy()->getGalleryClassName()), $folder);
+        $folder = new Folder();
+        $form = $this->createForm(new FolderType($folder));
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
@@ -147,7 +147,7 @@ class FolderController extends Controller
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
         return $this->render('KunstmaanMediaBundle:Folder:create.html.twig', array(
-            'gallery' => $folder,
+            'folder' => $folder,
             'form' => $form->createView(),
             'galleries'     => $galleries
         ));
@@ -169,7 +169,7 @@ class FolderController extends Controller
 
         /* @var Folder $parent */
         $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $folder = $parent->getStrategy()->getNewGallery();
+        $folder = new Folder();
         $folder->setParent($parent);
         $form = $this->createForm(new SubFolderType(), $folder);
         if ('POST' == $request->getMethod()) {
@@ -186,7 +186,7 @@ class FolderController extends Controller
         return $this->render('KunstmaanMediaBundle:Folder:subcreate.html.twig', array(
             'subform' => $form->createView(),
             'galleries' => $galleries,
-            'gallery' => $folder,
+            'folder' => $folder,
             'parent' => $parent
         ));
     }

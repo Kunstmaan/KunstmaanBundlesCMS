@@ -68,7 +68,7 @@ class FileListConfigurator extends AbstractAdminListConfigurator
         return array(
             'file' => array(
                 'path'   => 'KunstmaanMediaBundle_folder_filecreate',
-                'params' => array('gallery_id' => $params['gallery_id'])
+                'params' => array('folderIid' => $params['folderId'])
             )
         );
     }
@@ -109,7 +109,7 @@ class FileListConfigurator extends AbstractAdminListConfigurator
     public function adaptQueryBuilder(QueryBuilder $querybuilder, array $params = array())
     {
         parent::adaptQueryBuilder($querybuilder, $params);
-        $querybuilder->andwhere($querybuilder->expr()->eq("b.gallery", $params['gallery']));
+        $querybuilder->andwhere($querybuilder->expr()->eq("b.folder", $params['folder']));
         $querybuilder->andwhere("b.deleted != true");
     }
 

@@ -13,86 +13,31 @@ media:
     title: Aviary
     nothing: Nothing to see here.
   
-  file:
+  media:
     files: files
     file: File
-    addto: Add a new file to "%gallery%"
+    addto: Add a new file to "%folder%"
     new: New file
     add: Add new file
-    edit: Edit file
+    edit: Edit
     open: Open file
     delete: The files shown get also deleted
-    list: Files in "%gallery%"
+    list: Files in "%folder%"
     no: No files in this folder yet.
     gallery:
       new: Make new file folder
-      subnew: Make new file folder in %gallery%
-    sure: Are you sure you want to delete this file?
-    editmetadata: Edit metadata
+      subnew: Make new file folder in %folder%
+    deletesure: Are you sure you want to delete this file?
+    properties: Properties
     bulkupload:
-        addto: Upload files to "%gallery%"
-  
-  image: 
-    images: images
-    image: Image
-    addto: Add a new image to "%gallery%"
-    new: New image
-    add: Add new image
-    edit: Edit image
-    open: Open image
-    delete: The images shown get also deleted
-    list: Images in "%gallery%"
-    no: No images in this folder yet.
-    gallery:
-      new: Make new image folder
-      subnew: Make new image folder in %gallery%
-    sure: Are you sure you want to delete this image?
-    editmetadata: Edit metadata
-    edits: Image edits
-    noedits: No edits available
-    bulkupload:
-            addto: Upload images to "%gallery%"
-  
-  slide: 
-    slides: slides
-    slide: Slide
-    addto: Add a new slide to "%gallery%"
-    new: New slide
-    add: Add new slide
-    edit: Edit slide
-    open: Open slide
-    delete: The slides shown get also deleted
-    list: Slides in "%gallery%"
-    no: No slides in this folder yet.
-    gallery:
-      new: Make new slide folder
-      subnew: Make new slide folder in %gallery%
-    sure: Are you sure you want to delete this slide?  
-    code: Presentation code
-  
-  video: 
-    videos: video
-    video: Video
-    addto: Add a new video to "%gallery%"
-    new: New video
-    add: Add new video
-    edit: Edit video
-    open: Open video
-    delete: The videos shown get also deleted
-    list: Videos in "%gallery%"
-    no: No videos in this folder yet.
-    gallery:
-      new: Make new video folder
-      subnew: Make new video folder in %gallery%
-    sure: Are you sure you want to delete this video?  
-    code: Presentation code  
-  
-  gallery:
+      addto: Upload files to "%folder%"
+
+  folder:
     galleries: folders
     gallery: Folder
     sub:
       sub: Subfolder
-      addshort: Add new folder
+      addshort: Add subfolder
       belongsto: This folder belongs to
       list: The subfolders of "%gallery%"
       add: Add subfolder
@@ -101,17 +46,18 @@ media:
     create: Make new folder for  
     new: Make folder
     belongsto: The folder this folder is added to
-    deletesure: Are you sure you want to delete "%gallery%"? 
-    delete: Delete this folder
+    delete:
+      action: Delete this folder
+      title: Delete folder
+      sure: Are you sure you want to delete "%folder%"? 
     deletemedia: The following %type% are also deleted
     edit: Edit this folder
-    
-  folder:
-    sub: in folder
+    no: No media in this folder yet.
     folders: an event
     open: open this folder
     properties: Properties
-
+    notrequired: "Not required"
+    
   metadata:
     edit: Edit metadata
 

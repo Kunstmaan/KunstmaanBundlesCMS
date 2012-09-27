@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-
-use Symfony\Component\BrowserKit\Response;
 
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\MediaBundle\Event\MediaEvent;
@@ -46,21 +46,35 @@ class MediaController extends Controller
     public function showAction($mediaId)
     {
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
 
         /* @var Media $media */
         $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
-        $folder = $media->getGallery();
+        $folder = $media->getFolder();
 
         /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.manager');
-        $mediaContext = $mediaManager->getContext($media->getContext());
-        $metadataClass = $mediaContext->getMetadataClass();
+        $mediaManager = $this->get('kunstmaan_media.media_manager');
+        $handler = $mediaManager->getHandler($media);
+        $helper = $handler->getFormHelper($media);
 
-        return $this->render('KunstmaanMediaBundle:' . $media->getClassType() . ':show.html.twig', array(
-            'media'     => $media,
-            'gallery'   => $folder,
-            'hasmetadata' => (isset($metadataClass) ? true : false)
-        ));
+        $form = $this->createForm($handler->getFormType(), $helper);
+
+        if ('POST' == $request->getMethod()) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $media = $helper->getMedia();
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array('mediaId'  => $media->getId())));
+            }
+        }
+        $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
+
+        return $this->render($showTemplate, array(
+                'mediamanager' => $this->get('kunstmaan_media.media_manager'),
+                'form'      => $form->createView(),
+                'media' => $media,
+                'folder' => $folder));
     }
 
     /**
@@ -72,23 +86,23 @@ class MediaController extends Controller
      */
     public function deleteAction($mediaId)
     {
-        $em      = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         /* @var Media $media */
-        $media   = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
-        $folder = $media->getGallery();
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $folder = $media->getFolder();
 
         $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
 
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId(),
-            'slug' => $folder->getSlug()
-        )));
+        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array(
+                'folderId'  => $folder->getId(),
+                'slug' => $folder->getSlug())));
     }
 
     /**
      * @param int $folderId
      *
-     * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_bulk_upload")
+     * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanMediaBundle:File:bulkupload.html.twig")
      *
@@ -102,27 +116,18 @@ class MediaController extends Controller
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $strategy = $folder->getStrategy();
-
-        $newMediaInstance = $strategy->getNewBulkUploadMediaInstance();
-
-        if (is_null($newMediaInstance)) {
-            throw new \InvalidArgumentException("This type of gallery doesn't support multiple file upload.");
-        }
 
         $request = $this->getRequest();
         $helper  = new BulkUploadHelper();
 
-        $form = $this->createForm(new BulkUploadType($strategy->getBulkUploadAccept()), $helper);
+        $form = $this->createForm(new BulkUploadType('*/*'), $helper);
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
                 foreach ($helper->getFiles() as $file) {
                     /* @var Media $media */
-                    $media = clone $newMediaInstance;
-                    $media->setName($file->getClientOriginalName());
-                    $media->setContent($file);
+                    $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
                     $media->setGallery($folder);
                     $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
                 }
@@ -140,7 +145,7 @@ class MediaController extends Controller
 
         return array(
             'form'      => $formView,
-            'gallery'   => $folder
+            'folder'   => $folder
         );
 
     }
@@ -148,60 +153,79 @@ class MediaController extends Controller
     /**
      * @param int $folderId
      *
-     * @Route("filecreate/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_file_create")
+     * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload")
+     * @Method({"GET", "POST"})
+     *
+     * @return array|RedirectResponse
+     *
+     * @throws \InvalidArgumentException when the gallery does not support bulk upload
+     */
+    public function dropAction($folderId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var Folder $folder */
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+
+        $request = $this->getRequest();
+
+        $drop = null;
+        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0 ) {
+            $pic = $_FILES['files'];
+            $drop = $this->getRequest()->files->get('files');
+        } else {
+            $drop = $this->getRequest()->get('text');
+        }
+        $media = $this->get('kunstmaan_media.media_manager')->createNew($drop);
+        if ($media) {
+            $media->setFolder($folder);
+            $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+
+            return new Response(json_encode(array('status'=>'File was uploaded successfuly!')));
+        }
+
+        $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Could not recognize what you dropped!');
+
+        return new Response(json_encode(array('status'=>'Could not recognize anything!')));
+    }
+
+    /**
+     * @param int    $folderId The folder id
+     * @param string $type     The type
+     *
+     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanMediaBundle:File:create.html.twig")
      *
      * @return array|RedirectResponse
      */
-    public function fileCreateAction($folderId)
+    public function createAction($folderId, $type)
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $helper  = new MediaHelper();
+
+        $mediaManager = $this->get('kunstmaan_media.media_manager');
+        $handler = $mediaManager->getHandlerForType($type);
+        $helper  = $handler->createNewHelper();
 
         $formBuilder = $this->createFormBuilder();
-        $formBuilder->add('media', new MediaType());
-        $bindingArray = array('media' => $helper);
-
-        $metadataClass = $this->getMetadataClass(File::CONTEXT);
-
-        $metadata = null;
-        if (isset($metadataClass)) {
-            /* @var AbstractMediaMetadata $metadata */
-            $metadata = new $metadataClass();
-            $formBuilder->add('metadata', $metadata->getDefaultAdminType());
-            $bindingArray['metadata'] = $metadata;
-        }
-
-        $formBuilder->setData($bindingArray);
+        $formBuilder->add('media', $handler->getFormType());
+        $formBuilder->setData(array('media' => $helper));
         $form = $formBuilder->getForm();
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
                 if ($helper->getMedia() != null) {
-                    $file = new File();
-                    $file->setName($helper->getMedia()->getClientOriginalName());
-                    $file->setContent($helper->getMedia());
-                    $file->setGallery($folder);
+                    $media = $helper->getMedia();
+                    $media->setName($helper->getMedia()->getClientOriginalName());
+                    $media->setContent($helper->getMedia());
+                    $media->setGallery($folder);
 
-                    $em->getRepository('KunstmaanMediaBundle:Media')->save($file);
-
-                    if (isset($metadata)) {
-                        $metadata->setMedia($file);
-                        $em->persist($metadata);
-                        $em->flush();
-                    }
-
-                    $dispatcher = $this->get('event_dispatcher');
-                    if ($dispatcher->hasListeners(Events::POST_CREATE)) {
-                        $event = new MediaEvent($file, isset($metadata) ? $metadata : null);
-                        $dispatcher->dispatch(Events::POST_CREATE, $event);
-                    }
+                    $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
                     return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId(),
                         'slug' => $folder->getSlug()
@@ -212,222 +236,8 @@ class MediaController extends Controller
 
         return array(
             'form'      => $form->createView(),
-            'gallery'   => $folder
+            'folder'   => $folder
         );
-    }
-
-    /**
-     * @param int $folderId
-     *
-     * @Route("imagecreate/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_image_create")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:Image:create.html.twig")
-     *
-     * @return array|RedirectResponse
-     */
-    public function imageCreateAction($folderId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $pictureHelper = new MediaHelper();
-
-        $formBuilder = $this->createFormBuilder();
-        $formBuilder->add('media', new MediaType());
-        $bindingArray = array('media' => $pictureHelper);
-
-        $metadataClass = $this->getMetadataClass(Image::CONTEXT);
-
-        if (isset($metadataClass)) {
-            /* @var AbstractMediaMetadata $metadata */
-            $metadata = new $metadataClass();
-            $formBuilder->add('metadata', $metadata->getDefaultAdminType());
-            $bindingArray['metadata'] = $metadata;
-        }
-
-        $formBuilder->setData($bindingArray);
-        $form = $formBuilder->getForm();
-
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                if ($pictureHelper->getMedia() != null) {
-                    $picture = new Image();
-                    $picture->setName($pictureHelper->getMedia()->getClientOriginalName());
-                    $picture->setContent($pictureHelper->getMedia());
-                    $picture->setGallery($folder);
-
-                    $em->getRepository('KunstmaanMediaBundle:Media')->save($picture);
-
-                    if (isset($metadata)) {
-                        $metadata->setMedia($picture);
-                        $em->persist($metadata);
-                        $em->flush();
-                    }
-
-                    $dispatcher = $this->get('event_dispatcher');
-                    if ($dispatcher->hasListeners(Events::POST_CREATE)) {
-                        $event = new MediaEvent($picture, isset($metadata) ? $metadata : null);
-                        $dispatcher->dispatch(Events::POST_CREATE, $event);
-                    }
-
-                    return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId(),
-                        'slug' => $folder->getSlug()
-                    )));
-                }
-            }
-        }
-
-        return array(
-            'form'      => $form->createView(),
-            'gallery'   => $folder
-        );
-    }
-
-    /**
-     * @param int $folderId
-     *
-     * @Route("videocreate/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_video_create")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:Video:create.html.twig")
-     *
-     * @return array|RedirectResponse
-     */
-    public function videoCreateAction($folderId)
-    {
-        $em      = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $video   = new Video();
-
-        $formBuilder = $this->createFormBuilder();
-        $formBuilder->add('media', new VideoType());
-        $bindingArray = array('media' => $video);
-
-        $metadataClass = $this->getMetadataClass(Video::CONTEXT);
-
-        if (isset($metadataClass)) {
-            /* @var AbstractMediaMetadata $metadata */
-            $metadata = new $metadataClass();
-            $formBuilder->add('metadata', $metadata->getDefaultAdminType());
-            $bindingArray['metadata'] = $metadata;
-        }
-
-        $formBuilder->setData($bindingArray);
-        $form = $formBuilder->getForm();
-
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $video->setGallery($folder);
-
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($video);
-
-                if (isset($metadata)) {
-                    $metadata->setMedia($video);
-                    $em->persist($metadata);
-                    $em->flush();
-                }
-
-                $dispatcher = $this->get('event_dispatcher');
-                if ($dispatcher->hasListeners(Events::POST_CREATE)) {
-                    $event = new MediaEvent($video, isset($metadata) ? $metadata : null);
-                    $dispatcher->dispatch(Events::POST_CREATE, $event);
-                }
-
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId(),
-                    'slug' => $folder->getSlug()
-                )));
-            }
-        }
-
-        return array(
-            'form'      => $form->createView(),
-            'gallery'   => $folder
-        );
-    }
-
-    /**
-     * @param int $folderId
-     *
-     * @Route("slidecreate/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_slide_create")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:Slide:create.html.twig")
-     *
-     * @return array|RedirectResponse
-     */
-    public function slideCreateAction($folderId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $slide   = new Slide();
-
-        $formBuilder = $this->createFormBuilder();
-        $formBuilder->add('media', new SlideType());
-        $bindingArray = array('media' => $slide);
-
-        $metadataClass = $this->getMetadataClass(Slide::CONTEXT);
-
-        if (isset($metadataClass)) {
-            /* @var AbstractMediaMetadata $metadata */
-            $metadata = new $metadataClass();
-            $formBuilder->add('metadata', $metadata->getDefaultAdminType());
-            $bindingArray['metadata'] = $metadata;
-        }
-
-        $formBuilder->setData($bindingArray);
-        $form = $formBuilder->getForm();
-
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $slide->setGallery($folder);
-
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide);
-
-                if (isset($metadata)) {
-                    $metadata->setMedia($slide);
-                    $em->persist($slide);
-                    $em->flush();
-                }
-
-                $dispatcher = $this->get('event_dispatcher');
-                if ($dispatcher->hasListeners(Events::POST_CREATE)) {
-                    $event = new MediaEvent($slide, isset($metadata) ? $metadata : null);
-                    $dispatcher->dispatch(Events::POST_CREATE, $event);
-                }
-
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId(),
-                    'slug' => $folder->getSlug()
-                )));
-            }
-        }
-
-        return array(
-            'form'      => $form->createView(),
-            'gallery'   => $folder
-        );
-    }
-
-    /**
-     * @param string $context
-     *
-     * @return AbstractMediaMetadata
-     */
-    private function getMetadataClass($context = File::CONTEXT)
-    {
-        /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.manager');
-        $imageContext = $mediaManager->getContext($context);
-
-        return $imageContext->getMetadataClass();
     }
 
 }

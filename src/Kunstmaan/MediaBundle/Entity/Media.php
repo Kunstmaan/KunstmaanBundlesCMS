@@ -3,7 +3,7 @@
 namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Assetic\Asset\FileAsset;
 
@@ -12,12 +12,9 @@ use Assetic\Asset\FileAsset;
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\MediaRepository")
  * @ORM\Table(name="kuma_media")
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"media" = "Media", "image" = "Image", "file" = "File", "slide" = "Slide" , "video" = "Video"})
  * @ORM\HasLifecycleCallbacks
  */
-abstract class Media extends AbstractEntity
+class Media extends AbstractEntity
 {
 
     /**
@@ -31,9 +28,16 @@ abstract class Media extends AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="location", nullable=true)
+     */
+    protected $location;
 
     /**
      * @var string
@@ -47,7 +51,7 @@ abstract class Media extends AbstractEntity
      *
      * @ORM\Column(type="array")
      */
-    protected $metadata;
+    public $metadata;
 
     /**
      * @var \DateTime
@@ -66,10 +70,10 @@ abstract class Media extends AbstractEntity
     /**
      * @var Folder
      *
-     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
-     * @ORM\JoinColumn(name="gallery_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="media")
+     * @ORM\JoinColumn(name="folder_id", referencedColumnName="id")
      */
-    protected $gallery;
+    protected $folder;
 
     /**
      * @var mixed
@@ -99,13 +103,6 @@ abstract class Media extends AbstractEntity
         $this->setUpdatedAt(new \DateTime());
         $this->deleted = false;
     }
-
-    /**
-     * Get context
-     *
-     * @return string
-     */
-    public abstract function getContext();
 
     /**
      * @return string
@@ -174,6 +171,26 @@ abstract class Media extends AbstractEntity
     }
 
     /**
+     * Set location
+     *
+     * @param string $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
      * Set contentType
      *
      * @param string $contentType
@@ -211,10 +228,14 @@ abstract class Media extends AbstractEntity
      * Set metadata
      *
      * @param array $metadata
+     *
+     * @return Media
      */
     public function setMetadata($metadata)
     {
         $this->metadata = $metadata;
+
+        return $this;
     }
 
     /**
@@ -231,10 +252,14 @@ abstract class Media extends AbstractEntity
      * Set createdAt
      *
      * @param \DateTime $createdAt
+     *
+     * @param Media
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
+        return $this;
     }
 
     /**
@@ -251,10 +276,14 @@ abstract class Media extends AbstractEntity
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
+     *
+     * @return Media
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
     /**
@@ -271,11 +300,15 @@ abstract class Media extends AbstractEntity
      * Set content
      *
      * @param mixed $content
+     *
+     * @return Media
      */
     public function setContent($content)
     {
         $this->content = $content;
         $this->setUpdatedAt(new \DateTime());
+
+        return $this;
     }
 
     /**
@@ -289,23 +322,27 @@ abstract class Media extends AbstractEntity
     }
 
     /**
-     * Set gallery
+     * Set folder
      *
      * @param Folder $folder
+     *
+     * @return Media
      */
-    public function setGallery(Folder $folder)
+    public function setFolder(Folder $folder)
     {
-        $this->gallery = $folder;
+        $this->folder = $folder;
+
+        return $this;
     }
 
     /**
-     * Get gallery
+     * Get folder
      *
      * @return Folder
      */
-    public function getGallery()
+    public function getFolder()
     {
-        return $this->gallery;
+        return $this->folder;
     }
 
     /**
@@ -341,12 +378,12 @@ abstract class Media extends AbstractEntity
      */
     public function show($format = null, $options = array())
     {
-        $path = $this->getContext() . "/";
+        $path = "/";
         $path = $path . $this->getUuid();
         if (isset($format)) {
             $path = $path . "_" . $format;
         }
-        $path = $path . "." . ExtensionGuesser::guess($this->getContentType());
+        $path = $path . "." . ExtensionGuesser::getInstance()->guess($this->getContentType());
 
         return $path;
     }

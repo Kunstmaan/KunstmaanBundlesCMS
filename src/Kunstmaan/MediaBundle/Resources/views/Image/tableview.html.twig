@@ -1,6 +1,6 @@
 <section>
 	<ul class="thumbnails" id="file-list">
-    {% for media in gallery.files %}
+    {% for media in folder.media %}
         {% include 'KunstmaanMediaBundle:Media:sure-modal.html.twig' %}
         <li>
             <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">

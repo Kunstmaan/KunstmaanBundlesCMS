@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityNotFoundException;
 class FolderRepository extends EntityRepository
 {
     /**
-     * @param Folder $folder The gallery
+     * @param Folder $folder The folder
      */
     public function save(Folder $folder)
     {
@@ -79,25 +79,6 @@ class FolderRepository extends EntityRepository
         }
 
         return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * @param null $limit
-     *
-     * @return array
-     */
-    public function getAllFoldersByType($limit = null)
-    {
-        $all    = $this->getAllFolders($limit);
-        $bytype = array();
-        foreach ($all as $gal) {
-            if (!isset($bytype[$gal->getStrategy()->getType()])) {
-                $bytype[$gal->getStrategy()->getType()] = array();
-            }
-            $bytype[$gal->getStrategy()->getType()][] = $gal;
-        }
-
-        return $bytype;
     }
 
     /**

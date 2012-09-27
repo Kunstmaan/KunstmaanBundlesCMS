@@ -23,12 +23,11 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('kunstmaan_media');
 
-        $this->addCdnSection($rootNode);
-        $this->addProviderSection($rootNode);
-        $this->addGeneratorSection($rootNode);
-        $this->addManipulatorSection($rootNode);
-        $this->addFilesystemSection($rootNode);
-        $this->addContextsSection($rootNode);
+        //$this->addProviderSection($rootNode);
+        //$this->addGeneratorSection($rootNode);
+        //$this->addManipulatorSection($rootNode);
+        //$this->addFilesystemSection($rootNode);
+        //$this->addContextsSection($rootNode);
 
         return $treeBuilder;
     }

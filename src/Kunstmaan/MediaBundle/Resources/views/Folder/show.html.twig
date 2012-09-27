@@ -1,76 +1,40 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
-{% set FolderType = 'media.'~gallery.type~'.'~gallery.type %}
-
-{% block header %}
-	{% if gallery.type != "folder" %}
-		{% if adminmenu.current %}
-			<h1>
-				{{ adminmenu.current.internalname | trans }}
-				{% if gallery.parent %}
-					<small>
-						{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': gallery.parent.id, 'slug': gallery.parent.slug }) }}">{{ gallery.parent.name | trans }}</a>
-					</small>
-				{% endif %}
-			</h1>
-		{% endif %}
-	{% else %}
-		{% if adminmenu.current %}
-			<div class="page-header">
-				<h1>{{ adminmenu.current.internalname | trans }}</h1>
-			</div>
-		{% endif %}
-	{% endif %}
-{% endblock %}
-
 {% block content %}
 
-    {%  if gallery.type != "folder" %}
-        <!--=========Actions=========-->
-        <!--Main-->
-        <div class="main_actions">
-            {%  set addmediatype = 'media.'~gallery.type~'.add' %}
-            <a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ '_create', { 'folderId' : gallery.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>
-            <!--<button class="btn btn-primary" data-toggle="modal" data-target="#upload-image-modal">{{ 'media.bulkupload.bulkupload' |trans }}</button>-->
-            {% if gallery.strategy.getNewBulkUploadMediaInstance() is not null %}
-                <a href="{{ path('KunstmaanMediaBundle_folder_bulk_upload', { 'folderId' : gallery.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
-            {% endif %}
-            <a href="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : gallery.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
-            {% if gallery.canDelete %}
-                <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : gallery.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn">{{ 'media.gallery.delete' |trans }}</a>
-            {% endif %}
-        </div>
+    <!--=========Actions=========-->
+    <!--Main-->
+    <div class="main_actions">
+        {% block actions %}
+            {#{%  set addmediatype = 'media.'~folder.type~'.add' %}
+            <a href="{{ path('KunstmaanMediaBundle_folder_' ~ folder.type ~ '_create', { 'folderId' : folder.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>#}
+            <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn btn-primary">{{ 'media.bulkupload.bulkupload' |trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.folder.sub.addshort' |trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger">{{ 'media.folder.delete.action' |trans }}</a>
+        {% endblock %}
+    </div>
 
-		<!--Scroll-->
-        <div id="main_actions_top" class="main_actions top">
-            <div class="pull-right">
-                {%  set addmediatype = 'media.'~gallery.type~'.add' %}
-                <a href="{{ path('KunstmaanMediaBundle_folder_' ~ gallery.type ~ '_create', { 'folderId' : gallery.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>
-                {% if gallery.strategy.getNewBulkUploadMediaInstance() is not null %}
-                    <a href="{{ path('KunstmaanMediaBundle_folder_bulk_upload', { 'folderId' : gallery.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
-                {% endif %}
-                <a href="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : gallery.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.gallery.sub.addshort' |trans }}</a>
-                {% if gallery.canDelete %}
-                    <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : gallery.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn">{{ 'media.gallery.delete' |trans }}</a>
-                {% endif %}
-                <a class="btn up">&#9650;</a>
-            </div>
+	<!--Scroll-->
+    <div id="main_actions_top" class="main_actions top">
+        <div class="pull-right">
+            {{ block('actions') }}
+            <a class="btn up">&#9650;</a>
         </div>
-    {% endif %}
+    </div>
 
     <!--=========Tabs=========-->
     <ul class="nav nav-tabs">
-        {%  set galstype = 'media.menu.'~gallery.type~'s' %}
-        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ galstype|trans|capitalize }}</a></li>
+        <li class="active"><a href="#imagegallery" data-toggle="tab">Content</a></li>
         <li><a href="#properties" data-toggle="tab">{{ 'media.folder.properties' | trans }}</a></li>
     </ul>
 
     <div class="tab-content">
         <div class="tab-pane active" id="imagegallery">
+
             <section class="map-list">
                 <table class="table">
                     <tbody>
-                        {% for child in gallery.children %}
+                        {% for child in folder.children %}
                             <tr>
                                 <td>
                                 	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id, 'slug' : child.slug }) }}" class="item">{{ child.name }}</a>
@@ -79,19 +43,140 @@
                         {% else %}
                             <tr>
                                 <td class="no_item">
-                                	{{ 'media.gallery.sub.no' |trans }}
+                                	{{ 'media.folder.sub.no' |trans }}
                             	</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </section>
+            <section id="dropprogressinfo">
 
-            {%  set FolderTypelist = 'media.'~gallery.type~'.list' %}
-            {% include 'KunstmaanMediaBundle:' ~ gallery.type|capitalize ~ ':tableview.html.twig' %}
+            </section>
+            <section>
+            	<ul class="thumbnails" id="file-list">
+                {% for media in folder.media %}
+                    {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
+                    <li>
+                        <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
+                            {% set handler = mediamanager.getHandler(media) %}
+                            <img width="210" height="150" src="{{ handler.getThumbnailUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+                            <p class="img_name">{{ media.name }}</p>
+                        </a>
+                        <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
+                     	<span class="helper">Click to edit</span>
+                     </li>
+                {% else %}
+            		<li class="no_item">
+            			{{ 'media.media.no' |trans }}
+            		</li>
+                {% endfor %}
+                </ul>
+            </section>
+            <script type="text/javascript">
+            	$(document).ready(function () {
+            		initDel();
+            	});
+            </script>
        </div>
+       <script>
+       $(function(){
+
+    		var dropbox = $('#imagegallery'),
+    			message = $('.message', dropbox);
+
+    		dropbox.filedrop({
+    			paramname:'files',
+    			maxfiles: 500,
+    	    	maxfilesize: 200,
+    			url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}',
+
+    			drop: function(e) {
+    				files = e.dataTransfer.files;
+    				if (files === null || files === undefined || files.length <= 0) {
+        			    if(e.dataTransfer.getData('Text')) {
+        			        jQuery.ajax({
+        			            url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' :folder.id, 'slug' : folder.slug }) }}',
+        			            data: {'text': e.dataTransfer.getData('Text')},
+        			            async: false,
+        			            success: function() {
+        			            	window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id, 'slug' : folder.slug }) }}';
+        			            }
+            			    });
+            			}
+    				}
+        	    },
+
+    	    	error: function(err, file) {
+    				switch(err) {
+    					case 'BrowserNotSupported':
+    						break;
+    					case 'TooManyFiles':
+    						break;
+    					case 'FileTooLarge':
+    						alert(file.name+' is too large! Please upload files up to 2mb (configurable).');
+    						break;
+    					default:
+    						break;
+    				}
+    			},
+
+    			uploadStarted:function(i, file, len){
+    				createProgressInfo(file);
+    			},
+
+    			progressUpdated: function(i, file, progress) {
+    				$.data(file).find('.progress .bar').css('width', progress + '%');
+    			},
+
+    			uploadFinished:function(i,file,response){
+    				$.data(file).find('.progress .bar').css('width', '100%');
+    				$.data(file).find('.uploadtitle').html('Done');
+    			},
+
+    			afterAll:function(i,file,response){
+    				window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id, 'slug' : folder.slug }) }}';
+    			}
+
+    		});
+
+    		var template = '<div><span style="font-weight:bold" class="uploadtitle">Uploading file...</span> <span class="uploadfilename"></span><div class="progress progress-striped"><div class="bar" style="width: 0%;"></div></div></div>';
+
+    		function createProgressInfo(file){
+    			var preview = $(template);
+    			preview.appendTo(jQuery('#dropprogressinfo'));
+    			preview.find('.uploadfilename').html(file.name);
+
+    			// Associating a preview container
+    			// with the file, using jQuery's $.data():
+    			$.data(file,preview);
+    		}
+
+    	});
+
+       </script>
        <div class="tab-pane" id="properties">
-       		{% include 'KunstmaanMediaBundle:Folder:editform.html.twig' %}
+       		<form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_edit', { 'folderId' : folder.id } ) }}" method="post" {{ form_enctype(editform) }}>
+                <div class="prop_wrp">
+                    <div class="input_prop">
+                        {{ form_errors(editform) }}
+                        <label for="xlInput3">{{ 'form.name' |trans }}</label>
+                        {{ form_widget(editform.name) }}
+                    </div>
+                    <div class="input_prop">
+                        <label for="xlInput3">{{ 'media.folder.sub.belongsto' |trans }}</label>
+                        {{ form_widget(editform.parent) }}
+                        <p class="help-block">{{ 'media.folder.notrequired' |trans }}</p>
+                        {{ form_rest(editform) }}
+                    </div>
+                    <div class="input_prop">
+                    	<div class="btn_group">
+                        	<button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id, 'slug':folder.slug } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
+                        	<button class="btn btn-primary" type="submit">{{ 'media.folder.edit' |trans }}</button>
+                       	</div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <!--=========Modals=========-->

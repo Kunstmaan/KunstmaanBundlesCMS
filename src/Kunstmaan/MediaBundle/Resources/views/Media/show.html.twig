@@ -1,0 +1,102 @@
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+
+{% block header %}
+     <h1>{{ 'media.media.file'|trans }} <small>{{ media.name }}</small></h1>
+{% endblock %}
+
+{% block content %}
+
+	<!--=========Actions=========-->
+
+	<!--Main-->
+    <div class="main_actions">
+        {% block extraactions %}{% endblock %}
+        <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
+        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': folder.id, 'slug': folder.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
+    </div>
+
+	<!--Scroll-->
+    <div id="main_actions_top" class="main_actions top">
+        <div class="pull-right">
+            {{ block('extraactions') }}
+            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': folder.id, 'slug': folder.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
+            <a class="btn up">&#9650;</a>
+        </div>
+    </div>
+
+	<!--=========Tabs=========-->
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.media.file'|trans|capitalize }}</a></li>
+        <li><a href="#properties" data-toggle="tab">{{ 'media.media.properties' | trans }}</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="imagegallery">
+
+			<div class="properties">
+				<dl>
+				    <dt>Name:</dt>
+				    	<dd>{{ media.name }}</dd>
+				    <dt>Content-type:</dt>
+				    	<dd>{{ media.contentType }}</dd>
+				    <dt>Added:</dt>
+				    	<dd>{{ media.createdat|date|escape }}</dd>
+				    <dt>Updated:</dt>
+				    	<dd>{{ media.updatedat|date|escape }}</dd>
+				</dl>
+			</div>
+
+			{% set handler = mediamanager.getHandler(media) %}
+            <p><img id="editimage" class="thumbnail" src="{{ handler.getThumbnailUrl(media, app.request.basePath) }}" alt="{{ media.name }}" /></p>
+
+            <!-- Load Feather code -->
+            <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
+
+            <!-- Instantiate Feather -->
+            <script type="text/javascript">
+                var featherEditor = new Aviary.Feather({
+                    apiKey: '5f257cbef',
+                    apiVersion: 2,
+                    //tools: 'all',
+                    onSave: function(imageID, newURL) {
+                        var img = document.getElementById(imageID);
+                        img.src = newURL;
+                        window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'folderId' : folder.id, 'mediaId' : media.id }) }}?url='+newURL;
+                    }
+                });
+
+                function launchEditor(id, src) {
+                    featherEditor.launch({
+                        image: id,
+                        url: src
+                    });
+                    return false;
+                }
+            </script>
+
+            <div id="injection_site"></div>
+        </div>
+
+        <div class="tab-pane" id="properties">
+            <form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(form) }}>
+                <div class="prop_wrp">
+                    <div class="input_prop">
+                        {{ form_widget(form) }}
+                    </div>
+                    <div class="input_prop">
+                    	<div class="btn_group">
+                        	<button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
+                        	<button class="btn btn-primary" type="submit">{{ 'media.folder.edit' |trans }}</button>
+                       	</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--=========Modals=========-->
+    {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
+
+
+{% endblock %}

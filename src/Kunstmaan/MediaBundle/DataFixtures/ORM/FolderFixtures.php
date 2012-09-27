@@ -2,6 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\DataFixtures\ORM;
 
+use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
+
+use Kunstmaan\MediaBundle\Entity\Media;
+
 use Kunstmaan\MediaBundle\Entity\FileGallery;
 use Kunstmaan\MediaBundle\Entity\SlideGallery;
 use Kunstmaan\MediaBundle\Entity\VideoGallery;
@@ -28,7 +32,6 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $gal = new Folder($manager);
         $gal->setName('Media');
         $gal->setTranslatableLocale('en');
-        $gal->setCanDelete(false);
         $gal->setRel("media");
         $gal->setSequencenumber(1);
         $manager->persist($gal);
@@ -46,11 +49,10 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($gal);
         $manager->flush();
 
-        $subgal = new ImageGallery($manager);
+        $subgal = new Folder($manager);
         $subgal->setParent($gal);
         $subgal->setName('Images');
         $subgal->setTranslatableLocale('en');
-        $subgal->setCanDelete(false);
         $subgal->setRel("image");
         $subgal->setSequencenumber(1);
         $manager->persist($subgal);
@@ -68,11 +70,10 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($subgal);
         $manager->flush();
 
-        $subgal = new VideoGallery($manager);
+        $subgal = new Folder($manager);
         $subgal->setParent($gal);
         $subgal->setName('Videos');
         $subgal->setTranslatableLocale('en');
-        $subgal->setCanDelete(false);
         $subgal->setRel("video");
         $subgal->setSequencenumber(2);
         $manager->persist($subgal);
@@ -90,11 +91,18 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($subgal);
         $manager->flush();
 
-        $subgal = new SlideGallery($manager);
+        $media = new Media();
+        $media->setFolder($subgal);
+        $video = new RemoteVideoHelper($media);
+        $video->setCode('KONOD3s1zIw');
+        $video->setType('youtube');
+        $manager->persist($video->getMedia());
+        $manager->flush();
+
+        $subgal = new Folder($manager);
         $subgal->setParent($gal);
         $subgal->setName('Slides');
         $subgal->setTranslatableLocale('en');
-        $subgal->setCanDelete(false);
         $subgal->setRel("slideshow");
         $subgal->setSequencenumber(3);
         $manager->persist($subgal);
@@ -112,11 +120,31 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($subgal);
         $manager->flush();
 
-        $subgal = new FileGallery($manager);
+        $subgal = new Folder($manager);
         $subgal->setParent($gal);
         $subgal->setName('Files');
         $subgal->setTranslatableLocale('en');
-        $subgal->setCanDelete(false);
+        $subgal->setRel("files");
+        $subgal->setSequencenumber(4);
+        $manager->persist($subgal);
+        $manager->flush();
+
+        $subgal->setTranslatableLocale('nl');
+        $manager->refresh($subgal);
+        $subgal->setName('Bestanden');
+        $manager->persist($subgal);
+        $manager->flush();
+
+        $subgal->setTranslatableLocale('fr');
+        $manager->refresh($subgal);
+        $subgal->setName('Fichiers');
+        $manager->persist($subgal);
+        $manager->flush();
+
+        $subgal = new Folder($manager);
+        $subgal->setParent($gal);
+        $subgal->setName('Files');
+        $subgal->setTranslatableLocale('en');
         $subgal->setRel("files");
         $subgal->setSequencenumber(4);
         $manager->persist($subgal);

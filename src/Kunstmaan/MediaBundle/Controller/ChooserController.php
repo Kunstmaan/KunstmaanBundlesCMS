@@ -186,11 +186,11 @@ class ChooserController extends Controller
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         /* @var array $galleries */
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+        $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
         return array(
             'gallery'       => $folder,
-            'galleries'     => $galleries
+            'folders'     => $folders
         );
     }
 
@@ -208,12 +208,12 @@ class ChooserController extends Controller
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        /* @var array $galleries */
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+        /* @var array $folders */
+        $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
 
         return array(
             'gallery'       => $folder,
-            'galleries'     => $galleries
+            'folders'     => $folders
         );
     }
 

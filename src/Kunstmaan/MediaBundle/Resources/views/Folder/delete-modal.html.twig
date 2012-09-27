@@ -1,37 +1,14 @@
 <div id="delete-modal" class="modal hide fade">
     <div class="modal-header">
         <button class="close" data-dismiss="modal">&times;</button>
-        <h3>{{ 'media.gallery.deletesure'| trans({'%gallery%': gallery.name }) | raw }}</h3>
+        <h3>{{ 'media.folder.delete.title'| trans({'%folder%': folder.name }) | raw }}</h3>
     </div>
     <div class="modal-body">
-        <p>
-        	{% set mediadelete = "media."~gallery.type~".delete" %}
-        	{{ mediadelete | trans({'%gallery%': gallery.name }) | raw }}:
-            <ul>
-                {% for image in gallery.files %}
-                    <li>
-                        {{ image.id }}
-                        {{ image.name }}
-                        {{ image.contentType }}
-                    </li>
-                {% else %}
-                	{% set nomedia = "media."~gallery.type~".no" %}
-                    <li>{{ nomedia | trans }}</li>
-                {% endfor %}
-            </ul>
-            {{ 'media.gallery.sub.delete' | trans }}:
-            <ul>
-                {% for child in gallery.children %}
-                    <li>{% include 'KunstmaanMediaBundle:Folder:showgallery.html.twig' %}</li>
-                {% else %}
-                    <li>{{ 'media.gallery.sub.no' | trans }}</li>
-                {% endfor %}
-            </ul>
-        </p>
+        <p>{{ 'media.folder.delete.sure'| trans({'%folder%': folder.name }) | raw }}</p>
     </div>
     <div class="modal-footer">
     	<div class="btn_group">
-	        <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : gallery.id }) }}" class="btn btn-danger">{{ 'form.delete' |trans }}</a>
+	        <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id }) }}" class="btn btn-danger">{{ 'form.delete' |trans }}</a>
 	        <button class="btn" data-dismiss="modal">{{ 'form.cancel' |trans  }}</button>
 		</div>
     </div>

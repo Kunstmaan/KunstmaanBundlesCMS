@@ -13,42 +13,24 @@ services:
         arguments: ["@knp_menu.factory"]
 
 kunstmaan_media:
-    cdn:
-        local:
-            default: true
-            id: kunstmaan_media.cdn.remote_server
-            options:
-                base_url: "%cdnpath%" # instellen in parameters.ini
+    #filesystem:
+    #        local:
+    #            default: true
+    #            id: kunstmaan_media.filesystem.local
+    #            options:
+    #                base_path: "%kernel.root_dir%/../web%kunstmaan_media.upload_dir%"
+    #                create: true  #creates the directory if it doesn't exist yet
 
-    provider:
-        image:  # So we need the image provider here
-            default: true
-            id: kunstmaan_media.provider.image
-        file:  # So we need the file provider here
-            default: false
-            id: kunstmaan_media.provider.file
-        code:
-            default: false
-            id: kunstmaan_media.provider.code
+    #contexts:
+    #    kunstmaan_media_image:
+    #        provider: image
+    #        formats:
+    #            small: { width: 90, height: 90 }
+    #            medium: { width: 210, height: 150 }
+    #            large: { width: 330, height: 230 }
 
-    filesystem:
-            local:
-                default: true
-                id: kunstmaan_media.filesystem.local
-                options:
-                    base_path: "%kernel.root_dir%/../web%kunstmaan_media.upload_dir%"
-                    create: true  #creates the directory if it doesn't exist yet
+    #    kunstmaan_media_file:
+    #        provider: file
 
-    contexts:
-        kunstmaan_media_image:
-            provider: image
-            formats:
-                small: { width: 90, height: 90 }
-                medium: { width: 210, height: 150 }
-                large: { width: 330, height: 230 }
-
-        kunstmaan_media_file:
-            provider: file
-
-        kunstmaan_media_code:
-            provider: code
+    #    kunstmaan_media_code:
+    #        provider: code

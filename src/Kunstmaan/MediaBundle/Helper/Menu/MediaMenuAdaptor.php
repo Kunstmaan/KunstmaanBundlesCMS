@@ -67,21 +67,21 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             $currentId = $request->get('folderId');
 
             if (isset($currentId)) {
-                /* @var Folder $currentGallery */
-                $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
+                /* @var Folder $currentFolder */
+                $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
             } else if (in_array($request->attributes->get('_route'), $mediaRoutes)) {
                 /* @var Media $media */
                 $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('mediaId'));
-                $currentGallery = $media->getGallery();
+                $currentFolder = $media->getFolder();
             } else if (in_array($request->attributes->get('_route'), $createRoutes)) {
-                $currentId = $request->get('gallery_id');
+                $currentId = $request->get('folderId');
                 if (isset($currentId)) {
-                    $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
+                    $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
                 }
             }
 
-            if (isset($currentGallery)) {
-                $parents = $currentGallery->getParents();
+            if (isset($currentFolder)) {
+                $parents = $currentFolder->getParents();
             } else {
                 $parents = array();
             }
@@ -93,8 +93,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($folder->getRel());
-                if (isset($currentGallery) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
-                    if ($currentGallery->getId() == $folder->getId()) {
+                if (isset($currentFolder) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
+                    if ($currentFolder->getId() == $folder->getId()) {
                         $menuitem->setActive(true);
                     } else {
                         foreach ($parents as $parent) {
@@ -109,29 +109,29 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             }
         } else if ('KunstmaanMediaBundle_folder_show' == $parent->getRoute()) {
             $parentRouteParams = $parent->getRouteparams();
-            /* @var Folder $parentGallery */
-            $parentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($parentRouteParams['folderId']);
+            /* @var Folder $parentFolder */
+            $parentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($parentRouteParams['folderId']);
             /* @var Folder[] $galleries */
-            $galleries = $parentGallery->getChildren();
+            $galleries = $parentFolder->getChildren();
             $currentId = $request->get('folderId');
 
             if (isset($currentId)) {
-                /* @var Folder $currentGallery */
-                $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
+                /* @var Folder $currentFolder */
+                $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
             } else if (in_array($request->attributes->get('_route'), $mediaRoutes)) {
                 $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('mediaId'));
-                $currentGallery = $media->getGallery();
+                $currentFolder = $media->getFolder();
             } else if (in_array($request->attributes->get('_route'), $createRoutes)) {
                 $currentId = $request->get('folderId');
                 if (isset($currentId)) {
-                    $currentGallery = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
+                    $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
                 }
             }
 
             /* @var Folder[] $parentGalleries */
             $parentGalleries = null;
-            if (isset($currentGallery)) {
-                $parentGalleries = $currentGallery->getParents();
+            if (isset($currentFolder)) {
+                $parentGalleries = $currentFolder->getParents();
             } else {
                 $parentGalleries = array();
             }
@@ -143,12 +143,12 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($folder->getRel());
-                if (isset($currentGallery) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
-                    if ($currentGallery->getId() == $folder->getId()) {
+                if (isset($currentFolder) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
+                    if ($currentFolder->getId() == $folder->getId()) {
                         $menuitem->setActive(true);
                     } else {
-                        foreach ($parentGalleries as $parentGallery) {
-                            if ($parentGallery->getId() == $folder->getId()) {
+                        foreach ($parentGalleries as $parentFolder) {
+                            if ($parentFolder->getId() == $folder->getId()) {
                                 $menuitem->setActive(true);
                                 break;
                             }

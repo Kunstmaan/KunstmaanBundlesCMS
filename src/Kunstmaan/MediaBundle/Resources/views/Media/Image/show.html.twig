@@ -1,0 +1,5 @@
+{% extends 'KunstmaanMediaBundle:Media:show.html.twig' %}
+
+{% block extraactions %}
+    <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.media.edit' | trans }}</button>
+{% endblock %}

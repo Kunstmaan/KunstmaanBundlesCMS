@@ -138,7 +138,7 @@ In the configuration we've added to provider.xml you can see we defined a parame
 namespace Kunstmaan\MediaBundle\Helper\Provider;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Helper\Generator\ExtensionGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Kunstmaan\MediaBundle\Helper\Provider\AbstractVideoProvider;
 
 class PdfProvider extends FileProvider

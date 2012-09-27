@@ -1,7 +1,0 @@
-parameters:
-    kunstmaan_media.cdn.remote_server.class: 'Kunstmaan\MediaBundle\Helper\Cdn\RemoteServerCdn'
-    
-services:
-    kunstmaan_media.cdn.remote_server:
-        class: "%kunstmaan_media.cdn.remote_server.class%"
-        arguments: ["%kunstmaan_media.cdn.remote_server.base_url%"]

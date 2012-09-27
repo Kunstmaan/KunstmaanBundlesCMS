@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\Image;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
-use Symfony\Component\HttpFoundation\File\File;
+use Kunstmaan\MediaBundle\Entity\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,12 +19,12 @@ class AviaryController extends Controller
 
     /**
      * @param int $folderId The id of the Folder
-     * @param int $imageId  The id of the image
+     * @param int $mediaId  The id of the image
      *
-     * @Route("/aviary/{folderId}/{imageId}", requirements={"folderId" = "\d+", "imageId" = "\d+"}, name="KunstmaanMediaBundle_aviary")
+     * @Route("/aviary/{folderId}/{mediaId}", requirements={"folderId" = "\d+", "mediaId" = "\d+"}, name="KunstmaanMediaBundle_aviary")
      * @return RedirectResponse
      */
-    public function indexAction($folderId, $imageId)
+    public function indexAction($folderId, $mediaId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -36,7 +36,7 @@ class AviaryController extends Controller
 
         /* @var Image $media */
         $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($imageId);
-        $picture = new Image();
+        $picture = new File();
         $picture->setOriginal($media);
         $picture->setName($media->getName()."-edited");
         $picture->setContent($helper->getMedia());

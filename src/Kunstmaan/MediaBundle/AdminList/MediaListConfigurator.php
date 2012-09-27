@@ -53,7 +53,7 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
      */
     public function canAdd()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -67,25 +67,25 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
             'image' => array(
                 'path'   => 'KunstmaanMediaBundle_folder_imagecreate',
                 'params' => array(
-                    'gallery_id' => $params['gallery_id']
+                    'folderId' => $params['folderId']
                 )
             ),
             'file'  => array(
                 'path'   => 'KunstmaanMediaBundle_folder_filecreate',
                 'params' => array(
-                    'gallery_id' => $params['gallery_id']
+                    'folderId' => $params['folderId']
                 )
             ),
             'slide' => array(
                 'path'   => 'KunstmaanMediaBundle_folder_slidecreate',
                 'params' => array(
-                    'gallery_id' => $params['gallery_id']
+                    'folderId' => $params['folderId']
                 )
             ),
             'video' => array(
                 'path'   => 'KunstmaanMediaBundle_folder_videocreate',
                 'params' => array(
-                    'gallery_id' => $params['gallery_id']
+                    'folderId' => $params['folderId']
                 )
             )
         );
@@ -129,7 +129,7 @@ class MediaListConfigurator extends AbstractAdminListConfigurator
     public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
     {
         parent::adaptQueryBuilder($queryBuilder, $params);
-        $queryBuilder->andwhere($queryBuilder->expr()->eq("b.gallery", $params['gallery']));
+        $queryBuilder->andwhere($queryBuilder->expr()->eq("b.folder", $params['folder']));
         $queryBuilder->andwhere("b.deleted != true");
     }
 

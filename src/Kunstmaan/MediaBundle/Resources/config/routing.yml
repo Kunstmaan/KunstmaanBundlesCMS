@@ -18,19 +18,5 @@ KunstmaanMediaBundle_media_folder:
     type:     annotation
     prefix:   /admin/media/folder  
    
-KunstmaanMediaBundle_video:
-    resource: "@KunstmaanMediaBundle/Controller/VideoController.php"
-    type:     annotation
-    prefix:   /admin/media/video
-     
-KunstmaanMediaBundle_slide:
-    resource: "@KunstmaanMediaBundle/Controller/SlideController.php"
-    type:     annotation
-    prefix:   /admin/media/slide
-
-KunstmaanMediaBundle_metadata:
-    resource: "@KunstmaanMediaBundle/Controller/MediaMetadataController.php"
-    type:     annotation
-    prefix:   /admin/media/metadata
 
 

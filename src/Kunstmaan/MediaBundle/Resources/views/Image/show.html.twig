@@ -59,10 +59,6 @@
 				</dl>
 			</div>
 
-
-
-
-
             <p><img id="editimage" class="thumbnail" src="{{ asset(upload_dir~media.show()) }}" alt="{{ media.name }}" /></p>
 
             <!-- Load Feather code -->
@@ -79,7 +75,6 @@
                         img.src = newURL;
                         window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'folderId' : gallery.id, 'imageId' : media.id }) }}?url='+newURL;
                     }
-
                 });
 
                 function launchEditor(id, src) {

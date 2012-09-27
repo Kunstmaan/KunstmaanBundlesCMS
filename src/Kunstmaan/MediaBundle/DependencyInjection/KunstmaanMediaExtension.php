@@ -39,19 +39,19 @@ class KunstmaanMediaExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
-        foreach (array('provider', 'cdn', 'filesystem', 'generator', 'image', 'manager', 'orm') as $basename) {
+        foreach (array('manager', 'handlers') as $basename) {
             $loader->load(sprintf('%s.yml', $basename));
         }
 
-        $manager = $container->getDefinition('kunstmaan_media.manager');
+        //$manager = $container->getDefinition('kunstmaan_media.media_manager');
 
         // Order matters !!
-        $this->initCdns($config, $manager, $container);
+        /*$this->initCdns($config, $manager, $container);
         $this->initFilesystem($config, $manager, $container);
         $this->initGenerators($config, $manager, $container);
         $this->initManipulators($config, $manager, $container);
         $this->initProviders($config, $manager, $container);
-        $this->initContexts($config, $manager, $container);
+        $this->initContexts($config, $manager, $container);*/
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
