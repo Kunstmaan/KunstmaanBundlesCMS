@@ -7,6 +7,8 @@ use ArrayObject;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
@@ -105,17 +107,16 @@ class ChoicePagePart extends AbstractFormPagePart
         $formBuilder->add('formwidget_' . $this->getUniqueId(), new ChoiceFormSubmissionType($label, $this->getExpanded(), $this->getMultiple(), $choices, $this->getEmptyValue()));
         $formBuilder->setData($data);
         if ($this->getRequired()) {
-            $formBuilder->addValidator(
-                new FormValidator($cfsf, $this,
-                    function (FormInterface $form, ChoiceFormSubmissionField $cfsf, ChoicePagePart $thiss) {
-                        if ($cfsf->isNull()) {
-                            $errormsg = $thiss->getErrorMessageRequired();
-                            $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                            $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
-                            $v->addError($formError);
-                        }
-                    }
-                ));
+            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($cfsf, $this) {
+                $form = $formEvent->getForm();
+
+                if ($cfsf->isNull()) {
+                    $errormsg = $this->getErrorMessageRequired();
+                    $v = $form->get('formwidget_' . $this->getUniqueId())->get('value');
+                    $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
+                    $v->addError($formError);
+                }
+            });
         }
         $fields[] = $cfsf;
     }

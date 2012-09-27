@@ -12,6 +12,8 @@ use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -161,30 +163,27 @@ class MultiLineTextPagePart extends AbstractFormPagePart
         $formBuilder->add('formwidget_' . $this->getUniqueId(), new TextFormSubmissionType($label));
         $formBuilder->setData($data);
         if ($this->getRequired()) {
-            $formBuilder->addValidator(
-                new FormValidator($mfsf, $this,
-                    function (FormInterface $form, TextFormSubmissionField $sfsf, MultiLineTextPagePart $thiss) {
-                        $value = $sfsf->getValue();
-                        if (is_null($value) || !is_string($value) || empty($value)) {
-                            $errormsg = $thiss->getErrorMessageRequired();
-                            $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                            $v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
-                        }
-                    }
-                )
-            );
+            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($mfsf, $this) {
+                $form = $formEvent->getForm();
+
+                $value = $mfsf->getValue();
+                if (is_null($value) || !is_string($value) || empty($value)) {
+                    $errormsg = $this->getErrorMessageRequired();
+                    $v = $form->get('formwidget_' . $this->getUniqueId())->get('value');
+                    $v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
+                }
+            });
         }
         if ($this->getRegex()) {
-            $formBuilder
-                    ->addValidator(
-                        new FormValidator($mfsf, $this,
-                            function (FormInterface $form, TextFormSubmissionField $sfsf, MultiLineTextPagePart $thiss) {
-                                        $value = $sfsf->getValue();
-                                        if (!is_null($value) && is_string($value) && !preg_match('/' . $thiss->getRegex() . '/', $value)) {
-                                            $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                                            $v->addError(new FormError($thiss->getErrorMessageRegex()));
-                                        }
-                            }));
+            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($mfsf, $this) {
+                $form = $formEvent->getForm();
+
+                $value = $mfsf->getValue();
+                if (!is_null($value) && is_string($value) && !preg_match('/' . $this->getRegex() . '/', $value)) {
+                    $v = $form->get('formwidget_' . $this->getUniqueId())->get('value');
+                    $v->addError(new FormError($this->getErrorMessageRegex()));
+                }
+            });
         }
         $fields[] = $mfsf;
     }

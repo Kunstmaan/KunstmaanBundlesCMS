@@ -9,6 +9,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\Request;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -63,18 +65,16 @@ class FileUploadPagePart extends AbstractFormPagePart
         $formBuilder->setData($data);
 
         if ($this->getRequired()) {
-            $formBuilder->addValidator(
-                new FormValidator($ffsf, $this,
-                    function(FormInterface $form, FileFormSubmissionField $ffsf, FileUploadPagePart $thiss) {
-                        if ($ffsf->isNull()) {
-                            $errormsg = $thiss->getErrorMessageRequired();
-                            $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('file');
-                            $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
-                            $v->addError($formError);
-                        }
-                    }
-                )
-            );
+            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($ffsf, $this) {
+                $form = $formEvent->getForm();
+
+                if ($ffsf->isNull()) {
+                    $errormsg = $this->getErrorMessageRequired();
+                    $v = $form->get('formwidget_' . $this->getUniqueId())->get('file');
+                    $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
+                    $v->addError($formError);
+                }
+            });
         }
 
         $fields[] = $ffsf;
