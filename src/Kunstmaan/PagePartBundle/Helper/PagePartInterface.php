@@ -25,11 +25,6 @@ interface PagePartInterface
     public function getAdminView();
 
     /**
-     * @return string
-     */
-    public function getElasticaView();
-
-    /**
      * @return AbstractType
      */
     public function getDefaultAdminType();
