@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\AdminListConfiguratorInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,14 +18,14 @@ class AdminList
     protected $request = null;
 
     /**
-     * @var AbstractAdminListConfigurator $configurator
+     * @var AdminListConfiguratorInterface $configurator
      */
     protected $configurator = null;
 
     /**
-     * @param AbstractAdminListConfigurator $configurator The configurator
+     * @param AdminListConfiguratorInterface $configurator The configurator
      */
-    public function __construct(AbstractAdminListConfigurator $configurator)
+    public function __construct(AdminListConfiguratorInterface $configurator)
     {
         $this->configurator = $configurator;
         $this->configurator->buildFilters();
@@ -34,7 +34,7 @@ class AdminList
     }
 
     /**
-     * @return AbstractAdminListConfigurator|null
+     * @return AdminListConfiguratorInterface|null
      */
     public function getConfigurator()
     {
