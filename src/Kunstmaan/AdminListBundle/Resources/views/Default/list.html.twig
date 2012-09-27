@@ -33,7 +33,6 @@
 	{% else %}
 		{{ adminlist_widget(adminlist, adminlist.getIndexUrlFor()["path"], adminlist.getIndexUrlFor()) }}
 	{% endif %}
-
     {% if adminlist.hasListActions %}
         {% for action in adminlist.getListActions() %}
             {% if action.template is not null %}

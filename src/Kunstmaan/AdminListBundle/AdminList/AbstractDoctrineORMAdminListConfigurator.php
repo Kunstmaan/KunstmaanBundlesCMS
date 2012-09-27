@@ -33,9 +33,34 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     }
 
     /**
-     * @return string
+     * Return the url to edit the given $item
+     *
+     * @param object $item
+     *
+     * @return array
      */
-    abstract public function getRepositoryName();
+    public function getEditUrlFor($item)
+    {
+        return array(
+            'path'	 => $this->getPathByConvention($this::SUFFIX_EDIT),
+            'params' => array('id' => $item->getId())
+        );
+    }
+
+    /**
+     * Get the delete url for the given $item
+     *
+     * @param object $item
+     *
+     * @return array
+     */
+    public function getDeleteUrlFor($item)
+    {
+        return array(
+            'path' => $this->getPathByConvention($this::SUFFIX_DELETE),
+            'params'	=> array('id' => $item->getId())
+        );
+    }
 
     /**
      * @return Pagerfanta

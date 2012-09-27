@@ -7,6 +7,11 @@ use Pagerfanta\Pagerfanta;
 
 abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface
 {
+    const SUFFIX_ADD = 'add';
+    const SUFFIX_EDIT = 'edit';
+    const SUFFIX_EXPORT = 'export';
+    const SUFFIX_DELETE = 'delete';
+
     /* @var Field[] $fields */
     private $fields = array();
 
@@ -67,7 +72,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return array
      */
-    abstract public function getAddUrlFor(array $params = array());
+    public function getAddUrlFor(array $params = array())
+    {
+        return array(
+            strtolower($this->getEntityName()) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
+                                                        'params' => $params)
+        );
+    }
 
     /**
      * Get the delete url for the given $item
@@ -81,9 +92,46 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Return the url to list all the items
      *
+     * @param array $params
+     *
      * @return array
      */
-    abstract public function getIndexUrlFor();
+    public function getIndexUrlFor(array $params = array())
+    {
+        return array(
+            'path' => $this->getPathByConvention(),
+            'params' => $params
+        );
+    }
+
+    /**
+     * @return Pagerfanta
+     */
+    abstract public function getPagerfanta();
+
+    /**
+     * Return current bundle name.
+     *
+     * @return string
+     */
+    abstract public function getBundleName();
+
+    /**
+     * Return current entity name.
+     *
+     * @return string
+     */
+    abstract public function getEntityName();
+
+    /**
+     * Return default repository name.
+     *
+     * @return string
+     */
+    public function getRepositoryName()
+    {
+        return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+    }
 
     /**
      * @param object $entity
@@ -558,7 +606,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @return Pagerfanta
+     * @param string $suffix
+     *
+     * @return string
      */
-    abstract public function getPagerfanta();
+    public function getPathByConvention($suffix = null)
+    {
+        if (empty($suffix)) {
+            return sprintf('%s_admin_%ss', $this->getBundleName(), strtolower($this->getEntityName()));
+        }
+
+        return sprintf('%s_admin_%ss_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
+    }
+
+    /**
+     * Get controller path.
+     *
+     * @return string
+     */
+    public function getControllerPath()
+    {
+        return sprintf('%s:%s', $this->getBundleName(), $this->getEntityName());
+    }
+
 }

@@ -27,12 +27,42 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
+     * Return the url to edit the given $item
+     *
+     * @param array $item
+     *
+     * @return array
+     */
+    public function getEditUrlFor($item)
+    {
+        return array(
+            'path'   => $this->getPathByConvention($this::SUFFIX_EDIT),
+            'params' => array('id' => $item['id'])
+        );
+    }
+
+    /**
+     * Get the delete url for the given $item
+     *
+     * @param object $item
+     *
+     * @return array
+     */
+    public function getDeleteUrlFor($item)
+    {
+        return array(
+            'path'   => $this->getPathByConvention($this::SUFFIX_DELETE),
+            'params' => array('id' => $item['id'])
+        );
+    }
+
+    /**
      * @return Pagerfanta
      */
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter = new DoctrineDBALAdapter($this->getQueryBuilder(), $this->getCountField());
+            $adapter          = new DoctrineDBALAdapter($this->getQueryBuilder(), $this->getCountField());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setCurrentPage($this->getPage());
             $this->pagerfanta->setMaxPerPage($this->getLimit());

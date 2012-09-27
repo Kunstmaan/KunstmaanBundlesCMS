@@ -41,7 +41,7 @@
 	            <td class="actions">
 	            	{% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
 	                {% if adminlist.canEdit(item) %}
-	                    <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><i class="icon-edit"></i>Edit</a>
+	                    <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)["params"] ) }}"><i class="icon-edit"></i>Edit</a>
 	                {% endif %}
 	                {% if adminlist.canDelete(item) %}
 	                    {% if adminlist.getDeleteUrlFor(item)["action"] is defined %}
