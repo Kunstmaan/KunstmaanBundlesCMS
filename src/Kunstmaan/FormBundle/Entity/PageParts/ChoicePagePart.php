@@ -107,12 +107,13 @@ class ChoicePagePart extends AbstractFormPagePart
         $formBuilder->add('formwidget_' . $this->getUniqueId(), new ChoiceFormSubmissionType($label, $this->getExpanded(), $this->getMultiple(), $choices, $this->getEmptyValue()));
         $formBuilder->setData($data);
         if ($this->getRequired()) {
-            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($cfsf, $this) {
+            $thiss = $this;
+            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($cfsf, $thiss) {
                 $form = $formEvent->getForm();
 
                 if ($cfsf->isNull()) {
-                    $errormsg = $this->getErrorMessageRequired();
-                    $v = $form->get('formwidget_' . $this->getUniqueId())->get('value');
+                    $errormsg = $thiss->getErrorMessageRequired();
+                    $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
                     $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
                     $v->addError($formError);
                 }

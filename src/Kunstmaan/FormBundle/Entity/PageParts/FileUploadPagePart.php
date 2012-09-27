@@ -65,12 +65,13 @@ class FileUploadPagePart extends AbstractFormPagePart
         $formBuilder->setData($data);
 
         if ($this->getRequired()) {
-            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($ffsf, $this) {
+            $thiss = $this;
+            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($ffsf, $thiss) {
                 $form = $formEvent->getForm();
 
                 if ($ffsf->isNull()) {
-                    $errormsg = $this->getErrorMessageRequired();
-                    $v = $form->get('formwidget_' . $this->getUniqueId())->get('file');
+                    $errormsg = $thiss->getErrorMessageRequired();
+                    $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('file');
                     $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
                     $v->addError($formError);
                 }

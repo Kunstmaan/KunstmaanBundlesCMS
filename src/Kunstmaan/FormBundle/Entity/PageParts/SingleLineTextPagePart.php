@@ -163,25 +163,27 @@ class SingleLineTextPagePart extends AbstractFormPagePart
         $formBuilder->add('formwidget_' . $this->getUniqueId(), new StringFormSubmissionType($label));
         $formBuilder->setData($data);
         if ($this->getRequired()) {
-            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($sfsf, $this) {
+            $thiss = $this;
+            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($sfsf, $thiss) {
                 $form = $formEvent->getForm();
 
                 $value = $sfsf->getValue();
                 if (is_null($value) || !is_string($value) || empty($value)) {
-                    $errormsg = $this->getErrorMessageRequired();
-                    $v = $form->get('formwidget_' . $this->getUniqueId())->get('value');
+                    $errormsg = $thiss->getErrorMessageRequired();
+                    $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
                     $v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
                 }
             });
         }
         if ($this->getRegex()) {
-            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($sfsf, $this) {
+            $thiss = $this;
+            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($sfsf, $thiss) {
                 $form = $formEvent->getForm();
 
                 $value = $sfsf->getValue();
-                if (!is_null($value) && is_string($value) && !preg_match('/' . $this->getRegex() . '/', $value)) {
-                    $v = $form->get('formwidget_' . $this->getUniqueId())->get('value');
-                    $v->addError(new FormError($this->getErrorMessageRegex()));
+                if (!is_null($value) && is_string($value) && !preg_match('/' . $thiss->getRegex() . '/', $value)) {
+                    $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
+                    $v->addError(new FormError($thiss->getErrorMessageRegex()));
                 }
             });
         }
