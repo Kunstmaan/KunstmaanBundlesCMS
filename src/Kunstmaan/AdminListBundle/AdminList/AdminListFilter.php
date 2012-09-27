@@ -41,11 +41,15 @@ class AdminListFilter
     /**
      * @param string $columnName
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function get($columnName)
     {
-        return $this->filterDefinitions[$columnName];
+        if (isset($this->filterDefinitions[$columnName])) {
+            return $this->filterDefinitions[$columnName];
+        }
+
+        return null;
     }
 
     /**
