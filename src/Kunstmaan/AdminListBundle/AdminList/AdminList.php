@@ -44,11 +44,11 @@ class AdminList
     }
 
     /**
-     * @return AdminListFilter
+     * @return FilterBuilder
      */
     public function getAdminListFilter()
     {
-        return $this->configurator->getAdminListFilter();
+        return $this->configurator->getFilterBuilder();
     }
 
     /**

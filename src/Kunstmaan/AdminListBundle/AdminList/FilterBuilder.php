@@ -2,7 +2,8 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminListBundle\AdminList\Filters\FilterInterface;
+
+use Kunstmaan\AdminListBundle\AdminList\FilterTypeInterface;
 
 /**
  * AdminListFilter
@@ -20,14 +21,14 @@ class FilterBuilder
     private $currentParameters = array();
 
     /**
-     * @param string          $columnName The column name
-     * @param FilterInterface $type       The filter type
-     * @param string          $filterName The name of the filter
-     * @param array           $options    Options
+     * @param string              $columnName The column name
+     * @param FilterTypeInterface $type       The filter type
+     * @param string              $filterName The name of the filter
+     * @param array               $options    Options
      *
-     * @return AdminListFilter
+     * @return FilterBuilder
      */
-    public function add($columnName, FilterInterface $type = null, $filterName = null, array $options = array())
+    public function add($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = array())
     {
         $this->filterDefinitions[$columnName] = array(
             'type' => $type,
@@ -55,7 +56,7 @@ class FilterBuilder
     /**
      * @param string $columnName
      *
-     * @return AdminListFilter
+     * @return FilterBuilder
      */
     public function remove($columnName)
     {

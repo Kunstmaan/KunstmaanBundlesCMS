@@ -1,8 +1,12 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\PersistentCollection;
+
+use Kunstmaan\AdminListBundle\AdminList\Actions\SimpleAction;
+use Kunstmaan\AdminListBundle\AdminList\FilterTypeInterface;
+
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 
 use Pagerfanta\Pagerfanta;
@@ -44,8 +48,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /* @var string $deleteTemplate */
     private $deleteTemplate = 'KunstmaanAdminListBundle:Default:delete.html.twig';
 
-    /* @var AdminListFilter $adminListFilter */
-    private $adminListFilter = null;
+    /* @var FilterBuilder $filterBuilder */
+    private $filterBuilder = null;
 
     /* @var int $page */
     protected $page = 1;
@@ -223,6 +227,19 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $this->exportFields[] = new Field($name, $header, false, $template);
 
         return $this;
+    }
+
+    /**
+     * @param string              $columnName The column name
+     * @param FilterTypeInterface $type       The filter type
+     * @param string              $filterName The name of the filter
+     * @param array               $options    Options
+     *
+     * @return AdminListConfiguratorInterface
+     */
+    public function addFilter($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = array())
+    {
+        $this->filterBuilder->add($columnName, $type, $filterName, $options);
     }
 
     /**
@@ -550,15 +567,15 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @return AdminListFilter
+     * @return FilterBuilder
      */
-    public function getAdminListFilter()
+    public function getFilterBuilder()
     {
-        if (is_null($this->adminListFilter)) {
-            $this->adminListFilter = new AdminListFilter();
+        if (is_null($this->filterBuilder)) {
+            $this->filterBuilder = new FilterBuilder();
         }
 
-        return $this->adminListFilter;
+        return $this->filterBuilder;
     }
 
     /**
@@ -578,7 +595,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         if (!is_null($request->query->get('orderDirection'))) {
             $this->orderDirection = $request->query->get('orderDirection');
         }
-        $this->adminListFilter->bindRequest($request);
+        $this->filterBuilder->bindRequest($request);
     }
 
     /**

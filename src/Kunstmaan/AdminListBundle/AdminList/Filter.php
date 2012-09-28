@@ -4,6 +4,8 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\HttpFoundation\Request;
 
+use Kunstmaan\AdminListBundle\AdminList\FilterTypeInterface;
+
 /**
  * Filter
  */
@@ -46,7 +48,9 @@ class Filter
      */
     public function bindRequest(Request $request)
     {
-        $this->filterDefinition['type']->bindRequest($request, $this->data, $this->uniqueId);
+        /* @var FilterTypeInterface $type */
+        $type = $this->filterDefinition['type'];
+        $type->bindRequest($request, $this->data, $this->uniqueId);
     }
 
     /**
@@ -66,11 +70,20 @@ class Filter
     }
 
     /**
-     * @return Filter
+     * @return FilterTypeInterface
      */
     public function getType()
     {
         return $this->filterDefinition['type'];
+    }
+
+
+    /**
+     * Apply the filter
+     */
+    public function apply()
+    {
+        $this->getType()->apply($this->getData(), $this->getUniqueId());
     }
 
     /**

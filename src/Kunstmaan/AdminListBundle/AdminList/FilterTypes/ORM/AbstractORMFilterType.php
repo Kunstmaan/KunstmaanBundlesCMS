@@ -1,7 +1,8 @@
 <?php
-namespace Kunstmaan\AdminListBundle\AdminList\Filters\ORM;
 
-use Kunstmaan\AdminListBundle\AdminList\Filters\AbstractFilterType;
+namespace Kunstmaan\AdminListBundle\AdminList\FilterTypes\ORM;
+
+use Kunstmaan\AdminListBundle\AdminList\AbstractFilterType;
 
 use Doctrine\ORM\QueryBuilder;
 

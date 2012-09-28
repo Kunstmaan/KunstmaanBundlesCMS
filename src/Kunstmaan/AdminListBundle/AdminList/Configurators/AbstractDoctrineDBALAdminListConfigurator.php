@@ -1,5 +1,6 @@
 <?php
-namespace Kunstmaan\AdminListBundle\AdminList;
+
+namespace Kunstmaan\AdminListBundle\AdminList\Configurators;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -7,6 +8,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineDBALAdapter;
 use Pagerfanta\Pagerfanta;
 
+use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterTypes\DBAL\AbstractDBALFilterType;
 
 /**

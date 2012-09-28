@@ -1,6 +1,8 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Kunstmaan\AdminListBundle\AdminList\FilterTypeInterface;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\AbstractType;
 
@@ -101,6 +103,16 @@ interface AdminListConfiguratorInterface
      * @return AdminListConfiguratorInterface
      */
     public function addExportField($name, $header, $template = null);
+
+    /**
+     * @param string              $columnName The column name
+     * @param FilterTypeInterface $type       The filter type
+     * @param string              $filterName The name of the filter
+     * @param array               $options    Options
+     *
+     * @return AdminListConfiguratorInterface
+     */
+    public function addFilter($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = array());
 
     /**
      * Configure if it's possible to delete the given $item
@@ -298,9 +310,9 @@ interface AdminListConfiguratorInterface
     public function getPagerfanta();
 
     /**
-     * @return AdminListFilter
+     * @return FilterBuilder
      */
-    public function getAdminListFilter();
+    public function getFilterBuilder();
 
     /**
      * Return current sorting column.

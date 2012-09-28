@@ -1,6 +1,8 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\AdminList;
+namespace Kunstmaan\AdminListBundle\AdminList\Actions;
+
+use Kunstmaan\AdminListBundle\AdminList\ListActionInterface;
 
 /**
  * SimpleAction

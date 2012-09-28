@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\AdminList\Filters\DBAL;
+namespace Kunstmaan\AdminListBundle\AdminList\FilterTypes\DBAL;
 
 use Symfony\Component\HttpFoundation\Request;
 

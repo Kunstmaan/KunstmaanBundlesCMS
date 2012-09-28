@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\AdminList\Filters\ORM;
+namespace Kunstmaan\AdminListBundle\AdminList\FilterTypes\ORM;
 
 use Symfony\Component\HttpFoundation\Request;
 

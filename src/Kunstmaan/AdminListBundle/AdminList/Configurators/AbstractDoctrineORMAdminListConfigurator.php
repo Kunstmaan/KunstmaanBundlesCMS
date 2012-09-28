@@ -1,5 +1,6 @@
 <?php
-namespace Kunstmaan\AdminListBundle\AdminList;
+
+namespace Kunstmaan\AdminListBundle\AdminList\Configurators;
 
 use Traversable;
 
@@ -10,6 +11,7 @@ use Doctrine\ORM\Query;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\FilterTypes\ORM\AbstractORMFilterType;
+use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;

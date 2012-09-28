@@ -1,7 +1,8 @@
 <?php
-namespace Kunstmaan\AdminListBundle\AdminList\Filters\DBAL;
 
-use Kunstmaan\AdminListBundle\AdminList\Filters\AbstractFilterType;
+namespace Kunstmaan\AdminListBundle\AdminList\FilterTypes\DBAL;
+
+use Kunstmaan\AdminListBundle\AdminList\AbstractFilterType;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 

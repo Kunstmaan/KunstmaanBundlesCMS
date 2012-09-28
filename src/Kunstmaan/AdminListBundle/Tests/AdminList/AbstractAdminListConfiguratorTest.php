@@ -427,10 +427,10 @@ class AbstractAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator::getAdminListFilter
-     * @todo   Implement testGetAdminListFilter().
+     * @covers Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator::getFilterBuilder
+     * @todo   Implement testGetFilterBuilder().
      */
-    public function testGetAdminListFilter()
+    public function testGetFilterBuilder()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
