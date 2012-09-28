@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\AdminListBundle\Tests\AdminList;
+namespace Kunstmaan\AdminListBundle\Tests\AdminList\Actions;
 
 use Kunstmaan\AdminListBundle\AdminList\Actions\SimpleAction;
 
@@ -25,11 +25,11 @@ class SimpleActionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\SimpleAction::__construct
-     * @covers Kunstmaan\AdminListBundle\AdminList\SimpleAction::getUrl
-     * @covers Kunstmaan\AdminListBundle\AdminList\SimpleAction::getIcon
-     * @covers Kunstmaan\AdminListBundle\AdminList\SimpleAction::getLabel
-     * @covers Kunstmaan\AdminListBundle\AdminList\SimpleAction::getTemplate
+     * @covers Kunstmaan\AdminListBundle\AdminList\Actions\SimpleAction::__construct
+     * @covers Kunstmaan\AdminListBundle\AdminList\Actions\SimpleAction::getUrl
+     * @covers Kunstmaan\AdminListBundle\AdminList\Actions\SimpleAction::getIcon
+     * @covers Kunstmaan\AdminListBundle\AdminList\Actions\SimpleAction::getLabel
+     * @covers Kunstmaan\AdminListBundle\AdminList\Actions\SimpleAction::getTemplate
      */
     public function test__construct()
     {
