@@ -65,16 +65,16 @@ class Folder extends AbstractEntity
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at")
      */
-    protected $created;
+    protected $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at")
      */
-    protected $updated;
+    protected $updatedAt;
 
     /**
      * @var string
@@ -104,8 +104,8 @@ class Folder extends AbstractEntity
     {
         $this->children = new ArrayCollection();
         $this->media    = new ArrayCollection();
-        $this->setCreated(new \DateTime());
-        $this->setUpdated(new \DateTime());
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
         $this->deleted = false;
     }
 
@@ -162,51 +162,51 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * Set created
+     * Set createdAd
      *
-     * @param \DateTime $created
+     * @param \DateTime $createdAd
      *
      * @return Folder
      */
-    public function setCreated($created)
+    public function setCreatedAt($createdAt)
     {
-        $this->created = $created;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get createdAd
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getCreatedAt()
     {
-        return $this->created;
+        return $this->createdAt;
     }
 
     /**
-     * Set updated
+     * Set updatedAt
      *
-     * @param \DateTime $updated
+     * @param \DateTime $updatedAt
      *
      * @return Folder
      */
-    public function setUpdated($updated)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updated = $updated;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get updated
+     * Get updatedAt
      *
      * @return \DateTime
      */
-    public function getUpdated()
+    public function getUpdatedAt()
     {
-        return $this->updated;
+        return $this->updatedAt;
     }
 
     /**
