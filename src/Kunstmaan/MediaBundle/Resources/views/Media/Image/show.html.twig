@@ -1,5 +1,33 @@
 {% extends 'KunstmaanMediaBundle:Media:show.html.twig' %}
 
 {% block extraactions %}
+
     <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.media.edit' | trans }}</button>
+    <a href="{{ asset(upload_dir~media.show()) }}" data-toggle="modal" class="btn">{{ 'media.media.download'|trans }}</a>
+
+    <!-- Load Feather code -->
+    <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
+
+    <!-- Instantiate Feather -->
+    <script type="text/javascript">
+        var featherEditor = new Aviary.Feather({
+            apiKey: '5f257cbef',
+            apiVersion: 2,
+            //tools: 'all',
+            onSave: function(imageID, newURL) {
+                var img = document.getElementById(imageID);
+                img.src = newURL;
+                window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'folderId' : folder.id, 'mediaId' : media.id }) }}?url='+newURL;
+            }
+        });
+
+        function launchEditor(id, src) {
+            featherEditor.launch({
+                image: id,
+                url: src
+            });
+            return false;
+        }
+    </script>
+
 {% endblock %}

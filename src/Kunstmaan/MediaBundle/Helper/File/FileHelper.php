@@ -70,6 +70,7 @@ class FileHelper
     public function setFile(File $file)
     {
         $this->file = $file;
+        $this->media->setContent($file);
         $this->media->setContentType($file->getMimeType());
     }
 
@@ -106,7 +107,7 @@ class FileHelper
 
         fclose($saveFile);
 
-        $this->setMedia($upload);
+        $this->getMedia()->setContent($upload);
 
         if ($this->getMedia() == null) {
             unlink($path);

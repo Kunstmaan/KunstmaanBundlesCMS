@@ -91,14 +91,6 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($subgal);
         $manager->flush();
 
-        $media = new Media();
-        $media->setFolder($subgal);
-        $video = new RemoteVideoHelper($media);
-        $video->setCode('KONOD3s1zIw');
-        $video->setType('youtube');
-        $manager->persist($video->getMedia());
-        $manager->flush();
-
         $subgal = new Folder($manager);
         $subgal->setParent($gal);
         $subgal->setName('Slides');
@@ -117,27 +109,6 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setTranslatableLocale('fr');
         $manager->refresh($subgal);
         $subgal->setName('Presentations');
-        $manager->persist($subgal);
-        $manager->flush();
-
-        $subgal = new Folder($manager);
-        $subgal->setParent($gal);
-        $subgal->setName('Files');
-        $subgal->setTranslatableLocale('en');
-        $subgal->setRel("files");
-        $subgal->setSequencenumber(4);
-        $manager->persist($subgal);
-        $manager->flush();
-
-        $subgal->setTranslatableLocale('nl');
-        $manager->refresh($subgal);
-        $subgal->setName('Bestanden');
-        $manager->persist($subgal);
-        $manager->flush();
-
-        $subgal->setTranslatableLocale('fr');
-        $manager->refresh($subgal);
-        $subgal->setName('Fichiers');
         $manager->persist($subgal);
         $manager->flush();
 

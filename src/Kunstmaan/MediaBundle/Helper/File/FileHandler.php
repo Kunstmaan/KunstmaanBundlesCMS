@@ -37,10 +37,16 @@ class FileHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const CONTENT_TYPE = "*";
+    const TYPE = 'file';
 
+    /**
+     * @var Filesystem
+     */
     public $fileSystem = null;
 
+    /**
+     * @var MimeTypeGuesserInterface
+     */
     public $mimeTypeGuesser = null;
 
     /**
@@ -65,7 +71,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getType()
     {
-        return 'file';
+        return FileHandler::TYPE;
     }
 
     /**
@@ -130,7 +136,6 @@ class FileHandler extends AbstractMediaHandler
 
         $media->setFileSize(filesize($media->getContent()));
         $media->setMetadata($metadata);
-        //$media->setName($media->getContent()->getBasename());
 
         $media->setContentType($this->mimeTypeGuesser->guess($media->getContent()->getPathname()));
         $media->setLocation('local');
@@ -149,6 +154,11 @@ class FileHandler extends AbstractMediaHandler
         $originalFile->setContent(file_get_contents($media->getContent()->getRealPath()));
     }
 
+    /**
+     * @param Media $media
+     *
+     * @return \Gaufrette\File
+     */
     public function getOriginalFile(Media $media)
     {
         $relativePath = sprintf('/%s.%s', $media->getUuid(), ExtensionGuesser::getInstance()->guess($media->getContentType()));
@@ -211,9 +221,19 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getThumbnailUrl(Media $media, $basepath, $width = -1, $height = -1)
     {
-        $localPath = '/uploads/media/'.$media->getUrl();
+        return null;
+    }
 
-        return $basepath . $localPath;
+    /**
+     * @return multitype:string
+     */
+    public function getAddFolderActions()
+    {
+        return array(
+                FileHandler::TYPE => array(
+                        'type' => FileHandler::TYPE,
+                        'name' => 'media.file.add')
+        );
     }
 
 }

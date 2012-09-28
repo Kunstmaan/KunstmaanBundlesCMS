@@ -1,0 +1,25 @@
+{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+
+{% block title %}{{ 'media.media.new' | trans }}{% endblock%}
+
+{% block header %}
+    <div class="page-header">
+        <h1>{{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
+    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal properties">
+        <div class="prop_wrp">
+            {{ form_widget(form) }}
+            <div class="input_prop">
+                <div class="btn_group">
+                    <button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' | trans }}</button>
+                    <button class="btn btn-primary" type="submit">{{ 'media.file.add' | trans }}</button>
+                </div>
+            </div>
+         </div>
+    </form>
+{% endblock %}

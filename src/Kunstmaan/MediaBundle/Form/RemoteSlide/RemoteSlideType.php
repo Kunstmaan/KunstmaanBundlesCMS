@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Form\RemoteSlide;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
@@ -26,7 +28,7 @@ class RemoteSlideType extends AbstractType
     {
         $builder
             ->add('name', 'text')
-            ->add('content', 'text')
+            ->add('code', 'text')
             ->add('type', 'choice', array(
                 'choices'   => array('speakerdeck' => 'speakerdeck', 'slideshare' => 'slideshare')));
     }

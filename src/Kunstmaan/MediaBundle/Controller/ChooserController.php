@@ -18,202 +18,57 @@ class ChooserController extends Controller
 {
 
     /**
-     * @Route("/ckeditor", name="KunstmaanMediaBundle_chooser_ckeditor")
-     * @Template()
+     * @Route("/chooser", name="KunstmaanMediaBundle_chooser")
      *
      * @return RedirectResponse
      */
-    public function ckeditorAction()
+    public function chooserIndexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $type = $this->getRequest()->get('type');
+        $cKEditorFuncNum = $this->getRequest()->get("CKEditorFuncNum");
 
-        /* @var string $funcNum */
-        $funcNum = $this->getRequest()->get("CKEditorFuncNum");
-        /* @var Folder $firstGallery */
-        $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
-
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_ckeditor_show", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug(), "CKEditorFuncNum" => $funcNum)));
-    }
-
-    /**
-     * @param int $id
-     *
-     * @Route("/ckeditor/{id}/{slug}", requirements={"id" = "\d+"}, name="KunstmaanMediaBundle_ckeditor_show")
-     * @Template()
-     *
-     * @return RedirectResponse
-     */
-    public function ckeditorShowFolderAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var string $funcNum */
-        $funcNum = $this->getRequest()->get("CKEditorFuncNum");
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id);
-        /* @var array $galleries */
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-
-        return array(
-            'gallery'         => $folder,
-            'galleries'       => $galleries,
-            "CKEditorFuncNum" => $funcNum
-        );
-    }
-
-    /**
-     * @Route("/imagechooser", name="KunstmaanMediaBundle_chooser_image_chooser")
-     * @Template()
-     *
-     * @return RedirectResponse
-     */
-    public function imageChooserAction()
-    {
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $firstGallery */
-        $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
+        $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
+        //TODO get the first topfolder
 
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_image_chooser_show_folder", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
+        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_chooser_show_folder", array("folderId" => $firstFolder->getId(), "type" => $type, "CKEditorFuncNum" => $cKEditorFuncNum)));
     }
 
     /**
-     * @Route("/filechooser", name="KunstmaanMediaBundle_chooser_file_chooser")
-     * @Template()
+     * @param int $folderId The filder id
      *
-     * @return RedirectResponse
-     */
-    public function fileChooserAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var Folder $firstGallery */
-        $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
-
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_file_chooser_show_folder", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
-    }
-
-    /**
-     * @Route("/slidechooser", name="KunstmaanMediaBundle_chooser_slide_chooser")
-     * @Template()
-     *
-     * @return RedirectResponse
-     */
-    public function slideChooserAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var Folder $firstGallery */
-        $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
-
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_slide_chooser_show_folder", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
-    }
-
-    /**
-     * @Route("/videochooser", name="KunstmaanMediaBundle_chooser_video_chooser")
-     * @Template()
-     *
-     * @return RedirectResponse
-     */
-    public function videoChooserAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var Folder $firstGallery */
-        $firstGallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
-
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_video_chooser_show_folder", array("folderId"=>$firstGallery->getId(), "slug" => $firstGallery->getSlug())));
-    }
-
-    /**
-     * @param int $folderId
-     *
-     * @Route("/filechooser/{folderId}/{slug}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_file_chooser_show_folder")
+     * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_chooser_show_folder")
      * @Template()
      *
      * @return array
      */
-    public function fileChooserShowFolderAction($folderId)
+    public function chooserShowFolderAction($folderId)
     {
+        $type = $this->getRequest()->get('type');
+        $cKEditorFuncNum = $this->getRequest()->get("CKEditorFuncNum");
+
         $em = $this->getDoctrine()->getManager();
+        $mediaHandler = $this->get('kunstmaan_media.media_manager');
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        /* @var array $galleries */
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+        /* @var array $mediaHandler */
+        $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
+
+        $handler = null;
+        if ($type) {
+            $handler = $mediaHandler->getHandlerForType($type);
+        }
 
         return array(
-            'gallery'       => $folder,
-            'galleries'     => $galleries
-        );
-    }
-
-    /**
-     * @param int $folderId
-     *
-     * @Route("/imagechooser/{folderId}/{slug}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_image_chooser_show_folder")
-     * @Template()
-     *
-     * @return array
-     */
-    public function imageChooserShowFolderAction($folderId)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        /* @var array $galleries */
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-
-        return array(
-            'gallery'       => $folder,
-            'galleries'     => $galleries
-        );
-    }
-
-    /**
-     * @param int $folderId
-     *
-     * @Route("/slidechooser/{folderId}/{slug}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_slide_chooser_show_folder")
-     * @Template()
-     *
-     * @return array
-     */
-    public function slideChooserShowFolderAction($folderId)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        /* @var array $galleries */
-        $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-
-        return array(
-            'gallery'       => $folder,
-            'folders'     => $folders
-        );
-    }
-
-    /**
-     * @param int $folderId
-     *
-     * @Route("/videochooser/{folderId}/{slug}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_video_chooser_show_folder")
-     * @Template()
-     *
-     * @return array
-     */
-    public function videoChooserShowFolderAction($folderId)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        /* @var array $folders */
-        $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
-
-        return array(
-            'gallery'       => $folder,
-            'folders'     => $folders
+                "cKEditorFuncNum" => $cKEditorFuncNum,
+                'mediamanager' => $mediaHandler,
+                'handler' => $handler,
+                'type'    => $type,
+                'folder'  => $folder,
+                'folders' => $folders
         );
     }
 

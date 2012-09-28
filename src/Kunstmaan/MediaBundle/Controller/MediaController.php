@@ -72,7 +72,7 @@ class MediaController extends Controller
 
         return $this->render($showTemplate, array(
                 'mediamanager' => $this->get('kunstmaan_media.media_manager'),
-                'form'      => $form->createView(),
+                'editform'      => $form->createView(),
                 'media' => $media,
                 'folder' => $folder));
     }
@@ -94,9 +94,7 @@ class MediaController extends Controller
 
         $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
 
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array(
-                'folderId'  => $folder->getId(),
-                'slug' => $folder->getSlug())));
+        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
     }
 
     /**
@@ -104,7 +102,7 @@ class MediaController extends Controller
      *
      * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:File:bulkupload.html.twig")
+     * @Template()
      *
      * @return array|RedirectResponse
      *
@@ -132,10 +130,7 @@ class MediaController extends Controller
                     $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
                 }
 
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array(
-                    'folderId'  => $folder->getId(),
-                    'slug' => $folder->getSlug()
-                )));
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
             }
         }
 
@@ -195,7 +190,7 @@ class MediaController extends Controller
      *
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanMediaBundle:File:create.html.twig")
+     * @Template()
      *
      * @return array|RedirectResponse
      */
@@ -207,36 +202,29 @@ class MediaController extends Controller
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
+        /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
         $handler = $mediaManager->getHandlerForType($type);
-        $helper  = $handler->createNewHelper();
+        $media = new Media();
+        $helper = $handler->getFormHelper($media);
 
-        $formBuilder = $this->createFormBuilder();
-        $formBuilder->add('media', $handler->getFormType());
-        $formBuilder->setData(array('media' => $helper));
-        $form = $formBuilder->getForm();
+        $form = $this->createForm($handler->getFormType(), $helper);
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
-                if ($helper->getMedia() != null) {
-                    $media = $helper->getMedia();
-                    $media->setName($helper->getMedia()->getClientOriginalName());
-                    $media->setContent($helper->getMedia());
-                    $media->setGallery($folder);
+                $media = $helper->getMedia();
+                $media->setFolder($folder);
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
-                    $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
-
-                    return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId(),
-                        'slug' => $folder->getSlug()
-                    )));
-                }
+                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
             }
         }
 
         return array(
-            'form'      => $form->createView(),
-            'folder'   => $folder
+            'type' => $type,
+            'form' => $form->createView(),
+            'folder' => $folder
         );
     }
 

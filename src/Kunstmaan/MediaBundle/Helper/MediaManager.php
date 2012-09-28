@@ -15,7 +15,9 @@ use Gaufrette\Filesystem;
  */
 class MediaManager
 {
-    /* @var array */
+    /**
+     * @var array
+     */
     protected $handlers = array();
 
     /**
@@ -44,6 +46,24 @@ class MediaManager
         }
 
         throw new \InvalidArgumentException(sprintf('Handler "%s" doesn\'t exist', $media->getContentType()));
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return AbstractMediaHandler
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getHandlerForType($type)
+    {
+        foreach ($this->handlers as $handler) {
+            if ($handler->getType() == $type) {
+                return $handler;
+            }
+        }
+
+        throw new \InvalidArgumentException(sprintf('Handler "%s" doesn\'t exist', $type));
     }
 
     /**
@@ -102,5 +122,21 @@ class MediaManager
         }
 
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFolderAddActions()
+    {
+        $result = array();
+        foreach ($this->handlers as $handler) {
+            $actions = $handler->getAddFolderActions();
+            if ($actions) {
+                $result = array_merge($actions, $result);
+            }
+        }
+
+        return $result;
     }
 }

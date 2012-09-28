@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityNotFoundException;
 class MediaRepository extends EntityRepository
 {
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
+     * @param Media $media
      */
     public function save(Media $media)
     {
@@ -25,7 +25,7 @@ class MediaRepository extends EntityRepository
     }
 
     /**
-     * @param \Kunstmaan\MediaBundle\Entity\Media $media
+     * @param Media $media
      */
     public function delete(Media $media)
     {
@@ -40,7 +40,7 @@ class MediaRepository extends EntityRepository
      * @param int $mediaId
      *
      * @return object
-     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws EntityNotFoundException
      */
     public function getMedia($mediaId)
     {
@@ -58,7 +58,7 @@ class MediaRepository extends EntityRepository
      * @param integer $pictureId
      *
      * @return object
-     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws EntityNotFoundException
      */
     public function getPicture($pictureId)
     {

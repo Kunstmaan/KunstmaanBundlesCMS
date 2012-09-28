@@ -1,0 +1,96 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block extrajavascript %}
+    {{ parent() }}
+	<script type="text/javascript">
+	    // Handle click of OK button
+	    function handleOK(result) {
+	    	if (window.opener) {
+	    		{% if cKEditorFuncNum is defined %}
+                	window.opener.CKEDITOR.tools.callFunction({{ cKEditorFuncNum }}, result.imgpath);
+	    		{% else %}
+    	    	    window.opener.dialogWin.returnedValue = result;
+    	    		window.opener.dialogWin.returnFunc();
+    	    	{% endif %}
+	    	} else {
+	    		//alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
+	    	}
+	    	window.close();
+	    	return false
+	    }
+
+	    // Handle click of Cancel button
+	    function handleCancel() {
+	    	window.close();
+	    	return false
+	    }
+	</script>
+{% endblock %}
+
+{% block extraclasshtml "overflow-scroll" %}
+
+{% block extraparamsinbody %}
+	class="media_popup_temp"
+{% endblock %}
+
+{% block subbreadcrumb %}
+    {% for parent in folder.parents %}
+        <li><a href="{{ path('KunstmaanMediaBundle_image_chooser_show_folder', { 'folderId': parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ parent.name | trans }}</a></li>
+    {% endfor %}
+	<li class="active">{{ folder.name | trans }}</li>
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<aside class="sidebar">
+        	<h2>Media Chooser</h2>
+            <div id="tree" class="tree">
+            	{% for topfolder in folders %}
+            		<ul>
+            			{% for child in topfolder.children %}
+        	                {% include 'KunstmaanMediaBundle:Chooser:choosershownode.html.twig' %}
+        	            {% endfor %}
+        	         </ul>
+            	{% endfor %}
+            </div>
+        </aside>
+		<div class="content">
+        	<h1>{{ folder.name | trans }}{% if folder.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', { 'folderId': folder.parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ folder.parent.name | trans }}</a></small>{% endif %}</h1>
+
+        	<section class="map-list">
+                <table class="table">
+                	<tbody>
+        		        {% for child in folder.children %}
+        		            <tr>
+        		            	<td><a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', { 'folderId' :child.id, 'type' : type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name | trans }}</td>
+        		            </tr>
+        		        {% endfor %}
+        			</tbody>
+                </table>
+            </section>
+        	<section>
+        		<ul class="thumbnails" id="file-list">
+        		    {% for media in folder.media %}
+        		        {% if not handler or handler.canHandle(media) %}
+            		        <li>
+            		            {% set handler = mediamanager.getHandler(media) %}
+                                {% set thumbnailurl =  handler.getThumbnailUrl(media, app.request.basePath, 210, 150) %}
+            		            <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="thumbnail" href="#">
+            		                {% if thumbnailurl %}
+            		                    <img src="{{ handler.getThumbnailUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+            		                {% else %}
+                		                <div style="font-size: 135px;text-align:center">
+                                            <i class="icon-file"></i>
+                                        </div>
+            		                {% endif %}
+            		                <p class="img_name">{{ media.name }}</p>
+            		            </a>
+            		            <span class="helper">Click to select</span>
+            		         </li>
+        		         {% endif %}
+        		    {% endfor %}
+        	    </ul>
+        	</section>
+		</div>
+	</div>
+{% endblock %}

@@ -1,19 +1,18 @@
 <div id="addsub-modal" class="modal hide fade">
+
+    {% form_theme subform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
     <form action="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id }  ) }}" method="post" {{ form_enctype(subform) }}>
         <div class="modal-header">
         	<button class="close" data-dismiss="modal">&times;</button>
-            <h3>{{ 'media.folder.sub.add' | trans }}</h3>
+            <h3>{{ 'media.folder.addsub.title' | trans }}</h3>
         </div>
         <div class="modal-body">
-	        <fieldset>
-	            <div class="input_prop">
-	            {{ form_widget(subform) }}
-	            </div>
-	        </fieldset>
+	        {{ form_widget(subform) }}
         </div>
         <div class="modal-footer">
             <div class="btn_group">
-	            <button class="btn btn-primary" type="submit">{{ 'media.folder.sub.add' | trans }}</button>
+	            <button class="btn btn-primary" type="submit">{{ 'media.folder.addsub.save' | trans }}</button>
 	            <button class="btn" type="reset" data-dismiss="modal">{{ 'form.cancel' | trans }}</button>
 	    	</div>
         </div>

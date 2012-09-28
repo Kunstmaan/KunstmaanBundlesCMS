@@ -1,9 +1,16 @@
 parameters:
+    kunstmaan_media.media_manager.class: 'Kunstmaan\MediaBundle\Helper\MediaManager'
+    kunstmaan_media.menu.adaptor.class: 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor'
     kunstmaan_media.listener.doctrine.class: 'Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener'
+    kunstmaan_media.form.type.media.class: 'Kunstmaan\MediaBundle\Form\Type\MediaType'
 
 services:
+    
+    kunstmaan_media.media_manager:
+        class: "%kunstmaan_media.media_manager.class%"
+
     kunstmaan_media.menu.adaptor:
-        class: Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor
+        class: "%kunstmaan_media.menu.adaptor.class%"
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
@@ -17,3 +24,11 @@ services:
             - { name: 'doctrine.event_listener', event: 'postPersist' }
             - { name: 'doctrine.event_listener', event: 'postUpdate' }
             - { name: 'doctrine.event_listener', event: 'preRemove' }
+            
+    form.type.media:
+        class: "%kunstmaan_media.form.type.media.class%"
+        arguments:
+            - "@kunstmaan_media.media_manager"
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type, alias: media }

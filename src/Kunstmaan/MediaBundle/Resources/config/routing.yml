@@ -17,6 +17,3 @@ KunstmaanMediaBundle_media_folder:
     resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
     type:     annotation
     prefix:   /admin/media/folder  
-   
-
-

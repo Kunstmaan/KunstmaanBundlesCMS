@@ -14,6 +14,7 @@ media:
     nothing: Nothing to see here.
   
   media:
+    download: Download
     files: files
     file: File
     addto: Add a new file to "%folder%"
@@ -35,12 +36,14 @@ media:
   folder:
     galleries: folders
     gallery: Folder
+    addsub:
+      title: Add subfolder
+      save: Add
     sub:
       sub: Subfolder
       addshort: Add subfolder
       belongsto: This folder belongs to
       list: The subfolders of "%gallery%"
-      add: Add subfolder
       no: No subfolders yet.
       delete: This subfolders also get deleted
     create: Make new folder for  
@@ -64,4 +67,11 @@ media:
   bulkupload:
     upload: Upload
     bulkupload: Bulk upload
+    
+  slide:
+    add: Add Slide
+  video:
+    add: Add Video
+  file:
+    add: Add File
     

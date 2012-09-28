@@ -6,9 +6,10 @@
     <!--Main-->
     <div class="main_actions">
         {% block actions %}
-            {#{%  set addmediatype = 'media.'~folder.type~'.add' %}
-            <a href="{{ path('KunstmaanMediaBundle_folder_' ~ folder.type ~ '_create', { 'folderId' : folder.id }) }}" class="btn btn-primary">{{ addmediatype |trans }}</a>#}
-            <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn btn-primary">{{ 'media.bulkupload.bulkupload' |trans }}</a>
+            {% for addaction in mediamanager.getFolderAddActions() %}
+                <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
+            {% endfor %}
+            <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.folder.sub.addshort' |trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger">{{ 'media.folder.delete.action' |trans }}</a>
         {% endblock %}
@@ -37,7 +38,7 @@
                         {% for child in folder.children %}
                             <tr>
                                 <td>
-                                	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id, 'slug' : child.slug }) }}" class="item">{{ child.name }}</a>
+                                	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id }) }}" class="item">{{ child.name }}</a>
                                 </td>
                             </tr>
                         {% else %}
@@ -60,7 +61,14 @@
                     <li>
                         <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
                             {% set handler = mediamanager.getHandler(media) %}
-                            <img width="210" height="150" src="{{ handler.getThumbnailUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+                            {% set thumbnailurl =  handler.getThumbnailUrl(media, app.request.basePath, 210, 150) %}
+                            {% if thumbnailurl %}
+                                <img width="210" height="150" src="{{ handler.getThumbnailUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+                            {% else %}
+                                <div style="font-size: 135px;text-align:center">
+                                    <i class="icon-file"></i>
+                                </div>
+                           {% endif %}
                             <p class="img_name">{{ media.name }}</p>
                         </a>
                         <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
@@ -96,11 +104,11 @@
     				if (files === null || files === undefined || files.length <= 0) {
         			    if(e.dataTransfer.getData('Text')) {
         			        jQuery.ajax({
-        			            url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' :folder.id, 'slug' : folder.slug }) }}',
+        			            url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' :folder.id }) }}',
         			            data: {'text': e.dataTransfer.getData('Text')},
         			            async: false,
         			            success: function() {
-        			            	window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id, 'slug' : folder.slug }) }}';
+        			            	window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
         			            }
             			    });
             			}
@@ -135,7 +143,7 @@
     			},
 
     			afterAll:function(i,file,response){
-    				window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id, 'slug' : folder.slug }) }}';
+    				window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
     			}
 
     		});
@@ -156,22 +164,15 @@
 
        </script>
        <div class="tab-pane" id="properties">
-       		<form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_edit', { 'folderId' : folder.id } ) }}" method="post" {{ form_enctype(editform) }}>
+
+           {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
+       		<form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}" method="post" {{ form_enctype(editform) }}>
                 <div class="prop_wrp">
-                    <div class="input_prop">
-                        {{ form_errors(editform) }}
-                        <label for="xlInput3">{{ 'form.name' |trans }}</label>
-                        {{ form_widget(editform.name) }}
-                    </div>
-                    <div class="input_prop">
-                        <label for="xlInput3">{{ 'media.folder.sub.belongsto' |trans }}</label>
-                        {{ form_widget(editform.parent) }}
-                        <p class="help-block">{{ 'media.folder.notrequired' |trans }}</p>
-                        {{ form_rest(editform) }}
-                    </div>
+                    {{ form_widget(editform) }}
                     <div class="input_prop">
                     	<div class="btn_group">
-                        	<button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id, 'slug':folder.slug } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
+                        	<button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
                         	<button class="btn btn-primary" type="submit">{{ 'media.folder.edit' |trans }}</button>
                        	</div>
                     </div>

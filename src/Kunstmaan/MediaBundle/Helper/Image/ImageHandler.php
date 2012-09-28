@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Image;
 
+use Kunstmaan\MediaBundle\Helper\Manipulator\ImageManipulatorInterface;
+
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 
 use Kunstmaan\MediaBundle\Form\File\FileType;
@@ -35,6 +37,19 @@ class ImageHandler extends FileHandler
 {
 
     /**
+     * @var ImageManipulatorInterface
+     */
+    protected $imageManipulator;
+
+    /**
+     * @param ImageManipulatorInterface $imageManipulator
+     */
+    public function __construct(ImageManipulatorInterface $imageManipulator)
+    {
+      $this->imageManipulator = $imageManipulator;
+    }
+
+    /**
      * @return string
      */
     public function getName()
@@ -57,7 +72,7 @@ class ImageHandler extends FileHandler
      */
     public function canHandle(Media $media)
     {
-        if (parent::canHandle($media) && strpos($media->getContentType(), 'image') == 0) {
+        if (parent::canHandle($media) && strpos($media->getContentType(), 'image') === 0) {
             return true;
         }
 
@@ -82,6 +97,7 @@ class ImageHandler extends FileHandler
      */
     public function getThumbnailUrl(Media $media, $basepath, $width = -1, $height = -1)
     {
+        //TODO: use manipulator
         /*$this->imageManipulator->resize(
                 $media,
                 $originalFile,

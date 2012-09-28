@@ -1,6 +1,7 @@
 <?php
 
-namespace Kunstmaan\MediaBundle\Entity\Helper\RemoteVideo;
+namespace Kunstmaan\MediaBundle\Helper\RemoteSlide;
+
 use Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
 
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -29,6 +30,22 @@ class RemoteSlideHelper
     }
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->media->getName();
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->media->setName($name);
+    }
+
+    /**
      * @return Media
      */
     public function getMedia()
@@ -42,7 +59,7 @@ class RemoteSlideHelper
      */
     public function getCode()
     {
-        return $this->metadata['uuid'];
+        return $this->media->metadata['code'];
     }
 
     /**
@@ -54,6 +71,31 @@ class RemoteSlideHelper
     public function setCode($code)
     {
         $this->media->metadata['code'] = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThumbnailUrl()
+    {
+        if (isset($this->media->metadata['thumbnail_url'])) {
+            return $this->media->metadata['thumbnail_url'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Set thumbnail url
+     * @param string $url
+     *
+     * @return RemoteVideoHelper
+     */
+    public function setThumbnailUrl($url)
+    {
+        $this->media->metadata['thumbnail_url'] = $url;
 
         return $this;
     }

@@ -253,7 +253,7 @@ class Media extends AbstractEntity
      *
      * @param \DateTime $createdAt
      *
-     * @param Media
+     * @return Media
      */
     public function setCreatedAt($createdAt)
     {

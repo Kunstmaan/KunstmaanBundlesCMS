@@ -52,11 +52,8 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
         );
 
         $createRoutes = array(
-            'Create slide' => 'KunstmaanMediaBundle_folder_slidecreate',
-            'Create video' => 'KunstmaanMediaBundle_folder_videocreate',
-            'Create image' => 'KunstmaanMediaBundle_folder_imagecreate',
-            'Create file' => 'KunstmaanMediaBundle_folder_filecreate',
-            'Bulk upload' => 'KunstmaanMediaBundle_folder_bulkupload'
+            'Create' => 'KunstmaanMediaBundle_media_create',
+            'Bulk upload' => 'KunstmaanMediaBundle_media_bulk_upload'
         );
 
         $allRoutes = array_merge($createRoutes, $mediaRoutes);
@@ -89,7 +86,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             foreach ($galleries as $folder) {
                 $menuitem = new TopMenuItem($menu);
                 $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
-                $menuitem->setRouteparams(array('folderId' => $folder->getId(), 'slug' => $folder->getSlug()));
+                $menuitem->setRouteparams(array('folderId' => $folder->getId()));
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($folder->getRel());
@@ -139,7 +136,7 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
             foreach ($galleries as $folder) {
                 $menuitem = new MenuItem($menu);
                 $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
-                $menuitem->setRouteparams(array('folderId' => $folder->getId(), 'slug' => $folder->getSlug()));
+                $menuitem->setRouteparams(array('folderId' => $folder->getId()));
                 $menuitem->setInternalname($folder->getName());
                 $menuitem->setParent($parent);
                 $menuitem->setRole($folder->getRel());

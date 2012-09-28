@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper\RemoteVideo;
 
+use Kunstmaan\MediaBundle\Form\RemoteVideo\RemoteVideoType;
+
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -28,6 +30,11 @@ class RemoteVideoHandler extends AbstractMediaHandler
     const CONTENT_TYPE = "remote/video";
 
     /**
+     * @var string
+     */
+    const TYPE = 'video';
+
+    /**
      * @return string
      */
     public function getName()
@@ -40,7 +47,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function getType()
     {
-        return 'video';
+        return RemoteVideoHandler::TYPE;
     }
 
     /**
@@ -86,6 +93,22 @@ class RemoteVideoHandler extends AbstractMediaHandler
             $uuid = uniqid();
             $media->setUuid($uuid);
         }
+        $video = new RemoteVideoHelper($media);
+        $code = $video->getCode();
+        //update thumbnail
+        switch($video->getType()) {
+            case 'youtube':
+                $video->setThumbnailUrl("http://img.youtube.com/vi/" . $code . "/0.jpg");
+                break;
+            case 'vimeo':
+                $xml = simplexml_load_file("http://vimeo.com/api/v2/video/".$code.".xml");
+                $video->setThumbnailUrl($xml->video->thumbnail_large);
+                break;
+            case 'dailymotion':
+                $json = json_decode(file_get_contents("https://api.dailymotion.com/video/".$code."?fields=thumbnail_large_url"));
+                $video->setThumbnailUrl($json->thumbnail_large_url);
+                break;
+        }
     }
 
     /**
@@ -107,14 +130,8 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function updateMedia(Media $media)
     {
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getShowTemplate(Media $media)
-    {
-        return 'KunstmaanMediaBundle:Media\RemoteVideo:show.html.twig';
+
     }
 
     /**
@@ -144,17 +161,39 @@ class RemoteVideoHandler extends AbstractMediaHandler
         $result = null;
         if (is_string($data)) {
             $parsedUrl = parse_url($data);
-            parse_str($parsedUrl['query'], $queryFields);
-            $code = $queryFields['v'];
-            if ($parsedUrl['host'] == 'www.youtube.com') {
-                $result = new Media();
-                $video = new RemoteVideoHelper($result);
-                $video->setType('youtube');
-                $video->setCode($code);
-                $result = $video->getMedia();
-                $result->setName('Youtube ' . $code);
+            switch($parsedUrl['host']) {
+                case 'www.youtube.com':
+                case 'youtube.com':
+                    parse_str($parsedUrl['query'], $queryFields);
+                    $code = $queryFields['v'];
+                    $result = new Media();
+                    $video = new RemoteVideoHelper($result);
+                    $video->setType('youtube');
+                    $video->setCode($code);
+                    $result = $video->getMedia();
+                    $result->setName('Youtube ' . $code);
+                    break;
+                case 'www.vimeo.com':
+                case 'vimeo.com':
+                    $code = substr($parsedUrl['path'], 1);
+                    $result = new Media();
+                    $video = new RemoteVideoHelper($result);
+                    $video->setType('vimeo');
+                    $video->setCode($code);
+                    $result = $video->getMedia();
+                    $result->setName('Vimeo ' . $code);
+                    break;
+                case 'www.dailymotion.com':
+                case 'dailymotion.com':
+                    $code = substr($parsedUrl['path'], 7);
+                    $result = new Media();
+                    $video = new RemoteVideoHelper($result);
+                    $video->setType('dailymotion');
+                    $video->setCode($code);
+                    $result = $video->getMedia();
+                    $result->setName('Dailymotion ' . $code);
+                    break;
             }
-            //TODO: vimeo and dailymotion
         }
 
         return $result;
@@ -171,9 +210,20 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function getThumbnailUrl(Media $media, $basepath, $width = -1, $height = -1)
     {
         $helper = new RemoteVideoHelper($media);
-        $code = $helper->getCode();
 
-        return "http://img.youtube.com/vi/" . $code . "/0.jpg";
+        return $helper->getThumbnailUrl();
+    }
+
+    /**
+     * @return multitype:string
+     */
+    public function getAddFolderActions()
+    {
+        return array(
+                RemoteVideoHandler::TYPE => array(
+                    'type' => RemoteVideoHandler::TYPE,
+                    'name' => 'media.video.add')
+                );
     }
 
 }

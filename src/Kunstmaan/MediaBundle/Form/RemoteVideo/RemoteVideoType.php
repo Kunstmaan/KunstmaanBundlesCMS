@@ -28,7 +28,7 @@ class RemoteVideoType extends AbstractType
     {
         $builder
             ->add('name', 'text')
-            ->add('content', 'text')
+            ->add('code', 'text')
             ->add('type', 'choice', array(
                 'choices'   => array('youtube' => 'youtube', 'vimeo' => 'vimeo', 'dailymotion' => 'dailymotion')));
     }

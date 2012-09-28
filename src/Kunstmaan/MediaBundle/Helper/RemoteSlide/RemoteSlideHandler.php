@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper\RemoteSlide;
 
+use Kunstmaan\MediaBundle\Form\RemoteSlide\RemoteSlideType;
+
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -27,6 +29,8 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     const CONTENT_TYPE = "remote/slide";
 
+    const TYPE = 'slide';
+
     /**
      * @return string
      */
@@ -40,7 +44,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function getType()
     {
-        return 'video';
+        return RemoteSlideHandler::TYPE;
     }
 
     /**
@@ -86,6 +90,15 @@ class RemoteSlideHandler extends AbstractMediaHandler
             $uuid = uniqid();
             $media->setUuid($uuid);
         }
+        $slide = new RemoteSlideHelper($media);
+        $code = $slide->getCode();
+        //update thumbnail
+        switch ($slide->getType()) {
+            case 'slideshare':
+                $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url='.$code.'&format=json'));
+                $slide->setThumbnailUrl('http:'.$json->thumbnail);
+                break;
+        }
     }
 
     /**
@@ -107,14 +120,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function updateMedia(Media $media)
     {
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getShowTemplate(Media $media)
-    {
-        return 'KunstmaanMediaBundle:Media\RemoteSlide:show.html.twig';
     }
 
     /**
@@ -141,9 +147,23 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function createNew($data)
     {
-        //TODO
+       $result = null;
+        if (is_string($data)) {
+            $parsedUrl = parse_url($data);
+            switch($parsedUrl['host']) {
+                case 'www.slideshare.net':
+                case 'slideshare.net':
+                    $result = new Media();
+                    $slide = new RemoteSlideHelper($result);
+                    $slide->setType('slideshare');
+                    $slide->setCode($data);
+                    $result = $slide->getMedia();
+                    $result->setName('SlideShare ' . $data);
+                    break;
+            }
+        }
 
-        return null;
+        return $result;
     }
 
     /**
@@ -156,8 +176,20 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function getThumbnailUrl(Media $media, $basepath, $width = -1, $height = -1)
     {
-        //TODO
-        return "";
+        $helper = new RemoteSlideHelper($media);
 
+        return $helper->getThumbnailUrl();
+    }
+
+    /**
+     * @return multitype:string
+     */
+    public function getAddFolderActions()
+    {
+        return array(
+                RemoteSlideHandler::TYPE => array(
+                    'type' => RemoteSlideHandler::TYPE,
+                    'name' => 'media.slide.add')
+                );
     }
 }

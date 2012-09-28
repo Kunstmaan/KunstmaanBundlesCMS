@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Form\FolderType;
-use Kunstmaan\AdminBundle\Helper\Slugifier;
 use Kunstmaan\MediaBundle\Helper\FolderStrategy;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -19,7 +18,6 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
  * @ORM\Table(name="kuma_folders")
  * @ORM\HasLifecycleCallbacks
- * @Gedmo\Loggable
  */
 class Folder extends AbstractEntity
 {
@@ -40,13 +38,6 @@ class Folder extends AbstractEntity
      * this is not a mapped field of entity metadata, just a simple property
      */
     protected $locale;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $slug;
 
     /**
      * @var Folder
@@ -126,7 +117,6 @@ class Folder extends AbstractEntity
     public function setName($name)
     {
         $this->name = $name;
-        $this->setSlug($this->name);
 
         return $this;
     }
@@ -149,30 +139,6 @@ class Folder extends AbstractEntity
         $this->locale = $locale;
 
         return $this;
-    }
-
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return Folder
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
     /**
@@ -400,11 +366,11 @@ class Folder extends AbstractEntity
     /**
      * Add file
      *
-     * @param Media $file
+     * @param Media $media
      *
      * @return Folder
      */
-    public function addMedia(Media $file)
+    public function addMedia(Media $media)
     {
         $this->media[] = $media;
 
@@ -458,27 +424,11 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * @ORM\PrePersist
-     */
-    public function prePersist()
-    {
-        $this->setSlug(Slugifier::slugify($this->getName()));
-    }
-
-    /**
      * @ORM\PreUpdate
      */
     public function preUpdate()
     {
         $this->setUpdated(new \DateTime());
-    }
-
-    /**
-     * @ORM\PreRemove
-     */
-    public function preRemove()
-    {
-
     }
 
     /**

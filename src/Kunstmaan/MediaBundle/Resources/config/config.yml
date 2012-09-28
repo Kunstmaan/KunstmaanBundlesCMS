@@ -1,36 +1,7 @@
 parameters:
-    kunstmaan_media.provider.speakerdeck.class: Kunstmaan\MediaBundle\Helper\Provider\SpeakerdeckProvider
     kunstmaan_media.upload_dir: /uploads/media/
 
 twig:
     globals:
         upload_dir: "%kunstmaan_media.upload_dir%"
         mediabundleisset: true
-
-services:
-    kunstmaan_media.media_menu:
-        class: Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor
-        arguments: ["@knp_menu.factory"]
-
-kunstmaan_media:
-    #filesystem:
-    #        local:
-    #            default: true
-    #            id: kunstmaan_media.filesystem.local
-    #            options:
-    #                base_path: "%kernel.root_dir%/../web%kunstmaan_media.upload_dir%"
-    #                create: true  #creates the directory if it doesn't exist yet
-
-    #contexts:
-    #    kunstmaan_media_image:
-    #        provider: image
-    #        formats:
-    #            small: { width: 90, height: 90 }
-    #            medium: { width: 210, height: 150 }
-    #            large: { width: 330, height: 230 }
-
-    #    kunstmaan_media_file:
-    #        provider: file
-
-    #    kunstmaan_media_code:
-    #        provider: code

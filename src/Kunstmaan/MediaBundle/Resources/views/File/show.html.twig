@@ -16,7 +16,7 @@
             <a href="{{ path('KunstmaanMediaBundle_media_metadata_edit', { 'mediaId': media.id}) }}" class="btn primary type">{{ 'media.file.editmetadata' | trans }}</a>
         {% endif %}
         <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
-        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
+        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': gallery.id }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
     </div>
 
     <div id="main_actions_top" class="main_actions top">
@@ -26,7 +26,7 @@
             <a href="{{ path('KunstmaanMediaBundle_media_metadata_edit', { 'mediaId': media.id}) }}" class="btn primary type">{{ 'media.file.editmetadata' | trans }}</a>
             {% endif %}
             <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="btn danger">{{ 'form.delete'|trans }}</a>
-            <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': gallery.id, 'slug': gallery.slug }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': gallery.id }) }}" class="btn">{{ 'form.cancel' | trans }}</a>
             <a class="btn up">&#9650;</a>
         </div>
     </div>

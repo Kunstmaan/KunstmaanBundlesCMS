@@ -2,11 +2,12 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\MediaBundle\Helper\File\FileHelper;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\Image;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\MediaHelper;
-use Kunstmaan\MediaBundle\Entity\File;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,21 +31,19 @@ class AviaryController extends Controller
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        /* @var Media $media */
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        /* @var MediaManager $mediaManager */
+        $mediaManager = $this->get('kunstmaan_media.media_manager');
 
-        $helper = new MediaHelper();
-        $helper->getMediaFromUrl($this->getRequest()->get('url'));
+        $handler = $mediaManager->getHandler($media);
+        $fileHelper = $handler->getFormTypeHelper($media);
+        $fileHelper->getMediaFromUrl($this->getRequest()->get('url'));
+        $media = $fileHelper->getMedia();
 
-        /* @var Image $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($imageId);
-        $picture = new File();
-        $picture->setOriginal($media);
-        $picture->setName($media->getName()."-edited");
-        $picture->setContent($helper->getMedia());
-        $picture->setGallery($folder);
-
-        $em->persist($picture);
+        $em->persist($media);
         $em->flush();
 
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId' => $folder->getId(), 'slug' => $folder->getSlug())));
+        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId' => $folder->getId())));
     }
 }
