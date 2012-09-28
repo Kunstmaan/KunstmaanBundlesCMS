@@ -21,19 +21,29 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
  */
 abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminListConfigurator
 {
-    /* @var EntityManager $em */
+    /**
+     * @var EntityManager
+     */
     private $em;
 
-    /* @var Query $query */
+    /**
+     * @var Query
+     */
     private $query = null;
 
-    /* @var Pagerfanta $pagerfanta */
+    /**
+     * @var Pagerfanta
+     */
     private $pagerfanta = null;
 
-    /* @var PermissionDefinition */
+    /**
+     * @var PermissionDefinition
+     */
     private $permissionDef = null;
 
-    /* @var AclHelper $aclHelper */
+    /**
+     * @var AclHelper
+     */
     private $aclHelper = null;
 
     /**

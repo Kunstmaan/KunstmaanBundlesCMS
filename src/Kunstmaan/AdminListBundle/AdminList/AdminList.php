@@ -15,7 +15,7 @@ class AdminList
 {
 
     /**
-     * @var Request $request
+     * @var Request
      */
     protected $request = null;
 

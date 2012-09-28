@@ -11,7 +11,9 @@ use Doctrine\ORM\QueryBuilder;
  */
 abstract class AbstractORMFilterType extends AbstractFilterType
 {
-    /* @var QueryBuilder $queryBuilder */
+    /**
+     * @var QueryBuilder $queryBuilder
+     */
     protected $queryBuilder;
 
     /**

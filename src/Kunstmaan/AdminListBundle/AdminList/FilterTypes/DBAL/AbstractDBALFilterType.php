@@ -11,7 +11,9 @@ use Doctrine\DBAL\Query\QueryBuilder;
  */
 abstract class AbstractDBALFilterType extends AbstractFilterType
 {
-    /* @var QueryBuilder $queryBuilder */
+    /**
+     * @var QueryBuilder $queryBuilder
+     */
     protected $queryBuilder;
 
     /**

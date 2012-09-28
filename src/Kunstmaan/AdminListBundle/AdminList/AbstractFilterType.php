@@ -13,7 +13,14 @@ use Kunstmaan\AdminListBundle\AdminList\FilterTypeInterface;
  */
 abstract class AbstractFilterType implements FilterTypeInterface
 {
+    /**
+     * @var null|string
+     */
     protected $columnName = null;
+
+    /**
+     * @var null|string
+     */
     protected $alias = null;
 
     /**

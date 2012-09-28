@@ -9,9 +9,25 @@ use Kunstmaan\AdminListBundle\AdminList\ListActionInterface;
  */
 class SimpleAction implements ListActionInterface
 {
+
+    /**
+     * @var string
+     */
     private $url;
+
+    /**
+     * @var string
+     */
     private $icon;
+
+    /**
+     * @var string
+     */
     private $label;
+
+    /**
+     * @var null|string
+     */
     private $template;
 
     /**

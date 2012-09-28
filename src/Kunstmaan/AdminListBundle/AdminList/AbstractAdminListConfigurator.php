@@ -21,43 +21,69 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     const SUFFIX_EXPORT = 'export';
     const SUFFIX_DELETE = 'delete';
 
-    /* @var Field[] $fields */
+    /**
+     * @var Field[]
+     */
     private $fields = array();
 
-    /* @var Field[] $exportFields */
+    /**
+     * @var Field[]
+     */
     private $exportFields = array();
 
-    /* @var ListActionInterface[] $customActions */
+    /**
+     * @var ListActionInterface[]
+     */
     private $customActions = array();
 
-    /* @var ListActionInterface[] $listActions */
+    /**
+     * @var ListActionInterface[]
+     */
     private $listActions = array();
 
-    /* @var AbstractType $type */
+    /**
+     * @var AbstractType
+     */
     private $type = null;
 
-    /* @var string $listTemplate */
+    /**
+     * @var string
+     */
     private $listTemplate = 'KunstmaanAdminListBundle:Default:list.html.twig';
 
-    /* @var string $addTemplate */
+    /**
+     * @var string
+     */
     private $addTemplate = 'KunstmaanAdminListBundle:Default:add.html.twig';
 
-    /* @var string $editTemplate */
+    /**
+     * @var string
+     */
     private $editTemplate = 'KunstmaanAdminListBundle:Default:edit.html.twig';
 
-    /* @var string $deleteTemplate */
+    /**
+     * @var string
+     */
     private $deleteTemplate = 'KunstmaanAdminListBundle:Default:delete.html.twig';
 
-    /* @var FilterBuilder $filterBuilder */
+    /**
+     * @var FilterBuilder
+     */
     private $filterBuilder = null;
 
-    /* @var int $page */
+    /**
+     * @var int
+     */
     protected $page = 1;
 
-    /* @var string $orderBy */
+    /**
+     * @var string
+     */
     protected $orderBy = '';
 
-    /* @var string $orderDirection */
+    /**
+     * @var string
+     */
     protected $orderDirection = '';
 
     /**

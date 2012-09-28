@@ -11,13 +11,19 @@ use Kunstmaan\AdminListBundle\AdminList\FilterTypeInterface;
 class FilterBuilder
 {
 
-    /* @var array */
+    /**
+     * @var array
+     */
     private $filterDefinitions = array();
 
-    /* @var Filter[] */
+    /**
+     * @var Filter[]
+     */
     private $currentFilters = array();
 
-    /* @var array */
+    /**
+     * @var array
+     */
     private $currentParameters = array();
 
     /**

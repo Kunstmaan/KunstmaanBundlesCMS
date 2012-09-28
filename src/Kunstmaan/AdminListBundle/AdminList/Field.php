@@ -7,9 +7,25 @@ namespace Kunstmaan\AdminListBundle\AdminList;
  */
 class Field
 {
+
+    /**
+     * @var string
+     */
     private $header;
+
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var bool
+     */
     private $sort;
+
+    /**
+     * @var null|string
+     */
     private $template;
 
     /**

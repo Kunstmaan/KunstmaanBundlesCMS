@@ -16,16 +16,24 @@ use Kunstmaan\AdminListBundle\AdminList\FilterTypes\DBAL\AbstractDBALFilterType;
  */
 abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminListConfigurator
 {
-    /* @var Connection */
+    /**
+     * @var Connection
+     */
     private $connection = null;
 
-    /* @var QueryBuilder */
+    /**
+     * @var QueryBuilder
+     */
     private $queryBuilder = null;
 
-    /* @var Pagerfanta */
+    /**
+     * @var Pagerfanta
+     */
     private $pagerfanta = null;
 
-    /* @var string */
+    /**
+     * @var string
+     */
     private $countField = 'b.id';
 
     /**
