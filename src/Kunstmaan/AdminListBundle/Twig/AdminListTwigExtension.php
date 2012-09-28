@@ -5,6 +5,8 @@ namespace Kunstmaan\AdminListBundle\Twig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\CompiledRoute;
+
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
 /**
@@ -99,6 +101,7 @@ class AdminListTwigExtension extends \Twig_Extension
         $routeName = $request->attributes->get('_route');
         $routeParams = $request->query->all();
         $routeCollection = $router->getRouteCollection();
+        /* @var CompiledRoute $compiledRouteConnection */
         $compiledRouteConnection = $routeCollection->get($routeName)->compile();
         foreach ($compiledRouteConnection->getVariables() as $variable) {
             $routeParams[$variable] = $request->attributes->get($variable);

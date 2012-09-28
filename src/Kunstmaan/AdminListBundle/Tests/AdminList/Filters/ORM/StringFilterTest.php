@@ -46,6 +46,11 @@ class StringFilterTest extends ORMFilterTestCase
     }
 
     /**
+     * @param string $comparator  The comparator
+     * @param string $whereClause The where clause
+     * @param mixed  $value       The value
+     * @param mixed  $testValue   The test value
+     *
      * @covers Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter::apply
      * @dataProvider applyDataProvider
      */
@@ -61,6 +66,9 @@ class StringFilterTest extends ORMFilterTestCase
         $this->assertEquals($testValue, $qb->getParameter('var_string')->getValue());
     }
 
+    /**
+     * @return array
+     */
     public static function applyDataProvider()
     {
         return array(

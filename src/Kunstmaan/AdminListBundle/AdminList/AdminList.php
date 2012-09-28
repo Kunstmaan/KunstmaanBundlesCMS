@@ -6,6 +6,8 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListConfiguratorInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 
+use Pagerfanta\Pagerfanta;
+
 /**
  * AdminList
  */
@@ -18,7 +20,7 @@ class AdminList
     protected $request = null;
 
     /**
-     * @var AdminListConfiguratorInterface $configurator
+     * @var AdminListConfiguratorInterface
      */
     protected $configurator = null;
 
@@ -82,8 +84,6 @@ class AdminList
     }
 
     /**
-     * @param array $params
-     *
      * @return array|null
      */
     public function getItems()

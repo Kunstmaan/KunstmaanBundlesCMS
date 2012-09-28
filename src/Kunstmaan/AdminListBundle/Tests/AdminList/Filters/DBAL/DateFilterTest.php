@@ -46,6 +46,11 @@ class DateFilterTest extends DBALFilterTestCase
     }
 
     /**
+     * @param string $comparator  The comparator
+     * @param string $whereClause The where clause
+     * @param mixed  $value       The value
+     * @param mixed  $testValue   The test value
+     *
      * @covers Kunstmaan\AdminListBundle\AdminList\Filters\DBAL\DateFilter::apply
      * @dataProvider applyDataProvider
      */
@@ -61,6 +66,9 @@ class DateFilterTest extends DBALFilterTestCase
         $this->assertEquals($testValue, $qb->getParameter('var_date'));
     }
 
+    /**
+     * @return array
+     */
     public static function applyDataProvider()
     {
         return array(

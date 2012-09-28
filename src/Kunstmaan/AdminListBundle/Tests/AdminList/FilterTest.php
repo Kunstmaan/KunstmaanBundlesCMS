@@ -46,7 +46,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('columnName', $object->getColumnName());
         $this->assertEquals('string', $object->getUniqueId());
-        $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\Filters\AdminListFilterInterface', $object->getType());
+        $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\Filters\FilterInterface', $object->getType());
     }
 
     /**

@@ -2,9 +2,14 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\Form\AbstractType;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\HttpFoundation\Request;
+
 use Pagerfanta\Pagerfanta;
 
+/**
+ * Abstract admin list configurator, this implements the most common functionality from the AdminListConfiguratorInterface
+ */
 abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface
 {
     const SUFFIX_ADD = 'add';
@@ -18,7 +23,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /* @var Field[] $exportFields */
     private $exportFields = array();
 
-    /* @var ActionInterface[] $customActions */
+    /* @var ListActionInterface[] $customActions */
     private $customActions = array();
 
     /* @var ListActionInterface[] $listActions */
@@ -339,7 +344,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @return ActionInterface[]
+     * @return ListActionInterface[]
      */
     public function getCustomActions()
     {
@@ -418,8 +423,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             // @todo Get rid of hardcoded date format below?
             return $result->format('Y-m-d H:i:s');
         } else {
-            if ($result instanceof \Doctrine\ORM\PersistentCollection) {
+            if ($result instanceof PersistentCollection) {
                 $results = "";
+                /* @var Object $entry */
                 foreach ($result as $entry) {
                     // @todo Check where this is used, a PersistentCollection doesn't always have entities with a name property!!
                     $results[] = $entry->getName();

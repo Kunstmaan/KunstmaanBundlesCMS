@@ -6,7 +6,7 @@
 {% if nameprefix != "" and namesuffix != "" %}
 	<script>
     	$(document).ready(function() {
-        	$(".datepick{{nameprefix}}{{namesuffix}}").datePicker({startDate: '{{ datePicker_startDate }}'});
+        	$(".datepick{{ nameprefix }}{{ namesuffix }}").datePicker({startDate: '{{ datePicker_startDate }}'});
         });
 	</script>
 {% endif %}

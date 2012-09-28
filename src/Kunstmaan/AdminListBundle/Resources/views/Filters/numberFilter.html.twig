@@ -15,14 +15,19 @@
         />
 
 <script>
-	synctextfieldvisibility = function(){
-		if($('#{{nameprefix}}comparator{{namesuffix}}').val() == 'isnull' || $('#{{nameprefix}}comparator{{namesuffix}}').val() == 'isnotnull'){
-    		$('#{{nameprefix}}value{{namesuffix}}').hide();
+    var synctextfieldvisibility = function() {
+        var $comparator = $('#{{nameprefix}}comparator{{namesuffix}}'),
+            $value = $('#{{nameprefix}}value{{namesuffix}}')
+        ;
+
+        if($comparator.val() == 'isnull' || $comparator.val() == 'isnotnull'){
+            $value.hide();
         } else {
-        	$('#{{nameprefix}}value{{namesuffix}}').show();
+            $value.show();
         }
-	}
-	$(document).ready(function() {
-    	$('#{{nameprefix}}comparator{{namesuffix}}').change(synctextfieldvisibility);
+    };
+
+    $(document).ready(function() {
+        $('#{{nameprefix}}comparator{{namesuffix}}').change(synctextfieldvisibility);
     });
 </script>

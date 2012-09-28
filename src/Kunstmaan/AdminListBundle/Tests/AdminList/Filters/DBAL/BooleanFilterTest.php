@@ -46,6 +46,8 @@ class BooleanFilterTest extends DBALFilterTestCase
     }
 
     /**
+     * @param mixed $value
+     *
      * @covers Kunstmaan\AdminListBundle\AdminList\Filters\DBAL\BooleanFilter::apply
      * @dataProvider applyDataProvider
      */
@@ -60,6 +62,9 @@ class BooleanFilterTest extends DBALFilterTestCase
         $this->assertEquals("SELECT * FROM entity e WHERE e.boolean = $value", $qb->getSQL());
     }
 
+    /**
+     * @return array
+     */
     public static function applyDataProvider()
     {
         return array(

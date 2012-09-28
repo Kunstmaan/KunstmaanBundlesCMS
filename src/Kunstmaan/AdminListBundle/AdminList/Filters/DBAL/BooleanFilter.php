@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 class BooleanFilter extends AbstractDBALFilter
 {
     /**
-     * @param Request $request The request
+     * @param Request $request  The request
      * @param array   &$data    The data
-     * @param string $uniqueId The unique identifier
+     * @param string  $uniqueId The unique identifier
      */
-    public function bindRequest(Request $request, &$data, $uniqueId)
+    public function bindRequest(Request $request, array &$data, $uniqueId)
     {
         $data['value'] = $request->query->get('filter_value_' . $uniqueId);
     }

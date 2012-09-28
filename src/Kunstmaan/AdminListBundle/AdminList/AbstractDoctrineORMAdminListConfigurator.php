@@ -1,14 +1,21 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Traversable;
+
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query;
+
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Doctrine\ORM\QueryBuilder;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
+/**
+ * An abstract admin list configurator that can be used with the orm query builder
+ */
 abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminListConfigurator
 {
     /* @var EntityManager $em */
@@ -20,12 +27,16 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /* @var Pagerfanta $pagerfanta */
     private $pagerfanta = null;
 
-    /* @var PermissionDefinition $permissionDef */
+    /* @var PermissionDefinition */
     private $permissionDef = null;
 
     /* @var AclHelper $aclHelper */
     private $aclHelper = null;
 
+    /**
+     * @param EntityManager $em        The entity manager
+     * @param AclHelper     $aclHelper The acl helper
+     */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
         $this->em = $em;
@@ -77,21 +88,33 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         return $this->pagerfanta;
     }
 
+    /**
+     * @param QueryBuilder $queryBuilder
+     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->where('1=1');
     }
 
+    /**
+     * @return int
+     */
     public function getCount()
     {
         return $this->getPagerfanta()->getNbResults();
     }
 
+    /**
+     * @return array|Traversable
+     */
     public function getItems()
     {
         return $this->getPagerfanta()->getCurrentPageResults();
     }
 
+    /**
+     * @return Query|null
+     */
     public function getQuery()
     {
         if (is_null($this->query)) {

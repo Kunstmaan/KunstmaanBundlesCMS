@@ -5,16 +5,16 @@ namespace Kunstmaan\AdminListBundle\AdminList\Filters;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * AdminListFilterInterface
+ * FilterInterface
  */
-interface AdminListFilterInterface
+interface FilterInterface
 {
     /**
-     * @param Request $request The request
+     * @param Request $request  The request
      * @param array   &$data    The data
-     * @param string $uniqueId The unique identifier
+     * @param string  $uniqueId The unique identifier
      */
-    public function bindRequest(Request $request, &$data, $uniqueId);
+    public function bindRequest(Request $request, array &$data, $uniqueId);
 
     /**
      * @param array  $data     Data

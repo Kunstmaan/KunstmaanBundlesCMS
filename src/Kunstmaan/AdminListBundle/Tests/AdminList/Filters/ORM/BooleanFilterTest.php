@@ -46,6 +46,8 @@ class BooleanFilterTest extends ORMFilterTestCase
     }
 
     /**
+     * @param mixed $value
+     *
      * @covers Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter::apply
      * @dataProvider applyDataProvider
      */
@@ -60,6 +62,9 @@ class BooleanFilterTest extends ORMFilterTestCase
         $this->assertEquals("SELECT b FROM Entity b WHERE b.boolean = $value", $qb->getDQL());
     }
 
+    /**
+     * @return array
+     */
     public static function applyDataProvider()
     {
         return array(

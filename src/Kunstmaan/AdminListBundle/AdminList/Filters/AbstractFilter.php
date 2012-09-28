@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * Abstract base class for all admin list filters
  */
-abstract class AbstractFilter implements AdminListFilterInterface
+abstract class AbstractFilter implements FilterInterface
 {
     protected $columnName = null;
     protected $alias = null;
@@ -25,11 +25,11 @@ abstract class AbstractFilter implements AdminListFilterInterface
     }
 
     /**
-     * @param Request $request The request
+     * @param Request $request  The request
      * @param array   &$data    The data
-     * @param string $uniqueId The unique identifier
+     * @param string  $uniqueId The unique identifier
      */
-    abstract public function bindRequest(Request $request, &$data, $uniqueId);
+    abstract public function bindRequest(Request $request, array &$data, $uniqueId);
 
     /**
      * @param array  $data     Data

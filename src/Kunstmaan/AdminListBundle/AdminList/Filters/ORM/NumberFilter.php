@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 class NumberFilter extends AbstractORMFilter
 {
     /**
-     * @param Request $request The request
+     * @param Request $request  The request
      * @param array   &$data    The data
-     * @param string $uniqueId The unique identifier
+     * @param string  $uniqueId The unique identifier
      */
-    public function bindRequest(Request $request, &$data, $uniqueId)
+    public function bindRequest(Request $request, array &$data, $uniqueId)
     {
         $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
         $data['value']      = $request->query->get('filter_value_' . $uniqueId);

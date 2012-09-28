@@ -2,7 +2,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminListBundle\AdminList\Filters\AdminListFilterInterface;
+use Kunstmaan\AdminListBundle\AdminList\Filters\FilterInterface;
 
 /**
  * AdminListFilter
@@ -20,18 +20,18 @@ class AdminListFilter
     private $currentParameters = array();
 
     /**
-     * @param string                   $columnName The column name
-     * @param AdminListFilterInterface $type       The filter type
-     * @param string                   $filterName The name of the filter
-     * @param array                    $options    Options
+     * @param string          $columnName The column name
+     * @param FilterInterface $type       The filter type
+     * @param string          $filterName The name of the filter
+     * @param array           $options    Options
      *
      * @return AdminListFilter
      */
-    public function add($columnName, AdminListFilterInterface $type = null, $filterName = null, array $options = array())
+    public function add($columnName, FilterInterface $type = null, $filterName = null, array $options = array())
     {
         $this->filterDefinitions[$columnName] = array(
-            'type'       => $type,
-            'options'    => $options,
+            'type' => $type,
+            'options' => $options,
             'filtername' => $filterName
         );
 
@@ -90,10 +90,10 @@ class AdminListFilter
     public function bindRequest(Request $request)
     {
         $this->currentParameters = $request->query->all();
-        $filterColumnNames       = $request->query->get('filter_columnname');
+        $filterColumnNames = $request->query->get('filter_columnname');
         if (isset($filterColumnNames)) {
             $uniqueIds = $request->query->get('filter_uniquefilterid');
-            $index     = 0;
+            $index = 0;
             foreach ($filterColumnNames as $filterColumnName) {
                 $uniqueId = $uniqueIds[$index];
                 $filter = new Filter($filterColumnName, $this->get($filterColumnName), $uniqueId);

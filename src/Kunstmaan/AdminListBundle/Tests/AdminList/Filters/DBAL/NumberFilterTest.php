@@ -46,6 +46,11 @@ class NumberFilterTest extends DBALFilterTestCase
     }
 
     /**
+     * @param string $comparator  The comparator
+     * @param string $whereClause The where clause
+     * @param mixed  $value       The value
+     * @param mixed  $testValue   The test value
+     *
      * @covers Kunstmaan\AdminListBundle\AdminList\Filters\DBAL\NumberFilter::apply
      * @dataProvider applyDataProvider
      */
@@ -63,6 +68,9 @@ class NumberFilterTest extends DBALFilterTestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public static function applyDataProvider()
     {
         return array(

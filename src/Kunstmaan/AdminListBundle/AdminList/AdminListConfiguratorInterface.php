@@ -3,8 +3,12 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\AbstractType;
+
 use Pagerfanta\Pagerfanta;
 
+/**
+ * Implement this interface to create your own admin list
+ */
 interface AdminListConfiguratorInterface
 {
     /**
@@ -292,4 +296,23 @@ interface AdminListConfiguratorInterface
      * @return Pagerfanta
      */
     public function getPagerfanta();
+
+    /**
+     * @return AdminListFilter
+     */
+    public function getAdminListFilter();
+
+    /**
+     * Return current sorting column.
+     *
+     * @return string
+     */
+    public function getOrderBy();
+
+    /**
+     * Return current sorting direction.
+     *
+     * @return string
+     */
+    public function getOrderDirection();
 }

@@ -42,7 +42,7 @@ class Filter
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      */
     public function bindRequest(Request $request)
     {

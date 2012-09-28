@@ -4,6 +4,9 @@ namespace Kunstmaan\AdminListBundle\Tests\AdminList\Filters\DBAL;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 
+/**
+ * DBALFilterTestCase
+ */
 abstract class DBALFilterTestCase extends \PHPUnit_Framework_TestCase
 {
     protected function getQueryBuilder()

@@ -1,26 +1,32 @@
 <?php
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Pagerfanta\Adapter\DoctrineDBALAdapter;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
+use Pagerfanta\Adapter\DoctrineDBALAdapter;
 use Pagerfanta\Pagerfanta;
 
+/**
+ * An abstract admin list configurator that can be used with dbal query builder
+ */
 abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminListConfigurator
 {
-    /* @var Connection $connection */
+    /* @var Connection */
     private $connection = null;
 
-    /* @var QueryBuilder $qb */
+    /* @var QueryBuilder */
     private $queryBuilder = null;
 
-    /* @var Pagerfanta $pagerfanta */
+    /* @var Pagerfanta */
     private $pagerfanta = null;
 
-    /* @var string countField */
+    /* @var string */
     private $countField = 'b.id';
 
+    /**
+     * @param Connection $connection
+     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -71,26 +77,38 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         return $this->pagerfanta;
     }
 
-    public function adaptQueryBuilder(array $params = array())
+    /**
+     * @param array $params
+     */
+    public function adaptQueryBuilder(/** @noinspection PhpUnusedParameterInspection */ array $params = array())
     {
         $this->queryBuilder->where('1=1');
     }
 
+    /**
+     * @return int
+     */
     public function getCount()
     {
         return $this->getPagerfanta()->getNbResults();
     }
 
+    /**
+     * @return array|mixed|\Traversable
+     */
     public function getItems()
     {
         return $this->getPagerfanta()->getCurrentPageResults();
     }
 
+    /**
+     * @return QueryBuilder|null
+     */
     public function getQueryBuilder()
     {
         if (is_null($this->queryBuilder)) {
             $this->queryBuilder = new QueryBuilder($this->connection);
-            $this->adaptQueryBuilder($this->queryBuilder);
+            $this->adaptQueryBuilder();
 
             // Apply filters
             $filters = $this->getAdminListFilter()->getCurrentFilters();
@@ -106,11 +124,6 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
                     $orderBy = 'b.' . $orderBy;
                 }
                 $this->queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
-            }
-
-            // Apply ACL restrictions (if applicable)
-            if (!is_null($this->permissionDef) && !is_null($this->aclHelper)) {
-                $this->queryBuilder = $this->aclHelper->apply($this->queryBuilder, $this->permissionDef);
             }
         }
 
