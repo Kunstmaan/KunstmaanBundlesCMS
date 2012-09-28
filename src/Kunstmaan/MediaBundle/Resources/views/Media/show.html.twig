@@ -47,8 +47,7 @@
 				</dl>
 			</div>
 
-			{% set handler = mediamanager.getHandler(media) %}
-            <p><img id="editimage" class="thumbnail" src="{{ handler.getThumbnailUrl(media, app.request.basePath) }}" alt="{{ media.name }}" /></p>
+            <p><img id="editimage" class="thumbnail" src="{{ handler.getThumbnailUrl(media, app.request.basePath, 500, 500) }}" alt="{{ media.name }}" /></p>
 
             <div id="injection_site"></div>
         </div>

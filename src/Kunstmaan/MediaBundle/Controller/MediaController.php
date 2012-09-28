@@ -71,6 +71,7 @@ class MediaController extends Controller
         $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
 
         return $this->render($showTemplate, array(
+                'handler' => $handler,
                 'mediamanager' => $this->get('kunstmaan_media.media_manager'),
                 'editform'      => $form->createView(),
                 'media' => $media,

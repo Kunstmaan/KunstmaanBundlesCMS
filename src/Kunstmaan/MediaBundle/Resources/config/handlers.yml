@@ -5,7 +5,7 @@ parameters:
     kunstmaan_media.media_handler.image.class: 'Kunstmaan\MediaBundle\Helper\Image\ImageHandler'
     kunstmaan_media.media_handler.file.class: 'Kunstmaan\MediaBundle\Helper\File\FileHandler'
     kunstmaan_media.image.manipulator.imagine.class: 'Kunstmaan\MediaBundle\Helper\Manipulator\ImagineImageManipulator'
-
+    aviary_api_key: null
 
 services:
 
@@ -25,7 +25,7 @@ services:
             
     kunstmaan_media.media_handlers.image:
         class: "%kunstmaan_media.media_handler.image.class%"
-        arguments: ["@kunstmaan_media.image.manipulator.imagine"]
+        arguments: ["@kunstmaan_media.image.manipulator.imagine", "%aviary_api_key%"]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
             
