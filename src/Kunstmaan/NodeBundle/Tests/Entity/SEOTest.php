@@ -107,8 +107,8 @@ class SEOTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetOgImage()
     {
-        $this->object->setOgImage('http://domain.com/OpenGraphImage.jpg');
-        $this->assertEquals('http://domain.com/OpenGraphImage.jpg', $this->object->getOgImage());
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete('This test has not been implemented yet.');
     }
 
     /**
