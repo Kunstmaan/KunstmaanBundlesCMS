@@ -1,7 +1,1 @@
-services:
-    form.type.media:
-        class: Kunstmaan\MediaPagePartBundle\Form\Type\MediaType
-        arguments:
-            - @doctrine.orm.entity_manager
-        tags:
-            - { name: form.type, alias: media }
+
