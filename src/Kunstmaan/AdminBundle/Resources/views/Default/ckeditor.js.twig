@@ -1,0 +1,34 @@
+CKEDITOR.editorConfig = function( config )
+{
+    config.skin = 'kCK';
+    config.startupFocus = false;
+    config.height = 500;
+    config.bodyClass = 'CKEditor';
+    {% if nodebundleisactive is defined %}
+        config.filebrowserBrowseUrl = '{{ path('KunstmaanNodeBundle_ckselecturl') }}';
+    {% else %}
+        config.filebrowserBrowseUrl = '';
+    {% endif %}
+    config.filebrowserWindowWidth = '580';
+    {% if mediabundleisactive is defined %}
+        config.filebrowserImageBrowseUrl = '{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}';
+        config.filebrowserImageBrowseLinkUrl = '{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}';
+        config.filebrowserImageWindowWidth = '900';
+    {% else %}
+        config.filebrowserImageBrowseUrl = '';
+        config.filebrowserImageBrowseLinkUrl = '';
+    {% endif %}
+    config.filebrowserImageUploadUrl = '';
+    config.toolbar_Full =
+        [
+            { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike', '-', 'Subscript','Superscript' ] },
+            { name: 'lists', items : [ 'NumberedList','BulletedList' ] },
+            { name: 'dents', items : [ 'Outdent','Indent' ] },
+            { name: 'links', items : [ 'Link','Unlink', 'Anchor' ] },
+            { name: 'insert', items : [ 'Image', 'SpecialChar' ] },
+            { name: 'format', items : [ 'Format' ] },
+            { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+            { name: 'editing', items : [ 'Find','Replace','-','SelectAll', 'RemoveFormat' ] },
+            { name: 'document', items : [ 'Source' ] }
+        ];
+};
