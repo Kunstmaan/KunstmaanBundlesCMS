@@ -27,7 +27,7 @@ class SEOType extends AbstractType
                 ->add('ogTitle', null, array('label' => 'OG title'))
                 ->add('ogDescription', null, array('label' => 'OG description'))
                 ->add('ogImage', 'media', array(
-                    'pattern' => 'KunstmaanMediaBundle_chooser_image_chooser',
+                    'mediatype' => 'image',
                     'label' => 'OG image'
                 ))
                 ->add('extraMetadata', 'textarea')

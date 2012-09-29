@@ -537,4 +537,25 @@ class PagesController extends Controller
             'nodemenu'    => $nodeMenu,
         );
     }
+
+    /**
+     * Select a link
+     *
+     * @Route   ("/pageparts/selecturl", name="KunstmaanNodeBundle_selecturl")
+     * @Template()
+     *
+     * @return array
+     */
+    public function selectLinkAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $locale = $request->getLocale();
+        $securityContext = $this->container->get('security.context');
+        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, false, true);
+
+        return array('topnodes' => $topNodes, 'nodemenu' => $nodeMenu);
+    }
 }

@@ -1,25 +1,2 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
-{% block extrajavascript %}
-    <!--Inline-->
-    <script type=text/javascript>
-        $(document).ready(function () {
-            init_tree("{{ path('KunstmaanNodeBundle_pages_movenodes') }}", "{% if mediabundleisset is defined %}{{ path('KunstmaanMediaBundle_folder_movenodes') }}{% else %}/movenodes{% endif %}");
-        });
-
-        {% include "KunstmaanNodeBundle:Default:ckeditor.js.twig" %}
-        jQuery(document).ready(function(){
-            jQuery('textarea.rich_editor').each(function(item){
-                var config = {};
-                if($(this).attr('height')){
-                    config.height = $(this).attr('height');
-                }
-                if($(this).attr('noparagraphs')){
-                    config.enterMode = CKEDITOR.ENTER_BR;
-                    config.shiftEnterMode = CKEDITOR.ENTER_P;
-                }
-                CKEDITOR.replace( $(this).attr('id'), config);
-            });
-        });
-    </script>
-{% endblock %}
