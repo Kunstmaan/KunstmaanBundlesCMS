@@ -77,16 +77,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getSequencenumber
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setSequencenumber
-     */
-    public function testGetSetSequencenumber()
-    {
-        $this->object->setSequencenumber(15);
-        $this->assertEquals(15, $this->object->getSequencenumber());
-    }
-
-    /**
      * @covers Kunstmaan\MediaBundle\Entity\Folder::setDeleted
      * @covers Kunstmaan\MediaBundle\Entity\Folder::isDeleted
      */
