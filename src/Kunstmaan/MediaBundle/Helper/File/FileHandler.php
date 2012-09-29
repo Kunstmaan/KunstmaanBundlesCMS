@@ -54,7 +54,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function __construct()
     {
-        $this->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local("uploads/media/"));
+        $this->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local("uploads/media/", true));
         //we use a specific symfony mimetypeguesser because de default (FileinfoMimeTypeGuesser) is unable to recognize MS documents
         $this->mimeTypeGuesser = new FileBinaryMimeTypeGuesser();
     }
@@ -209,6 +209,14 @@ class FileHandler extends AbstractMediaHandler
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getShowTemplate(Media $media)
+    {
+        return 'KunstmaanMediaBundle:File:show.html.twig';
     }
 
     /**

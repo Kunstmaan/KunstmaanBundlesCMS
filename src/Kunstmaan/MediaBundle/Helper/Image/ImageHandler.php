@@ -49,8 +49,9 @@ class ImageHandler extends FileHandler
      */
     public function __construct(ImageManipulatorInterface $imageManipulator, $aviaryApiKey)
     {
-      $this->imageManipulator = $imageManipulator;
-      $this->aviaryApiKey = $aviaryApiKey;
+        parent::__construct();
+        $this->imageManipulator = $imageManipulator;
+        $this->aviaryApiKey = $aviaryApiKey;
     }
 
     /**

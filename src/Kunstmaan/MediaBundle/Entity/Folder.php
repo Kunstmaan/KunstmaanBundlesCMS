@@ -51,7 +51,7 @@ class Folder extends AbstractEntity
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="LAZY")
-     * @ORM\OrderBy({"sequencenumber" = "ASC"})
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $children;
 
@@ -72,7 +72,7 @@ class Folder extends AbstractEntity
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="created_at")
+     * @ORM\Column(type="datetime", name="updated_at")
      */
     protected $updatedAt;
 
@@ -82,13 +82,6 @@ class Folder extends AbstractEntity
      * @ORM\Column(type="string", nullable=true)
      */
     protected $rel;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $sequencenumber;
 
     /**
      * @var bool
@@ -164,7 +157,7 @@ class Folder extends AbstractEntity
     /**
      * Set createdAd
      *
-     * @param \DateTime $createdAd
+     * @param \DateTime $createdAt
      *
      * @return Folder
      */
@@ -298,20 +291,6 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * @return int
-     */
-    public function getNextSequence()
-    {
-        $children = $this->getChildren();
-        $count    = 0;
-        foreach ($children as $child) {
-            $count++;
-        }
-
-        return $count + 1;
-    }
-
-    /**
      * @param array $children
      *
      * @return Folder
@@ -319,26 +298,6 @@ class Folder extends AbstractEntity
     public function setChildren($children)
     {
         $this->children = $children;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSequencenumber()
-    {
-        return $this->sequencenumber;
-    }
-
-    /**
-     * @param int $sequencenumber
-     *
-     * @return Folder
-     */
-    public function setSequencenumber($sequencenumber)
-    {
-        $this->sequencenumber = $sequencenumber;
 
         return $this;
     }
@@ -428,22 +387,7 @@ class Folder extends AbstractEntity
      */
     public function preUpdate()
     {
-        $this->setUpdated(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function preInsert()
-    {
-        if (!$this->sequencenumber) {
-            $parent = $this->getParent();
-            if ($parent) {
-                $count = $parent->getChildren()->count();
-                $this->sequencenumber = $count + 1;
-            } else {
-                $this->sequencenumber = 1;
-            }
-        }
-    }
 }

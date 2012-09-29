@@ -1,7 +1,7 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block header %}
-     <h1>{{ 'media.media.file'|trans }} <small>{{ media.name }}</small></h1>
+     <h1>{{ 'media.media.title'|trans }} <small>{{ media.name }}</small></h1>
 {% endblock %}
 
 {% block content %}
@@ -27,8 +27,8 @@
 
 	<!--=========Tabs=========-->
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.media.file'|trans|capitalize }}</a></li>
-        <li><a href="#properties" data-toggle="tab">{{ 'media.media.properties' | trans }}</a></li>
+        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.media.contenttab.title'|trans|capitalize }}</a></li>
+        <li><a href="#properties" data-toggle="tab">{{ 'media.media.propertiestab.title' | trans }}</a></li>
     </ul>
 
     <div class="tab-content">
@@ -36,13 +36,13 @@
 
 			<div class="properties">
 				<dl>
-				    <dt>Name:</dt>
+				    <dt>{{ 'media.media.properties.name'|trans }}:</dt>
 				    	<dd>{{ media.name }}</dd>
-				    <dt>Content-type:</dt>
+				    <dt>{{ 'media.media.properties.contenttype'|trans }}:</dt>
 				    	<dd>{{ media.contentType }}</dd>
-				    <dt>Added:</dt>
+				    <dt>{{ 'media.media.properties.createdat'|trans }}:</dt>
 				    	<dd>{{ media.createdat|date|escape }}</dd>
-				    <dt>Updated:</dt>
+				    <dt>{{ 'media.media.properties.updatedat'|trans }}:</dt>
 				    	<dd>{{ media.updatedat|date|escape }}</dd>
 				</dl>
 			</div>

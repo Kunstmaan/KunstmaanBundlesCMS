@@ -3,10 +3,9 @@
 	<div id="{{ id }}_widget" class="clearfix">
 		<input type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}"/>
 
-
 		<div class="input_media hasnomedia">
 			<div class="preview"></div>
-			<button data-toggle="modal" data-target="#Media_Chooser" class="choose">Choose File</button>
+			<button data-toggle="modal" data-target="#Media_Chooser" class="choose">{{ 'media.widget.choose' | trans }}</button>
 		</div>
 
 		<div class="input_media hasmedia">
@@ -23,13 +22,13 @@
                         </div>
                    {% endif %}
                 </div>
-                <button class="del">Delete File</button>
+                <button class="del">{{ 'media.widget.delete' | trans }}</button>
                 <p class="title">{{ media.name }}</p>
 			{% else %}
 				<div class="preview">
 					<img src="" alt="" />
 				</div>
-				<button class="del">Delete File</button>
+				<button class="del">{{ 'media.widget.delete' | trans }}</button>
 				<p class="title"></p>
 			{% endif %}
 		</div>

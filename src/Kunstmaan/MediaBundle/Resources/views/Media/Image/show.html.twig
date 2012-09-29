@@ -2,9 +2,8 @@
 
 {% block extraactions %}
 
-
     {% if handler.aviaryApiKey %}
-        <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.media.edit' | trans }}</button>
+        <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}');" >{{ 'media.media.edit.action' | trans }}</button>
 
         <!-- Load Feather code -->
         <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
@@ -32,6 +31,6 @@
         </script>
     {% endif %}
 
-    <a href="{{ asset(upload_dir~media.show()) }}" data-toggle="modal" class="btn">{{ 'media.media.download'|trans }}</a>
+    <a href="{{ asset(upload_dir~media.show()) }}" data-toggle="modal" class="btn">{{ 'media.media.download.action'|trans }}</a>
 
 {% endblock %}

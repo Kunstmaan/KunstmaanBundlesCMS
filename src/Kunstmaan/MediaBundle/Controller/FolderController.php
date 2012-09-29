@@ -95,7 +95,7 @@ class FolderController extends Controller
         $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         $folder = new Folder();
         $folder->setParent($parent);
-        $form = $this->createForm(new SubFolderType(), $folder);
+        $form = $this->createForm(new FolderType(), $folder);
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {

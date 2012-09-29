@@ -4,4 +4,4 @@ parameters:
 twig:
     globals:
         upload_dir: "%kunstmaan_media.upload_dir%"
-        mediabundleisset: true
+        mediabundleisactive: true

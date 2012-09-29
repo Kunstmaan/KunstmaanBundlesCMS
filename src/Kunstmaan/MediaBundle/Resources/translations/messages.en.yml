@@ -1,68 +1,46 @@
 # Media
 media: 
-  menu:
-    home: Home
-    media: Media
-    images: Images
-    files: Files
-    videos: Video
-    slides: Slides
-    folders: Folders
-  
   aviary:
     title: Aviary
     nothing: Nothing to see here.
   
   media:
-    download: Download
-    files: files
-    file: File
-    addto: Add a new file to "%folder%"
-    new: New file
-    add: Add new file
-    edit: Edit
-    open: Open file
-    delete: The files shown get also deleted
-    list: Files in "%folder%"
     no: No files in this folder yet.
-    gallery:
-      new: Make new file folder
-      subnew: Make new file folder in %folder%
-    deletesure: Are you sure you want to delete this file?
-    properties: Properties
     bulkupload:
       addto: Upload files to "%folder%"
+    contenttab:
+      title: Content
+    propertiestab:
+      title: Properties
+    title: Media
+    edit:
+      action: Edit
+    download:
+      action: Download
+    properties:
+      name: Name
+      contenttype: Content-type
+      createdat: Added
+      updatedat: Updated
 
   folder:
-    galleries: folders
-    gallery: Folder
     addsub:
-      title: Add subfolder
-      save: Add
+      action: Add subfolder
+      modal:
+        title: Add subfolder
+        save: Add
     sub:
-      sub: Subfolder
-      addshort: Add subfolder
-      belongsto: This folder belongs to
-      list: The subfolders of "%gallery%"
       no: No subfolders yet.
-      delete: This subfolders also get deleted
-    create: Make new folder for  
-    new: Make folder
-    belongsto: The folder this folder is added to
     delete:
       action: Delete this folder
-      title: Delete folder
-      sure: Are you sure you want to delete "%folder%"? 
-    deletemedia: The following %type% are also deleted
-    edit: Edit this folder
-    no: No media in this folder yet.
-    folders: an event
-    open: open this folder
-    properties: Properties
-    notrequired: "Not required"
-    
-  metadata:
-    edit: Edit metadata
+      modal:
+        title: Delete folder
+        text: Are you sure you want to delete "%folder%"? 
+    save: Save
+    contenttab:
+      title: Content
+    propertiestab:
+      title: Properties
 
   bulkupload:
     upload: Upload
@@ -75,3 +53,6 @@ media:
   file:
     add: Add File
     
+  widget:
+    choose: Choose
+    delete: Delete

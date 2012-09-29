@@ -73,7 +73,7 @@ class FolderRepository extends EntityRepository
      */
     public function getAllFolders($limit = null)
     {
-        $qb = $this->createQueryBuilder('folder')->select('folder')->where('folder.parent is null AND folder.deleted != true')->orderby('folder.sequencenumber');
+        $qb = $this->createQueryBuilder('folder')->select('folder')->where('folder.parent is null AND folder.deleted != true')->orderby('folder.name');
         if (false === is_null($limit)) {
             $qb->setMaxResults($limit);
         }

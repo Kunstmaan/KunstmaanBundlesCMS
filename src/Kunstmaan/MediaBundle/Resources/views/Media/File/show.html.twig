@@ -1,5 +1,5 @@
 {% extends 'KunstmaanMediaBundle:Media:show.html.twig' %}
 
 {% block extraactions %}
-    <a href="{{ asset(upload_dir~media.show()) }}" data-toggle="modal" class="btn">{{ 'media.media.download'|trans }}</a>
+    <a href="{{ asset(upload_dir~media.show()) }}" data-toggle="modal" class="btn">{{ 'media.media.download.action'|trans }}</a>
 {% endblock %}

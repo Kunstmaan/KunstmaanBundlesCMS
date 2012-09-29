@@ -33,7 +33,6 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $gal->setName('Media');
         $gal->setTranslatableLocale('en');
         $gal->setRel("media");
-        $gal->setSequencenumber(1);
         $manager->persist($gal);
         $manager->flush();
 
@@ -54,7 +53,6 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setName('Images');
         $subgal->setTranslatableLocale('en');
         $subgal->setRel("image");
-        $subgal->setSequencenumber(1);
         $manager->persist($subgal);
         $manager->flush();
 
@@ -75,7 +73,6 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setName('Videos');
         $subgal->setTranslatableLocale('en');
         $subgal->setRel("video");
-        $subgal->setSequencenumber(2);
         $manager->persist($subgal);
         $manager->flush();
 
@@ -96,7 +93,6 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setName('Slides');
         $subgal->setTranslatableLocale('en');
         $subgal->setRel("slideshow");
-        $subgal->setSequencenumber(3);
         $manager->persist($subgal);
         $manager->flush();
 
@@ -117,7 +113,6 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setName('Files');
         $subgal->setTranslatableLocale('en');
         $subgal->setRel("files");
-        $subgal->setSequencenumber(4);
         $manager->persist($subgal);
         $manager->flush();
 
