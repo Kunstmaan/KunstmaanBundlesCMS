@@ -37,7 +37,7 @@ class GuestUserFactory implements SecurityFactoryInterface
 
         $listenerId = 'security.authentication.listener.kunstmaan.guest.'.$id;
         $listener = $container
-            ->setDefinition($listenerId, new DefinitionDecorator('kunstmaan.guest.security.authentication.listener'))
+            ->setDefinition($listenerId, new DefinitionDecorator('kunstmaan_admin.guest.security.authentication.listener'))
             ->replaceArgument(1, new Reference($userProvider))
             ->replaceArgument(2, $id);
 
@@ -45,20 +45,10 @@ class GuestUserFactory implements SecurityFactoryInterface
     }
 
     /**
-     * @param \Symfony\Component\Config\Definition\Builder\NodeDefinition $node
+     * @param NodeDefinition $node
      */
     public function addConfiguration(NodeDefinition $node)
     {
-
-        $builder = $node->children();
-
-        foreach ($this->options as $name => $default) {
-            if (is_bool($default)) {
-                $builder->booleanNode($name)->defaultValue($default);
-            } else {
-                $builder->scalarNode($name)->defaultValue($default);
-            }
-        }
     }
 
     /**
@@ -66,7 +56,7 @@ class GuestUserFactory implements SecurityFactoryInterface
      */
     public function getKey()
     {
-        return 'guest-user';
+        return 'guest_user';
     }
 
     /**
