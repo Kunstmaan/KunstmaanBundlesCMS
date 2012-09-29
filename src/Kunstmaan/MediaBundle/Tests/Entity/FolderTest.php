@@ -43,10 +43,10 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getCreated
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setCreated
+     * @covers Kunstmaan\MediaBundle\Entity\Folder::getCreatedAt
+     * @covers Kunstmaan\MediaBundle\Entity\Folder::setCreatedAt
      */
-    public function testGetSetCreated()
+    public function testGetSetCreatedAt()
     {
         $date = new \DateTime();
         $this->object->setCreatedAt($date);
@@ -54,10 +54,10 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getUpdated
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setUpdated
+     * @covers Kunstmaan\MediaBundle\Entity\Folder::getUpdatedAt
+     * @covers Kunstmaan\MediaBundle\Entity\Folder::setUpdatedAt
      */
-    public function testGetSetUpdated()
+    public function testGetSetUpdatedAt()
     {
         $date = new \DateTime();
         $this->object->setUpdatedAt($date);
