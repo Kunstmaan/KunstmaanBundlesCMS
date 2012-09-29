@@ -81,14 +81,6 @@ class LinkPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::getElasticaView
-     */
-    public function testGetElasticaView()
-    {
-        $this->assertEquals('KunstmaanPagePartBundle:LinkPagePart:view.html.twig', $this->object->getElasticaView());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()

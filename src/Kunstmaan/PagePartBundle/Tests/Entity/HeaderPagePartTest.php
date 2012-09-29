@@ -91,14 +91,6 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getElasticaView
-     */
-    public function testGetElasticaView()
-    {
-        $this->assertEquals('KunstmaanPagePartBundle:HeaderPagePart:view.html.twig', $this->object->getElasticaView());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()

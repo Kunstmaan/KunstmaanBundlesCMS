@@ -29,14 +29,6 @@ class LinePagePart extends AbstractPagePart
     }
 
     /**
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return LinePagePartAdminType
      */
     public function getDefaultAdminType()

@@ -34,16 +34,6 @@ class ToTopPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:ToTopPagePart:view.html.twig'
-     *
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return ToTopPagePartAdminType
      */
     public function getDefaultAdminType()

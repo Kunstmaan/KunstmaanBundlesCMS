@@ -55,16 +55,6 @@ class RawHTMLPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig'
-     *
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return RawHTMLPagePartAdminType
      */
     public function getDefaultAdminType()

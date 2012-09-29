@@ -93,14 +93,6 @@ class LinkPagePart extends AbstractPagePart
     }
 
     /**
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return LinkPagePartAdminType
      */
     public function getDefaultAdminType()

@@ -50,16 +50,6 @@ class TocPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Generated from @assert () == 'KunstmaanPagePartBundle:TocPagePart:view.html.twig'.
-     *
-     * @covers                Kunstmaan\PagePartBundle\Entity\TocPagePart::getElasticaView
-     */
-    public function testGetElasticaView()
-    {
-        $this->assertEquals('KunstmaanPagePartBundle:TocPagePart:view.html.twig', $this->object->getElasticaView());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Entity\TocPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()

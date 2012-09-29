@@ -60,16 +60,6 @@ class TextPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Generated from @assert () == 'KunstmaanPagePartBundle:TextPagePart:view.html.twig'.
-     *
-     * @covers                Kunstmaan\PagePartBundle\Entity\TextPagePart::getElasticaView
-     */
-    public function testGetElasticaView()
-    {
-        $this->assertEquals('KunstmaanPagePartBundle:TextPagePart:view.html.twig', $this->object->getElasticaView());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Entity\TextPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()

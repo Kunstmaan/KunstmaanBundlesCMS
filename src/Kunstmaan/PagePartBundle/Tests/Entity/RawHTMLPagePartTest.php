@@ -50,16 +50,6 @@ class RawHTMLPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Generated from @assert () == 'KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig'.
-     *
-     * @covers                Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::getElasticaView
-     */
-    public function testGetElasticaView()
-    {
-        $this->assertEquals('KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig', $this->object->getElasticaView());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::setContent
      * @covers Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::getContent
      */

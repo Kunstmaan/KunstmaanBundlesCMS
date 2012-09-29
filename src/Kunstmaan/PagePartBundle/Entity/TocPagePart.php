@@ -34,16 +34,6 @@ class TocPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:TocPagePart:view.html.twig'
-     *
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return TocPagePartAdminType
      */
     public function getDefaultAdminType()

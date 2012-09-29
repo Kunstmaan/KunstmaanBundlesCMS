@@ -50,16 +50,6 @@ class ToTopPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Generated from @assert () == 'KunstmaanPagePartBundle:ToTopPagePart:view.html.twig'.
-     *
-     * @covers                Kunstmaan\PagePartBundle\Entity\ToTopPagePart::getElasticaView
-     */
-    public function testGetElasticaView()
-    {
-        $this->assertEquals('KunstmaanPagePartBundle:ToTopPagePart:view.html.twig', $this->object->getElasticaView());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Entity\ToTopPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()

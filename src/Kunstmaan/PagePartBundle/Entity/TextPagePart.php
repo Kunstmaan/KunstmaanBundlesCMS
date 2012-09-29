@@ -55,16 +55,6 @@ class TextPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:TextPagePart:view.html.twig'
-     *
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return TextPagePartAdminType
      */
     public function getDefaultAdminType()

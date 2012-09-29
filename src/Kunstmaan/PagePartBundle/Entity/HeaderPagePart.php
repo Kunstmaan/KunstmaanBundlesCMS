@@ -87,14 +87,6 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return HeaderPagePartAdminType
      */
     public function getDefaultAdminType()
