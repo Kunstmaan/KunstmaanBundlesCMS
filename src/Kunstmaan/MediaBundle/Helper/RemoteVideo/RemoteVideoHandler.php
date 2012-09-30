@@ -102,7 +102,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 break;
             case 'vimeo':
                 $xml = simplexml_load_file("http://vimeo.com/api/v2/video/".$code.".xml");
-                $video->setThumbnailUrl($xml->video->thumbnail_large);
+                $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
                 break;
             case 'dailymotion':
                 $json = json_decode(file_get_contents("https://api.dailymotion.com/video/".$code."?fields=thumbnail_large_url"));
@@ -160,6 +160,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
     {
         $result = null;
         if (is_string($data)) {
+            if (strpos($data, 'http') !== 0) {
+                $data = "http://" . $data;
+            }
             $parsedUrl = parse_url($data);
             switch($parsedUrl['host']) {
                 case 'www.youtube.com':
@@ -197,6 +200,14 @@ class RemoteVideoHandler extends AbstractMediaHandler
         }
 
         return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getShowTemplate(Media $media)
+    {
+        return 'KunstmaanMediaBundle:Media\RemoteVideo:show.html.twig';
     }
 
     /**

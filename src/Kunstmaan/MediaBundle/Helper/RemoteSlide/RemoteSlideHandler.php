@@ -95,8 +95,11 @@ class RemoteSlideHandler extends AbstractMediaHandler
         //update thumbnail
         switch ($slide->getType()) {
             case 'slideshare':
-                $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url='.$code.'&format=json'));
-                $slide->setThumbnailUrl('http:'.$json->thumbnail);
+                try {
+                    $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url=http://www.slideshare.net/slideshow/embed_code/'.$code.'&format=json'));
+                    $slide->setThumbnailUrl('http:'.$json->thumbnail);
+                } catch (\ErrorException $e) {
+                }
                 break;
         }
     }
@@ -149,6 +152,9 @@ class RemoteSlideHandler extends AbstractMediaHandler
     {
        $result = null;
         if (is_string($data)) {
+            if (strpos($data, 'http') !== 0) {
+                $data = "http://" . $data;
+            }
             $parsedUrl = parse_url($data);
             switch($parsedUrl['host']) {
                 case 'www.slideshare.net':
@@ -156,7 +162,8 @@ class RemoteSlideHandler extends AbstractMediaHandler
                     $result = new Media();
                     $slide = new RemoteSlideHelper($result);
                     $slide->setType('slideshare');
-                    $slide->setCode($data);
+                    $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url='.$data.'&format=json'));
+                    $slide->setCode($json->slideshow_id);
                     $result = $slide->getMedia();
                     $result->setName('SlideShare ' . $data);
                     break;
@@ -164,6 +171,14 @@ class RemoteSlideHandler extends AbstractMediaHandler
         }
 
         return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getShowTemplate(Media $media)
+    {
+        return 'KunstmaanMediaBundle:Media\RemoteSlide:show.html.twig';
     }
 
     /**

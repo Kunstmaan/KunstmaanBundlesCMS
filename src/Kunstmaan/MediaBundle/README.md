@@ -3,7 +3,7 @@ KunstmaanMediaBundle
 
 While building websites for clients we have learned that almost every website benefits from a centralised management of multimedia assets. To facilitate our building process we have created this bundle to add this functionality with the least amount of hassle. Additionally, we want our websites to leverage external services as much as possible, so all video and presentation content is offloaded (manually) to external website.
 
-This bundle provides this centralised module for multimedia assets, and has built in providers for local images, [YouTube](http://www.youtube.com), [Vimeo](http://www.vimeo.com) and [Dailymotion](http://www.Dailymotion.com) video's, [Speakerdeck](http://speakerdeck.com/) and [Slideshare](http://www.slideshare.net/) presentations, and generic local files.
+This bundle provides this centralised module for multimedia assets, and has built in providers for local images, [YouTube](http://www.youtube.com), [Vimeo](http://www.vimeo.com) and [Dailymotion](http://www.Dailymotion.com) video's, [Slideshare](http://www.slideshare.net/) presentations, and generic local files.
 
 No central asset management module is useful without some pretty advanced image editing functionality. To provide this we have integrated the [Aviary](http://www.aviary.com/) image editing service right from the interface. This provides us with all the tools needed to manage images in a website, without the need of a Photoshop or other image editing tool on the administrators computer.
 

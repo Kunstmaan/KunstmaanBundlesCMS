@@ -30,7 +30,7 @@ class RemoteSlideType extends AbstractType
             ->add('name', 'text')
             ->add('code', 'text')
             ->add('type', 'choice', array(
-                'choices'   => array('speakerdeck' => 'speakerdeck', 'slideshare' => 'slideshare')));
+                'choices'   => array('slideshare' => 'slideshare')));
     }
 
     /**

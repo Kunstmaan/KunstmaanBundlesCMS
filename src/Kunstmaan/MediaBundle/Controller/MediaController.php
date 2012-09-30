@@ -75,6 +75,7 @@ class MediaController extends Controller
                 'mediamanager' => $this->get('kunstmaan_media.media_manager'),
                 'editform'      => $form->createView(),
                 'media' => $media,
+                'helper' => $helper,
                 'folder' => $folder));
     }
 
