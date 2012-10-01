@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Tests\Helper\Security;
+namespace Kunstmaan\AdminBundle\Tests\Helper;
 
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
