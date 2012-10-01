@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
 use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormError;
 
 /**
  * FormToolsExtension
@@ -42,11 +43,11 @@ class FormToolsExtension extends \Twig_Extension
      */
     public function hasErrorMessages(FormView $formView)
     {
-        foreach ($formView->get('errors') as $error) {
+        if (!empty($formView->vars['errors'])) {
             return true;
         }
-        if ($formView->hasChildren()) {
-            foreach ($formView->getChildren() as $child) {
+        if ($formView->count()) {
+            foreach ($formView->children as $child) {
                 if ($this->hasErrorMessages($child)) {
                     return true;
                 }
@@ -72,9 +73,10 @@ class FormToolsExtension extends \Twig_Extension
             }
         } else {
             /**
-             * @var FormView $formViews
+             * @var $formViews FormView
+             * @var $error     FormError
              */
-            foreach ($formViews->get('errors') as $error) {
+            foreach ($formViews->vars['errors'] as $error) {
 
                 $template   = $error->getMessageTemplate();
                 $parameters = $error->getMessageParameters();
@@ -85,8 +87,8 @@ class FormToolsExtension extends \Twig_Extension
 
                 $errors[] = $error;
             }
-            if ($formViews->hasChildren()) {
-                foreach ($formViews->getChildren() as $child) {
+            if ($formViews->count()) {
+                foreach ($formViews->children as $child) {
                     $this->getErrorMessages($child, $errors);
                 }
             }

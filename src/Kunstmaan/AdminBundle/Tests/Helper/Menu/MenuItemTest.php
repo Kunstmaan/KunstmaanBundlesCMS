@@ -21,6 +21,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        /* @var $menuBuilder MenuBuilder */
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -42,6 +43,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMenu()
     {
+        /* @var $menuBuilder MenuBuilder */
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
             ->getMock();

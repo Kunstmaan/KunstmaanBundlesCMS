@@ -23,6 +23,9 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
+use Symfony\Component\Security\Acl\Model\MutableAclInterface;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 
 /**
  * PermissionAdmin
@@ -32,28 +35,44 @@ class PermissionAdmin
     const ADD    = 'ADD';
     const DELETE = 'DEL';
 
-    /* @var AbstractEntity $resource */
+    /**
+     * @var AbstractEntity
+     */
     protected $resource = null;
 
-    /* @var EntityManager $em */
+    /**
+     * @var EntityManager
+     */
     protected $em = null;
 
-    /* @var SecurityContextInterface $securityContext */
+    /**
+     * @var SecurityContextInterface
+     */
     protected $securityContext = null;
 
-    /* @var AclProviderInterface $aclProvider */
+    /**
+     * @var MutableAclProviderInterface
+     */
     protected $aclProvider = null;
 
-    /* @var ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy */
+    /**
+     * @var ObjectIdentityRetrievalStrategyInterface
+     */
     protected $oidRetrievalStrategy = null;
 
-    /* @var PermissionMap $permissionMap */
+    /**
+     * @var PermissionMap
+     */
     protected $permissionMap = null;
 
-    /* @var array $permissions */
+    /**
+     * @var array
+     */
     protected $permissions = null;
 
-    /* @var EventDispatcherInterface $eventDispatcher */
+    /**
+     * @var EventDispatcherInterface
+     */
     protected $eventDispatcher = null;
 
     /**
@@ -95,8 +114,10 @@ class PermissionAdmin
         // Init permissions
         try {
             $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
+            /* @var $acl AclInterface */
             $acl            = $this->aclProvider->findAcl($objectIdentity);
             $objectAces     = $acl->getObjectAces();
+            /* @var $ace AuditableEntryInterface */
             foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
                 if ($securityIdentity instanceof RoleSecurityIdentity) {
@@ -192,7 +213,7 @@ class PermissionAdmin
      *
      * @param AbstractEntity $entity  The entity
      * @param array          $changes The changes
-     * @param User           $user    The user
+     * @param UserInterface  $user    The user
      *
      * @return AclChangeset
      */
@@ -201,6 +222,7 @@ class PermissionAdmin
         $aclChangeset = new AclChangeset();
         $aclChangeset->setRef($entity);
         $aclChangeset->setChangeset($changes);
+        /* @var $user User */
         $aclChangeset->setUser($user);
         $this->em->persist($aclChangeset);
         $this->em->flush();
@@ -223,6 +245,7 @@ class PermissionAdmin
             }
 
             // Iterate over children and apply recursively
+            /** @noinspection PhpUndefinedMethodInspection */
             foreach ($entity->getChildren() as $child) {
                 $this->applyAclChangeset($child, $changeset);
             }
@@ -231,8 +254,10 @@ class PermissionAdmin
         // Apply ACL modifications to node
         $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($entity);
         try {
+            /* @var $acl MutableAclInterface */
             $acl = $this->aclProvider->findAcl($objectIdentity);
         } catch (AclNotFoundException $e) {
+            /* @var $acl MutableAclInterface */
             $acl = $this->aclProvider->createAcl($objectIdentity);
         }
 
@@ -278,6 +303,7 @@ class PermissionAdmin
     private function getObjectAceIndex(AclInterface $acl, $role)
     {
         $objectAces = $acl->getObjectAces();
+        /* @var $ace AuditableEntryInterface */
         foreach ($objectAces as $index => $ace) {
             $securityIdentity = $ace->getSecurityIdentity();
             if ($securityIdentity instanceof RoleSecurityIdentity) {
@@ -301,6 +327,7 @@ class PermissionAdmin
     private function getMaskAtIndex(AclInterface $acl, $index)
     {
         $objectAces       = $acl->getObjectAces();
+        /* @var $ace AuditableEntryInterface */
         $ace              = $objectAces[$index];
         $securityIdentity = $ace->getSecurityIdentity();
         if ($securityIdentity instanceof RoleSecurityIdentity) {

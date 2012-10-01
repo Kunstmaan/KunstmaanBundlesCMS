@@ -133,14 +133,4 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
 
 }
 
-class TestEntity extends AbstractEntity
-{
-    /**
-     * @param int $id
-     */
-    public function __construct($id)
-    {
-        $this->setId($id);
-    }
 
-}

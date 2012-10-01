@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Tests\Helper;
+namespace Kunstmaan\AdminBundle\Tests\Helper\Security;
 
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
@@ -42,10 +42,5 @@ class ClassLookupTest extends \PHPUnit_Framework_TestCase
         $class = ClassLookup::getClassName(new DummyClass());
         $this->assertEquals('DummyClass', $class);
     }
-
-}
-
-class DummyClass
-{
 
 }

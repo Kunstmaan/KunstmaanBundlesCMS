@@ -9,6 +9,8 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * AclNativeHelper
@@ -41,7 +43,7 @@ class AclNativeHelper
      * @param QueryBuilder         $queryBuilder  The query builder
      * @param PermissionDefinition $permissionDef The permission definition
      *
-     * @return type
+     * @return QueryBuilder
      */
     public function apply(QueryBuilder $queryBuilder, PermissionDefinition $permissionDef)
     {
@@ -63,9 +65,11 @@ class AclNativeHelper
         }
         $mask = $builder->get();
 
+        /* @var $token TokenInterface */
         $token = $this->securityContext->getToken(); // for now lets imagine we will have token i.e user is logged in
         $user  = $token->getUser();
 
+        $uR = array();
         if (is_object($user)) {
             $userRoles = $user->getRoles();
             foreach ($userRoles as $role) {
@@ -82,6 +86,7 @@ class AclNativeHelper
             ) . '-' . $user->getUserName() . '"';
         } else {
             $userRoles = $token->getRoles();
+            /* @var $role RoleInterface */
             foreach ($userRoles as $role) {
                 $role = $role->getRole();
                 if ($role !== 'ROLE_USER') {

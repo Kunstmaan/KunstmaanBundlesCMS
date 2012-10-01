@@ -6,6 +6,8 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
+use Symfony\Component\Form\AbstractType;
+
 /**
  * RoleAdminListConfigurator
  *

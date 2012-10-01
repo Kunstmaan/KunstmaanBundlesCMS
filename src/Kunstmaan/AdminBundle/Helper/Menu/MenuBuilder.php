@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * MenuBuilder
@@ -58,6 +59,7 @@ class MenuBuilder
         if ($this->currentCache !== null) {
             return $this->currentCache;
         }
+        /* @var $active MenuItem */
         $active = null;
         do {
             /* @var MenuItem[] $children */
@@ -119,6 +121,7 @@ class MenuBuilder
     public function getTopChildren()
     {
         if (is_null($this->topMenuItems)) {
+            /* @var $request Request */
             $request = $this->container->get('request');
             $this->topMenuItems = array();
             foreach ($this->adaptors as $menuAdaptor) {
@@ -141,6 +144,7 @@ class MenuBuilder
         if ($parent == null) {
             return $this->getTopChildren();
         }
+        /* @var $request Request */
         $request = $this->container->get('request');
         $result = array();
         foreach ($this->adaptors as $menuAdaptor) {

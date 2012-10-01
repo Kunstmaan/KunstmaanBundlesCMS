@@ -10,8 +10,11 @@ use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\Parameter;
 
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * AclHelper
@@ -53,6 +56,7 @@ class AclHelper
     {
         $aclAppliedQuery = clone $query;
         $params          = $query->getParameters();
+        /* @var $param Parameter */
         foreach ($params as $param) {
             $aclAppliedQuery->setParameter($param->getName(), $param->getValue(), $param->getType());
         }
@@ -125,6 +129,7 @@ class AclHelper
         $mask          = $query->getHint('acl.mask');
         $rootEntity    = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
+        /* @var $token TokenInterface */
         $token = $this->securityContext->getToken(); // for now lets imagine we will have token i.e user is logged in
         $user  = $token->getUser();
 
@@ -146,6 +151,7 @@ class AclHelper
         } else {
             $userRoles = $token->getRoles();
             $uR        = array();
+            /* @var $role RoleInterface */
             foreach ($userRoles as $role) {
                 $role = $role->getRole();
                 if ($role !== 'ROLE_USER') {

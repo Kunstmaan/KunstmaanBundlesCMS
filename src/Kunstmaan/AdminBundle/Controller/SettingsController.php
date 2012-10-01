@@ -2,24 +2,28 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Kunstmaan\SearchBundle\AdminList\SearchedForAdminListConfigurator;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Doctrine\ORM\EntityManager;
+
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\Form\UserType;
 use Kunstmaan\AdminBundle\Form\GroupType;
 use Kunstmaan\AdminBundle\Form\RoleType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\AdminBundle\AdminList\UserAdminListConfigurator;
 use Kunstmaan\AdminBundle\AdminList\GroupAdminListConfigurator;
 use Kunstmaan\AdminBundle\AdminList\RoleAdminListConfigurator;
 use Kunstmaan\AdminBundle\AdminList\LogAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
+
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
+
 use FOS\UserBundle\Util\UserManipulator;
 
 /**
@@ -82,6 +86,7 @@ class SettingsController extends Controller
      */
     public function addUserAction()
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $user = new User();
@@ -119,6 +124,7 @@ class SettingsController extends Controller
      */
     public function editUserAction($userId)
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var User $user */
@@ -159,6 +165,7 @@ class SettingsController extends Controller
      */
     public function deleteUserAction($userId)
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var User $user */
         $user = $em->getRepository('KunstmaanAdminBundle:User')->find($userId);
@@ -180,6 +187,7 @@ class SettingsController extends Controller
      */
     public function groupsAction()
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
@@ -202,6 +210,7 @@ class SettingsController extends Controller
      */
     public function addGroupAction()
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $group = new Group();
@@ -235,6 +244,7 @@ class SettingsController extends Controller
      */
     public function editGroupAction($groupId)
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var Group $group */
@@ -270,6 +280,7 @@ class SettingsController extends Controller
      */
     public function deleteGroupAction($groupId)
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($groupId);
         if (!is_null($group)) {
@@ -278,29 +289,6 @@ class SettingsController extends Controller
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
-    }
-
-    /**
-     * Display searches
-     *
-     * @Route   ("/searches", name="KunstmaanAdminBundle_settings_searches")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-     *
-     * @todo This method should be moved to KunstmaanSearchBundle & injected into the menu
-     *
-     * @return array
-     */
-    public function searchesAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-        /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new SearchedForAdminListConfigurator(), $em);
-        $adminlist->bindRequest($request);
-
-        return array(
-            'adminlist' => $adminlist,
-        );
     }
 
     /**
@@ -313,6 +301,7 @@ class SettingsController extends Controller
      */
     public function logAction()
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
@@ -356,6 +345,7 @@ class SettingsController extends Controller
      */
     public function addRoleAction()
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $role = new Role('');
@@ -389,6 +379,7 @@ class SettingsController extends Controller
      */
     public function editRoleAction($roleId)
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var Role $role */
@@ -423,6 +414,7 @@ class SettingsController extends Controller
      */
     public function deleteRoleAction($roleId)
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($roleId);

@@ -7,6 +7,8 @@ use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
 
+use Symfony\Component\Form\AbstractType;
+
 /**
  * LogAdminListConfigurator
  *

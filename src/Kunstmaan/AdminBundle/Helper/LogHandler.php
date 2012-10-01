@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper;
 
 use Kunstmaan\AdminBundle\Entity\User;
+use PDOException;
 use Kunstmaan\AdminBundle\Entity\ErrorLogItem;
 
 use Doctrine\ORM\ORMException;
@@ -29,8 +30,8 @@ class LogHandler extends AbstractProcessingHandler
      * Constructor
      *
      * @param ContainerInterface $container The container
-     * @param int                $level     The log level
-     * @param bool               $bubble    Bubble or not
+     * @param int                $level     The minimum logging level at which this handler will be triggered
+     * @param bool               $bubble    Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct(ContainerInterface $container, $level = Logger::ERROR, $bubble = true)
     {
@@ -70,10 +71,10 @@ class LogHandler extends AbstractProcessingHandler
                 $em->persist($logItem);
                 $em->flush();
             }
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             // catching the exception during fullreload: errorlogitem table not found
             // TODO do something useful
-        } catch (\ORMException $e) {
+        } catch (ORMException $e) {
             // catching the exception during fullreload: The EntityManager is closed
             // TODO do something useful
         }

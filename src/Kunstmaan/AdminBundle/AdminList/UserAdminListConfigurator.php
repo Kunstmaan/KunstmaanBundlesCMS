@@ -7,6 +7,8 @@ use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
 use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 
+use Symfony\Component\Form\AbstractType;
+
 /**
  * UserAdminListConfigurator
  *

@@ -2,8 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
+use InvalidArgumentException;
+
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use FOS\UserBundle\Model\GroupInterface;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -76,6 +79,7 @@ class Group implements RoleInterface, GroupInterface
     public function getRoles()
     {
         $result = array();
+        /* @var $role RoleInterface */
         foreach ($this->roles as $role) {
             $result[] = $role->getRole();
         }
@@ -86,7 +90,7 @@ class Group implements RoleInterface, GroupInterface
     /**
      * Returns the true ArrayCollection of Roles.
      *
-     * @return Doctrine\Common\Collections\ArrayCollection
+     * @return ArrayCollection
      */
     public function getRolesCollection()
     {
@@ -102,6 +106,7 @@ class Group implements RoleInterface, GroupInterface
      */
     public function getRole($role = null)
     {
+        /* @var $roleItem RoleInterface */
         foreach ($this->roles as $roleItem) {
             if ($role == $roleItem->getRole()) {
                 return $roleItem;
@@ -137,7 +142,7 @@ class Group implements RoleInterface, GroupInterface
     public function addRole($role)
     {
         if (!$role instanceof Role) {
-            throw new \InvalidArgumentException("addRole takes a Role object as the parameter");
+            throw new InvalidArgumentException("addRole takes a Role object as the parameter");
         }
 
         if (!$this->hasRole($role->getRole())) {
@@ -174,7 +179,7 @@ class Group implements RoleInterface, GroupInterface
     /**
      * Directly set the ArrayCollection of Roles. Type hinted as Collection which is the parent of (Array|Persistent)Collection.
      *
-     * @param Doctrine\Common\Collections\Collection $collection
+     * @param Collection $collection
      */
     public function setRolesCollection(Collection $collection)
     {

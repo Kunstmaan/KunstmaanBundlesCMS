@@ -4,17 +4,28 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 
+/**
+ * MaskBuilderTest
+ */
 class MaskBuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param mixed $invalidMask
+     *
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::__construct
      * @expectedException \InvalidArgumentException
      * @dataProvider getInvalidConstructorData
      */
-    public function testConstructorWithNonInteger($invalidMask)
+    public function testSlugify($invalidMask)
     {
         new MaskBuilder($invalidMask);
     }
 
+    /**
+     * Provides data to the {@link testSlugify} function
+     *
+     * @return array
+     */
     public function getInvalidConstructorData()
     {
         return array(
@@ -25,6 +36,9 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::__construct
+     */
     public function testConstructorWithoutArguments()
     {
         $builder = new MaskBuilder();
@@ -32,6 +46,9 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $builder->get());
     }
 
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::__construct
+     */
     public function testConstructor()
     {
         $builder = new MaskBuilder(123456);
@@ -39,6 +56,10 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(123456, $builder->get());
     }
 
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::add
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::remove
+     */
     public function testAddAndRemove()
     {
         $builder = new MaskBuilder();
@@ -46,8 +67,7 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
         $builder
             ->add('view')
             ->add('eDiT')
-            ->add('puBLisH')
-        ;
+            ->add('puBLisH');
         $mask = $builder->get();
 
         $this->assertEquals(MaskBuilder::MASK_VIEW, $mask & MaskBuilder::MASK_VIEW);
@@ -63,6 +83,10 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(MaskBuilder::MASK_VIEW, $mask & MaskBuilder::MASK_VIEW);
     }
 
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::add
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::getPattern
+     */
     public function testGetPattern()
     {
         $builder = new MaskBuilder;
@@ -78,6 +102,10 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(str_repeat('.', 21).MaskBuilder::ON.'.....P...V', $builder->getPattern());
     }
 
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::get
+     * * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::reset
+     */
     public function testReset()
     {
         $builder = new MaskBuilder();
@@ -91,6 +119,7 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::add
      * @expectedException \InvalidArgumentException
      */
     public function testAddWithInvalidMask()
@@ -100,6 +129,7 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::remove
      * @expectedException \InvalidArgumentException
      */
     public function testRemoveWithInvalidMask()
@@ -108,6 +138,9 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
         $builder->remove(null);
     }
 
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::getCode
+     */
     public function testGetCode()
     {
         $code = MaskBuilder::getCode(MaskBuilder::MASK_DELETE);
@@ -118,13 +151,17 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::getCode
      * @expectedException \InvalidArgumentException
      */
     public function testGetCodeWithInvalidMask()
     {
-        $code = MaskBuilder::getCode(null);
+        MaskBuilder::getCode(null);
     }
 
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::has
+     */
     public function testHas()
     {
         $builder = new MaskBuilder();
@@ -138,6 +175,8 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::has
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder::add
      * @expectedException \InvalidArgumentException
      */
     public function testHasWithInvalidMask()

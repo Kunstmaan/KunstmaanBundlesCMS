@@ -2,7 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
+use Twig_Environment;
+
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
+
 use Symfony\Component\Form\FormView;
 
 /**
@@ -11,7 +14,7 @@ use Symfony\Component\Form\FormView;
 class AdminPermissionsTwigExtension extends \Twig_Extension
 {
     /**
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
     protected $environment;
 
@@ -22,7 +25,7 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
      *
      * @param Twig_Environment $environment The current Twig_Environment instance
      */
-    public function initRuntime(\Twig_Environment $environment)
+    public function initRuntime(Twig_Environment $environment)
     {
         $this->environment = $environment;
     }

@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
+use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Entity\User as BaseUser;
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -70,6 +72,7 @@ class User extends BaseUser
 
         $groupIds = array();
         if (count($groups) > 0) {
+            /* @var $group GroupInterface */
             foreach ($groups as $group) {
                 $groupIds[] = $group->getId();
             }

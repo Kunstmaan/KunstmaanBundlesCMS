@@ -22,7 +22,8 @@
         "knplabs/knp-menu-bundle": "*",
         "monolog/monolog": "dev-master",
         "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/node-bundle": "*"
+        "kunstmaan/node-bundle": "*",
+        "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }

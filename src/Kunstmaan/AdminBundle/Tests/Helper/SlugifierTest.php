@@ -4,10 +4,18 @@ namespace Kunstmaan\AdminBundle\Tests;
 
 use Kunstmaan\AdminBundle\Helper\Slugifier;
 
+/**
+ * SlugifierTest
+ */
 class SlugifierTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param string $text    The text to slugify
+     * @param string $default The default alternative
+     * @param string $result  The slug it should generate
+     *
      * @dataProvider getSlugifyData
+     * @covers Kunstmaan\AdminBundle\Helper\Slugifier::slugify
      */
     public function testSlugify($text, $default, $result)
     {
@@ -18,6 +26,11 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Provides data to the {@link testSlugify} function
+     *
+     * @return array
+     */
     public function getSlugifyData()
     {
         return array(
