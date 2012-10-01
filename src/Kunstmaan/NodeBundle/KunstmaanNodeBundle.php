@@ -9,11 +9,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class KunstmaanNodeBundle extends Bundle
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
-    {
-        return "TwigBundle";
-    }
+
 }
