@@ -8,7 +8,7 @@ This bundle will contain a set of helpful helper classes.
 
 A full list of features can be found in [Resources/doc/index.md](https://github.com/Kunstmaan/KunstmaanUtilitiesBundle/blob/master/Resources/doc/index.md).
 
-![image](http://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle.png)
+![image](https://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle.png?branch=master)
 
 Installation requirements
 -------------------------
