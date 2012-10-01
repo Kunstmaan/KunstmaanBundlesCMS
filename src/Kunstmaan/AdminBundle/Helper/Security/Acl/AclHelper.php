@@ -211,4 +211,11 @@ SELECTQUERY;
         return $result;
     }
 
+    /**
+     * @return null|SecurityContextInterface
+     */
+    public function getSecurityContext()
+    {
+        return $this->securityContext;
+    }
 }
