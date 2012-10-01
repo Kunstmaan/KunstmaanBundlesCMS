@@ -6,6 +6,8 @@ use Doctrine\ORM\PersistentCollection;
 use Kunstmaan\AdminListBundle\AdminList\Action\ListActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\Action\SimpleAction;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
+use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
+use Kunstmaan\AdminListBundle\AdminList\Field;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
