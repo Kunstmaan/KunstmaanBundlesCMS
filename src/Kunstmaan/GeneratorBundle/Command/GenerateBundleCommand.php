@@ -106,7 +106,7 @@ EOT
         $runner = $dialog->getRunner($output, $errors);
 
         // check that the namespace is already autoloaded
-        $runner($this->checkAutoloader($output, $namespace, $bundle, $dir));
+        $runner($this->checkAutoloader($output, $namespace, $bundle));
 
         // register the bundle in the Kernel class
         $runner($this->updateKernel($dialog, $input, $output, $this
@@ -176,7 +176,7 @@ EOT
                 '',));
     }
 
-    protected function checkAutoloader(OutputInterface $output, $namespace, $bundle, $dir)
+    protected function checkAutoloader(OutputInterface $output, $namespace, $bundle)
     {
         $output->write('Checking that the bundle is autoloaded: ');
         if (!class_exists($namespace . '\\' . $bundle)) {
