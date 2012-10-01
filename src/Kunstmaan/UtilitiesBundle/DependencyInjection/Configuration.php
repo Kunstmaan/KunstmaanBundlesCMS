@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kunstmaan_utilities');
+        $treeBuilder->root('kunstmaan_utilities');
 
         return $treeBuilder;
     }

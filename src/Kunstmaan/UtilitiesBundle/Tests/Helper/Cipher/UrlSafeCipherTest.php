@@ -2,19 +2,19 @@
 
 namespace Kunstmaan\UtilitiesBundle\Tests\Helper\Cipher;
 
-use Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher;
+use Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher;
 
 /**
- * CipherTest
+ * UrlSafeCipherTest
  */
-class CipherTest extends \PHPUnit_Framework_TestCase
+class UrlSafeCipherTest extends \PHPUnit_Framework_TestCase
 {
 
     const SECRET = "secret";
     const CONTENT = "This is a random sentence which will be encrypted and then decrypted!";
 
     /**
-     * @var Cipher
+     * @var UrlSafeCipher
      */
     protected $cipher;
 
@@ -22,11 +22,11 @@ class CipherTest extends \PHPUnit_Framework_TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      *
-     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher::__construct
+     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher::__construct
      */
     protected function setUp()
     {
-        $this->cipher = new Cipher(self::SECRET);
+        $this->cipher = new UrlSafeCipher(self::SECRET);
     }
 
     /**
@@ -38,8 +38,8 @@ class CipherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher::encrypt
-     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher::decrypt
+     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher::encrypt
+     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher::decrypt
      */
     public function testEncryptDecrypt()
     {
@@ -47,6 +47,17 @@ class CipherTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals(self::CONTENT, $encryptedValue);
         $decryptedValue = $this->cipher->decrypt($encryptedValue);
         $this->assertEquals($decryptedValue, self::CONTENT);
+    }
+
+    /**
+     * @covers Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher::hex2bin
+     */
+    public function testHex2bin()
+    {
+        $hexValue = bin2hex(self::CONTENT);
+        $this->assertNotEquals(self::CONTENT, $hexValue);
+        $binValue = $this->cipher->hex2bin($hexValue);
+        $this->assertEquals($binValue, self::CONTENT);
     }
 
 }
