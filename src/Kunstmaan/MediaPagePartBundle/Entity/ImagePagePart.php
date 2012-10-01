@@ -50,11 +50,11 @@ class ImagePagePart extends AbstractPagePart
     /**
      * Set openwinnewwindow
      *
-     * @param bool $link
+     * @param bool $openInNewWindow
      */
-    public function setOpenInNewWindow($link)
+    public function setOpenInNewWindow($openInNewWindow)
     {
-        $this->openInNewWindow = $link;
+        $this->openInNewWindow = $openInNewWindow;
     }
 
     /**
