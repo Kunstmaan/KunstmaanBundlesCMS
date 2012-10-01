@@ -19,7 +19,6 @@ class GuestUserListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleWithContextHavingAToken()
     {
-        /* @var $context SecurityContextInterface */
         $context = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $context
             ->expects($this->any())
@@ -32,6 +31,7 @@ class GuestUserListenerTest extends \PHPUnit_Framework_TestCase
         /* @var $provider UserProviderInterface */
         $provider = $this->getMock('Symfony\Component\Security\Core\User\UserProviderInterface');
 
+        /* @var $context SecurityContextInterface */
         $listener = new GuestUserListener($context, $provider, 'TheKey');
         /* @var $responseEvent GetResponseEvent */
         $responseEvent = $this->getMock('Symfony\Component\HttpKernel\Event\GetResponseEvent', array(), array(), '', false);
@@ -44,7 +44,6 @@ class GuestUserListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleWithContextHavingNoToken()
     {
-        /* @var $context SecurityContextInterface */
         $context = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $context
             ->expects($this->once())
@@ -64,7 +63,6 @@ class GuestUserListenerTest extends \PHPUnit_Framework_TestCase
             ->method('getRoles')
             ->will($this->returnValue(array('guest')));
 
-        /* @var UserProviderInterface */
         $provider = $this->getMock('Symfony\Component\Security\Core\User\UserProviderInterface');
         $provider
             ->expects($this->once())
@@ -72,8 +70,12 @@ class GuestUserListenerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('guest'))
             ->will($this->returnValue($account));
 
+        /*
+         * @var $context SecurityContextInterface
+         * @var $provider UserProviderInterface
+         */
         $listener = new GuestUserListener($context, $provider, 'TheKey');
-        /* @var $responseEVent GetResponseEvent */
+        /* @var $responseEvent GetResponseEvent */
         $responseEvent = $this->getMock('Symfony\Component\HttpKernel\Event\GetResponseEvent', array(), array(), '', false);
         $listener->handle($responseEvent);
     }

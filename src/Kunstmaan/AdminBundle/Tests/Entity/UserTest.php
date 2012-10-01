@@ -60,20 +60,21 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetGroupIds()
     {
-        /* @var $group1 GroupInterface */
         $group1 = $this->getMock('FOS\UserBundle\Model\GroupInterface');
         $group1
             ->expects($this->once())
             ->method('getId')
             ->will($this->returnValue(1));
 
-        /* @var $group2 GroupInterface */
         $group2 = $this->getMock('FOS\UserBundle\Model\GroupInterface');
         $group2
             ->expects($this->once())
             ->method('getId')
             ->will($this->returnValue(2));
+
+        /* @var $group1 GroupInterface */
         $this->object->addGroup($group1);
+        /* @var $group2 GroupInterface */
         $this->object->addGroup($group2);
 
         $this->assertEquals(array(1, 2), $this->object->getGroupIds());

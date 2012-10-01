@@ -78,6 +78,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetParent()
     {
+        /* @var $menuBuilder MenuBuilder */
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -122,6 +123,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $child2->setAppearInNavigation(true);
         $children = array($child1, $child2);
 
+
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -129,6 +131,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
             ->method('getChildren')
             ->will($this->returnValue($children));
 
+        /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getChildren();
         $this->assertEquals(2, count($result));
@@ -153,6 +156,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
             ->method('getChildren')
             ->will($this->returnValue($children));
 
+        /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getNavigationChildren();
         $this->assertEquals(1, count($result));
@@ -175,6 +179,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
             ->method('getChildren')
             ->will($this->returnValue($children));
 
+        /* @var $menuBuilder MenuBuilder */
         $parent = new MenuItem($menuBuilder);
         $result = $parent->getTopChildren();
         $this->assertEquals(1, count($result));

@@ -136,13 +136,13 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
 
         $permissions = array('PERMISSION1', 'PERMISSION2');
-        /* @var $permissionMap PermissionMapInterface */
         $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
         $permissionMap
             ->expects($this->any())
             ->method('getPossiblePermissions')
             ->will($this->returnValue($permissions));
         $entity = $this->getEntity();
+        /* @var $permissionMap PermissionMapInterface */
         $object->initialize($entity, $permissionMap);
         $this->assertEquals($permissions, $object->getPossiblePermissions());
     }
