@@ -8,7 +8,7 @@ The KunstmaanAdminBundle is a base bundle and is required by other bundles like 
 
 View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanAdminBundle).
 
-[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminBundle)
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanAdminBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminBundle)
 
 Installation requirements
 -------------------------
