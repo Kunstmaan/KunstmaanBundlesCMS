@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AdminListConfiguratorInterface;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 

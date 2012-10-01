@@ -38,7 +38,7 @@ class AdminListFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateList()
     {
         /* @var AdminListConfiguratorInterface $mockConfig */
-        $mockConfig = $this->getMock('Kunstmaan\AdminListBundle\AdminList\AdminListConfiguratorInterface');
+        $mockConfig = $this->getMock('Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface');
         $list = $this->object->createList($mockConfig);
 
         $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\AdminList', $list);

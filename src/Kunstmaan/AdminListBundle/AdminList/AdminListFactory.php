@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
+
 /**
  * AdminListFactory
  */

@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminListBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

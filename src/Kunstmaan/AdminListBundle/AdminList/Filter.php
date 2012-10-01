@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Kunstmaan\AdminListBundle\AdminList\FilterTypeInterface;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 
 /**
  * Filter
