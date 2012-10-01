@@ -63,14 +63,6 @@ class SlidePagePart extends AbstractPagePart
     }
 
     /**
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return SlidePagePartAdminType
      */
     public function getDefaultAdminType()

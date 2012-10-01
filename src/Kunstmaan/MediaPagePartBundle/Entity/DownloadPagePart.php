@@ -64,14 +64,6 @@ class DownloadPagePart extends AbstractPagePart
     }
 
     /**
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return "KunstmaanMediaPagePartBundle:DownloadPagePart:elastica.html.twig";
-    }
-
-    /**
      * @return DownloadPagePartAdminType
      */
     public function getDefaultAdminType()

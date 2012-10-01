@@ -63,14 +63,6 @@ class VideoPagePart extends AbstractPagePart
     }
 
     /**
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return $this->getDefaultView();
-    }
-
-    /**
      * @return VideoPagePartAdminType
      */
     public function getDefaultAdminType()

@@ -138,14 +138,6 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * @return string
-     */
-    public function getElasticaView()
-    {
-        return "KunstmaanMediaPagePartBundle:ImagePagePart:elastica.html.twig";
-    }
-
-    /**
      * @return ImagePagePartAdminType
      */
     public function getDefaultAdminType()
