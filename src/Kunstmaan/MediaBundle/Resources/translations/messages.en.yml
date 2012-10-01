@@ -17,11 +17,12 @@ media:
       action: Edit
     download:
       action: Download
-    properties:
+    mediainfo:
       name: Name
       contenttype: Content-type
       createdat: Added
       updatedat: Updated
+      downloadlink: Download link
 
   folder:
     addsub:

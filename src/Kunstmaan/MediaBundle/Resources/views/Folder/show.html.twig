@@ -61,9 +61,9 @@
                     <li>
                         <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
                             {% set handler = mediamanager.getHandler(media) %}
-                            {% set thumbnailurl =  handler.getThumbnailUrl(media, app.request.basePath, 210, 150) %}
-                            {% if thumbnailurl %}
-                                <img width="210" height="150" src="{{ handler.getThumbnailUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+                            {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                            {% if imageurl %}
+                                <img width="210" height="150" src="{{ imageurl | imagine_filter('media_list_thumbnail') }}" alt="{{ media.name }}" />
                             {% else %}
                                 <div style="font-size: 135px;text-align:center">
                                     <i class="icon-file"></i>

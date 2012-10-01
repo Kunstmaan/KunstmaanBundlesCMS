@@ -97,7 +97,12 @@ class RemoteSlideHandler extends AbstractMediaHandler
             case 'slideshare':
                 try {
                     $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url=http://www.slideshare.net/slideshow/embed_code/'.$code.'&format=json'));
-                    $slide->setThumbnailUrl('http:'.$json->thumbnail);
+                    $thumbnailUrl = 'http:'.$json->thumbnail;
+                    /* dirty hack to fix urls for imagine */
+                    if (!endsWith($thumbnailUrl, '.jpg') && !endsWith($thumbnailUrl, '.png')) {
+                        $thumbnailUrl = $thumbnailUrl.'&ext=.jpg';
+                    }
+                    $slide->setThumbnailUrl($thumbnailUrl);
                 } catch (\ErrorException $e) {
                 }
                 break;
@@ -184,12 +189,10 @@ class RemoteSlideHandler extends AbstractMediaHandler
     /**
      * @param Media  $media    The media entity
      * @param string $basepath The base path
-     * @param int    $width    The prefered width of the thumbnail
-     * @param int    $height   The prefered height of the thumbnail
      *
      * @return string
      */
-    public function getThumbnailUrl(Media $media, $basepath, $width = -1, $height = -1)
+    public function getImageUrl(Media $media, $basepath)
     {
         $helper = new RemoteSlideHelper($media);
 

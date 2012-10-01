@@ -1,9 +1,15 @@
 {% extends 'KunstmaanMediaBundle:Media:show.html.twig' %}
 
 {% block extraactions %}
-    <a href="{{ asset(upload_dir~media.show()) }}" data-toggle="modal" class="btn">{{ 'media.media.download.action'|trans }}</a>
+    <a href="{{ asset(upload_dir~media.show()) }}" class="btn">{{ 'media.media.download.action'|trans }}</a>
 {% endblock %}
 
 {% block preview %}
 
+{% endblock %}
+
+{% block mediainfo %}
+    {{ parent() }}
+    <dt>{{ 'media.media.mediainfo.downloadlink'|trans }}:</dt>
+    	<dd><a href="{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}" target="_blank">{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(upload_dir~media.show()) }}</a></dd>
 {% endblock %}

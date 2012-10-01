@@ -81,4 +81,15 @@ abstract class AbstractMediaHandler
         return 'KunstmaanMediaBundle:Media:show.html.twig';
     }
 
+    /**
+     * @param Media  $media    The media entity
+     * @param string $basepath The base path
+     *
+     * @return string
+     */
+    public function getImageUrl(Media $media, $basepath)
+    {
+        return null;
+    }
+
 }

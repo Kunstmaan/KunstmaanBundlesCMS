@@ -5,3 +5,18 @@ twig:
     globals:
         upload_dir: "%kunstmaan_media.upload_dir%"
         mediabundleisactive: true
+
+liip_imagine:
+    cache_prefix: uploads/cache
+    driver: imagick
+    data_loader: kunstmaan_media_thumbloader
+    cache: no_cache
+    filter_sets:
+        media_list_thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [210, 150], mode: outbound }
+        media_detail_thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [500, 500], mode: outbound }

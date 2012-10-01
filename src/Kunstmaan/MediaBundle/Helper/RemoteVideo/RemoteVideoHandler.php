@@ -106,9 +106,26 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 break;
             case 'dailymotion':
                 $json = json_decode(file_get_contents("https://api.dailymotion.com/video/".$code."?fields=thumbnail_large_url"));
-                $video->setThumbnailUrl($json->thumbnail_large_url);
+                $thumbnailUrl = $json->thumbnail_large_url;
+                /* dirty hack to fix urls for imagine */
+                if (!$this->endsWith($thumbnailUrl, '.jpg') && !$this->endsWith($thumbnailUrl, '.png')) {
+                    $thumbnailUrl = $thumbnailUrl.'&ext=.jpg';
+                }
+                $video->setThumbnailUrl($thumbnailUrl);
                 break;
         }
+    }
+
+    /**
+     * String helper
+     * @param string $str string
+     * @param string $sub substring
+     *
+     * @return boolean
+     */
+    private function endsWith( $str, $sub )
+    {
+        return substr($str, strlen($str) - strlen($sub)) === $sub;
     }
 
     /**
@@ -213,12 +230,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
     /**
      * @param Media  $media    The media entity
      * @param string $basepath The base path
-     * @param int    $width    The prefered width of the thumbnail
-     * @param int    $height   The prefered height of the thumbnail
      *
      * @return string
      */
-    public function getThumbnailUrl(Media $media, $basepath, $width = -1, $height = -1)
+    public function getImageUrl(Media $media, $basepath)
     {
         $helper = new RemoteVideoHelper($media);
 

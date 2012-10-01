@@ -36,19 +36,21 @@
 
 			<div class="properties">
 				<dl>
-				    <dt>{{ 'media.media.properties.name'|trans }}:</dt>
-				    	<dd>{{ media.name }}</dd>
-				    <dt>{{ 'media.media.properties.contenttype'|trans }}:</dt>
-				    	<dd>{{ media.contentType }}</dd>
-				    <dt>{{ 'media.media.properties.createdat'|trans }}:</dt>
-				    	<dd>{{ media.createdat|date|escape }}</dd>
-				    <dt>{{ 'media.media.properties.updatedat'|trans }}:</dt>
-				    	<dd>{{ media.updatedat|date|escape }}</dd>
+				    {% block mediainfo %}
+    				    <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
+    				    	<dd>{{ media.name }}</dd>
+    				    <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
+    				    	<dd>{{ media.contentType }}</dd>
+    				    <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
+    				    	<dd>{{ media.createdat|date|escape }}</dd>
+    				    <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
+    				    	<dd>{{ media.updatedat|date|escape }}</dd>
+				    {% endblock %}
 				</dl>
 			</div>
 
 			{% block preview %}
-                <p><img id="editimage" class="thumbnail" src="{{ handler.getThumbnailUrl(media, app.request.basePath, 500, 500) }}" alt="{{ media.name }}" /></p>
+
             {% endblock %}
 
             <div id="injection_site"></div>

@@ -220,19 +220,6 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media  $media    The media entity
-     * @param string $basepath The base path
-     * @param int    $width    The prefered width of the thumbnail
-     * @param int    $height   The prefered height of the thumbnail
-     *
-     * @return string
-     */
-    public function getThumbnailUrl(Media $media, $basepath, $width = -1, $height = -1)
-    {
-        return null;
-    }
-
-    /**
      * @return multitype:string
      */
     public function getAddFolderActions()

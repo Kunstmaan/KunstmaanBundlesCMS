@@ -4,8 +4,15 @@ parameters:
     kunstmaan_media.listener.doctrine.class: 'Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener'
     kunstmaan_media.form.type.media.class: 'Kunstmaan\MediaBundle\Form\Type\MediaType'
 
+
 services:
-    
+    liip_imagine.data.loader.stream.profile_photos:
+        class: "%liip_imagine.data.loader.stream.class%"
+        arguments:
+            - "@liip_imagine"
+            - ''
+        tags:
+            - { name: 'liip_imagine.data.loader', loader: 'kunstmaan_media_thumbloader' }
     kunstmaan_media.media_manager:
         class: "%kunstmaan_media.media_manager.class%"
 
