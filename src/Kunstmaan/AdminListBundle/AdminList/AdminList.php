@@ -46,7 +46,7 @@ class AdminList
     /**
      * @return FilterBuilder
      */
-    public function getAdminListFilter()
+    public function getFilterBuilder()
     {
         return $this->configurator->getFilterBuilder();
     }
