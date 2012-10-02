@@ -36,7 +36,7 @@ class SimpleItemAction implements ItemActionInterface
      * @param string   $label           The label
      * @param string   $template        The template
      */
-    public function __construct(callable $routerGenerator, $icon, $label, $template = null)
+    public function __construct($routerGenerator, $icon, $label, $template = null)
     {
         $this->routerGenerator = $routerGenerator;
         $this->icon = $icon;
