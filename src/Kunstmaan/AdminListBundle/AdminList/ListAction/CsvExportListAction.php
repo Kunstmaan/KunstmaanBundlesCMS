@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList\ListAction;
 
 /**
- * CsvExportListAction
+ * This csv export list action makes it possible to configure an action to export the list to csv.
  */
 class CsvExportListAction implements ListActionInterface
 {

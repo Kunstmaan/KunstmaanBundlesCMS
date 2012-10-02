@@ -2,8 +2,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
-use Kunstmaan\AdminListBundle\AdminList\Action\ActionInterface;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
+use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 
@@ -134,7 +133,7 @@ interface AdminListConfiguratorInterface
     public function hasCustomActions();
 
     /**
-     * @return ActionInterface[]
+     * @return ItemActionInterface[]
      */
     public function getCustomActions();
 

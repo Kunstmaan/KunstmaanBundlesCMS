@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\AdminList\Action;
+namespace Kunstmaan\AdminListBundle\AdminList\ItemAction;
 
 /**
  * The simple item action is a default implementation of the item action interface, this can be used

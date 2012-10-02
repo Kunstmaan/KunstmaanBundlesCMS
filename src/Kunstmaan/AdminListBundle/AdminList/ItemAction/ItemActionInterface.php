@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\AdminList\Action;
+namespace Kunstmaan\AdminListBundle\AdminList\ItemAction;
 
 /**
  * An item action can be used to configure custom actions on a listed item.

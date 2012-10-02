@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList\ListAction;
 
 /**
- * ListActionInterface
+ * A list action can be used to configure actions which can be executed on the whole list.
  */
 interface ListActionInterface
 {
