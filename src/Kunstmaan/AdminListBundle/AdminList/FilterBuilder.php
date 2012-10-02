@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\HttpFoundation\Request;

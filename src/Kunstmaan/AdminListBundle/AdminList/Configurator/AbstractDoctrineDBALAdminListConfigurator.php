@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
+use Traversable;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
@@ -112,7 +114,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * @return array|mixed|\Traversable
+     * @return array|mixed|Traversable
      */
     public function getItems()
     {

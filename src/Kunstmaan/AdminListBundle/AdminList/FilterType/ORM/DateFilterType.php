@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
+use DateTime;
+
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -28,7 +30,7 @@ class DateFilterType extends AbstractORMFilterType
     {
         if (isset($data['value']) && isset($data['comparator'])) {
             /* @todo get rid of hardcoded date formats below! */
-            $date = \DateTime::createFromFormat('d/m/Y', $data['value'])->format('Y-m-d');
+            $date = DateTime::createFromFormat('d/m/Y', $data['value'])->format('Y-m-d');
             switch ($data['comparator']) {
                 case 'before':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
