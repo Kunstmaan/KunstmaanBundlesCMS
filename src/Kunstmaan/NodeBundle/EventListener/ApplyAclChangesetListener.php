@@ -35,7 +35,7 @@ class ApplyAclChangesetListener
     /**
      * @param ApplyAclChangesetEvent $event
      */
-    public function onApplyAclChangeset(ApplyAclChangesetEvent $event)
+    public function onApplyAclChangeset(/** @noinspection PhpUnusedParameterInspection */ApplyAclChangesetEvent $event)
     {
         // Launch acl command
         $cmd = 'php ' . $this->kernel->getRootDir() . '/console kuma:acl:apply';

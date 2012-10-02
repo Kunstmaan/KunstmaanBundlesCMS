@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use JMS\SecurityExtraBundle\Security\Util\String;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
@@ -266,7 +264,7 @@ class NodeTranslation extends AbstractEntity
      *
      * @return NodeTranslation
      */
-    public function setPublicNodeVersion($publicNodeVersion)
+    public function setPublicNodeVersion(NodeVersion $publicNodeVersion)
     {
         $this->publicNodeVersion = $publicNodeVersion;
 
@@ -294,7 +292,7 @@ class NodeTranslation extends AbstractEntity
      *
      * @return NodeTranslation
      */
-    public function setNodeVersions($nodeVersions)
+    public function setNodeVersions(ArrayCollection $nodeVersions)
     {
         $this->nodeVersions = $nodeVersions;
 
@@ -309,6 +307,7 @@ class NodeTranslation extends AbstractEntity
     public function getNodeVersion($type)
     {
         $nodeVersions = $this->getNodeVersions();
+        /* @var NodeVersion $nodeVersion */
         foreach ($nodeVersions as $nodeVersion) {
             if ($type == $nodeVersion->getType()) {
                 return $nodeVersion;
@@ -331,16 +330,6 @@ class NodeTranslation extends AbstractEntity
         $nodeVersion->setNodeTranslation($this);
 
         return $this;
-    }
-
-    /**
-     * Disable lazy loading of node versions
-     */
-    public function disableNodeVersionsLazyLoading()
-    {
-        if (is_object($this->nodeVersions)) {
-            $this->nodeVersions->setInitialized(true);
-        }
     }
 
     /**

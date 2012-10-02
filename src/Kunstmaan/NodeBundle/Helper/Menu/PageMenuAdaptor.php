@@ -10,6 +10,7 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
+use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -114,7 +115,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             if (isset($currentNode) && stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 if ($currentNode->getId() == $child->getId()) {
                     $menuItem->setActive(true);
-                } else {
+                } else if (isset($parentNodes)) {
                     foreach ($parentNodes as $parentNode) {
                         if ($parentNode->getId() == $child->getId()) {
                             $menuItem->setActive(true);

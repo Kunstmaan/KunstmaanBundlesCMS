@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
 
 /**

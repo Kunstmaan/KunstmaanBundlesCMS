@@ -19,7 +19,9 @@
         "kunstmaan/adminlist-bundle": "*",
         "kunstmaan/admin-bundle": "*",
         "gedmo/doctrine-extensions": "*",
-		"knplabs/knp-menu-bundle": "*"
+		"knplabs/knp-menu-bundle": "*",
+        "kunstmaan/media-bundle": "master-dev",
+        "kunstmaan/pagepart-bundle": "master-dev"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\NodeBundle": "" }

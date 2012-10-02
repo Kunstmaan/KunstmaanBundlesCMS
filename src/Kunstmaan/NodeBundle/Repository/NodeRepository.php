@@ -8,6 +8,8 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -25,7 +27,7 @@ class NodeRepository extends EntityRepository
      *
      * @return Node[]
      */
-    public function getTopNodes($lang, $permission, $aclHelper, $includeHiddenFromNav = false)
+    public function getTopNodes($lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
     {
         $result = $this->getChildNodes(null, $lang, $permission, $aclHelper, $includeHiddenFromNav);
 
@@ -39,8 +41,10 @@ class NodeRepository extends EntityRepository
      */
     public function getNodeFor(HasNodeInterface $hasNode)
     {
+        /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
         if (!is_null($nodeVersion)) {
+            /* @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $nodeVersion->getNodeTranslation();
             if (!is_null($nodeTranslation)) {
                 return $nodeTranslation->getNode();
@@ -58,6 +62,7 @@ class NodeRepository extends EntityRepository
      */
     public function getNodeForIdAndEntityname($id, $entityName)
     {
+        /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(array('refId' => $id, 'refEntityName' => $entityName));
         if ($nodeVersion) {
             return $nodeVersion->getNodeTranslation()->getNode();
@@ -72,7 +77,7 @@ class NodeRepository extends EntityRepository
      *
      * @return Node|null
      */
-    public function getNodeForSlug($parentNode, $slug)
+    public function getNodeForSlug(Node $parentNode, $slug)
     {
         $slugParts = explode("/", $slug);
         $result = null;
@@ -113,6 +118,7 @@ class NodeRepository extends EntityRepository
         $node->setInternalName($internalName);
         $parent = $hasNode->getParent();
         if ($parent) {
+            /* @var NodeVersion $parentNodeVersion */
             $parentNodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityName' => ClassLookup::getClass($parent)));
             if ($parentNodeVersion) {
                 $node->setParent($parentNodeVersion->getNodeTranslation()->getNode());
@@ -121,13 +127,13 @@ class NodeRepository extends EntityRepository
         $em->persist($node);
         $em->flush();
         $em->refresh($node);
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($hasNode, $lang, $node, $owner);
+        $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($hasNode, $lang, $node, $owner);
 
         return $node;
     }
 
     /**
-     * @param int       $parentId             The parent id
+     * @param int|null  $parentId             The parent id
      * @param string    $lang                 The locale
      * @param string    $permission           The permission (read, write, ...)
      * @param AclHelper $aclHelper            The acl helper

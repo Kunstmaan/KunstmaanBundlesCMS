@@ -2,14 +2,15 @@
 
 namespace Kunstmaan\NodeBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\DateFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\NodeBundle\Entity\Node;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -40,11 +41,11 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFilters()
     {
-        $builder = $this->getAdminListFilter();
-        $builder->add('title', new StringFilter("title"), "Title")
-            ->add('online', new BooleanFilter("online"), "Online")
-            ->add('created', new DateFilter("created"), "Created At")
-            ->add('updated', new DateFilter("updated"), "Updated At");
+        $builder = $this->getFilterBuilder();
+        $builder->add('title', new StringFilterType("title"), "Title")
+                ->add('online', new BooleanFilterType("online"), "Online")
+                ->add('created', new DateFilterType("created"), "Created At")
+                ->add('updated', new DateFilterType("updated"), "Updated At");
     }
 
     /**
@@ -65,9 +66,12 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getEditUrlFor($item)
     {
+        /* @var Node $node */
+        $node = $item->getNode();
+
         return array(
             'path'   => 'KunstmaanNodeBundle_pages_edit',
-            'params' => array('id' => $item->getNode()->getId())
+            'params' => array('id' => $node->getId())
         );
     }
 
@@ -91,6 +95,11 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         return false;
     }
 
+    /**
+     * @param object $item
+     *
+     * @return array
+     */
     public function getDeleteUrlFor($item)
     {
         return array();

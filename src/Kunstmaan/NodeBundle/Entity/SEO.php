@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use JMS\SecurityExtraBundle\Security\Util\String;
-
 use Kunstmaan\MediaBundle\Entity\Media;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;

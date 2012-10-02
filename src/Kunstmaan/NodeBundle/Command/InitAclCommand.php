@@ -2,8 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,8 +38,11 @@ class InitAclCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /* @var MutableAclProviderInterface $aclProvider */
         $aclProvider = $this->getContainer()->get('security.acl.provider');
+        /* @var ObjectIdentityRetrievalStrategyInterface $oidStrategy */
         $oidStrategy = $this->getContainer()->get('security.acl.object_identity_retrieval_strategy');
 
         // Fetch all nodes & grant access
@@ -45,7 +52,6 @@ class InitAclCommand extends ContainerAwareCommand
             $count++;
             $objectIdentity = $oidStrategy->getObjectIdentity($node);
             try {
-                $acl = $aclProvider->findAcl($objectIdentity);
                 $aclProvider->deleteAcl($objectIdentity);
             } catch (AclNotFoundException $e) {
                 // Do nothing

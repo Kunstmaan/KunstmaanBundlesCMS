@@ -126,7 +126,7 @@ class Node extends AbstractEntity
     public function getChildren()
     {
         return $this->children->filter(
-            function ($entry) {
+            function (Node $entry) {
                 if ($entry->isDeleted()) {
                     return false;
                 }
@@ -164,16 +164,6 @@ class Node extends AbstractEntity
     }
 
     /**
-     * disableChildrenLazyLoading
-     */
-    public function disableChildrenLazyLoading()
-    {
-        if (is_object($this->children)) {
-            $this->children->setInitialized(true);
-        }
-    }
-
-    /**
      * @param bool $includeOffline
      *
      * @return ArrayCollection
@@ -181,7 +171,7 @@ class Node extends AbstractEntity
     public function getNodeTranslations($includeOffline = false)
     {
         return $this->nodeTranslations
-            ->filter(function ($entry) use ($includeOffline) {
+            ->filter(function (NodeTranslation $entry) use ($includeOffline) {
                 if ($includeOffline || $entry->isOnline()) {
                     return true;
                 }
@@ -196,7 +186,7 @@ class Node extends AbstractEntity
      *
      * @return Node
      */
-    public function setNodeTranslations($nodeTranslations)
+    public function setNodeTranslations(ArrayCollection $nodeTranslations)
     {
         $this->nodeTranslations = $nodeTranslations;
 
@@ -212,6 +202,7 @@ class Node extends AbstractEntity
     public function getNodeTranslation($lang, $includeOffline = false)
     {
         $nodeTranslations = $this->getNodeTranslations($includeOffline);
+        /* @var NodeTranslation $nodeTranslation */
         foreach ($nodeTranslations as $nodeTranslation) {
             if ($lang == $nodeTranslation->getLang()) {
                 return $nodeTranslation;
@@ -236,16 +227,6 @@ class Node extends AbstractEntity
         $nodeTranslation->setNode($this);
 
         return $this;
-    }
-
-    /**
-     * disableNodeTranslationsLazyLoading
-     */
-    public function disableNodeTranslationsLazyLoading()
-    {
-        if (is_object($this->nodeTranslations)) {
-            $this->nodeTranslations->setInitialized(true);
-        }
     }
 
     /**
@@ -330,11 +311,11 @@ class Node extends AbstractEntity
     /**
      * Set referenced entity
      *
-     * @param AbstractEntity $entity
+     * @param HasNodeInterface $entity
      *
      * @return Node
      */
-    public function setRef(AbstractEntity $entity)
+    public function setRef(HasNodeInterface $entity)
     {
         $this->setRefEntityName(ClassLookup::getClass($entity));
 
@@ -401,7 +382,7 @@ class Node extends AbstractEntity
         if (!$this->sequenceNumber) {
             $parent = $this->getParent();
             if ($parent) {
-                $count                = $parent->getChildren()->count();
+                $count                = count($parent->getChildren());
                 $this->sequenceNumber = $count + 1;
             } else {
                 $this->sequenceNumber = 1;

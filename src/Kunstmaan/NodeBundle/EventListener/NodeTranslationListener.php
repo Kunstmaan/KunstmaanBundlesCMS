@@ -3,11 +3,10 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-
 use Doctrine\ORM\Event\OnFlushEventArgs;
-
 use Doctrine\ORM\Event\PostFlushEventArgs;
 
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
@@ -70,6 +69,7 @@ class NodeTranslationListener
     {
         $children = $node->getNode()->getChildren();
         if (count($children) > 0) {
+            /* @var Node $child */
             foreach ($children as $child) {
                 $translation = $child->getNodeTranslation($node->getLang(), true);
                 if ($translation) {
@@ -88,9 +88,9 @@ class NodeTranslationListener
 
     /**
      * Update the url for a nodetranslation
-     * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $node
+     * @param NodeTranslation $node
      *
-     * @return \Kunstmaan\NodeBundle\Entity\NodeTranslation|bool
+     * @return NodeTranslation|bool
      */
     private function updateUrl(NodeTranslation $node)
     {

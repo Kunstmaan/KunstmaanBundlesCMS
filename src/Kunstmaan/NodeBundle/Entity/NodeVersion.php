@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use JMS\SecurityExtraBundle\Security\Util\String;
+use DateTime;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 
+use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
@@ -88,8 +88,8 @@ class NodeVersion extends AbstractEntity
      */
     public function __construct()
     {
-        $this->setCreated(new \DateTime());
-        $this->setUpdated(new \DateTime());
+        $this->setCreated(new DateTime());
+        $this->setUpdated(new DateTime());
     }
 
     /**
@@ -191,11 +191,11 @@ class NodeVersion extends AbstractEntity
     /**
      * Set created
      *
-     * @param \DateTime $created
+     * @param DateTime $created
      *
      * @return NodeVersion
      */
-    public function setCreated($created)
+    public function setCreated(DateTime $created)
     {
         $this->created = $created;
 
@@ -205,7 +205,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get created
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreated()
     {
@@ -215,11 +215,11 @@ class NodeVersion extends AbstractEntity
     /**
      * Set updated
      *
-     * @param \DateTime $updated
+     * @param DateTime $updated
      *
      * @return NodeVersion
      */
-    public function setUpdated($updated)
+    public function setUpdated(DateTime $updated)
     {
         $this->updated = $updated;
 
@@ -229,7 +229,7 @@ class NodeVersion extends AbstractEntity
     /**
      * Get updated
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdated()
     {
@@ -241,7 +241,7 @@ class NodeVersion extends AbstractEntity
      */
     public function preUpdate()
     {
-        $this->setUpdated(new \DateTime());
+        $this->setUpdated(new DateTime());
     }
 
     /**
@@ -301,9 +301,9 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * @param AbstractEntity $entity
+     * @param HasNodeInterface $entity
      */
-    public function setRef(AbstractEntity $entity)
+    public function setRef(HasNodeInterface $entity)
     {
         $this->setRefId($entity->getId());
         $this->setRefEntityName(ClassLookup::getClass($entity));
@@ -312,7 +312,7 @@ class NodeVersion extends AbstractEntity
     /**
      * @param EntityManager $em
      *
-     * @return object
+     * @return HasNodeInterface
      */
     public function getRef(EntityManager $em)
     {

@@ -14,17 +14,17 @@ class ConfigureActionMenuEvent extends Event
 {
 
     /**
-     * @var \Knp\Menu\FactoryInterface
+     * @var FactoryInterface
      */
     private $factory;
 
     /**
-     * @var \Knp\Menu\ItemInterface
+     * @var ItemInterface
      */
     private $menu;
 
     /**
-     * @var \Kunstmaan\NodeBundle\Entity\NodeVersion
+     * @var NodeVersion
      */
     private $activeNodeVersion;
 
@@ -41,7 +41,7 @@ class ConfigureActionMenuEvent extends Event
     }
 
     /**
-     * @return \Knp\Menu\FactoryInterface
+     * @return FactoryInterface
      */
     public function getFactory()
     {
@@ -49,7 +49,7 @@ class ConfigureActionMenuEvent extends Event
     }
 
     /**
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function getMenu()
     {
@@ -59,7 +59,7 @@ class ConfigureActionMenuEvent extends Event
     /**
      * Get activeNodeVersion
      *
-     * @return \Kunstmaan\NodeBundle\Entity\NodeVersion
+     * @return NodeVersion
      */
     public function getActiveNodeVersion()
     {

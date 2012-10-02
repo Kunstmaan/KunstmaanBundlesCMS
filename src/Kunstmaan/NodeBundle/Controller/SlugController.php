@@ -2,14 +2,22 @@
 
 namespace Kunstmaan\NodeBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
-use Kunstmaan\AdminBundle\Entity\DynamicRoutingPageInterface;
+use Kunstmaan\NodeBundle\Entity\DynamicRoutingPageInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -27,18 +35,19 @@ class SlugController extends Controller
      * @param bool   $preview Show in preview mode
      * @param bool   $draft   Show the draft version or not
      *
+     * @throws NotFoundHttpException
+     * @throws AccessDeniedHttpException
      * @Route("/")
      * @Route("/draft/{url}", requirements={"url" = ".+"}, defaults={"preview" = true, "draft" = true}, name="_slug_draft")
      * @Route("/preview/{url}", requirements={"url" = ".+"}, defaults={"preview" = true}, name="_slug_preview")
      * @Route("/{url}", requirements={"url" = ".+"}, name="_slug")
      * @Template()
      *
-     * @throws AccessDeniedHttpException
-     *
      * @return Response|array
      */
     public function slugAction($url = null, $preview = false, $draft = false)
     {
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $locale = $request->getLocale();
@@ -71,6 +80,7 @@ class SlugController extends Controller
             }
         }
 
+        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationForUrl($url, $locale);
         $exactMatch = true;
         if (!$nodeTranslation) {
@@ -78,6 +88,10 @@ class SlugController extends Controller
             $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getBestMatchForUrl($url, $locale);
             $exactMatch = false;
         }
+
+        /* @var HasNodeInterface $page */
+        $page = null;
+        $node = null;
         if ($nodeTranslation) {
             if ($draft) {
                 $version = $nodeTranslation->getNodeVersion('draft');
@@ -101,15 +115,18 @@ class SlugController extends Controller
             throw $this->createNotFoundException("The requested page is not online");
         }
 
+        /* @var SecurityContextInterface $securityContext */
         $securityContext = $this->get('security.context');
         if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
+        /* @var AclHelper $aclHelper */
         $aclHelper  = $this->container->get('kunstmaan_admin.acl.helper');
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node);
 
         if ($page instanceof DynamicRoutingPageInterface) {
+            /* @var DynamicRoutingPageInterface $page */
             $page->setLocale($locale);
             $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
             if (false === $slugPart) {
@@ -126,6 +143,10 @@ class SlugController extends Controller
         //render page
         $pageParts = array();
         if ($exactMatch && method_exists($page, 'getPagePartAdminConfigurations')) {
+            /**
+             * @noinspection PhpUndefinedMethodInspection
+             * @var AbstractPagePartAdminConfigurator $pagePartAdminConfiguration
+             */
             foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
                 $context = $pagePartAdminConfiguration->getDefaultContext();
                 $pageParts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
@@ -141,10 +162,12 @@ class SlugController extends Controller
                 'locales' => $localesArray));
         $hasView = false;
         if (method_exists($page, 'getDefaultView')) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $renderContext->setView($page->getDefaultView());
             $hasView = true;
         }
         if (method_exists($page, 'service')) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $redirect = $page->service($this->container, $request, $renderContext);
             if (!empty($redirect)) {
                 return $redirect;

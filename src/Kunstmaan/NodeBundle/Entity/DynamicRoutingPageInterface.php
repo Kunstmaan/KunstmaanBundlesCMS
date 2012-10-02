@@ -35,4 +35,11 @@ interface DynamicRoutingPageInterface extends PageInterface
      * @param bool   $absolute   Absolute or not
      */
     public function generate($name, array $parameters = array(), $absolute = false);
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale);
 }

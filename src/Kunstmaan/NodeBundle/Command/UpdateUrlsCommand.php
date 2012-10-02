@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Command;
 
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,6 +35,7 @@ class UpdateUrlsCommand extends ContainerAwareCommand
 
         $mainNodes = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getTopNodeTranslations();
         if (count($mainNodes)) {
+            /* @var NodeTranslation $mainNode */
             foreach ($mainNodes as $mainNode) {
                 $mainNode->setUrl('');
                 $em->persist($mainNode);

@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -9,6 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\NodeBundle\Helper\ShellHelper;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
 
 /**
  * ApplyAclCommand
@@ -16,14 +20,15 @@ use Kunstmaan\NodeBundle\Helper\ShellHelper;
 class ApplyAclCommand extends ContainerAwareCommand
 {
 
-    /* @var EntityManager $em */
+    /**
+     * @var EntityManager $em
+     */
     private $em = null;
 
-    /* @var ShellHelper $shellHelper */
+    /**
+     * @var ShellHelper
+     */
     private $shellHelper = null;
-
-    /* @var Node $rootNode */
-    private $rootNode;
 
     /**
      * Configures the command.
@@ -51,6 +56,7 @@ class ApplyAclCommand extends ContainerAwareCommand
         if ($this->isRunning()) {
             return;
         }
+        /* @var AclChangesetRepository $aclRepo */
         $aclRepo = $this->em->getRepository('KunstmaanNodeBundle:AclChangeset');
         do {
             /* @var AclChangeset $changeset */
@@ -63,7 +69,8 @@ class ApplyAclCommand extends ContainerAwareCommand
             $this->em->persist($changeset);
             $this->em->flush();
 
-            $permissionAdmin->applyAclChangeset($changeset->getNode(), $changeset->getChangeset());
+            $entity = $this->em->getRepository($changeset->getRefEntityName())->find($changeset->getRefId());
+            $permissionAdmin->applyAclChangeset($entity, $changeset->getChangeset());
 
             $changeset->setStatus(AclChangeset::STATUS_FINISHED);
             $this->em->persist($changeset);

@@ -10,4 +10,9 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 interface PageInterface extends HasNodeInterface
 {
 
+    /**
+     * @return array
+     */
+    public function getPossibleChildPageTypes();
+
 }

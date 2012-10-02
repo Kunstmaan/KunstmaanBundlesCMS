@@ -2,6 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,6 +34,7 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
     {
         ini_set('xdebug.max_nesting_level', 150);
 
+        /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $batchSize = 20;
@@ -39,6 +44,7 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
         $iterableResult = $q->iterate();
 
         while (($row = $iterableResult->next()) !== false) {
+            /* @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $row[0];
             if ($nodeTranslation->getWeight() == null) {
                 $output->writeln('- editing node: '. $nodeTranslation->getTitle());

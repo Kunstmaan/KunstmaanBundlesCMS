@@ -47,7 +47,7 @@ class NodeMenu
     private $topNodeMenuItems = array();
 
     /**
-     * @var array
+     * @var NodeMenuItem[]
      */
     private $breadCrumb = array();
 
@@ -76,7 +76,7 @@ class NodeMenu
      * @param SecurityContextInterface $securityContext      The security context
      * @param AclHelper                $aclHelper            The ACL helper
      * @param string                   $lang                 The language
-     * @param Node                     $currentNode          The node
+     * @param Node|null                $currentNode          The node
      * @param string                   $permission           The permission
      * @param bool                     $includeOffline       Include offline pages
      * @param bool                     $includeHiddenFromNav Include hidden pages
@@ -98,7 +98,9 @@ class NodeMenu
             array_unshift($nodeBreadCrumb, $tempNode);
             $tempNode = $tempNode->getParent();
         }
+        /* @var NodeMenuItem $parentNodeMenuItem */
         $parentNodeMenuItem = null;
+        /* @var Node $nodeBreadCrumbItem */
         foreach ($nodeBreadCrumb as $nodeBreadCrumbItem) {
             $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeOffline);
             if (!is_null($nodeTranslation)) {
@@ -112,6 +114,7 @@ class NodeMenu
 
         //topNodes
         $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->lang, $permission, $this->aclHelper, $includeHiddenFromNav);
+        /* @var Node $topNode */
         foreach ($topNodes as $topNode) {
             $nodeTranslation = $topNode->getNodeTranslation($this->lang, $this->includeOffline);
             if (!is_null($nodeTranslation)) {
@@ -198,6 +201,7 @@ class NodeMenu
             $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneBy(array('internalName' => $internalName, 'parent' => $parent->getId()));
             if (is_null($node)) {
                 $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findBy(array('internalName' => $internalName));
+                /* @var Node $n */
                 foreach ($nodes as $n) {
                     $p = $n;
                     while (is_null($node) && !is_null($p->getParent())) {
@@ -243,6 +247,7 @@ class NodeMenu
                 }
             }
             $nodeMenuItem = null;
+            /* @var Node $nodeBreadCrumbItem */
             foreach ($nodeBreadCrumb as $nodeBreadCrumbItem) {
                 $breadCrumbItemFromMain = $this->getBreadCrumbItemByNode($nodeBreadCrumbItem);
                 if (!is_null($breadCrumbItemFromMain)) {

@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Repository\NodeRepository;
 
 /**
  * NodeMenuItem
@@ -49,12 +50,12 @@ class NodeMenuItem
     private $menu;
 
     /**
-     * @param Node            $node            The node
-     * @param NodeTranslation $nodeTranslation The nodetranslation
-     * @param NodeMenuItem    $parent          The parent nodemenuitem
-     * @param NodeMenu        $menu            The menu
+     * @param Node              $node            The node
+     * @param NodeTranslation   $nodeTranslation The nodetranslation
+     * @param NodeMenuItem|null $parent          The parent nodemenuitem
+     * @param NodeMenu          $menu            The menu
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent, NodeMenu $menu)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeMenuItem $parent, NodeMenu $menu)
     {
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
@@ -207,6 +208,7 @@ class NodeMenuItem
     {
         if (is_null($this->lazyChildren)) {
             $this->lazyChildren = array();
+            /* @var NodeRepository $nodeRepo */
             $nodeRepo = $this->em->getRepository('KunstmaanNodeBundle:Node');
             $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getPermission(), $this->menu->getAclHelper(), true);
             foreach ($children as $child) {
@@ -217,7 +219,7 @@ class NodeMenuItem
             }
         }
 
-        return array_filter($this->lazyChildren, function ($entry) use ($includeHiddenFromNav) {
+        return array_filter($this->lazyChildren, function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
             if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
                 return false;
             }

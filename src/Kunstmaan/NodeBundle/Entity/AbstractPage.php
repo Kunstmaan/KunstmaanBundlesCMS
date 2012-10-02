@@ -2,13 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use JMS\SecurityExtraBundle\Security\Util\String;
-
 use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
+use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +33,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     /**
      * @var string
      *
-     * @ORM\Column(type="string",nullable=true,name="page_title")
+     * @ORM\Column(type="string", nullable=true, name="page_title")
      */
     protected $pageTitle;
 
@@ -140,11 +139,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     }
 
     /**
-     * @return array
-     */
-    abstract public function getPossibleChildPageTypes();
-
-    /**
      * @param EntityManager $em
      *
      * @return AbstractPage
@@ -157,7 +151,9 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
         $em->flush();
 
         if (method_exists($this, 'getPagePartAdminConfigurations')) {
+            /* @noinspection PhpUndefinedMethodInspection */
             $ppConfigurations = $this->getPagePartAdminConfigurations();
+            /* @var AbstractPagePartAdminConfigurator $ppConfiguration */
             foreach ($ppConfigurations as $ppConfiguration) {
                 $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($em, $this, $newPage, $ppConfiguration->getDefaultContext());
             }

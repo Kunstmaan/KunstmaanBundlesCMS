@@ -12,11 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class FixDateListener
 {
-   /**
-    * Make sure response has a timestamp
-    *
-    * @param GetResponseEvent $event
-    */
+    /**
+     * Make sure response has a timestamp
+     *
+     * @param FilterResponseEvent|GetResponseEvent $event
+     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();

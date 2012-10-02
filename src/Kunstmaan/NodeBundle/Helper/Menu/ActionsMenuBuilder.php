@@ -2,16 +2,20 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
 
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\NodeBundle\Event\Events;
-use Doctrine\ORM\EntityManager;
+
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+
+use Knp\Menu\ItemInterface;
 use Knp\Menu\FactoryInterface;
 
 /**
@@ -21,32 +25,32 @@ class ActionsMenuBuilder
 {
 
     /**
-     * @var \Knp\Menu\FactoryInterface
+     * @var FactoryInterface
      */
     private $factory;
 
     /**
-     * @var \Kunstmaan\NodeBundle\Entity\NodeVersion
+     * @var NodeVersion
      */
     private $activeNodeVersion;
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
     /**
-     * @var \Symfony\Component\Routing\RouterInterface
+     * @var RouterInterface
      */
     private $router;
 
     /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     * @var EventDispatcherInterface
      */
     private $dispatcher;
 
     /**
-     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     * @var SecurityContextInterface
      */
     private $context;
 
@@ -67,11 +71,11 @@ class ActionsMenuBuilder
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
-    public function createSubActionsMenu(Request $request = null)
+    public function createSubActionsMenu(/** @noinspection PhpUnusedParameterInspection */Request $request = null)
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
         $menu              = $this->factory->createItem('root');
@@ -87,11 +91,11 @@ class ActionsMenuBuilder
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
-    public function createActionsMenu(Request $request = null)
+    public function createActionsMenu(/** @noinspection PhpUnusedParameterInspection */Request $request = null)
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
         $menu              = $this->factory->createItem('root');
@@ -126,7 +130,7 @@ class ActionsMenuBuilder
                 $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
             }
             $page = $activeNodeVersion->getRef($this->em);
-            if (!is_null($page)) {
+            if (!is_null($page) && $page instanceof PageInterface) {
                 $possibleChildPages = $page->getPossibleChildPageTypes();
                 if (!empty($possibleChildPages)) {
                     $menu->addChild('action.addsubpage', array('linkAttributes' => array('type' => 'button', 'class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#add-subpage-modal'), 'extras' => array('renderType' => 'button')));
@@ -143,9 +147,9 @@ class ActionsMenuBuilder
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function createTopActionsMenu(Request $request = null)
     {
@@ -173,7 +177,7 @@ class ActionsMenuBuilder
     /**
      * Get activeNodeVersion
      *
-     * @return \Kunstmaan\NodeBundle\Entity\NodeVersion
+     * @return NodeVersion
      */
     public function getActiveNodeVersion()
     {

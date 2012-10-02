@@ -9,6 +9,7 @@ use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminBundle\Helper\Slugifier;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
@@ -53,6 +54,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getNodeTranslationFor(HasNodeInterface $hasNode)
     {
+        /* @var NodeVersion $nodeVersion */
         $nodeVersion = $this->getEntityManager()
             ->getRepository('KunstmaanNodeBundle:NodeVersion')
             ->getNodeVersionFor($hasNode);
@@ -192,8 +194,8 @@ class NodeTranslationRepository extends EntityRepository
         $nodeTranslation = new NodeTranslation();
         $nodeTranslation->setNode($node);
         $nodeTranslation->setLang($lang);
-        $nodeTranslation->setTitle($hasNode->__toString());
-        $nodeTranslation->setSlug(Slugifier::slugify($hasNode->__toString(), ''));
+        $nodeTranslation->setTitle($hasNode);
+        $nodeTranslation->setSlug(Slugifier::slugify($hasNode, ''));
         $nodeTranslation->setOnline($hasNode->isOnline());
 
         $addCommand = new AddCommand($em, $owner);
