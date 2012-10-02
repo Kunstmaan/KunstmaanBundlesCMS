@@ -9,7 +9,6 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
-use Kunstmaan\MediaBundle\Entity\File;
 
 /**
  * FolderType

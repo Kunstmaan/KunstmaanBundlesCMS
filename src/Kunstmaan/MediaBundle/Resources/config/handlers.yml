@@ -4,14 +4,9 @@ parameters:
     kunstmaan_media.media_handler.remote_video.class: 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler'
     kunstmaan_media.media_handler.image.class: 'Kunstmaan\MediaBundle\Helper\Image\ImageHandler'
     kunstmaan_media.media_handler.file.class: 'Kunstmaan\MediaBundle\Helper\File\FileHandler'
-    kunstmaan_media.image.manipulator.imagine.class: 'Kunstmaan\MediaBundle\Helper\Manipulator\ImagineImageManipulator'
     aviary_api_key: null
 
 services:
-
-    kunstmaan_media.image.manipulator.imagine:
-        class: "%kunstmaan_media.image.manipulator.imagine.class%"
-        arguments: ["@liip_imagine"]
 
     kunstmaan_media.media_handlers.remote_slide:
         class: "%kunstmaan_media.media_handler.remote_slide.class%"
@@ -25,7 +20,7 @@ services:
             
     kunstmaan_media.media_handlers.image:
         class: "%kunstmaan_media.media_handler.image.class%"
-        arguments: ["@kunstmaan_media.image.manipulator.imagine", "%aviary_api_key%"]
+        arguments: ["%aviary_api_key%"]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
             

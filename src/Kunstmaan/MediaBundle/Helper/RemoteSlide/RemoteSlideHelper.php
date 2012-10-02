@@ -66,7 +66,7 @@ class RemoteSlideHelper
      * Set code
      * @param string $code
      *
-     * @return RemoteVideoHelper
+     * @return RemoteSlideHelper
      */
     public function setCode($code)
     {
@@ -91,7 +91,7 @@ class RemoteSlideHelper
      * Set thumbnail url
      * @param string $url
      *
-     * @return RemoteVideoHelper
+     * @return RemoteSlideHelper
      */
     public function setThumbnailUrl($url)
     {
@@ -114,21 +114,13 @@ class RemoteSlideHelper
      * Set type
      * @param string $type
      *
-     * @return RemoteVideoHelper
+     * @return RemoteSlideHelper
      */
     public function setType($type)
     {
         $this->media->metadata['type'] = $type;
 
         return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function updateMedia(Media $media)
-    {
-        $this->saveMedia($media);
     }
 
 }

@@ -3,7 +3,6 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

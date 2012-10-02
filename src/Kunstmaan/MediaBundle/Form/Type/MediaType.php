@@ -3,16 +3,12 @@
 namespace Kunstmaan\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\FormView;
-
 use Symfony\Component\Form\FormInterface;
-
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
-
 use Doctrine\Common\Persistence\ObjectManager;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 
 /**
  * MediaType
@@ -96,8 +92,8 @@ class MediaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->set('chooser', $form->getAttribute('chooser'));
-        $view->set('mediatype', $form->getAttribute('mediatype'));
-        $view->set('mediamanager', $this->mediaManager);
+        $view->vars['chooser'] = $form->getAttribute('chooser');
+        $view->vars['mediatype'] = $form->getAttribute('mediatype');
+        $view->vars['mediamanager'] = $this->mediaManager;
     }
 }

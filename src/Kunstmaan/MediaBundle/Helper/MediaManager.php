@@ -5,10 +5,6 @@ namespace Kunstmaan\MediaBundle\Helper;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Entity\MediaContext;
-use Kunstmaan\MediaBundle\Helper\Cdn\CdnInterface;
-use Kunstmaan\MediaBundle\Helper\Provider\ProviderInterface;
-use Gaufrette\Filesystem;
 
 /**
  * MediaManager
@@ -16,7 +12,7 @@ use Gaufrette\Filesystem;
 class MediaManager
 {
     /**
-     * @var array
+     * @var AbstractMediaHandler[]
      */
     protected $handlers = array();
 

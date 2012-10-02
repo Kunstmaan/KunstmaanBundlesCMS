@@ -3,20 +3,8 @@
 namespace Kunstmaan\MediaBundle\Helper\RemoteVideo;
 
 use Kunstmaan\MediaBundle\Form\RemoteVideo\RemoteVideoType;
-
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-
 use Kunstmaan\MediaBundle\Entity\Media;
-
-use Kunstmaan\MediaBundle\Helper\StrategyInterface;
-
-use Kunstmaan\MediaBundle\Entity\Folder;
-
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\MediaBundle\Entity\VideoGallery;
-use Kunstmaan\MediaBundle\Form\VideoType;
-use Kunstmaan\MediaBundle\AdminList\VideoListConfigurator;
-use Kunstmaan\MediaBundle\Entity\Video;
 
 /**
  * RemoteVideoStrategy
@@ -51,7 +39,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Form\VideoType
+     * @return RemoteVideoType
      */
     public function getFormType()
     {
@@ -75,7 +63,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     /**
      * @param Media $media
      *
-     * @return Video
+     * @return RemoteVideoHelper
      */
     public function getFormHelper(Media $media)
     {
@@ -241,7 +229,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return multitype:string
+     * @return array
      */
     public function getAddFolderActions()
     {

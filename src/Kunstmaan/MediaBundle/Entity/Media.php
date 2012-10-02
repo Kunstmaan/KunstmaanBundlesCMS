@@ -5,7 +5,6 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Assetic\Asset\FileAsset;
 
 /**
  * Media

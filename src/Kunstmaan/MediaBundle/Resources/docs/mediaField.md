@@ -17,7 +17,8 @@ mediatype:
 	type: string
 	default: null
 	description:
-		You can specify a specific mediahandler by its name, when this is null all media items are possible. 
+		You can specify a specific mediahandler by its name, when this is null all media items are possible.
+		Knows possible values are: image|file|remotevideo|remoteslide
 
 ## Parent type:
 

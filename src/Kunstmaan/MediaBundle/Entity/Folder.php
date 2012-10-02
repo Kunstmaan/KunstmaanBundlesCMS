@@ -3,14 +3,9 @@
 namespace Kunstmaan\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\MediaBundle\Form\FolderType;
-use Kunstmaan\MediaBundle\Helper\FolderStrategy;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Translatable\Translatable;
 
 /**
  * Class that defines a folder from the MediaBundle in the database

@@ -3,7 +3,6 @@
 namespace Kunstmaan\MediaBundle\Repository;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -30,7 +29,7 @@ class FolderRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $this->deleteFiles($folder, $em);
+        $this->deleteMedia($folder, $em);
         $this->deleteChildren($folder, $em);
         $folder->setDeleted(true);
         $em->persist($folder);
@@ -40,11 +39,11 @@ class FolderRepository extends EntityRepository
     /**
      * @param Folder $folder
      */
-    public function deleteFiles(Folder $folder)
+    public function deleteMedia(Folder $folder)
     {
         $em = $this->getEntityManager();
 
-        foreach ($folder->getFiles() as $item) {
+        foreach ($folder->getMedia() as $item) {
             $item->setDeleted(true);
             $em->persist($item);
             $em->remove($item);
@@ -59,7 +58,7 @@ class FolderRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         foreach ($folder->getChildren() as $child) {
-            $this->deleteFiles($child, $em);
+            $this->deleteMedia($child, $em);
             $this->deleteChildren($child, $em);
             $child->setDeleted(true);
             $em->persist($child);
@@ -67,7 +66,7 @@ class FolderRepository extends EntityRepository
     }
 
     /**
-     * @param null $limit
+     * @param int $limit
      *
      * @return array
      */

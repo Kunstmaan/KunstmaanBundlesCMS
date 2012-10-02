@@ -2,15 +2,13 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
-use Kunstmaan\MediaBundle\Helper\File\FileHelper;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\MediaBundle\Entity\Image;
 use Kunstmaan\MediaBundle\Entity\Folder;
-use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 
 /**
  * controllerclass which Aviary can use to upload the edited image and add it to the database

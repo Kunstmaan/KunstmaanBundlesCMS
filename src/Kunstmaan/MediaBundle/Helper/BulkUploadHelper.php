@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Helper;
 
-use Kunstmaan\MediaBundle\Entity\Media;
-
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 /**
  * BulkUploadHelper

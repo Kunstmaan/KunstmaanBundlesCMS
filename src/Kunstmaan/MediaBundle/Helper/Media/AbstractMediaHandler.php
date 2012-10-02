@@ -3,14 +3,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Media;
 
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
-
 use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Entity\Folder;
-
 use Symfony\Component\Form\AbstractType;
-
-use Doctrine\ORM\EntityManager;
 
 /**
  * AbstractMediaHandler
@@ -91,5 +85,10 @@ abstract class AbstractMediaHandler
     {
         return null;
     }
+
+    /**
+     * @return array
+     */
+    public abstract function getAddFolderActions();
 
 }

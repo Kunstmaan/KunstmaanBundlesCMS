@@ -4,25 +4,10 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
-use Kunstmaan\MediaBundle\Entity\AbstractMediaMetadata;
-use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
-
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
-use Kunstmaan\MediaBundle\Event\MediaEvent;
-use Kunstmaan\MediaBundle\Event\Events;
 use Kunstmaan\MediaBundle\Form\BulkUploadType;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Form\VideoType;
-use Kunstmaan\MediaBundle\Entity\Video;
-use Kunstmaan\MediaBundle\Form\SlideType;
-use Kunstmaan\MediaBundle\Entity\Slide;
-use Kunstmaan\MediaBundle\Entity\Image;
-use Kunstmaan\MediaBundle\Entity\File;
-use Kunstmaan\MediaBundle\Form\MediaType;
-use Kunstmaan\MediaBundle\Helper\MediaHelper;
 use Kunstmaan\MediaBundle\Helper\BulkUploadHelper;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -164,11 +149,8 @@ class MediaController extends Controller
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
-        $request = $this->getRequest();
-
         $drop = null;
         if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0 ) {
-            $pic = $_FILES['files'];
             $drop = $this->getRequest()->files->get('files');
         } else {
             $drop = $this->getRequest()->get('text');

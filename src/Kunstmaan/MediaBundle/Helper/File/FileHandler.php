@@ -3,30 +3,14 @@
 namespace Kunstmaan\MediaBundle\Helper\File;
 
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-
 use Kunstmaan\MediaBundle\Form\File\FileType;
-
 use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
-
 use Gaufrette\Filesystem;
-
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
-
 use Gaufrette\Adapter\Local;
-
 use Symfony\Component\HttpFoundation\File\File;
-
 use Kunstmaan\MediaBundle\Entity\Media;
-
-use Kunstmaan\MediaBundle\Helper\StrategyInterface;
-
-use Kunstmaan\MediaBundle\Entity\Folder;
-
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\MediaBundle\Entity\VideoGallery;
-use Kunstmaan\MediaBundle\Form\VideoType;
-use Kunstmaan\MediaBundle\AdminList\VideoListConfigurator;
-use Kunstmaan\MediaBundle\Entity\Video;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 
 /**
  * FileHandler
@@ -75,7 +59,7 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Form\VideoType
+     * @return FileType
      */
     public function getFormType()
     {
@@ -99,7 +83,7 @@ class FileHandler extends AbstractMediaHandler
     /**
      * @param Media $media
      *
-     * @return Video
+     * @return FileHelper
      */
     public function getFormHelper(Media $media)
     {
@@ -171,18 +155,6 @@ class FileHandler extends AbstractMediaHandler
      */
     public function removeMedia(Media $media)
     {
-        foreach ($this->formats as $format => $options) {
-            $path = $this->generateRelativePath($media, $format);
-            if ($this->getFilesystem()->has($path)) {
-                $this->getFilesystem()->delete($path);
-            }
-        }
-
-        // Original
-        $path = $this->getOriginalFilePath($media);
-        if ($this->getFilesystem()->has($path)) {
-            $this->getFilesystem()->delete($path);
-        }
     }
 
     /**
@@ -220,7 +192,7 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return multitype:string
+     * @return array
      */
     public function getAddFolderActions()
     {

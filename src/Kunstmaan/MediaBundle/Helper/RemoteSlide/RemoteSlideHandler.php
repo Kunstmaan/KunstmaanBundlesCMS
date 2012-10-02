@@ -3,20 +3,8 @@
 namespace Kunstmaan\MediaBundle\Helper\RemoteSlide;
 
 use Kunstmaan\MediaBundle\Form\RemoteSlide\RemoteSlideType;
-
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-
 use Kunstmaan\MediaBundle\Entity\Media;
-
-use Kunstmaan\MediaBundle\Helper\StrategyInterface;
-
-use Kunstmaan\MediaBundle\Entity\Folder;
-
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\MediaBundle\Entity\VideoGallery;
-use Kunstmaan\MediaBundle\Form\VideoType;
-use Kunstmaan\MediaBundle\AdminList\VideoListConfigurator;
-use Kunstmaan\MediaBundle\Entity\Video;
 
 /**
  * RemoteSlideStrategy
@@ -48,7 +36,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return \Kunstmaan\MediaBundle\Form\VideoType
+     * @return RemoteSlideType
      */
     public function getFormType()
     {
@@ -72,7 +60,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     /**
      * @param Media $media
      *
-     * @return Video
+     * @return RemoteSlideHelper
      */
     public function getFormHelper(Media $media)
     {
@@ -97,12 +85,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
             case 'slideshare':
                 try {
                     $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url=http://www.slideshare.net/slideshow/embed_code/'.$code.'&format=json'));
-                    $thumbnailUrl = 'http:'.$json->thumbnail;
-                    /* dirty hack to fix urls for imagine */
-                    if (!endsWith($thumbnailUrl, '.jpg') && !endsWith($thumbnailUrl, '.png')) {
-                        $thumbnailUrl = $thumbnailUrl.'&ext=.jpg';
-                    }
-                    $slide->setThumbnailUrl($thumbnailUrl);
+                    $slide->setThumbnailUrl('http:'.$json->thumbnail);
                 } catch (\ErrorException $e) {
                 }
                 break;
@@ -200,7 +183,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return multitype:string
+     * @return array
      */
     public function getAddFolderActions()
     {
