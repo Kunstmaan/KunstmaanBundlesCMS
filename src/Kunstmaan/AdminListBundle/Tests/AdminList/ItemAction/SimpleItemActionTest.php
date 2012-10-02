@@ -27,11 +27,11 @@ class SimpleItemActionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Action\SimpleItemAction::__construct
-     * @covers Kunstmaan\AdminListBundle\AdminList\Action\SimpleItemAction::getUrl
-     * @covers Kunstmaan\AdminListBundle\AdminList\Action\SimpleItemAction::getIcon
-     * @covers Kunstmaan\AdminListBundle\AdminList\Action\SimpleItemAction::getLabel
-     * @covers Kunstmaan\AdminListBundle\AdminList\Action\SimpleItemAction::getTemplate
+     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::__construct
+     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getUrlFor
+     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getIconFor
+     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getLabelFor
+     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getTemplate
      *
      * @return null
      */
