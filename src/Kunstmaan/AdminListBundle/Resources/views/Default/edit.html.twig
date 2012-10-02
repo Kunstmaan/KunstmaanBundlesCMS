@@ -6,19 +6,15 @@
         <div class="main_actions">
             <button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
             <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrlFor()["path"], adminlistconfigurator.getIndexUrlFor()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
-            {% if adminlistconfigurator.hasCustomActions() %}
-                {% for customAction in adminlistconfigurator.getCustomActions() %}
-                    {% if customAction.template is not null %}
-                        {% include customAction.template with {'row': entity, 'item': entity} %}
+            {% if adminlistconfigurator.hasItemActions() %}
+                {% for itemAction in adminlistconfigurator.getItemActions() %}
+                    <a class="btn" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                    {% if itemAction.getIconFor(entity) is not null %}
+                        <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}"/>
                     {% else %}
-                        <a class="btn" href="{{ path(customAction.getUrlFor(entity)["path"], customAction.getUrlFor(entity)[("params")] ) }}">
-                        {% if customAction.getIcon(entity) is not null %}
-                            <img src="{{ asset(customAction.getIcon(entity)) }}" alt="{{ customAction.getLabel(entity) }}"/>
-                        {% else %}
-                            {{ customAction.getLabel(entity) }}
-                        {% endif %}
-                        </a>
+                        {{ itemAction.getLabelFor(entity) }}
                     {% endif %}
+                    </a>
                 {% endfor %}
             {% endif %}
         </div>
@@ -29,19 +25,15 @@
 				<button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
                 <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrlFor()["path"], adminlistconfigurator.getIndexUrlFor()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
 
-                {% if adminlistconfigurator.hasCustomActions() %}
-                    {% for customAction in adminlistconfigurator.getCustomActions() %}
-                        {% if customAction.template is not null %}
-                            {% include customAction.template with {'row': entity, 'item': entity} %}
+                {% if adminlistconfigurator.hasItemActions() %}
+                    {% for itemAction in adminlistconfigurator.getItemActions() %}
+                        <a class="btn" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                        {% if itemAction.getIconFor(entity) is not null %}
+                            <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}"/>
                         {% else %}
-                            <a class="btn" href="{{ path(customAction.getUrlFor(entity)["path"], customAction.getUrlFor(entity)[("params")] ) }}">
-                            {% if customAction.getIcon(entity) is not null %}
-                                <img src="{{ asset(customAction.getIcon(entity)) }}" alt="{{ customAction.getLabel(entity) }}"/>
-                            {% else %}
-                                {{ customAction.getLabel(entity) }}
-                            {% endif %}
-                            </a>
+                            {{ itemAction.getLabelFor(entity) }}
                         {% endif %}
+                        </a>
                     {% endfor %}
                 {% endif %}
 				<a class="btn up">&#9650;</a>

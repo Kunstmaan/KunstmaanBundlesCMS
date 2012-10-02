@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Doctrine\ORM\QueryBuilder;
-
 use Symfony\Component\HttpFoundation\Request;
+
+use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 
 /**
  * Filter
@@ -44,20 +44,13 @@ class Filter
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      */
     public function bindRequest(Request $request)
     {
-        $this->filterDefinition['type']->bindRequest($request, $this->data, $this->uniqueId);
-    }
-
-    /**
-     * @param QueryBuilder $querybuilder The query builder
-     * @param array        &$expressions The expressions
-     */
-    public function adaptQueryBuilder(QueryBuilder $querybuilder, &$expressions)
-    {
-        $this->filterDefinition['type']->adaptQueryBuilder($querybuilder, $expressions, $this->data, $this->uniqueId);
+        /* @var FilterTypeInterface $type */
+        $type = $this->filterDefinition['type'];
+        $type->bindRequest($request, $this->data, $this->uniqueId);
     }
 
     /**
@@ -77,11 +70,20 @@ class Filter
     }
 
     /**
-     * @return Filter
+     * @return FilterTypeInterface
      */
     public function getType()
     {
         return $this->filterDefinition['type'];
+    }
+
+
+    /**
+     * Apply the filter
+     */
+    public function apply()
+    {
+        $this->getType()->apply($this->getData(), $this->getUniqueId());
     }
 
     /**

@@ -2,13 +2,19 @@
 
 namespace Kunstmaan\AdminListBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManager;
+
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * AdminListController
@@ -25,6 +31,7 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        /* @var AdminList $adminlist */
         $adminlist = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
         $adminlist->bindRequest($request);
 
@@ -41,6 +48,7 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        /* @var AdminList $adminlist */
         $adminlist = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
         $adminlist->bindRequest($request);
         $entities = $adminlist->getItems(array());
@@ -67,6 +75,7 @@ abstract class AdminListController extends Controller
      */
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null)
     {
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $entityName = null;
@@ -101,11 +110,12 @@ abstract class AdminListController extends Controller
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $entityid     The id of the entity that will be edited
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws NotFoundHttpException
+     * @return Response
      */
     protected function doEditAction(AbstractAdminListConfigurator $configurator, $entityid)
     {
-
+        /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $request = $this->getRequest();
@@ -126,7 +136,7 @@ abstract class AdminListController extends Controller
             }
         }
 
-        $configurator->buildActions();
+        $configurator->buildItemActions();
 
         return new Response($this->renderView($configurator->getEditTemplate(), array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator)));
     }
@@ -135,10 +145,12 @@ abstract class AdminListController extends Controller
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param integer                       $entityid     The id to delete
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws NotFoundHttpException
+     * @return Response
      */
     protected function doDeleteAction(AbstractAdminListConfigurator $configurator, $entityid)
     {
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
         $request = $this->getRequest();
@@ -146,19 +158,12 @@ abstract class AdminListController extends Controller
         if ($helper == null) {
             throw new NotFoundHttpException("Entity not found.");
         }
-        $form = $this->createFormBuilder($helper)->add('id', "hidden")->getForm();
-
+        $indexUrl = $configurator->getIndexUrlFor();
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $em->remove($helper);
-                $em->flush();
-                $indexUrl = $configurator->getIndexUrlFor();
-
-                return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
-            }
+            $em->remove($helper);
+            $em->flush();
         }
 
-        return new Response($this->renderView($configurator->getDeleteTemplate(), array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator)));
+        return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
     }
 }

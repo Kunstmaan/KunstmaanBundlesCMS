@@ -32,6 +32,18 @@ class FieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\AdminListBundle\AdminList\Field::__construct
+     */
+    public function test__construct()
+    {
+        $object = new Field('name', 'header', true, 'template.html.twig');
+        $this->assertEquals('name', $object->getName());
+        $this->assertEquals('header', $object->getHeader());
+        $this->assertTrue($object->isSortable());
+        $this->assertEquals('template.html.twig', $object->getTemplate());
+    }
+
+    /**
      * @covers Kunstmaan\AdminListBundle\AdminList\Field::getName
      */
     public function testGetName()
