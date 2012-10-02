@@ -20,7 +20,7 @@ interface FilterTypeInterface
      * @param array  $data     Data
      * @param string $uniqueId The identifier
      */
-    public function apply($data, $uniqueId);
+    public function apply(array $data, $uniqueId);
 
     /**
      * @return string

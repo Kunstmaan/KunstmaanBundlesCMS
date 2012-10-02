@@ -36,7 +36,7 @@ class Filter
      * @param array  $filterDefinition The filter configuration
      * @param string $uniqueId         The unique id
      */
-    public function __construct($columnName, $filterDefinition, $uniqueId)
+    public function __construct($columnName, array $filterDefinition, $uniqueId)
     {
         $this->columnName       = $columnName;
         $this->filterDefinition = $filterDefinition;

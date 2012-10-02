@@ -108,18 +108,18 @@ abstract class AdminListController extends Controller
 
     /**
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string                        $entityid     The id of the entity that will be edited
+     * @param string                        $entityId     The id of the entity that will be edited
      *
      * @throws NotFoundHttpException
      * @return Response
      */
-    protected function doEditAction(AbstractAdminListConfigurator $configurator, $entityid)
+    protected function doEditAction(AbstractAdminListConfigurator $configurator, $entityId)
     {
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $request = $this->getRequest();
-        $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityid);
+        $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper == null) {
             throw new NotFoundHttpException("Entity not found.");
         }
@@ -143,18 +143,18 @@ abstract class AdminListController extends Controller
 
     /**
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param integer                       $entityid     The id to delete
+     * @param integer                       $entityId     The id to delete
      *
      * @throws NotFoundHttpException
      * @return Response
      */
-    protected function doDeleteAction(AbstractAdminListConfigurator $configurator, $entityid)
+    protected function doDeleteAction(AbstractAdminListConfigurator $configurator, $entityId)
     {
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
         $request = $this->getRequest();
-        $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityid);
+        $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper == null) {
             throw new NotFoundHttpException("Entity not found.");
         }

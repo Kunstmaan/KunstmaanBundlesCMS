@@ -26,7 +26,7 @@ class DateFilterType extends AbstractDBALFilterType
      * @param array  $data     The data
      * @param string $uniqueId The unique identifier
      */
-    public function apply($data, $uniqueId)
+    public function apply(array $data, $uniqueId)
     {
         if (isset($data['value']) && isset($data['comparator'])) {
             /* @todo get rid of hardcoded date formats below! */

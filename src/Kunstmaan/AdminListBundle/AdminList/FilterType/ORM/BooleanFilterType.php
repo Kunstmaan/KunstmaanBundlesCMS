@@ -23,7 +23,7 @@ class BooleanFilterType extends AbstractORMFilterType
      * @param array  $data     The data
      * @param string $uniqueId The unique identifier
      */
-    public function apply($data, $uniqueId)
+    public function apply(array $data, $uniqueId)
     {
         if (isset($data['value'])) {
             switch ($data['value']) {
