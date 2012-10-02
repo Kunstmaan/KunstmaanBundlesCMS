@@ -3,9 +3,9 @@
 namespace Kunstmaan\AdminListBundle\AdminList\ListAction;
 
 /**
- * CsvExportAction
+ * CsvExportListAction
  */
-class CsvExportAction implements ListActionInterface
+class CsvExportListAction implements ListActionInterface
 {
 
     /**

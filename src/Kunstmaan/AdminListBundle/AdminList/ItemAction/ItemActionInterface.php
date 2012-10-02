@@ -2,7 +2,10 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Action;
 
-interface ActionInterface
+/**
+ * An item action can be used to configure custom actions on a listed item.
+ */
+interface ItemActionInterface
 {
 
     /**

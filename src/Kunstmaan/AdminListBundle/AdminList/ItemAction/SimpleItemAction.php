@@ -3,15 +3,16 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Action;
 
 /**
- * SimpleAction
+ * The simple item action is a default implementation of the item action interface, this can be used
+ * in very simple use cases.
  */
-class SimpleAction implements ActionInterface
+class SimpleItemAction implements ItemActionInterface
 {
 
     /**
-     * @var string
+     * @var callable
      */
-    private $url;
+    private $routerGenerator;
 
     /**
      * @var string
@@ -29,14 +30,14 @@ class SimpleAction implements ActionInterface
     private $template;
 
     /**
-     * @param string $url      The url
-     * @param string $icon     The icon
-     * @param string $label    The label
-     * @param string $template The template
+     * @param callable $routerGenerator The generator used to generate the url of an item
+     * @param string   $icon            The icon
+     * @param string   $label           The label
+     * @param string   $template        The template
      */
-    public function __construct($url, $icon, $label, $template = null)
+    public function __construct(callable $routerGenerator, $icon, $label, $template = null)
     {
-        $this->url = $url;
+        $this->routerGenerator = $routerGenerator;
         $this->icon = $icon;
         $this->label = $label;
         $this->template = $template;
@@ -49,7 +50,11 @@ class SimpleAction implements ActionInterface
      */
     public function getUrlFor($item)
     {
-        return $this->url;
+        $routeGenerator = $this->routerGenerator;
+        if (is_callable($routeGenerator)) {
+           return $routeGenerator($item);
+        }
+        return null;
     }
 
     /**
