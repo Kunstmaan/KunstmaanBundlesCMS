@@ -3,28 +3,32 @@
 namespace Kunstmaan\NodeBundle\AdminList;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 
 use Doctrine\ORM\QueryBuilder;
 
 /**
  * PageAdminListConfigurator
  */
-class PageAdminListConfigurator extends AbstractAdminListConfigurator
+class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
     protected $locale;
     protected $permission;
 
     /**
-     * @param string $locale     The current locale
-     * @param string $permission The permission
+     * @param EntityManager $em         The entity manager
+     * @param AclHelper     $aclHelper  The ACL helper
+     * @param string        $locale     The current locale
+     * @param string        $permission The permission
      */
-    public function __construct($locale, $permission)
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission)
     {
+        parent::__construct($em, $aclHelper);
         $this->locale = $locale;
         $this->setPermissionDefinition(
             new PermissionDefinition(array($permission), 'Kunstmaan\NodeBundle\Entity\Node', 'n')
@@ -32,14 +36,15 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param AdminListFilter $builder
+     * Configure filters
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        $builder->add('title', new StringFilter("title"), "Title");
-        $builder->add('online', new BooleanFilter("online"), "Online");
-        $builder->add('created', new DateFilter("created"), "Created At");
-        $builder->add('updated', new DateFilter("updated"), "Updated At");
+        $builder = $this->getAdminListFilter();
+        $builder->add('title', new StringFilter("title"), "Title")
+            ->add('online', new BooleanFilter("online"), "Online")
+            ->add('created', new DateFilter("created"), "Created At")
+            ->add('updated', new DateFilter("updated"), "Updated At");
     }
 
     /**
@@ -47,10 +52,10 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField("title", "Title", true);
-        $this->addField("created", "Created At", true);
-        $this->addField("updated", "Updated At", true);
-        $this->addField("online", "Online", true);
+        $this->addField("title", "Title", true)
+            ->addField("created", "Created At", true)
+            ->addField("updated", "Updated At", true)
+            ->addField("online", "Online", true);
     }
 
     /**
@@ -67,14 +72,6 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @return array
-     */
-    public function getIndexUrlFor()
-    {
-        return array('path' => 'KunstmaanNodeBundle_pages');
-    }
-
-    /**
      * @return bool
      */
     public function canAdd()
@@ -83,17 +80,9 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * @param array $params
+     * Return if current user can delete the specified item
      *
-     * @return array
-     */
-    public function getAddUrlFor(array $params = array())
-    {
-        return "";
-    }
-
-    /**
-     * @param mixed $item
+     * @param array|object $item
      *
      * @return bool
      */
@@ -102,11 +91,6 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
         return false;
     }
 
-    /**
-     * @param mixed $item
-     *
-     * @return array
-     */
     public function getDeleteUrlFor($item)
     {
         return array();
@@ -115,16 +99,49 @@ class PageAdminListConfigurator extends AbstractAdminListConfigurator
     /**
      * @return string
      */
-    public function getRepositoryName()
+    public function getBundleName()
     {
-        return 'KunstmaanNodeBundle:NodeTranslation';
+        return 'KunstmaanNodeBundle';
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder The query builder
-     * @param array                      $params       Some extra parameters
+     * @return string
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
+    public function getEntityName()
+    {
+        return 'NodeTranslation';
+    }
+
+    /**
+     * Override path convention (because settings is a virtual admin subtree)
+     *
+     * @param string $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (empty($suffix)) {
+            return sprintf('%s_pages', $this->getBundleName());
+        }
+
+        return sprintf('%s_pages_%s', $this->getBundleName(), $suffix);
+    }
+
+    /**
+     * Override controller path (because actions for different entities are defined in a single Settings controller).
+     *
+     * @return string
+     */
+    public function getControllerPath()
+    {
+        return 'KunstmaanNodeBundle:Pages';
+    }
+
+    /**
+     * @param QueryBuilder $queryBuilder The query builder
+     */
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         parent::adaptQueryBuilder($queryBuilder);
 

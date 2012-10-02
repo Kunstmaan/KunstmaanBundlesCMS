@@ -44,7 +44,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
      * @param MenuBuilder $menu      The menu builder
      * @param MenuItem[]  &$children The children array that may be adapted
      * @param MenuItem    $parent    The parent menu item
-     * @param Request     $request   The Ruquest
+     * @param Request     $request   The request
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
