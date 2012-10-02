@@ -283,10 +283,10 @@ class AdminListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\AdminList::getCustomActions
-     * @todo   Implement testGetCustomActions().
+     * @covers Kunstmaan\AdminListBundle\AdminList\AdminList::getItemActions
+     * @todo   Implement testGetItemActions().
      */
-    public function testGetCustomActions()
+    public function testGetItemActions()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -295,10 +295,10 @@ class AdminListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\AdminList::hasCustomActions
-     * @todo   Implement testHasCustomActions().
+     * @covers Kunstmaan\AdminListBundle\AdminList\AdminList::hasItemActions
+     * @todo   Implement testHasItemActions().
      */
-    public function testHasCustomActions()
+    public function testHasItemActions()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

@@ -1,5 +1,8 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
+
+use InvalidArgumentException;
 
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
@@ -27,9 +30,14 @@ interface AdminListConfiguratorInterface
     public function buildFilters();
 
     /**
-     * configure the actions for each line
+     * Configure the actions for each item
      */
-    public function buildActions();
+    public function buildItemActions();
+
+    /**
+     * Configure the actions that can be executed on the whole list
+     */
+    public function buildListActions();
 
     /**
      * Return the url to edit the given $item
@@ -75,7 +83,7 @@ interface AdminListConfiguratorInterface
     /**
      * @param object $entity
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return AbstractType
      */
@@ -130,12 +138,12 @@ interface AdminListConfiguratorInterface
     /**
      * @return bool
      */
-    public function hasCustomActions();
+    public function hasItemActions();
 
     /**
      * @return ItemActionInterface[]
      */
-    public function getCustomActions();
+    public function getItemActions();
 
     /**
      * @return bool

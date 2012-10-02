@@ -32,7 +32,8 @@ class AdminList
         $this->configurator = $configurator;
         $this->configurator->buildFilters();
         $this->configurator->buildFields();
-        $this->configurator->buildActions();
+        $this->configurator->buildItemActions();
+        $this->configurator->buildListActions();
     }
 
     /**
@@ -224,17 +225,17 @@ class AdminList
     /**
      * @return array
      */
-    public function getCustomActions()
+    public function getItemActions()
     {
-        return $this->configurator->getCustomActions();
+        return $this->configurator->getItemActions();
     }
 
     /**
      * @return bool
      */
-    public function hasCustomActions()
+    public function hasItemActions()
     {
-        return $this->configurator->hasCustomActions();
+        return $this->configurator->hasItemActions();
     }
 
     /**

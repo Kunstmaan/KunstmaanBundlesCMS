@@ -223,10 +223,10 @@ class AbstractAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator::addCustomAction
-     * @todo   Implement testAddCustomAction().
+     * @covers Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator::addItemAction
+     * @todo   Implement testAddItemAction().
      */
-    public function testAddCustomAction()
+    public function testAddItemAction()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -235,10 +235,10 @@ class AbstractAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator::hasCustomActions
-     * @todo   Implement testHasCustomActions().
+     * @covers Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator::hasItemActions
+     * @todo   Implement testHasItemActions().
      */
-    public function testHasCustomActions()
+    public function testHasItemActions()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
@@ -247,10 +247,10 @@ class AbstractAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator::getCustomActions
-     * @todo   Implement testGetCustomActions().
+     * @covers Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator::getItemActions
+     * @todo   Implement testGetItemActions().
      */
-    public function testGetCustomActions()
+    public function testGetItemActions()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

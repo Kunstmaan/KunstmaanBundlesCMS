@@ -2,9 +2,11 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Doctrine\ORM\PersistentCollection;
+use InvalidArgumentException;
 
-use Kunstmaan\AdminListBundle\AdminList\Action\ListActionInterface;
-use Kunstmaan\AdminListBundle\AdminList\Action\SimpleAction;
+use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
+use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
+use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\AdminList\Field;
@@ -35,9 +37,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     private $exportFields = array();
 
     /**
-     * @var ListActionInterface[]
+     * @var ItemActionInterface[]
      */
-    private $customActions = array();
+    private $itemActions = array();
 
     /**
      * @var ListActionInterface[]
@@ -90,68 +92,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     protected $orderDirection = '';
 
     /**
-     * Configure the visible columns
-     */
-    abstract public function buildFields();
-
-    /**
-     * Return the url to edit the given $item
-     *
-     * @param object|array $item
-     *
-     * @return array
-     */
-    abstract public function getEditUrlFor($item);
-
-    /**
-     * Configure the types of items you can add
-     *
-     * @param array $params
-     *
-     * @return array
-     */
-    public function getAddUrlFor(array $params = array())
-    {
-        $params = array_merge($params, $this->getExtraParameters());
-
-        return array(
-            strtolower($this->getEntityName()) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
-                                                        'params' => $params)
-        );
-    }
-
-    /**
-     * Get the delete url for the given $item
-     *
-     * @param object|array $item
-     *
-     * @return array
-     */
-    abstract public function getDeleteUrlFor($item);
-
-    /**
-     * Return the url to list all the items
-     *
-     * @param array $params
-     *
-     * @return array
-     */
-    public function getIndexUrlFor(array $params = array())
-    {
-        $params = array_merge($params, $this->getExtraParameters());
-
-        return array(
-            'path' => $this->getPathByConvention(),
-            'params' => $params
-        );
-    }
-
-    /**
-     * @return Pagerfanta
-     */
-    abstract public function getPagerfanta();
-
-    /**
      * Return current bundle name.
      *
      * @return string
@@ -176,9 +116,74 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
+     * Configure the fields you can filter on
+     */
+    public function buildFilters()
+    {
+    }
+
+    /**
+     * Configure the actions for each line
+     */
+    public function buildItemActions()
+    {
+    }
+
+    /**
+     * Configure the actions that can be executed on the whole list
+     */
+    public function buildListActions()
+    {
+    }
+
+    /**
+     * Configure the types of items you can add
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getAddUrlFor(array $params = array())
+    {
+        $params = array_merge($params, $this->getExtraParameters());
+
+        return array(
+            strtolower($this->getEntityName()) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
+                                                        'params' => $params)
+        );
+    }
+
+    /**
+     * Get the url to export the listed items
+     *
+     * @return string
+     */
+    public function getExportUrlFor()
+    {
+        return '';
+    }
+
+    /**
+     * Return the url to list all the items
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getIndexUrlFor(array $params = array())
+    {
+        $params = array_merge($params, $this->getExtraParameters());
+
+        return array(
+            'path' => $this->getPathByConvention(),
+            'params' => $params
+        );
+    }
+
+    /**
      * @param object $entity
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return AbstractType
      */
@@ -192,7 +197,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $entity->getAdminType();
         }
 
-        throw new \InvalidArgumentException("You need to implement the getAdminType method in " . get_class(
+        throw new InvalidArgumentException("You need to implement the getAdminType method in " . get_class(
             $this
         ) . " or " . get_class($entity));
     }
@@ -210,20 +215,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Configure the fields you can filter on
-     */
-    public function buildFilters()
-    {
-    }
-
-    /**
-     * configure the actions for each line
-     */
-    public function buildActions()
-    {
-    }
-
-    /**
      * @param object|array $item
      *
      * @return bool
@@ -231,6 +222,38 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     public function canEdit($item)
     {
         return true;
+    }
+
+    /**
+     * Configure if it's possible to delete the given $item
+     *
+     * @param object|array $item
+     *
+     * @return bool
+     */
+    public function canDelete($item)
+    {
+        return true;
+    }
+
+    /**
+     * Configure if it's possible to add new items
+     *
+     * @return bool
+     */
+    public function canAdd()
+    {
+        return true;
+    }
+
+    /**
+     * Configure if it's possible to add new items
+     *
+     * @return bool
+     */
+    public function canExport()
+    {
+        return false;
     }
 
     /**
@@ -278,48 +301,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Configure if it's possible to delete the given $item
-     *
-     * @param object|array $item
-     *
-     * @return bool
-     */
-    public function canDelete($item)
-    {
-        return true;
-    }
-
-    /**
-     * Configure if it's possible to add new items
-     *
-     * @return bool
-     */
-    public function canAdd()
-    {
-        return true;
-    }
-
-    /**
-     * Configure if it's possible to add new items
-     *
-     * @return bool
-     */
-    public function canExport()
-    {
-        return false;
-    }
-
-    /**
-     * Get the url to export the listed items
-     *
-     * @return string
-     */
-    public function getExportUrlFor()
-    {
-        return '';
-    }
-
-    /**
      * @return int
      */
     public function getLimit()
@@ -363,26 +344,26 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $label    The label, only used when the template equals null
-     * @param string $url      The action url
-     * @param string $icon     The icon, only used when the template equals null
-     * @param string $template The template, when not specified the label is shown
+     * @param string   $label          The label, only used when the template equals null
+     * @param callable $routeGenerator The generator used to generate the url of an item, when generating the item will be provided
+     * @param string   $icon           The icon, only used when the template equals null
+     * @param string   $template       The template, when not specified the label is shown
      *
      * @return AbstractAdminListConfigurator
      */
-    public function addSimpleAction($label, $url, $icon, $template = null)
+    public function addSimpleItemAction($label, $routeGenerator, $icon, $template = null)
     {
-        return $this->addCustomAction(new SimpleAction($url, $icon, $label, $template));
+        return $this->addItemAction(new SimpleItemAction($routeGenerator, $icon, $label, $template));
     }
 
     /**
-     * @param ListActionInterface $customAction
+     * @param ItemActionInterface $itemAction
      *
      * @return AbstractAdminListConfigurator
      */
-    public function addCustomAction(ListActionInterface $customAction)
+    public function addItemAction(ItemActionInterface $itemAction)
     {
-        $this->customActions[] = $customAction;
+        $this->itemActions[] = $itemAction;
 
         return $this;
     }
@@ -390,17 +371,17 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @return bool
      */
-    public function hasCustomActions()
+    public function hasItemActions()
     {
-        return !empty($this->customActions);
+        return !empty($this->itemActions);
     }
 
     /**
-     * @return ListActionInterface[]
+     * @return ItemActionInterface[]
      */
-    public function getCustomActions()
+    public function getItemActions()
     {
-        return $this->customActions;
+        return $this->itemActions;
     }
 
     /**
@@ -417,6 +398,38 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     public function getListActions()
     {
         return $this->listActions;
+    }
+
+    /**
+     * @param ListActionInterface $listAction
+     *
+     * @return AdminListConfiguratorInterface
+     */
+    public function addListAction(ListActionInterface $listAction)
+    {
+        $this->listActions[] = $listAction;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getListTemplate()
+    {
+        return $this->listTemplate;
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return AdminListConfiguratorInterface
+     */
+    public function setListTemplate($template)
+    {
+        $this->listTemplate = $template;
+
+        return $this;
     }
 
     /**
@@ -495,38 +508,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
                 }
             }
         }
-    }
-
-    /**
-     * @param ListActionInterface $listAction
-     *
-     * @return AdminListConfiguratorInterface
-     */
-    public function addListAction(ListActionInterface $listAction)
-    {
-        $this->listActions[] = $listAction;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getListTemplate()
-    {
-        return $this->listTemplate;
-    }
-
-    /**
-     * @param string $template
-     *
-     * @return AdminListConfiguratorInterface
-     */
-    public function setListTemplate($template)
-    {
-        $this->listTemplate = $template;
-
-        return $this;
     }
 
     /**

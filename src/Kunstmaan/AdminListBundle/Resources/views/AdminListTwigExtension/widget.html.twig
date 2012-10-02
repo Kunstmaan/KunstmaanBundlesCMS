@@ -46,16 +46,16 @@
                 {% if adminlist.canDelete(item) %}
                     <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="danger"><i class="icon-remove-sign"></i>Delete</a>
                 {% endif %}
-                {% if adminlist.hasCustomActions() %}
-                    {% for customAction in adminlist.getCustomActions() %}
-                    {% if customAction.template is not null %}
-                        {% include customAction.template with {'row': item, 'item': item, 'action': customAction} %}
+                {% if adminlist.hasItemActions() %}
+                    {% for itemAction in adminlist.getItemActions() %}
+                    {% if itemAction.template is not null %}
+                        {% include itemAction.template with {'row': item, 'item': item, 'action': itemAction} %}
                     {% else %}
-                        <a href="{{ path(customAction.getUrlFor(item)["path"], customAction.getUrlFor(item)[("params")] ) }}">
-                            {% if customAction.getIcon(item) is not null %}
-                                <img src="{{ asset(customAction.getIcon(item)) }}" alt="{{ customAction.getLabel(item) }}"/>
+                        <a href="{{ path(itemAction.getUrlFor(item)["path"], itemAction.getUrlFor(item)[("params")] ) }}">
+                            {% if itemAction.getIconFor(item) is not null %}
+                                <img src="{{ asset(itemAction.getIconFor(item)) }}" alt="{{ itemAction.getLabelFor(item) }}"/>
                             {% endif %}
-                            {{ customAction.getLabel(item) }}
+                            {{ itemAction.getLabelFor(item) }}
                         </a>
                     {% endif %}
                     {% endfor %}

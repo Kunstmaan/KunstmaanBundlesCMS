@@ -136,7 +136,7 @@ abstract class AdminListController extends Controller
             }
         }
 
-        $configurator->buildActions();
+        $configurator->buildItemActions();
 
         return new Response($this->renderView($configurator->getEditTemplate(), array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator)));
     }
@@ -163,6 +163,7 @@ abstract class AdminListController extends Controller
             $em->remove($helper);
             $em->flush();
         }
+
         return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
     }
 }

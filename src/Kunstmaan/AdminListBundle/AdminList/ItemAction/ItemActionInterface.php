@@ -9,21 +9,21 @@ interface ItemActionInterface
 {
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return array
      */
     public function getUrlFor($item);
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return string
      */
     public function getLabelFor($item);
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return string
      */

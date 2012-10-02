@@ -30,7 +30,8 @@ class SimpleItemAction implements ItemActionInterface
     private $template;
 
     /**
-     * @param callable $routerGenerator The generator used to generate the url of an item
+     * @param callable $routerGenerator The generator used to generate the url of an item, when generating the item will
+     *                                  be provided.
      * @param string   $icon            The icon
      * @param string   $label           The label
      * @param string   $template        The template
@@ -54,6 +55,7 @@ class SimpleItemAction implements ItemActionInterface
         if (is_callable($routeGenerator)) {
            return $routeGenerator($item);
         }
+
         return null;
     }
 

@@ -23,7 +23,8 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "white-october/pagerfanta-bundle": "*",
-        "kunstmaan/admin-bundle": "*"
+        "kunstmaan/admin-bundle": "*",
+        "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminListBundle": "" }
