@@ -12,6 +12,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Filter;
 
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -142,6 +143,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
 
             // Apply filters
             $filters = $this->getFilterBuilder()->getCurrentFilters();
+            /* @var Filter $filter */
             foreach ($filters as $filter) {
                 /* @var AbstractORMFilterType $type */
                 $type = $filter->getType();

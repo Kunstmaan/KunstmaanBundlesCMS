@@ -1,8 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminListBundle\AdminList\Action;
-
-use Kunstmaan\AdminListBundle\AdminList\Action\ListActionInterface;
+namespace Kunstmaan\AdminListBundle\AdminList\ListAction;
 
 /**
  * CsvExportAction

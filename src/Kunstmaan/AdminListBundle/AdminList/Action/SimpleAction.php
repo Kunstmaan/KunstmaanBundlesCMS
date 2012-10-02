@@ -2,12 +2,10 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Action;
 
-use Kunstmaan\AdminListBundle\AdminList\Action\ListActionInterface;
-
 /**
  * SimpleAction
  */
-class SimpleAction implements ListActionInterface
+class SimpleAction implements ActionInterface
 {
 
     /**
@@ -45,25 +43,31 @@ class SimpleAction implements ListActionInterface
     }
 
     /**
+     * @param mixed $item
+     *
      * @return string
      */
-    public function getUrl()
+    public function getUrlFor($item)
     {
         return $this->url;
     }
 
     /**
+     * @param mixed $item
+     *
      * @return string
      */
-    public function getIcon()
+    public function getIconFor($item)
     {
         return $this->icon;
     }
 
     /**
+     * @param mixed $item
+     *
      * @return string
      */
-    public function getLabel()
+    public function getLabelFor($item)
     {
         return $this->label;
     }
