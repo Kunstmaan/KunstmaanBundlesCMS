@@ -11,7 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * AdminListController
@@ -155,19 +158,11 @@ abstract class AdminListController extends Controller
         if ($helper == null) {
             throw new NotFoundHttpException("Entity not found.");
         }
-        $form = $this->createFormBuilder($helper)->add('id', "hidden")->getForm();
-
+        $indexUrl = $configurator->getIndexUrlFor();
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $em->remove($helper);
-                $em->flush();
-                $indexUrl = $configurator->getIndexUrlFor();
-
-                return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
-            }
+            $em->remove($helper);
+            $em->flush();
         }
-
-        return new Response($this->renderView($configurator->getDeleteTemplate(), array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator)));
+        return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
     }
 }

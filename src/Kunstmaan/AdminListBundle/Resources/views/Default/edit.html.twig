@@ -8,17 +8,13 @@
             <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrlFor()["path"], adminlistconfigurator.getIndexUrlFor()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
             {% if adminlistconfigurator.hasCustomActions() %}
                 {% for customAction in adminlistconfigurator.getCustomActions() %}
-                    {% if customAction.template is not null %}
-                        {% include customAction.template with {'row': entity, 'item': entity} %}
+                    <a class="btn" href="{{ path(customAction.getUrlFor(entity)["path"], customAction.getUrlFor(entity)[("params")] ) }}">
+                    {% if customAction.getIcon(entity) is not null %}
+                        <img src="{{ asset(customAction.getIcon(entity)) }}" alt="{{ customAction.getLabel(entity) }}"/>
                     {% else %}
-                        <a class="btn" href="{{ path(customAction.getUrlFor(entity)["path"], customAction.getUrlFor(entity)[("params")] ) }}">
-                        {% if customAction.getIcon(entity) is not null %}
-                            <img src="{{ asset(customAction.getIcon(entity)) }}" alt="{{ customAction.getLabel(entity) }}"/>
-                        {% else %}
-                            {{ customAction.getLabel(entity) }}
-                        {% endif %}
-                        </a>
+                        {{ customAction.getLabel(entity) }}
                     {% endif %}
+                    </a>
                 {% endfor %}
             {% endif %}
         </div>
@@ -31,17 +27,13 @@
 
                 {% if adminlistconfigurator.hasCustomActions() %}
                     {% for customAction in adminlistconfigurator.getCustomActions() %}
-                        {% if customAction.template is not null %}
-                            {% include customAction.template with {'row': entity, 'item': entity} %}
+                        <a class="btn" href="{{ path(customAction.getUrlFor(entity)["path"], customAction.getUrlFor(entity)[("params")] ) }}">
+                        {% if customAction.getIcon(entity) is not null %}
+                            <img src="{{ asset(customAction.getIcon(entity)) }}" alt="{{ customAction.getLabel(entity) }}"/>
                         {% else %}
-                            <a class="btn" href="{{ path(customAction.getUrlFor(entity)["path"], customAction.getUrlFor(entity)[("params")] ) }}">
-                            {% if customAction.getIcon(entity) is not null %}
-                                <img src="{{ asset(customAction.getIcon(entity)) }}" alt="{{ customAction.getLabel(entity) }}"/>
-                            {% else %}
-                                {{ customAction.getLabel(entity) }}
-                            {% endif %}
-                            </a>
+                            {{ customAction.getLabel(entity) }}
                         {% endif %}
+                        </a>
                     {% endfor %}
                 {% endif %}
 				<a class="btn up">&#9650;</a>
