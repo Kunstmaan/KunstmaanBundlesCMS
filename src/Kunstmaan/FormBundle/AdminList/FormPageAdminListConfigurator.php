@@ -26,10 +26,9 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     /**
      * @param EntityManager $em         The entity manager
      * @param AclHelper     $aclHelper  The ACL helper
-     * @param string        $locale     The current locale
      * @param string        $permission The permission
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission)
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $permission)
     {
         parent::__construct($em, $aclHelper);
         $this->setPermissionDefinition(
