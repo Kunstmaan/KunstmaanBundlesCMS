@@ -1,6 +1,6 @@
 {% set quote = '"' %}
 {%- for column in adminlist.exportColumns -%}
-	{{- quote|raw -}}{{- column.fieldheader | trans -}}{{- quote|raw -}}
+	{{- quote|raw -}}{{- column.header | trans -}}{{- quote|raw -}}
 	{%- if not loop.last -%},{%- endif -%}
 {%- endfor -%}
 {% for item in adminlist.items(queryparams) %}

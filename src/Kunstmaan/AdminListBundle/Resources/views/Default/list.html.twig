@@ -20,7 +20,7 @@
 					<i class="icon-caret-down"></i>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="{{ path(adminlist.getExportUrlFor()["path"], adminlist.getExportUrlFor()[("params")]) }}">CSV</a></li>
+					<li><a href="{{ path(adminlist.getExportUrl()["path"], adminlist.getExportUrl()[("params")]) }}">CSV</a></li>
 				</ul>
 			</div>
 		</div>
@@ -28,10 +28,10 @@
 {% endblock %}
 
 {% block content %}
-    {% if adminlist.getIndexUrlFor()['params'] is defined %}
-        {{ adminlist_widget(adminlist, adminlist.getIndexUrlFor()["path"], adminlist.getIndexUrlFor()['params']) }}
+    {% if adminlist.getIndexUrl()['params'] is defined %}
+        {{ adminlist_widget(adminlist, adminlist.getIndexUrl()["path"], adminlist.getIndexUrl()['params']) }}
     {% else %}
-        {{ adminlist_widget(adminlist, adminlist.getIndexUrlFor()["path"], adminlist.getIndexUrlFor()) }}
+        {{ adminlist_widget(adminlist, adminlist.getIndexUrl()["path"], adminlist.getIndexUrl()) }}
     {% endif %}
 
     {% if adminlist.hasListActions %}

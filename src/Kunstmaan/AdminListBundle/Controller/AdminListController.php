@@ -97,7 +97,7 @@ abstract class AdminListController extends Controller
             if ($form->isValid()) {
                 $em->persist($helper);
                 $em->flush();
-                $indexUrl = $configurator->getIndexUrlFor();
+                $indexUrl = $configurator->getIndexUrl();
 
                 return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
             }
@@ -130,7 +130,7 @@ abstract class AdminListController extends Controller
             if ($form->isValid()) {
                 $em->persist($helper);
                 $em->flush();
-                $indexUrl = $configurator->getIndexUrlFor();
+                $indexUrl = $configurator->getIndexUrl();
 
                 return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
             }
@@ -158,7 +158,7 @@ abstract class AdminListController extends Controller
         if ($helper == null) {
             throw new NotFoundHttpException("Entity not found.");
         }
-        $indexUrl = $configurator->getIndexUrlFor();
+        $indexUrl = $configurator->getIndexUrl();
         if ('POST' == $request->getMethod()) {
             $em->remove($helper);
             $em->flush();

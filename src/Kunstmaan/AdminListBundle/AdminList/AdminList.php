@@ -123,9 +123,9 @@ class AdminList
     /**
      * @return array
      */
-    public function getIndexUrlFor()
+    public function getIndexUrl()
     {
-        return $this->configurator->getIndexUrlFor();
+        return $this->configurator->getIndexUrl();
     }
 
     /**
@@ -179,9 +179,9 @@ class AdminList
     /**
      * @return string
      */
-    public function getExportUrlFor()
+    public function getExportUrl()
     {
-        return $this->configurator->getExportUrlFor();
+        return $this->configurator->getExportUrl();
     }
 
     /**

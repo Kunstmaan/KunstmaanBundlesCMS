@@ -158,7 +158,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return string
      */
-    public function getExportUrlFor()
+    public function getExportUrl()
     {
         return '';
     }
@@ -166,13 +166,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Return the url to list all the items
      *
-     * @param array $params
-     *
      * @return array
      */
-    public function getIndexUrlFor(array $params = array())
+    public function getIndexUrl()
     {
-        $params = array_merge($params, $this->getExtraParameters());
+        $params = $this->getExtraParameters();
 
         return array(
             'path' => $this->getPathByConvention(),

@@ -5,7 +5,7 @@
     <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }}>
         <div class="main_actions">
             <button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
-            <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrlFor()["path"], adminlistconfigurator.getIndexUrlFor()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+            <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
             {% if adminlistconfigurator.hasItemActions() %}
                 {% for itemAction in adminlistconfigurator.getItemActions() %}
                     <a class="btn" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
@@ -23,7 +23,7 @@
         <div class="main_actions top" id="main_actions_top">
 			<div class="pull-right">
 				<button type="submit" class="btn btn-primary">{{ 'save' | trans }}</button>
-                <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrlFor()["path"], adminlistconfigurator.getIndexUrlFor()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+                <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
 
                 {% if adminlistconfigurator.hasItemActions() %}
                     {% for itemAction in adminlistconfigurator.getItemActions() %}

@@ -71,14 +71,14 @@ interface AdminListConfiguratorInterface
      *
      * @return array
      */
-    public function getIndexUrlFor();
+    public function getIndexUrl();
 
     /**
      * Get the url to export the listed items
      *
      * @return string
      */
-    public function getExportUrlFor();
+    public function getExportUrl();
 
     /**
      * @param object $entity
