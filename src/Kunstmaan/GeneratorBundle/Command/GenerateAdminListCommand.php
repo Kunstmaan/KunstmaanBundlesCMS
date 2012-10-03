@@ -6,7 +6,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
-use Symfony\Bundle\DoctrineBundle\Mapping\MetadataFactory;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Generator;
@@ -20,8 +19,19 @@ use Kunstmaan\GeneratorBundle\Generator\AdminListControllerGenerator;
 class GenerateAdminListCommand extends GenerateDoctrineCommand
 {
 
+    /**
+     * @var AdminListConfigurationGenerator
+     */
     private $configurationGenerator;
+
+    /**
+     * @var AdminListControllerGenerator
+     */
     private $controllerGenerator;
+
+    /**
+     * @var AdminListTypeGenerator
+     */
     private $typeGenerator;
 
     /**
@@ -37,12 +47,15 @@ The <info>kuma:generate:adminlist</info> command generates an AdminList for a Do
 
 <info>php app/console kuma:generate:adminlist Bundle:Entity</info>
 EOT
-        )
+            )
             ->setName('kuma:generate:adminlist');
     }
 
     /**
-     * @see Command
+     * Executes the command.
+     *
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -86,21 +99,23 @@ EOT
         $dialog->writeSection($output, 'Add the following to your routing.yml');
 
         $parts = explode('\\', $entity);
-        $entity_class = array_pop($parts);
+        $entityClass = array_pop($parts);
 
         $output->writeln('/*******************************/');
         $output->writeln('');
-        $output->writeln('' . $bundle->getName() . '_' . $entity_class . ':');
-        $output->writeln('    resource: "@' . $bundle->getName() . '/Controller/' . $entity_class . 'AdminListController.php"');
+        $output->writeln('' . $bundle->getName() . '_' . $entityClass . ':');
+        $output->writeln('    resource: "@' . $bundle->getName() . '/Controller/' . $entityClass . 'AdminListController.php"');
         $output->writeln('    type:     annotation');
-        $output->writeln('    prefix:   /{_locale}/admin/' . strtolower($entity_class) . '/');
+        $output->writeln('    prefix:   /{_locale}/admin/' . strtolower($entityClass) . '/');
         $output->writeln('    requirements:');
         $output->writeln('         _locale: %requiredlocales%');
         $output->writeln('');
         $output->writeln('/*******************************/');
-
     }
 
+    /**
+     * @return DialogHelper
+     */
     protected function getDialogHelper()
     {
         $dialog = $this
@@ -111,9 +126,13 @@ EOT
                 ->getHelperSet()
                 ->set($dialog = new DialogHelper());
         }
+
         return $dialog;
     }
 
+    /**
+     * @return AdminListConfigurationGenerator
+     */
     protected function getAdminListConfigurationGenerator()
     {
         if (null === $this->configurationGenerator) {
@@ -121,14 +140,21 @@ EOT
                 ->getContainer()
                 ->get('filesystem'), __DIR__ . '/../Resources/skeleton/adminlist');
         }
+
         return $this->configurationGenerator;
     }
 
+    /**
+     * @param AdminListConfigurationGenerator $configurationGenerator
+     */
     public function setAdminListConfigurationGenerator(AdminListConfigurationGenerator $configurationGenerator)
     {
         $this->configurationGenerator = $configurationGenerator;
     }
 
+    /**
+     * @return AdminListControllerGenerator
+     */
     protected function getAdminListControllerGenerator()
     {
         if (null === $this->controllerGenerator) {
@@ -136,14 +162,21 @@ EOT
                 ->getContainer()
                 ->get('filesystem'), __DIR__ . '/../Resources/skeleton/controller');
         }
+
         return $this->controllerGenerator;
     }
 
+    /**
+     * @param AdminListControllerGenerator $controllerGenerator
+     */
     public function setAdminListControllerGenerator(AdminListControllerGenerator $controllerGenerator)
     {
         $this->controllerGenerator = $controllerGenerator;
     }
 
+    /**
+     * @return AdminListTypeGenerator
+     */
     protected function getAdminListTypeGenerator()
     {
         if (null === $this->typeGenerator) {
@@ -151,9 +184,13 @@ EOT
                 ->getContainer()
                 ->get('filesystem'), __DIR__ . '/../Resources/skeleton/form');
         }
+
         return $this->typeGenerator;
     }
 
+    /**
+     * @param AdminListTypeGenerator $typeGenerator
+     */
     public function setAdminListTypeGenerator(AdminListTypeGenerator $typeGenerator)
     {
         $this->typeGenerator = $typeGenerator;

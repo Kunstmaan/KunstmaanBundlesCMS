@@ -13,16 +13,34 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 class AdminListControllerGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {
 
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
+
+    /**
+     * @var string
+     */
     private $skeletonDir;
 
+    /**
+     * @param Filesystem $filesystem  The filesystem
+     * @param string     $skeletonDir The skeleton directory
+     */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
     }
 
-    public function generate($bundle, $entity, $metadata)
+    /**
+     * @param Bundle        $bundle   The bundle
+     * @param string        $entity   The entity name
+     * @param ClassMetadata $metadata The meta data
+     *
+     * @throws \RuntimeException
+     */
+    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata)
     {
 
         $parts = explode('\\', $entity);

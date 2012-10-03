@@ -1,6 +1,8 @@
 <?php
 
 namespace Kunstmaan\GeneratorBundle\Command;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
 use Kunstmaan\GeneratorBundle\Generator\BundleGenerator;
 
 use Symfony\Component\Console\Input\InputOption;
@@ -28,11 +30,11 @@ class GenerateBundleCommand extends ContainerAwareCommand
     {
         $this
             ->setDefinition(
-            array(new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace of the bundle to create'),
+                array(new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace of the bundle to create'),
                 new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the bundle'),
                 new InputOption('bundle-name', '', InputOption::VALUE_REQUIRED, 'The optional bundle name'),))
             ->setHelp(
-            <<<EOT
+                <<<EOT
             The <info>generate:bundle</info> command helps you generates new bundles.
 
 By default, the command interacts with the developer to tweak the generation.
@@ -51,15 +53,17 @@ If you want to disable any user interaction, use <comment>--no-interaction</comm
 
 Note that the bundle namespace must end with "Bundle".
 EOT
-        )
+            )
             ->setName('kuma:generate:bundle');
     }
 
     /**
-     * @see Command
+     * Executes the command.
      *
-     * @throws \InvalidArgumentException When namespace doesn't end with Bundle
-     * @throws \RuntimeException         When bundle can't be executed
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -109,9 +113,7 @@ EOT
         $runner($this->checkAutoloader($output, $namespace, $bundle));
 
         // register the bundle in the Kernel class
-        $runner($this->updateKernel($dialog, $input, $output, $this
-            ->getContainer()
-            ->get('kernel'), $namespace, $bundle));
+        $runner($this->updateKernel($dialog, $input, $output, $this->getContainer()->get('kernel'), $namespace, $bundle));
 
         // routing
         $runner($this->updateRouting($dialog, $input, $output, $bundle, $format));
@@ -119,6 +121,14 @@ EOT
         $dialog->writeGeneratorSummary($output, $errors);
     }
 
+    /**
+     * Executes the command.
+     *
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     *
+     * @return void
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $dialog = $this->getDialogHelper();
@@ -127,7 +137,7 @@ EOT
         // namespace
         $output
             ->writeln(
-            array('', 'Your application code must be written in <comment>bundles</comment>. This command helps', 'you generate them easily.', '',
+                array('', 'Your application code must be written in <comment>bundles</comment>. This command helps', 'you generate them easily.', '',
                 'Each bundle is hosted under a namespace (like <comment>Acme/Bundle/BlogBundle</comment>).',
                 'The namespace should begin with a "vendor" name like your company name, your', 'project name, or your client name, followed by one or more optional category',
                 'sub-namespaces, and it should end with the bundle name itself', '(which must have <comment>Bundle</comment> as a suffix).', '',
@@ -136,14 +146,14 @@ EOT
 
         $namespace = $dialog
             ->askAndValidate($output, $dialog->getQuestion('Bundle namespace', $input->getOption('namespace')),
-            array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $input->getOption('namespace'));
+                array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $input->getOption('namespace'));
         $input->setOption('namespace', $namespace);
 
         // bundle name
         $bundle = $input->getOption('bundle-name') ? : strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
         $output
             ->writeln(
-            array('', 'In your code, a bundle is often referenced by its name. It can be the', 'concatenation of all namespace parts but it\'s really up to you to come',
+                array('', 'In your code, a bundle is often referenced by its name. It can be the', 'concatenation of all namespace parts but it\'s really up to you to come',
                 'up with a unique name (a good practice is to start with the vendor name).', 'Based on the namespace, we suggest <comment>' . $bundle . '</comment>.', '',));
         $bundle = $dialog->askAndValidate($output, $dialog->getQuestion('Bundle name', $bundle), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName'), false, $bundle);
         $input->setOption('bundle-name', $bundle);
@@ -155,10 +165,10 @@ EOT
         $output->writeln(array('', 'The bundle can be generated anywhere. The suggested default directory uses', 'the standard conventions.', '',));
         $dir = $dialog
             ->askAndValidate($output, $dialog->getQuestion('Target directory', $dir),
-            function ($dir) use ($bundle, $namespace)
-            {
-                return Validators::validateTargetDir($dir, $bundle, $namespace);
-            }, false, $dir);
+                function ($dir) use ($bundle, $namespace)
+                {
+                    return Validators::validateTargetDir($dir, $bundle, $namespace);
+                }, false, $dir);
         $input->setOption('dir', $dir);
 
         // format
@@ -169,13 +179,20 @@ EOT
         // summary
         $output
             ->writeln(
-            array('', $this
-                ->getHelper('formatter')
-                ->formatBlock('Summary before generation', 'bg=blue;fg=white', true), '',
-                sprintf("You are going to generate a \"<info>%s\\%s</info>\" bundle\nin \"<info>%s</info>\" using the \"<info>%s</info>\" format.", $namespace, $bundle, $dir, $format),
-                '',));
+                array('', $this
+                    ->getHelper('formatter')
+                    ->formatBlock('Summary before generation', 'bg=blue;fg=white', true), '',
+                    sprintf("You are going to generate a \"<info>%s\\%s</info>\" bundle\nin \"<info>%s</info>\" using the \"<info>%s</info>\" format.", $namespace, $bundle, $dir, $format),
+                    '',));
     }
 
+    /**
+     * @param OutputInterface $output    The output
+     * @param string          $namespace The namespace
+     * @param string          $bundle    The bundle name
+     *
+     * @return array
+     */
     protected function checkAutoloader(OutputInterface $output, $namespace, $bundle)
     {
         $output->write('Checking that the bundle is autoloaded: ');
@@ -184,7 +201,17 @@ EOT
         }
     }
 
-    protected function updateKernel($dialog, InputInterface $input, OutputInterface $output, KernelInterface $kernel, $namespace, $bundle)
+    /**
+     * @param DialogHelper    $dialog    The dialog helper
+     * @param InputInterface  $input     The command input
+     * @param OutputInterface $output    The command output
+     * @param KernelInterface $kernel    The kernel
+     * @param string          $namespace The namespace
+     * @param string          $bundle    The bundle
+     *
+     * @return array
+     */
+    protected function updateKernel(DialogHelper $dialog, InputInterface $input, OutputInterface $output, KernelInterface $kernel, $namespace, $bundle)
     {
         $auto = true;
         if ($input->isInteractive()) {
@@ -207,7 +234,16 @@ EOT
         }
     }
 
-    protected function updateRouting($dialog, InputInterface $input, OutputInterface $output, $bundle, $format)
+    /**
+     * @param DialogHelper    $dialog The dialog helper
+     * @param InputInterface  $input  The command input
+     * @param OutputInterface $output The command output
+     * @param string          $bundle The bundle name
+     * @param string          $format the format
+     *
+     * @return array
+     */
+    protected function updateRouting(DialogHelper $dialog, InputInterface $input, OutputInterface $output, $bundle, $format)
     {
         $auto = true;
         if ($input->isInteractive()) {
@@ -231,6 +267,9 @@ EOT
         }
     }
 
+    /**
+     * @return BundleGenerator
+     */
     protected function getGenerator()
     {
         if (null === $this->generator) {
@@ -242,11 +281,17 @@ EOT
         return $this->generator;
     }
 
+    /**
+     * @param BundleGenerator $generator
+     */
     public function setGenerator(BundleGenerator $generator)
     {
         $this->generator = $generator;
     }
 
+    /**
+     * @return DialogHelper
+     */
     protected function getDialogHelper()
     {
         $dialog = $this

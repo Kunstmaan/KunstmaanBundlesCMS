@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,16 +18,32 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {
 
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
+
+    /**
+     * @var string
+     */
     private $skeletonDir;
 
+    /**
+     * @param Filesystem $filesystem  The filesytem
+     * @param string     $skeletonDir The skeleton directory
+     */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
     }
 
-    public function generate($bundle, OutputInterface $output, $rootDir)
+    /**
+     * @param Bundle          $bundle  The bundle
+     * @param OutputInterface $output  The command output
+     * @param string          $rootDir The root directory
+     */
+    public function generate(Bundle $bundle, OutputInterface $output, $rootDir)
     {
 
         $parameters = array(
@@ -41,7 +59,13 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateTemplates($bundle, $parameters, $output, $rootDir);
     }
 
-    public function generateTemplates($bundle, $parameters, $output, $rootDir)
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output     The command output
+     * @param string          $rootDir    The root directory
+     */
+    public function generateTemplates(Bundle $bundle, array $parameters, OutputInterface $output, $rootDir)
     {
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/resources/views';
@@ -83,7 +107,12 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln('Configure assetic : <info>OK</info>');
     }
 
-    public function generateAssets($bundle, $parameters, $output)
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output     The command output
+     */
+    public function generateAssets(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/resources/public/css';
@@ -123,7 +152,14 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln('Generating Assets : <info>OK</info>');
     }
 
-    public function generateFixtures($bundle, $parameters, $output)
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output     The command output
+     *
+     * @throws \RuntimeException
+     */
+    public function generateFixtures(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath() . '/DataFixtures/ORM';
         $fullSkeletonDir = $this->skeletonDir . '/datafixtures/orm';
@@ -140,7 +176,14 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln('Generating Fixtures : <info>OK</info>');
     }
 
-    public function generatePagepartConfigs($bundle, $parameters, $output)
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output     The command output
+     *
+     * @throws \RuntimeException
+     */
+    public function generatePagepartConfigs(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath() . '/PagePartAdmin';
         $fullSkeletonDir = $this->skeletonDir . '/pagepartadmin';
@@ -186,7 +229,14 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln('Generating PagePart Configurators : <info>OK</info>');
     }
 
-    public function generateForm($bundle, $parameters, $output)
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output     The command output
+     *
+     * @throws \RuntimeException
+     */
+    public function generateForm(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath() . '/Form';
         $fullSkeletonDir = $this->skeletonDir . '/form';
@@ -221,7 +271,14 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln('Generating forms : <info>OK</info>');
     }
 
-    public function generateEntities($bundle, $parameters, $output)
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output     The command output
+     *
+     * @throws \RuntimeException
+     */
+    public function generateEntities(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath() . '/Entity';
         $fullSkeletonDir = $this->skeletonDir . '/entity';

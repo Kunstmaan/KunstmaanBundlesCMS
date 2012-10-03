@@ -33,12 +33,15 @@ The <info>kuma:generate:site</info> command generates an website using the Kunst
 
 <info>php app/console kuma:generate:default-site --namespace=Namespace\NamedBundle</info>
 EOT
-        )
+            )
             ->setName('kuma:generate:default-site');
     }
 
     /**
-     * @see Command
+     * Executes the command.
+     *
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -63,6 +66,9 @@ EOT
 
     }
 
+    /**
+     * @return DialogHelper
+     */
     protected function getDialogHelper()
     {
         $dialog = $this
@@ -73,9 +79,13 @@ EOT
                 ->getHelperSet()
                 ->set($dialog = new DialogHelper());
         }
+
         return $dialog;
     }
 
+    /**
+     * @return DefaultSiteGenerator
+     */
     protected function getSiteGenerator()
     {
         if (null === $this->siteGenerator) {
@@ -83,9 +93,13 @@ EOT
                 ->getContainer()
                 ->get('filesystem'), __DIR__ . '/../Resources/skeleton/defaultsite');
         }
+
         return $this->siteGenerator;
     }
 
+    /**
+     * @param DefaultSiteGenerator $siteGenerator
+     */
     public function setSiteGenerator(DefaultSiteGenerator $siteGenerator)
     {
         $this->siteGenerator = $siteGenerator;

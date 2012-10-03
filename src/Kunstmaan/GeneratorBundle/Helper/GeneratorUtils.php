@@ -2,13 +2,17 @@
 namespace Kunstmaan\GeneratorBundle\Helper;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
+/**
+ * GeneratorUtils
+ */
 class GeneratorUtils
 {
     /**
      * Returns an array of fields. Fields can be both column fields and
      * association fields.
      *
-     * @param ClassMetadataInfo $metadata
+     * @param ClassMetadata $metadata
+     *
      * @return array $fields
      */
     public static function getFieldsFromMetadata(ClassMetadata $metadata)
@@ -32,10 +36,11 @@ class GeneratorUtils
     /**
      * Prepend the string in the file
      *
-     * @param $string Text to be added in front of the file
-     * @param $filename File to prepend in
+     * @param string $string   Text to be added in front of the file
+     * @param string $filename File to prepend in
      */
-    public static function prepend($string, $filename) {
+    public static function prepend($string, $filename)
+    {
         $context = stream_context_create();
         $fp = fopen($filename, 'r', 1, $context);
         $tmpname = md5($string);
@@ -49,14 +54,15 @@ class GeneratorUtils
     /**
      * Find and replace the string in the file
      *
-     * @param $toreplace Text to be replaced
-     * @param $replace_text Text as replacement
-     * @param $filename File to replace in
+     * @param string $toReplace   Text to be replaced
+     * @param string $replaceText Text as replacement
+     * @param string $filename    File to replace in
      */
-    public static function replace($to_replace, $replace_text, $filename) {
+    public static function replace($toReplace, $replaceText, $filename)
+    {
         $content = @file_get_contents($filename);
-        if($content) {
-            $content = str_replace($to_replace, $replace_text, $content);
+        if ($content) {
+            $content = str_replace($toReplace, $replaceText, $content);
             file_put_contents($filename, $content);
         }
 
