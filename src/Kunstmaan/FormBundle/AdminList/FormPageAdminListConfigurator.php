@@ -2,40 +2,49 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Adminlist configuration to list all the form pages
  */
-class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
+class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
 
     /**
-     * @param string $permission The permission you need to view the form pages
+     * @var string
      */
-    public function __construct($permission)
+    protected $permission;
+
+    /**
+     * @param EntityManager $em         The entity manager
+     * @param AclHelper     $aclHelper  The ACL helper
+     * @param string        $locale     The current locale
+     * @param string        $permission The permission
+     */
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission)
     {
+        parent::__construct($em, $aclHelper);
         $this->setPermissionDefinition(
             new PermissionDefinition(array($permission), 'Kunstmaan\NodeBundle\Entity\Node', 'n')
         );
     }
 
     /**
-     * Configure the fields you can filter on
-     *
-     * @param AdminListFilter $builder
+     * Configure filters
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        $builder->add('title', new StringFilter("title"), "Title");
-        $builder->add('online', new BooleanFilter("online"), "Online");
+        $builder = $this->getFilterBuilder();
+        $builder->add('title', new StringFilterType("title"), "Title")
+                ->add('online', new BooleanFilterType('online'), 'Online');
     }
 
     /**
@@ -43,9 +52,9 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField("title", "Title", true);
-        $this->addField("lang", "Language", true);
-        $this->addField("url", "Form path", true);
+        $this->addField("title", "Title", true)
+             ->addField("lang", "Language", true)
+             ->addField("url", "Form path", true);
     }
 
     /**
@@ -108,32 +117,6 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * Configure the repository name of the items that will be listed
-     *
-     * @return string
-     */
-    public function getRepositoryName()
-    {
-        return 'KunstmaanNodeBundle:NodeTranslation';
-    }
-
-    /**
-     * Make some modifications to the default created query builder
-     *
-     * @param QueryBuilder $queryBuilder The query builder
-     * @param array        $params       The parameters
-     */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
-    {
-        parent::adaptQueryBuilder($queryBuilder);
-        $queryBuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->andWhere(
-                'n.id IN (SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)'
-            )
-            ->addOrderBy('n.sequenceNumber', 'DESC');
-    }
-
-    /**
      * Get the delete url for the given $item
      *
      * @param mixed $item
@@ -143,6 +126,45 @@ class FormPageAdminListConfigurator extends AbstractAdminListConfigurator
     public function getDeleteUrlFor($item)
     {
         return array();
+    }
+
+    /**
+     * @return string
+     */
+    public function getBundleName()
+    {
+        return 'KunstmaanNodeBundle';
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return 'NodeTranslation';
+    }
+
+    /**
+     * Override controller path (because actions for different entities are defined in a single Settings controller).
+     *
+     * @return string
+     */
+    public function getControllerPath()
+    {
+        return 'KunstmaanFormBundle:FormSubmissions';
+    }
+
+    /**
+     * @param QueryBuilder $queryBuilder The query builder
+     */
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->andWhere(
+                'n.id IN (SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)'
+            )
+            ->addOrderBy('n.sequenceNumber', 'DESC');
     }
 
 }
