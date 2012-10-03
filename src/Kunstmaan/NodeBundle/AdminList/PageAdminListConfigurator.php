@@ -18,7 +18,15 @@ use Doctrine\ORM\QueryBuilder;
  */
 class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
+
+    /**
+     * @var string
+     */
     protected $locale;
+
+    /**
+     * @var string
+     */
     protected $permission;
 
     /**
