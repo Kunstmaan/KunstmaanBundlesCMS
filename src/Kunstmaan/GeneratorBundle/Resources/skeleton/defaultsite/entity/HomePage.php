@@ -39,6 +39,14 @@ class HomePage extends AbstractPage
         return new HomePageAdminType();
     }
 
+    /**
+     * Return content to be indexed
+     *
+     * @param $container
+     * @param $entity
+     *
+     * @return string
+     */
     public function getContentForIndexing($container, $entity)
     {
         $renderer = $container->get('templating');
@@ -70,7 +78,7 @@ class HomePage extends AbstractPage
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function getPagePartAdminConfigurations()
     {
@@ -78,7 +86,7 @@ class HomePage extends AbstractPage
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDefaultView()
     {

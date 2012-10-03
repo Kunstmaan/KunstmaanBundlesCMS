@@ -28,6 +28,9 @@ class FormPageAdminType extends AbstractType
         return 'formpage';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array('data_class' => '{{ namespace }}\Entity\FormPage'));

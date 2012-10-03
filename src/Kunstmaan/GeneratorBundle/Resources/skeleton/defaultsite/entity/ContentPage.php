@@ -31,11 +31,22 @@ use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
 class ContentPage extends AbstractPage
 {
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultAdminType()
     {
         return new ContentPageAdminType();
     }
 
+    /**
+     * Return content to be indexed
+     *
+     * @param $container
+     * @param $entity
+     *
+     * @return string
+     */
     public function getContentForIndexing($container, $entity)
     {
         $renderer = $container->get('templating');

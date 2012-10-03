@@ -27,6 +27,9 @@ class ContentPageAdminType extends AbstractType
         return 'page';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array('data_class' => '{{ namespace }}\Entity\ContentPage'));

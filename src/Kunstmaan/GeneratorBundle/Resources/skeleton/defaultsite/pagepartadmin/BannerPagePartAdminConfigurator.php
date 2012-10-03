@@ -19,16 +19,25 @@ class BannerPagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     function getPossiblePagePartTypes()
     {
         return $this->pagePartTypes;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     function getName()
     {
         return "Banners";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     function getDefaultContext()
     {
         return "banners";

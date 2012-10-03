@@ -22,6 +22,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private $adminuser = null;
     private $container = null;
 
+    /**
+     * Load data fixtures with the passed EntityManager.
+     *
+     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $this->adminuser = $manager
@@ -41,7 +46,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $formpage = $this->createFormPage($manager, "Form", $pagepartspage);
     }
 
-    private function initPermissions($manager, Node $node)
+    /**
+     * Initialize the permissions for the given Node
+     *
+     * @param Kunstmaan\NodeBundle\Entity\Node $node
+     */
+    private function initPermissions(Node $node)
     {
         $aclProvider = $this->container->get('security.acl.provider');
         $oidStrategy = $this->container->get('security.acl.object_identity_retrieval_strategy');
@@ -68,7 +78,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $aclProvider->updateAcl($acl);
     }
 
-    private function createHomePage($manager, $title)
+    /**
+     * Create a Homepage
+     *
+     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param string                                    $title
+     *
+     * @return HomePage
+     */
+    private function createHomePage(ObjectManager $manager, string $title)
     {
         $homepage = new HomePage();
         $homepage->setTitle($title);
@@ -77,12 +95,21 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $node = $manager
             ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($homepage, 'en', $this->adminuser);
-        $this->initPermissions($manager, $node);
+        $this->initPermissions($node);
 
         return $homepage;
     }
 
-    private function createContentPage($manager, $title, $parent)
+    /**
+     * Create a ContentPage
+     *
+     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param string                                    $title
+     * @param                                           $parent
+     *
+     * @return ContentPage
+     */
+    private function createContentPage(ObjectManager $manager, string $title, $parent)
     {
         $page = new ContentPage();
         $page->setParent($parent);
@@ -92,11 +119,18 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $node = $manager
             ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($page, 'en', $this->adminuser);
-        $this->initPermissions($manager, $node);
+        $this->initPermissions($node);
         return $page;
     }
 
-    private function createHeaderPage($manager, $title, $parent)
+    /**
+     * Create a ContentPage containing headers
+     *
+     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param string                                    $title
+     * @param                                           $parent
+     */
+    private function createHeaderPage(ObjectManager $manager, string $title, $parent)
     {
         $headerpage = new ContentPage();
         $headerpage->setParent($parent);
@@ -106,7 +140,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $node = $manager
             ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($headerpage, 'en', $this->adminuser);
-        $this->initPermissions($manager, $node);
+        $this->initPermissions($node);
         for ($i = 1; $i <= 6; $i++) {
             $headerpagepart = new \Kunstmaan\PagePartBundle\Entity\HeaderPagePart();
             $headerpagepart->setNiv($i);
@@ -119,7 +153,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
     }
 
-    private function createTextPage($manager, $title, $parent)
+    /**
+     * Create a ContentPage containing headers and text
+     *
+     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param string                                    $title
+     * @param                                           $parent
+     */
+    private function createTextPage(ObjectManager $manager, string $title, $parent)
     {
         $textpage = new ContentPage();
         $textpage->setParent($parent);
@@ -129,7 +170,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $node = $manager
             ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($textpage, 'en', $this->adminuser);
-        $this->initPermissions($manager, $node);
+        $this->initPermissions($node);
         {
             $headerpagepart = new \Kunstmaan\PagePartBundle\Entity\HeaderPagePart();
             $headerpagepart->setNiv(1);
@@ -151,7 +192,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
     }
 
-    private function createTocPage($manager, $title, $parent)
+    /**
+     * Create a ContentPage containing a table of content, headers and text
+     *
+     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param string                                    $title
+     * @param                                           $parent
+     */
+    private function createTocPage(ObjectManager $manager, string $title, $parent)
     {
         $textpage = new ContentPage();
         $textpage->setParent($parent);
@@ -161,7 +209,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $node = $manager
             ->getRepository('KunstmaanNodeBundle:Node')
             ->createNodeFor($textpage, 'en', $this->adminuser);
-        $this->initPermissions($manager, $node);
+        $this->initPermissions($node);
         {
             $headerpagepart = new \Kunstmaan\PagePartBundle\Entity\HeaderPagePart();
             $headerpagepart->setNiv(1);
@@ -220,7 +268,16 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
     }
 
-    private function createFormPage($manager, $title, $parent)
+    /**
+     * Create a FormPage
+     *
+     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param string                                    $title
+     * @param                                           $parent
+     *
+     * @return FormPage
+     */
+    private function createFormPage(ObjectManager $manager, string $title, $parent)
     {
         $page = new FormPage();
         $page->setParent($parent);
@@ -289,10 +346,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     ->addPagePart($page, $submitbuttonpagepart, $counter++, "main");
             }
         }
-        $this->initPermissions($manager, $node);
+        $this->initPermissions($node);
         return $page;
     }
 
+    /**
+     * Get the order of this fixture
+     *
+     * @return int
+     */
     public function getOrder()
     {
         return 51;

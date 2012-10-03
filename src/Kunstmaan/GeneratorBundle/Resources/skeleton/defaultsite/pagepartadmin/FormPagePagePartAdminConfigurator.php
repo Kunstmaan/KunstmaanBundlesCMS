@@ -24,16 +24,25 @@ class FormPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigurato
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     function getPossiblePagePartTypes()
     {
         return $this->pagePartTypes;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     function getName()
     {
         return "Pageparts";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     function getDefaultContext()
     {
         return "main";

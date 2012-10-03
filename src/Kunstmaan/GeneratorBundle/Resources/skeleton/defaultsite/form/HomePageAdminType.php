@@ -27,6 +27,9 @@ class HomePageAdminType extends AbstractType
         return 'homepage';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array('data_class' => '{{ namespace }}\Entity\HomePage'));

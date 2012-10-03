@@ -38,31 +38,35 @@ use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
 class FormPage extends AbstractFormPage
 {
 
-    public function setThanks($thanks)
-    {
-        $this->thanks = $thanks;
-    }
-
-    public function getThanks()
-    {
-        return $this->thanks;
-    }
-
     public function __toString()
     {
         return $this->getTitle();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDefaultAdminType()
     {
         return new FormPageAdminType();
     }
 
+    /**
+     * @return bool
+     */
     public function isOnline()
     {
         return true;
     }
 
+    /**
+     * Return content to be indexed
+     *
+     * @param $container
+     * @param $entity
+     *
+     * @return string
+     */
     public function getContentForIndexing($container, $entity)
     {
         $renderer = $container->get('templating');
@@ -83,16 +87,25 @@ class FormPage extends AbstractFormPage
         return strip_tags($temp);
     }
 
+    /**
+     * @param $locale
+     */
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPossiblePermissions()
     {
         return $this->possiblePermissions;
     }
 
+    /**
+     * @return array
+     */
     public function getPossibleChildPageTypes()
     {
         $array[] = array('name' => 'ContentPage', 'class' => "{{ namespace }}\Entity\ContentPage");
@@ -101,11 +114,17 @@ class FormPage extends AbstractFormPage
         return $array;
     }
 
+    /**
+     * @return array
+     */
     public function getPagePartAdminConfigurations()
     {
         return array(new FormPagePagePartAdminConfigurator(), new BannerPagePartAdminConfigurator());
     }
 
+    /**
+     * @return string
+     */
     public function getDefaultView()
     {
         return "{{ bundle.getName() }}:FormPage:view.html.twig";
