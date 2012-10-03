@@ -66,7 +66,7 @@ class FormSubmissionsController extends Controller
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
         $aclHelper = $this->container->get('kunstmaan.acl.helper');
         /* @var $adminList AdminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($nodeTranslation), $em);
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($em, $nodeTranslation), $em);
         $adminList->setAclHelper($aclHelper);
         $adminList->bindRequest($request);
 

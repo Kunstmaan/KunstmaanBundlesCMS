@@ -76,7 +76,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      *
      * @return array
      */
-    public function getIndexUrlFor()
+    public function getIndexUrl()
     {
         return array('path' => 'KunstmaanFormBundle_formsubmissions');
     }

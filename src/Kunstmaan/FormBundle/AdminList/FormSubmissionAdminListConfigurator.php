@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
+use Doctrine\ORM\EntityManager;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
@@ -23,10 +25,12 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     protected $nodeTranslation;
 
     /**
-     * @param NodeTranslation $nodeTranslation
+     * @param EntityManager   $em              The entity manager
+     * @param NodeTranslation $nodeTranslation The node translation
      */
-    public function __construct($nodeTranslation)
+    public function __construct(EntityManager $em, $nodeTranslation)
     {
+        parent::__construct($em);
         $this->nodeTranslation = $nodeTranslation;
     }
 
@@ -71,7 +75,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      *
      * @return array
      */
-    public function getIndexUrlFor()
+    public function getIndexUrl()
     {
         return array(
             'path' => 'KunstmaanFormBundle_formsubmissions_list',
@@ -141,7 +145,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      *
      * @return array|string
      */
-    public function getExportUrlFor()
+    public function getExportUrl()
     {
         return array('path' => 'KunstmaanFormBundle_formsubmissions_export', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()));
     }
