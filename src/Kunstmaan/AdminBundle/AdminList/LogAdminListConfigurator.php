@@ -16,7 +16,7 @@ use Symfony\Component\Form\AbstractType;
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
+class LogAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
 
     /**
@@ -25,10 +25,10 @@ class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFilters()
     {
         $builder = $this->getFilterBuilder();
-        $builder->add('u.username', new StringFilterType('username', 'u'), 'User');
-        $builder->add('status', new StringFilterType('status'), 'Status');
-        $builder->add('message', new StringFilterType('message'), 'Message');
-        $builder->add('createdAt', new DateFilterType('createdAt'), 'Created At');
+        $builder->add('u.username', new StringFilterType('username', 'u'), 'User')
+                ->add('status', new StringFilterType('status'), 'Status')
+                ->add('message', new StringFilterType('message'), 'Message')
+                ->add('createdAt', new DateFilterType('createdAt'), 'Created At');
     }
 
     /**
@@ -36,10 +36,23 @@ class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('u.username', 'User', true);
-        $this->addField('status', 'Status', true);
-        $this->addField('message', 'Message', true);
-        $this->addField('createdAt', 'Created At', true);
+        $this->addField('u.username', 'User', true)
+             ->addField('status', 'Status', true)
+             ->addField('message', 'Message', true)
+             ->addField('createdAt', 'Created At', true);
+    }
+
+    /**
+     * Return the url to list all the items
+     *
+     * @return array
+     */
+    public function getIndexUrl()
+    {
+        return array(
+            'path' => 'KunstmaanAdminBundle_settings_logs',
+            'params' => array()
+        );
     }
 
     /**
