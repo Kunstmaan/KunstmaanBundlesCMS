@@ -291,7 +291,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      * @param string              $filterName The name of the filter
      * @param array               $options    Options
      *
-     * @return AdminListConfiguratorInterface
+     * @return AbstractAdminListConfigurator
      */
     public function addFilter($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = array())
     {
