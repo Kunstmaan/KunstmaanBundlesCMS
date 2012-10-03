@@ -40,15 +40,17 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
     /**
      * @param Bundle          $bundle  The bundle
+     * @param string          $prefix  The prefix
      * @param OutputInterface $output  The command output
      * @param string          $rootDir The root directory
      */
-    public function generate(Bundle $bundle, OutputInterface $output, $rootDir)
+    public function generate(Bundle $bundle, $prefix, OutputInterface $output, $rootDir)
     {
 
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
+            'prefix'            => $prefix
         );
 
         $this->generateEntities($bundle, $parameters, $output);

@@ -26,12 +26,21 @@ class GenerateDefaultSiteCommand extends GenerateDoctrineCommand
     protected function configure()
     {
         $this
-            ->setDefinition(array(new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the default website in'),))
+            ->setDefinition(
+                array(
+                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the default website in'),
+                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
+                )
+            )
             ->setDescription('Generates a basic website based on Kunstmaan bundles with default templates')
             ->setHelp(<<<EOT
 The <info>kuma:generate:site</info> command generates an website using the Kunstmaan bundles
 
 <info>php app/console kuma:generate:default-site --namespace=Namespace\NamedBundle</info>
+
+User the <info>--prefix</info> option to add a prefix to the table names of the generated entities
+
+<info>php app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=demo_</info>
 EOT
             )
             ->setName('kuma:generate:default-site');
@@ -54,6 +63,7 @@ EOT
         }
 
         $bundle = $input->getOption('namespace');
+        $prefix = $input->getOption('prefix');
         $bundle = $this
             ->getApplication()
             ->getKernel()
@@ -62,7 +72,7 @@ EOT
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
         $siteGenerator = $this->getSiteGenerator();
-        $siteGenerator->generate($bundle, $output, $rootDir);
+        $siteGenerator->generate($bundle, $prefix, $output, $rootDir);
 
     }
 

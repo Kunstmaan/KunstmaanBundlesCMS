@@ -25,7 +25,7 @@ use {{ namespace }}\PagePartAdmin\HomePagePagePartAdminConfigurator;
  * HomePage
  *
  * @ORM\Entity()
- * @ORM\Table(name="homepage")
+ * @ORM\Table(name="{{ prefix }}homepage")
  * @ORM\HasLifecycleCallbacks()
  */
 class HomePage extends AbstractPage

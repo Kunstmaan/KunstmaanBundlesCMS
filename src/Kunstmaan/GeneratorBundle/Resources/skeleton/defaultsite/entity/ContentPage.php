@@ -25,7 +25,7 @@ use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
  * ContentPage
  *
  * @ORM\Entity()
- * @ORM\Table(name="contentpage")
+ * @ORM\Table(name="{{ prefix }}contentpage")
  * @ORM\HasLifecycleCallbacks()
  */
 class ContentPage extends AbstractPage
