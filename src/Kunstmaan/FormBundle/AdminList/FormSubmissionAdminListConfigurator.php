@@ -3,11 +3,10 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\Filters\BooleanFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 use Doctrine\ORM\QueryBuilder;
@@ -15,7 +14,7 @@ use Doctrine\ORM\QueryBuilder;
 /**
  * Adminlist configuration to list all the form submissions for a given NodeTranslation
  */
-class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
+class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
 
     /**
@@ -33,14 +32,13 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
 
     /**
      * Configure the fields you can filter on
-     *
-     * @param AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        $builder->add('created', new DateFilter("created"), "Date");
-        $builder->add('lang', new BooleanFilter("lang"), "Language");
-        $builder->add('ipAddress', new StringFilter("ipAddress"), "IP Address");
+        $builder = $this->getFilterBuilder();
+        $builder->add('created', new DateFilterType("created"), "Date")
+                ->add('lang', new BooleanFilterType("lang"), "Language")
+                ->add('ipAddress', new StringFilterType("ipAddress"), "IP Address");
     }
 
     /**
@@ -48,9 +46,9 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField("created", "Date", true);
-        $this->addField("lang", "Language", true);
-        $this->addField("ipAddress", "ipAddress", true);
+        $this->addField("created", "Date", true)
+             ->addField("lang", "Language", true)
+             ->addField("ipAddress", "ipAddress", true);
     }
 
     /**
@@ -62,7 +60,10 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function getEditUrlFor($item)
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId()));
+        return array(
+            'path' => 'KunstmaanFormBundle_formsubmissions_list_edit',
+            'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId())
+        );
     }
 
     /**
@@ -72,7 +73,10 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function getIndexUrlFor()
     {
-        return array('path' => 'KunstmaanFormBundle_formsubmissions_list', 'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()));
+        return array(
+            'path' => 'KunstmaanFormBundle_formsubmissions_list',
+            'params' => array('nodeTranslationId' => $this->nodeTranslation->getId())
+        );
     }
 
     /**
@@ -109,30 +113,15 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
         return false;
     }
 
-    /**
-     * Configure the repository name of the items that will be listed
-     *
-     * @return string
-     */
-    public function getRepositoryName()
-    {
-        return 'KunstmaanFormBundle:FormSubmission';
-    }
 
     /**
-     * Make some modifications to the default created query builder
+     * Configure if it's possible to export the listed items
      *
-     * @param QueryBuilder $queryBuilder The query builder
-     * @param array        $params       The parameters
+     * @return bool
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
+    public function canExport()
     {
-        parent::adaptQueryBuilder($queryBuilder);
-        $queryBuilder
-                ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-                ->andWhere('n.id = :node')
-                ->setParameter('node', $this->nodeTranslation->getNode()->getId())
-                ->addOrderBy('b.created', 'DESC');
+        return true;
     }
 
     /**
@@ -158,12 +147,35 @@ class FormSubmissionAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * Configure if it's possible to export the listed items
-     *
-     * @return bool
+     * @return string
      */
-    public function canExport()
+    public function getBundleName()
     {
-        return true;
+        return 'KunstmaanFormBundle';
     }
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return 'FormSubmission';
+    }
+
+    /**
+     * Make some modifications to the default created query builder
+     *
+     * @param QueryBuilder $queryBuilder The query builder
+     * @param array        $params       The parameters
+     */
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
+    {
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder
+                ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+                ->andWhere('n.id = :node')
+                ->setParameter('node', $this->nodeTranslation->getNode()->getId())
+                ->addOrderBy('b.created', 'DESC');
+    }
+
 }
