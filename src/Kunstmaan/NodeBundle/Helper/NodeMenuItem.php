@@ -55,7 +55,7 @@ class NodeMenuItem
      * @param NodeMenuItem|null $parent          The parent nodemenuitem
      * @param NodeMenu          $menu            The menu
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeMenuItem $parent, NodeMenu $menu)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent, NodeMenu $menu)
     {
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
