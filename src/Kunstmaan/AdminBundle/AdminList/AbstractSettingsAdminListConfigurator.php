@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+
+use Symfony\Component\Form\AbstractType;
 
 abstract class AbstractSettingsAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {

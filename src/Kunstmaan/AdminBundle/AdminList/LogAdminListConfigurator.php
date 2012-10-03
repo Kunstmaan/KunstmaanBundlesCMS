@@ -2,11 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\DateFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
+
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 
 use Symfony\Component\Form\AbstractType;
 
@@ -20,16 +21,14 @@ class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 
     /**
      * Build filters for admin list
-     *
-     * @param AdminListFilter $builder
      */
     public function buildFilters()
     {
-        $builder = $this->getAdminListFilter();
-        $builder->add('u.username', new StringFilter('username', 'u'), 'User');
-        $builder->add('status', new StringFilter('status'), 'Status');
-        $builder->add('message', new StringFilter('message'), 'Message');
-        $builder->add('createdAt', new DateFilter('createdAt'), 'Created At');
+        $builder = $this->getFilterBuilder();
+        $builder->add('u.username', new StringFilterType('username', 'u'), 'User');
+        $builder->add('status', new StringFilterType('status'), 'Status');
+        $builder->add('message', new StringFilterType('message'), 'Message');
+        $builder->add('createdAt', new DateFilterType('createdAt'), 'Created At');
     }
 
     /**
@@ -97,6 +96,7 @@ class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function getValue($item, $columnName)
     {
         if ('u.username' == $columnName) {
+            /* @var User $user */
             $user = $item->getUser();
             if (!is_null($user)) {
                 return $user->getUsername();

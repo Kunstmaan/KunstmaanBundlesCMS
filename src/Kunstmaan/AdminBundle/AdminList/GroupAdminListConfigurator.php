@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
  * GroupAdminListConfigurator
@@ -17,7 +17,7 @@ class GroupAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->getAdminListFilter()->add('name', new StringFilter('name'), 'Name');
+        $this->getFilterBuilder()->add('name', new StringFilterType('name'), 'Name');
     }
 
     /**

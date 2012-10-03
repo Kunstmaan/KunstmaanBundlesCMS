@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 use Symfony\Component\Form\AbstractType;
 
@@ -17,12 +17,10 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 
     /**
      * Build filters for admin list
-     *
-     * @param AdminListFilter $builder
      */
     public function buildFilters()
     {
-        $this->getAdminListFilter()->add('role', new StringFilter('role'), 'Role');
+        $this->getFilterBuilder()->add('role', new StringFilterType('role'), 'Role');
     }
 
     /**

@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\BooleanFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 use Symfony\Component\Form\AbstractType;
 
@@ -17,15 +16,13 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
     /**
      * Build filters for admin list
-     *
-     * @param AdminListFilter $builder
      */
     public function buildFilters()
     {
-        $builder = $this->getAdminListFilter();
-        $builder->add('username', new StringFilter('username'), 'Username');
-        $builder->add('email', new StringFilter('email'), 'E-Mail');
-        $builder->add('enabled', new BooleanFilter('enabled'), 'Enabled');
+        $builder = $this->getFilterBuilder();
+        $builder->add('username', new StringFilterType('username'), 'Username');
+        $builder->add('email', new StringFilterType('email'), 'E-Mail');
+        $builder->add('enabled', new BooleanFilterType('enabled'), 'Enabled');
     }
 
     /**
