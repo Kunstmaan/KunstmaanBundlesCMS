@@ -38,6 +38,8 @@ class SlugController extends Controller
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
      * @Route("/")
+     * @Route("/draft", defaults={"preview" = true, "draft" = true})
+     * @Route("/preview", defaults={"preview" = true})
      * @Route("/draft/{url}", requirements={"url" = ".+"}, defaults={"preview" = true, "draft" = true}, name="_slug_draft")
      * @Route("/preview/{url}", requirements={"url" = ".+"}, defaults={"preview" = true}, name="_slug_preview")
      * @Route("/{url}", requirements={"url" = ".+"}, name="_slug")

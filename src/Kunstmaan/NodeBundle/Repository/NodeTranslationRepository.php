@@ -108,7 +108,7 @@ class NodeTranslationRepository extends EntityRepository
             ->setMaxResults(1)
             ->setParameter('lang', $locale);
 
-        if ($urlSlug === null) {
+        if (empty($urlSlug)) {
             $qb->andWhere('b.url IS NULL');
         } else {
             $qb->andWhere('b.url = :url');
