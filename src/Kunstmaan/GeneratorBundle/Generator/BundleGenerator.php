@@ -11,6 +11,8 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 
 use Symfony\Component\Filesystem\Filesystem;
@@ -21,15 +23,33 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class BundleGenerator extends Generator
 {
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
+
+    /**
+     * @var string
+     */
     private $skeletonDir;
 
+    /**
+     * @param Filesystem $filesystem  The filesystem
+     * @param string     $skeletonDir The skeleton directory
+     */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
     }
 
+    /**
+     * @param string $namespace The namespace
+     * @param string $bundle    The bundle name
+     * @param string $dir       The directory
+     *
+     * @throws \RuntimeException
+     */
     public function generate($namespace, $bundle, $dir)
     {
         $dir .= '/' . strtr($namespace, '\\', '/');

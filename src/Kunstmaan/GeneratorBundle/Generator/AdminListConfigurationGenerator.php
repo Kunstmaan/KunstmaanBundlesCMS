@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
@@ -14,16 +16,34 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {
 
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
+
+    /**
+     * @var string
+     */
     private $skeletonDir;
 
+    /**
+     * @param Filesystem $filesystem  The filesystem
+     * @param string     $skeletonDir The directory of the skeleton
+     */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
     }
 
-    public function generate($bundle, $entity, $metadata)
+    /**
+     * @param Bundle        $bundle   The bundle
+     * @param string        $entity   The entity name
+     * @param ClassMetadata $metadata The meta data
+     *
+     * @throws \RuntimeException
+     */
+    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata)
     {
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
@@ -47,9 +67,13 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
         );
 
         $this->renderFile($this->skeletonDir, 'AdminListConfigurator.php', $dirPath . '/' . $entity . 'AdminListConfigurator.php', $parameters);
-
     }
 
+    /**
+     * @param ClassMetadata $metadata
+     *
+     * @return string[]
+     */
     private function getFieldsFromMetadata(ClassMetadata $metadata)
     {
         return GeneratorUtils::getFieldsFromMetadata($metadata);
