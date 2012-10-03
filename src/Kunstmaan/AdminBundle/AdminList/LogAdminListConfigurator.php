@@ -3,9 +3,10 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\AdminListBundle\AdminList\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\DateFilter;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 
 use Symfony\Component\Form\AbstractType;
 
@@ -14,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class LogAdminListConfigurator extends AbstractAdminListConfigurator
+class LogAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
 
     /**
@@ -22,12 +23,13 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @param AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        $builder->add('user', new StringFilter("user"), "User");
-        $builder->add('status', new StringFilter("status"), "Status");
-        $builder->add('message', new StringFilter("message"), "Message");
-        $builder->add('createdat', new DateFilter("createdat"), "Created At");
+        $builder = $this->getAdminListFilter();
+        $builder->add('u.username', new StringFilter('username', 'u'), 'User');
+        $builder->add('status', new StringFilter('status'), 'Status');
+        $builder->add('message', new StringFilter('message'), 'Message');
+        $builder->add('createdAt', new DateFilter('createdAt'), 'Created At');
     }
 
     /**
@@ -35,10 +37,10 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField("user", "User", true);
-        $this->addField("status", "Status", true);
-        $this->addField("message", "Message", true);
-        $this->addField("createdat", "Created At", true);
+        $this->addField('u.username', 'User', true);
+        $this->addField('status', 'Status', true);
+        $this->addField('message', 'Message', true);
+        $this->addField('createdAt', 'Created At', true);
     }
 
     /**
@@ -52,18 +54,6 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     }
 
     /**
-     * Configure add action(s) of admin list
-     *
-     * @param array $params
-     *
-     * @return array
-     */
-    public function getAddUrlFor(array $params = array())
-    {
-        return array();
-    }
-
-    /**
      * Determine if the user can edit the specified item
      *
      * @param mixed $item
@@ -73,40 +63,6 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
     public function canEdit($item)
     {
         return false;
-    }
-
-    /**
-     * Configure edit action(s) of admin list
-     *
-     * @param mixed $item
-     *
-     * @return array
-     */
-    public function getEditUrlFor($item)
-    {
-        return array();
-    }
-
-    /**
-     * Configure index action of admin list
-     *
-     * @return array
-     */
-    public function getIndexUrlFor()
-    {
-        return array('path' => 'KunstmaanAdminBundle_settings_logs');
-    }
-
-    /**
-     * Configure delete action(s) of admin list
-     *
-     * @param mixed $item
-     *
-     * @return array
-     */
-    public function getDeleteUrlFor($item)
-    {
-        return array();
     }
 
     /**
@@ -133,13 +89,42 @@ class LogAdminListConfigurator extends AbstractAdminListConfigurator
         return null;
     }
 
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        $queryBuilder->leftJoin('b.user', 'u');
+    }
+
+    public function getValue($item, $columnName)
+    {
+        if ('u.username' == $columnName) {
+            $user = $item->getUser();
+            if (!is_null($user)) {
+                return $user->getUsername();
+            }
+
+            return '';
+        }
+
+        return parent::getValue($item, $columnName);
+    }
+
     /**
-     * Get repository name
+     * Get bundle name
      *
      * @return string
      */
-    public function getRepositoryName()
+    public function getBundleName()
     {
-        return 'KunstmaanAdminBundle:LogItem';
+        return 'KunstmaanAdminBundle';
+    }
+
+    /**
+     * Get entity name
+     *
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return 'LogItem';
     }
 }

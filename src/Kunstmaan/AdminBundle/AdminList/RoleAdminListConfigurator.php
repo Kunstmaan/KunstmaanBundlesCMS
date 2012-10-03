@@ -3,8 +3,7 @@
 namespace Kunstmaan\AdminBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Filters\ORM\StringFilter;
 
 use Symfony\Component\Form\AbstractType;
 
@@ -13,7 +12,7 @@ use Symfony\Component\Form\AbstractType;
  *
  * @todo We should probably move this to the AdminList bundle to prevent circular references...
  */
-class RoleAdminListConfigurator extends AbstractAdminListConfigurator
+class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
 
     /**
@@ -21,9 +20,9 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @param AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        $builder->add('role', new StringFilter("role"), "Role");
+        $this->getAdminListFilter()->add('role', new StringFilter('role'), 'Role');
     }
 
     /**
@@ -31,75 +30,7 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField("role", "Role", true);
-    }
-
-    /**
-     * Configure add action(s) of admin list
-     *
-     * @param array $params
-     *
-     * @return array
-     */
-    public function getAddUrlFor(array $params = array())
-    {
-        return array(
-            'role' => array('path' => 'KunstmaanAdminBundle_settings_roles_add', 'params' => $params)
-        );
-    }
-
-    /**
-     * Configure edit action(s) of admin list
-     *
-     * @param mixed $item
-     *
-     * @return array
-     */
-    public function getEditUrlFor($item)
-    {
-        return array(
-            'path'   => 'KunstmaanAdminBundle_settings_roles_edit',
-            'params' => array('roleId' => $item->getId())
-        );
-    }
-
-    /**
-     * Configure index action of admin list
-     *
-     * @return array
-     */
-    public function getIndexUrlFor()
-    {
-        return array('path' => 'KunstmaanAdminBundle_settings_roles');
-    }
-
-    /**
-     * Get admin type of entity
-     *
-     * @param mixed $item
-     *
-     * @return AbstractType|null
-     */
-    public function getAdminType($item)
-    {
-        return null;
-    }
-
-    /**
-     * Configure delete action(s) of admin list
-     *
-     * @param mixed $item
-     *
-     * @return array
-     */
-    public function getDeleteUrlFor($item)
-    {
-        return array(
-            'path'      => 'KunstmaanAdminBundle_settings_roles_delete',
-            'params'    => array(
-                'roleId'    => $item->getId()
-            )
-        );
+        $this->addField('role', 'Role', true);
     }
 
     /**
@@ -107,9 +38,9 @@ class RoleAdminListConfigurator extends AbstractAdminListConfigurator
      *
      * @return string
      */
-    public function getRepositoryName()
+    public function getEntityName()
     {
-        return 'KunstmaanAdminBundle:Role';
+        return 'Role';
     }
 
 }
