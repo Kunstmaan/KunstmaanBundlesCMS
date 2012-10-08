@@ -37,7 +37,7 @@ class GuestUserListener implements ListenerInterface
     /**
      * Handle response event (anonymous login).
      *
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     * @param GetResponseEvent $event
      */
     public function handle(GetResponseEvent $event)
     {

@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Errorlog item
+ * A log item which represents an error
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_error_log_items")

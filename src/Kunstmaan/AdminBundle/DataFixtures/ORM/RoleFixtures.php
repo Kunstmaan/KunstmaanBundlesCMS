@@ -2,9 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
 
+use Kunstmaan\AdminBundle\Entity\Role;
+
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Kunstmaan\AdminBundle\Entity\Role;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -13,29 +14,39 @@ use Doctrine\Common\Persistence\ObjectManager;
 class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * Load data fixtures with the passed EntityManager.
+     * Load data fixtures with the passed EntityManager
      *
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $role1 = new Role('ROLE_PERMISSIONMANAGER');
-        $manager->persist($role1);
+        $role1 = $this->createRole($manager, 'ROLE_PERMISSIONMANAGER');
+        $role2 = $this->createRole($manager, 'ROLE_ADMIN');
+        $role3 = $this->createRole($manager, 'ROLE_SUPER_ADMIN');
+        $role4 = $this->createRole($manager, 'ROLE_GUEST');
 
-        $role2 = new Role('ROLE_ADMIN');
-        $manager->persist($role2);
-
-        $role3 = new Role('ROLE_SUPER_ADMIN');
-        $manager->persist($role3);
-
-        $role4 = new Role('ROLE_GUEST');
-        $manager->persist($role4);
         $manager->flush();
 
         $this->addReference('permissionmanager-role', $role1);
         $this->addReference('admin-role', $role2);
         $this->addReference('superadmin-role', $role3);
         $this->addReference('guest-role', $role4);
+    }
+
+    /**
+     * Create a role
+     *
+     * @param ObjectManager $manager The object manager
+     * @param string        $name    The name of the role
+     *
+     * @return Role
+     */
+    private function createRole(ObjectManager $manager, $name)
+    {
+        $role = new Role($name);
+        $manager->persist($role);
+
+        return $role;
     }
 
     /**

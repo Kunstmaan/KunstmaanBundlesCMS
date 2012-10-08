@@ -1,15 +1,5 @@
 <?php
 
-/*
- * Copyright (c) 2012 Kunstmaan (http://www.kunstmaan.be)
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- *
- * @author Wim Vandersmissen <wim.vandersmissen@kunstmaan.be>
- * @license http://opensource.org/licenses/MIT MIT License
- */
-
 namespace Kunstmaan\AdminBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -24,12 +14,12 @@ use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
 
 /**
- * CreateGroupCommand
+ * Symfony CLI command to create a group using app/console kuma:group:create <name_of_the_group>
  */
 class CreateGroupCommand extends ContainerAwareCommand
 {
     /**
-     * Configures the current command.
+     * Configures the current command
      */
     protected function configure()
     {
@@ -59,7 +49,7 @@ EOT
     }
 
     /**
-     * Executes the current command.
+     * Executes the current command
      *
      * @param InputInterface  $input  The input
      * @param OutputInterface $output The output

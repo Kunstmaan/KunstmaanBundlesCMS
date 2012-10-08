@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\EntityManager;
 
 /**
- * DeepCloneableInterface
+ * Entities implementing this interface will be able to be cloned and persisted
  */
 interface DeepCloneableInterface
 {

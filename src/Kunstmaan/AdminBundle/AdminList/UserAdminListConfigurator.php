@@ -2,15 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
-use Symfony\Component\Form\AbstractType;
-
 /**
- * UserAdminListConfigurator
- *
- * @todo We should probably move this to the AdminList bundle to prevent circular references...
+ * User admin list configurator used to manage {@link User} in the admin
  */
 class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
@@ -38,7 +35,7 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     }
 
     /**
-     * Get entity name.
+     * Get entity name
      *
      * @return string
      */

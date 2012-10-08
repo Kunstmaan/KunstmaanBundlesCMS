@@ -4,17 +4,19 @@ namespace Kunstmaan\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 
-use Symfony\Component\Security\Core\SecurityContext;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
-use Kunstmaan\AdminBundle\Entity\LogItem;
+
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+use Kunstmaan\AdminBundle\Entity\LogItem;
+
 /**
- * The controller for login
+ * The security controller will handle the login procedure
  */
 class SecurityController extends BaseController
 {
@@ -43,7 +45,6 @@ class SecurityController extends BaseController
         }
 
         if ($error) {
-            // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
             $error = $error->getMessage();
             $logItem = new LogItem();
             $logItem->setStatus("error");

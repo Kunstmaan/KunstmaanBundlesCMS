@@ -2,12 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
- * GroupAdminListConfigurator
- *
- * @todo We should probably move this to the AdminList bundle to prevent circular references...
+ * Group admin list configurator used to manage {@link Group} in the admin
  */
 class GroupAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {

@@ -1,15 +1,5 @@
 <?php
 
-/*
- * Copyright (c) 2012 Kunstmaan (http://www.kunstmaan.be)
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- *
- * @author Wim Vandersmissen <wim.vandersmissen@kunstmaan.be>
- * @license http://opensource.org/licenses/MIT MIT License
- */
-
 namespace Kunstmaan\AdminBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -22,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\Role;
 
 /**
- * CreateRoleCommand
+ * Symfony CLI command to create a group using app/console kuma:role:create <NAME_OF_THE_ROLE>
  */
 class CreateRoleCommand extends ContainerAwareCommand
 {

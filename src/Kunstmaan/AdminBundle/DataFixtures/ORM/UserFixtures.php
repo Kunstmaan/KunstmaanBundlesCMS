@@ -13,32 +13,49 @@ use Doctrine\Common\Persistence\ObjectManager;
 class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * Load data fixtures with the passed EntityManager.
+     * Load data fixtures with the passed EntityManager
      *
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $user1 = new User();
-        $user1->setUsername("admin");
-        $user1->setPlainPassword("admin");
-        $user1->setRoles(array("ROLE_SUPER_ADMIN"));
-        $user1->setEmail("admin@domain.com");
-        $user1->setEnabled(true);
-        $user1->addGroup($manager->merge($this->getReference('admins-group')));
-        $manager->persist($user1);
-        $this->setReference('adminuser', $user1);
+        $user1 = $this->createUser($manager, "admin", "admin", "admin@domain.com", array("ROLE_SUPER_ADMIN"), array($manager->merge($this->getReference('admins-group'))), true);
+        $user2 = $this->createUser($manager, "guest", "guest", "guest@domain.com", array("ROLE_GUEST"), array($manager->merge($this->getReference('guests-group'))));
 
-        $user2 = new User();
-        $user2->setUsername("guest");
-        $user2->setPlainPassword("guest");
-        $user2->setRoles(array("ROLE_GUEST"));
-        $user2->setEmail("guest@domain.com");
-        $user2->setEnabled(false);
-        $user2->addGroup($manager->merge($this->getReference('guests-group')));
-        $manager->persist($user2);
         $manager->flush();
+
+        $this->setReference('adminuser', $user1);
     }
+
+    /**
+     * Create a user
+     *
+     * @param ObjectManager $manager  The object manager
+     * @param string        $username The username
+     * @param string        $password The plain password
+     * @param string        $email    The email of the user
+     * @param array         $roles    The roles the user has
+     * @param array         $groups   The groups the user belongs to
+     * @param bool          $enabled  Enable login for the user
+     * @return User
+     */
+    private function createUser(ObjectManager $manager, $username, $password, $email, array $roles = array(), array $groups = array(), $enabled = false)
+    {
+        $user = new User();
+        $user->setUsername($username);
+        $user->setPlainPassword($password);
+        $user->setRoles($roles);
+        $user->setEmail($email);
+        $user->setEnabled($enabled);
+        foreach ($groups as $group) {
+            $user->addGroup($group);
+        }
+
+        $manager->persist($user);
+
+        return $user;
+    }
+
 
     /**
      * Get the order of this fixture

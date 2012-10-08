@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
-use IntlDateFormatter;
+use IntlDateFormatter as DateFormatter;
 
 use Symfony\Component\Locale\Locale;
 
@@ -46,14 +46,14 @@ class DateByLocaleExtension extends \Twig_Extension
     public static function localeDateFilter($date, $locale="nl", $dateType = 'medium', $timeType = 'none')
     {
         $values = array(
-            'none' => IntlDateFormatter::NONE,
-            'short' => IntlDateFormatter::SHORT,
-            'medium' => IntlDateFormatter::MEDIUM,
-            'long' => IntlDateFormatter::LONG,
-            'full' => IntlDateFormatter::FULL,
+            'none' => DateFormatter::NONE,
+            'short' => DateFormatter::SHORT,
+            'medium' => DateFormatter::MEDIUM,
+            'long' => DateFormatter::LONG,
+            'full' => DateFormatter::FULL,
          );
 
-        $dateFormatter = IntlDateFormatter::create(
+        $dateFormatter = DateFormatter::create(
             $locale,
             $values[$dateType],
             $values[$timeType], 'Europe/Brussels');

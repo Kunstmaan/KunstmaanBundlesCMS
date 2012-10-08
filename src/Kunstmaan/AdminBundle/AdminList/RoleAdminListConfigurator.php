@@ -2,15 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
+use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
-use Symfony\Component\Form\AbstractType;
-
 /**
- * RoleAdminListConfigurator
- *
- * @todo We should probably move this to the AdminList bundle to prevent circular references...
+ * Role admin list configurator used to manage {@link Role} in the admin
  */
 class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {

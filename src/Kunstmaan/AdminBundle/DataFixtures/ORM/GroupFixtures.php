@@ -2,10 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+
 use Kunstmaan\AdminBundle\Entity\Group;
-use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Fixture for creating the basic groups
@@ -13,26 +15,46 @@ use Doctrine\Common\Persistence\ObjectManager;
 class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     * Load data fixtures with the passed EntityManager.
+     * Load data fixtures with the passed EntityManager
      *
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $group1 = new Group("Administrators");
-        $group1->setName("Administrators");
-        $group1->addRole($this->getReference('permissionmanager-role'));
-        $group1->addRole($this->getReference('admin-role'));
-        $manager->persist($group1);
+        $group1 = $this->createGroup($manager, 'Administrators', array(
+            $this->getReference('permissionmanager-role'),
+            $this->getReference('admin-role')
+        ));
 
-        $group2 = new Group('Guests');
-        $group2->setName("Guests");
-        $group2->addRole($this->getReference('guest-role'));
-        $manager->persist($group2);
+        $group2 = $this->createGroup($manager, 'Guests', array(
+            $this->getReference('guest-role')
+        ));
+
         $manager->flush();
 
         $this->addReference('admins-group', $group1);
         $this->addReference('guests-group', $group2);
+    }
+
+    /**
+     * Create a group
+     *
+     * @param ObjectManager $manager The object manager
+     * @param string        $name    The name of the group
+     * @param array         $roles   The roles connected to this group
+     *
+     * @return Group
+     */
+    private function createGroup(ObjectManager $manager, $name, array $roles = array())
+    {
+        $group = new Group($name);
+        $group->setName($name);
+        foreach ($roles as $role) {
+            $group->addRole($role);
+        }
+        $manager->persist($group);
+
+        return $group;
     }
 
     /**

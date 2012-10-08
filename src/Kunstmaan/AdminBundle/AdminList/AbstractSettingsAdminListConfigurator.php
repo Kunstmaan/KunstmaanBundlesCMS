@@ -6,6 +6,9 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminLis
 
 use Symfony\Component\Form\AbstractType;
 
+/**
+ * Abstract admin list configurator used by the Group, Log, Role and User configurators
+ */
 abstract class AbstractSettingsAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
     /**
@@ -37,7 +40,7 @@ abstract class AbstractSettingsAdminListConfigurator extends AbstractDoctrineORM
     }
 
     /**
-     * Get bundle name.
+     * Get bundle name
      *
      * @return string
      */
@@ -47,7 +50,7 @@ abstract class AbstractSettingsAdminListConfigurator extends AbstractDoctrineORM
     }
 
     /**
-     * Override controller path (because actions for different entities are defined in a single Settings controller).
+     * Override controller path (because actions for different entities are defined in a single Settings controller)
      *
      * @return string
      */

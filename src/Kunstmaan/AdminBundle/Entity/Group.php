@@ -4,8 +4,9 @@ namespace Kunstmaan\AdminBundle\Entity;
 
 use InvalidArgumentException;
 
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use FOS\UserBundle\Model\GroupInterface;
+
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -41,7 +42,7 @@ class Group implements RoleInterface, GroupInterface
     protected $roles;
 
     /**
-     * Constructor
+     * Construct a new group
      *
      * @param string $name Name of the group
      */
@@ -137,6 +138,7 @@ class Group implements RoleInterface, GroupInterface
      *
      * @param Role $role
      *
+     * @return GroupInterface
      * @throws InvalidArgumentException
      */
     public function addRole($role)
@@ -148,12 +150,16 @@ class Group implements RoleInterface, GroupInterface
         if (!$this->hasRole($role->getRole())) {
             $this->roles->add($role);
         }
+
+        return $this;
     }
 
     /**
      * Pass a string, remove the Role object from collection.
      *
      * @param string $role
+     *
+     * @return GroupInterface
      */
     public function removeRole($role)
     {
@@ -161,12 +167,16 @@ class Group implements RoleInterface, GroupInterface
         if ($roleElement) {
             $this->roles->removeElement($roleElement);
         }
+
+        return $this;
     }
 
     /**
      * Pass an ARRAY of Role objects and will clear the collection and re-set it with new Roles.
      *
      * @param Role[] $roles array of Role objects.
+     *
+     * @return GroupInterface
      */
     public function setRoles(array $roles)
     {
@@ -174,6 +184,8 @@ class Group implements RoleInterface, GroupInterface
         foreach ($roles as $role) {
             $this->addRole($role);
         }
+
+        return $this;
     }
 
     /**
@@ -200,9 +212,13 @@ class Group implements RoleInterface, GroupInterface
      * Set the name of the group
      *
      * @param string $name New name of the group
+     *
+     * @return GroupInterface
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 }

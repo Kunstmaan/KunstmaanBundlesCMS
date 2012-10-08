@@ -5,16 +5,14 @@ namespace Kunstmaan\AdminBundle\AdminList;
 use Doctrine\ORM\QueryBuilder;
 
 use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Entity\LogItem;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 
 use Symfony\Component\Form\AbstractType;
 
 /**
- * LogAdminListConfigurator
- *
- * @todo We should probably move this to the AdminList bundle to prevent circular references...
+ * Log admin list configurator used to manage {@link LogItem} in the admin
  */
 class LogAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {

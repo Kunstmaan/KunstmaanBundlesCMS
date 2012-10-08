@@ -18,11 +18,11 @@ class GuestUserFactory implements SecurityFactoryInterface
     );
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container         The container
-     * @param int                                                     $id                The id
-     * @param mixed                                                   $config            The configuration
-     * @param mixed                                                   $userProvider      The user provider
-     * @param mixed                                                   $defaultEntryPoint The default entry point
+     * @param ContainerBuilder $container         The container
+     * @param int              $id                The id
+     * @param mixed            $config            The configuration
+     * @param mixed            $userProvider      The user provider
+     * @param mixed            $defaultEntryPoint The default entry point
      *
      * @return array
      */

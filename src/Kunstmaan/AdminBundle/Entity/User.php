@@ -33,7 +33,7 @@ class User extends BaseUser
     protected $groups;
 
     /**
-     * Constructor
+     * Construct a new user
      */
     public function __construct()
     {

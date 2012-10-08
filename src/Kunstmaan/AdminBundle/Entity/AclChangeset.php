@@ -2,13 +2,16 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
+use DateTime;
+
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AclChangeset
+ * An Acl changeset will be added to the queue whenever a change is made to the permissions. The {@link ApplyAclCommand}
+ * will execute these changesets and change their status when finished.
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\AclChangesetRepository")
  * @ORM\Table(name="kuma_acl_changesets")
@@ -18,9 +21,24 @@ use Doctrine\ORM\Mapping as ORM;
 class AclChangeset extends AbstractEntity
 {
 
+    /**
+     * This changeset still needs to be applied
+     */
     const STATUS_NEW      = 0;
+
+    /**
+     * This changeset is currently being applied
+     */
     const STATUS_RUNNING  = 1;
+
+    /**
+     * This changeset is applied
+     */
     const STATUS_FINISHED = 2;
+
+    /**
+     * Something went wrong while applying the changeset
+     */
     const STATUS_FAILED   = 3;
 
     /**
@@ -70,7 +88,7 @@ class AclChangeset extends AbstractEntity
     public function __construct()
     {
         $this->status       = self::STATUS_NEW;
-        $this->lastModified = $this->created = new \DateTime('now');
+        $this->lastModified = $this->created = new DateTime('now');
     }
 
     /**
@@ -96,7 +114,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set timestamp of creation
      *
-     * @param \DateTime $created
+     * @param DateTime $created
      */
     public function setCreated($created)
     {
@@ -106,7 +124,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get timestamp of creation
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreated()
     {
@@ -116,7 +134,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set timestamp of last modification
      *
-     * @param \DateTime $lastModified
+     * @param DateTime $lastModified
      */
     public function setLastModified($lastModified)
     {
@@ -126,7 +144,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get timestamp of last modification
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getLastModified()
     {
@@ -192,7 +210,7 @@ class AclChangeset extends AbstractEntity
     public function setStatus($status)
     {
         $this->status = $status;
-        $this->setLastModified(new \DateTime('now'));
+        $this->setLastModified(new DateTime('now'));
     }
 
     /**

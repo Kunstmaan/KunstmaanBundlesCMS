@@ -2,10 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
+use DateTime;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Log item
+ * This item will log something to the database
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_log_items")
@@ -49,7 +51,7 @@ class LogItem
      */
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
     }
 
     /**
@@ -135,7 +137,7 @@ class LogItem
     /**
      * Get creation timestamp
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -145,9 +147,9 @@ class LogItem
     /**
      * Set creation timestamp
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }

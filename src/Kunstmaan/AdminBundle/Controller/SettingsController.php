@@ -27,14 +27,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use FOS\UserBundle\Util\UserManipulator;
 
 /**
- * The settings controller
- *
- * @todo We should probably combine Admin & AdminList into 1 bundle, or move this controller to the AdminList bundle to prevent circular references...
+ * Settings controller handling everything related to creating, editing, deleting and listing the users, roles and
+ * groups in an admin list
  */
 class SettingsController extends Controller
 {
     /**
-     * Default index
+     * Index page for the settings
      *
      * @Route("/", name="KunstmaanAdminBundle_settings")
      * @Template()
