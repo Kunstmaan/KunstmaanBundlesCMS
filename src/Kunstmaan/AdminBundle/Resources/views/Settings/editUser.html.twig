@@ -11,37 +11,37 @@
 	    <fieldset>
 	    	{{ form_errors(form) }}
 	        <div class="control-group">
-	            <label class="control-label" for="xlInput3">{{ 'settings.user.username' | trans }}</label>
+	            <label class="control-label" for="{{ form.username.vars['id'] }}">{{ 'settings.user.username' | trans }}</label>
 	            <div class="controls">
 	                {{ form_widget(form.username) }}
 	            </div>
 	        </div>
 	        <div class="control-group">
-	            <label class="control-label" for="xlInput3">{{ 'settings.user.password' | trans }}</label>
+	            <label class="control-label" for="{{ form.plainPassword.first.vars['id'] }}">{{ 'settings.user.password' | trans }}</label>
 	            <div class="controls">
 	                {{ form_widget(form.plainPassword.first) }}
 	            </div>
 	        </div>
 	        <div class="control-group">
-	            <label class="control-label" for="xlInput3">{{ 'settings.user.repeatedpassword' | trans }}</label>
+	            <label class="control-label" for="{{ form.plainPassword.second.vars['id'] }}">{{ 'settings.user.repeatedpassword' | trans }}</label>
 	            <div class="controls">
 	                {{ form_widget(form.plainPassword.second) }}
 	            </div>
 	        </div>
 	        <div class="control-group">
-	            <label class="control-label" for="xlInput3">{{ 'settings.user.email' | trans }}</label>
+	            <label class="control-label" for="{{ form.email.vars['id'] }}">{{ 'settings.user.email' | trans }}</label>
 	            <div class="controls">
 	                {{ form_widget(form.email) }}
 	            </div>
 	        </div>
 	        <div class="control-group">
-	            <label class="control-label" for="xlInput3">{{ 'settings.user.enabled' | trans }}</label>
+	            <label class="control-label" for="{{ form.enabled.vars['id'] }}">{{ 'settings.user.enabled' | trans }}</label>
 	            <div class="controls">
 	                {{ form_widget(form.enabled) }}
 	            </div>
 	        </div>
 	        <div class="control-group">
-	            <label class="control-label" for="xlInput3">{{ 'settings.user.roles' | trans }}</label>
+	            <label class="control-label" for="{{ form.groups.vars['id'] }}">{{ 'settings.user.roles' | trans }}</label>
 	            <div class="controls">
 	                {{ form_widget(form.groups) }}
 	            </div>

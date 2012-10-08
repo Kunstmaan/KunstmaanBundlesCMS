@@ -11,7 +11,7 @@
 	    <fieldset>
 	    	{{ form_errors(form) }}
 	        <div class="control-group">
-	            <label class="control-label" for="xlInput3">{{ 'settings.role.role' | trans }}</label>
+	            <label class="control-label" for="{{ form.role.vars['id'] }}">{{ 'settings.role.role' | trans }}</label>
 	            <div class="controls">
 	                {{ form_widget(form.role) }}
 	            </div>
