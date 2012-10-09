@@ -16,7 +16,7 @@ class GroupAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->getFilterBuilder()->add('name', new StringFilterType('name'), 'Name');
+        $this->addFilter('name', new StringFilterType('name'), 'Name');
     }
 
     /**

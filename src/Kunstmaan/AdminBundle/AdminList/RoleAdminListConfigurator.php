@@ -16,7 +16,7 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->getFilterBuilder()->add('role', new StringFilterType('role'), 'Role');
+        $this->addFilter('role', new StringFilterType('role'), 'Role');
     }
 
     /**

@@ -16,10 +16,9 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $builder = $this->getFilterBuilder();
-        $builder->add('username', new StringFilterType('username'), 'Username');
-        $builder->add('email', new StringFilterType('email'), 'E-Mail');
-        $builder->add('enabled', new BooleanFilterType('enabled'), 'Enabled');
+        $this->addFilter('username', new StringFilterType('username'), 'Username');
+        $this->addFilter('email', new StringFilterType('email'), 'E-Mail');
+        $this->addFilter('enabled', new BooleanFilterType('enabled'), 'Enabled');
     }
 
     /**
