@@ -99,11 +99,20 @@ class LogAdminListConfigurator extends AbstractSettingsAdminListConfigurator
         return null;
     }
 
+    /**
+     * @param QueryBuilder $queryBuilder
+     */
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->leftJoin('b.user', 'u');
     }
 
+    /**
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
+     *
+     * @return mixed
+     */
     public function getValue($item, $columnName)
     {
         if ('u.username' == $columnName) {

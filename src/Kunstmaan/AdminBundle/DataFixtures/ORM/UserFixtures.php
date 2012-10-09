@@ -20,7 +20,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $user1 = $this->createUser($manager, "admin", "admin", "admin@domain.com", array("ROLE_SUPER_ADMIN"), array($manager->merge($this->getReference('admins-group'))), true);
-        $user2 = $this->createUser($manager, "guest", "guest", "guest@domain.com", array("ROLE_GUEST"), array($manager->merge($this->getReference('guests-group'))));
+        $this->createUser($manager, "guest", "guest", "guest@domain.com", array("ROLE_GUEST"), array($manager->merge($this->getReference('guests-group'))));
 
         $manager->flush();
 
@@ -37,6 +37,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
      * @param array         $roles    The roles the user has
      * @param array         $groups   The groups the user belongs to
      * @param bool          $enabled  Enable login for the user
+     *
      * @return User
      */
     private function createUser(ObjectManager $manager, $username, $password, $email, array $roles = array(), array $groups = array(), $enabled = false)

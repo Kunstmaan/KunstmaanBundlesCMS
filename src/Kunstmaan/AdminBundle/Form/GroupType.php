@@ -11,24 +11,29 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class GroupType extends AbstractType
 {
+
     /**
      * Builds the form.
      *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * This method is called for each type in the hierarchy starting form the
+     * top most type. Type extensions can further modify the form.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
-        $builder->add('rolesCollection', 'entity', array(
-            'class' => 'KunstmaanAdminBundle:Role',
-            'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('r')
-                    ->orderBy('r.role', 'ASC');
-            },
-            'multiple' => true,
-            'expanded' => false,
-        ));
+        $builder->add('name')
+                ->add('rolesCollection', 'entity', array(
+                        'class' => 'KunstmaanAdminBundle:Role',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('r')
+                                ->orderBy('r.role', 'ASC');
+                        },
+                        'multiple' => true,
+                        'expanded' => false,
+                    )
+                );
     }
 
     /**

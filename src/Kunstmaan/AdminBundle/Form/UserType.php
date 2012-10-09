@@ -12,30 +12,36 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class UserType extends AbstractType
 {
+
     /**
      * Builds the form.
      *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * This method is called for each type in the hierarchy starting form the
+     * top most type. Type extensions can further modify the form.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username');
-        $builder->add('plainPassword', 'repeated', array(
-                'type' => 'password',
-                'required' => $options['password_required'],
-                'invalid_message' => "The passwords don't match!"));
-        $builder->add('email');
-        $builder->add('enabled', 'checkbox', array('required' => false));
-        $builder->add('groups', 'entity', array(
-                'class' => 'KunstmaanAdminBundle:Group',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('g')
-                        ->orderBy('g.name', 'ASC');
-                },
-                'multiple' => true,
-                'expanded' => false,
-            ));
+        $builder->add('username')
+                ->add('plainPassword', 'repeated', array(
+                    'type' => 'password',
+                    'required' => $options['password_required'],
+                    'invalid_message' => "The passwords don't match!")
+                )
+                ->add('email')
+                ->add('enabled', 'checkbox', array('required' => false))
+                ->add('groups', 'entity', array(
+                        'class' => 'KunstmaanAdminBundle:Group',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('g')
+                                ->orderBy('g.name', 'ASC');
+                        },
+                        'multiple' => true,
+                        'expanded' => false
+                    )
+                );
     }
 
     /**
