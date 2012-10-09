@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\Role;
@@ -13,6 +14,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 
 use Doctrine\ORM\EntityManager;
 
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -20,12 +22,12 @@ use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Helper to manage the permissions on a certain entity
@@ -76,6 +78,16 @@ class PermissionAdmin
     protected $eventDispatcher = null;
 
     /**
+     * @var KernelInterface
+     */
+    protected $kernel;
+
+    /**
+     * @var Shell
+     */
+    protected $shellHelper;
+
+    /**
      * Constructor
      *
      * @param EntityManager                            $em                   The EntityManager
@@ -83,13 +95,17 @@ class PermissionAdmin
      * @param AclProviderInterface                     $aclProvider          The ACL provider
      * @param ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy The object retrieval strategy
      * @param EventDispatcherInterface                 $eventDispatcher      The event dispatcher
+     * @param Shell                                    $shellHelper          The shell helper
+     * @param KernelInterface                          $kernel               The kernel
      */
     public function __construct(
         EntityManager $em,
         SecurityContextInterface $securityContext,
         AclProviderInterface $aclProvider,
         ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        Shell $shellHelper,
+        KernelInterface $kernel
     )
     {
         $this->em                   = $em;
@@ -97,6 +113,8 @@ class PermissionAdmin
         $this->aclProvider          = $aclProvider;
         $this->oidRetrievalStrategy = $oidRetrievalStrategy;
         $this->eventDispatcher      = $eventDispatcher;
+        $this->shellHelper          = $shellHelper;
+        $this->kernel               = $kernel;
     }
 
     /**
@@ -201,8 +219,12 @@ class PermissionAdmin
         if ($applyRecursive) {
             // Serialize changes & store them in DB
             $user = $this->securityContext->getToken()->getUser();
-            $aclChangeset = $this->createAclChangeSet($this->resource, $changes, $user);
-            $this->eventDispatcher->dispatch(Events::APPLY_ACL_CHANGESET, new ApplyAclChangesetEvent($aclChangeset));
+            $this->createAclChangeSet($this->resource, $changes, $user);
+
+            $cmd = 'php ' . $this->kernel->getRootDir() . '/console kuma:acl:apply';
+            $cmd .= ' --env=' . $this->kernel->getEnvironment();
+
+            $this->shellHelper->runInBackground($cmd);
         }
 
         return true;

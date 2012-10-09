@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 use InvalidArgumentException;
 
 /**
- * PermissionDefinition is a helper which stores an entity and his permissions
+ * The PermissionDefinition object allows you to define the settings to be used by the ACL helper
  */
 class PermissionDefinition
 {

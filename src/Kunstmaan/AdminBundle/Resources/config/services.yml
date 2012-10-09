@@ -1,5 +1,6 @@
 parameters:
-    kunstmaan_admin.menubuilder.class: Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder
+    kunstmaan_admin.menubuilder.class: 'Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder'
+    kunstmaan_admin.apply_acl_changeset.listener.class: 'Kunstmaan\AdminBundle\EventListener\ApplyAclChangesetListener'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -70,4 +71,4 @@ services:
         
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@event_dispatcher"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@event_dispatcher", "@kunstmaan_utilities.shell", "@kernel"]
