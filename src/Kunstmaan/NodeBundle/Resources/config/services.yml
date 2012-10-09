@@ -1,5 +1,4 @@
 parameters:
-    kunstmaan_node.apply_acl_changeset.listener.class: 'Kunstmaan\NodeBundle\EventListener\ApplyAclChangesetListener'
 
 services:
     kunstmaan_node.nodetranslation.listener:
@@ -49,12 +48,6 @@ services:
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'top_actions' } # The alias is what is used to retrieve the menu
-
-    kunstmaan_node.apply_acl_changeset.listener:
-        class: "%kunstmaan_node.apply_acl_changeset.listener.class%"
-        arguments: ["@kunstmaan_utilities.shell", "@kernel"]
-        tags:
-            - { name: 'kernel.event_listener', event: 'kunstmaan_admin.applyAclChangeset', method: 'onApplyAclChangeset' }
 
     kunstmaan_node.fix_date.listener:
         class: Kunstmaan\NodeBundle\EventListener\FixDateListener
