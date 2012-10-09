@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
