@@ -22,11 +22,10 @@ class LogAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $builder = $this->getFilterBuilder();
-        $builder->add('u.username', new StringFilterType('username', 'u'), 'User')
-                ->add('status', new StringFilterType('status'), 'Status')
-                ->add('message', new StringFilterType('message'), 'Message')
-                ->add('createdAt', new DateFilterType('createdAt'), 'Created At');
+        $this->addFilter('u.username', new StringFilterType('username', 'u'), 'User');
+        $this->addFilter('status', new StringFilterType('status'), 'Status');
+        $this->addFilter('message', new StringFilterType('message'), 'Message');
+        $this->addFilter('createdAt', new DateFilterType('createdAt'), 'Created At');
     }
 
     /**
