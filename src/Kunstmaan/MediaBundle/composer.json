@@ -18,6 +18,7 @@
         "symfony/symfony": "2.1.*",
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "kunstmaan/admin-bundle": "dev-master",
+        "kunstmaan/utilities-bundle": "*",
         "stof/doctrine-extensions-bundle": "dev-master",
         "liip/imagine-bundle": "*",
         "knplabs/knp-gaufrette-bundle": "*",

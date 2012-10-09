@@ -2,11 +2,12 @@
 
 namespace Kunstmaan\MediaBundle\EventListener;
 
-use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
+
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * DoctrineMediaListener
