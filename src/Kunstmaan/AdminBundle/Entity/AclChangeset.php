@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use DateTime;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\Mapping as ORM;
 
