@@ -10,7 +10,7 @@ $(document).ready(function () {
 });
 
 //JS-tree
-function init_tree(movepagesnodeurl, movemedianodeurl) {
+function init_tree() {
 	$('.tree').jstree({
 		"plugins" : [ "themes", "html_data", "types", "search" ] ,
 		"themes" : { 
@@ -177,33 +177,6 @@ function init_tree(movepagesnodeurl, movemedianodeurl) {
             "show_only_matches" : true
 		}
 	})
-	.bind("move_node.jstree", function (e, data) {
-		console.log("parentid" + data.rslt.np.attr("id"));
-		console.log("fromposition" + data.rslt.o.attr("sequence"));
-		console.log("afterposition" + data.rslt.cp);
-		$.ajax({
-				async : false,
-				type: 'POST',
-				url: movepagesnodeurl,
-				data : { 
-					"parentid": data.rslt.np.attr("id"),
-					"fromposition": data.rslt.o.attr("sequence"),
-					"afterposition" : data.rslt.cp
-				},
-				success : function (r) {
-					if(!r.status) {
-						$.jstree.rollback(data.rlbk);
-					}
-					else {
-						$(data.rslt.oc).attr("id", "node_" + r.id);
-						if(data.rslt.cy && $(data.rslt.oc).children("ul").length) {
-							data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-						}
-					}
-					$("#analyze").click();
-				}
-		});
-	});
     $("#pagestreeform").submit(function() {
         $('.pagestree').jstree('search', $('#pagestreeform #searchVal').val());
         return false;
@@ -301,30 +274,6 @@ function init_tree(movepagesnodeurl, movemedianodeurl) {
             "show_only_matches" : true
         }
 	})
-	.bind("move_node.jstree", function (e, data) {
-		$.ajax({
-				async : false,
-				type: 'POST',
-				url: movemedianodeurl,
-				data : { 
-					"parentid": data.rslt.np.attr("id"),
-					"fromposition": data.rslt.o.attr("sequence"),
-					"afterposition" : data.rslt.cp
-				},
-				success : function (r) {
-					if(!r.status) {
-						$.jstree.rollback(data.rlbk);
-					}
-					else {
-						$(data.rslt.oc).attr("id", "node_" + r.id);
-						if(data.rslt.cy && $(data.rslt.oc).children("ul").length) {
-							data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-						}
-					}
-					$("#analyze").click();
-				}
-		});
-	});
     $("#mediatreeform").submit(function() {
         $('.mediatree').jstree('search', $('#mediatreeform #searchVal').val());
         return false;

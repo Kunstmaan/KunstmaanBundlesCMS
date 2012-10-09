@@ -1,16 +1,4 @@
-{#
-{% if node.node.deleted ==false %}
-#}
-<li id="{{ menuitem.internalname }}"
-{#
-sequence="{{ node.node.getSequenceNumber() }}"
-#}
-class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is not null and currentMenuItem.internalname == menuitem.internalname  %}active{% endif %}
-{#
-{% if not node.online %}offline{% endif %}"
-#}
-"
-{% if menuitem.role %} rel="{{menuitem.role}}" {% endif %}>
+<li id="{{ menuitem.internalname }}" class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is not null and currentMenuItem.internalname == menuitem.internalname  %}active{% endif %}" {% if menuitem.role %} rel="{{menuitem.role}}" {% endif %}>
     <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname | trans }}</a>
     <ul>
         {% for menuitem in menuitem.navigationChildren %}
@@ -18,7 +6,3 @@ class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is n
         {% endfor %}
     </ul>
 </li>
-
-{#
-{% endif %}
-#}
