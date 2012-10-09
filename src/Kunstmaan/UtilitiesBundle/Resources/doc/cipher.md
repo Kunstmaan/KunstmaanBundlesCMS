@@ -5,20 +5,24 @@ Cipher is a helpful service to encrypt and decrypt string values. At the moment 
 * `Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher`: which will encrypt and decrypt using mcrypt.
 * `Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher`: which is an extension of the default one, which encrypts the string to a url safe string value by converting it to a hexadecimal encoded binary string.
 
-To start using cypher you must first register the service:
+To start using cypher you must first configure the cipher secret in your `parameters.yaml`:
 
 ```yaml
-kunstmaan_utilities.cipher:
-    class: '<CIPHER_IMPLEMENTATION_CLASS>'
-    arguments: ['<YOUR_SECRET_HERE>']
+kunstmaan_utilities.cipher.secret: '<YOUR_SECRET_HERE>'
 ```
 
-After registering the service you can encrypt and decrypt a string value as follows:
+The default implementation that is used is the `Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher`, to use another cipher implementation you can define the class you want to use in your `parameters.yaml` as follows:
+
+```yaml
+kunstmaan_utilities.cipher.class: '<YOUR_CLASS_HERE>'
+```
+
+The custom cipher class should extend *Kunstmaan\UtilitiesBundle\Helper\Cipher\CipherInterface*
+
+When the service is configured properly you can start using the cipher as follows:
 
 ```php
 $cipher = $container->get('kunstmaan_utilities.cipher');
 $encryptedValue = $cipher->encrypt('YOUR STRING HERE');
 $decryptedValue = $cipher->decrypt($encryptedValue);
 ```
-
-You can also specify your own cipher class, this class should extend *Kunstmaan\UtilitiesBundle\Helper\Cipher\CipherInterface*

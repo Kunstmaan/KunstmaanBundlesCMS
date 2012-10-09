@@ -1,4 +1,12 @@
 parameters:
+    kunstmaan_utilities.shell.class = 'Kunstmaan\UtilitiesBundle\Helper\Shell\Shell'
+    kunstmaan_utilities.cipher.class = 'Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher'
+    kunstmaan_utilities.cipher.secret = ''
 
 services:
+    kunstmaan_utilities.shell:
+        class: "%kunstmaan_utilities.shell.class%"
 
+    kunstmaan_utilities.cipher:
+        class: "%kunstmaan_utilities.cipher.class%"
+        arguments: ["%kunstmaan_utilities.cipher.secret%"]

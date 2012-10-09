@@ -2,14 +2,7 @@ Shell
 ======
 Shell is a helpfull service which makes it possible to execute shell commands in the background. Next to executing the commands it is also possible to check if the process is still running and kill the process.
 
-To start using the shell wrapper you must first register the service:
-
-```yaml
-kunstmaan_utilities.shell:
-    class: 'Kunstmaan\UtilitiesBundle\Helper\Shell\Shell'
-```
-
-After registering the service you can execute a shell command as follows:
+You can start using the service for executing a shell command as follows:
 
 ```php
 $shell = $container->get('kunstmaan_utilities.shell');
@@ -32,3 +25,5 @@ $success = $shell->kill('<YOUR_PROCESS_ID');
 ```
 
 Be aware when you use the kill method, make sure you don't use for example a http parameter as $pid because then you have a security hole !!!
+
+When you want to define your own Shell implementation then it should implement the *Kunstmaan\UtilitiesBundle\Helper\ShellInterface*.
