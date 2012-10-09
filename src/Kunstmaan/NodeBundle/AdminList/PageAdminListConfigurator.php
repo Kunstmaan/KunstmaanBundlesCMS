@@ -49,11 +49,10 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFilters()
     {
-        $builder = $this->getFilterBuilder();
-        $builder->add('title', new StringFilterType("title"), "Title")
-                ->add('online', new BooleanFilterType("online"), "Online")
-                ->add('created', new DateFilterType("created"), "Created At")
-                ->add('updated', new DateFilterType("updated"), "Updated At");
+        $this->addFilter('title', new StringFilterType('title'), 'Title')
+            ->addFilter('online', new BooleanFilterType('online'), 'Online')
+            ->addFilter('created', new DateFilterType('created'), 'Created At')
+            ->addFilter('updated', new DateFilterType('updated'), 'Updated At');
     }
 
     /**
@@ -61,10 +60,10 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField("title", "Title", true)
-            ->addField("created", "Created At", true)
-            ->addField("updated", "Updated At", true)
-            ->addField("online", "Online", true);
+        $this->addField('title', 'Title', true)
+            ->addField('created', 'Created At', true)
+            ->addField('updated', 'Updated At', true)
+            ->addField('online', 'Online', true);
     }
 
     /**
