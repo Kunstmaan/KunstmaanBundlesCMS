@@ -8,7 +8,9 @@ namespace Kunstmaan\AdminBundle\Event;
 class Events
 {
     /**
-     * The applyAclChangeset event occurs after saving an AclChangeset.
+     * The APPLY_ACL_CHANGESET event will be triggered after saving the {@link AclChangeset}
+     *
+     * @see PermissionAdmin::bindRequest()
      *
      * @var string
      */
