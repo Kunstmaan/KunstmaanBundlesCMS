@@ -1,14 +1,17 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
+
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+
 use Doctrine\ORM\EntityManager;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
