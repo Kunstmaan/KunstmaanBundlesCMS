@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper;
 
 /**
- * Slugifier
+ * Sulgifier is a helper to slugify a certain string
  */
 class Slugifier
 {

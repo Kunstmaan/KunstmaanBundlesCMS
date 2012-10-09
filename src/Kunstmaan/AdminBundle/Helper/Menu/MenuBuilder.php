@@ -7,22 +7,33 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * MenuBuilder
+ * The MenuBuilder will build the top menu and the side menu of the admin interface
  */
 class MenuBuilder
 {
-    /* @var TranslatorInterface $translator */
+    /**
+     * @var TranslatorInterface $translator
+     */
     private $translator;
 
-    /* @var MenuAdaptorInterface[] $adaptors */
+    /**
+     * @var MenuAdaptorInterface[] $adaptors
+     */
     private $adaptors = array();
 
-    /* @var TopMenuItem[] $topMenuItems */
+    /**
+     * @var TopMenuItem[] $topMenuItems
+     */
     private $topMenuItems = null;
 
-    /* @var ContainerInterface $container */
+    /**
+     * @var ContainerInterface $container
+     */
     private $container;
 
+    /**
+     * @var MenuItem|null
+     */
     private $currentCache = null;
 
     /**

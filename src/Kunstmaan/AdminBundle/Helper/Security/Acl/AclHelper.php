@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
+use InvalidArgumentException;
+
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 
@@ -17,19 +19,25 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
- * AclHelper
+ * AclHelper is a helper class to help setting the permissions when querying using ORM
  *
- * Based on https://gist.github.com/1363377
+ * @see https://gist.github.com/1363377
  */
 class AclHelper
 {
-    /* @var EntityManager $em */
+    /**
+     * @var EntityManager
+     */
     private $em = null;
 
-    /* @var SecurityContextInterface $securityContext */
+    /**
+     * @var SecurityContextInterface
+     */
     private $securityContext = null;
 
-    /* @var QuoteStrategy $quoteStrategy */
+    /**
+     * @var QuoteStrategy
+     */
     private $quoteStrategy = null;
 
     /**
@@ -184,7 +192,7 @@ SELECTQUERY;
      *
      * @param PermissionDefinition $permissionDef
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return array
      */
@@ -192,7 +200,7 @@ SELECTQUERY;
     {
         $rootEntity = $permissionDef->getEntity();
         if (empty($rootEntity)) {
-            throw new \InvalidArgumentException("You have to provide an entity class name!");
+            throw new InvalidArgumentException("You have to provide an entity class name!");
         }
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {

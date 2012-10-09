@@ -28,7 +28,7 @@ use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 
 /**
- * PermissionAdmin
+ * Helper to manage the permissions on a certain entity
  */
 class PermissionAdmin
 {

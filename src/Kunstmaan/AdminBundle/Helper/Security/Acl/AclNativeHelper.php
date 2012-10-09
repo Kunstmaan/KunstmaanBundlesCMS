@@ -13,16 +13,20 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
- * AclNativeHelper
+ * AclHelper is a helper class to help setting the permissions when querying using native queries
  *
- * Based on https://gist.github.com/1363377
+ * @see https://gist.github.com/1363377
  */
 class AclNativeHelper
 {
-    /* @var EntityManager $em */
+    /**
+     * @var EntityManager
+     */
     private $em = null;
 
-    /* @var SecurityContextInterface $securityContext */
+    /**
+     * @var SecurityContextInterface
+     */
     private $securityContext = null;
 
     /**

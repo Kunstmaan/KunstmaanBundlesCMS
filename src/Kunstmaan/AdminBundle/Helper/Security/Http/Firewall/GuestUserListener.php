@@ -13,13 +13,19 @@ use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
  */
 class GuestUserListener implements ListenerInterface
 {
-    /* @var SecurityContextInterface $context */
+    /**
+     * @var SecurityContextInterface
+     */
     private $context;
 
-    /* @var UserProviderInterface $provider */
+    /**
+     * @var UserProviderInterface
+     */
     private $provider;
 
-    /* @var string $providerKey */
+    /**
+     * @var string
+     */
     private $providerKey;
 
     /**

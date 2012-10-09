@@ -3,12 +3,13 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * UserType
+ * UserType defines the form used for {@link User}
  */
 class UserType extends AbstractType
 {

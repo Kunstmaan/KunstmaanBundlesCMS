@@ -3,11 +3,12 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * GroupType
+ * GroupType defines the form used for {@link Group}
  */
 class GroupType extends AbstractType
 {

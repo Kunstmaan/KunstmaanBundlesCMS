@@ -10,7 +10,7 @@ use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The Settings Menu Adaptor
+ * SettingsMenuAdaptor to add the Settings MenuItem to the top menu and build the Settings tree
  */
 class SettingsMenuAdaptor implements MenuAdaptorInterface
 {

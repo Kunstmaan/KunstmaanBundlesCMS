@@ -1,19 +1,14 @@
 <?php
 
-/*
- * Based on standard MaskBuilder part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
+
+use InvalidArgumentException;
 
 /**
  * This class allows you to build cumulative permissions easily, or convert
  * masks to a human-readable format.
+ *
+ * @see Symfony\Component\Security\Acl\Permission\MaskBuilder
  */
 class MaskBuilder
 {
@@ -43,12 +38,12 @@ class MaskBuilder
      *
      * @param int $mask optional; defaults to 0
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($mask = 0)
     {
         if (!is_int($mask)) {
-            throw new \InvalidArgumentException('$mask must be an integer.');
+            throw new InvalidArgumentException('$mask must be an integer.');
         }
 
         $this->mask = $mask;
@@ -59,7 +54,7 @@ class MaskBuilder
      *
      * @param mixed $mask
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return MaskBuilder
      */
@@ -68,7 +63,7 @@ class MaskBuilder
         if (is_string($mask) && defined($name = 'static::MASK_'.strtoupper($mask))) {
             $mask = constant($name);
         } elseif (!is_int($mask)) {
-            throw new \InvalidArgumentException('$mask must be an integer.');
+            throw new InvalidArgumentException('$mask must be an integer.');
         }
 
         $this->mask |= $mask;
@@ -115,7 +110,7 @@ class MaskBuilder
      *
      * @param mixed $mask
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return MaskBuilder
      */
@@ -124,7 +119,7 @@ class MaskBuilder
         if (is_string($mask) && defined($name = 'static::MASK_'.strtoupper($mask))) {
             $mask = constant($name);
         } elseif (!is_int($mask)) {
-            throw new \InvalidArgumentException('$mask must be an integer.');
+            throw new InvalidArgumentException('$mask must be an integer.');
         }
 
         $this->mask &= ~$mask;
@@ -149,7 +144,7 @@ class MaskBuilder
      *
      * @param null|int $mask
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws \RuntimeException
      *
      * @return string
@@ -157,7 +152,7 @@ class MaskBuilder
     public static function getCode($mask)
     {
         if (!is_int($mask)) {
-            throw new \InvalidArgumentException('$mask must be an integer.');
+            throw new InvalidArgumentException('$mask must be an integer.');
         }
 
         $reflection = new \ReflectionClass(get_called_class());
@@ -175,7 +170,7 @@ class MaskBuilder
             }
         }
 
-        throw new \InvalidArgumentException(sprintf('The mask "%d" is not supported.', $mask));
+        throw new InvalidArgumentException(sprintf('The mask "%d" is not supported.', $mask));
     }
 
     /**
@@ -183,7 +178,7 @@ class MaskBuilder
      *
      * @param string|int $mask
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return bool
      */
@@ -192,7 +187,7 @@ class MaskBuilder
         if (is_string($mask) && defined($name = 'static::MASK_'.strtoupper($mask))) {
             $mask = constant($name);
         } elseif (!is_int($mask)) {
-            throw new \InvalidArgumentException('$mask must be an integer.');
+            throw new InvalidArgumentException('$mask must be an integer.');
         }
 
         return ($this->mask & $mask) != 0;

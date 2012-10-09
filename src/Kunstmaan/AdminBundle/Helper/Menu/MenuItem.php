@@ -3,45 +3,67 @@
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 /**
- * MenuItem
+ * A MenuItem is part of the menu in the admin interface, this will be build by the {@link MenuBuilder}
  */
 class MenuItem
 {
-    /* @var MenuBuilder $menu */
+    /**
+     * @var MenuBuilder
+     */
     private $menu;
 
-    /* @var string $internalName */
+    /**
+     * @var string
+     */
     private $internalName;
 
-    /* @var string $role */
+    /**
+     * @var string
+     */
     private $role;
 
-    /* @var MenuItem $parent */
+    /**
+     * @var MenuItem
+     */
     private $parent;
 
-    /* @var string $route */
+    /**
+     * @var string
+     */
     private $route;
 
-    /* @var array $routeParams */
+    /**
+     * @var array
+     */
     private $routeParams = array();
 
-    /* @var boolean $active */
+    /**
+     * @var boolean
+     */
     private $active = false;
 
-    /* @var MenuItem[] $children */
+    /**
+     * @var MenuItem[]
+     */
     private $children = null;
 
-    /* @var array $attributes */
+    /**
+     * @var array
+     */
     private $attributes = array();
 
-    /* @var boolean $appearInNavigation */
+    /**
+     * @var boolean
+     */
     private $appearInNavigation = true;
 
-    /* @var int $weight */
+    /**
+     * @var int
+     */
     private $weight = -50;
 
     /**
-     * Constructor
+     * Construct the MenuItem
      *
      * @param MenuBuilder $menu
      */

@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 /**
- * TopMenuItem
+ * A MenuItem which represents an item in the top menu
  */
 class TopMenuItem extends MenuItem
 {

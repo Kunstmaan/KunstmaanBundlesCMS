@@ -5,10 +5,11 @@ namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 
 /**
- * Standard Kunstmaan permission map, based on BasicPermissionMap
+ * PermissionMap which stores all the possible permissions, this is based on the BasicPermissionMap
  */
 class PermissionMap implements PermissionMapInterface
 {
+
     const PERMISSION_VIEW       = 'VIEW';
     const PERMISSION_EDIT       = 'EDIT';
     // const PERMISSION_CREATE     = 'CREATE';

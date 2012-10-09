@@ -3,12 +3,13 @@
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
+
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The MenuAdaptorInterface
+ * The menu adaptor can be used to configure the main menu, to do this you need to implement this interface and tag
+ * your interface with 'kunstmaan_admin.menu.adaptor'
  */
 interface MenuAdaptorInterface
 {

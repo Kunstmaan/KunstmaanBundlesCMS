@@ -7,13 +7,15 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 
 /**
- * DynamicUrlMatcher
+ * Custom UrlMatcher which holds a copy of all the routes, this is needed for the DynamicRouting
  *
  * @todo Check if there's a better solution then this ugly hack...
  */
 class DynamicUrlMatcher extends UrlMatcher
 {
-    /* @var RouteCollection $routesCopy */
+    /**
+     * @var RouteCollection
+     */
     private $routesCopy;
 
     /**

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * RoleType
+ * RoleType defines the form used for {@link Role}
  */
 class RoleType extends AbstractType
 {

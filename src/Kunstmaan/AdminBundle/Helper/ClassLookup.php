@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Helper;
 
+use Doctrine\ORM\Proxy\Proxy;
+
 /**
  * Helper for looking up the classname, not the ORM proxy
  */
@@ -16,7 +18,7 @@ class ClassLookup
      */
     public static function getClass($object)
     {
-        return ($object instanceof \Doctrine\ORM\Proxy\Proxy) ? get_parent_class($object) : get_class($object);
+        return ($object instanceof Proxy) ? get_parent_class($object) : get_class($object);
     }
 
     /**
