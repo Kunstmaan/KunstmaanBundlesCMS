@@ -1,5 +1,4 @@
 parameters:
-    kunstmaan_node.shell_helper.class: 'Kunstmaan\NodeBundle\Helper\ShellHelper'
     kunstmaan_node.apply_acl_changeset.listener.class: 'Kunstmaan\NodeBundle\EventListener\ApplyAclChangesetListener'
 
 services:
@@ -14,9 +13,6 @@ services:
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
-
-    kunstmaan_node.shell_helper:
-        class: "%kunstmaan_node.shell_helper.class%"
         
     kunstmaan_node.form.type.urlchooser:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType
@@ -56,7 +52,7 @@ services:
 
     kunstmaan_node.apply_acl_changeset.listener:
         class: "%kunstmaan_node.apply_acl_changeset.listener.class%"
-        arguments: ["@kunstmaan_node.shell_helper", "@kernel"]
+        arguments: ["@kunstmaan_utilities.shell", "@kernel"]
         tags:
             - { name: 'kernel.event_listener', event: 'kunstmaan_admin.applyAclChangeset', method: 'onApplyAclChangeset' }
 

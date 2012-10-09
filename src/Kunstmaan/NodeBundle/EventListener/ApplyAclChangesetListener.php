@@ -5,7 +5,7 @@ namespace Kunstmaan\NodeBundle\EventListener;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Kunstmaan\AdminBundle\Event\ApplyAclChangesetEvent;
-use Kunstmaan\NodeBundle\Helper\ShellHelper;
+use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 
 /**
  * ApplyAclChangesetListener
@@ -13,20 +13,20 @@ use Kunstmaan\NodeBundle\Helper\ShellHelper;
 class ApplyAclChangesetListener
 {
     /**
-     * @var ShellHelper $shellHelper
+     * @var Shell
      */
     protected $shellHelper;
 
     /**
-     * @var KernelInterface $kernel
+     * @var KernelInterface
      */
     protected $kernel;
 
     /**
-     * @param ShellHelper     $shellHelper The shell helper
+     * @param Shell           $shellHelper The shell helper
      * @param KernelInterface $kernel      The kernel
      */
-    public function __construct(ShellHelper $shellHelper, KernelInterface $kernel)
+    public function __construct(Shell $shellHelper, KernelInterface $kernel)
     {
         $this->shellHelper = $shellHelper;
         $this->kernel = $kernel;

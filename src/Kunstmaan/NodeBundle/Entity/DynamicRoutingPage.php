@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\AdminBundle\Helper\Routing\DynamicUrlMatcher;
+use Kunstmaan\NodeBundle\Helper\Routing\DynamicUrlMatcher;
 
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;

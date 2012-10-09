@@ -5,11 +5,11 @@ namespace Kunstmaan\NodeBundle\Repository;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Helper\Slugifier;
 use Kunstmaan\AdminBundle\Entity\AddCommand;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
-use Kunstmaan\AdminBundle\Helper\Slugifier;
 use Kunstmaan\AdminBundle\Helper\ClassLookup;
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
