@@ -1,5 +1,6 @@
 <?php
 namespace Kunstmaan\PagePartBundle\Tests\Form;
+
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
