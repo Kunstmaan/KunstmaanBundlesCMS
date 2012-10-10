@@ -20,8 +20,8 @@
         "kunstmaan/admin-bundle": "*",
         "gedmo/doctrine-extensions": "*",
 		"knplabs/knp-menu-bundle": "*",
-        "kunstmaan/media-bundle": "master-dev",
-        "kunstmaan/pagepart-bundle": "master-dev",
+        "kunstmaan/media-bundle": "dev-master",
+        "kunstmaan/pagepart-bundle": "*",
         "kunstmaan/utilities-bundle": "dev-master"
     },
     "autoload": {
