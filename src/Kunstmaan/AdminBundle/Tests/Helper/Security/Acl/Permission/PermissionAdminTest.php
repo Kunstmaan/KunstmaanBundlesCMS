@@ -4,12 +4,15 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
 use Doctrine\ORM\EntityManager;
 
+
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
-use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
@@ -112,7 +115,9 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $aclProvider = $this->getAclProvider();
         $retrievalStrategy = $this->getOidRetrievalStrategy();
         $dispatcher = $this->getEventDispatcher();
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
+        $shell = $this->getShell();
+        $kernel = $this->getKernel();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher, $shell, $kernel);
 
         $this->assertNull($object->getAllRoles());
     }
@@ -133,7 +138,9 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
             ->method('getObjectIdentity')
             ->will($this->throwException(new \Symfony\Component\Security\Acl\Exception\AclNotFoundException()));
         $dispatcher = $this->getEventDispatcher();
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
+        $shell = $this->getShell();
+        $kernel = $this->getKernel();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher, $shell, $kernel);
 
         $permissions = array('PERMISSION1', 'PERMISSION2');
         $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
@@ -162,7 +169,9 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $aclProvider = $this->getAclProvider();
         $retrievalStrategy = $this->getOidRetrievalStrategy();
         $dispatcher = $this->getEventDispatcher();
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
+        $shell = $this->getShell();
+        $kernel = $this->getKernel();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher, $shell, $kernel);
 
         $entity = $this->getEntity();
         /* @var $user User */
@@ -226,6 +235,22 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return Shell
+     */
+    public function getShell()
+    {
+        return new Shell();
+    }
+
+    /**
+     * @return KernelInterface
+     */
+    public function getKernel()
+    {
+        return $this->getMock('Symfony\Component\HttpKernel\KernelInterface');
+    }
+
+    /**
      * Return permission admin mock
      *
      * @return PermissionAdmin
@@ -270,7 +295,9 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
             ->method('getObjectIdentity')
             ->will($this->returnValue($objectIdentity));
         $dispatcher = $this->getEventDispatcher();
-        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher);
+        $shell = $this->getShell();
+        $kernel = $this->getKernel();
+        $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher, $shell, $kernel);
 
         return $object;
     }
