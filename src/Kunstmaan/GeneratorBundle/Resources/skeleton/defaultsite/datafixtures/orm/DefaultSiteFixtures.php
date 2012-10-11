@@ -86,7 +86,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      *
      * @return HomePage
      */
-    private function createHomePage(ObjectManager $manager, string $title)
+    private function createHomePage(ObjectManager $manager, $title)
     {
         $homepage = new HomePage();
         $homepage->setTitle($title);
@@ -109,7 +109,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      *
      * @return ContentPage
      */
-    private function createContentPage(ObjectManager $manager, string $title, $parent)
+    private function createContentPage(ObjectManager $manager, $title, $parent)
     {
         $page = new ContentPage();
         $page->setParent($parent);
@@ -130,7 +130,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @param string                                    $title
      * @param                                           $parent
      */
-    private function createHeaderPage(ObjectManager $manager, string $title, $parent)
+    private function createHeaderPage(ObjectManager $manager, $title, $parent)
     {
         $headerpage = new ContentPage();
         $headerpage->setParent($parent);
@@ -160,7 +160,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @param string                                    $title
      * @param                                           $parent
      */
-    private function createTextPage(ObjectManager $manager, string $title, $parent)
+    private function createTextPage(ObjectManager $manager, $title, $parent)
     {
         $textpage = new ContentPage();
         $textpage->setParent($parent);
@@ -199,7 +199,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @param string                                    $title
      * @param                                           $parent
      */
-    private function createTocPage(ObjectManager $manager, string $title, $parent)
+    private function createTocPage(ObjectManager $manager, $title, $parent)
     {
         $textpage = new ContentPage();
         $textpage->setParent($parent);
@@ -277,7 +277,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      *
      * @return FormPage
      */
-    private function createFormPage(ObjectManager $manager, string $title, $parent)
+    private function createFormPage(ObjectManager $manager, $title, $parent)
     {
         $page = new FormPage();
         $page->setParent($parent);
