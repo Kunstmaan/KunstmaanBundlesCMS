@@ -4,6 +4,8 @@ namespace Kunstmaan\NodeBundle\Tabs;
 
 use Doctrine\ORM\EntityManager;
 
+use Kunstmaan\NodeBundle\Helper\Slugifier;
+
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -100,6 +102,11 @@ class TabPane
         }
     }
 
+    private function generateIdentifier(TabInterface $tab)
+    {
+        return Slugifier::slugify($tab->getTitle());
+    }
+
     /**
      * @param TabInterface $tab
      * @param null|int     $position
@@ -108,6 +115,10 @@ class TabPane
      */
     public function addTab(TabInterface $tab, $position = null)
     {
+        if (!$identifier = $tab->getIdentifier() || empty($identifier)) {
+            $tab->setIdentifier($this->generateIdentifier($tab));
+        }
+
         if (!is_null($position) && is_numeric($position) && $position < sizeof($this->tabs)) {
             array_splice($this->tabs, $position, 0, $tab);
         } else {

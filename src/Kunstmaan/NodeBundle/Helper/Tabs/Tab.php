@@ -20,6 +20,11 @@ class Tab implements TabInterface
     protected $title;
 
     /**
+     * @var string
+     */
+    protected $identifier;
+
+    /**
      * @var AbstractType[]
      */
     protected $types;
@@ -102,6 +107,23 @@ class Tab implements TabInterface
     public function getTemplate()
     {
         return 'KunstmaanNodeBundle:Tabs:tab.html.twig';
+    }
+
+    /**
+     * @param string $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     /**

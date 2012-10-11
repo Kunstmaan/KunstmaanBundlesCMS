@@ -14,11 +14,6 @@ interface TabInterface
 {
 
     /**
-     * @return string
-     */
-    public function getTitle();
-
-    /**
      * @param FormBuilderInterface $builder The form builder
      * @param Request              $request The request
      */
@@ -41,6 +36,23 @@ interface TabInterface
      * @return array
      */
     public function getFormErrors(FormView $formView);
+
+    /**
+     * @return string
+     */
+    public function getTitle();
+
+    /**
+     * @return string
+     */
+    public function getIdentifier();
+
+    /**
+     * @param $identifier
+     *
+     * @return TabInterface
+     */
+    public function setIdentifier($identifier);
 
     /**
      * @return string

@@ -16,6 +16,11 @@ class PermissionTab implements TabInterface
 {
 
     /**
+     * @var string
+     */
+    protected $identifier;
+
+    /**
      * @var PermissionAdmin
      */
     protected $permissionAdmin;
@@ -98,5 +103,22 @@ class PermissionTab implements TabInterface
     public function getTemplate()
     {
         return 'KunstmaanNodeBundle:Tabs:permission_tab.html.twig';
+    }
+
+    /**
+     * @param string $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 }
