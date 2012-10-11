@@ -1,0 +1,5 @@
+<fieldset class="properties">
+    {% for typeName in tab.types|keys %}
+        {{ form_row(formView[typeName]) }}
+    {%  endfor %}
+</fieldset>

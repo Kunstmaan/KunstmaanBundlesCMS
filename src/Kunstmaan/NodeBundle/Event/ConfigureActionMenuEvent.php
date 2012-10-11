@@ -3,9 +3,11 @@
 namespace Kunstmaan\NodeBundle\Event;
 
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\EventDispatcher\Event;
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Knp\Menu\ItemInterface;
+
+use Symfony\Component\EventDispatcher\Event;
+
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
 /**
  * ConfigureActionMenuEvent

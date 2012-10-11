@@ -18,6 +18,13 @@ class Events
     const POSTEDIT = 'kunstmaan_node.postEdit';
 
     /**
+     * The adaptForm event occurs when building the form for the node.
+     *
+     * @var string
+     */
+    const ADAPT_FORM = 'kunstmaan_node.adaptForm';
+
+    /**
      * This event will be triggered when creating the menu for the page sub actions.
      * It is possible to change this menu using this event.
      *

@@ -1,0 +1,135 @@
+<!--MODALS-->
+<div id="unpub" class="modal hide fade">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>Are you sure you want to unpublish this page?</h3>
+    </div>
+    <div class="modal-body">
+        <p>If you do this, the page will be offline!</p>
+    </div>
+    <div class="modal-footer">
+        <div class="btn_group">
+            <a href="{{ path('KunstmaanNodeBundle_pages_edit_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="pub" class="modal hide fade">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>Are you sure you want to publish this page?</h3>
+    </div>
+    <div class="modal-body">
+        <p>If you do this, the page will be online!</p>
+    </div>
+    <div class="modal-footer">
+        <div class="btn_group">
+            <a href="{{ path('KunstmaanNodeBundle_pages_edit_publish', { 'id': node.id}) }}" class="btn btn-danger">Publish</a>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="quitpagemodal" class="modal hide fade">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>Are you sure you want to unpublish this page?</h3>
+    </div>
+    <div class="modal-body">
+        <p>If you do this, the page will be offline!</p>
+    </div>
+    <div class="modal-footer">
+        <div class="btn_group">
+            <a href="#" onClick="iets=true;" class="btn btn-danger">Unpublish</a>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="versions" class="modal hide fade">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>Versions</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Nr</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>User</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for nodeVersion in nodeVersions %}
+                <tr>
+                    <td>{# <a href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}"> #}{{ nodeVersion.version }}{# </a> #}</td>
+                    <td>{{ nodeVersion.type }}</td>
+                    <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
+                    <td>{{ nodeVersion.owner }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% set pagePossibleChildPages = page.possibleChildPageTypes %}
+{% if pagePossibleChildPages is not empty %}
+    <div id="add-subpage-modal" class="modal hide fade">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <h3>Add subpage</h3>
+        </div>
+        <div class="modal-body">
+            <script type="text/javascript">
+                function doAddpage(link){
+                    link.href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" + "?addpage="+jQuery('#addpage_type').val() + "&addpagetitle=" + jQuery('#addpage_title').val();
+                    return true;
+                }
+            </script>
+            <div class="input_prop">
+                <label for="form-add-gallery">Title</label>
+                <input id="addpage_title" type="text" id="form-add-gallery" name="addpagetitle_disabled">
+            </div>
+            <div class="input_prop">
+                <label for="form-add-gallery">Type</label>
+                <select id="addpage_type" name="addpage_disabled">
+                    {% for pageType in pagePossibleChildPages %}
+                        <option value="{{pageType.class}}">{{pageType.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="btn_group">
+                <a onclick="return doAddpage(this)" class="btn btn-primary">Add</a>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div id="delete-page-modal" class="modal hide fade">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">&times;</button>
+        <h3>Delete page '{{page.title}}'</h3>
+    </div>
+    <div class="modal-body">
+        <script type="text/javascript">
+            function doDeletepage(link){
+                link.href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id}) }}" + "?delete=true";
+                return true;
+            }
+        </script>
+        <p>This will remove the page completely! Are you really sure about this?</p>
+    </div>
+    <div class="modal-footer">
+        <div class="btn_group">
+            <a onclick="return doDeletepage(this)" class="btn btn-danger">Delete</a>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</div>
