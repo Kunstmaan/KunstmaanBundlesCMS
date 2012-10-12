@@ -10,7 +10,7 @@ use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
 use Kunstmaan\PagePartBundle\Tabs\PagePartTab;
 
-class EditNodeListener
+class NodeListener
 {
 
     /**
