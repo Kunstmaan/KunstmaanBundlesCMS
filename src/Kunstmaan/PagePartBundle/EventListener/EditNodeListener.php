@@ -54,6 +54,7 @@ class EditNodeListener
              * @var AbstractPagePartAdminConfigurator $pagePartAdminConfiguration
              */
             foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
+                // @todo first tab should be merges with PropertiesTab
                 $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory));
             }
         }
