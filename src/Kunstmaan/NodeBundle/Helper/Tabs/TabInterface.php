@@ -15,9 +15,8 @@ interface TabInterface
 
     /**
      * @param FormBuilderInterface $builder The form builder
-     * @param Request              $request The request
      */
-    public function buildForm(FormBuilderInterface $builder, Request $request); // @todo request needed here?
+    public function buildForm(FormBuilderInterface $builder);
 
     /**
      * @param Request $request The request
@@ -26,9 +25,8 @@ interface TabInterface
 
     /**
      * @param EntityManager $em      The entity manager
-     * @param Request       $request The request
      */
-    public function persist(EntityManager $em, Request $request);  // @todo request needed here?
+    public function persist(EntityManager $em);
 
     /**
      * @param FormView $formView

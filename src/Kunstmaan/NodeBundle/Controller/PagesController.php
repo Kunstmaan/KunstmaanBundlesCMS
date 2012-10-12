@@ -174,14 +174,21 @@ class PagesController extends Controller
         $this->init();
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+        $page = $nodeVersion->getRef($this->em);
 
         $this->checkPermission(PermissionMap::PERMISSION_PUBLISH, $node);
+
+        $this->get('event_dispatcher')->dispatch(Events::PRE_PUBLISH, new PageEvent($node, $nodeTranslation, $page));
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(true);
 
         $this->em->persist($nodeTranslation);
         // @todo log using events
+
+        $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new PageEvent($node, $nodeTranslation, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
     }
@@ -206,11 +213,15 @@ class PagesController extends Controller
         // Check with Acl
         $this->checkPermission(PermissionMap::PERMISSION_UNPUBLISH, $node);
 
+        $this->get('event_dispatcher')->dispatch(Events::PRE_UNPUBLISH, new PageEvent($node, $nodeTranslation, $page));
+
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(false);
 
         $this->em->persist($nodeTranslation);
         // @todo log using events
+
+        $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new PageEvent($node, $nodeTranslation, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
     }

@@ -64,9 +64,8 @@ class PermissionTab implements TabInterface
 
     /**
      * @param FormBuilderInterface $builder The form builder
-     * @param Request              $request The request
      */
-    public function buildForm(FormBuilderInterface $builder, Request $request)
+    public function buildForm(FormBuilderInterface $builder)
     {
         $this->permissionAdmin->initialize($this->node, $this->permissionMap);
     }
@@ -81,9 +80,8 @@ class PermissionTab implements TabInterface
 
     /**
      * @param EntityManager $em
-     * @param Request $request
      */
-    public function persist(EntityManager $em, Request $request)
+    public function persist(EntityManager $em)
     {
     }
 

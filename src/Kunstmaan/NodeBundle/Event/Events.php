@@ -59,4 +59,8 @@ class Events
      */
     const CONFIGURE_ACTION_MENU = 'kunstmaan_node.configureActionMenu';
 
+    const POST_PUBLISH = '';
+    const POST_UNPUBLISH = '';
+    const PRE_UNPUBLISH = '';
+    const PRE_PUBLISH = '';
 }

@@ -49,9 +49,8 @@ class Tab implements TabInterface
 
     /**
      * @param FormBuilderInterface $builder The form builder
-     * @param Request              $request The request
      */
-    public function buildForm(FormBuilderInterface $builder, Request $request)
+    public function buildForm(FormBuilderInterface $builder)
     {
         $data = $builder->getData();
 
@@ -73,9 +72,8 @@ class Tab implements TabInterface
 
     /**
      * @param EntityManager $em      The entity manager
-     * @param Request       $request The request
      */
-    public function persist(EntityManager $em, Request $request)
+    public function persist(EntityManager $em)
     {
         foreach ($this->data as $item) {
             $em->persist($item);
