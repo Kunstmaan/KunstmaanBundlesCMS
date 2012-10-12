@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Twig_Environment;
+use Kunstmaan\NodeBundle\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Tabs\TabPaneInterface;
 
 use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
@@ -40,11 +41,11 @@ class TabsTwigExtension extends TwigExtension
     }
 
     /**
-     * @param TabPaneInterface $tabPane
+     * @param TabPane $tabPane
      *
      * @return string
      */
-    public function renderWidget(TabPaneInterface $tabPane, $options = array(), $template = "KunstmaanNodeBundle:TabsTwigExtension:widget.html.twig")
+    public function renderWidget(TabPane $tabPane, $options = array(), $template = "KunstmaanNodeBundle:TabsTwigExtension:widget.html.twig")
     {
         $template = $this->environment->loadTemplate($template);
 

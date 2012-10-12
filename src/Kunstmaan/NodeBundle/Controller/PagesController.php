@@ -231,12 +231,10 @@ class PagesController extends Controller
 
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
-
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
         $tabPane = new TabPane('todo', $request, $this->container->get('form.factory')); // @todo initialize separate from constructor?
 
-        $draft = ($subaction == 'draft');
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         if (!$nodeTranslation) {
             $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
@@ -244,13 +242,13 @@ class PagesController extends Controller
             return $this->render('KunstmaanNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
         }
 
-        $nodeVersions = $nodeTranslation->getNodeVersions();
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $draftNodeVersion = $nodeTranslation->getNodeVersion('draft');
 
         /* @var HasNodeInterface $page */
         $page = $this->em->getRepository($nodeVersion->getRefEntityName())->find($nodeVersion->getRefId());
 
+        $draft = ($subaction == 'draft');
         $saveAsDraft = $request->get('saveasdraft');
         if ((!$draft && is_string($saveAsDraft) && $saveAsDraft != '') || ($draft && is_null($draftNodeVersion))) {
             /* @var DeepCloneableInterface $page */
@@ -356,6 +354,7 @@ class PagesController extends Controller
 
         $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
         $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_EDIT, $this->aclHelper);
+        $nodeVersions = $nodeTranslation->getNodeVersions();
 
         $viewVariables = array(
             'topnodes' => $topNodes,

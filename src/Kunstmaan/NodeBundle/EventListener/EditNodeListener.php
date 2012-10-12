@@ -9,6 +9,9 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+/**
+ * @todo: move this to AdminBundle?
+ */
 class EditNodeListener
 {
 
@@ -42,7 +45,7 @@ class EditNodeListener
     /**
      * @param AdaptFormEvent $event
      */
-    public function buildForm(AdaptFormEvent $event)
+    public function adaptForm(AdaptFormEvent $event)
     {
         if ($this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
             $tabPane = $event->getTabPane();
