@@ -150,6 +150,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
         $em->persist($newPage);
         $em->flush();
 
+        // @todo move to node event
         if (method_exists($this, 'getPagePartAdminConfigurations')) {
             /* @noinspection PhpUndefinedMethodInspection */
             $ppConfigurations = $this->getPagePartAdminConfigurations();

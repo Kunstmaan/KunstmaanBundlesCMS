@@ -125,7 +125,10 @@ class PagesController extends Controller
         $otherLanguagePage = $otherLanguageNodeTranslation->getPublicNodeVersion()->getRef($this->em);
         /* @var DeepCloneableInterface $otherLanguagePage */
         $myLanguagePage = $otherLanguagePage->deepClone($this->em);
-        $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
+        $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
+
+        // @todo log using events
+        $this->get('event_dispatcher')->dispatch(Events::COPY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $myLanguagePage));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
     }
@@ -153,9 +156,11 @@ class PagesController extends Controller
         $myLanguagePage->setTitle('New page');
 
         $this->em->persist($myLanguagePage);
+        
         // @todo log using events
+        $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
 
-        $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
+        $this->get('event_dispatcher')->dispatch(Events::ADD_EMPTY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $entityName));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
     }
@@ -326,6 +331,8 @@ class PagesController extends Controller
         }
         $aclProvider->updateAcl($newAcl);
 
+        $this->get('event_dispatcher')->dispatch(Events::ADD_NODE, new PageEvent($nodeNewPage, $nodeNewPage->getNodeTranslation($this->locale, true), $newPage));
+
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeNewPage->getId())));
     }
 
@@ -493,13 +500,23 @@ class PagesController extends Controller
      */
     private function deleteNodeChildren(EntityManager $em, User $user, $locale, ArrayCollection $children)
     {
-        /* @var Node $child */
-        foreach ($children as $child) {
-            $child->setDeleted(true);
-            $this->em->persist($child);
+        /* @var Node $childNode */
+        foreach ($children as $childNode) {
+            $childNodeTranslation = $childNode->getNodeTranslation($this->locale, true);
+            $childNodeVersion = $childNodeTranslation->getPublicNodeVersion();
+            $childNodePage = $childNodeVersion->getRef($this->em);
+
+            $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($childNode, $childNodeTranslation, $childNodePage));
+
+            $childNode->setDeleted(true);
+            $this->em->persist($childNode);
+
             // @todo log using events
-            $children2 = $child->getChildren();
+
+            $children2 = $childNode->getChildren();
             $this->deleteNodeChildren($em, $user, $locale, $children2);
+
+            $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new PageEvent($childNode, $childNodeTranslation, $childNodePage));
         }
     }
 
