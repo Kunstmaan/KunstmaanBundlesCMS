@@ -122,13 +122,16 @@ class PagesController extends Controller
         $this->checkPermission(PermissionMap::PERMISSION_EDIT, $node);
 
         $otherLanguageNodeTranslation = $node->getNodeTranslation($otherlanguage, true);
-        $otherLanguagePage = $otherLanguageNodeTranslation->getPublicNodeVersion()->getRef($this->em);
+        $otherLanguageNodeNodeVersion = $otherLanguageNodeTranslation->getPublicNodeVersion();
+        $otherLanguagePage = $otherLanguageNodeNodeVersion->getRef($this->em);
         /* @var DeepCloneableInterface $otherLanguagePage */
         $myLanguagePage = $otherLanguagePage->deepClone($this->em);
+        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
         // @todo log using events
-        $this->get('event_dispatcher')->dispatch(Events::COPY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $myLanguagePage));
+        $this->get('event_dispatcher')->dispatch(Events::COPY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $nodeVersion, $myLanguagePage));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
     }
@@ -156,11 +159,12 @@ class PagesController extends Controller
         $myLanguagePage->setTitle('New page');
 
         $this->em->persist($myLanguagePage);
-
+        /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
         // @todo log using events
-        $this->get('event_dispatcher')->dispatch(Events::ADD_EMPTY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $entityName));
+        $this->get('event_dispatcher')->dispatch(Events::ADD_EMPTY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $nodeVersion, $entityName));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
     }
@@ -185,7 +189,7 @@ class PagesController extends Controller
 
         $this->checkPermission(PermissionMap::PERMISSION_PUBLISH, $node);
 
-        $this->get('event_dispatcher')->dispatch(Events::PRE_PUBLISH, new PageEvent($node, $nodeTranslation, $page));
+        $this->get('event_dispatcher')->dispatch(Events::PRE_PUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(true);
@@ -193,7 +197,7 @@ class PagesController extends Controller
         $this->em->persist($nodeTranslation);
 
         // @todo log using events
-        $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new PageEvent($node, $nodeTranslation, $page));
+        $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
     }
@@ -217,7 +221,7 @@ class PagesController extends Controller
 
         $this->checkPermission(PermissionMap::PERMISSION_UNPUBLISH, $node);
 
-        $this->get('event_dispatcher')->dispatch(Events::PRE_UNPUBLISH, new PageEvent($node, $nodeTranslation, $page));
+        $this->get('event_dispatcher')->dispatch(Events::PRE_UNPUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(false);
@@ -225,7 +229,7 @@ class PagesController extends Controller
         $this->em->persist($nodeTranslation);
 
         // @todo log using events
-        $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new PageEvent($node, $nodeTranslation, $page));
+        $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
     }
@@ -250,7 +254,7 @@ class PagesController extends Controller
 
         $this->checkPermission(PermissionMap::PERMISSION_DELETE, $node);
 
-        $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($node, $nodeTranslation, $page));
+        $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         $nodeParent = $node->getParent();
         $node->setDeleted(true);
@@ -261,7 +265,7 @@ class PagesController extends Controller
         $children = $node->getChildren();
         $this->deleteNodeChildren($this->em, $this->user, $this->locale, $children);
 
-        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new PageEvent($node, $nodeTranslation, $page));
+        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeParent->getId())));
     }
@@ -330,7 +334,10 @@ class PagesController extends Controller
         }
         $aclProvider->updateAcl($newAcl);
 
-        $this->get('event_dispatcher')->dispatch(Events::ADD_NODE, new PageEvent($nodeNewPage, $nodeNewPage->getNodeTranslation($this->locale, true), $newPage));
+        $nodeTranslation = $nodeNewPage->getNodeTranslation($this->locale, true);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+
+        $this->get('event_dispatcher')->dispatch(Events::ADD_NODE, new PageEvent($nodeNewPage, $nodeTranslation, $nodeVersion, $newPage));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeNewPage->getId())));
     }
@@ -402,7 +409,7 @@ class PagesController extends Controller
             $tabPane->bindRequest($request);
 
             if ($tabPane->isValid()) {
-                $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new PageEvent($node, $nodeTranslation, $page));
+                $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
                 $nodeTranslation->setTitle($page->getTitle());
                 $this->em->persist($nodeTranslation);
@@ -416,7 +423,7 @@ class PagesController extends Controller
                     $nodeVersion = $this->createPublicVersion($page, $nodeTranslation);
                 }
 
-                $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new PageEvent($node, $nodeTranslation, $page));
+                $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
                 return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array(
                     'id' => $node->getId(),
@@ -455,7 +462,7 @@ class PagesController extends Controller
         $this->em->persist($nodeTranslation);
 
         // @todo log using events
-        $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new PageEvent($node, $nodeTranslation, $page));
+        $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new PageEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage));
 
         return $nodeVersion;
     }
@@ -477,7 +484,7 @@ class PagesController extends Controller
         $this->em->persist($nodeVersion);
 
         // @todo log using events
-        $this->get('event_dispatcher')->dispatch(Events::CREATE_DRAFT_VERSION, new PageEvent($node, $nodeTranslation, $page));
+        $this->get('event_dispatcher')->dispatch(Events::CREATE_DRAFT_VERSION, new PageEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $page));
 
         return $nodeVersion;
     }
@@ -509,7 +516,7 @@ class PagesController extends Controller
             $childNodeVersion = $childNodeTranslation->getPublicNodeVersion();
             $childNodePage = $childNodeVersion->getRef($this->em);
 
-            $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($childNode, $childNodeTranslation, $childNodePage));
+            $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($childNode, $childNodeTranslation, $childNodeVersion, $childNodePage));
 
             $childNode->setDeleted(true);
             $this->em->persist($childNode);
@@ -519,7 +526,7 @@ class PagesController extends Controller
             $children2 = $childNode->getChildren();
             $this->deleteNodeChildren($em, $user, $locale, $children2);
 
-            $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new PageEvent($childNode, $childNodeTranslation, $childNodePage));
+            $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new PageEvent($childNode, $childNodeTranslation, $childNodeVersion, $childNodePage));
         }
     }
 
