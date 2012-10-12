@@ -401,17 +401,11 @@ class PagesController extends Controller
 
                 $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new PageEvent($node, $nodeTranslation, $page));
 
-                $redirectParams = array(
+                return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array(
                     'id' => $node->getId(),
                     'subaction' => $subaction,
                     'currenttab' => $tabPane->getActiveTab(),
-                );
-
-                if ($editPagePart = $request->get('edit') && isset($editPagePart)) {
-                    $redirectParams['edit'] = $editPagePart;
-                }
-
-                return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', $redirectParams));
+                )));
             }
         }
 
@@ -419,7 +413,7 @@ class PagesController extends Controller
         $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_EDIT, $this->aclHelper);
         $nodeVersions = $nodeTranslation->getNodeVersions();
 
-        $viewVariables = array(
+        return array(
             'topnodes' => $topNodes,
             'page' => $page,
             'entityname' => ClassLookup::getClass($page),
@@ -432,12 +426,6 @@ class PagesController extends Controller
             'subaction' => $subaction,
             'tabPane' => $tabPane
         );
-
-        if (isset($permissionAdmin) && $this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
-            $viewVariables['permissionadmin'] = $permissionAdmin;
-        }
-
-        return $viewVariables;
     }
 
     public function createPublicVersion(DeepCloneableInterface $page, NodeTranslation $nodeTranslation)

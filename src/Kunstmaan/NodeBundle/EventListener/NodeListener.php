@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 /**
  * @todo: move this to AdminBundle?
  */
-class EditNodeListener
+class NodeListener
 {
 
     /**
