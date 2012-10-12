@@ -9,13 +9,18 @@ class Events
 {
 
     /**
-     * The postEdit event occurs for a given page, after the update method.
-     *
-     * This is an entity lifecycle event.
+     * The preDelete event occurs for a given page, before it's deleted.
      *
      * @var string
      */
-    const POSTEDIT = 'kunstmaan_node.postEdit';
+    const PRE_DELETE = 'kunstmaan_node.preDelete';
+
+    /**
+     * The postDelete event occurs for a given page, after it's deleted.
+     *
+     * @var string
+     */
+    const POST_DELETE = 'kunstmaan_node.postDelete';
 
     /**
      * The adaptForm event occurs when building the form for the node.
@@ -23,6 +28,20 @@ class Events
      * @var string
      */
     const ADAPT_FORM = 'kunstmaan_node.adaptForm';
+
+    /**
+     * The postPersist event occurs for a given page, after the update method.
+     *
+     * @var string
+     */
+    const PRE_PERSIST = 'kunstmaan_node.prePersist';
+
+    /**
+     * The postPersist event occurs for a given page, after the update method.
+     *
+     * @var string
+     */
+    const POST_PERSIST = 'kunstmaan_node.postPersist';
 
     /**
      * This event will be triggered when creating the menu for the page sub actions.

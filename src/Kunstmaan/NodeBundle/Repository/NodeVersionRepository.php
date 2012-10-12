@@ -39,6 +39,7 @@ class NodeVersionRepository extends EntityRepository
     public function createNodeVersionFor(HasNodeInterface $hasNode, NodeTranslation $nodeTranslation, $owner, $type = "public")
     {
         $em = $this->getEntityManager();
+
         $nodeVersion = new NodeVersion();
         $nodeVersion->setNodeTranslation($nodeTranslation);
         $nodeVersion->setType($type);
@@ -46,10 +47,9 @@ class NodeVersionRepository extends EntityRepository
         $nodeVersion->setOwner($owner);
         $nodeVersion->setRef($hasNode);
 
-        $addcommand = new AddCommand($em, $owner);
-        $addcommand->execute("new version for page \"" . $nodeTranslation->getTitle() . "\" with locale: " . $nodeTranslation->getLang(), array('entity' => $nodeVersion));
-
+        $em->persist($nodeVersion);
         $em->refresh($nodeVersion);
+        // @todo logging $addcommand->execute("new version for page \"" . $nodeTranslation->getTitle() . "\" with locale: " . $nodeTranslation->getLang(), array('entity' => $nodeVersion));
 
         return $nodeVersion;
     }

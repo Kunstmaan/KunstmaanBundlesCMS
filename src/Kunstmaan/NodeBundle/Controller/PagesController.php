@@ -20,8 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Kunstmaan\AdminBundle\Entity\AddCommand;
-use Kunstmaan\AdminBundle\Entity\EditCommand;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
@@ -154,8 +152,8 @@ class PagesController extends Controller
         $myLanguagePage = new $entityName();
         $myLanguagePage->setTitle('New page');
 
-        $addCommand = new AddCommand($this->em, $this->user);  // @todo: remove commands
-        $addCommand->execute('empty page added with locale: ' . $this->locale, array('entity' => $myLanguagePage));
+        $this->em->persist($myLanguagePage);
+        // @todo log using events
 
         $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
 
@@ -182,8 +180,8 @@ class PagesController extends Controller
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(true);
 
-        $editCommand = new EditCommand($this->em, $this->user);  // @todo: remove commands
-        $editCommand->execute('published page "' . $nodeTranslation->getTitle() . '" for locale: ' . $this->locale, array('entity' => $nodeTranslation));
+        $this->em->persist($nodeTranslation);
+        // @todo log using events
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
     }
@@ -201,6 +199,9 @@ class PagesController extends Controller
         $this->init();
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+        $page = $nodeVersion->getRef($this->em);
 
         // Check with Acl
         $this->checkPermission(PermissionMap::PERMISSION_UNPUBLISH, $node);
@@ -208,8 +209,8 @@ class PagesController extends Controller
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(false);
 
-        $editCommand = new EditCommand($this->em, $this->user);  // @todo: remove commands
-        $editCommand->execute('unpublished page "' . $nodeTranslation->getTitle() . '" for locale: ' . $this->locale, array('entity' => $nodeTranslation));
+        $this->em->persist($nodeTranslation);
+        // @todo log using events
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
     }
@@ -228,21 +229,25 @@ class PagesController extends Controller
         $this->init();
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+        $page = $nodeVersion->getRef($this->em);
 
         // Check with Acl
         $this->checkPermission(PermissionMap::PERMISSION_DELETE, $node);
 
-        // @todo add event
+        $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($node, $nodeTranslation, $page));
 
         //remove node and page
         $nodeParent = $node->getParent();
         $node->setDeleted(true);
-        $updateCommand = new EditCommand($this->em, $this->user);  // @todo: remove commands
-        $updateCommand->execute('deleted page  with locale: ' . $this->locale, array('entity' => $node));
+        $this->em->persist($node);
+        // @todo log using events
+
         $children = $node->getChildren();
         $this->deleteNodeChildren($this->em, $this->user, $this->locale, $children);
 
-        // @todo add event
+        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new PageEvent($node, $nodeTranslation, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeParent->getId())));
     }
@@ -280,8 +285,8 @@ class PagesController extends Controller
             $newPage->setTitle('New page');
         }
 
-        $addCommand = new AddCommand($this->em, $this->user);  // @todo: remove commands
-        $addCommand->execute('page "' . $newPage->getTitle() . '" added with locale: ' . $this->locale, array('entity' => $newPage));
+        $this->em->persist($newPage);
+        // @todo log using events
 
         $newPage->setParent($parentPage);
 
@@ -380,12 +385,13 @@ class PagesController extends Controller
             $tabPane->bindRequest($request);
 
             if ($tabPane->isValid()) {
+                $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new PageEvent($node, $nodeTranslation, $page));
+
                 $nodeTranslation->setTitle($page->getTitle());
                 $this->em->persist($nodeTranslation);
                 $tabPane->persist($this->em, $request);
 
-                // $editCommand = new EditCommand($this->em, $this->user); // @todo: remove commands
-                // $editCommand->execute('added pageparts to page "' . $page->getTitle() . '" with locale: ' . $this->locale, array('entity' => $page));
+                // @todo log using events
 
                 $saveAndPublish = $request->get('saveandpublish');
                 if (is_string($saveAndPublish) && !empty($saveAndPublish)) {
@@ -393,7 +399,7 @@ class PagesController extends Controller
                     $nodeVersion = $this->createPublicVersion($page, $nodeTranslation);
                 }
 
-                $this->get('event_dispatcher')->dispatch(Events::POSTEDIT, new PageEvent($node, $nodeTranslation, $page));
+                $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new PageEvent($node, $nodeTranslation, $page));
 
                 $redirectParams = array(
                     'id' => $node->getId(),
@@ -441,8 +447,8 @@ class PagesController extends Controller
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
         $nodeTranslation->setTitle($newPublicPage->getTitle());
         $nodeTranslation->setOnline(true);
-        $addCommand = new AddCommand($this->em, $this->user); // @todo: remove commands
-        $addCommand->execute('saved and published page "' . $nodeTranslation->getTitle() . '" added with locale: ' . $this->locale, array('entity' => $nodeTranslation));
+        $this->em->persist($nodeTranslation);
+        // @todo log using events
 
         return $nodeVersion;
     }
@@ -462,6 +468,7 @@ class PagesController extends Controller
         $nodeVersion->setType('draft');
         $this->em->persist($nodeTranslation);
         $this->em->persist($nodeVersion);
+        // @todo log using events
 
         return $nodeVersion;
     }
@@ -490,8 +497,8 @@ class PagesController extends Controller
         /* @var Node $child */
         foreach ($children as $child) {
             $child->setDeleted(true);
-            $updateCommand = new EditCommand($em, $user);  // @todo: remove commands
-            $updateCommand->execute('deleted child for page with locale: ' . $locale, array('entity' => $child));
+            $this->em->persist($child);
+            // @todo log using events
             $children2 = $child->getChildren();
             $this->deleteNodeChildren($em, $user, $locale, $children2);
         }
