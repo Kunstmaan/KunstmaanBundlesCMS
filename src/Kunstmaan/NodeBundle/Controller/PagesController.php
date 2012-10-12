@@ -156,10 +156,10 @@ class PagesController extends Controller
         $myLanguagePage->setTitle('New page');
 
         $this->em->persist($myLanguagePage);
-        
-        // @todo log using events
+
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
 
+        // @todo log using events
         $this->get('event_dispatcher')->dispatch(Events::ADD_EMPTY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $entityName));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
@@ -191,8 +191,8 @@ class PagesController extends Controller
         $nodeTranslation->setOnline(true);
 
         $this->em->persist($nodeTranslation);
-        // @todo log using events
 
+        // @todo log using events
         $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new PageEvent($node, $nodeTranslation, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
@@ -215,7 +215,6 @@ class PagesController extends Controller
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        // Check with Acl
         $this->checkPermission(PermissionMap::PERMISSION_UNPUBLISH, $node);
 
         $this->get('event_dispatcher')->dispatch(Events::PRE_UNPUBLISH, new PageEvent($node, $nodeTranslation, $page));
@@ -224,8 +223,8 @@ class PagesController extends Controller
         $nodeTranslation->setOnline(false);
 
         $this->em->persist($nodeTranslation);
-        // @todo log using events
 
+        // @todo log using events
         $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new PageEvent($node, $nodeTranslation, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
@@ -249,15 +248,14 @@ class PagesController extends Controller
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        // Check with Acl
         $this->checkPermission(PermissionMap::PERMISSION_DELETE, $node);
 
         $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($node, $nodeTranslation, $page));
 
-        //remove node and page
         $nodeParent = $node->getParent();
         $node->setDeleted(true);
         $this->em->persist($node);
+
         // @todo log using events
 
         $children = $node->getChildren();
@@ -302,6 +300,7 @@ class PagesController extends Controller
         }
 
         $this->em->persist($newPage);
+
         // @todo log using events
 
         $newPage->setParent($parentPage);
@@ -454,7 +453,9 @@ class PagesController extends Controller
         $nodeTranslation->setTitle($newPublicPage->getTitle());
         $nodeTranslation->setOnline(true);
         $this->em->persist($nodeTranslation);
+
         // @todo log using events
+        $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new PageEvent($node, $nodeTranslation, $page));
 
         return $nodeVersion;
     }
@@ -474,7 +475,9 @@ class PagesController extends Controller
         $nodeVersion->setType('draft');
         $this->em->persist($nodeTranslation);
         $this->em->persist($nodeVersion);
+
         // @todo log using events
+        $this->get('event_dispatcher')->dispatch(Events::CREATE_DRAFT_VERSION, new PageEvent($node, $nodeTranslation, $page));
 
         return $nodeVersion;
     }

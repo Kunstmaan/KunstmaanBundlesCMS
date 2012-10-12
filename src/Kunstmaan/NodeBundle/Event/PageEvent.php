@@ -6,6 +6,7 @@ use Symfony\Component\EventDispatcher\Event;
 
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
@@ -13,13 +14,24 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
  */
 class PageEvent extends Event
 {
-    /* @var HasNodeInterface $page */
+    /**
+     * @var HasNodeInterface
+     */
     protected $page;
 
-    /* @var Node $node */
+    /**
+     * @var Node
+     */
     protected $node;
 
-    /* @var NodeTranslation $nodeTranslation */
+    /**
+     * @var NodeVersion
+     */
+    protected $nodeVersion;
+
+    /**
+     * @var NodeTranslation
+     */
     protected $nodeTranslation;
 
     /**
@@ -27,11 +39,29 @@ class PageEvent extends Event
      * @param NodeTranslation  $nodeTranslation The nodetranslation
      * @param HasNodeInterface $page            The object
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, HasNodeInterface $page)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, HasNodeInterface $page)
     {
         $this->node            = $node;
         $this->nodeTranslation = $nodeTranslation;
+        $this->nodeVersion     = $nodeVersion;
         $this->page            = $page;
+    }
+
+    /**
+     * @param NodeVersion $nodeVersion
+     */
+    public function setNodeVersion($nodeVersion)
+    {
+        $this->nodeVersion = $nodeVersion;
+        return $this;
+    }
+
+    /**
+     * @return NodeVersion
+     */
+    public function getNodeVersion()
+    {
+        return $this->nodeVersion;
     }
 
     /**
