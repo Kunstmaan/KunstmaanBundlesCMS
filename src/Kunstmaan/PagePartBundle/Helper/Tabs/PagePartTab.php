@@ -50,8 +50,14 @@ class PagePartTab extends Tab
     protected $formFactory;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @param string                            $title                     The title
      * @param HasNodeInterface                  $page                      The page
+     * @param Request                           $request                   The request
      * @param EntityManager                     $em                        The entity manager
      * @param AbstractPagePartAdminConfigurator $pagePartAdminConfigurator The page part admin configurator
      * @param FormFactoryInterface              $formFactory               The form factory
@@ -59,7 +65,7 @@ class PagePartTab extends Tab
      * @param array                             $types                     The types
      * @param array                             $data                      The data for the types
      */
-    function __construct($title, HasNodeInterface $page, EntityManager $em, AbstractPagePartAdminConfigurator $pagePartAdminConfigurator, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory, array $types = array(), array $data = array())
+    function __construct($title, HasNodeInterface $page, Request $request, EntityManager $em, AbstractPagePartAdminConfigurator $pagePartAdminConfigurator, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory, array $types = array(), array $data = array())
     {
         parent::__construct($title, $types, $data);
 
@@ -74,13 +80,12 @@ class PagePartTab extends Tab
 
     /**
      * @param FormBuilderInterface $builder The form builder
-     * @param Request              $request The request
      */
-    public function buildForm(FormBuilderInterface $builder, Request $request)
+    public function buildForm(FormBuilderInterface $builder)
     {
-        parent::buildForm($builder, $request);
+        parent::buildForm($builder, $this->request);
 
-        $this->pagePartAdmin->preBindRequest($request);
+        $this->pagePartAdmin->preBindRequest($this->request);
         $this->pagePartAdmin->adaptForm($builder, $this->formFactory);
     }
 
@@ -98,11 +103,10 @@ class PagePartTab extends Tab
 
     /**
      * @param EntityManager $em      The entity manager
-     * @param Request       $request The request
      */
-    public function persist(EntityManager $em, Request $request)
+    public function persist(EntityManager $em)
     {
-        $this->pagePartAdmin->postBindRequest($request);
+        $this->pagePartAdmin->postBindRequest($this->request);
     }
 
     /**

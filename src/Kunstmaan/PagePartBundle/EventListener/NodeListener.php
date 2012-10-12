@@ -4,6 +4,7 @@ namespace Kunstmaan\PagePartBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
@@ -29,11 +30,17 @@ class NodeListener
     private $pagePartAdminFactory;
 
     /**
-     * @param EntityManager $em
-     * @param FormFactoryInterface $formFactory
-     * @param PagePartAdminFactory $pagePartAdminFactory
+     * @var Request
      */
-    public function __construct(EntityManager $em, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
+    private $request;
+
+    /**
+     * @param Request              $request              The request
+     * @param EntityManager        $em                   The entity manager
+     * @param FormFactoryInterface $formFactory          The form factory
+     * @param PagePartAdminFactory $pagePartAdminFactory The page part admin factory
+     */
+    public function __construct(Request $request, EntityManager $em, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
     {
         $this->em = $em;
         $this->formFactory = $formFactory;
@@ -55,7 +62,7 @@ class NodeListener
              */
             foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
                 // @todo first tab should be merges with PropertiesTab
-                $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory));
+                $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory));
             }
         }
     }
