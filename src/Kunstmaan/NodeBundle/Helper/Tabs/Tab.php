@@ -11,6 +11,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @todo maybe another name for this?
+ */
 class Tab implements TabInterface
 {
 

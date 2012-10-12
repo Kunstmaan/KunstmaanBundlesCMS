@@ -348,16 +348,15 @@ class PagesController extends Controller
         $draft = ($subaction == 'draft');
         $saveAsDraft = $request->get('saveasdraft');
         if ((!$draft && !empty($saveAsDraft)) || ($draft && is_null($draftNodeVersion))) {
+            // Create a new draft version
             $draft = true;
             $subaction = "draft";
-
             $page = $nodeVersion->getRef($this->em);
             $nodeVersion = $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
         } elseif ($draft) {
             $nodeVersion = $draftNodeVersion;
-        }
-
-        if(is_null($page)) {
+            $page = $nodeVersion->getRef($this->em);
+        } else {
             $page = $nodeVersion->getRef($this->em);
         }
 
@@ -389,16 +388,9 @@ class PagesController extends Controller
                 // $editCommand->execute('added pageparts to page "' . $page->getTitle() . '" with locale: ' . $this->locale, array('entity' => $page));
 
                 $saveAndPublish = $request->get('saveandpublish');
-                if (is_string($saveAndPublish) && $saveAndPublish != '') {
-                    /* @var HasNodeInterface $newPublicPage */
-                    $newPublicPage = $page->deepClone($this->em);
-                    $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, 'public');
-                    $nodeTranslation->setPublicNodeVersion($nodeVersion);
-                    $nodeTranslation->setTitle($newPublicPage->getTitle());
-                    $nodeTranslation->setOnline(true);
-                    $addCommand = new AddCommand($this->em, $this->user); // @todo: remove commands
-                    $addCommand->execute('saved and published page "' . $nodeTranslation->getTitle() . '" added with locale: ' . $this->locale, array('entity' => $nodeTranslation));
+                if (is_string($saveAndPublish) && !empty($saveAndPublish)) {
                     $subaction = 'public';
+                    $nodeVersion = $this->createPublicVersion($page, $nodeTranslation);
                 }
 
                 $this->get('event_dispatcher')->dispatch(Events::POSTEDIT, new PageEvent($node, $nodeTranslation, $page));
@@ -440,6 +432,19 @@ class PagesController extends Controller
         }
 
         return $viewVariables;
+    }
+
+    public function createPublicVersion(DeepCloneableInterface $page, NodeTranslation $nodeTranslation)
+    {
+        $newPublicPage = $page->deepClone($this->em);
+        $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, 'public');
+        $nodeTranslation->setPublicNodeVersion($nodeVersion);
+        $nodeTranslation->setTitle($newPublicPage->getTitle());
+        $nodeTranslation->setOnline(true);
+        $addCommand = new AddCommand($this->em, $this->user); // @todo: remove commands
+        $addCommand->execute('saved and published page "' . $nodeTranslation->getTitle() . '" added with locale: ' . $this->locale, array('entity' => $nodeTranslation));
+
+        return $nodeVersion;
     }
 
     /**
