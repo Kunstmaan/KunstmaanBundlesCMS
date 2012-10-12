@@ -43,7 +43,7 @@ class EditNodeListener
     /**
      * @param AdaptFormEvent $event
      */
-    public function buildForm(AdaptFormEvent $event)
+    public function adaptForm(AdaptFormEvent $event)
     {
         $page = $event->getPage();
 

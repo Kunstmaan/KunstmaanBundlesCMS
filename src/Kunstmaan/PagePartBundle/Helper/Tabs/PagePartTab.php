@@ -49,8 +49,17 @@ class PagePartTab extends Tab
      */
     protected $formFactory;
 
-
-    function __construct($title, $page, EntityManager $em, AbstractPagePartAdminConfigurator $pagePartAdminConfigurator, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory, array $types = array(), array $data = array())
+    /**
+     * @param string                            $title                     The title
+     * @param HasNodeInterface                  $page                      The page
+     * @param EntityManager                     $em                        The entity manager
+     * @param AbstractPagePartAdminConfigurator $pagePartAdminConfigurator The page part admin configurator
+     * @param FormFactoryInterface              $formFactory               The form factory
+     * @param PagePartAdminFactory              $pagePartAdminFactory      The page part admin factory
+     * @param array                             $types                     The types
+     * @param array                             $data                      The data for the types
+     */
+    function __construct($title, HasNodeInterface $page, EntityManager $em, AbstractPagePartAdminConfigurator $pagePartAdminConfigurator, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory, array $types = array(), array $data = array())
     {
         parent::__construct($title, $types, $data);
 
@@ -63,6 +72,10 @@ class PagePartTab extends Tab
         $this->pagePartAdmin = $pagePartAdminFactory->createList($pagePartAdminConfigurator, $em, $page, null);
     }
 
+    /**
+     * @param FormBuilderInterface $builder The form builder
+     * @param Request              $request The request
+     */
     public function buildForm(FormBuilderInterface $builder, Request $request)
     {
         parent::buildForm($builder, $request);
@@ -71,22 +84,50 @@ class PagePartTab extends Tab
         $this->pagePartAdmin->adaptForm($builder, $this->formFactory);
     }
 
+    /**
+     * @param Request $request
+     */
     public function bindRequest(Request $request)
     {
         $this->pagePartAdmin->bindRequest($request);
     }
 
+    /**
+     * @param EntityManager $em      The entity manager
+     * @param Request       $request The request
+     */
     public function persist(EntityManager $em, Request $request)
     {
         $this->pagePartAdmin->postBindRequest($request);
     }
 
+    /**
+     * @param FormView $formView
+     *
+     * @return array
+     */
     public function getFormErrors(FormView $formView)
     {
         $errors = parent::getFormErrors($formView);
 
         $formTools = new FormToolsExtension(); // @todo keep this? move to helper class
         return array_merge($errors, $formTools->getErrorMessages($formView->vars['pagepartadmin_' . $this->pagePartAdmin->getContext()]));
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return 'KunstmaanPagePartBundle:Tabs:pagepart_tab.html.twig';
+    }
+
+    /**
+     * @return PagePartAdmin
+     */
+    public function getPagePartAdmin()
+    {
+        return $this->pagePartAdmin;
     }
 
 }

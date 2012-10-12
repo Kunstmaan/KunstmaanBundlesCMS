@@ -1,0 +1,9 @@
+{% include 'KunstmaanNodeBundle:Tabs:tab.html.twig' with { 'tab': tab, 'formView': formView } %}
+
+{% set pagepartadmin = tab.pagePartAdmin %}
+
+{% if formView['pagepartadmin_'~pagepartadmin.context] is defined %}
+    {{ pagepartadmin_widget(pagepartadmin, form['pagepartadmin_' ~ pagepartadmin.context]) }}
+{% else %}
+    {{ pagepartadmin_widget(pagepartadmin) }}
+{% endif %}
