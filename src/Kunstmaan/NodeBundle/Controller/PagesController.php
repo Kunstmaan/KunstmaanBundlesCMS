@@ -3,6 +3,8 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -201,9 +203,7 @@ class PagesController extends Controller
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
         // Check with Acl
-        if (false === $this->securityContext->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
-            throw new AccessDeniedException();
-        }
+        $this->checkPermission(PermissionMap::PERMISSION_UNPUBLISH, $node);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(false);
@@ -212,6 +212,105 @@ class PagesController extends Controller
         $editCommand->execute('unpublished page "' . $nodeTranslation->getTitle() . '" for locale: ' . $this->locale, array('entity' => $nodeTranslation));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws AccessDeniedException
+     * @Route("/{id}/delete", requirements={"_method" = "POST", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_delete")
+     * @Template()
+     *
+     * @return RedirectResponse
+     */
+    public function deleteAction($id)
+    {
+        $this->init();
+        /* @var Node $node */
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        // Check with Acl
+        $this->checkPermission(PermissionMap::PERMISSION_DELETE, $node);
+
+        // @todo add event
+
+        //remove node and page
+        $nodeParent = $node->getParent();
+        $node->setDeleted(true);
+        $updateCommand = new EditCommand($this->em, $this->user);  // @todo: remove commands
+        $updateCommand->execute('deleted page  with locale: ' . $this->locale, array('entity' => $node));
+        $children = $node->getChildren();
+        $this->deleteNodeChildren($this->em, $this->user, $this->locale, $children);
+
+        // @todo add event
+
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeParent->getId())));
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws AccessDeniedException
+     * @Route("/{id}/add", requirements={"_method" = "POST", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_add")
+     * @Template()
+     *
+     * @return RedirectResponse
+     */
+    public function addAction($id)
+    {
+        $this->init();
+        $request = $this->getRequest();
+        /* @var Node $parentNode */
+        $parentNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $parentNodeTranslation = $parentNode->getNodeTranslation($this->locale, true);
+        $parentNodeVersion = $parentNodeTranslation->getPublicNodeVersion();
+        $parentPage = $parentNodeVersion->getRef($this->em);
+
+        // Check with Acl
+        $this->checkPermission($parentNode, PermissionMap::PERMISSION_EDIT);
+
+        $type = $request->get('type'); // @todo .. what if no type has been given?
+        /* @var HasNodeInterface $newPage */
+        $newPage = new $type();
+
+        $title = $request->get('title');
+        if (is_string($title) && !empty($title)) {
+            $newPage->setTitle($title);
+        } else {
+            $newPage->setTitle('New page');
+        }
+
+        $addCommand = new AddCommand($this->em, $this->user);  // @todo: remove commands
+        $addCommand->execute('page "' . $newPage->getTitle() . '" added with locale: ' . $this->locale, array('entity' => $newPage));
+
+        $newPage->setParent($parentPage);
+
+        /* @var Node $nodeNewPage */
+        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($newPage, $this->locale, $this->user);
+        $this->em->persist($nodeNewPage);
+        $this->em->flush();
+
+        /* @var MutableAclProviderInterface $aclProvider */
+        $aclProvider = $this->container->get('security.acl.provider');
+        /* @var ObjectIdentityRetrievalStrategyInterface $strategy */
+        $strategy = $this->container->get('security.acl.object_identity_retrieval_strategy');
+        $parentIdentity = $strategy->getObjectIdentity($parentNode);
+        $parentAcl = $aclProvider->findAcl($parentIdentity);
+
+        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
+        $newAcl = $aclProvider->createAcl($newIdentity);
+
+        $aces = $parentAcl->getObjectAces();
+        /* @var EntryInterface $ace */
+        foreach ($aces as $ace) {
+            $securityIdentity = $ace->getSecurityIdentity();
+            if ($securityIdentity instanceof RoleSecurityIdentity) {
+                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
+            }
+        }
+        $aclProvider->updateAcl($newAcl);
+
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeNewPage->getId())));
     }
 
     /**
@@ -238,7 +337,6 @@ class PagesController extends Controller
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         if (!$nodeTranslation) {
             $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
-
             return $this->render('KunstmaanNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
         }
 
@@ -246,66 +344,35 @@ class PagesController extends Controller
         $draftNodeVersion = $nodeTranslation->getNodeVersion('draft');
 
         /* @var HasNodeInterface $page */
-        $page = $this->em->getRepository($nodeVersion->getRefEntityName())->find($nodeVersion->getRefId());
-
+        $page = null;
         $draft = ($subaction == 'draft');
         $saveAsDraft = $request->get('saveasdraft');
-        if ((!$draft && is_string($saveAsDraft) && $saveAsDraft != '') || ($draft && is_null($draftNodeVersion))) {
-            /* @var DeepCloneableInterface $page */
-            $publicPage = $page->deepClone($this->em);
-            $publicNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($publicPage, $nodeTranslation, $this->user, 'public');
-            $nodeTranslation->setPublicNodeVersion($publicNodeVersion);
-            $nodeVersion->setType('draft');
-            $this->em->persist($nodeTranslation);
-            $this->em->persist($nodeVersion);
+        if ((!$draft && !empty($saveAsDraft)) || ($draft && is_null($draftNodeVersion))) {
             $draft = true;
             $subaction = "draft";
+
+            $page = $nodeVersion->getRef($this->em);
+            $nodeVersion = $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
         } elseif ($draft) {
             $nodeVersion = $draftNodeVersion;
+        }
+
+        if(is_null($page)) {
             $page = $nodeVersion->getRef($this->em);
         }
 
         $this->get('kunstmaan_node.actions_menu_builder')->setActiveNodeVersion($nodeVersion);
-        $addPage = $request->get("addpage");
-
-        if (is_string($addPage) && $addPage != '') {
-            $nodeNewPage = $this->addPage($this->em, $this->user, $this->locale, $page, $addPage, $request->get("addpagetitle"));
-
-            return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeNewPage->getId(), 'currenttab' => $tabPane->getActiveTab())));
-        }
-
-        $delete = $request->get('delete');
-        if (is_string($delete) && $delete == 'true') {
-            // Check with Acl
-            $this->checkPermission(PermissionMap::PERMISSION_DELETE, $node);
-
-            //remove node and page
-            $nodeParent = $node->getParent();
-            $node->setDeleted(true);
-            $updateCommand = new EditCommand($this->em, $this->user);  // @todo: remove commands
-            $updateCommand->execute('deleted page "' . $page->getTitle() . '" with locale: ' . $this->locale, array('entity' => $node));
-            $children = $node->getChildren();
-            $this->deleteNodeChildren($this->em, $this->user, $this->locale, $children, $page);
-
-            return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeParent->getId(), 'currenttab' => $tabPane->getActiveTab())));
-        }
 
         // Building the form
-        $tabPane->addTab(new Tab('Properties', array(
-            'main' => $page->getDefaultAdminType(),
-            'node' => $node->getDefaultAdminType(),
-            'nodetranslation' => $nodeTranslation->getDefaultAdminType()
-        ), array(
-            'main' => $page,
-            'node' => $node,
-            'nodetranslation' => $nodeTranslation
-        )));
+        $propertiesTab = new Tab('Properties');
+        $propertiesTab->addType('main', $page->getDefaultAdminType(), $page);
+        $propertiesTab->addType('node', $node->getDefaultAdminType(), $node);
+        $propertiesTab->addType('nodetranslation', $nodeTranslation->getDefaultAdminType(), $nodeTranslation);
+        $tabPane->addTab($propertiesTab);
 
-        $tabPane->addTab(new Tab('Seo', array(
-            'seo' => new SEOType()
-        ), array(
-            'seo' => $nodeTranslation->getSEO()
-        )));
+        $seoTab = new Tab('SEO');
+        $seoTab->addType('seo', new SEOType(), $nodeTranslation->getSEO());
+        $tabPane->addTab($seoTab);
 
         $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         $tabPane->buildForm($request);
@@ -315,13 +382,11 @@ class PagesController extends Controller
 
             if ($tabPane->isValid()) {
                 $nodeTranslation->setTitle($page->getTitle());
-                $this->em->persist($node);
                 $this->em->persist($nodeTranslation);
-
                 $tabPane->persist($this->em, $request);
 
-                $editCommand = new EditCommand($this->em, $this->user); // @todo: remove commands
-                $editCommand->execute('added pageparts to page "' . $page->getTitle() . '" with locale: ' . $this->locale, array('entity' => $page));
+                // $editCommand = new EditCommand($this->em, $this->user); // @todo: remove commands
+                // $editCommand->execute('added pageparts to page "' . $page->getTitle() . '" with locale: ' . $this->locale, array('entity' => $page));
 
                 $saveAndPublish = $request->get('saveandpublish');
                 if (is_string($saveAndPublish) && $saveAndPublish != '') {
@@ -377,6 +442,31 @@ class PagesController extends Controller
         return $viewVariables;
     }
 
+    /**
+     * @param DeepCloneableInterface $page            The page
+     * @param NodeTranslation        $nodeTranslation The node translation
+     * @param NodeVersion            $nodeVersion     The node version
+     *
+     * @return NodeVersion
+     */
+    private function createDraftVersion(DeepCloneableInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion)
+    {
+        $publicPage = $page->deepClone($this->em);
+        $publicNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($publicPage, $nodeTranslation, $this->user, 'public');
+        $nodeTranslation->setPublicNodeVersion($publicNodeVersion);
+        $nodeVersion->setType('draft');
+        $this->em->persist($nodeTranslation);
+        $this->em->persist($nodeVersion);
+
+        return $nodeVersion;
+    }
+
+    /**
+     * @param Node   $node       The node
+     * @param string $permission The permission to check for
+     *
+     * @throws AccessDeniedException
+     */
     private function checkPermission(Node $node, $permission)
     {
         if (false === $this->securityContext->isGranted($permission, $node)) {
@@ -385,75 +475,20 @@ class PagesController extends Controller
     }
 
     /**
-     * @param EntityManager    $em         The Entity Manager
-     * @param User             $user       The user who adds the page
-     * @param string           $locale     The locale
-     * @param HasNodeInterface $parentPage The page will be added under this parent page
-     * @param string           $pageType   The class name
-     * @param string           $pageTitle  The new page title
-     *
-     * @return Node
-     */
-    protected function addPage(EntityManager $em, User $user, $locale, HasNodeInterface $parentPage, $pageType, $pageTitle = '')
-    {
-        /* @var HasNodeInterface $newPage */
-        $newPage = new $pageType();
-
-        if (is_string($pageTitle) && $pageTitle != '') {
-            $newPage->setTitle($pageTitle);
-        } else {
-            $newPage->setTitle('New page');
-        }
-
-        $addCommand = new AddCommand($em, $user);  // @todo: remove commands
-        $addCommand->execute('page "' . $newPage->getTitle() . '" added with locale: ' . $locale, array('entity' => $newPage));
-
-        $nodeParent = $em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($parentPage);
-        $newPage->setParent($parentPage);
-
-        $nodeNewPage = $em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($newPage, $locale, $user);
-        $em->persist($nodeNewPage);
-        $em->flush();
-
-        /* @var MutableAclProviderInterface $aclProvider */
-        $aclProvider = $this->container->get('security.acl.provider');
-        /* @var ObjectIdentityRetrievalStrategyInterface $strategy */
-        $strategy = $this->container->get('security.acl.object_identity_retrieval_strategy');
-        $parentIdentity = $strategy->getObjectIdentity($nodeParent);
-        $parentAcl = $aclProvider->findAcl($parentIdentity);
-
-        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
-        $newAcl = $aclProvider->createAcl($newIdentity);
-
-        $aces = $parentAcl->getObjectAces();
-        /* @var EntryInterface $ace */
-        foreach ($aces as $ace) {
-            $securityIdentity = $ace->getSecurityIdentity();
-            if ($securityIdentity instanceof RoleSecurityIdentity) {
-                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
-            }
-        }
-        $aclProvider->updateAcl($newAcl);
-
-        return $nodeNewPage;
-    }
-
-    /**
      * @param EntityManager    $em       The Entity Manager
      * @param User             $user     The user who deletes the children
      * @param string           $locale   The locale that was used
      * @param ArrayCollection  $children The children array
-     * @param HasNodeInterface $page     The node
      */
-    private function deleteNodeChildren(EntityManager $em, User $user, $locale, ArrayCollection $children, HasNodeInterface $page)
+    private function deleteNodeChildren(EntityManager $em, User $user, $locale, ArrayCollection $children)
     {
         /* @var Node $child */
         foreach ($children as $child) {
             $child->setDeleted(true);
             $updateCommand = new EditCommand($em, $user);  // @todo: remove commands
-            $updateCommand->execute('deleted child for page "' . $page->getTitle() . '" with locale: ' . $locale, array('entity' => $child));
+            $updateCommand->execute('deleted child for page with locale: ' . $locale, array('entity' => $child));
             $children2 = $child->getChildren();
-            $this->deleteNodeChildren($em, $user, $locale, $children2, $page);
+            $this->deleteNodeChildren($em, $user, $locale, $children2);
         }
     }
 

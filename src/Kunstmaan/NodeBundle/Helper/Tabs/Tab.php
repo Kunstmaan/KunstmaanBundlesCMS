@@ -74,7 +74,9 @@ class Tab implements TabInterface
      */
     public function persist(EntityManager $em, Request $request)
     {
-
+        foreach ($this->data as $item) {
+            $em->persist($item);
+        }
     }
 
     /**
@@ -142,8 +144,8 @@ class Tab implements TabInterface
      */
     public function addType($name, AbstractType $type, $data = null)
     {
-        $types['name'] = $type;
-        $data['name'] = $data;
+        $types[$name] = $type;
+        $data[$name] = $data;
     }
 
     /**
