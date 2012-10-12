@@ -90,6 +90,10 @@ class PagePartTab extends Tab
     public function bindRequest(Request $request)
     {
         $this->pagePartAdmin->bindRequest($request);
+
+        if ($editPagePart = $request->get('edit') && isset($editPagePart)) {
+            $request->getSession()->set('editpagepart', $editPagePart);
+        }
     }
 
     /**

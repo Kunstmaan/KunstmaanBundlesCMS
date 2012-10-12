@@ -15,8 +15,9 @@
 
 
 <div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
-	{% if app.request.get('edit') is defined and app.request.get('edit') !="" %}
-		{% set editpagepart = app.request.get('edit') + 2 %}
+    {% set editPagePartRaw = app.request.session.get('editpagepart') %}
+	{% if editPagePartRaw is defined and editPagePartRaw !="" %}
+		{% set editpagepart = editPagePartRaw + 2 %}
 	{% endif %}
 
 
