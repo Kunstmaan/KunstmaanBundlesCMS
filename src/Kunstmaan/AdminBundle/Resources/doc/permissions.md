@@ -2,6 +2,7 @@
 
 ## Initialization and bootstrapping
 First we have to configure the connection that the ACL system is supposed to use :
+
 ```yaml
 # app/config/security.yml
 security:
@@ -10,6 +11,7 @@ security:
 ```
 
 After the connection is configured, we have to import the database structure, you do that by running
+
 ```app/console init:acl```
 
 Without this you will not be able to use ACL permission support.
@@ -23,6 +25,7 @@ _Note:_ The CREATE permission has been commented out since we don't use this jus
 
 Using the MaskBuilder to create a set of permissions to be applied is very easy. Suppose you want to create a mask
 that grants the VIEW, EDIT and PUBLISH permission, to do that you would use :
+
 ```php
 $builder = new MaskBuilder();
 $builder
@@ -35,11 +38,13 @@ $mask = $builder->get();
 
 Constants are also defined for every permission, and since the mask is a bitmapped field, the above snippet could also
 be written as follows :
+
 ```php
 $mask = MaskBuilder::MASK_VIEW | MaskBuilder::MASK_EDIT | MaskBuilder::MASK_PUBLISH;
 ```
 
 You can also use the MaskBuilder to remove a specific permission from a mask :
+
 ```php
 $builder = new MaskBuilder($oldMask);
 $builder
@@ -50,6 +55,7 @@ $newMask = $builder->get();
 
 ## Creating an ACL
 To create a new ACL and grant the VIEW permission to the guest role for a domain object (ie. an entity) you would use :
+
 ```php
 $aclProvider = $this->get('security.acl.provider');
 $strategy = $this->get('security.acl.object_identity_retrieval_strategy');
@@ -66,6 +72,7 @@ Note that we use a custom object identity retrieval strategy (which is needed fo
 objects, refer to http://stackoverflow.com/questions/7476552/doctrine-2-proxy-classes-breaking-symfony2-acl for more info).
 
 To retrieve the ACL for a specific domain object you would use :
+
 ```php
 $aclProvider = $this->get('security.acl.provider');
 $strategy = $this->get('security.acl.object_identity_retrieval_strategy');
@@ -80,6 +87,7 @@ based permissions if needed.
 
 ## Checking access using ACL
 To check if the current user has access to a specific domain object, you use the following :
+
 ```php
 
 $securityContext = $this->get('security.context');
@@ -116,6 +124,7 @@ and can optionally also specify the root entity class name and the querybuilder 
 you don't specify the latter variables, the querybuilders' first root entity and alias will be used.
 
 To adapt a query in an EntityRepository method you could use:
+
 ```php
 public function findAllWithPermission(AclHelper $aclHelper, PermissionDefinition $permissionDef)
 {
@@ -130,6 +139,7 @@ public function findAllWithPermission(AclHelper $aclHelper, PermissionDefinition
 
 The AclHelper is provided as a service, so to call the above method to check the VIEW permission in a controller
 you could use :
+
 ```php
 $aclHelper = $this->get('kunstmaan_admin.acl.helper');
 $em = $this->getDoctrine()->getManager();
@@ -160,7 +170,7 @@ unique primary key (so in fact there's no support for composite keys).
 To enable the GuestUserListener, which will remap the default anonymous user to a guest user (including default
  guest user roles), you have to add the following to the security.yml of your project :
 
-```
+```yaml
 security:
     firewalls:
         main:
