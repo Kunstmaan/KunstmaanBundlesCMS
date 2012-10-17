@@ -5,7 +5,7 @@ namespace Kunstmaan\PagePartBundle\EventListener;
 use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use Kunstmaan\AdminBundle\Event\DeepCloneEvent;
+use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 
 /**
  * This event will make sure pageparts are being copied when deepClone is done on an entity implementing hasPagePartsInterface
@@ -27,9 +27,9 @@ class CloneListener
     }
 
     /**
-     * @param DeepCloneEvent $event
+     * @param DeepCloneAndSaveEvent $event
      */
-    public function postDeepClone(DeepCloneEvent $event)
+    public function postDeepClone(DeepCloneAndSaveEvent $event)
     {
         $originalEntity = $event->getEntity();
 
