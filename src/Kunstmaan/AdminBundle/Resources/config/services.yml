@@ -72,3 +72,12 @@ services:
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@event_dispatcher", "@kunstmaan_utilities.shell", "@kernel"]
+
+    kunstmaan_admin.clone.helper:
+        class: Kunstmaan\AdminBundle\Helper\CloneHelper
+        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
+
+    kunstmaan_admin.clone.listener:
+        class: Kunstmaan\AdminBundle\EventListener\CloneListener
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_admin.onDeepClone, method: onDeepClone }
