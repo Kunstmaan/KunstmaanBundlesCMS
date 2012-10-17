@@ -24,7 +24,6 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\NodeBundle\AdminList\PageAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Form\SEOType;
@@ -124,8 +123,7 @@ class PagesController extends Controller
         $otherLanguageNodeTranslation = $node->getNodeTranslation($otherlanguage, true);
         $otherLanguageNodeNodeVersion = $otherLanguageNodeTranslation->getPublicNodeVersion();
         $otherLanguagePage = $otherLanguageNodeNodeVersion->getRef($this->em);
-        /* @var DeepCloneableInterface $otherLanguagePage */
-        $myLanguagePage = $otherLanguagePage->deepClone($this->em);
+        $myLanguagePage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($otherLanguagePage);
         /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -452,9 +450,14 @@ class PagesController extends Controller
         );
     }
 
-    public function createPublicVersion(DeepCloneableInterface $page, NodeTranslation $nodeTranslation)
+    /**
+     * @param HasNodeInterface $page            The page
+     * @param NodeTranslation  $nodeTranslation The node translation
+     * @return mixed
+     */
+    public function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation)
     {
-        $newPublicPage = $page->deepClone($this->em);
+        $newPublicPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
         $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, 'public');
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
         $nodeTranslation->setTitle($newPublicPage->getTitle());
@@ -468,15 +471,15 @@ class PagesController extends Controller
     }
 
     /**
-     * @param DeepCloneableInterface $page            The page
-     * @param NodeTranslation        $nodeTranslation The node translation
-     * @param NodeVersion            $nodeVersion     The node version
+     * @param HasNodeInterface  $page            The page
+     * @param NodeTranslation   $nodeTranslation The node translation
+     * @param NodeVersion       $nodeVersion     The node version
      *
      * @return NodeVersion
      */
-    private function createDraftVersion(DeepCloneableInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion)
+    private function createDraftVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion)
     {
-        $publicPage = $page->deepClone($this->em);
+        $publicPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
         $publicNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($publicPage, $nodeTranslation, $this->user, 'public');
         $nodeTranslation->setPublicNodeVersion($publicNodeVersion);
         $nodeVersion->setType('draft');

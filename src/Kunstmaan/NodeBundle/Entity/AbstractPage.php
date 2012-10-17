@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\DeepCloneableInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
@@ -19,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * The Abstract ORM Page
  */
-abstract class AbstractPage extends AbstractEntity implements PageInterface, DeepCloneableInterface
+abstract class AbstractPage extends AbstractEntity implements PageInterface
 {
 
     /**
@@ -136,31 +135,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface, Dee
     public function isOnline()
     {
         return false;
-    }
-
-    /**
-     * @param EntityManager $em
-     *
-     * @return AbstractPage
-     */
-    public function deepClone(EntityManager $em)
-    {
-        $newPage = clone $this;
-        $newPage->setId(null);
-        $em->persist($newPage);
-        $em->flush();
-
-        // @todo move to node event
-        if (method_exists($this, 'getPagePartAdminConfigurations')) {
-            /* @noinspection PhpUndefinedMethodInspection */
-            $ppConfigurations = $this->getPagePartAdminConfigurations();
-            /* @var AbstractPagePartAdminConfigurator $ppConfiguration */
-            foreach ($ppConfigurations as $ppConfiguration) {
-                $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($em, $this, $newPage, $ppConfiguration->getDefaultContext());
-            }
-        }
-
-        return $newPage;
     }
 
     /**
