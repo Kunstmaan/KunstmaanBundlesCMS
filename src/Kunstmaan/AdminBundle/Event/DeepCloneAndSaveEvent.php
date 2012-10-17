@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 /**
  * This event wil be used to pass metadata when the deep clone event is triggered.
  */
-class DeepCloneEvent
+class DeepCloneAndSaveEvent
 {
 
     /**
