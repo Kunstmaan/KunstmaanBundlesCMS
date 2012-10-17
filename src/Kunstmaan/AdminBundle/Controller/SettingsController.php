@@ -13,7 +13,6 @@ use Kunstmaan\AdminBundle\Form\RoleType;
 use Kunstmaan\AdminBundle\AdminList\UserAdminListConfigurator;
 use Kunstmaan\AdminBundle\AdminList\GroupAdminListConfigurator;
 use Kunstmaan\AdminBundle\AdminList\RoleAdminListConfigurator;
-use Kunstmaan\AdminBundle\AdminList\LogAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -280,28 +279,6 @@ class SettingsController extends Controller
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
-    }
-
-    /**
-     * Display logs
-     *
-     * @Route   ("/logs", name="KunstmaanAdminBundle_settings_logs")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-     *
-     * @return array
-     */
-    public function logAction()
-    {
-        /* @var $em EntityManager */
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-        /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new LogAdminListConfigurator($em));
-        $adminlist->bindRequest($request);
-
-        return array(
-            'adminlist' => $adminlist,
-        );
     }
 
     /**

@@ -45,12 +45,7 @@ class LoginListener
         $user = $this->context->getToken()->getUser();
 
         if ($user instanceof UserInterface) {
-            $logItem = new LogItem();
-            $logItem->setStatus("info");
-            $logItem->setUser($user);
-            $logItem->setMessage($user . " succesfully logged in to the cms");
-            $this->em->persist($logItem);
-            $this->em->flush();
+            // @todo log $user . " succesfully logged in to the cms"
         }
     }
 }

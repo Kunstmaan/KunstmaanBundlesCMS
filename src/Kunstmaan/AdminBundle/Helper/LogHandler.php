@@ -57,6 +57,7 @@ class LogHandler extends AbstractProcessingHandler
                 $user = $token->getUser();
             }
 
+            /*
             $logItem = new ErrorLogItem();
             if ($user instanceof User) {
                 $logItem->setUser($user);
@@ -65,12 +66,13 @@ class LogHandler extends AbstractProcessingHandler
             $logItem->setChannel($record['channel']);
             $logItem->setLevel($record['level']);
             $logItem->setMessage($record['formatted']);
-            /* @var EntityManager $em */
             $em = $this->container->get('doctrine')->getEntityManager();
             if ($em->isOpen()) {
                 $em->persist($logItem);
                 $em->flush();
             }
+            */
+            // @todo log to file
         } catch (PDOException $e) {
             // catching the exception during fullreload: errorlogitem table not found
             // TODO do something useful

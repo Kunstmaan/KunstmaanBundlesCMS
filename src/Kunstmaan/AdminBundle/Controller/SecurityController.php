@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Session;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Kunstmaan\AdminBundle\Entity\LogItem;
-
 /**
  * The security controller will handle the login procedure
  */
@@ -45,14 +43,7 @@ class SecurityController extends BaseController
         }
 
         if ($error) {
-            $error = $error->getMessage();
-            $logItem = new LogItem();
-            $logItem->setStatus("error");
-            $logItem->setMessage(
-                $session->get(SecurityContext::LAST_USERNAME) . " tried to login to the cms but got error: " . $error
-            );
-            $em->persist($logItem);
-            $em->flush();
+            // @todo log $session->get(SecurityContext::LAST_USERNAME) . " tried to login to the cms but got error: " . $error
         }
 
         // last username entered by the user
