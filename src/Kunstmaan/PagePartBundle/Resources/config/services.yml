@@ -33,4 +33,4 @@ services:
         class: Kunstmaan\AdminBundle\EventListener\CloneListener
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
-            - { name: kernel.event_listener, event: kunstmaan_admin.postDeepClone, method: postDeepClone }
+            - { name: kernel.event_listener, event: kunstmaan_admin.postDeepCloneAndSave, method: postDeepCloneAndSave }
