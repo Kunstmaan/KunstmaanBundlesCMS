@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
 use Kunstmaan\PagePartBundle\Tabs\PagePartTab;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 class NodeListener
 {
@@ -54,12 +55,10 @@ class NodeListener
     {
         $page = $event->getPage();
 
-        if (method_exists($page, 'getPagePartAdminConfigurations')) {
+        if ($page instanceof HasPagePartsInterface) {
             $tabPane = $event->getTabPane();
 
-            /*
-             * @var AbstractPagePartAdminConfigurator $pagePartAdminConfiguration
-             */
+            /* @var HasPagePartsInterface $page */
             foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
                 // @todo first tab should be merges with PropertiesTab
                 $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory));
