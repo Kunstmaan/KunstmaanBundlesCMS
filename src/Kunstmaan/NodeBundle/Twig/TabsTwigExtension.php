@@ -1,13 +1,16 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Helper;
+namespace Kunstmaan\NodeBundle\Twig;
 
 use Twig_Environment;
+
 use Kunstmaan\NodeBundle\Tabs\TabPane;
-use Kunstmaan\NodeBundle\Tabs\TabPaneInterface;
 
 use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 
+/**
+ * Extension to render tabs
+ */
 class TabsTwigExtension extends TwigExtension
 {
 
@@ -41,7 +44,9 @@ class TabsTwigExtension extends TwigExtension
     }
 
     /**
-     * @param TabPane $tabPane
+     * @param TabPane $tabPane  The tab pane
+     * @param array   $options  The extra options
+     * @param string  $template The template
      *
      * @return string
      */

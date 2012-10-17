@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * A tab to show permissions
+ */
 class PermissionTab implements TabInterface
 {
 
@@ -46,7 +49,7 @@ class PermissionTab implements TabInterface
      * @param PermissionAdmin        $permissionAdmin The permission admin
      * @param PermissionMapInterface $permissionMap   The permission map
      */
-    function __construct($title, HasNodeInterface $node, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
+    public function __construct($title, HasNodeInterface $node, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
     {
         $this->title = $title;
         $this->node = $node;
@@ -105,6 +108,8 @@ class PermissionTab implements TabInterface
 
     /**
      * @param string $identifier
+     *
+     * @return TabInterface
      */
     public function setIdentifier($identifier)
     {

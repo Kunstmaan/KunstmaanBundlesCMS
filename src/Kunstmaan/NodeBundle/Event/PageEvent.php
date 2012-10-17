@@ -37,6 +37,7 @@ class PageEvent extends Event
     /**
      * @param Node             $node            The node
      * @param NodeTranslation  $nodeTranslation The nodetranslation
+     * @param NodeVersion      $nodeVersion     The node version
      * @param HasNodeInterface $page            The object
      */
     public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, HasNodeInterface $page)
@@ -49,6 +50,8 @@ class PageEvent extends Event
 
     /**
      * @param NodeVersion $nodeVersion
+     *
+     * @return PageEvent
      */
     public function setNodeVersion($nodeVersion)
     {

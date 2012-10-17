@@ -364,6 +364,7 @@ class PagesController extends Controller
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         if (!$nodeTranslation) {
             $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
+
             return $this->render('KunstmaanNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
         }
 
@@ -453,6 +454,7 @@ class PagesController extends Controller
     /**
      * @param HasNodeInterface $page            The page
      * @param NodeTranslation  $nodeTranslation The node translation
+     *
      * @return mixed
      */
     public function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation)

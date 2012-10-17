@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * A tab pane is a container which holds tabs
+ */
 class TabPane
 {
 
@@ -46,8 +49,9 @@ class TabPane
     protected $formView;
 
     /**
-     * @param string  $identifier
-     * @param Request $request
+     * @param string               $identifier  The identifier
+     * @param Request              $request     The request
+     * @param FormFactoryInterface $formFactory The form factory
      */
     public function __construct($identifier, Request $request, FormFactoryInterface $formFactory)
     {
@@ -92,8 +96,8 @@ class TabPane
     }
 
     /**
-     * @param EntityManager $em
-     * @param Request       $request
+     * @param EntityManager $em      The entity manager
+     * @param Request       $request The request
      */
     public function persist(EntityManager $em, Request $request)
     {
@@ -108,8 +112,8 @@ class TabPane
     }
 
     /**
-     * @param TabInterface $tab
-     * @param null|int     $position
+     * @param TabInterface $tab      The tab
+     * @param null|int     $position The position
      *
      * @return TabPane
      */
@@ -167,7 +171,7 @@ class TabPane
      */
     public function removeTabByPosition($position)
     {
-        if(is_numeric($position) && $position < sizeof($this->tabs)) {
+        if (is_numeric($position) && $position < sizeof($this->tabs)) {
             array_splice($this->tabs, $position, 1);
         }
 
@@ -210,6 +214,9 @@ class TabPane
         return $this->formView;
     }
 
+    /**
+     * @return bool
+     */
     public function isValid()
     {
         return $this->form->isValid();

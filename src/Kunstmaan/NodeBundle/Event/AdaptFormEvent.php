@@ -10,6 +10,9 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Tabs\TabPane;
 
+/**
+ * The event to pass metadata if the adaptForm event is triggered
+ */
 class AdaptFormEvent extends Event
 {
 
@@ -39,11 +42,11 @@ class AdaptFormEvent extends Event
     private $nodeVersion;
 
     /**
-     * @param TabPane $tabPane
-     * @param HasNodeInterface $page
-     * @param Node $node
-     * @param NodeTranslation $nodeTranslation
-     * @param NodeVersion $nodeVersion
+     * @param TabPane          $tabPane         The tab pane
+     * @param HasNodeInterface $page            The page
+     * @param Node             $node            The node
+     * @param NodeTranslation  $nodeTranslation The node translation
+     * @param NodeVersion      $nodeVersion     The node version
      */
     public function __construct(TabPane $tabPane, HasNodeInterface $page, Node $node, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion)
     {

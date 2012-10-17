@@ -10,6 +10,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
+ * NodeListener
  * @todo: move this to AdminBundle?
  */
 class NodeListener
@@ -31,11 +32,11 @@ class NodeListener
     protected $permissionMap;
 
     /**
-     * @param SecurityContextInterface $securityContext
-     * @param PermissionAdmin          $permissionAdmin
-     * @param PermissionMapInterface   $permissionMap
+     * @param SecurityContextInterface $securityContext The security context
+     * @param PermissionAdmin          $permissionAdmin The permission admin
+     * @param PermissionMapInterface   $permissionMap   The permission map
      */
-    function __construct(SecurityContextInterface $securityContext, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
+    public function __construct(SecurityContextInterface $securityContext, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
     {
         $this->permissionAdmin = $permissionAdmin;
         $this->permissionMap = $permissionMap;

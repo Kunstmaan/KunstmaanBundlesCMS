@@ -4,12 +4,13 @@ namespace Kunstmaan\NodeBundle\Tabs;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * A tab can be added to the TabPane and show fields or other information of a certain entity
+ */
 interface TabInterface
 {
 
@@ -19,12 +20,12 @@ interface TabInterface
     public function buildForm(FormBuilderInterface $builder);
 
     /**
-     * @param Request $request The request
+     * @param Request $request
      */
     public function bindRequest(Request $request);
 
     /**
-     * @param EntityManager $em      The entity manager
+     * @param EntityManager $em The entity manager
      */
     public function persist(EntityManager $em);
 

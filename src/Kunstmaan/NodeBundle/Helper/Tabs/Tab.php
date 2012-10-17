@@ -12,6 +12,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * The default tab implementation
+ *
  * @todo maybe another name for this?
  */
 class Tab implements TabInterface
@@ -71,7 +73,7 @@ class Tab implements TabInterface
     }
 
     /**
-     * @param EntityManager $em      The entity manager
+     * @param EntityManager $em
      */
     public function persist(EntityManager $em)
     {
@@ -114,6 +116,8 @@ class Tab implements TabInterface
 
     /**
      * @param string $identifier
+     *
+     * @return TabInterface
      */
     public function setIdentifier($identifier)
     {
@@ -131,6 +135,8 @@ class Tab implements TabInterface
 
     /**
      * @param string $title
+     *
+     * @return TabInterface
      */
     public function setTitle($title)
     {
