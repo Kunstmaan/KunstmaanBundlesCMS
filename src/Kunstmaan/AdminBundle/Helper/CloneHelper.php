@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use Kunstmaan\AdminBundle\Event\Events;
-use Kunstmaan\AdminBundle\Event\DeepCloneEvent;
+use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 
 /**
  * This helper will help you to clone Entities
@@ -38,15 +38,15 @@ class CloneHelper
     /**
      * @param mixed $entity
      */
-    public function deepClone($entity)
+    public function deepCloneAndSave($entity)
     {
         $clonedEntity = clone $entity;
-        $this->eventDispatcher->dispatch(Events::DEEP_CLONE, new DeepCloneEvent($entity, $clonedEntity, $this->em));
+        $this->eventDispatcher->dispatch(Events::DEEP_CLONE, new DeepCloneAndSaveEvent($entity, $clonedEntity, $this->em));
 
         $this->em->persist($clonedEntity);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(Events::POST_DEEP_CLONE, new DeepCloneEvent($entity, $clonedEntity, $this->em));
+        $this->eventDispatcher->dispatch(Events::POST_DEEP_CLONE, new DeepCloneAndSaveEvent($entity, $clonedEntity, $this->em));
     }
 
 }

@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Event;
 
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Doctrine\ORM\EntityManager;
-
 /**
  * This event wil be used to pass metadata when the deep clone event is triggered.
  */
@@ -29,7 +26,6 @@ class DeepCloneAndSaveEvent
     {
         $this->entity = $entity;
         $this->clonedEntity = $clonedEntity;
-        $this->em = $em;
     }
 
     /**

@@ -14,12 +14,12 @@ class Events
      *
      * @var string
      */
-    const DEEP_CLONE  = 'kunstmaan_admin.onDeepClone';
+    const DEEP_CLONE_AND_SAVE  = 'kunstmaan_admin.onDeepCloneAndSave';
 
     /**
      * The postDeepClone event occurs for a given entity after it has been deep cloned.
      *
      * @var string
      */
-    const POST_DEEP_CLONE = 'kunstmaan_admin.postDeepClone';
+    const POST_DEEP_CLONE_AND_SAVE = 'kunstmaan_admin.postDeepCloneAndSave';
 }

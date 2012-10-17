@@ -80,4 +80,4 @@ services:
     kunstmaan_admin.clone.listener:
         class: Kunstmaan\AdminBundle\EventListener\CloneListener
         tags:
-            - { name: kernel.event_listener, event: kunstmaan_admin.onDeepClone, method: onDeepClone }
+            - { name: kernel.event_listener, event: kunstmaan_admin.onDeepCloneAndSave, method: onDeepCloneAndSave }
