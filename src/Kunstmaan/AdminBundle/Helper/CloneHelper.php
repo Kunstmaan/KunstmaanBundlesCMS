@@ -41,12 +41,14 @@ class CloneHelper
     public function deepCloneAndSave($entity)
     {
         $clonedEntity = clone $entity;
-        $this->eventDispatcher->dispatch(Events::DEEP_CLONE, new DeepCloneAndSaveEvent($entity, $clonedEntity, $this->em));
+        $this->eventDispatcher->dispatch(Events::DEEP_CLONE_AND_SAVE, new DeepCloneAndSaveEvent($entity, $clonedEntity, $this->em));
 
         $this->em->persist($clonedEntity);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(Events::POST_DEEP_CLONE, new DeepCloneAndSaveEvent($entity, $clonedEntity, $this->em));
+        $this->eventDispatcher->dispatch(Events::POST_DEEP_CLONE_AND_SAVE, new DeepCloneAndSaveEvent($entity, $clonedEntity, $this->em));
+
+        return $clonedEntity;
     }
 
 }

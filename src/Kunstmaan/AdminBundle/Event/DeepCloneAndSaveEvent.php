@@ -2,10 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\Event;
 
+use Symfony\Component\EventDispatcher\Event;
+
 /**
  * This event wil be used to pass metadata when the deep clone event is triggered.
  */
-class DeepCloneAndSaveEvent
+class DeepCloneAndSaveEvent extends Event
 {
 
     /**
