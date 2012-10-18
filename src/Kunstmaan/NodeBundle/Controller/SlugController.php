@@ -142,13 +142,16 @@ class SlugController extends Controller
         }
 
         //render page
-        $renderContext = new RenderContext(array(
+        $renderContext = new RenderContext(
+            array(
                 'nodetranslation' => $nodeTranslation,
                 'slug' => $url,
                 'page' => $page,
                 'resource' => $page,
                 'nodemenu' => $nodeMenu,
-                'locales' => $localesArray));
+                'locales' => $localesArray
+            )
+        );
         $hasView = false;
         if (method_exists($page, 'getDefaultView')) {
             /** @noinspection PhpUndefinedMethodInspection */

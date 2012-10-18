@@ -3,17 +3,19 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Event\CopyPageTranslationPageEvent;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Symfony\Bridge\Monolog\Logger;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -128,8 +130,7 @@ class PagesController extends Controller
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        // @todo log using events
-        $this->get('event_dispatcher')->dispatch(Events::COPY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $nodeVersion, $myLanguagePage));
+        $this->get('event_dispatcher')->dispatch(Events::COPY_PAGE_TRANSLATION, new CopyPageTranslationPageEvent($node, $nodeTranslation, $nodeVersion, $myLanguagePage, $otherLanguageNodeTranslation, $otherLanguageNodeNodeVersion, $otherLanguagePage, $otherlanguage));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
     }
@@ -162,7 +163,6 @@ class PagesController extends Controller
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        // @todo log using events
         $this->get('event_dispatcher')->dispatch(Events::ADD_EMPTY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $nodeVersion, $entityName));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
@@ -196,7 +196,6 @@ class PagesController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        // @todo log using events
         $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
@@ -229,7 +228,6 @@ class PagesController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        // @todo log using events
         $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
@@ -260,8 +258,6 @@ class PagesController extends Controller
         $nodeParent = $node->getParent();
         $node->setDeleted(true);
         $this->em->persist($node);
-
-        // @todo log using events
 
         $children = $node->getChildren();
         $this->deleteNodeChildren($this->em, $this->user, $this->locale, $children);
@@ -308,8 +304,6 @@ class PagesController extends Controller
         $this->em->persist($newPage);
         $this->em->flush(); // @todo move flush?
 
-        // @todo log using events
-
         $newPage->setParent($parentPage);
 
         /* @var Node $nodeNewPage */
@@ -355,7 +349,6 @@ class PagesController extends Controller
      */
     public function editAction($id, $subaction)
     {
-
         $this->init();
         $request = $this->getRequest();
 
@@ -419,8 +412,6 @@ class PagesController extends Controller
                 $tabPane->persist($this->em);
                 $this->em->flush();
 
-                // @todo log using events
-
                 $saveAndPublish = $request->get('saveandpublish');
                 if (is_string($saveAndPublish) && !empty($saveAndPublish)) {
                     $subaction = 'public';
@@ -472,7 +463,6 @@ class PagesController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        // @todo log using events
         $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new PageEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage));
 
         return $nodeVersion;
@@ -495,7 +485,6 @@ class PagesController extends Controller
         $this->em->persist($nodeVersion);
         $this->em->flush();
 
-        // @todo log using events
         $this->get('event_dispatcher')->dispatch(Events::CREATE_DRAFT_VERSION, new PageEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $page));
 
         return $nodeVersion;
@@ -532,8 +521,6 @@ class PagesController extends Controller
 
             $childNode->setDeleted(true);
             $this->em->persist($childNode);
-
-            // @todo log using events
 
             $children2 = $childNode->getChildren();
             $this->deleteNodeChildren($em, $user, $locale, $children2);
