@@ -542,47 +542,4 @@ class PagesController extends Controller
         }
     }
 
-    /**
-     * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")
-     * @Template()
-     *
-     * @return array
-     * @todo move to separate controller?
-     */
-    public function ckSelectLinkAction()
-    {
-        $this->init();
-        $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_VIEW, $this->aclHelper);
-        $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, null, PermissionMap::PERMISSION_VIEW, true, true);
-
-        return array(
-            'topnodes' => $topNodes,
-            'nodemenu' => $nodeMenu,
-        );
-    }
-
-    /**
-     * Select a link
-     *
-     * @Route   ("/pageparts/selecturl", name="KunstmaanNodeBundle_selecturl")
-     * @Template()
-     *
-     * @return array
-     * @todo move to separate controller?
-     */
-    public function selectLinkAction()
-    {
-        /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-        $locale = $request->getLocale();
-        /* @var SecurityContextInterface $securityContext */
-        $securityContext = $this->container->get('security.context');
-        /* @var AclHelper $aclHelper */
-        $aclHelper = $this->container->get('kunstmaan.acl.helper');
-        $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, false, true);
-
-        return array('topnodes' => $topNodes, 'nodemenu' => $nodeMenu);
-    }
 }

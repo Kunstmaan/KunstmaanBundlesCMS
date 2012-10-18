@@ -1,3 +1,8 @@
+KunstmaanNodeBundle_widgets:
+    resource: "@KunstmaanNodeBundle/Controller/WidgetsController.php"
+    type:     annotation
+    prefix:   /admin/nodewidgets
+
 KunstmaanNodeBundle_pages:
     resource: "@KunstmaanNodeBundle/Controller/PagesController.php"
     type:     annotation
