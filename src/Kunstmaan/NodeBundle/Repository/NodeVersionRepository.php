@@ -47,6 +47,7 @@ class NodeVersionRepository extends EntityRepository
         $nodeVersion->setRef($hasNode);
 
         $em->persist($nodeVersion);
+        $em->flush();
         $em->refresh($nodeVersion);
         // @todo logging $addcommand->execute("new version for page \"" . $nodeTranslation->getTitle() . "\" with locale: " . $nodeTranslation->getLang(), array('entity' => $nodeVersion));
 
