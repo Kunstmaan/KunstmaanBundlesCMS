@@ -143,23 +143,11 @@ class SlugController extends Controller
         }
 
         //render page
-        $pageParts = array();
-        if ($exactMatch && method_exists($page, 'getPagePartAdminConfigurations')) {
-            /**
-             * @noinspection PhpUndefinedMethodInspection
-             * @var AbstractPagePartAdminConfigurator $pagePartAdminConfiguration
-             */
-            foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
-                $context = $pagePartAdminConfiguration->getDefaultContext();
-                $pageParts[$context] = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $context);
-            }
-        }
         $renderContext = new RenderContext(array(
                 'nodetranslation' => $nodeTranslation,
                 'slug' => $url,
                 'page' => $page,
                 'resource' => $page,
-                'pageparts' => $pageParts,
                 'nodemenu' => $nodeMenu,
                 'locales' => $localesArray));
         $hasView = false;
