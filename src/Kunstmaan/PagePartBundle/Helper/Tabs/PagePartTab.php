@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\PagePartBundle\Tabs;
+namespace Kunstmaan\PagePartBundle\Helper\Tabs;
 
 use Doctrine\ORM\EntityManager;
 
@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-use Kunstmaan\NodeBundle\Tabs\Tab;
+use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
@@ -74,6 +74,7 @@ class PagePartTab extends Tab
         $this->formFactory = $formFactory;
         $this->pagePartAdminConfigurator = $pagePartAdminConfigurator;
         $this->pagePartAdminFactory = $pagePartAdminFactory;
+        $this->request = $request;
 
         $this->pagePartAdmin = $pagePartAdminFactory->createList($pagePartAdminConfigurator, $em, $page, null);
     }
@@ -83,7 +84,7 @@ class PagePartTab extends Tab
      */
     public function buildForm(FormBuilderInterface $builder)
     {
-        parent::buildForm($builder, $this->request);
+        parent::buildForm($builder);
 
         $this->pagePartAdmin->preBindRequest($this->request);
         $this->pagePartAdmin->adaptForm($builder, $this->formFactory);
@@ -119,7 +120,7 @@ class PagePartTab extends Tab
         $errors = parent::getFormErrors($formView);
 
         $formTools = new FormToolsExtension(); // @todo keep this? move to helper class
-        return array_merge($errors, $formTools->getErrorMessages($formView->vars['pagepartadmin_' . $this->pagePartAdmin->getContext()]));
+        return array_merge($errors, $formTools->getErrorMessages($formView['pagepartadmin_' . $this->pagePartAdmin->getContext()]));
     }
 
     /**

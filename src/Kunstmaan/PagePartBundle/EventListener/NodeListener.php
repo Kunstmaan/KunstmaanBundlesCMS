@@ -8,8 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
-use Kunstmaan\PagePartBundle\Tabs\PagePartTab;
+use Kunstmaan\PagePartBundle\Helper\Tabs\PagePartTab;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 class NodeListener
@@ -46,6 +47,7 @@ class NodeListener
         $this->em = $em;
         $this->formFactory = $formFactory;
         $this->pagePartAdminFactory = $pagePartAdminFactory;
+        $this->request = $request;
     }
 
     /**
@@ -59,9 +61,22 @@ class NodeListener
             $tabPane = $event->getTabPane();
 
             /* @var HasPagePartsInterface $page */
-            foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
-                // @todo first tab should be merges with PropertiesTab
-                $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory));
+            foreach ($page->getPagePartAdminConfigurations() as $index => $pagePartAdminConfiguration) {
+                $types = array();
+                $data = array();
+                $position = 0; // sizeof($tabPane->getTabs()) - 1;
+                if ($index == 0) {
+                    /* @var Tab $propertiesTab */
+                    $propertiesTab = $tabPane->getTabByTitle('Properties');
+
+                    if (!is_null($propertiesTab)) {
+                        $types = $propertiesTab->getTypes();
+                        $data = $propertiesTab->getData();
+
+                        $tabPane->removeTab($propertiesTab);
+                    }
+                }
+                $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory, $types, $data), $position);
             }
         }
     }
