@@ -17,15 +17,9 @@ services:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    kunstmaan_admin.handler.log:
-        class: Kunstmaan\AdminBundle\Helper\LogHandler
-        arguments: ["@service_container"]
-        tags:
-            - { name: 'log_handler' }
-
     kunstmaan_admin.login.listener:
         class: Kunstmaan\AdminBundle\EventListener\LoginListener
-        arguments: ["@security.context", "@doctrine.orm.entity_manager"]
+        arguments: ["@security.context", "@doctrine.orm.entity_manager", "@kunstmaan_admin.logger"]
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
             
@@ -66,8 +60,6 @@ services:
     kunstmaan_admin.guest.security.authentication.listener:
         class: Kunstmaan\AdminBundle\Helper\Security\Http\Firewall\GuestUserListener
         arguments: ["@security.context", "user_provider", "provider_key"]
-        tags:
-            - { name: 'monolog.logger', channel: 'security' }
         
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
@@ -81,3 +73,19 @@ services:
         class: Kunstmaan\AdminBundle\EventListener\CloneListener
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.onDeepCloneAndSave, method: onDeepCloneAndSave }
+
+    kunstmaan_admin.logger.processor.user:
+        class: Kunstmaan\AdminBundle\Helper\UserProcessor
+        arguments: [ @service_container ]
+        tags:
+            - { name: monolog.processor, method: processRecord }
+
+    kunstmaan_admin.logger.handler:
+        class: Monolog\Handler\RotatingFileHandler
+        arguments: [%kernel.logs_dir%/kunstmaan_%kernel.environment%.log, 10]
+
+    kunstmaan_admin.logger:
+        class: Symfony\Bridge\Monolog\Logger
+        arguments: [kunstmaan]
+        calls:
+            - [pushHandler, [@kunstmaan_admin.logger.handler]]

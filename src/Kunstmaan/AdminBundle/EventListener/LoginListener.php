@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
+use Monolog\Logger;
+
 use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Security\Core\SecurityContext;
@@ -16,22 +18,33 @@ use Kunstmaan\AdminBundle\Entity\User;
  */
 class LoginListener
 {
-    /* @var SecurityContext $context */
+    /**
+     * @var SecurityContext $context
+     */
     private $context;
 
-    /* @var EntityManager $em */
+    /**
+     * @var EntityManager $em
+     */
     private $em;
+
+    /**
+     * @var Logger
+     */
+    private $logger;
 
     /**
      * Constructor
      *
      * @param SecurityContext $context The security context
      * @param EntityManager   $em      The entity manager
+     * @param Logger          $logger  The logger
      */
-    public function __construct(SecurityContext $context, EntityManager $em)
+    public function __construct(SecurityContext $context, EntityManager $em, Logger $logger)
     {
         $this->context = $context;
         $this->em      = $em;
+        $this->logger  = $logger;
     }
 
     /**
@@ -45,7 +58,7 @@ class LoginListener
         $user = $this->context->getToken()->getUser();
 
         if ($user instanceof UserInterface) {
-            // @todo log $user . " succesfully logged in to the cms"
+            $this->logger->addInfo($user . " succesfully logged in to the cms");
         }
     }
 }
