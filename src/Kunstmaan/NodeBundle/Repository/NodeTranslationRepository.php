@@ -198,7 +198,6 @@ class NodeTranslationRepository extends EntityRepository
         $nodeTranslation->setOnline($hasNode->isOnline());
 
         $em->persist($nodeTranslation);
-        // @todo log using events "new translation for page \"" . $nodeTranslation->getTitle() . "\" with locale: " . $lang,             array('entity' => $nodeTranslation)
 
         $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($hasNode, $nodeTranslation, $owner);
 
