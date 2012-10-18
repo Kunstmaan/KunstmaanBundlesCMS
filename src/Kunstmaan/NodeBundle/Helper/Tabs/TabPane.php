@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tabs;
+namespace Kunstmaan\NodeBundle\Helper\Tabs;
 
 use Doctrine\ORM\EntityManager;
 
@@ -62,20 +62,18 @@ class TabPane
             $this->activeTab = $request->request->get('currenttab');
         } elseif ($request->get('currenttab')) {
             $this->activeTab = $request->get('currenttab');
-        } else {
-            $this->activeTab = 'pageparts1';
         }
     }
 
     /**
      * @return FormInterface
      */
-    public function buildForm(Request $request)
+    public function buildForm()
     {
         $builder = $this->formFactory->createBuilder('form');
 
         foreach ($this->tabs as $tab) {
-            $tab->buildForm($builder, $request);
+            $tab->buildForm($builder);
         }
 
         $this->form = $builder->getForm();
@@ -99,10 +97,10 @@ class TabPane
      * @param EntityManager $em      The entity manager
      * @param Request       $request The request
      */
-    public function persist(EntityManager $em, Request $request)
+    public function persist(EntityManager $em)
     {
         foreach ($this->tabs as $tab) {
-            $tab->persist($em, $request);
+            $tab->persist($em);
         }
     }
 
@@ -119,12 +117,13 @@ class TabPane
      */
     public function addTab(TabInterface $tab, $position = null)
     {
-        if (!$identifier = $tab->getIdentifier() || empty($identifier)) {
+        $identifier = $tab->getIdentifier();
+        if (!$identifier || empty($identifier)) {
             $tab->setIdentifier($this->generateIdentifier($tab));
         }
 
         if (!is_null($position) && is_numeric($position) && $position < sizeof($this->tabs)) {
-            array_splice($this->tabs, $position, 0, $tab);
+            array_splice($this->tabs, $position, 0, array($tab));
         } else {
             $this->tabs[] = $tab;
         }
@@ -141,6 +140,7 @@ class TabPane
     {
         if (in_array($tab, $this->tabs)) {
             unset($this->tabs[array_search($tab, $this->tabs)]);
+            $this->reindexTabs();
         }
 
         return $this;
@@ -156,7 +156,7 @@ class TabPane
         foreach ($this->tabs as $key => $tab) {
             if ($tab->getTitle() === $title) {
                 unset($this->tabs[$key]);
-
+                $this->reindexTabs();
                 return $this;
             }
         }
@@ -187,11 +187,41 @@ class TabPane
     }
 
     /**
+     * @param string $title
+     *
+     * @return TabInterface|null
+     */
+    public function getTabByTitle($title)
+    {
+        foreach ($this->tabs as $key => $tab) {
+            if ($tab->getTitle() === $title) {
+                return $this->tabs[$key];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param int $position
+     *
+     * @return TabInterface|null
+     */
+    public function getTabByPosition($position)
+    {
+        if (is_numeric($position) && $position < sizeof($this->tabs)) {
+            return $this->tabs[$position];
+        }
+
+        return null;
+    }
+
+    /**
      * @return string
      */
     public function getActiveTab()
     {
-        return $this->activeTab;
+        return !empty($this->activeTab) ? $this->activeTab : $this->tabs[0]->getIdentifier();
     }
 
     /**
@@ -220,6 +250,14 @@ class TabPane
     public function isValid()
     {
         return $this->form->isValid();
+    }
+
+    /**
+     * Reset the indexes of the tabs
+     */
+    private function reindexTabs()
+    {
+        $this->tabs = array_values($this->tabs);
     }
 
 }

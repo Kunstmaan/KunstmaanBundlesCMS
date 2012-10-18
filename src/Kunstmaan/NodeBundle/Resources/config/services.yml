@@ -55,7 +55,7 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -100 }
 
     kunstmaan_node.tabs.twig.extension:
-        class: Kunstmaan\PagePartBundle\Twig\TabsTwigExtension
+        class: Kunstmaan\NodeBundle\Twig\TabsTwigExtension
         tags:
             - { name: twig.extension }
 

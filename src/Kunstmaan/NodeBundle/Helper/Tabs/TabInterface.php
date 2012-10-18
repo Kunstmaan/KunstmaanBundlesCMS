@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tabs;
+namespace Kunstmaan\NodeBundle\Helper\Tabs;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormView;

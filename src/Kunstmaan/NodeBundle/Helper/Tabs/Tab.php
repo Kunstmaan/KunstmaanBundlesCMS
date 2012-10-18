@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tabs;
+namespace Kunstmaan\NodeBundle\Helper\Tabs;
 
 use Doctrine\ORM\EntityManager;
 
@@ -47,6 +47,8 @@ class Tab implements TabInterface
     public function __construct($title, array $types = array(), array $data = array())
     {
         $this->title = $title;
+        $this->types = $types;
+        $this->data = $data;
     }
 
     /**
@@ -99,7 +101,7 @@ class Tab implements TabInterface
     {
         $formViews = array();
         foreach ($this->types as $name => $type) {
-            $formViews[] = $formView->vars[$name];
+            $formViews[] = $formView[$name];
         }
 
         $formTools = new FormToolsExtension(); // @todo keep this? move to helper class
@@ -151,8 +153,8 @@ class Tab implements TabInterface
      */
     public function addType($name, AbstractType $type, $data = null)
     {
-        $types[$name] = $type;
-        $data[$name] = $data;
+        $this->types[$name] = $type;
+        $this->data[$name] = $data;
     }
 
     /**
@@ -161,6 +163,11 @@ class Tab implements TabInterface
     public function getTypes()
     {
         return $this->types;
+    }
+
+    public function getData()
+    {
+        return $this->data;
     }
 
 }

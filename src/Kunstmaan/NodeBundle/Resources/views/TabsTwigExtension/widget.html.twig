@@ -1,12 +1,14 @@
 {% set formView = tabPane.formView %}
 {% set activeTab = tabPane.activeTab %}
 
+{% form_theme formView 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
 <ul class="nav nav-tabs">
     {% for tab in tabPane.tabs %}
         {% set tabIdentifier = tab.identifier %}
         {% set formErrors = tab.getFormErrors(formView) %}
 
-        <li {% if activeTab == tabIdentifier or loop.index == 1 %} class="active" {% endif %} onClick="jQuery('#currenttab').val('{{ tabIdentifier }}');">
+        <li {% if activeTab == tabIdentifier %} class="active" {% endif %} onClick="jQuery('#currenttab').val('{{ tabIdentifier }}');">
             <a href="#{{ tabIdentifier }}" data-toggle="tab">
                 {{ tab.title }}
                 {% if formErrors|length > 0 %}
@@ -24,11 +26,11 @@
 </ul>
 
 <div class="tab-content">
-    <input type="hidden" name="currenttab" id="currenttab" value="{{ currenttab }}">
+    <input type="hidden" name="currenttab" id="currenttab" value="{{ activeTab }}">
     {% for tab in tabPane.tabs %}
         {% set tabIdentifier = tab.identifier %}
 
-        <div class="{% if activeTab == tabIdentifier %}active{% endif %} tab-pane" id="tabIdentifier">
+        <div class="{% if activeTab == tabIdentifier %}active{% endif %} tab-pane" id="{{ tabIdentifier }}">
             {% include tab.template with {'tab' : tab, 'formView': formView} %}
         </div>
     {% endfor %}

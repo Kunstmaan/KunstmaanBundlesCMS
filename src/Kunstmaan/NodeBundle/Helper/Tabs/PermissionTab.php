@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tabs;
+namespace Kunstmaan\NodeBundle\Helper\Tabs;
 
 use Doctrine\ORM\EntityManager;
 
@@ -36,7 +36,7 @@ class PermissionTab implements TabInterface
     /**
      * @var HasNodeInterface
      */
-    protected $node;
+    protected $page;
 
     /**
      * @var string
@@ -45,14 +45,14 @@ class PermissionTab implements TabInterface
 
     /**
      * @param string                 $title           The title
-     * @param HasNodeInterface       $node            The node
+     * @param HasNodeInterface       $page            The page
      * @param PermissionAdmin        $permissionAdmin The permission admin
      * @param PermissionMapInterface $permissionMap   The permission map
      */
-    public function __construct($title, HasNodeInterface $node, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
+    public function __construct($title, HasNodeInterface $page, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
     {
         $this->title = $title;
-        $this->node = $node;
+        $this->page = $page;
         $this->permissionAdmin = $permissionAdmin;
         $this->permissionMap = $permissionMap;
     }
@@ -70,7 +70,7 @@ class PermissionTab implements TabInterface
      */
     public function buildForm(FormBuilderInterface $builder)
     {
-        $this->permissionAdmin->initialize($this->node, $this->permissionMap);
+        $this->permissionAdmin->initialize($this->page, $this->permissionMap);
     }
 
     /**
@@ -124,4 +124,62 @@ class PermissionTab implements TabInterface
     {
         return $this->identifier;
     }
+
+    /**
+     * @param HasNodeInterface $page
+     *
+     * @return PermissionTab
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @return HasNodeInterface
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * @param PermissionAdmin $permissionAdmin
+     *
+     * @return PermissionTab
+     */
+    public function setPermissionAdmin($permissionAdmin)
+    {
+        $this->permissionAdmin = $permissionAdmin;
+        return $this;
+    }
+
+    /**
+     * @return PermissionAdmin
+     */
+    public function getPermissionAdmin()
+    {
+        return $this->permissionAdmin;
+    }
+
+    /**
+     * @param PermissionMapInterface $permissionMap
+     *
+     * @return PermissionTab
+     */
+    public function setPermissionMap($permissionMap)
+    {
+        $this->permissionMap = $permissionMap;
+        return $this;
+    }
+
+    /**
+     * @return PermissionMapInterface
+     */
+    public function getPermissionMap()
+    {
+        return $this->permissionMap;
+    }
+
 }

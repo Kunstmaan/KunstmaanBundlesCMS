@@ -32,8 +32,8 @@ use Kunstmaan\NodeBundle\Event\PageEvent;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Tabs\Tab;
-use Kunstmaan\NodeBundle\Tabs\TabPane;
+use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
+use Kunstmaan\NodeBundle\Helper\Tabs\TabPane;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
@@ -402,7 +402,7 @@ class PagesController extends Controller
         $tabPane->addTab($seoTab);
 
         $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
-        $tabPane->buildForm($request);
+        $tabPane->buildForm();
 
         if ($request->getMethod() == 'POST') {
             $tabPane->bindRequest($request);
@@ -412,7 +412,7 @@ class PagesController extends Controller
 
                 $nodeTranslation->setTitle($page->getTitle());
                 $this->em->persist($nodeTranslation);
-                $tabPane->persist($this->em, $request);
+                $tabPane->persist($this->em);
 
                 // @todo log using events
 

@@ -3,15 +3,14 @@
 namespace Kunstmaan\NodeBundle\Twig;
 
 use Twig_Environment;
+use Twig_Extension;
 
-use Kunstmaan\NodeBundle\Tabs\TabPane;
-
-use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
+use Kunstmaan\NodeBundle\Helper\Tabs\TabPane;
 
 /**
  * Extension to render tabs
  */
-class TabsTwigExtension extends TwigExtension
+class TabsTwigExtension extends Twig_Extension
 {
 
     /**
