@@ -79,6 +79,7 @@ services:
         arguments: [ @service_container ]
         tags:
             - { name: monolog.processor, method: processRecord }
+            - { name: kunstmaan_admin.logger.processor, method: processRecord }
 
     kunstmaan_admin.logger.handler:
         class: Monolog\Handler\RotatingFileHandler

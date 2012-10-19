@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Security\Factory\GuestUserFactory;
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -21,6 +22,8 @@ class KunstmaanAdminBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new MenuCompilerPass());
+        $container->addCompilerPass(new AddLogProcessorsCompilerPass());
+
         $container->registerExtension(new KunstmaanAdminExtension());
 
         $extension = $container->getExtension('security');
