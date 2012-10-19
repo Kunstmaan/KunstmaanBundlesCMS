@@ -1,0 +1,28 @@
+{
+    "name": "kunstmaan/seo-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 KunstmaanSeoBundle",
+    "keywords": [],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanSeoBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.1.*",
+        "gedmo/doctrine-extensions": "*",
+        "kunstmaan/admin-bundle": "*",
+        "kunstmaan/media-bundle": "dev-master",
+        "kunstmaan/utilities-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\SeoBundle": "" }
+    },
+    "target-dir": "Kunstmaan/SeoBundle"
+}
