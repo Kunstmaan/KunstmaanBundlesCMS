@@ -6,9 +6,15 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
+/**
+ * This compiler pass makes it possible to add processors for the Kunstmaan logger
+ */
 class AddLogProcessorsCompilerPass implements CompilerPassInterface
 {
 
+    /**
+     * @param ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition('kunstmaan_admin.logger')) {
