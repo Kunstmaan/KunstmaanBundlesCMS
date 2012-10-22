@@ -62,15 +62,6 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
-
-            $menuItem = new MenuItem($menu);
-            $menuItem->setRoute('KunstmaanAdminBundle_settings_logs')
-                ->setInternalName('Logs')
-                ->setParent($parent);
-            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                $menuItem->setActive(true);
-            }
-            $children[] = $menuItem;
         } else {
             if ('KunstmaanAdminBundle_settings_users' == $parent->getRoute()) {
                 $menuItem = new MenuItem($menu);

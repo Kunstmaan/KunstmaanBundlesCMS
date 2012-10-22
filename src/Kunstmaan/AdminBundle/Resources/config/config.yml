@@ -25,12 +25,9 @@ fos_user:
 monolog:
     handlers:
         main:
-            type: stream
+            type: rotating_file
             path: %kernel.logs_dir%/%kernel.environment%.log
             level: debug
-        doctrine:
-            type: service
-            id: kunstmaan_admin.handler.log
 
 parameters:
     security.acl.permission.map.class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap

@@ -1,38 +1,15 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Twig\Extension;
+namespace Kunstmaan\AdminBundle\Helper;
 
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormError;
 
 /**
- * FormToolsExtension
+ * Helper class for forms
  */
-class FormToolsExtension extends \Twig_Extension
+class FormHelper
 {
-
-    /**
-     * Get Twig functions defined in this extension.
-     *
-     * @return array
-     */
-    public function getFunctions()
-    {
-        return array(
-            'form_errors_recursive'      => new \Twig_Function_Method($this, 'getErrorMessages'),
-            'form_has_errors_recursive'  => new \Twig_Function_Method($this, 'hasErrorMessages'),
-        );
-    }
-
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'FormToolsExtension';
-    }
 
     /**
      * Return if there are error messages.
@@ -41,14 +18,14 @@ class FormToolsExtension extends \Twig_Extension
      *
      * @return bool
      */
-    public function hasErrorMessages(FormView $formView)
+    public function hasRecursiveErrorMessages(FormView $formView)
     {
         if (!empty($formView->vars['errors'])) {
             return true;
         }
         if ($formView->count()) {
             foreach ($formView->children as $child) {
-                if ($this->hasErrorMessages($child)) {
+                if ($this->hasRecursiveErrorMessages($child)) {
                     return true;
                 }
             }
@@ -65,11 +42,11 @@ class FormToolsExtension extends \Twig_Extension
      *
      * @return array
      */
-    public function getErrorMessages($formViews, array &$errors = array())
+    public function getRecursiveErrorMessages($formViews, array &$errors = array())
     {
         if (is_array($formViews)) {
             foreach ($formViews as $formView) {
-                $this->getErrorMessages($formView, $errors);
+                $this->getRecursiveErrorMessages($formView, $errors);
             }
         } else {
             /**
@@ -89,7 +66,7 @@ class FormToolsExtension extends \Twig_Extension
             }
             if ($formViews->count()) {
                 foreach ($formViews->children as $child) {
-                    $this->getErrorMessages($child, $errors);
+                    $this->getRecursiveErrorMessages($child, $errors);
                 }
             }
         }

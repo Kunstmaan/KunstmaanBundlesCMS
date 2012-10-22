@@ -17,41 +17,36 @@ services:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    kunstmaan_admin.handler.log:
-        class: Kunstmaan\AdminBundle\Helper\LogHandler
-        arguments: ["@service_container"]
-        tags:
-            - { name: 'log_handler' }
-
     kunstmaan_admin.login.listener:
         class: Kunstmaan\AdminBundle\EventListener\LoginListener
-        arguments: ["@security.context", "@doctrine.orm.entity_manager"]
+        arguments: ["@security.context", "@doctrine.orm.entity_manager", "@kunstmaan_admin.logger"]
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
             
     kunstmaan_admin.menu.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\MenuTwigExtension
+        class: Kunstmaan\AdminBundle\Twig\MenuTwigExtension
         arguments: ["@kunstmaan_admin.menubuilder"]
         tags:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.localeswitcher.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
+        class: Kunstmaan\AdminBundle\Twig\LocaleSwitcherTwigExtension
         tags:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.locale.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
+        class: Kunstmaan\AdminBundle\Twig\DateByLocaleExtension
         tags:
             - { name: 'twig.extension' }
 
     kunstmaan_admin.formtools.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension
+        class: Kunstmaan\AdminBundle\Twig\FormToolsExtension
+        arguments: ["@kunstmaan_admin.form.helper"]
         tags:
             - { name: 'twig.extension' }
  
     kunstmaan_admin.permissions.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
+        class: Kunstmaan\AdminBundle\Twig\AdminPermissionsTwigExtension
         tags:
             -  { name: 'twig.extension' }
 
@@ -66,9 +61,36 @@ services:
     kunstmaan_admin.guest.security.authentication.listener:
         class: Kunstmaan\AdminBundle\Helper\Security\Http\Firewall\GuestUserListener
         arguments: ["@security.context", "user_provider", "provider_key"]
-        tags:
-            - { name: 'monolog.logger', channel: 'security' }
         
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@event_dispatcher", "@kunstmaan_utilities.shell", "@kernel"]
+
+    kunstmaan_admin.clone.helper:
+        class: Kunstmaan\AdminBundle\Helper\CloneHelper
+        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
+
+    kunstmaan_admin.clone.listener:
+        class: Kunstmaan\AdminBundle\EventListener\CloneListener
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_admin.onDeepCloneAndSave, method: onDeepCloneAndSave }
+
+    kunstmaan_admin.logger.processor.user:
+        class: Kunstmaan\AdminBundle\Helper\UserProcessor
+        arguments: [ @service_container ]
+        tags:
+            - { name: monolog.processor, method: processRecord }
+            - { name: kunstmaan_admin.logger.processor, method: processRecord }
+
+    kunstmaan_admin.logger.handler:
+        class: Monolog\Handler\RotatingFileHandler
+        arguments: [%kernel.logs_dir%/kunstmaan_%kernel.environment%.log, 10]
+
+    kunstmaan_admin.logger:
+        class: Symfony\Bridge\Monolog\Logger
+        arguments: [kunstmaan]
+        calls:
+            - [pushHandler, [@kunstmaan_admin.logger.handler]]
+
+    kunstmaan_admin.form.helper:
+        class: Kunstmaan\AdminBundle\Helper\FormHelper

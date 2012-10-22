@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Twig\Extension;
+namespace Kunstmaan\AdminBundle\Twig;
 
 use IntlDateFormatter as DateFormatter;
 
