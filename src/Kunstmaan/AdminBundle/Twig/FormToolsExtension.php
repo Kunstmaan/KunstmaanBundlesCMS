@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Twig\Extension;
 
+use Kunstmaan\AdminBundle\Helper\FormHelper;
+
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormError;
 
@@ -10,6 +12,20 @@ use Symfony\Component\Form\FormError;
  */
 class FormToolsExtension extends \Twig_Extension
 {
+
+    /**
+     * @var FormHelper
+     */
+    private $formHelper;
+
+    /**
+     * @param FormHelper $formHelper
+     */
+    public function __construct(FormHelper $formHelper)
+    {
+        $this->formHelper = $formHelper;
+    }
+
 
     /**
      * Get Twig functions defined in this extension.
@@ -43,18 +59,7 @@ class FormToolsExtension extends \Twig_Extension
      */
     public function hasErrorMessages(FormView $formView)
     {
-        if (!empty($formView->vars['errors'])) {
-            return true;
-        }
-        if ($formView->count()) {
-            foreach ($formView->children as $child) {
-                if ($this->hasErrorMessages($child)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return $this->formHelper->hasRecursiveErrorMessages($formView);
     }
 
     /**
@@ -67,34 +72,7 @@ class FormToolsExtension extends \Twig_Extension
      */
     public function getErrorMessages($formViews, array &$errors = array())
     {
-        if (is_array($formViews)) {
-            foreach ($formViews as $formView) {
-                $this->getErrorMessages($formView, $errors);
-            }
-        } else {
-            /**
-             * @var $formViews FormView
-             * @var $error     FormError
-             */
-            foreach ($formViews->vars['errors'] as $error) {
-
-                $template   = $error->getMessageTemplate();
-                $parameters = $error->getMessageParameters();
-
-                foreach ($parameters as $var => $value) {
-                    $template = str_replace($var, $value, $template);
-                }
-
-                $errors[] = $error;
-            }
-            if ($formViews->count()) {
-                foreach ($formViews->children as $child) {
-                    $this->getErrorMessages($child, $errors);
-                }
-            }
-        }
-
-        return $errors;
+        return $this->formHelper->getRecusriveErrorMessages($formViews, $errors);
     }
 
 }
