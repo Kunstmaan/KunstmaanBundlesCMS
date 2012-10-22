@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
-use Kunstmaan\NodeBundle\Event\RevertNodeAction;
 use InvalidArgumentException;
 
 use Doctrine\ORM\EntityManager;
@@ -33,6 +32,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\NodeBundle\Event\RevertNodeAction;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
@@ -334,6 +334,7 @@ class NodeAdminController extends Controller
      * @param int $id
      *
      * @throws AccessDeniedException
+     * @throws InvalidArgumentException
      * @Route("/{id}/add", requirements={"_method" = "POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_add")
      * @Template()
      *
@@ -352,7 +353,12 @@ class NodeAdminController extends Controller
         $parentNodeTranslation = $parentNode->getNodeTranslation($this->locale, true);
         $parentNodeVersion = $parentNodeTranslation->getPublicNodeVersion();
         $parentPage = $parentNodeVersion->getRef($this->em);
-        $type = $request->get('type'); // @todo .. what if no type has been given?
+        $type = $request->get('type');
+
+        if (empty($type)) {
+            throw new InvalidArgumentException('Please specify a type of page to create!');
+        }
+
         /* @var HasNodeInterface $newPage */
         $newPage = new $type();
 

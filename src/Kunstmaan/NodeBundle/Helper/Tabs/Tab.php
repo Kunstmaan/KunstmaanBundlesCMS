@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Helper\Tabs;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\FormHelper;
 
 use Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension;
 
@@ -104,8 +105,25 @@ class Tab implements TabInterface
             $formViews[] = $formView[$name];
         }
 
-        $formTools = new FormToolsExtension(); // @todo keep this? move to helper class
-        return $formTools->getErrorMessages($formViews);
+        $formHelper = $this->getFormHelper();
+        return $formHelper->getRecursiveErrorMessages($formViews);
+    }
+
+    /**
+     * @var FormHelper
+     */
+    private $formHelper;
+
+    /**
+     * @return FormHelper
+     */
+    private function getFormHelper()
+    {
+        if (is_null($this->formHelper)) {
+            $this->formHelper = new FormHelper();
+        }
+
+        return $this->formHelper;
     }
 
     /**
