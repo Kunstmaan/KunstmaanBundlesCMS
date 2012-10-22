@@ -46,18 +46,12 @@ class PagePartAdmin
     protected $pageparts = array();
 
     /**
-     * @var Container
-     */
-    protected $container = null;
-
-    /**
      * @param AbstractPagePartAdminConfigurator $configurator The configurator
      * @param EntityManager                     $em           The entity manager
      * @param AbstractPage                      $page         The page
      * @param null|string                       $context      The context
-     * @param Container                         $container    The container
      */
-    public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, AbstractPage $page, $context = null, Container $container = null)
+    public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, AbstractPage $page, $context = null)
     {
         $this->configurator = $configurator;
         $this->em = $em;
@@ -71,7 +65,6 @@ class PagePartAdmin
                 $this->context = "main";
             }
         }
-        $this->container = $container;
     }
 
     /**
@@ -145,10 +138,8 @@ class PagePartAdmin
     public function getPossiblePagePartTypes()
     {
         $possiblePPTypes = $this->configurator->getPossiblePagePartTypes();
-        /** @var Registry $doctrine  */
-        $doctrine = $this->container->get('doctrine');
         /** @var EntityManager $em  */
-        $em = $doctrine->getManager();
+        $em = $this->em;
         // filter page part types that can only be added x times to the page.
         // to achieve this, provide a 'pagelimit' parameter when adding the pp type in your PagePartAdminConfiguration
         if (!empty($possiblePPTypes)) {

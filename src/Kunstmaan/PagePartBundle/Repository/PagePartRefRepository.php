@@ -2,12 +2,13 @@
 
 namespace Kunstmaan\PagePartBundle\Repository;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * PagePartRefRepository
