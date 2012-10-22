@@ -70,7 +70,7 @@
                     <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
                     <td>{{ nodeVersion.owner }}</td>
                     <td class="actions">
-                        {% if nodeVersion.id not in [draftNodeVersion.id, publicVersion.id] %}
+                        {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
                             <a href="{{ path('KunstmaanNodeBundle_pages_revert', { 'id': node.id, 'version': nodeVersion.id }) }}"><i class="icon-refresh"></i>Revert</a>
                         {% endif %}
                     </td>
