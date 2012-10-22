@@ -16,6 +16,13 @@ class Events
     const ADD_NODE = 'kunstmaan_node.addNode';
 
     /**
+     * The addNode event occurs for a given node, after it's being reverted to a previous version.
+     *
+     * @var string
+     */
+    const REVERT = 'kunstmaan_node.onRevert';
+
+    /**
      * The preUnPublish event occurs for a given node, before it's unpublished.
      *
      * @var string

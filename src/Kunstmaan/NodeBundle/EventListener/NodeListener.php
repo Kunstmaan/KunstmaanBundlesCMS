@@ -11,8 +11,6 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * NodeListener
- * @todo: move this to AdminBundle?
- * @todo: right name?
  */
 class NodeListener
 {

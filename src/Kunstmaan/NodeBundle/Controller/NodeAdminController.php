@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
+use Kunstmaan\NodeBundle\Event\RevertNodeAction;
 use InvalidArgumentException;
 
 use Doctrine\ORM\EntityManager;
@@ -37,7 +38,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
 use Kunstmaan\NodeBundle\Helper\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
-use Kunstmaan\NodeBundle\Event\CopyPageTranslationPageEvent;
+use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
@@ -135,7 +136,7 @@ class NodeAdminController extends Controller
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->get('event_dispatcher')->dispatch(Events::COPY_PAGE_TRANSLATION, new CopyPageTranslationPageEvent($node, $nodeTranslation, $nodeVersion, $myLanguagePage, $otherLanguageNodeTranslation, $otherLanguageNodeNodeVersion, $otherLanguagePage, $otherlanguage));
+        $this->get('event_dispatcher')->dispatch(Events::COPY_PAGE_TRANSLATION, new CopyPageTranslationNodeEvent($node, $nodeTranslation, $nodeVersion, $myLanguagePage, $otherLanguageNodeTranslation, $otherLanguageNodeNodeVersion, $otherLanguagePage, $otherlanguage));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
     }
@@ -320,6 +321,8 @@ class NodeAdminController extends Controller
         $nodeTranslation->setTitle($clonedPage->getTitle());
         $this->em->persist($nodeTranslation);
         $this->em->flush();
+
+        $this->get('event_dispatcher')->dispatch(Events::REVERT, new RevertNodeAction($node, $nodeTranslation, $newNodeVersion, $clonedPage, $nodeVersion, $page));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
             'id' => $id,

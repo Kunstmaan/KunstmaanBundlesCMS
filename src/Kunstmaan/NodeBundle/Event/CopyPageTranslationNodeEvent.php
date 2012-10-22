@@ -7,7 +7,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
-class CopyPageTranslationPageEvent extends NodeEvent
+class CopyPageTranslationNodeEvent extends NodeEvent
 {
 
     /**
@@ -51,7 +51,7 @@ class CopyPageTranslationPageEvent extends NodeEvent
     /**
      * @param string $originalLanguage
      *
-     * @return CopyPageTranslationPageEvent
+     * @return CopyPageTranslationNodeEvent
      */
     public function setOriginalLanguage($originalLanguage)
     {
@@ -70,7 +70,7 @@ class CopyPageTranslationPageEvent extends NodeEvent
     /**
      * @param NodeTranslation $originalNodeTranslation
      *
-     * @return CopyPageTranslationPageEvent
+     * @return CopyPageTranslationNodeEvent
      */
     public function setOriginalNodeTranslation($originalNodeTranslation)
     {
@@ -89,7 +89,7 @@ class CopyPageTranslationPageEvent extends NodeEvent
     /**
      * @param HasNodeInterface $originalPage
      *
-     * @return CopyPageTranslationPageEvent
+     * @return CopyPageTranslationNodeEvent
      */
     public function setOriginalPage($originalPage)
     {
@@ -108,7 +108,7 @@ class CopyPageTranslationPageEvent extends NodeEvent
     /**
      * @param NodeVersion $originalNodeVersion
      *
-     * @return CopyPageTranslationPageEvent
+     * @return CopyPageTranslationNodeEvent
      */
     public function setOriginalNodeVersion($originalNodeVersion)
     {

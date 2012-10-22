@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Kunstmaan\NodeBundle\Event\Events;
-use Kunstmaan\NodeBundle\Event\CopyPageTranslationPageEvent;
+use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 
 use Symfony\Bridge\Monolog\Logger;
@@ -86,7 +86,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
         return $this->user;
     }
 
-    public function onCopyPageTranslation(CopyPageTranslationPageEvent $event)
+    public function onCopyPageTranslation(CopyPageTranslationNodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just copied the page translation from %s (%d) to %s (%d) for node with id %d', $this->getUser()->getUsername(), $event->getOriginalLanguage(), $event->getOriginalPage()->getId(), $event->getNodeTranslation()->getLang(), $event->getPage()->getId(), $event->getNode()->getId()));
     }
