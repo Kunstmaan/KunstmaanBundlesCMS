@@ -1,11 +1,10 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\Twig\Extension;
+namespace Kunstmaan\AdminBundle\Twig;
 
 use Kunstmaan\AdminBundle\Helper\FormHelper;
 
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormError;
 
 /**
  * FormToolsExtension
@@ -72,7 +71,7 @@ class FormToolsExtension extends \Twig_Extension
      */
     public function getErrorMessages($formViews, array &$errors = array())
     {
-        return $this->formHelper->getRecusriveErrorMessages($formViews, $errors);
+        return $this->formHelper->getRecursiveErrorMessages($formViews, $errors);
     }
 
 }

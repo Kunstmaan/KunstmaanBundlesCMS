@@ -24,28 +24,29 @@ services:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
             
     kunstmaan_admin.menu.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\MenuTwigExtension
+        class: Kunstmaan\AdminBundle\Twig\MenuTwigExtension
         arguments: ["@kunstmaan_admin.menubuilder"]
         tags:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.localeswitcher.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\LocaleSwitcherTwigExtension
+        class: Kunstmaan\AdminBundle\Twig\LocaleSwitcherTwigExtension
         tags:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.locale.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension
+        class: Kunstmaan\AdminBundle\Twig\DateByLocaleExtension
         tags:
             - { name: 'twig.extension' }
 
     kunstmaan_admin.formtools.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension
+        class: Kunstmaan\AdminBundle\Twig\FormToolsExtension
+        arguments: ["@kunstmaan_admin.form.helper"]
         tags:
             - { name: 'twig.extension' }
  
     kunstmaan_admin.permissions.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\Extension\AdminPermissionsTwigExtension
+        class: Kunstmaan\AdminBundle\Twig\AdminPermissionsTwigExtension
         tags:
             -  { name: 'twig.extension' }
 
@@ -90,3 +91,6 @@ services:
         arguments: [kunstmaan]
         calls:
             - [pushHandler, [@kunstmaan_admin.logger.handler]]
+
+    kunstmaan_admin.form.helper:
+        class: Kunstmaan\AdminBundle\Helper\FormHelper
