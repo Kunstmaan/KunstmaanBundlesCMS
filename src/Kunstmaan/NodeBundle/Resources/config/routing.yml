@@ -4,7 +4,7 @@ KunstmaanNodeBundle_widgets:
     prefix:   /admin/nodewidgets
 
 KunstmaanNodeBundle_nodes:
-    resource: "@KunstmaanNodeBundle/Controller/NodeAdminController.php.php"
+    resource: "@KunstmaanNodeBundle/Controller/NodeAdminController.php"
     type:     annotation
     prefix:   /admin/nodes
 
