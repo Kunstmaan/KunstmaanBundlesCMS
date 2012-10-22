@@ -38,7 +38,7 @@ class CloneListener
 
             $ppConfigurations = $originalEntity->getPagePartAdminConfigurations();
             foreach ($ppConfigurations as $ppConfiguration) {
-                $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($this->em, $this, $clonedEntity, $ppConfiguration->getDefaultContext());
+                $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($this->em, $originalEntity, $clonedEntity, $ppConfiguration->getDefaultContext());
             }
         }
     }
