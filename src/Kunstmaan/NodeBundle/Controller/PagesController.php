@@ -280,6 +280,7 @@ class PagesController extends Controller
      * @param int $id The node id
      *
      * @throws AccessDeniedException
+     * @throws InvalidArgumentException
      * @Route("/{id}/revert", requirements={"_method" = "GET", "id" = "\d+"}, defaults={"subaction" = "public"}, name="KunstmaanNodeBundle_pages_revert")
      * @Template()
      *
@@ -295,17 +296,22 @@ class PagesController extends Controller
 
         $request = $this->getRequest();
         $version = $request->get('version');
+
+        if (empty($version) || !is_numeric($version)) {
+            throw new InvalidArgumentException('No version specified!');
+        }
+
         /* @var NodeVersionRepository $nodeVersionRepo */
         $nodeVersionRepo = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion');
         /* @var NodeVersion $nodeVersion */
         $nodeVersion = $nodeVersionRepo->find($version);
-        /* @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
 
         if (is_null($nodeVersion)) {
             throw new InvalidArgumentException('Version does not exist!');
         }
 
+        /* @var NodeTranslation $nodeTranslation */
+        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $page = $nodeVersion->getRef($this->em);
         /* @var HasNodeInterface $clonedPage */
         $clonedPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);

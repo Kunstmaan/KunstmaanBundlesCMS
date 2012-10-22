@@ -37,16 +37,14 @@ class SlugController extends Controller
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
      * @Route("/")
-     * @Route("/draft", defaults={"preview" = true, "draft" = true})
      * @Route("/preview", defaults={"preview" = true})
-     * @Route("/draft/{url}", requirements={"url" = ".+"}, defaults={"preview" = true, "draft" = true}, name="_slug_draft")
      * @Route("/preview/{url}", requirements={"url" = ".+"}, defaults={"preview" = true}, name="_slug_preview")
      * @Route("/{url}", requirements={"url" = ".+"}, name="_slug")
      * @Template()
      *
      * @return Response|array
      */
-    public function slugAction($url = null, $preview = false, $draft = false)
+    public function slugAction($url = null, $preview = false)
     {
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -74,8 +72,8 @@ class SlugController extends Controller
                 $url = $locale . '/' . $url;
             }
             $locale = $fallback;
-            if ($draft) {
-                return $this->redirect($this->generateUrl('_slug_draft', array('url' => $url, '_locale' => $locale)));
+            if ($preview) {
+                return $this->redirect($this->generateUrl('_slug_preview', array('url' => $url, '_locale' => $locale)));
             } else {
                 return $this->redirect($this->generateUrl('_slug', array('url' => $url, '_locale' => $locale)));
             }
@@ -94,13 +92,16 @@ class SlugController extends Controller
         $page = null;
         $node = null;
         if ($nodeTranslation) {
-            if ($draft) {
-                $version = $nodeTranslation->getNodeVersion('draft');
-                if (is_null($version)) {
-                    $version = $nodeTranslation->getPublicNodeVersion();
+            if ($preview) {
+                $version = $request->get('version');
+                if (!empty($version) && is_numeric($version)) {
+                    $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->find($version);
+                    if (!is_null($nodeVersion)) {
+                        $page = $nodeVersion->getRef($em);
+                    }
                 }
-                $page = $version->getRef($em);
-            } else {
+            }
+            if (is_null($page)) {
                 $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
             }
             $node = $nodeTranslation->getNode();
