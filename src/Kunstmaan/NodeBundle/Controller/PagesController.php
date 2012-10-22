@@ -28,7 +28,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\AdminList\PageAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Form\SEOType;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\PageEvent;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
@@ -393,10 +392,6 @@ class PagesController extends Controller
         $propertiesTab->addType('node', $node->getDefaultAdminType(), $node);
         $propertiesTab->addType('nodetranslation', $nodeTranslation->getDefaultAdminType(), $nodeTranslation);
         $tabPane->addTab($propertiesTab);
-
-        $seoTab = new Tab('SEO');
-        $seoTab->addType('seo', new SEOType(), $nodeTranslation->getSEO());
-        $tabPane->addTab($seoTab);
 
         $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         $tabPane->buildForm();
