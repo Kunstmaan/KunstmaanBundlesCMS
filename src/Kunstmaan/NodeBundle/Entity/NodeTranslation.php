@@ -72,16 +72,10 @@ class NodeTranslation extends AbstractEntity
     protected $publicNodeVersion;
 
     /**
-     * @ORM\OneToOne(targetEntity="SEO", cascade={"all"})
-     * @ORM\JoinColumn(name="seo_id", referencedColumnName="id")
-     */
-    protected $seo;
-
-    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
-     * @ORM\OrderBy({"version" = "DESC"})
+     * @ORM\OrderBy({"created" = "DESC"})
      */
     protected $nodeVersions;
 
@@ -98,7 +92,6 @@ class NodeTranslation extends AbstractEntity
     public function __construct()
     {
         $this->nodeVersions = new ArrayCollection();
-        $this->seo          = new SEO();
     }
 
     /**
@@ -380,26 +373,6 @@ class NodeTranslation extends AbstractEntity
         $lastVersion = $versions->last();
 
         return $lastVersion->getUpdated();
-    }
-
-    /**
-     * @param SEO $seo
-     *
-     * @return NodeTranslation
-     */
-    public function setSEO($seo)
-    {
-        $this->seo = $seo;
-
-        return $this;
-    }
-
-    /**
-     * @return SEO
-     */
-    public function getSEO()
-    {
-        return $this->seo;
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\SEO;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -208,17 +207,6 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setSEO
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getSEO
-     */
-    public function testSetGetSEO()
-    {
-        $seo = new SEO();
-        $this->object->setSEO($seo);
-        $this->assertEquals($seo, $this->object->getSEO());
     }
 
     /**

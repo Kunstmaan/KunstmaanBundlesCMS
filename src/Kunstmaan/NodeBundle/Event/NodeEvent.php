@@ -6,38 +6,71 @@ use Symfony\Component\EventDispatcher\Event;
 
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
- * PageEvent
+ * NodeEvent
  */
-class PageEvent extends Event
+class NodeEvent extends Event
 {
-    /* @var HasNodeInterface $page */
+    /**
+     * @var HasNodeInterface
+     */
     protected $page;
 
-    /* @var Node $node */
+    /**
+     * @var Node
+     */
     protected $node;
 
-    /* @var NodeTranslation $nodeTranslation */
+    /**
+     * @var NodeVersion
+     */
+    protected $nodeVersion;
+
+    /**
+     * @var NodeTranslation
+     */
     protected $nodeTranslation;
 
     /**
      * @param Node             $node            The node
      * @param NodeTranslation  $nodeTranslation The nodetranslation
+     * @param NodeVersion      $nodeVersion     The node version
      * @param HasNodeInterface $page            The object
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, HasNodeInterface $page)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, HasNodeInterface $page)
     {
         $this->node            = $node;
         $this->nodeTranslation = $nodeTranslation;
+        $this->nodeVersion     = $nodeVersion;
         $this->page            = $page;
+    }
+
+    /**
+     * @param NodeVersion $nodeVersion
+     *
+     * @return NodeEvent
+     */
+    public function setNodeVersion($nodeVersion)
+    {
+        $this->nodeVersion = $nodeVersion;
+        return $this;
+    }
+
+    /**
+     * @return NodeVersion
+     */
+    public function getNodeVersion()
+    {
+        return $this->nodeVersion;
     }
 
     /**
      * @param Node $node
      *
-     * @return PageEvent
+     * @return NodeEvent
      */
     public function setNode($node)
     {
@@ -57,7 +90,7 @@ class PageEvent extends Event
     /**
      * @param NodeTranslation $nodeTranslation
      *
-     * @return PageEvent
+     * @return NodeEvent
      */
     public function setNodeTranslation($nodeTranslation)
     {
@@ -77,7 +110,7 @@ class PageEvent extends Event
     /**
      * @param HasNodeInterface $page
      *
-     * @return PageEvent
+     * @return NodeEvent
      */
     public function setPage($page)
     {

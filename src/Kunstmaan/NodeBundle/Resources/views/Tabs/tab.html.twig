@@ -1,0 +1,7 @@
+{% if tab.types is not empty %}
+    <fieldset class="properties">
+        {% for typeName in tab.types|keys %}
+            {{ form_widget(formView[typeName]) }}
+        {%  endfor %}
+    </fieldset>
+{% endif %}

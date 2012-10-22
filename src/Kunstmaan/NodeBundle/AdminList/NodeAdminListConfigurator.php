@@ -14,9 +14,9 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * PageAdminListConfigurator
+ * NodeAdminListConfigurator
  */
-class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
+class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
 
     /**
@@ -77,7 +77,7 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $node = $item->getNode();
 
         return array(
-            'path'   => 'KunstmaanNodeBundle_pages_edit',
+            'path'   => 'KunstmaanNodeBundle_nodes_edit',
             'params' => array('id' => $node->getId())
         );
     }
@@ -138,10 +138,10 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function getPathByConvention($suffix = null)
     {
         if (empty($suffix)) {
-            return sprintf('%s_pages', $this->getBundleName());
+            return sprintf('%s_nodes', $this->getBundleName());
         }
 
-        return sprintf('%s_pages_%s', $this->getBundleName(), $suffix);
+        return sprintf('%s_nodes_%s', $this->getBundleName(), $suffix);
     }
 
     /**
@@ -151,7 +151,7 @@ class PageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getControllerPath()
     {
-        return 'KunstmaanNodeBundle:Pages';
+        return 'KunstmaanNodeBundle:NodeAdmin';
     }
 
     /**

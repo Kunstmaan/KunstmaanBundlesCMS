@@ -54,16 +54,6 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getVersion
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setVersion
-     */
-    public function testSetGetVersion()
-    {
-        $this->object->setVersion('1');
-        $this->assertEquals('1', $this->object->getVersion());
-    }
-
-    /**
      * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setOwner
      * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getOwner
      */

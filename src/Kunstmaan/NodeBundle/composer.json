@@ -18,11 +18,9 @@
         "symfony/symfony": "2.1.*",
         "kunstmaan/adminlist-bundle": "*",
         "kunstmaan/admin-bundle": "*",
+        "kunstmaan/utilities-bundle": "dev-master",
         "gedmo/doctrine-extensions": "*",
-		"knplabs/knp-menu-bundle": "*",
-        "kunstmaan/media-bundle": "dev-master",
-        "kunstmaan/pagepart-bundle": "*",
-        "kunstmaan/utilities-bundle": "dev-master"
+        "knplabs/knp-menu-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\NodeBundle": "" }

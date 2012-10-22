@@ -113,7 +113,7 @@ class ActionsMenuBuilder
                 if ($this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
                     $menu->addChild('action.publish', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn' . ($isFirst ? ' btn-primary' : ''), 'value' => 'saveandpublish', 'name' => 'saveandpublish'), 'extras' => array('renderType' => 'button')));
                 }
-                $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_draft', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
+                $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl(), 'version' => $activeNodeVersion->getId())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
             } else {
                 if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
                     $menu->addChild('action.save', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn' . ($isFirst ? ' btn-primary' : ''), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
