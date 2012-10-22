@@ -52,14 +52,14 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         if (is_null($this->nodeMenu)) {
             /* @var Node $node */
             $node = null;
-            if ($request->attributes->get('_route') == 'KunstmaanNodeBundle_pages_edit') {
+            if ($request->attributes->get('_route') == 'KunstmaanNodeBundle_nodes_edit') {
                 $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
             $this->nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getLocale(), $node, PermissionMap::PERMISSION_EDIT, true, true);
         }
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
-            $menuItem->setRoute('KunstmaanNodeBundle_pages');
+            $menuItem->setRoute('KunstmaanNodeBundle_nodes');
             $menuItem->setInternalName("Pages");
             $menuItem->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
@@ -67,11 +67,11 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             }
             $children[] = $menuItem;
         } else {
-            if ('KunstmaanNodeBundle_pages' == $parent->getRoute()) {
+            if ('KunstmaanNodeBundle_nodes' == $parent->getRoute()) {
                 $topNodes = $this->nodeMenu->getTopNodes();
                 $currentId = $request->attributes->get('id');
                 $this->processNodes($currentId, $menu, $children, $topNodes, $parent, $request);
-            } elseif ('KunstmaanNodeBundle_pages_edit' == $parent->getRoute()) {
+            } elseif ('KunstmaanNodeBundle_nodes_edit' == $parent->getRoute()) {
                 $parentRouteParams = $parent->getRouteparams();
                 /* @var Node $node */
                 $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneById($parentRouteParams['id']);
@@ -105,7 +105,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
 
         foreach ($nodes as $child) {
             $menuItem = new MenuItem($menu);
-            $menuItem->setRoute('KunstmaanNodeBundle_pages_edit');
+            $menuItem->setRoute('KunstmaanNodeBundle_nodes_edit');
             $menuItem->setRouteparams(array('id' => $child->getId()));
             $menuItem->setInternalName($child->getTitle());
             $menuItem->setParent($parent);

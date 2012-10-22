@@ -4,7 +4,7 @@ namespace Kunstmaan\NodeBundle\EventListener;
 
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationPageEvent;
-use Kunstmaan\NodeBundle\Event\PageEvent;
+use Kunstmaan\NodeBundle\Event\NodeEvent;
 
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -91,42 +91,42 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
         $this->logger->addInfo(sprintf('%s just copied the page translation from %s (%d) to %s (%d) for node with id %d', $this->getUser()->getUsername(), $event->getOriginalLanguage(), $event->getOriginalPage()->getId(), $event->getNodeTranslation()->getLang(), $event->getPage()->getId(), $event->getNode()->getId()));
     }
 
-    public function onAddEmptyPageTranslation(PageEvent $event)
+    public function onAddEmptyPageTranslation(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just added an empty page translation (%d) for node with id %d in language %s', $this->getUser()->getUsername(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    public function postPublish(PageEvent $event)
+    public function postPublish(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just published the page with id %d for node %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    public function postUnPublish(PageEvent $event)
+    public function postUnPublish(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just unpublished the page with id %d for node %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    public function postDelete(PageEvent $event)
+    public function postDelete(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just deleted node with id %d', $this->getUser()->getUsername(), $event->getNode()->getId()));
     }
 
-    public function onAddNode(PageEvent $event)
+    public function onAddNode(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just added node with id %d in language %s', $this->getUser()->getUsername(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    public function postPersist(PageEvent $event)
+    public function postPersist(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just updated page with id %d for node %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    public function onCreatePublicVersion(PageEvent $event)
+    public function onCreatePublicVersion(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just created a new public version %d for node %d in language %s', $this->getUser()->getUsername(), $event->getNodeVersion()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
-    public function onCreateDraftVersion(PageEvent $event)
+    public function onCreateDraftVersion(NodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just created a draft version %d for node %d in language %s', $this->getUser()->getUsername(), $event->getNodeVersion()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }

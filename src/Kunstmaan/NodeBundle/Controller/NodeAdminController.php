@@ -27,10 +27,10 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-use Kunstmaan\NodeBundle\AdminList\PageAdminListConfigurator;
+use Kunstmaan\NodeBundle\AdminList\NodeAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Event\Events;
-use Kunstmaan\NodeBundle\Event\PageEvent;
+use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -85,7 +85,7 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route("/", name="KunstmaanNodeBundle_pages")
+     * @Route("/", name="KunstmaanNodeBundle_nodes")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
      * @return array
@@ -97,7 +97,7 @@ class NodeAdminController extends Controller
         $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_EDIT, $this->aclHelper, true);
         $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, null, PermissionMap::PERMISSION_EDIT, true, true);
         /* @var AdminList $adminlist */
-        $adminlist = $this->get('kunstmaan_adminlist.factory')->createList(new PageAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT));
+        $adminlist = $this->get('kunstmaan_adminlist.factory')->createList(new NodeAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT));
         $adminlist->bindRequest($this->getRequest());
 
         return array(
@@ -112,7 +112,7 @@ class NodeAdminController extends Controller
      * @param string $otherlanguage The locale from where the version must be copied
      *
      * @throws AccessDeniedException
-     * @Route("/{id}/copyfromotherlanguage", requirements={"_method" = "GET", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_copyfromotherlanguage")
+     * @Route("/{id}/copyfromotherlanguage", requirements={"_method" = "GET", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_copyfromotherlanguage")
      * @Template()
      *
      * @return RedirectResponse
@@ -137,14 +137,14 @@ class NodeAdminController extends Controller
 
         $this->get('event_dispatcher')->dispatch(Events::COPY_PAGE_TRANSLATION, new CopyPageTranslationPageEvent($node, $nodeTranslation, $nodeVersion, $myLanguagePage, $otherLanguageNodeTranslation, $otherLanguageNodeNodeVersion, $otherLanguagePage, $otherlanguage));
 
-        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
     }
 
     /**
      * @param int $id
      *
      * @throws AccessDeniedException
-     * @Route("/{id}/createemptypage", requirements={"_method" = "GET", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_createemptypage")
+     * @Route("/{id}/createemptypage", requirements={"_method" = "GET", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_createemptypage")
      * @Template()
      *
      * @return RedirectResponse
@@ -168,16 +168,16 @@ class NodeAdminController extends Controller
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->get('event_dispatcher')->dispatch(Events::ADD_EMPTY_PAGE_TRANSLATION, new PageEvent($node, $nodeTranslation, $nodeVersion, $entityName));
+        $this->get('event_dispatcher')->dispatch(Events::ADD_EMPTY_PAGE_TRANSLATION, new NodeEvent($node, $nodeTranslation, $nodeVersion, $entityName));
 
-        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $id)));
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
     }
 
     /**
      * @param int $id
      *
      * @throws AccessDeniedException
-     * @Route("/{id}/publish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_edit_publish")
+     * @Route("/{id}/publish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_publish")
      * @Template()
      *
      * @return RedirectResponse
@@ -194,7 +194,7 @@ class NodeAdminController extends Controller
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        $this->get('event_dispatcher')->dispatch(Events::PRE_PUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
+        $this->get('event_dispatcher')->dispatch(Events::PRE_PUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(true);
@@ -202,16 +202,16 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
+        $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
-        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
 
     /**
      * @param int $id
      *
      * @throws AccessDeniedException
-     * @Route("/{id}/unpublish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_edit_unpublish")
+     * @Route("/{id}/unpublish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_unpublish")
      * @Template()
      * @return RedirectResponse
      */
@@ -227,7 +227,7 @@ class NodeAdminController extends Controller
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        $this->get('event_dispatcher')->dispatch(Events::PRE_UNPUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
+        $this->get('event_dispatcher')->dispatch(Events::PRE_UNPUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeTranslation->setOnline(false);
@@ -235,16 +235,16 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
+        $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
-        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $node->getId())));
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
 
     /**
      * @param int $id
      *
      * @throws AccessDeniedException
-     * @Route("/{id}/delete", requirements={"_method" = "POST", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_delete")
+     * @Route("/{id}/delete", requirements={"_method" = "POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_delete")
      * @Template()
      *
      * @return RedirectResponse
@@ -261,7 +261,7 @@ class NodeAdminController extends Controller
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
 
-        $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
+        $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         $nodeParent = $node->getParent();
         $node->setDeleted(true);
@@ -271,9 +271,9 @@ class NodeAdminController extends Controller
         $this->deleteNodeChildren($this->em, $this->user, $this->locale, $children);
         $this->em->flush();
 
-        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
+        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
-        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeParent->getId())));
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeParent->getId())));
     }
 
     /**
@@ -281,7 +281,7 @@ class NodeAdminController extends Controller
      *
      * @throws AccessDeniedException
      * @throws InvalidArgumentException
-     * @Route("/{id}/revert", requirements={"_method" = "GET", "id" = "\d+"}, defaults={"subaction" = "public"}, name="KunstmaanNodeBundle_pages_revert")
+     * @Route("/{id}/revert", requirements={"_method" = "GET", "id" = "\d+"}, defaults={"subaction" = "public"}, name="KunstmaanNodeBundle_nodes_revert")
      * @Template()
      *
      * @return RedirectResponse
@@ -321,7 +321,7 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array(
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
             'id' => $id,
             'subaction' => 'draft'
         )));
@@ -331,7 +331,7 @@ class NodeAdminController extends Controller
      * @param int $id
      *
      * @throws AccessDeniedException
-     * @Route("/{id}/add", requirements={"_method" = "POST", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_add")
+     * @Route("/{id}/add", requirements={"_method" = "POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_add")
      * @Template()
      *
      * @return RedirectResponse
@@ -391,9 +391,9 @@ class NodeAdminController extends Controller
         $nodeTranslation = $nodeNewPage->getNodeTranslation($this->locale, true);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
-        $this->get('event_dispatcher')->dispatch(Events::ADD_NODE, new PageEvent($nodeNewPage, $nodeTranslation, $nodeVersion, $newPage));
+        $this->get('event_dispatcher')->dispatch(Events::ADD_NODE, new NodeEvent($nodeNewPage, $nodeTranslation, $nodeVersion, $newPage));
 
-        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array('id' => $nodeNewPage->getId())));
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeNewPage->getId())));
     }
 
     /**
@@ -401,7 +401,7 @@ class NodeAdminController extends Controller
      * @param string $subaction The subaction (draft|public)
      *
      * @throws AccessDeniedException
-     * @Route("/{id}/{subaction}", requirements={"_method" = "GET|POST", "id" = "\d+"}, defaults={"subaction" = "public"}, name="KunstmaanNodeBundle_pages_edit")
+     * @Route("/{id}/{subaction}", requirements={"_method" = "GET|POST", "id" = "\d+"}, defaults={"subaction" = "public"}, name="KunstmaanNodeBundle_nodes_edit")
      * @Template()
      *
      * @return RedirectResponse|array
@@ -421,7 +421,7 @@ class NodeAdminController extends Controller
         if (!$nodeTranslation) {
             $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
 
-            return $this->render('KunstmaanNodeBundle:Pages:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
+            return $this->render('KunstmaanNodeBundle:NodeAdmin:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
         }
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -461,7 +461,7 @@ class NodeAdminController extends Controller
             $tabPane->bindRequest($request);
 
             if ($tabPane->isValid()) {
-                $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
+                $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
                 $nodeTranslation->setTitle($page->getTitle());
                 $this->em->persist($nodeTranslation);
@@ -474,9 +474,9 @@ class NodeAdminController extends Controller
                     $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion);
                 }
 
-                $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
+                $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
-                return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array(
+                return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
                     'id' => $node->getId(),
                     'subaction' => $subaction,
                     'currenttab' => $tabPane->getActiveTab(),
@@ -521,7 +521,7 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new PageEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage));
+        $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new NodeEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage));
 
         return $nodeVersion;
     }
@@ -547,7 +547,7 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeVersion);
         $this->em->flush();
 
-        $this->get('event_dispatcher')->dispatch(Events::CREATE_DRAFT_VERSION, new PageEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $page));
+        $this->get('event_dispatcher')->dispatch(Events::CREATE_DRAFT_VERSION, new NodeEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $page));
 
         return $nodeVersion;
     }
@@ -579,7 +579,7 @@ class NodeAdminController extends Controller
             $childNodeVersion = $childNodeTranslation->getPublicNodeVersion();
             $childNodePage = $childNodeVersion->getRef($this->em);
 
-            $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($childNode, $childNodeTranslation, $childNodeVersion, $childNodePage));
+            $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new NodeEvent($childNode, $childNodeTranslation, $childNodeVersion, $childNodePage));
 
             $childNode->setDeleted(true);
             $this->em->persist($childNode);
@@ -587,7 +587,7 @@ class NodeAdminController extends Controller
             $children2 = $childNode->getChildren();
             $this->deleteNodeChildren($em, $user, $locale, $children2);
 
-            $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new PageEvent($childNode, $childNodeTranslation, $childNodeVersion, $childNodePage));
+            $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new NodeEvent($childNode, $childNodeTranslation, $childNodeVersion, $childNodePage));
         }
     }
 

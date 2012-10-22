@@ -7,7 +7,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
-class CopyPageTranslationPageEvent extends PageEvent
+class CopyPageTranslationPageEvent extends NodeEvent
 {
 
     /**

@@ -3,10 +3,10 @@ KunstmaanNodeBundle_widgets:
     type:     annotation
     prefix:   /admin/nodewidgets
 
-KunstmaanNodeBundle_pages:
-    resource: "@KunstmaanNodeBundle/Controller/PagesController.php"
+KunstmaanNodeBundle_nodes:
+    resource: "@KunstmaanNodeBundle/Controller/NodeAdminController.php.php"
     type:     annotation
-    prefix:   /admin/pages
+    prefix:   /admin/nodes
 
 KunstmaanNodeBundle_slug:
     resource: "@KunstmaanNodeBundle/Controller/SlugController.php"
