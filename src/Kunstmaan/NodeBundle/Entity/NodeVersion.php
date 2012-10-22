@@ -41,13 +41,6 @@ class NodeVersion extends AbstractEntity
     protected $type;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="bigint")
-     */
-    protected $version;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string")
@@ -81,6 +74,16 @@ class NodeVersion extends AbstractEntity
      * @ORM\Column(type="string", name="ref_entity_name")
      */
     protected $refEntityName;
+
+    /**
+     * The nodeVersion this nodeVersion originated from
+     *
+     * @var NodeVersion
+     *
+     * @ORM\ManyToOne(targetEntity="NodeVersion")
+     * @ORM\JoinColumn(name="origin_id", referencedColumnName="id")
+     */
+    protected $origin;
 
     /**
      * Constructor
@@ -135,30 +138,6 @@ class NodeVersion extends AbstractEntity
     public function setType($type)
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get version
-     *
-     * @return string
-     */
-    public function getVersion()
-    {
-        return $this->version;
-    }
-
-    /**
-     * Set version
-     *
-     * @param string $version
-     *
-     * @return NodeVersion
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
 
         return $this;
     }
@@ -317,4 +296,25 @@ class NodeVersion extends AbstractEntity
     {
         return $em->getRepository($this->getRefEntityName())->find($this->getRefId());
     }
+
+    /**
+     * @param NodeVersion $origin
+     *
+     * @return NodeVersion
+     */
+    public function setOrigin($origin)
+    {
+        $this->origin = $origin;
+
+        return $this;
+    }
+
+    /**
+     * @return NodeVersion
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
+    }
+
 }

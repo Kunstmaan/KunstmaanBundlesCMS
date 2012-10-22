@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Controller;
 
+use DateTime;
+use InvalidArgumentException;
+
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\NodeBundle\Event\CopyPageTranslationPageEvent;
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Symfony\Bridge\Monolog\Logger;
@@ -26,6 +26,7 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\NodeBundle\AdminList\PageAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Event\Events;
@@ -35,7 +36,10 @@ use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
 use Kunstmaan\NodeBundle\Helper\Tabs\TabPane;
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
+use Kunstmaan\NodeBundle\Event\CopyPageTranslationPageEvent;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
@@ -108,18 +112,20 @@ class PagesController extends Controller
      * @param string $otherlanguage The locale from where the version must be copied
      *
      * @throws AccessDeniedException
-     * @Route("/copyfromotherlanguage/{id}/{otherlanguage}", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_copyfromotherlanguage")
+     * @Route("/{id}/copyfromotherlanguage", requirements={"_method" = "GET", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_copyfromotherlanguage")
      * @Template()
      *
      * @return RedirectResponse
      */
-    public function copyFromOtherLanguageAction($id, $otherlanguage)
+    public function copyFromOtherLanguageAction($id)
     {
         $this->init();
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+
+        $otherlanguage = $this->getRequest()->get('originallanguage');
 
         $otherLanguageNodeTranslation = $node->getNodeTranslation($otherlanguage, true);
         $otherLanguageNodeNodeVersion = $otherLanguageNodeTranslation->getPublicNodeVersion();
@@ -138,7 +144,7 @@ class PagesController extends Controller
      * @param int $id
      *
      * @throws AccessDeniedException
-     * @Route("/{id}/createemptypage", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_createemptypage")
+     * @Route("/{id}/createemptypage", requirements={"_method" = "GET", "id" = "\d+"}, name="KunstmaanNodeBundle_pages_createemptypage")
      * @Template()
      *
      * @return RedirectResponse
@@ -181,11 +187,12 @@ class PagesController extends Controller
         $this->init();
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->checkPermission($node, PermissionMap::PERMISSION_PUBLISH);
+
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
-
-        $this->checkPermission($node, PermissionMap::PERMISSION_PUBLISH);
 
         $this->get('event_dispatcher')->dispatch(Events::PRE_PUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
@@ -213,11 +220,12 @@ class PagesController extends Controller
         $this->init();
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->checkPermission($node, PermissionMap::PERMISSION_UNPUBLISH);
+
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
-
-        $this->checkPermission($node, PermissionMap::PERMISSION_UNPUBLISH);
 
         $this->get('event_dispatcher')->dispatch(Events::PRE_UNPUBLISH, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
@@ -246,11 +254,12 @@ class PagesController extends Controller
         $this->init();
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->checkPermission($node, PermissionMap::PERMISSION_DELETE);
+
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
         $page = $nodeVersion->getRef($this->em);
-
-        $this->checkPermission($node, PermissionMap::PERMISSION_DELETE);
 
         $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
 
@@ -268,6 +277,51 @@ class PagesController extends Controller
     }
 
     /**
+     * @param int $id The node id
+     *
+     * @throws AccessDeniedException
+     * @Route("/{id}/revert", requirements={"_method" = "GET", "id" = "\d+"}, defaults={"subaction" = "public"}, name="KunstmaanNodeBundle_pages_revert")
+     * @Template()
+     *
+     * @return RedirectResponse
+     */
+    public function revertAction($id)
+    {
+        $this->init();
+        /* @var Node $node */
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+
+        $request = $this->getRequest();
+        $version = $request->get('version');
+        /* @var NodeVersionRepository $nodeVersionRepo */
+        $nodeVersionRepo = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion');
+        /* @var NodeVersion $nodeVersion */
+        $nodeVersion = $nodeVersionRepo->find($version);
+        /* @var NodeTranslation $nodeTranslation */
+        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
+
+        if (is_null($nodeVersion)) {
+            throw new InvalidArgumentException('Version does not exist!');
+        }
+
+        $page = $nodeVersion->getRef($this->em);
+        /* @var HasNodeInterface $clonedPage */
+        $clonedPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
+        $newNodeVersion = $nodeVersionRepo->createNodeVersionFor($clonedPage, $nodeTranslation, $this->user, $nodeVersion, 'draft');
+
+        $nodeTranslation->setTitle($clonedPage->getTitle());
+        $this->em->persist($nodeTranslation);
+        $this->em->flush();
+
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_pages_edit', array(
+            'id' => $id,
+            'subaction' => 'draft'
+        )));
+    }
+
+    /**
      * @param int $id
      *
      * @throws AccessDeniedException
@@ -279,16 +333,16 @@ class PagesController extends Controller
     public function addAction($id)
     {
         $this->init();
-        $request = $this->getRequest();
         /* @var Node $parentNode */
         $parentNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
-        $parentNodeTranslation = $parentNode->getNodeTranslation($this->locale, true);
-        $parentNodeVersion = $parentNodeTranslation->getPublicNodeVersion();
-        $parentPage = $parentNodeVersion->getRef($this->em);
 
         // Check with Acl
         $this->checkPermission($parentNode, PermissionMap::PERMISSION_EDIT);
 
+        $request = $this->getRequest();
+        $parentNodeTranslation = $parentNode->getNodeTranslation($this->locale, true);
+        $parentNodeVersion = $parentNodeTranslation->getPublicNodeVersion();
+        $parentPage = $parentNodeVersion->getRef($this->em);
         $type = $request->get('type'); // @todo .. what if no type has been given?
         /* @var HasNodeInterface $newPage */
         $newPage = new $type();
@@ -349,12 +403,12 @@ class PagesController extends Controller
     public function editAction($id, $subaction)
     {
         $this->init();
-        $request = $this->getRequest();
-
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
+        $request = $this->getRequest();
         $tabPane = new TabPane('todo', $request, $this->container->get('form.factory')); // @todo initialize separate from constructor?
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
@@ -377,6 +431,7 @@ class PagesController extends Controller
             $subaction = "draft";
             $page = $nodeVersion->getRef($this->em);
             $nodeVersion = $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
+            $draftNodeVersion = $nodeVersion;
         } elseif ($draft) {
             $nodeVersion = $draftNodeVersion;
             $page = $nodeVersion->getRef($this->em);
@@ -410,7 +465,7 @@ class PagesController extends Controller
                 $saveAndPublish = $request->get('saveandpublish');
                 if (is_string($saveAndPublish) && !empty($saveAndPublish)) {
                     $subaction = 'public';
-                    $nodeVersion = $this->createPublicVersion($page, $nodeTranslation);
+                    $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion);
                 }
 
                 $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new PageEvent($node, $nodeTranslation, $nodeVersion, $page));
@@ -445,16 +500,18 @@ class PagesController extends Controller
     /**
      * @param HasNodeInterface $page            The page
      * @param NodeTranslation  $nodeTranslation The node translation
+     * @param NodeVersion      $nodeVersion     The node version
      *
      * @return mixed
      */
-    public function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation)
+    private function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion)
     {
         $newPublicPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
-        $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, 'public');
+        $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, $nodeVersion);
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
         $nodeTranslation->setTitle($newPublicPage->getTitle());
         $nodeTranslation->setOnline(true);
+
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
@@ -473,9 +530,13 @@ class PagesController extends Controller
     private function createDraftVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion)
     {
         $publicPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
-        $publicNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($publicPage, $nodeTranslation, $this->user, 'public');
+        /* @var NodeVersion $publicNodeVersion */
+        $publicNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($publicPage, $nodeTranslation, $this->user, $nodeVersion->getOrigin(), 'public', $nodeVersion->getCreated());
         $nodeTranslation->setPublicNodeVersion($publicNodeVersion);
         $nodeVersion->setType('draft');
+        $nodeVersion->setOrigin($publicNodeVersion);
+        $nodeVersion->setCreated(new DateTime());
+
         $this->em->persist($nodeTranslation);
         $this->em->persist($nodeVersion);
         $this->em->flush();

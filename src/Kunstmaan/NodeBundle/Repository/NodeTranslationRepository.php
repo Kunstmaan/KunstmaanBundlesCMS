@@ -199,7 +199,7 @@ class NodeTranslationRepository extends EntityRepository
 
         $em->persist($nodeTranslation);
 
-        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($hasNode, $nodeTranslation, $owner);
+        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($hasNode, $nodeTranslation, $owner, null);
 
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
         $em->persist($nodeTranslation);

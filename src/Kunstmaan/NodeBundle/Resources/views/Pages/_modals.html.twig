@@ -56,19 +56,24 @@
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
-                <th>Nr</th>
                 <th>Type</th>
-                <th>Date</th>
+                <th>Last modified</th>
                 <th>User</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
+            {% set publicVersion = nodeTranslation.getPublicNodeVersion() %}
             {% for nodeVersion in nodeVersions %}
                 <tr>
-                    <td>{# <a href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'version': nodeVersion.id }) }}"> #}{{ nodeVersion.version }}{# </a> #}</td>
                     <td>{{ nodeVersion.type }}</td>
                     <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
                     <td>{{ nodeVersion.owner }}</td>
+                    <td class="actions">
+                        {% if nodeVersion.id not in [draftNodeVersion.id, publicVersion.id] %}
+                            <a href="{{ path('KunstmaanNodeBundle_pages_revert', { 'id': node.id, 'version': nodeVersion.id }) }}"><i class="icon-refresh"></i>Revert</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
