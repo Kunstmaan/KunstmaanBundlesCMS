@@ -10,9 +10,9 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
- * PageEvent
+ * NodeEvent
  */
-class PageEvent extends Event
+class NodeEvent extends Event
 {
     /**
      * @var HasNodeInterface
@@ -51,7 +51,7 @@ class PageEvent extends Event
     /**
      * @param NodeVersion $nodeVersion
      *
-     * @return PageEvent
+     * @return NodeEvent
      */
     public function setNodeVersion($nodeVersion)
     {
@@ -70,7 +70,7 @@ class PageEvent extends Event
     /**
      * @param Node $node
      *
-     * @return PageEvent
+     * @return NodeEvent
      */
     public function setNode($node)
     {
@@ -90,7 +90,7 @@ class PageEvent extends Event
     /**
      * @param NodeTranslation $nodeTranslation
      *
-     * @return PageEvent
+     * @return NodeEvent
      */
     public function setNodeTranslation($nodeTranslation)
     {
@@ -110,7 +110,7 @@ class PageEvent extends Event
     /**
      * @param HasNodeInterface $page
      *
-     * @return PageEvent
+     * @return NodeEvent
      */
     public function setPage($page)
     {

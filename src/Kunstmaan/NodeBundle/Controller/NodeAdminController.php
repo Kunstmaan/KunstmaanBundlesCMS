@@ -43,9 +43,9 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
- * PagesController
+ * NodeAdminController
  */
-class PagesController extends Controller
+class NodeAdminController extends Controller
 {
     /**
      * @var EntityManager $em

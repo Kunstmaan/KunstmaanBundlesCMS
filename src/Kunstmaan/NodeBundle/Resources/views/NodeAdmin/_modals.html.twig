@@ -9,7 +9,7 @@
     </div>
     <div class="modal-footer">
         <div class="btn_group">
-            <a href="{{ path('KunstmaanNodeBundle_pages_edit_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
+            <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
             <button class="btn" data-dismiss="modal">Cancel</button>
         </div>
     </div>
@@ -25,7 +25,7 @@
     </div>
     <div class="modal-footer">
         <div class="btn_group">
-            <a href="{{ path('KunstmaanNodeBundle_pages_edit_publish', { 'id': node.id}) }}" class="btn btn-danger">Publish</a>
+            <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger">Publish</a>
             <button class="btn" data-dismiss="modal">Cancel</button>
         </div>
     </div>
@@ -72,7 +72,7 @@
                     <td class="actions">
                         <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank"><i class="icon-eye-open"></i>Preview</a>
                         {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
-                            <a href="{{ path('KunstmaanNodeBundle_pages_revert', { 'id': node.id, 'version': nodeVersion.id }) }}"><i class="icon-refresh"></i>Revert</a>
+                            <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}"><i class="icon-refresh"></i>Revert</a>
                         {% endif %}
                     </td>
                 </tr>
@@ -89,7 +89,7 @@
             <button class="close" data-dismiss="modal">&times;</button>
             <h3>Add subpage</h3>
         </div>
-        <form action="{{ path('KunstmaanNodeBundle_pages_add', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+        <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': node.id }) }}" method="post" novalidate="novalidate">
             <div class="modal-body">
                 <div class="input_prop">
                     <label for="addpage_title">Title</label>
@@ -124,7 +124,7 @@
     </div>
     <div class="modal-footer">
         <div class="btn_group">
-            <form action="{{ path('KunstmaanNodeBundle_pages_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+            <form action="{{ path('KunstmaanNodeBundle_nodes_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
                 <input type="submit" name="submit" value="Delete" class="btn btn-danger" />
                 <button class="btn" data-dismiss="modal">Cancel</button>
             </form>

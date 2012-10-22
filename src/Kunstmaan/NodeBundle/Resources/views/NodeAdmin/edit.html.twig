@@ -37,13 +37,13 @@
             {{ adminmenu.current.internalname | trans }}
             {% if draft %}
                 <small>
-                    Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)
+                    Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': ''}) }}">public version</a>)
                 </small>
             {% else %}
                 <small>
                     Public version
                     {% if draftNodeVersion is not null %}
-                        (Go to <a href="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
+                        (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
                     {% endif %}
                 </small>
             {% endif %}
@@ -54,7 +54,7 @@
 
 
 {% block content %}
-    <form id="pageadminform" class="form-horizontal" action="{{ path('KunstmaanNodeBundle_pages_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+    <form id="pageadminform" class="form-horizontal" action="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
 
         {{ knp_menu_render('sub_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
         {{ knp_menu_render('actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
@@ -63,6 +63,6 @@
         {{ tabs_widget(tabPane) }}
     </form>
 
-    {% include 'KunstmaanNodeBundle:Pages:_modals.html.twig' %}
+    {% include 'KunstmaanNodeBundle:NodeAdmin:_modals.html.twig' %}
 
 {% endblock %}
