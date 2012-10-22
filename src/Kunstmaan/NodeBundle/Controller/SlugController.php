@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,7 +57,6 @@ class SlugController extends Controller
         }
 
         $requiredLocales = $this->container->getParameter('requiredlocales');
-
         $localesArray = explode('|', $requiredLocales);
 
         if (!empty($localesArray[0])) {
@@ -124,7 +124,7 @@ class SlugController extends Controller
         }
 
         /* @var AclHelper $aclHelper */
-        $aclHelper  = $this->container->get('kunstmaan_admin.acl.helper');
+        $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node);
 
         if ($page instanceof DynamicRoutingPageInterface) {
@@ -161,10 +161,11 @@ class SlugController extends Controller
         }
         if (method_exists($page, 'service')) {
             /** @noinspection PhpUndefinedMethodInspection */
-            $redirect = $page->service($this->container, $request, $renderContext);
-            if (!empty($redirect)) {
-                return $redirect;
-            } elseif (!$exactMatch && !$hasView) {
+            $response = $page->service($this->container, $request, $renderContext);
+            if ($response instanceof RedirectResponse) {
+                return $response;
+            }
+            if (!$exactMatch && !$hasView) {
                 // If it was a dynamic routing page and no view and no service implementation -> 404
                 throw $this->createNotFoundException('No page found for slug ' . $url);
             }
