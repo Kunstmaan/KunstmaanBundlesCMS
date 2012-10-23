@@ -15,7 +15,7 @@ use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Entity\DynamicRoutingPageInterface;
+use Kunstmaan\NodeBundle\Entity\DynamicRoutingInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 
@@ -108,7 +108,7 @@ class SlugController extends Controller
         }
 
         // If no node translation or no exact match that is not a dynamic routing page -> 404
-        if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingPageInterface))) {
+        if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingInterface))) {
             throw $this->createNotFoundException('No page found for slug ' . $url);
         }
 
@@ -127,8 +127,8 @@ class SlugController extends Controller
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node);
 
-        if ($page instanceof DynamicRoutingPageInterface) {
-            /* @var DynamicRoutingPageInterface $page */
+        if ($page instanceof DynamicRoutingInterface) {
+            /* @var DynamicRoutingInterface $page */
             $page->setLocale($locale);
             $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
             if (false === $slugPart) {

@@ -5,9 +5,9 @@ namespace Kunstmaan\NodeBundle\Entity;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * DynamicRoutingPageInterface
+ * DynamicRoutingInterface
  */
-interface DynamicRoutingPageInterface extends PageInterface
+interface DynamicRoutingInterface extends HasNodeInterface
 {
     /**
      * initialize routing configuration

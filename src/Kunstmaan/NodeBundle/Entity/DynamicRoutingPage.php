@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * DynamicRoutingPage
  */
-abstract class DynamicRoutingPage extends AbstractPage implements DynamicRoutingPageInterface
+abstract class DynamicRoutingPage extends AbstractPage implements DynamicRoutingInterface
 {
     /**
      * @var RouteCollection $routes
