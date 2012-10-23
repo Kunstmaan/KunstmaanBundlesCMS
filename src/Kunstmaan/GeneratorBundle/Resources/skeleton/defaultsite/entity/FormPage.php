@@ -106,7 +106,7 @@ class FormPage extends AbstractFormPage
     /**
      * @return array
      */
-    public function getPossibleChildPageTypes()
+    public function getPossibleChildTypes()
     {
         $array[] = array('name' => 'ContentPage', 'class' => "{{ namespace }}\Entity\ContentPage");
         $array[] = array('name' => 'FormPage', 'class' => "{{ namespace }}\Entity\FormPage");

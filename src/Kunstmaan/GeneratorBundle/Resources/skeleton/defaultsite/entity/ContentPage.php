@@ -70,7 +70,7 @@ class ContentPage extends AbstractPage
     /**
      * {@inheritdoc}
      */
-    public function getPossibleChildPageTypes()
+    public function getPossibleChildTypes()
     {
         $array[] = array('name' => 'ContentPage', 'class'=> "{{ namespace }}\Entity\ContentPage");
 
