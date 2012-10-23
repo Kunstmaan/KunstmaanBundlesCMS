@@ -119,10 +119,10 @@ class PagePartTab extends Tab
     {
         $errors = parent::getFormErrors($formView);
 
-        $formTools = new FormToolsExtension(); // @todo keep this? move to helper class
+        $formHelper = $this->getFormHelper();
 
         if (isset($formView['pagepartadmin_' . $this->pagePartAdmin->getContext()])) {
-            $errors = array_merge($errors, $formTools->getErrorMessages($formView['pagepartadmin_' . $this->pagePartAdmin->getContext()]));
+            $errors = array_merge($errors, $formHelper->getRecursiveErrorMessages($formView['pagepartadmin_' . $this->pagePartAdmin->getContext()]));
         }
         return $errors;
     }
