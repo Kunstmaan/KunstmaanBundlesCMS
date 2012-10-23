@@ -165,7 +165,7 @@ class SlugController extends Controller
             if ($response instanceof RedirectResponse) {
                 return $response;
             }
-            if (!$exactMatch && !$hasView) {
+            if (!$hasView) {
                 // If it was a dynamic routing page and no view and no service implementation -> 404
                 throw $this->createNotFoundException('No page found for slug ' . $url);
             }

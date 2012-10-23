@@ -128,14 +128,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * @return bool
-     */
-    public function isOnline()
-    {
-        return false;
-    }
-
-    /**
      * @param ContainerInterface $container The Container
      * @param Request            $request   The Request
      * @param RenderContext      $context   The Render context
