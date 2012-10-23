@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Seo metadata for entities
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\SeoBundle\Repository\SeoRepository")
- * @ORM\Entity
  * @ORM\Table(name="kuma_seo")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
