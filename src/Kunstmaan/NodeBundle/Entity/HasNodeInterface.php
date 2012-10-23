@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\NodeBundle\Form\PageAdminType;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * HasNodeInterface Interface
@@ -42,7 +42,7 @@ interface HasNodeInterface
     public function setParent(HasNodeInterface $hasNode);
 
     /**
-     * @return PageAdminType
+     * @return AbstractType
      */
     public function getDefaultAdminType();
 
