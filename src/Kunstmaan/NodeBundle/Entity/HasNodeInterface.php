@@ -46,4 +46,9 @@ interface HasNodeInterface
      */
     public function getDefaultAdminType();
 
+    /**
+     * @return array
+     */
+    public function getPossibleChildTypes();
+
 }
