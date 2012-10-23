@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
+/**
+ * When browsing to an entity implementing this interface a forward will be done to the configured controller action.
+ */
 interface ControllerActionInterface extends HasNodeInterface
 {
 
