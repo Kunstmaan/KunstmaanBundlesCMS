@@ -88,8 +88,8 @@ class SlugController extends Controller
             $exactMatch = false;
         }
 
-        /* @var HasNodeInterface $page */
-        $page = null;
+        /* @var HasNodeInterface $entity */
+        $entity = null;
         $node = null;
         if ($nodeTranslation) {
             if ($preview) {
@@ -97,18 +97,18 @@ class SlugController extends Controller
                 if (!empty($version) && is_numeric($version)) {
                     $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->find($version);
                     if (!is_null($nodeVersion)) {
-                        $page = $nodeVersion->getRef($em);
+                        $entity = $nodeVersion->getRef($em);
                     }
                 }
             }
-            if (is_null($page)) {
-                $page = $nodeTranslation->getPublicNodeVersion()->getRef($em);
+            if (is_null($entity)) {
+                $entity = $nodeTranslation->getPublicNodeVersion()->getRef($em);
             }
             $node = $nodeTranslation->getNode();
         }
 
         // If no node translation or no exact match that is not a dynamic routing page -> 404
-        if (!$nodeTranslation || (!$exactMatch && !($page instanceof DynamicRoutingInterface))) {
+        if (!$nodeTranslation || (!$exactMatch && !($entity instanceof DynamicRoutingInterface))) {
             throw $this->createNotFoundException('No page found for slug ' . $url);
         }
 
@@ -127,14 +127,14 @@ class SlugController extends Controller
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node);
 
-        if ($page instanceof DynamicRoutingInterface) {
+        if ($entity instanceof DynamicRoutingInterface) {
             /* @var DynamicRoutingInterface $page */
-            $page->setLocale($locale);
+            $entity->setLocale($locale);
             $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
             if (false === $slugPart) {
                 $slugPart = '/';
             }
-            $path = $page->match($slugPart);
+            $path = $entity->match($slugPart);
             if ($path) {
                 $path['nodeTranslationId'] = $nodeTranslation->getId();
 
@@ -147,21 +147,21 @@ class SlugController extends Controller
             array(
                 'nodetranslation' => $nodeTranslation,
                 'slug' => $url,
-                'page' => $page,
-                'resource' => $page,
+                'page' => $entity,
+                'resource' => $entity,
                 'nodemenu' => $nodeMenu,
                 'locales' => $localesArray
             )
         );
         $hasView = false;
-        if (method_exists($page, 'getDefaultView')) {
+        if (method_exists($entity, 'getDefaultView')) {
             /** @noinspection PhpUndefinedMethodInspection */
-            $renderContext->setView($page->getDefaultView());
+            $renderContext->setView($entity->getDefaultView());
             $hasView = true;
         }
-        if (method_exists($page, 'service')) {
+        if (method_exists($entity, 'service')) {
             /** @noinspection PhpUndefinedMethodInspection */
-            $response = $page->service($this->container, $request, $renderContext);
+            $response = $entity->service($this->container, $request, $renderContext);
             if ($response instanceof RedirectResponse) {
                 return $response;
             }
