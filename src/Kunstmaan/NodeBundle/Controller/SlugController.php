@@ -128,7 +128,7 @@ class SlugController extends Controller
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node);
 
         if ($entity instanceof DynamicRoutingInterface) {
-            /* @var DynamicRoutingInterface $page */
+            /* @var DynamicRoutingInterface $entity */
             $entity->setLocale($locale);
             $slugPart = substr($url, strlen($nodeTranslation->getUrl()));
             if (false === $slugPart) {
