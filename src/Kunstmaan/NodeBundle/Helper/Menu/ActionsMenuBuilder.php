@@ -131,7 +131,7 @@ class ActionsMenuBuilder
             }
             $page = $activeNodeVersion->getRef($this->em);
             if (!is_null($page) && $page instanceof PageInterface) {
-                $possibleChildPages = $page->getPossibleChildPageTypes();
+                $possibleChildPages = $page->getPossibleChildTypes();
                 if (!empty($possibleChildPages)) {
                     $menu->addChild('action.addsubpage', array('linkAttributes' => array('type' => 'button', 'class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#add-subpage-modal'), 'extras' => array('renderType' => 'button')));
                 }

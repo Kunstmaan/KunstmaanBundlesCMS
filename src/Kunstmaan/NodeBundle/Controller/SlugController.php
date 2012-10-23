@@ -3,10 +3,10 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -16,6 +16,7 @@ use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\DynamicRoutingInterface;
+use Kunstmaan\NodeBundle\Entity\ControllerActionInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 
@@ -142,6 +143,11 @@ class SlugController extends Controller
             }
         }
 
+        if ($entity instanceof ControllerActionInterface) {
+            /* @var ControllerActionInterface $entity */
+            return $this->forward($entity->getControllerAction(), $entity->getPathParams(), $entity->getQueryParams());
+        }
+
         //render page
         $renderContext = new RenderContext(
             array(
@@ -153,24 +159,23 @@ class SlugController extends Controller
                 'locales' => $localesArray
             )
         );
-        $hasView = false;
         if (method_exists($entity, 'getDefaultView')) {
             /** @noinspection PhpUndefinedMethodInspection */
             $renderContext->setView($entity->getDefaultView());
-            $hasView = true;
-        }
-        if (method_exists($entity, 'service')) {
-            /** @noinspection PhpUndefinedMethodInspection */
-            $response = $entity->service($this->container, $request, $renderContext);
-            if ($response instanceof RedirectResponse) {
-                return $response;
-            }
-            if (!$hasView) {
-                // If it was a dynamic routing page and no view and no service implementation -> 404
-                throw $this->createNotFoundException('No page found for slug ' . $url);
-            }
         }
 
-        return $this->render($renderContext->getView(), (array) $renderContext);
+        /** @noinspection PhpUndefinedMethodInspection */
+        $response = $entity->service($this->container, $request, $renderContext);
+
+        if ($response instanceof RedirectResponse) {
+            return $response;
+        }
+
+        $view = $renderContext->getView();
+        if (!empty($view)) {
+            throw $this->createNotFoundException('No page found for slug ' . $url);
+        }
+
+        return $this->render($view, (array) $renderContext);
     }
 }

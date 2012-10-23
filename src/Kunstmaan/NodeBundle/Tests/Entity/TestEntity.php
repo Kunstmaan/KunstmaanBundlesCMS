@@ -67,11 +67,16 @@ class TestEntity extends AbstractEntity implements HasNodeInterface
     }
 
     /**
-     * @todo: this should be moved to another location?
-     *
      * @return PageAdminType
      */
     public function getDefaultAdminType()
+    {
+    }
+
+    /**
+     * @return array
+     */
+    public function getPossibleChildTypes()
     {
     }
 }
