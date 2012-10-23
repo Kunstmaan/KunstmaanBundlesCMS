@@ -117,7 +117,7 @@ class Tab implements TabInterface
     /**
      * @return FormHelper
      */
-    private function getFormHelper()
+    protected function getFormHelper()
     {
         if (is_null($this->formHelper)) {
             $this->formHelper = new FormHelper();
