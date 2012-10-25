@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * An event listener to add a formsubmissions link to the submenu of nodes.
@@ -27,9 +27,9 @@ class ConfigureActionsMenuListener
 
     /**
      * @param EntityManager $em     The entity manager
-     * @param Router        $router The router
+     * @param RouterInterface       $router The router
      */
-    public function __construct(EntityManager $em, Router $router)
+    public function __construct(EntityManager $em, RouterInterface $router)
     {
         $this->router = $router;
         $this->em = $em;
