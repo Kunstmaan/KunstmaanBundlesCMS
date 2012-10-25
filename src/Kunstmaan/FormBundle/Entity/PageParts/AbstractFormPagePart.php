@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
