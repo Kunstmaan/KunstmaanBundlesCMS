@@ -23,7 +23,7 @@
         "ddeboer/data-import-bundle": "*",
         "gedmo/doctrine-extensions": "*",
         "gregwar/form-bundle": "dev-master",
-        "swiftmailer/swiftmailer": "dev-master",
+        "swiftmailer/swiftmailer": ">=4.2.0",
         "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
