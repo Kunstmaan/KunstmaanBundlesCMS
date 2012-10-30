@@ -47,9 +47,9 @@ class AdminTypeGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
-        $className = $entityClass . 'AdminListType';
-        $dirPath = $bundle->getPath() . '/Form';
-        $classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . '.php';
+        $className = sprintf("%sAdminType", $entityClass);
+        $dirPath = sprintf("%s/Form", $bundle->getPath());
+        $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
 
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
@@ -58,15 +58,12 @@ class AdminTypeGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         $parts = explode('\\', $entity);
         array_pop($parts);
 
-        $parameters = array(
+        $this->renderFile($this->skeletonDir, 'EntityAdminType.php', $classPath, array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
             'entity_class'      => $entityClass,
             'fields'            => $this->getFieldsFromMetadata($metadata)
-        );
-
-        $this->renderFile($this->skeletonDir, 'EntityAdminListType.php', $dirPath . '/' . $entity . 'AdminListType.php', $parameters);
-
+        ));
     }
 
     /**

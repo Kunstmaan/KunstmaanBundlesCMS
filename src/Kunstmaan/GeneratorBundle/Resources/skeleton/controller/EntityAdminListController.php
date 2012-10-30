@@ -2,67 +2,68 @@
 
 namespace {{ namespace }}\Controller;
 
-use Kunstmaan\AdminBundle\Entity\User;
-use Kunstmaan\AdminBundle\Entity\Group;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
-
 use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
-use {{ namespace }}\Form\{{ entity_class }}AdminType;
+use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * The {{ entity_class }} admin list controller
+ * The admin list controller for {{ entity_class }}
  */
 class {{ entity_class }}AdminListController extends AdminListController
 {
 
-    public function getAdminListConfiguration()
+    /**
+     * @var AdminListConfiguratorInterface
+     */
+    private $configurator;
+
+    /**
+     * @return AdminListConfiguratorInterface
+     */
+    public function getAdminListConfigurator()
     {
-        return new {{ entity_class }}AdminListConfigurator($this->getDoctrine()->getManager());
+        if (!isset($this->configurator)) {
+            $this->configurator = new {{ entity_class }}AdminListConfigurator($this->getDoctrine()->getManager());
+        }
+        return $this->configurator;
     }
 
-    public function getAdminType()
-    {
-        return new {{ entity_class }}AdminType($this->container);
-    }
-
-	/**
-	 * The index action
-	 *
-	 * @Route("/", name="{{ bundle.getName() }}_{{ entity_class }}")
-	 * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-	 */
+    /**
+     * The index action
+     *
+     * @Route("/", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}")
+     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     */
     public function indexAction()
     {
-    	return parent::indexAction();
+        return parent::doIndexAction($this->getAdminListConfigurator());
     }
 
     /**
      * The add action
-     * 
-	 * @Route("/add", name="{{ bundle.getName() }}_{{ entity_class }}_add")
-	 * @Method({"GET", "POST"})
-	 * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
-	 * @return array
-	 */
+     *
+     * @Route("/add", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_add")
+     * @Method({"GET", "POST"})
+     * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
+     * @return array
+     */
     public function addAction()
     {
-        return parent::addAction();
+        return parent::doAddAction($this->getAdminListConfigurator());
     }
 
     /**
      * The edit action
-     * @param int $id      The entity id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_{{ entity_class }}_edit")
+     * @param int $id
+     *
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_edit")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      *
@@ -70,30 +71,33 @@ class {{ entity_class }}AdminListController extends AdminListController
      */
     public function editAction($id)
     {
-    	return parent::editAction($id);
+        return parent::doEditAction($this->getAdminListConfigurator(), $id);
     }
 
     /**
-     * @param integer $id
+     * The delete action
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_{{ entity_class }}_delete")
+     * @param int $id
+     *
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_delete")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      *
      * @return array
      */
-    public function deleteAction($entity_id)
+    public function deleteAction($id)
     {
-        return parent::deleteAction($entity_id);
+        return parent::doDeleteAction($this->getAdminListConfigurator(), $id);
     }
 
     /**
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName() }}_{{ entity_class }}_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_export")
      * @Method({"GET", "POST"})
      * @return array
      */
     public function exportAction($_format)
     {
-        return parent::exportAction($_format);
-	}
+        return parent::doExportAction($this->getAdminListConfigurator(), $_format);
+    }
+
 }

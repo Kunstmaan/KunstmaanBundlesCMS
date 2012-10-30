@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\GeneratorBundle\Helper;
+
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
@@ -7,6 +9,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
  */
 class GeneratorUtils
 {
+
     /**
      * Returns an array of fields. Fields can be both column fields and
      * association fields.

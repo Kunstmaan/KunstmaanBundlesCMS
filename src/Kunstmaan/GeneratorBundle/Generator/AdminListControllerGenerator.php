@@ -2,10 +2,11 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Generates the controller for an AdminList
@@ -46,24 +47,22 @@ class AdminListControllerGenerator extends \Sensio\Bundle\GeneratorBundle\Genera
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
-        $this->className = $entityClass . 'AdminListController';
-        $dirPath = $bundle->getPath() . '/Controller';
-        $this->classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . '.php';
+        $className = sprintf("%sAdminListController", $entityClass);
+        $dirPath = sprintf("%s/Controller", $bundle->getPath());
+        $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
 
-        if (file_exists($this->classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $this->className, $this->classPath));
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
         $parts = explode('\\', $entity);
         array_pop($parts);
 
-        $parameters = array(
+        $this->renderFile($this->skeletonDir, 'EntityAdminListController.php', $classPath, array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
             'entity_class'      => $entityClass,
-        );
-
-        $this->renderFile($this->skeletonDir, 'EntityAdminListController.php', $dirPath . '/' . $entity . 'AdminListController.php', $parameters);
+        ));
 
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Generates the configuration for an AdminList
@@ -37,46 +37,72 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
     }
 
     /**
-     * @param Bundle        $bundle   The bundle
-     * @param string        $entity   The entity name
-     * @param ClassMetadata $metadata The meta data
+     * @param Bundle        $bundle            The bundle
+     * @param string        $entity            The entity name
+     * @param ClassMetadata $metadata          The meta data
+     * @param boolean       $generateAdminType True if we need to specify the admin type
      *
      * @throws \RuntimeException
+     * @return void
      */
-    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata)
+    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata, $generateAdminType)
     {
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
-        $this->className = $entityClass . 'AdminListConfigurator';
-        $dirPath = $bundle->getPath() . '/AdminList';
-        $this->classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . '.php';
+        $className = sprintf("%sAdminListConfigurator", $entityClass);
+        $dirPath = sprintf("%s/AdminList", $bundle->getPath());
+        $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
 
-        if (file_exists($this->classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $this->className, $this->classPath));
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
         $parts = explode('\\', $entity);
         array_pop($parts);
 
-        $parameters = array(
-            'namespace'         => $bundle->getNamespace(),
-            'bundle'            => $bundle,
-            'entity_class'      => $entityClass,
-            'fields'            => $this->getFieldsFromMetadata($metadata)
-        );
-
-        $this->renderFile($this->skeletonDir, 'AdminListConfigurator.php', $dirPath . '/' . $entity . 'AdminListConfigurator.php', $parameters);
+        $this->renderFile($this->skeletonDir, 'AdminListConfigurator.php', $classPath, array(
+            'namespace'           => $bundle->getNamespace(),
+            'bundle'              => $bundle,
+            'entity_class'        => $entityClass,
+            'fields'              => $this->getFieldsWithFilterTypeFromMetadata($metadata),
+            'generate_admin_type' => $generateAdminType
+        ));
     }
+
 
     /**
      * @param ClassMetadata $metadata
      *
-     * @return string[]
+     * @return array
      */
-    private function getFieldsFromMetadata(ClassMetadata $metadata)
+    private function getFieldsWithFilterTypeFromMetadata(ClassMetadata $metadata)
     {
-        return GeneratorUtils::getFieldsFromMetadata($metadata);
+        $mapping = array(
+            'string' => 'ORM\StringFilterType',
+            'text' => 'ORM\StringFilterType',
+            'integer' => 'ORM\NumberFilterType',
+            'smallint' => 'ORM\NumberFilterType',
+            'bigint' => 'ORM\NumberFilterType',
+            'decimal' => 'ORM\NumberFilterType',
+            'boolean' => 'ORM\BooleanFilterType',
+            'date' => 'ORM\DateFilterType',
+            'datetime' => 'ORM\DateFilterType',
+            'time' => 'ORM\DateFilterType'
+        );
+
+        $fields = array();
+
+        foreach (GeneratorUtils::getFieldsFromMetadata($metadata) as $fieldName) {
+            $type = $metadata->getTypeOfField($fieldName);
+            $filterType = $mapping[$type];
+
+            if (!is_null($filterType)) {
+                $fields[$fieldName] = $filterType;
+            }
+        }
+
+        return $fields;
     }
 
 }
