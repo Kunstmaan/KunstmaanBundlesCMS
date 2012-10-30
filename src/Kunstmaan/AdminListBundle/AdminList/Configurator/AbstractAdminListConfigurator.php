@@ -650,10 +650,10 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     public function getPathByConvention($suffix = null)
     {
         if (empty($suffix)) {
-            return sprintf('%s_admin_%ss', $this->getBundleName(), strtolower($this->getEntityName()));
+            return sprintf('%s_admin_%s', $this->getBundleName(), strtolower($this->getEntityName()));
         }
 
-        return sprintf('%s_admin_%ss_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
+        return sprintf('%s_admin_%s_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
     }
 
     /**
