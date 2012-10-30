@@ -10,9 +10,9 @@ use Symfony\Component\DependencyInjection\Container;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 /**
- * AdminListTypeGenerator
+ * AdminTypeGenerator
  */
-class AdminListTypeGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
+class AdminTypeGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {
 
     /**
@@ -47,12 +47,12 @@ class AdminListTypeGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Ge
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
-        $this->className = $entityClass . 'AdminListType';
+        $className = $entityClass . 'AdminListType';
         $dirPath = $bundle->getPath() . '/Form';
-        $this->classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . '.php';
+        $classPath = $dirPath . '/' . str_replace('\\', '/', $entity) . '.php';
 
-        if (file_exists($this->classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $this->className, $this->classPath));
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
         $parts = explode('\\', $entity);
