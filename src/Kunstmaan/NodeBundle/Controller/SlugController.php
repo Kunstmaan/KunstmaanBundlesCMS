@@ -23,7 +23,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * This controller is for showing frontend pages based on slugs
- */
+ *
+ * @param string $url     The url
+ * @param bool   $preview Show in preview mode
+ *
+ * @throws NotFoundHttpException
+ * @throws AccessDeniedHttpException
+ *
+ * @return Response|array
+*/
 class SlugController extends Controller
 {
 
