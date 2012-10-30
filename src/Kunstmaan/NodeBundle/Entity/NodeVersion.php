@@ -28,7 +28,7 @@ class NodeVersion extends AbstractEntity
     /**
      * @var NodeTranslation
      *
-     * @ORM\ManyToOne(targetEntity="NodeTranslation")
+     * @ORM\ManyToOne(targetEntity="NodeTranslation",inversedBy="nodeVersions")
      * @ORM\JoinColumn(name="node_translation_id", referencedColumnName="id")
      */
     protected $nodeTranslation;

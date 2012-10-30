@@ -10,7 +10,7 @@ use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints as Assert;
 
-abstract class AbstractControllerAction extends AbstractEntity implements ControllerActionInterface
+abstract class AbstractControllerAction extends AbstractEntity implements HasNodeInterface
 {
 
     /**

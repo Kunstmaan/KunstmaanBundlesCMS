@@ -70,3 +70,9 @@ services:
         arguments: ["@kunstmaan_admin.logger", "@security.context"]
         tags:
             - { name: kernel.event_subscriber }
+
+    kunstmaannodebundle.slugrouter:
+        class: Kunstmaan\NodeBundle\Router\SlugRouter
+        arguments: [@service_container]
+        tags:
+            - { name: router, priority: 0 }

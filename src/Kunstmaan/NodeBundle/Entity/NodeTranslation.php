@@ -23,7 +23,7 @@ class NodeTranslation extends AbstractEntity
     /**
      * @var Node
      *
-     * @ORM\ManyToOne(targetEntity="Node")
+     * @ORM\ManyToOne(targetEntity="Node",inversedBy="nodeTranslations")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
      */
     protected $node;
