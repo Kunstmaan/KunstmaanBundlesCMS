@@ -1,5 +1,15 @@
 {% set extraparams = extraparams|merge(filter.currentparameters) %}
 
+{% if adminlist.canAdd() %}
+    <div class="btn-group">
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{ 'form.add' | trans }}<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            {% for key,add in adminlist.getAddUrlFor(addparams) %}
+                <li><a href="{{ path(add["path"], add[("params")]) }}" >{{ key }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
 {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
@@ -66,14 +76,5 @@
         </tbody>
     </table>
 </div>
-
-{% if adminlist.canAdd() %}
-    <select onchange="location = this.options[this.selectedIndex].value;">
-        <option>{{ 'form.add' | trans }}</option>
-        {% for key,add in adminlist.getAddUrlFor(addparams) %}
-        <option value="{{ path(add["path"], add[("params")]) }}">{{ key }}</option>
-        {% endfor %}
-    </select>
-{% endif %}
 
 {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
