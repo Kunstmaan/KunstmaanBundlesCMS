@@ -8,15 +8,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 
-use Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Generator;
 
-use Kunstmaan\GeneratorBundle\Generator\AdminListConfigurationGenerator;
-use Kunstmaan\GeneratorBundle\Generator\AdminTypeGenerator;
-use Kunstmaan\GeneratorBundle\Generator\AdminListControllerGenerator;
+use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
 
 /**
  * Generates a KunstmaanAdminList
@@ -25,19 +22,9 @@ class GenerateAdminListCommand extends GenerateDoctrineCommand
 {
 
     /**
-     * @var AdminListConfigurationGenerator
+     * @var AdminListGenerator
      */
-    private $configurationGenerator;
-
-    /**
-     * @var AdminListControllerGenerator
-     */
-    private $controllerGenerator;
-
-    /**
-     * @var AdminTypeGenerator
-     */
-    private $typeGenerator;
+    private $generator;
 
     /**
      * @see Command
@@ -78,38 +65,10 @@ EOT
         $entityClass = $this->getContainer()->get('doctrine')->getEntityNamespace($bundle).'\\'.$entity;
         $metadata    = $this->getEntityMetadata($entityClass);
         $bundle      = $this->getContainer()->get('kernel')->getBundle($bundle);
-        $generateAdminType = !method_exists($entityClass, 'getAdminType');
 
         $dialog->writeSection($output, 'AdminList Generation');
 
-        if ($generateAdminType) {
-            $admintypeGenerator = $this->getAdminTypeGenerator();
-            try {
-                $admintypeGenerator->generate($bundle, $entity, $metadata[0]);
-            } catch (\Exception $error) {
-                $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-            }
-
-            $output->writeln('Generating the Type code: <info>OK</info>');
-        }
-
-        $configurationGenerator = $this->getAdminListConfigurationGenerator();
-        try {
-            $configurationGenerator->generate($bundle, $entity, $metadata[0], $generateAdminType);
-        } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
-
-        $output->writeln('Generating the Configuration code: <info>OK</info>');
-
-        $controllerGenerator = $this->getAdminListControllerGenerator();
-        try {
-            $controllerGenerator->generate($bundle, $entity, $metadata[0]);
-        } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
-
-        $output->writeln('Generating the Controller code: <info>OK</info>');
+        $this->getGenerator()->generate($bundle, $entityClass, $metadata[0], $output, $dialog);
 
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
@@ -228,68 +187,17 @@ EOT
     }
 
     /**
-     * @return AdminListConfigurationGenerator
+     * @return AdminListGenerator
      */
-    protected function getAdminListConfigurationGenerator()
+    protected function getGenerator()
     {
-        if (null === $this->configurationGenerator) {
-            $this->configurationGenerator = new AdminListConfigurationGenerator($this
+        if (null === $this->generator) {
+            $this->generator = new AdminListGenerator($this
                 ->getContainer()
                 ->get('filesystem'), __DIR__ . '/../Resources/skeleton/adminlist');
         }
 
-        return $this->configurationGenerator;
+        return $this->generator;
     }
 
-    /**
-     * @param AdminListConfigurationGenerator $configurationGenerator
-     */
-    public function setAdminListConfigurationGenerator(AdminListConfigurationGenerator $configurationGenerator)
-    {
-        $this->configurationGenerator = $configurationGenerator;
-    }
-
-    /**
-     * @return AdminListControllerGenerator
-     */
-    protected function getAdminListControllerGenerator()
-    {
-        if (null === $this->controllerGenerator) {
-            $this->controllerGenerator = new AdminListControllerGenerator($this
-                ->getContainer()
-                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/controller');
-        }
-
-        return $this->controllerGenerator;
-    }
-
-    /**
-     * @param AdminListControllerGenerator $controllerGenerator
-     */
-    public function setAdminListControllerGenerator(AdminListControllerGenerator $controllerGenerator)
-    {
-        $this->controllerGenerator = $controllerGenerator;
-    }
-
-    /**
-     * @return AdminTypeGenerator
-     */
-    protected function getAdminTypeGenerator()
-    {
-        if (null === $this->typeGenerator) {
-            $this->typeGenerator = new AdminTypeGenerator($this
-                ->getContainer()
-                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/form');
-        }
-
-        return $this->typeGenerator;
-    }
-
-    /**
-     * @param AdminTypeGenerator $typeGenerator
-     */
-    public function setAdminTypeGenerator(AdminTypeGenerator $typeGenerator)
-    {
-        $this->typeGenerator = $typeGenerator;
-    }
 }

@@ -30,33 +30,4 @@ class GenerateAdminListCommandTest extends \PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Command\GenerateAdminListCommand::setAdminListConfigurationGenerator
-     * @todo   Implement testSetAdminListConfigurationGenerator().
-     */
-    public function testSetAdminListConfigurationGenerator()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Command\GenerateAdminListCommand::setAdminListControllerGenerator
-     * @todo   Implement testSetAdminListControllerGenerator().
-     */
-    public function testSetAdminListControllerGenerator()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Command\GenerateAdminListCommand::setAdminTypeGenerator
-     * @todo   Implement testSetAdminTypeGenerator().
-     */
-    public function testSetAdminTypeGenerator()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
 }

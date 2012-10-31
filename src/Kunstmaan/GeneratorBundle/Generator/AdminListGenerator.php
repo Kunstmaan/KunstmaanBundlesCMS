@@ -6,14 +6,17 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
+use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Generates the configuration for an AdminList
+ * Generates all classes for an admin list
  */
-class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
+class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {
 
     /**
@@ -45,12 +48,48 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
      * @throws \RuntimeException
      * @return void
      */
-    public function generateConfiguration(Bundle $bundle, $entity, ClassMetadata $metadata, $generateAdminType)
+    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata, OutputInterface $output, DialogHelper $dialog)
     {
         $parts = explode('\\', $entity);
-        $entityClass = array_pop($parts);
+        $entityName = array_pop($parts);
+        $generateAdminType = !method_exists($entity, 'getAdminType');
 
-        $className = sprintf("%sAdminListConfigurator", $entityClass);
+        if ($generateAdminType) {
+            try {
+                $this->generateAdminType($bundle, $entityName, $metadata);
+            } catch (\Exception $error) {
+                $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            }
+            $output->writeln('Generating the Type code: <info>OK</info>');
+        }
+
+        try {
+            $this->generateConfiguration($bundle, $entityName, $metadata, $generateAdminType);
+        } catch (\Exception $error) {
+            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+        $output->writeln('Generating the Configuration code: <info>OK</info>');
+
+        try {
+            $this->generateController($bundle, $entityName, $metadata);
+        } catch (\Exception $error) {
+            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+        $output->writeln('Generating the Controller code: <info>OK</info>');
+    }
+
+    /**
+     * @param Bundle        $bundle            The bundle
+     * @param string        $entityName        The entity name
+     * @param ClassMetadata $metadata          The meta data
+     * @param boolean       $generateAdminType True if we need to specify the admin type
+     *
+     * @throws \RuntimeException
+     * @return void
+     */
+    public function generateConfiguration(Bundle $bundle, $entityName, ClassMetadata $metadata, $generateAdminType)
+    {
+        $className = sprintf("%sAdminListConfigurator", $entityName);
         $dirPath = sprintf("%s/AdminList", $bundle->getPath());
         $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
 
@@ -58,32 +97,24 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $parts = explode('\\', $entity);
-        array_pop($parts);
-
-        $this->renderFile($this->skeletonDir, 'AdminListConfigurator.php', $classPath, array(
+        $this->renderFile($this->skeletonDir . '/AdminList', 'AdminListConfigurator.php', $classPath, array(
             'namespace'           => $bundle->getNamespace(),
             'bundle'              => $bundle,
-            'entity_class'        => $entityClass,
+            'entity_class'        => $entityName,
             'fields'              => $this->getFieldsWithFilterTypeFromMetadata($metadata),
             'generate_admin_type' => $generateAdminType
         ));
     }
 
     /**
-     * @param Bundle        $bundle   The bundle
-     * @param string        $entity   The entity name
-     * @param ClassMetadata $metadata The meta data
+     * @param Bundle        $bundle     The bundle
+     * @param string        $entityName The entity name
      *
      * @throws \RuntimeException
      */
-    public function generateController(Bundle $bundle, $entity, ClassMetadata $metadata)
+    public function generateController(Bundle $bundle, $entityName)
     {
-
-        $parts = explode('\\', $entity);
-        $entityClass = array_pop($parts);
-
-        $className = sprintf("%sAdminListController", $entityClass);
+        $className = sprintf("%sAdminListController", $entityName);
         $dirPath = sprintf("%s/Controller", $bundle->getPath());
         $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
 
@@ -91,13 +122,10 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $parts = explode('\\', $entity);
-        array_pop($parts);
-
-        $this->renderFile($this->skeletonDir, 'EntityAdminListController.php', $classPath, array(
+        $this->renderFile($this->skeletonDir . '/Controller', 'EntityAdminListController.php', $classPath, array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
-            'entity_class'      => $entityClass,
+            'entity_class'      => $entityName,
         ));
 
     }
@@ -109,12 +137,9 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
      *
      * @throws \RuntimeException
      */
-    public function generateAdminType(Bundle $bundle, $entity, ClassMetadata $metadata)
+    public function generateAdminType(Bundle $bundle, $entityName, ClassMetadata $metadata)
     {
-        $parts = explode('\\', $entity);
-        $entityClass = array_pop($parts);
-
-        $className = sprintf("%sAdminType", $entityClass);
+        $className = sprintf("%sAdminType", $entityName);
         $dirPath = sprintf("%s/Form", $bundle->getPath());
         $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
 
@@ -122,13 +147,10 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $parts = explode('\\', $entity);
-        array_pop($parts);
-
-        $this->renderFile($this->skeletonDir, 'EntityAdminType.php', $classPath, array(
+        $this->renderFile($this->skeletonDir . '/Form', 'EntityAdminType.php', $classPath, array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
-            'entity_class'      => $entityClass,
+            'entity_class'      => $entityName,
             'fields'            => $this->getFieldsFromMetadata($metadata)
         ));
     }
@@ -166,7 +188,7 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
 
         $fields = array();
 
-        foreach (GeneratorUtils::getFieldsFromMetadata($metadata) as $fieldName) {
+        foreach ($this->getFieldsFromMetadata($metadata) as $fieldName) {
             $type = $metadata->getTypeOfField($fieldName);
             $filterType = $mapping[$type];
 
