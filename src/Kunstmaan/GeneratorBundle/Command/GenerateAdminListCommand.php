@@ -187,6 +187,9 @@ EOT
     }
 
     /**
+     * @param OutputInterface $output The output
+     * @param DialogHelper    $dialog The dialog helper
+     *
      * @return AdminListGenerator
      */
     protected function getGenerator(OutputInterface $output, DialogHelper $dialog)
