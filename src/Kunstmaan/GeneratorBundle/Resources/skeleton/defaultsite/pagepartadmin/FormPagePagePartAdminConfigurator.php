@@ -6,11 +6,6 @@ class FormPagePagePartAdminConfigurator extends ContentPagePagePartAdminConfigur
 {
 
     /**
-     * @var array
-     */
-    private $pagePartTypes;
-
-    /**
      * @param array $pagePartTypes
      */
     public function __construct(array $pagePartTypes = array())
@@ -43,19 +38,4 @@ class FormPagePagePartAdminConfigurator extends ContentPagePagePartAdminConfigur
         return $this->pagePartTypes;
     }
 
-    /**
-     * @return string
-     */
-    function getName()
-    {
-        return "Page parts";
-    }
-
-    /**
-     * @return string
-     */
-    function getDefaultContext()
-    {
-        return "main";
-    }
 }
