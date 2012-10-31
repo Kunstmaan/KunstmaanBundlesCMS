@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\AbstractType;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -121,7 +122,9 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * @return PageAdminType
+     * Returns the default backend form type for this page
+     *
+     * @return AbstractType
      */
     public function getDefaultAdminType()
     {
