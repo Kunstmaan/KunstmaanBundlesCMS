@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 
 use Doctrine\ORM\EntityManager;
 
@@ -81,7 +82,7 @@ class NodeMenu
      * @param bool                     $includeOffline       Include offline pages
      * @param bool                     $includeHiddenFromNav Include hidden pages
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $lang, Node $currentNode = null, $permission = 'VIEW', $includeOffline = false, $includeHiddenFromNav = false)
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $lang, Node $currentNode = null, $permission = PermissionMap::PERMISSION_VIEW, $includeOffline = false, $includeHiddenFromNav = false)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
