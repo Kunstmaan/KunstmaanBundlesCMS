@@ -45,7 +45,7 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
      * @throws \RuntimeException
      * @return void
      */
-    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata, $generateAdminType)
+    public function generateConfiguration(Bundle $bundle, $entity, ClassMetadata $metadata, $generateAdminType)
     {
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
@@ -68,6 +68,79 @@ class AdminListConfigurationGenerator extends \Sensio\Bundle\GeneratorBundle\Gen
             'fields'              => $this->getFieldsWithFilterTypeFromMetadata($metadata),
             'generate_admin_type' => $generateAdminType
         ));
+    }
+
+    /**
+     * @param Bundle        $bundle   The bundle
+     * @param string        $entity   The entity name
+     * @param ClassMetadata $metadata The meta data
+     *
+     * @throws \RuntimeException
+     */
+    public function generateController(Bundle $bundle, $entity, ClassMetadata $metadata)
+    {
+
+        $parts = explode('\\', $entity);
+        $entityClass = array_pop($parts);
+
+        $className = sprintf("%sAdminListController", $entityClass);
+        $dirPath = sprintf("%s/Controller", $bundle->getPath());
+        $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
+
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
+        }
+
+        $parts = explode('\\', $entity);
+        array_pop($parts);
+
+        $this->renderFile($this->skeletonDir, 'EntityAdminListController.php', $classPath, array(
+            'namespace'         => $bundle->getNamespace(),
+            'bundle'            => $bundle,
+            'entity_class'      => $entityClass,
+        ));
+
+    }
+
+    /**
+     * @param Bundle        $bundle   The bundle
+     * @param string        $entity   The entity name
+     * @param ClassMetadata $metadata The meta data
+     *
+     * @throws \RuntimeException
+     */
+    public function generateAdminType(Bundle $bundle, $entity, ClassMetadata $metadata)
+    {
+        $parts = explode('\\', $entity);
+        $entityClass = array_pop($parts);
+
+        $className = sprintf("%sAdminType", $entityClass);
+        $dirPath = sprintf("%s/Form", $bundle->getPath());
+        $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
+
+        if (file_exists($classPath)) {
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
+        }
+
+        $parts = explode('\\', $entity);
+        array_pop($parts);
+
+        $this->renderFile($this->skeletonDir, 'EntityAdminType.php', $classPath, array(
+            'namespace'         => $bundle->getNamespace(),
+            'bundle'            => $bundle,
+            'entity_class'      => $entityClass,
+            'fields'            => $this->getFieldsFromMetadata($metadata)
+        ));
+    }
+
+    /**
+     * @param ClassMetadata $metadata
+     *
+     * @return string[]
+     */
+    private function getFieldsFromMetadata(ClassMetadata $metadata)
+    {
+        return GeneratorUtils::getFieldsFromMetadata($metadata);
     }
 
 
