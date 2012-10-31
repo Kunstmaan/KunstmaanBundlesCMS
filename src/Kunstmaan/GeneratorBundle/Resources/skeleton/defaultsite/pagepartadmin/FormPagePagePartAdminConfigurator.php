@@ -2,9 +2,7 @@
 
 namespace {{ namespace }}\PagePartAdmin;
 
-use {{namespace}}\PagePartAdmin\ContentPagePartAdminConfigurator;
-
-class FormPagePagePartAdminConfigurator extends ContentPagePartAdminConfigurator
+class FormPagePagePartAdminConfigurator extends ContentPagePagePartAdminConfigurator
 {
 
     /**

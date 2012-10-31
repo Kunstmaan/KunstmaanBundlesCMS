@@ -61,6 +61,7 @@ class ContentPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigur
                 )
             ), $pagePartTypes
         );
+
     }
 
     /**
