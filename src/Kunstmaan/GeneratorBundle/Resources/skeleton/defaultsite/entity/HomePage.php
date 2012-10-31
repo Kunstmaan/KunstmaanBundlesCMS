@@ -16,7 +16,7 @@ use {{ namespace }}\PagePartAdmin\HomePagePagePartAdminConfigurator;
  * HomePage
  *
  * @ORM\Entity()
- * @ORM\Table(name="{{ prefix }}homepage")
+ * @ORM\Table(name="{{ prefix }}home_pages")
  */
 class HomePage extends AbstractPage implements HasPagePartsInterface
 {

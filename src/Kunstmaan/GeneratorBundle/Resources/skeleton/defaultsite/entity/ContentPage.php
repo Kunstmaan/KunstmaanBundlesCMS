@@ -19,7 +19,7 @@ use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
  * ContentPage
  *
  * @ORM\Entity()
- * @ORM\Table(name="{{ prefix }}contentpage")
+ * @ORM\Table(name="{{ prefix }}content_pages")
  */
 class ContentPage extends AbstractPage implements HasPagePartsInterface
 {

@@ -95,7 +95,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @param string        $title   The title
      * @param PageInterface $parent  The parent
      *
-     * @return Kunstmaan\NodeBundle\Entity\PageInterface
+     * @return PageInterface
      */
     private function createAndPersistPage(ObjectManager $manager, $class, $title, $parent = null)
     {
@@ -193,9 +193,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Create a ContentPage containing a table of content, headers and text
      *
-     * @param Doctrine\Common\Persistence\ObjectManager $manager
-     * @param string                                    $title
-     * @param                                           $parent
+     * @param ObjectManager $manager The object manager
+     * @param string        $title   The title
+     * @param PageInterface $parent  The parent
      */
     private function createTocPage(ObjectManager $manager, $title, $parent)
     {

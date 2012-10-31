@@ -12,13 +12,12 @@ use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use {{ namespace }}\Form\FormPageAdminType;
 use {{ namespace }}\PagePartAdmin\FormPagePagePartAdminConfigurator;
 use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
-use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
 
 /**
  * FormPage
  *
  * @ORM\Entity()
- * @ORM\Table(name="{{ prefix }}formpage")
+ * @ORM\Table(name="{{ prefix }}form_pages")
  */
 class FormPage extends AbstractFormPage
 {
