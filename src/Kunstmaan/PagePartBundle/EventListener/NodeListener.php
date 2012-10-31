@@ -64,7 +64,7 @@ class NodeListener
             foreach ($page->getPagePartAdminConfigurations() as $index => $pagePartAdminConfiguration) {
                 $types = array();
                 $data = array();
-                $position = 0; // sizeof($tabPane->getTabs()) - 1;
+                $position = sizeof($tabPane->getTabs());
                 if ($index == 0) {
                     /* @var Tab $propertiesTab */
                     $propertiesTab = $tabPane->getTabByTitle('Properties');
@@ -74,6 +74,7 @@ class NodeListener
                         $data = $propertiesTab->getData();
 
                         $tabPane->removeTab($propertiesTab);
+                        $position = 0;
                     }
                 }
                 $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory, $types, $data), $position);
