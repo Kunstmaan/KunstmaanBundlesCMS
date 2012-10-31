@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Helper\Tabs;
 
 use Doctrine\ORM\EntityManager;
 
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
@@ -39,6 +40,11 @@ class PermissionTab implements TabInterface
     protected $page;
 
     /**
+     * @var Node
+     */
+    protected $node;
+
+    /**
      * @var string
      */
     protected $title;
@@ -49,10 +55,11 @@ class PermissionTab implements TabInterface
      * @param PermissionAdmin        $permissionAdmin The permission admin
      * @param PermissionMapInterface $permissionMap   The permission map
      */
-    public function __construct($title, HasNodeInterface $page, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
+    public function __construct($title, HasNodeInterface $page, Node $node, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
     {
         $this->title = $title;
         $this->page = $page;
+        $this->node = $node;
         $this->permissionAdmin = $permissionAdmin;
         $this->permissionMap = $permissionMap;
     }
@@ -70,7 +77,7 @@ class PermissionTab implements TabInterface
      */
     public function buildForm(FormBuilderInterface $builder)
     {
-        $this->permissionAdmin->initialize($this->page, $this->permissionMap);
+        $this->permissionAdmin->initialize($this->node, $this->permissionMap);
     }
 
     /**
@@ -180,6 +187,23 @@ class PermissionTab implements TabInterface
     public function getPermissionMap()
     {
         return $this->permissionMap;
+    }
+
+    /**
+     * @param Node $node
+     */
+    public function setNode($node)
+    {
+        $this->node = $node;
+        return $this;
+    }
+
+    /**
+     * @return Node
+     */
+    public function getNode()
+    {
+        return $this->node;
     }
 
 }
