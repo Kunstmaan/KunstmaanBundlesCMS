@@ -42,7 +42,7 @@ class PagePartTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'getpageparts_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
+            'render_pageparts'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
             'getpageparts'  => new \Twig_Function_Method($this, 'getPageParts'),
         );
     }
