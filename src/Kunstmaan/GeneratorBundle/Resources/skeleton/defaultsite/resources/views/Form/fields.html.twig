@@ -1,13 +1,13 @@
 {% block field_row %}
-	{% spaceless %}
-	<div class='group {% if errors|length > 0 %}error{% endif %}'>
-	    {{ form_label(form) }}
-	    <div class='input'>
-	        {{ form_widget(form) }}
-	        {{ form_errors(form) }}
-	    </div>
-	</div>
-	{% endspaceless %}
+    {% spaceless %}
+    <div class='group {% if errors|length > 0 %}error{% endif %}'>
+        {{ form_label(form) }}
+        <div class='input'>
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    </div>
+    {% endspaceless %}
 {% endblock field_row %}
 
 {% block field_errors %}
@@ -28,11 +28,11 @@
         <div {{ block('widget_container_attributes') }}>
         <ul class='inputs-list'>
         {% for child in form %}
-        	<li>
-        		<label>
-	            	{{ form_widget(child) }}
-	            	<span>{{ label }}</span>
-            	</label>
+            <li>
+                <label>
+                    {{ form_widget(child) }}
+                    <span>{{ label }}</span>
+                </label>
             </li>
         {% endfor %}
         </ul>

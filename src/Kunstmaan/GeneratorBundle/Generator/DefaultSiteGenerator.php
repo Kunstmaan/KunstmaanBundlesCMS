@@ -108,10 +108,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->renderFile($fullSkeletonDir, '/Layout/_js_footer.html.twig', $dirPath . '/Resources/views/Layout/_js_footer.html.twig', $parameters);
         $this->renderFile($fullSkeletonDir, '/Layout/_js_header.html.twig', $dirPath . '/Resources/views/Layout/_js_header.html.twig', $parameters);
 
-        $this->filesystem->copy($fullSkeletonDir . '/Elastica/ContentPage.elastica.twig', $dirPath . '/Resources/views/Elastica/ContentPage.elastica.twig');
-        $this->filesystem->copy($fullSkeletonDir . '/Elastica/FormPage.elastica.twig', $dirPath . '/Resources/views/Elastica/FormPage.elastica.twig');
-        $this->filesystem->copy($fullSkeletonDir . '/Elastica/HomePage.elastica.twig', $dirPath . '/Resources/views/Elastica/HomePage.elastica.twig');
-
         $this->output->writeln('Generating Twig Templates : <info>OK</info>');
 
         // @todo: should be improved

@@ -13,21 +13,7 @@
         <meta name='description' content=''>
         <meta name='viewport' content='width=device-width'>
 
-        {% if nodetranslation.getSEO().getMetaDescription() %}
-            <meta name='description' content='{{ nodetranslation.getSEO().getMetaDescription() }}'>
-        {% endif %}
-        {% if nodetranslation.getSEO().getMetaKeywords() %}
-            <meta name='keywords' content='{{ nodetranslation.getSEO().getMetaKeywords() }}'>
-        {% endif %}
-        {% if nodetranslation.getSEO().getMetaAuthor() %}
-            <meta name='author' content='{{ nodetranslation.getSEO().getMetaAuthor() }}'>
-        {% endif %}
-        {% if nodetranslation.getSEO().getMetaRobots() %}
-            <meta name='robots' content='{{ nodetranslation.getSEO().getMetaRobots() }}'>
-        {% endif %}
-        {% if nodetranslation.getSEO().getMetaRevised() %}
-            <meta name='revised' content='{{ nodetranslation.getSEO().getMetaRevised() }}'>
-        {% endif %}
+        {{ render_seo_metadata_for(page) }}
         <meta name='viewport' content='width=device-width,initial-scale=1'>
 
         <!-- open graph facebook -->

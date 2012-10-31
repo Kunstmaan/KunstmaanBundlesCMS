@@ -1,5 +1,7 @@
 {{ "
-{% block css %}
-    <link rel='stylesheet' href='{{ asset('@" ~ bundle.getName() ~ "/Resources/public/css/style.css') }}' type='text/css'>
-{% endblock %}
+    {% block css %}
+        {% stylesheets '@" ~ bundle.getName() ~ "/Resources/public/css/style.css' %}
+            <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
+        {% endstylesheets %}
+    {% endblock %}
 " }}

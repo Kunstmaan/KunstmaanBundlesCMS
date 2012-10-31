@@ -1,9 +1,9 @@
 {{ "
     {% javascripts
-        '@" ~ bundle.getName() ~ "/Resources/public/js/libs/*'
-        '@" ~ bundle.getName() ~ "/Resources/public/js/*'
+        '@" ~ bundle.getName() ~ "/Resources/public/js/libs/modernizr-2.6.2.min.js'
+        '@" ~ bundle.getName() ~ "/Resources/public/js/libs/respond.min.js'
         filter='yui_js'
-        output='frontend/js.css'
+        output='frontend/header.js'
     %}
         <script src='{{ asset_url }}'></script>
     {% endjavascripts %}
