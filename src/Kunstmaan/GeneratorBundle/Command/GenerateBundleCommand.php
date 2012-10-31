@@ -142,7 +142,7 @@ EOT
                 'The namespace should begin with a "vendor" name like your company name, your', 'project name, or your client name, followed by one or more optional category',
                 'sub-namespaces, and it should end with the bundle name itself', '(which must have <comment>Bundle</comment> as a suffix).', '',
                 'See http://symfony.com/doc/current/cookbook/bundles/best_practices.html#index-1 for more', 'details on bundle naming conventions.', '',
-                'Use <comment>/</comment> instead of <comment>\\</comment> for the namespace delimiter to avoid any problem.', '',));
+                'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.', '',));
 
         $namespace = $dialog
             ->askAndValidate($output, $dialog->getQuestion('Bundle namespace', $input->getOption('namespace')),

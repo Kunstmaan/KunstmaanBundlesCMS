@@ -2,30 +2,43 @@
 
 namespace {{ namespace }}\PagePartAdmin;
 
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+use {{namespace}}\PagePartAdmin\ContentPagePartAdminConfigurator;
 
-class FormPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
+class FormPagePagePartAdminConfigurator extends ContentPagePartAdminConfigurator
 {
 
-    protected $pagePartTypes = array();
+    /**
+     * @var array
+     */
+    private $pagePartTypes;
 
-    public function __construct($pagepartProviders = array())
+    /**
+     * @param array $pagePartTypes
+     */
+    public function __construct(array $pagePartTypes = array())
     {
-        $this->pagePartTypes = array(
-            array('name' => 'Single Line text input', 'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart'),
-            array('name' => 'Multi Line text input', 'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart'),
-            array('name' => 'Choice input', 'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart'),
-            array('name' => 'Header', 'class'=> 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart'),
-            array('name' => 'Text', 'class'=> 'Kunstmaan\PagePartBundle\Entity\TextPagePart'),
-            array('name' => 'Line', 'class'=> 'Kunstmaan\PagePartBundle\Entity\LinePagePart'),
-            array('name' => 'TOC', 'class'=> 'Kunstmaan\PagePartBundle\Entity\TocPagePart'),
-            array('name' => 'Link', 'class'=> 'Kunstmaan\PagePartBundle\Entity\LinkPagePart'),
-            array('name' => 'To Top', 'class'=> 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart'),
+        parent::__construct($pagePartTypes);
+
+        $this->pagePartTypes = array_merge(
+            array(
+                array(
+                    'name' => 'Single Line text input',
+                    'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart'
+                ),
+                array(
+                    'name' => 'Multi Line text input',
+                    'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart'
+                ),
+                array(
+                    'name' => 'Choice input',
+                    'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart'
+                )
+            ), $this->pagePartTypes
         );
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     function getPossiblePagePartTypes()
     {
@@ -33,15 +46,15 @@ class FormPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigurato
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     function getName()
     {
-        return "Pageparts";
+        return "Page parts";
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     function getDefaultContext()
     {

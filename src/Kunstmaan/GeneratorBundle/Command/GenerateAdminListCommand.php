@@ -35,7 +35,7 @@ class GenerateAdminListCommand extends GenerateDoctrineCommand
             ->setDefinition(array(new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The entity class name to create an admin list for (shortcut notation)'),))
             ->setDescription('Generates a KunstmaanAdminList')
             ->setHelp(<<<EOT
-The <info>kuma:generate:adminlist</info> command generates an AdminList for a Doctrine entity.
+The <info>kuma:generate:adminlist</info> command generates an AdminList for a Doctrine ORM entity.
 
 <info>php app/console kuma:generate:adminlist Bundle:Entity</info>
 EOT
@@ -59,7 +59,7 @@ EOT
             }
         }
 
-        $entity = $input->getOption('entity');
+        $entity = Validators::validateEntityName($input->getOption('entity'));
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
         $entityClass = $this->getContainer()->get('doctrine')->getEntityNamespace($bundle).'\\'.$entity;
@@ -76,6 +76,12 @@ EOT
         $this->updateRouting($dialog, $input, $output, $bundle, $entityClass);
     }
 
+    /**
+     * Interacts with the user.
+     *
+     * @param InputInterface  $input  An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $dialog = $this->getDialogHelper();

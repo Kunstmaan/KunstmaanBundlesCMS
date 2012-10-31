@@ -7,20 +7,40 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 class BannerPagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
 {
 
-    protected $pagePartTypes = array();
+    /**
+     * @var array
+     */
+    private $pagePartTypes;
 
-    public function __construct($pagepartProviders = array())
+    /**
+     * @param array $pagePartTypes
+     */
+    public function __construct(array $pagePartTypes = array())
     {
-        $this->pagePartTypes = array(
-            array('name' => 'Header', 'class'=> 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart'),
-            array('name' => 'Text', 'class'=> 'Kunstmaan\PagePartBundle\Entity\TextPagePart'),
-            array('name' => 'Line', 'class'=> 'Kunstmaan\PagePartBundle\Entity\LinePagePart'),
-            array('name' => 'Image', 'class'=> 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart'),
+        $this->pagePartTypes = array_merge(
+            array(
+                array(
+                    'name' => 'Header',
+                    'class'=> 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart'
+                ),
+                array(
+                    'name' => 'Text',
+                    'class'=> 'Kunstmaan\PagePartBundle\Entity\TextPagePart'
+                ),
+                array(
+                    'name' => 'Line',
+                    'class'=> 'Kunstmaan\PagePartBundle\Entity\LinePagePart'
+                ),
+                array(
+                    'name' => 'Image',
+                    'class'=> 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart'
+                )
+            ), $pagePartTypes
         );
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     function getPossiblePagePartTypes()
     {
@@ -28,7 +48,7 @@ class BannerPagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     function getName()
     {
@@ -36,7 +56,7 @@ class BannerPagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     function getDefaultContext()
     {

@@ -9,8 +9,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ContentPageAdminType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface  $builder The builder
-     * @param array                 $options The options
+     * Builds the form.
+     *
+     * This method is called for each type in the hierarchy starting form the
+     * top most type. Type extensions can further modify the form.
+     *
+     * @see FormTypeExtensionInterface::buildForm()
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,20 +25,24 @@ class ContentPageAdminType extends AbstractType
     }
 
     /**
-     * @assert () == 'page'
+     * Sets the default options for this type.
      *
-     * @return string
+     * @param OptionsResolverInterface $resolver The resolver for the options.
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => '{{ namespace }}\Entity\ContentPage'
+        ));
+    }
+
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
      */
     public function getName()
     {
         return 'page';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array('data_class' => '{{ namespace }}\Entity\ContentPage'));
     }
 }

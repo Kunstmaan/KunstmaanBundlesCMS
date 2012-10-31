@@ -2,15 +2,14 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
 
-use Doctrine\ORM\Mapping\ClassMetadata;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 
 /**
  * Generates a default website using several Kunstmaan bundles using default templates and assets
@@ -29,48 +28,59 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     private $skeletonDir;
 
     /**
-     * @param Filesystem $filesystem  The filesytem
-     * @param string     $skeletonDir The skeleton directory
+     * @var OutputInterface
      */
-    public function __construct(Filesystem $filesystem, $skeletonDir)
+    private $output;
+
+    /**
+     * @var DialogHelper
+     */
+    private $dialog;
+
+    /**
+     * @param Filesystem      $filesystem  The filesytem
+     * @param string          $skeletonDir The skeleton directory
+     * @param OutputInterface $output      The output
+     * @param DialogHelper    $dialog      The dialog
+     */
+    public function __construct(Filesystem $filesystem, $skeletonDir, OutputInterface $output, DialogHelper $dialog)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
+        $this->output = $output;
+        $this->dialog = $dialog;
     }
 
     /**
      * @param Bundle          $bundle  The bundle
      * @param string          $prefix  The prefix
-     * @param OutputInterface $output  The command output
      * @param string          $rootDir The root directory
      */
-    public function generate(Bundle $bundle, $prefix, OutputInterface $output, $rootDir)
+    public function generate(Bundle $bundle, $prefix, $rootDir)
     {
-
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
             'prefix'            => $prefix
         );
 
-        $this->generateEntities($bundle, $parameters, $output);
-        $this->generateForm($bundle, $parameters, $output);
-        $this->generatePagepartConfigs($bundle, $parameters, $output);
-        $this->generateFixtures($bundle, $parameters, $output);
-        $this->generateAssets($bundle, $parameters, $output);
-        $this->generateTemplates($bundle, $parameters, $output, $rootDir);
+        $this->generateEntities($bundle, $parameters);
+        $this->generateForm($bundle, $parameters);
+        $this->generatePagepartConfigs($bundle, $parameters);
+        $this->generateFixtures($bundle, $parameters);
+        $this->generateAssets($bundle);
+        $this->generateTemplates($bundle, $parameters, $rootDir);
     }
 
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
-     * @param OutputInterface $output     The command output
      * @param string          $rootDir    The root directory
      */
-    public function generateTemplates(Bundle $bundle, array $parameters, OutputInterface $output, $rootDir)
+    public function generateTemplates(Bundle $bundle, array $parameters, $rootDir)
     {
         $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/resources/views';
+        $fullSkeletonDir = $this->skeletonDir . '/Resources/views';
 
         $this->filesystem->copy($fullSkeletonDir . '/Default/index.html.twig', $dirPath . '/Resources/views/Default/index.html.twig');
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Resources/views/Default/index.html.twig');
@@ -102,217 +112,185 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->filesystem->copy($fullSkeletonDir . '/Elastica/FormPage.elastica.twig', $dirPath . '/Resources/views/Elastica/FormPage.elastica.twig');
         $this->filesystem->copy($fullSkeletonDir . '/Elastica/HomePage.elastica.twig', $dirPath . '/Resources/views/Elastica/HomePage.elastica.twig');
 
-        $output->writeln('Generating Twig Templates : <info>OK</info>');
+        $this->output->writeln('Generating Twig Templates : <info>OK</info>');
 
+        // @todo: should be improved
         GeneratorUtils::replace("[ \"KunstmaanAdminBundle\"", "[ \"KunstmaanAdminBundle\", \"". $bundle->getName()  ."\"", $rootDir . '/config/config.yml');
 
-        $output->writeln('Configure assetic : <info>OK</info>');
+        $this->output->writeln('Configure assetic : <info>OK</info>');
     }
 
     /**
-     * @param Bundle          $bundle     The bundle
-     * @param array           $parameters The template parameters
-     * @param OutputInterface $output     The command output
+     * @param Bundle $bundle
      */
-    public function generateAssets(Bundle $bundle, array $parameters, OutputInterface $output)
+    public function generateAssets(Bundle $bundle)
     {
         $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/resources/public/css';
+        $fullSkeletonDir = $this->skeletonDir . '/Resources/public';
 
-        $this->filesystem->copy($fullSkeletonDir . '/style.css', $dirPath . '/Resources/public/css/style.css', $parameters);
+        $assets = array(
+            '/css/style.css',
+            '/js/script.js',
+            '/js/libs/boxsizing.htc',
+            '/js/libs/jquery-1.8.1.min.js',
+            '/js/libs/modernizr-2.6.2.min.js',
+            '/js/libs/respond.min.js',
+            '/sass/_480.scss',
+            '/sass/_768.scss',
+            '/sass/_1024.scss',
+            '/sass/_debug.scss',
+            '/sass/_fallbacks.scss',
+            '/sass/_main.scss',
+            '/sass/_mixins.scss',
+            '/sass/_normalizer.scss',
+            '/sass/_print.scss',
+            '/sass/style.scss',
+            '/apple-touch-icon-57x57-precomposed.png',
+            '/apple-touch-icon-72x72-precomposed.png',
+            '/apple-touch-icon-114x114-precomposed.png',
+            '/apple-touch-icon-precomposed.png',
+            '/apple-touch-icon.png',
+            '/favicon.ico'
+        );
 
-        $fullSkeletonDir = $this->skeletonDir . '/resources/public/js';
+        foreach ($assets as $asset) {
+            $this->filesystem->copy(sprintf("%s%s", $fullSkeletonDir, $asset), sprintf("%s/Resources/public%s", $dirPath, $asset));
+        }
 
-        $this->filesystem->copy($fullSkeletonDir . '/script.js', $dirPath . '/Resources/public/js/script.js');
-        $this->filesystem->copy($fullSkeletonDir . '/libs/boxsizing.htc', $dirPath . '/Resources/public/js/libs/boxsizing.htc');
-        $this->filesystem->copy($fullSkeletonDir . '/libs/jquery-1.8.1.min.js', $dirPath . '/Resources/public/js/libs/jquery-1.8.1.min.js');
-        $this->filesystem->copy($fullSkeletonDir . '/libs/modernizr-2.6.2.min.js', $dirPath . '/Resources/public/js/libs/modernizr-2.6.2.min.js');
-        $this->filesystem->copy($fullSkeletonDir . '/libs/respond.min.js', $dirPath . '/Resources/public/js/libs/respond.min.js');
-
-        $fullSkeletonDir = $this->skeletonDir . '/resources/public/sass';
-
-        $this->filesystem->copy($fullSkeletonDir . '/_480.scss', $dirPath . '/Resources/public/sass/_480.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/_768.scss', $dirPath . '/Resources/public/sass/_768.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/_1024.scss', $dirPath . '/Resources/public/sass/_1024.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/_debug.scss', $dirPath . '/Resources/public/sass/_debug.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/_fallbacks.scss', $dirPath . '/Resources/public/sass/_fallbacks.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/_main.scss', $dirPath . '/Resources/public/sass/_main.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/_mixins.scss', $dirPath . '/Resources/public/sass/_mixins.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/_normalizer.scss', $dirPath . '/Resources/public/sass/_normalizer.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/_print.scss', $dirPath . '/Resources/public/sass/_print.scss');
-        $this->filesystem->copy($fullSkeletonDir . '/style.scss', $dirPath . '/Resources/public/sass/style.scss');
-
-        $fullSkeletonDir = $this->skeletonDir . '/resources/public';
-
-        $this->filesystem->copy($fullSkeletonDir . '/apple-touch-icon-57x57-precomposed.png', $dirPath . '/Resources/public/apple-touch-icon-57x57-precomposed.png');
-        $this->filesystem->copy($fullSkeletonDir . '/apple-touch-icon-72x72-precomposed.png', $dirPath . '/Resources/public/apple-touch-icon-72x72-precomposed.png');
-        $this->filesystem->copy($fullSkeletonDir . '/apple-touch-icon-114x114-precomposed.png', $dirPath . '/Resources/public/apple-touch-icon-114x114-precomposed.png');
-        $this->filesystem->copy($fullSkeletonDir . '/apple-touch-icon-precomposed.png', $dirPath . '/Resources/public/apple-touch-icon-precomposed.png');
-        $this->filesystem->copy($fullSkeletonDir . '/apple-touch-icon.png', $dirPath . '/Resources/public/apple-touch-icon.png');
-        $this->filesystem->copy($fullSkeletonDir . '/favicon.ico', $dirPath . '/Resources/public/favicon.ico');
-
-        $output->writeln('Generating Assets : <info>OK</info>');
+        $this->output->writeln('Generating Assets : <info>OK</info>');
     }
 
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
-     * @param OutputInterface $output     The command output
      *
      * @throws \RuntimeException
      */
-    public function generateFixtures(Bundle $bundle, array $parameters, OutputInterface $output)
+    public function generateFixtures(Bundle $bundle, array $parameters)
     {
         $dirPath = $bundle->getPath() . '/DataFixtures/ORM';
-        $fullSkeletonDir = $this->skeletonDir . '/datafixtures/orm';
+        $fullSkeletonDir = $this->skeletonDir . '/DataFixtures/ORM';
 
-        /* Default Site Fixtures */
-
-        $classname = 'DefaultSiteFixtures';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'DefaultSiteFixtures', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
-        $output->writeln('Generating Fixtures : <info>OK</info>');
+        $this->output->writeln('Generating Fixtures : <info>OK</info>');
     }
 
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
-     * @param OutputInterface $output     The command output
      *
      * @throws \RuntimeException
      */
-    public function generatePagepartConfigs(Bundle $bundle, array $parameters, OutputInterface $output)
+    public function generatePagepartConfigs(Bundle $bundle, array $parameters)
     {
         $dirPath = $bundle->getPath() . '/PagePartAdmin';
-        $fullSkeletonDir = $this->skeletonDir . '/pagepartadmin';
+        $fullSkeletonDir = $this->skeletonDir . '/PagePartAdmin';
 
-        /* Banner */
-
-        $classname = 'BannerPagePartAdminConfigurator';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'BannerPagePartAdminConfigurator', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
-
-        /* Content page */
-
-        $classname = 'ContentPagePagePartAdminConfigurator';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'ContentPagePagePartAdminConfigurator', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
-
-        /* Form page */
-
-        $classname = 'FormPagePagePartAdminConfigurator';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'FormPagePagePartAdminConfigurator', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
-        $output->writeln('Generating forms : <info>OK</info>');
+        $this->output->writeln('Generating forms : <info>OK</info>');
 
-        /* Home page */
-
-        $classname = 'HomePagePagePartAdminConfigurator';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'HomePagePagePartAdminConfigurator', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
-        $output->writeln('Generating PagePart Configurators : <info>OK</info>');
+        $this->output->writeln('Generating PagePart Configurators : <info>OK</info>');
     }
 
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
-     * @param OutputInterface $output     The command output
      *
      * @throws \RuntimeException
      */
-    public function generateForm(Bundle $bundle, array $parameters, OutputInterface $output)
+    public function generateForm(Bundle $bundle, array $parameters)
     {
         $dirPath = $bundle->getPath() . '/Form';
-        $fullSkeletonDir = $this->skeletonDir . '/form';
+        $fullSkeletonDir = $this->skeletonDir . '/Form';
 
-        /* Content page */
-
-        $classname = 'ContentPageAdminType';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'ContentPageAdminType', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
-
-        /* Form page */
-
-        $classname = 'FormPageAdminType';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'FormPageAdminType', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
-
-        /* Home page */
-
-        $classname = 'HomePageAdminType';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'HomePageAdminType', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
 
-        $output->writeln('Generating forms : <info>OK</info>');
+        $this->output->writeln('Generating forms : <info>OK</info>');
     }
 
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
-     * @param OutputInterface $output     The command output
+     */
+    public function generateEntities(Bundle $bundle, array $parameters)
+    {
+        $dirPath = sprintf("%s/Entity", $bundle->getPath());
+        $fullSkeletonDir = sprintf("%s/Entity", $this->skeletonDir);
+
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'ContentPage', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'FormPage', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+        try {
+            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'HomePage', $parameters);
+        } catch (\Exception $error) {
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+        }
+
+        $this->output->writeln('Generating entities : <info>OK</info>');
+    }
+
+    /**
+     * @param string $fullSkeletonDir The full dir of the entity skeleton
+     * @param string $dirPath         The full fir of where the entity should be created
+     * @param string $className       The class name of the entity to create
+     * @param array  $parameters      The template parameters
      *
      * @throws \RuntimeException
      */
-    public function generateEntities(Bundle $bundle, array $parameters, OutputInterface $output)
+    private function generateSkeletonBasedClass($fullSkeletonDir, $dirPath, $className, array $parameters)
     {
-        $dirPath = $bundle->getPath() . '/Entity';
-        $fullSkeletonDir = $this->skeletonDir . '/entity';
-
-        /* Content page */
-
-        $classname = 'ContentPage';
-        $classPath = $dirPath . '/' . $classname . '.php';
+        $classPath = sprintf("%s/%s.php", $dirPath, $className);
         if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
+            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
-
-        /* Form page */
-
-        $classname = 'FormPage';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
-        }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
-
-        /* Home page */
-
-        $classname = 'HomePage';
-        $classPath = $dirPath . '/' . $classname . '.php';
-        if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $classname, $classPath));
-        }
-        $this->renderFile($fullSkeletonDir, $classname . '.php', $classPath, $parameters);
-
-        $output->writeln('Generating entities : <info>OK</info>');
+        $this->renderFile($fullSkeletonDir, $className . '.php', $classPath, $parameters);
     }
 
 }
