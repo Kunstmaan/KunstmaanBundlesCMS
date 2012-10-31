@@ -26,7 +26,6 @@ class FormPageAdminType extends AbstractType
     {
         $builder->add('title')
                 ->add('thanks', 'textarea', array(
-                    'data_class' => '{{ namespace }}\Entity\FormPage',
                     'required' => false,
                     'attr' => array(
                         'class' => 'rich_editor'
