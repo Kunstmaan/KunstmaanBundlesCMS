@@ -2,25 +2,22 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
-use ArrayObject;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
-use Kunstmaan\FormBundle\Entity\FormSubmission;
-use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * This is an abstract ORM form page. With this page it's possible to create forms using a mix of form page parts and
@@ -28,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Furthermore it's possible to configure an administrative email to be send when a form is submitted with in it an
  * overview of all the submitted fields.
  */
-abstract class AbstractFormPage extends AbstractPage implements FormPageInterface
+abstract class AbstractFormPage extends AbstractPage implements FormPageInterface, HasPagePartsInterface
 {
     /**
      * The thank you text to be shown when the form was successfully submitted
@@ -184,7 +181,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     /**
      * Returns the default backend form type for this form
      *
-     * @return AbstractFormPageAdminType
+     * @return AbstractType
      */
     public function getDefaultAdminType()
     {
