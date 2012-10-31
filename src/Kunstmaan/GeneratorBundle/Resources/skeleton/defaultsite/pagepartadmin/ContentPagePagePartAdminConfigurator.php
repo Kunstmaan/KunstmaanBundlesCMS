@@ -10,7 +10,7 @@ class ContentPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigur
     /**
      * @var array
      */
-    private $pagePartTypes;
+    protected $pagePartTypes;
 
     /**
      * @param array $pagePartTypes
