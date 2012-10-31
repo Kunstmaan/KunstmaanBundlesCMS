@@ -30,13 +30,27 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     private $skeletonDir;
 
     /**
-     * @param Filesystem $filesystem  The filesystem
-     * @param string     $skeletonDir The directory of the skeleton
+     * @var OutputInterface
      */
-    public function __construct(Filesystem $filesystem, $skeletonDir)
+    private $output;
+
+    /**
+     * @var DialogHelper
+     */
+    private $dialog;
+
+    /**
+     * @param Filesystem      $filesystem  The filesystem
+     * @param string          $skeletonDir The directory of the skeleton
+     * @param OutputInterface $output      The output
+     * @param DialogHelper    $dialog      The dialog
+     */
+    public function __construct(Filesystem $filesystem, $skeletonDir, OutputInterface $output, DialogHelper $dialog)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
+        $this->output = $output;
+        $this->dialog = $dialog;
     }
 
     /**
@@ -48,7 +62,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
      * @throws \RuntimeException
      * @return void
      */
-    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata, OutputInterface $output, DialogHelper $dialog)
+    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata)
     {
         $parts = explode('\\', $entity);
         $entityName = array_pop($parts);
@@ -58,24 +72,24 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             try {
                 $this->generateAdminType($bundle, $entityName, $metadata);
             } catch (\Exception $error) {
-                $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+                $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
             }
-            $output->writeln('Generating the Type code: <info>OK</info>');
+            $this->output->writeln('Generating the Type code: <info>OK</info>');
         }
 
         try {
             $this->generateConfiguration($bundle, $entityName, $metadata, $generateAdminType);
         } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $output->writeln('Generating the Configuration code: <info>OK</info>');
+        $this->output->writeln('Generating the Configuration code: <info>OK</info>');
 
         try {
             $this->generateController($bundle, $entityName, $metadata);
         } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $output->writeln('Generating the Controller code: <info>OK</info>');
+        $this->output->writeln('Generating the Controller code: <info>OK</info>');
     }
 
     /**

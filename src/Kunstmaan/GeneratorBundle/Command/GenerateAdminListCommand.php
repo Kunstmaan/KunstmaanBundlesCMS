@@ -68,7 +68,7 @@ EOT
 
         $dialog->writeSection($output, 'AdminList Generation');
 
-        $this->getGenerator()->generate($bundle, $entityClass, $metadata[0], $output, $dialog);
+        $this->getGenerator($output, $dialog)->generate($bundle, $entityClass, $metadata[0]);
 
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
@@ -189,12 +189,12 @@ EOT
     /**
      * @return AdminListGenerator
      */
-    protected function getGenerator()
+    protected function getGenerator(OutputInterface $output, DialogHelper $dialog)
     {
         if (null === $this->generator) {
             $this->generator = new AdminListGenerator($this
                 ->getContainer()
-                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/adminlist');
+                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/adminlist', $output, $dialog);
         }
 
         return $this->generator;
