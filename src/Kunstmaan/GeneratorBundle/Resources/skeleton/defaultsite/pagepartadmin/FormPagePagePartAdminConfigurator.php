@@ -30,12 +30,4 @@ class FormPagePagePartAdminConfigurator extends ContentPagePagePartAdminConfigur
         );
     }
 
-    /**
-     * @return array
-     */
-    function getPossiblePagePartTypes()
-    {
-        return $this->pagePartTypes;
-    }
-
 }
