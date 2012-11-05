@@ -1,0 +1,11 @@
+{% block content %}
+    {% if thanks is defined and thanks %}
+        {{ page.thanks|raw }}
+    {% else %}
+        {% form_theme frontendform '~~~BUNDLE~~~:Form:fields.html.twig' %}
+        <form action='{{ path('_slug', { 'url': nodemenu.current.slug }) }}' method='post' {{ form_enctype(frontendform) }} novalidate='true'>
+            {{ render_pageparts(page, 'main') }}
+            {{ form_rest(frontendform) }}
+        </form>
+    {% endif %}
+{% endblock %}

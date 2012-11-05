@@ -1,0 +1,153 @@
+//////////////////// MIXINS /////////////////////
+
+// 01. Place Image
+// 02. CSS3 Mixins
+// 03. Link Styles
+// 04. Arrow + Arrow List
+// 05. Rounded Corners + Arrow Link
+// 06. Body Depth
+// 07. Box Shadow
+// 08. Basic Border Radius
+
+//-----------------
+// 01. Place Image
+//-----------------
+@mixin place_image($width, $height){
+	text-indent: 100%;
+	white-space: nowrap;
+	display: block;
+	overflow: hidden;
+	width: $width;
+	height: $height;
+}
+
+
+//-----------------
+// 02. CSS3 Mixins
+//-----------------
+@mixin single_transition($property, $duration, $ease){
+	-webkit-transition: $property $duration $ease;
+	   -moz-transition: $property $duration $ease;
+	    -ms-transition: $property $duration $ease;
+		 -o-transition: $property $duration $ease;
+			transition: $property $duration $ease;
+}
+@mixin simple_animation($name, $duration, $ease){
+	-webkit-animation: $name $duration $ease;
+	   -moz-animation: $name $duration $ease;
+		-ms-animation: $name $duration $ease;
+		 -o-animation: $name $duration $ease;
+			animation: $name $duration $ease;
+	-webkit-animation-fill-mode: forwards;
+	   -moz-animation-fill-mode: forwards;
+		-ms-animation-fill-mode: forwards;
+		 -o-animation-fill-mode: forwards;
+			animation-fill-mode: forwards;
+}
+
+
+//-----------------
+// 03. Link Styles
+//-----------------
+// Underlined > hover: none
+@mixin link($color, $hover-color, $font-weight) {
+	text-decoration: underline;
+	color: $color;
+	font-weight: $font-weight;
+	&:hover { 
+		text-decoration: none;
+		color: $hover-color;
+	}
+	&:focus { 
+		outline: none;
+		text-decoration: none; 
+	}
+	&:hover, &:active { 
+		outline: 0; 
+	}
+}
+// None > hover: underlined
+@mixin inverse_link($color, $hover-color, $font-weight) {
+	text-decoration: none;
+	color: $color;
+	font-weight: $font-weight;
+	&:hover { 
+		text-decoration: underline;
+		color: $hover-color;
+	}
+	&:focus { 
+		outline: none;
+		text-decoration: underline; 
+	}
+	&:hover, &:active { 
+		outline: 0; 
+	}
+}
+
+//-------------------------------------------------------
+// 04. Arrow + Arrow List (FF, Safari, Chrome, IE9, IE8)
+//-------------------------------------------------------
+// Single arrow
+@mixin arrow_right($color, $width) {
+	border-color: transparent transparent transparent $color;
+	border-style: solid;
+	border-width: $width;
+	width: 0;
+	height: 0;
+}
+
+// Arrow as 'list-style'
+@mixin arrow_list($color, $width) {
+	list-style: none !important;
+	zoom: 1; 
+	&:before, &:after { 
+		content: ""; 
+		display: table;
+	}
+	&:before { 
+		border-color: transparent transparent transparent $color;
+		border-style: solid;
+		border-width: $width;
+		width: 0;
+		height: 0;
+		margin: 5px 0;
+		float: left;
+	}
+	&:after { 
+		clear: both; 
+	}
+	a {
+		float: left;
+	}
+}
+
+//-----------------------------------
+// 05. Rounded Corners + Arrow Link
+//-----------------------------------
+// ► (the arrow is text)
+@mixin arrow_link($bgcolor, $color) {
+	text-decoration: none;
+	border-radius: 13px;
+	padding: 4px 4px 4px 5px;
+	background-color: $bgcolor;
+	color: $color;
+	font-size: 8px;
+}
+
+//-----------------------------------
+// 07. Box Shadow
+//-----------------------------------
+@mixin box-shadow($top: 5px, $left: 5px, $blur: 5px, $spread: 5px, $color: #333, $inset:"") {
+  -webkit-box-shadow: #{$inset} $top $left $blur $spread $color;
+ 				  box-shadow: #{$inset} $top $left $blur $color ;
+}
+
+//-----------------------------------
+// 08. Basic Border Radius
+//-----------------------------------
+
+@mixin border-radius($r: 3px) {
+	-webkit-border-radius: $r;
+	        border-radius: $r;
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+}
