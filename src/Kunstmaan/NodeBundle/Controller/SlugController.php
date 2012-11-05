@@ -60,7 +60,7 @@ class SlugController extends Controller
 
         /* @var HasNodeInterface $entity */
         $entity     = null;
-        $node       = null;
+        $node       = $nodeTranslation->getNode();
         if ($preview) {
             $version = $request->get('version');
             if (!empty($version) && is_numeric($version)) {
@@ -73,7 +73,6 @@ class SlugController extends Controller
         if (is_null($entity)) {
             $entity = $nodeTranslation->getPublicNodeVersion()->getRef($em);
         }
-        $node = $nodeTranslation->getNode();
 
         /* @var SecurityContextInterface $securityContext */
         $securityContext = $this->get('security.context');
