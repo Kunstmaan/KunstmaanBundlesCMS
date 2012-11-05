@@ -13,7 +13,9 @@
         <meta name='description' content=''>
         <meta name='viewport' content='width=device-width'>
 
-        {{ render_seo_metadata_for(page) }}
+        {% if page is defined %}
+            {{ render_seo_metadata_for(page) }}
+        {% endif %}
         <meta name='viewport' content='width=device-width,initial-scale=1'>
 
         <!-- open graph facebook -->
@@ -45,36 +47,38 @@
         <script src='//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js'></script>
         <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
         <![endif]-->
-        <header>
 
-            <nav>
+        {% if nodemenu is defined %}
+            <header>
+                <nav>
+                    <ul class="clearfix">
+                        {% for node in nodemenu.topnodes %}
+                            <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                <ul class="clearfix">
+                                    {% for node in node.children %}
+                                        <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                            <ul>
+                                                {% for node in node.children %}
+                                                    <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </header>
+
+            <div class="breadcrumb">
                 <ul class="clearfix">
-                    {% for node in nodemenu.topnodes %}
-                        <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
-                            <ul class="clearfix">
-                                {% for node in node.children %}
-                                    <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
-                                        <ul>
-                                            {% for node in node.children %}
-                                                <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
+                    {% for node in nodemenu.breadCrumb %}
+                        <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
                     {% endfor %}
                 </ul>
-            </nav>
-        </header>
-
-        <div class="breadcrumb">
-            <ul class="clearfix">
-                {% for node in nodemenu.breadCrumb %}
-                    <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
+            </div>
+        {% endif %}
 
         {% block intro %}
         {% endblock %}
