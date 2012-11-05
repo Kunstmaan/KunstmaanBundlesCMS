@@ -69,8 +69,8 @@ class SeoTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param AbstractEntity $entity
-     * @param string $template
+     * @param AbstractEntity $entity   The entity
+     * @param string         $template The template
      *
      * @return string
      */
