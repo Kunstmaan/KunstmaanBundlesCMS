@@ -92,6 +92,8 @@ class SettingsController extends Controller
                 $manipulator = $this->get('fos_user.util.user_manipulator');
                 $manipulator->changePassword($user->getUsername(), $user->getPlainpassword());
 
+                $this->get('session')->getFlashBag()->add('success', 'User \''.$user->getUsername().'\' has been created!');
+
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users'));
             }
         }
@@ -132,6 +134,7 @@ class SettingsController extends Controller
                 $user->setPlainpassword("");
                 $em->persist($user);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'User \''.$user->getUsername().'\' has been edited!');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users'));
             }
@@ -160,8 +163,10 @@ class SettingsController extends Controller
         /* @var User $user */
         $user = $em->getRepository('KunstmaanAdminBundle:User')->find($id);
         if (!is_null($user)) {
+            $username = $user->getUsername();
             $em->remove($user);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'User \''.$username.'\' has been deleted!');
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users'));
@@ -211,6 +216,7 @@ class SettingsController extends Controller
             if ($form->isValid()) {
                 $em->persist($group);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'User \''.$group->getName().'\' has been created!');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
             }
@@ -246,6 +252,7 @@ class SettingsController extends Controller
             if ($form->isValid()) {
                 $em->persist($group);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'User \''.$group->getName().'\' has been edited!');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
             }
@@ -274,8 +281,10 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($id);
         if (!is_null($group)) {
+            $groupname = $group->getName();
             $em->remove($group);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'User \''.$groupname.'\' has been deleted!');
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
@@ -325,6 +334,8 @@ class SettingsController extends Controller
                 $em->persist($role);
                 $em->flush();
 
+                $this->get('session')->getFlashBag()->add('success', 'User \''.$role->getRole().'\' has been created!');
+
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
             }
         }
@@ -360,6 +371,8 @@ class SettingsController extends Controller
                 $em->persist($role);
                 $em->flush();
 
+                $this->get('session')->getFlashBag()->add('success', 'User \''.$role->getRole().'\' has been edited!');
+
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
             }
         }
@@ -387,8 +400,11 @@ class SettingsController extends Controller
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
         if (!is_null($role)) {
+            $rolename = $role->getRole();
             $em->remove($role);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', 'User \''.$rolename.'\' has been deleted!');
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
