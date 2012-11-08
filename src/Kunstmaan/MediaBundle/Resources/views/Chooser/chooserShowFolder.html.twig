@@ -74,10 +74,10 @@
         		        {% if not handler or handler.canHandle(media) %}
             		        <li>
             		            {% set handler = mediamanager.getHandler(media) %}
-                                {% set thumbnailurl =  handler.getThumbnailUrl(media, app.request.basePath, 210, 150) %}
+                                {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
             		            <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="thumbnail" href="#">
             		                {% if thumbnailurl %}
-            		                    <img src="{{ handler.getThumbnailUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+            		                    <img src="{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
             		                {% else %}
                 		                <div style="font-size: 135px;text-align:center">
                                             <i class="icon-file"></i>

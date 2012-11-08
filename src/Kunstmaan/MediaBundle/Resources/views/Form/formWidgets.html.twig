@@ -13,9 +13,9 @@
 			    <div class="preview">
     			    {% set media = value.ent %}
     			    {% set handler = mediamanager.getHandler(media) %}
-                    {% set thumbnailurl =  handler.getThumbnailUrl(media, app.request.basePath, 210, 150) %}
+                    {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
                     {% if thumbnailurl %}
-                        <img width="210" height="150" src="{{ handler.getThumbnailUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+                        <img width="210" height="150" src="{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
                     {% else %}
                         <div style="font-size: 135px;text-align:center">
                             <i class="icon-file"></i>
