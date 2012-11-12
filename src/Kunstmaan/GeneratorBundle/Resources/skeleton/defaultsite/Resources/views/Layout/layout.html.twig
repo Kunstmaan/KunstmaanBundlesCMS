@@ -8,7 +8,7 @@
         <meta charset='utf-8'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 
-        <title>{% block title %}{% endblock %}</title>
+        <title>{{ websitetitle | trans }}{% block title %} - {{ page.title }}{% endblock %}</title>
 
         <meta name='description' content=''>
         <meta name='viewport' content='width=device-width'>
@@ -52,7 +52,8 @@
             <header>
                 <nav>
                     <ul class="clearfix">
-                        {% for node in nodemenu.topnodes %}
+                        {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                        {% for node in activeSubnode.children %}
                             <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
                                 <ul class="clearfix">
                                     {% for node in node.children %}
@@ -81,10 +82,12 @@
         {% endif %}
 
         {% block intro %}
+            <div class='welcome'>
+                <p><strong>I am rendering page '{{ page.title }}'!</strong></p>
+            </div>
         {% endblock %}
 
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
 
         <div role='main'>
             <div class='socialwidgets clearfix'>
