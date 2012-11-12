@@ -39,14 +39,14 @@ class ContentPage extends AbstractPage implements HasPagePartsInterface
      */
     public function getPossibleChildTypes()
     {
-        return array(
+        return array (
             array(
                 'name' => 'ContentPage',
-                'class' => "Kadeke\KadekeBundle\Entity\ContentPage"
+                'class'=> "{{ namespace }}\Entity\ContentPage"
             ),
-            array (
+            array(
                 'name' => 'FormPage',
-                'class' => "Kadeke\KadekeBundle\Entity\FormPage"
+                'class'=> "{{ namespace }}\Entity\FormPage"
             )
         );
     }
