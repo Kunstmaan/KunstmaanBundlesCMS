@@ -39,7 +39,11 @@ class HomePage extends AbstractPage implements HasPagePartsInterface
         return array(
             array(
                 'name' => 'ContentPage',
-                'class'=> "{{ namespace }}\Entity\ContentPage"
+                'class' => "Kadeke\KadekeBundle\Entity\ContentPage"
+            ),
+            array (
+                'name' => 'FormPage',
+                'class' => "Kadeke\KadekeBundle\Entity\FormPage"
             )
         );
     }
