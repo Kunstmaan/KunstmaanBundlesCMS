@@ -6,7 +6,7 @@
 	    // Handle click of OK button
 	    function handleOK(result) {
 	    	if (window.opener) {
-	    		{% if cKEditorFuncNum is defined %}
+	    		{% if cKEditorFuncNum is not empty %}
                 	window.opener.CKEDITOR.tools.callFunction({{ cKEditorFuncNum }}, result.imgpath);
 	    		{% else %}
     	    	    window.opener.dialogWin.returnedValue = result;
