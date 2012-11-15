@@ -205,6 +205,8 @@ class NodeAdminController extends Controller
 
         $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
+        $this->get('session')->getFlashBag()->add('success', 'Page has been published!');
+
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
 
@@ -237,6 +239,8 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
+
+        $this->get('session')->getFlashBag()->add('success', 'Page has been unpublished!');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
@@ -273,6 +277,8 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
+
+        $this->get('session')->getFlashBag()->add('success', 'Page has been deleted!');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeParent->getId())));
     }
@@ -323,6 +329,8 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         $this->get('event_dispatcher')->dispatch(Events::REVERT, new RevertNodeAction($node, $nodeTranslation, $newNodeVersion, $clonedPage, $nodeVersion, $page));
+
+        $this->get('session')->getFlashBag()->add('success', 'Page has been reverted!');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
             'id' => $id,
@@ -484,6 +492,8 @@ class NodeAdminController extends Controller
                 }
 
                 $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
+
+                $this->get('session')->getFlashBag()->add('success', 'Page has been edited!');
 
                 return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
                     'id' => $node->getId(),
