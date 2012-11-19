@@ -147,8 +147,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = array_merge($params, $this->getExtraParameters());
 
+        $friendlyName = explode("\\", $this->getEntityName());
+        $friendlyName = array_pop($friendlyName);
+
         return array(
-            strtolower($this->getEntityName()) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
+            strtolower($friendlyName) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
                                                         'params' => $params)
         );
     }
@@ -649,11 +652,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function getPathByConvention($suffix = null)
     {
+        $entityName = strtolower($this->getEntityName());
+        $entityName = str_replace('\\', '_', $entityName);
         if (empty($suffix)) {
-            return sprintf('%s_admin_%s', $this->getBundleName(), strtolower($this->getEntityName()));
+            return sprintf('%s_admin_%s', $this->getBundleName(), $entityName);
         }
 
-        return sprintf('%s_admin_%s_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
+        return sprintf('%s_admin_%s_%s', $this->getBundleName(), $entityName, $suffix);
     }
 
     /**
