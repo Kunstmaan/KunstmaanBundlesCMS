@@ -147,7 +147,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     /**
      * Override controller path (because actions for different entities are defined in a single Settings controller).
      *
-     * @return stringadaptQueryBuilder
+     * @return string
      */
     public function getControllerPath()
     {
