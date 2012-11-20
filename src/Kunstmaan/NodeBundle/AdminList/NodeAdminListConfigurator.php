@@ -162,10 +162,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         parent::adaptQueryBuilder($queryBuilder);
 
         $queryBuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id');
-	    $queryBuilder->innerJoin('b.nodeVersions', 'nv', 'WITH', 'b.publicNodeVersion = nv.id');
+        $queryBuilder->innerJoin('b.nodeVersions', 'nv', 'WITH', 'b.publicNodeVersion = nv.id');
         $queryBuilder->andWhere('b.lang = :lang');
         $queryBuilder->andWhere('n.deleted = 0');
-	    $queryBuilder->addOrderBy("nv.updated", "DESC");
+        $queryBuilder->addOrderBy("nv.updated", "DESC");
         $queryBuilder->setParameter('lang', $this->locale);
     }
 
