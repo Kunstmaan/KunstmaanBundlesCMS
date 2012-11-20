@@ -82,24 +82,24 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/Resources/views';
 
-        $this->filesystem->copy($fullSkeletonDir . '/Default/index.html.twig', $dirPath . '/Resources/views/Default/index.html.twig');
+        $this->filesystem->copy($fullSkeletonDir . '/Default/index.html.twig', $dirPath . '/Resources/views/Default/index.html.twig', true);
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Resources/views/Default/index.html.twig');
 
         $this->renderFile($fullSkeletonDir, '/Page/layout.html.twig', $dirPath . '/Resources/views/Page/layout.html.twig', $parameters);
 
-        $this->filesystem->copy($fullSkeletonDir . '/ContentPage/view.html.twig', $dirPath . '/Resources/views/ContentPage/view.html.twig');
+        $this->filesystem->copy($fullSkeletonDir . '/ContentPage/view.html.twig', $dirPath . '/Resources/views/ContentPage/view.html.twig', true);
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/ContentPage/view.html.twig');
 
-        $this->filesystem->copy($fullSkeletonDir . '/Form/fields.html.twig', $dirPath . '/Resources/views/Form/fields.html.twig');
+        $this->filesystem->copy($fullSkeletonDir . '/Form/fields.html.twig', $dirPath . '/Resources/views/Form/fields.html.twig', true);
 
-        $this->filesystem->copy($fullSkeletonDir . '/FormPage/view.html.twig', $dirPath . '/Resources/views/FormPage/view.html.twig');
+        $this->filesystem->copy($fullSkeletonDir . '/FormPage/view.html.twig', $dirPath . '/Resources/views/FormPage/view.html.twig', true);
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/FormPage/view.html.twig');
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/views/FormPage/view.html.twig');
 
-        $this->filesystem->copy($fullSkeletonDir . '/HomePage/view.html.twig', $dirPath . '/Resources/views/HomePage/view.html.twig');
+        $this->filesystem->copy($fullSkeletonDir . '/HomePage/view.html.twig', $dirPath . '/Resources/views/HomePage/view.html.twig', true);
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/HomePage/view.html.twig');
 
-        $this->filesystem->copy($fullSkeletonDir . '/Layout/layout.html.twig', $dirPath . '/Resources/views/Layout/layout.html.twig');
+        $this->filesystem->copy($fullSkeletonDir . '/Layout/layout.html.twig', $dirPath . '/Resources/views/Layout/layout.html.twig', true);
         GeneratorUtils::replace("~~~CSS~~~", "{% include '" . $bundle->getName() .":Layout:_css.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
         GeneratorUtils::replace("~~~TOP_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_header.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
         GeneratorUtils::replace("~~~FOOTER_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_footer.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
