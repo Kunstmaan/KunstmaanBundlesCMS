@@ -1,5 +1,7 @@
-{% if resource.link is defined and resource.link != "" %}
-	<p><a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}><img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" /></a></p>
-{% else %}
-	<p><img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" /></p>
+{% if resource.media is not empty %}
+    {% if resource.link is defined and resource.link != "" %}
+    	<p><a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}><img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" /></a></p>
+    {% else %}
+    	<p><img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" /></p>
+    {% endif %}
 {% endif %}

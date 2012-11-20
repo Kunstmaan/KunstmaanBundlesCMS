@@ -27,7 +27,7 @@ class VideoPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser_videochooser'));
+        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser', 'mediatype' => 'video'));
     }
 
     /**
