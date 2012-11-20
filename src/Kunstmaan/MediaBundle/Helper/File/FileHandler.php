@@ -67,13 +67,13 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
+     * @param mixed $object
      *
      * @return bool
      */
-    public function canHandle(Media $media)
+    public function canHandle($object)
     {
-        if (is_file($media->getContent()) || $media->getLocation() == 'local') {
+        if ($object instanceof File || ($object instanceof Media && (is_file($object->getContent()) || $object->getLocation() == 'local'))) {
             return true;
         }
 

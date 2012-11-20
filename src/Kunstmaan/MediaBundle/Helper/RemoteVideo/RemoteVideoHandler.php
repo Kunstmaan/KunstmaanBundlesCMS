@@ -47,13 +47,13 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
+     * @param mixed $object
      *
      * @return bool
      */
-    public function canHandle(Media $media)
+    public function canHandle($object)
     {
-        if ($media->getContentType() == RemoteVideoHandler::CONTENT_TYPE) {
+        if ((is_string($object)) || ($object instanceof Media && $object->getContentType() == RemoteVideoHandler::CONTENT_TYPE)) {
             return true;
         }
 
@@ -94,7 +94,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 break;
             case 'dailymotion':
                 $json = json_decode(file_get_contents("https://api.dailymotion.com/video/".$code."?fields=thumbnail_large_url"));
-                $thumbnailUrl = $json->thumbnail_large_url;
+                $thumbnailUrl = $json->{"thumbnail_large_url"};
                 /* dirty hack to fix urls for imagine */
                 if (!$this->endsWith($thumbnailUrl, '.jpg') && !$this->endsWith($thumbnailUrl, '.png')) {
                     $thumbnailUrl = $thumbnailUrl.'&ext=.jpg';

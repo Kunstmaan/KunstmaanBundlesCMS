@@ -28,7 +28,7 @@ class ChooserController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        /* @var Folder $firstGallery */
+        /* @var Folder $firstFolder */
         $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
         //TODO get the first topfolder
 

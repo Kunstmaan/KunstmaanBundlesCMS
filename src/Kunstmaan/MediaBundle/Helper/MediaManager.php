@@ -33,7 +33,7 @@ class MediaManager
      *
      * @throws \InvalidArgumentException when there is no context for this name
      */
-    public function getHandler(Media $media)
+    public function getHandler($media)
     {
         foreach ($this->handlers as $handler) {
             if ($handler->canHandle($media)) {
