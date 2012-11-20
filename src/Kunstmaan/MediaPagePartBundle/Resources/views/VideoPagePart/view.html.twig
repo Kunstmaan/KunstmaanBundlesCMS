@@ -1,20 +1,3 @@
-{% if pagepartref is defined %}
-	<script>
-		$(document).ready(function() {
-		    {# $('a#link_pagepartadmin_main_{{ pagepartref.id }}_media').on('click', function(ev) { #}
-		   	$('select#form_pagepartadmin_main_{{ pagepartref.id }}_media').on('click', function(ev) {
-			   	ev.preventDefault();
-		        window.open("{{ path('KunstmaanMediaBundle_chooser_videochooser') }}", "_blank","toolbar=0,width=800,height=600");
-		    });
-		});
-
-		window.VideoChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
-		    $('select#form_pagepartadmin_main_{{ pagepartref.id }}_media').val(id);
-		}
-	</script>
-	{# <a id="link_pagepartadmin_main_{{ pagepartref.id }}_media" href="">{{ 'Select file' | trans }}</a> #}
-{% endif %}
-
 {% if resource.media is defined and resource.media != "" %}
-	{% include 'KunstmaanMediaBundle:Video:'~ resource.media.type ~'.html.twig' with {'media': resource.media} %}
+	{% include 'KunstmaanMediaBundle:Media\\RemoteVideo:preview.html.twig' with {'media': resource.media} %}
 {% endif %}

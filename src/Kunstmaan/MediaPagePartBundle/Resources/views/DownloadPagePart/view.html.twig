@@ -1,20 +1,7 @@
-{% if pagepartref is defined %}
-	<script>
-		$(document).ready(function() {
-		    {# $('a#link_pagepartadmin_main_{{ pagepartref.id }}_media').on('click', function(ev) { #}
-		   	$('select#form_pagepartadmin_main_{{ pagepartref.id }}_media').on('click', function(ev) {
-			   	ev.preventDefault();
-		        window.open("{{ path('KunstmaanMediaBundle_chooser_filechooser') }}", "_blank","toolbar=0,width=800,height=600");
-		    });
-		});
-
-		window.FileChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
-		    $('select#form_pagepartadmin_main_{{ pagepartref.id }}_media').val(id);
-		}
-	</script>
-	{# <a id="link_pagepartadmin_main_{{ pagepartref.id }}_media" href="">{{ 'Select file' | trans }}</a> #}
-{% endif %}
-
-{% if resource is defined and resource != "" %}
-	<p class="download"><a href="{{ asset(upload_dir~resource.media.show()) }}" target="_blank" class="download">{{ resource.media.name }}</a> <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span>
+{% if resource.media is not empty %}
+    {% set name = resource.media.name %}
+    {% if name is empty %}
+        {% set name = "Download" %}
+    {% endif %}
+	<p class="download"><a href="{{ asset(upload_dir~resource.media.show()) }}" target="_blank" class="download">{{ name }}</a> <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span>
 {% endif %}
