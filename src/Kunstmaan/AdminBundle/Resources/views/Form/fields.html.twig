@@ -38,29 +38,29 @@
     {% spaceless %}
         <div class="input_prop{% if errors|length > 0 %} error{% endif %}">
             {{ form_label(form) }}
-            {% if required %}
-                <span class="help-inline">{{ 'This is a required field' | trans }}</span>
-            {% endif %}
             <div class="input">
                 {{ form_widget(form) }}
+                {% if required %}
+                    <span class="help-inline">{{ 'This is a required field' | trans }}</span>
+                {% endif %}
                 {% if max_length %}
-                <style>
-                    {#TODO frontend: add this to site.css#}
-                    .help-inline.error {
-                        color: #B94A48;
-                    }
-                </style>
-                <script>
-                    jQuery(document).ready(function(){
-                    	$("#{{ id }}").charCount({
-                            allowed: {{ max_length }},
-                            counterText: 'Characters left: ',
-                            css: 'help-inline',
-                            cssExceeded: 'error'
+                    <style>
+                        {#TODO frontend: add this to site.css#}
+                        .help-inline.error {
+                            color: #B94A48;
+                        }
+                    </style>
+                    <script>
+                        jQuery(document).ready(function(){
+                        	$("#{{ id }}").charCount({
+                                allowed: {{ max_length }},
+                                counterText: 'Characters left: ',
+                                css: 'help-inline',
+                                cssExceeded: 'error'
+                            });
+                        	$("#{{ id }}").attr('maxlength', '');
                         });
-                    	$("#{{ id }}").attr('maxlength', '');
-                    });
-                </script>
+                    </script>
                 {% endif %}
                 {{ form_errors(form) }}
             </div>
