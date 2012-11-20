@@ -75,7 +75,7 @@
             		        <li>
             		            {% set handler = mediamanager.getHandler(media) %}
                                 {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
-            		            <a onclick="handleOK({imgpath: '{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}', path:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name }}', id:'{{media.id}}'});return false;" class="thumbnail" href="#">
+            		            <a onclick="handleOK({imgpath: '{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}', path:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name|escape('js') }}', id:'{{media.id}}'});return false;" class="thumbnail" href="#">
             		                {% if thumbnailurl %}
             		                    <img src="{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
             		                {% else %}
