@@ -7,7 +7,7 @@
 	    function handleOK(result) {
 	    	if (window.opener) {
 	    		{% if cKEditorFuncNum is not empty %}
-                	window.opener.CKEDITOR.tools.callFunction({{ cKEditorFuncNum }}, result.imgpath);
+                	window.opener.CKEDITOR.tools.callFunction({{ cKEditorFuncNum }}, result.path);
 	    		{% else %}
     	    	    window.opener.dialogWin.returnedValue = result;
     	    		window.opener.dialogWin.returnFunc();
@@ -55,7 +55,7 @@
             </div>
         </aside>
 		<div class="content">
-        	<h1>{{ folder.name | trans }}{% if folder.parent %} <small>{{ 'media.folder.sub' | trans }} <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', { 'folderId': folder.parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ folder.parent.name | trans }}</a></small>{% endif %}</h1>
+        	<h1>{{ folder.name | trans }}</h1>
 
         	<section class="map-list">
                 <table class="table">
@@ -75,7 +75,7 @@
             		        <li>
             		            {% set handler = mediamanager.getHandler(media) %}
                                 {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
-            		            <a onclick="handleOK({imgpath:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name|escape('js') }}', id:'{{media.id}}'});return false;" class="thumbnail" href="#">
+            		            <a onclick="handleOK({imgpath: '{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}', path:'{{ asset(upload_dir~media.show()) }}', title:'{{ media.name|escape('js') }}', id:'{{media.id}}'});return false;" class="thumbnail" href="#">
             		                {% if thumbnailurl %}
             		                    <img src="{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
             		                {% else %}
