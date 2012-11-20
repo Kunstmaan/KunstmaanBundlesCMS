@@ -20,7 +20,7 @@
 {% block messages %}
     {% if not draft and nodeTranslation.isOnline %}
         <div class="alert alert-block">
-            <strong>{{ "Warning" | trans }}: </strong>{{ "Changes you save will be performed on the live page" | trans }}
+            <strong>{{ "Warning" | trans }}: </strong>{{ "Attention, changes are immediately online" | trans }}
         </div>
     {% endif %}
     {% if form_has_errors_recursive(form) %}
