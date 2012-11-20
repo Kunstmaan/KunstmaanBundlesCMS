@@ -107,6 +107,10 @@ class RemoteSlideHelper
      */
     public function getType()
     {
+        if (empty($this->media->metadata['type'])) {
+            return null;
+        }
+
         return $this->media->metadata['type'];
     }
 

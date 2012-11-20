@@ -1,11 +1,5 @@
 {% extends 'KunstmaanMediaBundle:Media:show.html.twig' %}
 
 {% block preview %}
-    {% if helper.type == 'youtube' %}
-        <iframe width="560" height="315" src="http://www.youtube.com/embed/{{ helper.code }}" frameborder="0" allowfullscreen></iframe>
-    {% elseif helper.type == 'vimeo' %}
-        <iframe src="http://player.vimeo.com/video/{{ helper.code }}" width="500" height="290" frameborder="0"></iframe>
-    {% elseif helper.type == 'dailymotion' %}
-        <iframe frameborder="0" width="480" height="270" src="http://www.dailymotion.com/embed/video/{{ helper.code }}"></iframe>
-    {% endif %}
+    {% include 'KunstmaanMediaBundle:Media\\RemoteVideo:preview.html.twig' with {'media': media} %}
 {% endblock %}
