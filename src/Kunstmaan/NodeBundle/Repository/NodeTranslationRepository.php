@@ -191,11 +191,13 @@ class NodeTranslationRepository extends EntityRepository
         }
 
         $nodeTranslation = new NodeTranslation();
-        $nodeTranslation->setNode($node);
-        $nodeTranslation->setLang($lang);
-        $nodeTranslation->setTitle($hasNode->getTitle());
-        $nodeTranslation->setSlug(Slugifier::slugify($hasNode->getTitle(), ''));
-        $nodeTranslation->setOnline(false);
+        $nodeTranslation
+            ->setNode($node)
+            ->setLang($lang)
+            ->setTitle($hasNode->getTitle())
+            ->setSlug(Slugifier::slugify($hasNode->getTitle(), ''))
+            ->setOnline(false)
+            ->setWeight(0);
 
         $em->persist($nodeTranslation);
 
