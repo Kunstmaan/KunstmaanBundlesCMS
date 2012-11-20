@@ -44,13 +44,13 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media $media
+     * @param mixed $object
      *
      * @return bool
      */
-    public function canHandle(Media $media)
+    public function canHandle($object)
     {
-        if ($media->getContentType() == RemoteSlideHandler::CONTENT_TYPE) {
+        if ((is_string($object)) || ($object instanceof Media && $object->getContentType() == RemoteSlideHandler::CONTENT_TYPE)) {
             return true;
         }
 
@@ -151,7 +151,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                     $slide = new RemoteSlideHelper($result);
                     $slide->setType('slideshare');
                     $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url='.$data.'&format=json'));
-                    $slide->setCode($json->slideshow_id);
+                    $slide->setCode($json->{"slideshow_id"});
                     $result = $slide->getMedia();
                     $result->setName('SlideShare ' . $data);
                     break;

@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Image;
 
+use Symfony\Component\HttpFoundation\File\File;
+
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
@@ -16,8 +18,7 @@ class ImageHandler extends FileHandler
     protected $aviaryApiKey;
 
     /**
-     * @param ImageManipulatorInterface $imageManipulator The image manipulator
-     * @param string                    $aviaryApiKey     The aviary key
+     * @param string $aviaryApiKey The aviary key
      */
     public function __construct($aviaryApiKey)
     {
@@ -50,13 +51,13 @@ class ImageHandler extends FileHandler
     }
 
     /**
-     * @param Media $media
+     * @param mixed $object
      *
      * @return bool
      */
-    public function canHandle(Media $media)
+    public function canHandle($object)
     {
-        if (parent::canHandle($media) && strpos($media->getContentType(), 'image') === 0) {
+        if (parent::canHandle($object) && ($object instanceof File || strpos($object->getContentType(), 'image') === 0)) {
             return true;
         }
 

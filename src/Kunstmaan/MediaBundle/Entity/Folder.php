@@ -237,20 +237,6 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * Add folder
-     *
-     * @param Folder $folder
-     *
-     * @return Folder
-     */
-    public function addGallery(Folder $folder)
-    {
-        $this->children[] = $folder;
-
-        return $this;
-    }
-
-    /**
      * Add a child
      *
      * @param Folder $child
