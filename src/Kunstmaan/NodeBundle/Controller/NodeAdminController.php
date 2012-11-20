@@ -474,8 +474,8 @@ class NodeAdminController extends Controller
 
                 $nodeTranslation->setTitle($page->getTitle());
                 $this->em->persist($nodeTranslation);
-	            $nodeVersion->setUpdated(new DateTime());
-	            $this->em->persist($nodeVersion);
+                $nodeVersion->setUpdated(new DateTime());
+                $this->em->persist($nodeVersion);
                 $tabPane->persist($this->em);
                 $this->em->flush();
 
