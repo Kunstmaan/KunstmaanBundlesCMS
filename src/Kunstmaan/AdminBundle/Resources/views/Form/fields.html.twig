@@ -38,6 +38,9 @@
     {% spaceless %}
         <div class="input_prop{% if errors|length > 0 %} error{% endif %}">
             {{ form_label(form) }}
+            {% if required %}
+                <span class="help-inline">{{ 'This is a required field' | trans }}</span>
+            {% endif %}
             <div class="input">
                 {{ form_widget(form) }}
                 {% if max_length %}
