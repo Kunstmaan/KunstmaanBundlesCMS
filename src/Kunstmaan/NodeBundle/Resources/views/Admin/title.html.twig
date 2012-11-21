@@ -1,0 +1,5 @@
+{% if adminlist.canEdit(row) %}
+    <span class="actions"><a href="{{ path(adminlist.getEditUrlFor(row)["path"], adminlist.getEditUrlFor(row)[("params")] ) }}">{{adminlist.getStringValue(row, columnName)}}</a></span>
+{% else %}
+    {{adminlist.getStringValue(row, columnName)}}
+{% endif %}
