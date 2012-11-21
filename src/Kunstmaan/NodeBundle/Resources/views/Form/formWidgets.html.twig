@@ -19,3 +19,11 @@
 {% endspaceless %}
 {% endblock urlchooser_widget %}
 
+{% block slug_widget %}
+{% spaceless %}
+    <div id="{{ id }}_widget">
+        <input type="text" name="{{ full_name }}" value="{% if(value is defined) %}{{ value }}{% endif %}"/>
+    </div>
+    <span class="help-inline">{{ 'Prefix' | trans }}: {{ prefix }}</span>
+{% endspaceless %}
+{% endblock slug_widget %}
