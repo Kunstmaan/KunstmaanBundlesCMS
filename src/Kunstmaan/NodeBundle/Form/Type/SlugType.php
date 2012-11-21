@@ -48,7 +48,7 @@ class SlugType extends AbstractType
             $parentNode = $nodeTranslation->getNode()->getParent();
             if ($parentNode != null) {
                 $nodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang(), true);
-                $view->set('prefix', '/'.$nodeTranslation->getSlugPart());
+                $view->set('prefix', '/'.$nodeTranslation->getSlugPart().'/');
             }
     }
 }
