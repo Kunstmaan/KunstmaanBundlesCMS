@@ -24,7 +24,8 @@ class NodeTranslationAdminType extends AbstractType
             'choice',
             array(
                 'choices'     => array_combine(range(-50, 50), range(-50, 50)),
-                'empty_value' => false
+                'empty_value' => false,
+                'attr' => array('title' => 'Used to reorder the pages.')
             )
         );
     }
