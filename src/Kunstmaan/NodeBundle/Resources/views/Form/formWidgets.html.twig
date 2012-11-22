@@ -19,3 +19,19 @@
 {% endspaceless %}
 {% endblock urlchooser_widget %}
 
+{% block slug_widget %}
+{% spaceless %}
+    <div id="{{ id }}_widget">
+        <input type="text" name="{{ full_name }}" id="{{ id }}" value="{% if(value is defined) %}{{ value }}{% endif %}"/>
+    </div>
+    <span class="help-inline" id="{{ id }}_preview"></span>
+    <script>
+        var updateSlugPreview = function(){
+        	jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: {{ path('_slug', {'url': ''})}}{{ prefix }}'+jQuery('#{{ id }}').val());
+        };
+        jQuery('#{{ id }}').change(updateSlugPreview);
+        jQuery('#{{ id }}').keyup(updateSlugPreview);
+        updateSlugPreview();
+    </script>
+{% endspaceless %}
+{% endblock slug_widget %}
