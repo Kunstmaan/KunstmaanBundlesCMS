@@ -87,7 +87,7 @@ class NodeAdminController extends Controller
 
     /**
      * @Route("/", name="KunstmaanNodeBundle_nodes")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     * @Template("KunstmaanNodeBundle:Admin:list.html.twig")
      *
      * @return array
      */
