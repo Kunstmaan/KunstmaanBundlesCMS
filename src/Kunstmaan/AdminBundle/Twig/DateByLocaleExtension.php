@@ -19,7 +19,7 @@ class DateByLocaleExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'localeDate' => new \Twig_Filter_Function('\Kunstmaan\AdminBundle\Twig\Extension\DateByLocaleExtension::localeDateFilter')
+            'localeDate' => new \Twig_Filter_Function('\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter')
         );
     }
 
@@ -40,10 +40,11 @@ class DateByLocaleExtension extends \Twig_Extension
      * @param string $locale   The locale
      * @param string $dateType The date type
      * @param string $timeType The time type
+     * @param string $pattern  The pattern to use
      *
      * @return string
      */
-    public static function localeDateFilter($date, $locale="nl", $dateType = 'medium', $timeType = 'none')
+    public static function localeDateFilter($date, $locale = "nl", $dateType = 'medium', $timeType = 'none', $pattern = null)
     {
         $values = array(
             'none' => DateFormatter::NONE,
@@ -51,12 +52,23 @@ class DateByLocaleExtension extends \Twig_Extension
             'medium' => DateFormatter::MEDIUM,
             'long' => DateFormatter::LONG,
             'full' => DateFormatter::FULL,
-         );
+        );
 
-        $dateFormatter = DateFormatter::create(
-            $locale,
-            $values[$dateType],
-            $values[$timeType], 'Europe/Brussels');
+        if (is_null($pattern)) {
+            $dateFormatter = DateFormatter::create(
+                $locale,
+                $values[$dateType],
+                $values[$timeType], 'Europe/Brussels'
+            );
+        } else {
+            $dateFormatter = DateFormatter::create(
+                $locale,
+                $values[$dateType],
+                $values[$timeType], 'Europe/Brussels',
+                DateFormatter::GREGORIAN,
+                $pattern
+            );
+        }
 
         return $dateFormatter->format($date);
     }
