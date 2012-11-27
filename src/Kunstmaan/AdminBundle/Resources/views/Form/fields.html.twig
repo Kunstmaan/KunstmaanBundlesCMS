@@ -62,6 +62,20 @@
                         });
                     </script>
                 {% endif %}
+                {% if attr['mask'] is defined %}
+                    <script>
+                        jQuery(document).ready(function(){
+                            $("#{{ id }}").inputmask("{{ attr['mask'] }}");
+                        });
+                    </script>
+                {% endif %}
+                {% if attr['title'] is defined %}
+                    <script>
+                        jQuery(document).ready(function(){
+                            $("#{{ id }}").tooltip();
+                        });
+                    </script>
+                {% endif %}
                 {{ form_errors(form) }}
             </div>
         </div>
