@@ -18,13 +18,14 @@ class NodeTranslationAdminType extends AbstractType
     {
         $builder->add('id', 'hidden');
         //$builder->add('node', 'entity_id', array('class' => 'Kunstmaan\NodeBundle\Entity\Node'));
-        $builder->add('slug', 'slug');
+        $builder->add('slug', 'slug', array('required' => false));
         $builder->add(
             'weight',
             'choice',
             array(
                 'choices'     => array_combine(range(-50, 50), range(-50, 50)),
                 'empty_value' => false,
+                'required' => false,
                 'attr' => array('title' => 'Used to reorder the pages.')
             )
         );
