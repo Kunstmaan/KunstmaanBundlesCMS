@@ -74,35 +74,40 @@
 
 {# Misc #}
 
+{% block datetime_widget %}
+    {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
+    <div class="datetime">
+        {{ block('base_datetime_widget') }}
+    </div>
+{% endblock %}
+
 {% block date_widget %}
+    {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
     {% if widget == 'single_text' %}
         <script>
             jQuery(document).ready(function(){
                 $("#{{ id }}").inputmask("date");
             });
         </script>
-        {{ block('form_widget') }}
+    {% endif %}
+    {{ block('base_date_widget') }}
+    {% if widget == 'single_text' %}
         <script>
             $("#{{ id }}").addClass('form_datepicker');
         </script>
-    {% else %}
-        {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
-        {{ block('base_date_widget') }}
     {% endif %}
 {% endblock date_widget %}
 
 {% block time_widget %}
+    {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
     {% if widget == 'single_text' %}
         <script>
             jQuery(document).ready(function(){
                 $("#{{ id }}").inputmask("hh:mm");
             });
         </script>
-        {{ block('form_widget') }}
-    {% else %}
-        {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
-        {{ block('base_time_widget') }}
     {% endif %}
+    {{ block('base_time_widget') }}
 {% endblock time_widget %}
 
 {% block form_errors %}
