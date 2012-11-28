@@ -82,11 +82,9 @@
             });
         </script>
         {{ block('form_widget') }}
-        {% if widget == 'single_text' %}
-            <script>
-                $("#{{ id }}").addClass('form_datepicker');
-            </script>
-        {% endif %}
+        <script>
+            $("#{{ id }}").addClass('form_datepicker');
+        </script>
     {% else %}
         {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
         {{ block('base_date_widget') }}
