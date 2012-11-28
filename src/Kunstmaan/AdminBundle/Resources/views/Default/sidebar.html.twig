@@ -12,16 +12,11 @@
             </form>
         </div>
         <div class="tree clearfix">
-        	<ul>
-                {% set currentMenuItem = adminmenu.current %}
-                <li class="jstree-open {% if lowestTopChild.internalname == currentMenuItem.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}>
-                	<a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}">{{ lowestTopChild.internalname | trans }}</a>
-        	        <ul>
-                		{% for menuitem in navigationChildren %}
-                            {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
-                        {% endfor %}
-                    </ul>
-            	</li>
+            {% set currentMenuItem = adminmenu.current %}
+   	        <ul>
+           		{% for menuitem in navigationChildren %}
+                    {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
+                {% endfor %}
             </ul>
         </div>
     </aside>
