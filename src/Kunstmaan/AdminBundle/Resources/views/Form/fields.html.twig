@@ -59,10 +59,10 @@
                     });
                 </script>
                 {% endif %}
-                {% if attr['mask'] is defined %}
+                {% if attr['title'] is defined %}
                     <script>
                         jQuery(document).ready(function(){
-                            $("#{{ id }}").inputmask("{{ attr['mask'] }}");
+                            $("#{{ id }}").tooltip();
                         });
                     </script>
                 {% endif %}
@@ -73,6 +73,39 @@
 {% endblock form_row %}
 
 {# Misc #}
+
+{% block date_widget %}
+    {% if widget == 'single_text' %}
+        <script>
+            jQuery(document).ready(function(){
+                $("#{{ id }}").inputmask("date");
+            });
+        </script>
+        {{ block('form_widget') }}
+        {% if widget == 'single_text' %}
+            <script>
+                $("#{{ id }}").addClass('form_datepicker');
+            </script>
+        {% endif %}
+    {% else %}
+        {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
+        {{ block('base_date_widget') }}
+    {% endif %}
+{% endblock date_widget %}
+
+{% block time_widget %}
+    {% if widget == 'single_text' %}
+        <script>
+            jQuery(document).ready(function(){
+                $("#{{ id }}").inputmask("hh:mm");
+            });
+        </script>
+        {{ block('form_widget') }}
+    {% else %}
+        {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
+        {{ block('base_time_widget') }}
+    {% endif %}
+{% endblock time_widget %}
 
 {% block form_errors %}
     {% spaceless %}
