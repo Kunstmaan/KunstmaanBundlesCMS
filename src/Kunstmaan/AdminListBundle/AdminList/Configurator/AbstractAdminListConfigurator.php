@@ -612,7 +612,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         if (!is_null($request->query->get('orderDirection'))) {
             $this->orderDirection = $request->query->get('orderDirection');
         }
-        $this->filterBuilder->bindRequest($request);
+        $this->getFilterBuilder()->bindRequest($request);
     }
 
     /**
