@@ -95,6 +95,8 @@ class PagePartTab extends Tab
      */
     public function bindRequest(Request $request)
     {
+        parent::bindRequest($request);
+
         $this->pagePartAdmin->bindRequest($request);
 
         if ($editPagePart = $request->get('edit') && isset($editPagePart)) {
@@ -107,6 +109,8 @@ class PagePartTab extends Tab
      */
     public function persist(EntityManager $em)
     {
+        parent::persist($em);
+
         $this->pagePartAdmin->postBindRequest($this->request);
     }
 
