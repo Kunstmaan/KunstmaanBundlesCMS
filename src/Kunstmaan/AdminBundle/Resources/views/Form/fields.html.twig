@@ -117,6 +117,8 @@
             });
         </script>
     {% endif %}
+    {# type="time" shows am/pm in chrome #}
+    {% set type = 'text' %}
     {{ block('base_time_widget') }}
 {% endblock time_widget %}
 
