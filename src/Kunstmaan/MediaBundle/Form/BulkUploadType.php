@@ -43,7 +43,8 @@ class BulkUploadType extends AbstractType
                   "attr" => array(
                       "accept" => $this->accept,
                       "multiple" => "multiple",
-                  )
+                  ),
+                  'data_class' => null
              )
         );
     }
