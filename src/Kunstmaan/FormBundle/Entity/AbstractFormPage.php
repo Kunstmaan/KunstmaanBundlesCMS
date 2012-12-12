@@ -170,7 +170,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     {
         $thanksParam = $request->get('thanks');
         if (!empty($thanksParam)) {
-            $result["thanks"] = true;
+            $context["thanks"] = true;
 
             return null;
         }
