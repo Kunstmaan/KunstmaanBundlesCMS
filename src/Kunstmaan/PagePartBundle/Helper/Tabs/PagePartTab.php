@@ -99,7 +99,8 @@ class PagePartTab extends Tab
 
         $this->pagePartAdmin->bindRequest($request);
 
-        if ($editPagePart = $request->get('edit') && isset($editPagePart)) {
+        $editPagePart = $request->get('edit');
+        if (isset($editPagePart)) {
             $request->getSession()->set('editpagepart', $editPagePart);
         }
     }

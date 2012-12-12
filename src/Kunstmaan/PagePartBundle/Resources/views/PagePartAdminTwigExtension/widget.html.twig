@@ -80,7 +80,7 @@
             	{% else %}
             		{% set editmode = false %}
             	{% endif %}
-                <div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %}>
+                <div class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %} {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %}>
                     {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
                     <div class="block" id="{{pagepartref.id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
