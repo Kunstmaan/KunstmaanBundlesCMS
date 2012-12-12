@@ -65,7 +65,7 @@
 
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
 
-        	<div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="pagepart">
+        	<div class="pagepart">
             	<a id="{{pagepartadmin.context}}pagepart{{ loop.index }}" ></a>
             	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
             		<i class="icon-move"></i>
@@ -80,7 +80,7 @@
             	{% else %}
             		{% set editmode = false %}
             	{% endif %}
-                <div class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %}>
+                <div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %}>
                     {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
                     <div class="block" id="{{pagepartref.id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
