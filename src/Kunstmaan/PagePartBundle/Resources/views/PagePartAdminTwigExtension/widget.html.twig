@@ -37,6 +37,8 @@
     	<section class="draggable" id="{{pagepartref.id}}_container" >
 
 	        <script>
+                var isOpen_{{pagepartref.id}} = false;
+
 	            function delete_{{pagepartref.id}}(){
 	            	isEdited = true;
 	                document.getElementById('{{pagepartref.id}}_deleted').value = 'true';
@@ -47,14 +49,14 @@
 	            }
 	            function edit_{{pagepartref.id}}(){
 	            	isEdited = true;
-                    if(isOpen) {
+                    if(isOpen_{{pagepartref.id}}) {
                         document.getElementById('{{pagepartref.id}}_edit').style.display = 'none';
                         document.getElementById('{{pagepartref.id}}_view').style.display = '';
-                        isOpen = false;
+                        isOpen_{{pagepartref.id}} = false;
                     } else {
                         document.getElementById('{{pagepartref.id}}_edit').style.display = '';
                         document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
-                        isOpen = true;
+                        isOpen_{{pagepartref.id}} = true;
                     }
                     window.activeEdit = '{{pagepartref.id}}';
 	                return false;
