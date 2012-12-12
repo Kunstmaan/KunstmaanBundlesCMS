@@ -47,8 +47,15 @@
 	            }
 	            function edit_{{pagepartref.id}}(){
 	            	isEdited = true;
-	                document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
-	                document.getElementById('{{pagepartref.id}}_edit').style.display = '';
+                    if(isOpen) {
+                        document.getElementById('{{pagepartref.id}}_edit').style.display = 'none';
+                        document.getElementById('{{pagepartref.id}}_view').style.display = '';
+                        isOpen = false;
+                    } else {
+                        document.getElementById('{{pagepartref.id}}_edit').style.display = '';
+                        document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
+                        isOpen = true;
+                    }
                     window.activeEdit = '{{pagepartref.id}}';
 	                return false;
 	            }
