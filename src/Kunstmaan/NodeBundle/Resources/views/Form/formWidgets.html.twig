@@ -27,7 +27,7 @@
     <span class="help-inline" id="{{ id }}_preview"></span>
     <script>
         var updateSlugPreview = function(){
-        	jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: {{ path('_slug', {'url': ''})}}{{ prefix|default('') }}'+jQuery('#{{ id }}').val());
+        	jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: {{ path('_slug', {'url': prefix|default('')})}}'+jQuery('#{{ id }}').val());
         };
         jQuery('#{{ id }}').change(updateSlugPreview);
         jQuery('#{{ id }}').keyup(updateSlugPreview);
