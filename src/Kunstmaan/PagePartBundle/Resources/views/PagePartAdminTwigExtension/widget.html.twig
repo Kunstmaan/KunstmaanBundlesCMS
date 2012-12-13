@@ -15,11 +15,10 @@
 
 
 <div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
-    {% set editPagePartRaw = app.request.session.get('editpagepart') %}
+    {% set editPagePartRaw = app.request.get('editpagepart') %}
 	{% if editPagePartRaw is defined and editPagePartRaw !="" %}
 		{% set editpagepart = editPagePartRaw + 2 %}
 	{% endif %}
-
 
 	<div class="new_pagepart first">
 	  <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
