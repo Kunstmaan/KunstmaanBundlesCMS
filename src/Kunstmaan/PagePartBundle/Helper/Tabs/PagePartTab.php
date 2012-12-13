@@ -98,11 +98,6 @@ class PagePartTab extends Tab
         parent::bindRequest($request);
 
         $this->pagePartAdmin->bindRequest($request);
-
-        /*$editPagePart = $request->get('edit');
-        if (isset($editPagePart)) {
-            $request->getSession()->set('editpagepart', $editPagePart);
-        }*/
     }
 
     /**
