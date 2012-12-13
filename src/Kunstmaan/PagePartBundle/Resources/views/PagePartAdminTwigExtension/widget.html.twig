@@ -36,7 +36,11 @@
     	<section class="draggable" id="{{pagepartref.id}}_container" >
 
 	        <script>
-                var isOpen_{{pagepartref.id}} = false;
+                {% if (editpagepart is defined and editpagepart == loop.index) or form_has_errors_recursive(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) %}
+                    var isOpen_{{pagepartref.id}} = true;
+                {% else %}
+                    var isOpen_{{pagepartref.id}} = false;
+                {% endif %}
 
 	            function delete_{{pagepartref.id}}(){
 	            	isEdited = true;
