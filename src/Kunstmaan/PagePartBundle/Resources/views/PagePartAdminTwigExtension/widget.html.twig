@@ -15,11 +15,10 @@
 
 
 <div class="pagepartscontainer" id="parts_{{pagepartadmin.context}}">
-    {% set editPagePartRaw = app.request.session.get('editpagepart') %}
+    {% set editPagePartRaw = app.request.get('editpagepart') %}
 	{% if editPagePartRaw is defined and editPagePartRaw !="" %}
 		{% set editpagepart = editPagePartRaw + 2 %}
 	{% endif %}
-
 
 	<div class="new_pagepart first">
 	  <select onchange="return doAddpagepart_{{pagepartadmin.context}}(this, '-1')">
@@ -37,6 +36,12 @@
     	<section class="draggable" id="{{pagepartref.id}}_container" >
 
 	        <script>
+                {% if (editpagepart is defined and editpagepart == loop.index) or form_has_errors_recursive(form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id]) %}
+                    var isOpen_{{pagepartref.id}} = true;
+                {% else %}
+                    var isOpen_{{pagepartref.id}} = false;
+                {% endif %}
+
 	            function delete_{{pagepartref.id}}(){
 	            	isEdited = true;
 	                document.getElementById('{{pagepartref.id}}_deleted').value = 'true';
@@ -47,8 +52,15 @@
 	            }
 	            function edit_{{pagepartref.id}}(){
 	            	isEdited = true;
-	                document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
-	                document.getElementById('{{pagepartref.id}}_edit').style.display = '';
+                    if(isOpen_{{pagepartref.id}}) {
+                        document.getElementById('{{pagepartref.id}}_edit').style.display = 'none';
+                        document.getElementById('{{pagepartref.id}}_view').style.display = '';
+                        isOpen_{{pagepartref.id}} = false;
+                    } else {
+                        document.getElementById('{{pagepartref.id}}_edit').style.display = '';
+                        document.getElementById('{{pagepartref.id}}_view').style.display = 'none';
+                        isOpen_{{pagepartref.id}} = true;
+                    }
                     window.activeEdit = '{{pagepartref.id}}';
 	                return false;
 	            }
@@ -56,7 +68,7 @@
 
 	        <input type="hidden" id="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence" name="{{pagepartref.context}}_{{pagepartref.pageid}}_{{pagepartref.pageentityname}}_sequence[]" value="{{pagepartref.id}}" />
 
-        	<div {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %} class="pagepart">
+        	<div class="pagepart">
             	<a id="{{pagepartadmin.context}}pagepart{{ loop.index }}" ></a>
             	<div class="prop_bar {% if not form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}noedit{% endif %}">
             		<i class="icon-move"></i>
@@ -71,7 +83,7 @@
             	{% else %}
             		{% set editmode = false %}
             	{% endif %}
-                <div class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %}>
+                <div class="block" id="{{pagepartref.id}}_view" {% if editmode %}style="display:none"{% endif %} {% if form['pagepartadmin_'~pagepartref.context~'_'~pagepartref.id].count %}onDblclick="return edit_{{pagepartref.id}}()"{% endif %}>
                     {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin, 'pageparts': pagepartadmin.pagepartrefs} %}
                 </div>
                     <div class="block" id="{{pagepartref.id}}_edit" {% if not editmode %}style="display:none"{% endif %}>

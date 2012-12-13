@@ -98,10 +98,6 @@ class PagePartTab extends Tab
         parent::bindRequest($request);
 
         $this->pagePartAdmin->bindRequest($request);
-
-        if ($editPagePart = $request->get('edit') && isset($editPagePart)) {
-            $request->getSession()->set('editpagepart', $editPagePart);
-        }
     }
 
     /**
@@ -145,6 +141,21 @@ class PagePartTab extends Tab
     public function getPagePartAdmin()
     {
         return $this->pagePartAdmin;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function getExtraParams(Request $request)
+    {
+        $params = array();
+        $editPagePart = $request->get('edit');
+        if (isset($editPagePart)) {
+            $params['editpagepart'] = $editPagePart;
+        }
+        return $params;
     }
 
 }
