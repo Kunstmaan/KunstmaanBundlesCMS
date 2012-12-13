@@ -206,4 +206,14 @@ class PermissionTab implements TabInterface
         return $this->node;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function getExtraParams(Request $request)
+    {
+        return array();
+    }
+
 }

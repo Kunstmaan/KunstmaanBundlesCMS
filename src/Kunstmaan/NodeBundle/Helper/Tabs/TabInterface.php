@@ -58,4 +58,11 @@ interface TabInterface
      */
     public function getTemplate();
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function getExtraParams(Request $request);
+
 }

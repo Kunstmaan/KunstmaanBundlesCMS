@@ -497,11 +497,14 @@ class NodeAdminController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', 'Page has been edited!');
 
-                return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
+                $params = array(
                     'id' => $node->getId(),
                     'subaction' => $subaction,
-                    'currenttab' => $tabPane->getActiveTab(),
-                )));
+                    'currenttab' => $tabPane->getActiveTab()
+                );
+                $params = array_merge($params, $tabPane->getExtraParams($request));
+
+                return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', $params));
             }
         }
 
