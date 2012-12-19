@@ -22,7 +22,7 @@
         "symfony/monolog-bundle": "2.1.*",
         "kunstmaan/adminlist-bundle": "*",
         "kunstmaan/utilities-bundle": "dev-master",
-        "sensio/framework-extra-bundle": "*"
+        "sensio/framework-extra-bundle": "2.1.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
