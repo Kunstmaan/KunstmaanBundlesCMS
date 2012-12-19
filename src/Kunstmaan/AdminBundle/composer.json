@@ -12,17 +12,16 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-fixtures-bundle": "dev-master as 2.1.x-dev",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "*",
         "knplabs/knp-menu-bundle": "*",
         "symfony/monolog-bundle": "2.1.*",
         "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/utilities-bundle": "*",
+        "kunstmaan/utilities-bundle": "dev-master",
         "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
