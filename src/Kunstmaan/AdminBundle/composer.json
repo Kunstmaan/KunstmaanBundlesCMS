@@ -17,7 +17,7 @@
         "symfony/symfony": "2.1.*",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "friendsofsymfony/user-bundle": "*",
+        "friendsofsymfony/user-bundle": "2.0.x@dev",
         "knplabs/knp-menu-bundle": "*",
         "symfony/monolog-bundle": "2.1.*",
         "kunstmaan/adminlist-bundle": "*",
