@@ -18,9 +18,9 @@
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "2.0.x@dev",
-        "knplabs/knp-menu-bundle": "*",
+        "knplabs/knp-menu-bundle": "2.0.x-dev",
         "symfony/monolog-bundle": "2.1.*",
-        "kunstmaan/adminlist-bundle": "*",
+        "kunstmaan/adminlist-bundle": "dev-master",
         "kunstmaan/utilities-bundle": "dev-master",
         "sensio/framework-extra-bundle": "2.1.*"
     },
