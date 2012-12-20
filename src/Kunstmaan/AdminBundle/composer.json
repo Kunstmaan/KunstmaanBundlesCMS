@@ -1,8 +1,8 @@
 {
     "name": "kunstmaan/admin-bundle",
     "type": "symfony-bundle",
-    "description": "The Kunstmaan AdminBundle can be used to create a backend structure that enables you to create any kind of application, ranging from a CMS to a tool or even een single page app. It features a rolebased security system and a custom bootstrap based backend theme",
-    "keywords": ["admin", "backend"],
+    "description": "Symfony2 KunstmaanAdminBundle",
+    "keywords": [],
     "homepage": "https://github.com/Kunstmaan/KunstmaanAdminBundle",
     "license": "MIT",
     "authors": [
@@ -12,21 +12,18 @@
             "email": "support@kunstmaan.be"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "doctrine/data-fixtures": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "*",
-        "knplabs/knp-menu-bundle": "2.0.*@dev",
-        "knplabs/knp-menu": "2.0.*@dev",
-        "symfony/monolog-bundle": "2.1.*",
-        "kunstmaan/adminlist-bundle": "dev-master",
-        "white-october/pagerfanta-bundle": "dev-master",
-        "pagerfanta/pagerfanta": "dev-master",
-        "kunstmaan/utilities-bundle": "dev-master",
-        "sensio/framework-extra-bundle": "2.1.*"
+        "knplabs/knp-menu-bundle": "*",
+        "monolog/monolog": "dev-master",
+        "kunstmaan/adminlist-bundle": "*",
+        "kunstmaan/utilities-bundle": "*",
+        "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
