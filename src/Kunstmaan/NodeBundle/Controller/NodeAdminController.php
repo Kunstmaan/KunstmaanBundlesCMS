@@ -523,7 +523,8 @@ class NodeAdminController extends Controller
             'draft' => $draft,
             'draftNodeVersion' => $draftNodeVersion,
             'subaction' => $subaction,
-            'tabPane' => $tabPane
+            'tabPane' => $tabPane,
+            'editmode' => true
         );
     }
 
