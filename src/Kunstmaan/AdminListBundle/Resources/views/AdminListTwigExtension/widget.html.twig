@@ -21,7 +21,9 @@
 {% endif %}
 
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
-{{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
+{% if adminlist.pagerfanta.haveToPaginate() %}
+    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
+{% endif %}
 
 <div class="table_overflow_fix">
     <table class="table table-striped table-bordered responsive">
@@ -86,4 +88,6 @@
     </table>
 </div>
 
-{{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
+{% if adminlist.pagerfanta.haveToPaginate() %}
+    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
+{% endif %}
