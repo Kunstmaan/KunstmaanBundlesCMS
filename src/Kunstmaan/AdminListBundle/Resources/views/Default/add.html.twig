@@ -3,12 +3,47 @@
 
 {% block content %}
     <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }}>
-        <fieldset>
-        	{{ form_widget(form) }}
-            <div class="form-actions">
-                <button class="btn btn-primary" type="submit">{{ 'save' | trans }}</button>
+        <div class="main_actions">
+            <button type="submit" class="btn btn-primary">{{ 'Save' | trans }}</button>
+            <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+            {% if adminlistconfigurator.hasItemActions() %}
+                {% for itemAction in adminlistconfigurator.getItemActions() %}
+                    <a class="btn" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                        {% if itemAction.getIconFor(entity) is not null %}
+                            <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}"/>
+                        {% else %}
+                            {{ itemAction.getLabelFor(entity) }}
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!--Scroll Actions-->
+        <div class="main_actions top" id="main_actions_top">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary">{{ 'Save' | trans }}</button>
                 <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+
+                {% if adminlistconfigurator.hasItemActions() %}
+                    {% for itemAction in adminlistconfigurator.getItemActions() %}
+                        <a class="btn" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                            {% if itemAction.getIconFor(entity) is not null %}
+                                <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}"/>
+                            {% else %}
+                                {{ itemAction.getLabelFor(entity) }}
+                            {% endif %}
+                        </a>
+                    {% endfor %}
+                {% endif %}
+                <a class="btn up">&#9650;</a>
             </div>
+        </div>
+        <div style="clear:both;">
+            &nbsp;
+        </div>
+        <fieldset class="properties">
+            {{ form_widget(form) }}
         </fieldset>
     </form>
 {% endblock %}
