@@ -1,0 +1,11 @@
+<script>
+    window.fbAsyncInit = function() {
+        FB.Event.subscribe('edge.create',
+            function(response) {
+                jQuery.ajax({
+                    url : '{{ url('voting_facebooklike') }}?response=' + response
+                });
+            }
+        );
+    }
+</script>

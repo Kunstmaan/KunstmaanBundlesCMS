@@ -5,3 +5,8 @@ services:
 #    kunstmaan_voting_list.example:
 #        class: %kunstmaan_voting_list.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    kunstmaan_voting.facebooklike:
+        class: Kunstmaan\VotingBundle\EventListener\Facebook\FacebookLikeEventListener
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_voting.facebookLike, method: onFacebookLike }
