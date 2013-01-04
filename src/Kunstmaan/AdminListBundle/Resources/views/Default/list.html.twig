@@ -14,7 +14,11 @@
     {% if adminlist.canAdd() %}
         <div class="widget clearfix">
             <div class="btn-group pull-right">
-                {% set adminaddlist = adminlist.getAddUrlFor(addparams) %}
+                {% if adminlist.getIndexUrl()['params'] is defined %}
+                    {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
+                {% else %}
+                    {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()) %}
+                {% endif %}
                 {% if adminaddlist|length > 1 %}
                     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{ 'form.add' | trans }}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
