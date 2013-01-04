@@ -7,13 +7,13 @@ services:
         class: %kunstmaan_admin.menubuilder.class%
         arguments: ["@translator", "@service_container"]
 
-    kunstmaan_admin.menu.adaptor.settings:
-        class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
-        tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
-        
     kunstmaan_admin.menu.adaptor.modules:
         class: Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor
+        tags:
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
+
+    kunstmaan_admin.menu.adaptor.settings:
+        class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
