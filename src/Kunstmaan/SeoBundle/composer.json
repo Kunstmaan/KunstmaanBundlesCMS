@@ -18,8 +18,8 @@
         "symfony/symfony": "2.1.*",
         "gedmo/doctrine-extensions": "*",
         "kunstmaan/admin-bundle": "*",
-        "kunstmaan/media-bundle": "dev-master",
-        "kunstmaan/utilities-bundle": "dev-master"
+        "kunstmaan/media-bundle": "*",
+        "kunstmaan/utilities-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\SeoBundle": "" }
