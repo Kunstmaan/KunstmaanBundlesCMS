@@ -1,4 +1,4 @@
-{% set handler = mediahandler.getHandler(media) %}
+{% set handler = mediamanager.getHandler(media) %}
 {% set helper = handler.getFormHelper(media) %}
 {% if helper.type == 'youtube' %}
     <iframe width="560" height="315" src="http://www.youtube.com/embed/{{ helper.code }}" frameborder="0" allowfullscreen></iframe>

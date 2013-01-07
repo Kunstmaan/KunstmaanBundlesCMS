@@ -115,13 +115,19 @@ class FileHandler extends AbstractMediaHandler
             $file = new File($content);
             $media->setContent($file);
         }
+        if (!$content instanceof UploadedFile) {
+            $media->setName($content->getClientOriginalName());
+        }
 
         $metadata = array();
 
         $media->setFileSize(filesize($media->getContent()));
         $media->setMetadata($metadata);
 
-        $media->setContentType($this->mimeTypeGuesser->guess($media->getContent()->getPathname()));
+        $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
+        $media->setContentType($contentType);
+        $relativePath = sprintf('/%s.%s', $media->getUuid(), ExtensionGuesser::getInstance()->guess($media->getContentType()));
+        $media->setUrl('/uploads/media'.$relativePath);
         $media->setLocation('local');
     }
 

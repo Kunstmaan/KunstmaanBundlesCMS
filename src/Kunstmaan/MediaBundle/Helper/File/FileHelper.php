@@ -72,6 +72,7 @@ class FileHelper
         $this->file = $file;
         $this->media->setContent($file);
         $this->media->setContentType($file->getMimeType());
+        $this->media->setUrl('/uploads/media/'.$this->media->getUuid() . '.' . $this->media->getContent()->getExtension());
     }
 
     /**
