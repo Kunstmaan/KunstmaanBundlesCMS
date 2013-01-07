@@ -17,7 +17,7 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "kunstmaan/pagepart-bundle": "dev-master",
-        "kunstmaan/media-bundle": "dev-master"
+        "kunstmaan/media-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaPagePartBundle": "" }
