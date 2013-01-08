@@ -1,9 +1,15 @@
 {% set handler = mediahandler.getHandler(media) %}
 {% set helper = handler.getFormHelper(media) %}
 {% if helper.type == 'youtube' %}
+<div class="embedded-youtube">
     <iframe width="560" height="315" src="http://www.youtube.com/embed/{{ helper.code }}" frameborder="0" allowfullscreen></iframe>
+</div>
 {% elseif helper.type == 'vimeo' %}
+<div class="embedded-vimeo">
     <iframe src="http://player.vimeo.com/video/{{ helper.code }}" width="500" height="290" frameborder="0"></iframe>
+</div>
 {% elseif helper.type == 'dailymotion' %}
+<div class="embedded-dailymotion">
     <iframe frameborder="0" width="480" height="270" src="http://www.dailymotion.com/embed/video/{{ helper.code }}"></iframe>
+</div>
 {% endif %}
