@@ -8,5 +8,6 @@ services:
 
     kunstmaan_voting.facebooklike:
         class: Kunstmaan\VotingBundle\EventListener\Facebook\FacebookLikeEventListener
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.facebookLike, method: onFacebookLike }

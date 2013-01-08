@@ -3,10 +3,18 @@
 namespace Kunstmaan\VotingBundle\EventListener\Facebook;
 
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
 
 class FacebookLikeEventListener
 {
+
+    protected $em;
+
+    function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     public function onFacebookLike(FacebookLikeEvent $event)
     {
@@ -14,10 +22,8 @@ class FacebookLikeEventListener
         $vote->setReference($event->getResponse());
         $vote->setIp($event->getRequest()->getClientIp());
 
-        $em = $this->getDoctrine()->getManager();
-
-        $em->persist($vote);
-        $em->flush();
+        $this->em->persist($vote);
+        $this->em->flush();
     }
 
 }
