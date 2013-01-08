@@ -11,3 +11,7 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.facebookLike, method: onFacebookLike }
+
+    kunstmaan_voting.helper.facebook.like:
+        class: Kunstmaan\VotingBundle\Helper\Facebook\FacebookLikeHelper
+        arguments: ["@doctrine.orm.entity_manager"]
