@@ -3,7 +3,7 @@
         FB.Event.subscribe('edge.create',
             function(response) {
                 jQuery.ajax({
-                    url : '{{ url('voting_facebooklike') }}?response=' + response
+                    url : '{{ url('voting_facebooklike') }}?response=' + response {% if value is defined %}+ '&value={{ value }}'{% endif %}
                 });
             }
         );

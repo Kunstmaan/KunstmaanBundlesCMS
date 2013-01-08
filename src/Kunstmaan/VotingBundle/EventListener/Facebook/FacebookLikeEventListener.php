@@ -22,6 +22,10 @@ class FacebookLikeEventListener
         $vote->setReference($event->getResponse());
         $vote->setIp($event->getRequest()->getClientIp());
 
+        if ($event->getValue() != null) {
+            $vote->setValue($event->getValue());
+        }
+
         $this->em->persist($vote);
         $this->em->flush();
     }

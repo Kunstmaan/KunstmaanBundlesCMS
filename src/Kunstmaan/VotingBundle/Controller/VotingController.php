@@ -20,7 +20,8 @@ class VotingController extends Controller
     public function facebookLikeAction(Request $request)
     {
         $response = $request->get('response');
-        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_LIKE, new FacebookLikeEvent($this->getRequest(), $response));
+        $value = $request->get('value');
+        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_LIKE, new FacebookLikeEvent($this->getRequest(), $response, $value));
     }
 
 }

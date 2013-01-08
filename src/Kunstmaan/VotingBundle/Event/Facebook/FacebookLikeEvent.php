@@ -20,11 +20,19 @@ class FacebookLikeEvent extends Event
      */
     private $response;
 
+    /**
+     * The value of this like
+     *
+     * @var int
+     */
+    private $value;
 
-    public function __construct(Request $request, $response)
+
+    public function __construct(Request $request, $response, $value)
     {
         $this->request = $request;
         $this->response = $response;
+        $this->value = $value;
     }
 
     public function getRequest()
@@ -38,6 +46,14 @@ class FacebookLikeEvent extends Event
     public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * @return int
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
 }
