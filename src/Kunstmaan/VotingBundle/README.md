@@ -17,10 +17,27 @@ Assuming you have installed composer.phar or composer binary:
 $ composer require kunstmaan/voting-bundle
 ```
 
-Add the KunstmaanAdminBundle to your AppKernel.php file:
+Add the KunstmaanVotingBundle to your AppKernel.php file:
 
 ```
-new Kunstmaan\AdminBundle\KunstmaanVotingBundle(),
+new Kunstmaan\VotingBundle\KunstmaanVotingBundle(),
+```
+
+Use
+---
+
+### Facebook
+
+Make sure the Facebook plugin javascript has been added to your page. 
+
+See : https://developers.facebook.com/docs/reference/javascript/
+
+#### Facebook Like
+
+Add the following code to your template. The 'value' parameter is optional. Default value is set to 1.
+
+```twig
+    {% include 'KunstmaanVotingBundle:Facebook:like-callback.html.twig' with {'value' : value} %}
 ```
 
 Contact
