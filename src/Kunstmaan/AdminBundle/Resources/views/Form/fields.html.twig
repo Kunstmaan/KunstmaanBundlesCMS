@@ -86,7 +86,7 @@
 
 {% block datetime_widget %}
     {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
-    <div class="datetime">
+    <div class="datetime small-datetime-widget">
         {{ block('base_datetime_widget') }}
     </div>
 {% endblock %}
@@ -114,6 +114,7 @@
         <script>
             jQuery(document).ready(function(){
                 $("#{{ id }}").inputmask("hh:mm");
+                $("#{{ id }}").addClass('form_timepicker');
             });
         </script>
     {% endif %}
