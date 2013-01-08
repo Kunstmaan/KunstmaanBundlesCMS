@@ -3,5 +3,5 @@
     {% if name is empty %}
         {% set name = "Download" %}
     {% endif %}
-	<p class="download"><a href="{{ asset(upload_dir~resource.media.show()) }}" target="_blank" class="download">{{ name }}</a> <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span>
+	<p class="download"><a href="{{ asset(upload_dir~resource.media.show()) }}" target="_blank" class="download">{{ name }}</a> <span>| {{ resource.media.contentTypeShort }} {{ resource.media.getFileSize() }}</span></p>
 {% endif %}
