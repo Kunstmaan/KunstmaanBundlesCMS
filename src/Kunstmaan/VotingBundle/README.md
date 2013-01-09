@@ -3,7 +3,7 @@ KunstmaanVotingBundle by Kunstmaan
 
 About
 -----
-The KunstmaanVotingBundle is a plugin to add voting to your Symfony2 project.
+The KunstmaanVotingBundle allows you to add extensible voting support to your project
 
 Installation requirements
 -------------------------
@@ -34,11 +34,7 @@ KunstmaanVotingBundle:
 Use
 ---
 
-###Facebook
-
-Read the following documentation on how to use this bundle :
-
-* [Facebook documentation](https://github.com/Kunstmaan/KunstmaanVotingBundle/blob/master/Resources/doc/facebook.md)
+* [Documentation](https://github.com/Kunstmaan/KunstmaanVotingBundle/blob/master/Resources/doc/index.md)
 
 Contact
 -------
