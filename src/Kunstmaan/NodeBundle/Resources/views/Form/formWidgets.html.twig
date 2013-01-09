@@ -1,6 +1,6 @@
 {% block urlchooser_widget %}
 {% spaceless %}
-    <div id="{{ id }}_widget">
+    <div id="{{ id }}_widget" class="input-append">
         <input type="text" name="{{ full_name }}" value="{{ value|default('') }}"/>
         <button class="btn choosebutton{{ id }}">Choose</button>
     </div>
