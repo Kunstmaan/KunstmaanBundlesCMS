@@ -468,8 +468,13 @@ class NodeAdminController extends Controller
         $propertiesTab = new Tab('Properties');
         $propertiesTab->addType('main', $page->getDefaultAdminType(), $page);
         $propertiesTab->addType('node', $node->getDefaultAdminType(), $node);
-        $propertiesTab->addType('nodetranslation', $nodeTranslation->getDefaultAdminType(), $nodeTranslation);
         $tabPane->addTab($propertiesTab);
+
+        // Menu tab
+        $menuTab = new Tab('Menu');
+        $menuTab->addType('menunodetranslation', $nodeTranslation->getMenuTabAdminType(), $nodeTranslation);
+        $menuTab->addType('menunode', $node->getMenuTabAdminType(), $node);
+        $tabPane->addTab($menuTab);
 
         $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         $tabPane->buildForm();

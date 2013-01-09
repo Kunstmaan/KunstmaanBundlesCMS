@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
@@ -129,6 +130,16 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     public function getDefaultAdminType()
     {
         return new PageAdminType();
+    }
+
+    /**
+     * Returns the menu tab backend form type for this page
+     *
+     * @return AbstractType
+     */
+    public function getMenuTabAdminType()
+    {
+        return new NodeMenuTabAdminType();
     }
 
     /**

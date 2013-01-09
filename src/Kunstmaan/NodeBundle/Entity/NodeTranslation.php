@@ -3,6 +3,8 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
 
@@ -331,6 +333,14 @@ class NodeTranslation extends AbstractEntity
     public function getDefaultAdminType()
     {
         return new NodeTranslationAdminType();
+    }
+
+    /**
+     * @return NodeMenuTabTranslationAdminType
+     */
+    public function getMenuTabAdminType()
+    {
+        return new NodeMenuTabTranslationAdminType();
     }
 
     /**
