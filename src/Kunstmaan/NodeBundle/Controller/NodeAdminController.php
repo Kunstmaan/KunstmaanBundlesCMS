@@ -3,6 +3,8 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use InvalidArgumentException;
 
 use Doctrine\ORM\EntityManager;
@@ -468,8 +470,13 @@ class NodeAdminController extends Controller
         $propertiesTab = new Tab('Properties');
         $propertiesTab->addType('main', $page->getDefaultAdminType(), $page);
         $propertiesTab->addType('node', $node->getDefaultAdminType(), $node);
-        $propertiesTab->addType('nodetranslation', $nodeTranslation->getDefaultAdminType(), $nodeTranslation);
         $tabPane->addTab($propertiesTab);
+
+        // Menu tab
+        $menuTab = new Tab('Menu');
+        $menuTab->addType('menunodetranslation', new NodeMenuTabTranslationAdminType(), $nodeTranslation);
+        $menuTab->addType('menunode', new NodeMenuTabAdminType(), $node);
+        $tabPane->addTab($menuTab);
 
         $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         $tabPane->buildForm();
