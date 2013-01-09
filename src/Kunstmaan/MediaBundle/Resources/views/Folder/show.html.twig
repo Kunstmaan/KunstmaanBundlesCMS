@@ -4,7 +4,7 @@
 
     <!--=========Actions=========-->
     <!--Main-->
-    <div class="main_actions">
+    <div class="main_actions btn-group">
         {% block actions %}
             {% for addaction in mediamanager.getFolderAddActions() %}
                 <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
@@ -17,7 +17,7 @@
 
 	<!--Scroll-->
     <div id="main_actions_top" class="main_actions top">
-        <div class="pull-right">
+        <div class="pull-right btn-group">
             {{ block('actions') }}
             <a class="btn up">&#9650;</a>
         </div>
