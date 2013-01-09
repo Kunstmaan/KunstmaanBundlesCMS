@@ -30,7 +30,7 @@ class SeoType extends AbstractType
                     'label' => 'OG image'
                 ))
                 ->add('extraMetadata', 'textarea')
-                ->add('cimKeyword', 'text', array('required' => true, 'max_length' => 24));
+                ->add('cimKeyword', 'text', array('required' => false, 'max_length' => 24));
     }
 
     /**
