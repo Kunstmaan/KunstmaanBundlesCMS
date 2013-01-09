@@ -19,26 +19,26 @@ $ composer require kunstmaan/voting-bundle
 
 Add the KunstmaanVotingBundle to your AppKernel.php file:
 
-```
+```PHP
 new Kunstmaan\VotingBundle\KunstmaanVotingBundle(),
+```
+
+Add the KunstmaanVotingBundle to your routing.yml. Take your own routing into account, it's possible you will need to add the following code prior to your own routing configurations
+
+```PHP
+KunstmaanVotingBundle:
+    resource: "@KunstmaanVotingBundle/Resources/config/routing.yml"
+    prefix:   /
 ```
 
 Use
 ---
 
-### Facebook
+###Facebook
 
-Make sure the Facebook plugin javascript has been added to your page. 
+Read the following documentation on how to use this bundle :
 
-See : https://developers.facebook.com/docs/reference/javascript/
-
-#### Facebook Like
-
-Add the following code to your template. The 'value' parameter is optional. Default value is set to 1.
-
-```twig
-    {% include 'KunstmaanVotingBundle:Facebook:like-callback.html.twig' with {'value' : value} %}
-```
+* [Facebook documentation](https://github.com/Kunstmaan/KunstmaanVotingBundle/blob/master/Resources/doc/facebook.md)
 
 Contact
 -------
