@@ -11,7 +11,7 @@
             {% endfor %}
             <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
             <a href="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id }) }}" data-toggle="modal" data-target="#addsub-modal" class="btn">{{ 'media.folder.addsub.action' |trans }}</a>
-            <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger">{{ 'media.folder.delete.action' |trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id }) }}" data-toggle="modal" data-target="#delete-modal" class="btn">{{ 'media.folder.delete.action' |trans }}</a>
         {% endblock %}
     </div>
 
