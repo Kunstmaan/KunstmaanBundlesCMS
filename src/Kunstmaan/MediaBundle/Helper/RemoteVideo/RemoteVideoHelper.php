@@ -56,7 +56,7 @@ class RemoteVideoHelper
      */
     public function getCode()
     {
-        return $this->media->metadata['code'];
+        return $this->media->getMetadataValue('code');
     }
 
     /**
@@ -67,21 +67,17 @@ class RemoteVideoHelper
      */
     public function setCode($code)
     {
-        $this->media->metadata['code'] = $code;
+        $this->media->setMetadataValue('code', $code);
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getThumbnailUrl()
     {
-        if (isset($this->media->metadata['thumbnail_url'])) {
-            return $this->media->metadata['thumbnail_url'];
-        }
-
-        return null;
+        return $this->media->getMetadataValue('thumbnail_url');
     }
 
     /**
@@ -92,7 +88,7 @@ class RemoteVideoHelper
      */
     public function setThumbnailUrl($url)
     {
-        $this->media->metadata['thumbnail_url'] = $url;
+        $this->media->setMetadataValue('thumbnail_url', $url);
 
         return $this;
     }
@@ -100,15 +96,11 @@ class RemoteVideoHelper
     /**
      * Get type
      *
-     * @return string
+     * @return string|null
      */
     public function getType()
     {
-        if (empty($this->media->metadata['type'])) {
-            return null;
-        }
-
-        return $this->media->metadata['type'];
+        return $this->media->getMetadataValue('type');
     }
 
     /**
@@ -119,7 +111,7 @@ class RemoteVideoHelper
      */
     public function setType($type)
     {
-        $this->media->metadata['type'] = $type;
+        $this->media->setMetadataValue('type', $type);
 
         return $this;
     }
