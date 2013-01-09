@@ -50,7 +50,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="array")
      */
-    public $metadata;
+    protected $metadata;
 
     /**
      * @var \DateTime
