@@ -99,7 +99,7 @@ class Seo extends AbstractEntity
      * @ORM\Column(name="cim_keyword", type="string", length=24, nullable=true)
      * @Assert\Regex(pattern="/^[a-zA-Z0-9\/]*$/")
      */
-    public $cimKeyword;
+    protected $cimKeyword;
 
     /**
      * @var int
