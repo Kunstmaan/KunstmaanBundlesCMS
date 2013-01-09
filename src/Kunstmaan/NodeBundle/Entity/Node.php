@@ -376,14 +376,6 @@ class Node extends AbstractEntity
     }
 
     /**
-     * @return NodeMenuTabAdminType
-     */
-    public function getMenuTabAdminType()
-    {
-        return new NodeMenuTabAdminType();
-    }
-
-    /**
      * @ORM\PrePersist
      */
     public function preInsert()

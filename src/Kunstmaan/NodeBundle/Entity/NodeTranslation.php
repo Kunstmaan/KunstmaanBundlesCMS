@@ -336,14 +336,6 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @return NodeMenuTabTranslationAdminType
-     */
-    public function getMenuTabAdminType()
-    {
-        return new NodeMenuTabTranslationAdminType();
-    }
-
-    /**
      * @param EntityManager $em   The entity manager
      * @param string        $type The type
      *

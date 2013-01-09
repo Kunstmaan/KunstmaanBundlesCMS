@@ -133,16 +133,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Returns the menu tab backend form type for this page
-     *
-     * @return AbstractType
-     */
-    public function getMenuTabAdminType()
-    {
-        return new NodeMenuTabAdminType();
-    }
-
-    /**
      * @param ContainerInterface $container The Container
      * @param Request            $request   The Request
      * @param RenderContext      $context   The Render context
