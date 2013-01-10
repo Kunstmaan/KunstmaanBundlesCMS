@@ -4,10 +4,13 @@
 $(document).ready(function () {
 	init_main_functions();
 	initTop();
+	initCancel()
 	initCustomSelect();
 	initDel();
 	initFilter();
     initDatePicker();
+    initTimePicker();
+    initDropdownButton();
 });
 
 //JS-tree
@@ -343,9 +346,34 @@ function initDel() {
 	});
 }
 
+function initCancel() {
+	$('.close_modal').on('click', function (e) {
+		e.preventDefault();
+		$(this).parents('.modal').modal('hide');
+	});
+}
+
 //Datepicker
 function init_datePicker() {
 	$('.date-pick').datePicker();
+}
+
+// Toggle Properties
+function init_toggleProp() {
+	$("#toggle-properties").click(function(e){
+		e.preventDefault();
+		if ($(this).hasClass('big')) {
+			$("#prop_wrp").slideUp("slow").animate({opacity: 0},{queue: false, duration: "slow"}).addClass('small_prop').removeClass('big_prop');
+			$(this).removeClass('big').addClass('small').html('Show Properties');
+			
+			
+					
+		}
+		else {
+			$("#prop_wrp").slideDown("slow").animate({opacity: 1},{queue: false, duration: "slow"}).addClass('small_prop').removeClass('big_prop');
+			$(this).removeClass('small').addClass('big').html('Hide Properties');
+		}
+	});
 }
 
 //Twipsy
@@ -495,3 +523,85 @@ function initDatePicker() {
         $(".form_datepicker").datepicker();
     }
 }
+
+function initTimePicker() {
+	// http://jdewit.github.com/bootstrap-timepicker/
+	if($('.form_timepicker').length > 0) {
+		$(".form_timepicker").timepicker({
+			'showMeridian': false,
+			'minuteStep': 1
+		});
+	}
+}
+
+function initDropdownButton() {
+	var $el = $('.main_actions .btn.dropdown-toggle');
+
+	if($el.is(':nth-child(2)')) {
+		$el.css({
+			'-webkit-border-top-right-radius': 0,
+			'-webkit-border-bottom-right-radius': 0,
+			'-moz-border-radius-topright': 0,
+			'-moz-border-radius-bottomright': 0,
+			'border-top-right-radius': 0,
+			'border-bottom-right-radius': 0
+		})
+	}
+
+	$el.on('click', function() {
+		var offset = $el.offset().left - $('.main_actions').offset().left - $('.main_actions .dropdown-menu').outerWidth() + $(this).outerWidth();
+		$el.next('.dropdown-menu').css('left', offset);
+	});
+}
+
+
+
+
+// UI SORTABLE
+$(function() {
+    var sortableClicked = false;
+    $('.sortable').mousedown(
+        function() {
+            sortableClicked = true;
+            var scope = $(this).data('scope');
+            $('.sortable[data-scope~=' + scope + ']')
+                .addClass('connectedSortable')
+                .sortable('option', 'connectWith', '.connectedSortable');
+            $('.sortable:not([data-scope~=' + scope + '])')
+                .sortable('disable')
+                .sortable('option', 'connectWith', false)
+                .parent().addClass('region-disabled');
+            $('.template-block-content').not('.sortable')
+                .parent().addClass('region-disabled');
+        }
+    );
+    $('body').mouseup(
+        function() {
+            if (sortableClicked) {
+                // Enable all sortable regions again
+                $('.sortable')
+                    .sortable('enable')
+                    .sortable('option', 'connectWith', false)
+                    .parent().removeClass('region-disabled');
+                $('.template-block-content').not('.sortable')
+                    .parent().removeClass('region-disabled');
+                sortableClicked = false;
+            }
+        }
+    );
+    $( ".sortable" ).sortable({
+        connectWith: ".connectedSortable",
+        placeholder: "sortable-placeholder",
+        tolerance:"pointer",
+        revert: 300
+/*
+        stop: function(e, ui) {
+            // Enable all
+            $('.sortable')
+                .sortable('enable')
+                .sortable('option', 'connectWith', false)
+                .parent().removeClass('region-disabled');
+        }
+*/
+    }).disableSelection();
+});

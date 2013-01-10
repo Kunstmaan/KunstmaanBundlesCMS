@@ -59,8 +59,8 @@
 	<!--=========== JS ===========-->
 	<!--Combined-->
 	{% javascripts
-	    '@KunstmaanAdminBundle/Resources/public/js/libs/modernizr.custom.2.5.3.js'
-	    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-1.7.2.min.js'
+	    '@KunstmaanAdminBundle/Resources/public/js/libs/modernizr.custom.2.6.2.js'
+	    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-1.8.3.min.js'
 	    output='generated-js/scripts.js'
 	%}
 	<script src="{{ asset_url }}"></script>
@@ -74,7 +74,7 @@
 	{% block body %}
   	<!--=========Top menu=========-->
   	<header>
-  		<div class="navbar navbar-fixed-top" data-dropdown="dropdown">
+  		<div class="navbar navbar-inverse navbar-fixed-top" data-dropdown="dropdown">
   			<div class="navbar-inner">
   				<div class="container-fluid">
 					<a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
@@ -205,7 +205,7 @@
 
     <!--Combined-->
     {% javascripts
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-ui-1.8.20.custom.min.js'
+        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-ui-1.8.24.custom.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/chosen.jquery.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.filedrop.js'
@@ -219,6 +219,7 @@
         '@KunstmaanAdminBundle/Resources/public/js/libs/responsive-tables.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/charCount.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-datepicker.js'
+        '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-timepicker.js'
         '@KunstmaanAdminBundle/Resources/public/js/plugins.js'
         '@KunstmaanAdminBundle/Resources/public/js/script.js'
         output='generated-js/scripts_bottom.js'
