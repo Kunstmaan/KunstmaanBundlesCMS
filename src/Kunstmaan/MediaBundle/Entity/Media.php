@@ -50,7 +50,7 @@ class Media extends AbstractEntity
      *
      * @ORM\Column(type="array")
      */
-    public $metadata;
+    protected $metadata = array();
 
     /**
      * @var \DateTime
@@ -245,6 +245,33 @@ class Media extends AbstractEntity
     public function getMetadata()
     {
         return $this->metadata;
+    }
+
+    /**
+     * Set the specified metadata value
+     *
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return Media
+     */
+    public function setMetadataValue($key, $value)
+    {
+        $this->metadata[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get the specified metadata value
+     *
+     * @param string $key
+     *
+     * @return mixed|null
+     */
+    public function getMetadataValue($key)
+    {
+        return isset($this->metadata[$key]) ? $this->metadata[$key] : null;
     }
 
     /**

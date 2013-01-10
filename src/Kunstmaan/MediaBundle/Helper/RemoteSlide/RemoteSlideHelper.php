@@ -59,7 +59,7 @@ class RemoteSlideHelper
      */
     public function getCode()
     {
-        return $this->media->metadata['code'];
+        return $this->media->getMetadataValue('code');
     }
 
     /**
@@ -70,7 +70,7 @@ class RemoteSlideHelper
      */
     public function setCode($code)
     {
-        $this->media->metadata['code'] = $code;
+        $this->media->setMetadataValue('code', $code);
 
         return $this;
     }
@@ -80,11 +80,7 @@ class RemoteSlideHelper
      */
     public function getThumbnailUrl()
     {
-        if (isset($this->media->metadata['thumbnail_url'])) {
-            return $this->media->metadata['thumbnail_url'];
-        }
-
-        return null;
+        return $this->media->getMetadataValue('thumbnail_url');
     }
 
     /**
@@ -95,7 +91,7 @@ class RemoteSlideHelper
      */
     public function setThumbnailUrl($url)
     {
-        $this->media->metadata['thumbnail_url'] = $url;
+        $this->media->setMetadataValue('thumbnail_url', $url);
 
         return $this;
     }
@@ -107,11 +103,7 @@ class RemoteSlideHelper
      */
     public function getType()
     {
-        if (empty($this->media->metadata['type'])) {
-            return null;
-        }
-
-        return $this->media->metadata['type'];
+        return $this->media->getMetadataValue('type');
     }
 
     /**
@@ -122,7 +114,7 @@ class RemoteSlideHelper
      */
     public function setType($type)
     {
-        $this->media->metadata['type'] = $type;
+        $this->media->setMetadataValue('type', $type);
 
         return $this;
     }
