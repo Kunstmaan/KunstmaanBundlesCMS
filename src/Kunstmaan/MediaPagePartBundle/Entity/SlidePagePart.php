@@ -20,7 +20,7 @@ class SlidePagePart extends AbstractPagePart
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
-    public $media;
+    protected $media;
 
     /**
      * Get media
