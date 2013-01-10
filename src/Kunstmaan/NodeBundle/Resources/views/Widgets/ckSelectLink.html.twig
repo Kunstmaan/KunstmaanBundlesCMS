@@ -12,8 +12,8 @@
 
   {% block body %}
   	<header>
-		<div class="topbar" data-dropdown="dropdown">
-			<div class="topbar-inner">
+		<div class="navbar navbar-inverse navbar-fixed-top" data-dropdown="dropdown">
+			<div class="navbar-inner">
 				<div class="container-fluid">
 					<a class="brand" href="#">{{ websitetitle | trans }}</a>
 					<nav>
@@ -34,7 +34,7 @@
 	    	<h1>Select a link</h1>
 	    	<div class="search_wrp">
 	    		<input type="text" id="searchVal" placeholder="Search" />
-	    		<button id="search" class="btn search"><img src="{{ asset('bundles/kunstmaanadmin/img/icons/search.png') }}" alt="Search" /></button>
+	    		<button id="search" class="btn search"><i class="icon-search"></i></button>
 	    	</div>
 <div id="tree" class="tree">
         <ul>
@@ -49,7 +49,7 @@
 	    <div class="content">
 	    	<div class="well">
 		    	<p id="selection">Selection: empty</p>
-		    	<div class="main_actions">
+		    	<div class="main_actions btn-group">
 		    		<button onclick="
 		    			function getUrlParam(paramName)
 			    		{
