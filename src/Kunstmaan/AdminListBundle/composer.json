@@ -1,8 +1,8 @@
 {
     "name": "kunstmaan/adminlist-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 KunstmaanAdminListBundle",
-    "keywords": [],
+    "description": "Every website contains several lists of content ranging from articles on a blog, to drop down values. The KunstlaanAdminListBundles takes CRUD a step further by supplying filtering, exports to csv and editing capabilities to these content entities.",
+    "keywords": ["kunstmaan", "cms", "crud"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanAdminListBundle",
     "license": "MIT",
     "authors": [
