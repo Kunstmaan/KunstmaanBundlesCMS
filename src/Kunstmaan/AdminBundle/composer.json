@@ -1,8 +1,8 @@
 {
     "name": "kunstmaan/admin-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 KunstmaanAdminBundle",
-    "keywords": [],
+    "description": "The Kunstmaan Admin bundle supplies your project with a basic, elegant backend interface you can modify and extend so you can make your perfect admin module. The clean interface makes it straightforward for you and the people working with it to change settings and modify content.",
+    "keywords": ["kunstmaan", "cms", "admin"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanAdminBundle",
     "license": "MIT",
     "authors": [
