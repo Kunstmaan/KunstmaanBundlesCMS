@@ -1,8 +1,8 @@
 {
     "name": "kunstmaan/media-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 KunstmaanMediaBundle",
-    "keywords": [],
+    "description": "To build your perfect website you probably need images, video's or maybe even a presentation too. The Kunstmaan Media Bundle handles all those media assets and centralizes them so you can find your content just the way you like it: fast and efficiently. No central asset management module is useful without some pretty advanced image editing functionality. To provide this we have integrated the Aviary image editing service right from the interface.",
+    "keywords": ["kunstmaan", "cms", "media"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanMediaBundle",
     "license": "MIT",
     "authors": [
