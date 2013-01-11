@@ -3,10 +3,9 @@ KunstmaanAdminBundle by Kunstmaan
 
 About
 -----
-The KunstmaanAdminBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
-The KunstmaanAdminBundle is a base bundle and is required by other bundles like KunstmaanNodeBundle, KunstmaanAdminListBundle, etc.
+The Kunstmaan Admin bundle supplies your project with a basic, elegant backend interface you can modify and extend so you can make your perfect admin module. The clean interface makes it straightforward for you and the people working with it to change settings and modify content.
 
-View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanAdminBundle).
+View screenshots and more on our [bundles website](http://bundles.kunstmaan.be).
 
 [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanAdminBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminBundle)
 
