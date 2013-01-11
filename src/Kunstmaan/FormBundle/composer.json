@@ -1,8 +1,8 @@
 {
     "name": "kunstmaan/form-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 KunstmaanFormBundle",
-    "keywords": [],
+    "description": "Managing forms, fields and their submissions by the user is a key functionality missing in most platforms. By leveraging the KunstmaanPagePartBundle system in the KunstmaanFormBundle users gain an easy way to create and manage the form on their website, again without having to worry about the technical side of things.",
+    "keywords": ["kunstmaan", "cms", "forms"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanFormBundle",
     "license": "MIT",
     "authors": [
