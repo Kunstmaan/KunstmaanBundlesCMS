@@ -35,7 +35,7 @@ class NodeListener
         /* @var Seo $seo */
         $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($event->getPage());
 
-        $seoTab = new Tab('Seo');
+        $seoTab = new Tab('Meta');
         $seoTab->addType('seo', $seo->getDefaultAdminType(), $seo);
         $event->getTabPane()->addTab($seoTab);
     }
