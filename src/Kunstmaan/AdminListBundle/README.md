@@ -3,10 +3,9 @@ KunstmaanAdminListBundle by Kunstmaan
 
 About
 -----
-The KunstmaanAdminListBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
-You have to install this bundle in order to work with lists in the administrator area.
+Every website contains several lists of content ranging from articles on a blog, to drop down values. The KunstlaanAdminListBundles takes CRUD a step further by supplying filtering, exports to csv and editing capabilities to these content entities.
 
-View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanAdminListBundle).
+View screenshots and more on our [bundles site](http://bundles.kunstmaan.be).
 
 [![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanAdminListBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminListBundle)
 
