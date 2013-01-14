@@ -143,6 +143,7 @@
 
 <script>
     function doAddpagepart_{{pagepartadmin.context}}(select, id){
+        isEdited = false;
     	var position = jQuery('#parts_{{pagepartadmin.context}} section.draggable').index(jQuery(select).parents("section.draggable"))+2;
         if(position<0){
 			position = 0;
