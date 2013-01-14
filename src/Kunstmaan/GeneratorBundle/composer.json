@@ -1,8 +1,8 @@
 {
     "name": "kunstmaan/generator-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 KunstmaanGeneratorBundle",
-    "keywords": [],
+    "description": "If you're like us, you like to build applications without having to do the same things over and over again and dislike copy/pasting code and change a couple of words every time you need feature X. The KunstmaanGeneratorBundle gives you the possibility to generate code for new bundles, adminlists and can even make you a basic default website. That way you don't have to wait too long before you see some results and you have more time to do other things. Easy no?",
+    "keywords": [ "kunstmaan", "cms", "generator"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanGeneratorBundle",
     "license": "MIT",
     "authors": [
