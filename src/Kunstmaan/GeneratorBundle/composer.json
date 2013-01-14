@@ -20,11 +20,11 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "*",
         "sensio/generator-bundle": "2.1.*",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/node-bundle": "*",
-        "kunstmaan/form-bundle": "*",
-        "kunstmaan/pagepart-bundle": "*",
-        "kunstmaan/media-pagepart-bundle": "*"
+        "kunstmaan/adminlist-bundle": "2.2.*@dev",
+        "kunstmaan/node-bundle": "2.2.*@dev",
+        "kunstmaan/form-bundle": "2.2.*@dev",
+        "kunstmaan/pagepart-bundle": "2.2.*@dev",
+        "kunstmaan/media-pagepart-bundle": "2.2.*@dev"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
