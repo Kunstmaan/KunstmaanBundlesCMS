@@ -5,9 +5,16 @@
 .jstree-OMNext a{
 	text-shadow: 0 1px 0 #FFF;
 	color: #404040;
+	//color: #FFF;
+	//text-shadow: 0 1px 0 #000;
 }
 .jstree-OMNext a:hover, .jstree-OMNext .active > a{
 	color: #0069D6;
+	//color: #FFF;
+}
+.jstree-OMNext .offline > a{
+	color: #797E8C;
+	//color: #FFF;
 }
 .jstree-OMNext li, 
 .jstree-OMNext ins { background-image:url("d.png"); background-repeat:no-repeat; background-color:transparent; }
@@ -38,7 +45,7 @@
 
 .jstree-OMNext .jstree-no-icons a .jstree-icon { display:none; }
 
-.jstree-OMNext .jstree-search { font-style:italic; }
+.jstree-OMNext .jstree-search { font-style:normal; }
 
 .jstree-OMNext .jstree-no-icons .jstree-checkbox { display:inline-block; }
 .jstree-OMNext .jstree-no-checkboxes .jstree-checkbox { display:none !important; }
@@ -54,7 +61,7 @@
 #vakata-dragged.jstree-OMNext .jstree-invalid { background:url("d.png") -18px -53px no-repeat !important; }
 #jstree-marker.jstree-OMNext { background:url("d.png") -41px -57px no-repeat !important; text-indent:-100px; }
 
-.jstree-OMNext a.jstree-search { color:aqua; }
+.jstree-OMNext a.jstree-search { color:#3F8EDF; }
 .jstree-OMNext .jstree-locked a { color:silver; cursor:OMNext; }
 
 #vakata-contextmenu.jstree-OMNext-context, 
