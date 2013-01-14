@@ -1,6 +1,26 @@
-# Permissions
+# AdminBundle
 
-## Initialization and bootstrapping
+## Customizing the menu of the admin interface
+
+Customizing the menu of the admin interface can be achieved by creating a service which implements the `Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface`. The service you created should provide an implementation for the `adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)` function.
+
+In the adaptChildren function it is possible to customize the children for the given parent by adding or removing menu items in the children array. There are different types of menu items:
+
+* `Kunstmaan\AdminBundle\Helper\Menu\MenuItem`: Which represents a menu item that will be shown in the tree
+* `Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem`: Which represents a menu item that will be shown in the top menu
+
+When the service is created, you still need to tag the service with the 'kunstmaan_admin.menu.adaptor' tag. An example of this is the SettingsMenuAdaptor:
+
+```yaml
+kunstmaan_admin.menu.adaptor.settings:
+        class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
+        tags:
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
+```
+
+## Permissions
+
+### Initialization and bootstrapping
 First we have to configure the connection that the ACL system is supposed to use :
 
 ```yaml
@@ -16,8 +36,7 @@ After the connection is configured, we have to import the database structure, yo
 
 Without this you will not be able to use ACL permission support.
 
-
-## MaskBuilder
+### MaskBuilder
 Since we use a specific set of permissions, we created a custom MaskBuilder (Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder) and
 PermissionMap (Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap) that support these permissions.
 
@@ -53,7 +72,7 @@ $builder
 $newMask = $builder->get();
 ```
 
-## Creating an ACL
+### Creating an ACL
 To create a new ACL and grant the VIEW permission to the guest role for a domain object (ie. an entity) you would use :
 
 ```php
@@ -85,7 +104,7 @@ $acl = $aclProvider->findAcl($objectIdentity);
 _Note:_ We currently only use object scope and role based permissions, you could however also use class scope and/or user
 based permissions if needed.
 
-## Checking access using ACL
+### Checking access using ACL
 To check if the current user has access to a specific domain object, you use the following :
 
 ```php
@@ -102,7 +121,7 @@ if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $entit
 In this example, we check whether the user has the VIEW permission and if the user doesn't have the VIEW permission
 an exception will be thrown.
 
-## Twig support
+### Twig support
 You can also check the permissions in Twig templates which can be useful if you want to only show specific front-end
 elements for users that have a specific permission :
 
@@ -147,7 +166,7 @@ $permissionDef = new PermissionDefinition(array('view'));
 $items = $em->getRepository('ARepository')->findAllWithPermission($aclHelper, $permissionDef);
 ```
 
-## PermissionDefinition
+### PermissionDefinition
 The permission definition object allows you to define the settings to be used by the ACL helper. Per default
 the (ORM based) AclHelper will check the QueryBuilder passed to it to determine the first root entity and
 the corresponding alias. You can override this by providing *both* a root entity name and alias, ie. :
@@ -165,7 +184,7 @@ DBAL QueryBuilder doesn't know about your entities.
 One important thing to note is that ACL permissions currently can only be applied to entities with a single
 unique primary key (so in fact there's no support for composite keys).
 
-## Enable the GuestUserListener
+### Enable the GuestUserListener
 
 To enable the GuestUserListener, which will remap the default anonymous user to a guest user (including default
  guest user roles), you have to add the following to the security.yml of your project :
@@ -177,7 +196,7 @@ security:
             guest_user: true
 ```
 
-## References
+### References
 
 - [How to use Access Control Lists (ACLs)](http://symfony.com/doc/current/cookbook/security/acl.html)
 - [How to use Advanced ACL Concepts](http://symfony.com/doc/current/cookbook/security/acl_advanced.html)
