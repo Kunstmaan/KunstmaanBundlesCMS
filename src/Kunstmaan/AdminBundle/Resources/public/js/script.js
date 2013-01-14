@@ -15,6 +15,11 @@ $(document).ready(function () {
 
 //JS-tree
 function init_tree() {
+	var topLevelTreeElements = "";
+	$('.tree > ul > li').each(function() {
+		topLevelTreeElements = topLevelTreeElements + $(this).attr('id'); + ",";
+	});
+	console.log(topLevelTreeElements);
 	$('.tree').jstree({
 		"plugins" : [ "themes", "html_data", "types", "search" ] ,
 		"themes" : { 
@@ -22,6 +27,11 @@ function init_tree() {
 			"dots" : true,
 			"icons" : true		
 		},
+		"core": { 
+                    "animation": 0,
+                    "open_parents": true,
+                    "initially_open": [topLevelTreeElements]
+                },
 		"types" : {
 			"types" : {
 				//Page
@@ -100,7 +110,11 @@ function init_tree() {
 			"theme" : "OMNext",
 			"dots" : true,
 			"icons" : true		
-		},
+		},"core": { 
+                    "animation": 0,
+                    "open_parents": true,
+                    "initially_open": [topLevelTreeElements]
+                },
 		"types" : {
 			"types" : {
 				//Page
