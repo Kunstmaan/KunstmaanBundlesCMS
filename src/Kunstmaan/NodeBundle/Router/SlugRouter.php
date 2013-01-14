@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Router;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\RequestContext;
@@ -14,7 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
  * The SlugRouter takes care of routing the paths for slugs. It should have the lowest priority as it's a
  * catch-all router that routes (almost) all requests to the SlugController
  */
-class SlugRouter implements RouterInterface {
+class SlugRouter implements RouterInterface
+{
 
     /** @var  RequestContext */
     private $context;
@@ -28,20 +30,21 @@ class SlugRouter implements RouterInterface {
     /** @var ContainerInterface */
     private $container;
 
-
     /**
      * The constructor for this service
      *
-     * @param $container
+     * @param ContainerInterface $container
      */
-    public function __construct($container) {
+    public function __construct($container)
+    {
         $this->container = $container;
         $this->routeCollection = new RouteCollection();
 
         $multilanguage      = $this->container->getParameter('multilanguage');
         $defaultlocale      = $this->container->getParameter('defaultlocale');
 
-        if($multilanguage) { // the website is multilingual so the language is the first parameter
+        if ($multilanguage) {
+            // the website is multilingual so the language is the first parameter
             $requiredLocales    = $this->container->getParameter('requiredlocales');
 
             $this->routeCollection->add('_slug', new Route(
@@ -64,7 +67,8 @@ class SlugRouter implements RouterInterface {
                 ),
                 array('_locale' => $requiredLocales, 'url' => "[a-zA-Z1-9\-_\/]+") // override default validation of url to accept /, - and _
             ));
-        } else { // the website is not multiligual, _locale must do a fallback to the default locale
+        } else {
+            // the website is not multiligual, _locale must do a fallback to the default locale
             $this->routeCollection->add('_slug', new Route(
                 '/{url}',
                 array(
@@ -97,7 +101,8 @@ class SlugRouter implements RouterInterface {
      *
      * @return array
      */
-    public function match($pathinfo) {
+    public function match($pathinfo)
+    {
         $urlMatcher = new UrlMatcher($this->routeCollection, $this->getContext());
 
         return $urlMatcher->match($pathinfo);
@@ -107,13 +112,14 @@ class SlugRouter implements RouterInterface {
     /**
      * Generate an url for a supplied route
      *
-     * @param string $name
-     * @param array $parameters
-     * @param bool $absolute
+     * @param string $name       The path
+     * @param array  $parameters The route parameters
+     * @param bool   $absolute   Absolute url or not
      *
      * @return null|string
      */
-    public function generate($name, $parameters = array(), $absolute = false) {
+    public function generate($name, $parameters = array(), $absolute = false)
+    {
         $this->urlGenerator = new UrlGenerator($this->routeCollection, $this->context);
 
         return $this->urlGenerator->generate($name, $parameters, $absolute);
@@ -142,10 +148,11 @@ class SlugRouter implements RouterInterface {
      */
     public function getContext()
     {
-        if(!isset($this->context)) {
+        if (!isset($this->context)) {
             $this->context = new RequestContext();
             $this->context->fromRequest($this->container->get('request'));
         }
+
         return $this->context;
     }
 
@@ -155,7 +162,8 @@ class SlugRouter implements RouterInterface {
      *
      * @return \Symfony\Component\Routing\RouteCollection
      */
-    public function getRouteCollection() {
+    public function getRouteCollection()
+    {
         return $this->routeCollection;
     }
 }
