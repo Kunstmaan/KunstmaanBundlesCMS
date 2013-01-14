@@ -2,6 +2,9 @@
 
 //Init functions needed on every page
 $(document).ready(function () {
+	if($('.tree').length > 0) {
+		init_tree();
+	}
 	init_main_functions();
 	initTop();
 	initCancel()
