@@ -260,4 +260,18 @@ class TabPane
         $this->tabs = array_values($this->tabs);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function getExtraParams(Request $request)
+    {
+        $extraParams = array();
+        foreach($this->getTabs() as $tab) {
+            $extraParams = array_merge($extraParams, $tab->getExtraParams($request));
+        }
+        return $extraParams;
+    }
+
 }

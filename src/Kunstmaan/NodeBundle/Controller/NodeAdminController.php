@@ -3,6 +3,8 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use InvalidArgumentException;
 
 use Doctrine\ORM\EntityManager;
@@ -87,7 +89,7 @@ class NodeAdminController extends Controller
 
     /**
      * @Route("/", name="KunstmaanNodeBundle_nodes")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     * @Template("KunstmaanNodeBundle:Admin:list.html.twig")
      *
      * @return array
      */
@@ -204,6 +206,8 @@ class NodeAdminController extends Controller
 
         $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
+        $this->get('session')->getFlashBag()->add('success', 'Page has been published!');
+
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
 
@@ -236,6 +240,8 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
+
+        $this->get('session')->getFlashBag()->add('success', 'Page has been unpublished!');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
@@ -272,6 +278,8 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
+
+        $this->get('session')->getFlashBag()->add('success', 'Page has been deleted!');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeParent->getId())));
     }
@@ -322,6 +330,8 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         $this->get('event_dispatcher')->dispatch(Events::REVERT, new RevertNodeAction($node, $nodeTranslation, $newNodeVersion, $clonedPage, $nodeVersion, $page));
+
+        $this->get('session')->getFlashBag()->add('success', 'Page has been reverted!');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
             'id' => $id,
@@ -459,8 +469,13 @@ class NodeAdminController extends Controller
         $propertiesTab = new Tab('Properties');
         $propertiesTab->addType('main', $page->getDefaultAdminType(), $page);
         $propertiesTab->addType('node', $node->getDefaultAdminType(), $node);
-        $propertiesTab->addType('nodetranslation', $nodeTranslation->getDefaultAdminType(), $nodeTranslation);
         $tabPane->addTab($propertiesTab);
+
+        // Menu tab
+        $menuTab = new Tab('Menu');
+        $menuTab->addType('menunodetranslation', new NodeMenuTabTranslationAdminType(), $nodeTranslation);
+        $menuTab->addType('menunode', new NodeMenuTabAdminType(), $node);
+        $tabPane->addTab($menuTab);
 
         $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         $tabPane->buildForm();
@@ -473,6 +488,8 @@ class NodeAdminController extends Controller
 
                 $nodeTranslation->setTitle($page->getTitle());
                 $this->em->persist($nodeTranslation);
+                $nodeVersion->setUpdated(new DateTime());
+                $this->em->persist($nodeVersion);
                 $tabPane->persist($this->em);
                 $this->em->flush();
 
@@ -484,11 +501,16 @@ class NodeAdminController extends Controller
 
                 $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
-                return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
+                $this->get('session')->getFlashBag()->add('success', 'Page has been edited!');
+
+                $params = array(
                     'id' => $node->getId(),
                     'subaction' => $subaction,
-                    'currenttab' => $tabPane->getActiveTab(),
-                )));
+                    'currenttab' => $tabPane->getActiveTab()
+                );
+                $params = array_merge($params, $tabPane->getExtraParams($request));
+
+                return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', $params));
             }
         }
 
@@ -507,7 +529,8 @@ class NodeAdminController extends Controller
             'draft' => $draft,
             'draftNodeVersion' => $draftNodeVersion,
             'subaction' => $subaction,
-            'tabPane' => $tabPane
+            'tabPane' => $tabPane,
+            'editmode' => true
         );
     }
 

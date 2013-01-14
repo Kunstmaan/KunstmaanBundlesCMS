@@ -60,10 +60,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('title', 'Title', true)
+        $this->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
             ->addField('created', 'Created At', true)
             ->addField('updated', 'Updated At', true)
-            ->addField('online', 'Online', true);
+            ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
     /**
@@ -162,8 +162,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         parent::adaptQueryBuilder($queryBuilder);
 
         $queryBuilder->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id');
+        $queryBuilder->innerJoin('b.nodeVersions', 'nv', 'WITH', 'b.publicNodeVersion = nv.id');
         $queryBuilder->andWhere('b.lang = :lang');
         $queryBuilder->andWhere('n.deleted = 0');
+        $queryBuilder->addOrderBy("nv.updated", "DESC");
         $queryBuilder->setParameter('lang', $this->locale);
     }
 

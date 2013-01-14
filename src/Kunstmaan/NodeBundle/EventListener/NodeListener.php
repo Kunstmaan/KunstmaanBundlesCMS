@@ -49,7 +49,7 @@ class NodeListener
     {
         if ($this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
             $tabPane = $event->getTabPane();
-            $tabPane->addTab(new PermissionTab('Permissions', $event->getPage(), $this->permissionAdmin, $this->permissionMap));
+            $tabPane->addTab(new PermissionTab('Permissions', $event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap));
         }
     }
 

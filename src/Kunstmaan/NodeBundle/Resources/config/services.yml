@@ -17,6 +17,11 @@ services:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType
         tags:
             - { name: 'form.type', alias: 'urlchooser' }
+            
+    kunstmaan_node.form.type.slug:
+        class: Kunstmaan\NodeBundle\Form\Type\SlugType
+        tags:
+            - { name: 'form.type', alias: 'slug' }
 
     kunstmaan_node.actions_menu_builder:
         class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder

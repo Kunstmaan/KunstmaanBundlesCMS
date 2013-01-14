@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 use Doctrine\ORM\Mapping as ORM;

@@ -6,9 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * NodeTranslationAdminType
+ * NodeMenuTabTranslationAdminType
  */
-class NodeTranslationAdminType extends AbstractType
+class NodeMenuTabTranslationAdminType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,8 +16,17 @@ class NodeTranslationAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
-        //$builder->add('node', 'entity_id', array('class' => 'Kunstmaan\NodeBundle\Entity\Node'));
+        $builder->add('slug', 'slug', array('required' => false));
+        $builder->add(
+            'weight',
+            'choice',
+            array(
+                'choices'     => array_combine(range(-50, 50), range(-50, 50)),
+                'empty_value' => false,
+                'required' => false,
+                'attr' => array('title' => 'Used to reorder the pages.')
+            )
+        );
     }
 
     /**
@@ -25,7 +34,7 @@ class NodeTranslationAdminType extends AbstractType
      */
     public function getName()
     {
-        return 'nodetranslation';
+        return 'menutranslation';
     }
 
     /**

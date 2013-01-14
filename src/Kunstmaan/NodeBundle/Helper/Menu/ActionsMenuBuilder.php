@@ -99,7 +99,7 @@ class ActionsMenuBuilder
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
         $menu              = $this->factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'main_actions');
+        $menu->setChildrenAttribute('class', 'main_actions btn-group');
 
         if (!is_null($activeNodeVersion)) {
             $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();

@@ -6,9 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * NodeTranslationAdminType
+ * NodeMenuTabAdminType
  */
-class NodeTranslationAdminType extends AbstractType
+class NodeMenuTabAdminType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -16,8 +16,7 @@ class NodeTranslationAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
-        //$builder->add('node', 'entity_id', array('class' => 'Kunstmaan\NodeBundle\Entity\Node'));
+        $builder->add('hiddenFromNav', 'checkbox', array('label' => 'Hidden from menu', 'required' => false));
     }
 
     /**
@@ -25,7 +24,7 @@ class NodeTranslationAdminType extends AbstractType
      */
     public function getName()
     {
-        return 'nodetranslation';
+        return 'menu';
     }
 
     /**
@@ -36,7 +35,7 @@ class NodeTranslationAdminType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'Kunstmaan\NodeBundle\Entity\NodeTranslation',
+            'data_class' => 'Kunstmaan\NodeBundle\Entity\Node',
         );
     }
 }

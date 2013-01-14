@@ -60,7 +60,7 @@ class WidgetsController extends Controller
         /* @var SecurityContextInterface $securityContext */
         $securityContext = $this->container->get('security.context');
         /* @var AclHelper $aclHelper */
-        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
         $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, false, true);

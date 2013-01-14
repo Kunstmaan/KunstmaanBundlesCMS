@@ -3,6 +3,8 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
 
@@ -14,7 +16,7 @@ use Doctrine\ORM\EntityManager;
  * NodeTranslation
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeTranslationRepository")
- * @ORM\Table(name="kuma_node_translations")
+ * @ORM\Table(name="kuma_node_translations", uniqueConstraints={@ORM\UniqueConstraint(name="ix_kuma_node_translations_node_lang", columns={"node_id", "lang"})})
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class NodeTranslation extends AbstractEntity

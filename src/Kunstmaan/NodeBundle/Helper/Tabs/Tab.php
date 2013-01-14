@@ -188,4 +188,13 @@ class Tab implements TabInterface
         return $this->data;
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function getExtraParams(Request $request)
+    {
+        return array();
+    }
 }
