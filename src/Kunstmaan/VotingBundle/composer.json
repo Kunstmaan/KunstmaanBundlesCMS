@@ -1,8 +1,8 @@
 {
     "name": "kunstmaan/voting-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 KunstmaanVotingBundle",
-    "keywords": [],
+    "description": "A lot of sites enable users to vote or participate in actions where Facebook Likes are counted and rewarded. The KunstmaanVotingBundle was created to allow a faster setup of that kind of actions and will provide a backlog of votes your users casted. That way you can look for irregularities and automatically stop campains when their deadline has expired. It will provice support for votes on your site only but also for external social networks as Facebook so you can worry about you ideas and not how to implement it.",
+    "keywords": [ "kunstmaan", "cms", "social", "voting"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanVotingBundle",
     "license": "MIT",
     "authors": [
