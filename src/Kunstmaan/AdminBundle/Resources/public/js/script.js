@@ -19,7 +19,6 @@ function init_tree() {
 	$('.tree > ul > li').each(function() {
 		topLevelTreeElements = topLevelTreeElements + $(this).attr('id'); + ",";
 	});
-	console.log(topLevelTreeElements);
 	$('.tree').jstree({
 		"plugins" : [ "themes", "html_data", "types", "search" ] ,
 		"themes" : { 
