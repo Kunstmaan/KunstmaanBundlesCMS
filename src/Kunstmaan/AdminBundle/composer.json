@@ -21,8 +21,8 @@
         "friendsofsymfony/user-bundle": "1.3.*",
         "knplabs/knp-menu-bundle": "*",
         "monolog/monolog": ">=1.0,<1.3-dev",
-        "kunstmaan/adminlist-bundle": "2.2.*@dev",
-        "kunstmaan/utilities-bundle": "2.2.*@dev",
+        "kunstmaan/adminlist-bundle": "*",
+        "kunstmaan/utilities-bundle": "*",
         "sensio/framework-extra-bundle": "*"
     },
     "autoload": {
