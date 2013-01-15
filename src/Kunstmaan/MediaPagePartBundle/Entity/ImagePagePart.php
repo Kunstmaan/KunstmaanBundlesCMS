@@ -35,7 +35,7 @@ class ImagePagePart extends AbstractPagePart
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
-    public $media;
+    protected $media;
 
     /**
      * Get opennewwindow
@@ -82,7 +82,7 @@ class ImagePagePart extends AbstractPagePart
      *
      * @param string $altText
      */
-    public function setAlttext($altText)
+    public function setAltText($altText)
     {
         $this->altText = $altText;
     }
@@ -112,7 +112,7 @@ class ImagePagePart extends AbstractPagePart
      *
      * @return string
      */
-    public function getAlttext()
+    public function getAltText()
     {
         return $this->altText;
     }
