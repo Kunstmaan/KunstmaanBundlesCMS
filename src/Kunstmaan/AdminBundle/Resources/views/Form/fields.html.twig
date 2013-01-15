@@ -2,7 +2,7 @@
 
 {% block choice_widget_expanded %}
     {% spaceless %}
-        <div {{ block('widget_container_attributes') }}>
+        <div {{ block('widget_container_attributes') }} class="nested_input_prop_container">
             {% for child in form %}
                 <div class="input_prop">
                     {{ form_label(child) }}
