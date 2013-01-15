@@ -1,4 +1,5 @@
 parameters:
+    kunstmaan_node.version_timeout: 3600
 
 services:
     kunstmaan_node.nodetranslation.listener:
