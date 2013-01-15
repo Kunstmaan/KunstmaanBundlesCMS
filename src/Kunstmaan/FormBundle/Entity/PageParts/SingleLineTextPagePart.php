@@ -49,7 +49,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     /**
      * If a regular expression is set and it doesn't match with the given value, this error message will be shown
      *
-     * @ORM\Column(type="string", name="error_essage_regex", nullable=true)
+     * @ORM\Column(type="string", name="error_message_regex", nullable=true)
      */
     protected $errorMessageRegex;
 
