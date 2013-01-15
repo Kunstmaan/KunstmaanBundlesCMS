@@ -34,7 +34,7 @@ class WidgetsController extends Controller
         /* @var AclHelper $aclHelper */
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
-        $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper);
+        $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, true, true);
 
         return array(
@@ -63,7 +63,7 @@ class WidgetsController extends Controller
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
         $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, false, true);
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, true, true);
 
         return array(
             'topnodes' => $topNodes,

@@ -55,7 +55,7 @@ class SlugRouter implements RouterInterface
                         'url'           => '',
                         '_locale'       => $defaultlocale,
                     ),
-                    array('_locale' => $requiredLocales, 'url' => "[a-zA-Z1-9\-_\/]*") // override default validation of url to accept /, - and _
+                    array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
                 ));
             $this->routeCollection->add('_slug', new Route(
                 '/{_locale}/{url}',
@@ -65,7 +65,7 @@ class SlugRouter implements RouterInterface
                     'url'           => '',
                     '_locale'       => $defaultlocale,
                 ),
-                array('_locale' => $requiredLocales, 'url' => "[a-zA-Z1-9\-_\/]*") // override default validation of url to accept /, - and _
+                array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
             ));
         } else {
             // the website is not multiligual, _locale must do a fallback to the default locale
@@ -77,7 +77,7 @@ class SlugRouter implements RouterInterface
                         'url'           => '',
                         '_locale'       => $defaultlocale,
                     ),
-                    array('url' => "[a-zA-Z1-9\-_\/]*") // override default validation of url to accept /, - and _
+                    array('url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
                 ));
             $this->routeCollection->add('_slug', new Route(
                 '/{url}',
@@ -87,7 +87,7 @@ class SlugRouter implements RouterInterface
                     'url'           => '',
                     '_locale'       => $defaultlocale,
                 ),
-                array('url' => "[a-zA-Z1-9\-_\/]*") // override default validation of url to accept /, - and _
+                array('url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
             ));
         }
     }
