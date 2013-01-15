@@ -7,12 +7,14 @@
 	<script>
     	$(document).ready(function() {
         	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker('setStartDate', '{{ datePicker_startDate }}');
+        	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').inputmask("date");
         });
 	</script>
 {% else %}
 	<script>
     	$(document).ready(function() {
         	$('.form_datepicker').datepicker('update');
+        	$('.form_datepicker').inputmask("date");
         });
 	</script>
 {% endif %}
