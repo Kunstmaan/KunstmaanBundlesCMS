@@ -486,7 +486,7 @@ class NodeAdminController extends Controller
 
             if ($tabPane->isValid()) {
                 //Check the save threshold and make a new nodeversion if the threshold is passed
-                $thresholdDate = date("Y-m-d H:i:s", time()-60*60*$this->container->getParameter("save_threshold"));
+                $thresholdDate = date("Y-m-d H:i:s", time()-$this->container->getParameter("version_timeout"));
                 $updatedDate = date("Y-m-d H:i:s", strtotime($nodeVersion->getUpdated()->format("Y-m-d H:i:s")));
                 if($thresholdDate >= $updatedDate) {
                     if($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {

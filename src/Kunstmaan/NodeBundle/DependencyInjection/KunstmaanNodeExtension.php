@@ -28,7 +28,7 @@ class KunstmaanNodeExtension extends Extension
             $container->getParameter('twig.form.resources'),
             array('KunstmaanNodeBundle:Form:formWidgets.html.twig')
         ));
-        $container->setParameter('save_threshold', $config['save_threshold']);
+        $container->setParameter('version_timeout', $config['version_timeout']);
 
         $loader->load('services.yml');
     }

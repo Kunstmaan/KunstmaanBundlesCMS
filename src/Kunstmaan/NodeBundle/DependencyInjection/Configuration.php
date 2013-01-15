@@ -20,9 +20,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('kunstmaan_node');
 
+        //The version_timeout parameter sets the time, in seconds, when a new version
+        //needs to be created when one saves a node and the timeout is passed.
+        //e.g. timeout is 3600 seconds, so when a page is last saved more then 3600 seconds ago
+        //a new version will be created.
         $rootNode->children()
-            ->variableNode('save_threshold')
-            ->defaultValue(1)
+            ->variableNode('version_timeout')
+            ->defaultValue(3600)
             ->end();
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
