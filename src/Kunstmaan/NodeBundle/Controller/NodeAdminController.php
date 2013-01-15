@@ -485,6 +485,17 @@ class NodeAdminController extends Controller
             $tabPane->bindRequest($request);
 
             if ($tabPane->isValid()) {
+                //Check the save threshold and make a new nodeversion if the threshold is passed
+                $thresholdDate = date("Y-m-d H:i:s", time()-60*60*$this->container->getParameter("save_threshold"));
+                $updatedDate = date("Y-m-d H:i:s", strtotime($nodeVersion->getUpdated()->format("Y-m-d H:i:s")));
+                if($thresholdDate >= $updatedDate) {
+                    if($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
+                        $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion);
+                    } else {
+                        $nodeVersion = $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
+                    }
+                }
+
                 $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
                 $nodeTranslation->setTitle($page->getTitle());

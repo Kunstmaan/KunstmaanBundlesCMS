@@ -20,7 +20,7 @@ class KunstmaanNodeExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -28,6 +28,7 @@ class KunstmaanNodeExtension extends Extension
             $container->getParameter('twig.form.resources'),
             array('KunstmaanNodeBundle:Form:formWidgets.html.twig')
         ));
+        $container->setParameter('save_threshold', $config['save_threshold']);
 
         $loader->load('services.yml');
     }
