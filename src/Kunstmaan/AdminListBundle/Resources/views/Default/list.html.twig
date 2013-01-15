@@ -12,7 +12,7 @@
 
 {% block extra_actions_header %}
     {% if adminlist.canAdd() %}
-        <div class="widget clearfix">
+        <div class="extra_actions_header">
             <div class="btn-group pull-right">
                 {% if adminlist.getIndexUrl()['params'] is defined %}
                     {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
