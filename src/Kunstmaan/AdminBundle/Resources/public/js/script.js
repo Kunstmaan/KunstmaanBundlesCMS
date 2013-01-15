@@ -536,7 +536,7 @@ function updateOptions(el, options){
 function initDatePicker() {
     // http://www.eyecon.ro/bootstrap-datepicker/
     if($('.form_datepicker').length > 0) {
-        $(".form_datepicker").datepicker();
+        $(".form_datepicker").datepicker('format', 'mm/dd/yyyy');
     }
 }
 
