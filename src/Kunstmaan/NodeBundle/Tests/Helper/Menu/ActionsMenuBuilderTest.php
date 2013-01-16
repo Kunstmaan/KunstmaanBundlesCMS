@@ -137,7 +137,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.unpublish'));
         $this->assertNotNull($menu->getChild('action.delete'));
 
-        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions');
+        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
     }
 
     /**
