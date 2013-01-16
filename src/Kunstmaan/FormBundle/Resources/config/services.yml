@@ -6,7 +6,7 @@ services:
     kunstmaan_form.menu.adaptor.forms:
         class: Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor
         tags:
-            -  { name: admin_menu.adaptor }
+            -  { name: kunstmaan_admin.menu.adaptor }
 
     kunstmaan_form.form_mailer:
         class: %kunstmaan_form.form_mailer.class%
