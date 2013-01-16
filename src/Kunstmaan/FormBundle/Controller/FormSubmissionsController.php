@@ -39,10 +39,9 @@ class FormSubmissionsController extends Controller
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $aclHelper = $this->container->get('kunstmaan.acl.helper');
+        $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
         /* @var $adminList AdminList */
         $adminList = $this->get('kunstmaan_adminlist.factory')->createList(new FormPageAdminListConfigurator($em, $aclHelper, PermissionMap::PERMISSION_VIEW), $em);
-        $adminList->setAclHelper($aclHelper);
         $adminList->bindRequest($request);
 
         return array('adminlist' => $adminList);
@@ -64,10 +63,8 @@ class FormSubmissionsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $aclHelper = $this->container->get('kunstmaan.acl.helper');
         /* @var $adminList AdminList */
         $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($em, $nodeTranslation), $em);
-        $adminList->setAclHelper($aclHelper);
         $adminList->bindRequest($request);
 
         return array('nodetranslation' => $nodeTranslation, 'adminlist' => $adminList);
