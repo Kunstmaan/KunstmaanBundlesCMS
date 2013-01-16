@@ -1,9 +1,8 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-<div class="alert-message warning">
+<div class="alert fade in">
         <a class="close" href="{{ path('fos_user_security_login') }}">×</a>
-        <strong>{{ 'form.warning' | trans }}: </strong>
-        {{ 'We send you a mail with a confirmation link.' | trans }}
+        {{ 'We have sent you an email with a confirmation link.' | trans }}
 </div>
 {% endblock %}
