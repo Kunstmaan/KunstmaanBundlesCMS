@@ -53,18 +53,10 @@ The KunstmaanMediaBundle depends on the hard work of the PHP and Symfony communi
 
 Installation instructions
 -------------------------
-Installation is straightforward, add the following lines to your deps file and running vendors install.
+Assuming you have installed composer.phar or composer binary:
 
-```
-[KunstmaanMediaBundle]
-    git=https://github.com/Kunstmaan/KunstmaanMediaBundle.git
-    target=/bundles/Kunstmaan/MediaBundle
-```
-
-Register the Kunstmaan namespace in your autoload.php file:
-
-```
-'Kunstmaan'        => __DIR__.'/../vendor/bundles'
+``` bash
+$ composer require kunstmaan/media-bundle
 ```
 
 Add the KunstmaanMediaBundle to your AppKernel.php file:
