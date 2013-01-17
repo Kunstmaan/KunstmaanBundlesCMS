@@ -3,8 +3,8 @@
     <option value="doesnotcontain" {% if data.comparator is defined and data.comparator == "doesnotcontain" %} selected="selected" {% endif %} >doesn't contain</option>
     <option value="equals" {% if data.comparator is defined and data.comparator == "equals" %} selected="selected" {% endif %} >equals</option>
     <option value="notequals" {% if data.comparator is defined and data.comparator == "notequals" %} selected="selected" {% endif %} >not equals</option>
-    <option value="startswith" {% if data.comparator is defined and data.comparator == "startswith" %} selected="selected" {% endif %} >starts width</option>
-    <option value="endswith" {% if data.comparator is defined and data.comparator == "endswith" %} selected="selected" {% endif %} >ends width</option>
+    <option value="startswith" {% if data.comparator is defined and data.comparator == "startswith" %} selected="selected" {% endif %} >starts with</option>
+    <option value="endswith" {% if data.comparator is defined and data.comparator == "endswith" %} selected="selected" {% endif %} >ends with</option>
 </select>
 <input type="text" name="{{nameprefix}}value{{namesuffix}}"
        {% if data.value is defined %}

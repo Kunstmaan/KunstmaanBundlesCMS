@@ -1,6 +1,6 @@
 <select name="{{nameprefix}}comparator{{namesuffix}}" id="{{nameprefix}}comparator{{namesuffix}}">
     <option value="eq" {% if data.comparator is defined and data.comparator == "eq" %} selected="selected" {% endif %} >equals</option>
-    <option value="neq" {% if data.comparator is defined and data.comparator == "neq" %} selected="selected" {% endif %} >doesn't equals</option>
+    <option value="neq" {% if data.comparator is defined and data.comparator == "neq" %} selected="selected" {% endif %} >not equals</option>
     <option value="lt" {% if data.comparator is defined and data.comparator == "lt" %} selected="selected" {% endif %} >lower than</option>
     <option value="lte" {% if data.comparator is defined and data.comparator == "lte" %} selected="selected" {% endif %} >lower than or equal</option>
     <option value="gt" {% if data.comparator is defined and data.comparator == "gt" %} selected="selected" {% endif %} >greater than</option>
