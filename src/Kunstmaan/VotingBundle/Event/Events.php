@@ -18,4 +18,11 @@ class Events
      * @var string
      */
     const FACEBOOK_SEND = "kunstmaan_voting.facebookSend";
+
+    /**
+     * The onLinkedInShare will be triggered through a callback from the LinkedIn Javascript API when a Share has been completed
+     *
+     * @var string
+     */
+    const LINKEDIN_SHARE = "kunstmaan_voting.linkedInShare";
 }

@@ -29,10 +29,12 @@ In most cases the default value of 1 is all you need. But in a few cases you may
 ## Facebook
 
 * Like
-* Send (planned)
+* Send
 
 See : [Facebook documentation](https://github.com/Kunstmaan/KunstmaanVotingBundle/blob/master/Resources/doc/facebook.md)
 
 ## LinkedIn
 
-* Share (planned)
+* Share
+
+See : [LinkedIn documentation](https://github.com/Kunstmaan/KunstmaanVotingBundle/blob/master/Resources/doc/linkedin.md)

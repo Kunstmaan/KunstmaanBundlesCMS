@@ -1,0 +1,7 @@
+<script type="text/javascript">
+    function linkedInShareCallback($reference){
+        jQuery.ajax({
+            url : '{{ url('voting_linkedinshare') }}?reference=' + $reference {% if value is defined %}+ '&value={{ value }}'{% endif %}
+        });
+    }
+</script>

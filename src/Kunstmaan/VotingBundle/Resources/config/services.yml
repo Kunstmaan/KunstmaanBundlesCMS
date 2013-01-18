@@ -20,7 +20,6 @@ services:
 
     ## FACEBOOK SEND
 
-
     kunstmaan_voting.facebooksend:
         class: Kunstmaan\VotingBundle\EventListener\Facebook\FacebookSendEventListener
         arguments: ["@doctrine.orm.entity_manager"]
@@ -29,4 +28,16 @@ services:
 
     kunstmaan_voting.helper.facebook.send:
         class: Kunstmaan\VotingBundle\Helper\Facebook\FacebookSendHelper
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    ## LINKEDIN SHARE
+
+    kunstmaan_voting.linkedinshare:
+        class: Kunstmaan\VotingBundle\EventListener\LinkedIn\LinkedInShareEventListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_voting.linkedInShare, method: onLinkedInShare }
+
+    kunstmaan_voting.helper.linkedin.share:
+        class: Kunstmaan\VotingBundle\Helper\LinkedIn\LinkedInShareHelper
         arguments: ["@doctrine.orm.entity_manager"]
