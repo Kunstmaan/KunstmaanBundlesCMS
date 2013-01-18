@@ -1,0 +1,14 @@
+<script>
+    window.fbAsyncInit = function() {
+        FB.Event.subscribe('message.send',
+            function(response) {
+                if (!!response) {
+                    // Post was published
+                    jQuery.ajax({
+                        url : '{{ url('voting_facebooksend') }}?response=' + response {% if value is defined %}+ '&value={{ value }}'{% endif %}
+                    });
+                }
+            }
+        );
+    }
+</script>
