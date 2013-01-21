@@ -18,43 +18,18 @@ Contains the latest code. Will most likely have bc breaks and possibly will not 
 available on GitHub and on [Packagist](http://packagist.org/packages/kunstmaan/pagepart-bundle) and is tested on
 Travis CI [![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanPagePartBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanPagePartBundle)
 
-### Installation
-#### Using deps and vendor install
+Installation instructions
+-------------------------
+Assuming you have installed composer.phar or composer binary:
 
-Add the following lines to your deps file:
-
-```ini
-[KunstmaanAdminBundle]
-    git=git@github.com:Kunstmaan/KunstmaanAdminBundle.git
-    target=/bundles/Kunstmaan/AdminBundle
-[KunstmaanPagePartBundle]
-    git=git@github.com:Kunstmaan/KunstmaanPagePartBundle.git
-    target=/bundles/Kunstmaan/PagePartBundle
+``` bash
+$ composer require kunstmaan/pagepart-bundle
 ```
 
-Register the namespaces in your autoload.php file:
-
-```php
-// app/autoload.php
-
-$loader->registerNamespaces(array(
-    // ...
-    'Kunstmaan'        => __DIR__.'/../vendor/bundles'
-    // ...
-));
+Add the KunstmaanPagePartBundle to your AppKernel.php file:
 
 ```
-
-#### Using [Composer](http://getcomposer.org)
-
-```json
-{
-    "require": {
-        // ...
-        "kunstmaan/pagepart-bundle": "dev-master"
-        // ...
-    }
-}
+new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
 ```
 
 ## [1.0 branch](https://github.com/Kunstmaan/KunstmaanPagePartBundle/tree/1.0)
