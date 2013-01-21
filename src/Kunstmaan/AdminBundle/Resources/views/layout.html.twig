@@ -2,45 +2,45 @@
 
 {% block body %}
         <header>
-        	<div class="navbar navbar-fixed-top" data-dropdown="dropdown">
-        		<div class="navbar-inner">
-        			<div class="container-fluid">
-						<a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
-						<p class="pull-right">
-							<a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
-								<object data="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.svg') }}" type="image/svg+xml">
-									<img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.png') }}" alt="Kunstmaan" />
-								</object>
-							</a>
-						</p>
-	               </div>
-	           </div>
-	        </div>
+            <div class="navbar navbar-fixed-top" data-dropdown="dropdown">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
+                        <p class="pull-right">
+                            <a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
+                                <object data="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.svg') }}" type="image/svg+xml">
+                                    <img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.png') }}" alt="Kunstmaan" />
+                                </object>
+                            </a>
+                        </p>
+                   </div>
+               </div>
+            </div>
         </header>
         <div class="container-fluid">
-			<div class="login_form">
-				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-				 <div class="alert alert-warning">
-				     <strong>{{ 'form.warning' | trans }}: </strong>
-				     {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-				     <a href="{{ path('fos_user_security_logout') }}">
-				        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-				     </a>
-				 </div>
-				{% endif %}
-				{% for key, message in app.session.getFlashes() %}
-				<div class="alert alert-info {{ key }}">
-				     <button class="close" data-dismiss="alert">&times;</button>
-				     <strong>{{ 'form.headsup' | trans }}! </strong>
-				     {{ message|trans({}, 'FOSUserBundle') }}
-				</div>
-				{% endfor %}
-				
-				{% block fos_user_content %}
-				{% endblock fos_user_content %}
-				{% block forgot_password_link %}
-					<a href="{{ path('fos_user_resetting_request') }}" class="forgot_password fadeInDownPw">{{ 'Forgot my password.' | trans }}</a>
-				{% endblock %}
-			</div>
-	     </div>
+            <div class="login_form">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                 <div class="alert alert-warning">
+                     <strong>{{ 'form.warning' | trans }}: </strong>
+                     {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                     <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                     </a>
+                 </div>
+                {% endif %}
+                {% for key, message in app.session.getFlashes() %}
+                <div class="alert alert-info {{ key }}">
+                     <button class="close" data-dismiss="alert">&times;</button>
+                     <strong>{{ 'form.headsup' | trans }}! </strong>
+                     {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+                {% endfor %}
+                
+                {% block fos_user_content %}
+                {% endblock fos_user_content %}
+                {% block forgot_password_link %}
+                    <a href="{{ path('fos_user_resetting_request') }}" class="forgot_password fadeInDownPw">{{ 'Forgot my password.' | trans }}</a>
+                {% endblock %}
+            </div>
+         </div>
 {% endblock %}

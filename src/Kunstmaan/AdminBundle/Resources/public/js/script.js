@@ -351,15 +351,16 @@ function initTop() {
 
 //Thumbnails Helper
 function initDel() {
-	$('.thumbnails .del').live("mouseover mouseout", function(e) {
-		if (e.type == "mouseover") {
-			$(this).parent().find('.thumbnail').addClass('warning');
-			$(this).parent().find('.helper').html('Delete').addClass('warning');
-		} else {
-			$(this).parent().find('.thumbnail').removeClass('warning');
-			$(this).parent().find('.helper').html('Click to edit').removeClass('warning');
-		}
-	});
+    $('.thumbnails .del').hover(
+        function() {
+            $(this).parent().find('.thumbnail').addClass('warning');
+            $(this).parent().find('.helper').html('Delete').addClass('warning');
+        },
+        function() {
+            $(this).parent().find('.thumbnail').removeClass('warning');
+            $(this).parent().find('.helper').html('Click to edit').removeClass('warning');
+        }
+    );
 }
 
 function initCancel() {
@@ -367,11 +368,6 @@ function initCancel() {
 		e.preventDefault();
 		$(this).parents('.modal').modal('hide');
 	});
-}
-
-//Datepicker
-function init_datePicker() {
-	$('.date-pick').datePicker();
 }
 
 // Toggle Properties
@@ -427,7 +423,7 @@ function initFilter() {
 		onChange: function (e, value) {
 			if(value){
 				$(".all").removeClass("active");
-				$(".filters_wrp").addClass("active");				
+				$(".filters_wrp").addClass("active");
 			} else {
 				$(".all").addClass("active");
 				$(".filters_wrp").removeClass("active");
@@ -437,11 +433,6 @@ function initFilter() {
 		}
 	});
 }
-
-
-
-
-
 
 function createFilter(el, hide, options){
     console.log("Create filter init");
@@ -536,7 +527,7 @@ function updateOptions(el, options){
 function initDatePicker() {
     // http://www.eyecon.ro/bootstrap-datepicker/
     if($('.form_datepicker').length > 0) {
-        $(".form_datepicker").datepicker({'format': 'dd/mm/yyyy'});
+        $(".form_datepicker").datepicker();
     }
 }
 
@@ -569,8 +560,6 @@ function initDropdownButton() {
 		$el.next('.dropdown-menu').css('left', offset);
 	});
 }
-
-
 
 
 // UI SORTABLE
