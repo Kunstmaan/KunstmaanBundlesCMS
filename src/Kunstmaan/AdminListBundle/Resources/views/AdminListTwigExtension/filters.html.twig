@@ -64,9 +64,7 @@
 		</select>
 		<input type="hidden" name="uniquefilterid[]" class="uniquefilterid" value="" />
 		<span class="filteroptions"></span>
-		{% if filter.currentfilters|length >1 %}
 			<button class="remove_filter" type="button" onclick="return removeFilter(this)"><i class="icon-remove-sign"></i></button>
-		{% endif %}
 	</div>
 
     {% for columnname, value in filter.filterdefinitions %}

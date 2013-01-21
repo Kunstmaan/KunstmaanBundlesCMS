@@ -2,11 +2,19 @@
     <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
     <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
 </select>
-<input class="datepick{{nameprefix}}{{namesuffix}}" name="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %} />
+<input type="text" class="form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %} />
 {% if nameprefix != "" and namesuffix != "" %}
 	<script>
     	$(document).ready(function() {
-        	$(".datepick{{ nameprefix }}{{ namesuffix }}").datePicker({startDate: '{{ datePicker_startDate }}'});
+        	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker('setStartDate', '{{ datePicker_startDate }}');
+        	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').inputmask("date");
+        });
+	</script>
+{% else %}
+	<script>
+    	$(document).ready(function() {
+        	$('.form_datepicker').datepicker('update');
+        	$('.form_datepicker').inputmask("date");
         });
 	</script>
 {% endif %}

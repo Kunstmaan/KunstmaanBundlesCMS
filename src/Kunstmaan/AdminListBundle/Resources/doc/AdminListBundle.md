@@ -1,5 +1,6 @@
-Permission support
-==================
+# AdminList
+
+## Permission support
 
 ### AbstractAdminListConfigurator
 

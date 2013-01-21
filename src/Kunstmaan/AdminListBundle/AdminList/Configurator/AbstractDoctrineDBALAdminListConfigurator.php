@@ -7,11 +7,11 @@ use Traversable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-use Pagerfanta\Adapter\DoctrineDBALAdapter;
 use Pagerfanta\Pagerfanta;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType;
+use Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter;
 
 /**
  * An abstract admin list configurator that can be used with dbal query builder
@@ -100,9 +100,9 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     /**
      * @param array $params
      */
-    public function adaptQueryBuilder(/** @noinspection PhpUnusedParameterInspection */ array $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, /** @noinspection PhpUnusedParameterInspection */ array $params = array())
     {
-        $this->queryBuilder->where('1=1');
+        $queryBuilder->where('1=1');
     }
 
     /**
@@ -128,7 +128,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     {
         if (is_null($this->queryBuilder)) {
             $this->queryBuilder = new QueryBuilder($this->connection);
-            $this->adaptQueryBuilder();
+            $this->adaptQueryBuilder($this->queryBuilder);
 
             // Apply filters
             $filters = $this->getFilterBuilder()->getCurrentFilters();
@@ -142,9 +142,6 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
             // Apply sorting
             if (!empty($this->orderBy)) {
                 $orderBy = $this->orderBy;
-                if (!strpos($orderBy, '.')) {
-                    $orderBy = 'b.' . $orderBy;
-                }
                 $this->queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
             }
         }

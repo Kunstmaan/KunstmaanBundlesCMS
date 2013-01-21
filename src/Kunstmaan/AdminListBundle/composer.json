@@ -12,12 +12,6 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/wimvds/Pagerfanta"
-        }
-    ],
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
