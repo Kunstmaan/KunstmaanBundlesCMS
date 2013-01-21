@@ -1,129 +1,86 @@
-<!doctype html>
-    <!--[if lt IE 7]> <html class='no-js lt-ie9 lt-ie8 lt-ie7' lang='nl' xmlns:og='http://opengraphprotocol.org/schema/' xmlns:fb='http://www.facebook.com/2008/fbml'> <![endif]-->
-    <!--[if IE 7]>    <html class='no-js lt-ie9 lt-ie8' lang='nl' xmlns:og='http://opengraphprotocol.org/schema/' xmlns:fb='http://www.facebook.com/2008/fbml'> <![endif]-->
-    <!--[if IE 8]>    <html class='no-js lt-ie9' lang='nl' xmlns:og='http://opengraphprotocol.org/schema/' xmlns:fb='http://www.facebook.com/2008/fbml'> <![endif]-->
-    <!--[if gt IE 8]><!--> <html class='no-js' lang='en' xmlns:og='http://opengraphprotocol.org/schema/' xmlns:fb='http://www.facebook.com/2008/fbml'> <!--<![endif]-->
-
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
     <head>
-        <meta charset='utf-8'>
-        <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
-
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
         <title>{{ websitetitle | trans }}{% block title %} - {{ page.title }}{% endblock %}</title>
-
-        <meta name='description' content=''>
-        <meta name='viewport' content='width=device-width'>
-
         {% if page is defined %}
             {{ render_seo_metadata_for(page) }}
         {% endif %}
-        <meta name='viewport' content='width=device-width,initial-scale=1'>
-
-        <!-- open graph facebook -->
-        <meta property='og:title' content=''/>
-        <meta property='og:type' content=''/>
-        <meta property='og:url' content=''/>
-        <meta property='og:image' content=''/>
-        <meta property='og:site_name' content=''/>
-
-        <meta property='fb:admins' content=''/>
-        <meta property='og:description' content=''/>
-
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144x144.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png">
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-
-        ~~~CSS~~~
-
+        <link rel="shortcut icon" href="{{ asset('/img/favicon.ico') }}" type="image/x-icon">
+        ~~CSS~~~
         ~~~TOP_JS~~~
-
     </head>
-
     <body>
-        <!-- Chrome Frame -->
-        <!--[if lt IE 7 ]>
-        <script src='//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js'></script>
-        <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
-        <![endif]-->
 
-        {% if nodemenu is defined %}
-            <header>
-                <nav>
-                    <ul class="clearfix">
-                        {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                        {% for node in activeSubnode.children %}
-                            <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
-                                <ul class="clearfix">
-                                    {% for node in node.children %}
-                                        <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
-                                            <ul>
-                                                {% for node in node.children %}
-                                                    <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </nav>
-            </header>
+    <!-- Header and Nav -->
 
-            <div class="breadcrumb">
-                <ul class="clearfix">
-                    {% for node in nodemenu.breadCrumb %}
-                        <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
-                    {% endfor %}
+    <div class="row">
+        <div class="twelve columns">
+            <nav class="top-bar">
+                <ul>
+                    <li class="name">
+                        <h1>
+                            <a href="{{ path('_slug', { 'url': 'home' }) }}">Generated Website</a>
+                        </h1>
+                    </li>
+                    <li class="toggle-topbar"><a href="#"></a></li>
                 </ul>
-            </div>
-        {% endif %}
+                <section>
+                    {% if nodemenu is defined %}
+                        <ul class="right">
+                            <li class="divider show-for-medium-and-up"></li>
+                            {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                            {% for node in activeSubnode.children %}
+                                <li {% if node.children|length>0 %}class="has-dropdown"{% endif %}>
+                                    <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                    {% if node.children|length>0 %}
+                                        <ul class="dropdown">
+                                            {% for node in node.children %}
+                                                <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </section>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
 
-        {% block intro %}
-            <div class='welcome'>
-                <p><strong>I am rendering page '{{ page.title }}'!</strong></p>
-            </div>
-        {% endblock %}
-
-        {% block content %}{% endblock %}
-
-        <div role='main'>
-            <div class='socialwidgets clearfix'>
-                <div class='share share-google'>
-                    <g:plusone size='medium'></g:plusone>
-                </div>
-                <div class='share share-facebook-send'>
-                    <div class='fb-like' data-send='true' data-layout='button_count' data-width='140' data-show-faces='false'></div>
-                </div>
-                <div class='share share-facebook'>
-                    <div class='fb-like' data-send='false' data-layout='button_count' data-width='85' data-show-faces='false'></div>
-                </div>
-                <div class='share share-twitter'>
-                    <a href='https://twitter.com/share' class='twitter-share-button'>Tweet</a>
-                </div>
-                <div class='share share-linkedin'>
-                    <script type='IN/Share' data-counter='right'></script>
+    <footer class="row">
+        <div class="twelve columns">
+            <hr />
+            <div class="row">
+                <div class="twelve columns">
+                    <p>&copy; {{ "now"|date("Y") }}</p>
                 </div>
             </div>
         </div>
+    </footer>
 
-        <footer>
+    ~~~FOOTER_JS~~~
 
-        </footer>
+    <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+    mathiasbynens.be/notes/async-analytics-snippet -->
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){
+            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)
+        }(document,'script'));
+    </script>
 
-        ~~~FOOTER_JS~~~
-
-        <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
-        mathiasbynens.be/notes/async-analytics-snippet -->
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){
-                var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-                g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-                s.parentNode.insertBefore(g,s)
-            }(document,'script'));
-        </script>
     </body>
 </html>
