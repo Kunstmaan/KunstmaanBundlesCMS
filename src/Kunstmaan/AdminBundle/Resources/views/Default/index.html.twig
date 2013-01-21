@@ -3,7 +3,7 @@
 
 {% block content %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
-    <a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-primary btn-medium" style="float:right">{{ 'Edit dashboard' | trans }}</a>
+    <a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-medium" style="float:right">{{ 'Edit dashboard' | trans }}</a>
 {% endif %}
 {% if dashboardConfiguration %}
     <div class="page-header">
