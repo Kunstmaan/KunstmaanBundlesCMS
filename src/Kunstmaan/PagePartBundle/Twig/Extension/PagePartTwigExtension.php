@@ -42,7 +42,7 @@ class PagePartTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_pageparts'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
+            'render_pageparts'  => new \Twig_Function_Method($this, 'renderWidget', array('needs_context' => true, 'is_safe' => array('html'))),
             'getpageparts'  => new \Twig_Function_Method($this, 'getPageParts'),
         );
     }
@@ -54,16 +54,18 @@ class PagePartTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderWidget(AbstractPage $page, $context = "main", array $parameters = array())
+    public function renderWidget($twigContext, AbstractPage $page, $contextName = "main", array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
         /* @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-        $pageparts = $entityRepository->getPageParts($page, $context);
-
-        return $template->render(array_merge($parameters, array(
+        $pageparts = $entityRepository->getPageParts($page, $contextName);
+        $newTwigContext = array_merge($parameters, array(
             'pageparts' => $pageparts
-        )));
+        ));
+        $newTwigContext = array_merge($newTwigContext, $twigContext);
+
+        return $template->render($newTwigContext);
     }
 
     /**
