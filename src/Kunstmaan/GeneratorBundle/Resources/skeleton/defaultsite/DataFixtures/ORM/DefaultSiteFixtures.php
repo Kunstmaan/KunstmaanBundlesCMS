@@ -6,6 +6,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
+use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\PagePartBundle\Entity\LinePagePart;
+use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
+use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
+use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,6 +32,10 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 
 class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+
+    private $PARAGRAPHTEXT="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla. Aenean feugiat, nunc in scelerisque cursus, eros turpis condimentum justo, a tempor orci ligula pharetra velit. Vestibulum a purus interdum tellus eleifend semper. Integer eleifend adipiscing gravida. Phasellus dignissim, quam sagittis molestie sollicitudin, urna ligula pharetra diam, id consequat dui ante eget justo.</p>";
+    private $SHORT_PARAGRAPHTEXT="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p>";
+    private $RAW_HTML='<div class="row"><div class="six columns"><div class="panel"><h5>Lorem ipsum dolor sit amet.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div><div class="six columns"><div class="panel callout radius"><h5>Aenean auctor tempor nisl.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div></div>';
 
     /**
      * @var UserInterface
@@ -48,12 +58,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             ->getRepository('KunstmaanAdminBundle:User')
             ->findOneBy(array('username' => 'Admin'));
 
+        // Homepage
         $homePage = $this->createHomePage($manager, "Home");
-        $pagePartsPage = $this->createContentPage($manager, "PageParts", $homePage);
-        $this->createHeaderPage($manager, "Headers", $pagePartsPage);
-        $this->createTextPage($manager, "Text", $pagePartsPage);
-        $this->createTocPage($manager, "Toc", $pagePartsPage);
-        $this->createFormPage($manager, "Form", $pagePartsPage);
+        // PageParts
+        $this->createPagePartPage($manager, "Content PageParts", $homePage);
+        // From PageParts
+        $this->createFormPage($manager, "Form PageParts", $homePage);
     }
 
     /**
@@ -97,7 +107,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      *
      * @return PageInterface
      */
-    private function createAndPersistPage(ObjectManager $manager, $class, $title, $parent = null)
+    private function createAndPersistPage(ObjectManager $manager, $class, $title, $parent = null, $slug = null, $internalName = null)
     {
         /* @var PageInterface $page */
         $page = new $class();
@@ -107,7 +117,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
         $manager->persist($page);
         $manager->flush();
-        $node = $manager->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($page, 'en', $this->adminuser);
+        $node = $manager->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($page, 'en', $this->adminuser, $internalName);
+        /** @var $nodeTranslation NodeTranslation */
+        $nodeTranslation = $node->getNodeTranslation('en', true);
+        $nodeTranslation->setOnline(true);
+        if (!is_null($slug)){
+            $nodeTranslation->setSlug($slug);
+        }
+        $manager->persist($nodeTranslation);
+        $manager->flush();
         $this->initPermissions($node);
 
         return $page;
@@ -123,7 +141,23 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createHomePage(ObjectManager $manager, $title)
     {
-        return $this->createAndPersistPage($manager, '{{ namespace }}\Entity\HomePage', $title);
+        $homepage = $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\HomePage', $title, null, "", "homepage");
+        {
+            $headerpagepart = new HeaderPagePart();
+            $headerpagepart->setNiv(1);
+            $headerpagepart->setTitle("Welcome to your new website");
+            $manager->persist($headerpagepart);
+            $manager->flush();
+            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($homepage, $headerpagepart, 1);
+        }
+        {
+            $textpagepart = new TextPagePart();
+            $textpagepart->setContent("<p><strong>Success! It Works!</strong></p><p>This is a barebone frontend template, this can be, but most likely is not, the starting point of your website. This frontend template is built using <a href=\"http://foundation.zurb.com/\">Foundation 3</a>.</p>");
+            $manager->persist($textpagepart);
+            $manager->flush();
+            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($homepage, $textpagepart, 2);
+        }
+        return $homepage;
     }
 
     /**
@@ -137,7 +171,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createContentPage(ObjectManager $manager, $title, $parent)
     {
-        return $this->createAndPersistPage($manager, '{{ namespace }}\Entity\ContentPage', $title, $parent);
+        return $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\ContentPage', $title, $parent);
     }
 
     /**
@@ -147,104 +181,201 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @param string        $title   The title
      * @param PageInterface $parent  The parent
      */
-    private function createHeaderPage(ObjectManager $manager, $title, $parent)
+    private function createPagePartPage(ObjectManager $manager, $title, $parent)
     {
         $headerpage = $this->createContentPage($manager, $title, $parent);
-
-        for ($i = 1; $i <= 6; $i++) {
-            $headerpagepart = new HeaderPagePart();
-            $headerpagepart->setNiv($i);
-            $headerpagepart->setTitle("Header " . $i);
-            $manager->persist($headerpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($headerpage, $headerpagepart, $i);
+        $position = 1;
+        {
+            $this->createTOCPagePart($headerpage, $position++, $manager);
+        }
+        {
+            $this->createHeaderPagePart("1. Header (niv=1)", 1, $headerpage, $position++, $manager);
+            $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            {
+                $this->createHeaderPagePart("1.1. Header (niv=2)", 2, $headerpage, $position++, $manager);
+                $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                {
+                    $this->createHeaderPagePart("1.1.1. Header (niv=3)", 3, $headerpage, $position++, $manager);
+                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                }
+                {
+                    $this->createHeaderPagePart("1.1.1.1. Header (niv=4)", 4, $headerpage, $position++, $manager);
+                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                }
+                {
+                    $this->createHeaderPagePart("1.1.1.1.1. Header (niv=5)", 5, $headerpage, $position++, $manager);
+                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                }
+                {
+                    $this->createHeaderPagePart("1.1.1.1.1.1. Header (niv=6)", 6, $headerpage, $position++, $manager);
+                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                }
+            }
+            {
+                $this->createHeaderPagePart("1.2. Header (niv=2)", 2, $headerpage, $position++, $manager);
+                $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            }
+            {
+                $this->createToTopPagePart($headerpage, $position++, $manager);
+            }
+            {
+                $this->createLinePagePart($headerpage, $position++, $manager);
+            }
+        }
+        {
+            $this->createRawHTMLPagePart($this->RAW_HTML, $headerpage, $position++, $manager);
+        }
+        {
+            $this->createHeaderPagePart("2. Header (niv=1)", 1, $headerpage, $position++, $manager);
+            $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            {
+                $this->createHeaderPagePart("2.1. Header (niv=2)", 2, $headerpage, $position++, $manager);
+                $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            }
+            {
+                $this->createHeaderPagePart("2.2. Header (niv=2)", 2, $headerpage, $position++, $manager);
+                $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                {
+                    $this->createHeaderPagePart("2.2.2. Header (niv=3)", 3, $headerpage, $position++, $manager);
+                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                }
+                {
+                    $this->createHeaderPagePart("2.2.2.2. Header (niv=4)", 4, $headerpage, $position++, $manager);
+                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                }
+                {
+                    $this->createHeaderPagePart("2.2.2.2.2. Header (niv=5)", 5, $headerpage, $position++, $manager);
+                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                }
+                {
+                    $this->createHeaderPagePart("2.2.2.2.2.2. Header (niv=6)", 6, $headerpage, $position++, $manager);
+                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                }
+            }
+            {
+                $this->createToTopPagePart($headerpage, $position++, $manager);
+            }
+            {
+                $this->createLinePagePart($headerpage, $position++, $manager);
+            }
+            {
+                $this->createLinkPagePart("http://bundles.kunstmaan.be", "Kunstmaan Bundles site", true, $headerpage, $position++, $manager);
+            }
         }
     }
 
     /**
-     * Create a ContentPage containing headers and text
+     * Create a ToTopPagePart
      *
-     * @param ObjectManager $manager The object manager
-     * @param string        $title   The title
-     * @param PageInterface $parent  The parent
+     * @param PageInterface $page       The page where the pagepart needs to be created
+     * @param int           $position   The position on the page
+     * @param ObjectManager $manager    The object manager
      */
-    private function createTextPage(ObjectManager $manager, $title, $parent)
-    {
-        $textpage = $this->createContentPage($manager, $title, $parent);
-        {
-            $headerpagepart = new HeaderPagePart();
-            $headerpagepart->setNiv(1);
-            $headerpagepart->setTitle($title);
-            $manager->persist($headerpagepart);
-            $manager->flush();
-            $manager
-                ->getRepository('KunstmaanPagePartBundle:PagePartRef')
-                ->addPagePart($textpage, $headerpagepart, 1);
-        }
-        {
-            $textpagepart = new TextPagePart();
-            $textpagepart->setContent("<strong>Lorem ipsum dolor sit amet</strong>, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci <a href=\"#\">textlink</a> tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim.</p>");
-            $manager->persist($textpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($textpage, $textpagepart, 2);
-        }
+    private function createToTopPagePart($page, $position, $manager){
+        $totoppagepart = new ToTopPagePart();
+        $manager->persist($totoppagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $totoppagepart, $position);
     }
 
     /**
-     * Create a ContentPage containing a table of content, headers and text
+     * Create a RawHTMLPagePart
      *
-     * @param ObjectManager $manager The object manager
-     * @param string        $title   The title
-     * @param PageInterface $parent  The parent
+     * @param string        $content    The content of the pagepart
+     * @param PageInterface $page       The page where the pagepart needs to be created
+     * @param int           $position   The position on the page
+     * @param ObjectManager $manager    The object manager
      */
-    private function createTocPage(ObjectManager $manager, $title, $parent)
-    {
-        $textpage = $this->createContentPage($manager, $title, $parent);
-        {
-            $headerpagepart = new HeaderPagePart();
-            $headerpagepart->setNiv(1);
-            $headerpagepart->setTitle($title);
-            $manager->persist($headerpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($textpage, $headerpagepart, 1);
-        }
-        {
-            $headerpagepart = new TocPagePart();
-            $manager->persist($headerpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($textpage, $headerpagepart, 2);
-        }
-        {
-            $headerpagepart = new HeaderPagePart();
-            $headerpagepart->setNiv(2);
-            $headerpagepart->setTitle("Title A");
-            $manager->persist($headerpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($textpage, $headerpagepart, 3);
-        }
-        {
-            $textpagepart = new TextPagePart();
-            $textpagepart->setContent("<strong>Lorem ipsum dolor sit amet</strong>, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci <a href=\"#\">textlink</a> tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim.</p>");
-            $manager->persist($textpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($textpage, $textpagepart, 4);
-        }
-        {
-            $headerpagepart = new HeaderPagePart();
-            $headerpagepart->setNiv(2);
-            $headerpagepart->setTitle("Title B");
-            $manager->persist($headerpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($textpage, $headerpagepart, 5);
-        }
-        {
-            $textpagepart = new TextPagePart();
-            $textpagepart->setContent("<strong>Lorem ipsum dolor sit amet</strong>, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci <a href=\"#\">textlink</a> tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim.</p>");
-            $manager->persist($textpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($textpage, $textpagepart, 6);
-        }
+    private function createRawHTMLPagePart($content, $page, $position, $manager){
+        $rawhtmlpagepart = new RawHTMLPagePart();
+        $rawhtmlpagepart->setContent($content);
+        $manager->persist($rawhtmlpagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $rawhtmlpagepart, $position);
     }
+
+    /**
+     * Create a TocPagePart
+     *
+     * @param PageInterface $page       The page where the pagepart needs to be created
+     * @param int           $position   The position on the page
+     * @param ObjectManager $manager    The object manager
+     */
+    private function createTOCPagePart($page, $position, $manager){
+        $tocpagepart = new TocPagePart();
+        $manager->persist($tocpagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $tocpagepart, $position);
+    }
+
+    /**
+     * Creates a LinkPagePart (Not really useful in real life, more a proof of concept)
+     *
+     * @param string        $url                The link
+     * @param string        $text               The label
+     * @param boolean       $openinnewwindow    Should the target be blank
+     * @param PageInterface $page               The page where the pagepart needs to be created
+     * @param int           $position           The position on the page
+     * @param ObjectManager $manager            The object manager
+     */
+    private function createLinkPagePart($url, $text, $openinnewwindow, $page, $position, $manager){
+        $linkpagepart = new LinkPagePart();
+        $linkpagepart->setUrl($url);
+        $linkpagepart->setText($text);
+        $linkpagepart->setOpenInNewWindow($openinnewwindow);
+        $manager->persist($linkpagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $linkpagepart, $position);
+    }
+
+    /**
+     * Create a LinePagePart
+     *
+     * @param PageInterface $page       The page where the pagepart needs to be created
+     * @param int           $position   The position on the page
+     * @param ObjectManager $manager    The object manager
+     */
+    private function createLinePagePart($page, $position, $manager){
+        $linepagepart = new LinePagePart();
+        $manager->persist($linepagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $linepagepart, $position);
+    }
+
+    /**
+     * Create a HeaderPagePart
+     *
+     * @param string        $content    The content of the pagepart
+     * @param int           $level      The header level
+     * @param PageInterface $page       The page where the pagepart needs to be created
+     * @param int           $position   The position on the page
+     * @param ObjectManager $manager    The object manager
+     */
+    private function createHeaderPagePart($content, $level, $page, $position, $manager){
+        $headerpagepart = new HeaderPagePart();
+        $headerpagepart->setNiv($level);
+        $headerpagepart->setTitle($content);
+        $manager->persist($headerpagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $headerpagepart, $position);
+    }
+
+    /**
+     * Create a TextPagePart
+     *
+     * @param string        $content    The content of the pagepart
+     * @param PageInterface $page       The page where the pagepart needs to be created
+     * @param int           $position   The position on the page
+     * @param ObjectManager $manager    The object manager
+     */
+    private function createTextPagePart($content, $page, $position, $manager){
+        $textpagepart = new TextPagePart();
+        $textpagepart->setContent($content);
+        $manager->persist($textpagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $textpagepart, $position);
+    }
+
 
     /**
      * Create a FormPage
@@ -257,8 +388,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createFormPage(ObjectManager $manager, $title, $parent)
     {
-        $page = $this->createAndPersistPage($manager, '{{ namespace }}\Entity\FormPage', $title, $parent);
-        $page->setThanks("<p>We have received your submissions.</p>");
+        $page = $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\FormPage', $title, $parent);
+        $page->setThanks("<p>We have received your submission.</p>");
         $manager->persist($page);
         $manager->flush();
         $manager->refresh($page);
@@ -291,6 +422,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $manager->flush();
                 $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $singlelinetextpagepart, $counter++, "main");
             }
+//            {
+//                $choicepagepart = new ChoicePagePart();
+//                $choicepagepart->setLabel("Subject");
+//                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+//                $choicepagepart->setChoices($choices);
+//                $manager->persist($choicepagepart);
+//                $manager->flush();
+//                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
+//            }
             {
                 $multilinetextpagepart = new MultiLineTextPagePart();
                 $multilinetextpagepart->setLabel("Description");
