@@ -18,49 +18,21 @@ Contains the latest code. Will most likely have bc breaks and possibly will not 
 available on GitHub and on [Packagist](http://packagist.org/packages/kunstmaan/media-pagepart-bundle) and is tested on
 Travis CI [![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanMediaPagePartBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanMediaPagePartBundle)
 
-### Installation
-#### Using deps and vendor install
+Installation instructions
+-------------------------
+Assuming you have installed composer.phar or composer binary:
 
-Add the following lines to your deps file:
-
-```ini
-[KunstmaanAdminBundle]
-    git=git@github.com:Kunstmaan/KunstmaanAdminBundle.git
-    target=/bundles/Kunstmaan/AdminBundle
-[KunstmaanPagePartBundle]
-    git=git@github.com:Kunstmaan/KunstmaanPagePartBundle.git
-    target=/bundles/Kunstmaan/PagePartBundle
-[KunstmaanMediaBundle]
-    git=git@github.com:Kunstmaan/KunstmaanMediaBundle.git
-    target=/bundles/Kunstmaan/MediaBundle
-[KunstmaanMediaPagePartBundle]
-    git=git@github.com:Kunstmaan/KunstmaanMediaPagePartBundle.git
-    target=/bundles/Kunstmaan/MediaPagePartBundle
+``` bash
+$ composer require kunstmaan/media-pagepart-bundle
 ```
 
-Register the namespaces in your autoload.php file:
-
-```php
-// app/autoload.php
-
-$loader->registerNamespaces(array(
-    // ...
-    'Kunstmaan'        => __DIR__.'/../vendor/bundles'
-    // ...
-));
+Add the KunstmaanMediaPagePartBundle to your AppKernel.php file:
 
 ```
-
-#### Using [Composer](http://getcomposer.org)
-
-```json
-{
-    "require": {
-        // ...
-        "kunstmaan/media-pagepart-bundle": "dev-master"
-        // ...
-    }
-}
+new Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
+new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
+new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
+new Kunstmaan\MediaPagePartBundle\KunstmaanMediaPagePartBundle(),
 ```
 
 ## [1.0 branch](https://github.com/Kunstmaan/KunstmaanMediaPagePartBundle/tree/1.0)
