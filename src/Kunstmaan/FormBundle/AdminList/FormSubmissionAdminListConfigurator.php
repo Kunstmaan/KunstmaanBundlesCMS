@@ -41,7 +41,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     {
         $builder = $this->getFilterBuilder();
         $builder->add('created', new DateFilterType("created"), "Date")
-                ->add('lang', new BooleanFilterType("lang"), "Language")
+                ->add('lang', new StringFilterType("lang"), "Language")
                 ->add('ipAddress', new StringFilterType("ipAddress"), "IP Address");
     }
 
