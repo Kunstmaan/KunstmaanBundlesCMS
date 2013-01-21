@@ -108,6 +108,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($page);
         $manager->flush();
         $node = $manager->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($page, 'en', $this->adminuser);
+        $nodeTranslation = $node->getNodeTranslation('en', true);
+        $nodeTranslation->setOnline(true);
+        $manager->persist($nodeTranslation);
+        $manager->flush();
         $this->initPermissions($node);
 
         return $page;
