@@ -32,7 +32,7 @@ class ChoiceFormSubmissionType extends AbstractType
     private $choices;
 
     /**
-     * @var array
+     * @var string
      */
     private $emptyValue;
 
@@ -43,7 +43,7 @@ class ChoiceFormSubmissionType extends AbstractType
      * @param array  $choices    The choices array
      * @param array  $emptyValue The empty value
      */
-    public function __construct($label, $expanded, $multiple, array $choices, array $emptyValue = null)
+    public function __construct($label, $expanded, $multiple, array $choices, $emptyValue = null)
     {
         $this->label = $label;
         $this->expanded = $expanded;
@@ -74,5 +74,17 @@ class ChoiceFormSubmissionType extends AbstractType
     public function getName()
     {
         return 'kunstmaan_formbundle_choiceformsubmissiontype';
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+                'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField',
+        );
     }
 }
