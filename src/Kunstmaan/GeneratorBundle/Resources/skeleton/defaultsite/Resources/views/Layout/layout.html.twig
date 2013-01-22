@@ -24,7 +24,8 @@
                 <ul>
                     <li class="name">
                         <h1>
-                            <a href="{{ path('_slug', { 'url': 'home' }) }}">Generated Website</a>
+                            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">Generated Website</a>
                         </h1>
                     </li>
                     <li class="toggle-topbar"><a href="#"></a></li>
