@@ -6,6 +6,7 @@
 {% if nameprefix != "" and namesuffix != "" %}
 	<script>
     	$(document).ready(function() {
+            $('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker({'format' : 'dd/mm/yyyy'});
         	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker('setStartDate', '{{ datePicker_startDate }}');
         	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').inputmask("date");
         });
@@ -13,6 +14,7 @@
 {% else %}
 	<script>
     	$(document).ready(function() {
+            $('.form_datepicker').datepicker({'format' : 'dd/mm/yyyy'});
         	$('.form_datepicker').datepicker('update');
         	$('.form_datepicker').inputmask("date");
         });
