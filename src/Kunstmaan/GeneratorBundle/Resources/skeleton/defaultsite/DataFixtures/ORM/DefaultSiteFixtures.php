@@ -6,12 +6,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\PagePartBundle\Entity\LinePagePart;
-use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
-use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
-use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,14 +15,20 @@ use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\PagePartBundle\Entity\TextPagePart;
 use Kunstmaan\PagePartBundle\Entity\TocPagePart;
 use Kunstmaan\PagePartBundle\Entity\HeaderPagePart;
+use Kunstmaan\PagePartBundle\Entity\LinePagePart;
+use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
+use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
+use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 
 class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -64,6 +64,16 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->createPagePartPage($manager, "Content PageParts", $homePage);
         // From PageParts
         $this->createFormPage($manager, "Form PageParts", $homePage);
+        // Dashboard
+        /** @var $dashboard DashboardConfiguration */
+        $dashboard = $manager->getRepository("KunstmaanAdminBundle:DashboardConfiguration")->findOneBy(array());
+        if (is_null($dashboard)){
+            $dashboard = new DashboardConfiguration();
+        }
+        $dashboard->setTitle("Dashboard");
+        $dashboard->setContent('<div class="alert alert-block alert-error"><strong>Important: </strong>please change these items to the graphs of your own site!</div><iframe src="https://rpm.newrelic.com/public/charts/2h1YQ3W7j7Z" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/1VNlg8JA5ed" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/36A9KcMTMli" width="100%" height="300" scrolling="no" frameborder="no"></iframe>');
+        $manager->persist($dashboard);
+        $manager->flush();
     }
 
     /**
@@ -141,7 +151,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createHomePage(ObjectManager $manager, $title)
     {
-        $homepage = $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\HomePage', $title, null, "", "homepage");
+        $homepage = $this->createAndPersistPage($manager, '{{ namespace }}\Entity\HomePage', $title, null, "", "homepage");
         {
             $headerpagepart = new HeaderPagePart();
             $headerpagepart->setNiv(1);
@@ -171,7 +181,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createContentPage(ObjectManager $manager, $title, $parent)
     {
-        return $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\ContentPage', $title, $parent);
+        return $this->createAndPersistPage($manager, '{{ namespace }}\Entity\ContentPage', $title, $parent);
     }
 
     /**
@@ -388,7 +398,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createFormPage(ObjectManager $manager, $title, $parent)
     {
-        $page = $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\FormPage', $title, $parent);
+        $page = $this->createAndPersistPage($manager, '{{ namespace }}\Entity\FormPage', $title, $parent);
         $page->setThanks("<p>We have received your submission.</p>");
         $manager->persist($page);
         $manager->flush();
