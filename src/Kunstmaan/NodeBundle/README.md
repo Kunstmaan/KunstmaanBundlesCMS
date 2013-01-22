@@ -3,10 +3,9 @@ KunstmaanNodeBundle by Kunstmaan
 
 About
 -----
-The KunstmaanNodeBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
-You have to install this bundle in order to work with nodes and pagetypes.
+TAll websites need pages(we call them nodes) but you probably don't want to spend too much time building them. Plus they should look pretty and contain the right content and that takes time. We make sure you have to spend less time managing your pages but still offer you flexibility so you can focus on more important tasks and don't have to worry about it.
 
-View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanNodeBundle).
+View screenshots and more on our [bundles website](http://bundles.kunstmaan.be).
 
 [![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanNodeBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanNodeBundle)
 
