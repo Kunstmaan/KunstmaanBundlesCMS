@@ -125,28 +125,14 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $fullSkeletonDir = $this->skeletonDir . '/Resources/public';
 
         $assets = array(
-            '/css/style.css',
-            '/js/script.js',
-            '/js/libs/boxsizing.htc',
-            '/js/libs/jquery-1.8.1.min.js',
-            '/js/libs/modernizr-2.6.2.min.js',
-            '/js/libs/respond.min.js',
-            '/sass/_480.scss',
-            '/sass/_768.scss',
-            '/sass/_1024.scss',
-            '/sass/_debug.scss',
-            '/sass/_fallbacks.scss',
-            '/sass/_main.scss',
-            '/sass/_mixins.scss',
-            '/sass/_normalizer.scss',
-            '/sass/_print.scss',
-            '/sass/style.scss',
-            '/apple-touch-icon-57x57-precomposed.png',
-            '/apple-touch-icon-72x72-precomposed.png',
-            '/apple-touch-icon-114x114-precomposed.png',
-            '/apple-touch-icon-precomposed.png',
-            '/apple-touch-icon.png',
-            '/favicon.ico'
+            '/css/app.css',
+            '/css/foundation.css',
+            '/css/foundation.min.css',
+            '/js/app.js',
+            '/js/foundation.min.js',
+            '/js/jquery.js',
+            '/js/modernizr.foundation.js',
+            '/img/favicon.ico'
         );
 
         foreach ($assets as $asset) {
