@@ -202,7 +202,7 @@ class NodeTranslation extends AbstractEntity
      */
     public function setSlug($slug)
 	{
-		$this->slug = Slugifier::slugify($slug, '');
+        $this->slug = Slugifier::slugify($slug, '');
 
         return $this;
     }
