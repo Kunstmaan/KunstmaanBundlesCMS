@@ -3,7 +3,7 @@ KunstmaanNodeBundle by Kunstmaan
 
 About
 -----
-TAll websites need pages(we call them nodes) but you probably don't want to spend too much time building them. Plus they should look pretty and contain the right content and that takes time. We make sure you have to spend less time managing your pages but still offer you flexibility so you can focus on more important tasks and don't have to worry about it.
+All websites need pages(we call them nodes) but you probably don't want to spend too much time building them. Plus they should look pretty and contain the right content and that takes time. We make sure you have to spend less time managing your pages but still offer you flexibility so you can focus on more important tasks and don't have to worry about it.
 
 View screenshots and more on our [bundles website](http://bundles.kunstmaan.be).
 
