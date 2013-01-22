@@ -7,6 +7,7 @@ use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
+use Kunstmaan\NodeBundle\Helper\Slugifier;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -200,8 +201,8 @@ class NodeTranslation extends AbstractEntity
      * @return NodeTranslation
      */
     public function setSlug($slug)
-    {
-        $this->slug = $slug;
+	{
+		$this->slug = Slugifier::slugify($slug, '');
 
         return $this;
     }
