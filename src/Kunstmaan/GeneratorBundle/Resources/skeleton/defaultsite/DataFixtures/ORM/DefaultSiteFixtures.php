@@ -141,7 +141,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createHomePage(ObjectManager $manager, $title)
     {
-        $homepage = $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\HomePage', $title, null, "", "homepage");
+        $homepage = $this->createAndPersistPage($manager, '{{ namespace }}\Entity\HomePage', $title, null, "", "homepage");
         {
             $headerpagepart = new HeaderPagePart();
             $headerpagepart->setNiv(1);
@@ -171,7 +171,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createContentPage(ObjectManager $manager, $title, $parent)
     {
-        return $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\ContentPage', $title, $parent);
+        return $this->createAndPersistPage($manager, '{{ namespace }}\Entity\ContentPage', $title, $parent);
     }
 
     /**
@@ -388,7 +388,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createFormPage(ObjectManager $manager, $title, $parent)
     {
-        $page = $this->createAndPersistPage($manager, 'Kunstmaan\SandboxDemoBundle\Entity\FormPage', $title, $parent);
+        $page = $this->createAndPersistPage($manager, '{{ namespace }}\Entity\FormPage', $title, $parent);
         $page->setThanks("<p>We have received your submission.</p>");
         $manager->persist($page);
         $manager->flush();
