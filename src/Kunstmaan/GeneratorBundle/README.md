@@ -1,32 +1,11 @@
-KunstmaanGeneratorBundle by Kunstmaan
-=================================
+# KunstmaanGeneratorBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanGeneratorBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanGeneratorBundle)
 
-About
------
-The KunstmaanGeneratorBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
-The KunstmaanGeneratorBundle is a feature bundle and supplies helpful generators for the Kunstmaan bundles.
+If you're like us, you like to build applications without having to do the same things over and over again and dislike copy/pasting code and change a couple of words every time you need feature X. The KunstmaanGeneratorBundle gives you the possibility to generate code for new bundles, adminlists and can even make you a basic default website. That way you don't have to wait too long before you see some results and you have more time to do other things. Easy no?
 
-View screenshots and more on our [github page](http://kunstmaan.github.com/KunstmaanGeneratorBundle).
+## Installation
 
-[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanGeneratorBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanGeneratorBundle)
+This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
 
-Installation requirements
--------------------------
-You should be able to get Symfony 2 up and running before you can install the KunstmaanGeneratorBundle.
-
-Installation instructions
--------------------------
-Assuming you have installed composer.phar or composer binary:
-
-``` bash
-$ composer require kunstmaan/generator-bundle
-```
-
-Add the KunstmaanGeneratorBundle to your AppKernel.php file:
-
-```
-$bundles[] = new Kunstmaan\GeneratorBundle\KunstmaanGeneratorBundle();
-```
 
 Use
 ---
@@ -49,19 +28,5 @@ Generate a KunstmaanAdminList for an Entity :
 app/console kuma:generate:adminlist --entity=Bundle:Entity
 ```
 
-Documentation
-------------
-
 You can find more detailed information about these commands [here](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/index.md)
 
-Contact
--------
-Kunstmaan (support@kunstmaan.be)
-
-Download
---------
-You can also clone the project with Git by running:
-
-```
-$ git clone git://github.com/Kunstmaan/KunstmaanGeneratorBundle
-```
