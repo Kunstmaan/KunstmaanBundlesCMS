@@ -1,9 +1,6 @@
-KunstmaanVotingBundle by Kunstmaan
-=================================
+# KunstmaanVotingBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanVotingBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanVotingBundle)
 
-About
------
-The KunstmaanVotingBundle allows you to add extensible voting support to your project
+A lot of sites enable users to vote or participate in actions where Facebook Likes are counted and rewarded. The KunstmaanVotingBundle was created to allow a faster setup of that kind of actions and will provide a backlog of votes your users casted. That way you can look for irregularities and automatically stop campaigns when their deadline has expired. It will provice support for votes on your site only but also for external social networks as Facebook so you can worry about you ideas and not how to implement it.
 
 Installation requirements
 -------------------------
@@ -35,15 +32,3 @@ Use
 ---
 
 * [Documentation](https://github.com/Kunstmaan/KunstmaanVotingBundle/blob/master/Resources/doc/index.md)
-
-Contact
--------
-Kunstmaan (support@kunstmaan.be)
-
-Download
---------
-You can also clone the project with Git by running:
-
-```
-$ git clone git://github.com/Kunstmaan/KunstmaanVotingBundle
-```
