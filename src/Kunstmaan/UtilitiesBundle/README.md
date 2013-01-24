@@ -1,41 +1,9 @@
-KunstmaanUtilitiesBundle by Kunstmaan
-============================
+# KunstmaanUtilitiesBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle)
 
-About
------
-The KunstmaanUtilitiesBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
-This bundle will contain a set of helpful helper classes.
+The KunstmaanUtilitiesBundle makes your life easier by providing a couple of small but usefull helper services you can use and re-use in your applications. We already implemented an easy to use cipher service and a shell helper service for you but feel free to send in a pull request with your additions. The shell helper allows you to run apps in the background, see if a process is running and has a method to kill a running process. The cipher service allow you to encode and decode strings using the Rijndael 256 cipher.
 
-A full list of features can be found in [Resources/doc/index.md](https://github.com/Kunstmaan/KunstmaanUtilitiesBundle/blob/master/Resources/doc/index.md).
+More information: [http://bundles.kunstmaan.be](http://bundles.kunstmaan.be).
 
-[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle)
+## Installation
 
-Installation requirements
--------------------------
-You should be able to get Symfony 2.1 up and running before you can install the KunstmaanAdminBundle.
-
-Installation instructions
--------------------------
-Assuming you have installed composer.phar or composer binary:
-
-``` bash
-$ composer require kunstmaan/utilities-bundle
-```
-
-Add the KunstmaanUtilitiesBundle to your AppKernel.php file:
-
-```
-new Kunstmaan\UtilitiesBundle\KunstmaanUtilitiesBundle(),
-```
-
-Contact
--------
-Kunstmaan (support@kunstmaan.be)
-
-Download
---------
-You can also clone the project with Git by running:
-
-```
-$ git clone git@github.com:Kunstmaan/KunstmaanUtilitiesBundle.git
-```
+This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
