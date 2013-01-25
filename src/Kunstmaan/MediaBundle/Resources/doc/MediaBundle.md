@@ -1,8 +1,9 @@
-# Add Aviary image editor to the [KunstmaanMediaBundle][KunstmaanMediaBundle]
+# MediaBundle
+## Add Aviary image editor to the [KunstmaanMediaBundle][KunstmaanMediaBundle]
 
 This document describes how you can enable the Aviary image editor to the [KunstmaanMediaBundle][KunstmaanMediaBundle].
 
-## Add Api Key to parameters.yml:
+### Add Api Key to parameters.yml:
 
 Register and get your Api Key on [http://www.aviary.com/](http://www.aviary.com/)
 
@@ -17,15 +18,15 @@ Now you will get an "edit" button when you view an image.
 
 [KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
 
-# Add media handler to the [KunstmaanMediaBundle][KunstmaanMediaBundle]
+## Add media handler to the [KunstmaanMediaBundle][KunstmaanMediaBundle]
 
 This document describes how you can add a new media handlers to the [KunstmaanMediaBundle][KunstmaanMediaBundle].
 
-## Create a MediaHandler
+### Create a MediaHandler
 
-## Create a MediaHelper
+### Create a MediaHelper
 
-## Add the mediahandler service:
+### Add the mediahandler service:
 
 ```yaml
     service:
@@ -38,11 +39,11 @@ This document describes how you can add a new media handlers to the [KunstmaanMe
 
 [KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
 
-# MediaField
+## MediaField
 
 A field for media references. It has a "choose" button which opens a popup where you can select your media item from the media repository.
 
-## Example Usage:
+### Example Usage:
 
 ```php
 $builder->add('ogImage', 'media', array(
@@ -51,7 +52,7 @@ $builder->add('ogImage', 'media', array(
 ));
 ```
 
-## Options:
+### Options:
 
 mediatype:
     type: string
@@ -60,10 +61,10 @@ mediatype:
         You can specify a specific mediahandler by its name, when this is null all media items are possible.
         Knows possible values are: image|file|remotevideo|remoteslide
 
-## Parent type:
+### Parent type:
 
 form
 
-## Class:
+### Class:
 
 Kunstmaan\MediaBundle\Form\Type\MediaType
