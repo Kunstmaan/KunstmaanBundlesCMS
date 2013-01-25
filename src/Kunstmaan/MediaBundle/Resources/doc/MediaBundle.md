@@ -1,5 +1,5 @@
 # MediaBundle
-## Add Aviary image editor to the [KunstmaanMediaBundle][KunstmaanMediaBundle]
+## Add Aviary image editor
 
 This document describes how you can enable the Aviary image editor to the [KunstmaanMediaBundle][KunstmaanMediaBundle].
 
@@ -18,7 +18,7 @@ Now you will get an "edit" button when you view an image.
 
 [KunstmaanMediaBundle]: https://github.com/Kunstmaan/KunstmaanMediaBundle "KunstmaanMediaBundle"
 
-## Add media handler to the [KunstmaanMediaBundle][KunstmaanMediaBundle]
+## Add media handler
 
 This document describes how you can add a new media handlers to the [KunstmaanMediaBundle][KunstmaanMediaBundle].
 
