@@ -16,9 +16,9 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
-        "kunstmaan/admin-bundle": "dev-master",
+        "kunstmaan/admin-bundle": "*",
         "kunstmaan/utilities-bundle": "*",
-        "kunstmaan/node-bundle": "dev-master"
+        "kunstmaan/node-bundle": "*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\PagePartBundle": "" }
