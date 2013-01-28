@@ -9,9 +9,8 @@ matrix:
   allow_failures:
     - php: 5.5
 
-before_script:
-    - curl -s http://getcomposer.org/installer | php
-    - php composer.phar --dev install
+
+before_script: composer install --dev --prefer-source
 
 script: phpunit --debug
 
