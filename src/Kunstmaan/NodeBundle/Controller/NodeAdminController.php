@@ -487,9 +487,9 @@ class NodeAdminController extends Controller
                 //Check the version timeout and make a new nodeversion if the timeout is passed
                 $thresholdDate = date("Y-m-d H:i:s", time()-$this->container->getParameter("kunstmaan_node.version_timeout"));
                 $updatedDate = date("Y-m-d H:i:s", strtotime($nodeVersion->getUpdated()->format("Y-m-d H:i:s")));
-                if($thresholdDate >= $updatedDate) {
-                    if($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
-                        $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion);
+                if ($thresholdDate >= $updatedDate) {
+                    if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
+                        $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, false);
                     } else {
                         $nodeVersion = $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
                     }
@@ -549,16 +549,19 @@ class NodeAdminController extends Controller
      * @param HasNodeInterface $page            The page
      * @param NodeTranslation  $nodeTranslation The node translation
      * @param NodeVersion      $nodeVersion     The node version
+     * @param boolean          $publish         Publish node
      *
      * @return mixed
      */
-    private function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion)
+    private function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, boolean $publish = true)
     {
         $newPublicPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
         $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, $nodeVersion);
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
         $nodeTranslation->setTitle($newPublicPage->getTitle());
-        $nodeTranslation->setOnline(true);
+        if ($publish) {
+            $nodeTranslation->setOnline(true);
+        }
 
         $this->em->persist($nodeTranslation);
         $this->em->flush();
