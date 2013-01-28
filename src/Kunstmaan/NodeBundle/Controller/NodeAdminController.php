@@ -553,7 +553,7 @@ class NodeAdminController extends Controller
      *
      * @return mixed
      */
-    private function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, boolean $publish = true)
+    private function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, $publish = true)
     {
         $newPublicPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
         $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, $nodeVersion);
