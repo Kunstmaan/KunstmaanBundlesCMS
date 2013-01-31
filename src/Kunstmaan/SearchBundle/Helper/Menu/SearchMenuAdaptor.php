@@ -25,11 +25,11 @@ class SearchMenuAdaptor implements MenuAdaptorInterface
 
         } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             $menuitem = new MenuItem($menu);
-            $menuitem->setRoute('KunstmaanAdminBundle_settings_searches');
+            $menuitem->setRoute('KunstmaanSearchBundle_admin_searchedfor');
             $menuitem->setInternalName('Searches');
             $menuitem->setRouteparams(array());
             $menuitem->setParent($parent);
-            if (stripos($request->attributes->get('_route'), "KunstmaanAdminBundle_settings_searches") === 0) {
+            if (stripos($request->attributes->get('_route'), "KunstmaanSearchBundle_admin_searchedfor") === 0) {
                 $menuitem->setActive(true);
             }
             $children[] = $menuitem;
