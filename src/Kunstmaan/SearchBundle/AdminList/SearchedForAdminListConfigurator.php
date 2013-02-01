@@ -4,23 +4,23 @@ namespace Kunstmaan\SearchBundle\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Doctrine\ORM\PersistentCollection;
 use Kunstmaan\ViewBundle\Entity\SearchPage;
-use Kunstmaan\AdminListBundle\AdminList\Filters\DateFilter;
-use Kunstmaan\AdminListBundle\AdminList\Filters\StringFilter;
-use Kunstmaan\AdminListBundle\AdminList\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 
 /**
  * TODO: Fill out the docbook comments
  */
-class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
+class SearchedForAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
 
     /**
-     * @param \Kunstmaan\AdminListBundle\AdminList\AdminListFilter $builder
      */
-    public function buildFilters(AdminListFilter $builder)
+    public function buildFilters()
     {
-        $builder->add('query', new StringFilter("query"), "Query");
-        $builder->add('createdat', new DateFilter('createdat'), "Created At");
+        $builder = $this->getFilterBuilder();
+        $builder->add('query', new StringFilterType("query"), "Query")
+                ->add('createdat', new DateFilterType('createdat'), "Created At");
     }
 
     /**
@@ -31,6 +31,23 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
         $this->addField("query", "Query", true);
         $this->addField("searchpage", "Search Page", false);
         $this->addField("createdat", "Created At", false);
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getBundleName()
+    {
+        return 'KunstmaanSearchBundle';
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return 'SearchedFor';
     }
 
     /**
@@ -76,7 +93,7 @@ class SearchedForAdminListConfigurator extends AbstractAdminListConfigurator
      */
     public function getIndexUrlFor()
     {
-        return array('path' => 'KunstmaanAdminBundle_settings_searches');
+        return array('path' => 'KunstmaanSearchBundle_admin_searchedfor');
     }
 
     /**
