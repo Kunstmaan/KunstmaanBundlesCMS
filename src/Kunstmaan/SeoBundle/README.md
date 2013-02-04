@@ -1,40 +1,10 @@
-KunstmaanSeoBundle by Kunstmaan
-=================================
+# KunstmaanSeoBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanSeoBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanSeoBundle)
 
-About
------
-The KunstmaanSeoBundle for Symfony 2 is part of the bundles we use to build custom and flexible applications at Kunstmaan.
-You have to install this bundle to add seo support to the KunstmaanNodeBundle.
+Annotating content with metadata for social sharing and seo purposes cannot be overlooked nowadays. The KunstmaanSeoBundle contains default editing functionality for OpenGraph data, meta descriptions, keywords and titles and Metriweb tags. Because the metatagging and tracking options are always changing, a free field to add custom header information is provided as well.
 
-[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanSeoBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanSeoBundle)
+[![KunstmaanMediaBundle](http://bundles.kunstmaan.be/bundles/kunstmaankunstmaanbundles/img/features/meta.png)](http://bundles.kunstmaan.be)
+View more screenshots and information [http://bundles.kunstmaan.be](http://bundles.kunstmaan.be).
 
+## Installation
 
-Installation requirements
--------------------------
-You should be able to get Symfony 2 up and running before you can install the KunstmaanSeoBundle.
-
-Installation instructions
--------------------------
-Assuming you have installed composer.phar or composer binary:
-
-``` bash
-$ composer require kunstmaan/seo-bundle
-```
-
-Add the KunstmaanSeoBundle to your AppKernel.php file:
-
-```
-new Kunstmaan\NodeBundle\KunstmaanSeoBundle(),
-```
-
-Contact
--------
-Kunstmaan (support@kunstmaan.be)
-
-Download
---------
-You can also clone the project with Git by running:
-
-```
-$ git clone git://github.com/Kunstmaan/KunstmaanSeoBundle
-```
+This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
