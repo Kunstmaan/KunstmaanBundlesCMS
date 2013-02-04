@@ -17,9 +17,9 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "gedmo/doctrine-extensions": "*",
-        "kunstmaan/admin-bundle": "2.2.*@dev",
-        "kunstmaan/media-bundle": "2.2.*@dev",
-        "kunstmaan/utilities-bundle": "2.2.*@dev"
+        "kunstmaan/admin-bundle": "2.2.*",
+        "kunstmaan/media-bundle": "2.2.*",
+        "kunstmaan/utilities-bundle": "2.2.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\SeoBundle": "" }
