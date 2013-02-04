@@ -5,7 +5,7 @@ twig:
     globals:
         upload_dir: "%kunstmaan_media.upload_dir%"
         mediabundleisactive: true
-        mediahandler: "@kunstmaan_media.media_manager"
+        mediamanager: "@kunstmaan_media.media_manager"
 
 liip_imagine:
     cache_prefix: uploads/cache

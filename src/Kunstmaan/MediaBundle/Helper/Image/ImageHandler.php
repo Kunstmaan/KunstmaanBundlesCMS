@@ -80,9 +80,7 @@ class ImageHandler extends FileHandler
      */
     public function getImageUrl(Media $media, $basepath)
     {
-        $localPath = '/uploads/media/'.$media->getUrl();
-
-        return $basepath . $localPath;
+        return $basepath . $media->getUrl();
     }
 
 }
