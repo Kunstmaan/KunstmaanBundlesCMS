@@ -1,41 +1,11 @@
-KunstmaanAdminListBundle by Kunstmaan
-=================================
+# KunstmaanAdminListBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanAdminListBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminListBundle)
 
-About
------
 Every website contains several lists of content ranging from articles on a blog, to drop down values. The KunstlaanAdminListBundles takes CRUD a step further by supplying filtering, exports to csv and editing capabilities to these content entities.
 
-View screenshots and more on our [bundles site](http://bundles.kunstmaan.be).
+[![AdminListBundle](http://bundles.kunstmaan.be/bundles/kunstmaankunstmaanbundles/img/features/crud.png)](http://bundles.kunstmaan.be)
+View more screenshots and information [http://bundles.kunstmaan.be](http://bundles.kunstmaan.be).
 
-[![Build Status](https://secure.travis-ci.org/Kunstmaan/KunstmaanAdminListBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminListBundle)
+## Installation
 
+This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
 
-Installation requirements
--------------------------
-You should be able to get Symfony 2 up and running before you can install the KunstmaanAdminListBundle.
-
-Installation instructions
--------------------------
-Assuming you have installed composer.phar or composer binary:
-
-``` bash
-$ composer require kunstmaan/adminlist-bundle
-```
-
-Add the KunstmaanAdminBundle to your AppKernel.php file:
-
-```
-new Kunstmaan\AdminListBundle\KunstmaanAdminListBundle(),
-```
-
-Contact
--------
-Kunstmaan (support@kunstmaan.be)
-
-Download
---------
-You can also clone the project with Git by running:
-
-```
-$ git clone git://github.com/Kunstmaan/KunstmaanAdminListBundle
-```
