@@ -1,4 +1,4 @@
-{% set handler = mediahandler.getHandler(media) %}
+{% set handler = mediamanager.getHandler(media) %}
 {% set helper = handler.getFormHelper(media) %}
 {% if helper.type == 'youtube' %}
 <div class="video-pp youtube-pp">

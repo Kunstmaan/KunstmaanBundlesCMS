@@ -87,6 +87,14 @@ class Media extends AbstractEntity
     protected $filesize;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $url;
+
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -392,26 +400,15 @@ class Media extends AbstractEntity
      */
     public function getUrl()
     {
-        return $this->show();
+        return $this->url;
     }
 
-
     /**
-     * @param string $format  format
-     * @param array  $options options
-     *
-     * @return string
+     * @param string $url
      */
-    public function show($format = null, $options = array())
+    public function setUrl($url)
     {
-        $path = "/";
-        $path = $path . $this->getUuid();
-        if (isset($format)) {
-            $path = $path . "_" . $format;
-        }
-        $path = $path . "." . ExtensionGuesser::getInstance()->guess($this->getContentType());
-
-        return $path;
+        $this->url = $url;
     }
 
     /**
