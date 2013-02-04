@@ -21,7 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
  *     "string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
  *     "text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
  *     "choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
- *     "file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField"
+ *     "file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField",
+ *     "email" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField"
  * })
  */
 class FormSubmissionField
