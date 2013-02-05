@@ -17,7 +17,7 @@ services:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    bancontact.twig.extension:
+    kunstmaan_search.twig.extension:
         class: Kunstmaan\SearchBundle\Twig\Extension\TrimHighlightTwigExtension
         arguments: ["@service_container"]
         tags:
