@@ -18,7 +18,7 @@
         "symfony/symfony": "2.1.*",
         "kunstmaan/admin-bundle": "dev-master",
         "kunstmaan/node-bundle": "dev-master",
-        "exercise/elastica-bundle": "2.0@dev"
+        "exercise/elastica-bundle": "2.0.*@dev"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\SearchBundle": "" }
