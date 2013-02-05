@@ -8,8 +8,17 @@ services:
         class: %kunstmaan_search.transformers.elasticatransformerclass%
         arguments: [@doctrine.orm.entity_manager, %kunstmaan_search.entity.website%, [identifier: id, hydrate: true]]
 
+    kunstmaan_search.pagecontent_for_search_renderer:
+        class: Kunstmaan\SearchBundle\Helper\PageContentRenderer
+
     kunstmaan_search.menu.adaptor:
         class: Kunstmaan\SearchBundle\Helper\Menu\SearchMenuAdaptor
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
+
+    bancontact.twig.extension:
+        class: Kunstmaan\SearchBundle\Twig\Extension\TrimHighlightTwigExtension
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }

@@ -4,10 +4,10 @@ parameters:
     kunstmaan_search.entity.website: Kunstmaan\NodeBundle\Entity\NodeTranslation
     kunstmaan_search.website_custom_mappings:
         content:
-            handlerclass: Kunstmaan\NodeBundle\Entity\NodeTranslation
+            handlerclass: Kunstmaan\SearchBundle\Helper\NodeContentSearcher
             handlermethod: getSearchContentForNode
         parents:
-            handlerclass: Kunstmaan\NodeBundle\Entity\NodeTranslation
+            handlerclass: Kunstmaan\SearchBundle\Helper\NodeContentSearcher
             handlermethod: getParentsAndSelfForNode
 
 twig:
@@ -37,6 +37,6 @@ foq_elastica:
                             service: kunstmaan_search.transformers.nodetransformer
                         elastica_to_model_transformer:
                             service: kunstmaan_search.transformers.elasticatransformer
-                        listener:
-                        finder:
+                        listener: ~
+                        finder: ~
 

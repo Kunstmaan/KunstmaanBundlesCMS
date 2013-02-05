@@ -2,7 +2,7 @@
 namespace Kunstmaan\SearchBundle\Entity;
 
 use Symfony\Component\Validator\Constraints\DateTime;
-use Kunstmaan\AdminBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,7 +26,7 @@ class SearchedFor extends AbstractEntity
     protected $createdat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kunstmaan\NodeBundle\Entity\NodeTranslation")
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\SearchBundle\Entity\SearchPage")
      * @ORM\JoinColumn(name="searchpage", referencedColumnName="id")
      */
     protected $searchpage;

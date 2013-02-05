@@ -7,7 +7,7 @@ use Kunstmaan\SearchBundle\Entity\IndexableInterface;
 use Elastica_Document;
 use RuntimeException;
 use FOQ\ElasticaBundle\Transformer\ModelToElasticaAutoTransformer;
-use Kunstmaan\AdminBundle\Helper\ClassLookup;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * NodeTransformer
@@ -38,19 +38,22 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
     {
         $customMappings = $this->container->getParameter('kunstmaan_search.website_custom_mappings');
         $array = array();
-        foreach ($fields as $field) {
-            if (isset($customMappings[$field]) && (isset($customMappings[$field]['handlerclass']) && isset($customMappings[$field]['handlermethod']))) {
-                $array[$field] = $this->getHandlerField($this->container, $object, $field, $customMappings[$field]);
+        foreach ($fields as $key => $value) {
+            if (isset($customMappings[$key]) && (isset($customMappings[$key]['handlerclass']) && isset($customMappings[$key]['handlermethod']))) {
+                $array[$key] = $this->getHandlerField($this->container, $object, $key, $customMappings[$key]);
             } else {
-                $array[$field] = $this->getNormalField($this->container, $object, $field);
+                $array[$key] = $this->getNormalField($this->container, $object, $key);
             }
         }
+
+        var_dump($array);
+
         //gets the identifier field, most of the time this will be the id field
         // if the identifier field is already fetched, use that, don't recompute
         if (isset($array[$this->options['identifier']])) {
             //the identifier field was empty, so use either the normal or handler method
-            if (isset($customMappings[$field]) && (isset($customMappings[$this->options['identifier']]['handlerclass']) && isset($customMappings[$this->options['identifier']]['handlermethod']))) {
-                $identifier = $this->getHandlerField($this->container, $object, $field, $customMappings[$field]);
+            if (isset($customMappings[$key]) && (isset($customMappings[$this->options['identifier']]['handlerclass']) && isset($customMappings[$this->options['identifier']]['handlermethod']))) {
+                $identifier = $this->getHandlerField($this->container, $object, $key, $customMappings[$key]);
             } else {
                 $identifier = $this->getNormalField($this->container, $object, $this->options['identifier']);
             }
@@ -71,11 +74,12 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
      * @return array|string
      * @throws RuntimeException
      */
-    protected function getNormalField(ContainerInterface $container, $object, $field)
+    protected function getNormalField(ContainerInterface $container, $object, $field_name)
     {
         $class = ClassLookup::getClass($object);
-        $getter = 'get' . ucfirst($field);
+        $getter = 'get' . ucfirst($field_name);
         if (!method_exists($class, $getter)) {
+            var_dump($field_name);
             throw new RuntimeException(sprintf('The getter %s::%s does not exist', $class, $getter));
         }
 
@@ -94,7 +98,7 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
      * @throws \RuntimeException
      * @return mixed
      */
-    protected function getHandlerField(ContainerInterface $container, $object, $field, array $mappingSettings)
+    protected function getHandlerField(ContainerInterface $container, $object, $field_name, array $mappingSettings)
     {
         //basic checks
         if (!class_exists($mappingSettings['handlerclass'])) {
@@ -105,14 +109,14 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
         }
         //instanciate the class, call the method and return the output
         $class = new $mappingSettings['handlerclass']();
-        $searchResult = $class->$mappingSettings['handlermethod']($container, $object, $field);
-        if (is_object($searchResult)) {
-            //gets the output from the getContentForIndexing method, but only if it's an instance of IndexableInterface
-            $output = '';
-            if ($searchResult instanceof IndexableInterface) {
-                /** @var IndexableInterface $seachresult */
-                $output = $searchResult->getContentForIndexing($container, $object);
-            }
+        $searchResult = $class->$mappingSettings['handlermethod']($container, $object, $field_name);
+        $output = '';
+        //gets the output from the getContentForIndexing method, but only if it's an instance of IndexableInterface
+        if ($searchResult instanceof IndexableInterface) {
+            var_dump('found an indexableinterface');
+            /** @var IndexableInterface $seachresult */
+            $output = $searchResult->getContentForIndexing($container, $object);
+            var_dump($output);
         } else {
             $output = $searchResult;
         }

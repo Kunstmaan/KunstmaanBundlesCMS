@@ -16,11 +16,18 @@ class ElasticaTransformer extends ElasticaToModelTransformer
      * @param string        $objectClass   The class
      * @param array         $options       Options
      */
-    public function __construct(ObjectManager $objectManager, $objectClass, array $options = array())
+    public function __construct(ObjectManager $manager, $objectClass, array $options = array())
     {
-        $this->objectManager = $objectManager;
+        var_dump('before ElasticaTransformer parent constructor');
+        //parent::__construct($manager, $objectClass, array('identifier' => $this->options['identifier'], 'hydrate' => $this->options['hydrate']));
+        //$this->options = array_merge($this->options, $options);
+        var_dump('after ElasticaTransformer parent constructor');
+
+        $this->registry = $manager;
         $this->objectClass = $objectClass;
+        // TODO: Options are in a different arrayformat than what this class expects. So it's using the defaults.
         $this->options = array_merge($this->options, $options);
+        var_dump($this->options);
     }
 
     /**
@@ -33,10 +40,23 @@ class ElasticaTransformer extends ElasticaToModelTransformer
      **/
     public function transform(array $elasticaObjects)
     {
+        var_dump('start transform');
+        var_dump($elasticaObjects);
         $ids = array_map(function($elasticaObject) {
             return $elasticaObject->getId();
         }, $elasticaObjects);
-        $objects = $this->findByIdentifiers($this->objectClass, $this->options['identifier'], $ids, $this->options['hydrate']);
+
+        var_dump("ids::::");
+        var_dump($ids);
+
+        // This returns 'regular' NodeTranslation objects.
+        $objects = $this->findByIdentifiers($ids, $this->options['hydrate']);
+        return $objects;
+
+        // TODO: Order by ID. Why not relevance like ElasticSearch returns?
+        // TODO: Highlight results.
+
+        /*
         $identifierGetter = 'get' . ucfirst($this->options['identifier']);
         // sort objects in the order of ids
         $idPos = array_flip($ids);
@@ -54,5 +74,6 @@ class ElasticaTransformer extends ElasticaToModelTransformer
         }
 
         return $objects;
+        */
     }
 }
