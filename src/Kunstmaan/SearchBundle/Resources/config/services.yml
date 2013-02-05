@@ -6,7 +6,7 @@ services:
 
     kunstmaan_search.transformers.elasticatransformer:
         class: %kunstmaan_search.transformers.elasticatransformerclass%
-        arguments: [@doctrine.orm.entity_manager, %kunstmaan_search.entity.website%, [identifier: id, hydrate: true]]
+        arguments: [@doctrine, %kunstmaan_search.entity.website%, [identifier: id, hydrate: true]]
 
     kunstmaan_search.pagecontent_for_search_renderer:
         class: Kunstmaan\SearchBundle\Helper\PageContentRenderer

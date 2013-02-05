@@ -46,7 +46,6 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
             }
         }
 
-        var_dump($array);
 
         //gets the identifier field, most of the time this will be the id field
         // if the identifier field is already fetched, use that, don't recompute
@@ -60,6 +59,10 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
         } else {
             $identifier = $array[$this->options['identifier']];
         }
+
+        var_dump('FOUND:');
+        var_dump($identifier);
+        var_dump($array);
 
         return new Elastica_Document($identifier, array_filter($array));
     }
@@ -79,7 +82,6 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
         $class = ClassLookup::getClass($object);
         $getter = 'get' . ucfirst($field_name);
         if (!method_exists($class, $getter)) {
-            var_dump($field_name);
             throw new RuntimeException(sprintf('The getter %s::%s does not exist', $class, $getter));
         }
 
@@ -113,10 +115,8 @@ class NodeTransformer extends ModelToElasticaAutoTransformer
         $output = '';
         //gets the output from the getContentForIndexing method, but only if it's an instance of IndexableInterface
         if ($searchResult instanceof IndexableInterface) {
-            var_dump('found an indexableinterface');
             /** @var IndexableInterface $seachresult */
             $output = $searchResult->getContentForIndexing($container, $object);
-            var_dump($output);
         } else {
             $output = $searchResult;
         }

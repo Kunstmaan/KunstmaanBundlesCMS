@@ -15,9 +15,7 @@ class NodeContentSearcher
     public function getSearchContentForNode($container, $entity, $field)
     {
         $page = $entity->getRef($container->get('doctrine')->getEntityManager());
-        var_dump(get_class($page));
         if ($page instanceof IndexableInterface) {
-            var_dump('getSearchContentForNode found indexableinterface');
             return $page;
         }
 

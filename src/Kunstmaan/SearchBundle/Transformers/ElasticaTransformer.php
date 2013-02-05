@@ -12,22 +12,30 @@ class ElasticaTransformer extends ElasticaToModelTransformer
 {
 
     /**
-     * @param ObjectManager $objectManager The object manager
+     * @param Registry      $registry      The doctrine registry
      * @param string        $objectClass   The class
      * @param array         $options       Options
      */
-    public function __construct(ObjectManager $manager, $objectClass, array $options = array())
+    public function __construct($registry, $objectClass, array $options = array())
     {
-        var_dump('before ElasticaTransformer parent constructor');
-        //parent::__construct($manager, $objectClass, array('identifier' => $this->options['identifier'], 'hydrate' => $this->options['hydrate']));
-        //$this->options = array_merge($this->options, $options);
-        var_dump('after ElasticaTransformer parent constructor');
-
-        $this->registry = $manager;
+        $this->registry = $registry;
         $this->objectClass = $objectClass;
-        // TODO: Options are in a different arrayformat than what this class expects. So it's using the defaults.
-        $this->options = array_merge($this->options, $options);
-        var_dump($this->options);
+        $this->options = array_merge($this->options, $this->fromArrayToHashArray($options));
+    }
+
+    private function fromArrayToHashArray(array $array)
+    {
+      $hash_array = array();
+
+      foreach ($array as $key => $value)
+      {
+          if (count($value[key($value)]) == 1)
+          {
+              $hash_array[key($value)] = $value[key($value)];
+          }
+      }
+
+      return $hash_array;
     }
 
     /**
@@ -40,29 +48,20 @@ class ElasticaTransformer extends ElasticaToModelTransformer
      **/
     public function transform(array $elasticaObjects)
     {
-        var_dump('start transform');
-        var_dump($elasticaObjects);
         $ids = array_map(function($elasticaObject) {
             return $elasticaObject->getId();
         }, $elasticaObjects);
 
-        var_dump("ids::::");
-        var_dump($ids);
-
         // This returns 'regular' NodeTranslation objects.
         $objects = $this->findByIdentifiers($ids, $this->options['hydrate']);
-        return $objects;
 
-        // TODO: Order by ID. Why not relevance like ElasticSearch returns?
-        // TODO: Highlight results.
-
-        /*
         $identifierGetter = 'get' . ucfirst($this->options['identifier']);
         // sort objects in the order of ids
         $idPos = array_flip($ids);
         usort($objects, function($a, $b) use ($idPos, $identifierGetter) {
             return $idPos[$a->$identifierGetter()] > $idPos[$b->$identifierGetter()];
         });
+
         foreach ($objects as &$object) {
             foreach ($elasticaObjects as $elasticaObject) {
                 $id = $elasticaObject->getParam('_id');
@@ -74,6 +73,5 @@ class ElasticaTransformer extends ElasticaToModelTransformer
         }
 
         return $objects;
-        */
     }
 }

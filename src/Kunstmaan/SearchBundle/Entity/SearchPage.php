@@ -26,24 +26,18 @@ class SearchPage extends AbstractPage implements HasPagePartsInterface
 
       $boolQuery = new \Elastica_Query_Bool();
 
-      /*
       $languageQuery = new \Elastica_Query_Term(array('lang' => $request->getLocale()));
       $boolQuery->addMust($languageQuery);
-       */
 
       $searchQuery = new \Elastica_Query_QueryString($query);
       $searchQuery->setDefaultField('content');
       $boolQuery->addMust($searchQuery);
 
-      /*
       $parentNode = $container->get('doctrine')->getEntityManager()->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($this)->getParent();
       if ($parentNode != null) {
-        var_dump('parentNode');
-        var_dump($parentNode->getId());
         $parentQuery = new \Elastica_Query_Wildcard('parents', $parentNode->getId());
         $boolQuery->addMust($parentQuery);
       }
-       */
 
       $queryObj = \Elastica_Query::create($boolQuery);
 
@@ -68,7 +62,6 @@ class SearchPage extends AbstractPage implements HasPagePartsInterface
       $em->persist($searchedfor);
       $em->flush();
 
-      var_dump($query);
       $context['query'] = $query;
       $context['results'] = $pages;
       $context['error'] = "";
