@@ -22,7 +22,7 @@ The IP address of the user triggering the voting event.
 
 Value is by default 1.
 
-In most cases the default value of 1 is all you need. But in a few cases you may want to give your vote a specific value. For example, you track Facebook Likes and for each each like you commit yourself to donate €0.10 to sharity. This means you can give a vote a value of 10. When requesting the sum of the your total vote value, say you have 283 votes, which means a value of 2830. Divide it by 100 (100 cents in 1 euro) and you'll get the amount you committed yourself donate to sharity : €28,3.
+In most cases the default value of 1 is all you need. But in a few cases you may want to give your vote a specific value. For example, you track Facebook Likes and for each like you commit yourself to donate €0.10 to sharity. This means you can give a vote a value of 10. Let's say you have 283 votes. When requesting the sum of your total vote value, you'll get 2830. Divide it by 100 (100 cents in 1 euro) and you'll get the amount you committed yourself to donate to sharity : €28,3.
 
 # Configuration
 
