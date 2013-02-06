@@ -31,9 +31,7 @@ class FacebookSendEventListener
         $vote = new FacebookSend();
         $vote->setReference($event->getResponse());
         if (!is_null($event->getRequest())) {
-            $vote->setIp($event
-                ->getRequest()
-                ->getClientIp());
+            $vote->setIp($event->getRequest()->getClientIp());
         }
         if ($event->getValue() != null) {
             $vote->setValue($event->getValue());
