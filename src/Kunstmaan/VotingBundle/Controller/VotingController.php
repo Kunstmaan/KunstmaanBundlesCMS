@@ -11,13 +11,38 @@ use Kunstmaan\VotingBundle\Event\Events;
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
+use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
+use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 
 class VotingController extends Controller
 {
 
     /**
+     * @Route("/voting-upvote", name="voting_upvote")
+     * @Template("KunstmaanVotingBundle:UpDown:voted.html.twig")
+     */
+    public function upVoteAction(Request $request)
+    {
+        $reference = $request->get('reference');
+        $value = $request->get('value');
+        $this->get('event_dispatcher')->dispatch(Events::VOTE_UP, new UpVoteEvent($this->getRequest(), $reference, $value));
+        return;
+    }
+
+    /**
+     * @Route("/voting-downvote", name="voting_downvote")
+     * @Template("KunstmaanVotingBundle:UpDown:voted.html.twig")
+     */
+    public function downVoteAction(Request $request)
+    {
+        $reference = $request->get('reference');
+        $value = $request->get('value');
+        $this->get('event_dispatcher')->dispatch(Events::VOTE_DOWN, new DownVoteEvent($this->getRequest(), $reference, $value));
+        return;
+    }
+
+    /**
      * @Route("/voting-facebooklike", name="voting_facebooklike")
-     * @Template("KunstmaanVotingBundle:Facebook:like-callback")
      */
     public function facebookLikeAction(Request $request)
     {
@@ -28,7 +53,6 @@ class VotingController extends Controller
 
     /**
      * @Route("/voting-facebooksend", name="voting_facebooksend")
-     * @Template("KunstmaanVotingBundle:Facebook:send-callback")
      */
     public function facebookSendAction(Request $request)
     {
@@ -39,7 +63,6 @@ class VotingController extends Controller
 
     /**
      * @Route("/voting-linkedinshare", name="voting_linkedinshare")
-     * @Template("KunstmaanVotingBundle:LinkedIn:share-callback")
      */
     public function linkedInShareAction(Request $request)
     {

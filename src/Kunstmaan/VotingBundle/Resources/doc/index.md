@@ -67,6 +67,10 @@ if (isset($actions['yourownvote'])) {
 }
 ```
 
+# Standard voting
+
+We have a standard voting implementation using an Up and Down vote. For more information, check out the [documentation]((https://github.com/Kunstmaan/KunstmaanVotingBundle/blob/master/Resources/doc/updown.md))
+
 # Supported services
 
 ## Facebook

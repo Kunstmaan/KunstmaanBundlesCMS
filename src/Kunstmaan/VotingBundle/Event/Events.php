@@ -25,4 +25,8 @@ class Events
      * @var string
      */
     const LINKEDIN_SHARE = "kunstmaan_voting.linkedInShare";
+
+    const VOTE_UP = "kunstmaan_voting.upVote";
+
+    const VOTE_DOWN = "kunstmaan_voting.downVote";
 }

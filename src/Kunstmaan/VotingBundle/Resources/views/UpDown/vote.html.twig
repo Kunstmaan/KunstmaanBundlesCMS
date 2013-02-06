@@ -1,0 +1,43 @@
+{% if reference is not defined %}
+    {% set reference = '' %}
+{% endif %}
+
+<div id="vote{{ reference }}">
+    {% if hideUpVote is defined and hideUpVote %}
+
+    {% else %}
+
+        <a href="#" onclick="registerUpVote{{ reference }}();return false;">{{ "Vote up" | trans }}</a>
+
+        <script type="text/javascript">
+            function registerUpVote{{ reference }}() {
+                jQuery.ajax({
+                    url : '{{ url('voting_upvote') }}?reference={{ reference }}'{% if upValue is defined %}+'&value={{ upValue }}'{% endif %},
+                    success: function(data) {
+                        jQuery('#vote{{ reference }}').html(data);
+                    }
+                });
+            }
+        </script>
+
+    {% endif %}
+
+    {% if hideDownVote is defined and hideDownVote %}
+
+    {% else %}
+
+        <a href="#" onclick="registerDownVote{{ reference }}();return false;">{{ "Vote down" | trans }}</a>
+
+        <script type="text/javascript">
+            function registerDownVote{{ reference }}() {
+                jQuery.ajax({
+                    url : '{{ url('voting_downvote') }}?reference={{ reference }}'{% if downValue is defined %}+'&value={{ downValue }}'{% endif %},
+                    success: function(data) {
+                        jQuery('#vote{{ reference }}').html(data);
+                    }
+                });
+            }
+        </script>
+
+    {% endif %}
+</div>

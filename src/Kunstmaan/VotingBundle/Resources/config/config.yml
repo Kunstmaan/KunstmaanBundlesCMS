@@ -3,6 +3,10 @@ parameters:
 
 kunstmaan_voting:
     actions:
+        up_vote:
+            default_value: %kuma_voting_default_value%
+        down_vote:
+            default_value: -%kuma_voting_default_value%
         facebook_like:
             default_value: %kuma_voting_default_value%
         facebook_send:
