@@ -1,0 +1,11 @@
+parameters:
+    kuma_voting_default_value: 1
+
+kunstmaan_voting:
+    actions:
+        facebook_like:
+            default_value: %kuma_voting_default_value%
+        facebook_send:
+            default_value: %kuma_voting_default_value%
+        linkedin_share:
+            default_value: %kuma_voting_default_value%

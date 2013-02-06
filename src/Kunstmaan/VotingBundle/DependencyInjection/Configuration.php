@@ -18,7 +18,21 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_voting');
+        $rootNode = $treeBuilder->root('kunstmaan_voting');
+
+        $rootNode
+            ->children()
+                ->arrayNode('actions')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->fixXmlConfig('action', 'actions')
+                        ->children()
+                            ->scalarNode('default_value')->defaultValue('%kuma_voting_default_value%')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ->end();
 
         return $treeBuilder;
     }

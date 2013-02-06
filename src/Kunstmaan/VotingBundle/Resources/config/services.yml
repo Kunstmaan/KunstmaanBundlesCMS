@@ -10,7 +10,7 @@ services:
 
     kunstmaan_voting.facebooklike:
         class: Kunstmaan\VotingBundle\EventListener\Facebook\FacebookLikeEventListener
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.facebookLike, method: onFacebookLike }
 
@@ -22,7 +22,7 @@ services:
 
     kunstmaan_voting.facebooksend:
         class: Kunstmaan\VotingBundle\EventListener\Facebook\FacebookSendEventListener
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.facebookSend, method: onFacebookSend }
 
@@ -34,7 +34,7 @@ services:
 
     kunstmaan_voting.linkedinshare:
         class: Kunstmaan\VotingBundle\EventListener\LinkedIn\LinkedInShareEventListener
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.linkedInShare, method: onLinkedInShare }
 

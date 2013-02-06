@@ -28,6 +28,13 @@ KunstmaanVotingBundle:
     prefix:   /
 ```
 
+Import the KunstmaanVotingBundle config to your config.yml :
+
+```PHP
+imports:
+    - { resource: @KunstmaanVotingBundle/Resources/config/config.yml }
+```
+
 Use
 ---
 
