@@ -536,7 +536,8 @@ function initTimePicker() {
     if($('.form_timepicker').length > 0) {
         $(".form_timepicker").timepicker({
             'showMeridian': false,
-            'minuteStep': 1
+            'minuteStep': 1,
+            'defaultTime': 'value'
         });
     }
 }
