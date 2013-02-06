@@ -2,9 +2,10 @@
 
 namespace Kunstmaan\VotingBundle\EventListener\LinkedIn;
 
-use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare;
+use Symfony\Component\DependencyInjection\Container;
 
 class LinkedInShareEventListener
 {
