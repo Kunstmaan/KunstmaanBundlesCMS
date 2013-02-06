@@ -16,7 +16,9 @@ class FacebookSendHelper extends VotingHelper
      */
     public function byReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:Facebook\FacebookSend')->findByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:Facebook\FacebookSend')
+            ->findByReference($reference);
     }
 
     /**
@@ -26,7 +28,9 @@ class FacebookSendHelper extends VotingHelper
      */
     public function countByReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:Facebook\FacebookSend')->countByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:Facebook\FacebookSend')
+            ->countByReference($reference);
     }
 
     /**
@@ -36,6 +40,8 @@ class FacebookSendHelper extends VotingHelper
      */
     public function getValueByReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:Facebook\FacebookSend')->getValueByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:Facebook\FacebookSend')
+            ->getValueByReference($reference);
     }
 }

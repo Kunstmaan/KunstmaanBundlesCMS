@@ -16,7 +16,9 @@ class FacebookLikeHelper extends VotingHelper
      */
     public function byReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:Facebook\FacebookLike')->findByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:Facebook\FacebookLike')
+            ->findByReference($reference);
     }
 
     /**
@@ -26,7 +28,9 @@ class FacebookLikeHelper extends VotingHelper
      */
     public function countByReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:Facebook\FacebookLike')->countByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:Facebook\FacebookLike')
+            ->countByReference($reference);
     }
 
     /**
@@ -36,6 +40,8 @@ class FacebookLikeHelper extends VotingHelper
      */
     public function getValueByReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:Facebook\FacebookLike')->getValueByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:Facebook\FacebookLike')
+            ->getValueByReference($reference);
     }
 }

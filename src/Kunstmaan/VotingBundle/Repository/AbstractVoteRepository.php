@@ -16,11 +16,14 @@ class AbstractVoteRepository extends EntityRepository
      */
     public function findByReference($reference)
     {
-        $qb = $this->createQueryBuilder('e')
+        $qb = $this
+            ->createQueryBuilder('e')
             ->where('e.reference = :reference')
             ->setParameter('reference', $reference);
 
-        return $qb->getQuery()->getArrayResult();
+        return $qb
+            ->getQuery()
+            ->getArrayResult();
     }
 
     /**
@@ -30,12 +33,15 @@ class AbstractVoteRepository extends EntityRepository
      */
     public function countByReference($reference)
     {
-        $qb = $this->createQueryBuilder('e')
+        $qb = $this
+            ->createQueryBuilder('e')
             ->select('count(e.id)')
             ->where('e.reference = :reference')
             ->setParameter('reference', $reference);
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return $qb
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
@@ -45,11 +51,14 @@ class AbstractVoteRepository extends EntityRepository
      */
     public function getValueByReference($reference)
     {
-        $qb = $this->createQueryBuilder('e')
+        $qb = $this
+            ->createQueryBuilder('e')
             ->select('SUM(e.value)')
             ->where('e.reference = :reference')
             ->setParameter('reference', $reference);
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return $qb
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

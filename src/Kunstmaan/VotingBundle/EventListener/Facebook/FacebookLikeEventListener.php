@@ -7,7 +7,6 @@ use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
 use Symfony\Component\DependencyInjection\Container;
 
-
 class FacebookLikeEventListener
 {
 

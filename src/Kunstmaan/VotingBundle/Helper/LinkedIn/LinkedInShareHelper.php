@@ -17,7 +17,9 @@ class LinkedInShareHelper extends VotingHelper
      */
     public function byReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:LinkedIn\LinkedInShare')->findByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:LinkedIn\LinkedInShare')
+            ->findByReference($reference);
     }
 
     /**
@@ -27,7 +29,9 @@ class LinkedInShareHelper extends VotingHelper
      */
     public function countByReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:LinkedIn\LinkedInShare')->countByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:LinkedIn\LinkedInShare')
+            ->countByReference($reference);
     }
 
     /**
@@ -37,6 +41,8 @@ class LinkedInShareHelper extends VotingHelper
      */
     public function getValueByReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:LinkedIn\LinkedInShare')->getValueByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:LinkedIn\LinkedInShare')
+            ->getValueByReference($reference);
     }
 }

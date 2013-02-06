@@ -144,7 +144,8 @@ class AbstractVote
     /**
      * @ORM\PrePersist
      */
-    public function _prePersist() {
+    public function _prePersist()
+    {
         // Set timestamp to now when none is set
         if ($this->timestamp == null) {
             $this->setTimestamp(new \DateTime('now'));

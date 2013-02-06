@@ -17,7 +17,9 @@ class UpVoteHelper extends VotingHelper
      */
     public function byReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:UpDown\UpVote')->findByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:UpDown\UpVote')
+            ->findByReference($reference);
     }
 
     /**
@@ -27,7 +29,9 @@ class UpVoteHelper extends VotingHelper
      */
     public function countByReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:UpDown\UpVote')->countByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:UpDown\UpVote')
+            ->countByReference($reference);
     }
 
     /**
@@ -37,6 +41,8 @@ class UpVoteHelper extends VotingHelper
      */
     public function getValueByReference($reference)
     {
-        return $this->em->getRepository('KunstmaanVotingBundle:UpDown\UpVote')->getValueByReference($reference);
+        return $this->em
+            ->getRepository('KunstmaanVotingBundle:UpDown\UpVote')
+            ->getValueByReference($reference);
     }
 }

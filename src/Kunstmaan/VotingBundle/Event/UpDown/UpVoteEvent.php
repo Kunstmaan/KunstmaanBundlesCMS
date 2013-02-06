@@ -5,6 +5,9 @@ namespace Kunstmaan\VotingBundle\Event\UpDown;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Event when an Up vote has been triggered
+ */
 class UpVoteEvent extends Event
 {
 
