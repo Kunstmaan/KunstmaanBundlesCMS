@@ -82,3 +82,9 @@ services:
         arguments: [@service_container]
         tags:
             - { name: router, priority: 0 }
+
+    kunstmaan_node.node.twig.extension:
+        class: Kunstmaan\NodeBundle\Twig\NodeTwigExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }
