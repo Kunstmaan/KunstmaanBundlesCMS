@@ -12,7 +12,7 @@ The default Symfony 2.1 router does not support multiple routers. To allow more 
 
 * Composer.json now includes a dependency for "symfony-cmf/routing-extra-bundle".
 * The config.yml includes the required configuration values for "symfony_cmf_routing_extra".
-* There is an extra service in services.yml called "kunstmaan_node.slug.router".
+* There is an extra service in services.yml called "kunstmaan_node.slugrouter".
 
 ### Adding a router
 

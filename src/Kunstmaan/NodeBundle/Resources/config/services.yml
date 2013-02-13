@@ -77,7 +77,7 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    kunstmaan_node.slug.router:
+    kunstmaan_node.slugrouter:
         class: Kunstmaan\NodeBundle\Router\SlugRouter
         arguments: [@service_container]
         tags:
