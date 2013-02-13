@@ -79,6 +79,13 @@ class Folder extends AbstractEntity
     protected $rel;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", name="internal_name", nullable=true)
+     */
+    protected $internalName;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -353,6 +360,26 @@ class Folder extends AbstractEntity
         }
 
         return false;
+    }
+
+    /**
+     * @param string $internalName
+     *
+     * @return Folder
+     */
+    public function setInternalName($internalName)
+    {
+        $this->internalName = $internalName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInternalName()
+    {
+        return $this->internalName;
     }
 
     /**
