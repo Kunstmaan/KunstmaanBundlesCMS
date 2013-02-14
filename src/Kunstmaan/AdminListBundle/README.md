@@ -9,3 +9,7 @@ View more screenshots and information [http://bundles.kunstmaan.be](http://bundl
 
 This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
 
+## Documentation
+
+You can find more detailed documentation [here](https://github.com/Kunstmaan/KunstmaanAdminListBundle/edit/master/Resources/doc/AdminListBundle.md)
+

@@ -1,5 +1,11 @@
 # AdminList
 
+## Generator
+
+The [KunstmaanGeneratorBundle](https://github.com/Kunstmaan/KunstmaanGeneratorBundle) offers a generator to generate an AdminList for your entity. It will generate the required classes and settings based on your Entity class.
+
+For more information, see the AdminList generator [documentation](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md#adminlist).
+
 ## Permission support
 
 ### AbstractAdminListConfigurator
