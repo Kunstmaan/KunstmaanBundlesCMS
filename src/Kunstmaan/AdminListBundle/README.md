@@ -11,5 +11,5 @@ This bundle is compatible with all Symfony 2.1.* releases. More information abou
 
 ## Documentation
 
-You can find more detailed documentation [here](https://github.com/Kunstmaan/KunstmaanAdminListBundle/edit/master/Resources/doc/AdminListBundle.md)
+You can find more detailed documentation [here](https://github.com/Kunstmaan/KunstmaanAdminListBundle/blob/master/Resources/doc/AdminListBundle.md).
 

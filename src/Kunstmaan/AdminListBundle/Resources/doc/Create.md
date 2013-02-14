@@ -2,29 +2,23 @@
 
 ## How to create a new AdminList
 
-Below you will find a how-to to create your own AdminList for your Entity manually. We also offer an [AdminList Generator](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md#adminlist) to do this for you in the [KunstmaanGeneratorBundle](https://github.com/Kunstmaan/KunstmaanGeneratorBundle).
+Below you will find a how-to on how to create your own AdminList for your Entity manually. We also offer an [AdminList Generator](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md#adminlist) to do this for you in the [KunstmaanGeneratorBundle](https://github.com/Kunstmaan/KunstmaanGeneratorBundle).
 
-You will need to create 3 classes. An AdminListConfigurator, AdminListController and an AdminType. Let's assume you have already created an Entity called Document located in your Entity folder and its corresponding Repository.
+You will need to create 3 classes. An AdminListConfigurator, AdminListController and an AdminType. Let's assume you have already created an Entity called Document (with fields Title, Type and Reviewed) located in your Entity folder and its corresponding Repository.
 
 ## Classes
 
 ### Configurator
 
-The configurator will configure the listed fields and filters in your AdminList.
+As its name implies the configurator will configure the listed fields and filters in your AdminList.
 
-Create your DocumentAdminListConfigurator class in the AdminList folder in your Bundle.
-
-Import you Entity class and the [FilterTypes](https://github.com/Kunstmaan/KunstmaanAdminListBundle/edit/master/Resources/doc/Filters.md) you want to use to filter your AdminList.
+Create your DocumentAdminListConfigurator class in the AdminList folder in your Bundle and import your Entity class and the [FilterTypes](https://github.com/Kunstmaan/KunstmaanAdminListBundle/edit/master/Resources/doc/Filters.md) you want to use to filter your AdminList.
 
 ```PHP
 use Your\Bundle\Entity\Document;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-```
 
-We continue line by line
-
-```PHP
 class DocumentAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
 ```
@@ -45,7 +39,7 @@ The first parameter of addFilter() method is the fieldname, the second parameter
 
 The buildFields() method will allow you to configure which fields will be displayed in the list and is independent from the form used to edit your Entity.
 
-The first parameter of the addField() method is the fieldname, second one is the header title of the column the value will be displayed and the last parameter you see here allows you to enable sorting for this field.
+The first parameter of the addField() method is the fieldname, second one is the column header and the last parameter you see here allows you to enable sorting for this field.
 
 ``` PHP
     public function buildFields()
@@ -68,11 +62,9 @@ And at last we add our Entity name
 
 ### Controller
 
-The controller will allow you to list, add, edit and delete your Entity
+The controller will allow you to list, add, edit and delete your Entity.
 
-Create your DocumentAdminListController in your Controller folder.
-
-Import you Entity class and the FilterTypes you want to use to filter your AdminList.
+Create your DocumentAdminListController in your Controller folder and import you Entity class and the FilterTypes you want to use to filter your AdminList.
 
 ```PHP
 use Your\Bundle\Form\DocumentType;
@@ -93,7 +85,7 @@ The first method will simply list your Entities.
 
 ```PHP
     /**
-     * @Route("/document", name="YourBundle_admin_document")
+     * @Route("/document", name="yourbundle_admin_document")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function documentAction()
@@ -120,7 +112,7 @@ The edit action method will build and process the edit form.
      * @internal param $eid
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/document/{id}/edit", requirements={"id" = "\d+"}, name="YourBundle_admin_document_edit")
+     * @Route("/document/{id}/edit", requirements={"id" = "\d+"}, name="yourbundle_admin_document_edit")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      */
@@ -141,7 +133,7 @@ The edit action method will build and process the edit form.
                 $em->persist($text);
                 $em->flush();
 
-                return new RedirectResponse($this->generateUrl('YourBundle_admin_document'));
+                return new RedirectResponse($this->generateUrl('yourbundle_admin_document'));
             }
         }
 
@@ -161,7 +153,7 @@ The delete action will handle the deletion of your Entity.
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws NotFoundHttpException
-     * @Route("/document/{id}/delete", requirements={"id" = "\d+"}, name="YourBundle_admin_document_delete")
+     * @Route("/document/{id}/delete", requirements={"id" = "\d+"}, name="yourbundle_admin_document_delete")
      * @Method({"GET", "POST"})
      */
     public function deleteDocumentAction($id)
@@ -173,7 +165,7 @@ The delete action will handle the deletion of your Entity.
             $em->flush();
         }
 
-        return new RedirectResponse($this->generateUrl('YourBundle_admin_document'));
+        return new RedirectResponse($this->generateUrl('yourbundle_admin_document'));
     }
 ```
 
@@ -181,7 +173,7 @@ To export your Entities, there's the export action method.
 
 ```PHP
     /**
-     * @Route("/document/export.{_format}", requirements={"_format" = "csv"}, name="YourBundle_document_export")
+     * @Route("/document/export.{_format}", requirements={"_format" = "csv"}, name="yourbundle_document_export")
      * @Method({"GET", "POST"})
      *
      * @param $_format
@@ -240,7 +232,7 @@ And include the following methods.
 
 ## Routing
 
-Add the following lines to your routing.yml
+Add the following lines to your routing.yml.
 
 ```YAML
 YourBundle_documents:
