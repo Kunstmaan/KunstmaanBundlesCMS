@@ -2,7 +2,7 @@
 
 ## How to create a new AdminList
 
-Below you will find a how-to to create your own AdminList for your Entity manually. We also offer an [AdminList Generator])(https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md#adminlist) to to this for you in the [KunstmaanGeneratorBundle](https://github.com/Kunstmaan/KunstmaanGeneratorBundle).
+Below you will find a how-to to create your own AdminList for your Entity manually. We also offer an [AdminList Generator](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md#adminlist) to do this for you in the [KunstmaanGeneratorBundle](https://github.com/Kunstmaan/KunstmaanGeneratorBundle).
 
 You will need to create 3 classes. An AdminListConfigurator, AdminListController and an AdminType. Let's assume you have already created an Entity called Document located in your Entity folder and its corresponding Repository.
 
@@ -14,7 +14,7 @@ The configurator will configure the listed fields and filters in your AdminList.
 
 Create your DocumentAdminListConfigurator class in the AdminList folder in your Bundle.
 
-Import you Entity class and the FilterTypes you want to use to filter your AdminList.
+Import you Entity class and the [FilterTypes](https://github.com/Kunstmaan/KunstmaanAdminListBundle/edit/master/Resources/doc/Filters.md) you want to use to filter your AdminList.
 
 ```PHP
 use Your\Bundle\Entity\Document;
@@ -31,6 +31,9 @@ class DocumentAdminListConfigurator extends AbstractSettingsAdminListConfigurato
 
 Next we add the buildFiters() method and supply the fields we want to filter on. Our document has a title, type and a boolean telling us the document has been reviewed.
 
+The first parameter of addFilter() method is the fieldname, the second parameter is the FilterType you want to use to filter this field with. The last parameter is the label for the filter.
+
+
 ```PHP
     public function buildFilters()
     {
@@ -42,7 +45,7 @@ Next we add the buildFiters() method and supply the fields we want to filter on.
 
 The buildFields() method will allow you to configure which fields will be displayed in the list and is independent from the form used to edit your Entity.
 
-The first parameter is the field's name, second one is the header title of the column the value will be displayed and the last parameter you see here allows you to enable sorting for this field.
+The first parameter of the addField() method is the fieldname, second one is the header title of the column the value will be displayed and the last parameter you see here allows you to enable sorting for this field.
 
 ``` PHP
     public function buildFields()
@@ -207,6 +210,8 @@ The form Type class will create the form for the Entity when adding or editing o
 
 Add your fields to the buildForm() method to add them to the add and edit form.
 
+The add method's first parameter is the fieldname, the second one is the [field type](http://symfony.com/doc/2.0/reference/forms/types.html) and at last an array of additional options.
+
 ```PHP
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -231,8 +236,7 @@ And include the following methods.
         return 'document';
     }
 }
-```PHP
-
+```
 
 ## Routing
 
