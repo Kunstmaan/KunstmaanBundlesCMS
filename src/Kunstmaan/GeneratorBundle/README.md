@@ -28,5 +28,5 @@ Generate a KunstmaanAdminList for an Entity :
 app/console kuma:generate:adminlist --entity=Bundle:Entity
 ```
 
-You can find more detailed information about these commands [here](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/index.md)
+You can find more detailed information about these commands [here](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md)
 
