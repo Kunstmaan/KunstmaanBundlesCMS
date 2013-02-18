@@ -1,9 +1,9 @@
 {% if resource.media is not empty %}
     <div class="image-pp">
     {%- if resource.link is defined and resource.link != "" -%}
-    	<a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}><img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" /></a>
+    	<a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}><img src="{{ asset(resource.media.url) }}" alt="{{ resource.alttext }}" /></a>
     {%- else -%}
-    	<img src="{{ asset(upload_dir~resource) }}" alt="{{ resource.alttext }}" />
+    	<img src="{{ asset(resource.media.url) }}" alt="{{ resource.alttext }}" />
     {%- endif -%}
     </div>
 {% endif %}
