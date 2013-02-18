@@ -23,6 +23,8 @@ abstract class AdminListController extends Controller
 {
 
     /**
+     * Shows the list of entities
+     *
      * @param AbstractAdminListConfigurator $configurator
      *
      * @return array
@@ -39,6 +41,8 @@ abstract class AdminListController extends Controller
     }
 
     /**
+     * Export a list of Entities
+     *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $_format      The format to export to
      *
@@ -68,6 +72,8 @@ abstract class AdminListController extends Controller
     }
 
     /**
+     * Creates and processes the form to add a new Entity
+     *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $type         The type to add
      *
@@ -107,6 +113,8 @@ abstract class AdminListController extends Controller
     }
 
     /**
+     * Creates and processes the edit form for an Entity using its ID
+     *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $entityId     The id of the entity that will be edited
      *
@@ -142,6 +150,8 @@ abstract class AdminListController extends Controller
     }
 
     /**
+     * Delete the Entity using its ID
+     *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param integer                       $entityId     The id to delete
      *
