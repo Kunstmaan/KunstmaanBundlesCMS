@@ -27,10 +27,6 @@ For more information, see the AdminList generator [documentation](https://github
 
 ### Manually
 
-While we supply a generator to generate an AdminList, you can also create one manually.
-
-#### How to create a new AdminList
-
 Below you will find a how-to on how to create your own AdminList for your Entity manually. We also offer an [AdminList Generator](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md#adminlist) to do this for you in the [KunstmaanGeneratorBundle](https://github.com/Kunstmaan/KunstmaanGeneratorBundle).
 
 You will need to create 3 classes. An AdminListConfigurator, AdminListController and an AdminType. Let's assume you have already created an Entity called Document (with fields Title, Type and Reviewed) located in your Entity folder and its corresponding Repository.
@@ -52,7 +48,7 @@ class DocumentAdminListConfigurator extends AbstractSettingsAdminListConfigurato
 {
 ```
 
-Next we add the buildFiters() method and supply the fields we want to filter on. Our document has a title, type and a boolean telling us the document has been reviewed.
+Next we add the buildFilters() method and supply the fields we want to filter on. Our document has a title, type and a boolean telling us the document has been reviewed.
 
 The first parameter of addFilter() method is the fieldname, the second parameter is the FilterType you want to use to filter this field with. The last parameter is the label for the filter.
 
@@ -84,16 +80,16 @@ And at last we add our Entity name
 ```PHP
     public function getEntityName()
     {
-        return 'User';
+        return 'Document';
     }
 }
 ```
 
 ##### Controller
 
-The controller will allow you to list, add, edit and delete your Entity.
+The controller will allow you to list, add, edit and delete your Entity. There's also a method to export the list of entities.
 
-Create your DocumentAdminListController in your Controller folder and import you Entity class and the FilterTypes you want to use to filter your AdminList.
+Create your DocumentAdminListController in your Controller folder and import your Entity class and the FilterTypes you want to use to filter your AdminList with.
 
 ```PHP
 use Your\Bundle\Form\DocumentType;
