@@ -110,10 +110,30 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $this->output->writeln('Generating Twig Templates : <info>OK</info>');
 
+        $this->generateErrorTemplates($bundle, $parameters, $rootDir);
+
         // @todo: should be improved
         GeneratorUtils::replace("[ \"KunstmaanAdminBundle\"", "[ \"KunstmaanAdminBundle\", \"". $bundle->getName()  ."\"", $rootDir . '/config/config.yml');
 
         $this->output->writeln('Configure assetic : <info>OK</info>');
+    }
+
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param string          $rootDir    The root directory
+     */
+    public function generateErrorTemplates(Bundle $bundle, array $parameters, $rootDir)
+    {
+        $dirPath = $bundle->getPath();
+        $fullSkeletonDir = $this->skeletonDir . '/Resources/views/Error';
+
+        $this->renderFile($fullSkeletonDir, '/error.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, '/error404.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error404.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, '/error500.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error500.html.twig', $parameters);
+        $this->renderFile($fullSkeletonDir, '/error503.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error503.html.twig', $parameters);
+
+        $this->output->writeln('Generating Error Twig Templates : <info>OK</info>');
     }
 
     /**
