@@ -1,42 +1,25 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
-{% block content %}
+{% block header %}
+    {% if adminmenu.current %}
+        <div class="page-header">
+            <h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>
+            <small><strong>date</strong>: {{ formsubmission.created|date }} / <strong>language</strong>: {{ formsubmission.lang }} / <strong>ip</strong>: {{ formsubmission.ipAddress }}</small>
+            {% block extra_actions_header %}{% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}
 
-    <table class="bordered-table zebra-striped">
-        <thead>
-            <tr>
-                <!--suppress HtmlUnknownAttribute -->
-                <th width="30%">Label</th>
-                <!--suppress HtmlUnknownAttribute -->
-                <th width="70%">Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Date</td>
-                <td>{{ formsubmission.created|date }}</td>
-            </tr>
-            <tr>
-                <td>Lang</td>
-                <td>{{ formsubmission.lang }}</td>
-            </tr>
-            <tr>
-                <td>ipAddress</td>
-                <td>{{ formsubmission.ipAddress }}</td>
-            </tr>
+{% block content %}
             {% for field in formsubmission.fields %}
-                <tr>
-                    <td><strong>{{ field.label }}</strong></td>
-                    <td>
+                    <p><strong>{{ field.label }}</strong></p>
+                    <p>
                         {% if (field.submissionTemplate is defined) %}
                             {% include field.submissionTemplate with {'resource' : field, 'host' : ''} %}
                         {% else %}
                             {{ field }}
                         {% endif %}
-                    </td>
-                </tr>
+                    </p>
             {% endfor %}
-        </tbody>
-    </table>
 
 {% endblock %}
