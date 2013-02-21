@@ -178,7 +178,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
         $queryBuilder
                 ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
                 ->andWhere('n.id = :node')
+                ->andWhere('b.lang = :lang')
                 ->setParameter('node', $this->nodeTranslation->getNode()->getId())
+                ->setParameter('lang', $this->nodeTranslation->getLang())
                 ->addOrderBy('b.created', 'DESC');
     }
 
