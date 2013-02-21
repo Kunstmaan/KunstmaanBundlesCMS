@@ -27,7 +27,7 @@ class DownloadPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser_filechooser'));
+        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser_filechooser', 'label' => 'mediapagepart.download.choosefile'));
     }
 
     /**

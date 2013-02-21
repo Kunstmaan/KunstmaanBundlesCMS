@@ -26,10 +26,10 @@ class ImagePagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser'));
-        $builder->add('alttext', null, array('required' => false));
-        $builder->add('link', 'urlchooser', array('required' => false));
-        $builder->add('openinnewwindow', 'checkbox', array('required' => false));
+        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser', 'label' => 'mediapagepart.image.choosefile'));
+        $builder->add('alttext', null, array('required' => false, 'label' => 'mediapagepart.image.alttext'));
+        $builder->add('link', 'urlchooser', array('required' => false, 'label' => 'mediapagepart.image.link'));
+        $builder->add('openinnewwindow', 'checkbox', array('required' => false, 'label' => 'mediapagepart.image.openinnewwindow'));
     }
 
     /**
