@@ -242,4 +242,26 @@ class NodeTranslationRepository extends EntityRepository
 
         return $translation;
     }
+
+
+    /**
+     * Look if all parents of a NodeTranslation have NodeTranslations 
+     * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $nodeTranslation
+     * @param $language
+     * @return bool
+     */
+    public function hasParentNodeTranslationsForLanguage(NodeTranslation $nodeTranslation, $language)
+    {
+        $parentNode = $nodeTranslation->getNode()->getParent();
+        if($parentNode != null) {
+            $parentNodeTranslation = $parentNode->getNodeTranslation($language, true);
+            if($parentNodeTranslation != null) {
+                return $this->hasParentNodeTranslationsForLanguage($parentNodeTranslation, $language);
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
