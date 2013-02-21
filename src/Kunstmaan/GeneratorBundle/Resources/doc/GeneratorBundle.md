@@ -5,7 +5,7 @@ This bundle provides the following generation options :
 
 ## Bundle
 
-The bundle generator is based on the bundle generator of the SensoGeneratorBundle. We modified it with predetermined options : YAML for configurations files and no structure files generation.
+The bundle generator is based on the bundle generator of the [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle). We modified it with predetermined options : YAML for configurations files and no structure files generation.
 
 ### Command
 
@@ -14,6 +14,16 @@ You use the bundle generating with the following command. You will be prompted f
 ```
 app/console kuma:generate:bundle
 ```
+
+## Entity
+
+This entity generator will generate an entity which extends de AmdinBundle's AbstractEntity in your Entity folder. When you also create the repository, the repository will be generated in the bundle's Repository folder keeping the folder structure of your Entity.
+
+```
+app/console kuma:generate:entity
+```
+
+This generator is based on the SensioBundleGenerator's GenerateDoctrineEntity, for more information, see their [documentation[(https://github.com/sensio/SensioGeneratorBundle/blob/master/Resources/doc/commands/generate_doctrine_entity.rst). The format option has been removed from this generator.
 
 ## AdminList
 
