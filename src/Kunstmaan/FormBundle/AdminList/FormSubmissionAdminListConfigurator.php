@@ -64,7 +64,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
             $arr = array("path" => "KunstmaanFormBundle_formsubmissions_list_edit", "params" => array("nodeTranslationId" => $this->nodeTranslation->getId(), "submissionId" => $item->getId()));
             return $arr;
         };
-        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, null, "View");
+        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, "eye-open", "View");
         $this->addItemAction($ia);
     }
 

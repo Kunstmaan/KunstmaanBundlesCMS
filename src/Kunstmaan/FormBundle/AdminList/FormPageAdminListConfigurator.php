@@ -67,7 +67,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
                 'params' => array('nodeTranslationId' => $item->getId())
             );
         };
-        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, null, "View");
+        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, "eye-open", "View");
         $this->addItemAction($ia);
     }
 
