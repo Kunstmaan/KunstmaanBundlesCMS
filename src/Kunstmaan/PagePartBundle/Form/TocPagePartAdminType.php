@@ -34,7 +34,7 @@ class TocPagePartAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\TocPagePart',
-                               ));
+            'data_class' => 'Kunstmaan\PagePartBundle\Entity\TocPagePart',
+        ));
     }
 }

@@ -16,7 +16,7 @@ class TextPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', 'textarea', array('required' => false, 'attr' => array('rows' => 32, 'cols' => 600, 'class' => 'rich_editor')));
+        $builder->add('content', 'textarea', array('label' => 'pagepart.text.content', 'required' => false, 'attr' => array('rows' => 32, 'cols' => 600, 'class' => 'rich_editor')));
     }
 
     /**
@@ -35,7 +35,7 @@ class TextPagePartAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\TextPagePart',
-                               ));
+            'data_class' => 'Kunstmaan\PagePartBundle\Entity\TextPagePart',
+        ));
     }
 }

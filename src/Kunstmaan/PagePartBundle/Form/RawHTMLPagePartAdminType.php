@@ -17,7 +17,7 @@ class RawHTMLPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', 'textarea', array('required' => false, 'attr' => array("style" => "width: 600px", 'rows' => 32)));
+        $builder->add('content', 'textarea', array('label' => 'pagepart.html.content', 'required' => false, 'attr' => array("style" => "width: 600px", 'rows' => 32)));
     }
 
     /**
@@ -36,7 +36,7 @@ class RawHTMLPagePartAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
-                               ));
+            'data_class' => 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
+        ));
     }
 }
