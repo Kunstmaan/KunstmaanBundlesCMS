@@ -1,4 +1,4 @@
 # Changelog
 
-### dev (2012-08-30)
-- Support for ACL permissions instead of our own custom implementation.
+## dev-master
+* icons for list actions and item actions are defined with Glyphicons in stead of regular images (http://twitter.github.com/bootstrap/base-css.html#icons)
