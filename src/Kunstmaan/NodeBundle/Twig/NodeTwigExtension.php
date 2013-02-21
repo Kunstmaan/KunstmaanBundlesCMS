@@ -37,7 +37,7 @@ class NodeTwigExtension extends Twig_Extension
     {
         return array(
             'get_node_for'             => new \Twig_Function_Method($this, 'getNodeFor'),
-            'get_node_translation_for' => new \Twig_Function_Method($this, 'getNodeTranslationFor'),
+            'get_node_translation_for' => new \Twig_Function_Method($this, 'getNodeTranslationFor')
         );
     }
 
