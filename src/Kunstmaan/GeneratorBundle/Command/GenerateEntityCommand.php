@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Symfony\Component\Console\Input\ArrayInput;
 use Kunstmaan\GeneratorBundle\Generator\DoctrineEntityGenerator;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
@@ -25,6 +26,7 @@ class GenerateEntityCommand extends GenerateDoctrineCommand
             ->addOption('entity', null, InputOption::VALUE_REQUIRED, 'The entity class name to initialize (shortcut notation)')
             ->addOption('fields', null, InputOption::VALUE_REQUIRED, 'The fields to create with the new entity')
             ->addOption('with-repository', null, InputOption::VALUE_NONE, 'Whether to generate the entity repository or not')
+            ->addOption('with-adminlist', null, InputOption::VALUE_NONE, 'Whether to generate the entity AdminList or not')
             ->setHelp(<<<EOT
 The <info>doctrine:generate:entity</info> task generates a new Doctrine
 entity inside a bundle:
@@ -44,10 +46,15 @@ The command can also generate the corresponding entity repository class with the
 
 <info>php app/console doctrine:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-repository</info>
 
+The command can also generate the corresponding entity AdminList with the
+<comment>--with-adminlist</comment> option:
+
+<info>php app/console doctrine:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-adminlist</info>
+
 To deactivate the interaction mode, simply use the `--no-interaction` option
 without forgetting to pass all needed options:
 
-<info>php app/console doctrine:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --no-interaction</info>
+<info>php app/console doctrine:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --with-adminlist --no-interaction</info>
 EOT
         );
     }
@@ -67,19 +74,30 @@ EOT
             }
         }
 
-        $entity = Validators::validateEntityName($input->getOption('entity'));
-        list($bundle, $entity) = $this->parseShortcutNotation($entity);
+        $entityInput = Validators::validateEntityName($input->getOption('entity'));
+        list($bundleName, $entity) = $this->parseShortcutNotation($entityInput);
         $format = 'annotation';
         $fields = $this->parseFields($input->getOption('fields'));
 
         $dialog->writeSection($output, 'Entity generation');
 
-        $bundle = $this->getContainer()->get('kernel')->getBundle($bundle);
+        $bundle = $this->getContainer()->get('kernel')->getBundle($bundleName);
 
         $generator = $this->getGenerator();
         $generator->generate($bundle, $entity, $format, array_values($fields), $input->getOption('with-repository'));
 
         $output->writeln('Generating the entity code: <info>OK</info>');
+
+        $withAdminlist = $input->getOption('with-adminlist');
+        if ($withAdminlist) {
+            $command = $this->getApplication()->find('kuma:generate:adminlist');
+            $arguments = array(
+                'command' => 'doctrine:fixtures:load',
+                '--entity' => $entityInput
+            );
+            $input = new ArrayInput($arguments);
+            $command->run($input, $output);
+        }
 
         $dialog->writeGeneratorSummary($output, array());
     }
@@ -133,6 +151,11 @@ EOT
         $output->writeln('');
         $withRepository = $dialog->askConfirmation($output, $dialog->getQuestion('Do you want to generate an empty repository class', $input->getOption('with-repository') ? 'yes' : 'no', '?'), $input->getOption('with-repository'));
         $input->setOption('with-repository', $withRepository);
+
+        // repository?
+        $output->writeln('');
+        $withAdminList = $dialog->askConfirmation($output, $dialog->getQuestion('Do you want to generate an AdminList for your entity', $input->getOption('with-adminlist') ? 'yes' : 'no', '?'), $input->getOption('with-adminlist'));
+        $input->setOption('with-adminlist', $withAdminList);
 
         // summary
         $output->writeln(array(

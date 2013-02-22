@@ -16,13 +16,19 @@ Generate a Bundle :
 app/console kuma:generate:bundle
 ```
 
+Generate an Entity based on the [KunstmaanAdminBundle](https://github.com/Kunstmaan/KunstmaanAdminBundle)'s AbstractEntity
+
+```
+app/console kuma:generate:entity
+```
+
 Generate a default website using the Kunstmaan bundles :
 
 ```
 app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
 ```
 
-Generate a KunstmaanAdminList for an Entity :
+Generate a [KunstmaanAdminList](https://github.com/Kunstmaan/KunstmaanAdminListBundle) for an Entity :
 
 ```
 app/console kuma:generate:adminlist --entity=Bundle:Entity
