@@ -72,7 +72,7 @@ The standard usage for Node is as the page in your website. The bundle contains 
 
 ## Retrieval
 
-TODO : Documntation on how to retrieve certain nodes, node translations and node versions.
+TODO : Documentation on how to retrieve certain nodes, node translations and node versions.
 
 ## Events
 
