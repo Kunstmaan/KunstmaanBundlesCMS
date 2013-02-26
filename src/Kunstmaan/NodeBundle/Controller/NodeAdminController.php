@@ -437,9 +437,23 @@ class NodeAdminController extends Controller
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         if (!$nodeTranslation) {
+            //try to find a parent node with the correct translation, if there is none allow copy.
+            //if there is a parent but it doesn't have the language to copy to don't allow it
+            $parentNode = $node->getParent();
+            if($parentNode) {
+                $parentNodeTranslation = $parentNode->getNodeTranslation($this->locale, true);
+                $parentsAreOk = false;
+
+                if($parentNodeTranslation) {
+                    $parentsAreOk = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->hasParentNodeTranslationsForLanguage($node->getParent()->getNodeTranslation($this->locale, true), $this->locale);
+                }
+            } else {
+                $parentsAreOk = true;
+            }
+
             $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
 
-            return $this->render('KunstmaanNodeBundle:NodeAdmin:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu));
+            return $this->render('KunstmaanNodeBundle:NodeAdmin:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu, 'copyfromotherlanguages' => $parentsAreOk));
         }
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
