@@ -5,7 +5,6 @@ namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
@@ -52,12 +51,12 @@ class PagePartAdmin
      * @param EntityManager                     $em           The entity manager
      * @param HasPagePartsInterface             $page         The page
      * @param null|string                       $context      The context
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, HasPagePartsInterface $page, $context = null)
     {
         if(!($page instanceof AbstractEntity)) {
-            throw new InvalidArgumentException("Page must be an instance of AbstractEntity.");
+            throw new \InvalidArgumentException("Page must be an instance of AbstractEntity.");
         }
         $this->configurator = $configurator;
         $this->em = $em;
