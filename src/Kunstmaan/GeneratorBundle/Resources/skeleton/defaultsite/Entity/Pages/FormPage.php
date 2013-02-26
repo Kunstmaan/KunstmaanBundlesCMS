@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Entity;
+namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
 

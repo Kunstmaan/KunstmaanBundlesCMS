@@ -1,15 +1,15 @@
 <?php
 
-namespace {{ namespace }}\Form;
+namespace {{ namespace }}\Form\Pages;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * The admin type for content pages
+ * The admin type for home pages
  */
-class ContentPageAdminType extends AbstractType
+class HomePageAdminType extends AbstractType
 {
     /**
      * Builds the form.
@@ -35,17 +35,17 @@ class ContentPageAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\ContentPage'
+            'data_class' => '{{ namespace }}\Entity\Pages\HomePage'
         ));
     }
 
     /**
-     * Returns the name of this type.
+     * @assert () == 'homepage'
      *
-     * @return string The name of this type
+     * @return string
      */
     public function getName()
     {
-        return 'page';
+        return 'homepage';
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Entity;
+namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
-use {{ namespace }}\Form\ContentPageAdminType;
+use {{ namespace }}\Form\Pages\ContentPageAdminType;
 use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
 use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
 
@@ -64,6 +64,6 @@ class ContentPage extends AbstractPage implements HasPagePartsInterface
      */
     public function getDefaultView()
     {
-        return "{{ bundle.getName() }}:ContentPage:view.html.twig";
+        return "{{ bundle.getName() }}:Pages\ContentPage:view.html.twig";
     }
 }
