@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Entity;
+namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
-use {{ namespace }}\Form\FormPageAdminType;
+use {{ namespace }}\Form\Pages\FormPageAdminType;
 use {{ namespace }}\PagePartAdmin\FormPagePagePartAdminConfigurator;
 use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
 
@@ -40,11 +40,11 @@ class FormPage extends AbstractFormPage
         return array(
             array(
                 'name' => 'ContentPage',
-                'class' => "{{ namespace }}\Entity\ContentPage"
+                'class' => "{{ namespace }}\Entity\Pages\ContentPage"
             ),
             array (
                 'name' => 'FormPage',
-                'class' => "{{ namespace }}\Entity\FormPage"
+                'class' => "{{ namespace }}\Entity\Pages\FormPage"
             )
         );
     }
@@ -65,6 +65,6 @@ class FormPage extends AbstractFormPage
      */
     public function getDefaultView()
     {
-        return "{{ bundle.getName() }}:FormPage:view.html.twig";
+        return "{{ bundle.getName() }}:Pages\FormPage:view.html.twig";
     }
 }

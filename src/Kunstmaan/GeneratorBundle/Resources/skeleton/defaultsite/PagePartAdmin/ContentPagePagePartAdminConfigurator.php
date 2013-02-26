@@ -67,7 +67,7 @@ class ContentPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigur
     /**
      * @return array
      */
-    function getPossiblePagePartTypes()
+    public function getPossiblePagePartTypes()
     {
         return $this->pagePartTypes;
     }
@@ -75,7 +75,7 @@ class ContentPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigur
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return "Page parts";
     }
@@ -83,7 +83,7 @@ class ContentPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigur
     /**
      * @return string
      */
-    function getDefaultContext()
+    public function getDefaultContext()
     {
         return "main";
     }
