@@ -56,7 +56,7 @@ class PagePartAdmin
     public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, HasPagePartsInterface $page, $context = null)
     {
         if(!($page instanceof AbstractEntity)) {
-            throw new InvalidArgumentException($page." must be an instance of AbstractEntity");
+            throw new InvalidArgumentException("Page must be an instance of AbstractEntity");
         }
         $this->configurator = $configurator;
         $this->em = $em;
