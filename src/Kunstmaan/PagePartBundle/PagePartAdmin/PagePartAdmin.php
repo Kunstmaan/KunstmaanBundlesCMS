@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
@@ -56,7 +57,7 @@ class PagePartAdmin
     public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, HasPagePartsInterface $page, $context = null)
     {
         if(!($page instanceof AbstractEntity)) {
-            throw new InvalidArgumentException("Page must be an instance of AbstractEntity");
+            throw new InvalidArgumentException("Page must be an instance of AbstractEntity.");
         }
         $this->configurator = $configurator;
         $this->em = $em;
