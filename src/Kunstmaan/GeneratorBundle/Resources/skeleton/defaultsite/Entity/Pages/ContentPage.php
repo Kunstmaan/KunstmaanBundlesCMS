@@ -42,11 +42,11 @@ class ContentPage extends AbstractPage implements HasPagePartsInterface
         return array (
             array(
                 'name' => 'ContentPage',
-                'class'=> "{{ namespace }}\Entity\ContentPage"
+                'class'=> "{{ namespace }}\Entity\Pages\ContentPage"
             ),
             array(
                 'name' => 'FormPage',
-                'class'=> "{{ namespace }}\Entity\FormPage"
+                'class'=> "{{ namespace }}\Entity\Pages\FormPage"
             )
         );
     }
