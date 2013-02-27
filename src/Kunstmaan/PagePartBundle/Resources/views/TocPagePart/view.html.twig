@@ -1,22 +1,14 @@
 {% set tocContent = '' %}
 
-{% if pageparts.main is defined %}
-	{% for pagepart in pageparts.main %}
-	    {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
-	    	{% if pagepart.getNiv() == 2 %}
-	        	{% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|url_encode~'">'~pagepart.getTitle~'</a></li>' %}
-	    	{% endif %}
-	    {% endif %}
-	{% endfor %}
-{% else %}
-	{% for pagepart in pageparts %}
-	    {% if pagepart.getDefaultView is defined and pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
-	        {% if pagepart.getNiv() == 2 %}
-	    		{% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|url_encode~'">'~pagepart.getTitle~'</a></li>' %}
-	    	{% endif %}
-	    {% endif %}
-	{% endfor %}
-{% endif %}
+{% if page is defined %}
+
+{% for pagepart in getpageparts(page, "main") %}
+    {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
+      {% if pagepart.getNiv() == 2 %}
+          {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|url_encode~'">'~pagepart.getTitle~'</a></li>' %}
+      {% endif %}
+    {% endif %}
+{% endfor %}
 
 {% if tocContent %}
     <div class="toc-pp">
@@ -24,4 +16,6 @@
         {{ tocContent|raw }}
         </ul>
     </div>
+{% endif %}
+
 {% endif %}
