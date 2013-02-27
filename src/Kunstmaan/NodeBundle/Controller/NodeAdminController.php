@@ -522,6 +522,9 @@ class NodeAdminController extends Controller
                 $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
                 $nodeTranslation->setTitle($page->getTitle());
+                if ($isStructureNode) {
+                    $nodeTranslation->setSlug('');
+                }
                 $this->em->persist($nodeTranslation);
                 $nodeVersion->setUpdated(new DateTime());
                 $this->em->persist($nodeVersion);
