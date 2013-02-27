@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 /**
  * PagePartRefRepository
@@ -17,14 +17,14 @@ class PagePartRefRepository extends EntityRepository
 {
 
     /**
-     * @param AbstractPage      $page           The page
-     * @param PagePartInterface $pagepart       The pagepart
-     * @param integer           $sequencenumber The sequence numer
-     * @param string            $context        The context
+     * @param HasPagePartsInterface      $page           The page
+     * @param PagePartInterface          $pagepart       The pagepart
+     * @param integer                    $sequencenumber The sequence numer
+     * @param string                     $context        The context
      *
      * @return \Kunstmaan\PagePartBundle\Entity\PagePartRef
      */
-    public function addPagePart(AbstractPage $page, PagePartInterface $pagepart, $sequencenumber, $context = "main")
+    public function addPagePart(HasPagePartsInterface $page, PagePartInterface $pagepart, $sequencenumber, $context = "main")
     {
         $pagepartrefs = $this->getPagePartRefs($page);
         foreach ($pagepartrefs as $pagepartref) {
@@ -49,23 +49,23 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param AbstractPage $page    The page
-     * @param string       $context The string
+     * @param HasPagePartsInterface $page    The page
+     * @param string                $context The string
      *
      * @return PagePartRef[]
      */
-    public function getPagePartRefs(AbstractPage $page, $context = "main")
+    public function getPagePartRefs(HasPagePartsInterface $page, $context = "main")
     {
         return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => ClassLookup::getClass($page), 'context' => $context), array('sequencenumber' => 'ASC'));
     }
 
     /**
-     * @param AbstractPage $page    The page
-     * @param string       $context The pagepart context
+     * @param HasPagePartsInterface $page    The page
+     * @param string                $context The pagepart context
      *
      * @return PagePartInterface[]
      */
-    public function getPageParts(AbstractPage $page, $context = "main")
+    public function getPageParts(HasPagePartsInterface $page, $context = "main")
     {
         $pagepartrefs = $this->getPagePartRefs($page, $context);
         $result = array();
@@ -77,12 +77,12 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param EntityManager $em       The entity manager
-     * @param AbstractPage  $frompage The page from where you copy the pageparts
-     * @param AbstractPage  $topage   The page to where you want to copy the pageparts
-     * @param string        $context  The pagepart context
+     * @param EntityManager          $em       The entity manager
+     * @param HasPagePartsInterface  $frompage The page from where you copy the pageparts
+     * @param HasPagePartsInterface  $topage   The page to where you want to copy the pageparts
+     * @param string                 $context  The pagepart context
      */
-    public function copyPageParts(EntityManager $em, AbstractPage $frompage, AbstractPage $topage, $context = "main")
+    public function copyPageParts(EntityManager $em, HasPagePartsInterface $frompage, HasPagePartsInterface $topage, $context = "main")
     {
         $frompageparts = $this->getPageParts($frompage, $context);
         $sequencenumber = 1;
@@ -97,13 +97,13 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param AbstractPage $page              The page
-     * @param string       $pagepartClassname The classname of the pagepart
-     * @param string       $context           The context
+     * @param HasPagePartsInterface $page              The page
+     * @param string                $pagepartClassname The classname of the pagepart
+     * @param string                $context           The context
      *
      * @return mixed
      */
-    public function countPagePartsOfType(AbstractPage $page, $pagepartClassname, $context = 'main')
+    public function countPagePartsOfType(HasPagePartsInterface $page, $pagepartClassname, $context = 'main')
     {
         $em = $this->getEntityManager();
         $pageClassname = ClassLookup::getClass($page);
@@ -124,12 +124,12 @@ class PagePartRefRepository extends EntityRepository
     /**
      * Test if entity has pageparts for the specified context
      *
-     * @param AbstractPage $page    The page
-     * @param string       $context The context
+     * @param HasPagePartsInterface $page    The page
+     * @param string                $context The context
      *
      * @return bool
      */
-    public function hasPageParts(AbstractPage $page, $context = 'main')
+    public function hasPageParts(HasPagePartsInterface $page, $context = 'main')
     {
         $em = $this->getEntityManager();
         $pageClassname = ClassLookup::getClass($page);
