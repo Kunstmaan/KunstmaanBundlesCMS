@@ -379,12 +379,19 @@ class NodeAdminController extends Controller
         }
 
         $this->em->persist($newPage);
-        $this->em->flush(); // @todo move flush?
+        $this->em->flush();
 
         $newPage->setParent($parentPage);
 
         /* @var Node $nodeNewPage */
         $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($newPage, $this->locale, $this->user);
+        $nodeTranslation = $nodeNewPage->getNodeTranslation($this->locale, true);
+        if ($newPage->isStructureNode()) {
+            $nodeTranslation->setSlug('');
+            $this->em->persist($nodeTranslation);
+        }
+
+        $this->em->flush(); // @todo move flush?
 
         /* @var MutableAclProviderInterface $aclProvider */
         $aclProvider = $this->container->get('security.acl.provider');
@@ -406,7 +413,6 @@ class NodeAdminController extends Controller
         }
         $aclProvider->updateAcl($newAcl);
 
-        $nodeTranslation = $nodeNewPage->getNodeTranslation($this->locale, true);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
         $this->get('event_dispatcher')->dispatch(Events::ADD_NODE, new NodeEvent($nodeNewPage, $nodeTranslation, $nodeVersion, $newPage));
@@ -479,6 +485,8 @@ class NodeAdminController extends Controller
 
         $this->get('kunstmaan_node.actions_menu_builder')->setActiveNodeVersion($nodeVersion);
 
+        $isStructureNode = $page->isStructureNode();
+
         // Building the form
         $propertiesTab = new Tab('Properties');
         $propertiesTab->addType('main', $page->getDefaultAdminType(), $page);
@@ -486,12 +494,14 @@ class NodeAdminController extends Controller
         $tabPane->addTab($propertiesTab);
 
         // Menu tab
-        $menuTab = new Tab('Menu');
-        $menuTab->addType('menunodetranslation', new NodeMenuTabTranslationAdminType(), $nodeTranslation);
-        $menuTab->addType('menunode', new NodeMenuTabAdminType(), $node);
-        $tabPane->addTab($menuTab);
+        if (!$isStructureNode) {
+            $menuTab = new Tab('Menu');
+            $menuTab->addType('menunodetranslation', new NodeMenuTabTranslationAdminType(), $nodeTranslation);
+            $menuTab->addType('menunode', new NodeMenuTabAdminType(), $node);
+            $tabPane->addTab($menuTab);
 
-        $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
+            $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
+        }
         $tabPane->buildForm();
 
         if ($request->getMethod() == 'POST') {

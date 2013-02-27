@@ -51,4 +51,12 @@ interface HasNodeInterface
      */
     public function getPossibleChildTypes();
 
+    /**
+     * When this is true there won't be any save, publish, copy, menu, meta, preview, etc.
+     * It's basically not a page. Just a node where other pages can hang under.
+     *
+     * @return boolean
+     */
+    public function isStructureNode();
+
 }
