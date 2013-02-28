@@ -70,6 +70,20 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateFixtures($bundle, $parameters);
         $this->generateAssets($bundle);
         $this->generateTemplates($bundle, $parameters, $rootDir);
+        $this->generateBehatTests($bundle);
+    }
+
+    /**
+     * @param Bundle $bundle
+     */
+    public function generateBehatTests(Bundle $bundle)
+    {
+        $dirPath = $bundle->getPath();
+        $fullSkeletonDir = $this->skeletonDir . '/Features';
+
+        $this->filesystem->copy($fullSkeletonDir . '/homepage.feature', $dirPath . '/Features/homepage.feature', true);
+
+        $this->output->writeln('Generating Behat Tests : <info>OK</info>');
     }
 
     /**
