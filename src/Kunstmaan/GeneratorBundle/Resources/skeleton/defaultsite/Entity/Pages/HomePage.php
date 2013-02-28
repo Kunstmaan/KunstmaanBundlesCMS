@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Entity;
+namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use {{ namespace }}\Form\HomePageAdminType;
+use {{ namespace }}\Form\Pages\HomePageAdminType;
 use {{ namespace }}\PagePartAdmin\HomePagePagePartAdminConfigurator;
 
 /**
@@ -39,11 +39,11 @@ class HomePage extends AbstractPage implements HasPagePartsInterface
         return array(
             array(
                 'name' => 'ContentPage',
-                'class'=> "{{ namespace }}\Entity\ContentPage"
+                'class'=> "{{ namespace }}\Entity\Pages\ContentPage"
             ),
             array(
                 'name' => 'FormPage',
-                'class'=> "{{ namespace }}\Entity\FormPage"
+                'class'=> "{{ namespace }}\Entity\Pages\FormPage"
             )
         );
     }
@@ -61,6 +61,6 @@ class HomePage extends AbstractPage implements HasPagePartsInterface
      */
     public function getDefaultView()
     {
-        return "{{ bundle.getName() }}:HomePage:view.html.twig";
+        return "{{ bundle.getName() }}:Pages\HomePage:view.html.twig";
     }
 }

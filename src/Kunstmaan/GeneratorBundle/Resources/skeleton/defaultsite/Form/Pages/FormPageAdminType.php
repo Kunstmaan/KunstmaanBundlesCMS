@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Form;
+namespace {{ namespace }}\Form\Pages;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -41,7 +41,7 @@ class FormPageAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\FormPage'
+            'data_class' => '{{ namespace }}\Entity\Pages\FormPage'
         ));
     }
 
