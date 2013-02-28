@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\BehatBundle\Context\SubContext;
+namespace Kunstmaan\BehatBundle\Features\Context\SubContext;
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Mink\Exception\ElementNotFoundException;

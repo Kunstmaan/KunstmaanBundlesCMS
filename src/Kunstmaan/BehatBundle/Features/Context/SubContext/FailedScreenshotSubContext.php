@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\BehatBundle\Context\SubContext;
+namespace Kunstmaan\BehatBundle\Features\Context\SubContext;
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Mink\Driver\Selenium2Driver;
@@ -12,15 +12,19 @@ use Behat\Mink\Exception\UnsupportedDriverActionException;
  */
 class FailedScreenshotSubContext extends BehatContext
 {
+
+    protected $browsername;
+
     /**
      * Initializes context.
      * Every scenario gets it's own context object.
      *
-     * @param array $parameters context parameters
+     * @param array     $parameters context parameters
+     * @param string    $browsername
      */
-    public function __construct(array $parameters)
+    public function __construct(array $parameters, $browsername)
     {
-
+    $this->browsername = $browsername;
     }
 
     /**
@@ -49,7 +53,7 @@ class FailedScreenshotSubContext extends BehatContext
             if (!is_dir($directory)) {
                 mkdir($directory, 0777, true);
             }
-            $filename = sprintf('%s_%s_%s.%s', $this->getMinkParameter('browser_name'), date('c'), uniqid('', true), 'png');
+            $filename = sprintf('%s_%s_%s.%s', $this->browsername, date('c'), uniqid('', true), 'png');
             file_put_contents($directory.'/'.$filename, $driver->getScreenshot());
         }
     }

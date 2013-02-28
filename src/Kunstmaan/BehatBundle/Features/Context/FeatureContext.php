@@ -3,8 +3,8 @@
 namespace Kunstmaan\BehatBundle\Features\Context;
 
 use Behat\MinkExtension\Context\MinkContext;
-use Kunstmaan\BehatBundle\Context\SubContext\RadioButtonSubContext;
-use Kunstmaan\BehatBundle\Context\SubContext\FailedScreenshotSubContext;
+use Kunstmaan\BehatBundle\Features\Context\SubContext\RadioButtonSubContext;
+use Kunstmaan\BehatBundle\Features\Context\SubContext\FailedScreenshotSubContext;
 use Behat\Mink\Driver\Selenium2Driver;
 
 class FeatureContext extends MinkContext
@@ -12,7 +12,7 @@ class FeatureContext extends MinkContext
 
     public function __construct(array $parameters)
     {
-        $this->useContext('FailedScreenshotSubContext', new FailedScreenshotSubContext($parameters));
+        $this->useContext('FailedScreenshotSubContext', new FailedScreenshotSubContext($parameters, $this->getMinkParameter('browser_name')));
         $this->useContext('RadioButtonSubContext', new RadioButtonSubContext($parameters));
     }
 
