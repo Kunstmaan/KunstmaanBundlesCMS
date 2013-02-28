@@ -70,6 +70,7 @@ class BundleGenerator extends Generator
         $this->renderFile($this->skeletonDir, 'Configuration.php', $dir . '/DependencyInjection/Configuration.php', $parameters);
         $this->renderFile($this->skeletonDir, 'DefaultController.php', $dir . '/Controller/DefaultController.php', $parameters);
         $this->renderFile($this->skeletonDir, 'DefaultControllerTest.php', $dir . '/Tests/Controller/DefaultControllerTest.php', $parameters);
+        $this->renderFile($this->skeletonDir, 'FeatureContext.php', $dir . '/Features/Context/FeatureContext.php', $parameters);
         $this->renderFile($this->skeletonDir, 'index.html.twig', $dir . '/Resources/views/Default/index.html.twig', $parameters);
 
         $this->renderFile($this->skeletonDir, 'services.yml', $dir . '/Resources/config/services.yml', $parameters);
