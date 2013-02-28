@@ -96,22 +96,34 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return NodeTranslation|null
      */
-    public function getNodeTranslationForUrl($urlSlug, $locale)
+    public function getNodeTranslationForUrl($urlSlug, $locale = '', $includeDeleted = true, NodeTranslation $toExclude = null)
     {
+        $deleted = (int) $includeDeleted;
+
         $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where('n.deleted != 1 AND b.lang = :lang')
+            ->where('n.deleted = :deleted')
+            ->setParameter('deleted', $deleted)
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
-            ->setMaxResults(1)
-            ->setParameter('lang', $locale);
+            ->setMaxResults(1);
+
+        if (!empty($locale)) {
+            $qb->andWhere('b.lang = :lang')
+               ->setParameter('lang', $locale);
+        }
 
         if (empty($urlSlug)) {
             $qb->andWhere('b.url IS NULL');
         } else {
             $qb->andWhere('b.url = :url');
             $qb->setParameter('url', $urlSlug);
+        }
+
+        if (!is_null($toExclude)) {
+            $qb->andWhere('NOT b.id = :exclude_id')
+               ->setParameter('exclude_id', $toExclude->getId());
         }
 
         return $qb->getQuery()->getOneOrNullResult();
