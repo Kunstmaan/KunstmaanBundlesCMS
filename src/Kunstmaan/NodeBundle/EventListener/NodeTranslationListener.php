@@ -9,8 +9,6 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
-use Kunstmaan\NodeBundle\Controller\UrlGenerationResult;
-
 /**
  * Listens to doctrine postFlush event and updates
  * the urls if the entities are nodetranslations
@@ -96,15 +94,15 @@ class NodeTranslationListener
      *
      * @return NodeTranslation|bool Returns the node when all is well because it has to be saved.
      */
-    private function updateUrl(NodeTranslation $node, $em)
+    private function updateUrl(NodeTranslation $translation, $em)
     {
-        $result = $this->ensureUniqueUrl($node, $em);
-        /*
-        if ($result->getSlugModified()) {
-            return $node;
+        if ($translation->getUrl() != $translation->getFullSlug())
+        {
+            $this->ensureUniqueUrl($translation, $em);
+            return $translation;
+        } else {
+            return false;
         }
-        return false;*/
-        return $node;
     }
 
 
@@ -128,37 +126,22 @@ class NodeTranslationListener
      * language or not. For now both scenarios are possible so we check for all languages.
      *
      * @var NodeTranslation $translation Reference to the NodeTranslation. This is modified in place.
-     * @var boolean $isStructureNode
-     * @var string $locale
-     *
-     * @return UrlGenerationResult Results.
-     *
-     * @throws
      *
      */
     private function ensureUniqueUrl(NodeTranslation &$translation, $em) {
         $translation->setUrl($translation->getFullSlug());
 
-        /*
-        // TEMP!
-        $result = new UrlGenerationResult(true, $translation->getSlug(), $translation->getUrl());
-        return $result;
-        */
-        $result = new UrlGenerationResult(false, $translation->getSlug(), $translation->getUrl());
-
-
+        // Can't use GetRef here yet since the NodeVersions aren't loaded yet for some reason.
         $pnv = $translation->getPublicNodeVersion();
-        var_dump('pnv: ' . $pnv);
+
         $page = $em->getRepository($pnv->getRefEntityName())->find($pnv->getRefId());
-        var_dump('page: ' . $page);
         $isStructureNode = $page->isStructureNode();
 
-        // If it's a structurenode the slug and url should be empty.
-        if (($isStructureNode) && (($translation->getSlug() != '' or ($translation->getUrl() != '')))) {
-            $result->setSlugModified(true);
+        // If it's a StructureNode the slug and url should be empty.
+        if (($isStructureNode)) {
             $translation->setSlug('');
             $translation->setUrl('');
-            return $result;
+            return null;
         }
 
         $nodeTranslationRepository = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
@@ -167,13 +150,11 @@ class NodeTranslationListener
         $translations = $nodeTranslationRepository->getNodeTranslationForUrl($translation->getUrl(), '', false, $translation);
 
         if (count($translations) > 0) {
-            $result->setSlugModified(true);
             $translation->setSlug($this->IncrementString($translation->getSlug()));
-
-            return $this->ensureUniqueUrl($translation, $em);
+            $this->ensureUniqueUrl($translation, $em);
         }
 
-        return $result;
+        return null;
     }
 
     /**
