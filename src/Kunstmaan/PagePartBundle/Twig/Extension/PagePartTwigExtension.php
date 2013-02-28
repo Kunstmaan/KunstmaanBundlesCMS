@@ -5,7 +5,7 @@ namespace Kunstmaan\PagePartBundle\Twig\Extension;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 /**
  * PagePartTwigExtension
@@ -48,13 +48,14 @@ class PagePartTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param AbstractPage $page       The page
-     * @param string       $context    The pagepart context
-     * @param array        $parameters Some extra parameters
+     * @param $twigContext
+     * @param HasPagePartsInterface $page       The page
+     * @param string                $context    The pagepart context
+     * @param array                 $parameters Some extra parameters
      *
      * @return string
      */
-    public function renderWidget($twigContext, AbstractPage $page, $contextName = "main", array $parameters = array())
+    public function renderWidget($twigContext, HasPagePartsInterface $page, $contextName = "main", array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
         /* @var $entityRepository PagePartRefRepository */
@@ -69,12 +70,12 @@ class PagePartTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param AbstractPage $page    The page
-     * @param string       $context The pagepart context
+     * @param HasPagePartsInterface $page    The page
+     * @param string                $context The pagepart context
      *
      * @return PagePartInterface[]
      */
-    public function getPageParts(AbstractPage $page, $context = "main")
+    public function getPageParts(HasPagePartsInterface $page, $context = "main")
     {
         /**@var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
