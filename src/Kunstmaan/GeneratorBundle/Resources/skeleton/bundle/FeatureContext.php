@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\DependencyInjection;
+namespace {{ namespace }}\Features\Context;
 
 use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 
