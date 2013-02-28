@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Event\OnFlushEventArgs;
-use Doctrine\ORM\Event\PostFlushEventArgs;
+use Doctrine\ORM\EntityManager,
+    Doctrine\ORM\Event\OnFlushEventArgs,
+    Doctrine\ORM\Event\PostFlushEventArgs;
 
-use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\Node,
+    Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 
