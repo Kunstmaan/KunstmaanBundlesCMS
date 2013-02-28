@@ -13,7 +13,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission,
 /**
  * Service to add the correct permissions to new HasNodeInterface objects.
  */
-class ACLPermissionCreationService Implements ContainerAwareInterface
+class ACLPermissionCreatorService Implements ContainerAwareInterface
 {
 
     /**
