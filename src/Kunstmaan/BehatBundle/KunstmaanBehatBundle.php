@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\GeneratorBundle;
+namespace Kunstmaan\BehatBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
