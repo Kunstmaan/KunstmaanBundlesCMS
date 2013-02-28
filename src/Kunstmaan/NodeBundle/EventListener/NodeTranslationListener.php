@@ -9,12 +9,21 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 /**
  * Listens to doctrine postFlush event and updates
  * the urls if the entities are nodetranslations
  */
 class NodeTranslationListener
 {
+
+    private $session;
+
+    public function __construct(Session $session)
+    {
+        $this->session = $session;
+    }
 
     private $nodeTranslations = array();
 
@@ -128,7 +137,7 @@ class NodeTranslationListener
      * @var NodeTranslation $translation Reference to the NodeTranslation. This is modified in place.
      *
      */
-    private function ensureUniqueUrl(NodeTranslation &$translation, $em) {
+    private function ensureUniqueUrl(NodeTranslation &$translation, $em, $flashes = []) {
         $translation->setUrl($translation->getFullSlug());
 
         // Can't use GetRef here yet since the NodeVersions aren't loaded yet for some reason.
@@ -150,8 +159,17 @@ class NodeTranslationListener
         $translations = $nodeTranslationRepository->getNodeTranslationForUrl($translation->getUrl(), '', false, $translation);
 
         if (count($translations) > 0) {
+            $oldUrl = $translation->getFullSlug();
             $translation->setSlug($this->IncrementString($translation->getSlug()));
-            $this->ensureUniqueUrl($translation, $em);
+            $newUrl = $translation->getFullSlug();
+
+            $flashes[] = 'The URL of the page has been changed from ' . $oldUrl . ' to ' . $newUrl . ' since another page already uses this URL.';
+
+            $this->ensureUniqueUrl($translation, $em, $flashes);
+        } elseif (count($flashes) > 0) {
+            $flash = end($flashes);
+            $flash = current(array_slice($flashes, -1));
+            $this->session->getFlashBag()->add('warning', $flash);
         }
 
         return null;
