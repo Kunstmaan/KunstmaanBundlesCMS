@@ -98,7 +98,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getNodeTranslationForUrl($urlSlug, $locale = '', $includeDeleted = true, NodeTranslation $toExclude = null)
     {
-        $deleted = (int) $includeDeleted;
+        $deleted = (int) !$includeDeleted;
 
         $qb = $this->createQueryBuilder('b')
             ->select('b')
