@@ -16,9 +16,9 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
-        "kunstmaan/adminlist-bundle": "2.2.*",
-        "kunstmaan/admin-bundle": "2.2.*",
-        "kunstmaan/utilities-bundle": "2.2.*",
+        "kunstmaan/adminlist-bundle": "*",
+        "kunstmaan/admin-bundle": "*",
+        "kunstmaan/utilities-bundle": "*",
         "gedmo/doctrine-extensions": "*",
         "knplabs/knp-menu-bundle": "*",
         "symfony-cmf/routing-extra-bundle": "1.0.x-dev"
