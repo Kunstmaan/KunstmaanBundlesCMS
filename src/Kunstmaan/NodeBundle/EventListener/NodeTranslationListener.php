@@ -19,10 +19,12 @@ class NodeTranslationListener
 {
 
     private $session;
+    private $logger;
 
-    public function __construct(Session $session)
+    public function __construct(Session $session, $logger)
     {
         $this->session = $session;
+        $this->logger = $logger;
     }
 
     private $nodeTranslations = array();
@@ -55,10 +57,8 @@ class NodeTranslationListener
     {
         $em = $args->getEntityManager();
 
-
         foreach ($this->nodeTranslations as $entity) {
             if ($entity instanceof NodeTranslation) {
-
                 $entity = $this->updateUrl($entity, $em);
 
                 if ($entity != false) {
@@ -105,13 +105,14 @@ class NodeTranslationListener
      */
     private function updateUrl(NodeTranslation $translation, $em)
     {
-        if ($translation->getUrl() != $translation->getFullSlug())
-        {
-            $this->ensureUniqueUrl($translation, $em);
+        $result = $this->ensureUniqueUrl($translation, $em);
+
+        if ($result) {
             return $translation;
-        } else {
-            return false;
         }
+
+        $this->logger->addInfo('Found NT ' . $translation->getId() . ' needed NO change');
+        return false;
     }
 
 
@@ -138,8 +139,6 @@ class NodeTranslationListener
      *
      */
     private function ensureUniqueUrl(NodeTranslation &$translation, $em, $flashes = []) {
-        $translation->setUrl($translation->getFullSlug());
-
         // Can't use GetRef here yet since the NodeVersions aren't loaded yet for some reason.
         $pnv = $translation->getPublicNodeVersion();
 
@@ -150,29 +149,43 @@ class NodeTranslationListener
         if (($isStructureNode)) {
             $translation->setSlug('');
             $translation->setUrl($translation->getFullSlug());
-            return null;
+            return true;
         }
 
+        /* @var Kunstmaan\NodeBundle\Entity\NodeTranslation $nodeTranslationRepository */
         $nodeTranslationRepository = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
 
-        // Find all translations with this URL, whose nodes are not deleted.
+        if (($translation->getUrl() == $translation->getFullSlug())) {
+            $this->logger->addDebug('Evaluating URL for NT ' . $translation->getId() . ' getUrl: \'' . $translation->getUrl() . '\' getFullSlug: \'' . $translation->getFullSlug() . '\'');
+            return false;
+        }
+
+        // Adjust the URL.
+        $translation->setUrl($translation->getFullSlug());
+
+        // Find all translations with this new URL, whose nodes are not deleted.
         $translations = $nodeTranslationRepository->getNodeTranslationForUrl($translation->getUrl(), '', false, $translation);
+
+        $this->logger->addDebug('Found ' . count($translations) . ' node(s) that match url \'' . $translation->getUrl() . '\'');
 
         if (count($translations) > 0) {
             $oldUrl = $translation->getFullSlug();
             $translation->setSlug($this->IncrementString($translation->getSlug()));
             $newUrl = $translation->getFullSlug();
 
-            $flashes[] = 'The URL of the page has been changed from ' . $oldUrl . ' to ' . $newUrl . ' since another page already uses this URL.';
+            $message = 'The URL of the page has been changed from ' . $oldUrl . ' to ' . $newUrl . ' since another page already uses this URL.';
+            $this->logger->addInfo($message);
+            $flashes[] = $message;
 
             $this->ensureUniqueUrl($translation, $em, $flashes);
         } elseif (count($flashes) > 0) {
+            // No translations found so we're certain we can show this message.
             $flash = end($flashes);
             $flash = current(array_slice($flashes, -1));
             $this->session->getFlashBag()->add('warning', $flash);
         }
 
-        return null;
+        return true;
     }
 
     /**
