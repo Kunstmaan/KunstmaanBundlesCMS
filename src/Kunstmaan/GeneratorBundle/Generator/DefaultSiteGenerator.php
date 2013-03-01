@@ -71,6 +71,21 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateAssets($bundle);
         $this->generateTemplates($bundle, $parameters, $rootDir);
         $this->generateBehatTests($bundle);
+        $this->generateUnitTests($bundle, $parameters);
+    }
+
+    /**
+     * @param Bundle $bundle
+     * @param array  $parameters The template parameters
+     */
+    public function generateUnitTests(Bundle $bundle, array $parameters)
+    {
+        $dirPath = $bundle->getPath();
+        $fullSkeletonDir = $this->skeletonDir . '/Tests';
+
+        $this->renderFile($fullSkeletonDir, '/Controller/DefaultControllerTest.php', $dirPath . '/Tests/Controller/DefaultControllerTest.php', $parameters);
+
+        $this->output->writeln('Generating Unit Tests : <info>OK</info>');
     }
 
     /**
