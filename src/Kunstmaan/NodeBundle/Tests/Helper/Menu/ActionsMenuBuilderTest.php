@@ -10,6 +10,7 @@ use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\Node;
 
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -88,10 +89,24 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateSubActionsMenu()
     {
-        $nodeVersion = new NodeVersion();
         $nodeTranslation = new NodeTranslation();
-        $nodeVersion->setNodeTranslation($nodeTranslation);
-        $this->builder->setActiveNodeVersion($nodeVersion);
+        $nodeTranslation->setNode(new Node());
+
+        // Create Mock for $nodeTranslation->getRef(). Should return a TestEntity.
+        $nodeVersionStub = $this->getMockBuilder('Kunstmaan\NodeBundle\Entity\NodeVersion')
+            ->getMock();
+
+        $testEntity = new \Kunstmaan\NodeBundle\Tests\Entity\TestEntity();
+        $nodeVersionStub->expects($this->any())
+            ->method('getRef')
+            ->will($this->returnValue($testEntity));
+
+        $nodeVersionStub->expects($this->any())
+            ->method('getNodeTranslation')
+            ->will($this->returnValue($nodeTranslation));
+
+        $this->builder->setActiveNodeVersion($nodeVersionStub);
+
 
         $menu = $this->builder->createSubActionsMenu();
         $this->assertNotNull($menu->getChild('subaction.versions'));
@@ -102,32 +117,77 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
      */
-    public function testCreateActionsMenu()
+    public function testCreateActionsMenuDraft()
     {
-        $nodeVersion = new NodeVersion();
         $nodeTranslation = new NodeTranslation();
-        $nodeVersion->setNodeTranslation($nodeTranslation);
-        $this->builder->setActiveNodeVersion($nodeVersion);
+        $nodeTranslation->setNode(new Node());
 
-        $nodeVersion->setType('draft');
+        // Create Mock for $nodeTranslation->getRef(). Should return a TestEntity.
+        $nodeVersionStub = $this->getMockBuilder('Kunstmaan\NodeBundle\Entity\NodeVersion')
+            ->getMock();
+
+        $testEntity = new \Kunstmaan\NodeBundle\Tests\Entity\TestEntity();
+        $nodeVersionStub->expects($this->any())
+            ->method('getRef')
+            ->will($this->returnValue($testEntity));
+
+        $nodeVersionStub->expects($this->any())
+            ->method('getNodeTranslation')
+            ->will($this->returnValue($nodeTranslation));
+
+        $nodeVersionStub->expects($this->any())
+            ->method('getType')
+            ->will($this->returnValue('draft'));
+
+        $this->builder->setActiveNodeVersion($nodeVersionStub);
+
+
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.save'));
-        $this->assertNotNull($menu->getChild('action.delete'));
+        // This one doesn't show unless the node has a parent.
+        // $this->assertNotNull($menu->getChild('action.delete'));
 
-        $nodeVersion->setType('public');
+        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
+    }
+
+    public function testCreateActionsMenuPublic()
+    {
+        $nodeTranslation = new NodeTranslation();
+        $nodeTranslation->setNode(new Node());
+
+        // Create Mock for $nodeTranslation->getRef(). Should return a TestEntity.
+        $nodeVersionStub = $this->getMockBuilder('Kunstmaan\NodeBundle\Entity\NodeVersion')
+            ->getMock();
+
+        $testEntity = new \Kunstmaan\NodeBundle\Tests\Entity\TestEntity();
+        $nodeVersionStub->expects($this->any())
+            ->method('getRef')
+            ->will($this->returnValue($testEntity));
+
+        $nodeVersionStub->expects($this->any())
+            ->method('getNodeTranslation')
+            ->will($this->returnValue($nodeTranslation));
+
+        $nodeVersionStub->expects($this->any())
+            ->method('getType')
+            ->will($this->returnValue('public'));
+
+        $this->builder->setActiveNodeVersion($nodeVersionStub);
         $nodeTranslation->setOnline(false);
+
+
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
-        $this->assertNotNull($menu->getChild('action.delete'));
+        // This one doesn't show unless the node has a parent.
+        // $this->assertNotNull($menu->getChild('action.delete'));
 
-        $nodeVersion->setType('public');
         $nodeTranslation->setOnline(true);
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
@@ -135,7 +195,8 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.unpublish'));
-        $this->assertNotNull($menu->getChild('action.delete'));
+        // This one doesn't show unless the node has a parent.
+        // $this->assertNotNull($menu->getChild('action.delete'));
 
         $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
     }
@@ -145,10 +206,24 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTopActionsMenu()
     {
-        $nodeVersion = new NodeVersion();
         $nodeTranslation = new NodeTranslation();
-        $nodeVersion->setNodeTranslation($nodeTranslation);
-        $this->builder->setActiveNodeVersion($nodeVersion);
+        $nodeTranslation->setNode(new Node());
+
+        // Create Mock for $nodeTranslation->getRef(). Should return a TestEntity.
+        $nodeVersionStub = $this->getMockBuilder('Kunstmaan\NodeBundle\Entity\NodeVersion')
+            ->getMock();
+
+        $testEntity = new \Kunstmaan\NodeBundle\Tests\Entity\TestEntity();
+        $nodeVersionStub->expects($this->any())
+            ->method('getRef')
+            ->will($this->returnValue($testEntity));
+
+        $nodeVersionStub->expects($this->any())
+            ->method('getNodeTranslation')
+            ->will($this->returnValue($nodeTranslation));
+
+        $this->builder->setActiveNodeVersion($nodeVersionStub);
+
 
         $menu = $this->builder->createTopActionsMenu();
         $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions top');
