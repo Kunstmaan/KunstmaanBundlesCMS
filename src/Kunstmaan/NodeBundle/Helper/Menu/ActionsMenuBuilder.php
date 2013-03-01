@@ -54,6 +54,9 @@ class ActionsMenuBuilder
      */
     private $context;
 
+    private $isEditableNode = true;
+
+
     /**
      * @param FactoryInterface         $factory    The factory
      * @param EntityManager            $em         The entity manager
@@ -82,10 +85,7 @@ class ActionsMenuBuilder
         $menu->setChildrenAttribute('class', 'sub_actions');
 
         if (!is_null($activeNodeVersion)) {
-            $page = $activeNodeVersion->getRef($this->em);
-            $isStructureNode = $page->isStructureNode();
-
-            if (!$isStructureNode) {
+            if ($this->isEditableNode) {
                 $menu->addChild('subaction.versions', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#versions')));
             }
         }
@@ -109,11 +109,9 @@ class ActionsMenuBuilder
         if (!is_null($activeNodeVersion)) {
             $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
             $node = $activeNodeTranslation->getNode();
-            $page = $activeNodeVersion->getRef($this->em);
-            $isStructureNode = $page->isStructureNode();
 
             $isFirst = true;
-            if (('draft' == $activeNodeVersion->getType()) && !$isStructureNode) {
+            if (('draft' == $activeNodeVersion->getType()) && $this->isEditableNode) {
                 if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
                     $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn' . ($isFirst ? ' btn-primary' : ''), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
                     $isFirst = false;
@@ -127,7 +125,7 @@ class ActionsMenuBuilder
                     $menu->addChild('action.save', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn' . ($isFirst ? ' btn-primary' : ''), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
                     $isFirst = false;
                 }
-                if (!$isStructureNode) {
+                if ($this->isEditableNode) {
                     if ($activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
                         $menu->addChild('action.unpublish', array('linkAttributes' => array('class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#unpub')));
                     } elseif (!$activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
@@ -141,6 +139,7 @@ class ActionsMenuBuilder
 
             }
 
+            $page = $activeNodeVersion->getRef($this->em);
             if (!is_null($page) && $page instanceof PageInterface) {
                 $possibleChildPages = $page->getPossibleChildTypes();
                 if (!empty($possibleChildPages)) {
@@ -194,6 +193,11 @@ class ActionsMenuBuilder
     public function getActiveNodeVersion()
     {
         return $this->activeNodeVersion;
+    }
+
+    public function setIsEditableNode($value)
+    {
+        $this->isEditableNode = $value;
     }
 
 }

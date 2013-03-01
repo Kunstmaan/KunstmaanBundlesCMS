@@ -483,9 +483,11 @@ class NodeAdminController extends Controller
             $page = $nodeVersion->getRef($this->em);
         }
 
-        $this->get('kunstmaan_node.actions_menu_builder')->setActiveNodeVersion($nodeVersion);
-
         $isStructureNode = $page->isStructureNode();
+
+        $menubuilder = $this->get('kunstmaan_node.actions_menu_builder');
+        $menubuilder->setActiveNodeVersion($nodeVersion);
+        $menubuilder->setIsEditableNode(!$isStructureNode);
 
         // Building the form
         $propertiesTab = new Tab('Properties');
