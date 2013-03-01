@@ -52,7 +52,7 @@ class SlugType extends AbstractType
                 if (!empty($slug)) {
                     $slug .= '/';
                 }
-                $view->set('prefix', $slug);
+                $view->vars['prefix'] = $slug;
             }
     }
 }

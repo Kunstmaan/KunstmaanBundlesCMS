@@ -10,6 +10,7 @@ use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\Node;
 
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -88,10 +89,14 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateSubActionsMenu()
     {
-        $nodeVersion = new NodeVersion();
         $nodeTranslation = new NodeTranslation();
+        $nodeTranslation->setNode(new Node());
+
+        $nodeVersion = new NodeVersion();
         $nodeVersion->setNodeTranslation($nodeTranslation);
+
         $this->builder->setActiveNodeVersion($nodeVersion);
+
 
         $menu = $this->builder->createSubActionsMenu();
         $this->assertNotNull($menu->getChild('subaction.versions'));
@@ -102,32 +107,48 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
      */
-    public function testCreateActionsMenu()
+    public function testCreateActionsMenuDraft()
     {
-        $nodeVersion = new NodeVersion();
         $nodeTranslation = new NodeTranslation();
+        $nodeTranslation->setNode(new Node());
+
+        $nodeVersion = new NodeVersion();
+        $nodeVersion->setType('draft');
         $nodeVersion->setNodeTranslation($nodeTranslation);
+
         $this->builder->setActiveNodeVersion($nodeVersion);
 
-        $nodeVersion->setType('draft');
+
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.save'));
-        $this->assertNotNull($menu->getChild('action.delete'));
+        $this->assertNull($menu->getChild('action.delete'));;
 
-        $nodeVersion->setType('public');
-        $nodeTranslation->setOnline(false);
+        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
+    }
+
+    public function testCreateActionsMenuPublic()
+    {
+        $nodeTranslation = new NodeTranslation();
+        $nodeTranslation->setNode(new Node());
+
+        $nodeVersion = new NodeVersion();
+        $nodeVersion->setType("public");
+        $nodeVersion->setNodeTranslation($nodeTranslation);
+
+        $this->builder->setActiveNodeVersion($nodeVersion);
+
+
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
-        $this->assertNotNull($menu->getChild('action.delete'));
+        $this->assertNull($menu->getChild('action.delete'));
 
-        $nodeVersion->setType('public');
         $nodeTranslation->setOnline(true);
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
@@ -135,7 +156,31 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.unpublish'));
-        $this->assertNotNull($menu->getChild('action.delete'));
+        $this->assertNull($menu->getChild('action.delete'));
+
+        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
+    }
+
+    public function testCreateActionsMenuNonEditable()
+    {
+        $nodeTranslation = new NodeTranslation();
+        $nodeTranslation->setNode(new Node());
+
+        $nodeVersion = new NodeVersion();
+        $nodeVersion->setType("public");
+        $nodeVersion->setNodeTranslation($nodeTranslation);
+        $this->builder->setIsEditableNode(false);
+
+        $this->builder->setActiveNodeVersion($nodeVersion);
+        $nodeTranslation->setOnline(false);
+
+
+        $menu = $this->builder->createActionsMenu();
+        $this->assertNotNull($menu->getChild('action.save')); // We want to save.
+        $this->assertNull($menu->getChild('action.saveasdraft'));
+        $this->assertNull($menu->getChild('action.preview'));
+        $this->assertNull($menu->getChild('action.publish'));
+        $this->assertNull($menu->getChild('action.unpublish'));
 
         $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
     }
@@ -145,10 +190,16 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTopActionsMenu()
     {
-        $nodeVersion = new NodeVersion();
         $nodeTranslation = new NodeTranslation();
+        $nodeTranslation->setNode(new Node());
+
+        $nodeVersion = new NodeVersion();
         $nodeVersion->setNodeTranslation($nodeTranslation);
+
+        $testEntity = new \Kunstmaan\NodeBundle\Tests\Entity\TestEntity();
+
         $this->builder->setActiveNodeVersion($nodeVersion);
+
 
         $menu = $this->builder->createTopActionsMenu();
         $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions top');
@@ -164,6 +215,55 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $nodeVersion = new NodeVersion();
         $this->builder->setActiveNodeVersion($nodeVersion);
         $this->assertEquals($this->builder->getActiveNodeVersion(), $nodeVersion);
+    }
+
+    public function testShouldHideDeleteButtonWhenNoPermissions()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete('This test has not been implemented yet.');
+    }
+
+    public function testShouldHidePublishButtonWhenNoPermissions()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete('This test has not been implemented yet.');
+    }
+
+    public function testShouldHideUnPublishButtonWhenNoPermissions()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete('This test has not been implemented yet.');
+    }
+
+    public function testShouldHideSaveAndSaveAsDraftPublishButtonWhenNoPermissions()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete('This test has not been implemented yet.');
+    }
+
+
+
+    /**
+     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
+     */
+    public function testShouldShowDeleteButtonWhenTheNodeHasAParent()
+    {
+        $nodeTranslation = new NodeTranslation();
+        $node = new Node();
+        $node->setParent(new Node);
+        $nodeTranslation->setNode($node);
+
+        $nodeVersion = new NodeVersion();
+        $nodeVersion->setType('public');
+        $nodeVersion->setNodeTranslation($nodeTranslation);
+
+        $this->builder->setActiveNodeVersion($nodeVersion);
+
+
+        $menu = $this->builder->createActionsMenu();
+        $this->assertNotNull($menu->getChild('action.delete'));
+
+        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
     }
 
 }

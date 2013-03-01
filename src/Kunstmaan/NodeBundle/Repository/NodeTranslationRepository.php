@@ -96,22 +96,34 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return NodeTranslation|null
      */
-    public function getNodeTranslationForUrl($urlSlug, $locale)
+    public function getNodeTranslationForUrl($urlSlug, $locale = '', $includeDeleted = true, NodeTranslation $toExclude = null)
     {
+        $deleted = (int) !$includeDeleted;
+
         $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->where('n.deleted != 1 AND b.lang = :lang')
+            ->where('n.deleted = :deleted')
+            ->setParameter('deleted', $deleted)
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
-            ->setMaxResults(1)
-            ->setParameter('lang', $locale);
+            ->setMaxResults(1);
+
+        if (!empty($locale)) {
+            $qb->andWhere('b.lang = :lang')
+               ->setParameter('lang', $locale);
+        }
 
         if (empty($urlSlug)) {
             $qb->andWhere('b.url IS NULL');
         } else {
             $qb->andWhere('b.url = :url');
             $qb->setParameter('url', $urlSlug);
+        }
+
+        if (!is_null($toExclude)) {
+            $qb->andWhere('NOT b.id = :exclude_id')
+               ->setParameter('exclude_id', $toExclude->getId());
         }
 
         return $qb->getQuery()->getOneOrNullResult();
@@ -241,5 +253,27 @@ class NodeTranslationRepository extends EntityRepository
         $translation = $query->getOneOrNullResult();
 
         return $translation;
+    }
+
+
+    /**
+     * Look if all parents of a NodeTranslation have NodeTranslations 
+     * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $nodeTranslation
+     * @param $language
+     * @return bool
+     */
+    public function hasParentNodeTranslationsForLanguage(NodeTranslation $nodeTranslation, $language)
+    {
+        $parentNode = $nodeTranslation->getNode()->getParent();
+        if($parentNode != null) {
+            $parentNodeTranslation = $parentNode->getNodeTranslation($language, true);
+            if($parentNodeTranslation != null) {
+                return $this->hasParentNodeTranslationsForLanguage($parentNodeTranslation, $language);
+            } else {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

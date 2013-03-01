@@ -143,4 +143,14 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     {
     }
 
+    /**
+     * @inheritdoc
+     *
+     * By default this is false. Pages will always be pages until some class says otherwise.
+     */
+    public function isStructureNode()
+    {
+        return false;
+    }
+
 }

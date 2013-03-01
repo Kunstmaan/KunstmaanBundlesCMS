@@ -13,12 +13,16 @@
 
 {% block content %}
     <h1>{{ 'pages.pagenottranslated' | trans }}</h1>
+    {% if copyfromotherlanguages %}
     <ul>
 	    {% for nodeTranslation in nodeTranslations %}
 	    	<li>{{ 'pages.copyfrom' | trans }} <a href="{{ path('KunstmaanNodeBundle_nodes_copyfromotherlanguage', { 'id': node.id, 'originallanguage': nodeTranslation.lang}) }}" class="translate">{{ nodeTranslation.lang }}</a> : {{ nodeTranslation.title }}</li>
 	    {% endfor %}
 	    <li><a href="{{ path('KunstmaanNodeBundle_nodes_createemptypage', { 'id': node.id}) }}" class="translate">{{ 'pages.createemptypage' | trans }}</a></li>
     </ul>
+    {% else %}
+        {{ 'pages.copynotavailable' | trans }}
+    {% endif %}
 
 <script type="text/javascript">
     $(document).ready(function() {
