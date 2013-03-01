@@ -104,9 +104,6 @@ class PageCreatorService Implements ContainerAwareInterface
 
             $callback($pageTypeInstance, $translationNode);
 
-            if ($pageTypeInstance->isStructureNode()) {
-                $translationNode->setSlug('');
-            }
             $em->persist($translationNode);
             $em->flush();
         }
