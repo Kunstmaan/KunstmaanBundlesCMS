@@ -80,4 +80,9 @@ class TestEntity extends AbstractEntity implements HasNodeInterface
     public function getPossibleChildTypes()
     {
     }
+
+    public function IsStructureNode()
+    {
+        return false;
+    }
 }
