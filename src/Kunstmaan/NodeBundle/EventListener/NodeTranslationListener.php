@@ -149,7 +149,7 @@ class NodeTranslationListener
         // If it's a StructureNode the slug and url should be empty.
         if (($isStructureNode)) {
             $translation->setSlug('');
-            $translation->setUrl('');
+            $translation->setUrl($translation->getFullSlug());
             return null;
         }
 
