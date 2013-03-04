@@ -22,13 +22,6 @@ class SeoType extends AbstractType
                 ->add('metaKeywords', null, array('label' => 'Meta keywords'))
                 ->add('metaRobots', null, array('label' => 'Meta robots'))
                 ->add('metaRevised', null, array('label' => 'Meta revised'))
-                ->add('ogType', null, array('label' => 'OG type'))
-                ->add('ogTitle', null, array('label' => 'OG title'))
-                ->add('ogDescription', null, array('label' => 'OG description'))
-                ->add('ogImage', 'media', array(
-                    'mediatype' => 'image',
-                    'label' => 'OG image'
-                ))
                 ->add('extraMetadata', 'textarea', array('label' => 'Extra metadata'))
                 ->add('cimKeyword', 'text', array('label' => 'Cim keyword', 'required' => false, 'max_length' => 24));
     }
