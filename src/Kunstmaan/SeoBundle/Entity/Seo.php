@@ -21,6 +21,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Seo extends AbstractEntity
 {
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_title", type="string", nullable=true)
+     */
+    protected $metaTitle;
 
     /**
      * @var string
@@ -114,6 +120,27 @@ class Seo extends AbstractEntity
      * @ORM\Column(type="string", name="ref_entity_name")
      */
     protected $refEntityName;
+
+
+    /**
+     * @return string
+     */
+    public function getMetaTitle()
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return string
+     */
+    public function setMetaTitle($title)
+    {
+        $this->metaTitle = $title;
+
+        return $this;
+    }
 
     /**
      * @return string

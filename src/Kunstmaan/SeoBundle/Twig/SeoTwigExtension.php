@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
+
 /**
  * Twig extensions for Seo
  */
@@ -54,7 +56,8 @@ class SeoTwigExtension extends Twig_Extension
     {
         return array(
             'render_seo_metadata_for'  => new \Twig_Function_Method($this, 'renderSeoMetadataFor', array('is_safe' => array('html'))),
-            'get_seo_for'  => new \Twig_Function_Method($this, 'getSeoFor')
+            'get_seo_for'  => new \Twig_Function_Method($this, 'getSeoFor'),
+            'get_title_for'  => new \Twig_Function_Method($this, 'getTitleFor')
         );
     }
 
@@ -63,9 +66,44 @@ class SeoTwigExtension extends Twig_Extension
      *
      * @return mixed
      */
-    public function getSeoFor(AbstractEntity $entity)
+    public function getSeoFor(AbstractPage $entity)
     {
         return $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
+    }
+
+    /**
+     * The first value that is not null or empty will be returned.
+     *
+     * @param AbstractEntity $entity The entity for which you want the page title.
+     *
+     * @return The page title. Will look in the SEO meta first, then the NodeTranslation, then the page.
+     */
+    public function getTitleFor(AbstractPage $entity)
+    {
+        $arr = [];
+
+        // Check if there is an SEO entity for this abstractpage.
+        $seoRepo = $this->em->getRepository('KunstmaanSeoBundle:Seo');
+        $seo = $seoRepo->findFor($entity);
+
+        if (!is_null($seo)) {
+            $arr[] = $seo->getMetaTitle();
+        }
+
+        $arr[] = $entity->getTitle();
+
+        return $this->getPreferredValue($arr);
+    }
+
+    protected function getPreferredValue(array $values)
+    {
+        foreach ($values as $v) {
+            if (!is_null($v) && !empty($v)) {
+                return $v;
+            }
+        }
+
+        return '';
     }
 
     /**
@@ -80,7 +118,8 @@ class SeoTwigExtension extends Twig_Extension
         $template = $this->environment->loadTemplate($template);
 
         return $template->render(array(
-            'seo' => $seo
+            'seo' => $seo,
+            'entity' => $entity
         ));
     }
 

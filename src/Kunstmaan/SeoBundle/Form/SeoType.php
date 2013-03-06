@@ -17,6 +17,7 @@ class SeoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden')
+                ->add('metaTitle', null, array('label' => 'Title'))
                 ->add('metaAuthor', null, array('label' => 'Meta author'))
                 ->add('metaDescription', null, array('label' => 'Meta description'))
                 ->add('metaKeywords', null, array('label' => 'Meta keywords'))
