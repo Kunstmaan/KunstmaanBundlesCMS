@@ -3,6 +3,11 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use FOS\UserBundle\Model\GroupInterface;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\EmailValidator;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 use FOS\UserBundle\Entity\User as BaseUser;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -89,6 +94,14 @@ class User extends BaseUser
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('username', new NotBlank());
+        $metadata->addPropertyConstraint('plainPassword', new NotBlank());
+        $metadata->addPropertyConstraint('email', new NotBlank());
+        $metadata->addPropertyConstraint('email', new Email());
     }
 
 }

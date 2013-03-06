@@ -8,16 +8,9 @@
 
 {% block content %}
 
-    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_roles_edit', { 'id' : role.id }) }}" method="post" {{ form_enctype(form) }}>
+    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_roles_edit', { 'id' : role.id }) }}" method="post" {{ form_enctype(form) }} novalidate >
     <fieldset>
-    	{{ form_errors(form) }}
-        <div class="control-group">
-            <label class="control-label" for="{{ form.role.vars['id'] }}">{{ 'settings.role.role' | trans }}</label>
-            <div class="controls">
-                {{ form_widget(form.role) }}
-            </div>
-        </div>
-
         {{ form_rest(form) }}
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">{{ 'settings.role.edit' | trans }}</button>

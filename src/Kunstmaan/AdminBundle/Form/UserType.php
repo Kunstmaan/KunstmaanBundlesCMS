@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -25,13 +26,20 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username')
+        $builder->add('username', 'text', array ('required' => true))
                 ->add('plainPassword', 'repeated', array(
                     'type' => 'password',
                     'required' => $options['password_required'],
-                    'invalid_message' => "The passwords don't match!")
+                    'invalid_message' => "The passwords don't match!",
+                    'first_options' => array(
+                        'label' => 'settings.user.password'
+                    ),
+                    'second_options' => array(
+                        'label' => 'settings.user.repeatedpassword'
+                    )
+                    )
                 )
-                ->add('email')
+                ->add('email', 'email', array ('required' => true))
                 ->add('enabled', 'checkbox', array('required' => false))
                 ->add('groups', 'entity', array(
                         'class' => 'KunstmaanAdminBundle:Group',
@@ -40,7 +48,8 @@ class UserType extends AbstractType
                                 ->orderBy('g.name', 'ASC');
                         },
                         'multiple' => true,
-                        'expanded' => false
+                        'expanded' => false,
+                        'required' => true
                     )
                 );
     }

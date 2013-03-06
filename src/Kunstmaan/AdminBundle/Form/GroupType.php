@@ -33,6 +33,7 @@ class GroupType extends AbstractType
                         },
                         'multiple' => true,
                         'expanded' => false,
+                        'required' => true
                     )
                 );
     }

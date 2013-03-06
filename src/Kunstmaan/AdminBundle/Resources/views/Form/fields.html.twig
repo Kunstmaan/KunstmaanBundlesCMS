@@ -19,6 +19,7 @@
 
 {% block form_label %}
     {% spaceless %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
@@ -36,13 +37,10 @@
 
 {% block form_row %}
     {% spaceless %}
-        <div class="input_prop{% if errors|length > 0 %} error{% endif %}">
+        <div class="control-group{% if errors|length > 0 %} error{% endif %}">
             {{ form_label(form) }}
-            <div class="input">
+            <div class="controls">
                 {{ form_widget(form) }}
-                {% if required and not(errors|length > 0) %}
-                    <span class="help-inline">{{ 'This is a required field' | trans }}</span>
-                {% endif %}
                 {% if max_length %}
                     <style>
                         {#TODO frontend: add this to site.css#}

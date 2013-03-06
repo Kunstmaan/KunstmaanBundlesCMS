@@ -3,6 +3,14 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use InvalidArgumentException;
+use Symfony\Component\Validator\ExecutionContext;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 use FOS\UserBundle\Model\GroupInterface;
 
@@ -220,5 +228,20 @@ class Group implements RoleInterface, GroupInterface
         $this->name = $name;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('name', new NotBlank());
+        $metadata->addConstraint(new Callback(array(
+            'methods' => array('isGroupValid'),
+        )));
+    }
+
+    public function isGroupValid(ExecutionContext $context)
+    {
+        if (!(count($this->getRoles()) > 0)) {
+            $context->addViolationAtSubPath('rolesCollection', 'At least one option must be selected.', array(), null);
+        }
     }
 }
