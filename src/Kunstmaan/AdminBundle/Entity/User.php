@@ -3,9 +3,7 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use FOS\UserBundle\Model\GroupInterface;
-use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\EmailValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use FOS\UserBundle\Entity\User as BaseUser;
