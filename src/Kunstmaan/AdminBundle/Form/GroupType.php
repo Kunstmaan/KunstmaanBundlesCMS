@@ -24,8 +24,9 @@ class GroupType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')
+        $builder->add('name', 'text', array('required' => true, 'label' => 'settings.group.name'))
                 ->add('rolesCollection', 'entity', array(
+                        'label' => 'settings.group.roles',
                         'class' => 'KunstmaanAdminBundle:Role',
                         'query_builder' => function(EntityRepository $er) {
                             return $er->createQueryBuilder('r')

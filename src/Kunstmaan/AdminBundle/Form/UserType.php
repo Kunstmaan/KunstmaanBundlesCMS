@@ -26,7 +26,7 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', 'text', array ('required' => true))
+        $builder->add('username', 'text', array ('required' => true, 'label' => 'settings.user.username'))
                 ->add('plainPassword', 'repeated', array(
                     'type' => 'password',
                     'required' => $options['password_required'],
@@ -39,9 +39,10 @@ class UserType extends AbstractType
                     )
                     )
                 )
-                ->add('email', 'email', array ('required' => true))
-                ->add('enabled', 'checkbox', array('required' => false))
+                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'))
+                ->add('enabled', 'checkbox', array('required' => false, 'label' => 'settings.user.enabled'))
                 ->add('groups', 'entity', array(
+                        'label' => 'settings.user.roles',
                         'class' => 'KunstmaanAdminBundle:Group',
                         'query_builder' => function(EntityRepository $er) {
                             return $er->createQueryBuilder('g')
