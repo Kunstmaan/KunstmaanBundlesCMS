@@ -38,6 +38,7 @@ class PageCreatorService Implements ContainerAwareInterface
      * @param array options -
      *      parent: type node, nodetransation or page.
      *      page_internal_name: string. name the page will have in the database.
+     *      set_online: bool. if true the page will be set as online after creation.
      *      todo: creator: user?
      *
      * @return Node The new node for the page.
@@ -60,6 +61,7 @@ class PageCreatorService Implements ContainerAwareInterface
         /* @var NodeRepository $nodeRepo */
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         $userRepo = $em->getRepository('KunstmaanAdminBundle:User');
+        $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
 
         // TODO: Get this from options.
         $creator = $userRepo->findOneBy(array('username' => 'pagecreator'));
@@ -67,6 +69,8 @@ class PageCreatorService Implements ContainerAwareInterface
         $parent = isset($options['parent']) ? $options['parent'] : null;
 
         $pageInternalName = isset($options['page_internal_name']) ? $options['page_internal_name'] : '';
+
+        $setOnline = isset($options['set_online']) ? $options['set_online'] : false;
 
         $em->persist($pageTypeInstance);
         $em->flush();
@@ -79,7 +83,6 @@ class PageCreatorService Implements ContainerAwareInterface
         /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo*/
         $nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
 
-        // TODO: Throw an error when there are no translations. More at the top.
         foreach ($translations as $translation) {
             $language = $translation['language'];
             $callback = $translation['callback'];
@@ -102,7 +105,23 @@ class PageCreatorService Implements ContainerAwareInterface
                 $translationNode = $nodeTranslationRepo->createNodeTranslationFor($pageTypeInstance, $language, $rootNode, $creator);
             }
 
-            $callback($pageTypeInstance, $translationNode);
+            $em->persist($translationNode);
+            $em->flush();
+
+            // Make SEO.
+            $seo = null;
+
+            if (!is_null($seoRepo)) {
+                $seo = $seoRepo->findOrCreateFor($pageTypeInstance);
+            }
+
+            $callback($pageTypeInstance, $translationNode, $seo);
+
+            $translationNode->setOnline($setOnline);
+
+            if (!is_null($seo)) {
+                $em->persist($seo);
+            }
 
             $em->persist($translationNode);
             $em->flush();
