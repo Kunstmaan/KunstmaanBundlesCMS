@@ -121,6 +121,70 @@ class Seo extends AbstractEntity
      */
     protected $refEntityName;
 
+    /**
+     * @ORM\Column(type="string", nullable=true, name="linked_in_recommend_link")
+     */
+    protected $linkedInRecommendLink;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, name="linked_in_recommend_product_id")
+     */
+    protected $linkedInRecommendProductID;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, name="og_url")
+     */
+    protected $ogUrl;
+
+
+
+    /**
+     * @param string $url
+     */
+    public function setOgUrl($url)
+    {
+        $this->ogUrl = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOgUrl()
+    {
+        return $this->ogUrl;
+    }
+
+    /**
+     * @param string $var
+     */
+    public function setLinkedInRecommendProductID($var)
+    {
+        $this->linkedInRecommendProductID = $var;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkedInRecommendProductID()
+    {
+        return $this->linkedInRecommendProductID;
+    }
+
+    /**
+     * @param string $var
+     */
+    public function setLinkedInRecommendLink($var)
+    {
+        $this->linkedInRecommendLink = $var;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkedInRecommendLink()
+    {
+        return $this->linkedInRecommendLink;
+    }
 
     /**
      * @return string

@@ -11,6 +11,8 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
+use Kunstmaan\SeoBundle\Entity\Seo;
+
 /**
  * Twig extensions for Seo
  */
@@ -57,14 +59,15 @@ class SeoTwigExtension extends Twig_Extension
         return array(
             'render_seo_metadata_for'  => new \Twig_Function_Method($this, 'renderSeoMetadataFor', array('is_safe' => array('html'))),
             'get_seo_for'  => new \Twig_Function_Method($this, 'getSeoFor'),
-            'get_title_for'  => new \Twig_Function_Method($this, 'getTitleFor')
+            'get_title_for'  => new \Twig_Function_Method($this, 'getTitleFor'),
+            'get_social_widget_for'  => new \Twig_Function_Method($this, 'getSocialWidgetFor', array('is_safe' => array('html')))
         );
     }
 
     /**
      * @param AbstractEntity $entity
      *
-     * @return mixed
+     * @return Seo
      */
     public function getSeoFor(AbstractPage $entity)
     {
@@ -95,6 +98,41 @@ class SeoTwigExtension extends Twig_Extension
         return $this->getPreferredValue($arr);
     }
 
+    public function getSocialWidgetFor(AbstractPage $entity, $platform)
+    {
+        $seo = $this->getSeoFor($entity);
+
+        if (is_null($seo)) {
+            return false;
+        }
+
+        $arguments = [];
+        if ($platform == 'linkedin') {
+            $arguments = array(
+                'productid' => $seo->getLinkedInRecommendProductID(),
+                'url' => $seo->getLinkedInRecommendLink()
+            );
+
+            if (empty($arguments['url'])) {
+                $arguments['url'] = $seo->getOgUrl();
+            }
+        } elseif ($platform == 'facebook') {
+            $arguments = array(
+                'url' => $seo->getOgUrl()
+            );
+        } else {
+            throw new \InvalidArgumentException('Only linkedin and facebook are supported for now.');
+        }
+
+        // TODO: Check if it makes sense to display the widget for this platform.
+        //       If the values aren't present there is no point.
+
+        $template = 'KunstmaanSeoBundle:SeoTwigExtension:' . $platform . '_widget.html.twig';
+        $template = $this->environment->loadTemplate($template);
+
+        return $template->render($arguments);
+    }
+
     protected function getPreferredValue(array $values)
     {
         foreach ($values as $v) {
@@ -112,14 +150,15 @@ class SeoTwigExtension extends Twig_Extension
      *
      * @return string
      */
-    public function renderSeoMetadataFor(AbstractEntity $entity, $template='KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig')
+    public function renderSeoMetadataFor(AbstractEntity $entity, $currentNode = null, $template='KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig')
     {
         $seo = $this->getSeoFor($entity);
         $template = $this->environment->loadTemplate($template);
 
         return $template->render(array(
             'seo' => $seo,
-            'entity' => $entity
+            'entity' => $entity,
+            'currentNode' => $currentNode
         ));
     }
 
