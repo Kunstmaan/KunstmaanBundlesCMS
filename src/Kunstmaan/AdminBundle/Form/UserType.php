@@ -50,7 +50,7 @@ class UserType extends AbstractType
                         },
                         'multiple' => true,
                         'expanded' => false,
-                        'required' => true
+                        'required' => false
                     )
                 );
     }
