@@ -15,7 +15,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.1.*,<2.3.*",
+        "symfony/symfony": ">=2.1.0,<2.3.0",
         "kunstmaan/adminlist-bundle": "dev-master",
         "kunstmaan/node-bundle": "dev-master",
         "kunstmaan/admin-bundle": "dev-master",
