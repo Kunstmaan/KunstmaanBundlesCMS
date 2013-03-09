@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\VotingBundle\Repository\Facebook;
+namespace Kunstmaan\VotingBundle\Repository\UpDown;
 
 use Kunstmaan\VotingBundle\Repository\AbstractVoteRepository;
 
