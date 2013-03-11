@@ -20,7 +20,7 @@
         "pagerfanta/pagerfanta": "dev-master",
         "kunstmaan/admin-bundle": "*",
         "kunstmaan/utilities-bundle": "@dev",
-        "sensio/framework-extra-bundle": "2.1.*"
+        "sensio/framework-extra-bundle": "2.2.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminListBundle": "" }
