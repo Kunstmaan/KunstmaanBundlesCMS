@@ -94,9 +94,9 @@ class FileHelper
         $url      = parse_url($mediaurl);
         $info     = pathinfo($url['path']);
         $filename = $info['filename'] . "." . $info['extension'];
-        $path     = sys_get_temp_dir() . "/" . $filename;
-        $saveFile = fopen($path, 'w');
+        $path     = rtrim(sys_get_temp_dir(), '/') . '/' . $filename;
 
+        $saveFile = fopen($path, 'w');
         $this->path = $path;
 
         curl_setopt($ch, CURLOPT_FILE, $saveFile);
