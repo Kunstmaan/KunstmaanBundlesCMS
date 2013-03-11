@@ -20,7 +20,7 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "*",
-        "monolog/monolog": ">=1.0,<1.3-dev",
+        "monolog/monolog": "1.4.*@dev",
         "kunstmaan/adminlist-bundle": "*",
         "kunstmaan/utilities-bundle": "*",
         "sensio/framework-extra-bundle": "*"
