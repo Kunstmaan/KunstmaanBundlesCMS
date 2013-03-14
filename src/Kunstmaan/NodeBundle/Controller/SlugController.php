@@ -82,7 +82,8 @@ class SlugController extends Controller
 
         /* @var AclHelper $aclHelper */
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node);
+        $includeOffline = $preview;
+        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, PermissionMap::PERMISSION_VIEW, $includeOffline);
 
         unset($securityContext);
         unset($aclHelper);
