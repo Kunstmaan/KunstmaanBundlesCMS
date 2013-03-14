@@ -143,27 +143,29 @@ class PagePartAdmin
     public function getPossiblePagePartTypes()
     {
         $possiblePPTypes = $this->configurator->getPossiblePagePartTypes();
+        $result = array();
+
         /** @var EntityManager $em  */
         $em = $this->em;
         // filter page part types that can only be added x times to the page.
         // to achieve this, provide a 'pagelimit' parameter when adding the pp type in your PagePartAdminConfiguration
         if (!empty($possiblePPTypes)) {
-            for ($i = 0; $i < sizeof($possiblePPTypes); $i++) {
-                $possibleTypeArray = $possiblePPTypes[$i];
-                if (array_key_exists('pagelimit', $possibleTypeArray)) {
-                    $pageLimit = $possibleTypeArray['pagelimit'];
+            foreach ($possiblePPTypes as $possibleTypeData) {
+                if (array_key_exists('pagelimit', $possibleTypeData)) {
+                    $pageLimit = $possibleTypeData['pagelimit'];
                     /** @var PagePartRefRepository $entityRepository  */
                     $entityRepository = $em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-                    $formPPCount = $entityRepository->countPagePartsOfType($this->page, $possibleTypeArray['class'], $this->configurator->getDefaultContext());
-                    if ($formPPCount >= $pageLimit) {
-                        // 'pagelimit' reached -> remove pp type
-                        unset($possiblePPTypes[$i]);
+                    $formPPCount = $entityRepository->countPagePartsOfType($this->page, $possibleTypeData['class'], $this->configurator->getDefaultContext());
+                    if ($formPPCount < $pageLimit) {
+                        $result[] = $possibleTypeData;
                     }
+                } else {
+                    $result[] = $possibleTypeData;
                 }
             }
         }
 
-        return $possiblePPTypes;
+        return $result;
     }
 
     /**
