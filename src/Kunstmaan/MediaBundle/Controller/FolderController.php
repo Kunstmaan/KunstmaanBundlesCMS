@@ -64,7 +64,9 @@ class FolderController extends Controller
         $foldername = $folder->getName();
         $parentFolder = $folder->getParent();
 
-        $em->getRepository('KunstmaanMediaBundle:Folder')->delete($folder);
+        $folder->setDeleted(true);
+        $em->persist($folder);
+        $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'Folder \''.$foldername.'\' has been deleted!');
 
@@ -101,7 +103,7 @@ class FolderController extends Controller
             }
         }
 
-        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFoldersByType();
+        $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
 
         return $this->render('KunstmaanMediaBundle:Folder:subcreate.html.twig', array(
             'subform' => $form->createView(),
