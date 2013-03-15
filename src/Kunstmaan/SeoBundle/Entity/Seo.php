@@ -21,6 +21,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Seo extends AbstractEntity
 {
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_title", type="string", nullable=true)
+     */
+    protected $metaTitle;
 
     /**
      * @var string
@@ -114,6 +120,91 @@ class Seo extends AbstractEntity
      * @ORM\Column(type="string", name="ref_entity_name")
      */
     protected $refEntityName;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, name="linked_in_recommend_link")
+     */
+    protected $linkedInRecommendLink;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, name="linked_in_recommend_product_id")
+     */
+    protected $linkedInRecommendProductID;
+
+    /**
+     * @ORM\Column(type="string", nullable=true, name="og_url")
+     */
+    protected $ogUrl;
+
+
+
+    /**
+     * @param string $url
+     */
+    public function setOgUrl($url)
+    {
+        $this->ogUrl = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOgUrl()
+    {
+        return $this->ogUrl;
+    }
+
+    /**
+     * @param string $var
+     */
+    public function setLinkedInRecommendProductID($var)
+    {
+        $this->linkedInRecommendProductID = $var;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkedInRecommendProductID()
+    {
+        return $this->linkedInRecommendProductID;
+    }
+
+    /**
+     * @param string $var
+     */
+    public function setLinkedInRecommendLink($var)
+    {
+        $this->linkedInRecommendLink = $var;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkedInRecommendLink()
+    {
+        return $this->linkedInRecommendLink;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaTitle()
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return string
+     */
+    public function setMetaTitle($title)
+    {
+        $this->metaTitle = $title;
+
+        return $this;
+    }
 
     /**
      * @return string
