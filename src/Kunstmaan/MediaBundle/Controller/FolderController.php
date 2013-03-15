@@ -99,13 +99,13 @@ class FolderController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', 'Folder \''.$folder->getName().'\' has been created!');
 
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId' => $folder->getId())));
+                return new Response('<script>window.location="'.$this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId' => $folder->getId())).'"</script>');
             }
         }
 
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
 
-        return $this->render('KunstmaanMediaBundle:Folder:subcreate.html.twig', array(
+        return $this->render('KunstmaanMediaBundle:Folder:addsub-modal.html.twig', array(
             'subform' => $form->createView(),
             'galleries' => $galleries,
             'folder' => $folder,
