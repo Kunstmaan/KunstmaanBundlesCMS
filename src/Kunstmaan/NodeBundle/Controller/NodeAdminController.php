@@ -502,7 +502,7 @@ class NodeAdminController extends Controller
             $menuTab->addType('menunode', new NodeMenuTabAdminType(), $node);
             $tabPane->addTab($menuTab);
 
-            $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
+            $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($request, $tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         }
         $tabPane->buildForm();
 
