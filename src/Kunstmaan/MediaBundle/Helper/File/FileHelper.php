@@ -3,12 +3,10 @@
 namespace Kunstmaan\MediaBundle\Helper\File;
 
 use Symfony\Component\HttpFoundation\File\File;
-
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 
-use Symfony\Component\HttpFoundation\File\File as SystemFile;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 /**
@@ -94,20 +92,18 @@ class FileHelper
         $url      = parse_url($mediaurl);
         $info     = pathinfo($url['path']);
         $filename = $info['filename'] . "." . $info['extension'];
-        $path     = sys_get_temp_dir() . "/" . $filename;
-        $saveFile = fopen($path, 'w');
+        $path     = rtrim(sys_get_temp_dir(), '/') . '/' . $filename;
 
+        $saveFile = fopen($path, 'w');
         $this->path = $path;
 
         curl_setopt($ch, CURLOPT_FILE, $saveFile);
         curl_exec($ch);
         curl_close($ch);
-        chmod($path, 777);
-
-        $upload = new SystemFile($path);
-
         fclose($saveFile);
+        chmod($path, 0777);
 
+        $upload = new UploadedFile($path, $filename);
         $this->getMedia()->setContent($upload);
 
         if ($this->getMedia() == null) {
