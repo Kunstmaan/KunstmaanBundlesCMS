@@ -4,9 +4,12 @@ namespace Kunstmaan\SeoBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\SeoBundle\Entity\Seo;
-use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\SeoBundle\Entity\Seo,
+    Kunstmaan\SeoBundle\Form\SeoType,
+    Kunstmaan\SeoBundle\Form\SocialType;
+
+use Kunstmaan\NodeBundle\Helper\Tabs\Tab,
+    Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 
 /**
  * This will add a seo tab on each page
@@ -35,9 +38,13 @@ class NodeListener
         /* @var Seo $seo */
         $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($event->getPage());
 
-        $seoTab = new Tab('Meta');
-        $seoTab->addType('seo', $seo->getDefaultAdminType(), $seo);
+        $seoTab = new Tab('SEO');
+        $seoTab->addType('seo', new SeoType(), $seo);
         $event->getTabPane()->addTab($seoTab);
+
+        $socialTab = new Tab('Social');
+        $socialTab->addType('social', new SocialType(), $seo);
+        $event->getTabPane()->addTab($socialTab);
     }
 
 }

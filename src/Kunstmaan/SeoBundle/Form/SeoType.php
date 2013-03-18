@@ -17,19 +17,13 @@ class SeoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden')
+                ->add('metaTitle', null, array('label' => 'Title'))
                 ->add('metaAuthor', null, array('label' => 'Meta author'))
                 ->add('metaDescription', null, array('label' => 'Meta description'))
                 ->add('metaKeywords', null, array('label' => 'Meta keywords'))
                 ->add('metaRobots', null, array('label' => 'Meta robots'))
                 ->add('metaRevised', null, array('label' => 'Meta revised'))
-                ->add('ogType', null, array('label' => 'OG type'))
-                ->add('ogTitle', null, array('label' => 'OG title'))
-                ->add('ogDescription', null, array('label' => 'OG description'))
-                ->add('ogImage', 'media', array(
-                    'mediatype' => 'image',
-                    'label' => 'OG image'
-                ))
-                ->add('extraMetadata', 'textarea', array('label' => 'Extra metadata'))
+                ->add('extraMetadata', 'textarea', array('label' => 'Extra metadata', 'required' => false))
                 ->add('cimKeyword', 'text', array('label' => 'Cim keyword', 'required' => false, 'max_length' => 24));
     }
 
