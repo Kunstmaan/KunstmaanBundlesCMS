@@ -69,7 +69,7 @@ class NodeListener
                         $position = 0;
                     }
                 }
-                $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->event->getRequest(), $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory, $types, $data), $position);
+                $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $event->getRequest(), $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory, $types, $data), $position);
             }
         }
     }
