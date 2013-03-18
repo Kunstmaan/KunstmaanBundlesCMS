@@ -23,6 +23,13 @@
 {% if seo.getOgDescription() %}
     <meta property="og:description" content="{{ seo.getOgDescription() }}">
 {% endif %}
+{% if seo.getOgUrl() %}
+   <meta property="og:url" content="{{ seo.getOgUrl() }}">
+{% else %}
+    {% if currentNode %}
+        <meta property="og:url" content="{{ url('_slug', { 'url': currentNode.slug, '_locale': app.request.locale }) }}"/>
+    {% endif %}
+{% endif %}
 {% if seo.getOgImage() is defined and seo.getOgImage() is not null %}
     <meta property="og:image" content="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}">
     <link rel="image_src" href="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}" / >
