@@ -45,10 +45,10 @@ class PageCreatorService Implements ContainerAwareInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function createPage(HasNodeInterface $pageTypeInstance, array $translations, array $options = [])
+    public function createPage(HasNodeInterface $pageTypeInstance, array $translations, array $options = array())
     {
         if (is_null($options)) {
-            $options = [];
+            $options = array();
         }
 
         if (is_null($translations) or (count($translations) == 0)) {
