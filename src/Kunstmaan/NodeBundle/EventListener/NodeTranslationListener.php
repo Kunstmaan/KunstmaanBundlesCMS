@@ -138,7 +138,7 @@ class NodeTranslationListener
      * @var NodeTranslation $translation Reference to the NodeTranslation. This is modified in place.
      *
      */
-    private function ensureUniqueUrl(NodeTranslation &$translation, $em, $flashes = []) {
+    private function ensureUniqueUrl(NodeTranslation &$translation, $em, $flashes = array()) {
         // Can't use GetRef here yet since the NodeVersions aren't loaded yet for some reason.
         $pnv = $translation->getPublicNodeVersion();
 
@@ -200,7 +200,7 @@ class NodeTranslationListener
     private static function IncrementString($string, $append = '-v')
     {
         $finalDigitGrabberRegex = '/\d+$/';
-        $matches = [];
+        $matches = array();
 
         preg_match($finalDigitGrabberRegex, $string, $matches);
 

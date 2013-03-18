@@ -19,7 +19,8 @@ class ACLPermissionCreatorService Implements ContainerAwareInterface
     /**
      * Create ACL permissions for an object.
      */
-    public function createPermission($object) {
+    public function createPermission($object)
+    {
         $container = $this->container;
 
         /* @var MutableAclProviderInterface $aclProvider */
