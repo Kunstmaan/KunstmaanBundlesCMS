@@ -9,6 +9,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Helper\Tabs\TabPane;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The event to pass metadata if the adaptForm event is triggered
