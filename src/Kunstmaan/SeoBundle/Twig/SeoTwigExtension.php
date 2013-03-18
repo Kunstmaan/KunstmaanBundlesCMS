@@ -83,7 +83,7 @@ class SeoTwigExtension extends Twig_Extension
      */
     public function getTitleFor(AbstractPage $entity)
     {
-        $arr = [];
+        $arr = array();
 
         // Check if there is an SEO entity for this abstractpage.
         $seoRepo = $this->em->getRepository('KunstmaanSeoBundle:Seo');
@@ -106,7 +106,7 @@ class SeoTwigExtension extends Twig_Extension
             return false;
         }
 
-        $arguments = [];
+        $arguments = array();
         if ($platform == 'linkedin') {
             $arguments = array(
                 'productid' => $seo->getLinkedInRecommendProductID(),
