@@ -3,7 +3,8 @@
 	{{- quote|raw -}}{{- column.header | trans -}}{{- quote|raw -}}
 	{%- if not loop.last -%},{%- endif -%}
 {%- endfor -%}
-{% for item in adminlist.items(queryparams) %}
+{% for item in iterator %}
+    {% set item = item[0] %}
 
 {% for column in adminlist.exportColumns -%}
 	{%- set columnName = column.name -%}
