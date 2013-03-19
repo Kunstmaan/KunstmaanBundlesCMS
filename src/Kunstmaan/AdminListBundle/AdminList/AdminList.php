@@ -93,6 +93,16 @@ class AdminList
     }
 
     /**
+     * Return an iterator for all items that matches the current filtering
+     *
+     * @return \Iterator
+     */
+    public function getAllIterator()
+    {
+        return $this->configurator->getAllIterator();
+    }
+
+    /**
      * @param string $columnName
      *
      * @return bool

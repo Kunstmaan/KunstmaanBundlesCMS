@@ -122,6 +122,19 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
+     * Return an iterator for all items that matches the current filtering
+     *
+     * @return \Iterator
+     */
+    public function getAllIterator()
+    {
+        /*@var Statement $statement*/
+        $statement = $this->getQueryBuilder()->execute();
+
+        return $statement->getIterator();
+    }
+
+    /**
      * @return QueryBuilder|null
      */
     public function getQueryBuilder()
