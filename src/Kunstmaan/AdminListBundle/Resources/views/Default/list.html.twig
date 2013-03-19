@@ -43,7 +43,8 @@
 					<i class="icon-caret-down"></i>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="{{ path(adminlist.getExportUrl()["path"], adminlist.getExportUrl()[("params")]) }}">CSV</a></li>
+				{% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
+					<li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">CSV</a></li>
 				</ul>
 			</div>
 		</div>
