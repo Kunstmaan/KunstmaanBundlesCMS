@@ -14,8 +14,6 @@ class TocPagePart extends AbstractPagePart
 {
 
     /**
-     * @assert () == 'TocPagePart'
-     *
      * @return string
      */
     public function __toString()
@@ -24,8 +22,6 @@ class TocPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:TocPagePart:view.html.twig'
-     *
      * @return string
      */
     public function getDefaultView()

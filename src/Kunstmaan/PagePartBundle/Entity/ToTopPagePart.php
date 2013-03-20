@@ -14,8 +14,6 @@ class ToTopPagePart extends AbstractPagePart
 {
 
     /**
-     * @assert () == 'ToTopPagePart'
-     *
      * @return string
      */
     public function __toString()
@@ -24,8 +22,6 @@ class ToTopPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:ToTopPagePart:view.html.twig'
-     *
      * @return string
      */
     public function getDefaultView()
