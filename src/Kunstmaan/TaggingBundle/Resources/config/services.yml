@@ -1,0 +1,29 @@
+parameters:
+
+services:
+    cb_tagging.tag_manager:
+        class: Kunstmaan\TaggingBundle\Entity\TagManager
+        arguments: ["@doctrine.orm.entity_manager", "Kunstmaan\TaggingBundle\Entity\Tag", "Kunstmaan\TaggingBundle\Entity\Tagging"]
+
+    cb_tagging.listener:
+        class: Kunstmaan\TaggingBundle\Listener\TagsListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postLoad }
+            - { name: kernel.event_listener, event: adminnode.postEdit, method: postPageEdit }
+            - { name: kernel.event_listener, event: media.postEdit, method: postMediaEdit }
+            - { name: kernel.event_listener, event: media.postCreate, method: postMediaCreate }
+
+    cb_tagging.menuadaptor.modules:
+        class: Kunstmaan\TaggingBundle\Helper\Menu\ModuleMenuAdaptor
+        arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_admin.permissionmanager", "@security.context"]
+        tags:
+          -  { name: admin_menu.adaptor }
+
+    form.type.tags:
+        class: Kunstmaan\TaggingBundle\Form\TagsAdminType
+        arguments: ["@kuma_tagging.tag_manager"]
+        tags:
+            - { name: form.type, alias: tags }
