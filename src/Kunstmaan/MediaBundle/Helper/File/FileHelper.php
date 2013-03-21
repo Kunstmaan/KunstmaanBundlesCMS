@@ -88,20 +88,23 @@ class FileHelper
      */
     public function getMediaFromUrl($mediaurl)
     {
-        $ch       = curl_init($mediaurl);
-        $url      = parse_url($mediaurl);
-        $info     = pathinfo($url['path']);
-        $filename = $info['filename'] . "." . $info['extension'];
-        $path     = rtrim(sys_get_temp_dir(), '/') . '/' . $filename;
-
+        $path = tempnam(sys_get_temp_dir(), 'kuma_');
         $saveFile = fopen($path, 'w');
         $this->path = $path;
 
+        $ch = curl_init($mediaurl);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_FILE, $saveFile);
         curl_exec($ch);
+        $effectiveUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
         curl_close($ch);
+
         fclose($saveFile);
         chmod($path, 0777);
+
+        $url      = parse_url($effectiveUrl);
+        $info     = pathinfo($url['path']);
+        $filename = $info['filename'] . "." . $info['extension'];
 
         $upload = new UploadedFile($path, $filename);
         $this->getMedia()->setContent($upload);
