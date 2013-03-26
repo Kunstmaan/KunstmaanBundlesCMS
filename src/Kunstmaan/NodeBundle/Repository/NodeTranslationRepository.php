@@ -101,6 +101,7 @@ class NodeTranslationRepository extends EntityRepository
         $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->addOrderBy('n.online', 'DESC')
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
@@ -257,7 +258,7 @@ class NodeTranslationRepository extends EntityRepository
 
 
     /**
-     * Look if all parents of a NodeTranslation have NodeTranslations 
+     * Look if all parents of a NodeTranslation have NodeTranslations
      * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $nodeTranslation
      * @param $language
      * @return bool
