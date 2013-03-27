@@ -78,7 +78,7 @@ class NodeTranslation extends AbstractEntity
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
-     * @ORM\OrderBy({"created" = "DESC"})
+     * @ORM\OrderBy({"created" = "ASC"})
      */
     protected $nodeVersions;
 
