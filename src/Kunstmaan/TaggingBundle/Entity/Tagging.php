@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TaggingBundle\Entity;
 
+use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
 use DoctrineExtensions\Taggable\Entity\Tagging as BaseTagging;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -72,7 +73,7 @@ class Tagging extends BaseTagging
      *
      * @param $tag
      */
-    public function setTag($tag)
+    public function setTag(BaseTag $tag)
     {
         $this->tag = $tag;
     }
@@ -132,7 +133,7 @@ class Tagging extends BaseTagging
      *
      * @param $createdAt
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }
@@ -152,7 +153,7 @@ class Tagging extends BaseTagging
      *
      * @param $updatedAt
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
     }
