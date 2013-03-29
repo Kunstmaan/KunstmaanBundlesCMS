@@ -16,7 +16,7 @@ class TagAdminType extends AbstractType
 
     public function getName()
     {
-        return 'kunstmaan_taggingbundle_tag';
+        return 'tag_admin_form';
     }
 
 }

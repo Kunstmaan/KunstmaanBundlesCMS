@@ -16,9 +16,8 @@ services:
             - { name: kernel.event_listener, event: media.postEdit, method: postMediaEdit }
             - { name: kernel.event_listener, event: media.postCreate, method: postMediaCreate }
 
-    kuma_tagging.menuadaptor:
+    kuma_tagging.menu.adaptor:
         class: Kunstmaan\TaggingBundle\Helper\Menu\TagMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager"]
         tags:
           -  { name: admin_menu.adaptor }
 

@@ -12,19 +12,6 @@ class TagMenuAdaptor implements MenuAdaptorInterface
 {
 
     /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * @param EntityManager $em
-     */
-    public function __construct($em)
-    {
-        $this->em = $em;
-    }
-
-    /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
      *
      * @param MenuBuilder $menu      The MenuBuilder
@@ -37,11 +24,11 @@ class TagMenuAdaptor implements MenuAdaptorInterface
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuitem = new TopMenuItem($menu);
             $menuitem->setRoute('KunstmaanTaggingBundle_admin_tag');
-            $menuitem->setInternalname('Tags');
+            $menuitem->setInternalName('Tags');
             $menuitem->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                $menuitem->setActive(TRUE);
-                $parent->setActive(TRUE);
+                $menuitem->setActive(true);
+                $parent->setActive(true);
             }
             $children[] = $menuitem;
         }

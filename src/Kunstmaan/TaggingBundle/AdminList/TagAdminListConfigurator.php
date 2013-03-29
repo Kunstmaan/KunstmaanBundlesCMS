@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\TaggingBundle\Form\TagAdminType;
 
 class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -19,7 +20,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
-        $this->setAdminType(new BlogAuthorAdminType());
+        $this->setAdminType(new TagAdminType());
     }
 
     /**
