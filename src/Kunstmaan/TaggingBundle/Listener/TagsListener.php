@@ -5,8 +5,7 @@ namespace Kunstmaan\TaggingBundle\Listener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use DoctrineExtensions\Taggable\Taggable;
 
-use Kunstmaan\AdminNodeBundle\Helper\Event\PageEvent;
-use Kunstmaan\MediaBundle\Helper\Event\MediaEvent;
+use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 
 class TagsListener
@@ -55,30 +54,12 @@ class TagsListener
         $this->postPersist($args);
     }
 
-    public function postNodePersist(PageEvent $event)
+    public function postNodePersist(NodeEvent $event)
     {
         $page = $event->getPage();
 
         if ($page instanceof Taggable) {
             $this->getTagManager()->saveTagging($page);
-        }
-    }
-
-    public function postMediaEdit(MediaEvent $event)
-    {
-        $metadata = $event->getMetadata();
-
-        if (isset($metadata) && $metadata instanceof Taggable) {
-            $this->getTagManager()->saveTagging($metadata);
-        }
-    }
-
-    public function postMediaCreate(MediaEvent $event)
-    {
-        $metadata = $event->getMetadata();
-
-        if (isset($metadata) && $metadata instanceof Taggable) {
-            $this->getTagManager()->saveTagging($metadata);
         }
     }
 

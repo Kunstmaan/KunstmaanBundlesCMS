@@ -13,8 +13,6 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postLoad }
             - { name: kernel.event_listener, event: kunstmaan_node.postPersist, method: postNodePersist }
-            - { name: kernel.event_listener, event: media.postEdit, method: postMediaEdit }
-            - { name: kernel.event_listener, event: media.postCreate, method: postMediaCreate }
 
     kuma_tagging.menu.adaptor:
         class: Kunstmaan\TaggingBundle\Helper\Menu\TagMenuAdaptor
