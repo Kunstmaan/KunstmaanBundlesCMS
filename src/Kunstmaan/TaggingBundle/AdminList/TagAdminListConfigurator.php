@@ -4,11 +4,10 @@ namespace Kunstmaan\TaggingBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminListBundle\AdminList\AdminListFilter;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 
 class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -28,7 +27,9 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('name', 'name', true);
+        $this->addField('name', 'Name', true);
+        $this->addField('createdat', 'Created at', true);
+        $this->addField('updatedat', 'Updated at', true);
     }
 
     /**

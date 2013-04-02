@@ -12,14 +12,14 @@ services:
             - { name: doctrine.event_listener, event: postUpdate }
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postLoad }
-            - { name: kernel.event_listener, event: adminnode.postEdit, method: postPageEdit }
+            - { name: kernel.event_listener, event: nnode.postEdit, method: postPageEdit }
             - { name: kernel.event_listener, event: media.postEdit, method: postMediaEdit }
             - { name: kernel.event_listener, event: media.postCreate, method: postMediaCreate }
 
     kuma_tagging.menu.adaptor:
         class: Kunstmaan\TaggingBundle\Helper\Menu\TagMenuAdaptor
         tags:
-          -  { name: admin_menu.adaptor }
+          -  { name: kunstmaan_admin.menu.adaptor }
 
     form.type.tags:
         class: Kunstmaan\TaggingBundle\Form\TagsAdminType
