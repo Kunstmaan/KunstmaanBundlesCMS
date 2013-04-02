@@ -55,7 +55,7 @@ class TagsListener
         $this->postPersist($args);
     }
 
-    public function postPageEdit(PageEvent $event)
+    public function postNodePersist(PageEvent $event)
     {
         $page = $event->getPage();
 
