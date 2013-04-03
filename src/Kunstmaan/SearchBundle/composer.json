@@ -18,7 +18,7 @@
         "symfony/symfony": ">=2.1,<2.3-dev",
         "kunstmaan/admin-bundle": "*",
         "kunstmaan/node-bundle": "*",
-        "sherlock/sherlock": "~0.1"
+        "sherlock/sherlock": "0.1.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\SearchBundle": "" }
