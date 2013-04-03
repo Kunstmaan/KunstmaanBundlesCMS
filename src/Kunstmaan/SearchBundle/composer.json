@@ -1,7 +1,7 @@
 {
     "name": "kunstmaan/search-bundle",
     "type": "symfony-bundle",
-    "description": "The KunstmaanSearchBundle is the glue between the KunstmaanViewBundle and the FOQElasticaBundle. It features automatic transformation of pages into indexable objects for Elastica. It also provides a navigation item in the KunstmaanAdminBundle where it registers all the performed search queries for further evaluation.",
+    "description": "The KunstmaanSearchBundle",
     "keywords": ["kunstmaan", "search", "elastica"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanSearchBundle",
     "license": "MIT",
@@ -16,8 +16,6 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.1,<2.3-dev",
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/node-bundle": "*",
         "sherlock/sherlock": "0.1.*"
     },
     "autoload": {
