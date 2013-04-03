@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TaggingBundle\Listener;
+namespace Kunstmaan\TaggingBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use DoctrineExtensions\Taggable\Taggable;
