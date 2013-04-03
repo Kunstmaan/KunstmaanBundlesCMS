@@ -1,21 +1,12 @@
+parameters:
+    kunstmaan_search.hostname : "localhost"
+    kunstmaan_search.port : 9200
+
 services:
-    kunstmaan_search.transformers.nodetransformer:
-        class: %kunstmaan_search.transformers.nodetransformerclass%
-        arguments:
-            - { container: @service_container }
 
-    kunstmaan_search.transformers.elasticatransformer:
-        class: %kunstmaan_search.transformers.elasticatransformerclass%
-        arguments: [@doctrine, %kunstmaan_search.entity.website%, [identifier: id, hydrate: true]]
-
-    kunstmaan_search.pagecontent_for_search_renderer:
-        class: Kunstmaan\SearchBundle\Helper\PageContentRenderer
-
-    kunstmaan_search.menu.adaptor:
-        class: Kunstmaan\SearchBundle\Helper\Menu\SearchMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
+    kunstmaan_search.sherlock:
+        class: Kunstmaan\SearchBundle\Sherlock\SherlockImpl
+        arguments: [%kunstmaan_search.hostname%, %kunstmaan_search.port%]
 
     kunstmaan_search.twig.extension:
         class: Kunstmaan\SearchBundle\Twig\Extension\TrimHighlightTwigExtension
