@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +51,7 @@ class SlugController extends Controller
 
         // If no node translation -> 404
         if (!$nodeTranslation) {
-            throw $this->createNotFoundException('No page found for slug ' . $url);
+            throw new ResourceNotFoundException('No page found for slug ' . $url);
         }
 
         // check if the requested node is online, else throw a 404 exception (only when not previewing!)
