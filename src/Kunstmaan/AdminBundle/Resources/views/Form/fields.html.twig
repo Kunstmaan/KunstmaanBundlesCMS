@@ -40,7 +40,7 @@
             {{ form_label(form) }}
             <div class="input">
                 {{ form_widget(form) }}
-                {% if required %}
+                {% if required and not(errors|length > 0) %}
                     <span class="help-inline">{{ 'This is a required field' | trans }}</span>
                 {% endif %}
                 {% if max_length %}
