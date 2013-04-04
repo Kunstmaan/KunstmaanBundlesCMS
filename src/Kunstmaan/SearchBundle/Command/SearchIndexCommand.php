@@ -20,10 +20,9 @@ class SearchIndexCommand extends ContainerAwareCommand {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $sherlock = $this->getContainer()->get('kunstmaan_search.sherlock');
-        $response = $sherlock->searchIndex();
+        $response = $sherlock->searchIndex("kurt");
 
         $output->writeln('Index searched');
-        $output->writeln($response);
     }
 
 

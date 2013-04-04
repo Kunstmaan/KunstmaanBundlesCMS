@@ -46,16 +46,26 @@ class SherlockImpl {
         $doc->execute();
     }
 
-    public function searchIndex()
+    /**
+     * @param string $querystring
+     *
+     * @return \Sherlock\responses\QueryResponse
+     */
+    public function searchIndex($querystring)
     {
         $request = $this->sherlock->search();
 
-        $termQuery = Sherlock::queryBuilder()->Wildcard()->field("firstname")->value("Kurt");
-        echo $termQuery->toJSON()."\r\n";
+        $firstnameQuery = Sherlock::queryBuilder()->Match()->field("firstname")->query($querystring);
+        $lastnameQuery = Sherlock::queryBuilder()->Match()->field("lastname")->query($querystring);
+        $functionQuery = Sherlock::queryBuilder()->Match()->field("function")->query($querystring);
+
+        $query = Sherlock::queryBuilder()->Bool()->should(array($firstnameQuery, $lastnameQuery, $functionQuery))->minimum_number_should_match(1);
+
+        echo $query->toJSON()."\r\n";
 
         $request->index("testindex")
                 ->type("employee")
-                ->query($termQuery);
+                ->query($query);
         echo $request->toJSON()."\r\n";
 
         $response = $request->execute();
@@ -67,6 +77,8 @@ class SherlockImpl {
         {
             echo $hit['score'].' : '.$hit['source']['firstname'].' '.$hit['source']['lastname'].' - '.$hit['source']['function']."\r\n";
         }
+
+        return $response;
     }
 
     public function deleteIndex()
