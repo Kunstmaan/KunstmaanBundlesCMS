@@ -46,12 +46,7 @@ class SherlockImpl {
         $doc->execute();
     }
 
-    /**
-     * @param string $querystring
-     *
-     * @return \Sherlock\responses\QueryResponse
-     */
-    public function searchIndex($querystring, $tag)
+    public function searchIndex($querystring, $tags = array())
     {
         $request = $this->sherlock->search();
 
@@ -63,12 +58,14 @@ class SherlockImpl {
 
         $query = Sherlock::queryBuilder()->Bool()->should(array($firstnameQuery, $lastnameQuery, $companyQuery, $teamQuery, $functionQuery))->minimum_number_should_match(1);
 
-        if($tag and $tag != ''){
-            $tagQuery = Sherlock::queryBuilder()->Term()->field("tags")->term($tag);
+        if(count($tags) > 0){
+            $tagQueries = array();
+            foreach($tags as $tag){
+                $tagQueries[] = Sherlock::queryBuilder()->Term()->field("tags")->term($tag);
+            }
+            $tagQuery = Sherlock::queryBuilder()->Bool()->must($tagQueries)->minimum_number_should_match(1);
             $query = Sherlock::queryBuilder()->Bool()->must(array($tagQuery, $query))->minimum_number_should_match(1);
         }
-
-        echo $query->toJSON()."\r\n";
 
         $request->index("testindex")
                 ->type("employee")
@@ -79,9 +76,6 @@ class SherlockImpl {
         $request->facets($facet);
 
         $response = $request->execute();
-
-        echo "Took: ".$response->took."\r\n";
-        echo "Number of Hits: ".count($response)."\r\n";
 
         foreach($response as $hit)
         {
