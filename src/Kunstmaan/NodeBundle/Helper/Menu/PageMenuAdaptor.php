@@ -109,6 +109,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $menuItem->setRouteparams(array('id' => $child->getId()));
             $menuItem->setInternalName($child->getTitle());
             $menuItem->setParent($parent);
+            $menuItem->setOffline(!$child->getNodeTranslation()->isOnline());
             $menuItem->setRole('page');
             $menuItem->setWeight($child->getNodeTranslation()->getWeight());
 
