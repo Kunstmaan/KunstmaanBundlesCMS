@@ -33,15 +33,15 @@ class SherlockImpl {
 
     public function populateIndex()
     {
-        $doc = array("firstname" => "Roderik", "lastname" => "van der Veer", "function" => "Technology Director");
+        $doc = array("firstname" => "Roderik", "lastname" => "van der Veer", "company" => "Kunstmaan", "team" => "Smarties", "function" => "Technology Director", "tags" => array("een", "twee", "drie"));
         $doc = $this->sherlock->document()->index('testindex')->type('employee')->document($doc);
         $doc->execute();
 
-        $doc = array("firstname" => "Kenny", "lastname" => "Debrauwer", "function" => "Web Developer");
+        $doc = array("firstname" => "Kenny", "lastname" => "Debrauwer", "company" => "Kunstmaan", "team" => "Smarties", "function" => "Web Developer", "tags" => array("een", "drie"));
         $doc = $this->sherlock->document()->index('testindex')->type('employee')->document($doc);
         $doc->execute();
 
-        $doc = array("firstname" => "Kurt", "lastname" => "Limbos", "function" => "Art Director");
+        $doc = array("firstname" => "Kurt", "lastname" => "Limbos", "company" => "Kunstmaan", "team" => "Studio", "function" => "Art Director", "tags" => array("twee"));
         $doc = $this->sherlock->document()->index('testindex')->type('employee')->document($doc);
         $doc->execute();
     }
@@ -51,15 +51,22 @@ class SherlockImpl {
      *
      * @return \Sherlock\responses\QueryResponse
      */
-    public function searchIndex($querystring)
+    public function searchIndex($querystring, $tag)
     {
         $request = $this->sherlock->search();
 
         $firstnameQuery = Sherlock::queryBuilder()->Match()->field("firstname")->query($querystring);
         $lastnameQuery = Sherlock::queryBuilder()->Match()->field("lastname")->query($querystring);
+        $companyQuery = Sherlock::queryBuilder()->Match()->field("company")->query($querystring);
+        $teamQuery = Sherlock::queryBuilder()->Match()->field("team")->query($querystring);
         $functionQuery = Sherlock::queryBuilder()->Match()->field("function")->query($querystring);
 
-        $query = Sherlock::queryBuilder()->Bool()->should(array($firstnameQuery, $lastnameQuery, $functionQuery))->minimum_number_should_match(1);
+        $query = Sherlock::queryBuilder()->Bool()->should(array($firstnameQuery, $lastnameQuery, $companyQuery, $teamQuery, $functionQuery))->minimum_number_should_match(1);
+
+        if($tag and $tag != ''){
+            $tagQuery = Sherlock::queryBuilder()->Term()->field("tags")->term($tag);
+            $query = Sherlock::queryBuilder()->Bool()->must(array($tagQuery, $query))->minimum_number_should_match(1);
+        }
 
         echo $query->toJSON()."\r\n";
 
@@ -68,6 +75,9 @@ class SherlockImpl {
                 ->query($query);
         echo $request->toJSON()."\r\n";
 
+        $facet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
+        $request->facets($facet);
+
         $response = $request->execute();
 
         echo "Took: ".$response->took."\r\n";
@@ -75,7 +85,16 @@ class SherlockImpl {
 
         foreach($response as $hit)
         {
-            echo $hit['score'].' : '.$hit['source']['firstname'].' '.$hit['source']['lastname'].' - '.$hit['source']['function']."\r\n";
+            echo $hit['score'].' : '.$hit['source']['firstname'].' '.$hit['source']['lastname'].' - '.$hit['source']['function'] . ' - ' . implode(' | ', $hit['source']['tags']) ."\r\n";
+        }
+
+        $responseData = $response->responseData;
+        foreach($responseData['facets'] as $facet)
+        {
+            foreach($facet['terms'] as $term)
+            {
+                echo implode(' : ',$term) . "\r\n";
+            }
         }
 
         return $response;
