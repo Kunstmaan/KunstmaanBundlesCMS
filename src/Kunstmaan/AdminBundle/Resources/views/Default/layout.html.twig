@@ -210,6 +210,7 @@
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.fileupload.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.iframe-transport.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.inputmask.js'
+        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.form.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.inputmask.date.extensions.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/modaldialog.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/responsive-tables.js'
@@ -222,10 +223,10 @@
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    
+
     <!--Extra-->
     {% block extrajavascript %}{% endblock %}
-    
+
     <!--CKEDITOR-->
     <script>
     {% include "KunstmaanAdminBundle:Default:ckeditor.js.twig" %}
