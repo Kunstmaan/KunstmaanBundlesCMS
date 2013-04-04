@@ -16,7 +16,8 @@ class SearchIndexCommand extends ContainerAwareCommand {
             ->setName("kuma:search:search")
             ->setDescription("Search the index")
             ->addOption('query', null, InputOption::VALUE_REQUIRED, 'The query to perform')
-            ->addOption('tag', null, InputOption::VALUE_OPTIONAL, 'The tag')
+            ->addOption('tag', null, InputOption::VALUE_OPTIONAL, 'The tags, comma seperated')
+            ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'The type of page you want to search on')
         ;
     }
 
@@ -24,9 +25,24 @@ class SearchIndexCommand extends ContainerAwareCommand {
     {
         $query = $input->getOption('query');
         $tag = $input->getOption('tag');
+        $type = $input->getOption('type');
 
         $sherlock = $this->getContainer()->get('kunstmaan_search.sherlock');
-        $response = $sherlock->searchIndex($query, $tag);
+        $response = $sherlock->searchIndex($query, $type, $tag);
+
+        foreach($response as $hit)
+        {
+            echo $hit['score'].' : '.$hit['source']['title'].' ['.$hit['source']['lang'].']  ('.$hit['source']['slug'] .") \r\n";
+        }
+
+        $responseData = $response->responseData;
+        foreach($responseData['facets'] as $facet)
+        {
+            foreach($facet['terms'] as $term)
+            {
+                echo implode(' : ',$term) . "\r\n";
+            }
+        }
 
         $output->writeln('Index searched');
     }

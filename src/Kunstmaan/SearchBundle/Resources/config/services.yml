@@ -6,7 +6,7 @@ services:
 
     kunstmaan_search.sherlock:
         class: Kunstmaan\SearchBundle\Sherlock\SherlockImpl
-        arguments: [%kunstmaan_search.hostname%, %kunstmaan_search.port%]
+        arguments: ["@doctrine.orm.entity_manager", %kunstmaan_search.hostname%, %kunstmaan_search.port%]
 
     kunstmaan_search.twig.extension:
         class: Kunstmaan\SearchBundle\Twig\Extension\TrimHighlightTwigExtension

@@ -3,14 +3,21 @@
 namespace Kunstmaan\SearchBundle\Sherlock;
 
 
+use Doctrine\ORM\EntityManager;
+use DoctrineExtensions\Taggable\Taggable;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sherlock\Sherlock;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SherlockImpl {
 
+    private $em;
+
     private $sherlock;
 
-    public function __construct($hostname, $port)
+    public function __construct(EntityManager $em, $hostname, $port)
     {
+        $this->em = $em;
         $this->sherlock = new Sherlock;
         $this->sherlock->addNode($hostname, $port);
     }
@@ -19,11 +26,11 @@ class SherlockImpl {
     {
         $index = $this->sherlock->index('testindex');
 
-        //Add two mappings, one a string and one a date
         $index->mappings(
-            Sherlock::mappingBuilder('employee')->String()->field('firstname'),
-            Sherlock::mappingBuilder('employee')->String()->field('lastname'),
-            Sherlock::mappingBuilder('employee')->String()->field('function')
+            Sherlock::mappingBuilder('node')->String()->field('title'),
+            Sherlock::mappingBuilder('node')->String()->field('content'),
+            Sherlock::mappingBuilder('node')->String()->field('lang'),
+            Sherlock::mappingBuilder('node')->String()->field('tags')->analyzer('keyword')
         );
 
         $response = $index->create();
@@ -33,30 +40,64 @@ class SherlockImpl {
 
     public function populateIndex()
     {
-        $doc = array("firstname" => "Roderik", "lastname" => "van der Veer", "company" => "Kunstmaan", "team" => "Smarties", "function" => "Technology Director", "tags" => array("een", "twee", "drie"));
-        $doc = $this->sherlock->document()->index('testindex')->type('employee')->document($doc);
-        $doc->execute();
+        $nodeRepository = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
-        $doc = array("firstname" => "Kenny", "lastname" => "Debrauwer", "company" => "Kunstmaan", "team" => "Smarties", "function" => "Web Developer", "tags" => array("een", "drie"));
-        $doc = $this->sherlock->document()->index('testindex')->type('employee')->document($doc);
-        $doc->execute();
+        $topNodes = $nodeRepository->getAllTopNodes();
 
-        $doc = array("firstname" => "Kurt", "lastname" => "Limbos", "company" => "Kunstmaan", "team" => "Studio", "function" => "Art Director", "tags" => array("twee"));
-        $doc = $this->sherlock->document()->index('testindex')->type('employee')->document($doc);
-        $doc->execute();
+        foreach($topNodes as $topNode){
+            $this->indexNodeTranslations($topNode);
+            $this->indexChildren($topNode);
+        }
     }
 
-    public function searchIndex($querystring, $tags = array())
+    public function indexChildren($parentNode)
+    {
+        foreach ($parentNode->getChildren() as $childNode) {
+            $this->indexNodeTranslations($childNode);
+            $this->indexChildren($childNode);
+        }
+    }
+
+    public function indexNodeTranslations($node)
+    {
+        foreach ($node->getNodeTranslations() as $nodeTranslation) {
+
+            $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
+            $page = $publicNodeVersion->getRef($this->em);
+
+            $doc = array(
+                "title" => $nodeTranslation->getTitle(),
+                "lang" => $nodeTranslation->getLang(),
+                "slug"  => $nodeTranslation->getFullSlug(),
+                "type" => ClassLookup::getClassName($page),
+                "content" => "Dit is test content"
+            );
+
+            if( $page instanceof Taggable){
+                $tags = array();
+                foreach($page->getTags() as $tag){
+                    $tags[] = $tag->getName();
+                }
+                $doc = array_merge($doc, array("tags" => $tags));
+            }
+
+            $doc = $this->sherlock
+                ->document()
+                ->index('testindex')
+                ->type('node')
+                ->document($doc);
+            $doc->execute();
+        }
+    }
+
+    public function searchIndex($querystring, $type = array(), $tags = array())
     {
         $request = $this->sherlock->search();
 
-        $firstnameQuery = Sherlock::queryBuilder()->Match()->field("firstname")->query($querystring);
-        $lastnameQuery = Sherlock::queryBuilder()->Match()->field("lastname")->query($querystring);
-        $companyQuery = Sherlock::queryBuilder()->Match()->field("company")->query($querystring);
-        $teamQuery = Sherlock::queryBuilder()->Match()->field("team")->query($querystring);
-        $functionQuery = Sherlock::queryBuilder()->Match()->field("function")->query($querystring);
+        $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
+        $contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
 
-        $query = Sherlock::queryBuilder()->Bool()->should(array($firstnameQuery, $lastnameQuery, $companyQuery, $teamQuery, $functionQuery))->minimum_number_should_match(1);
+        $query = $tagQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
 
         if(count($tags) > 0){
             $tagQueries = array();
@@ -67,29 +108,23 @@ class SherlockImpl {
             $query = Sherlock::queryBuilder()->Bool()->must(array($tagQuery, $query))->minimum_number_should_match(1);
         }
 
+        if($type && $type != ''){
+            $typeQuery = Sherlock::queryBuilder()->Term()->field("type")->term($type);
+            $query = Sherlock::queryBuilder()->Bool()->must(array($typeQuery, $query))->minimum_number_should_match(1);
+        }
+
         $request->index("testindex")
-                ->type("employee")
+                ->type("node")
                 ->query($query);
         echo $request->toJSON()."\r\n";
 
-        $facet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
-        $request->facets($facet);
+        $tagFacet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
+        $typeFacet = Sherlock::facetBuilder()->Terms()->fields("type")->facetname("type");
+        $request->facets($tagFacet, $typeFacet);
 
         $response = $request->execute();
 
-        foreach($response as $hit)
-        {
-            echo $hit['score'].' : '.$hit['source']['firstname'].' '.$hit['source']['lastname'].' - '.$hit['source']['function'] . ' - ' . implode(' | ', $hit['source']['tags']) ."\r\n";
-        }
-
-        $responseData = $response->responseData;
-        foreach($responseData['facets'] as $facet)
-        {
-            foreach($facet['terms'] as $term)
-            {
-                echo implode(' : ',$term) . "\r\n";
-            }
-        }
+        //var_dump($response->responseData['facets']['tag']); die();
 
         return $response;
     }
