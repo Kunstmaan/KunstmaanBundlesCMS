@@ -116,7 +116,6 @@ class SherlockImpl {
         $request->index("testindex")
                 ->type("node")
                 ->query($query);
-        echo $request->toJSON()."\r\n";
 
         $tagFacet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
         $typeFacet = Sherlock::facetBuilder()->Terms()->fields("type")->facetname("type");
