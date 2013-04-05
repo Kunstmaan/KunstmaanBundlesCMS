@@ -5,19 +5,25 @@ namespace Kunstmaan\SearchBundle\Sherlock;
 
 use Doctrine\ORM\EntityManager;
 use DoctrineExtensions\Taggable\Taggable;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\SearchBundle\Helper\IndexControllerInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class SherlockImpl {
 
     private $em;
 
+    private $container;
+
     private $sherlock;
 
-    public function __construct(EntityManager $em, $hostname, $port)
+    public function __construct(ContainerInterface $container, $hostname, $port)
     {
-        $this->em = $em;
+        $this->container = $container;
+        $this->em = $container->get('doctrine')->getEntityManager();
         $this->sherlock = new Sherlock;
         $this->sherlock->addNode($hostname, $port);
     }
@@ -65,28 +71,41 @@ class SherlockImpl {
             $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
             $page = $publicNodeVersion->getRef($this->em);
 
-            $doc = array(
-                "title" => $nodeTranslation->getTitle(),
-                "lang" => $nodeTranslation->getLang(),
-                "slug"  => $nodeTranslation->getFullSlug(),
-                "type" => ClassLookup::getClassName($page),
-                "content" => "Dit is test content"
-            );
+            if(!($page instanceof IndexControllerInterface) or $page->shouldBeIndexed()){
 
-            if( $page instanceof Taggable){
-                $tags = array();
-                foreach($page->getTags() as $tag){
-                    $tags[] = $tag->getName();
+                $doc = array(
+                    "title" => $nodeTranslation->getTitle(),
+                    "lang" => $nodeTranslation->getLang(),
+                    "slug"  => $nodeTranslation->getFullSlug(),
+                    "type" => ClassLookup::getClassName($page),
+                );
+
+                $content = '';
+                if( $page instanceof HasPagePartsInterface){
+                    $this->container->enterScope('request');
+                    $this->container->set('request', new Request(), 'request');
+                    $pageparts = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page);
+                    $renderer = $this->container->get('templating');
+                    $view = 'KunstmaanSearchBundle:PagePart:view.html.twig';
+                    $content = strip_tags($renderer->render($view, array('page' => $page, 'pageparts' => $pageparts, 'pagepartviewresolver' => $this)));
+
                 }
-                $doc = array_merge($doc, array("tags" => $tags));
-            }
+                $doc = array_merge($doc, array("content" => $content));
+                if( $page instanceof Taggable){
+                    $tags = array();
+                    foreach($page->getTags() as $tag){
+                        $tags[] = $tag->getName();
+                    }
+                    $doc = array_merge($doc, array("tags" => $tags));
+                }
 
-            $doc = $this->sherlock
-                ->document()
-                ->index('testindex')
-                ->type('node')
-                ->document($doc);
-            $doc->execute();
+                $doc = $this->sherlock
+                    ->document()
+                    ->index('testindex')
+                    ->type('node')
+                    ->document($doc);
+                $doc->execute();
+            }
         }
     }
 
