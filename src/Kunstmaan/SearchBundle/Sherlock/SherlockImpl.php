@@ -140,9 +140,11 @@ class SherlockImpl {
         $typeFacet = Sherlock::facetBuilder()->Terms()->fields("type")->facetname("type");
         $request->facets($tagFacet, $typeFacet);
 
-        $response = $request->execute();
+        $highlight = Sherlock::highlightBuilder()->Highlight()->pre_tags(array("<strong>"))->post_tags(array("</strong>"))->fields(array("content" => array("fragment_size" => 150, "number_of_fragments" => 1)));
 
-        //var_dump($response->responseData['facets']['tag']); die();
+        $request->highlight($highlight);
+
+        $response = $request->execute();
 
         return $response;
     }
