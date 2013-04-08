@@ -112,6 +112,6 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
     {
         $response = $this->sherlock->delete($this->indexName);
 
-        return $response;
+        return $response->ok;
     }
 }

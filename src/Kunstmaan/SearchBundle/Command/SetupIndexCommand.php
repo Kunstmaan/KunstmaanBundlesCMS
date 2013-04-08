@@ -22,12 +22,12 @@ class SetupIndexCommand extends ContainerAwareCommand {
     {
         $responses = array();
         $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');
-        foreach($searchConfigurationChain->getIndexers() as $searchConfiguration){
+        foreach($searchConfigurationChain->getSearchConfigurations() as $searchConfiguration){
             $responses[] = array($searchConfiguration, $searchConfiguration->create());
         }
 
-        foreach($responses as $key => $value){
-            $output->writeln('Index created : ' . ClassLookup::getClassName($key) . ' : ' . $value);
+        foreach($responses as $response){
+            $output->writeln('Index created : ' . ClassLookup::getClass($response[0]) . ' : ' . $response[1]);
         }
     }
 
