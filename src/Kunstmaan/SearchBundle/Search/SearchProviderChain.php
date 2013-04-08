@@ -18,7 +18,7 @@ class SearchProviderChain {
 
     public function getSearchProvider($alias)
     {
-        if (array_key_exists($alias, $this->searchProvider)) {
+        if (array_key_exists($alias, $this->searchProviders)) {
             return $this->searchProviders[$alias];
         }
         else {

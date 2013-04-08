@@ -40,7 +40,7 @@ class SherlockImpl implements SearchProviderInterface {
         return $this->sherlock->index($name)->delete();
     }
 
-    public function searchIndex($querystring, $type = array(), $tags = array())
+    public function search($querystring, $type = array(), $tags = array())
     {
         $request = $this->sherlock->search();
 

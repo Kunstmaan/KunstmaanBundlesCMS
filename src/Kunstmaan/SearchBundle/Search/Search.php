@@ -4,25 +4,24 @@ namespace Kunstmaan\SearchBundle\Search;
 
 class Search implements SearchProviderInterface {
 
-    /**
-     * @var SearchProviderInterface
-     */
-    private $providers;
+    private $searchProviderChain;
 
     /**
      * @var string
      */
     private $activeProvider = "Sherlock";
 
-    public function __construct()
+    /**
+     * @param SearchProviderChain $searchProviderChain
+     */
+    public function __construct($searchProviderChain)
     {
-        $searchProviderChain = $this->getContainer()->get('kunstmaan_search.searchprovider_chain');
-        $this->providers = $searchProviderChain->getSearchProviders();
+        $this->searchProviderChain = $searchProviderChain;
     }
 
     public function getActiveProvider()
     {
-        return $this->providers[$this->activeProvider];
+        return $this->searchProviderChain->getSearchProvider($this->activeProvider);
     }
 
     public function index($indexName)
@@ -38,6 +37,11 @@ class Search implements SearchProviderInterface {
     public function delete($indexName)
     {
         return $this->getActiveProvider()->index($indexName)->delete();
+    }
+
+    public function search($querystring, $type = array(), $tags = array())
+    {
+        return $this->getActiveProvider()->search($querystring, $type, $tags);
     }
 
     /**
