@@ -1,15 +1,19 @@
 parameters:
-    kunstmaan_search.hostname : "localhost"
-    kunstmaan_search.port : 9200
+    kunstmaan_search.hostname: "localhost"
+    kunstmaan_search.port: 9200
+    kunstmaan_search.indexer_chain.class: Kunstmaan\SearchBundle\Service\IndexerChain
 
 services:
 
     kunstmaan_search.sherlock:
         class: Kunstmaan\SearchBundle\Sherlock\SherlockImpl
-        arguments: ["@service_container", %kunstmaan_search.hostname%, %kunstmaan_search.port%]
+        arguments: [%kunstmaan_search.hostname%, %kunstmaan_search.port%]
 
-    kunstmaan_search.twig.extension:
-        class: Kunstmaan\SearchBundle\Twig\Extension\TrimHighlightTwigExtension
-        arguments: ["@service_container"]
+    Kunstmaan_search.indexer_chain:
+        class: "%kunstmaan_search.indexer_chain.class%"
+
+    kunstmaan_search.indexer.node:
+        class: Kunstmaan\SearchBundle\Service\NodeIndexer
+        arguments: ["@service_container", "@kunstmaan_search.sherlock"]
         tags:
-            - { name: twig.extension }
+            - { name: kunstmaan_search.indexer, alias : Node }
