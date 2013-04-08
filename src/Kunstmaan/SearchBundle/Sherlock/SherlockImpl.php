@@ -14,22 +14,6 @@ class SherlockImpl {
         $this->sherlock->addNode($hostname, $port);
     }
 
-    public function setupIndex()
-    {
-        $index = $this->sherlock->index('testindex');
-
-        $index->mappings(
-            Sherlock::mappingBuilder('node')->String()->field('title'),
-            Sherlock::mappingBuilder('node')->String()->field('content'),
-            Sherlock::mappingBuilder('node')->String()->field('lang'),
-            Sherlock::mappingBuilder('node')->String()->field('tags')->analyzer('keyword')
-        );
-
-        $response = $index->create();
-
-        return $response->ok;
-    }
-
     public function searchIndex($querystring, $type = array(), $tags = array())
     {
         $request = $this->sherlock->search();
@@ -70,16 +54,18 @@ class SherlockImpl {
         return $response;
     }
 
-    public function deleteIndex()
+    public function index($name)
     {
-        $index = $this->sherlock->index('testindex');
-        $response = $index->delete();
-
-        return $response;
+        return $this->sherlock->index($name);
     }
 
     public function document()
     {
         return $this->sherlock->document();
+    }
+
+    public function delete($name)
+    {
+        return $this->sherlock->index($name)->delete();
     }
 }

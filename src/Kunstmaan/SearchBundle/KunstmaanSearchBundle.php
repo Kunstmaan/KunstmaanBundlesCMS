@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SearchBundle;
 
-use Kunstmaan\SearchBundle\DependencyInjection\Compiler\IndexerCompilerPass;
+use Kunstmaan\SearchBundle\DependencyInjection\Compiler\SearchConfigurationCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -15,6 +15,6 @@ class KunstmaanSearchBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new IndexerCompilerPass());
+        $container->addCompilerPass(new SearchConfigurationCompilerPass());
     }
 }

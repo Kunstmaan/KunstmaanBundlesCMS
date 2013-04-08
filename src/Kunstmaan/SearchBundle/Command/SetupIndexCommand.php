@@ -3,6 +3,7 @@
 namespace Kunstmaan\SearchBundle\Command;
 
 
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,10 +20,15 @@ class SetupIndexCommand extends ContainerAwareCommand {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $sherlock = $this->getContainer()->get('kunstmaan_search.sherlock');
-        $response = $sherlock->setupIndex();
+        $responses = array();
+        $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');
+        foreach($searchConfigurationChain->getIndexers() as $searchConfiguration){
+            $responses[] = array($searchConfiguration, $searchConfiguration->create());
+        }
 
-        $output->writeln('Index created : ' . $response);
+        foreach($responses as $key => $value){
+            $output->writeln('Index created : ' . ClassLookup::getClassName($key) . ' : ' . $value);
+        }
     }
 
 

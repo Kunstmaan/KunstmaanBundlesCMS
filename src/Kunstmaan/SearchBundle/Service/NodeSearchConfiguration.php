@@ -6,22 +6,41 @@ use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Helper\IndexControllerInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class NodeIndexer implements IndexerInterface {
+class NodeSearchConfiguration implements SearchConfigurationInterface {
 
     private $container;
     private $em;
     private $sherlock;
-    private $indexName = 'testindex';
-    private $indexType = 'node';
+    private $indexName = 'nodeindex';
+    private $indexNodeType = 'page';
 
     public function __construct(ContainerInterface $container, $sherlock)
     {
         $this->container = $container;
         $this->em = $this->container->get('doctrine')->getEntityManager();
         $this->sherlock = $sherlock;
+    }
+
+    public function create()
+    {
+        $index = $this->sherlock->index($this->indexName);
+
+        $index->mappings(
+            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('title'),
+            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('content'),
+            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('lang'),
+            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('tags')->analyzer('keyword'),
+            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('type')->analyzer('keyword'),
+            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('slug')->analyzer('keyword')
+        );
+
+        $response = $index->create();
+
+        return $response->ok;
     }
 
     public function index()
@@ -36,7 +55,7 @@ class NodeIndexer implements IndexerInterface {
         }
     }
 
-    public function indexChildren($parentNode)
+    protected function indexChildren($parentNode)
     {
         foreach ($parentNode->getChildren() as $childNode) {
             $this->indexNodeTranslations($childNode);
@@ -44,7 +63,7 @@ class NodeIndexer implements IndexerInterface {
         }
     }
 
-    public function indexNodeTranslations($node)
+    protected function indexNodeTranslations($node)
     {
         foreach ($node->getNodeTranslations() as $nodeTranslation) {
 
@@ -82,10 +101,17 @@ class NodeIndexer implements IndexerInterface {
                 $doc = $this->sherlock
                     ->document()
                     ->index($this->indexName)
-                    ->type($this->indexType)
+                    ->type($this->indexNodeType)
                     ->document($doc);
                 $doc->execute();
             }
         }
+    }
+
+    public function delete()
+    {
+        $response = $this->sherlock->delete($this->indexName);
+
+        return $response;
     }
 }

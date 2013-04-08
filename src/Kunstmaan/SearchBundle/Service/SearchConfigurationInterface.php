@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\SearchBundle\Service;
 
-interface IndexerInterface {
+interface SearchConfigurationInterface {
+
+    public function create();
 
     public function index();
 

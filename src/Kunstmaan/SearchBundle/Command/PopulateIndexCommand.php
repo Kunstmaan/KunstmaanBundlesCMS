@@ -29,7 +29,7 @@ class PopulateIndexCommand extends ContainerAwareCommand {
             $setup_command->execute(new ArrayInput(array()), $output);
         }
 
-        $indexerChain = $this->getContainer()->get('kunstmaan_search.indexer_chain');
+        $indexerChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');
         foreach($indexerChain->getIndexers() as $indexer){
             $indexer->index();
         }

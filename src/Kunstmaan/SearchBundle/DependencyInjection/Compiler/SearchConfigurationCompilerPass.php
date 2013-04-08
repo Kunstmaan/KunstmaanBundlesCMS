@@ -6,25 +6,25 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class IndexerCompilerPass implements CompilerPassInterface
+class SearchConfigurationCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_search.indexer_chain')) {
+        if (!$container->hasDefinition('kunstmaan_search.searchconfiguration_chain')) {
             return;
         }
 
         $definition = $container->getDefinition(
-            'kunstmaan_search.indexer_chain'
+            'kunstmaan_search.searchconfiguration_chain'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'kunstmaan_search.indexer'
+            'kunstmaan_search.searchconfiguration'
         );
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
-                    'addIndexer',
+                    'addSearchConfiguration',
                     array(new Reference($id), $attributes["alias"])
                 );
             }

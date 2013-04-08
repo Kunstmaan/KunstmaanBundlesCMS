@@ -1,7 +1,7 @@
 parameters:
     kunstmaan_search.hostname: "localhost"
     kunstmaan_search.port: 9200
-    kunstmaan_search.indexer_chain.class: Kunstmaan\SearchBundle\Service\IndexerChain
+    kunstmaan_search.indexer_chain.class: Kunstmaan\SearchBundle\Service\SearchConfigurationChain
 
 services:
 
@@ -13,7 +13,7 @@ services:
         class: "%kunstmaan_search.indexer_chain.class%"
 
     kunstmaan_search.indexer.node:
-        class: Kunstmaan\SearchBundle\Service\NodeIndexer
+        class: Kunstmaan\SearchBundle\Service\NodeSearchConfiguration
         arguments: ["@service_container", "@kunstmaan_search.sherlock"]
         tags:
             - { name: kunstmaan_search.indexer, alias : Node }
