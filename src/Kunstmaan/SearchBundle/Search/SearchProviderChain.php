@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\SearchBundle\Search;
 
+/**
+ * The chain of SearchProviders
+ */
 class SearchProviderChain {
     
     private $searchProviders;

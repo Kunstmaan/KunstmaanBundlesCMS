@@ -10,6 +10,10 @@ use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Search configuration for nodes. Creates an index and will populate it with all Nodes it retrieves recursively from the TopNodes
+ * It iterates over all NodeTranslations and only uses the public NodeVersion
+ */
 class NodeSearchConfiguration implements SearchConfigurationInterface {
 
     private $container;

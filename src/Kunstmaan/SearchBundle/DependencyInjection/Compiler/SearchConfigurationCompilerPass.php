@@ -6,6 +6,11 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * CompilerPass class for SearchConfiguration
+ *
+ * Will find all services tagged "kunstmaan_search.searchconfiguration" and will add them to the chain with their alias.
+ */
 class SearchConfigurationCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)

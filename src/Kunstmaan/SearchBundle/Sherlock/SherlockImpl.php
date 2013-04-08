@@ -5,6 +5,9 @@ namespace Kunstmaan\SearchBundle\Sherlock;
 use Kunstmaan\SearchBundle\Search\SearchProviderInterface;
 use Sherlock\Sherlock;
 
+/**
+ * The Sherlock SearchProvider
+ */
 class SherlockImpl implements SearchProviderInterface {
 
     private $sherlock;
@@ -79,6 +82,5 @@ class SherlockImpl implements SearchProviderInterface {
 
         return $response;
     }
-
 
 }

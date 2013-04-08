@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Command to create the indexes
+ */
 class SetupIndexCommand extends ContainerAwareCommand {
 
     protected function configure()

@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\SearchBundle\Search;
 
+/**
+ * Search class which will delegate to the active SearchProvider
+ */
 class Search implements SearchProviderInterface {
 
     private $searchProviderChain;
@@ -19,6 +22,11 @@ class Search implements SearchProviderInterface {
         $this->searchProviderChain = $searchProviderChain;
     }
 
+    /**
+     * Get the current active SearchProvider
+     *
+     * @return SearchProviderInterface
+     */
     public function getActiveProvider()
     {
         return $this->searchProviderChain->getSearchProvider($this->activeProvider);
@@ -31,7 +39,7 @@ class Search implements SearchProviderInterface {
 
     public function document($indexName, $indexType, $doc)
     {
-        return $this->getActiveProvider()->document();
+        return $this->getActiveProvider()->document($indexName, $indexType, $doc);
     }
 
     public function delete($indexName)
@@ -44,11 +52,6 @@ class Search implements SearchProviderInterface {
         return $this->getActiveProvider()->search($querystring, $type, $tags);
     }
 
-    /**
-     * Returns a unique name for the SearchProvider
-     *
-     * @return string
-     */
     public function getName()
     {
         return "Search";

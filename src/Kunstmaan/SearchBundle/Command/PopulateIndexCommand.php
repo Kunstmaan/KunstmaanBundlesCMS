@@ -8,6 +8,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Command to populate all indexes. Use the 'full' argument when you want to delete and add all indexes again
+ */
 class PopulateIndexCommand extends ContainerAwareCommand {
 
     protected function configure()

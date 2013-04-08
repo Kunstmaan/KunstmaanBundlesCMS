@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\SearchBundle\Configuration;
 
+/**
+ * The chain of SearchConfigurations
+ */
 class SearchConfigurationChain {
 
     private $searchConfigurations;
