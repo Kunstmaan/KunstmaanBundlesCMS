@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\SearchBundle\Command;
 
-
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
@@ -30,10 +28,10 @@ class PopulateIndexCommand extends ContainerAwareCommand {
             $setup_command->execute(new ArrayInput(array()), $output);
         }
 
-        $indexerChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');
-        foreach($indexerChain->getSearchConfigurations() as $searchconfiguration){
+        $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');
+        foreach($searchConfigurationChain->getSearchConfigurations() as $alias => $searchconfiguration){
             $searchconfiguration->index();
-            $output->writeln('Index populated : ' . ClassLookup::getClass($searchconfiguration));
+            $output->writeln('Index populated : ' . $alias);
         }
     }
 

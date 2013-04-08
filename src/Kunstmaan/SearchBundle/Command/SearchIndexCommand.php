@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\SearchBundle\Command;
 
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,7 +26,7 @@ class SearchIndexCommand extends ContainerAwareCommand {
         $tag = $input->getOption('tag');
         $type = $input->getOption('type');
 
-        $sherlock = $this->getContainer()->get('kunstmaan_search.sherlock');
+        $sherlock = $this->getContainer()->get('kunstmaan_search.searchprovider.sherlock');
         $response = $sherlock->searchIndex($query, $type, $tag);
 
         foreach($response as $hit)
@@ -46,6 +45,5 @@ class SearchIndexCommand extends ContainerAwareCommand {
 
         $output->writeln('Index searched');
     }
-
 
 }

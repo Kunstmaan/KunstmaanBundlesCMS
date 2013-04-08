@@ -2,9 +2,10 @@
 
 namespace Kunstmaan\SearchBundle\Sherlock;
 
+use Kunstmaan\SearchBundle\Search\SearchProviderInterface;
 use Sherlock\Sherlock;
 
-class SherlockImpl {
+class SherlockImpl implements SearchProviderInterface {
 
     private $sherlock;
 
@@ -12,6 +13,31 @@ class SherlockImpl {
     {
         $this->sherlock = new Sherlock;
         $this->sherlock->addNode($hostname, $port);
+    }
+
+    public function getName()
+    {
+        return "Sherlock";
+    }
+
+    public function index($name)
+    {
+        return $this->sherlock->index($name);
+    }
+
+    public function document($indexName, $indexType, $doc )
+    {
+        $doc = $this->sherlock
+            ->document()
+            ->index($indexName)
+            ->type($indexType)
+            ->document($doc);
+        $doc->execute();
+    }
+
+    public function delete($name)
+    {
+        return $this->sherlock->index($name)->delete();
     }
 
     public function searchIndex($querystring, $type = array(), $tags = array())
@@ -37,8 +63,8 @@ class SherlockImpl {
             $query = Sherlock::queryBuilder()->Bool()->must(array($typeQuery, $query))->minimum_number_should_match(1);
         }
 
-        $request->index("testindex")
-                ->type("node")
+        $request->index("nodeindex")
+                ->type("page")
                 ->query($query);
 
         $tagFacet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
@@ -54,18 +80,5 @@ class SherlockImpl {
         return $response;
     }
 
-    public function index($name)
-    {
-        return $this->sherlock->index($name);
-    }
 
-    public function document()
-    {
-        return $this->sherlock->document();
-    }
-
-    public function delete($name)
-    {
-        return $this->sherlock->index($name)->delete();
-    }
 }

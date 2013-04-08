@@ -2,18 +2,31 @@ parameters:
     kunstmaan_search.hostname: "localhost"
     kunstmaan_search.port: 9200
     kunstmaan_search.searchconfiguration_chain.class: Kunstmaan\SearchBundle\Service\SearchConfigurationChain
+    kunstmaan_search.searchprovider_chain.class: Kunstmaan\SearchBundle\Service\SearchProviderChain
 
 services:
 
-    kunstmaan_search.sherlock:
+    kunstmaan_search.search:
+        class: Kunstmaan\SearchBundle\Search\Search
+
+    # Providers
+
+    Kunstmaan_search.searchprovider_chain:
+        class: "%kunstmaan_search.searchprovider_chain.class%"
+
+    kunstmaan_search.searchprovider.sherlock:
         class: Kunstmaan\SearchBundle\Sherlock\SherlockImpl
         arguments: [%kunstmaan_search.hostname%, %kunstmaan_search.port%]
+        tags:
+            - { name: kunstmaan_search:searchprovider, alias: Sherlock}
+
+    #Configurations
 
     Kunstmaan_search.searchconfiguration_chain:
         class: "%kunstmaan_search.searchconfiguration_chain.class%"
 
     kunstmaan_search.searchconfiguration.node:
         class: Kunstmaan\SearchBundle\Service\NodeSearchConfiguration
-        arguments: ["@service_container", "@kunstmaan_search.sherlock"]
+        arguments: ["@service_container", "@kunstmaan_search.searchprovider.sherlock"]
         tags:
-            - { name: kunstmaan_search.searchconfiguration, alias : Node }
+            - { name: kunstmaan_search.searchconfiguration, alias: Node }

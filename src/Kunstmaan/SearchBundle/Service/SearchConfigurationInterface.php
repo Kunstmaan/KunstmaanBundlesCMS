@@ -8,4 +8,6 @@ interface SearchConfigurationInterface {
 
     public function index();
 
+    public function delete();
+
 }

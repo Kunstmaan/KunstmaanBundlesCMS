@@ -14,20 +14,20 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
 
     private $container;
     private $em;
-    private $sherlock;
+    private $search;
     private $indexName = 'nodeindex';
     private $indexNodeType = 'page';
 
-    public function __construct(ContainerInterface $container, $sherlock)
+    public function __construct(ContainerInterface $container, $search)
     {
         $this->container = $container;
         $this->em = $this->container->get('doctrine')->getEntityManager();
-        $this->sherlock = $sherlock;
+        $this->search = $search;
     }
 
     public function create()
     {
-        $index = $this->sherlock->index($this->indexName);
+        $index = $this->search->index($this->indexName);
 
         $index->mappings(
             Sherlock::mappingBuilder($this->indexNodeType)->String()->field('title'),
@@ -40,7 +40,6 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
 
         $response = $index->create();
 
-        return $response->ok;
     }
 
     public function index()
@@ -98,20 +97,13 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
                     $doc = array_merge($doc, array("tags" => $tags));
                 }
 
-                $doc = $this->sherlock
-                    ->document()
-                    ->index($this->indexName)
-                    ->type($this->indexNodeType)
-                    ->document($doc);
-                $doc->execute();
+                $this->search->document($this->indexName, $this->indexNodeType, $doc);
             }
         }
     }
 
     public function delete()
     {
-        $response = $this->sherlock->delete($this->indexName);
-
-        return $response->ok;
+        $this->search->delete($this->indexName);
     }
 }
