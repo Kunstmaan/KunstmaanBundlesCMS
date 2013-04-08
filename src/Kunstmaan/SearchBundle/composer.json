@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.1,<2.3-dev",
-        "sherlock/sherlock": "ff7065a30c91db6fe0eb31142a2e7cdd7cfc3d0f"
+        "sherlock/sherlock": "0.1.*#ff7065a30c91db6fe0eb31142a2e7cdd7cfc3d0f"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\SearchBundle": "" }
