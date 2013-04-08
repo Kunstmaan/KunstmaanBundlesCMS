@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\SearchBundle\Service;
+namespace Kunstmaan\SearchBundle\Configuration;
 
 class SearchConfigurationChain {
 
