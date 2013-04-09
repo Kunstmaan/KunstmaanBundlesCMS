@@ -28,11 +28,12 @@ interface SearchProviderInterface {
      *
      * @param $indexName    Name of the index
      * @param $indexType    Type of the index to add the document to
-     * @param $doc  The document
+     * @param $doc          The document to index
+     * @param $uid          Unique ID for this document, this will allow the document to be overwritten by new data instead of being duplicated
      *
      * @return mixed
      */
-    public function document($indexName, $indexType, $doc);
+    public function document($indexName, $indexType, $doc, $uid);
 
     /**
      * Delete an index

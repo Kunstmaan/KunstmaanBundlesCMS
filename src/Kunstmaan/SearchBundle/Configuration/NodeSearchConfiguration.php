@@ -100,8 +100,8 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
                     }
                     $doc = array_merge($doc, array("tags" => $tags));
                 }
-
-                $this->search->document($this->indexName, $this->indexNodeType, $doc);
+                $uid = "page_".$page->getId();
+                $this->search->document($this->indexName, $this->indexNodeType, $doc, $uid);
             }
         }
     }

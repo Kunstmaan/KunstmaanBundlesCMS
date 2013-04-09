@@ -28,13 +28,13 @@ class SherlockImpl implements SearchProviderInterface {
         return $this->sherlock->index($name);
     }
 
-    public function document($indexName, $indexType, $doc )
+    public function document($indexName, $indexType, $doc, $uid)
     {
         $doc = $this->sherlock
             ->document()
             ->index($indexName)
             ->type($indexType)
-            ->document($doc);
+            ->document($doc, $uid);
         $doc->execute();
     }
 

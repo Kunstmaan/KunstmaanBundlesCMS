@@ -37,9 +37,9 @@ class Search implements SearchProviderInterface {
         return $this->getActiveProvider()->index($indexName);
     }
 
-    public function document($indexName, $indexType, $doc)
+    public function document($indexName, $indexType, $doc, $uid)
     {
-        return $this->getActiveProvider()->document($indexName, $indexType, $doc);
+        return $this->getActiveProvider()->document($indexName, $indexType, $doc, $uid);
     }
 
     public function delete($indexName)
