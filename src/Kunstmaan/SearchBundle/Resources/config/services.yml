@@ -17,7 +17,7 @@ services:
         class: "%kunstmaan_search.searchprovider_chain.class%"
 
     kunstmaan_search.searchprovider.sherlock:
-        class: Kunstmaan\SearchBundle\Sherlock\SherlockImpl
+        class: Kunstmaan\SearchBundle\Sherlock\SherlockSearchProvider
         arguments: [%kunstmaan_search.hostname%, %kunstmaan_search.port%]
         tags:
             - { name: kunstmaan_search.searchprovider, alias: Sherlock}

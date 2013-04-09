@@ -8,7 +8,7 @@ use Sherlock\Sherlock;
 /**
  * The Sherlock SearchProvider
  */
-class SherlockImpl implements SearchProviderInterface
+class SherlockSearchProvider implements SearchProviderInterface
 {
     private $sherlock;
 
