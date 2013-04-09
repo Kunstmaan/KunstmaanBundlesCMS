@@ -43,11 +43,6 @@ class SherlockImpl implements SearchProviderInterface
         return $this->sherlock->index($name)->delete();
     }
 
-    public function getSherlock()
-    {
-        return  $this->sherlock;
-    }
-
     public function search($indexName, $indexType, $querystring, $json = false)
     {
         $request = $this->sherlock->search();
@@ -70,7 +65,12 @@ class SherlockImpl implements SearchProviderInterface
 
         $response = $request->execute();
 
-        return $response;
+        return $response->responseData;
+    }
+
+    public function getSherlock()
+    {
+        return  $this->sherlock;
     }
 
 }

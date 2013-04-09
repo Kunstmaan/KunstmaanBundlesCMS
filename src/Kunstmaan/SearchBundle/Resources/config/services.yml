@@ -3,11 +3,12 @@ parameters:
     kunstmaan_search.port: 9200
     kunstmaan_search.searchconfiguration_chain.class: Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain
     kunstmaan_search.searchprovider_chain.class: Kunstmaan\SearchBundle\Search\SearchProviderChain
+    kunstmaan_search.searchconfiguration.node.class: Kunstmaan\SearchBundle\Node\NodeSearchConfiguration
 
 services:
 
     kunstmaan_search.search:
-        arguments: ["@kunstmaan_search.searchprovider_chain"]
+        arguments: ["@kunstmaan_search.searchprovider_chain", %searchindexprefix%]
         class: Kunstmaan\SearchBundle\Search\Search
 
     # Providers
@@ -27,7 +28,7 @@ services:
         class: "%kunstmaan_search.searchconfiguration_chain.class%"
 
     kunstmaan_search.searchconfiguration.node:
-        class: Kunstmaan\SearchBundle\Configuration\NodeSearchConfiguration
-        arguments: ["@service_container", "@kunstmaan_search.searchprovider.sherlock"]
+        class: "%kunstmaan_search.searchconfiguration.node.class%"
+        arguments: ["@service_container", "@kunstmaan_search.search"]
         tags:
             - { name: kunstmaan_search.searchconfiguration, alias: Node }

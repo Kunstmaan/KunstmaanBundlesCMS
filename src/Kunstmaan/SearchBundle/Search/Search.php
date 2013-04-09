@@ -9,6 +9,8 @@ class Search implements SearchProviderInterface
 {
     private $searchProviderChain;
 
+    private $indexNamePrefix;
+
     /**
      * @var string
      */
@@ -16,10 +18,12 @@ class Search implements SearchProviderInterface
 
     /**
      * @param SearchProviderChain $searchProviderChain
+     * @param string              $indexNamePrefix
      */
-    public function __construct($searchProviderChain)
+    public function __construct($searchProviderChain, $indexNamePrefix)
     {
         $this->searchProviderChain = $searchProviderChain;
+        $this->indexNamePrefix = $indexNamePrefix;
     }
 
     /**
@@ -34,26 +38,31 @@ class Search implements SearchProviderInterface
 
     public function index($indexName)
     {
-        return $this->getActiveProvider()->index($indexName);
+        return $this->getActiveProvider()->index($this->indexNamePrefix . $indexName);
     }
 
     public function document($indexName, $indexType, $doc, $uid)
     {
-        return $this->getActiveProvider()->document($indexName, $indexType, $doc, $uid);
+        return $this->getActiveProvider()->document($this->indexNamePrefix . $indexName, $indexType, $doc, $uid);
     }
 
     public function delete($indexName)
     {
-        return $this->getActiveProvider()->index($indexName)->delete();
+        return $this->getActiveProvider()->index($this->indexNamePrefix . $indexName)->delete();
     }
 
     public function search($indexName, $indexType, $querystring, $json = false)
     {
-        return $this->getActiveProvider()->search($indexName, $indexType, $querystring, $json);
+        return $this->getActiveProvider()->search($this->indexNamePrefix . $indexName, $indexType, $querystring, $json);
     }
 
     public function getName()
     {
         return "Search";
+    }
+
+    public function getIndexNamePrefix()
+    {
+        return $this->indexNamePrefix;
     }
 }

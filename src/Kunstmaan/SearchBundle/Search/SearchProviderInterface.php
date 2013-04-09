@@ -18,8 +18,6 @@ interface SearchProviderInterface
      * Create an index
      *
      * @param $indexName Name of the index
-     *
-     * @return mixed
      */
     public function index($indexName);
 
@@ -30,8 +28,6 @@ interface SearchProviderInterface
      * @param string    $indexType    Type of the index to add the document to
      * @param           $doc          The document to index
      * @param           $uid          Unique ID for this document, this will allow the document to be overwritten by new data instead of being duplicated
-     *
-     * @return mixed
      */
     public function document($indexName, $indexType, $doc, $uid);
 
@@ -39,8 +35,6 @@ interface SearchProviderInterface
      * Delete an index
      *
      * @param $indexName    Name of the index to delete
-     *
-     * @return mixed
      */
     public function delete($indexName);
 
@@ -53,7 +47,7 @@ interface SearchProviderInterface
      * @param string $querystring  The query string
      * @param bool   $json         The $querystring is formatted as JSON, default set to false
      *
-     * @return mixed
+     * @return array
      */
     public function search($indexName, $indexType, $querystring, $json = false);
 
