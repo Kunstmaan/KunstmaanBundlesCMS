@@ -1,6 +1,6 @@
 # About the KunstmaanSearchBundle
 
-The KunstmaanSearchBundle works with ElasticSearch and supports different search providers. We currently support [Sherlock](https://github.com/polyfractal/sherlock) as a provider.
+The KunstmaanSearchBundle works with [ElasticSearch](http://www.elasticsearch.org/) and supports different search providers. We currently support [Sherlock](https://github.com/polyfractal/sherlock) as a provider.
 
 * Add your own objects to index using a tagged service which implements the [SearchConfigurationInterface](https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/sherlock/Configuration/SearchConfigurationInterface.php)
 * Want to add another search provider ? It's easy, just add a tagged service which implements the [SearchProviderInterface](https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/sherlock/Search/SearchProviderInterface.php)
@@ -30,9 +30,9 @@ AppKernel.php:
 ### Parameter
 
 Add the following parameter to your parameters file (ini, yml, ...), the prefix will be automatically used before each indexname you specify.
-
+```yaml
  searchindexprefix: prefix_
-
+```
 
 ## Documentation
 

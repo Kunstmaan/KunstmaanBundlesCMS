@@ -13,7 +13,7 @@ $response = $search->search("testIndex", "testType", $querystring);
 
 ### Advanced
 
-If you want a more advanced query covering more fields, using range, boolean phrase queries, define new options for highlighting or add facets. You can use use JSON string as a parameter. In order to build that JSON string, you can use the Sherlock builders.
+If you want a more advanced query covering more fields, using range, boolean phrase queries, define new options for highlighting or add facets. You can use use JSON string as a parameter. In order to build that JSON string, you can use the [Sherlock](https://github.com/polyfractal/sherlock) builders.
 
 The $json parameter is expected to contain the full query in JSON format.
 
@@ -27,39 +27,39 @@ $response = $search->search("nodeindex", "page", $json, true);
 One way to build your query is by using the Sherlock QueryBuilder :
 
 ```PHP
-        $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
-        $contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
+$titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
+$contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
 
-        $query = $tagQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
+$query = $tagQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
 ```
 
-See (Sherlock)[https://github.com/polyfractal/sherlock] for more information regarding query building.
+See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding query building.
 
 #### Filters
 
-See (Sherlock)[https://github.com/polyfractal/sherlock] for more information regarding filters.
+See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding filters.
 
 #### Facets
 
 You can add facets to your search, Sherlock supplies a FacetBuilder to aid you :
 
 ```PHP
-        $tagFacet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
-        $request->facets($tagFacet);
+$tagFacet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
+$request->facets($tagFacet);
 ```
 
-See (Sherlock)[https://github.com/polyfractal/sherlock] for more information regarding facets.
+See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding facets.
 
 #### Highligting
 
 Sherlock also supplies a HighlightBuilder to add highlighting to your search results.
 
 ```PHP
-        $highlight = Sherlock::highlightBuilder()->Highlight()->pre_tags(array("<strong>"))->post_tags(array("</strong>"))->fields(array("content" => array("fragment_size" => 150, "number_of_fragments" => 1)));
-        $request->highlight($highlight);
+$highlight = Sherlock::highlightBuilder()->Highlight()->pre_tags(array("<strong>"))->post_tags(array("</strong>"))->fields(array("content" => array("fragment_size" => 150, "number_of_fragments" => 1)));
+$request->highlight($highlight);
 ```
 
-See (Sherlock)[https://github.com/polyfractal/sherlock] for more information regarding highlighting.
+See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding highlighting.
 
 ## Adding a SearchConfiguration
 
@@ -137,7 +137,7 @@ Using the tag "kunstmaan_search.searchconfiguration", your SearchConfiguration w
 
 Want to trade in Sherlock for another ElasticSearch library ? You can do that by creating a new SearchProvider.
 
-Create a new class and implement the (SearchProviderInterface)[https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/sherlock/Search/SearchProviderInterface.php].
+Create a new class and implement the [SearchProviderInterface](https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/sherlock/Search/SearchProviderInterface.php).
 
 ### Implement methods
 
