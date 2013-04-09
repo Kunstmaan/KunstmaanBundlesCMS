@@ -43,40 +43,30 @@ class SherlockImpl implements SearchProviderInterface
         return $this->sherlock->index($name)->delete();
     }
 
-    public function search($querystring, $type = array(), $tags = array())
+    public function getSherlock()
+    {
+        return  $this->sherlock;
+    }
+
+    public function search($indexName, $indexType, $querystring, $json = false)
     {
         $request = $this->sherlock->search();
+        if($json){
+            $query = Sherlock::queryBuilder()->Raw($querystring);
+        } else {
+            $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
+            $contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
 
-        $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
-        $contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
+            $query = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
 
-        $query = $tagQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
+            $highlight = Sherlock::highlightBuilder()->Highlight()->pre_tags(array("<strong>"))->post_tags(array("</strong>"))->fields(array("content" => array("fragment_size" => 150, "number_of_fragments" => 1)));
 
-        if (count($tags) > 0) {
-            $tagQueries = array();
-            foreach ($tags as $tag) {
-                $tagQueries[] = Sherlock::queryBuilder()->Term()->field("tags")->term($tag);
-            }
-            $tagQuery = Sherlock::queryBuilder()->Bool()->must($tagQueries)->minimum_number_should_match(1);
-            $query = Sherlock::queryBuilder()->Bool()->must(array($tagQuery, $query))->minimum_number_should_match(1);
+            $request->highlight($highlight);
         }
 
-        if ($type && $type != '') {
-            $typeQuery = Sherlock::queryBuilder()->Term()->field("type")->term($type);
-            $query = Sherlock::queryBuilder()->Bool()->must(array($typeQuery, $query))->minimum_number_should_match(1);
-        }
-
-        $request->index("nodeindex")
-                ->type("page")
-                ->query($query);
-
-        $tagFacet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
-        $typeFacet = Sherlock::facetBuilder()->Terms()->fields("type")->facetname("type");
-        $request->facets($tagFacet, $typeFacet);
-
-        $highlight = Sherlock::highlightBuilder()->Highlight()->pre_tags(array("<strong>"))->post_tags(array("</strong>"))->fields(array("content" => array("fragment_size" => 150, "number_of_fragments" => 1)));
-
-        $request->highlight($highlight);
+        $request->index($indexName)
+            ->type($indexType)
+            ->query($query);
 
         $response = $request->execute();
 
