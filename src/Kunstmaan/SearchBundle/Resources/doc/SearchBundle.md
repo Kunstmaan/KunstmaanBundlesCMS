@@ -61,7 +61,7 @@ $request->highlight($highlight);
 
 See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding highlighting.
 
-## Adding a SearchConfiguration
+## Adding a search configuration
 
 If you want to index and search your own objects, you will need to create a SearchConfiguration.
 
@@ -87,6 +87,7 @@ In this method it's expected it creates one or more indexes. Sherlock has a Mapp
         $index->create();
     }
 ```
+See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding the MappingBuilder.
 
 #### index
 
@@ -118,7 +119,7 @@ Delete your index(es) in this method.
 
 After your class is ready, add it as a tagged service to your services.yml.
 
-Here's an example from the NodeSearchConfiguration, used to index nodes from the KunstmaanNodeBundle
+Here's an example from the NodeSearchConfiguration, used to index nodes from the [KunstmaanNodeBundle](https://github.com/Kunstmaan/KunstmaanNodeBundle)
 
 <pre>
 parameters:
@@ -133,7 +134,7 @@ services:
 
 Using the tag "kunstmaan_search.searchconfiguration", your SearchConfiguration will be added to the SearchConfigurationChain and in turn be called upon when creating, deleting and populating the indexes.
 
-## Adding a SearchProvider
+## Adding a search provider
 
 Want to trade in Sherlock for another ElasticSearch library ? You can do that by creating a new SearchProvider.
 
@@ -156,3 +157,21 @@ Delete the index
 #### search
 
 The search method allows 2 ways of searching. A standard search which is expected to search the 'title' and 'content' field for the $querystring. When the $json parameter is set to true, the $querystring will contain the full JSON request for ElasticSearch.
+
+## Commands
+
+Create indexes by performing the following command. It will iterate over all SearchConfigurations and call the create() method.
+```
+kuma:search:setup
+```
+Use the following command to populate the indexes. Use the 'full' argument to delete and create the indexes again. This command will iterate over all SearchConfigurations and call the index() method.
+```
+kuma:search:populate
+```
+```
+kuma:search:populate full
+```
+Next command is used to delete the indexes. It will iterate over all SearchConfigurations and call the delete() method.
+```
+kuma:search:delete
+```
