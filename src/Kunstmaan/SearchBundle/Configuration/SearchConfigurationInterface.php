@@ -22,4 +22,6 @@ interface SearchConfigurationInterface
      */
     public function delete();
 
+
+
 }

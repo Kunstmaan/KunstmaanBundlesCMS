@@ -17,7 +17,7 @@ interface SearchProviderInterface
     /**
      * Create an index
      *
-     * @param $indexName Name of the index
+     * @param string    $indexName  Name of the index
      */
     public function index($indexName);
 
@@ -26,7 +26,7 @@ interface SearchProviderInterface
      *
      * @param string    $indexName    Name of the index
      * @param string    $indexType    Type of the index to add the document to
-     * @param           $doc          The document to index
+     * @param array     $doc          The document to index
      * @param           $uid          Unique ID for this document, this will allow the document to be overwritten by new data instead of being duplicated
      */
     public function document($indexName, $indexType, $doc, $uid);
@@ -42,8 +42,8 @@ interface SearchProviderInterface
      * Search the index. The query string will by default search in the 'title' and 'content' fields.
      * When $json is set to true, the query string is assumed to be a JSON structure containing the entire query
      *
-     * @param        $indexName
-     * @param        $indexType
+     * @param string $indexName
+     * @param string $indexType
      * @param string $querystring  The query string
      * @param bool   $json         The $querystring is formatted as JSON, default set to false
      *
