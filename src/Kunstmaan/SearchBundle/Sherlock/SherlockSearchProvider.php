@@ -46,7 +46,7 @@ class SherlockSearchProvider implements SearchProviderInterface
     public function search($indexName, $indexType, $querystring, $json = false)
     {
         $request = $this->sherlock->search();
-        if($json){
+        if ($json) {
             $query = Sherlock::queryBuilder()->Raw($querystring);
         } else {
             $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);

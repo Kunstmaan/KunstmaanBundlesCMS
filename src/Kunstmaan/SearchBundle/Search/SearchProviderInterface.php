@@ -17,17 +17,17 @@ interface SearchProviderInterface
     /**
      * Create an index
      *
-     * @param string    $indexName  Name of the index
+     * @param string $indexName Name of the index
      */
     public function index($indexName);
 
     /**
      * Add a document to the index
      *
-     * @param string    $indexName    Name of the index
-     * @param string    $indexType    Type of the index to add the document to
-     * @param array     $doc          The document to index
-     * @param           $uid          Unique ID for this document, this will allow the document to be overwritten by new data instead of being duplicated
+     * @param string $indexName Name of the index
+     * @param string $indexType Type of the index to add the document to
+     * @param array  $doc       The document to index
+     * @param        $uid       Unique ID for this document, this will allow the document to be overwritten by new data instead of being duplicated
      */
     public function document($indexName, $indexType, $doc, $uid);
 
@@ -44,8 +44,8 @@ interface SearchProviderInterface
      *
      * @param string $indexName
      * @param string $indexType
-     * @param string $querystring  The query string
-     * @param bool   $json         The $querystring is formatted as JSON, default set to false
+     * @param string $querystring The query string
+     * @param bool   $json        The $querystring is formatted as JSON, default set to false
      *
      * @return array
      */

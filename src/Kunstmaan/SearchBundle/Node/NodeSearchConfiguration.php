@@ -73,10 +73,10 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
     {
         foreach ($node->getNodeTranslations() as $nodeTranslation) {
             // Only index online NodeTranslations
-            if($nodeTranslation->isOnline()){
+            if ($nodeTranslation->isOnline()) {
                 // Retrieve the public NodeVersion
                 $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
-                if($publicNodeVersion){
+                if ($publicNodeVersion) {
                     // Retrieve the referenced entity from the public NodeVersion
                     $page = $publicNodeVersion->getRef($this->em);
                     // If the page doesn't implement IndexControllerInterfance or it return true on shouldBeIndexed, index the page
@@ -96,10 +96,10 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                         // Parent and Ancestors
 
                         $parent = $node->getParent();
-                        if($parent){
+                        if ($parent) {
                             $doc = array_merge($doc, array("parent" => $parent->getId()));
                             $ancestors = array();
-                            do{
+                            do {
                                 $ancestors[] = $parent->getId();
                                 $parent = $parent->getParent();
                             } while ($parent);
