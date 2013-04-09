@@ -11,8 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Command to populate all indexes. Use the 'full' argument when you want to delete and add all indexes again
  */
-class PopulateIndexCommand extends ContainerAwareCommand {
-
+class PopulateIndexCommand extends ContainerAwareCommand
+{
     protected function configure()
     {
         $this
@@ -32,7 +32,7 @@ class PopulateIndexCommand extends ContainerAwareCommand {
         }
 
         $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');
-        foreach($searchConfigurationChain->getSearchConfigurations() as $alias => $searchconfiguration){
+        foreach ($searchConfigurationChain->getSearchConfigurations() as $alias => $searchconfiguration) {
             $searchconfiguration->index();
             $output->writeln('Index populated : ' . $alias);
         }

@@ -5,8 +5,8 @@ namespace Kunstmaan\SearchBundle\Search;
 /**
  * Interface for a SearchProvider
  */
-interface SearchProviderInterface {
-
+interface SearchProviderInterface
+{
     /**
      * Returns a unique name for the SearchProvider
      *

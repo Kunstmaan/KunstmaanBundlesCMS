@@ -7,8 +7,8 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * Event used when the index needs to be updated by the changed object
  */
-class UpdateIndexEvent extends Event {
-
+class UpdateIndexEvent extends Event
+{
     private $object;
 
     /**

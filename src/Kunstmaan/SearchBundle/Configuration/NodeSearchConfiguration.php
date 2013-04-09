@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
  * Search configuration for nodes. Creates an index and will populate it with all Nodes it retrieves recursively from the TopNodes
  * It iterates over all NodeTranslations and only uses the public NodeVersion
  */
-class NodeSearchConfiguration implements SearchConfigurationInterface {
-
+class NodeSearchConfiguration implements SearchConfigurationInterface
+{
     private $container;
     private $em;
     private $search;
@@ -52,7 +52,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
 
         $topNodes = $nodeRepository->getAllTopNodes();
 
-        foreach($topNodes as $topNode){
+        foreach ($topNodes as $topNode) {
             $this->indexNodeTranslations($topNode);
             $this->indexChildren($topNode);
         }
@@ -73,7 +73,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
             $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
             $page = $publicNodeVersion->getRef($this->em);
 
-            if(!($page instanceof IndexControllerInterface) or $page->shouldBeIndexed()){
+            if (!($page instanceof IndexControllerInterface) or $page->shouldBeIndexed()) {
 
                 $doc = array(
                     "title" => $nodeTranslation->getTitle(),
@@ -83,7 +83,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
                 );
 
                 $content = '';
-                if( $page instanceof HasPagePartsInterface){
+                if ($page instanceof HasPagePartsInterface) {
                     $this->container->enterScope('request');
                     $this->container->set('request', new Request(), 'request');
                     $pageparts = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page);
@@ -93,9 +93,9 @@ class NodeSearchConfiguration implements SearchConfigurationInterface {
 
                 }
                 $doc = array_merge($doc, array("content" => $content));
-                if( $page instanceof Taggable){
+                if ($page instanceof Taggable) {
                     $tags = array();
-                    foreach($page->getTags() as $tag){
+                    foreach ($page->getTags() as $tag) {
                         $tags[] = $tag->getName();
                     }
                     $doc = array_merge($doc, array("tags" => $tags));

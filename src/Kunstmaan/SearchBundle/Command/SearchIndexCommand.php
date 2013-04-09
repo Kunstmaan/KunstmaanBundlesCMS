@@ -10,8 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Command to search the index
  */
-class SearchIndexCommand extends ContainerAwareCommand {
-
+class SearchIndexCommand extends ContainerAwareCommand
+{
     protected function configure()
     {
         $this
@@ -32,16 +32,13 @@ class SearchIndexCommand extends ContainerAwareCommand {
         $sherlock = $this->getContainer()->get('kunstmaan_search.searchprovider.sherlock');
         $response = $sherlock->searchIndex($query, $type, $tag);
 
-        foreach($response as $hit)
-        {
+        foreach ($response as $hit) {
             echo $hit['score'].' : '.$hit['source']['title'].' ['.$hit['source']['lang'].']  ('.$hit['source']['slug'] .") \r\n";
         }
 
         $responseData = $response->responseData;
-        foreach($responseData['facets'] as $facet)
-        {
-            foreach($facet['terms'] as $term)
-            {
+        foreach ($responseData['facets'] as $facet) {
+            foreach ($facet['terms'] as $term) {
                 echo implode(' : ',$term) . "\r\n";
             }
         }

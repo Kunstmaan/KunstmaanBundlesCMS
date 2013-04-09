@@ -5,8 +5,8 @@ namespace Kunstmaan\SearchBundle\Configuration;
 /**
  * Interface for a SearchConfiguration
  */
-interface SearchConfigurationInterface {
-
+interface SearchConfigurationInterface
+{
     /**
      * Create indexes
      */

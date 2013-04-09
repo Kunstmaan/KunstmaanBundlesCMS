@@ -5,8 +5,8 @@ namespace Kunstmaan\SearchBundle\Search;
 /**
  * Search class which will delegate to the active SearchProvider
  */
-class Search implements SearchProviderInterface {
-
+class Search implements SearchProviderInterface
+{
     private $searchProviderChain;
 
     /**

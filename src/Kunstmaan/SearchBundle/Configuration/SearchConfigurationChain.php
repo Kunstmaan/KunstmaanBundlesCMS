@@ -5,8 +5,8 @@ namespace Kunstmaan\SearchBundle\Configuration;
 /**
  * The chain of SearchConfigurations
  */
-class SearchConfigurationChain {
-
+class SearchConfigurationChain
+{
     private $searchConfigurations;
 
     public function __construct()
@@ -23,8 +23,7 @@ class SearchConfigurationChain {
     {
         if (array_key_exists($alias, $this->searchConfiguration)) {
             return $this->searchConfigurations[$alias];
-        }
-        else {
+        } else {
             return;
         }
     }

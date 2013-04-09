@@ -8,8 +8,8 @@ use Sherlock\Sherlock;
 /**
  * The Sherlock SearchProvider
  */
-class SherlockImpl implements SearchProviderInterface {
-
+class SherlockImpl implements SearchProviderInterface
+{
     private $sherlock;
 
     public function __construct($hostname, $port)
@@ -52,16 +52,16 @@ class SherlockImpl implements SearchProviderInterface {
 
         $query = $tagQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
 
-        if(count($tags) > 0){
+        if (count($tags) > 0) {
             $tagQueries = array();
-            foreach($tags as $tag){
+            foreach ($tags as $tag) {
                 $tagQueries[] = Sherlock::queryBuilder()->Term()->field("tags")->term($tag);
             }
             $tagQuery = Sherlock::queryBuilder()->Bool()->must($tagQueries)->minimum_number_should_match(1);
             $query = Sherlock::queryBuilder()->Bool()->must(array($tagQuery, $query))->minimum_number_should_match(1);
         }
 
-        if($type && $type != ''){
+        if ($type && $type != '') {
             $typeQuery = Sherlock::queryBuilder()->Term()->field("type")->term($type);
             $query = Sherlock::queryBuilder()->Bool()->must(array($typeQuery, $query))->minimum_number_should_match(1);
         }

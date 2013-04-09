@@ -5,8 +5,8 @@ namespace Kunstmaan\SearchBundle\Search;
 /**
  * The chain of SearchProviders
  */
-class SearchProviderChain {
-    
+class SearchProviderChain
+{
     private $searchProviders;
 
     public function __construct()
@@ -23,8 +23,7 @@ class SearchProviderChain {
     {
         if (array_key_exists($alias, $this->searchProviders)) {
             return $this->searchProviders[$alias];
-        }
-        else {
+        } else {
             return;
         }
     }
