@@ -27,7 +27,7 @@ In "parent" you will find the ID of the parent Node. In "ancestors" you will fin
 
 ### Content
 
-The field "content" will contain the bulk text content from the page. By default we check if the page implements the HasPagePartsInterface. If it does, it will iterate over all PageParts and load its template. The content of that template will be rendered and stripped from all tags. In case you have content in additional fields, you will need to implement the HasCustomContentTemplate interface. This interface will then search for a "searchcontent.html.twig" template and add it to the rest of the content to be indexed.
+The field "content" will contain the bulk text content from the page. By default we check if the page implements the HasPagePartsInterface. If it does, it will iterate over all PageParts and load its template. The content of that template will be rendered and stripped from all tags. In case you have content in additional fields, you will need to implement the HasCustomContent interface. This interface contains the getCustomSearchContent() method which is expected to return a string containing additional content that will be added to the rest of the content to be indexed.
 
 ### Taggable
 
