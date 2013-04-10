@@ -26,7 +26,7 @@ class NodeIndexUpdateEventListener {
 
     private function index(NodeEvent $event)
     {
-        $nodeSearchConfiguration = $this->container->get('kunstmaan_search.searchconfiguration.node');
+        $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.searchconfiguration.node');
         $nodeSearchConfiguration->indexNodeTranslation($event->getNodeTranslation());
     }
 
@@ -45,7 +45,7 @@ class NodeIndexUpdateEventListener {
      */
     public function delete(NodeEvent $event)
     {
-        $nodeSearchConfiguration = $this->container->get('kunstmaan_search.searchconfiguration.node');
+        $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.searchconfiguration.node');
         $nodeSearchConfiguration->deleteNodeTranslation($event->getNodeTranslation());
     }
 

@@ -1,5 +1,5 @@
 parameters:
-    kunstmaan_node_search.searchconfiguration.node.class: Kunstmaan\SearchBundle\Node\NodeSearchConfiguration
+    kunstmaan_node_search.searchconfiguration.node.class: Kunstmaan\NodeSearchBundle\Configuration\NodeSearchConfiguration
 
 services:
 
@@ -10,7 +10,7 @@ services:
             - { name: kunstmaan_search.searchconfiguration, alias: Node }
 
     kunstmaan_node_search.node_index_update.listener:
-        class: Kunstmaan\SearchBundle\Node\NodeIndexUpdateEventListener
+        class: Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener
         arguments: ["@service_container"]
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.postPublish, method: onPostPublish }
