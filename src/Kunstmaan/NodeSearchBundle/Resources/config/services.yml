@@ -1,0 +1,19 @@
+parameters:
+    kunstmaan_node_search.searchconfiguration.node.class: Kunstmaan\SearchBundle\Node\NodeSearchConfiguration
+
+services:
+
+    kunstmaan_node_search.searchconfiguration.node:
+        class: "%kunstmaan_node_search.searchconfiguration.node.class%"
+        arguments: ["@service_container", "@kunstmaan_search.search"]
+        tags:
+            - { name: kunstmaan_search.searchconfiguration, alias: Node }
+
+    kunstmaan_node_search.node_index_update.listener:
+        class: Kunstmaan\SearchBundle\Node\NodeIndexUpdateEventListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_node.postPublish, method: onPostPublish }
+            - { name: kernel.event_listener, event: kunstmaan_node.postPersist, method: onPostPersist }
+            - { name: kernel.event_listener, event: kunstmaan_node.postDelete, method: onPostDelete }
+            - { name: kernel.event_listener, event: kunstmaan_node.postUnPublish, method: onPostUnPublish }

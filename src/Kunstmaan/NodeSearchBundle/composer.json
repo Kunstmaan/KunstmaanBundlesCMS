@@ -1,0 +1,28 @@
+{
+    "name": "kunstmaan/nodesearch-bundle",
+    "type": "symfony-bundle",
+    "description": "The KunstmaanNodeSearchBundle",
+    "keywords": ["kunstmaan", "node", "search", "elasticsearch"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanNodeSearchBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": ">=2.1,<2.3-dev",
+        "kunstmaan/node-bundle": "*",
+        "kunstmaan/pagepart-bundle": "*",
+        "kunstmaan/search-bundle": "*",
+        "sherlock/sherlock": "0.1.*"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\NodeSearchBundle": "" }
+    },
+    "target-dir": "Kunstmaan/NodeSearchBundle"
+}
