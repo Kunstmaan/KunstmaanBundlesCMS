@@ -4,6 +4,7 @@ namespace Kunstmaan\SearchBundle\Node;
 
 use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Helper\IndexControllerInterface;
@@ -51,7 +52,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $topNodes = $nodeRepository->getAllTopNodes();
 
         foreach ($topNodes as $topNode) {
-            $this->indexNodeTranslations($topNode);
+            $this->indexNode($topNode);
             $this->indexChildren($topNode);
         }
     }
@@ -61,83 +62,100 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
      *
      * @param $node Node
      */
-    protected function indexChildren($node)
+    public function indexChildren($node)
     {
         foreach ($node->getChildren() as $childNode) {
-            $this->indexNodeTranslations($childNode);
+            $this->indexNode($childNode);
             $this->indexChildren($childNode);
         }
     }
 
-    protected function indexNodeTranslations(Node $node)
+    public function indexNode(Node $node)
     {
         foreach ($node->getNodeTranslations() as $nodeTranslation) {
-            // Only index online NodeTranslations
-            if ($nodeTranslation->isOnline()) {
-                // Retrieve the public NodeVersion
-                $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
-                if ($publicNodeVersion) {
-                    // Retrieve the referenced entity from the public NodeVersion
-                    $page = $publicNodeVersion->getRef($this->em);
-                    // If the page doesn't implement IndexControllerInterfance or it return true on shouldBeIndexed, index the page
-                    if (!($page instanceof IndexControllerInterface) or $page->shouldBeIndexed()) {
+            $this->indexNodeTranslation($nodeTranslation);
+        }
+    }
 
-                        $doc = array(
-                            "node_id" => $node->getId(),
-                            "nodetranslation_id" => $nodeTranslation->getId(),
-                            "nodeversion_id" => $publicNodeVersion->getId(),
-                            "title" => $nodeTranslation->getTitle(),
-                            "lang" => $nodeTranslation->getLang(),
-                            "slug"  => $nodeTranslation->getFullSlug(),
-                            "type" => ClassLookup::getClassName($page),
+    /**
+     * @param      $nodeTranslation
+     */
+    public function indexNodeTranslation(NodeTranslation $nodeTranslation)
+    {
+        // Only index online NodeTranslations
+        if ($nodeTranslation->isOnline()) {
+            // Retrieve the public NodeVersion
+            $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
+            if ($publicNodeVersion) {
+                $node = $nodeTranslation->getNode();
+                // Retrieve the referenced entity from the public NodeVersion
+                $page = $publicNodeVersion->getRef($this->em);
+                // If the page doesn't implement IndexControllerInterfance or it return true on shouldBeIndexed, index the page
+                if (!($page instanceof IndexControllerInterface) or $page->shouldBeIndexed()) {
 
-                        );
+                    $doc = array(
+                        "node_id"            => $node->getId(),
+                        "nodetranslation_id" => $nodeTranslation->getId(),
+                        "nodeversion_id"     => $publicNodeVersion->getId(),
+                        "title"              => $nodeTranslation->getTitle(),
+                        "lang"               => $nodeTranslation->getLang(),
+                        "slug"               => $nodeTranslation->getFullSlug(),
+                        "type"               => ClassLookup::getClassName($page),
 
-                        // Parent and Ancestors
+                    );
 
-                        $parent = $node->getParent();
-                        if ($parent) {
-                            $doc = array_merge($doc, array("parent" => $parent->getId()));
-                            $ancestors = array();
-                            do {
-                                $ancestors[] = $parent->getId();
-                                $parent = $parent->getParent();
-                            } while ($parent);
-                            $doc = array_merge($doc, array("ancestors" => implode(' ', $ancestors)));
-                        }
+                    // Parent and Ancestors
 
-                        // Content
-
-                        $content = '';
-                        if ($page instanceof HasPagePartsInterface) {
-                            $this->container->enterScope('request');
-                            $this->container->set('request', new Request(), 'request');
-                            $pageparts = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page);
-                            $renderer = $this->container->get('templating');
-                            $view = 'KunstmaanSearchBundle:PagePart:view.html.twig';
-                            $content = strip_tags($renderer->render($view, array('page' => $page, 'pageparts' => $pageparts, 'pagepartviewresolver' => $this)));
-
-                        }
-                        $doc = array_merge($doc, array("content" => $content));
-
-                        // Taggable
-
-                        if ($page instanceof Taggable) {
-                            $tags = array();
-                            foreach ($page->getTags() as $tag) {
-                                $tags[] = $tag->getName();
-                            }
-                            $doc = array_merge($doc, array("tags" => $tags));
-                        }
-
-                        // Add document to index
-
-                        $uid = "page_".$page->getId();
-                        $this->search->document($this->indexName, $this->indexNodeType, $doc, $uid);
+                    $parent = $node->getParent();
+                    if ($parent) {
+                        $doc = array_merge($doc, array("parent" => $parent->getId()));
+                        $ancestors = array();
+                        do {
+                            $ancestors[] = $parent->getId();
+                            $parent = $parent->getParent();
+                        } while ($parent);
+                        $doc = array_merge($doc, array("ancestors" => implode(' ', $ancestors)));
                     }
+
+                    // Content
+
+                    $content = '';
+                    if ($page instanceof HasPagePartsInterface) {
+                        $this->container->enterScope('request');
+                        $this->container->set('request', new Request(), 'request');
+                        $pageparts = $this->em
+                            ->getRepository('KunstmaanPagePartBundle:PagePartRef')
+                            ->getPageParts($page);
+                        $renderer = $this->container->get('templating');
+                        $view = 'KunstmaanSearchBundle:PagePart:view.html.twig';
+                        $content = strip_tags($renderer->render($view, array('page' => $page, 'pageparts' => $pageparts, 'pagepartviewresolver' => $this)));
+
+                    }
+                    $doc = array_merge($doc, array("content" => $content));
+
+                    // Taggable
+
+                    if ($page instanceof Taggable) {
+                        $tags = array();
+                        foreach ($page->getTags() as $tag) {
+                            $tags[] = $tag->getName();
+                        }
+                        $doc = array_merge($doc, array("tags" => $tags));
+                    }
+
+                    // Add document to index
+
+                    $uid = "nodetranslation_" . $nodeTranslation->getId();
+                    $this->search->document($this->indexName, $this->indexNodeType, $doc, $uid);
                 }
             }
         }
+    }
+
+    public function deleteNodeTranslation(NodeTranslation $nodeTranslation)
+    {
+        $uid = "nodetranslation_" . $nodeTranslation->getId();
+        $this->search->deleteDocument($this->indexName, $this->indexNodeType, $uid);
     }
 
     public function delete()

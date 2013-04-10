@@ -38,6 +38,16 @@ class SherlockSearchProvider implements SearchProviderInterface
         $doc->execute();
     }
 
+    public function deleteDocument($indexName, $indexType, $uid)
+    {
+        $this->sherlock
+            ->deleteDocument()
+            ->index($indexName)
+            ->type($indexType)
+            ->document($uid)
+            ->execute();
+    }
+
     public function delete($name)
     {
         return $this->sherlock->index($name)->delete();

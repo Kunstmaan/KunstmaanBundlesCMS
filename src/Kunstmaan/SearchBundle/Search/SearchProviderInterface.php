@@ -32,6 +32,15 @@ interface SearchProviderInterface
     public function document($indexName, $indexType, $doc, $uid);
 
     /**
+     * delete a document from the index
+     *
+     * @param string $indexName Name of the index
+     * @param string $indexType Type of the index the document is located
+     * @param        $uid       Unique ID of the document to be delete
+     */
+    public function deleteDocument($indexName, $indexType, $uid);
+
+    /**
      * Delete an index
      *
      * @param $indexName    Name of the index to delete
