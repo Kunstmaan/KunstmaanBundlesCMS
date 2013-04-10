@@ -8,18 +8,18 @@ By default the search method accepts a string which will be searched for in the 
 
 ```PHP
 $search = $container->get('kunstmaan_search.search');
-$response = $search->search("testIndex", "testType", $querystring);
+$response = $search->search("testindex", "testtype", $querystring);
 ```
 
 ### Advanced
 
-If you want a more advanced query covering more fields, using range, boolean phrase queries, define new options for highlighting or add facets. You can use use JSON string as a parameter. In order to build that JSON string, you can use the [Sherlock](https://github.com/polyfractal/sherlock) builders.
+It's possible to use a more advanced query covering more fields, using range, boolean phrase queries, define new options for highlighting or add facets. Use a JSON string as a parameter. In order to build that JSON string, [Sherlock](https://github.com/polyfractal/sherlock) has some handy builders.
 
 The $json parameter is expected to contain the full query in JSON format.
 
 ```PHP
 $search = $container->get('kunstmaan_search.search');
-$response = $search->search("nodeindex", "page", $json, true);
+$response = $search->search("testindex", "testtype", $json, true);
 ```
 
 #### Query
@@ -30,7 +30,7 @@ One way to build your query is by using the Sherlock QueryBuilder :
 $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
 $contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
 
-$query = $tagQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
+$query = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
 ```
 
 See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding query building.
@@ -41,7 +41,7 @@ See [Sherlock](https://github.com/polyfractal/sherlock) for more information reg
 
 #### Facets
 
-You can add facets to your search, Sherlock supplies a FacetBuilder to aid you :
+Add facets to your search, Sherlock supplies a FacetBuilder to aid you :
 
 ```PHP
 $tagFacet = Sherlock::facetBuilder()->Terms()->fields("tags")->facetname("tag");
@@ -72,7 +72,7 @@ Implement the three methods from the interface.
 
 #### create
 
-In this method it's expected it creates one or more indexes. Sherlock has a MappingBuilder to help create mappings for your index.
+This method is expected to create one or more indexes. Sherlock has a MappingBuilder to help create mappings for your index.
 
 ```PHP
     public function create()
@@ -81,7 +81,8 @@ In this method it's expected it creates one or more indexes. Sherlock has a Mapp
 
         $index->mappings(
             Sherlock::mappingBuilder('type')->String()->field('title'),
-            Sherlock::mappingBuilder('type')->String()->field('content')
+            Sherlock::mappingBuilder('type')->String()->field('content'),
+            Sherlock::mappingBuilder('type')->String()->field('tags')->analyzer('keyword'),
         );
 
         $index->create();
@@ -107,7 +108,7 @@ The index method will be called upon to populate your index with documents. With
 
 #### delete
 
-Delete your index(es) in this method.
+Delete the index(es) in this method.
 
 ```PHP
     public function delete()
@@ -117,7 +118,7 @@ Delete your index(es) in this method.
 ```
 ### Tagged service
 
-After your class is ready, add it as a tagged service to your services.yml.
+Add the SearchConfiguration class as a tagged service to the services.yml.
 
 Here's an example from the NodeSearchConfiguration, used to index nodes from the [KunstmaanNodeBundle](https://github.com/Kunstmaan/KunstmaanNodeBundle)
 
@@ -132,11 +133,11 @@ services:
             - { name: kunstmaan_search.searchconfiguration, alias: Node }
 </pre>
 
-Using the tag "kunstmaan_search.searchconfiguration", your SearchConfiguration will be added to the SearchConfigurationChain and in turn be called upon when creating, deleting and populating the indexes.
+Using the tag "kunstmaan_search.searchconfiguration", the SearchConfiguration will be added to the SearchConfigurationChain and in turn be called upon when creating, deleting and populating the indexes.
 
 ## Adding a search provider
 
-Want to trade in Sherlock for another ElasticSearch library ? You can do that by creating a new SearchProvider.
+Want to trade in Sherlock for another ElasticSearch library ? It can be done by creating a new SearchProvider.
 
 Create a new class and implement the [SearchProviderInterface](https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/sherlock/Search/SearchProviderInterface.php).
 
