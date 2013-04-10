@@ -1,5 +1,5 @@
 {
-    "name": "kunstmaan/nodesearch-bundle",
+    "name": "kunstmaan/node-search-bundle",
     "type": "symfony-bundle",
     "description": "The KunstmaanNodeSearchBundle",
     "keywords": ["kunstmaan", "node", "search", "elasticsearch"],
