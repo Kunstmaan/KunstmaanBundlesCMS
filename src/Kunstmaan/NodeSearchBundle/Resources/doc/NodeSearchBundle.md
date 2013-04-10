@@ -60,4 +60,8 @@ You can add the SearchPage to your website by adding it as a possible child to a
     }
 ```
 
+To override the template, simply create a view.html.twig in the 'app/Resources/KunstmaanNodeSearchBundle/views/SearchPage/' folder.
+
+## More documentation
+
 In case you want to extend your searching or even indexing, have a look at the documentation of the [KunstmaanSearchBundle](https://github.com/Kunstmaan/KunstmaanSearchBundle).
