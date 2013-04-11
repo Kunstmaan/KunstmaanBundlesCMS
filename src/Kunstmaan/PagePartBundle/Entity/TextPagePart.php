@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
 
@@ -35,8 +36,6 @@ class TextPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == "TextPagePart " . $this->object->getContent()
-     *
      * @return string
      */
     public function __toString()
@@ -45,8 +44,6 @@ class TextPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:TextPagePart:view.html.twig'
-     *
      * @return string
      */
     public function getDefaultView()

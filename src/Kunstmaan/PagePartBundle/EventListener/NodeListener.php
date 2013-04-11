@@ -4,7 +4,6 @@ namespace Kunstmaan\PagePartBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
@@ -32,22 +31,15 @@ class NodeListener
     private $pagePartAdminFactory;
 
     /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @param Request              $request              The request
      * @param EntityManager        $em                   The entity manager
      * @param FormFactoryInterface $formFactory          The form factory
      * @param PagePartAdminFactory $pagePartAdminFactory The page part admin factory
      */
-    public function __construct(Request $request, EntityManager $em, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
+    public function __construct(EntityManager $em, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
     {
         $this->em = $em;
         $this->formFactory = $formFactory;
         $this->pagePartAdminFactory = $pagePartAdminFactory;
-        $this->request = $request;
     }
 
     /**
@@ -77,7 +69,7 @@ class NodeListener
                         $position = 0;
                     }
                 }
-                $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory, $types, $data), $position);
+                $tabPane->addTab(new PagePartTab($pagePartAdminConfiguration->getName(), $page, $event->getRequest(), $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory, $types, $data), $position);
             }
         }
     }
