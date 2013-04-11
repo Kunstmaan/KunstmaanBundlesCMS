@@ -35,8 +35,6 @@ class RawHTMLPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == "RawHTMLPagePart " . htmlentities($this->object->getContent())
-     *
      * @return string
      */
     public function __toString()
@@ -45,8 +43,6 @@ class RawHTMLPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig'
-     *
      * @return string
      */
     public function getDefaultView()
