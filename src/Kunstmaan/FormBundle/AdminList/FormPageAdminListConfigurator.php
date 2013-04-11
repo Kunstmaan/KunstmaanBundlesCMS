@@ -56,6 +56,21 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
              ->addField("url", "Form path", true);
     }
 
+    /*
+ * Add a view action.
+ */
+    public function buildItemActions()
+    {
+        $create_route = function ($item) {
+            return array(
+                'path'   => 'KunstmaanFormBundle_formsubmissions_list',
+                'params' => array('nodeTranslationId' => $item->getId())
+            );
+        };
+        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, "eye-open", "View");
+        $this->addItemAction($ia);
+    }
+
     /**
      * Return the url to edit the given $item
      *
@@ -87,6 +102,11 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      * @return bool
      */
     public function canAdd()
+    {
+        return false;
+    }
+
+    public function canEdit($item)
     {
         return false;
     }

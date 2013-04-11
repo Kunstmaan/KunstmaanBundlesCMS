@@ -55,6 +55,24 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
              ->addField("ipAddress", "ipAddress", true);
     }
 
+    /*
+     * Add a view action.
+     */
+    public function buildItemActions()
+    {
+        $create_route = function ($item) {
+            $arr = array("path" => "KunstmaanFormBundle_formsubmissions_list_edit", "params" => array("nodeTranslationId" => $this->nodeTranslation->getId(), "submissionId" => $item->getId()));
+            return $arr;
+        };
+        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, "eye-open", "View");
+        $this->addItemAction($ia);
+    }
+
+    public function canEdit($item)
+    {
+        return false;
+    }
+
     /**
      * Return the url to edit the given $item
      *
@@ -178,7 +196,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
         $queryBuilder
                 ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
                 ->andWhere('n.id = :node')
+                ->andWhere('b.lang = :lang')
                 ->setParameter('node', $this->nodeTranslation->getNode()->getId())
+                ->setParameter('lang', $this->nodeTranslation->getLang())
                 ->addOrderBy('b.created', 'DESC');
     }
 
