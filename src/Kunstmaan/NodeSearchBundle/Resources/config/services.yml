@@ -1,7 +1,7 @@
 parameters:
     kunstmaan_node_search.searchconfiguration.node.class: Kunstmaan\NodeSearchBundle\Configuration\NodeSearchConfiguration
-    kunstmaan_node_search.indexname = "nodeindex"
-    kunstmaan_node_search.indextype = "page"
+    kunstmaan_node_search.indexname: "nodeindex"
+    kunstmaan_node_search.indextype: "page"
 services:
 
     kunstmaan_node_search.searchconfiguration.node:
