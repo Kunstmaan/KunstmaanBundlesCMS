@@ -39,7 +39,7 @@ class SearchPage extends AbstractPage implements IndexControllerInterface {
             $context['s_tags'] = $tags;
             $context['q_type'] = $querytype;
             $context['facets'] = $responseData['facets'];
-            $context['responseDate'] = $responseData;
+            $context['responseData'] = $responseData;
         }
     }
 

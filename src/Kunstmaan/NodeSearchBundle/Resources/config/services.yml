@@ -1,11 +1,12 @@
 parameters:
     kunstmaan_node_search.searchconfiguration.node.class: Kunstmaan\NodeSearchBundle\Configuration\NodeSearchConfiguration
-
+    kunstmaan_node_search.indexname = "nodeindex"
+    kunstmaan_node_search.indextype = "page"
 services:
 
     kunstmaan_node_search.searchconfiguration.node:
         class: "%kunstmaan_node_search.searchconfiguration.node.class%"
-        arguments: ["@service_container", "@kunstmaan_search.search"]
+        arguments: ["@service_container", "@kunstmaan_search.search", "%kunstmaan_node_search.indexname%", "%kunstmaan_node_search.indextype%"]
         tags:
             - { name: kunstmaan_search.searchconfiguration, alias: Node }
 

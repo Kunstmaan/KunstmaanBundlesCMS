@@ -9,6 +9,7 @@ use Kunstmaan\NodeSearchBundle\Helper\HasCustomSearchContent;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Helper\IndexControllerInterface;
+use Kunstmaan\SearchBundle\Search\Search;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,17 +21,35 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NodeSearchConfiguration implements SearchConfigurationInterface
 {
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
     private $container;
-    private $em;
-    private $search;
-    private $indexName = 'nodeindex';
-    private $indexNodeType = 'page';
 
-    public function __construct(ContainerInterface $container, $search)
+    private $em;
+
+    /**
+     * @var \Kunstmaan\SearchBundle\Search\Search
+     */
+    private $search;
+
+    /**
+     * @var string
+     */
+    private $indexName;
+
+    /**
+     * @var string
+     */
+    private $indexType;
+
+    public function __construct(ContainerInterface $container, $search, $indexName, $indexType)
     {
         $this->container = $container;
         $this->em = $this->container->get('doctrine')->getEntityManager();
         $this->search = $search;
+        $this->indexName = $indexName;
+        $this->indexType = $indexType;
     }
 
     public function create()
@@ -38,9 +57,9 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $index = $this->search->index($this->indexName);
 
         $index->mappings(
-            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('tags')->analyzer('keyword'),
-            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('type')->analyzer('keyword'),
-            Sherlock::mappingBuilder($this->indexNodeType)->String()->field('slug')->analyzer('keyword')
+            Sherlock::mappingBuilder($this->indexType)->String()->field('tags')->analyzer('keyword'),
+            Sherlock::mappingBuilder($this->indexType)->String()->field('type')->analyzer('keyword'),
+            Sherlock::mappingBuilder($this->indexType)->String()->field('slug')->analyzer('keyword')
         );
 
         $index->create();
@@ -63,7 +82,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
      *
      * @param $node Node
      */
-    public function indexChildren($node)
+    public function indexChildren(Node $node)
     {
         foreach ($node->getChildren() as $childNode) {
             $this->indexNode($childNode);
@@ -152,7 +171,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                     // Add document to index
 
                     $uid = "nodetranslation_" . $nodeTranslation->getId();
-                    $this->search->document($this->indexName, $this->indexNodeType, $doc, $uid);
+                    $this->search->document($this->indexName, $this->indexType, $doc, $uid);
                 }
             }
         }
@@ -161,7 +180,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
     public function deleteNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $uid = "nodetranslation_" . $nodeTranslation->getId();
-        $this->search->deleteDocument($this->indexName, $this->indexNodeType, $uid);
+        $this->search->deleteDocument($this->indexName, $this->indexType, $uid);
     }
 
     public function delete()
