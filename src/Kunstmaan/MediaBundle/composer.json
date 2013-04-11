@@ -15,9 +15,9 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.1.*",
+        "symfony/symfony": ">=2.1.0,<2.3.0",
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
-        "kunstmaan/admin-bundle": "dev-master",
+        "kunstmaan/admin-bundle": "*",
         "kunstmaan/utilities-bundle": "*",
         "stof/doctrine-extensions-bundle": "dev-master",
         "liip/imagine-bundle": "*",
