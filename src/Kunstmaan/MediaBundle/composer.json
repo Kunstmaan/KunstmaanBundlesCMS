@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.1.*",
+        "symfony/symfony": ">=2.1.0,<2.3.0",
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "kunstmaan/admin-bundle": "2.2.*",
         "kunstmaan/utilities-bundle": "2.2.*",
