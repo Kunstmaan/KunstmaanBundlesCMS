@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
@@ -19,6 +20,7 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
+
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -502,7 +504,7 @@ class NodeAdminController extends Controller
             $menuTab->addType('menunode', new NodeMenuTabAdminType(), $node);
             $tabPane->addTab($menuTab);
 
-            $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($tabPane, $page, $node, $nodeTranslation, $nodeVersion));
+            $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($request, $tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         }
         $tabPane->buildForm();
 
