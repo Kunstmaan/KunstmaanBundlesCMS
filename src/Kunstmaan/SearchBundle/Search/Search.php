@@ -2,28 +2,38 @@
 
 namespace Kunstmaan\SearchBundle\Search;
 
+use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
+
 /**
  * Search class which will delegate to the active SearchProvider
  */
 class Search implements SearchProviderInterface
 {
+    /**
+     * @var SearchProviderChain
+     */
     private $searchProviderChain;
 
+    /**
+     * @var string
+     */
     private $indexNamePrefix;
 
     /**
      * @var string
      */
-    private $activeProvider = "Sherlock";
+    private $activeProvider;
 
     /**
      * @param SearchProviderChain $searchProviderChain
      * @param string              $indexNamePrefix
+     * @param string              $activeProvider
      */
-    public function __construct($searchProviderChain, $indexNamePrefix)
+    public function __construct($searchProviderChain, $indexNamePrefix, $activeProvider)
     {
         $this->searchProviderChain = $searchProviderChain;
         $this->indexNamePrefix = $indexNamePrefix;
+        $this->activeProvider = $activeProvider;
     }
 
     /**

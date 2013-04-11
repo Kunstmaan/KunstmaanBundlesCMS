@@ -2,7 +2,7 @@
     "name": "kunstmaan/search-bundle",
     "type": "symfony-bundle",
     "description": "The KunstmaanSearchBundle",
-    "keywords": ["kunstmaan", "search", "elastica"],
+    "keywords": ["kunstmaan", "search", "elasticsearch"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanSearchBundle",
     "license": "MIT",
     "authors": [

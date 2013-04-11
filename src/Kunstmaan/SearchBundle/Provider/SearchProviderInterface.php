@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\SearchBundle\Search;
+namespace Kunstmaan\SearchBundle\Provider;
 
 /**
  * Interface for a SearchProvider
