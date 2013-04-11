@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SearchBundle\Sherlock;
 
-use Kunstmaan\SearchBundle\Search\SearchProviderInterface;
+use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
 use Sherlock\Sherlock;
 
 /**

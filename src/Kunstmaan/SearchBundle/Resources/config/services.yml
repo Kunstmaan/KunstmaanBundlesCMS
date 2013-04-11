@@ -8,7 +8,7 @@ parameters:
 services:
 
     kunstmaan_search.search:
-        arguments: ["@kunstmaan_search.searchprovider_chain", %searchindexprefix%, "@kunstmaan_search.searchprovider"]
+        arguments: ["@kunstmaan_search.searchprovider_chain", %searchindexprefix%, "%kunstmaan_search.searchprovider%"]
         class: Kunstmaan\SearchBundle\Search\Search
 
     # Providers
