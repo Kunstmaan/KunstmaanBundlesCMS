@@ -54,7 +54,7 @@
                     {% else %}
                         <a href="{{ path(itemAction.getUrlFor(item)["path"], itemAction.getUrlFor(item)[("params")] ) }}">
                             {% if itemAction.getIconFor(item) is not null %}
-                                <img src="{{ asset(itemAction.getIconFor(item)) }}" alt="{{ itemAction.getLabelFor(item) }}"/>
+                                <i class="icon-{{ itemAction.getIconFor(item) }}"></i>
                             {% endif %}
                             {{ itemAction.getLabelFor(item) }}
                         </a>
