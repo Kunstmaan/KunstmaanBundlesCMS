@@ -8,8 +8,11 @@ use Kunstmaan\SeoBundle\Entity\Seo,
     Kunstmaan\SeoBundle\Form\SeoType,
     Kunstmaan\SeoBundle\Form\SocialType;
 
-use Kunstmaan\NodeBundle\Helper\Tabs\Tab,
-    Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
+use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+
+
 
 /**
  * This will add a seo tab on each page
@@ -38,13 +41,13 @@ class NodeListener
         /* @var Seo $seo */
         $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($event->getPage());
 
-        $seoTab = new Tab('SEO');
-        $seoTab->addType('seo', new SeoType(), $seo);
-        $event->getTabPane()->addTab($seoTab);
+        $seoWidget = new FormWidget();
+        $seoWidget->addType('seo', new SeoType(), $seo);
+        $event->getTabPane()->addTab(new Tab('SEO', $seoWidget));
 
-        $socialTab = new Tab('Social');
-        $socialTab->addType('social', new SocialType(), $seo);
-        $event->getTabPane()->addTab($socialTab);
+        $socialWidget = new FormWidget();
+        $socialWidget->addType('social', new SocialType(), $seo);
+        $event->getTabPane()->addTab(new Tab('Social', $socialWidget));
     }
 
 }
