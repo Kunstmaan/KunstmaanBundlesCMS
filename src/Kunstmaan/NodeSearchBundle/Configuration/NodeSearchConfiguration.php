@@ -2,9 +2,11 @@
 
 namespace Kunstmaan\NodeSearchBundle\Configuration;
 
+use Doctrine\ORM\Events;
 use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeSearchBundle\Event\IndexNodeContentEvent;
 use Kunstmaan\NodeSearchBundle\Helper\HasCustomSearchContent;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
@@ -149,13 +151,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                         $renderer = $this->container->get('templating');
                         $view = 'KunstmaanSearchBundle:PagePart:view.html.twig';
                         $content = strip_tags($renderer->render($view, array('page' => $page, 'pageparts' => $pageparts, 'pagepartviewresolver' => $this)));
-
                     }
-
-                    if ($page instanceof HasCustomSearchContent) {
-                        $content .= ' ' . $page->getCustomSearchContent();
-                    }
-
                     $doc = array_merge($doc, array("content" => $content));
 
                     // Taggable
@@ -167,6 +163,12 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                         }
                         $doc = array_merge($doc, array("tags" => $tags));
                     }
+
+                    // Trigger index node event
+                    $event = new IndexNodeEvent($page, $doc);
+
+                    $dispatcher = new EventDispatcher();
+                    $dispatcher->dispatch(Events::INDEX_NODE, $event);
 
                     // Add document to index
 
