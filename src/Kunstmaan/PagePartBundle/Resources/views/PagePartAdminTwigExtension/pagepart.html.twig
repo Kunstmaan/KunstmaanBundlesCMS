@@ -1,0 +1,67 @@
+{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+{% set context = pagepartadmin.context %}
+<input type="checkbox" class="deletefield" id="{{id}}_deleted" name="{{id}}_deleted" value="true" style="display:none"/>
+<section class="draggable" id="{{id}}_container" data-scope="{{ pagepartadmin.getClassName(pagepart)|replace({'\\':""}) }}" >
+    {% if pagepart.id == 0 %}
+        <input type="hidden" name="{{context}}_new[]" data-suffix="_new[]" class="pagepartadmin_field_updatecontextname" value="{{id}}" />
+        <input type="hidden" name="{{context}}_type_{{id}}" data-suffix="_type_{{id}}" class="pagepartadmin_field_updatecontextname" value="{{pagepartadmin.getClassName(pagepart)}}" />
+    {% endif %}
+    <input type="hidden" name="{{context}}_sequence[]" data-suffix="_sequence[]" class="pagepartadmin_field_updatecontextname" value="{{id}}" />
+
+	<div class="pagepart">
+	    {% if form_has_errors_recursive(form['pagepartadmin_'~id]) %}
+    		{% set editmode = true %}
+        {% endif %}
+        {% if form['pagepartadmin_'~id].count %}
+    		{% set editable = true %}
+    	{% else %}
+    		{% set editable = false %}
+    	{% endif %}
+    	<div class="prop_bar {% if not form['pagepartadmin_'~id].count %}noedit{% endif %}">
+    		<i class="icon-move"></i>
+    		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
+			<button class="del red" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}"><i class="icon-trash"></i></button>
+			{% if editable %}
+				<button class="bleu" onclick="return PagePartEditor.editPagepart('{{id}}')">Edit</button>
+			{% endif %}
+    	</div>
+
+        <div class="block" id="{{id}}_view" {% if editmode %}style="display:none"{% endif %} {% if editable %}onDblclick="return edit_{{id}}()"{% endif %}>
+            {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
+        </div>
+        <div class="block" id="{{id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
+            {% set pagepartid = 'pagepart'~id %}
+            {% if pagepart.editTemplate is defined %}
+                {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~id]} %}
+            {% else %}
+                {{ form_widget(form['pagepartadmin_'~id]) }}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="new_pagepart">
+      <select onchange="return PagePartEditor.addPagepart(this)" class="addselect">
+        <option value="">Add a pagepart</option>
+        {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+          <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!--Del modal-->
+	<div id="delete-pagepart-modal{{id}}" class="modal hide fade">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">&times;</button>
+			<h3>Delete pagepart '{{pagepartadmin.getType(pagepart)}}'</h3>
+		</div>
+		<div class="modal-body">
+			<p>This will not remove the pagepart completely, save the page to remove this pagepart permanently.</p>
+		</div>
+		<div class="modal-footer">
+			<div class="btn_group">
+				<button type="button" id="" onclick="PagePartEditor.deletePagepart('{{id}}'); $('#delete-pagepart-modal{{id}}').modal('hide');" class="btn btn-danger">Delete</button>
+				<button class="btn" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</section>

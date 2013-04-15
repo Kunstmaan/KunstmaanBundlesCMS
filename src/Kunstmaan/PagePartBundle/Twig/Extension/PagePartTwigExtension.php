@@ -42,7 +42,7 @@ class PagePartTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_pageparts'  => new \Twig_Function_Method($this, 'renderWidget', array('needs_context' => true, 'is_safe' => array('html'))),
+            'render_pageparts'  => new \Twig_Function_Method($this, 'renderPageParts', array('needs_context' => true, 'is_safe' => array('html'))),
             'getpageparts'  => new \Twig_Function_Method($this, 'getPageParts'),
         );
     }
@@ -55,7 +55,7 @@ class PagePartTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderWidget($twigContext, HasPagePartsInterface $page, $contextName = "main", array $parameters = array())
+    public function renderPageParts($twigContext, HasPagePartsInterface $page, $contextName = "main", array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
         /* @var $entityRepository PagePartRefRepository */

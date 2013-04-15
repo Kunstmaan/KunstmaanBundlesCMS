@@ -35,8 +35,6 @@ class TextPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == "TextPagePart " . $this->object->getContent()
-     *
      * @return string
      */
     public function __toString()
@@ -45,8 +43,6 @@ class TextPagePart extends AbstractPagePart
     }
 
     /**
-     * @assert () == 'KunstmaanPagePartBundle:TextPagePart:view.html.twig'
-     *
      * @return string
      */
     public function getDefaultView()

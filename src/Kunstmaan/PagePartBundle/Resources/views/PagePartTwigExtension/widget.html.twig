@@ -1,3 +1,4 @@
 {% for box in pageparts %}
-    {% include box.defaultview with {'resource': box} %}
+    {% set resource = box %}
+    {% include box.defaultview %}
 {% endfor %}
