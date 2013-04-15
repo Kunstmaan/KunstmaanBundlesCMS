@@ -6,7 +6,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Helper\Slugifier;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
@@ -257,7 +257,7 @@ class NodeTranslationRepository extends EntityRepository
 
 
     /**
-     * Look if all parents of a NodeTranslation have NodeTranslations 
+     * Look if all parents of a NodeTranslation have NodeTranslations
      * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $nodeTranslation
      * @param $language
      * @return bool

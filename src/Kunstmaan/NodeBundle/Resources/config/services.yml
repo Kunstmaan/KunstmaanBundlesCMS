@@ -61,11 +61,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -100 }
 
-    kunstmaan_node.tabs.twig.extension:
-        class: Kunstmaan\NodeBundle\Twig\TabsTwigExtension
-        tags:
-            - { name: twig.extension }
-
     kunstmaan_node.edit_node.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeListener
         arguments: ["@security.context", "@kunstmaan_admin.permissionadmin", "@security.acl.permission.map"]
