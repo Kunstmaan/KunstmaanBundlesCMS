@@ -94,3 +94,8 @@ services:
 
     kunstmaan_admin.form.helper:
         class: Kunstmaan\AdminBundle\Helper\FormHelper
+        
+    kunstmaan_admin.tabs.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\TabsTwigExtension
+        tags:
+            - { name: twig.extension }

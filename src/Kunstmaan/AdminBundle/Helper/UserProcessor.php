@@ -29,6 +29,9 @@ class UserProcessor
      */
     private $record = array();
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
