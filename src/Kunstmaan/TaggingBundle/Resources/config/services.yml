@@ -20,6 +20,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.postDeepCloneAndSave, method: postDeepCloneAndSave }
 
+    kuma_tagging.index_node.listener:
+        class: Kunstmaan\TaggingBundle\EventListener\IndexNodeEventListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_node_search.onIndexNode, method: onIndexNode }
+
     kuma_tagging.menu.adaptor:
         class: Kunstmaan\TaggingBundle\Helper\Menu\TagMenuAdaptor
         tags:
