@@ -74,7 +74,7 @@ class SearchPage extends AbstractPage implements IndexControllerInterface {
         $typeFacet = Sherlock::facetBuilder()->Terms()->fields("type")->facetname("type");
         $request->facets($tagFacet, $typeFacet);
 
-        $highlight = Sherlock::highlightBuilder()->Highlight()->pre_tags(array("<strong>"))->post_tags(array("</strong>"))->fields(array("content" => array("fragment_size" => 150, "number_of_fragments" => 1)));
+        $highlight = Sherlock::highlightBuilder()->Highlight()->pre_tags(array("<strong>"))->post_tags(array("</strong>"))->fields(array("content" => array("fragment_size" => 250, "number_of_fragments" => 1)));
 
         $request->highlight($highlight);
 

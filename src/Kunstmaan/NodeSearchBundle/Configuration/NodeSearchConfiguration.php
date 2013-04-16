@@ -162,23 +162,11 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                     }
                     $doc = array_merge($doc, array("content" => $content));
 
-                    // Taggable
-
-                    if ($page instanceof Taggable) {
-                        $tags = array();
-                        foreach ($page->getTags() as $tag) {
-                            $tags[] = $tag->getName();
-                        }
-                        $doc = array_merge($doc, array("tags" => $tags));
-                    }
-
                     // Trigger index node event
                     $event = new IndexNodeEvent($page, $doc);
 
-                    $dispatcher = new EventDispatcher();
+                    $dispatcher = $this->container->get('event_dispatcher');
                     $dispatcher->dispatch(Events::INDEX_NODE, $event);
-
-
 
                     // Add document to index
 

@@ -13,22 +13,17 @@ class IndexNodeEvent extends Event {
 
     protected $page;
 
-    protected $doc;
+    public $doc;
 
-    public function __construct($page, $doc)
+    public function __construct($page, &$doc)
     {
         $this->page = $page;
-        $this->doc = $doc;
+        $this->doc = &$doc;
     }
 
     public function getPage()
     {
         return $this->page;
-    }
-
-    public function getDoc()
-    {
-        $this->doc;
     }
 
 }
