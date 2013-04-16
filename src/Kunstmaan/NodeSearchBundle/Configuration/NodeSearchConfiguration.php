@@ -57,11 +57,13 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $index = $this->search->index($this->indexName);
 
         $index->mappings(
+            Sherlock::mappingBuilder($this->indexType)->Analyzer()->path("contentanalyzer"),
             Sherlock::mappingBuilder($this->indexType)->String()->field('parents')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('ancestors')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('tags')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('type')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('slug')->analyzer('keyword')
+
         );
 
         $index->create();
@@ -118,15 +120,17 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                 if (!($page instanceof IndexControllerInterface) or $page->shouldBeIndexed()) {
 
                     $doc = array(
-                        "node_id"            => $node->getId(),
-                        "nodetranslation_id" => $nodeTranslation->getId(),
-                        "nodeversion_id"     => $publicNodeVersion->getId(),
-                        "title"              => $nodeTranslation->getTitle(),
-                        "lang"               => $nodeTranslation->getLang(),
-                        "slug"               => $nodeTranslation->getFullSlug(),
-                        "type"               => ClassLookup::getClassName($page),
-
+                        "node_id"               => $node->getId(),
+                        "nodetranslation_id"    => $nodeTranslation->getId(),
+                        "nodeversion_id"        => $publicNodeVersion->getId(),
+                        "title"                 => $nodeTranslation->getTitle(),
+                        "lang"                  => $nodeTranslation->getLang(),
+                        "slug"                  => $nodeTranslation->getFullSlug(),
+                        "type"                  => ClassLookup::getClassName($page),
                     );
+                    $language = $this->container->getParameter('kunstmaan_search')['analyzer_languages'][$nodeTranslation->getLang()];
+
+                    $doc['contentanalyzer'] = $language;
 
                     // Parent and Ancestors
 
