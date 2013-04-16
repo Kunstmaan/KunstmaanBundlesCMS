@@ -5,9 +5,7 @@ namespace Kunstmaan\NodeSearchBundle\Event;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class IndexNodeEvent
- *
- * @package Kunstmaan\NodeSearchBundle\Event
+ * Event triggered when a Node is being indexed. The document is being passed by reference to allow manipulation before being added to the index
  */
 class IndexNodeEvent extends Event
 {

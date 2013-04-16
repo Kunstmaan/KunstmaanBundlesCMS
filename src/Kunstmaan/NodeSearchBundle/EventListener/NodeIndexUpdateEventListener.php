@@ -5,6 +5,9 @@ namespace Kunstmaan\NodeSearchBundle\EventListener;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * EventListener which will be triggered when a Node has been updated in order to update its related documents in the index
+ */
 class NodeIndexUpdateEventListener
 {
     private $container;

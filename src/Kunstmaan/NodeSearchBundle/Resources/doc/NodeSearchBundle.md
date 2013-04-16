@@ -27,11 +27,11 @@ In "parent" you will find the ID of the parent Node. In "ancestors" you will fin
 
 ### Content
 
-The field "content" will contain the bulk text content from the page. By default we check if the page implements the HasPagePartsInterface. If it does, it will iterate over all PageParts and load its template. The content of that template will be rendered and stripped from all tags. In case you have content in additional fields, create an EventListener on "kunstmaan_search.onIndexNode" which will allow you to manipulate the document before its being indexed.
+The field "content" will contain the bulk text content from the page. By default we check if the page implements the HasPagePartsInterface. If it does, it will iterate over all PageParts and load its template. The content of that template will be rendered and stripped from all tags.
 
-### Taggable
+### Extra fields
 
-In case your page implements the DoctrineExtensions\Taggable\Taggable interface, the tags will also be indexed in the field "tags".
+In case you want to index extra content or index addition information, create an EventListener on "kunstmaan_node_search.onIndexNode" which will allow you to manipulate the document before its being indexed.
 
 ### ID
 
