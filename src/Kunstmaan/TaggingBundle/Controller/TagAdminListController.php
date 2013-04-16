@@ -27,6 +27,7 @@ class TagAdminListController extends AdminListController
         if (!isset($this->configurator)) {
             $this->configurator = new TagAdminListConfigurator($this->getDoctrine()->getManager());
         }
+
         return $this->configurator;
     }
 
@@ -87,8 +88,8 @@ class TagAdminListController extends AdminListController
             ->orderBy('n.name', 'ASC')
             ->setParameter('search', '%' . $search . '%');
         $tags = $qb->getQuery()->getResult();
-    
+
         return array('tags' => $tags);
     }
-        
+
 }

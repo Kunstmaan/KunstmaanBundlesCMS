@@ -6,7 +6,6 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use DoctrineExtensions\Taggable\Taggable;
 
 use Kunstmaan\NodeBundle\Event\NodeEvent;
-use Kunstmaan\TaggingBundle\Entity\TagManager;
 
 class TagsListener
 {

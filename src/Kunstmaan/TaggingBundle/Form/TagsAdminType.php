@@ -4,7 +4,6 @@ namespace Kunstmaan\TaggingBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormBuilder;
 
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 use Kunstmaan\TaggingBundle\Form\DataTransformer\TagsTransformer;
@@ -53,7 +52,7 @@ class TagsAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    function getName()
+    public function getName()
     {
         return 'kunstmaan_taggingbundle_tags';
     }

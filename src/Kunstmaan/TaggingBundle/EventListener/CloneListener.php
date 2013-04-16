@@ -5,7 +5,6 @@ namespace Kunstmaan\TaggingBundle\EventListener;
 use Doctrine\ORM\EntityManager;
 use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * This listener will make sure the tags are copied as well

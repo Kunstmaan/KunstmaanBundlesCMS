@@ -16,7 +16,7 @@ class TagManager extends BaseTagManager
     /**
      * Gets all tags for the given taggable resource
      *
-     * @param \DoctrineExtensions\Taggable\Taggable  $resource   Taggable resource
+     * @param \DoctrineExtensions\Taggable\Taggable $resource Taggable resource
      */
     public function getTagging(\DoctrineExtensions\Taggable\Taggable $resource)
     {
@@ -44,7 +44,7 @@ class TagManager extends BaseTagManager
     public function findById($id)
     {
 
-        if(!isset($id) || is_null($id)) {
+        if (!isset($id) || is_null($id)) {
             return NULL;
         }
         $builder = $this->em->createQueryBuilder();
@@ -64,6 +64,7 @@ class TagManager extends BaseTagManager
     public function findAll()
     {
         $tagsRepo = $this->em->getRepository('KunstmaanTaggingBundle:Tag');
+
         return $tagsRepo->findAll();
     }
 

@@ -12,7 +12,7 @@ class TagRepository extends EntityRepository
 
     protected $tagManager;
 
-    function __construct($em, ClassMetadata $class)
+    public function __construct($em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
         $this->tagManager = new TagManager($em, 'Kunstmaan\TaggingBundle\Entity\Tag', 'Kunstmaan\TaggingBundle\Entity\Tagging');

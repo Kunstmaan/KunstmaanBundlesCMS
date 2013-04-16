@@ -7,7 +7,6 @@ use DoctrineExtensions\Taggable\Entity\Tagging as BaseTagging;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * @ORM\Entity()
  * @ORM\Table(name="kuma_taggings",indexes={@ORM\Index(name="kuma_taggings_type_index", columns={"resource_type"})})
@@ -167,6 +166,5 @@ class Tagging extends BaseTagging
     {
         return $this->updatedAt;
     }
-
 
 }
