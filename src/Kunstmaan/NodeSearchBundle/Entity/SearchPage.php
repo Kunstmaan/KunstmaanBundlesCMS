@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
  * @ORM\Entity()
  * @ORM\Table(name="kuma_searchpage")
  */
-class SearchPage extends AbstractPage implements IndexControllerInterface {
-
+class SearchPage extends AbstractPage implements IndexControllerInterface
+{
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
         $querystring = $request->get("query");
@@ -23,9 +23,9 @@ class SearchPage extends AbstractPage implements IndexControllerInterface {
         $queryrtag = $request->get("rtag");
         $querytype = $request->get("type");
         $tags = array();
-        if($querytag and $querytag != ''){
+        if ($querytag and $querytag != '') {
             $tags = explode(',', $querytag);
-            if($queryrtag and $queryrtag != '') {
+            if ($queryrtag and $queryrtag != '') {
                 unset($tags[$queryrtag]);
                 $tags = array_merge(array_diff($tags, array($queryrtag)));
             }

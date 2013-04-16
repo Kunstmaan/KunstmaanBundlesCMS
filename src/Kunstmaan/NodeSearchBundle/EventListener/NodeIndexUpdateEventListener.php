@@ -5,8 +5,8 @@ namespace Kunstmaan\NodeSearchBundle\EventListener;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class NodeIndexUpdateEventListener {
-
+class NodeIndexUpdateEventListener
+{
     private $container;
 
     public function __construct(ContainerInterface $container)

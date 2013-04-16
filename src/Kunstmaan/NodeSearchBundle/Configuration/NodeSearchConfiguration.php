@@ -2,11 +2,9 @@
 
 namespace Kunstmaan\NodeSearchBundle\Configuration;
 
-use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeSearchBundle\Event\Events;
-use Kunstmaan\NodeSearchBundle\Event\IndexNodeContentEvent;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
@@ -15,7 +13,6 @@ use Kunstmaan\SearchBundle\Search\Search;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -78,7 +75,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
 
         $nodes = $nodeRepository->getAllTopNodes();
 
-        foreach($languages as $lang){
+        foreach ($languages as $lang) {
             foreach ($nodes as $node) {
                 $this->indexNode($node, $lang);
             }
@@ -88,8 +85,8 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
     public function indexNode(Node $node, $lang)
     {
         $nodeTranslation = $node->getNodeTranslation($lang);
-        if($nodeTranslation){
-            if($this->indexNodeTranslation($nodeTranslation)){
+        if ($nodeTranslation) {
+            if ($this->indexNodeTranslation($nodeTranslation)) {
                 $this->indexChildren($node, $lang);
             }
         }
@@ -103,8 +100,8 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
     }
 
     /**
-     * @param  NodeTranslation  $nodeTranslation
-     * @return bool                                 Return true of document has been indexed
+     * @param  NodeTranslation $nodeTranslation
+     * @return bool            Return true of document has been indexed
      */
     public function indexNodeTranslation(NodeTranslation $nodeTranslation)
     {
@@ -172,7 +169,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
 
                     $uid = "nodetranslation_" . $nodeTranslation->getId();
                     $suffix = $uid;
-                    if($parentNodeTranslation){
+                    if ($parentNodeTranslation) {
                         $puid = "nodetranslation_" . $parentNodeTranslation->getId();
                         //$suffix .=  "?parent=". $puid;
                     }
@@ -202,8 +199,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $request->query($query);
         $response = $this->search->search($this->indexName, $this->indexType, $request->toJSON(), true);
 
-        foreach($response['hits']['hits'] as $hit)
-        {
+        foreach ($response['hits']['hits'] as $hit) {
             $nodetranslation_id = $hit['_source']['nodetranslation_id'];
             $childNodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodetranslation_id);
             $this->deleteNodeTranslation($childNodeTranslation);

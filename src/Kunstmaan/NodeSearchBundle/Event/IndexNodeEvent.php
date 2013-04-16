@@ -9,8 +9,8 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @package Kunstmaan\NodeSearchBundle\Event
  */
-class IndexNodeEvent extends Event {
-
+class IndexNodeEvent extends Event
+{
     protected $page;
 
     public $doc;

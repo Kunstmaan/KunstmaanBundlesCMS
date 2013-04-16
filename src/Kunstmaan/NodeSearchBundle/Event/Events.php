@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeSearchBundle\Event;
 
-
 class Events
 {
 
