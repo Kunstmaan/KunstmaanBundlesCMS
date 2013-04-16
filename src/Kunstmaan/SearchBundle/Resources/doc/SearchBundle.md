@@ -50,7 +50,7 @@ $request->facets($tagFacet);
 
 See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding facets.
 
-#### Highligting
+#### Highlighting
 
 Sherlock also supplies a HighlightBuilder to add highlighting to your search results.
 
