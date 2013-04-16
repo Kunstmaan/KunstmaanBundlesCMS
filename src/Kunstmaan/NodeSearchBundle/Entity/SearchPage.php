@@ -52,7 +52,7 @@ class SearchPage extends AbstractPage implements IndexControllerInterface {
         $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
         $contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
 
-        $query = $tagQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
+        $query = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
 
         if (count($tags) > 0) {
             $tagQueries = array();

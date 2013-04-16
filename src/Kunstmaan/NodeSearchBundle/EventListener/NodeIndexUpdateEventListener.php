@@ -27,7 +27,7 @@ class NodeIndexUpdateEventListener {
     private function index(NodeEvent $event)
     {
         $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.searchconfiguration.node');
-        $nodeSearchConfiguration->indexNodeTranslation($event->getNodeTranslation());
+        $nodeSearchConfiguration->indexNode($event->getNode(), $event->getNodeTranslation()->getLang());
     }
 
     public function onPostDelete(NodeEvent $event)
@@ -41,7 +41,7 @@ class NodeIndexUpdateEventListener {
     }
 
     /**
-     * @param NodeEvent $event
+     * @param \Kunstmaan\NodeBundle\Event\NodeEvent $event
      */
     public function delete(NodeEvent $event)
     {

@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\NodeSearchBundle\Configuration;
 
-use Doctrine\ORM\Events;
 use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeSearchBundle\Event\Events;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeContentEvent;
-use Kunstmaan\NodeSearchBundle\Helper\HasCustomSearchContent;
+use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Helper\IndexControllerInterface;
@@ -15,6 +15,7 @@ use Kunstmaan\SearchBundle\Search\Search;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -59,6 +60,8 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $index = $this->search->index($this->indexName);
 
         $index->mappings(
+            Sherlock::mappingBuilder($this->indexType)->String()->field('parents')->analyzer('keyword'),
+            Sherlock::mappingBuilder($this->indexType)->String()->field('ancestors')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('tags')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('type')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('slug')->analyzer('keyword')
@@ -71,36 +74,37 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
     {
         $nodeRepository = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
-        $topNodes = $nodeRepository->getAllTopNodes();
+        $languages = explode('|', $this->container->getParameter('requiredlocales'));
 
-        foreach ($topNodes as $topNode) {
-            $this->indexNode($topNode);
-            $this->indexChildren($topNode);
+        $nodes = $nodeRepository->getAllTopNodes();
+
+        foreach($languages as $lang){
+            foreach ($nodes as $node) {
+                $this->indexNode($node, $lang);
+            }
         }
     }
 
-    /**
-     * Recursively index the children of the node
-     *
-     * @param $node Node
-     */
-    public function indexChildren(Node $node)
+    public function indexNode(Node $node, $lang)
+    {
+        $nodeTranslation = $node->getNodeTranslation($lang);
+        if($nodeTranslation){
+            if($this->indexNodeTranslation($nodeTranslation)){
+                $this->indexChildren($node, $lang);
+            }
+        }
+    }
+
+    public function indexChildren(Node $node, $lang)
     {
         foreach ($node->getChildren() as $childNode) {
-            $this->indexNode($childNode);
-            $this->indexChildren($childNode);
-        }
-    }
-
-    public function indexNode(Node $node)
-    {
-        foreach ($node->getNodeTranslations() as $nodeTranslation) {
-            $this->indexNodeTranslation($nodeTranslation);
+            $this->indexNode($childNode, $lang);
         }
     }
 
     /**
-     * @param      $nodeTranslation
+     * @param  NodeTranslation  $nodeTranslation
+     * @return bool                                 Return true of document has been indexed
      */
     public function indexNodeTranslation(NodeTranslation $nodeTranslation)
     {
@@ -112,6 +116,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                 $node = $nodeTranslation->getNode();
                 // Retrieve the referenced entity from the public NodeVersion
                 $page = $publicNodeVersion->getRef($this->em);
+
                 // If the page doesn't implement IndexControllerInterfance or it return true on shouldBeIndexed, index the page
                 if (!($page instanceof IndexControllerInterface) or $page->shouldBeIndexed()) {
 
@@ -129,14 +134,17 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                     // Parent and Ancestors
 
                     $parent = $node->getParent();
+                    $parentNodeTranslation = null;
+
                     if ($parent) {
+                        $parentNodeTranslation = $parent->getNodeTranslation($nodeTranslation->getLang());
                         $doc = array_merge($doc, array("parent" => $parent->getId()));
                         $ancestors = array();
                         do {
                             $ancestors[] = $parent->getId();
                             $parent = $parent->getParent();
                         } while ($parent);
-                        $doc = array_merge($doc, array("ancestors" => implode(' ', $ancestors)));
+                        $doc = array_merge($doc, array("ancestors" => $ancestors));
                     }
 
                     // Content
@@ -170,19 +178,49 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                     $dispatcher = new EventDispatcher();
                     $dispatcher->dispatch(Events::INDEX_NODE, $event);
 
+
+
                     // Add document to index
 
                     $uid = "nodetranslation_" . $nodeTranslation->getId();
-                    $this->search->document($this->indexName, $this->indexType, $doc, $uid);
+                    $suffix = $uid;
+                    if($parentNodeTranslation){
+                        $puid = "nodetranslation_" . $parentNodeTranslation->getId();
+                        //$suffix .=  "?parent=". $puid;
+                    }
+
+                    $this->search->document($this->indexName, $this->indexType, $doc, $suffix);
+
+                    return true;
                 }
             }
         }
+
+        return false;
     }
 
     public function deleteNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $uid = "nodetranslation_" . $nodeTranslation->getId();
         $this->search->deleteDocument($this->indexName, $this->indexType, $uid);
+
+        $ancestorQuery = Sherlock::queryBuilder()->Term()->field("ancestors")->term($nodeTranslation->getNode()->getId());
+        $langQuery =  Sherlock::queryBuilder()->Term()->field("lang")->term($nodeTranslation->getLang());
+
+        $query = Sherlock::queryBuilder()->Bool()->must($ancestorQuery, $langQuery)->minimum_number_should_match(1);
+
+        $sherlock = $this->container->get('kunstmaan_search.searchprovider.sherlock');
+        $request = $sherlock->getSherlock()->search();
+        $request->query($query);
+        $response = $this->search->search($this->indexName, $this->indexType, $request->toJSON(), true);
+
+        foreach($response['hits']['hits'] as $hit)
+        {
+            $nodetranslation_id = $hit['_source']['nodetranslation_id'];
+            $childNodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodetranslation_id);
+            $this->deleteNodeTranslation($childNodeTranslation);
+        }
+
     }
 
     public function delete()
