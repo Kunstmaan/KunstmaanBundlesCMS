@@ -55,9 +55,11 @@ interface SearchProviderInterface
      * @param string $indexType
      * @param string $querystring The query string
      * @param bool   $json        The $querystring is formatted as JSON, default set to false
+     * @param null   $from        Offset from which the searchresults must start
+     * @param null   $size        The number of hits to return
      *
      * @return array
      */
-    public function search($indexName, $indexType, $querystring, $json = false);
+    public function search($indexName, $indexType, $querystring, $json = false, $from = null, $size = null);
 
 }

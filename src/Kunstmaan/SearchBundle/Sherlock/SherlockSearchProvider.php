@@ -53,7 +53,7 @@ class SherlockSearchProvider implements SearchProviderInterface
         return $this->sherlock->index($name)->delete();
     }
 
-    public function search($indexName, $indexType, $querystring, $json = false)
+    public function search($indexName, $indexType, $querystring, $json = false, $from = null, $size = null)
     {
         $request = $this->sherlock->search();
         if ($json) {
@@ -69,9 +69,15 @@ class SherlockSearchProvider implements SearchProviderInterface
             $request->highlight($highlight);
         }
 
-        $request->index($indexName)
-            ->type($indexType)
-            ->query($query);
+        $request->index($indexName)->type($indexType)->query($query);
+
+        if($from){
+            $request->index($indexName)->type($indexType)->from($from);
+        }
+
+        if($size){
+            $request->index($indexName)->type($indexType)->size($from);
+        }
 
         $response = $request->execute();
 

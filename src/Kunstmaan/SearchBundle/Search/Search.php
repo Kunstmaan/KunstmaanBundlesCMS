@@ -66,9 +66,9 @@ class Search implements SearchProviderInterface
         return $this->getActiveProvider()->index($this->indexNamePrefix . $indexName)->delete();
     }
 
-    public function search($indexName, $indexType, $querystring, $json = false)
+    public function search($indexName, $indexType, $querystring, $json = false, $from = null, $size = null)
     {
-        return $this->getActiveProvider()->search($this->indexNamePrefix . $indexName, $indexType, $querystring, $json);
+        return $this->getActiveProvider()->search($this->indexNamePrefix . $indexName, $indexType, $querystring, $json, $from, $size);
     }
 
     public function getName()
