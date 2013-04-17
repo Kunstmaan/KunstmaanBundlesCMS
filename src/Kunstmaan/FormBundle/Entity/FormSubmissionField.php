@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @ORM\DiscriminatorMap({
  *     "string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
  *     "text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
+ *     "boolean" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField",
  *     "choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
  *     "file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField",
  *     "email" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField"
