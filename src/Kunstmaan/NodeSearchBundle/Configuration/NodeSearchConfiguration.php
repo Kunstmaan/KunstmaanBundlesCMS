@@ -128,7 +128,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                         "slug"                  => $nodeTranslation->getFullSlug(),
                         "type"                  => ClassLookup::getClassName($page),
                     );
-                    $language = $this->container->getParameter('kunstmaan_search')['analyzer_languages'][$nodeTranslation->getLang()];
+                    $language = $this->container->getParameter('analyzer_languages')[$nodeTranslation->getLang()]['analyzer'];
 
                     $doc['contentanalyzer'] = $language;
 
