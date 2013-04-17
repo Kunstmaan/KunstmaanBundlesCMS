@@ -27,6 +27,11 @@ AppKernel.php:
         );
 ```
 
+config.yml:
+```
+imports:
+    - { resource: @KunstmaanSearchBundle/Resources/config/config.yml }
+```
 ## Configuration
 
 ### Parameter
