@@ -7,11 +7,8 @@ use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
 
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * The security controller will handle the login procedure
@@ -22,12 +19,12 @@ class SecurityController extends BaseController
     /**
      * Handle login action
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return string
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-        /* @var Request $request */
-        $request = $this->container->get('request');
         /* @var EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
         $session = $request->getSession();

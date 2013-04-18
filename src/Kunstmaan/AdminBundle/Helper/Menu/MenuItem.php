@@ -43,6 +43,11 @@ class MenuItem
     private $active = false;
 
     /**
+     * @var boolean
+     */
+    private $offline = false;
+
+    /**
      * @var MenuItem[]
      */
     private $children = null;
@@ -298,6 +303,30 @@ class MenuItem
     public function setActive($active)
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get menu item offline state
+     *
+     * @return bool
+     */
+    public function getOffline()
+    {
+        return $this->offline;
+    }
+
+    /**
+     * Set menu item offline state
+     *
+     * @param bool $offline
+     *
+     * @return MenuItem
+     */
+    public function setOffline($offline)
+    {
+        $this->offline = $offline;
 
         return $this;
     }
