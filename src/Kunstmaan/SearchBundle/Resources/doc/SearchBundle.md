@@ -2,6 +2,8 @@
 
 ## Searching
 
+In case you are using the [KunstmaanNodeBundle](https://github.com/Kunstmaan/KunstmaanNodeBundle), you can use the [KunstmaanNodeSearchBundle](https://github.com/Kunstmaan/KunstmaanNodeSearchBundle) which offers you an implementation of this SearchBundle to search your pages. It contains a ready made SearchPage to start with.
+
 ### Standard
 
 By default the search method accepts a string which will be searched for in the 'title' and 'content' fields in the index.

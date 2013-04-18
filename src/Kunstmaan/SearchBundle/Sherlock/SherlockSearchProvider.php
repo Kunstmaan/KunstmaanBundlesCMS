@@ -18,16 +18,25 @@ class SherlockSearchProvider implements SearchProviderInterface
         $this->sherlock->addNode($hostname, $port);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getName()
     {
         return "Sherlock";
     }
 
+    /**
+     * @inheritdoc
+     */
     public function index($name)
     {
         return $this->sherlock->index($name);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function document($indexName, $indexType, $doc, $uid)
     {
         $doc = $this->sherlock
@@ -38,6 +47,9 @@ class SherlockSearchProvider implements SearchProviderInterface
         $doc->execute();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function deleteDocument($indexName, $indexType, $uid)
     {
         $this->sherlock
@@ -48,11 +60,17 @@ class SherlockSearchProvider implements SearchProviderInterface
             ->execute();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function delete($name)
     {
         return $this->sherlock->index($name)->delete();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function search($indexName, $indexType, $querystring, $json = false, $from = null, $size = null)
     {
         $request = $this->sherlock->search();
@@ -84,6 +102,9 @@ class SherlockSearchProvider implements SearchProviderInterface
         return $response->responseData;
     }
 
+    /**
+     * @return Sherlock
+     */
     public function getSherlock()
     {
         return  $this->sherlock;

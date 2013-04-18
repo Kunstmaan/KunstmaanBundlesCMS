@@ -6,6 +6,7 @@ use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
 
 /**
  * Search class which will delegate to the active SearchProvider
+ * The active SearchProvider can be overridden by overriding the "kunstmaan_search.searchprovider" parameter
  */
 class Search implements SearchProviderInterface
 {
@@ -46,36 +47,59 @@ class Search implements SearchProviderInterface
         return $this->searchProviderChain->getSearchProvider($this->activeProvider);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function index($indexName)
     {
         return $this->getActiveProvider()->index($this->indexNamePrefix . $indexName);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function document($indexName, $indexType, $doc, $uid)
     {
         return $this->getActiveProvider()->document($this->indexNamePrefix . $indexName, $indexType, $doc, $uid);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function deleteDocument($indexName, $indexType, $uid)
     {
         return $this->getActiveProvider()->deleteDocument($this->indexNamePrefix . $indexName, $indexType, $uid);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function delete($indexName)
     {
         return $this->getActiveProvider()->index($this->indexNamePrefix . $indexName)->delete();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function search($indexName, $indexType, $querystring, $json = false, $from = null, $size = null)
     {
         return $this->getActiveProvider()->search($this->indexNamePrefix . $indexName, $indexType, $querystring, $json, $from, $size);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getName()
     {
         return "Search";
     }
 
+    /**
+     * Get the prefix for the index' name
+     *
+     * @return string
+     */
     public function getIndexNamePrefix()
     {
         return $this->indexNamePrefix;
