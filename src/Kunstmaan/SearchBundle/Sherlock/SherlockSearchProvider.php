@@ -29,7 +29,7 @@ class SherlockSearchProvider implements SearchProviderInterface
     /**
      * @inheritdoc
      */
-    public function index($name)
+    public function createIndex($name)
     {
         return $this->sherlock->index($name);
     }
@@ -63,7 +63,7 @@ class SherlockSearchProvider implements SearchProviderInterface
     /**
      * @inheritdoc
      */
-    public function delete($name)
+    public function deleteIndex($name)
     {
         return $this->sherlock->index($name)->delete();
     }

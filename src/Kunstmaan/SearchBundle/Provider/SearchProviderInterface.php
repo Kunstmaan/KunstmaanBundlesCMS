@@ -19,7 +19,7 @@ interface SearchProviderInterface
      *
      * @param string $indexName Name of the index
      */
-    public function index($indexName);
+    public function createIndex($indexName);
 
     /**
      * Add a document to the index
@@ -45,7 +45,7 @@ interface SearchProviderInterface
      *
      * @param $indexName    Name of the index to delete
      */
-    public function delete($indexName);
+    public function deleteIndex($indexName);
 
     /**
      * Search the index. The query string will by default search in the 'title' and 'content' fields.

@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Command to delete all indexes.
  *
- * It will load the SearchConfigurationChain and call the delete() method on each SearchConfguration
+ * It will load the SearchConfigurationChain and call the deleteIndex() method on each SearchConfguration
  */
 class DeleteIndexCommand extends ContainerAwareCommand
 {
@@ -30,7 +30,7 @@ class DeleteIndexCommand extends ContainerAwareCommand
 
         $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');
         foreach ($searchConfigurationChain->getSearchConfigurations() as $alias => $searchConfiguration) {
-            $searchConfiguration->delete();
+            $searchConfiguration->deleteIndex();
             $output->writeln('Index deleted : ' . $alias);
         }
 

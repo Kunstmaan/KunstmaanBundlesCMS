@@ -73,14 +73,14 @@ Implement the three methods from the interface.
 
 ### Implement methods
 
-#### create
+#### createIndex
 
 This method is expected to create one or more indexes. Sherlock has a MappingBuilder to help create mappings for your index.
 
 ```PHP
-    public function create()
+    public function createIndex()
     {
-        $index = $this->search->index($this->indexName);
+        $index = $this->search->createIndex($this->indexName);
 
         $index->mappings(
             Sherlock::mappingBuilder('type')->String()->field('title'),
@@ -93,30 +93,30 @@ This method is expected to create one or more indexes. Sherlock has a MappingBui
 ```
 See [Sherlock](https://github.com/polyfractal/sherlock) for more information regarding the MappingBuilder.
 
-#### index
+#### populateIndex
 
 The index method will be called upon to populate your index with documents. With '$indexName' and '$indexType' parameter you can control where this document is being put.
 
 ```PHP
-    public function index()
+    public function populateIndex()
     {
         $doc = array(
             "title" => "Test Title",
             "content" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec lacus tortor, ut ultricies libero. Donec dapibus erat a nisi condimentum viverra."
         );
         $uid = "a_unique_doc_id";
-        $this->search->document($indexName, $indexType, $doc, $uid);
+        $this->search->addDocument($indexName, $indexType, $doc, $uid);
     }
 ```
 
-#### delete
+#### deleteIndex
 
 Delete the index(es) in this method.
 
 ```PHP
-    public function delete()
+    public function deleteIndex()
     {
-        $this->search->delete($indexName);
+        $this->search->deleteIndex($indexName);
     }
 ```
 ### Tagged service
@@ -146,7 +146,7 @@ Create a new class and implement the [SearchProviderInterface](https://github.co
 
 ### Implement methods
 
-#### index
+#### createIndex
 
 Create the index
 
@@ -158,7 +158,7 @@ Add the document to the index
 
 Delete the document from the index
 
-#### delete
+#### deleteIndex
 
 Delete the index
 
@@ -168,18 +168,18 @@ The search method allows 2 ways of searching. A standard search which is expecte
 
 ## Commands
 
-Create indexes by performing the following command. It will iterate over all SearchConfigurations and call the create() method.
+Create indexes by performing the following command. It will iterate over all SearchConfigurations and call the createIndex() method.
 ```
 kuma:search:setup
 ```
-Use the following command to populate the indexes. Use the 'full' argument to delete and create the indexes again. This command will iterate over all SearchConfigurations and call the index() method.
+Use the following command to populate the indexes. Use the 'full' argument to delete and create the indexes again. This command will iterate over all SearchConfigurations and call the populateIndex() method.
 ```
 kuma:search:populate
 ```
 ```
 kuma:search:populate full
 ```
-Next command is used to delete the indexes. It will iterate over all SearchConfigurations and call the delete() method.
+Next command is used to delete the indexes. It will iterate over all SearchConfigurations and call the deleteIndex() method.
 ```
 kuma:search:delete
 ```

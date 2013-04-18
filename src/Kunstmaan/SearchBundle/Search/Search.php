@@ -50,9 +50,9 @@ class Search implements SearchProviderInterface
     /**
      * @inheritdoc
      */
-    public function index($indexName)
+    public function createIndex($indexName)
     {
-        return $this->getActiveProvider()->index($this->indexNamePrefix . $indexName);
+        return $this->getActiveProvider()->createIndex($this->indexNamePrefix . $indexName);
     }
 
     /**
@@ -74,9 +74,9 @@ class Search implements SearchProviderInterface
     /**
      * @inheritdoc
      */
-    public function delete($indexName)
+    public function deleteIndex($indexName)
     {
-        return $this->getActiveProvider()->index($this->indexNamePrefix . $indexName)->delete();
+        return $this->getActiveProvider()->createIndex($this->indexNamePrefix . $indexName)->delete();
     }
 
     /**

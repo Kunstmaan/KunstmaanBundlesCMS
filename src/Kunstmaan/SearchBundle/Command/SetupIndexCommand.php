@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Command to create the indexes
  *
- * It will load the SearchConfigurationChain and call the create() method on each SearchConfguration
+ * It will load the SearchConfigurationChain and call the createIndex() method on each SearchConfguration
  */
 class SetupIndexCommand extends ContainerAwareCommand
 {
@@ -29,7 +29,7 @@ class SetupIndexCommand extends ContainerAwareCommand
     {
         $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');
         foreach ($searchConfigurationChain->getSearchConfigurations() as $alias => $searchConfiguration) {
-            $searchConfiguration->create();
+            $searchConfiguration->createIndex();
             $output->writeln('Index created : ' . $alias);
         }
     }

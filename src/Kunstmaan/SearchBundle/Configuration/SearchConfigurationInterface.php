@@ -10,16 +10,16 @@ interface SearchConfigurationInterface
     /**
      * Create indexes
      */
-    public function create();
+    public function createIndex();
 
     /**
      * Populate the indexes
      */
-    public function index();
+    public function populateIndex();
 
     /**
      * Delete indexes
      */
-    public function delete();
+    public function deleteIndex();
 
 }
