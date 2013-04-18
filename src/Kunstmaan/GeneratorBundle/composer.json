@@ -17,14 +17,17 @@
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.1.0,<2.3.0",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-fixtures-bundle": "2.1.*",
-        "friendsofsymfony/user-bundle": "*",
-        "sensio/generator-bundle": "2.2.*",
+        "sensio/generator-bundle": "2.2.*"
+    },
+    "suggest": {
+        "kunstmaan/admin-bundle": "*",
         "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/node-bundle": "*",
         "kunstmaan/form-bundle": "*",
-        "kunstmaan/pagepart-bundle": "*",
-        "kunstmaan/media-pagepart-bundle": "*"
+        "kunstmaan/media-bundle": "*",
+        "kunstmaan/media-pagepart-bundle": "*",
+        "kunstmaan/node-bundle": "*",
+        "kunstmaan/pagepart-bundle": "*"
+
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\GeneratorBundle": "" }

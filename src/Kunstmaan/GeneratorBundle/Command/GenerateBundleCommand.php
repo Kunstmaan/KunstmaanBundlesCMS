@@ -165,8 +165,7 @@ EOT
         $output->writeln(array('', 'The bundle can be generated anywhere. The suggested default directory uses', 'the standard conventions.', '',));
         $dir = $dialog
             ->askAndValidate($output, $dialog->getQuestion('Target directory', $dir),
-                function ($dir) use ($bundle, $namespace)
-                {
+                function ($dir) use ($bundle, $namespace) {
                     return Validators::validateTargetDir($dir, $bundle, $namespace);
                 }, false, $dir);
         $input->setOption('dir', $dir);

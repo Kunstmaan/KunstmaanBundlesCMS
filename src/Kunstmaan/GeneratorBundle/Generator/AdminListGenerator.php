@@ -9,7 +9,6 @@ use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -121,8 +120,8 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     }
 
     /**
-     * @param Bundle        $bundle     The bundle
-     * @param string        $entityName The entity name
+     * @param Bundle $bundle     The bundle
+     * @param string $entityName The entity name
      *
      * @throws \RuntimeException
      */
@@ -178,7 +177,6 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     {
         return GeneratorUtils::getFieldsFromMetadata($metadata);
     }
-
 
     /**
      * @param ClassMetadata $metadata
