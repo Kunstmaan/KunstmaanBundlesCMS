@@ -8,7 +8,7 @@ use Kunstmaan\NodeSearchBundle\Event\Events;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
-use Kunstmaan\SearchBundle\Helper\IndexControllerInterface;
+use Kunstmaan\SearchBundle\Helper\ShouldBeIndexed;
 use Kunstmaan\SearchBundle\Search\Search;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sherlock\Sherlock;
@@ -116,8 +116,8 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                 // Retrieve the referenced entity from the public NodeVersion
                 $page = $publicNodeVersion->getRef($this->em);
 
-                // If the page doesn't implement IndexControllerInterfance or it return true on shouldBeIndexed, index the page
-                if (!($page instanceof IndexControllerInterface) or $page->shouldBeIndexed()) {
+                // If the page doesn't implement ShouldBeIndexed interface or it return true on shouldBeIndexed, index the page
+                if (!($page instanceof ShouldBeIndexed) or $page->shouldBeIndexed()) {
 
                     $doc = array(
                         "node_id"               => $node->getId(),
