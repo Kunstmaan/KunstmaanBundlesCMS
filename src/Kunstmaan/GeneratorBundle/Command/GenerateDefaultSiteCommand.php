@@ -78,6 +78,9 @@ EOT
         $this->getSiteGenerator($output, $dialog)->generate($bundle, $prefix, $rootDir);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $dialog = $this->getDialogHelper();
@@ -138,6 +141,9 @@ EOT
     }
 
     /**
+     * @param OutputInterface $output The output
+     * @param DialogHelper    $dialog The dialog helper
+     *
      * @return DefaultSiteGenerator
      */
     protected function getSiteGenerator(OutputInterface $output, DialogHelper $dialog)
