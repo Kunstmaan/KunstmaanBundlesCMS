@@ -30,7 +30,8 @@ class PageTemplateTwigExtension extends \Twig_Extension
     protected $environment;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager   $em     The entity manager
+     * @param KernelInterface $kernel The kernel
      */
     public function __construct(EntityManager $em, KernelInterface $kernel)
     {
@@ -58,14 +59,13 @@ class PageTemplateTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param $twigContext
-     * @param HasPagePartsInterface $page       The page
-     * @param string                $context    The pagepart context
-     * @param array                 $parameters Some extra parameters
+     * @param array                    $twigContext The twig context
+     * @param HasPageTemplateInterface $page        The page
+     * @param array                    $parameters  Some extra parameters
      *
      * @return string
      */
-    public function renderPageTemplate($twigContext, HasPageTemplateInterface $page, array $parameters = array())
+    public function renderPageTemplate(array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
     {
         $pageTemplateConfigurationReader = new PageTemplateConfigurationReader($this->kernel);
         $pageTemplates = $pageTemplateConfigurationReader->getPageTemplates($page);

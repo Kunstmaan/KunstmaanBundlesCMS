@@ -48,14 +48,14 @@ class PagePartTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param $twigContext
-     * @param HasPagePartsInterface $page       The page
-     * @param string                $context    The pagepart context
-     * @param array                 $parameters Some extra parameters
+     * @param array                 $twigContext The twig context
+     * @param HasPagePartsInterface $page        The page
+     * @param string                $contextName The pagepart context
+     * @param array                 $parameters  Some extra parameters
      *
      * @return string
      */
-    public function renderPageParts($twigContext, HasPagePartsInterface $page, $contextName = "main", array $parameters = array())
+    public function renderPageParts(array $twigContext, HasPagePartsInterface $page, $contextName = "main", array $parameters = array())
     {
         $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
         /* @var $entityRepository PagePartRefRepository */

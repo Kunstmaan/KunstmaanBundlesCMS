@@ -101,7 +101,7 @@ class PagePartWidget extends FormWidget
     }
 
     /**
-     * @param EntityManager $em      The entity manager
+     * @param EntityManager $em The entity manager
      */
     public function persist(EntityManager $em)
     {
@@ -156,6 +156,7 @@ class PagePartWidget extends FormWidget
         if (isset($editPagePart)) {
             $params['editpagepart'] = $editPagePart;
         }
+
         return $params;
     }
 

@@ -27,7 +27,8 @@ class CloneListener
     private $kernel;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager   $em     The entity manager
+     * @param KernelInterface $kernel The kernel
      */
     public function __construct(EntityManager $em, KernelInterface $kernel)
     {
