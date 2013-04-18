@@ -23,8 +23,20 @@ class FormPagePagePartAdminConfigurator extends ContentPagePagePartAdminConfigur
                     'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart'
                 ),
                 array(
+                    'name' => 'Email input',
+                    'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart'
+                ),
+                array(
+                    'name' => 'File upload',
+                    'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart'
+                ),
+                array(
                     'name' => 'Choice input',
                     'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart'
+                ),
+                array(
+                    'name' => 'Submit button',
+                    'class'=> 'Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart'
                 )
             ), $this->pagePartTypes
         );
