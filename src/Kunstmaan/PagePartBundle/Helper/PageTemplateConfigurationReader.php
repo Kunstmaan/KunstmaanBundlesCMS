@@ -55,4 +55,28 @@ class PageTemplateConfigurationReader
 
         return $result;
     }
+
+    /**
+     * @param HasPageTemplateInterface $page
+     *
+     * @throws \Exception
+     * @return array(string => PageTemplate)
+     */
+    public function getPageTemplates(HasPageTemplateInterface $page)
+    {
+        $pageTemplates = array();
+        foreach ($page->getPageTemplates() as $pageTemplate) {
+            $pt = null;
+            if (is_string($pageTemplate)) {
+                $pt = $this->parse($pageTemplate);
+            } else if (is_object($pageTemplate) && $pageTemplate instanceof PageTemplate) {
+                $pt = $pageTemplate;
+            } else {
+                throw new \Exception("don't know how to handle the pageTemplate " . get_class($pageTemplate));
+            }
+            $pageTemplates[$pt->getName()] = $pt;
+        }
+
+        return $pageTemplates;
+    }
 }

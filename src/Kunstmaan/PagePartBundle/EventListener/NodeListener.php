@@ -79,17 +79,9 @@ class NodeListener
         } else if ($page instanceof HasPagePartsInterface) {
             /* @var HasPagePartsInterface $page */
             $pagePartConfigurationReader = new PagePartConfigurationReader($this->kernel);
-            $pagePartAdminConfigurations = array();
-            foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
-                if (is_string($pagePartAdminConfiguration)) {
-                    $pagePartAdminConfigurations[] = $pagePartConfigurationReader->parse($pagePartAdminConfiguration);
-                } else if (is_object($pagePartAdminConfiguration) && $pagePartAdminConfiguration instanceof AbstractPagePartAdminConfigurator) {
-                    $pagePartAdminConfigurations[] = $pagePartAdminConfiguration;
-                } else {
-                    throw new \Exception("don't know how to handle the pagePartAdminConfiguration " . get_class($pagePartAdminConfiguration));
-                }
-            }
-            foreach ($pagePartAdminConfigurations as $index => $pagePartAdminConfiguration) {
+            $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
+
+            foreach ($pagePartAdminConfigurators as $index => $pagePartAdminConfiguration) {
                 $pagePartWidget = new PagePartWidget($page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory);
                 if ($index == 0) {
                     /* @var Tab $propertiesTab */

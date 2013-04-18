@@ -9,6 +9,7 @@ use Kunstmaan\PagePartBundle\PageTemplate\Region;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfigurator;
+use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 /**
  * PagePartConfigurationReader
  */
@@ -44,21 +45,36 @@ class PagePartConfigurationReader
         $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pageparts/'.$name.'.yml');
         $rawdata = Yaml::parse($path);
         $result->setName($rawdata["name"]);
+        $result->setInternalName($name);
         $types = array();
         foreach ($rawdata["types"] as $rawType) {
             $types[] = array("name"=>$rawType["name"], "class"=>$rawType["class"]);
         }
         $result->setPossiblePagePartTypes($types);
-        $result->setDefaultContext($name);
+        $result->setContext($rawdata["context"]);
 
         return $result;
     }
+
     /**
-     * name: "Banners"
-types:
-    - { name: "Header", class: "Kunstmaan\PagePartBundle\Entity\HeaderPagePart" }
-    - { name: "Text", class: "Kunstmaan\PagePartBundle\Entity\TextPagePart" }
-    - { name: "Line", class: "Kunstmaan\PagePartBundle\Entity\LinePagePart" }
-    - { name: "Image", class: "Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart" }
+     * @param HasPagePartsInterface $page
+     *
+     * @throws \Exception
+     * @return AbstractPagePartAdminConfigurator[]
      */
+    public function getPagePartAdminConfigurators(HasPagePartsInterface $page)
+    {
+        $pagePartAdminConfigurators = array();
+        foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
+            if (is_string($pagePartAdminConfiguration)) {
+                $pagePartAdminConfigurators[] = $this->parse($pagePartAdminConfiguration);
+            } else if (is_object($pagePartAdminConfiguration) && $pagePartAdminConfiguration instanceof AbstractPagePartAdminConfigurator) {
+                $pagePartAdminConfigurators[] = $pagePartAdminConfiguration;
+            } else {
+                throw new \Exception("don't know how to handle the pagePartAdminConfiguration " . get_class($pagePartAdminConfiguration));
+            }
+        }
+
+        return $pagePartAdminConfigurators;
+    }
 }

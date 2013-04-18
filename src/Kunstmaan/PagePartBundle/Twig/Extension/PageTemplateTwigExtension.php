@@ -68,18 +68,7 @@ class PageTemplateTwigExtension extends \Twig_Extension
     public function renderPageTemplate($twigContext, HasPageTemplateInterface $page, array $parameters = array())
     {
         $pageTemplateConfigurationReader = new PageTemplateConfigurationReader($this->kernel);
-        $pageTemplates = array();
-        foreach ($page->getPageTemplates() as $pageTemplate) {
-            $pt = null;
-            if (is_string($pageTemplate)) {
-                $pt = $pageTemplateConfigurationReader->parse($pageTemplate);
-            } else if (is_object($pageTemplate) && $pageTemplate instanceof PageTemplate) {
-                $pt = $pageTemplate;
-            } else {
-                throw new \Exception("don't know how to handle the pageTemplate " . get_class($pageTemplate));
-            }
-            $pageTemplates[$pt->getName()] = $pt;
-        }
+        $pageTemplates = $pageTemplateConfigurationReader->getPageTemplates($page);
 
         /* @var $pageTemplate PageTemplate */
         $pageTemplate = $pageTemplates[$this->getPageTemplate($page)];
@@ -100,7 +89,7 @@ class PageTemplateTwigExtension extends \Twig_Extension
     {
         /**@var $entityRepository PageTemplateConfigurationRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
-        $pageTemplateConfiguration = $entityRepository->findFor($page);
+        $pageTemplateConfiguration = $entityRepository->findOrCreateFor($page);
 
         return $pageTemplateConfiguration->getPageTemplate();
     }

@@ -70,8 +70,8 @@ class PagePartAdmin
         if ($context) {
             $this->context = $context;
         } else {
-            if ($this->configurator->getDefaultContext()) {
-                $this->context = $this->configurator->getDefaultContext();
+            if ($this->configurator->getContext()) {
+                $this->context = $this->configurator->getContext();
             } else {
                 $this->context = "main";
             }
@@ -202,7 +202,7 @@ class PagePartAdmin
                     $pageLimit = $possibleTypeData['pagelimit'];
                     /** @var PagePartRefRepository $entityRepository  */
                     $entityRepository = $em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-                    $formPPCount = $entityRepository->countPagePartsOfType($this->page, $possibleTypeData['class'], $this->configurator->getDefaultContext());
+                    $formPPCount = $entityRepository->countPagePartsOfType($this->page, $possibleTypeData['class'], $this->configurator->getContext());
                     if ($formPPCount < $pageLimit) {
                         $result[] = $possibleTypeData;
                     }

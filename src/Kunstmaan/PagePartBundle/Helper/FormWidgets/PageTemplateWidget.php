@@ -99,36 +99,16 @@ class PageTemplateWidget extends FormWidget
         $this->em = $em;
         $this->request = $request;
         $pageTemplateConfigurationReader = new PageTemplateConfigurationReader($kernel);
-        foreach ($page->getPageTemplates() as $pageTemplate) {
-            $pt = null;
-            if (is_string($pageTemplate)) {
-                $pt = $pageTemplateConfigurationReader->parse($pageTemplate);
-            } else if (is_object($pageTemplate) && $pageTemplate instanceof PageTemplate) {
-                $pt = $pageTemplate;
-            } else {
-                throw new \Exception("don't know how to handle the pageTemplate " . get_class($pageTemplate));
-            }
-            $this->pageTemplates[$pt->getName()] = $pt;
-        }
+        $this->pageTemplates = $pageTemplateConfigurationReader->getPageTemplates($page);
         $pagePartConfigurationReader = new PagePartConfigurationReader($kernel);
-
-        foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
-            if (is_string($pagePartAdminConfiguration)) {
-                $this->pagePartAdminConfigurations[] = $pagePartConfigurationReader->parse($pagePartAdminConfiguration);
-            } else if (is_object($pagePartAdminConfiguration) && $pagePartAdminConfiguration instanceof AbstractPagePartAdminConfigurator) {
-                $this->pagePartAdminConfigurations[] = $pagePartAdminConfiguration;
-            } else {
-                throw new \Exception("don't know how to handle the pagePartAdminConfiguration " . $pagePartAdminConfiguration);
-            }
-        }
-
-        $this->pageTemplateConfiguration = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration')->findOrCreateFor($page, $this->pageTemplates[key($this->pageTemplates)]);
+        $this->pagePartAdminConfigurations = $pagePartConfigurationReader->getPagePartAdminConfigurators($this->page);
+        $this->pageTemplateConfiguration = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration')->findOrCreateFor($page);
 
         foreach ($this->getPageTemplate()->getRows() as $row) {
             foreach ($row->getRegions() as $region) {
                 $pagePartAdminConfiguration = null;
                 foreach ($this->pagePartAdminConfigurations as $ppac) {
-                    if ($ppac->getDefaultContext() == $region->getName()) {
+                    if ($ppac->getInternalName() == $region->getName()) {
                         $pagePartAdminConfiguration = $ppac;
                     }
                 }

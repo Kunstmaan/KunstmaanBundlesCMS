@@ -39,25 +39,16 @@ class PagePartAdminController extends Controller
         $page = $this->em->getRepository($pageclassname)->findOneById($pageid);
 
         $pagePartConfigurationReader = new PagePartConfigurationReader($this->container->get('kernel'));
-        $pagePartAdminConfigurations = array();
-        foreach ($page->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
-            if (is_string($pagePartAdminConfiguration)) {
-                $pagePartAdminConfigurations[] = $pagePartConfigurationReader->parse($pagePartAdminConfiguration);
-            } else if (is_object($pagePartAdminConfiguration) && $pagePartAdminConfiguration instanceof AbstractPagePartAdminConfigurator) {
-                $pagePartAdminConfigurations[] = $pagePartAdminConfiguration;
-            } else {
-                throw new \Exception("don't know how to handle the pagePartAdminConfiguration " . get_class($pagePartAdminConfiguration));
+        $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
+
+        $pagepartadminconfigurator = null;
+        foreach ($pagePartAdminConfigurators as $ppac) {
+            if ($context == $ppac->getContext()) {
+                $pagepartadminconfigurator = $ppac;
             }
         }
 
-        $pagepartadminconfiguration = null;
-        foreach ($pagePartAdminConfigurations as $ppac) {
-            if ($context == $ppac->getDefaultContext()) {
-                $pagepartadminconfiguration = $ppac;
-            }
-        }
-
-        $pagePartAdmin = new PagePartAdmin($pagepartadminconfiguration, $this->em, $page, $context, $this->container);
+        $pagePartAdmin = new PagePartAdmin($pagepartadminconfigurator, $this->em, $page, $context, $this->container);
         $pagepart = new $type();
 
         $formFactory = $this->container->get('form.factory');

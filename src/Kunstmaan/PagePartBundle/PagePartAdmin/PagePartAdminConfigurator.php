@@ -15,6 +15,12 @@ class PagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
     /**
      * @var string
      */
+    protected $internalName;
+
+
+    /**
+     * @var string
+     */
     protected $context;
 
     /**
@@ -57,7 +63,23 @@ class PagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
     /**
      * @return string
      */
-    public function getDefaultContext()
+    public function getInternalName()
+    {
+        return $this->internalName;
+    }
+
+    /**
+     * @param string $internalName
+     */
+    public function setInternalName($internalName)
+    {
+        $this->internalName = $internalName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContext()
     {
         return $this->context;
     }
@@ -65,7 +87,7 @@ class PagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
     /**
      * @param string $context
      */
-    public function setDefaultContext($context)
+    public function setContext($context)
     {
         $this->context = $context;
     }

@@ -46,18 +46,9 @@ class CloneListener
             $clonedEntity = $event->getClonedEntity();
 
             $pagePartConfigurationReader = new PagePartConfigurationReader($this->kernel);
-            $pagePartAdminConfigurations = array();
-            foreach ($originalEntity->getPagePartAdminConfigurations() as $pagePartAdminConfiguration) {
-                if (is_string($pagePartAdminConfiguration)) {
-                    $pagePartAdminConfigurations[] = $pagePartConfigurationReader->parse($pagePartAdminConfiguration);
-                } else if (is_object($pagePartAdminConfiguration) && $pagePartAdminConfiguration instanceof AbstractPagePartAdminConfigurator) {
-                    $pagePartAdminConfigurations[] = $pagePartAdminConfiguration;
-                } else {
-                    throw new \Exception("don't know how to handle the pagePartAdminConfiguration " . get_class($pagePartAdminConfiguration));
-                }
-            }
-            foreach ($pagePartAdminConfigurations as $ppConfiguration) {
-                $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($this->em, $originalEntity, $clonedEntity, $ppConfiguration->getDefaultContext());
+            $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($originalEntity);
+            foreach ($pagePartAdminConfigurators as $ppConfigurator) {
+                $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($this->em, $originalEntity, $clonedEntity, $ppConfigurator->getContext());
             }
         }
         if ($originalEntity instanceof HasPageTemplateInterface) {
