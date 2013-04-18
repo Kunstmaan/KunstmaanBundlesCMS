@@ -52,9 +52,9 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $this->indexType = $indexType;
     }
 
-    public function create()
+    public function createIndex()
     {
-        $index = $this->search->index($this->indexName);
+        $index = $this->search->createIndex($this->indexName);
 
         $index->mappings(
             Sherlock::mappingBuilder($this->indexType)->Analyzer()->path("contentanalyzer"),
@@ -69,7 +69,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $index->create();
     }
 
-    public function index()
+    public function populateIndex()
     {
         $nodeRepository = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
@@ -178,7 +178,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                         //$suffix .=  "?parent=". $puid;
                     }
 
-                    $this->search->document($this->indexName, $this->indexType, $doc, $suffix);
+                    $this->search->addDocument($this->indexName, $this->indexType, $doc, $suffix);
 
                     return true;
                 }
@@ -211,8 +211,8 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
 
     }
 
-    public function delete()
+    public function deleteIndex()
     {
-        $this->search->delete($this->indexName);
+        $this->search->deleteIndex($this->indexName);
     }
 }
