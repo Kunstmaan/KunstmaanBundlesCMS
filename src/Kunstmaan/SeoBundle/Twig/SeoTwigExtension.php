@@ -98,6 +98,13 @@ class SeoTwigExtension extends Twig_Extension
         return $this->getPreferredValue($arr);
     }
 
+    /**
+     * @param AbstractPage $entity   The page
+     * @param string       $platform The platform
+     *
+     * @throws \InvalidArgumentException
+     * @return boolean|string
+     */
     public function getSocialWidgetFor(AbstractPage $entity, $platform)
     {
         $seo = $this->getSeoFor($entity);
@@ -133,6 +140,11 @@ class SeoTwigExtension extends Twig_Extension
         return $template->render($arguments);
     }
 
+    /**
+     * @param array $values
+     *
+     * @return string
+     */
     protected function getPreferredValue(array $values)
     {
         foreach ($values as $v) {
@@ -145,8 +157,9 @@ class SeoTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param AbstractEntity $entity   The entity
-     * @param string         $template The template
+     * @param AbstractEntity $entity      The entity
+     * @param object         $currentNode The current node
+     * @param string         $template    The template
      *
      * @return string
      */
