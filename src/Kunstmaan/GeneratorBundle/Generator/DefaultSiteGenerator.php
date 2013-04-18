@@ -7,7 +7,6 @@ use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\DependencyInjection\Container;
 
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 
@@ -52,9 +51,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle  The bundle
-     * @param string    $prefix  The prefix
-     * @param string    $rootDir The root directory
+     * @param Bundle $bundle  The bundle
+     * @param string $prefix  The prefix
+     * @param string $rootDir The root directory
      */
     public function generate(Bundle $bundle, $prefix, $rootDir)
     {
@@ -102,9 +101,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
-     * @param string    $rootDir    The root directory
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
+     * @param string $rootDir    The root directory
      */
     public function generateTemplates(Bundle $bundle, array $parameters, $rootDir)
     {
@@ -148,9 +147,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
-     * @param string    $rootDir    The root directory
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
+     * @param string $rootDir    The root directory
      */
     public function generateErrorTemplates(Bundle $bundle, array $parameters, $rootDir)
     {
@@ -192,8 +191,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
      *
      * @throws \RuntimeException
      */
@@ -212,8 +211,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
      *
      * @throws \RuntimeException
      */
@@ -250,8 +249,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
      *
      * @throws \RuntimeException
      */
@@ -280,8 +279,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
      */
     public function generateEntities(Bundle $bundle, array $parameters)
     {

@@ -9,7 +9,6 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Tools\EntityGenerator;
 use Doctrine\ORM\Tools\EntityRepositoryGenerator;
-use Doctrine\ORM\Tools\Export\ClassMetadataExporter;
 
 class DoctrineEntityGenerator extends Generator
 {

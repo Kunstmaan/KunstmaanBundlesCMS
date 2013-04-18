@@ -125,7 +125,7 @@ EOT
             list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
             // check reserved words
-            if ($this->getGenerator()->isReservedKeyword($entity)){
+            if ($this->getGenerator()->isReservedKeyword($entity)) {
                 $output->writeln(sprintf('<bg=red> "%s" is a reserved word</>.', $entity));
                 continue;
             }
@@ -252,7 +252,7 @@ EOT
                 }
 
                 // check reserved words
-                if ($self->getGenerator()->isReservedKeyword($name)){
+                if ($self->getGenerator()->isReservedKeyword($name)) {
                     throw new \InvalidArgumentException(sprintf('Name "%s" is a reserved word.', $name));
                 }
 
