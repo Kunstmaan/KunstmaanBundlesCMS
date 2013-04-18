@@ -37,7 +37,7 @@ class SherlockSearchProvider implements SearchProviderInterface
     /**
      * @inheritdoc
      */
-    public function document($indexName, $indexType, $doc, $uid)
+    public function addDocument($indexName, $indexType, $doc, $uid)
     {
         $doc = $this->sherlock
             ->document()

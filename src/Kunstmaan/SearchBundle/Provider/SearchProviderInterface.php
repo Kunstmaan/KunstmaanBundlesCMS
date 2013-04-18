@@ -29,7 +29,7 @@ interface SearchProviderInterface
      * @param array  $doc       The document to index
      * @param        $uid       Unique ID for this document, this will allow the document to be overwritten by new data instead of being duplicated
      */
-    public function document($indexName, $indexType, $doc, $uid);
+    public function addDocument($indexName, $indexType, $doc, $uid);
 
     /**
      * delete a document from the index

@@ -150,9 +150,13 @@ Create a new class and implement the [SearchProviderInterface](https://github.co
 
 Create the index
 
-#### document
+#### addDocument
 
 Add the document to the index
+
+### deleteDocument
+
+Delete the document from the index
 
 #### delete
 

@@ -58,9 +58,9 @@ class Search implements SearchProviderInterface
     /**
      * @inheritdoc
      */
-    public function document($indexName, $indexType, $doc, $uid)
+    public function addDocument($indexName, $indexType, $doc, $uid)
     {
-        return $this->getActiveProvider()->document($this->indexNamePrefix . $indexName, $indexType, $doc, $uid);
+        return $this->getActiveProvider()->addDocument($this->indexNamePrefix . $indexName, $indexType, $doc, $uid);
     }
 
     /**
