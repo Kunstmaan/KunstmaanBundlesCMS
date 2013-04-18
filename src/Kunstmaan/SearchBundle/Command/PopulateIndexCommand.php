@@ -10,6 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Command to populate all indexes. Use the 'full' argument when you want to delete and add all indexes again
+ *
+ * It will load the SearchConfigurationChain and call the index() method on each SearchConfguration
  */
 class PopulateIndexCommand extends ContainerAwareCommand
 {
@@ -17,11 +19,15 @@ class PopulateIndexCommand extends ContainerAwareCommand
     {
         $this
             ->setName("kuma:search:populate")
-            ->addArgument('full', InputArgument::OPTIONAL, 'Delete and create a new index before populating')
-            ->setDescription("Populate the index")
+            ->addArgument('full', InputArgument::OPTIONAL, 'Delete and create new index(es) before populating')
+            ->setDescription("Populate the index(es)")
         ;
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getArgument('full')) {

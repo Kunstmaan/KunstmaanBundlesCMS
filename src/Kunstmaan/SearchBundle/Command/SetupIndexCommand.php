@@ -8,6 +8,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Command to create the indexes
+ *
+ * It will load the SearchConfigurationChain and call the create() method on each SearchConfguration
  */
 class SetupIndexCommand extends ContainerAwareCommand
 {
@@ -15,10 +17,14 @@ class SetupIndexCommand extends ContainerAwareCommand
     {
         $this
             ->setName("kuma:search:setup")
-            ->setDescription("Set up the index")
+            ->setDescription("Set up the index(es)")
             ;
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.searchconfiguration_chain');

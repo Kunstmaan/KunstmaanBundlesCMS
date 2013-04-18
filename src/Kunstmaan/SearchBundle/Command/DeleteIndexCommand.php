@@ -7,7 +7,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command to delete all indexes
+ * Command to delete all indexes.
+ *
+ * It will load the SearchConfigurationChain and call the delete() method on each SearchConfguration
  */
 class DeleteIndexCommand extends ContainerAwareCommand
 {
@@ -15,10 +17,14 @@ class DeleteIndexCommand extends ContainerAwareCommand
     {
         $this
             ->setName("kuma:search:delete")
-            ->setDescription("Delete the index")
+            ->setDescription("Delete the index(es)")
             ;
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
