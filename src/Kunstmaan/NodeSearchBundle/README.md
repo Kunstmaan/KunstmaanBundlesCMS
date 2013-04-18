@@ -26,7 +26,7 @@ AppKernel.php:
 
 ### SearchPage
 
-Add the SearchPage as a possible child to a page in your website :
+Extend the AbstractSearchPage and add your new class as a possible child to a page in your website :
 ```PHP
     /**
      * @return array
@@ -35,8 +35,8 @@ Add the SearchPage as a possible child to a page in your website :
     {
         return array(
             array(
-                'name' => 'Search',
-                'class'=> "Kunstmaan\NodeSearchBundle\Entity\SearchPage"
+                'name' => 'Search page',
+                'class'=> "Acme\DemoBundle\Entity\SearchPage"
             )
         );
     }

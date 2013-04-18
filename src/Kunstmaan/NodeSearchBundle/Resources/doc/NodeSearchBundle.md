@@ -43,8 +43,7 @@ When a page is being updated, an event will be triggered to update the index wit
 
 ## Searching
 
-You can add the SearchPage to your website by adding it as a possible child to any page in your website :
-
+Extend the AbstractSearchPage and add your new class as a possible child to a page in your website :
 ```PHP
     /**
      * @return array
@@ -53,8 +52,8 @@ You can add the SearchPage to your website by adding it as a possible child to a
     {
         return array(
             array(
-                'name' => 'Search',
-                'class'=> "Kunstmaan\NodeSearchBundle\Entity\SearchPage"
+                'name' => 'Search page',
+                'class'=> "Acme\DemoBundle\Entity\SearchPage"
             )
         );
     }

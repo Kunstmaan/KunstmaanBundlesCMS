@@ -14,22 +14,43 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="kuma_searchpage")
+ * AbstractSearchPage, extend this class to create your own SearchPage and extends the standard functionality
+ *
  */
-class SearchPage extends AbstractPage implements IndexControllerInterface
+class AbstractSearchPage extends AbstractPage implements IndexControllerInterface
 {
+    /**
+     * Default number of search results to show per page (default: 10)
+     * @var int
+     */
+    public $defaultperpage;
+
+    public function __construct()
+    {
+        $this->defaultperpage = 10;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param Request            $request
+     * @param RenderContext      $context
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|void
+     */
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
+        // Retrieve the current page number from the URL, if not present of lower than 1, set it to 1
         $pagenumber = $request->get("page");
         if (!$pagenumber or $pagenumber < 1) {
             $pagenumber = 1;
         }
+        // Retrieve the search parameters
         $querystring = $request->get("query");
         $querytag = $request->get("tag");
         $queryrtag = $request->get("rtag");
         $querytype = $request->get("type");
         $tags = array();
+        // Put the tags in an array
         if ($querytag and $querytag != '') {
             $tags = explode(',', $querytag);
             if ($queryrtag and $queryrtag != '') {
@@ -37,6 +58,7 @@ class SearchPage extends AbstractPage implements IndexControllerInterface
                 $tags = array_merge(array_diff($tags, array($queryrtag)));
             }
         }
+        // Perform a search if there is a querystring available
         if ($querystring and $querystring != "") {
             $pagerfanta = $this->search($container, $querystring, $querytype, $tags, $pagenumber);
             $context['q_query'] = $querystring;
@@ -47,7 +69,17 @@ class SearchPage extends AbstractPage implements IndexControllerInterface
         }
     }
 
-    public function search($container, $querystring, $type, $tags, $pagenumber)
+    /**
+     * @param ContainerInterface $container
+     * @param string             $querystring
+     * @param string             $type
+     * @param array              $tags
+     * @param int                $pagenumber
+     *
+     * @return Pagerfanta
+     * @throws NotFoundHttpException
+     */
+    public function search(ContainerInterface $container, $querystring, $type, array $tags, $pagenumber)
     {
         $search = $container->get('kunstmaan_search.search');
         $sherlock = $container->get('kunstmaan_search.searchprovider.sherlock');
@@ -86,7 +118,7 @@ class SearchPage extends AbstractPage implements IndexControllerInterface
 
         $adapter = new SearchAdapter($search, "nodeindex", "page", $json, true);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(2);
+        $pagerfanta->setMaxPerPage($this->defaultperpage);
         try {
             $pagerfanta->setCurrentPage($pagenumber);
         } catch (NotValidCurrentPageException $e) {
@@ -109,7 +141,7 @@ class SearchPage extends AbstractPage implements IndexControllerInterface
      */
     public function getDefaultView()
     {
-        return "KunstmaanNodeSearchBundle:SearchPage:view.html.twig";
+        return "KunstmaanNodeSearchBundle:AbstractSearchPage:view.html.twig";
     }
 
     /**
