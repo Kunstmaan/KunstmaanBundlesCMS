@@ -19,6 +19,7 @@
         "kunstmaan/node-bundle": "*",
         "kunstmaan/pagepart-bundle": "*",
         "kunstmaan/search-bundle": "*",
+        "pagerfanta/pagerfanta": "dev-master",
         "sherlock/sherlock": "0.1.*"
     },
     "autoload": {

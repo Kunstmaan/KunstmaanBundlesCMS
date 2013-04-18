@@ -5,7 +5,10 @@ namespace Kunstmaan\NodeSearchBundle\Entity;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SearchAdapter;
 use Kunstmaan\SearchBundle\Helper\IndexControllerInterface;
+use Pagerfanta\Exception\NotValidCurrentPageException;
+use Pagerfanta\Pagerfanta;
 use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +21,10 @@ class SearchPage extends AbstractPage implements IndexControllerInterface
 {
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
+        $pagenumber = $request->get("page");
+        if (!$pagenumber or $pagenumber < 1) {
+            $pagenumber = 1;
+        }
         $querystring = $request->get("query");
         $querytag = $request->get("tag");
         $queryrtag = $request->get("rtag");
@@ -31,19 +38,16 @@ class SearchPage extends AbstractPage implements IndexControllerInterface
             }
         }
         if ($querystring and $querystring != "") {
-            $responseData = $this->search($container, $querystring, $querytype, $tags);
-
-            $context['hits'] = $responseData['hits']['hits'];
+            $pagerfanta = $this->search($container, $querystring, $querytype, $tags, $pagenumber);
             $context['q_query'] = $querystring;
             $context['q_tags'] = implode(',', $tags);
             $context['s_tags'] = $tags;
             $context['q_type'] = $querytype;
-            $context['facets'] = $responseData['facets'];
-            $context['responseData'] = $responseData;
+            $context['pagerfanta'] = $pagerfanta;
         }
     }
 
-    public function search($container, $querystring, $type, $tags)
+    public function search($container, $querystring, $type, $tags, $pagenumber)
     {
         $search = $container->get('kunstmaan_search.search');
         $sherlock = $container->get('kunstmaan_search.searchprovider.sherlock');
@@ -80,9 +84,16 @@ class SearchPage extends AbstractPage implements IndexControllerInterface
 
         $json = $request->toJSON();
 
-        $response = $search->search("nodeindex", "page", $json, true);
+        $adapter = new SearchAdapter($search, "nodeindex", "page", $json, true);
+        $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage(2);
+        try {
+            $pagerfanta->setCurrentPage($pagenumber);
+        } catch (NotValidCurrentPageException $e) {
+            throw new NotFoundHttpException();
+        }
 
-        return $response;
+        return $pagerfanta;
     }
 
     /**
