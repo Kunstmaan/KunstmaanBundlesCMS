@@ -91,8 +91,10 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get the node translation for a given url
      *
-     * @param string $urlSlug The full url
-     * @param string $locale  The locale
+     * @param string          $urlSlug        The full url
+     * @param string          $locale         The locale
+     * @param boolean         $includeDeleted Include deleted
+     * @param NodeTranslation $toExclude      To exclude
      *
      * @return NodeTranslation|null
      */
@@ -258,16 +260,17 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * Look if all parents of a NodeTranslation have NodeTranslations
-     * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $nodeTranslation
-     * @param $language
+     * @param NodeTranslation $nodeTranslation The node translation
+     * @param string          $language        The locale
+     *
      * @return bool
      */
     public function hasParentNodeTranslationsForLanguage(NodeTranslation $nodeTranslation, $language)
     {
         $parentNode = $nodeTranslation->getNode()->getParent();
-        if($parentNode != null) {
+        if ($parentNode != null) {
             $parentNodeTranslation = $parentNode->getNodeTranslation($language, true);
-            if($parentNodeTranslation != null) {
+            if ($parentNodeTranslation != null) {
                 return $this->hasParentNodeTranslationsForLanguage($parentNodeTranslation, $language);
             } else {
                 return false;

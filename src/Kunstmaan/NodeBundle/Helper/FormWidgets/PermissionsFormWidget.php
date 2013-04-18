@@ -109,6 +109,7 @@ class PermissionsFormWidget extends FormWidget
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
+
         return $this;
     }
 
@@ -128,6 +129,7 @@ class PermissionsFormWidget extends FormWidget
     public function setPage($page)
     {
         $this->page = $page;
+
         return $this;
     }
 
@@ -147,6 +149,7 @@ class PermissionsFormWidget extends FormWidget
     public function setPermissionAdmin($permissionAdmin)
     {
         $this->permissionAdmin = $permissionAdmin;
+
         return $this;
     }
 
@@ -166,6 +169,7 @@ class PermissionsFormWidget extends FormWidget
     public function setPermissionMap($permissionMap)
     {
         $this->permissionMap = $permissionMap;
+
         return $this;
     }
 
@@ -179,10 +183,13 @@ class PermissionsFormWidget extends FormWidget
 
     /**
      * @param Node $node
+     *
+     * @return PermissionsFormWidget
      */
     public function setNode($node)
     {
         $this->node = $node;
+
         return $this;
     }
 

@@ -195,6 +195,9 @@ class ActionsMenuBuilder
         return $this->activeNodeVersion;
     }
 
+    /**
+     * @param boolean $value
+     */
     public function setIsEditableNode($value)
     {
         $this->isEditableNode = $value;

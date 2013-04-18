@@ -4,7 +4,7 @@ parameters:
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: [@session, @kunstmaan_admin.logger]
+        arguments: ["@session", "@kunstmaan_admin.logger"]
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
             - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
@@ -75,7 +75,7 @@ services:
 
     kunstmaan_node.slugrouter:
         class: Kunstmaan\NodeBundle\Router\SlugRouter
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - { name: router, priority: 0 }
 
