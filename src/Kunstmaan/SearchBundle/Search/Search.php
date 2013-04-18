@@ -76,7 +76,7 @@ class Search implements SearchProviderInterface
      */
     public function deleteIndex($indexName)
     {
-        return $this->getActiveProvider()->createIndex($this->indexNamePrefix . $indexName)->delete();
+        return $this->getActiveProvider()->deleteIndex($this->indexNamePrefix . $indexName);
     }
 
     /**
