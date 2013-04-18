@@ -12,6 +12,7 @@ By default the search method accepts a string which will be searched for in the 
 $search = $container->get('kunstmaan_search.search');
 $response = $search->search("testindex", "testtype", $querystring);
 ```
+The response contains the array returned from ElasticSearch upon searching. See the [ElasticSearch](http://www.elasticsearch.org/guide/reference/api/search/request-body/) docs for more information.
 
 ### Advanced
 
@@ -23,8 +24,6 @@ The $json parameter is expected to contain the full query in JSON format.
 $search = $container->get('kunstmaan_search.search');
 $response = $search->search("testindex", "testtype", $json, true);
 ```
-
-The response contains the array returned from ElasticSearch upon searching. See the [ElasticSearch](http://www.elasticsearch.org/guide/reference/api/search/request-body/) docs for more information.
 
 #### Query
 
