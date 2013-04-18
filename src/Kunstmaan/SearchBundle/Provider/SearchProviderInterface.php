@@ -51,6 +51,8 @@ interface SearchProviderInterface
      * Search the index. The query string will by default search in the 'title' and 'content' fields.
      * When $json is set to true, the query string is assumed to be a JSON structure containing the entire query
      *
+     * Returns an array containing the response from ElasticSearch, see : http://www.elasticsearch.org/guide/reference/api/search/request-body/
+     *
      * @param string $indexName
      * @param string $indexType
      * @param string $querystring The query string

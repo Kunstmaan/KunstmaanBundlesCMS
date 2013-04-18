@@ -24,6 +24,8 @@ $search = $container->get('kunstmaan_search.search');
 $response = $search->search("testindex", "testtype", $json, true);
 ```
 
+The response contains the array returned from ElasticSearch upon searching. See the [ElasticSearch](http://www.elasticsearch.org/guide/reference/api/search/request-body/) docs for more information.
+
 #### Query
 
 One way to build your query is by using the Sherlock QueryBuilder :
