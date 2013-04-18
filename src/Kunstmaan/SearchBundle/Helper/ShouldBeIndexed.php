@@ -3,9 +3,9 @@
 namespace Kunstmaan\SearchBundle\Helper;
 
 /**
- * Interface for your class to control if the object should be indexed or not
+ * Interface for your class to allow you to decide if the object should be indexed or not
  */
-interface IndexControllerInterface
+interface ShouldBeIndexed
 {
     /**
      * @return boolean
