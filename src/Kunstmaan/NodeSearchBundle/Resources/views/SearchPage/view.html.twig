@@ -8,22 +8,25 @@
     {% if q_query is defined and q_query != '' %}
         <h3>Results</h3>
         <div class="span12" style="margin-left: 0">
-
             <div class="span9" style="margin-left: 0">
-                {% set count = 0 %}
-                {% for searchresult in hits %}
-                    {% if count > 0 %}<hr />{% endif %}
-                    <div style=" margin-right: 20px;">
-                        <h4><a href="{{ searchresult['_source']['slug'] }}">{{ searchresult['_source']['title'] }}</a></h4>
-                        {% if searchresult['highlight'] is defined %}
-                            <p>{{ searchresult['highlight']['content'][0] | raw }}</p>
-                        {% else %}
-                            <p>{{ searchresult['_source']['content'] | truncate(300) | escape('html') }}</p>
-                        {% endif %}
-                    </div>
-                    {% set count = count + 1 %}
-                {% endfor %}
+                <div class="span9" style="margin-left: 0">
+                    {% set count = 0 %}
+                    {% for searchresult in pagerfanta.currentPageResults %}
+                        {% if count > 0 %}<hr />{% endif %}
+                        <div style=" margin-right: 20px;">
+                            <h4><a href="{{ searchresult['_source']['slug'] }}">{{ searchresult['_source']['title'] }}</a></h4>
+                            {% if searchresult['highlight'] is defined %}
+                                <p>{{ searchresult['highlight']['content'][0] | raw }}</p>
+                            {% else %}
+                                <p>{{ searchresult['_source']['content'] | truncate(300) | escape('html') }}</p>
+                            {% endif %}
+                        </div>
+                        {% set count = count + 1 %}
+                    {% endfor %}
+                </div>
+                {{ pagerfanta(pagerfanta, 'twitter_bootstrap') }}
             </div>
+            {% set facets =  pagerfanta.getAdapter().getResponse()['facets'] %}
             <div class="span3 well-small" style="margin: 0; border-left:1px solid #E3E3E3;">
                 {% if facets['tag']['terms']|length > 0 %}
                     <p><strong>Tags</strong></p>
