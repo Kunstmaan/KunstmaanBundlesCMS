@@ -23,12 +23,7 @@ class AbstractSearchPage extends AbstractPage implements IndexControllerInterfac
      * Default number of search results to show per page (default: 10)
      * @var int
      */
-    public $defaultperpage;
-
-    public function __construct()
-    {
-        $this->defaultperpage = 10;
-    }
+    public $defaultperpage = 10;
 
     /**
      * @param ContainerInterface $container
