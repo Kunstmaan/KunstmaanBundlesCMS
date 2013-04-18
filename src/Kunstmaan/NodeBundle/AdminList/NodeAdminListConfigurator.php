@@ -50,9 +50,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFilters()
     {
         $this->addFilter('title', new StringFilterType('title'), 'Title')
-            ->addFilter('online', new BooleanFilterType('online'), 'Online')
-            ->addFilter('created', new DateFilterType('created', 'nv'), 'Created At')
-            ->addFilter('updated', new DateFilterType('updated', 'nv'), 'Updated At');
+            ->addFilter('online', new BooleanFilterType('online'), 'Online');
     }
 
     /**
