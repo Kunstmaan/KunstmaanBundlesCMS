@@ -32,6 +32,11 @@ class FormWidget implements FormWidgetInterface
     protected $data;
 
     /**
+     * @var FormHelper
+     */
+    private $formHelper = null;
+
+    /**
      * @param array $types The types
      * @param array $data  The data attached to the types
      */
@@ -92,11 +97,6 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
-     * @var FormHelper
-     */
-    private $formHelper;
-
-    /**
      * @return FormHelper
      */
     protected function getFormHelper()
@@ -140,11 +140,15 @@ class FormWidget implements FormWidgetInterface
      * @param string       $name
      * @param AbstractType $type
      * @param null         $data
+     *
+     * @return FormWidget
      */
     public function addType($name, AbstractType $type, $data = null)
     {
         $this->types[$name] = $type;
         $this->data[$name] = $data;
+
+        return $this;
     }
 
     /**
