@@ -14,13 +14,7 @@ class GroupType extends AbstractType
 {
 
     /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -40,9 +34,7 @@ class GroupType extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {

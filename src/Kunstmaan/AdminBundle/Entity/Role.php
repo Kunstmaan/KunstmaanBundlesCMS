@@ -78,6 +78,9 @@ class Role implements RoleInterface
         $this->role = $role;
     }
 
+    /**
+     * @param ClassMetadata $metadata
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('role', new NotBlank());
