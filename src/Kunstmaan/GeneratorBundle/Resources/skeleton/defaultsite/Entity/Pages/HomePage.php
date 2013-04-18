@@ -2,15 +2,14 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use Doctrine\ORM\Mapping as ORM;
-
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\HttpFoundation\Request;
-
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use {{ namespace }}\Form\Pages\HomePageAdminType;
 use {{ namespace }}\PagePartAdmin\HomePagePagePartAdminConfigurator;
+
+use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * HomePage
@@ -18,7 +17,7 @@ use {{ namespace }}\PagePartAdmin\HomePagePagePartAdminConfigurator;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}home_pages")
  */
-class HomePage extends AbstractPage implements HasPagePartsInterface
+class HomePage extends AbstractPage  implements HasPageTemplateInterface
 {
 
     /**
@@ -49,11 +48,19 @@ class HomePage extends AbstractPage implements HasPagePartsInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getPagePartAdminConfigurations()
     {
-        return array(new HomePagePagePartAdminConfigurator());
+        return array("{{ bundle.getName() }}:main", "{{ bundle.getName() }}:banners", "{{ bundle.getName() }}:footer");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPageTemplates()
+    {
+        return array("{{ bundle.getName() }}:homepage");
     }
 
     /**
