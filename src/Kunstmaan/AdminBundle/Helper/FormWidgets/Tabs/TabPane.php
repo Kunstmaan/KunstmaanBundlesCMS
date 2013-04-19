@@ -25,7 +25,7 @@ class TabPane
     /**
      * @var TabInterface[]
      */
-    protected $tabs;
+    protected $tabs = array();
 
     /**
      * @var string
