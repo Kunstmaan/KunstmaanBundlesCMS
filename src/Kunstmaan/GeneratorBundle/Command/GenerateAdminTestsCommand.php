@@ -51,9 +51,9 @@ EOT
             ->getKernel()
             ->getBundle($bundle);
         $dialog->writeSection($output, 'Admin Tests Generation');
-        //$rootDir = $this->getApplication()->getKernel()->getRootDir();
 
-        $this->getGenerator()->generate($bundle, $output);
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator->generate($bundle, $output);
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -81,23 +81,6 @@ EOT
             $namespace = $dialog->askAndValidate($output, $dialog->getQuestion('Bundle namespace', $namespace), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $namespace);
             $input->setOption('namespace', $namespace);
         }
-    }
-
-    /**
-     * @return DialogHelper
-     */
-    protected function getDialogHelper()
-    {
-        $dialog = $this
-            ->getHelperSet()
-            ->get('dialog');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper') {
-            $this
-                ->getHelperSet()
-                ->set($dialog = new DialogHelper());
-        }
-
-        return $dialog;
     }
 
     protected function createGenerator()

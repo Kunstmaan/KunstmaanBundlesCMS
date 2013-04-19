@@ -73,7 +73,8 @@ EOT
         $dialog->writeSection($output, 'Site Generation');
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
-        $this->getGenerator()->generate($bundle, $prefix, $rootDir, $output);
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator->generate($bundle, $prefix, $rootDir, $output);
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -116,23 +117,6 @@ EOT
             $prefix = $dialog->ask($output, $dialog->getQuestion('Tablename prefix', $prefix), $prefix);
             $input->setOption('prefix', empty($prefix) ? null : $prefix);
         }
-    }
-
-    /**
-     * @return DialogHelper
-     */
-    protected function getDialogHelper()
-    {
-        $dialog = $this
-            ->getHelperSet()
-            ->get('dialog');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper') {
-            $this
-                ->getHelperSet()
-                ->set($dialog = new DialogHelper());
-        }
-
-        return $dialog;
     }
 
     protected function createGenerator()

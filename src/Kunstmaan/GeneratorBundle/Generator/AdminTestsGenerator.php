@@ -30,7 +30,7 @@ class AdminTestsGenerator extends  Generator
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
-        $this->skeletonDir = $skeletonDir;
+        $this->skeletonDir = $skeletonDir . 'admintests';
     }
 
     /**

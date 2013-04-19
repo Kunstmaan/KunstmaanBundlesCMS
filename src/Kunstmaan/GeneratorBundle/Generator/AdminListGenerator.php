@@ -33,7 +33,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
-        $this->skeletonDir = $skeletonDir;
+        $this->skeletonDir = $skeletonDir . 'adminlists';
     }
 
     /**
@@ -95,7 +95,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $this->renderFile($this->skeletonDir . '/AdminList', 'AdminListConfigurator.php', $classPath, array(
+        $this->renderFile($this->skeletonDir . '/AdminList/AdminListConfigurator.php', $classPath, array(
             'namespace'           => $bundle->getNamespace(),
             'bundle'              => $bundle,
             'entity_class'        => $entityName,
@@ -120,7 +120,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $this->renderFile($this->skeletonDir . '/Controller', 'EntityAdminListController.php', $classPath, array(
+        $this->renderFile($this->skeletonDir . '/Controller/EntityAdminListController.php', $classPath, array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
             'entity_class'      => $entityName,
@@ -145,7 +145,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $this->renderFile($this->skeletonDir . '/Form', 'EntityAdminType.php', $classPath, array(
+        $this->renderFile($this->skeletonDir . '/Form/EntityAdminType.php', $classPath, array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
             'entity_class'      => $entityName,

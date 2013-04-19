@@ -68,7 +68,8 @@ EOT
 
         $dialog->writeSection($output, 'AdminList Generation');
 
-        $this->getGenerator()->generate($bundle, $entityClass, $metadata[0], $output);
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator->generate($bundle, $entityClass, $metadata[0], $output);
 
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);

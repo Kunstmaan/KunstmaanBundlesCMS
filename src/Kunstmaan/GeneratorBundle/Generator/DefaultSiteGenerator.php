@@ -32,7 +32,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
-        $this->skeletonDir = $skeletonDir;
+        $this->skeletonDir = $skeletonDir . '/defaultsite';
     }
 
     /**
