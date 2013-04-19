@@ -16,8 +16,6 @@ use Doctrine\DBAL\Types\Type;
 class GenerateEntityCommand extends GenerateDoctrineCommand
 {
 
-    private $generator;
-
     protected function configure()
     {
         $this
@@ -289,20 +287,6 @@ EOT
         return $fields;
     }
 
-    public function getGenerator()
-    {
-        if (null === $this->generator) {
-            $this->generator = new DoctrineEntityGenerator($this->getContainer()->get('filesystem'), $this->getContainer()->get('doctrine'));
-        }
-
-        return $this->generator;
-    }
-
-    public function setGenerator(DoctrineEntityGenerator $generator)
-    {
-        $this->generator = $generator;
-    }
-
     protected function getDialogHelper()
     {
         $dialog = $this->getHelperSet()->get('dialog');
@@ -311,5 +295,10 @@ EOT
         }
 
         return $dialog;
+    }
+
+    protected function createGenerator()
+    {
+        return new DoctrineEntityGenerator($this->getContainer()->get('filesystem'), $this->getContainer()->get('doctrine'));
     }
 }

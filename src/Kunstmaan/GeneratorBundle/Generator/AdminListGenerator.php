@@ -6,8 +6,6 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
-
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,39 +27,26 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     private $skeletonDir;
 
     /**
-     * @var OutputInterface
+     * @param Filesystem $filesystem  The filesystem
+     * @param string     $skeletonDir The directory of the skeleton
      */
-    private $output;
-
-    /**
-     * @var DialogHelper
-     */
-    private $dialog;
-
-    /**
-     * @param Filesystem      $filesystem  The filesystem
-     * @param string          $skeletonDir The directory of the skeleton
-     * @param OutputInterface $output      The output
-     * @param DialogHelper    $dialog      The dialog
-     */
-    public function __construct(Filesystem $filesystem, $skeletonDir, OutputInterface $output, DialogHelper $dialog)
+    public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
-        $this->output = $output;
-        $this->dialog = $dialog;
     }
 
     /**
-     * @param Bundle        $bundle            The bundle
-     * @param string        $entity            The entity name
-     * @param ClassMetadata $metadata          The meta data
-     * @param boolean       $generateAdminType True if we need to specify the admin type
+     * @param Bundle          $bundle   The bundle
+     * @param string          $entity   The entity name
+     * @param ClassMetadata   $metadata The meta data
+     * @param OutputInterface $output
      *
-     * @throws \RuntimeException
+     * @internal param bool $generateAdminType True if we need to specify the admin type
+     *
      * @return void
      */
-    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata)
+    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata, OutputInterface $output)
     {
         $parts = explode('\\', $entity);
         $entityName = array_pop($parts);
@@ -71,24 +56,24 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             try {
                 $this->generateAdminType($bundle, $entityName, $metadata);
             } catch (\Exception $error) {
-                $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+                $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
             }
-            $this->output->writeln('Generating the Type code: <info>OK</info>');
+            $output->writeln('Generating the Type code: <info>OK</info>');
         }
 
         try {
             $this->generateConfiguration($bundle, $entityName, $metadata, $generateAdminType);
         } catch (\Exception $error) {
-            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->output->writeln('Generating the Configuration code: <info>OK</info>');
+        $output->writeln('Generating the Configuration code: <info>OK</info>');
 
         try {
             $this->generateController($bundle, $entityName, $metadata);
         } catch (\Exception $error) {
-            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
-        $this->output->writeln('Generating the Controller code: <info>OK</info>');
+        $output->writeln('Generating the Controller code: <info>OK</info>');
     }
 
     /**
@@ -144,9 +129,9 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     }
 
     /**
-     * @param Bundle        $bundle   The bundle
-     * @param string        $entity   The entity name
-     * @param ClassMetadata $metadata The meta data
+     * @param Bundle        $bundle     The bundle
+     * @param               $entityName
+     * @param ClassMetadata $metadata   The meta data
      *
      * @throws \RuntimeException
      */

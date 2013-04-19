@@ -20,8 +20,6 @@ use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 class GenerateDefaultSiteCommand extends GenerateDoctrineCommand
 {
 
-    private $siteGenerator;
-
     /**
      * @see Command
      */
@@ -75,7 +73,7 @@ EOT
         $dialog->writeSection($output, 'Site Generation');
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
-        $this->getSiteGenerator($output, $dialog)->generate($bundle, $prefix, $rootDir);
+        $this->getGenerator()->generate($bundle, $prefix, $rootDir, $output);
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -137,26 +135,8 @@ EOT
         return $dialog;
     }
 
-    /**
-     * @return DefaultSiteGenerator
-     */
-    protected function getSiteGenerator(OutputInterface $output, DialogHelper $dialog)
+    protected function createGenerator()
     {
-        if (null === $this->siteGenerator) {
-            $this->siteGenerator = new DefaultSiteGenerator($this
-                ->getContainer()
-                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/defaultsite', $output, $dialog);
-        }
-
-        return $this->siteGenerator;
+        return new DefaultSiteGenerator($this->getContainer()->get('filesystem'), __DIR__ . '/../Resources/skeleton/defaultsite');
     }
-
-    /**
-     * @param DefaultSiteGenerator $siteGenerator
-     */
-    public function setSiteGenerator(DefaultSiteGenerator $siteGenerator)
-    {
-        $this->siteGenerator = $siteGenerator;
-    }
-
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\GeneratorBundle\Command;
+use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 use Kunstmaan\GeneratorBundle\Generator\BundleGenerator;
@@ -10,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 use Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator;
@@ -19,7 +19,7 @@ use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 /**
  * Generates bundles.
  */
-class GenerateBundleCommand extends ContainerAwareCommand
+class GenerateBundleCommand extends GeneratorCommand
 {
     private $generator;
 
@@ -63,6 +63,7 @@ EOT
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
+     * @throws \RuntimeException
      * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -266,42 +267,8 @@ EOT
         }
     }
 
-    /**
-     * @return BundleGenerator
-     */
-    protected function getGenerator()
+    protected function createGenerator()
     {
-        if (null === $this->generator) {
-            $this->generator = new BundleGenerator($this
-                ->getContainer()
-                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/bundle');
-        }
-
-        return $this->generator;
-    }
-
-    /**
-     * @param BundleGenerator $generator
-     */
-    public function setGenerator(BundleGenerator $generator)
-    {
-        $this->generator = $generator;
-    }
-
-    /**
-     * @return DialogHelper
-     */
-    protected function getDialogHelper()
-    {
-        $dialog = $this
-            ->getHelperSet()
-            ->get('dialog');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper') {
-            $this
-                ->getHelperSet()
-                ->set($dialog = new DialogHelper());
-        }
-
-        return $dialog;
+        return new BundleGenerator($this->getContainer()->get('filesystem'), __DIR__ . '/../Resources/skeleton/bundle');
     }
 }

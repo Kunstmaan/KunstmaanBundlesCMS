@@ -3,7 +3,6 @@
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -25,60 +24,48 @@ class AdminTestsGenerator extends  Generator
     private $skeletonDir;
 
     /**
-     * @var OutputInterface
+     * @param Filesystem $filesystem  The filesytem
+     * @param string     $skeletonDir The skeleton directory
      */
-    private $output;
-
-    /**
-     * @var DialogHelper
-     */
-    private $dialog;
-
-    /**
-     * @param Filesystem      $filesystem  The filesytem
-     * @param string          $skeletonDir The skeleton directory
-     * @param OutputInterface $output      The output
-     * @param DialogHelper    $dialog      The dialog
-     */
-    public function __construct(Filesystem $filesystem, $skeletonDir, OutputInterface $output, DialogHelper $dialog)
+    public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
-        $this->output = $output;
-        $this->dialog = $dialog;
     }
 
     /**
      * @param Bundle $bundle  The bundle
      * @param string $rootDir The root directory
      */
-    public function generate(Bundle $bundle, $rootDir)
+    public function generate(Bundle $bundle, OutputInterface $output)
     {
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle
         );
 
-        $this->generateBehatTests($bundle);
-        $this->generateUnitTests($bundle, $parameters);
+        $this->generateBehatTests($bundle, $output);
+        $this->generateUnitTests($bundle, $parameters, $output);
     }
 
     /**
-     * @param Bundle $bundle
-     * @param array  $parameters The template parameters
+     * @param Bundle          $bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output
      */
-    public function generateUnitTests(Bundle $bundle, array $parameters)
+    public function generateUnitTests(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/Tests';
 
-        $this->output->writeln('Generating Unit Tests : <info>OK</info>');
+        $output->writeln('Generating Unit Tests : <info>OK</info>');
     }
 
     /**
-     * @param Bundle $bundle
+     * @param Bundle          $bundle
+     * @param OutputInterface $output
      */
-    public function generateBehatTests(Bundle $bundle)
+    public function generateBehatTests(Bundle $bundle, OutputInterface $output)
     {
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/Features';
@@ -86,6 +73,6 @@ class AdminTestsGenerator extends  Generator
         $this->filesystem->copy($fullSkeletonDir . '/AdminLogin.feature', $dirPath . '/Features/AdminLogin.feature', true);
         $this->filesystem->copy($fullSkeletonDir . '/AdminLogin.feature', $dirPath . '/Features/AdminSettingsUser.feature', true);
 
-        $this->output->writeln('Generating Behat Tests : <info>OK</info>');
+        $output->writeln('Generating Behat Tests : <info>OK</info>');
     }
 }
