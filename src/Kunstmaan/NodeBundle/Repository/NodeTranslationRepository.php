@@ -93,8 +93,8 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @param string          $urlSlug        The full url
      * @param string          $locale         The locale
-     * @param boolean         $includeDeleted Include deleted
-     * @param NodeTranslation $toExclude      To exclude
+     * @param boolean         $includeDeleted Include deleted nodes
+     * @param NodeTranslation $toExclude      Optional NodeTranslation instance you wish to exclude
      *
      * @return NodeTranslation|null
      */
@@ -259,7 +259,7 @@ class NodeTranslationRepository extends EntityRepository
 
 
     /**
-     * Look if all parents of a NodeTranslation have NodeTranslations
+     * Test if all parents of the specified NodeTranslation have a node translation for the specified language
      * @param NodeTranslation $nodeTranslation The node translation
      * @param string          $language        The locale
      *
