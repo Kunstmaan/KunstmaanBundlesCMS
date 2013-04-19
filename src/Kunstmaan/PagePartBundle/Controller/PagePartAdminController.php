@@ -31,43 +31,43 @@ class PagePartAdminController extends Controller
         $this->locale = $this->getRequest()->getLocale();
 
         $request = $this->getRequest();
-        $pageid = $request->get('pageid');
-        $pageclassname = $request->get('pageclassname');
+        $pageId = $request->get('pageid');
+        $pageClassName = $request->get('pageclassname');
         $context = $request->get('context');
-        $type = $request->get('type');
+        $pagePartClass = $request->get('type');
 
-        $page = $this->em->getRepository($pageclassname)->findOneById($pageid);
+        $page = $this->em->getRepository($pageClassName)->findOneById($pageId);
 
         $pagePartConfigurationReader = new PagePartConfigurationReader($this->container->get('kernel'));
         $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
 
-        $pagepartadminconfigurator = null;
+        $pagePartAdminConfigurator = null;
         foreach ($pagePartAdminConfigurators as $ppac) {
             if ($context == $ppac->getContext()) {
-                $pagepartadminconfigurator = $ppac;
+                $pagePartAdminConfigurator = $ppac;
             }
         }
 
-        $pagePartAdmin = new PagePartAdmin($pagepartadminconfigurator, $this->em, $page, $context, $this->container);
-        $pagepart = new $type();
+        $pagePartAdmin = new PagePartAdmin($pagePartAdminConfigurator, $this->em, $page, $context, $this->container);
+        $pagePart = new $pagePartClass();
 
         $formFactory = $this->container->get('form.factory');
-        $formbuilder = $formFactory->createBuilder('form');
-        $pagePartAdmin->adaptForm($formbuilder);
-        $form = $formbuilder->getForm();
+        $formBuilder = $formFactory->createBuilder('form');
+        $pagePartAdmin->adaptForm($formBuilder);
+        $form = $formBuilder->getForm();
         $id = 'newpp_' . time();
 
-        $data = $formbuilder->getData();
-        $data['pagepartadmin_' . $id] = $pagepart;
-        $formbuilder->add('pagepartadmin_' . $id, $pagepart->getDefaultAdminType());
-        $formbuilder->setData($data);
-        $form = $formbuilder->getForm();
+        $data = $formBuilder->getData();
+        $data['pagepartadmin_' . $id] = $pagePart;
+        $formBuilder->add('pagepartadmin_' . $id, $pagePart->getDefaultAdminType());
+        $formBuilder->setData($data);
+        $form = $formBuilder->getForm();
         $formview = $form->createView();
 
         return array(
                 'id'=> $id,
                 'form' => $formview,
-                'pagepart' => $pagepart,
+                'pagepart' => $pagePart,
                 'pagepartadmin' => $pagePartAdmin,
                 'editmode'=> true);
     }

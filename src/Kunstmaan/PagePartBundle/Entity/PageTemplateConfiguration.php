@@ -41,10 +41,14 @@ class PageTemplateConfiguration extends AbstractEntity
 
     /**
      * @param integer $id
+     *
+     * @return PageTemplateConfiguration
      */
     public function setPageId($id)
     {
         $this->pageId = $id;
+
+        return $this;
     }
 
     /**
@@ -61,10 +65,14 @@ class PageTemplateConfiguration extends AbstractEntity
      * Set pageEntityname
      *
      * @param string $pageEntityName
+     *
+     * @return PageTemplateConfiguration
      */
     public function setPageEntityName($pageEntityName)
     {
         $this->pageEntityName = $pageEntityName;
+
+        return $this;
     }
 
     /**
@@ -81,10 +89,14 @@ class PageTemplateConfiguration extends AbstractEntity
      * Set pagetemplate
      *
      * @param string $pageTemplate
+     *
+     * @return PageTemplateConfiguration
      */
     public function setPageTemplate($pageTemplate)
     {
         $this->pageTemplate = $pageTemplate;
+
+        return $this;
     }
 
     /**
