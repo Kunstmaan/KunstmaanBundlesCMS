@@ -90,11 +90,11 @@ class SherlockSearchProvider implements SearchProviderInterface
         $request->index($indexName)->type($indexType)->query($query);
 
         if($from){
-            $request->index($indexName)->type($indexType)->from($from);
+            $request->from($from);
         }
 
         if($size){
-            $request->index($indexName)->type($indexType)->size($size);
+            $request->size($size);
         }
 
         $response = $request->execute();
