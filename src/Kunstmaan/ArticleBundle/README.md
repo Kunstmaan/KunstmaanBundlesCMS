@@ -1,4 +1,4 @@
-# KunstmaanSrticleBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanArticleBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanArticleBundle)
+# KunstmaanArticleBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanArticleBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanArticleBundle)
 
 This bundle adds articles to your Kunstmaan Bundles project.
 
