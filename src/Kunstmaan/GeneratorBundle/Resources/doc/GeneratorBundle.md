@@ -57,8 +57,24 @@ Using this generator you can generate a default website using the Kunstmaan bund
 
 The 'namespace' parameter is required and will determine in which bundle the files will be generated.
 
-The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes. When generating more than one website, you can prevent the websites using the same tables in the database
+The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes. When generating more than one website, you can prevent the websites using the same tables in the database.
 
 ```
 app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
+```
+
+## Search Page
+
+Generate a search page for your website which will search the pages in the index created by the [KunstmaanNodeSearchBundle](https://github.com/Kunstmaan/KunstmaanNodeSearchBundle). Only published nodes will be indexed.
+
+The search page holds by default 10 results per page and each result shows the page title, a highlighted best fragment and will link to the page. If your page is Taggable ([fpn/doctrine-extensions-taggable](https://github.com/FabienPennequin/DoctrineExtensions-Taggable)), the tags will be available as facets to filter on.
+
+### Command
+
+The 'namespace' parameter is required and will determine in which bundle the files will be generated.
+
+The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
+
+```
+app/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=tableprefix_
 ```

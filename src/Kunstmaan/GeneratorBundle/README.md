@@ -7,8 +7,7 @@ If you're like us, you like to build applications without having to do the same 
 This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
 
 
-Use
----
+## Use
 
 Generate a Bundle :
 
@@ -22,10 +21,6 @@ Generate an Entity based on the [KunstmaanAdminBundle](https://github.com/Kunstm
 app/console kuma:generate:entity
 ```
 
-Generate a default website using the Kunstmaan bundles :
-
-```
-app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
 ```
 
 Generate a [KunstmaanAdminList](https://github.com/Kunstmaan/KunstmaanAdminListBundle) for an Entity :
@@ -33,6 +28,23 @@ Generate a [KunstmaanAdminList](https://github.com/Kunstmaan/KunstmaanAdminListB
 ```
 app/console kuma:generate:adminlist --entity=Bundle:Entity
 ```
+
+### Website
+
+Generate a default website using the Kunstmaan bundles :
+
+```
+app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
+
+#### Additional Pages
+
+Generate a search page based on the [KunstmaanNodeSearchBundle](https://github.com/Kunstmaan/KunstmaanNodeSearchBundle) :
+
+```
+app/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=tableprefix_
+```
+
+## More
 
 You can find more detailed information about these commands [here](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md)
 
