@@ -1,0 +1,15 @@
+{% extends 'KadekeWebsiteBundle:Page:layout.html.twig' %}
+{% block content %}
+    <h2>{{ page.title }}</h2>
+
+    {{ render_pageparts(page, 'main') }}
+
+    {% set count = 1 %}
+    {% block articles %}
+        {% for article in articles %}
+            {% if count > 1 %}<hr />{% endif %}
+            {% include 'KunstmaanArticleBundle:AbstractArticlePage:teaser.html.twig' %}
+            {% set count = count + 1 %}
+        {% endfor %}
+    {% endblock %}
+{% endblock %}

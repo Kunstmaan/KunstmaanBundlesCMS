@@ -1,0 +1,8 @@
+parameters:
+#    kunstmaan_article.example.class: Kunstmaan\ArticleBundle\Example
+
+services:
+    kunstmaan_article.menu.adaptor:
+        class: Kunstmaan\ArticleBundle\Helper\Menu\AbstractArticleMenuAdaptor
+        tags:
+            - { name: kunstmaan_admin.menu.adaptor }
