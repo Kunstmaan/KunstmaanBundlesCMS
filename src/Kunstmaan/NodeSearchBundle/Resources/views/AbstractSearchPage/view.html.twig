@@ -26,49 +26,51 @@
                 </div>
                 {{ pagerfanta(pagerfanta, 'twitter_bootstrap') }}
             </div>
-            {% set facets =  pagerfanta.getAdapter().getResponse()['facets'] %}
-            <div class="span3 well-small" style="margin: 0; border-left:1px solid #E3E3E3;">
-                {% if facets['tag']['terms']|length > 0 %}
-                    <p><strong>Tags</strong></p>
-                    <ul>
-                        {% for tag in facets['tag']['terms'] %}
-                            <li>
-                                {% if tag['term'] not in s_tags %}
-                                {% set tags = tag['term'] %}
-                                {% if q_tags %}
-                                    {% set tags = tags ~ ',' ~ q_tags %}
-                                {% endif %}
-                                <a href="?query={{ q_query }}&tag={{ tags }}">
-                                    {% endif %}
-                                    {{ tag['term'] }}
+            {% if pagerfanta.getAdapter().getResponse()['facets'] is defined %}
+                {% set facets =  pagerfanta.getAdapter().getResponse()['facets'] %}
+                <div class="span3 well-small" style="margin: 0; border-left:1px solid #E3E3E3;">
+                    {% if facets['tag']['terms']|length > 0 %}
+                        <p><strong>Tags</strong></p>
+                        <ul>
+                            {% for tag in facets['tag']['terms'] %}
+                                <li>
                                     {% if tag['term'] not in s_tags %}
-                                    ({{ tag['count'] }})</a>
-                            {% else %}
-                                <a href="?query={{ q_query }}&tag={{ q_tags }}&rtag={{ tag['term'] }}">(-)</a>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-                {% if facets['type']['terms']|length > 0 %}
-                    <p><strong>Types</strong></p>
-                    <ul>
-                        {% for type in facets['type']['terms'] %}
-                            <li>
-                                {% if type['term'] != q_type %}
-                                <a href="?query={{ q_query }}&tag={{ q_tags }}&type={{ type['term'] }}">
+                                    {% set tags = tag['term'] %}
+                                    {% if q_tags %}
+                                        {% set tags = tags ~ ',' ~ q_tags %}
                                     {% endif %}
-                                    {{ type['term'] }}
+                                    <a href="?query={{ q_query }}&tag={{ tags }}">
+                                        {% endif %}
+                                        {{ tag['term'] }}
+                                        {% if tag['term'] not in s_tags %}
+                                        ({{ tag['count'] }})</a>
+                                {% else %}
+                                    <a href="?query={{ q_query }}&tag={{ q_tags }}&rtag={{ tag['term'] }}">(-)</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if facets['type']['terms']|length > 0 %}
+                        <p><strong>Types</strong></p>
+                        <ul>
+                            {% for type in facets['type']['terms'] %}
+                                <li>
                                     {% if type['term'] != q_type %}
-                                    ({{ type['count'] }})</a>
-                            {% else %}
-                                <a href="?query={{ q_query }}&tag={{ q_tags }}">(-)</a>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
+                                    <a href="?query={{ q_query }}&tag={{ q_tags }}&type={{ type['term'] }}">
+                                        {% endif %}
+                                        {{ type['term'] }}
+                                        {% if type['term'] != q_type %}
+                                        ({{ type['count'] }})</a>
+                                {% else %}
+                                    <a href="?query={{ q_query }}&tag={{ q_tags }}">(-)</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
     {% endif %}
 
