@@ -13,8 +13,8 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Entity(repositoryClass="Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository")
  * @ORM\Table(name="kuma_abstractarticles")
  */
-class AbstractArticlePage extends AbstractPage implements HasPagePartsInterface {
-
+class AbstractArticlePage extends AbstractPage implements HasPagePartsInterface
+{
     /**
      * @var string
      *

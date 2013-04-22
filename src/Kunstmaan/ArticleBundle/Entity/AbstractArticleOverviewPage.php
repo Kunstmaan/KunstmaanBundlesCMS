@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  * @ORM\Entity()
  * @ORM\Table(name="kuma_abstractarticleoverviewpages")
  */
-class AbstractArticleOverviewPage extends AbstractPage implements HasPagePartsInterface {
-
+class AbstractArticleOverviewPage extends AbstractPage implements HasPagePartsInterface
+{
     /**
      * @return array
      */

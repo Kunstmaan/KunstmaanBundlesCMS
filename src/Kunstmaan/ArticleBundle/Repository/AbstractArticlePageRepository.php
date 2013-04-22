@@ -8,8 +8,8 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 /**
  * Repository class for the AbstractArticlePage
  */
-class AbstractArticlePageRepository extends EntityRepository {
-
+class AbstractArticlePageRepository extends EntityRepository
+{
     /**
      * Returns an array of all AbstractArticlePages
      *

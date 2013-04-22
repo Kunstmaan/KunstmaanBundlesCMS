@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\ArticleBundle\Controller;
 
-
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
@@ -14,8 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * The AdminList controller for the AbstractArticlePage
  */
-class AbstractArticlePageAdminListController extends AdminListController {
-
+class AbstractArticlePageAdminListController extends AdminListController
+{
     /**
      * @var AdminListConfiguratorInterface
      */
@@ -29,6 +28,7 @@ class AbstractArticlePageAdminListController extends AdminListController {
         if (!isset($this->configurator)) {
             $this->configurator = new AbstractArticlePageAdminListConfigurator($this->getDoctrine()->getManager());
         }
+
         return $this->configurator;
     }
 
@@ -102,5 +102,5 @@ class AbstractArticlePageAdminListController extends AdminListController {
     {
         return parent::doExportAction($this->getAdminListConfigurator(), $_format);
     }
-    
+
 }

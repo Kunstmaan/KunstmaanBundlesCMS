@@ -9,8 +9,8 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminLis
 /**
  * The AdminList configurator for the AbstractArticlePage
  */
-class AbstractArticlePageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator {
-
+class AbstractArticlePageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
+{
     /**
      * @param EntityManager $em        The entity manager
      * @param AclHelper     $aclHelper The acl helper
