@@ -32,7 +32,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
-        $this->skeletonDir = $skeletonDir . '/searchpage';
+        $this->skeletonDir = $skeletonDir;
     }
 
     /**
@@ -65,7 +65,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/Resources/views';
 
-        $this->filesystem->copy($fullSkeletonDir . '/Pages/Search/SearchPage/view.html.twig', $dirPath . '/Resources/views/Pages/Search/SearchPage/view.html.twig', true);
+        $this->filesystem->copy(__DIR__.'/../Resources/SensioGeneratorBundle/skeleton' . $fullSkeletonDir . '/Pages/Search/SearchPage/view.html.twig', $dirPath . '/Resources/views/Pages/Search/SearchPage/view.html.twig', true);
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/Search/SearchPage/view.html.twig');
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');
@@ -76,16 +76,18 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
      * @param OutputInterface $output
+     *
+     * @throws \RuntimeException
      */
     public function generateEntities(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Entity/Pages/Search", $bundle->getPath());
-        $fullSkeletonDir = sprintf("%s/Entity/Pages/Search", $this->skeletonDir);
+        $dirPath = sprintf("%s/Entity/Pages/Search/", $bundle->getPath());
+        $fullSkeletonDir = sprintf("%s/Entity/Pages/Search/", $this->skeletonDir);
 
         try {
             $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'SearchPage', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating entities : <info>OK</info>');
@@ -105,7 +107,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, $className . '.php', $classPath, $parameters);
+        $this->renderFile($fullSkeletonDir.  $className . '.php', $classPath, $parameters);
     }
 
 }

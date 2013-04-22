@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
+use Kunstmaan\GeneratorBundle\Generator\SearchPageGenerator;
 use Symfony\Component\Console\Input\InputOption;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
@@ -70,7 +71,7 @@ EOT
             ->getApplication()
             ->getKernel()
             ->getBundle($bundle);
-        $dialog->writeSection($output, 'Site Generation');
+        $dialog->writeSection($output, 'Search Page Generation');
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
@@ -121,6 +122,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new SearchPageGenerator($this->getContainer()->get('filesystem'), __DIR__ . '/../Resources/skeleton/searchpage');
+        return new SearchPageGenerator($this->getContainer()->get('filesystem'), '/searchpage');
     }
 }
