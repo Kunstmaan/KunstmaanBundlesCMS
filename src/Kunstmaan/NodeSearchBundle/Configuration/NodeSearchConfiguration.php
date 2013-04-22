@@ -158,7 +158,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                             ->getRepository('KunstmaanPagePartBundle:PagePartRef')
                             ->getPageParts($page);
                         $renderer = $this->container->get('templating');
-                        $view = 'KunstmaanSearchBundle:PagePart:view.html.twig';
+                        $view = 'KunstmaanNodeSearchBundle:PagePart:view.html.twig';
                         $content = strip_tags($renderer->render($view, array('page' => $page, 'pageparts' => $pageparts, 'pagepartviewresolver' => $this)));
                     }
                     $doc = array_merge($doc, array("content" => $content));
