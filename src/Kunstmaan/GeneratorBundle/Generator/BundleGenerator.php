@@ -29,18 +29,11 @@ class BundleGenerator extends Generator
     private $filesystem;
 
     /**
-     * @var string
-     */
-    private $skeletonDir;
-
-    /**
      * @param Filesystem $filesystem  The filesystem
-     * @param string     $skeletonDir The skeleton directory
      */
-    public function __construct(Filesystem $filesystem, $skeletonDir)
+    public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->skeletonDir = $skeletonDir . 'bundle/';
     }
 
     /**
@@ -65,15 +58,15 @@ class BundleGenerator extends Generator
             'extension_alias' => Container::underscore($basename),
         );
 
-        $this->renderFile($this->skeletonDir. 'Bundle.php', $dir . '/' . $bundle . '.php', $parameters);
-        $this->renderFile($this->skeletonDir. 'Extension.php', $dir . '/DependencyInjection/' . $basename . 'Extension.php', $parameters);
-        $this->renderFile($this->skeletonDir. 'Configuration.php', $dir . '/DependencyInjection/Configuration.php', $parameters);
-        $this->renderFile($this->skeletonDir. 'DefaultController.php', $dir . '/Controller/DefaultController.php', $parameters);
-        $this->renderFile($this->skeletonDir. 'FeatureContext.php', $dir . '/Features/Context/FeatureContext.php', $parameters);
-        $this->renderFile($this->skeletonDir. 'index.html.twig', $dir . '/Resources/views/Default/index.html.twig', $parameters);
+        $this->renderFile('/bundle/Bundle.php', $dir . '/' . $bundle . '.php', $parameters);
+        $this->renderFile('/bundle/Extension.php', $dir . '/DependencyInjection/' . $basename . 'Extension.php', $parameters);
+        $this->renderFile('/bundle/Configuration.php', $dir . '/DependencyInjection/Configuration.php', $parameters);
+        $this->renderFile('/bundle/DefaultController.php', $dir . '/Controller/DefaultController.php', $parameters);
+        $this->renderFile('/bundle/FeatureContext.php', $dir . '/Features/Context/FeatureContext.php', $parameters);
+        $this->renderFile('/bundle/index.html.twig', $dir . '/Resources/views/Default/index.html.twig', $parameters);
 
-        $this->renderFile($this->skeletonDir. 'services.yml', $dir . '/Resources/config/services.yml', $parameters);
-        $this->renderFile($this->skeletonDir. 'routing.yml', $dir . '/Resources/config/routing.yml', $parameters);
+        $this->renderFile('/bundle/services.yml', $dir . '/Resources/config/services.yml', $parameters);
+        $this->renderFile('/bundle/routing.yml', $dir . '/Resources/config/routing.yml', $parameters);
 
     }
 }
