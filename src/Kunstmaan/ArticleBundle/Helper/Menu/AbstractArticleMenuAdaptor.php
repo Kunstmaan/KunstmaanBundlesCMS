@@ -15,7 +15,7 @@ class AbstractArticleMenuAdaptor implements MenuAdaptorInterface
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuitem = new TopMenuItem($menu);
             $menuitem->setRoute('KunstmaanArticleBundle_admin_abstractarticlepage');
-            $menuitem->setInternalName('Abstract Articles');
+            $menuitem->setInternalName('Articles');
             $menuitem->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                 $menuitem->setActive(true);

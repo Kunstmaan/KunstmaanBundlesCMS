@@ -14,7 +14,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 /**
  * The AdminList configurator for the AbstractArticlePage
  */
-abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
+class AbstractArticlePageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
     /**
      * @var string

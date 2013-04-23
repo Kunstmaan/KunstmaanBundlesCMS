@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\ArticleBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticleOverviewPagePagePartAdminConfigurator;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;

@@ -16,7 +16,7 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
      *
      * @ORM\Column(name="summary", type="text", nullable=true)
      */
-    protected  $summary;
+    protected $summary;
 
     /**
      * Set the summary of this article
