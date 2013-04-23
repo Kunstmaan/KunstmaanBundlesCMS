@@ -2,6 +2,10 @@
 
 namespace Kunstmaan\ArticleBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
@@ -9,6 +13,7 @@ use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * The AdminList controller for the AbstractArticlePage
@@ -21,12 +26,42 @@ class AbstractArticlePageAdminListController extends AdminListController
     private $configurator;
 
     /**
+     * @var EntityManager $em
+     */
+    private $em;
+
+    /**
+     * @var string $locale
+     */
+    private $locale;
+
+    /**
+     * @var SecurityContextInterface $securityContext
+     */
+    private $securityContext;
+
+    /**
+     * @var User $user
+     */
+    private $user;
+
+    /**
+     * @var AclHelper $aclHelper
+     */
+    private $aclHelper;
+
+    /**
      * @return AdminListConfiguratorInterface
      */
     public function getAdminListConfigurator()
     {
+        $this->em = $this->getDoctrine()->getManager();
+        $this->locale = $this->getRequest()->getLocale();
+        $this->securityContext = $this->container->get('security.context');
+        $this->user = $this->securityContext->getToken()->getUser();
+        $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
         if (!isset($this->configurator)) {
-            $this->configurator = new AbstractArticlePageAdminListConfigurator($this->getDoctrine()->getManager());
+            $this->configurator = new AbstractArticlePageAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
         }
 
         return $this->configurator;

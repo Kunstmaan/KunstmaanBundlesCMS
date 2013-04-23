@@ -20,11 +20,18 @@ use Symfony\Component\HttpFoundation\Request;
 class AbstractArticleOverviewPage extends AbstractPage implements HasPagePartsInterface
 {
     /**
+     * The blog will have BlogEntry's as its children
+     *
      * @return array
      */
     public function getPossibleChildTypes()
     {
-        return array();
+        return array (
+            array(
+                'name' => 'Abstract Article',
+                'class'=> "Kunstmaan\ArticleBundle\Entity\AbstractArticlePage"
+            )
+        );
     }
 
     /**
