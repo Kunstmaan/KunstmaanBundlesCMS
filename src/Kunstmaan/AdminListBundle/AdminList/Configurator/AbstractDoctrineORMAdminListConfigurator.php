@@ -25,7 +25,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var Query
@@ -148,7 +148,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     public function getQuery()
     {
         if (is_null($this->query)) {
-            $queryBuilder = $this->em->getRepository($this->getRepositoryName())->createQueryBuilder('b');
+            $queryBuilder = $this->getQueryBuilder();
             $this->adaptQueryBuilder($queryBuilder);
 
             // Apply filters
@@ -179,6 +179,17 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         }
 
         return $this->query;
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    protected function getQueryBuilder()
+    {
+        $queryBuilder = $this->em
+            ->getRepository($this->getRepositoryName())
+            ->createQueryBuilder('b');
+        return $queryBuilder;
     }
 
     /**
