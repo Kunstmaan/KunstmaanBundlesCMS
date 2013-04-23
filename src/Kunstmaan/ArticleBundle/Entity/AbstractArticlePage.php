@@ -9,18 +9,14 @@ use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Symfony\Component\Form\AbstractType;
 
-/**
- * @ORM\Entity(repositoryClass="Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository")
- * @ORM\Table(name="kuma_abstractarticles")
- */
-class AbstractArticlePage extends AbstractPage implements HasPagePartsInterface
+abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsInterface
 {
     /**
      * @var string
      *
      * @ORM\Column(name="summary", type="text", nullable=true)
      */
-    private $summary;
+    protected  $summary;
 
     /**
      * Set the summary of this article

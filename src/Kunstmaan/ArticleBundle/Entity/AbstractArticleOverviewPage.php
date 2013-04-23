@@ -13,25 +13,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The article overview page which shows its articles
- *
- * @ORM\Entity()
- * @ORM\Table(name="kuma_abstractarticleoverviewpages")
  */
-class AbstractArticleOverviewPage extends AbstractPage implements HasPagePartsInterface
+abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPagePartsInterface
 {
     /**
-     * The blog will have BlogEntry's as its children
-     *
      * @return array
      */
     public function getPossibleChildTypes()
     {
-        return array (
-            array(
-                'name' => 'Abstract Article',
-                'class'=> "Kunstmaan\ArticleBundle\Entity\AbstractArticlePage"
-            )
-        );
+        return array ();
     }
 
     /**

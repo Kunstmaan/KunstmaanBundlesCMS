@@ -18,53 +18,58 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 /**
  * The AdminList controller for the AbstractArticlePage
  */
-class AbstractArticlePageAdminListController extends AdminListController
+abstract class AbstractArticlePageAdminListController extends AdminListController
 {
     /**
      * @var AdminListConfiguratorInterface
      */
-    private $configurator;
+    protected $configurator;
 
     /**
      * @var EntityManager $em
      */
-    private $em;
+    protected $em;
 
     /**
      * @var string $locale
      */
-    private $locale;
+    protected $locale;
 
     /**
      * @var SecurityContextInterface $securityContext
      */
-    private $securityContext;
+    protected $securityContext;
 
     /**
      * @var User $user
      */
-    private $user;
+    protected $user;
 
     /**
      * @var AclHelper $aclHelper
      */
-    private $aclHelper;
+    protected $aclHelper;
 
     /**
      * @return AdminListConfiguratorInterface
      */
     public function getAdminListConfigurator()
     {
-        $this->em = $this->getDoctrine()->getManager();
-        $this->locale = $this->getRequest()->getLocale();
-        $this->securityContext = $this->container->get('security.context');
-        $this->user = $this->securityContext->getToken()->getUser();
-        $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+        $this->initAdminListConfigurator();
         if (!isset($this->configurator)) {
             $this->configurator = new AbstractArticlePageAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
         }
 
         return $this->configurator;
+    }
+
+    protected function initAdminListConfigurator()
+    {
+        $this->em = $this->getDoctrine()->getManager();
+        $this->locale = $this->getRequest()->getLocale();
+        $this->securityContext = $this->container->get('security.context');
+        $this->user = $this->securityContext->getToken()->getUser();
+        $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
     }
 
     /**

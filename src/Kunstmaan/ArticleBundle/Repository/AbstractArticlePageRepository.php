@@ -36,7 +36,7 @@ class AbstractArticlePageRepository extends EntityRepository
         $query .= " n.ref_entity_name = 'Kunstmaan\\\\ArticleBundle\\\\Entity\\\\AbstractArticle'";
         $query .= " AND";
         $query .= " nt.online = 1 ";
-        //$query .= " ORDER BY entry.date DESC";
+        $query .= " ORDER BY article.date DESC";
 
         $q = $this->_em->createNativeQuery($query, $rsm);
 
