@@ -1,0 +1,4 @@
+    {{ bundle.getName()|lower }}.menu.adaptor:
+        class: {{ namespace }}\Helper\Menu\{{ entity_class }}MenuAdaptor
+        tags:
+            - { name: kunstmaan_admin.menu.adaptor }
