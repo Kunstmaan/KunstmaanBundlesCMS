@@ -109,7 +109,7 @@ class AbstractArticlePageAdminListConfigurator extends AbstractDoctrineORMAdminL
         $queryBuilder->andWhere('n.refEntityName = :class');
         $queryBuilder->addOrderBy("nv.updated", "DESC");
         $queryBuilder->setParameter('lang', $this->locale);
-        $queryBuilder->setParameter('class', 'Kunstmaan\ArticleBundle\Entity\AbstractArticlePage');
+        //$queryBuilder->setParameter('class', 'Kunstmaan\ArticleBundle\Entity\AbstractArticlePage');
     }
 
     /**
