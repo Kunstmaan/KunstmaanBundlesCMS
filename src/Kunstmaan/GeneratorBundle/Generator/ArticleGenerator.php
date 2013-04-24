@@ -98,7 +98,7 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'MenuAdaptor', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating menu : <info>OK</info>');
@@ -153,7 +153,7 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AdminListController', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating controllers : <info>OK</info>');
@@ -176,12 +176,12 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'OverviewPagePagePartAdminConfigurator', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PagePagePartAdminConfigurator', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating PagePart configurators : <info>OK</info>');
@@ -203,7 +203,7 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AdminListConfigurator', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating AdminList configurators : <info>OK</info>');
@@ -225,7 +225,7 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageAdminType', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating forms : <info>OK</info>');

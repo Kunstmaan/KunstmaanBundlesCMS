@@ -121,6 +121,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new DefaultSiteGenerator($this->getContainer()->get('filesystem'), __DIR__ . '/../Resources/skeleton/defaultsite');
+        return new DefaultSiteGenerator($this->getContainer()->get('filesystem'), '/defaultsite');
     }
 }

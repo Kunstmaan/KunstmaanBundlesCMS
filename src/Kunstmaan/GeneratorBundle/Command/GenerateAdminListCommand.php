@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
-use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
+use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,7 +18,7 @@ use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
 /**
  * Generates a KunstmaanAdminList
  */
-class GenerateAdminListCommand extends GeneratorCommand
+class GenerateAdminListCommand extends GenerateDoctrineCommand
 {
 
     /**
@@ -48,6 +48,9 @@ EOT
      *
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
+     *
+     * @throws \RuntimeException
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

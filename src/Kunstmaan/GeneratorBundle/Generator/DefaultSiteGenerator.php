@@ -24,6 +24,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     private $skeletonDir;
 
+    private $fullSkeletonDir;
+
     /**
      * @param Filesystem $filesystem  The filesytem
      * @param string     $skeletonDir The skeleton directory
@@ -32,7 +34,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
-        $this->skeletonDir = $skeletonDir . '/defaultsite';
+        $this->skeletonDir = $skeletonDir;
+        $this->fullSkeletonDir = __DIR__.'/../Resources/SensioGeneratorBundle/skeleton' . $skeletonDir;
     }
 
     /**
@@ -66,10 +69,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generateUnitTests(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Tests';
+        $dirPath = sprintf("%s/Tests/Controller", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Tests/Controller", $this->skeletonDir);
 
-        $this->renderFile($fullSkeletonDir, '/Controller/DefaultControllerTest.php', $dirPath . '/Tests/Controller/DefaultControllerTest.php', $parameters);
+        $this->renderFile($skeletonDir . '/DefaultControllerTest.php', $dirPath . '/DefaultControllerTest.php', $parameters);
 
         $output->writeln('Generating Unit Tests : <info>OK</info>');
     }
@@ -80,10 +83,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generateBehatTests(Bundle $bundle, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Features';
+        $dirPath = sprintf("%s/Features", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Features", $this->skeletonDir);
 
-        $this->filesystem->copy($fullSkeletonDir . '/homepage.feature', $dirPath . '/Features/homepage.feature', true);
+        $this->filesystem->copy($skeletonDir . '/homepage.feature', $dirPath . '/homepage.feature', true);
 
         $output->writeln('Generating Behat Tests : <info>OK</info>');
     }
@@ -96,34 +99,34 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generateTemplates(Bundle $bundle, array $parameters, $rootDir, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Resources/views';
+        $dirPath = sprintf("%s/Resources/views", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/views", $this->skeletonDir);
 
-        $this->filesystem->copy($fullSkeletonDir . '/Default/index.html.twig', $dirPath . '/Resources/views/Default/index.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Resources/views/Default/index.html.twig');
+        $this->filesystem->copy($this->fullSkeletonDir . '/Default/index.html.twig', $dirPath . '/Default/index.html.twig', true);
+        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Default/index.html.twig');
 
-        $this->renderFile($fullSkeletonDir, '/Page/layout.html.twig', $dirPath . '/Resources/views/Page/layout.html.twig', $parameters);
+        $this->renderFile($this->fullSkeletonDir , '/Page/layout.html.twig', $dirPath . '/Page/layout.html.twig', $parameters);
 
-        $this->filesystem->copy($fullSkeletonDir . '/Pages/ContentPage/view.html.twig', $dirPath . '/Resources/views/Pages/ContentPage/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/ContentPage/view.html.twig');
+        $this->filesystem->copy($this->fullSkeletonDir  . '/Pages/ContentPage/view.html.twig', $dirPath . '/Pages/ContentPage/view.html.twig', true);
+        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/ContentPage/view.html.twig');
 
-        $this->filesystem->copy($fullSkeletonDir . '/Form/fields.html.twig', $dirPath . '/Resources/views/Form/fields.html.twig', true);
+        $this->filesystem->copy($this->fullSkeletonDir  . '/Form/fields.html.twig', $dirPath . '/Form/fields.html.twig', true);
 
-        $this->filesystem->copy($fullSkeletonDir . '/Pages/FormPage/view.html.twig', $dirPath . '/Resources/views/Pages/FormPage/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/FormPage/view.html.twig');
-        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/views/Pages/FormPage/view.html.twig');
+        $this->filesystem->copy($this->fullSkeletonDir  . '/Pages/FormPage/view.html.twig', $dirPath . '/Pages/FormPage/view.html.twig', true);
+        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/FormPage/view.html.twig');
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/FormPage/view.html.twig');
 
-        $this->filesystem->copy($fullSkeletonDir . '/Pages/HomePage/view.html.twig', $dirPath . '/Resources/views/Pages/HomePage/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/HomePage/view.html.twig');
+        $this->filesystem->copy($this->fullSkeletonDir  . '/Pages/HomePage/view.html.twig', $dirPath . '/Pages/HomePage/view.html.twig', true);
+        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/HomePage/view.html.twig');
 
-        $this->filesystem->copy($fullSkeletonDir . '/Layout/layout.html.twig', $dirPath . '/Resources/views/Layout/layout.html.twig', true);
-        GeneratorUtils::replace("~~~CSS~~~", "{% include '" . $bundle->getName() .":Layout:_css.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
-        GeneratorUtils::replace("~~~TOP_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_header.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
-        GeneratorUtils::replace("~~~FOOTER_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_footer.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
+        $this->filesystem->copy($this->fullSkeletonDir  . '/Layout/layout.html.twig', $dirPath . '/Layout/layout.html.twig', true);
+        GeneratorUtils::replace("~~~CSS~~~", "{% include '" . $bundle->getName() .":Layout:_css.html.twig' %}\n", $dirPath . 'Layout/layout.html.twig');
+        GeneratorUtils::replace("~~~TOP_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_header.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
+        GeneratorUtils::replace("~~~FOOTER_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_footer.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
 
-        $this->renderFile($fullSkeletonDir, '/Layout/_css.html.twig', $dirPath . '/Resources/views/Layout/_css.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, '/Layout/_js_footer.html.twig', $dirPath . '/Resources/views/Layout/_js_footer.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, '/Layout/_js_header.html.twig', $dirPath . '/Resources/views/Layout/_js_header.html.twig', $parameters);
+        $this->renderFile($this->fullSkeletonDir , '/Layout/_css.html.twig', $dirPath . '/Layout/_css.html.twig', $parameters);
+        $this->renderFile($this->fullSkeletonDir , '/Layout/_js_footer.html.twig', $dirPath . '/Layout/_js_footer.html.twig', $parameters);
+        $this->renderFile($this->fullSkeletonDir , '/Layout/_js_header.html.twig', $dirPath . '/views/Layout/_js_header.html.twig', $parameters);
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');
 
@@ -143,13 +146,13 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generateErrorTemplates(Bundle $bundle, array $parameters, $rootDir, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Resources/views/Error';
+        $dirPath = sprintf("%s/Resources/views/Error", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/views/Error", $this->skeletonDir);
 
-        $this->renderFile($fullSkeletonDir, '/error.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, '/error404.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error404.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, '/error500.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error500.html.twig', $parameters);
-        $this->renderFile($fullSkeletonDir, '/error503.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error503.html.twig', $parameters);
+        $this->renderFile($skeletonDir . '/error.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error.html.twig', $parameters);
+        $this->renderFile($skeletonDir . '/error404.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error404.html.twig', $parameters);
+        $this->renderFile($skeletonDir . '/error500.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error500.html.twig', $parameters);
+        $this->renderFile($skeletonDir . '/error503.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error503.html.twig', $parameters);
 
         $output->writeln('Generating Error Twig Templates : <info>OK</info>');
     }
@@ -160,8 +163,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generateAssets(Bundle $bundle, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Resources/public';
+        $dirPath = sprintf("%s/Resources/public", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/public", $this->skeletonDir);
 
         $assets = array(
             '/css/app.css',
@@ -175,7 +178,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         );
 
         foreach ($assets as $asset) {
-            $this->filesystem->copy(sprintf("%s%s", $fullSkeletonDir, $asset), sprintf("%s/Resources/public%s", $dirPath, $asset));
+            $this->filesystem->copy(sprintf("%s%s", $this->fullSkeletonDir, $asset), sprintf("%s%s", $dirPath, $asset));
         }
 
         $output->writeln('Generating Assets : <info>OK</info>');
@@ -191,12 +194,12 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     public function generateFixtures(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath() . '/DataFixtures/ORM';
-        $fullSkeletonDir = $this->skeletonDir . '/DataFixtures/ORM';
+        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM';
 
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'DefaultSiteFixtures', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultSiteFixtures', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating Fixtures : <info>OK</info>');
@@ -212,28 +215,28 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     public function generatePagepartConfigs(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath() . '/PagePartAdmin';
-        $fullSkeletonDir = $this->skeletonDir . '/PagePartAdmin';
+        $skeletonDir = $this->skeletonDir . '/PagePartAdmin';
 
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'BannerPagePartAdminConfigurator', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'BannerPagePartAdminConfigurator', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'ContentPagePagePartAdminConfigurator', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'ContentPagePagePartAdminConfigurator', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'FormPagePagePartAdminConfigurator', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'FormPagePagePartAdminConfigurator', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'HomePagePagePartAdminConfigurator', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'HomePagePagePartAdminConfigurator', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating PagePart Configurators : <info>OK</info>');
@@ -249,22 +252,22 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     public function generateForm(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath() . '/Form/Pages';
-        $fullSkeletonDir = $this->skeletonDir . '/Form/Pages';
+        $skeletonDir = $this->skeletonDir . '/Form/Pages';
 
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'ContentPageAdminType', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'ContentPageAdminType', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'FormPageAdminType', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'FormPageAdminType', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'HomePageAdminType', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'HomePageAdminType', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating forms : <info>OK</info>');
@@ -274,46 +277,49 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
      * @param OutputInterface $output
+     *
+     * @throws \RuntimeException
      */
     public function generateEntities(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = sprintf("%s/Entity/Pages", $bundle->getPath());
-        $fullSkeletonDir = sprintf("%s/Entity/Pages", $this->skeletonDir);
+        $skeletonDir = sprintf("%s/Entity/Pages", $this->skeletonDir);
 
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'ContentPage', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'ContentPage', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'FormPage', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'FormPage', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
         try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'HomePage', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'HomePage', $parameters);
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            throw new \RuntimeException($error->getMessage());
         }
 
         $output->writeln('Generating entities : <info>OK</info>');
     }
 
     /**
-     * @param string $fullSkeletonDir The full dir of the entity skeleton
+     * @param string $skeletonDir     The dir of the entity skeleton
      * @param string $dirPath         The full fir of where the entity should be created
      * @param string $className       The class name of the entity to create
      * @param array  $parameters      The template parameters
      *
      * @throws \RuntimeException
      */
-    private function generateSkeletonBasedClass($fullSkeletonDir, $dirPath, $className, array $parameters)
+    private function generateSkeletonBasedClass($skeletonDir, $dirPath, $className, array $parameters)
     {
         $classPath = sprintf("%s/%s.php", $dirPath, $className);
+        $skeletonPath = sprintf("%s/%s.php", $skeletonDir, $className);
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
-        $this->renderFile($fullSkeletonDir, $className . '.php', $classPath, $parameters);
+        $this->renderFile($skeletonPath, $classPath, $parameters);
     }
 
 }
