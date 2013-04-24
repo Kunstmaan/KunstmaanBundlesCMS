@@ -20,8 +20,9 @@ Add the KunstmaanArticleBundle to your AppKernel.php file:
 new Kunstmaan\ArticleBundle\KunstmaanArticleBundle(),
 ```
 
-You can find more detailed information on how to use this bundle [here](https://github.com/Kunstmaan/KunstmaanArticleBundle/blob/master/Resources/doc/ArticleBundle.md)
+You can find more detailed information on how to use this bundle [here](https://github.com/Kunstmaan/KunstmaanArticleBundle/blob/master/Resources/doc/ArticleBundle.md).
 
-## Current Status
+Generate
+--------
 
-This bundle is still under development. The end product will allow you to use the KunstmaanGeneratorBundle to generate seperate article sections for your website.
+This bundle has been developed to work closely with the [KunstmaanGeneratorBundle](https://github.com/Kunstmaan/KunstmaanGeneratorBundle). This bundle contains abstract classes used by the generated article classes. For more information, please read the extended documentation on the [Article generator](https://github.com/Kunstmaan/KunstmaanGeneratorBundle).

@@ -153,7 +153,7 @@ class AbstractArticlePageAdminListConfigurator extends AbstractDoctrineORMAdminL
      */
     public function getOverviewPage()
     {
-        $repository = $this->em->getRepository('KunstmaanArticleBundle:AbstractArticleOverviewPage');
+        $repository = $this->getOverviewPageRepository();
         $pages = $overviewpage = $repository->findAll();
         if (isset($pages) and count($pages) > 0) {
             return $pages[0];
@@ -161,6 +161,11 @@ class AbstractArticlePageAdminListConfigurator extends AbstractDoctrineORMAdminL
 
         return null;
     }
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    abstract public function getOverviewPageRepository();
 
     /**
      * @return string
