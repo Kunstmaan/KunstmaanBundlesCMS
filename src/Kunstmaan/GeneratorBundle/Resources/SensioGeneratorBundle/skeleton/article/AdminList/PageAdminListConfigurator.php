@@ -43,20 +43,12 @@ class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdm
     }
 
     /**
-     * Returns the OverviewPage of the {{ entity_class }}Pages
-     *
-     * @return {{ entity_class }}OverviewPage
+     * @return \Doctrine\ORM\EntityRepository
      */
-    public function getOverviewPage()
-    {
-        $repository = $this->em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}\{{ entity_class }}OverviewPage');
-        $pages = $overviewpage = $repository->findAll();
-        if (isset($pages) and count($pages) > 0) {
-            return $pages[0];
-        }
-
-        return null;
-    }
+    public function getOverviewPageRepository()
+{
+    return $this->em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}\{{ entity_class }}OverviewPage');
+}
 
     /**
      * @return string
