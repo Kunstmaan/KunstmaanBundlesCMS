@@ -135,6 +135,9 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         $this->filesystem->copy($fullSkeletonDir . '/OverviewPage/view.html.twig', $dirPath . '/Pages/' . $entity . '/' . $entity . 'OverviewPage/view.html.twig', true);
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Pages/' . $entity . '/view.html.twig');
 
+        $this->filesystem->copy($fullSkeletonDir . '/Page/view.html.twig', $dirPath . '/Pages/' . $entity . '/' . $entity . 'Page/view.html.twig', true);
+        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Pages/' . $entity . '/view.html.twig');
+
         //$this->filesystem->copy($fullSkeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . $entity . 'PageAdminList/view.html.twig', true);
         $this->renderFile($skeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . $entity . 'PageAdminList/list.html.twig', $parameters );
 
