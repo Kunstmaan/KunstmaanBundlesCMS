@@ -19,12 +19,11 @@ class SecurityController extends BaseController
     /**
      * Handle login action
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return string
      */
-    public function loginAction(Request $request)
+    public function loginAction()
     {
+        $request = $this->container->get('request');
         /* @var EntityManager $em */
         $em = $this->container->get('doctrine')->getManager();
         $session = $request->getSession();
