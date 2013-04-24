@@ -3,12 +3,19 @@
 
     {{ render_pageparts(page, 'main') }}
 
-    {% set count = 1 %}
-    {% block articles %}
-        {% for article in articles %}
-            {% if count > 1 %}<hr />{% endif %}
-            {% include 'KunstmaanArticleBundle:AbstractArticlePage:teaser.html.twig' %}
+    {% set count = 0 %}
+    {% if pagerfanta.nbResults > 0 %}
+        {% for article in pagerfanta.currentPageResults %}
+            {% if count > 0 %}<hr />{% endif %}
+            <div style=" margin-right: 20px;">
+                <h4><a href="#">{{ article.title }}</a></h4>
+                {{ article.summary }}
+            </div>
             {% set count = count + 1 %}
         {% endfor %}
-    {% endblock %}
+
+        {% if pagerfanta.haveToPaginate %}
+            {{ pagerfanta(pagerfanta) }}
+        {% endif %}
+    {% endif %}
 {% endblock %}

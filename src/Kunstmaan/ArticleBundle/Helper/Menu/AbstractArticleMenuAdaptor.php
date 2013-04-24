@@ -12,6 +12,7 @@ class AbstractArticleMenuAdaptor implements MenuAdaptorInterface
 {
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
+        /*
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuitem = new TopMenuItem($menu);
             $menuitem->setRoute('KunstmaanArticleBundle_admin_abstractarticlepage');
@@ -23,5 +24,6 @@ class AbstractArticleMenuAdaptor implements MenuAdaptorInterface
             }
             $children[] = $menuitem;
         }
+        */
     }
 }

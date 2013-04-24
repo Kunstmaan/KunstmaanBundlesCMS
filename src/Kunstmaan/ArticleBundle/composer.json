@@ -18,7 +18,9 @@
         "fpn/doctrine-extensions-taggable": "dev-master",
         "kunstmaan/admin-bundle": "*",
         "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/node-bundle": "*"
+        "kunstmaan/node-bundle": "*",
+        "white-october/pagerfanta-bundle": "dev-master",
+        "pagerfanta/pagerfanta": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\ArticleBundle": "" }

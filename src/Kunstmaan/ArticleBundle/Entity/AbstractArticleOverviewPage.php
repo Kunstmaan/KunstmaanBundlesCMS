@@ -7,6 +7,8 @@ use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,10 +41,31 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
         parent::service($container, $request, $context);
+
         $em = $container->get('doctrine')->getManager();
-        $repository = $em->getRepository('KunstmaanArticleBundle:AbstractArticlePage');
-        $context['articles'] = $repository->getArticles();
+        $repository = $this->getArticleRepository($em);
+        $adapter = new ArrayAdapter($repository->getArticles());
+        $pagerfanta = new Pagerfanta($adapter);
+
+        $pagenumber = $request->get('page');
+        if(!$pagenumber or $pagenumber < 1)
+        {
+            $pagenumber = 1;
+        }
+        $pagerfanta->setCurrentPage($pagenumber);
+        $context['pagerfanta'] = $pagerfanta;
+
     }
+
+    /**
+     * Return the Article repository
+     *
+     * @param $em
+     *
+     * @return mixed
+     */
+    public abstract function getArticleRepository($em);
+
 
     /**
      * @return string
