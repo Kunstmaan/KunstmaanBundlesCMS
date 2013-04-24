@@ -1,5 +1,6 @@
 # NodeBundle
 
+
 ## Chainrouter implementation in NodeBundle
 
 The KunstmaanNodeBundle implements the [Symfony CMF](http://cmf.symfony.com/) [RoutingExtra](https://github.com/symfony-cmf/RoutingExtraBundle) bundle.
@@ -85,3 +86,11 @@ TODO : Write down how slugs and the router works.
 ## Known Issues
 
 * Even though you click on 'Save as draft' after creating and modifying pageparts on your public version, the modifications will also be saved to the public version. It is advised to first "Save as draft" before you start altering pageparts.
+
+## Publish later
+
+Nodes can be published on a specified date, you have to configure a cronjob for this:
+```cron
+* * * * * /....../app/console kuma:nodes:cron
+```
+
