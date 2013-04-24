@@ -36,7 +36,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
         $query .= " n.ref_entity_name = '{{ namespace | replace('\\', '\\\\') }}\\\\Entity\\\\Pages\\\\{{ entity_class }}\\\\{{ entity_class }}Page'";
         $query .= " AND";
         $query .= " nt.online = 1 ";
-        $query .= " ORDER BY article.date DESC";
+        //$query .= " ORDER BY article.date DESC";
 
         $q = $this->_em->createNativeQuery($query, $rsm);
 
