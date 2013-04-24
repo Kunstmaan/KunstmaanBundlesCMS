@@ -130,9 +130,13 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
     {
         $dirPath = sprintf("%s/Resources/views", $bundle->getPath());
         $skeletonDir = sprintf("%s/Resources/views", $this->skeletonDir);
+        $fullSkeletonDir = sprintf("%s/Resources/views", $this->fullSkeletonDir);
 
-        $this->filesystem->copy(__DIR__.'/../Resources/SensioGeneratorBundle/skeleton' . $skeletonDir . '/OverviewPage/view.html.twig', $dirPath . '/Pages/' . $entity . '/view.html.twig', true);
+        $this->filesystem->copy($fullSkeletonDir . '/OverviewPage/view.html.twig', $dirPath . '/Pages/' . $entity . '/view.html.twig', true);
         GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Pages/' . $entity . '/view.html.twig');
+
+        //$this->filesystem->copy($fullSkeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . $entity . 'PageAdminList/view.html.twig', true);
+        $this->renderFile($skeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . $entity . 'PageAdminList/list.html.twig', $parameters );
 
         $output->writeln('Generating twig templates : <info>OK</info>');
     }
@@ -151,7 +155,7 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         $skeletonDir = sprintf("%s/Controller", $this->skeletonDir);
 
         try {
-            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AdminListController', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageAdminListController', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
@@ -201,7 +205,7 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         $skeletonDir = sprintf("%s/AdminList", $this->skeletonDir);
 
         try {
-            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AdminListConfigurator', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageAdminListConfigurator', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
