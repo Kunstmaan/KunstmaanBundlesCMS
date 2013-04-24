@@ -48,8 +48,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
         $pagerfanta = new Pagerfanta($adapter);
 
         $pagenumber = $request->get('page');
-        if(!$pagenumber or $pagenumber < 1)
-        {
+        if (!$pagenumber or $pagenumber < 1) {
             $pagenumber = 1;
         }
         $pagerfanta->setCurrentPage($pagenumber);
@@ -64,8 +63,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      *
      * @return mixed
      */
-    public abstract function getArticleRepository($em);
-
+    abstract public function getArticleRepository($em);
 
     /**
      * @return string

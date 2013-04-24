@@ -14,5 +14,5 @@ abstract class AbstractArticlePageRepository extends EntityRepository
      *
      * @return array
      */
-    public abstract  function getArticles();
+    abstract public function getArticles();
 }
