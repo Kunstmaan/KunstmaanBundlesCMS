@@ -6,7 +6,6 @@ If you're like us, you like to build applications without having to do the same 
 
 This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
 
-
 ## Use
 
 Generate a Bundle :
@@ -36,12 +35,20 @@ Generate a default website using the Kunstmaan bundles :
 ```
 app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
 
-#### Additional Pages
+#### Search page
 
 Generate a search page based on the [KunstmaanNodeSearchBundle](https://github.com/Kunstmaan/KunstmaanNodeSearchBundle) :
 
 ```
 app/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=tableprefix_
+```
+
+#### Article : Overview and detail pages
+
+Generate an overview page with article pages. The overview page contains a paginated list of its articles. The articles are managed by AdminLists.
+
+```
+app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
 ```
 
 ## More

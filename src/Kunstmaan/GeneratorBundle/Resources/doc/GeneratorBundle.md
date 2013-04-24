@@ -78,3 +78,19 @@ The 'prefix' parameter is optional and will allow you to add a prefix to all tab
 ```
 app/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=tableprefix_
 ```
+
+## Article : Overview and detail pages
+
+Generate the classes for an overview and its detail pages. The detail page is a content page with pageparts and a summary text field. The overview page contains a paginated list of its articles and shows for each article its title and summary and will link to the article page for its full content.
+
+### Command
+
+The 'namespace' parameter is required and will determine in which bundle the files will be generated.
+
+The 'entity' parameter is required in order to generated the class names. Most used entity names are "News", "Press", ...
+
+The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
+
+```
+app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
+```
