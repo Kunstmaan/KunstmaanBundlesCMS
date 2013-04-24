@@ -39,9 +39,9 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
     }
 
     /**
-     * @param Bundle          $bundle  The bundle
+     * @param Bundle          $bundle The bundle
      * @param string          $entity
-     * @param string          $prefix  The prefix
+     * @param string          $prefix The prefix
      * @param OutputInterface $output
      */
     public function generate(Bundle $bundle, $entity, $prefix, OutputInterface $output)
@@ -166,7 +166,6 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         $output->writeln('Generating controllers : <info>OK</info>');
     }
 
-
     /**
      * @param Bundle          $bundle     The bundle
      * @param string          $entity     The name of the entity
@@ -288,11 +287,11 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
     }
 
     /**
-     * @param string $skeletonDir     The full dir of the entity skeleton
+     * @param string $skeletonDir The full dir of the entity skeleton
      * @param string $entity
-     * @param string $dirPath         The full fir of where the entity should be created
-     * @param string $className       The class name of the entity to create
-     * @param array  $parameters      The template parameters
+     * @param string $dirPath     The full fir of where the entity should be created
+     * @param string $className   The class name of the entity to create
+     * @param array  $parameters  The template parameters
      *
      * @throws \RuntimeException
      */

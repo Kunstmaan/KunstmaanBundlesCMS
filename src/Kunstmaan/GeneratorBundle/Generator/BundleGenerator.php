@@ -29,7 +29,7 @@ class BundleGenerator extends Generator
     private $filesystem;
 
     /**
-     * @param Filesystem $filesystem  The filesystem
+     * @param Filesystem $filesystem The filesystem
      */
     public function __construct(Filesystem $filesystem)
     {

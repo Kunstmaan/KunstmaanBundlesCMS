@@ -5,7 +5,6 @@ namespace {{ namespace }}\Entity\Pages;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\HttpFoundation\Request;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;

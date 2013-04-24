@@ -42,7 +42,7 @@ class BannerPagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
     /**
      * @return array
      */
-    function getPossiblePagePartTypes()
+    public function getPossiblePagePartTypes()
     {
         return $this->pagePartTypes;
     }
@@ -50,7 +50,7 @@ class BannerPagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return "Banners";
     }
@@ -58,7 +58,7 @@ class BannerPagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
     /**
      * @return string
      */
-    function getDefaultContext()
+    public function getDefaultContext()
     {
         return "banners";
     }

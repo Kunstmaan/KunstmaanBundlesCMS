@@ -4,9 +4,7 @@ namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use {{ namespace }}\Form\Pages\FormPageAdminType;

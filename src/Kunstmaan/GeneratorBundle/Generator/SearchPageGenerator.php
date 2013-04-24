@@ -53,7 +53,6 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
     }
 
-
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters

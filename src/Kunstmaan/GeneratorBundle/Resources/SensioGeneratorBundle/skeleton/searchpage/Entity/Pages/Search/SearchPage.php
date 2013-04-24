@@ -9,8 +9,8 @@ use Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}search_page")
  */
-class SearchPage extends AbstractSearchPage {
-
+class SearchPage extends AbstractSearchPage
+{
     /*
      * return string
      */

@@ -10,5 +10,4 @@ use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticlePagePagePartAdminConfig
 class {{ entity_class }}PagePagePartAdminConfigurator extends AbstractArticlePagePagePartAdminConfigurator
 {
 
-
 }

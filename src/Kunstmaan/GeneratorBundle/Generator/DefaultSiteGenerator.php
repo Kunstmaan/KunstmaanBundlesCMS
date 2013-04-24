@@ -305,10 +305,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param string $skeletonDir     The dir of the entity skeleton
-     * @param string $dirPath         The full fir of where the entity should be created
-     * @param string $className       The class name of the entity to create
-     * @param array  $parameters      The template parameters
+     * @param string $skeletonDir The dir of the entity skeleton
+     * @param string $dirPath     The full fir of where the entity should be created
+     * @param string $className   The class name of the entity to create
+     * @param array  $parameters  The template parameters
      *
      * @throws \RuntimeException
      */

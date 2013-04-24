@@ -6,8 +6,6 @@ use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,6 +29,7 @@ class {{ entity_class }}AdminListController extends AdminListController
         if (!isset($this->configurator)) {
             $this->configurator = new {{ entity_class }}AdminListConfigurator($this->getDoctrine()->getManager());
         }
+
         return $this->configurator;
     }
 

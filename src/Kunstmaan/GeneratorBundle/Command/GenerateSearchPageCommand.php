@@ -10,10 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Generator;
-
-use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 
 /**
  * Generates a SearchPage based on the KunstmaanNodeSearchBundle

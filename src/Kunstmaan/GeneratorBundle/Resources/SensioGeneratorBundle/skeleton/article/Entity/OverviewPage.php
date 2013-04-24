@@ -35,9 +35,11 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
         parent::service($container, $request, $context);
-        $em = $container->get('doctrine')->getManager();
-        $repository = $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}\{{ entity_class }}Page');
-        $context['articles'] = $repository->getArticles();
+    }
+
+    public function getArticleRepository($em)
+    {
+        return $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}\{{ entity_class }}Page');
     }
 
     /**

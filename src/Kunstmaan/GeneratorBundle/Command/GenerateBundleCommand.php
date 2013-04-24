@@ -102,7 +102,6 @@ EOT
             $dir = getcwd() . '/' . $dir;
         }
 
-
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($namespace, $bundle, $dir, $format);
 

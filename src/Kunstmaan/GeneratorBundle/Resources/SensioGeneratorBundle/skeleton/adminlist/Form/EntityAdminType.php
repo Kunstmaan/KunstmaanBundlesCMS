@@ -2,7 +2,6 @@
 
 namespace {{ namespace }}\Form;
 
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -34,7 +33,8 @@ class {{ entity_class }}AdminType extends AbstractType {
      *
      * @return string The name of this type
      */
-    function getName() {
+    public function getName()
+    {
         return "{{ entity_class|lower }}_form";
     }
 

@@ -6,7 +6,6 @@ use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Kunstmaan\GeneratorBundle\Generator\AdminTestsGenerator;
 use Symfony\Component\Console\Input\InputOption;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 
