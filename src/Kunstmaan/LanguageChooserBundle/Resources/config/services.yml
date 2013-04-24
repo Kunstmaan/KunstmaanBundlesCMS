@@ -1,0 +1,6 @@
+services:
+    kunstmaan_languagechooser.languagechooserrouter:
+        class: Kunstmaan\LanguageChooserBundle\Router\LanguageChooserRouter
+        arguments: ["@service_container"]
+        tags:
+            - { name: router, priority: 100 }

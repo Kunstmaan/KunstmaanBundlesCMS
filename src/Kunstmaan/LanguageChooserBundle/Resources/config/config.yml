@@ -1,0 +1,14 @@
+twig:
+    globals:
+        languagechooser_languages: %languagechooser%
+
+lunetics_locale:
+  allowed_locales: %languagechooser%
+  cookie:
+    set_on_change: true
+  guessing_order:
+    - query
+    - cookie
+    - session
+    - browser
+    - router
