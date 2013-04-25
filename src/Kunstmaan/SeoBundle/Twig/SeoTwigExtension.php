@@ -124,8 +124,11 @@ class SeoTwigExtension extends Twig_Extension
             throw new \InvalidArgumentException('Only linkedin and facebook are supported for now.');
         }
 
-        // TODO: Check if it makes sense to display the widget for this platform.
-        //       If the values aren't present there is no point.
+        // If not a single argument is present we can be sure the button will be useless.
+        // This is just a catchall. For more specific behaviour you can return false sooner in the platform specific check.
+        if (!array_filter($arguments)) {
+            return false;
+        }
 
         $template = 'KunstmaanSeoBundle:SeoTwigExtension:' . $platform . '_widget.html.twig';
         $template = $this->environment->loadTemplate($template);
