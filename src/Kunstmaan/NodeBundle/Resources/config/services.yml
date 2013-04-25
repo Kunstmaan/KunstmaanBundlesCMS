@@ -24,6 +24,10 @@ services:
         class: Kunstmaan\NodeBundle\Form\Type\SlugType
         tags:
             - { name: 'form.type', alias: 'slug' }
+    
+    kunstmaan_node.admin_node.publisher:
+        class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@event_dispatcher"]
 
     kunstmaan_node.actions_menu_builder:
         class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder

@@ -109,6 +109,7 @@ class ActionsMenuBuilder
         if (!is_null($activeNodeVersion)) {
             $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
             $node = $activeNodeTranslation->getNode();
+            $queuedNodeTranslationAction = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findOneBy(array('nodeTranslation' => $activeNodeTranslation));
 
             $isFirst = true;
             if (('draft' == $activeNodeVersion->getType()) && $this->isEditableNode) {
@@ -116,7 +117,7 @@ class ActionsMenuBuilder
                     $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn' . ($isFirst ? ' btn-primary' : ''), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
                     $isFirst = false;
                 }
-                if ($this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
+                if (empty($queuedNodeTranslationAction) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
                     $menu->addChild('action.publish', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn' . ($isFirst ? ' btn-primary' : ''), 'value' => 'saveandpublish', 'name' => 'saveandpublish'), 'extras' => array('renderType' => 'button')));
                 }
                 $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl(), 'version' => $activeNodeVersion->getId())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
@@ -126,9 +127,9 @@ class ActionsMenuBuilder
                     $isFirst = false;
                 }
                 if ($this->isEditableNode) {
-                    if ($activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
+                    if (empty($queuedNodeTranslationAction) && $activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
                         $menu->addChild('action.unpublish', array('linkAttributes' => array('class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#unpub')));
-                    } elseif (!$activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
+                    } elseif (empty($queuedNodeTranslationAction) && !$activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
                         $menu->addChild('action.publish', array('linkAttributes' => array('class' => 'btn', 'data-toggle' => 'modal', 'data-target' => '#pub')));
                     }
                     if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
@@ -136,7 +137,6 @@ class ActionsMenuBuilder
                     }
                     $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn')));
                 }
-
             }
 
             $page = $activeNodeVersion->getRef($this->em);

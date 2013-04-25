@@ -18,6 +18,12 @@
 {% endblock %}
 
 {% block messages %}
+    {% if queuedNodeTranslationAction %}
+        <div class="alert alert-block">
+            <strong>{{ "Warning" | trans }}: </strong>{{ "This page will be " ~ queuedNodeTranslationAction.action ~ "ed at %date%" | trans({"%date%":queuedNodeTranslationAction.date|date('Y-m-d H:i:s')}) }}
+            (<a href="{{ path('KunstmaanNodeBundle_nodes_unschedule_publish', { 'id': node.id}) }}">Cancel</a>)
+        </div>
+    {% endif %}
     {% if not draft and nodeTranslation.isOnline %}
         <div class="alert alert-block">
             <strong>{{ "Warning" | trans }}: </strong>{{ "Attention, changes are immediately online" | trans }}
