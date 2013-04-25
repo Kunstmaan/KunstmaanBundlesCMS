@@ -1,5 +1,0 @@
-KunstmaanSearchBundle_searches:
-    resource: @KunstmaanSearchBundle/Controller/SearchedForAdminListController.php
-    type:     annotation
-    prefix:   /admin/searchedfor/
-

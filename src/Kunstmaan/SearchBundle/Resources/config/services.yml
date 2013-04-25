@@ -1,24 +1,28 @@
+parameters:
+    kunstmaan_search.hostname: "localhost"
+    kunstmaan_search.port: 9200
+    kunstmaan_search.searchprovider: "Sherlock"
+    kunstmaan_search.searchconfiguration_chain.class: Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain
+    kunstmaan_search.searchprovider_chain.class: Kunstmaan\SearchBundle\Provider\SearchProviderChain
+
 services:
-    kunstmaan_search.transformers.nodetransformer:
-        class: %kunstmaan_search.transformers.nodetransformerclass%
-        arguments:
-            - { container: @service_container }
 
-    kunstmaan_search.transformers.elasticatransformer:
-        class: %kunstmaan_search.transformers.elasticatransformerclass%
-        arguments: [@doctrine, %kunstmaan_search.entity.website%, [identifier: id, hydrate: true]]
+    kunstmaan_search.search:
+        arguments: ["@kunstmaan_search.searchprovider_chain", %searchindexprefix%, "%kunstmaan_search.searchprovider%"]
+        class: Kunstmaan\SearchBundle\Search\Search
 
-    kunstmaan_search.pagecontent_for_search_renderer:
-        class: Kunstmaan\SearchBundle\Helper\PageContentRenderer
+    # Providers
 
-    kunstmaan_search.menu.adaptor:
-        class: Kunstmaan\SearchBundle\Helper\Menu\SearchMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager"]
+    Kunstmaan_search.searchprovider_chain:
+        class: "%kunstmaan_search.searchprovider_chain.class%"
+
+    kunstmaan_search.searchprovider.sherlock:
+        class: Kunstmaan\SearchBundle\Sherlock\SherlockSearchProvider
+        arguments: [%kunstmaan_search.hostname%, %kunstmaan_search.port%]
         tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
+            - { name: kunstmaan_search.searchprovider, alias: Sherlock}
 
-    kunstmaan_search.twig.extension:
-        class: Kunstmaan\SearchBundle\Twig\Extension\TrimHighlightTwigExtension
-        arguments: ["@service_container"]
-        tags:
-            - { name: twig.extension }
+    #Configurations
+
+    Kunstmaan_search.searchconfiguration_chain:
+        class: "%kunstmaan_search.searchconfiguration_chain.class%"

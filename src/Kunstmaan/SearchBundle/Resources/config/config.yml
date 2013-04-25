@@ -1,42 +1,30 @@
-parameters:
-    kunstmaan_search.transformers.nodetransformerclass: Kunstmaan\SearchBundle\Transformers\NodeTransformer
-    kunstmaan_search.transformers.elasticatransformerclass: Kunstmaan\SearchBundle\Transformers\ElasticaTransformer
-    kunstmaan_search.entity.website: Kunstmaan\NodeBundle\Entity\NodeTranslation
-    kunstmaan_search.website_custom_mappings:
-        content:
-            handlerclass: Kunstmaan\SearchBundle\Helper\NodeContentSearcher
-            handlermethod: getSearchContentForNode
-        parents:
-            handlerclass: Kunstmaan\SearchBundle\Helper\NodeContentSearcher
-            handlermethod: getParentsAndSelfForNode
-
-twig:
-    globals:
-        searchbundleisset: true
-
-foq_elastica:
-    clients:
-        default: { host: localhost, port: %searchport% }
-    indexes:
-        %searchindexname%:
-            client: default
-            types:
-                page:
-                    mappings:
-                        title: { analyzer: snowball }
-                        id:
-                        lang:
-                        parents: { analyzer: whitespace }
-                        content: { analyzer: snowball, store:'yes',  "term_vector" : "with_positions_offsets" }
-                    persistence:
-                        driver: orm
-                        provider:
-                              query_builder_method: getOnlineNodes
-                        model: Kunstmaan\NodeBundle\Entity\NodeTranslation
-                        model_to_elastica_transformer:
-                            service: kunstmaan_search.transformers.nodetransformer
-                        elastica_to_model_transformer:
-                            service: kunstmaan_search.transformers.elasticatransformer
-                        listener: ~
-                        finder: ~
-
+kunstmaan_search:
+    analyzer_languages:
+        - { lang: 'ar', analyzer: 'arabic'}
+        - { lang: 'hy', analyzer: 'armenian'}
+        - { lang: 'eu', analyzer: 'basque'}
+        - { lang: 'bg', analyzer: 'bulgarian'}
+        - { lang: 'ca', analyzer: 'catalan'}
+        - { lang: 'zh', analyzer: 'chinese'}
+        - { lang: 'cs', analyzer: 'czech'}
+        - { lang: 'da', analyzer: 'danish'}
+        - { lang: 'nl', analyzer: 'dutch'}
+        - { lang: 'en', analyzer: 'english'}
+        - { lang: 'fi', analyzer: 'finnish'}
+        - { lang: 'fr', analyzer: 'french'}
+        - { lang: 'gl', analyzer: 'galician'}
+        - { lang: 'de', analyzer: 'german'}
+        - { lang: 'el', analyzer: 'greek'}
+        - { lang: 'hi', analyzer: 'hindi'}
+        - { lang: 'hu', analyzer: 'hungarian'}
+        - { lang: 'id', analyzer: 'indonesian'}
+        - { lang: 'it', analyzer: 'italian'}
+        - { lang: 'no', analyzer: 'norwegian'}
+        - { lang: 'fa', analyzer: 'persian'}
+        - { lang: 'pt', analyzer: 'portuguese'}
+        - { lang: 'ro', analyzer: 'romanian'}
+        - { lang: 'ru', analyzer: 'russian'}
+        - { lang: 'es', analyzer: 'spanish'}
+        - { lang: 'sv', analyzer: 'swedish'}
+        - { lang: 'tr', analyzer: 'turkish'}
+        - { lang: 'th', analyzer: 'thai'}
