@@ -39,13 +39,14 @@ use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\RevertNodeAction;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
-use Kunstmaan\NodeBundle\Helper\Tabs\TabPane;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 
 /**
@@ -503,17 +504,17 @@ class NodeAdminController extends Controller
         $menubuilder->setIsEditableNode(!$isStructureNode);
 
         // Building the form
-        $propertiesTab = new Tab('Properties');
-        $propertiesTab->addType('main', $page->getDefaultAdminType(), $page);
-        $propertiesTab->addType('node', $node->getDefaultAdminType(), $node);
-        $tabPane->addTab($propertiesTab);
+        $propertiesWidget = new FormWidget();
+        $propertiesWidget->addType('main', $page->getDefaultAdminType(), $page);
+        $propertiesWidget->addType('node', $node->getDefaultAdminType(), $node);
+        $tabPane->addTab(new Tab('Properties', $propertiesWidget));
 
         // Menu tab
         if (!$isStructureNode) {
-            $menuTab = new Tab('Menu');
-            $menuTab->addType('menunodetranslation', new NodeMenuTabTranslationAdminType(), $nodeTranslation);
-            $menuTab->addType('menunode', new NodeMenuTabAdminType(), $node);
-            $tabPane->addTab($menuTab);
+            $menuWidget = new FormWidget();
+            $menuWidget->addType('menunodetranslation', new NodeMenuTabTranslationAdminType(), $nodeTranslation);
+            $menuWidget->addType('menunode', new NodeMenuTabAdminType(), $node);
+            $tabPane->addTab(new Tab('Menu', $menuWidget));
 
             $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($request, $tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         }

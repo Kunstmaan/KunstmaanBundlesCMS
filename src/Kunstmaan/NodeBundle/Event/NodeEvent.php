@@ -56,6 +56,7 @@ class NodeEvent extends Event
     public function setNodeVersion($nodeVersion)
     {
         $this->nodeVersion = $nodeVersion;
+
         return $this;
     }
 

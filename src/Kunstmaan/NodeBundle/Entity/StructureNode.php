@@ -20,11 +20,10 @@ abstract class StructureNode extends AbstractPage
         return false;
     }
 
-
     /**
-     * @inheritdoc
-     *
      * By default this is true..
+     *
+     * {@inheritdoc}
      */
     public function isStructureNode()
     {

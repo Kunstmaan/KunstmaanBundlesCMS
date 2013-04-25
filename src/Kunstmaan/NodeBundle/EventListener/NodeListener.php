@@ -2,7 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Kunstmaan\NodeBundle\Helper\Tabs\PermissionTab;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
+use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
@@ -49,7 +50,7 @@ class NodeListener
     {
         if ($this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
             $tabPane = $event->getTabPane();
-            $tabPane->addTab(new PermissionTab('Permissions', $event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap));
+            $tabPane->addTab(new Tab('Permissions', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
         }
     }
 

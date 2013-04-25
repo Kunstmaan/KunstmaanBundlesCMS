@@ -4,7 +4,7 @@ parameters:
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: [@session, @kunstmaan_admin.logger]
+        arguments: ["@session", "@kunstmaan_admin.logger"]
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
             - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
@@ -64,11 +64,6 @@ services:
         class: Kunstmaan\NodeBundle\EventListener\FixDateListener
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -100 }
-
-    kunstmaan_node.tabs.twig.extension:
-        class: Kunstmaan\NodeBundle\Twig\TabsTwigExtension
-        tags:
-            - { name: twig.extension }
 
     kunstmaan_node.edit_node.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeListener

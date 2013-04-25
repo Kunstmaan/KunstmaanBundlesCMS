@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager,
 use Kunstmaan\NodeBundle\Entity\Node,
     Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
+use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -21,6 +22,10 @@ class NodeTranslationListener
     private $session;
     private $logger;
 
+    /**
+     * @param Session $session The session
+     * @param Logger  $logger  The logger
+     */
     public function __construct(Session $session, $logger)
     {
         $this->session = $session;
@@ -98,8 +103,10 @@ class NodeTranslationListener
     }
 
     /**
+     * @param NodeTranslation $translation The node translation
+     * @param EntityManager   $em          The entity manager
+     *
      * Update the url for a nodetranslation
-     * @param NodeTranslation $node
      *
      * @return NodeTranslation|bool Returns the node when all is well because it has to be saved.
      */
@@ -112,12 +119,15 @@ class NodeTranslationListener
         }
 
         $this->logger->addInfo('Found NT ' . $translation->getId() . ' needed NO change');
+
         return false;
     }
 
-
-
     /**
+     * @param NodeTranslation $translation The node translation
+     * @param EntityManager   $em          The entity manager
+     * @param array           $flashes     Flashes
+     *
      * A function that checks the URL and sees if it's unique.
      * It's allowed to be the same when the node is a StructureNode.
      * When a node is deleted it needs to be ignored in the check.
@@ -137,8 +147,10 @@ class NodeTranslationListener
      *
      * @var NodeTranslation $translation Reference to the NodeTranslation. This is modified in place.
      *
+     * @return boolean
      */
-    private function ensureUniqueUrl(NodeTranslation &$translation, $em, $flashes = array()) {
+    private function ensureUniqueUrl(NodeTranslation $translation, $em, $flashes = array())
+    {
         // Can't use GetRef here yet since the NodeVersions aren't loaded yet for some reason.
         $pnv = $translation->getPublicNodeVersion();
 
@@ -149,6 +161,7 @@ class NodeTranslationListener
         if (($isStructureNode)) {
             $translation->setSlug('');
             $translation->setUrl($translation->getFullSlug());
+
             return true;
         }
 
@@ -157,6 +170,7 @@ class NodeTranslationListener
 
         if (($translation->getUrl() == $translation->getFullSlug())) {
             $this->logger->addDebug('Evaluating URL for NT ' . $translation->getId() . ' getUrl: \'' . $translation->getUrl() . '\' getFullSlug: \'' . $translation->getFullSlug() . '\'');
+
             return false;
         }
 
@@ -205,7 +219,7 @@ class NodeTranslationListener
         preg_match($finalDigitGrabberRegex, $string, $matches);
 
         if (count($matches) > 0) {
-            $digit = (int)$matches[0];
+            $digit = (int) $matches[0];
             ++$digit;
 
             // Replace the integer with the new digit.
