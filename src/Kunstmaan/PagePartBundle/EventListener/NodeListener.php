@@ -4,7 +4,6 @@ namespace Kunstmaan\PagePartBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
@@ -46,24 +45,17 @@ class NodeListener
     private $pagePartAdminFactory;
 
     /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @param Request              $request              The request
      * @param EntityManager        $em                   The entity manager
      * @param KernelInterface      $kernel               The kernel
      * @param FormFactoryInterface $formFactory          The form factory
      * @param PagePartAdminFactory $pagePartAdminFactory The page part admin factory
      */
-    public function __construct(Request $request, EntityManager $em, KernelInterface $kernel, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
+    public function __construct(EntityManager $em, KernelInterface $kernel, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
     {
         $this->em = $em;
         $this->formFactory = $formFactory;
         $this->kernel = $kernel;
         $this->pagePartAdminFactory = $pagePartAdminFactory;
-        $this->request = $request;
     }
 
     /**
@@ -82,7 +74,7 @@ class NodeListener
             $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
 
             foreach ($pagePartAdminConfigurators as $index => $pagePartAdminConfiguration) {
-                $pagePartWidget = new PagePartWidget($page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory);
+                $pagePartWidget = new PagePartWidget($page, $event->getRequest(), $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory);
                 if ($index == 0) {
                     /* @var Tab $propertiesTab */
                     $propertiesTab = $tabPane->getTabByTitle('Properties');
