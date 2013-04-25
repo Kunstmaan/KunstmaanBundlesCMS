@@ -53,10 +53,9 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     }
 
     /**
-     * @param Bundle        $bundle            The bundle
-     * @param string        $entity            The entity name
-     * @param ClassMetadata $metadata          The meta data
-     * @param boolean       $generateAdminType True if we need to specify the admin type
+     * @param Bundle        $bundle   The bundle
+     * @param string        $entity   The entity name
+     * @param ClassMetadata $metadata The meta data
      *
      * @throws \RuntimeException
      * @return void
@@ -144,9 +143,9 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     }
 
     /**
-     * @param Bundle        $bundle   The bundle
-     * @param string        $entity   The entity name
-     * @param ClassMetadata $metadata The meta data
+     * @param Bundle        $bundle     The bundle
+     * @param string        $entityName The entity name
+     * @param ClassMetadata $metadata   The meta data
      *
      * @throws \RuntimeException
      */

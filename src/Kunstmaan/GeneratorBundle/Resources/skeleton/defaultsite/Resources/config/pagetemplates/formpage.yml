@@ -1,0 +1,8 @@
+name: "Content page"
+rows:
+    - regions: 
+        - { name: "form", span: 9 }
+        - { name: "banners", span: 3 }
+    - regions: 
+        - { name: "footer", span: 12 }
+template: "~~~BUNDLE~~~::Pages\\FormPage\\pagetemplate.html.twig"

@@ -64,7 +64,7 @@ class AdminTestsGenerator extends  Generator
     }
 
     /**
-     * @param Bundle $bundle
+     * @param Bundle $bundle     The bundle
      * @param array  $parameters The template parameters
      */
     public function generateUnitTests(Bundle $bundle, array $parameters)

@@ -30,12 +30,15 @@ use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 
+/**
+ * DefaultSiteFixtures
+ */
 class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
 
-    private $PARAGRAPHTEXT="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla. Aenean feugiat, nunc in scelerisque cursus, eros turpis condimentum justo, a tempor orci ligula pharetra velit. Vestibulum a purus interdum tellus eleifend semper. Integer eleifend adipiscing gravida. Phasellus dignissim, quam sagittis molestie sollicitudin, urna ligula pharetra diam, id consequat dui ante eget justo.</p>";
-    private $SHORT_PARAGRAPHTEXT="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p>";
-    private $RAW_HTML='<div class="row"><div class="six columns"><div class="panel"><h5>Lorem ipsum dolor sit amet.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div><div class="six columns"><div class="panel callout radius"><h5>Aenean auctor tempor nisl.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div></div>';
+    const PARAGRAPHTEXT = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla. Aenean feugiat, nunc in scelerisque cursus, eros turpis condimentum justo, a tempor orci ligula pharetra velit. Vestibulum a purus interdum tellus eleifend semper. Integer eleifend adipiscing gravida. Phasellus dignissim, quam sagittis molestie sollicitudin, urna ligula pharetra diam, id consequat dui ante eget justo.</p>";
+    const SHORT_PARAGRAPHTEXT = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p>";
+    const RAW_HTML = '<div class="row"><div class="six columns"><div class="panel"><h5>Lorem ipsum dolor sit amet.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div><div class="six columns"><div class="panel callout radius"><h5>Aenean auctor tempor nisl.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div></div>';
 
     /**
      * @var UserInterface
@@ -67,7 +70,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         // Dashboard
         /** @var $dashboard DashboardConfiguration */
         $dashboard = $manager->getRepository("KunstmaanAdminBundle:DashboardConfiguration")->findOneBy(array());
-        if (is_null($dashboard)){
+        if (is_null($dashboard)) {
             $dashboard = new DashboardConfiguration();
         }
         $dashboard->setTitle("Dashboard");
@@ -110,10 +113,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     }
 
     /**
-     * @param ObjectManager $manager The object manager
-     * @param string        $class   The class
-     * @param string        $title   The title
-     * @param PageInterface $parent  The parent
+     * @param ObjectManager $manager      The object manager
+     * @param string        $class        The class
+     * @param string        $title        The title
+     * @param PageInterface $parent       The parent
+     * @param string        $slug         The slug
+     * @param string        $internalName The internal name
      *
      * @return PageInterface
      */
@@ -131,7 +136,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         /** @var $nodeTranslation NodeTranslation */
         $nodeTranslation = $node->getNodeTranslation('en', true);
         $nodeTranslation->setOnline(true);
-        if (!is_null($slug)){
+        if (!is_null($slug)) {
             $nodeTranslation->setSlug($slug);
         }
         $manager->persist($nodeTranslation);
@@ -167,6 +172,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $manager->flush();
             $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($homepage, $textpagepart, 2);
         }
+
         return $homepage;
     }
 
@@ -200,30 +206,30 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
         {
             $this->createHeaderPagePart("1. Header (niv=1)", 1, $headerpage, $position++, $manager);
-            $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
             {
                 $this->createHeaderPagePart("1.1. Header (niv=2)", 2, $headerpage, $position++, $manager);
-                $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 {
                     $this->createHeaderPagePart("1.1.1. Header (niv=3)", 3, $headerpage, $position++, $manager);
-                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 }
                 {
                     $this->createHeaderPagePart("1.1.1.1. Header (niv=4)", 4, $headerpage, $position++, $manager);
-                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 }
                 {
                     $this->createHeaderPagePart("1.1.1.1.1. Header (niv=5)", 5, $headerpage, $position++, $manager);
-                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 }
                 {
                     $this->createHeaderPagePart("1.1.1.1.1.1. Header (niv=6)", 6, $headerpage, $position++, $manager);
-                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 }
             }
             {
                 $this->createHeaderPagePart("1.2. Header (niv=2)", 2, $headerpage, $position++, $manager);
-                $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
             }
             {
                 $this->createToTopPagePart($headerpage, $position++, $manager);
@@ -233,33 +239,33 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             }
         }
         {
-            $this->createRawHTMLPagePart($this->RAW_HTML, $headerpage, $position++, $manager);
+            $this->createRawHTMLPagePart(DefaultSiteFixtures::RAW_HTML, $headerpage, $position++, $manager);
         }
         {
             $this->createHeaderPagePart("2. Header (niv=1)", 1, $headerpage, $position++, $manager);
-            $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
             {
                 $this->createHeaderPagePart("2.1. Header (niv=2)", 2, $headerpage, $position++, $manager);
-                $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
             }
             {
                 $this->createHeaderPagePart("2.2. Header (niv=2)", 2, $headerpage, $position++, $manager);
-                $this->createTextPagePart($this->PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 {
                     $this->createHeaderPagePart("2.2.2. Header (niv=3)", 3, $headerpage, $position++, $manager);
-                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 }
                 {
                     $this->createHeaderPagePart("2.2.2.2. Header (niv=4)", 4, $headerpage, $position++, $manager);
-                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 }
                 {
                     $this->createHeaderPagePart("2.2.2.2.2. Header (niv=5)", 5, $headerpage, $position++, $manager);
-                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 }
                 {
                     $this->createHeaderPagePart("2.2.2.2.2.2. Header (niv=6)", 6, $headerpage, $position++, $manager);
-                    $this->createTextPagePart($this->SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
+                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
                 }
             }
             {
@@ -277,11 +283,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Create a ToTopPagePart
      *
-     * @param PageInterface $page       The page where the pagepart needs to be created
-     * @param int           $position   The position on the page
-     * @param ObjectManager $manager    The object manager
+     * @param PageInterface $page     The page where the pagepart needs to be created
+     * @param int           $position The position on the page
+     * @param ObjectManager $manager  The object manager
      */
-    private function createToTopPagePart($page, $position, $manager){
+    private function createToTopPagePart($page, $position, $manager)
+    {
         $totoppagepart = new ToTopPagePart();
         $manager->persist($totoppagepart);
         $manager->flush();
@@ -291,12 +298,13 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Create a RawHTMLPagePart
      *
-     * @param string        $content    The content of the pagepart
-     * @param PageInterface $page       The page where the pagepart needs to be created
-     * @param int           $position   The position on the page
-     * @param ObjectManager $manager    The object manager
+     * @param string        $content  The content of the pagepart
+     * @param PageInterface $page     The page where the pagepart needs to be created
+     * @param int           $position The position on the page
+     * @param ObjectManager $manager  The object manager
      */
-    private function createRawHTMLPagePart($content, $page, $position, $manager){
+    private function createRawHTMLPagePart($content, $page, $position, $manager)
+    {
         $rawhtmlpagepart = new RawHTMLPagePart();
         $rawhtmlpagepart->setContent($content);
         $manager->persist($rawhtmlpagepart);
@@ -307,11 +315,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Create a TocPagePart
      *
-     * @param PageInterface $page       The page where the pagepart needs to be created
-     * @param int           $position   The position on the page
-     * @param ObjectManager $manager    The object manager
+     * @param PageInterface $page     The page where the pagepart needs to be created
+     * @param int           $position The position on the page
+     * @param ObjectManager $manager  The object manager
      */
-    private function createTOCPagePart($page, $position, $manager){
+    private function createTOCPagePart($page, $position, $manager)
+    {
         $tocpagepart = new TocPagePart();
         $manager->persist($tocpagepart);
         $manager->flush();
@@ -321,14 +330,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Creates a LinkPagePart (Not really useful in real life, more a proof of concept)
      *
-     * @param string        $url                The link
-     * @param string        $text               The label
-     * @param boolean       $openinnewwindow    Should the target be blank
-     * @param PageInterface $page               The page where the pagepart needs to be created
-     * @param int           $position           The position on the page
-     * @param ObjectManager $manager            The object manager
+     * @param string        $url             The link
+     * @param string        $text            The label
+     * @param boolean       $openinnewwindow Should the target be blank
+     * @param PageInterface $page            The page where the pagepart needs to be created
+     * @param int           $position        The position on the page
+     * @param ObjectManager $manager         The object manager
      */
-    private function createLinkPagePart($url, $text, $openinnewwindow, $page, $position, $manager){
+    private function createLinkPagePart($url, $text, $openinnewwindow, $page, $position, $manager)
+    {
         $linkpagepart = new LinkPagePart();
         $linkpagepart->setUrl($url);
         $linkpagepart->setText($text);
@@ -341,11 +351,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Create a LinePagePart
      *
-     * @param PageInterface $page       The page where the pagepart needs to be created
-     * @param int           $position   The position on the page
-     * @param ObjectManager $manager    The object manager
+     * @param PageInterface $page     The page where the pagepart needs to be created
+     * @param int           $position The position on the page
+     * @param ObjectManager $manager  The object manager
      */
-    private function createLinePagePart($page, $position, $manager){
+    private function createLinePagePart($page, $position, $manager)
+    {
         $linepagepart = new LinePagePart();
         $manager->persist($linepagepart);
         $manager->flush();
@@ -355,13 +366,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Create a HeaderPagePart
      *
-     * @param string        $content    The content of the pagepart
-     * @param int           $level      The header level
-     * @param PageInterface $page       The page where the pagepart needs to be created
-     * @param int           $position   The position on the page
-     * @param ObjectManager $manager    The object manager
+     * @param string        $content  The content of the pagepart
+     * @param int           $level    The header level
+     * @param PageInterface $page     The page where the pagepart needs to be created
+     * @param int           $position The position on the page
+     * @param ObjectManager $manager  The object manager
      */
-    private function createHeaderPagePart($content, $level, $page, $position, $manager){
+    private function createHeaderPagePart($content, $level, $page, $position, $manager)
+    {
         $headerpagepart = new HeaderPagePart();
         $headerpagepart->setNiv($level);
         $headerpagepart->setTitle($content);
@@ -373,12 +385,13 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Create a TextPagePart
      *
-     * @param string        $content    The content of the pagepart
-     * @param PageInterface $page       The page where the pagepart needs to be created
-     * @param int           $position   The position on the page
-     * @param ObjectManager $manager    The object manager
+     * @param string        $content  The content of the pagepart
+     * @param PageInterface $page     The page where the pagepart needs to be created
+     * @param int           $position The position on the page
+     * @param ObjectManager $manager  The object manager
      */
-    private function createTextPagePart($content, $page, $position, $manager){
+    private function createTextPagePart($content, $page, $position, $manager)
+    {
         $textpagepart = new TextPagePart();
         $textpagepart->setContent($content);
         $manager->persist($textpagepart);

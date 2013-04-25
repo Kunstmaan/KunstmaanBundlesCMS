@@ -2,18 +2,17 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use Doctrine\ORM\Mapping as ORM;
-
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use {{ namespace }}\Form\Pages\ContentPageAdminType;
 use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
 use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
+
+use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * ContentPage
@@ -21,7 +20,7 @@ use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}content_pages")
  */
-class ContentPage extends AbstractPage implements HasPagePartsInterface
+class ContentPage extends AbstractPage  implements HasPageTemplateInterface
 {
 
     /**
@@ -52,15 +51,23 @@ class ContentPage extends AbstractPage implements HasPagePartsInterface
     }
 
     /**
-     * @return AbstractPagePartAdminConfigurator[]
+     * @return string[]
      */
     public function getPagePartAdminConfigurations()
     {
-        return array(new ContentPagePagePartAdminConfigurator(), new BannerPagePartAdminConfigurator());
+        return array("{{ bundle.getName() }}:main", "{{ bundle.getName() }}:banners", "{{ bundle.getName() }}:footer");
     }
 
     /**
-     * return string
+     * {@inheritdoc}
+     */
+    public function getPageTemplates()
+    {
+        return array("{{ bundle.getName() }}:contentpage", "{{ bundle.getName() }}:contentpage-singlecolumn");
+    }
+
+    /**
+     * @return string
      */
     public function getDefaultView()
     {

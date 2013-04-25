@@ -10,17 +10,33 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Tools\EntityGenerator;
 use Doctrine\ORM\Tools\EntityRepositoryGenerator;
 
+/**
+ * DoctrineEntityGenerator
+ */
 class DoctrineEntityGenerator extends Generator
 {
     private $filesystem;
     private $registry;
 
+    /**
+     * @param Filesystem        $filesystem The filesystem
+     * @param RegistryInterface $registry   The registry
+     */
     public function __construct(Filesystem $filesystem, RegistryInterface $registry)
     {
         $this->filesystem = $filesystem;
         $this->registry = $registry;
     }
 
+    /**
+     * @param BundleInterface $bundle         The bundle
+     * @param string          $entity         The entity name
+     * @param string          $format         The format
+     * @param array           $fields         The fields
+     * @param boolean         $withRepository With repository
+     *
+     * @throws \RuntimeException
+     */
     public function generate(BundleInterface $bundle, $entity, $format, array $fields, $withRepository)
     {
         // configure the bundle (needed if the bundle does not contain any Entities yet)
@@ -66,11 +82,19 @@ class DoctrineEntityGenerator extends Generator
         }
     }
 
+    /**
+     * @param string $keyword
+     *
+     * @return boolean
+     */
     public function isReservedKeyword($keyword)
     {
         return $this->registry->getConnection()->getDatabasePlatform()->getReservedKeywordsList()->isKeyword($keyword);
     }
 
+    /**
+     * @return \Doctrine\ORM\Tools\EntityGenerator
+     */
     protected function getEntityGenerator()
     {
         $entityGenerator = new EntityGenerator();
@@ -85,6 +109,9 @@ class DoctrineEntityGenerator extends Generator
         return $entityGenerator;
     }
 
+    /**
+     * @return \Doctrine\ORM\Tools\EntityRepositoryGenerator
+     */
     protected function getRepositoryGenerator()
     {
         return new EntityRepositoryGenerator();
