@@ -103,6 +103,7 @@ class NodeTranslationRepository extends EntityRepository
         $qb = $this->createQueryBuilder('b')
             ->select('b')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->addOrderBy('b.online', 'DESC')
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);

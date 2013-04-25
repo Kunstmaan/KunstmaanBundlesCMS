@@ -78,7 +78,7 @@ class NodeTranslation extends AbstractEntity
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
-     * @ORM\OrderBy({"created" = "DESC"})
+     * @ORM\OrderBy({"created" = "ASC"})
      */
     protected $nodeVersions;
 
@@ -303,8 +303,12 @@ class NodeTranslation extends AbstractEntity
     public function getNodeVersion($type)
     {
         $nodeVersions = $this->getNodeVersions();
-        /* @var NodeVersion $nodeVersion */
-        foreach ($nodeVersions as $nodeVersion) {
+
+        $max = count($nodeVersions);
+        for ($i = $max-1; $i >= 0; $i--) {
+            /* @var NodeVersion $nodeVersion */
+            $nodeVersion = $nodeVersions[$i];
+
             if ($type == $nodeVersion->getType()) {
                 return $nodeVersion;
             }
