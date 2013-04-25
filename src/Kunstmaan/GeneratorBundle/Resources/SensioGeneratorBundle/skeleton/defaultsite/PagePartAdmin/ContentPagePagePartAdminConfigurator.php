@@ -83,7 +83,7 @@ class ContentPagePagePartAdminConfigurator extends AbstractPagePartAdminConfigur
     /**
      * @return string
      */
-    public function getDefaultContext()
+    public function getContext()
     {
         return "main";
     }

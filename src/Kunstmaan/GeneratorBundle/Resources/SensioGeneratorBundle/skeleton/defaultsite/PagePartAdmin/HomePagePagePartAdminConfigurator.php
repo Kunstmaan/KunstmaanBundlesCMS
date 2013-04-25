@@ -82,7 +82,7 @@ class HomePagePagePartAdminConfigurator extends AbstractPagePartAdminConfigurato
     /**
      * @return string
      */
-    public function getDefaultContext()
+    public function getContext()
     {
         return "main";
     }
