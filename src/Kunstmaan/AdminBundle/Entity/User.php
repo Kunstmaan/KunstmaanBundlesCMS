@@ -94,6 +94,9 @@ class User extends BaseUser
         return $this->groups;
     }
 
+    /**
+     * @param ClassMetadata $metadata
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('username', new NotBlank());

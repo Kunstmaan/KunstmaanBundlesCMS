@@ -1,0 +1,4 @@
+{% for widget in resource.widgets %}
+    {% set resource = widget %}
+    {% include widget.template %}
+{% endfor %}

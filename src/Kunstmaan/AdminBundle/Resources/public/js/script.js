@@ -14,6 +14,8 @@ $(document).ready(function () {
     initDatePicker();
     initTimePicker();
     initDropdownButton();
+    initModalFocus();
+    initSaveKeyListener();
 });
 
 //JS-tree
@@ -611,3 +613,70 @@ $(function() {
 */
     }).disableSelection();
 });
+
+function initModalFocus() {
+	$('.modal').on('shown', function () {
+		var inputs = jQuery(this).find('input[type=text]');
+		if(inputs.length>0) {
+			inputs[0].focus();
+		} else {
+			var btns = jQuery(this).find('.btn-primary, .btn-danger');
+			if(btns.length>0){
+				btns[0].focus();
+		    } else {
+		    	btns = jQuery(this).find('.btn');
+		    	if(btns.length>0){
+					btns[0].focus();
+			    } else {
+			    	btns = jQuery(this).find('button');
+			    	if(btns.length>0){
+						btns[0].focus();
+				    }
+				}
+			}
+		}
+	});
+}
+
+function performSaveAction() {
+	var btns = jQuery('.btn-save');
+	if(btns.length>0) {
+		btns[0].click();
+	}
+}
+
+function initSaveKeyListener() {
+	if(document.all){
+		document.onkeyup = function() {
+			if (window.event.ctrlKey) {
+				if (window.event.keyCode == 83) {
+					performSaveAction();
+					return false;
+				}
+			}
+		};
+	} else {
+		document.onkeydown = document.onkeypress = function (evt) {
+			// check voor ctrl-s key
+			if (evt.ctrlKey) {
+				if (evt.keyCode)
+					code = evt.keyCode;
+				else if (evt.which)
+					code = evt.which;
+				if (code=="117" || code == "83") {
+					performSaveAction();
+					return false;
+				}
+			}
+			// checken voor enter key
+			var evt = (evt) ? evt : ((event) ? event : null);
+			var node = (evt.target) ? evt.target
+					: ((evt.srcElement) ? evt.srcElement : null);
+			if ((evt.keyCode == 13) && (node.type == "text")) {
+				performSaveAction();
+				return false;
+			}
+		};
+	}
+}
+

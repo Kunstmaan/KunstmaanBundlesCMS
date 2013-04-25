@@ -226,6 +226,9 @@ class Group implements RoleInterface, GroupInterface
         return $this;
     }
 
+    /**
+     * @param ClassMetadata $metadata
+     */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('name', new NotBlank());
@@ -234,6 +237,9 @@ class Group implements RoleInterface, GroupInterface
         )));
     }
 
+    /**
+     * @param ExecutionContext $context
+     */
     public function isGroupValid(ExecutionContext $context)
     {
         if (!(count($this->getRoles()) > 0)) {

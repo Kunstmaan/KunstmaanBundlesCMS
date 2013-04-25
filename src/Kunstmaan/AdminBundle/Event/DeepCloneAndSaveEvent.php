@@ -21,8 +21,8 @@ class DeepCloneAndSaveEvent extends Event
     private $clonedEntity;
 
     /**
-     * @param mixed          $entity       The origin entity
-     * @param mixed          $clonedEntity The cloned entity
+     * @param mixed $entity       The origin entity
+     * @param mixed $clonedEntity The cloned entity
      */
     public function __construct($entity, $clonedEntity)
     {
@@ -32,10 +32,13 @@ class DeepCloneAndSaveEvent extends Event
 
     /**
      * @param mixed $clonedEntity
+     *
+     * @return DeepCloneAndSaveEvent
      */
     public function setClonedEntity($clonedEntity)
     {
         $this->clonedEntity = $clonedEntity;
+
         return $this;
     }
 
@@ -49,10 +52,13 @@ class DeepCloneAndSaveEvent extends Event
 
     /**
      * @param mixed $entity
+     *
+     * @return DeepCloneAndSaveEvent
      */
     public function setEntity($entity)
     {
         $this->entity = $entity;
+
         return $this;
     }
 

@@ -16,13 +16,7 @@ class UserType extends AbstractType
 {
 
     /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -56,9 +50,7 @@ class UserType extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -66,9 +58,7 @@ class UserType extends AbstractType
     }
 
     /**
-     * Sets the default options and allowed values for this type.
-     *
-     * @param OptionsResolverInterface $resolver
+     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
