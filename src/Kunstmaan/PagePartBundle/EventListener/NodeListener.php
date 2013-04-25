@@ -67,7 +67,7 @@ class NodeListener
         $tabPane = $event->getTabPane();
 
         if ($page instanceof HasPageTemplateInterface) {
-            $tabPane->addTab(new Tab("Content", new PageTemplateWidget($page, $this->request, $this->em, $this->kernel, $this->formFactory, $this->pagePartAdminFactory)));
+            $tabPane->addTab(new Tab("Content", new PageTemplateWidget($page, $event->getRequest(), $this->em, $this->kernel, $this->formFactory, $this->pagePartAdminFactory)));
         } else if ($page instanceof HasPagePartsInterface) {
             /* @var HasPagePartsInterface $page */
             $pagePartConfigurationReader = new PagePartConfigurationReader($this->kernel);
