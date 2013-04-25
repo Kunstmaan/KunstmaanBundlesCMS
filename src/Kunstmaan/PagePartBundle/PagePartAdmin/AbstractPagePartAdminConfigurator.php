@@ -21,5 +21,5 @@ abstract class AbstractPagePartAdminConfigurator
     /**
      * @return string
      */
-    abstract public function getDefaultContext();
+    abstract public function getContext();
 }
