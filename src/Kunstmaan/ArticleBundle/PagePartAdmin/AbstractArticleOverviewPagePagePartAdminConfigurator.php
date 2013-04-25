@@ -86,7 +86,7 @@ class AbstractArticleOverviewPagePagePartAdminConfigurator extends AbstractPageP
     /**
      * @return string
      */
-    public function getDefaultContext()
+    public function getContext()
     {
         return "main";
     }
