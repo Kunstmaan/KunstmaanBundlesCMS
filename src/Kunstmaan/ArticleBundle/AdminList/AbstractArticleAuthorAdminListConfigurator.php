@@ -71,7 +71,7 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function buildFields()
     {
-        $this->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig');
+        $this->addField('name', 'name', true);
     }
 
 }
