@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Entity\Pages\{{ entity_class }};
+namespace {{ namespace }}\Entity\{{ entity_class }};
 
 use Doctrine\ORM\Mapping as ORM;
 use {{ namespace }}\PagePartAdmin\{{ entity_class }}\{{ entity_class }}OverviewPagePagePartAdminConfigurator;
@@ -39,7 +39,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
 
     public function getArticleRepository($em)
     {
-        return $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}\{{ entity_class }}Page');
+        return $em->getRepository('{{ bundle.getName() }}:{{ entity_class }}\{{ entity_class }}Page');
     }
 
     /**
@@ -47,7 +47,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
      */
     public function getDefaultView()
     {
-        return "{{ bundle.getName() }}:Pages/{{ entity_class }}/{{ entity_class }}OverviewPage:view.html.twig";
+        return "{{ bundle.getName() }}:{{ entity_class }}/{{ entity_class }}OverviewPage:view.html.twig";
     }
 
 }

@@ -2,18 +2,18 @@
 
 namespace {{ namespace }}\Controller\{{ entity_class }};
 
-use {{ namespace }}\AdminList\{{ entity_class }}\{{ entity_class }}PageAdminListConfigurator;
+use {{ namespace }}\AdminList\{{ entity_class }}\{{ entity_class }}AuthorAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\ArticleBundle\Controller\AbstractArticlePageAdminListController;
+use Kunstmaan\ArticleBundle\Controller\AbstractArticleAuthorAdminListController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * The AdminList controller for the {{ entity_class }}Page
+ * The AdminList controller for the {{ entity_class }}Author
  */
-class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdminListController
+class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorAdminListController
 {
 
     /**
@@ -21,13 +21,13 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      */
     public function createAdminListConfigurator()
     {
-        return new {{ entity_class }}PageAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
+        return new {{ entity_class }}AuthorAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
     }
 
     /**
      * The index action
      *
-     * @Route("/", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}page")
+     * @Route("/", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}author")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
@@ -38,7 +38,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}page_add")
+     * @Route("/add", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}author_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
@@ -53,7 +53,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}page_edit")
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}author_edit")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      *
@@ -69,7 +69,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}page_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}author_delete")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      *
@@ -85,7 +85,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}page_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}author_export")
      * @Method({"GET", "POST"})
      *
      * @return array

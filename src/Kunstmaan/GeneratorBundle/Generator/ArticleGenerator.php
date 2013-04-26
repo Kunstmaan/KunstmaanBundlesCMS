@@ -132,14 +132,13 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         $skeletonDir = sprintf("%s/Resources/views", $this->skeletonDir);
         $fullSkeletonDir = sprintf("%s/Resources/views", $this->fullSkeletonDir);
 
-        $this->filesystem->copy($fullSkeletonDir . '/OverviewPage/view.html.twig', $dirPath . '/Pages/' . $entity . '/' . $entity . 'OverviewPage/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Pages/' . $entity . '/view.html.twig');
+        $this->filesystem->copy($fullSkeletonDir . '/OverviewPage/view.html.twig', $dirPath . '/' . $entity . '/' . $entity . 'OverviewPage/view.html.twig', true);
+        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/' . $entity . '/' . $entity . 'OverviewPage/view.html.twig');
 
-        $this->filesystem->copy($fullSkeletonDir . '/Page/view.html.twig', $dirPath . '/Pages/' . $entity . '/' . $entity . 'Page/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Pages/' . $entity . '/view.html.twig');
+        $this->filesystem->copy($fullSkeletonDir . '/Page/view.html.twig', $dirPath . '/' . $entity . '/' . $entity . 'Page/view.html.twig', true);
+        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/' . $entity . '/' . $entity . 'Page/view.html.twig');
 
-        //$this->filesystem->copy($fullSkeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . $entity . 'PageAdminList/view.html.twig', true);
-        $this->renderFile($skeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . $entity . 'PageAdminList/list.html.twig', $parameters );
+        $this->renderFile($skeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . '/' . $entity . '/' . $entity . 'PageAdminList/list.html.twig', $parameters );
 
         $output->writeln('Generating twig templates : <info>OK</info>');
     }
@@ -159,6 +158,12 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageAdminListController', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AuthorAdminListController', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
@@ -212,6 +217,12 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
             throw new \RuntimeException($error->getMessage());
         }
 
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AuthorAdminListConfigurator', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
         $output->writeln('Generating AdminList configurators : <info>OK</info>');
     }
 
@@ -225,11 +236,17 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
      */
     public function generateForm(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Form/Pages/" . $entity, $bundle->getPath());
+        $dirPath = sprintf("%s/Form/" . $entity, $bundle->getPath());
         $skeletonDir = sprintf("%s/Form", $this->skeletonDir);
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageAdminType', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AuthorAdminType', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
@@ -247,11 +264,17 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
      */
     public function generateRepositories(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Repository/Pages/" . $entity, $bundle->getPath());
+        $dirPath = sprintf("%s/Repository/" . $entity, $bundle->getPath());
         $skeletonDir = sprintf("%s/Repository", $this->skeletonDir);
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageRepository', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AuthorRepository', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
@@ -269,7 +292,7 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
      */
     public function generateEntities(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Entity/Pages/" . $entity, $bundle->getPath());
+        $dirPath = sprintf("%s/Entity/" . $entity, $bundle->getPath());
         $skeletonDir = sprintf("%s/Entity", $this->skeletonDir);
 
         try {
@@ -279,6 +302,12 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         }
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'Page', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'Author', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }

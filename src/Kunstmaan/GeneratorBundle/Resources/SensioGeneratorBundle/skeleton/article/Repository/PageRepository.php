@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Repository\Pages\{{ entity_class }};
+namespace {{ namespace }}\Repository\{{ entity_class }};
 
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository;
@@ -18,7 +18,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
     public function getArticles()
     {
         $rsm = new ResultSetMappingBuilder($this->_em);
-        $rsm->addRootEntityFromClassMetadata('{{ namespace }}\Entity\Pages\{{ entity_class }}\{{ entity_class }}Page', 'qp');
+        $rsm->addRootEntityFromClassMetadata('{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Page', 'qp');
 
         $query = "SELECT";
         $query .= " article.*";
@@ -33,7 +33,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
         $query .= " WHERE";
         $query .= " n.deleted = 0";
         $query .= " AND";
-        $query .= " n.ref_entity_name = '{{ namespace | replace('\\', '\\\\') }}\\\\Entity\\\\Pages\\\\{{ entity_class }}\\\\{{ entity_class }}Page'";
+        $query .= " n.ref_entity_name = '{{ namespace | replace('\\', '\\\\') }}\\\\Entity\\\\{{ entity_class }}\\\\{{ entity_class }}Page'";
         $query .= " AND";
         $query .= " nt.online = 1 ";
         //$query .= " ORDER BY article.date DESC";

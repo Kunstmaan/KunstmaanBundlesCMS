@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Form\Pages\{{ entity_class }};
+namespace {{ namespace }}\Form\{{ entity_class }};
 
 use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -19,7 +19,7 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}\{{ entity_class }}Page'
+            'data_class' => '{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Page'
         ));
     }
 
