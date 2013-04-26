@@ -4,3 +4,10 @@ KunstmaanArticleBundle_abstractarticlepage_admin_list:
     prefix:   /admin/abstractarticlepage/
     requirements:
          _locale: %requiredlocales%
+
+KunstmaanArticleBundle_abstractarticleauthor_admin_list:
+    resource: @KunstmaanArticleBundle/Controller/AbstractArticleAuthorAdminListController.php
+    type:     annotation
+    prefix:   /admin/abstractarticleauthor/
+    requirements:
+         _locale: %requiredlocales%

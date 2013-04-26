@@ -2,13 +2,10 @@
 
 namespace Kunstmaan\ArticleBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\User;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
+use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -16,9 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * The AdminList controller for the AbstractArticlePage
+ * The AdminList controller for the AbstractArticleAuthor
  */
-abstract class AbstractArticlePageAdminListController extends AdminListController
+abstract class AbstractArticleAuthorAdminListController extends AdminListController
 {
     /**
      * @var AdminListConfiguratorInterface
@@ -80,7 +77,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
     /**
      * The index action
      *
-     * @Route("/", name="KunstmaanArticleBundle_admin_abstractarticlepage")
+     * @Route("/", name="KunstmaanArticleBundle_admin_abstractarticleauthor")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
@@ -91,7 +88,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
     /**
      * The add action
      *
-     * @Route("/add", name="KunstmaanArticleBundle_admin_abstractarticlepage_add")
+     * @Route("/add", name="KunstmaanArticleBundle_admin_abstractarticleauthor_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
@@ -106,7 +103,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="KunstmaanArticleBundle_admin_abstractarticlepage_edit")
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="KunstmaanArticleBundle_admin_abstractarticleauthor_edit")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      *
@@ -122,7 +119,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanArticleBundle_admin_abstractarticlepage_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanArticleBundle_admin_abstractarticleauthor_delete")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      *
@@ -138,7 +135,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      *
      * @param $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="KunstmaanArticleBundle_admin_abstractarticlepage_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="KunstmaanArticleBundle_admin_abstractarticleauthor_export")
      * @Method({"GET", "POST"})
      *
      * @return array
