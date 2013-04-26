@@ -199,7 +199,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
 
         foreach ($this->getFieldsFromMetadata($metadata) as $fieldName) {
             $type = $metadata->getTypeOfField($fieldName);
-            $filterType = $mapping[$type];
+            $filterType = isset($mapping[$type]) ? $mapping[$type] : null;
 
             if (!is_null($filterType)) {
                 $fields[$fieldName] = $filterType;
