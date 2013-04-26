@@ -76,9 +76,6 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
 
     /**
      * The index action
-     *
-     * @Route("/", name="KunstmaanArticleBundle_admin_abstractarticleauthor")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
     {
@@ -87,11 +84,6 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
 
     /**
      * The add action
-     *
-     * @Route("/add", name="KunstmaanArticleBundle_admin_abstractarticleauthor_add")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
-     * @return array
      */
     public function addAction()
     {
@@ -100,14 +92,6 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
 
     /**
      * The edit action
-     *
-     * @param int $id
-     *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="KunstmaanArticleBundle_admin_abstractarticleauthor_edit")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
-     *
-     * @return array
      */
     public function editAction($id)
     {
@@ -116,14 +100,6 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
 
     /**
      * The delete action
-     *
-     * @param int $id
-     *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanArticleBundle_admin_abstractarticleauthor_delete")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
-     *
-     * @return array
      */
     public function deleteAction($id)
     {
@@ -132,13 +108,6 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
 
     /**
      * Export action
-     *
-     * @param $_format
-     *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="KunstmaanArticleBundle_admin_abstractarticleauthor_export")
-     * @Method({"GET", "POST"})
-     *
-     * @return array
      */
     public function exportAction($_format)
     {

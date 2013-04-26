@@ -79,9 +79,6 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
 
     /**
      * The index action
-     *
-     * @Route("/", name="KunstmaanArticleBundle_admin_abstractarticlepage")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
     {
@@ -90,11 +87,6 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
 
     /**
      * The add action
-     *
-     * @Route("/add", name="KunstmaanArticleBundle_admin_abstractarticlepage_add")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
-     * @return array
      */
     public function addAction()
     {
@@ -103,14 +95,6 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
 
     /**
      * The edit action
-     *
-     * @param int $id
-     *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="KunstmaanArticleBundle_admin_abstractarticlepage_edit")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
-     *
-     * @return array
      */
     public function editAction($id)
     {
@@ -119,14 +103,6 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
 
     /**
      * The delete action
-     *
-     * @param int $id
-     *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanArticleBundle_admin_abstractarticlepage_delete")
-     * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
-     *
-     * @return array
      */
     public function deleteAction($id)
     {
@@ -135,13 +111,6 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
 
     /**
      * Export action
-     *
-     * @param $_format
-     *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="KunstmaanArticleBundle_admin_abstractarticlepage_export")
-     * @Method({"GET", "POST"})
-     *
-     * @return array
      */
     public function exportAction($_format)
     {
