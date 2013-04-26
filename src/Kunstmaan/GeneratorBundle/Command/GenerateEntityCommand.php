@@ -244,7 +244,7 @@ EOT
         while (true) {
             $output->writeln('');
             $self = $this;
-            $columnName = $dialog->askAndValidate($output, $dialog->getQuestion('New field name (press <return> to stop adding fields)', null), function ($name) use ($fields, $self) {
+            $columnName = $dialog->askAndValidate($output, $dialog->getQuestion('New field name (enter empty name to stop adding fields)', null), function ($name) use ($fields, $self) {
                 if (isset($fields[$name]) || 'id' == $name) {
                     throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
                 }

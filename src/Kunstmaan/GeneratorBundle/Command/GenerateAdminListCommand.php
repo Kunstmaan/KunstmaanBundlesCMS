@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
+use CG\Generator\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -14,6 +15,7 @@ use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Generator;
 
 use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils as GUtils;
 
 /**
  * Generates a KunstmaanAdminList
@@ -72,6 +74,7 @@ EOT
         $dialog->writeSection($output, 'AdminList Generation');
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator->setDialog($dialog);
         $generator->generate($bundle, $entityClass, $metadata[0], $output);
 
         $parts = explode('\\', $entity);
@@ -179,6 +182,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new AdminListGenerator($this->getContainer()->get('filesystem'), __DIR__ . '/../Resources/skeleton/adminlist');
+        return new AdminListGenerator($this->getContainer()->get('filesystem'), GUtils::getFullSkeletonPath('adminlist'));
     }
 }

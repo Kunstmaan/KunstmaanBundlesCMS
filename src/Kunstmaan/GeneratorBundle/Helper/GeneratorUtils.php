@@ -88,4 +88,24 @@ class GeneratorUtils
         }
 
     }
+
+
+    public static function getFullSkeletonPath($pathInSkeleton)
+    {
+        $pathInSkeleton = trim($pathInSkeleton);
+
+        // pathInSkeleton needs to be prepended by a /
+        if (substr($pathInSkeleton, 0, 1) !== '/') {
+            $pathInSkeleton = '/' . $pathInSkeleton;
+        }
+
+        // Can't have a / at the end.
+        if (substr($pathInSkeleton, -1) == '/') {
+
+            //substr_replace($pathInSkeleton,"",-1);
+            $pathInSkeleton = rtrim($pathInSkeleton, '/');
+        }
+
+        return __DIR__ . '/../Resources/SensioGeneratorBundle/skeleton' . $pathInSkeleton;
+    }
 }

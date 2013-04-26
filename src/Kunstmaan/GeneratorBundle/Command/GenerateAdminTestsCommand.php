@@ -4,6 +4,7 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Kunstmaan\GeneratorBundle\Generator\AdminTestsGenerator;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\Console\Input\InputOption;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -84,6 +85,6 @@ EOT
 
     protected function createGenerator()
     {
-       return new AdminTestsGenerator($this->getContainer()->get('filesystem'), __DIR__ . '/../Resources/skeleton/admintests');
+        return new AdminTestsGenerator($this->getContainer()->get('filesystem'), GeneratorUtils::getFullSkeletonPath('admintests'));
     }
 }

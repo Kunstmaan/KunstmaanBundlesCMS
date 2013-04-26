@@ -26,6 +26,12 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
      */
     private $skeletonDir;
 
+    private $dialog;
+
+    public function setDialog($dialog) {
+        $this->dialog = $dialog;
+    }
+
     /**
      * @param Filesystem $filesystem  The filesystem
      * @param string     $skeletonDir The directory of the skeleton
@@ -33,7 +39,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
         $this->filesystem = $filesystem;
-        $this->skeletonDir = $skeletonDir . 'adminlists';
+        $this->skeletonDir = $skeletonDir;
     }
 
     /**
@@ -55,25 +61,29 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         if ($generateAdminType) {
             try {
                 $this->generateAdminType($bundle, $entityName, $metadata);
+                $output->writeln('Generating the Type code: <info>OK</info>');
             } catch (\Exception $error) {
                 $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+                $output->writeln('Generating the Type code: <error>ERROR</error>');
             }
-            $output->writeln('Generating the Type code: <info>OK</info>');
         }
 
         try {
             $this->generateConfiguration($bundle, $entityName, $metadata, $generateAdminType);
+            $output->writeln('Generating the Configuration code: <info>OK</info>');
         } catch (\Exception $error) {
             $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln('Generating the Configuration code: <error>ERROR</error>');
         }
-        $output->writeln('Generating the Configuration code: <info>OK</info>');
+
 
         try {
             $this->generateController($bundle, $entityName, $metadata);
+            $output->writeln('Generating the Controller code: <info>OK</info>');
         } catch (\Exception $error) {
             $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln('Generating the Controller code: <error>ERROR</error>');
         }
-        $output->writeln('Generating the Controller code: <info>OK</info>');
     }
 
     /**
@@ -94,8 +104,8 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         if (file_exists($classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
-
-        $this->renderFile($this->skeletonDir . '/AdminList/AdminListConfigurator.php', $classPath, array(
+        $this->setSkeletonDirs(array($this->skeletonDir));
+        $this->renderFile('/AdminList/AdminListConfigurator.php', $classPath, array(
             'namespace'           => $bundle->getNamespace(),
             'bundle'              => $bundle,
             'entity_class'        => $entityName,
@@ -120,7 +130,8 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $this->renderFile($this->skeletonDir . '/Controller/EntityAdminListController.php', $classPath, array(
+        $this->setSkeletonDirs(array($this->skeletonDir));
+        $this->renderFile('/Controller/EntityAdminListController.php', $classPath, array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
             'entity_class'      => $entityName,
@@ -145,7 +156,8 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
         }
 
-        $this->renderFile($this->skeletonDir . '/Form/EntityAdminType.php', $classPath, array(
+        $this->setSkeletonDirs(array($this->skeletonDir));
+        $this->renderFile('/Form/EntityAdminType.php', $classPath, array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
             'entity_class'      => $entityName,
