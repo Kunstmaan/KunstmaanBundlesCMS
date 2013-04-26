@@ -11,7 +11,7 @@
                 <button class='close' data-dismiss='modal'>&times;</button>
                 <h3>Add " ~ entity_class ~ "</h3>
             </div>
-            <form action='{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : '" ~ namespace|replace('\\', '\\\\') ~ "\\\\Entity\\\\" ~ entity_class ~ "\\\\" ~ entity_class ~ "Page'}) }}' method='post' novalidate='novalidate'>
+            <form action='{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : '" ~ namespace|replace("\\", "\\\\") ~ "\\\\Entity\\\\" ~ entity_class ~ "\\\\" ~ entity_class ~ "Page'}) }}' method='post' novalidate='novalidate'>
                 <div class='modal-body'>
                     <div class='input_prop'>
                         <label for='addpage_title'>Title</label>

@@ -10,7 +10,7 @@ use {{ namespace }}\PagePartAdmin\{{ entity_class }}\{{ entity_class }}PagePageP
 use Symfony\Component\Form\AbstractType;
 
 /**
- * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\Pages\{{ entity_class }}\{{ entity_class }}PageRepository")
+ * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}\{{ entity_class }}PageRepository")
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}pages")
  */
 class {{ entity_class }}Page extends AbstractArticlePage
