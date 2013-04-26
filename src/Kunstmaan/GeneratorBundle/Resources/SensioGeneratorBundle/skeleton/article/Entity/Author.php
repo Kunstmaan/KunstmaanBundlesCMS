@@ -20,7 +20,7 @@ class {{ entity_class }}Author extends AbstractAuthor {
      *
      * @return AbstractType
      */
-    public function getDefaultAdminType()
+    public function getAdminType()
     {
         return new {{ entity_class }}AuthorAdminType();
     }
