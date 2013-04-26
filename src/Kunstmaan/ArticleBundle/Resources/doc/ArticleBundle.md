@@ -28,17 +28,38 @@ app/console kuma:generate:article --namespace=Kunstmaan\NewsBundle --entity=news
 
 The following files will be generated :
 
+* Kunstmaan/NewsBundle/AdminList/News/NewsAuthorAdminListConfigurator.php
 * Kunstmaan/NewsBundle/AdminList/News/NewsPageAdminListConfigurator.php
+* Kunstmaan/NewsBundle/Controler/News/NewsAuthorAdminListController.php
 * Kunstmaan/NewsBundle/Controler/News/NewsPageAdminListController.php
-* Kunstmaan/NewsBundle/Entity/Pages/News/NewsOverviewPage.php
-* Kunstmaan/NewsBundle/Entity/Pages/News/NewsPage.php
-* Kunstmaan/NewsBundle/Form/Pages/Trip/TripPageAdminType.php
-* Kunstmaan/NewsBundle/Helper/Menu/TripMenuAdaptor.php
-* Kunstmaan/NewsBundle/PagePartAdmin/Trip/TripOverviewPagePartAdminConfigurator.php
-* Kunstmaan/NewsBundle/PagePartAdmin/Trip/TripPagePartAdminConfigurator.php
-* Kunstmaan/NewsBundle/Repository/Pages/Trip/TripPageRepository
+* Kunstmaan/NewsBundle/Entity/News/NewsAuthor.php
+* Kunstmaan/NewsBundle/Entity/News/NewsOverviewPage.php
+* Kunstmaan/NewsBundle/Entity/News/NewsPage.php
+* Kunstmaan/NewsBundle/Form/News/NewsAuthorAdminType.php
+* Kunstmaan/NewsBundle/Form/News/NewsPageAdminType.php
+* Kunstmaan/NewsBundle/Helper/Menu/NewsMenuAdaptor.php
+* Kunstmaan/NewsBundle/PagePartAdmin/News/NewsOverviewPagePartAdminConfigurator.php
+* Kunstmaan/NewsBundle/PagePartAdmin/News/NewsPagePartAdminConfigurator.php
+* Kunstmaan/NewsBundle/Repository/News/NewsAuthorRepository
+* Kunstmaan/NewsBundle/Repository/News/NewsPageRepository
 * Kunstmaan/NewsBundle/Resources/config/routing.yml
 * Kunstmaan/NewsBundle/Resources/config/services.yml
-* Kunstmaan/NewsBundle/views/AdminList/TripPageAdminList/list.html.twig
-* Kunstmaan/NewsBundle/views/Pages/Trip/TripOverviewPage/view.html.twig
-* Kunstmaan/NewsBundle/views/Pages/Trip/TripPage/view.html.twig
+* Kunstmaan/NewsBundle/views/AdminList/NewsPageAdminList/list.html.twig
+* Kunstmaan/NewsBundle/views/News/NewsOverviewPage/view.html.twig
+* Kunstmaan/NewsBundle/views/News/NewsPage/view.html.twig
+
+### Entities
+
+#### ArticleOverviewPage
+
+The overview page can contain PageParts. The paginated list of articles will be shown under these PageParts. The articles will be shown by 10 per page and shows a teaser for each article containing the title, which will link to the article, and its summary.
+
+#### ArticlePage
+
+The ArticlePage is the full content page of the article and will show all the PageParts on this page. The summary will now be shown.
+
+The ArticlePage also has a field to select its ArticleAuthor.
+
+#### ArticleAuthor
+
+The article author has a name and a link.
