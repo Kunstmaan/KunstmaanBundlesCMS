@@ -4,7 +4,6 @@ namespace Kunstmaan\ArticleBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
@@ -33,9 +32,6 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
     {
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;
-        $this->setPermissionDefinition(
-            new PermissionDefinition(array($permission), 'Kunstmaan\NodeBundle\Entity\Node', 'n')
-        );
     }
 
     /**
@@ -64,6 +60,7 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
     public function buildFilters()
     {
         $this->addFilter('name', new StringFilterType('name'), 'Name');
+        $this->addFilter('link', new StringFilterType('link'), 'Link');
     }
 
     /**
@@ -71,7 +68,8 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function buildFields()
     {
-        $this->addField('name', 'name', true);
+        $this->addField('name', 'Name', true);
+        $this->addField('link', 'Link', true);
     }
 
 }

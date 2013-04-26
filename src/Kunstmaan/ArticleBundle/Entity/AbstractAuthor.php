@@ -46,7 +46,7 @@ class AbstractAuthor extends AbstractEntity {
         return $this->getName();
     }
 
-    public function getDefaultAdminType()
+    public function getdminType()
     {
         return new AbstractAuthorAdminType();
     }
