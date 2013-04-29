@@ -20,7 +20,7 @@
         "kunstmaan/utilities-bundle": "2.2.*",
         "gedmo/doctrine-extensions": "*",
         "knplabs/knp-menu-bundle": "*",
-        "symfony-cmf/routing-extra-bundle": "1.0.x-dev"
+        "symfony-cmf/routing-extra-bundle": "1.0.0"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\NodeBundle": "" }
