@@ -4,7 +4,11 @@
 	{%- if not loop.last -%},{%- endif -%}
 {%- endfor -%}
 {% for item in iterator %}
+    {% if item[0] is defined %}
     {% set item = item[0] %}
+    {% else %}
+    {% set item = item %}
+    {% endif %}
 
 {% for column in adminlist.exportColumns -%}
 	{%- set columnName = column.name -%}
