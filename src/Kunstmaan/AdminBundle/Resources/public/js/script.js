@@ -1,5 +1,3 @@
-//Author: Indri & Ibe
-
 //Init functions needed on every page
 $(document).ready(function () {
     if($('.tree').length > 0) {
@@ -16,6 +14,7 @@ $(document).ready(function () {
     initDropdownButton();
     initModalFocus();
     initSaveKeyListener();
+    initSidenavSize();
 });
 
 //JS-tree
@@ -26,12 +25,12 @@ function init_tree() {
     });
     $('.tree').jstree({
         "plugins" : [ "themes", "html_data", "types", "search" ] ,
-        "themes" : { 
+        "themes" : {
             "theme" : "OMNext",
             "dots" : true,
-            "icons" : true      
+            "icons" : true
         },
-        "core": { 
+        "core": {
                     "animation": 0,
                     "open_parents": true,
                     "initially_open": [topLevelTreeElements]
@@ -42,55 +41,55 @@ function init_tree() {
                 "page" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -57px" 
+                        "position" : "-57px -57px"
                     }
                 },
                 "page_offline" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -74px" 
+                        "position" : "-57px -74px"
                     }
-                },              
+                },
                 //Site
                 "site" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-75px -38px" 
+                        "position" : "-75px -38px"
                     }
                 },
                 //Settings
                 "settings" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -37px" 
+                        "position" : "-57px -37px"
                     }
                 },
                 //Image
                 "image" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-20px -74px" 
+                        "position" : "-20px -74px"
                     }
                 },
                 //Video
                 "video" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-75px -55px" 
+                        "position" : "-75px -55px"
                     }
                 },
                 //Slideshow
                 "slideshow" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-2px -72px" 
+                        "position" : "-2px -72px"
                     }
                 },
                 //Files
                 "files" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-38px -72px" 
+                        "position" : "-38px -72px"
                     }
                 }
             }
@@ -110,11 +109,11 @@ function init_tree() {
 
     $('.pagestree').jstree({
         "plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
-        "themes" : { 
+        "themes" : {
             "theme" : "OMNext",
             "dots" : true,
-            "icons" : true      
-        },"core": { 
+            "icons" : true
+        },"core": {
                     "animation": 0,
                     "open_parents": true,
                     "initially_open": [topLevelTreeElements]
@@ -125,62 +124,62 @@ function init_tree() {
                 "page" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -57px" 
+                        "position" : "-57px -57px"
                     }
                 },
                 "page_offline" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -74px" 
+                        "position" : "-57px -74px"
                     }
-                },      
+                },
                 //Site
                 "site" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-75px -38px" 
+                        "position" : "-75px -38px"
                     }
                 },
                 //Settings
                 "settings" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -37px" 
+                        "position" : "-57px -37px"
                     }
                 },
                 //Image
                 "image" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-20px -74px" 
+                        "position" : "-20px -74px"
                     }
                 },
                 //Video
                 "video" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-75px -55px" 
+                        "position" : "-75px -55px"
                     }
                 },
                 //Slideshow
                 "slideshow" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-2px -72px" 
+                        "position" : "-2px -72px"
                     }
                 },
                 //Files
                 "files" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-38px -72px" 
+                        "position" : "-38px -72px"
                     }
                 }
             }
         },
-        "crrm" : { 
+        "crrm" : {
             "move" : {
-                "check_move" : function (m) { 
+                "check_move" : function (m) {
                     var p = this._get_parent(m.o);
                     if(!p) return false;
                     p = p == -1 ? this.get_container() : p;
@@ -209,10 +208,10 @@ function init_tree() {
 
     $('.mediatree').jstree({
         "plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
-        "themes" : { 
+        "themes" : {
             "theme" : "OMNext",
             "dots" : true,
-            "icons" : true      
+            "icons" : true
         },
         "types" : {
             "types" : {
@@ -220,64 +219,64 @@ function init_tree() {
                 "page" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -57px" 
+                        "position" : "-57px -57px"
                     }
                 },
                 "page_offline" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -74px" 
+                        "position" : "-57px -74px"
                     }
-                },              
+                },
                 //Site
                 "site" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-75px -38px" 
+                        "position" : "-75px -38px"
                     }
                 },
                 //Settings
                 "settings" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-57px -37px" 
+                        "position" : "-57px -37px"
                     }
                 },
                 //Image
                 "image" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-20px -74px" 
+                        "position" : "-20px -74px"
                     }
                 },
                 //Video
                 "video" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-75px -55px" 
+                        "position" : "-75px -55px"
                     }
                 },
                 //Slideshow
                 "slideshow" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-2px -72px" 
+                        "position" : "-2px -72px"
                     }
                 },
                 //Files
                 "files" : {
                     "icon" : {
                         "image" : $.jstree._themes + "OMNext/d.png",
-                        "position" : "-38px -72px" 
+                        "position" : "-38px -72px"
                     }
                 }
             }
-        
-        
+
+
         },
-        "crrm" : { 
+        "crrm" : {
             "move" : {
-                "check_move" : function (m) { 
+                "check_move" : function (m) {
                     var p = this._get_parent(m.o);
                     if(!p) return false;
                     p = p == -1 ? this.get_container() : p;
@@ -307,11 +306,11 @@ function init_tree() {
 
 //Drag and Drop
 function init_DragDrop() {
-    $('#parts').sortable({  
-        handle: '.prop_bar',  
-        cursor: 'move',  
-        placeholder: 'placeholder',  
-        forcePlaceholderSize: true, 
+    $('#parts').sortable({
+        handle: '.prop_bar',
+        cursor: 'move',
+        placeholder: 'placeholder',
+        forcePlaceholderSize: true,
         revert: 100,
         //opacity: 0.4
         opacity: 1,
@@ -325,7 +324,7 @@ function init_DragDrop() {
     });
 }
 
- 
+
 
 //Drop down main_actions
 function init_main_functions() {
@@ -335,10 +334,10 @@ function init_main_functions() {
             if(scrollTop >= 180){
                 $('#main_actions_top').addClass('slideDown');
             }
-            
+
             if(scrollTop < 180){
                 $('#main_actions_top').removeClass('slideDown');
-            }       
+            }
         }
     );
 }
@@ -379,9 +378,9 @@ function init_toggleProp() {
         if ($(this).hasClass('big')) {
             $("#prop_wrp").slideUp("slow").animate({opacity: 0},{queue: false, duration: "slow"}).addClass('small_prop').removeClass('big_prop');
             $(this).removeClass('big').addClass('small').html('Show Properties');
-            
-            
-                    
+
+
+
         }
         else {
             $("#prop_wrp").slideDown("slow").animate({opacity: 1},{queue: false, duration: "slow"}).addClass('small_prop').removeClass('big_prop');
@@ -405,14 +404,14 @@ function initCustomSelect() {
 ////FILTERS
 function initFilter() {
     var checked = $("#filter_on_off").attr("checked");
-    
+
     if (checked) {
         $(".all").removeClass("active");
         $(".filters_wrp").addClass("active");
     } else {
         $(".all").addClass("active");
     }
-    
+
     $("#filter_on_off").iphoneStyle({
         checkedLabel: '',
         uncheckedLabel: '',
@@ -431,35 +430,35 @@ function initFilter() {
                 $(".filters_wrp").removeClass("active");
                 resetFilters();
             }
-        
+
         }
     });
 }
 
 function createFilter(el, hide, options){
     console.log("Create filter init");
-    
+
     var line = $(el).parent("li");
-    
+
     if(hide == true){
         line.addClass("hidden");
     }
-  
+
     var uniqueid = calculateUniqueFilterId();
     var newitem = $('<li>').attr('class', 'filterline').append($("#filterdummyline").html());
-    
+
     if(hide == true){
         line.after(newitem);
     } else {
         line.before(newitem);
     }
-    
-    
-    
+
+
+
     newitem.find(".uniquefilterid").val(uniqueid);
     newitem.find(".filterdummy").val(line.find(".filterselect").val());
     updateOptions(newitem.find(".filterdummy"), options);
-    
+
     if(hide == true){
         newitem.removeClass("hidden");
         line.find("select").val("");
@@ -517,7 +516,7 @@ function updateOptions(el, options){
         if (fieldName.substr(0, 7) != "filter_") {
             $(this).attr("name", "filter_" + $(this).attr("name"));
         }
-    });    
+    });
     $(el).parent(".filterline").find(".filteroptions").find("input:not(.uniquefilterid), select").each(function(){
         $(this).attr("name", $(this).attr("name") + "_" + uniqueid);
         if($(this).hasClass("datepick")){
@@ -613,6 +612,13 @@ $(function() {
 */
     }).disableSelection();
 });
+
+function initSidenavSize() {
+    $('#adjust_sidebar').on('click', function () {
+        $('#sidebar').toggleClass('hidden');
+        $(this).toggleClass('sidebar_hidden');
+    });
+}
 
 function initModalFocus() {
 	$('.modal').on('shown', function () {
