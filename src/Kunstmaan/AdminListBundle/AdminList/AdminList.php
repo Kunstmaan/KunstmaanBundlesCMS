@@ -107,8 +107,11 @@ class AdminList
      *
      * @return bool
      */
-    public function hasSort($columnName)
+    public function hasSort($columnName = null)
     {
+        if (is_null($columnName)) {
+            return count($this->configurator->getSortFields()) > 0;
+        }
         return in_array($columnName, $this->configurator->getSortFields());
     }
 
