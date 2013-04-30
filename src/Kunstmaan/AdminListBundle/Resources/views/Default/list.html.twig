@@ -65,7 +65,7 @@
             {% else %}
                 <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}">
                     {% if action.getIcon() is not null %}
-                        <img src="{{ asset(action.getIcon()) }}" alt="{{ action.getLabel() }}"/>
+                        <i class="icon-{{ action.getIcon() }} }}"></i>
                     {% else %}
                         {{ action.getLabel() }}
                     {% endif %}
