@@ -56,6 +56,5 @@ class SlugType extends AbstractType
                 }
                 $view->vars['prefix'] = $slug;
             }
-
     }
 }
