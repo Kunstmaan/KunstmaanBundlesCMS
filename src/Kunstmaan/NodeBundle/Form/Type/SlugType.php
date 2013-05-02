@@ -46,7 +46,7 @@ class SlugType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
             $nodeTranslation = $form->getParent()->getData();
-            $view->vars['reset'] = Slugifier::slugify($nodeTranslation->getSlug(), '');
+            $view->vars['reset'] = Slugifier::slugify($nodeTranslation->getTitle(), '');
             $parentNode = $nodeTranslation->getNode()->getParent();
             if ($parentNode != null) {
                 $nodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang(), true);
