@@ -38,7 +38,8 @@ class SearchAdapter implements  AdapterInterface
      */
     public function getNbResults()
     {
-        return $this->search->search($this->indexName, $this->indexType, $this->querystring, $this->json)['hits']['total'];
+        $response = $this->search->search($this->indexName, $this->indexType, $this->querystring, $this->json)
+        return $response['hits']['total'];
     }
 
     /**
