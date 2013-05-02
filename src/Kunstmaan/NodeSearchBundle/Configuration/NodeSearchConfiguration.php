@@ -46,7 +46,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
     public function __construct(ContainerInterface $container, $search, $indexName, $indexType)
     {
         $this->container = $container;
-        $this->em = $this->container->get('doctrine')->getEntityManager();
+        $this->em = $this->container->get('doctrine')->getManager();
         $this->search = $search;
         $this->indexName = $indexName;
         $this->indexType = $indexType;
