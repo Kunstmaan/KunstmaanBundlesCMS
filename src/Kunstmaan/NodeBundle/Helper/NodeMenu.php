@@ -73,6 +73,11 @@ class NodeMenu
     private $user = null;
 
     /**
+     * @var array
+     */
+    private $fallbackLocales = array();
+
+    /**
      * @param EntityManager            $em                   The entity manager
      * @param SecurityContextInterface $securityContext      The security context
      * @param AclHelper                $aclHelper            The ACL helper
@@ -81,8 +86,9 @@ class NodeMenu
      * @param string                   $permission           The permission
      * @param bool                     $includeOffline       Include offline pages
      * @param bool                     $includeHiddenFromNav Include hidden pages
+     * @param array                    $fallbackLocales      Locales to fall back so we can show the node in another language
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $lang, Node $currentNode = null, $permission = PermissionMap::PERMISSION_VIEW, $includeOffline = false, $includeHiddenFromNav = false)
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $lang, Node $currentNode = null, $permission = PermissionMap::PERMISSION_VIEW, $includeOffline = false, $includeHiddenFromNav = false, array $fallbackLocales = array())
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
@@ -91,6 +97,7 @@ class NodeMenu
         $this->includeOffline = $includeOffline;
         $this->includeHiddenFromNav = $includeHiddenFromNav;
         $this->permission = $permission;
+        $this->fallbackLocales = $fallbackLocales;
         $tempNode = $currentNode;
 
         //Breadcrumb
@@ -104,6 +111,10 @@ class NodeMenu
         /* @var Node $nodeBreadCrumbItem */
         foreach ($nodeBreadCrumb as $nodeBreadCrumbItem) {
             $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeOffline);
+            $count = count($fallbackLocales);
+            for ($i=0; (is_null($nodeTranslation) && $i < $count); $i++) {
+                $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($fallbackLocales[$i], $this->includeOffline);
+            }
             if (!is_null($nodeTranslation)) {
                 $nodeMenuItem = new NodeMenuItem($nodeBreadCrumbItem, $nodeTranslation, $parentNodeMenuItem, $this);
                 $this->breadCrumb[] = $nodeMenuItem;
@@ -118,6 +129,10 @@ class NodeMenu
         /* @var Node $topNode */
         foreach ($topNodes as $topNode) {
             $nodeTranslation = $topNode->getNodeTranslation($this->lang, $this->includeOffline);
+            $count = count($fallbackLocales);
+            for ($i=0; (is_null($nodeTranslation) && $i < $count); $i++) {
+                $nodeTranslation = $topNode->getNodeTranslation($fallbackLocales[$i], $this->includeOffline);
+            }
             if (!is_null($nodeTranslation)) {
                 if (sizeof($this->breadCrumb)>0 && $this->breadCrumb[0]->getNode()->getId() == $topNode->getId()) {
                     $this->topNodeMenuItems[] = $this->breadCrumb[0];
@@ -345,6 +360,14 @@ class NodeMenu
     public function isIncludeHiddenFromNav()
     {
         return $this->includeHiddenFromNav;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFallbackLocales()
+    {
+        return $this->fallbackLocales;
     }
 
 }
