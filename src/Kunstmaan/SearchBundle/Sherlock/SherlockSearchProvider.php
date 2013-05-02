@@ -73,10 +73,11 @@ class SherlockSearchProvider implements SearchProviderInterface
      */
     public function search($indexName, $indexType, $querystring, $json = false, $from = null, $size = null)
     {
-        $request = $this->sherlock->search();
         if ($json) {
-            $query = Sherlock::queryBuilder()->Raw($querystring);
+            $request = $this->sherlock->raw();
+            $request->uri($indexName . "/" . $indexType . "/_search")->method("post")->body($querystring);
         } else {
+            $request = $this->sherlock->search();
             $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
             $contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
 
@@ -85,16 +86,15 @@ class SherlockSearchProvider implements SearchProviderInterface
             $highlight = Sherlock::highlightBuilder()->Highlight()->pre_tags(array("<strong>"))->post_tags(array("</strong>"))->fields(array("content" => array("fragment_size" => 150, "number_of_fragments" => 1)));
 
             $request->highlight($highlight);
-        }
+            $request->index($indexName)->type($indexType)->query($query);
 
-        $request->index($indexName)->type($indexType)->query($query);
+            if($from){
+                $request->from($from);
+            }
 
-        if($from){
-            $request->from($from);
-        }
-
-        if($size){
-            $request->size($size);
+            if($size){
+                $request->size($size);
+            }
         }
 
         $response = $request->execute();
