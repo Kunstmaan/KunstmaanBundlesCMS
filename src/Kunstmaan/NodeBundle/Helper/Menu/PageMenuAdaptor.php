@@ -25,18 +25,27 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private $em;
     private $securityContext;
     private $aclHelper;
+    private $fallbackLocales;
     private $nodeMenu;
 
     /**
      * @param EntityManager            $em              The entity manager
      * @param SecurityContextInterface $securityContext The security context
      * @param AclHelper                $aclHelper       The acl helper
+     * @param string                   $fallbackLocales The locales to fall back to fill the three with node items translated in another language
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper)
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $fallbackLocales = '')
     {
         $this->em              = $em;
         $this->securityContext = $securityContext;
         $this->aclHelper       = $aclHelper;
+        $this->fallbackLocales = $fallbackLocales;
+        $this->fallbackLocales=array();
+        $help=strtok($fallbackLocales, "|");
+        while ($help !== false) {
+            $this->fallbackLocales[] = $help;
+            $help = strtok("|");
+        }
     }
 
     /**
@@ -55,7 +64,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             if ($request->attributes->get('_route') == 'KunstmaanNodeBundle_nodes_edit') {
                 $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneById($request->attributes->get('id'));
             }
-            $this->nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getLocale(), $node, PermissionMap::PERMISSION_EDIT, true, true);
+            $this->nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getLocale(), $node, PermissionMap::PERMISSION_EDIT, true, true, $this->fallbackLocales);
         }
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
@@ -75,7 +84,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $parentRouteParams = $parent->getRouteparams();
                 /* @var Node $node */
                 $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneById($parentRouteParams['id']);
-                $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getLocale(), $node, PermissionMap::PERMISSION_EDIT, true, true);
+                $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $request->getLocale(), $node, PermissionMap::PERMISSION_EDIT, true, true, $this->fallbackLocales);
                 $childNodes = $nodeMenu->getCurrent()->getChildren();
                 $currentId = $request->attributes->get('id');
                 $this->processNodes($currentId, $menu, $children, $childNodes, $parent, $request);
