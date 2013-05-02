@@ -2,16 +2,17 @@
 
 namespace Kunstmaan\NodeSearchBundle\Entity;
 
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SearchAdapter;
+use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SherlockRequestAdapter;
 use Kunstmaan\SearchBundle\Helper\ShouldBeIndexed;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
 use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * AbstractSearchPage, extend this class to create your own SearchPage and extends the standard functionality
@@ -109,9 +110,7 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
 
         $request->highlight($highlight);
 
-        $json = $request->toJSON();
-
-        $adapter = new SearchAdapter($search, "nodeindex", "page", $json, true);
+        $adapter = new SherlockRequestAdapter($search, "nodeindex", "page", $request);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage($this->defaultperpage);
         try {

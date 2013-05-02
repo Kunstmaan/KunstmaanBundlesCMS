@@ -4,8 +4,9 @@ namespace Kunstmaan\NodeSearchBundle\PagerFanta\Adapter;
 
 use Kunstmaan\SearchBundle\Search\Search;
 use Pagerfanta\Adapter\AdapterInterface;
+use Sherlock\requests\SearchRequest;
 
-class SearchAdapter implements  AdapterInterface
+class SherlockRequestAdapter implements  AdapterInterface
 {
     /**
      * @var Search
@@ -13,17 +14,19 @@ class SearchAdapter implements  AdapterInterface
     private $search;
     private $indexName;
     private $indexType;
-    private $querystring;
-    private $json;
+
+    /**
+     * @var SearchRequest
+     */
+    private $request;
     private $response;
 
-    public function __construct($search, $indexName, $indexType, $querystring, $json = false)
+    public function __construct($search, $indexName, $indexType, $request)
     {
         $this->search = $search;
         $this->indexName = $indexName;
         $this->indexType = $indexType;
-        $this->querystring = $querystring;
-        $this->json = $json;
+        $this->request = $request;
     }
 
     public function getResponse()
@@ -38,7 +41,7 @@ class SearchAdapter implements  AdapterInterface
      */
     public function getNbResults()
     {
-        $response = $this->search->search($this->indexName, $this->indexType, $this->querystring, $this->json);
+        $response = $this->search->search($this->indexName, $this->indexType, $this->request->toJSON(), true);
         return $response['hits']['total'];
     }
 
@@ -52,7 +55,10 @@ class SearchAdapter implements  AdapterInterface
      */
     public function getSlice($offset, $length)
     {
-        $this->response = $this->search->search($this->indexName, $this->indexType, $this->querystring, $this->json, $offset, $length);
+        $this->request->from($offset);
+        $this->request->size($length);
+
+        $this->response = $this->search->search($this->indexName, $this->indexType, $this->request->toJSON(), true);
 
         return $this->response['hits']['hits'];
     }
