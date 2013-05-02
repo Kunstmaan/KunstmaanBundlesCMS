@@ -20,7 +20,7 @@
         "kunstmaan/pagepart-bundle": "*",
         "kunstmaan/search-bundle": "*",
         "pagerfanta/pagerfanta": "dev-master",
-        "sherlock/sherlock": "dev-master*"
+        "sherlock/sherlock": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\NodeSearchBundle": "" }
