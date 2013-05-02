@@ -11,7 +11,7 @@ services:
 
     kunstmaan_node.menu.adaptor.pages:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper", "%requiredlocales%"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
         
