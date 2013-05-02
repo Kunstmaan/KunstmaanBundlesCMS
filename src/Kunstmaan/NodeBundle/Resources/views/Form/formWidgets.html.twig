@@ -22,15 +22,22 @@
 {% block slug_widget %}
 {% spaceless %}
     <div id="{{ id }}_widget">
-        <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}"/>
+        <input type="text" name="{{ full_name }}" id="{{ id }}" data-reset="{{ reset }}" value="{{ value|default('') }}"/> <button class="btn" id="{{ id }}_resetbtn">Reset</button>
     </div>
     <span class="help-inline" id="{{ id }}_preview"></span>
     <script>
         var updateSlugPreview = function(){
         	jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: {{ path('_slug', {'url': prefix|default('')})}}'+jQuery('#{{ id }}').val());
         };
+        var resetSlug = function(e) {
+        	jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
+        	jQuery('#{{ id }}').change();
+        	e.preventDefault();
+        	return false;
+        }
         jQuery('#{{ id }}').change(updateSlugPreview);
         jQuery('#{{ id }}').keyup(updateSlugPreview);
+        jQuery('#{{ id }}_resetbtn').click(resetSlug);
         updateSlugPreview();
     </script>
 {% endspaceless %}
