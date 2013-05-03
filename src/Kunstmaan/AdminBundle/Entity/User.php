@@ -10,6 +10,7 @@ use FOS\UserBundle\Entity\User as BaseUser;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User entity
@@ -103,6 +104,14 @@ class User extends BaseUser
         $metadata->addPropertyConstraint('plainPassword', new NotBlank());
         $metadata->addPropertyConstraint('email', new NotBlank());
         $metadata->addPropertyConstraint('email', new Email());
+        $metadata->addConstraint(new UniqueEntity(array(
+                'fields'  => 'username',
+                'message' => 'This username already exists.',
+        )));
+        $metadata->addConstraint(new UniqueEntity(array(
+                'fields'  => 'email',
+                'message' => 'There is already a user with this email address.',
+        )));
     }
 
 }
