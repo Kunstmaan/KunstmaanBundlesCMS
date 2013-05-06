@@ -8,23 +8,29 @@
     {% endif %}
     <input type="hidden" name="{{context}}_sequence[]" data-suffix="_sequence[]" class="pagepartadmin_field_updatecontextname" value="{{id}}" />
 
-	<div class="pagepart">
-	    {% if form_has_errors_recursive(form['pagepartadmin_'~id]) %}
-    		{% set editmode = true %}
+    <div class="pagepart">
+        {% if form_has_errors_recursive(form['pagepartadmin_'~id]) %}
+            {% set editmode = true %}
         {% endif %}
         {% if form['pagepartadmin_'~id].count %}
-    		{% set editable = true %}
-    	{% else %}
-    		{% set editable = false %}
-    	{% endif %}
-    	<div class="prop_bar {% if not form['pagepartadmin_'~id].count %}noedit{% endif %}">
-    		<i class="icon-move"></i>
-    		<h6>{{pagepartadmin.getType(pagepart)}}</h6>
-			<button class="del red" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}"><i class="icon-trash"></i></button>
-			{% if editable %}
-				<button class="bleu" onclick="return PagePartEditor.editPagepart('{{id}}')">Edit</button>
-			{% endif %}
-    	</div>
+            {% set editable = true %}
+        {% else %}
+            {% set editable = false %}
+        {% endif %}
+        <div class="prop_bar {% if not form['pagepartadmin_'~id].count %}noedit{% endif %}">
+            <i class="icon-move"></i>
+            <h6>{{pagepartadmin.getType(pagepart)}}</h6>
+            <div class="actions">
+                <button class="del red" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}">
+                    <i class="icon-trash"></i>
+                </button>
+                {% if editable %}
+                    <button class="edit bleu" onclick="return PagePartEditor.editPagepart('{{id}}')">
+                        <i class="icon-edit"></i>
+                    </button>
+                {% endif %}
+            </div>
+        </div>
 
         <div class="block" id="{{id}}_view" {% if editmode %}style="display:none"{% endif %} {% if editable %}onDblclick="return edit_{{id}}()"{% endif %}>
             {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
@@ -49,19 +55,19 @@
     </div>
 
     <!--Del modal-->
-	<div id="delete-pagepart-modal{{id}}" class="modal hide fade">
-		<div class="modal-header">
-			<button class="close" data-dismiss="modal">&times;</button>
-			<h3>Delete pagepart '{{pagepartadmin.getType(pagepart)}}'</h3>
-		</div>
-		<div class="modal-body">
-			<p>This will not remove the pagepart completely, save the page to remove this pagepart permanently.</p>
-		</div>
-		<div class="modal-footer">
-			<div class="btn_group">
-				<button type="button" id="" onclick="PagePartEditor.deletePagepart('{{id}}'); $('#delete-pagepart-modal{{id}}').modal('hide');" class="btn btn-danger">Delete</button>
-				<button class="btn" data-dismiss="modal">Cancel</button>
-			</div>
-		</div>
-	</div>
+    <div id="delete-pagepart-modal{{id}}" class="modal hide fade">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <h3>Delete pagepart '{{pagepartadmin.getType(pagepart)}}'</h3>
+        </div>
+        <div class="modal-body">
+            <p>This will not remove the pagepart completely, save the page to remove this pagepart permanently.</p>
+        </div>
+        <div class="modal-footer">
+            <div class="btn_group">
+                <button type="button" id="" onclick="PagePartEditor.deletePagepart('{{id}}'); $('#delete-pagepart-modal{{id}}').modal('hide');" class="btn btn-danger">Delete</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
 </section>
