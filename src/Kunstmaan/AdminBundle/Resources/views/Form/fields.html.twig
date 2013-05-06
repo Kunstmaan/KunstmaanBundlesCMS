@@ -42,12 +42,6 @@
             <div class="input">
                 {{ form_widget(form) }}
                 {% if max_length %}
-                    <style>
-                        {#TODO frontend: add this to site.css#}
-                        .help-inline.error {
-                            color: #B94A48;
-                        }
-                    </style>
                     <script>
                         jQuery(document).ready(function(){
                         	$("#{{ id }}").charCount({
