@@ -430,16 +430,13 @@ function initFilter() {
 }
 
 function createFilter(el, hide, options){
-    console.log("Create filter init");
-
-    var line = $(el).parent("li");
+    var line = $(el).parent("li"),
+        uniqueid = calculateUniqueFilterId(),
+        newitem = $('<li>').attr('class', 'filterline').append($("#filterdummyline").html());
 
     if(hide === true){
         line.addClass("hidden");
     }
-
-    var uniqueid = calculateUniqueFilterId();
-    var newitem = $('<li>').attr('class', 'filterline').append($("#filterdummyline").html());
 
     if(hide === true){
         line.after(newitem);
@@ -466,8 +463,8 @@ function resetFilters(){
     return false;
 }
 
-function removeFilter(el){
-    if($("#filtermap").find(".filterline").length==2){
+function removeThisFilter(el){
+    if($("#filtermap").find(".filterline").length === 2){
         $(el).parent(".filterline").remove();
         $("#addline").removeClass("hidden");
     } else {
@@ -481,9 +478,9 @@ function removeFilter(el){
 function calculateUniqueFilterId(){
     var result = 1;
     $("input.uniquefilterid").each(function(){
-        var value = parseInt(jQuery(this).val());
+        var value = parseInt(jQuery(this).val(), 10);
         if(result <= value){
-            result = value+1;
+            result = value + 1;
         }
     });
     return result;
