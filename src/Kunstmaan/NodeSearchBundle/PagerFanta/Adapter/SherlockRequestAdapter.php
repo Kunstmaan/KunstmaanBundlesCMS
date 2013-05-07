@@ -20,6 +20,7 @@ class SherlockRequestAdapter implements  AdapterInterface
      */
     private $request;
     private $response;
+    private $fullResponse;
 
     public function __construct($search, $indexName, $indexType, $request)
     {
@@ -27,11 +28,17 @@ class SherlockRequestAdapter implements  AdapterInterface
         $this->indexName = $indexName;
         $this->indexType = $indexType;
         $this->request = $request;
+        $this->fullResponse = $this->search->search($this->indexName, $this->indexType, $this->request->toJSON(), true);
     }
 
     public function getResponse()
     {
         return $this->response;
+    }
+
+    public function getFullResponse()
+    {
+        return $this->fullResponse;
     }
 
     /**
@@ -41,8 +48,7 @@ class SherlockRequestAdapter implements  AdapterInterface
      */
     public function getNbResults()
     {
-        $response = $this->search->search($this->indexName, $this->indexType, $this->request->toJSON(), true);
-        return $response['hits']['total'];
+        return $this->fullResponse['hits']['total'];
     }
 
     /**

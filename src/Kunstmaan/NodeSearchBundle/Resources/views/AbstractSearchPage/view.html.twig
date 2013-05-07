@@ -26,8 +26,8 @@
                 </div>
                 {{ pagerfanta(pagerfanta, 'twitter_bootstrap') }}
             </div>
-            {% if pagerfanta.getAdapter().getResponse()['facets'] is defined %}
-                {% set facets =  pagerfanta.getAdapter().getResponse()['facets'] %}
+            {% if pagerfanta.getAdapter().getFullResponse()['facets'] is defined %}
+                {% set facets =  pagerfanta.getAdapter().getFullResponse()['facets'] %}
                 <div class="span3 well-small" style="margin: 0; border-left:1px solid #E3E3E3;">
                     {% if facets['tag']['terms']|length > 0 %}
                         <p><strong>Tags</strong></p>
