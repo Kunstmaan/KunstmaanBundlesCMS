@@ -10,6 +10,8 @@ use Symfony\Component\Filesystem\Filesystem;
 
 // TODO: Add the Bundle to assetic:bundles configuration.
 
+// TODO: Modify security.yml
+
 /**
  * Generates a default website using several Kunstmaan bundles using default templates and assets
  */
