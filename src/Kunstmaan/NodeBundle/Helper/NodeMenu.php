@@ -200,6 +200,8 @@ class NodeMenu
      * @param string                                        $internalName The internal name
      * @param NodeTranslation|NodeMenuItem|HasNodeInterface $parent       The parent
      *
+     * @param bool                                          $includeOffline
+     *
      * @return NodeMenuItem|null
      */
     public function getNodeByInternalName($internalName, $parent = null, $includeOffline = null)
@@ -248,6 +250,8 @@ class NodeMenu
 
     /**
      * @param NodeTranslation $nodeTranslation
+     *
+     * @param bool            $includeOffline
      *
      * @return NodeMenuItem|NULL
      */
