@@ -494,7 +494,22 @@ class NodeAdminController extends Controller
             $nodeVersion = $draftNodeVersion;
             $page = $nodeVersion->getRef($this->em);
         } else {
+            if ($request->getMethod() == 'POST') {
+                //Check the version timeout and make a new nodeversion if the timeout is passed
+                $thresholdDate = date("Y-m-d H:i:s", time()-$this->container->getParameter("kunstmaan_node.version_timeout"));
+                $updatedDate = date("Y-m-d H:i:s", strtotime($nodeVersion->getUpdated()->format("Y-m-d H:i:s")));
+                if ($thresholdDate >= $updatedDate) {
+                    $page = $nodeVersion->getRef($this->em);
+                    if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
+                        $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, false);
+                    } else {
+                        $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
+                    }
+                }
+            }
             $page = $nodeVersion->getRef($this->em);
+
+
         }
 
         $isStructureNode = $page->isStructureNode();
@@ -524,17 +539,6 @@ class NodeAdminController extends Controller
             $tabPane->bindRequest($request);
 
             if ($tabPane->isValid()) {
-                //Check the version timeout and make a new nodeversion if the timeout is passed
-                $thresholdDate = date("Y-m-d H:i:s", time()-$this->container->getParameter("kunstmaan_node.version_timeout"));
-                $updatedDate = date("Y-m-d H:i:s", strtotime($nodeVersion->getUpdated()->format("Y-m-d H:i:s")));
-                if ($thresholdDate >= $updatedDate) {
-                    if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
-                        $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, false);
-                    } else {
-                        $nodeVersion = $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
-                    }
-                }
-
                 $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
                 $nodeTranslation->setTitle($page->getTitle());
@@ -570,7 +574,7 @@ class NodeAdminController extends Controller
 
         $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
         $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_EDIT, $this->aclHelper);
-        $nodeVersions = $nodeTranslation->getNodeVersions();
+        $nodeVersions = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->findBy(array('nodeTranslation' => $nodeTranslation), array('updated'=> 'ASC'));
 
         $queuedNodeTranslationAction = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findOneBy(array('nodeTranslation' => $nodeTranslation));
 
@@ -602,19 +606,20 @@ class NodeAdminController extends Controller
     private function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, $publish = true)
     {
         $newPublicPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
-        $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, $nodeVersion);
-        $nodeTranslation->setPublicNodeVersion($nodeVersion);
-        $nodeTranslation->setTitle($newPublicPage->getTitle());
+        $newNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, $nodeVersion);
         if ($publish) {
             $nodeTranslation->setOnline(true);
         }
 
+        $newNodeVersion->setOwner($nodeVersion->getOwner());
+        $nodeVersion->setOwner($this->user);
+        $this->em->persist($newNodeVersion);
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
         $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new NodeEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage));
 
-        return $nodeVersion;
+        return $newNodeVersion;
     }
 
     /**
