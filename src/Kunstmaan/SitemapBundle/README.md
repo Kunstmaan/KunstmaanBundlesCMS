@@ -32,9 +32,6 @@ KunstmaanSitemapBundle:
         _locale: %requiredlocales%
 
 ```
+## Documentation
 
-## How to use
-
-After installing this bundle, you can go to the '/en/sitemap' url on your website, a sitemap XML based on the [Sitemap protocol](http://www.sitemaps.org/protocol.html) will be generated.
-
-You can hide pages from the sitemap by implementing the HiddenFromSitemap interface, this interface will allow you the hide the page and/or its children from the sitemap.
+The bundle comes with a generated XML and its own sitemap page you can add to your website, for more information, check our the more detailed [documentation](https://github.com/Kunstmaan/KunstmaanSitemapBundle/blob/master/Resources/doc/SitemapBundle.md).

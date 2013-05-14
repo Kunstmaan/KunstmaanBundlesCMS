@@ -15,7 +15,7 @@ class SitemapController extends Controller {
 
     /**
      * @Route("/sitemap", name="KunstmaanSitemapBundle_sitemap")
-     * @Template("KunstmaanSitemapBundle:Sitemap:view.html.twig")
+     * @Template("KunstmaanSitemapBundle:Sitemap:view.xml.twig")
      *
      * @return array
      */

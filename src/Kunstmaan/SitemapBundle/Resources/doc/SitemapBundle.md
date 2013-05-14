@@ -15,3 +15,34 @@ This bundle also supplies two new twig extensions, both methods accept a [NodeMe
 ```
     hide_children_from_sitemap(nodemenuitem)
 ```
+## Sitemap Page
+
+The bundle also has a SitemapPage which can be added to your website, simply add the SitemapPage as a possible child to one of your pages :
+
+```PHP
+    public function getPossibleChildTypes()
+    {
+        return array(
+            array(
+                'name' => 'Sitemap Page',
+                'class'=> "Kunstmaan\SitemapBundle\Entity\SitemapPage"
+            )
+        );
+    }
+```
+And override its template by copying the view.html.twig of the SitemapPage to the the following location 'app/Resources/KunstmaanSitemapBundle/views/SitemapPage'.
+
+```twig
+{% extends 'YourWebsiteBundle:Page:layout.html.twig' %}
+
+{% block content %}
+    <ul class="sitemap">
+        {% if nodemenu is defined %}
+            {% for topNode in nodemenu.getTopNodes() %}
+                {% for node in topNode.getChildren() %}
+                    {{ include('KunstmaanSitemapBundle:SitemapPage:entry.html.twig', {'entry' : node})  }}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    <ul>
+{% endblock %}
