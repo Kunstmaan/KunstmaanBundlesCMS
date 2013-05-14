@@ -47,9 +47,9 @@ class CloneListener
             $clonedEntity = $event->getClonedEntity();
 
             $pagePartConfigurationReader = new PagePartConfigurationReader($this->kernel);
-            $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($originalEntity);
-            foreach ($pagePartAdminConfigurators as $ppConfigurator) {
-                $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($this->em, $originalEntity, $clonedEntity, $ppConfigurator->getContext());
+            $contexts = $pagePartConfigurationReader->getPagePartContexts($originalEntity);
+            foreach ($contexts as $context) {
+                $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($this->em, $originalEntity, $clonedEntity, $context);
             }
         }
         if ($originalEntity instanceof HasPageTemplateInterface) {
