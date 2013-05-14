@@ -77,4 +77,25 @@ class PagePartConfigurationReader
 
         return $pagePartAdminConfigurators;
     }
+
+    /**
+     * @param HasPagePartsInterface $page
+     *
+     * @throws \Exception
+     * @return string[]
+     */
+    public function getPagePartContexts(HasPagePartsInterface $page)
+    {
+        $result = array();
+
+        $pagePartAdminConfigurators = $this->getPagePartAdminConfigurators($page);
+        foreach ($pagePartAdminConfigurators as $pagePartAdminConfigurator) {
+            $context = $pagePartAdminConfigurator->getContext();
+            if (!in_array($context, $result)) {
+                $result[] = $context;
+            }
+        }
+
+        return $result;
+    }
 }
