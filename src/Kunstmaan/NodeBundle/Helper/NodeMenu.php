@@ -202,9 +202,12 @@ class NodeMenu
      *
      * @return NodeMenuItem|null
      */
-    public function getNodeByInternalName($internalName, $parent = null)
+    public function getNodeByInternalName($internalName, $parent = null, $includeOffline = null)
     {
         $node = null;
+        if ($includeOffline == null) {
+            $includeOffline = $this->includeOffline;
+        }
 
         if (!is_null($parent)) {
             if ($parent instanceof NodeTranslation) {
@@ -234,9 +237,9 @@ class NodeMenu
             $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneBy(array('internalName' => $internalName));
         }
         if (!is_null($node)) {
-            $nodeTranslation = $node->getNodeTranslation($this->lang, $this->includeOffline);
+            $nodeTranslation = $node->getNodeTranslation($this->lang, $includeOffline);
             if (!is_null($nodeTranslation)) {
-                return $this->getNodemenuForNodeTranslation($nodeTranslation);
+                return $this->getNodemenuForNodeTranslation($nodeTranslation, $includeOffline);
             }
         }
 
@@ -248,8 +251,12 @@ class NodeMenu
      *
      * @return NodeMenuItem|NULL
      */
-    private function getNodemenuForNodeTranslation(NodeTranslation $nodeTranslation)
+    private function getNodemenuForNodeTranslation(NodeTranslation $nodeTranslation, $includeOffline = null)
     {
+        if ($includeOffline == null) {
+            $includeOffline = $this->includeOffline;
+        }
+
         if (!is_null($nodeTranslation)) {
             $tempNode = $nodeTranslation->getNode();
             //Breadcrumb
@@ -269,7 +276,7 @@ class NodeMenu
                 if (!is_null($breadCrumbItemFromMain)) {
                     $parentNodeMenuItem = $breadCrumbItemFromMain;
                 }
-                $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeOffline);
+                $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $includeOffline);
                 if (!is_null($nodeTranslation)) {
                     $nodeMenuItem = new NodeMenuItem($nodeBreadCrumbItem, $nodeTranslation, $parentNodeMenuItem, $this);
                     $parentNodeMenuItem = $nodeMenuItem;
