@@ -32,6 +32,11 @@ KunstmaanSitemapBundle:
         _locale: %requiredlocales%
 
 ```
+
+## Use
+
+Once installed, you will be able to view the generated sitemap XML on the '/en/sitemap.xml' route.
+
 ## Documentation
 
 The bundle comes with a generated XML and its own sitemap page you can add to your website, for more information, check our the more detailed [documentation](https://github.com/Kunstmaan/KunstmaanSitemapBundle/blob/master/Resources/doc/SitemapBundle.md).

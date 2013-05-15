@@ -14,12 +14,16 @@ use Symfony\Component\HttpFoundation\Request;
 class SitemapController extends Controller {
 
     /**
-     * @Route("/sitemap", name="KunstmaanSitemapBundle_sitemap")
+     * Use the mode parameter to select in which mode the sitemap should be generated. At this moment only XML is supported
+     *
+     * @Route("/sitemap.{mode}", name="KunstmaanSitemapBundle_sitemap")
      * @Template("KunstmaanSitemapBundle:Sitemap:view.xml.twig")
+     *
+     * @param $mode
      *
      * @return array
      */
-    public function sitemapAction()
+    public function sitemapAction($mode)
     {
         $em = $this->getDoctrine()->getManager();
         $locale = $this->getRequest()->getLocale();

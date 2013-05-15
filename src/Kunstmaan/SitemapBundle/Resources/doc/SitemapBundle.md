@@ -4,18 +4,11 @@ After installing this bundle, you can go to the '/en/sitemap' url on your websit
 
 You can hide pages from the sitemap by implementing the HiddenFromSitemap interface, this interface will allow you the hide the page and/or its children from the sitemap.
 
-## Twig extension
+## XML
 
-This bundle also supplies two new twig extensions, both methods accept a [NodeMenuItem](https://github.com/Kunstmaan/KunstmaanNodeBundle/blob/master/Helper/NodeMenuItem.php) as parameter and will return a boolean.
+Once the bundle is installed, you will be able to view the generated sitemap XML on the '/en/sitemap.xml' route.
 
-```
-    hide_from_sitemap(nodemenuitem)
-```
-
-```
-    hide_children_from_sitemap(nodemenuitem)
-```
-## Sitemap Page
+## Page
 
 The bundle also has a SitemapPage which can be added to your website, simply add the SitemapPage as a possible child to one of your pages :
 
@@ -46,3 +39,15 @@ And override its template by copying the view.html.twig of the SitemapPage to th
         {% endif %}
     <ul>
 {% endblock %}
+
+## Twig extension
+
+This bundle also supplies two new twig extensions, both methods accept a [NodeMenuItem](https://github.com/Kunstmaan/KunstmaanNodeBundle/blob/master/Helper/NodeMenuItem.php) as parameter and will return a boolean.
+
+```
+    hide_from_sitemap(nodemenuitem)
+```
+
+```
+    hide_children_from_sitemap(nodemenuitem)
+```
