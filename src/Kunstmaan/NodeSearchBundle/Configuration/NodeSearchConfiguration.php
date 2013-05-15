@@ -57,7 +57,9 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $index = $this->search->createIndex($this->indexName);
 
         $index->mappings(
-            Sherlock::mappingBuilder($this->indexType)->Analyzer()->path("contentanalyzer"),
+            //Sherlock::mappingBuilder($this->indexType)->Analyzer()->path("contentanalyzer"),
+            Sherlock::mappingBuilder($this->indexType)->String()->field('title')->analyzer('standard'),
+            Sherlock::mappingBuilder($this->indexType)->String()->field('content')->analyzer('standard'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('parents')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('ancestors')->analyzer('keyword'),
             Sherlock::mappingBuilder($this->indexType)->String()->field('tags')->analyzer('keyword'),
