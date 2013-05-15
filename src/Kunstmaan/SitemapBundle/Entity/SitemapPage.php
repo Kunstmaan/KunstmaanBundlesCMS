@@ -12,8 +12,8 @@ use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemap;
  * @ORM\Entity()
  * @ORM\Table(name="kuma_sitemap_pages")
  */
-class SitemapPage extends AbstractPage implements HiddenFromSitemap {
-
+class SitemapPage extends AbstractPage implements HiddenFromSitemap
+{
     /**
      * @return array
      */

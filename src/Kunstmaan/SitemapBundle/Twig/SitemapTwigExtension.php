@@ -5,8 +5,8 @@ namespace Kunstmaan\SitemapBundle\Twig;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemap;
 
-class SitemapTwigExtension extends \Twig_Extension {
-
+class SitemapTwigExtension extends \Twig_Extension
+{
     /**
      * Returns a list of functions to add to the existing list.
      *
@@ -31,11 +31,11 @@ class SitemapTwigExtension extends \Twig_Extension {
     {
         $page = $item->getPage();
 
-        if($page->isStructureNode()) {
+        if ($page->isStructureNode()) {
             return true;
         }
 
-        if($page instanceof HiddenFromSitemap){
+        if ($page instanceof HiddenFromSitemap) {
             return $page->isHiddenFromSitemap();
         }
 
@@ -53,7 +53,7 @@ class SitemapTwigExtension extends \Twig_Extension {
     {
         $page = $item->getPage();
 
-        if($page instanceof HiddenFromSitemap){
+        if ($page instanceof HiddenFromSitemap) {
             return $page->isChildrenHiddenFromSitemap();
         }
 

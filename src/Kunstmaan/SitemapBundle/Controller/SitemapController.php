@@ -2,17 +2,14 @@
 
 namespace Kunstmaan\SitemapBundle\Controller;
 
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
-
-class SitemapController extends Controller {
-
+class SitemapController extends Controller
+{
     /**
      * Use the mode parameter to select in which mode the sitemap should be generated. At this moment only XML is supported
      *
