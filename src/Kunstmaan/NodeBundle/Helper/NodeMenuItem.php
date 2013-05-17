@@ -283,7 +283,7 @@ class NodeMenuItem
      */
     public function getPage()
     {
-        return $this->getNodeTranslation()->getRef($this->em);
+        return $this->getNodeTranslation()->getPublicNodeVersion()->getRef($this->em);
     }
 
     /**
