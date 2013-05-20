@@ -13,14 +13,14 @@ class SitemapController extends Controller
     /**
      * Use the mode parameter to select in which mode the sitemap should be generated. At this moment only XML is supported
      *
-     * @Route("/sitemap.{mode}", name="KunstmaanSitemapBundle_sitemap")
+     * @Route("/sitemap.{_format}", name="KunstmaanSitemapBundle_sitemap", requirements={"_format" = "xml"})
      * @Template("KunstmaanSitemapBundle:Sitemap:view.xml.twig")
      *
      * @param $mode
      *
      * @return array
      */
-    public function sitemapAction($mode)
+    public function sitemapAction()
     {
         $em = $this->getDoctrine()->getManager();
         $locale = $this->getRequest()->getLocale();
