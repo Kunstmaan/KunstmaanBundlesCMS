@@ -612,11 +612,16 @@ class NodeAdminController extends Controller
         }
 
         $newNodeVersion->setOwner($nodeVersion->getOwner());
+        $newNodeVersion->setUpdated($nodeVersion->getUpdated());
+        $newNodeVersion->setCreated($nodeVersion->getCreated());
         $nodeVersion->setOwner($this->user);
+        $nodeVersion->setCreated(new \DateTime());
+        $nodeVersion->setOrigin($newNodeVersion);
+
         $this->em->persist($newNodeVersion);
+        $this->em->persist($nodeVersion);
         $this->em->persist($nodeTranslation);
         $this->em->flush();
-
         $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new NodeEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage));
 
         return $newNodeVersion;

@@ -215,14 +215,6 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->setUpdated(new DateTime());
-    }
-
-    /**
      * Get refId
      *
      * @return int
