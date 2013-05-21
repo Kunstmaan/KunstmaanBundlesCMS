@@ -4,7 +4,7 @@ A lot of sites enable users to vote or participate in actions where Facebook Lik
 
 Installation requirements
 -------------------------
-You should be able to get Symfony 2.1 up and running before you can install the KunstmaanVotingBundle.
+You should be able to get Symfony 2.2 up and running before you can install the KunstmaanVotingBundle.
 
 Installation instructions
 -------------------------
