@@ -224,6 +224,20 @@ class MenuItem
     }
 
     /**
+     * Warning: the menubuilder and the menuadaptors will not be handles anymore to load the children
+     *
+     * @param array $children
+     *
+     * @return MenuItem
+     */
+    public function setChildren(array $children = array())
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
      * Get children of current menu item that have the appearInNavigation flag set
      *
      * @return MenuItem[]
