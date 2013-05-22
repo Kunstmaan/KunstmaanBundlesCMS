@@ -224,7 +224,7 @@ class MenuItem
     }
 
     /**
-     * Warning: the menubuilder and the menuadaptors will not be handles anymore to load the children
+     * Warning: the adaptChildren method on the menuadaptors will not be called anymore for this menuitem
      *
      * @param array $children
      *
