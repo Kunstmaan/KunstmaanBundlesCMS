@@ -6,6 +6,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeSearchBundle\Event\Events;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
+use Kunstmaan\NodeSearchBundle\Helper\HasCustomSearchType;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Helper\ShouldBeIndexed;
@@ -128,8 +129,17 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                         "title"                 => $nodeTranslation->getTitle(),
                         "lang"                  => $nodeTranslation->getLang(),
                         "slug"                  => $nodeTranslation->getFullSlug(),
-                        "type"                  => ClassLookup::getClassName($page),
                     );
+
+                    // Type
+
+                    $type = ClassLookup::getClassName($page);
+                    if($page instanceof HasCustomSearchType){
+                        $type = $page->getSearchType();
+                    }
+                    $doc = array_merge($doc, array("type" => $type));
+                    // Analyzer field
+
                     $language = $this->container->getParameter('analyzer_languages');
                     $language = $language[$nodeTranslation->getLang()]['analyzer'];
 

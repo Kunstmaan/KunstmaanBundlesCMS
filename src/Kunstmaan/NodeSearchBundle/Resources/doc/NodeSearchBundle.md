@@ -21,6 +21,10 @@ $doc = array(
 );
 ```
 
+### Type
+
+The type is by default the class name of the object. This can be overridden by implementing the HasCustomSearchType interface. This will allow you to bundle multiple classes together under the same type.
+
 ### Parent and Ancestors
 
 In "parent" you will find the ID of the parent Node. In "ancestors" you will find a list of keys consisting of all the parent Nodes ID's (parent of the parent of the parent ...).
