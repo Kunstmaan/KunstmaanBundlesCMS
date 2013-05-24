@@ -3,6 +3,7 @@
 namespace Kunstmaan\SearchBundle\Sherlock;
 
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
+use Sherlock\common\exceptions\DocumentMissingException;
 use Sherlock\Sherlock;
 
 /**
@@ -52,12 +53,16 @@ class SherlockSearchProvider implements SearchProviderInterface
      */
     public function deleteDocument($indexName, $indexType, $uid)
     {
-        $this->sherlock
-            ->deleteDocument()
+        try {
+            $this->sherlock
+                ->deleteDocument()
             ->index($indexName)
             ->type($indexType)
             ->document($uid)
             ->execute();
+        } catch (DocumentMissingException $e) {
+            // Document already not in index anymore
+        }
     }
 
     /**
