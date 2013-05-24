@@ -110,21 +110,16 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
      */
     public function indexNodeTranslation(NodeTranslation $nodeTranslation)
     {
-        var_dump("NodeTranslation : " . $nodeTranslation->getTitle());
         // Only index online NodeTranslations
         if ($nodeTranslation->isOnline()) {
             // Retrieve the public NodeVersion
-            var_dump("    Online");
             $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
             if ($publicNodeVersion) {
-                var_dump("    Public");
                 $node = $nodeTranslation->getNode();
                 // Retrieve the referenced entity from the public NodeVersion
                 $page = $publicNodeVersion->getRef($this->em);
-
                 // If the page doesn't implement ShouldBeIndexed interface or it return true on shouldBeIndexed, index the page
                 if (!($page instanceof ShouldBeIndexed) or $page->shouldBeIndexed()) {
-                    var_dump("    INDEXING");
                     $doc = array(
                         "node_id"               => $node->getId(),
                         "nodetranslation_id"    => $nodeTranslation->getId(),
