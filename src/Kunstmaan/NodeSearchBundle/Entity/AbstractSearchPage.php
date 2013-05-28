@@ -45,6 +45,7 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
         $querytag = $request->get("tag");
         $queryrtag = $request->get("rtag");
         $querytype = $request->get("type");
+        $lang = $request->getLocale();
         $tags = array();
         // Put the tags in an array
         if ($querytag and $querytag != '') {
@@ -56,7 +57,7 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
         }
         // Perform a search if there is a querystring available
         if ($querystring and $querystring != "") {
-            $pagerfanta = $this->search($container, $querystring, $querytype, $tags, $pagenumber);
+            $pagerfanta = $this->search($container, $querystring, $querytype, $tags, $lang, $pagenumber);
             $context['q_query'] = $querystring;
             $context['q_tags'] = implode(',', $tags);
             $context['s_tags'] = $tags;
@@ -70,12 +71,13 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
      * @param string             $querystring
      * @param string             $type
      * @param array              $tags
+     * @param string             $lang
      * @param int                $pagenumber
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return Pagerfanta
-     * @throws NotFoundHttpException
      */
-    public function search(ContainerInterface $container, $querystring, $type, array $tags, $pagenumber)
+    public function search(ContainerInterface $container, $querystring, $type, array $tags, $lang, $pagenumber)
     {
         $search = $container->get('kunstmaan_search.search');
         $sherlock = $container->get('kunstmaan_search.searchprovider.sherlock');
@@ -83,8 +85,10 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
 
         $titleQuery = Sherlock::queryBuilder()->Match()->field("title")->query($querystring)->fuzziness(0.8);
         $contentQuery = Sherlock::queryBuilder()->Match()->field("content")->query($querystring)->fuzziness(0.8);
+        $langQuery = Sherlock::queryBuilder()->Term()->field("lang")->term($lang);
 
-        $query = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
+        $querystringQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
+        $query = Sherlock::queryBuilder()->Bool()->must($langQuery, $querystringQuery)->minimum_number_should_match(1);
 
         if (count($tags) > 0) {
             $tagQueries = array();
