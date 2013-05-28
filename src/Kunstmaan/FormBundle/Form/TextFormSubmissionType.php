@@ -4,6 +4,7 @@ namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * This class represents the type for the TextFormSubmissionField
@@ -38,16 +39,11 @@ class TextFormSubmissionType extends AbstractType
         ));
     }
 
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
-    {
-        return array(
+    / public function setDefaultOptions(OptionsResolverInterface $resolver)
+{
+    $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField',
-        );
+        ));
     }
 
     /**
