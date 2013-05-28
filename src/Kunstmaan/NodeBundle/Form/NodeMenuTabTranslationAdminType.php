@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * NodeMenuTabTranslationAdminType
@@ -37,15 +38,10 @@ class NodeMenuTabTranslationAdminType extends AbstractType
         return 'menutranslation';
     }
 
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\NodeBundle\Entity\NodeTranslation',
-        );
+        ));
     }
 }

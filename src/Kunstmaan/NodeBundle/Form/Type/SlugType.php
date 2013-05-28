@@ -14,15 +14,6 @@ use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
  */
 class SlugType extends AbstractType
 {
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
-    {
-        return $options;
-    }
 
     /**
      * @return string
