@@ -128,7 +128,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                         "lang"                  => $nodeTranslation->getLang(),
                         "slug"                  => $nodeTranslation->getFullSlug(),
                     );
-
+                    $this->container->get('logger')->info("Indexing document : " . implode(', ', $doc));
                     // Type
 
                     $type = ClassLookup::getClassName($page);
