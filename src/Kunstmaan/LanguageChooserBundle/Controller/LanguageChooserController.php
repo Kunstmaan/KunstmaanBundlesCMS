@@ -25,8 +25,11 @@ class LanguageChooserController extends Controller
             $request                = $this->getRequest();
 
             $locale = $localeGuesserManager->runLocaleGuessing($request);
-            //locale returned will in the form of en_US, we need en
-            $locale = locale_get_primary_language($locale);
+
+            if ($locale) {
+                //locale returned will in the form of en_US, we need en
+                $locale = locale_get_primary_language($locale);
+            }
 
             // locale has been found, redirect
             if ($locale) {
