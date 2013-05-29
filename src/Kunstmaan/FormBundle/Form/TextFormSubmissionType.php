@@ -39,9 +39,9 @@ class TextFormSubmissionType extends AbstractType
         ));
     }
 
-    / public function setDefaultOptions(OptionsResolverInterface $resolver)
-{
-    $resolver->setDefaults(array(
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField',
         ));
     }
