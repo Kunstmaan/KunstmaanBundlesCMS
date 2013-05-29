@@ -6,7 +6,7 @@ use FOS\UserBundle\Model\GroupInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as AbstractUser;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\UserRepository")
  * @ORM\Table(name="kuma_users")
  */
-class User extends BaseUser
+class User extends AbstractUser
 {
     /**
      * @ORM\Id
