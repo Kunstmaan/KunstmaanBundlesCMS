@@ -96,12 +96,12 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
                 $tagQueries[] = Sherlock::queryBuilder()->Term()->field("tags")->term($tag);
             }
             $tagQuery = Sherlock::queryBuilder()->Bool()->must($tagQueries)->minimum_number_should_match(1);
-            $query = Sherlock::queryBuilder()->Bool()->must(array($tagQuery, $query))->minimum_number_should_match(1);
+            $query = Sherlock::queryBuilder()->Bool()->must($tagQuery, $query)->minimum_number_should_match(1);
         }
 
         if ($type && $type != '') {
             $typeQuery = Sherlock::queryBuilder()->Term()->field("type")->term($type);
-            $query = Sherlock::queryBuilder()->Bool()->must(array($typeQuery, $query))->minimum_number_should_match(1);
+            $query = Sherlock::queryBuilder()->Bool()->must($typeQuery, $query)->minimum_number_should_match(1);
         }
 
         $request->query($query);
