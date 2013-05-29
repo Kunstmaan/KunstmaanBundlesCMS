@@ -6,6 +6,7 @@ lunetics_locale:
   allowed_locales: %languagechooser%
   cookie:
     set_on_change: true
+    secure: true
   guessing_order:
     - query
     - cookie
