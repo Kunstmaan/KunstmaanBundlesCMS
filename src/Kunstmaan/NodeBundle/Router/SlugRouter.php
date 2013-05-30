@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Router;
 
+use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Route;
@@ -121,8 +123,10 @@ class SlugRouter implements RouterInterface
             // The route matches, now check if it actually exists
             $em = $this->container->get('doctrine.orm.entity_manager');
 
+            /* @var NodeTranslationRepository $nodeTranslationRepo */
+            $nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
             /* @var NodeTranslation $nodeTranslation */
-            $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationForUrl($result['url'], $result['_locale']);
+            $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl($result['url'], $result['_locale']);
 
             if (is_null($nodeTranslation)) {
                 throw new ResourceNotFoundException('No page found for slug ' . $pathinfo);
