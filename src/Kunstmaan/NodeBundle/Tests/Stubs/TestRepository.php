@@ -16,4 +16,12 @@ class TestRepository
         return null;
     }
 
+    /**
+     * @return NULL
+     */
+    public function findOneBy()
+    {
+        return null;
+    }
+
 }
