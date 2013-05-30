@@ -48,46 +48,58 @@ class SlugRouter implements RouterInterface
             // the website is multilingual so the language is the first parameter
             $requiredLocales    = $this->container->getParameter('requiredlocales');
 
-            $this->routeCollection->add('_slug_preview', new Route(
-                '/{_locale}/preview/{url}',
-                array(
+            $this->routeCollection->add(
+                '_slug_preview',
+                new Route(
+                    '/{_locale}/preview/{url}',
+                    array(
+                            '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
+                            'preview'       => true,
+                            'url'           => ''
+                    ),
+                    array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*")
+                )
+            );
+            $this->routeCollection->add(
+                '_slug',
+                new Route(
+                    '/{_locale}/{url}',
+                    array(
                         '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'       => true,
+                        'preview'       => false,
                         'url'           => ''
-                ),
-                array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
-            ));
-            $this->routeCollection->add('_slug', new Route(
-                '/{_locale}/{url}',
-                array(
-                    '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
-                    'preview'       => false,
-                    'url'           => ''
-                ),
-                array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
-            ));
+                    ),
+                    array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*")
+                )
+            );
         } else {
             // the website is not multiligual, _locale must do a fallback to the default locale
-            $this->routeCollection->add('_slug_preview', new Route(
-                '/preview/{url}',
-                array(
+            $this->routeCollection->add(
+                '_slug_preview',
+                new Route(
+                    '/preview/{url}',
+                    array(
+                            '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
+                            'preview'       => true,
+                            'url'           => '',
+                            '_locale'       => $defaultlocale
+                        ),
+                    array('url' => "[a-zA-Z0-9\-_\/]*")
+                )
+            );
+            $this->routeCollection->add(
+                '_slug',
+                new Route(
+                    '/{url}',
+                    array(
                         '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'       => true,
+                        'preview'       => false,
                         'url'           => '',
                         '_locale'       => $defaultlocale
                     ),
-                array('url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
-            ));
-            $this->routeCollection->add('_slug', new Route(
-                '/{url}',
-                array(
-                    '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
-                    'preview'       => false,
-                    'url'           => '',
-                    '_locale'       => $defaultlocale
-                ),
-                array('url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
-            ));
+                    array('url' => "[a-zA-Z0-9\-_\/]*")
+                )
+            );
         }
     }
 
@@ -161,8 +173,11 @@ class SlugRouter implements RouterInterface
     public function getContext()
     {
         if (!isset($this->context)) {
+            /* @var Request $request */
+            $request = $this->container->get('request');
+
             $this->context = new RequestContext();
-            $this->context->fromRequest($this->container->get('request'));
+            $this->context->fromRequest($request);
         }
 
         return $this->context;
