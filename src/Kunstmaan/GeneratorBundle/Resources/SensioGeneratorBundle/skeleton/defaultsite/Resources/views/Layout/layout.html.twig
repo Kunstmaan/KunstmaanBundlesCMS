@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <title>{{ websitetitle | trans }}{% block title %} - {{ page.title }}{% endblock %}</title>
+        <title>{{ websitetitle | trans }}{% block title %} - {{ get_title_for(page) }}{% endblock %}</title>
         {% if page is defined %}
             {{ render_seo_metadata_for(page) }}
         {% endif %}
