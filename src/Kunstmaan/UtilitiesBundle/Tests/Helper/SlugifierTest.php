@@ -15,7 +15,7 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
      * @param string $result  The slug it should generate
      *
      * @dataProvider getSlugifyData
-     * @covers Kunstmaan\NodeBundle\Helper\Slugifier::slugify
+     * @covers Kunstmaan\UtilitiesBundle\Helper\Slugifier::slugify
      */
     public function testSlugify($text, $default, $result)
     {
