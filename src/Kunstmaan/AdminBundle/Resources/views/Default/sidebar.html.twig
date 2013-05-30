@@ -14,9 +14,18 @@
         <div class="tree clearfix">
             {% set currentMenuItem = adminmenu.current %}
    	        <ul>
-           		{% for menuitem in navigationChildren %}
+                {% if lowestTopChild.appearInSidebar %}
+                    <li class="jstree-open {% if lowestTopChild.internalname == currentMenuItem.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}>
+                        <a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}">{{ lowestTopChild.internalname | trans }}</a>
+                        <ul>
+                {% endif %}
+                {% for menuitem in navigationChildren %}
                     {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
                 {% endfor %}
+                {% if lowestTopChild.appearInSidebar %}
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </aside>
