@@ -20,6 +20,11 @@ class ChoiceFormSubmissionType extends AbstractType
     /**
      * @var bool
      */
+    private $required;
+
+    /**
+     * @var bool
+     */
     private $expanded;
 
     /**
@@ -39,14 +44,16 @@ class ChoiceFormSubmissionType extends AbstractType
 
     /**
      * @param string $label      The label
+     * @param        $required
      * @param bool   $expanded   Expanded or not
      * @param bool   $multiple   Multiple or not
      * @param array  $choices    The choices array
      * @param array  $emptyValue The empty value
      */
-    public function __construct($label, $expanded, $multiple, array $choices, $emptyValue = null)
+    public function __construct($label, $required, $expanded, $multiple, array $choices, $emptyValue = null)
     {
         $this->label = $label;
+        $this->required = $required;
         $this->expanded = $expanded;
         $this->multiple = $multiple;
         $this->choices = $choices;
@@ -61,6 +68,7 @@ class ChoiceFormSubmissionType extends AbstractType
     {
         $builder->add('value', 'choice', array(
             'label' => $this->label,
+            'required' => $this->required,
             'expanded' => $this->expanded,
             'multiple' => $this->multiple,
             'choices' => $this->choices,
