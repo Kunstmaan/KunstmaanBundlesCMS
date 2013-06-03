@@ -100,7 +100,7 @@ class ChoicePagePart extends AbstractFormPagePart
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $cfsf;
         $label = $this->getLabel();
-        $formBuilder->add('formwidget_' . $this->getUniqueId(), new ChoiceFormSubmissionType($label, $this->getExpanded(), $this->getMultiple(), $choices, $this->getEmptyValue()));
+        $formBuilder->add('formwidget_' . $this->getUniqueId(), new ChoiceFormSubmissionType($label, $this->required, $this->getExpanded(), $this->getMultiple(), $choices, $this->getEmptyValue()));
         $formBuilder->setData($data);
         if ($this->getRequired()) {
             $thiss = $this;
