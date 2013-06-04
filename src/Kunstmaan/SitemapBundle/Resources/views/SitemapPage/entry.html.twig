@@ -1,7 +1,7 @@
 {% set hidden = hide_from_sitemap(entry) %}
 {% if not hidden %}
     <li>
-        <a href="{{ url('_slug', { 'url': entry.slug }) }}">{{ entry.page.title }}</a>
+        <a href="{{ url('_slug', { 'url': entry.slug }) }}">{{ entry.title }}</a>
 {% endif %}
 {% if not hide_children_from_sitemap(entry) %}
     {% set children = entry.getChildren() %}

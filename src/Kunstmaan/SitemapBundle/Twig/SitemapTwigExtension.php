@@ -29,13 +29,9 @@ class SitemapTwigExtension extends \Twig_Extension
      */
     public function isHiddenFromSitemap(NodeMenuItem $item)
     {
-        $page = $item->getPage();
+        if (is_subclass_of($item->getNode()->getRefEntityName(), 'Kunstmaan\\SitemapBundle\\Helper\\HiddenFromSitemap')) {
+            $page = $item->getPage();
 
-        if ($page->isStructureNode()) {
-            return true;
-        }
-
-        if ($page instanceof HiddenFromSitemap) {
             return $page->isHiddenFromSitemap();
         }
 
@@ -51,9 +47,9 @@ class SitemapTwigExtension extends \Twig_Extension
      */
     public function isHiddenChildrenFromSitemap(NodeMenuItem $item)
     {
-        $page = $item->getPage();
+        if (is_subclass_of($item->getNode()->getRefEntityName(), 'Kunstmaan\\SitemapBundle\\Helper\\HiddenFromSitemap')) {
+            $page = $item->getPage();
 
-        if ($page instanceof HiddenFromSitemap) {
             return $page->isChildrenHiddenFromSitemap();
         }
 
@@ -71,3 +67,4 @@ class SitemapTwigExtension extends \Twig_Extension
     }
 
 }
+
