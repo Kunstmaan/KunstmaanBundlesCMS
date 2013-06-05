@@ -55,7 +55,7 @@ class BooleanFormSubmissionField extends FormSubmissionField
     /**
      * Returns a string representation of this FormSubmissionField
      *
-     * @return array|string
+     * @return string
      */
     public function __toString()
     {
