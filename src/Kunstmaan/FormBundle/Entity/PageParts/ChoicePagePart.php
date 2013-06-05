@@ -97,6 +97,7 @@ class ChoicePagePart extends AbstractFormPagePart
         $cfsf->setFieldName("field_" . $this->getUniqueId());
         $cfsf->setLabel($this->getLabel());
         $cfsf->setChoices($choices);
+        $cfsf->setRequired($this->required);
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $cfsf;
         $label = $this->getLabel();
