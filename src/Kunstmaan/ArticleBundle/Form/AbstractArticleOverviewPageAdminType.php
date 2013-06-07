@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * The admin type for abstract article overview pages
  */
-class AbstractArticleOvervoewPageAdminType extends PageAdminType
+class AbstractArticleOverviewPageAdminType extends PageAdminType
 {
     /**
      * Builds the form.
