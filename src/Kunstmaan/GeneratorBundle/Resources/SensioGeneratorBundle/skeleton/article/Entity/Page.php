@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 /**
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}\{{ entity_class }}PageRepository")
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}pages")
+ * @ORM\HasLifecycleCallbacks
  */
 class {{ entity_class }}Page extends AbstractArticlePage
 {
@@ -51,4 +52,23 @@ class {{ entity_class }}Page extends AbstractArticlePage
     {
         return $this->author;
     }
+
+    public function getDefaultView()
+    {
+        return "{{ namespace }}:{{ entity_class }}/{{ entity_class }}Page:view.html.twig";
+    }
+
+    /**
+     * Before persisting this entity, check the date.
+     * When no date is present, fill in current date and time.
+     *
+     * @ORM\PrePersist
+     */
+    public function _prePersist()
+{
+    // Set date to now when none is set
+    if ($this->date == null) {
+        $this->setDate(new \DateTime());
+    }
+}
 }

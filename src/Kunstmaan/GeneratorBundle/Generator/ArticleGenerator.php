@@ -240,6 +240,12 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
         $skeletonDir = sprintf("%s/Form", $this->skeletonDir);
 
         try {
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'OverviewPageAdminType', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageAdminType', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
@@ -266,6 +272,12 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
     {
         $dirPath = sprintf("%s/Repository/" . $entity, $bundle->getPath());
         $skeletonDir = sprintf("%s/Repository", $this->skeletonDir);
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'OverviewPageRepository', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageRepository', $parameters);

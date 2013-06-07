@@ -3,6 +3,7 @@
 namespace {{ namespace }}\Entity\{{ entity_class }};
 
 use Doctrine\ORM\Mapping as ORM;
+use {{ namespace }}\Form\{{ entity_class }}\{{ entity_class }}OverviewPageAdminType;
 use {{ namespace }}\PagePartAdmin\{{ entity_class }}\{{ entity_class }}OverviewPagePagePartAdminConfigurator;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * The article overview page which shows its articles
  *
+ * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}\{{ entity_class }}OverviewPageRepository")
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}overviewpages")
  */
@@ -48,6 +50,16 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
     public function getDefaultView()
     {
         return "{{ bundle.getName() }}:{{ entity_class }}/{{ entity_class }}OverviewPage:view.html.twig";
+    }
+
+    /**
+     * Returns the default backend form type for this page
+     *
+     * @return AbstractType
+     */
+    public function getDefaultAdminType()
+    {
+        return new {{ entity_class }}OverviewPageAdminType();
     }
 
 }

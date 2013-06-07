@@ -10,12 +10,33 @@ use Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository;
  */
 class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
 {
+
     /**
      * Returns an array of all {{ entity_class }}Pages
      *
+     * @param string $lang
+     * @param int    $offset
+     * @param int    $limit
+     *
      * @return array
      */
-    public function getArticles()
+    public function getArticles($lang = null, $offset = 0, $limit = 10)
+    {
+        $q = $this->getArticlesQuery($lang, $offset, $limit);
+
+        return $q->getResult();
+    }
+
+    /**
+     * Returns the article query
+     *
+     * @param string $lang
+     * @param int    $offset
+     * @param int    $limit
+     *
+     * @return Query
+     */
+    public function getArticlesQuery($lang = null, $offset, $limit)
     {
         $rsm = new ResultSetMappingBuilder($this->_em);
         $rsm->addRootEntityFromClassMetadata('{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Page', 'qp');
@@ -36,11 +57,24 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
         $query .= " n.ref_entity_name = '{{ namespace | replace('\\', '\\\\') }}\\\\Entity\\\\{{ entity_class }}\\\\{{ entity_class }}Page'";
         $query .= " AND";
         $query .= " nt.online = 1 ";
-        //$query .= " ORDER BY article.date DESC";
+        if ($lang) {
+            $query .= " AND";
+            $query .= " nt.lang = ? ";
+        }
+        $query .= " ORDER BY article.date DESC";
 
         $q = $this->_em->createNativeQuery($query, $rsm);
 
-        return $q->getResult();
+        if ($lang) {
+            $q->setParameter(1, $lang);
+            $q->setParameter(2, $limit);
+            $q->setParameter(3, $offset);
+        } else {
+            $q->setParameter(1, $limit);
+            $q->setParameter(2, $offset);
+        }
+
+        return $q;
     }
 
 }
