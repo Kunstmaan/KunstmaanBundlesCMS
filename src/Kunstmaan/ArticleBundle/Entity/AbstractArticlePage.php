@@ -12,11 +12,38 @@ use Symfony\Component\Form\AbstractType;
 abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsInterface
 {
     /**
+     * The article's date, set automatically to 'now' before persisting when empty
+     *
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $date;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="summary", type="text", nullable=true)
      */
     protected $summary;
+
+    /**
+     * Return the date of this article
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * Set the date of the article
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
 
     /**
      * Set the summary of this article

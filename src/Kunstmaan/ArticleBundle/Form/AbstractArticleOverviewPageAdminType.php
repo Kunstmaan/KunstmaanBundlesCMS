@@ -7,9 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * The admin type for abstract article pages
+ * The admin type for abstract article overview pages
  */
-class AbstractArticlePageAdminType extends PageAdminType
+class AbstractArticleOvervoewPageAdminType extends PageAdminType
 {
     /**
      * Builds the form.
@@ -25,17 +25,6 @@ class AbstractArticlePageAdminType extends PageAdminType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add(
-            'date',
-            'datetime',
-            array(
-                'required' => true,
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
-                'date_format' => 'dd/MM/yyyy'
-            )
-        );
-        $builder->add('summary');
     }
 
     /**
@@ -46,7 +35,7 @@ class AbstractArticlePageAdminType extends PageAdminType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractArticlePage'
+            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractOverviewArticlePage'
         ));
     }
 
@@ -55,6 +44,6 @@ class AbstractArticlePageAdminType extends PageAdminType
      */
     public function getName()
     {
-        return 'AbstractArticlePage';
+        return 'AbstractArticleOverviewPage';
     }
 }
