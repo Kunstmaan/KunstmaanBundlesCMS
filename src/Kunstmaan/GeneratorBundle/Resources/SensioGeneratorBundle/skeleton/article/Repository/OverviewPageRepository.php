@@ -2,8 +2,7 @@
 
 namespace {{ namespace }}\Repository\{{ entity_class }};
 
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
-use Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository;
+use Kunstmaan\ArticleBundle\Repository\AbstractArticleOverviewPageRepository;
 
 /**
  * Repository class for the {{ entity_class }}OverviewPage
