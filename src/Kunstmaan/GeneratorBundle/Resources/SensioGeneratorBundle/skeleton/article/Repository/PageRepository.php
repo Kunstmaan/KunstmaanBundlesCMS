@@ -62,6 +62,8 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
             $query .= " nt.lang = ? ";
         }
         $query .= " ORDER BY article.date DESC";
+        $query .= " LIMIT ?";
+        $query .= " OFFSET ?";
 
         $q = $this->_em->createNativeQuery($query, $rsm);
 
