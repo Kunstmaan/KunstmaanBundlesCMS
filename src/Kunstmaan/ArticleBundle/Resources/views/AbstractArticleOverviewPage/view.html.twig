@@ -8,7 +8,8 @@
         {% for article in pagerfanta.currentPageResults %}
             {% if count > 0 %}<hr />{% endif %}
             <div style=" margin-right: 20px;">
-                <h4><a href="#">{{ article.title }}</a></h4>
+                {% set articlenode = get_node_translation_for(article) %}
+                <h4><a href="{{ articlenode.url }}">{{ article.title }}</a></h4>
                 {{ article.summary }}
             </div>
             {% set count = count + 1 %}
