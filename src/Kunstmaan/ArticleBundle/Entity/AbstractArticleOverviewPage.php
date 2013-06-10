@@ -44,7 +44,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
 
         $em = $container->get('doctrine')->getManager();
         $repository = $this->getArticleRepository($em);
-        $adapter = new ArrayAdapter($repository->getArticles());
+        $adapter = new ArrayAdapter($repository->getArticles($request->getLocale()));
         $pagerfanta = new Pagerfanta($adapter);
 
         $pagenumber = $request->get('page');
