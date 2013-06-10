@@ -9,3 +9,6 @@ action:
     save: "Save"
     delete: "Delete"
     addsubpage: "Add subpage"
+
+pages:
+    copynotavailable: "Please translate the parent page first"
