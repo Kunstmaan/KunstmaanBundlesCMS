@@ -2,6 +2,7 @@
 
 namespace {{ namespace }}\Helper\Menu;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
