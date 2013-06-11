@@ -10,6 +10,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 {
+
+    private $overviewpageIds = array();
+
+    /**
+     * @param EntityManager $em The entity manager
+     */
+    public function __construct(EntityManager $em)
+    {
+        $overviewpageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace }}\\Entity\\{{ entity_class }}\\{{ entity_class }}OverviewPage');
+        foreach ($overviewpageNodes as $overviewpageNode) {
+            $this->overviewpageIds[] = $overviewpageNode->getId();
+        }
+    }
+
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
@@ -33,6 +47,19 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
                 $parent->setActive(true);
             }
             $children[] = $menuitem;
+        }
+
+        //don't load children
+        if (!is_null($parent) && 'KunstmaanNodeBundle_nodes_edit' == $parent->getRoute()) {
+            foreach ($children as $key => $child) {
+                if ('KunstmaanNodeBundle_nodes_edit' == $child->getRoute()){
+                    $params = $child->getRouteParams();
+                    $id = $params["id"];
+                    if (in_array($id, $this->overviewpageIds)) {
+                        $child->setChildren(array());
+                    }
+                }
+            }
         }
     }
 }
