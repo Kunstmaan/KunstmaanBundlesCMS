@@ -20,7 +20,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
      *
      * @return array
      */
-    public function getArticles($lang = null, $offset = 0, $limit = 10)
+    public function getArticles($lang = null, $offset = null, $limit = null)
     {
         $q = $this->getArticlesQuery($lang, $offset, $limit);
 
@@ -62,18 +62,31 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
             $query .= " nt.lang = ? ";
         }
         $query .= " ORDER BY article.date DESC";
-        $query .= " LIMIT ?";
-        $query .= " OFFSET ?";
+        if($limit){
+            $query .= " LIMIT ?";
+            if($offset){
+                $query .= " OFFSET ?";
+            }
+        }
 
         $q = $this->_em->createNativeQuery($query, $rsm);
 
         if ($lang) {
             $q->setParameter(1, $lang);
-            $q->setParameter(2, $limit);
-            $q->setParameter(3, $offset);
+            if($limit){
+                $q->setParameter(2, $limit);
+                if($offset){
+                    $q->setParameter(3, $offset);
+                }
+            }
+
         } else {
-            $q->setParameter(1, $limit);
-            $q->setParameter(2, $offset);
+            if($limit){
+                $q->setParameter(1, $limit);
+                if($offset){
+                    $q->setParameter(2, $offset);
+                }
+            }
         }
 
         return $q;
