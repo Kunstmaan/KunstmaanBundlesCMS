@@ -1,0 +1,18 @@
+<div id="addfile-modal" class="modal hide fade">
+
+    {% form_theme fileform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
+    <form action="{{ path('KunstmaanMediaBundle_media_modal_create', { 'folderId' : folder.id, 'type': 'file' }  ) }}" method="post" {{ form_enctype(fileform) }}>
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <h3>{{ 'media.file.modal.title' | trans }}</h3>
+        </div>
+        {{ form_widget(fileform) }}
+        <div class="modal-footer">
+            <div class="btn_group">
+                <button class="btn btn-primary" type="submit">{{ 'media.file.modal.save' | trans }}</button>
+                <button class="btn" type="reset" data-dismiss="modal">{{ 'form.cancel' | trans }}</button>
+            </div>
+        </div>
+    </form>
+</div>

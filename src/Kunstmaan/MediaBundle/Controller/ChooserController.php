@@ -2,8 +2,11 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Kunstmaan\MediaBundle\Entity\Media;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -49,6 +52,7 @@ class ChooserController extends Controller
         $cKEditorFuncNum = $this->getRequest()->get("CKEditorFuncNum");
 
         $em = $this->getDoctrine()->getManager();
+        /* @var MediaManager $mediaHandler */
         $mediaHandler = $this->get('kunstmaan_media.media_manager');
 
         /* @var Folder $folder */
@@ -67,8 +71,25 @@ class ChooserController extends Controller
                 'handler' => $handler,
                 'type'    => $type,
                 'folder'  => $folder,
-                'folders' => $folders
+                'folders' => $folders,
+                'fileform' => $this->createTypeFormView($mediaHandler, "file"),
+                'videoform' => $this->createTypeFormView($mediaHandler, "video"),
+                'slideform' => $this->createTypeFormView($mediaHandler, "slide")
         );
+    }
+
+    /**
+     * @param MediaManager $mediaManager
+     * @param String $type
+     *
+     * @return \Symfony\Component\Form\FormView
+     */
+    private function createTypeFormView(MediaManager $mediaManager, $type)
+    {
+        $handler = $mediaManager->getHandlerForType($type);
+        $media = new Media();
+        $helper = $handler->getFormHelper($media);
+        return $this->createForm($handler->getFormType(), $helper)->createView();
     }
 
 }
