@@ -15,7 +15,7 @@
             {% set count = count + 1 %}
         {% endfor %}
 
-        {% if pagerfanta.haveToPaginate %}
+        {% if pagerfanta.haveToPaginate() %}
             {{ pagerfanta(pagerfanta) }}
         {% endif %}
     {% endif %}
