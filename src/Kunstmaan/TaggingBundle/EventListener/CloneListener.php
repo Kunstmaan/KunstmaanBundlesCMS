@@ -27,7 +27,7 @@ class CloneListener
         $originalEntity = $event->getEntity();
 
         if ($originalEntity instanceof Taggable) {
-            $targetEntity = $event->getEntity();
+            $targetEntity = $event->getClonedEntity();
             $this->em->getRepository('KunstmaanTaggingBundle:Tag')->copyTags($originalEntity, $targetEntity);
         }
     }
