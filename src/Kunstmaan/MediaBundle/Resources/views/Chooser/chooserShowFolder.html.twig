@@ -56,7 +56,13 @@
         </aside>
 		<div class="content">
         	<h1>{{ folder.name | trans }}</h1>
-
+            <div class="main_actions btn-group">
+                <div class="main_actions btn-group">
+                    {% for addaction in mediamanager.getFolderAddActions() %}
+                        <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" data-toggle="modal" data-target="#add{{ addaction.type }}-modal" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
+                    {% endfor %}
+                </div>
+            </div>
         	<section class="map-list">
                 <table class="table">
                 	<tbody>
@@ -93,4 +99,9 @@
         	</section>
 		</div>
 	</div>
+
+    <!--=========Modals=========-->
+    {% include 'KunstmaanMediaBundle:Media:addfile-modal.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Media:addvideo-modal.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Media:addslide-modal.html.twig' %}
 {% endblock %}

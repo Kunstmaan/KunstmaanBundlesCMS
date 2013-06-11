@@ -46,7 +46,7 @@
 			}
 			widget.find('.choose').on('click', function(ev) {
 				ev.preventDefault();
-				openDGDialog('{{ path(chooser, {'type': mediatype}) }}', 800, 600, function(param){
+				openDGDialog('{{ path(chooser, {'type': mediatype}) }}', 1050, 600, function(param){
 					var widget = jQuery('#{{ id }}_widget');
 					widget.find('input').val(dialogWin.returnedValue.id);
 					if(typeof(dialogWin.returnedValue.title)!="undefined"){
