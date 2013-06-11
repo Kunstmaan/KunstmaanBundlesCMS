@@ -94,3 +94,7 @@ services:
 
     kunstmaan_admin.form.helper:
         class: Kunstmaan\AdminBundle\Helper\FormHelper
+
+    kunstmaan_admin.permission_creator:
+        class: Kunstmaan\AdminBundle\Helper\Creators\AclPermissionCreator
+        arguments: ["@security.acl.provider", "@security.acl.object_identity_retrieval_strategy"]
