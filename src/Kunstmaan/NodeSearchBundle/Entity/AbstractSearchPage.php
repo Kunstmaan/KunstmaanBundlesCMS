@@ -83,8 +83,8 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
         $sherlock = $container->get('kunstmaan_search.searchprovider.sherlock');
         $request = $sherlock->getSherlock()->search();
 
-        $titleQuery = Sherlock::queryBuilder()->Match()->field("title")->query($querystring)->fuzziness(0.8);
-        $contentQuery = Sherlock::queryBuilder()->Match()->field("content")->query($querystring)->fuzziness(0.8);
+        $titleQuery = Sherlock::queryBuilder()->Match()->field("title")->query($querystring)->fuzziness(0.7);
+        $contentQuery = Sherlock::queryBuilder()->Match()->field("content")->query($querystring)->fuzziness(0.7);
         $langQuery = Sherlock::queryBuilder()->Term()->field("lang")->term($lang);
 
         $querystringQuery = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
