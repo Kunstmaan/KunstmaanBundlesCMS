@@ -83,8 +83,8 @@ class SherlockSearchProvider implements SearchProviderInterface
             $request->uri($indexName . "/" . $indexType . "/_search")->method("post")->body($querystring);
         } else {
             $request = $this->sherlock->search();
-            $titleQuery = Sherlock::queryBuilder()->Wildcard()->field("title")->value($querystring);
-            $contentQuery = Sherlock::queryBuilder()->Wildcard()->field("content")->value($querystring);
+            $titleQuery = Sherlock::queryBuilder()->Match()->field("title")->query($querystring)->fuzziness(0.7);
+            $contentQuery = Sherlock::queryBuilder()->Match()->field("content")->query($querystring)->fuzziness(0.7);
 
             $query = Sherlock::queryBuilder()->Bool()->should($titleQuery, $contentQuery)->minimum_number_should_match(1);
 
