@@ -17,7 +17,7 @@
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "sensio/generator-bundle": "2.3.*"
+        "sensio/generator-bundle": ">=2.3.0"
     },
     "suggest": {
         "kunstmaan/admin-bundle": "*",
