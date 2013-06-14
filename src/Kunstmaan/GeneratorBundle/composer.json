@@ -15,9 +15,9 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.1.0,<2.3.0",
+        "symfony/symfony": ">=2.3.0,<2.4.0",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "sensio/generator-bundle": "dev-master"
+        "sensio/generator-bundle": ">=2.3.0"
     },
     "suggest": {
         "kunstmaan/admin-bundle": "*",
