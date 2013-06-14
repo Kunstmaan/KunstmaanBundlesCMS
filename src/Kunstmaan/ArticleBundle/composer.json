@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.1,<2.3-dev",
+        "symfony/symfony": ">=2.3.0,<2.4.0",
         "kunstmaan/admin-bundle": "*",
         "kunstmaan/adminlist-bundle": "*",
         "kunstmaan/node-bundle": "*",
