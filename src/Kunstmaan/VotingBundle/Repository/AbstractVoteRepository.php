@@ -44,6 +44,27 @@ class AbstractVoteRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
+     /**
+     * @param string $reference The reference to filter the votes by
+     * @param string $ip        The ip to filter the votes by
+     *
+     * @return mixed Returns the count of votes
+     */
+    public function countByReferenceAndByIp($reference, $ip)
+    {
+        $qb = $this
+            ->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->where('e.reference = :reference')
+            ->andWhere('e.ip = :ip')
+            ->setParameter('ip', $ip)
+            ->setParameter('reference', $reference);
+
+        return $qb
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     /**
      * @param $reference The reference to filter the votes by
      *

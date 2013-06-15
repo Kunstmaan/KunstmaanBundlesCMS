@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
                         ->fixXmlConfig('action', 'actions')
                         ->children()
                             ->scalarNode('default_value')->defaultValue('%kuma_voting_default_value%')->end()
+                            ->scalarNode('max_number_by_ip')->defaultValue(null)->end()
                         ->end()
                     ->end()
                 ->end()
