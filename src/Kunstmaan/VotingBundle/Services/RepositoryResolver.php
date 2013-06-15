@@ -16,7 +16,6 @@ use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 class RepositoryResolver
 {
 
-
 	/**
 	* Constructor
 	* @param Object $em entity manager
@@ -37,26 +36,37 @@ class RepositoryResolver
 		$repository = null;
 
 		if ($event instanceof DownVoteEvent) {
-			$repository = $this->em->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\DownVote');
+			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\DownVote');
 		}
 
 		if ($event instanceof UpVoteEvent) {
-			$repository = $this->em->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\UpVote');
+			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\UpVote');
 		}
 
 		if ($event instanceof LinkedInShareEvent) {
-			$repository = $this->em->getRepository('Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare');
+			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare');
 		}
 
 		if ($event instanceof FacebookLikeEvent) {
-			$repository = $this->em->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike');
+			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike');
 		}
 
-		if ($event instanceof FacebookLikeEvent) {
-			$repository = $this->em->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend');
+		if ($event instanceof FacebookSendEvent) {
+			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend');
 		}
 
 		return $repository;
+	}
+
+	/**
+	* Return a repository By name
+	* @param string $name name
+	*
+	* @return Repository
+	*/
+	protected function getRepository($name)
+	{
+		return $this->em->getRepository($name);
 	}
 
 }
