@@ -16,57 +16,57 @@ use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 class RepositoryResolver
 {
 
-	/**
-	* Constructor
-	* @param Object $em entity manager
-	*/
-	public function __construct(EntityManager $em)
-	{
-		$this->em = $em;
-	}
+    /**
+    * Constructor
+    * @param Object $em entity manager
+    */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
-	/**
-	* Return repository for event
-	* @param Event $event event
-	*
-	* @return Repository
-	*/
-	public function getRepositoryForEvent($event)
-	{
-		$repository = null;
+    /**
+    * Return repository for event
+    * @param Event $event event
+    *
+    * @return Repository
+    */
+    public function getRepositoryForEvent($event)
+    {
+        $repository = null;
 
-		if ($event instanceof DownVoteEvent) {
-			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\DownVote');
-		}
+        if ($event instanceof DownVoteEvent) {
+            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\DownVote');
+        }
 
-		if ($event instanceof UpVoteEvent) {
-			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\UpVote');
-		}
+        if ($event instanceof UpVoteEvent) {
+            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\UpDown\UpVote');
+        }
 
-		if ($event instanceof LinkedInShareEvent) {
-			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare');
-		}
+        if ($event instanceof LinkedInShareEvent) {
+            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\LinkedIn\LinkedInShare');
+        }
 
-		if ($event instanceof FacebookLikeEvent) {
-			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike');
-		}
+        if ($event instanceof FacebookLikeEvent) {
+            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike');
+        }
 
-		if ($event instanceof FacebookSendEvent) {
-			$repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend');
-		}
+        if ($event instanceof FacebookSendEvent) {
+            $repository = $this->getRepository('Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend');
+        }
 
-		return $repository;
-	}
+        return $repository;
+    }
 
-	/**
-	* Return a repository By name
-	* @param string $name name
-	*
-	* @return Repository
-	*/
-	protected function getRepository($name)
-	{
-		return $this->em->getRepository($name);
-	}
+    /**
+    * Return a repository By name
+    * @param string $name name
+    *
+    * @return Repository
+    */
+    protected function getRepository($name)
+    {
+        return $this->em->getRepository($name);
+    }
 
 }

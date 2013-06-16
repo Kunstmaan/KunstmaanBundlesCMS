@@ -47,7 +47,6 @@ class AbstractVote
      */
     protected $reference;
 
-
     /**
      * Use this field to add the ID of a meta entity containing meta information of this vote
      *

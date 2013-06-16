@@ -45,8 +45,6 @@ class KunstmaanVotingExtension extends Extension
 
         }
 
-
-
         $container->setParameter('kuma_voting.actions', $config['actions']);
     }
 }
