@@ -14,12 +14,12 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.1,<2.3-dev",
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/node-bundle": "*",
+        "symfony/symfony": ">=2.2.0,<2.3.0",
         "white-october/pagerfanta-bundle": "dev-master",
-        "pagerfanta/pagerfanta": "dev-master"
+        "pagerfanta/pagerfanta": "dev-master",
+        "kunstmaan/admin-bundle": "2.2.8.*",
+        "kunstmaan/adminlist-bundle": "2.2.8.*",
+        "kunstmaan/node-bundle": "2.2.8.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\ArticleBundle": "" }
