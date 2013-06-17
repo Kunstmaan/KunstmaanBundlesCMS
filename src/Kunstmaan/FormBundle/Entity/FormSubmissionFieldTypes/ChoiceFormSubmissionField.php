@@ -59,7 +59,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     /**
      * Returns a string representation of this FormSubmissionField
      *
-     * @return array|string
+     * @return string
      */
     public function __toString()
     {
@@ -74,8 +74,6 @@ class ChoiceFormSubmissionField extends FormSubmissionField
                 }
 
                 return implode(", ", $result);
-            } else {
-                return $values;
             }
         }
 
@@ -95,7 +93,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
         } elseif (is_string($values)) {
             return (!isset($values) || trim($values) === '');
         } else {
-            return empty($values);
+            return is_null($values);
         }
     }
 

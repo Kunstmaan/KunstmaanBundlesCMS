@@ -4,6 +4,7 @@ namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * This class represents the type for the ChoiceFormSubmissionField
@@ -15,6 +16,11 @@ class ChoiceFormSubmissionType extends AbstractType
      * @var string
      */
     private $label;
+
+    /**
+     * @var bool
+     */
+    private $required;
 
     /**
      * @var bool
@@ -38,14 +44,16 @@ class ChoiceFormSubmissionType extends AbstractType
 
     /**
      * @param string $label      The label
+     * @param        $required
      * @param bool   $expanded   Expanded or not
      * @param bool   $multiple   Multiple or not
      * @param array  $choices    The choices array
      * @param array  $emptyValue The empty value
      */
-    public function __construct($label, $expanded, $multiple, array $choices, $emptyValue = null)
+    public function __construct($label, $required, $expanded, $multiple, array $choices, $emptyValue = null)
     {
         $this->label = $label;
+        $this->required = $required;
         $this->expanded = $expanded;
         $this->multiple = $multiple;
         $this->choices = $choices;
@@ -60,6 +68,7 @@ class ChoiceFormSubmissionType extends AbstractType
     {
         $builder->add('value', 'choice', array(
             'label' => $this->label,
+            'required' => $this->required,
             'expanded' => $this->expanded,
             'multiple' => $this->multiple,
             'choices' => $this->choices,
@@ -76,15 +85,10 @@ class ChoiceFormSubmissionType extends AbstractType
         return 'kunstmaan_formbundle_choiceformsubmissiontype';
     }
 
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField',
-        );
+        ));
     }
 }
