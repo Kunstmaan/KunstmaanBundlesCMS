@@ -4,6 +4,7 @@ namespace Kunstmaan\SeoBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * SeoType
@@ -35,15 +36,10 @@ class SeoType extends AbstractType
         return 'seo';
     }
 
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\SeoBundle\Entity\Seo',
-        );
+        ));
     }
 }

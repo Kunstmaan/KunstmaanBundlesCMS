@@ -25,6 +25,9 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
             array('getRepository', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
     }
 
+    /**
+     * testShouldReturnNameForEntityWhenNoSEO
+     */
     public function testShouldReturnNameForEntityWhenNoSEO()
     {
         $name = 'OK';
@@ -41,7 +44,9 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
         $this->assertEquals($name, $result);
     }
 
-
+    /**
+     * testShouldReturnNameForEntityWhenSEOWithTitleFound
+     */
     public function testShouldReturnNameForEntityWhenSEOWithTitleFound()
     {
         $nokName = 'NOK';
@@ -59,17 +64,18 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
         $this->assertEquals($name, $result);
     }
 
-
-
-
-
-
+    /**
+     * @param string $name
+     */
     protected function EntityWithName($name)
     {
         $this->entityMock = $this->getMock('Kunstmaan\NodeBundle\Entity\AbstractPage');
         $this->entityMock->expects($this->once())->method('getTitle')->will($this->returnValue($name));
     }
 
+    /**
+     * NoSeoFound
+     */
     protected function NoSeoFound()
     {
         $this->ensureSeoRepoMock();
@@ -80,13 +86,19 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
         $this->wireUpSeoRepo();
     }
 
+    /**
+     * ensureSeoRepoMock
+     */
     protected function ensureSeoRepoMock()
     {
         if (is_null($this->seoRepoMock)) {
-            $this->seoRepoMock = $this->getMock('Kunstmaan\SeoBundle\Repository\SeoRepository', [], [], '', false);
+            $this->seoRepoMock = $this->getMock('Kunstmaan\SeoBundle\Repository\SeoRepository', array(), array(), '', false);
         }
     }
 
+    /**
+     * wireUpSeoRepo
+     */
     protected function wireUpSeoRepo()
     {
         $this->emMock->expects($this->once())
@@ -95,6 +107,9 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->seoRepoMock));
     }
 
+    /**
+     * @param string $title
+     */
     protected function SeoFoundWithTitle($title)
     {
         $this->ensureSeoRepoMock();

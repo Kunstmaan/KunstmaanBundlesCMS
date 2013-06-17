@@ -4,6 +4,7 @@ namespace Kunstmaan\SeoBundle\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * SocialType. Uses the same SEO entity as the SeoType in order to prevent dataloss because there
@@ -37,15 +38,10 @@ class SocialType extends AbstractType
         return 'social';
     }
 
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\SeoBundle\Entity\Seo',
-        );
+        ));
     }
 }
