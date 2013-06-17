@@ -39,13 +39,15 @@ use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\RevertNodeAction;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
-use Kunstmaan\NodeBundle\Helper\Tabs\TabPane;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
+use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 
 /**
  * NodeAdminController
@@ -182,7 +184,6 @@ class NodeAdminController extends Controller
      *
      * @throws AccessDeniedException
      * @Route("/{id}/publish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_publish")
-     * @Template()
      *
      * @return RedirectResponse
      */
@@ -192,23 +193,17 @@ class NodeAdminController extends Controller
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
-        $this->checkPermission($node, PermissionMap::PERMISSION_PUBLISH);
-
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        $page = $nodeVersion->getRef($this->em);
+        $request = $this->get('request');
 
-        $this->get('event_dispatcher')->dispatch(Events::PRE_PUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
-
-        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $nodeTranslation->setOnline(true);
-
-        $this->em->persist($nodeTranslation);
-        $this->em->flush();
-
-        $this->get('event_dispatcher')->dispatch(Events::POST_PUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
-
-        $this->get('session')->getFlashBag()->add('success', 'Page has been published!');
+        if ($request->get('pub_date')) {
+            $date = new \DateTime($request->get('pub_date') . ' ' . $request->get('pub_time'));
+            $this->get('kunstmaan_node.admin_node.publisher')->publishLater($nodeTranslation, $date);
+            $this->get('session')->getFlashBag()->add('success', 'Publishing of the Page has been scheduled!');
+        } else {
+            $this->get('kunstmaan_node.admin_node.publisher')->publish($nodeTranslation);
+            $this->get('session')->getFlashBag()->add('success', 'Page has been published!');
+        }
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
@@ -218,7 +213,7 @@ class NodeAdminController extends Controller
      *
      * @throws AccessDeniedException
      * @Route("/{id}/unpublish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_unpublish")
-     * @Template()
+     *
      * @return RedirectResponse
      */
     public function unPublishAction($id)
@@ -227,25 +222,42 @@ class NodeAdminController extends Controller
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
-        $this->checkPermission($node, PermissionMap::PERMISSION_UNPUBLISH);
-
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        $page = $nodeVersion->getRef($this->em);
+        $request = $this->get('request');
 
-        $this->get('event_dispatcher')->dispatch(Events::PRE_UNPUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
-
-        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $nodeTranslation->setOnline(false);
-
-        $this->em->persist($nodeTranslation);
-        $this->em->flush();
-
-        $this->get('event_dispatcher')->dispatch(Events::POST_UNPUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
-
-        $this->get('session')->getFlashBag()->add('success', 'Page has been unpublished!');
+        if ($request->get('unpub_date')) {
+            $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
+            $this->get('kunstmaan_node.admin_node.publisher')->unPpublishLater($nodeTranslation, $date);
+            $this->get('session')->getFlashBag()->add('success', 'Unpublishing of the Page has been scheduled!');
+        } else {
+            $this->get('kunstmaan_node.admin_node.publisher')->unPublish($nodeTranslation);
+            $this->get('session')->getFlashBag()->add('success', 'Page has been unpublished!');
+        }
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
+    }
+
+    /**
+     * @param int $id
+     *
+     * @throws AccessDeniedException
+     * @Route("/{id}/unschedulepublish", requirements={"_method" = "GET|POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_unschedule_publish")
+     *
+     * @return RedirectResponse
+     */
+    public function unSchedulePublishAction($id)
+    {
+        $this->init();
+
+        /* @var Node $node */
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
+        $this->get('kunstmaan_node.admin_node.publisher')->unSchedulePublish($nodeTranslation);
+
+        $this->get('session')->getFlashBag()->add('success', 'Scheduling canceled!');
+
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
     }
 
     /**
@@ -448,11 +460,11 @@ class NodeAdminController extends Controller
             //try to find a parent node with the correct translation, if there is none allow copy.
             //if there is a parent but it doesn't have the language to copy to don't allow it
             $parentNode = $node->getParent();
-            if($parentNode) {
+            if ($parentNode) {
                 $parentNodeTranslation = $parentNode->getNodeTranslation($this->locale, true);
                 $parentsAreOk = false;
 
-                if($parentNodeTranslation) {
+                if ($parentNodeTranslation) {
                     $parentsAreOk = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->hasParentNodeTranslationsForLanguage($node->getParent()->getNodeTranslation($this->locale, true), $this->locale);
                 }
             } else {
@@ -482,7 +494,22 @@ class NodeAdminController extends Controller
             $nodeVersion = $draftNodeVersion;
             $page = $nodeVersion->getRef($this->em);
         } else {
+            if ($request->getMethod() == 'POST') {
+                //Check the version timeout and make a new nodeversion if the timeout is passed
+                $thresholdDate = date("Y-m-d H:i:s", time()-$this->container->getParameter("kunstmaan_node.version_timeout"));
+                $updatedDate = date("Y-m-d H:i:s", strtotime($nodeVersion->getUpdated()->format("Y-m-d H:i:s")));
+                if ($thresholdDate >= $updatedDate) {
+                    $page = $nodeVersion->getRef($this->em);
+                    if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
+                        $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, false);
+                    } else {
+                        $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
+                    }
+                }
+            }
             $page = $nodeVersion->getRef($this->em);
+
+
         }
 
         $isStructureNode = $page->isStructureNode();
@@ -492,17 +519,17 @@ class NodeAdminController extends Controller
         $menubuilder->setIsEditableNode(!$isStructureNode);
 
         // Building the form
-        $propertiesTab = new Tab('Properties');
-        $propertiesTab->addType('main', $page->getDefaultAdminType(), $page);
-        $propertiesTab->addType('node', $node->getDefaultAdminType(), $node);
-        $tabPane->addTab($propertiesTab);
+        $propertiesWidget = new FormWidget();
+        $propertiesWidget->addType('main', $page->getDefaultAdminType(), $page);
+        $propertiesWidget->addType('node', $node->getDefaultAdminType(), $node);
+        $tabPane->addTab(new Tab('Properties', $propertiesWidget));
 
         // Menu tab
         if (!$isStructureNode) {
-            $menuTab = new Tab('Menu');
-            $menuTab->addType('menunodetranslation', new NodeMenuTabTranslationAdminType(), $nodeTranslation);
-            $menuTab->addType('menunode', new NodeMenuTabAdminType(), $node);
-            $tabPane->addTab($menuTab);
+            $menuWidget = new FormWidget();
+            $menuWidget->addType('menunodetranslation', new NodeMenuTabTranslationAdminType(), $nodeTranslation);
+            $menuWidget->addType('menunode', new NodeMenuTabAdminType(), $node);
+            $tabPane->addTab(new Tab('Menu', $menuWidget));
 
             $this->get('event_dispatcher')->dispatch(Events::ADAPT_FORM, new AdaptFormEvent($request, $tabPane, $page, $node, $nodeTranslation, $nodeVersion));
         }
@@ -512,17 +539,6 @@ class NodeAdminController extends Controller
             $tabPane->bindRequest($request);
 
             if ($tabPane->isValid()) {
-                //Check the version timeout and make a new nodeversion if the timeout is passed
-                $thresholdDate = date("Y-m-d H:i:s", time()-$this->container->getParameter("kunstmaan_node.version_timeout"));
-                $updatedDate = date("Y-m-d H:i:s", strtotime($nodeVersion->getUpdated()->format("Y-m-d H:i:s")));
-                if ($thresholdDate >= $updatedDate) {
-                    if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
-                        $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, false);
-                    } else {
-                        $nodeVersion = $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
-                    }
-                }
-
                 $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
                 $nodeTranslation->setTitle($page->getTitle());
@@ -558,7 +574,9 @@ class NodeAdminController extends Controller
 
         $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
         $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_EDIT, $this->aclHelper);
-        $nodeVersions = $nodeTranslation->getNodeVersions();
+        $nodeVersions = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->findBy(array('nodeTranslation' => $nodeTranslation), array('updated'=> 'ASC'));
+
+        $queuedNodeTranslationAction = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findOneBy(array('nodeTranslation' => $nodeTranslation));
 
         return array(
             'topnodes' => $topNodes,
@@ -572,7 +590,8 @@ class NodeAdminController extends Controller
             'draftNodeVersion' => $draftNodeVersion,
             'subaction' => $subaction,
             'tabPane' => $tabPane,
-            'editmode' => true
+            'editmode' => true,
+            'queuedNodeTranslationAction' => $queuedNodeTranslationAction
         );
     }
 
@@ -587,19 +606,25 @@ class NodeAdminController extends Controller
     private function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, $publish = true)
     {
         $newPublicPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($page);
-        $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, $nodeVersion);
-        $nodeTranslation->setPublicNodeVersion($nodeVersion);
-        $nodeTranslation->setTitle($newPublicPage->getTitle());
+        $newNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $this->user, $nodeVersion);
         if ($publish) {
             $nodeTranslation->setOnline(true);
         }
 
+        $newNodeVersion->setOwner($nodeVersion->getOwner());
+        $newNodeVersion->setUpdated($nodeVersion->getUpdated());
+        $newNodeVersion->setCreated($nodeVersion->getCreated());
+        $nodeVersion->setOwner($this->user);
+        $nodeVersion->setCreated(new \DateTime());
+        $nodeVersion->setOrigin($newNodeVersion);
+
+        $this->em->persist($newNodeVersion);
+        $this->em->persist($nodeVersion);
         $this->em->persist($nodeTranslation);
         $this->em->flush();
-
         $this->get('event_dispatcher')->dispatch(Events::CREATE_PUBLIC_VERSION, new NodeEvent($nodeTranslation->getNode(), $nodeTranslation, $nodeVersion, $newPublicPage));
 
-        return $nodeVersion;
+        return $newNodeVersion;
     }
 
     /**

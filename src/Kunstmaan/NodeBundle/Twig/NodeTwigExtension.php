@@ -7,7 +7,7 @@ use Twig_Extension;
 use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\NodeBundle\Helper\Tabs\TabPane;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 
 /**
  * Extension to fetch node / translation by page in Twig templates

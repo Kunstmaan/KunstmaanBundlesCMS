@@ -6,7 +6,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Helper\Slugifier;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
@@ -91,8 +91,10 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get the node translation for a given url
      *
-     * @param string $urlSlug The full url
-     * @param string $locale  The locale
+     * @param string          $urlSlug        The full url
+     * @param string          $locale         The locale
+     * @param boolean         $includeDeleted Include deleted nodes
+     * @param NodeTranslation $toExclude      Optional NodeTranslation instance you wish to exclude
      *
      * @return NodeTranslation|null
      */
@@ -258,17 +260,18 @@ class NodeTranslationRepository extends EntityRepository
 
 
     /**
-     * Look if all parents of a NodeTranslation have NodeTranslations
-     * @param \Kunstmaan\NodeBundle\Entity\NodeTranslation $nodeTranslation
-     * @param $language
+     * Test if all parents of the specified NodeTranslation have a node translation for the specified language
+     * @param NodeTranslation $nodeTranslation The node translation
+     * @param string          $language        The locale
+     *
      * @return bool
      */
     public function hasParentNodeTranslationsForLanguage(NodeTranslation $nodeTranslation, $language)
     {
         $parentNode = $nodeTranslation->getNode()->getParent();
-        if($parentNode != null) {
+        if ($parentNode != null) {
             $parentNodeTranslation = $parentNode->getNodeTranslation($language, true);
-            if($parentNodeTranslation != null) {
+            if ($parentNodeTranslation != null) {
                 return $this->hasParentNodeTranslationsForLanguage($parentNodeTranslation, $language);
             } else {
                 return false;

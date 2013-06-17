@@ -50,9 +50,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFilters()
     {
         $this->addFilter('title', new StringFilterType('title'), 'Title')
-            ->addFilter('online', new BooleanFilterType('online'), 'Online')
-            ->addFilter('created', new DateFilterType('created', 'nv'), 'Created At')
-            ->addFilter('updated', new DateFilterType('updated', 'nv'), 'Updated At');
+            ->addFilter('online', new BooleanFilterType('online'), 'Online');
     }
 
     /**
@@ -61,8 +59,8 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFields()
     {
         $this->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
-            ->addField('created', 'Created At', true)
-            ->addField('updated', 'Updated At', true)
+            ->addField('created', 'Created At', false)
+            ->addField('updated', 'Updated At', false)
             ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
