@@ -10,11 +10,17 @@ use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 
+/**
+ * GenerateAdminTestsCommand
+ */
 class GenerateAdminTestsCommand extends ContainerAwareCommand
 {
 
     private $generator;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -30,11 +36,13 @@ The <info>kuma:generate:admin-test</info> command generates tests to test the ad
 <info>php app/console kuma:generate:admin-tests --namespace=Namespace/NamedBundle</info>
 
 EOT
-
             )
             ->setName('kuma:generate:admin-tests');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dialog = $this->getDialogHelper();
@@ -58,6 +66,9 @@ EOT
         $this->getGenerator($output, $dialog)->generate($bundle, $rootDir);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $dialog = $this->getDialogHelper();
@@ -102,6 +113,12 @@ EOT
         return $dialog;
     }
 
+    /**
+     * @param OutputInterface $output The output
+     * @param DialogHelper    $dialog The dialog helper
+     *
+     * @return AdminTestsGenerator
+     */
     protected function getGenerator(OutputInterface $output, DialogHelper $dialog)
     {
         if (null === $this->generator) {
@@ -114,7 +131,7 @@ EOT
     }
 
     /**
-     * @param AdminTestsGenerator generator
+     * @param AdminTestsGenerator $generator
      */
     public function setSiteGenerator(AdminTestsGenerator $generator)
     {

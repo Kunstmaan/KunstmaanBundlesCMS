@@ -164,7 +164,6 @@ EOT
         $output->writeln('/*******************************/');
     }
 
-
     /**
      * KunstmaanTestBundle_TestEntity:
     resource: "@KunstmaanTestBundle/Controller/TestEntityAdminListController.php"
@@ -173,7 +172,6 @@ EOT
     requirements:
     _locale: %requiredlocales%
      */
-
 
     /**
      * @return DialogHelper

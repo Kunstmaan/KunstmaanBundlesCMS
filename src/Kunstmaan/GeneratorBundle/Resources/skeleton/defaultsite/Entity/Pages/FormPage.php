@@ -2,16 +2,16 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use Doctrine\ORM\Mapping as ORM;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use {{ namespace }}\Form\Pages\FormPageAdminType;
 use {{ namespace }}\PagePartAdmin\FormPagePagePartAdminConfigurator;
 use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
+
+use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\FormBundle\Entity\AbstractFormPage;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * FormPage
@@ -19,7 +19,7 @@ use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}form_pages")
  */
-class FormPage extends AbstractFormPage
+class FormPage extends AbstractFormPage implements HasPageTemplateInterface
 {
 
     /**
@@ -50,14 +50,19 @@ class FormPage extends AbstractFormPage
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getPagePartAdminConfigurations()
     {
-        return array(
-            new FormPagePagePartAdminConfigurator(),
-            new BannerPagePartAdminConfigurator()
-        );
+        return array("{{ bundle.getName() }}:form", "{{ bundle.getName() }}:banners", "{{ bundle.getName() }}:footer");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPageTemplates()
+    {
+        return array("{{ bundle.getName() }}:formpage", "{{ bundle.getName() }}:formpage-singlecolumn");
     }
 
     /**

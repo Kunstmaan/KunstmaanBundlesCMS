@@ -13,11 +13,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\DBAL\Types\Type;
 
+/**
+ * GenerateEntityCommand
+ */
 class GenerateEntityCommand extends GenerateDoctrineCommand
 {
 
     private $generator;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -56,11 +62,11 @@ without forgetting to pass all needed options:
 
 <info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --with-adminlist --no-interaction</info>
 EOT
-        );
+            );
     }
 
     /**
-     * @throws \InvalidArgumentException When the bundle doesn't end with Bundle (Example: "Bundle/MySampleBundle")
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -102,6 +108,9 @@ EOT
         $dialog->writeGeneratorSummary($output, array());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $dialog = $this->getDialogHelper();
@@ -125,7 +134,7 @@ EOT
             list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
             // check reserved words
-            if ($this->getGenerator()->isReservedKeyword($entity)){
+            if ($this->getGenerator()->isReservedKeyword($entity)) {
                 $output->writeln(sprintf('<bg=red> "%s" is a reserved word</>.', $entity));
                 continue;
             }
@@ -167,6 +176,11 @@ EOT
         ));
     }
 
+    /**
+     * @param array|string $input
+     *
+     * @return array[]
+     */
     private function parseFields($input)
     {
         if (is_array($input)) {
@@ -190,6 +204,15 @@ EOT
         return $fields;
     }
 
+    /**
+     * @param InputInterface  $input  The input
+     * @param OutputInterface $output The output
+     * @param DialogHelper    $dialog The dialog helper
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return array
+     */
     private function addFields(InputInterface $input, OutputInterface $output, DialogHelper $dialog)
     {
         $fields = $this->parseFields($input->getOption('fields'));
@@ -252,7 +275,7 @@ EOT
                 }
 
                 // check reserved words
-                if ($self->getGenerator()->isReservedKeyword($name)){
+                if ($self->getGenerator()->isReservedKeyword($name)) {
                     throw new \InvalidArgumentException(sprintf('Name "%s" is a reserved word.', $name));
                 }
 
@@ -289,6 +312,9 @@ EOT
         return $fields;
     }
 
+    /**
+     * @return DoctrineEntityGenerator
+     */
     public function getGenerator()
     {
         if (null === $this->generator) {
@@ -298,11 +324,17 @@ EOT
         return $this->generator;
     }
 
+    /**
+     * @param DoctrineEntityGenerator $generator
+     */
     public function setGenerator(DoctrineEntityGenerator $generator)
     {
         $this->generator = $generator;
     }
 
+    /**
+     * @return DialogHelper
+     */
     protected function getDialogHelper()
     {
         $dialog = $this->getHelperSet()->get('dialog');

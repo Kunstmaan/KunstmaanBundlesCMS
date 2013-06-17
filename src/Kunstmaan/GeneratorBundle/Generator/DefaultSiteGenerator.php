@@ -7,7 +7,6 @@ use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\DependencyInjection\Container;
 
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 
@@ -52,9 +51,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle  The bundle
-     * @param string    $prefix  The prefix
-     * @param string    $rootDir The root directory
+     * @param Bundle $bundle  The bundle
+     * @param string $prefix  The prefix
+     * @param string $rootDir The root directory
      */
     public function generate(Bundle $bundle, $prefix, $rootDir)
     {
@@ -67,6 +66,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateEntities($bundle, $parameters);
         $this->generateForm($bundle, $parameters);
         $this->generatePagepartConfigs($bundle, $parameters);
+        $this->generatePagetemplateConfigs($bundle, $parameters);
         $this->generateFixtures($bundle, $parameters);
         $this->generateAssets($bundle);
         $this->generateTemplates($bundle, $parameters, $rootDir);
@@ -75,7 +75,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle $bundle
+     * @param Bundle $bundle     The bundle name
      * @param array  $parameters The template parameters
      */
     public function generateUnitTests(Bundle $bundle, array $parameters)
@@ -102,9 +102,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
-     * @param string    $rootDir    The root directory
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
+     * @param string $rootDir    The root directory
      */
     public function generateTemplates(Bundle $bundle, array $parameters, $rootDir)
     {
@@ -116,17 +116,30 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $this->renderFile($fullSkeletonDir, '/Page/layout.html.twig', $dirPath . '/Resources/views/Page/layout.html.twig', $parameters);
 
-        $this->filesystem->copy($fullSkeletonDir . '/Pages/ContentPage/view.html.twig', $dirPath . '/Resources/views/Pages/ContentPage/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/ContentPage/view.html.twig');
-
         $this->filesystem->copy($fullSkeletonDir . '/Form/fields.html.twig', $dirPath . '/Resources/views/Form/fields.html.twig', true);
 
-        $this->filesystem->copy($fullSkeletonDir . '/Pages/FormPage/view.html.twig', $dirPath . '/Resources/views/Pages/FormPage/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/FormPage/view.html.twig');
-        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/views/Pages/FormPage/view.html.twig');
+        { //ContentPage
+            $this->filesystem->copy($fullSkeletonDir . '/Pages/ContentPage/view.html.twig', $dirPath . '/Resources/views/Pages/ContentPage/view.html.twig', true);
+            GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/ContentPage/view.html.twig');
+            $this->filesystem->copy($fullSkeletonDir . '/Pages/ContentPage/pagetemplate.html.twig', $dirPath . '/Resources/views/Pages/ContentPage/pagetemplate.html.twig', true);
+            $this->filesystem->copy($fullSkeletonDir . '/Pages/ContentPage/pagetemplate-singlecolumn.html.twig', $dirPath . '/Resources/views/Pages/ContentPage/pagetemplate-singlecolumn.html.twig', true);
+        }
 
-        $this->filesystem->copy($fullSkeletonDir . '/Pages/HomePage/view.html.twig', $dirPath . '/Resources/views/Pages/HomePage/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/HomePage/view.html.twig');
+        { //FormPage
+            $this->filesystem->copy($fullSkeletonDir . '/Pages/FormPage/view.html.twig', $dirPath . '/Resources/views/Pages/FormPage/view.html.twig', true);
+            GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/FormPage/view.html.twig');
+            $this->filesystem->copy($fullSkeletonDir . '/Pages/FormPage/pagetemplate.html.twig', $dirPath . '/Resources/views/Pages/FormPage/pagetemplate.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/views/Pages/FormPage/pagetemplate.html.twig');
+            $this->filesystem->copy($fullSkeletonDir . '/Pages/FormPage/pagetemplate-singlecolumn.html.twig', $dirPath . '/Resources/views/Pages/FormPage/pagetemplate-singlecolumn.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/views/Pages/FormPage/pagetemplate-singlecolumn.html.twig');
+        }
+
+        { //HomePage
+            $this->filesystem->copy($fullSkeletonDir . '/Pages/HomePage/view.html.twig', $dirPath . '/Resources/views/Pages/HomePage/view.html.twig', true);
+            GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/HomePage/view.html.twig');
+            $this->filesystem->copy($fullSkeletonDir . '/Pages/HomePage/pagetemplate.html.twig', $dirPath . '/Resources/views/Pages/HomePage/pagetemplate.html.twig', true);
+        }
+
 
         $this->filesystem->copy($fullSkeletonDir . '/Layout/layout.html.twig', $dirPath . '/Resources/views/Layout/layout.html.twig', true);
         GeneratorUtils::replace("~~~CSS~~~", "{% include '" . $bundle->getName() .":Layout:_css.html.twig' %}\n", $dirPath . '/Resources/views/Layout/layout.html.twig');
@@ -148,9 +161,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
-     * @param string    $rootDir    The root directory
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
+     * @param string $rootDir    The root directory
      */
     public function generateErrorTemplates(Bundle $bundle, array $parameters, $rootDir)
     {
@@ -192,8 +205,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
      *
      * @throws \RuntimeException
      */
@@ -212,46 +225,53 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
      *
      * @throws \RuntimeException
      */
     public function generatePagepartConfigs(Bundle $bundle, array $parameters)
     {
-        $dirPath = $bundle->getPath() . '/PagePartAdmin';
-        $fullSkeletonDir = $this->skeletonDir . '/PagePartAdmin';
+        $dirPath = $bundle->getPath();
+        $fullSkeletonDir = $this->skeletonDir . '/Resources/config';
 
-        try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'BannerPagePartAdminConfigurator', $parameters);
-        } catch (\Exception $error) {
-            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
-        try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'ContentPagePagePartAdminConfigurator', $parameters);
-        } catch (\Exception $error) {
-            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
-        try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'FormPagePagePartAdminConfigurator', $parameters);
-        } catch (\Exception $error) {
-            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
-
-        $this->output->writeln('Generating forms : <info>OK</info>');
-
-        try {
-            $this->generateSkeletonBasedClass($fullSkeletonDir, $dirPath, 'HomePagePagePartAdminConfigurator', $parameters);
-        } catch (\Exception $error) {
-            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
+        $this->filesystem->copy($fullSkeletonDir . '/pageparts/banners.yml', $dirPath . '/Resources/config/pageparts/banners.yml', true);
+        $this->filesystem->copy($fullSkeletonDir . '/pageparts/form.yml', $dirPath . '/Resources/config/pageparts/form.yml', true);
+        $this->filesystem->copy($fullSkeletonDir . '/pageparts/home.yml', $dirPath . '/Resources/config/pageparts/home.yml', true);
+        $this->filesystem->copy($fullSkeletonDir . '/pageparts/main.yml', $dirPath . '/Resources/config/pageparts/main.yml', true);
+        $this->filesystem->copy($fullSkeletonDir . '/pageparts/footer.yml', $dirPath . '/Resources/config/pageparts/footer.yml', true);
 
         $this->output->writeln('Generating PagePart Configurators : <info>OK</info>');
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
+     *
+     * @throws \RuntimeException
+     */
+    public function generatePagetemplateConfigs(Bundle $bundle, array $parameters)
+    {
+        $dirPath = $bundle->getPath();
+        $fullSkeletonDir = $this->skeletonDir . '/Resources/config';
+
+        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/contentpage-singlecolumn.yml', $dirPath . '/Resources/config/pagetemplates/contentpage-singlecolumn.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/contentpage-singlecolumn.yml');
+        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/contentpage.yml', $dirPath . '/Resources/config/pagetemplates/contentpage.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/contentpage.yml');
+        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/formpage-singlecolumn.yml', $dirPath . '/Resources/config/pagetemplates/formpage-singlecolumn.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/formpage-singlecolumn.yml');
+        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/formpage.yml', $dirPath . '/Resources/config/pagetemplates/formpage.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/formpage.yml');
+        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/homepage.yml', $dirPath . '/Resources/config/pagetemplates/homepage.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/homepage.yml');
+
+        $this->output->writeln('Generating PageTemplate Configurators : <info>OK</info>');
+    }
+
+    /**
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
      *
      * @throws \RuntimeException
      */
@@ -280,8 +300,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle    $bundle     The bundle
-     * @param array     $parameters The template parameters
+     * @param Bundle $bundle     The bundle
+     * @param array  $parameters The template parameters
      */
     public function generateEntities(Bundle $bundle, array $parameters)
     {
