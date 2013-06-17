@@ -15,7 +15,11 @@ use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
  */
 class RepositoryResolver
 {
-
+    /**
+     * Entity manager
+     */
+    protected $em;
+    
     /**
     * Constructor
     * @param Object $em entity manager
