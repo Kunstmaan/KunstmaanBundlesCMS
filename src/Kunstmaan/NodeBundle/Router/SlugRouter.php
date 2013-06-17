@@ -61,7 +61,6 @@ class SlugRouter implements RouterInterface
                 ),
                 array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
             ));
-            );
             $this->routeCollection->add(
                 '_slug',
                 new Route(
