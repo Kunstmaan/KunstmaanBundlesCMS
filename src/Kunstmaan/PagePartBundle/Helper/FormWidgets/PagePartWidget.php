@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\PagePartBundle\Helper\Tabs;
+namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
 
@@ -9,14 +9,17 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-use Kunstmaan\NodeBundle\Helper\Tabs\Tab;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
-use Kunstmaan\AdminBundle\Twig\Extension\FormToolsExtension;
 
-class PagePartTab extends Tab
+/**
+ * PagePartWidget
+ */
+class PagePartWidget extends FormWidget
 {
 
     /**
@@ -55,19 +58,16 @@ class PagePartTab extends Tab
     protected $request;
 
     /**
-     * @param string                            $title                     The title
      * @param HasNodeInterface                  $page                      The page
      * @param Request                           $request                   The request
      * @param EntityManager                     $em                        The entity manager
      * @param AbstractPagePartAdminConfigurator $pagePartAdminConfigurator The page part admin configurator
      * @param FormFactoryInterface              $formFactory               The form factory
      * @param PagePartAdminFactory              $pagePartAdminFactory      The page part admin factory
-     * @param array                             $types                     The types
-     * @param array                             $data                      The data for the types
      */
-    function __construct($title, HasNodeInterface $page, Request $request, EntityManager $em, AbstractPagePartAdminConfigurator $pagePartAdminConfigurator, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory, array $types = array(), array $data = array())
+    public function __construct(HasNodeInterface $page, Request $request, EntityManager $em, AbstractPagePartAdminConfigurator $pagePartAdminConfigurator, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
     {
-        parent::__construct($title, $types, $data);
+        parent::__construct();
 
         $this->page = $page;
         $this->em = $em;
@@ -101,13 +101,13 @@ class PagePartTab extends Tab
     }
 
     /**
-     * @param EntityManager $em      The entity manager
+     * @param EntityManager $em The entity manager
      */
     public function persist(EntityManager $em)
     {
         parent::persist($em);
 
-        $this->pagePartAdmin->postBindRequest($this->request);
+        $this->pagePartAdmin->persist($this->request);
     }
 
     /**
@@ -124,6 +124,7 @@ class PagePartTab extends Tab
         if (isset($formView['pagepartadmin_' . $this->pagePartAdmin->getContext()])) {
             $errors = array_merge($errors, $formHelper->getRecursiveErrorMessages($formView['pagepartadmin_' . $this->pagePartAdmin->getContext()]));
         }
+
         return $errors;
     }
 
@@ -132,7 +133,7 @@ class PagePartTab extends Tab
      */
     public function getTemplate()
     {
-        return 'KunstmaanPagePartBundle:Tabs:pagepart_tab.html.twig';
+        return 'KunstmaanPagePartBundle:FormWidgets\PagePartWidget:widget.html.twig';
     }
 
     /**
@@ -155,6 +156,7 @@ class PagePartTab extends Tab
         if (isset($editPagePart)) {
             $params['editpagepart'] = $editPagePart;
         }
+
         return $params;
     }
 

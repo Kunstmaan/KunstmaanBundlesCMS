@@ -17,10 +17,10 @@ class PagePartRefRepository extends EntityRepository
 {
 
     /**
-     * @param HasPagePartsInterface      $page           The page
-     * @param PagePartInterface          $pagepart       The pagepart
-     * @param integer                    $sequencenumber The sequence numer
-     * @param string                     $context        The context
+     * @param HasPagePartsInterface $page           The page
+     * @param PagePartInterface     $pagepart       The pagepart
+     * @param integer               $sequencenumber The sequence numer
+     * @param string                $context        The context
      *
      * @return \Kunstmaan\PagePartBundle\Entity\PagePartRef
      */
@@ -77,10 +77,10 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param EntityManager          $em       The entity manager
-     * @param HasPagePartsInterface  $frompage The page from where you copy the pageparts
-     * @param HasPagePartsInterface  $topage   The page to where you want to copy the pageparts
-     * @param string                 $context  The pagepart context
+     * @param EntityManager         $em       The entity manager
+     * @param HasPagePartsInterface $frompage The page from where you copy the pageparts
+     * @param HasPagePartsInterface $topage   The page to where you want to copy the pageparts
+     * @param string                $context  The pagepart context
      */
     public function copyPageParts(EntityManager $em, HasPagePartsInterface $frompage, HasPagePartsInterface $topage, $context = "main")
     {
