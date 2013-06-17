@@ -216,7 +216,7 @@ class SettingsController extends Controller
             if ($form->isValid()) {
                 $em->persist($group);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'User \''.$group->getName().'\' has been created!');
+                $this->get('session')->getFlashBag()->add('success', 'Group \''.$group->getName().'\' has been created!');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
             }
@@ -252,7 +252,7 @@ class SettingsController extends Controller
             if ($form->isValid()) {
                 $em->persist($group);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'User \''.$group->getName().'\' has been edited!');
+                $this->get('session')->getFlashBag()->add('success', 'Group \''.$group->getName().'\' has been edited!');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
             }
@@ -284,7 +284,7 @@ class SettingsController extends Controller
             $groupname = $group->getName();
             $em->remove($group);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'User \''.$groupname.'\' has been deleted!');
+            $this->get('session')->getFlashBag()->add('success', 'Group \''.$groupname.'\' has been deleted!');
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_groups'));
@@ -334,7 +334,7 @@ class SettingsController extends Controller
                 $em->persist($role);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'User \''.$role->getRole().'\' has been created!');
+                $this->get('session')->getFlashBag()->add('success', 'Role \''.$role->getRole().'\' has been created!');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
             }
@@ -371,7 +371,7 @@ class SettingsController extends Controller
                 $em->persist($role);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'User \''.$role->getRole().'\' has been edited!');
+                $this->get('session')->getFlashBag()->add('success', 'Role \''.$role->getRole().'\' has been edited!');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
             }
@@ -404,7 +404,7 @@ class SettingsController extends Controller
             $em->remove($role);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'User \''.$rolename.'\' has been deleted!');
+            $this->get('session')->getFlashBag()->add('success', 'Role \''.$rolename.'\' has been deleted!');
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));

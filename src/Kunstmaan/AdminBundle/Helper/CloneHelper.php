@@ -26,8 +26,8 @@ class CloneHelper
     private $eventDispatcher;
 
     /**
-     * @param EntityManager $em
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param EntityManager            $em              The EntityManager
+     * @param EventDispatcherInterface $eventDispatcher The EventDispatchInterface
      */
     public function __construct(EntityManager $em, EventDispatcherInterface $eventDispatcher)
     {
@@ -37,6 +37,8 @@ class CloneHelper
 
     /**
      * @param mixed $entity
+     *
+     * @return mixed
      */
     public function deepCloneAndSave($entity)
     {

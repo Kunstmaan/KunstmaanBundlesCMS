@@ -4,7 +4,7 @@ parameters:
 
 services:
     kunstmaan_admin.menubuilder:
-        class: %kunstmaan_admin.menubuilder.class%
+        class: "%kunstmaan_admin.menubuilder.class%"
         arguments: ["@translator", "@service_container"]
 
     kunstmaan_admin.menu.adaptor.modules:
@@ -77,23 +77,28 @@ services:
 
     kunstmaan_admin.logger.processor.user:
         class: Kunstmaan\AdminBundle\Helper\UserProcessor
-        arguments: [ @service_container ]
+        arguments: [ "@service_container" ]
         tags:
             - { name: monolog.processor, method: processRecord }
             - { name: kunstmaan_admin.logger.processor, method: processRecord }
 
     kunstmaan_admin.logger.handler:
         class: Monolog\Handler\RotatingFileHandler
-        arguments: [%kernel.logs_dir%/kunstmaan_%kernel.environment%.log, 10]
+        arguments: ["%kernel.logs_dir%/kunstmaan_%kernel.environment%.log", 10]
 
     kunstmaan_admin.logger:
         class: Symfony\Bridge\Monolog\Logger
         arguments: [kunstmaan]
         calls:
-            - [pushHandler, [@kunstmaan_admin.logger.handler]]
+            - [pushHandler, ["@kunstmaan_admin.logger.handler"]]
 
     kunstmaan_admin.form.helper:
         class: Kunstmaan\AdminBundle\Helper\FormHelper
+        
+    kunstmaan_admin.tabs.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\TabsTwigExtension
+        tags:
+            - { name: twig.extension }
 
     kunstmaan_admin.permission_creator:
         class: Kunstmaan\AdminBundle\Helper\Creators\AclPermissionCreator

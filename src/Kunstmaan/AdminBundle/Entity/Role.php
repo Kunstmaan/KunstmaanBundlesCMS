@@ -3,6 +3,8 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
@@ -75,4 +77,13 @@ class Role implements RoleInterface
     {
         $this->role = $role;
     }
+
+    /**
+     * @param ClassMetadata $metadata
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('role', new NotBlank());
+    }
+
 }

@@ -19,6 +19,7 @@
 
 {% block form_label %}
     {% spaceless %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
@@ -40,16 +41,7 @@
             {{ form_label(form) }}
             <div class="input">
                 {{ form_widget(form) }}
-                {% if required and not(errors|length > 0) %}
-                    <span class="help-inline">{{ 'This is a required field' | trans }}</span>
-                {% endif %}
                 {% if max_length %}
-                    <style>
-                        {#TODO frontend: add this to site.css#}
-                        .help-inline.error {
-                            color: #B94A48;
-                        }
-                    </style>
                     <script>
                         jQuery(document).ready(function(){
                         	$("#{{ id }}").charCount({

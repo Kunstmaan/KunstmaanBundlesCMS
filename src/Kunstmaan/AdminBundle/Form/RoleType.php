@@ -11,20 +11,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 class RoleType extends AbstractType
 {
     /**
-     * Builds the form.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('role');
+        $builder->add('role', 'text', array ('required' => true, 'label' => 'settings.role.role' ));
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {

@@ -177,6 +177,11 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('group2', $object->getName());
     }
 
+    /**
+     * @param string $name
+     *
+     * @return \Kunstmaan\AdminBundle\Entity\Role
+     */
     protected function getRole($name = 'role1')
     {
         $role = $this->getMockBuilder('Kunstmaan\AdminBundle\Entity\Role')

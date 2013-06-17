@@ -7,46 +7,10 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_users_add') }}" method="post" {{ form_enctype(form) }}>
+    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_users_add') }}" method="post" {{ form_enctype(form) }} novalidate>
 	    <fieldset>
-	    	{{ form_errors(form) }}
-	        <div class="control-group">
-	            <label class="control-label" for="{{ form.username.vars['id'] }}">{{ 'settings.user.username' | trans }}</label>
-	            <div class="controls">
-	                {{ form_widget(form.username) }}
-	            </div>
-	        </div>
-	        <div class="control-group">
-	            <label class="control-label" for="{{ form.plainPassword.first.vars['id'] }}">{{ 'settings.user.password' | trans }}</label>
-	            <div class="controls">
-	                {{ form_widget(form.plainPassword.first) }}
-	            </div>
-	        </div>
-	        <div class="control-group">
-	            <label class="control-label" for="{{ form.plainPassword.second.vars['id'] }}">{{ 'settings.user.repeatedpassword' | trans }}</label>
-	            <div class="controls">
-	                {{ form_widget(form.plainPassword.second) }}
-	            </div>
-	        </div>
-	        <div class="control-group">
-	            <label class="control-label" for="{{ form.email.vars['id'] }}">{{ 'settings.user.email' | trans }}</label>
-	            <div class="controls">
-	                {{ form_widget(form.email) }}
-	            </div>
-	        </div>
-	        <div class="control-group">
-	            <label class="control-label" for="{{ form.enabled.vars['id'] }}">{{ 'settings.user.enabled' | trans }}</label>
-	            <div class="controls">
-	                {{ form_widget(form.enabled) }}
-	            </div>
-	        </div>
-	        <div class="control-group">
-	            <label class="control-label" for="{{ form.groups.vars['id'] }}">{{ 'settings.user.roles' | trans }}</label>
-	            <div class="controls">
-	                {{ form_widget(form.groups) }}
-	            </div>
-	        </div>
-	        {{ form_rest(form) }}
+            {{ form_rest(form) }}
 	        <div class="form-actions">
 	            <button class="btn btn-primary" type="submit">{{ 'settings.user.add' | trans }}</button>
 	            <button onclick="window.location = '{{ path('KunstmaanAdminBundle_settings_users') }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>

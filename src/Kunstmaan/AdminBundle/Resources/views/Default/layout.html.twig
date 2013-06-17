@@ -10,6 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="noindex, nofollow">
 
     <title>{% block title %}{{ websitetitle | trans }}{% endblock %}</title>
 
@@ -127,7 +128,7 @@
         {% endblock %}
 
         <!--Content_wrp-->
-        <div class="content">
+        <div id="main_content" class="content">
             <!--Breadcrumb-->
             {% block breadcrumb %}
             {% set breadcrumbitems = adminmenu.breadcrumb %}

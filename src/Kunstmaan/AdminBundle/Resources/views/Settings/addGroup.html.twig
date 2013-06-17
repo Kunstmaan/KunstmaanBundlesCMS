@@ -7,23 +7,9 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_groups_add') }}" method="post" {{ form_enctype(form) }}>
+    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_groups_add') }}" method="post" {{ form_enctype(form) }} novalidate >
 	    <fieldset>
-	    	{{ form_errors(form) }}
-	        <div class="control-group">
-	            <label class="control-label" for="{{ form.name.vars['id'] }}">{{ 'settings.group.name' | trans }}</label>
-	            <div class="controls">
-	                {{ form_widget(form.name) }}
-	            </div>
-	        </div>
-	
-	        <div class="control-group">
-	            <label class="control-label" for="{{ form.rolesCollection.vars['id'] }}">{{ 'settings.group.roles' | trans }}</label>
-	            <div class="controls">
-	                {{ form_widget(form.rolesCollection) }}
-	            </div>
-	        </div>
-	
 	        {{ form_rest(form) }}
 	        <div class="form-actions">
 	            <button class="btn btn-primary" type="submit">{{ 'settings.group.add' | trans }}</button>

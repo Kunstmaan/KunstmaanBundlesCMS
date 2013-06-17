@@ -4,11 +4,15 @@
 {% endif %}
 
 {% if lowestTopChild and navigationChildren | length > 0 %}
-    <aside class="sidebar">
+    <button type="button" id="adjust_sidebar" class="adjust_sidebar">
+        <i class="icon icon-angle-left"></i>
+        <i class="icon icon-angle-right"></i>
+    </button>
+    <aside id="sidebar" class="sidebar">
         <div class="search_wrp">
             <form id="treeform">
-        	    <input type="text" id="searchVal" value="" />
-        	    <button id="search" class="btn search"><i class="icon-search"></i></button>
+                <input type="text" id="searchVal" value="" />
+                <button id="search" class="btn search"><i class="icon-search"></i></button>
             </form>
         </div>
         <div class="tree clearfix">

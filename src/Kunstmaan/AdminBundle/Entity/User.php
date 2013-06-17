@@ -3,10 +3,14 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use FOS\UserBundle\Model\GroupInterface;
-use FOS\UserBundle\Entity\User as BaseUser;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use FOS\UserBundle\Model\User as AbstractUser;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User entity
@@ -14,7 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\UserRepository")
  * @ORM\Table(name="kuma_users")
  */
-class User extends BaseUser
+class User extends AbstractUser
 {
     /**
      * @ORM\Id
@@ -89,6 +93,25 @@ class User extends BaseUser
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * @param ClassMetadata $metadata
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('username', new NotBlank());
+        $metadata->addPropertyConstraint('plainPassword', new NotBlank());
+        $metadata->addPropertyConstraint('email', new NotBlank());
+        $metadata->addPropertyConstraint('email', new Email());
+        $metadata->addConstraint(new UniqueEntity(array(
+                'fields'  => 'username',
+                'message' => 'This username already exists.',
+        )));
+        $metadata->addConstraint(new UniqueEntity(array(
+                'fields'  => 'email',
+                'message' => 'There is already a user with this email address.',
+        )));
     }
 
 }

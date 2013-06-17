@@ -14,18 +14,13 @@ class GroupType extends AbstractType
 {
 
     /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')
+        $builder->add('name', 'text', array('required' => true, 'label' => 'settings.group.name'))
                 ->add('rolesCollection', 'entity', array(
+                        'label' => 'settings.group.roles',
                         'class' => 'KunstmaanAdminBundle:Role',
                         'query_builder' => function(EntityRepository $er) {
                             return $er->createQueryBuilder('r')
@@ -33,14 +28,13 @@ class GroupType extends AbstractType
                         },
                         'multiple' => true,
                         'expanded' => false,
+                        'required' => true
                     )
                 );
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getName()
     {
