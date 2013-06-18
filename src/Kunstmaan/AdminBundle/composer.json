@@ -21,8 +21,8 @@
         "knplabs/knp-menu-bundle": "*",
         "monolog/monolog": "1.4.*@dev",
         "sensio/framework-extra-bundle": "*",
-        "kunstmaan/adminlist-bundle": "2.2.8.*",
-        "kunstmaan/utilities-bundle": "2.2.8.*"
+        "kunstmaan/adminlist-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
