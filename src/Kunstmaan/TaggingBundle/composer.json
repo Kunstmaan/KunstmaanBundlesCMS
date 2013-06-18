@@ -16,10 +16,10 @@
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
         "fpn/doctrine-extensions-taggable": "dev-master",
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/media-bundle": "*",
-        "kunstmaan/node-bundle": "*"
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/adminlist-bundle": "self.version",
+        "kunstmaan/media-bundle": "self.version",
+        "kunstmaan/node-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\TaggingBundle": "" }
