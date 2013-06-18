@@ -12,14 +12,17 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
+<<<<<<< HEAD
         "symfony/symfony": ">=2.3.0,<2.4.0",
+=======
+        "symfony/symfony": ">=2.2.0,<2.3.0",
+>>>>>>> master
         "gedmo/doctrine-extensions": "*",
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/media-bundle": "*",
-        "kunstmaan/utilities-bundle": "*"
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/media-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\SeoBundle": "" }
