@@ -16,8 +16,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.2.0,<2.3.0",
-        "kunstmaan/pagepart-bundle": "2.2.8.*",
-        "kunstmaan/media-bundle": "2.2.8.*"
+        "kunstmaan/pagepart-bundle": "self.version",
+        "kunstmaan/media-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaPagePartBundle": "" }
