@@ -216,4 +216,21 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         return $this;
     }
 
+    /**
+     * @param EntityManager $em
+     */
+    public function setEntityManager($em)
+    {
+        $this->em = $em;
+        return $this;
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->em;
+    }
+
 }

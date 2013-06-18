@@ -131,7 +131,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         /*@var Statement $statement*/
         $statement = $this->getQueryBuilder()->execute();
 
-        return $statement->getIterator();
+        return $statement;
     }
 
     /**

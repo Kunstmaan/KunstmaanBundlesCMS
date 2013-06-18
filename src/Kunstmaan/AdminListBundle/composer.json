@@ -12,15 +12,15 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
         "white-october/pagerfanta-bundle": "dev-master",
         "pagerfanta/pagerfanta": "dev-master",
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/utilities-bundle": "@dev",
-        "sensio/framework-extra-bundle": "2.2.*"
+        "sensio/framework-extra-bundle": "2.2.*",
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version"
+
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminListBundle": "" }
