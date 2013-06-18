@@ -21,8 +21,8 @@
         "knplabs/knp-gaufrette-bundle": "*",
         "gedmo/doctrine-extensions": "*",
         "sensio/framework-extra-bundle": "*",
-        "kunstmaan/admin-bundle": "2.2.8.*",
-        "kunstmaan/utilities-bundle": "2.2.8.*"
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
