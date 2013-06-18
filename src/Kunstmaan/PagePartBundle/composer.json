@@ -12,13 +12,12 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/utilities-bundle": "*",
-        "kunstmaan/node-bundle": "*"
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version",
+        "kunstmaan/node-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\PagePartBundle": "" }

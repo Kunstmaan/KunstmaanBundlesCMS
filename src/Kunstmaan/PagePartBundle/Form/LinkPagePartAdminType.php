@@ -16,7 +16,9 @@ class LinkPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('url', 'urlchooser', array('required' => false))->add('openinnewwindow', 'checkbox', array('required' => false))->add('text', null, array('required' => false));
+        $builder->add('url', 'urlchooser', array('label' => 'pagepart.link.choose', 'required' => false))
+            ->add('openinnewwindow', 'checkbox', array('label' => 'pagepart.link.openinnewwindow', 'required' => false))
+            ->add('text', null, array('label' => 'pagepart.link.text', 'required' => false));
     }
 
     /**
@@ -35,7 +37,7 @@ class LinkPagePartAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinkPagePart',
-                               ));
+            'data_class' => 'Kunstmaan\PagePartBundle\Entity\LinkPagePart',
+        ));
     }
 }

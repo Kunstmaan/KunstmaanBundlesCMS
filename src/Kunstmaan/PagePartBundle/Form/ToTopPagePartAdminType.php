@@ -34,7 +34,7 @@ class ToTopPagePartAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart',
-                               ));
+            'data_class' => 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart',
+        ));
     }
 }
