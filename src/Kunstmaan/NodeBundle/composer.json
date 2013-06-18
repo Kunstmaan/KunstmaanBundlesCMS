@@ -18,9 +18,9 @@
         "gedmo/doctrine-extensions": "*",
         "knplabs/knp-menu-bundle": "*",
         "symfony-cmf/routing-extra-bundle": "1.0.0",
-        "kunstmaan/adminlist-bundle": "2.2.8.*",
-        "kunstmaan/admin-bundle": "2.2.8.*",
-        "kunstmaan/utilities-bundle": "2.2.8.*"
+        "kunstmaan/adminlist-bundle": "self.version",
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\NodeBundle": "" }
