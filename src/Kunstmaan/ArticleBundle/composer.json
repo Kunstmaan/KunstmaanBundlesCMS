@@ -15,11 +15,11 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/node-bundle": "*",
         "white-october/pagerfanta-bundle": "dev-master",
-        "pagerfanta/pagerfanta": "dev-master"
+        "pagerfanta/pagerfanta": "dev-master",
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/adminlist-bundle": "self.version",
+        "kunstmaan/node-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\ArticleBundle": "" }
