@@ -18,8 +18,8 @@
         "white-october/pagerfanta-bundle": "dev-master",
         "pagerfanta/pagerfanta": "dev-master",
         "sensio/framework-extra-bundle": "2.2.*",
-        "kunstmaan/admin-bundle": "2.2.8.*",
-        "kunstmaan/utilities-bundle": "2.2.8.*"
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version"
 
     },
     "autoload": {
