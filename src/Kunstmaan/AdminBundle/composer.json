@@ -12,7 +12,6 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
@@ -21,9 +20,9 @@
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "*",
         "monolog/monolog": "1.4.*@dev",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/utilities-bundle": "*",
-        "sensio/framework-extra-bundle": "*"
+        "sensio/framework-extra-bundle": "*",
+        "kunstmaan/adminlist-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }

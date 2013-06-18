@@ -99,3 +99,7 @@ services:
         class: Kunstmaan\AdminBundle\Twig\TabsTwigExtension
         tags:
             - { name: twig.extension }
+
+    kunstmaan_admin.permission_creator:
+        class: Kunstmaan\AdminBundle\Helper\Creators\AclPermissionCreator
+        arguments: ["@security.acl.provider", "@security.acl.object_identity_retrieval_strategy"]
