@@ -8,6 +8,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface,
 use Kunstmaan\NodeBundle\Repository\NodeRepository,
     Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
 
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface,
     Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -70,9 +71,6 @@ class PageCreatorService Implements ContainerAwareInterface
 
         $setOnline = isset($options['set_online']) ? $options['set_online'] : false;
 
-        $em->persist($pageTypeInstance);
-        $em->flush();
-
         // We need to get the language of the first translation so we can create the rootnode.
         // This will also create a translationnode for that language attached to the rootnode.
         $first = true;
@@ -88,10 +86,18 @@ class PageCreatorService Implements ContainerAwareInterface
             $translationNode = null;
             if ($first) {
                 $first = false;
+
+                $em->persist($pageTypeInstance);
+                $em->flush();
+
                 // Fetch the translation instead of creating it.
                 // This returns the rootnode.
                 $rootNode = $nodeRepo->createNodeFor($pageTypeInstance, $language, $creator, $pageInternalName);
+
                 if (!is_null($parent)) {
+                    if ($parent instanceof HasPagePartsInterface) {
+                        $parent = $nodeRepo->getNodeFor($parent);
+                    }
                     $rootNode->setParent($parent);
                 }
                 $em->persist($rootNode);
@@ -99,12 +105,15 @@ class PageCreatorService Implements ContainerAwareInterface
 
                 $translationNode = $rootNode->getNodeTranslation($language, true);
             } else {
+                // Clone the $pageTypeInstance.
+                $pageTypeInstance = clone $pageTypeInstance;
+
+                $em->persist($pageTypeInstance);
+                $em->flush();
+
                 // Create the translationnode.
                 $translationNode = $nodeTranslationRepo->createNodeTranslationFor($pageTypeInstance, $language, $rootNode, $creator);
             }
-
-            $em->persist($translationNode);
-            $em->flush();
 
             // Make SEO.
             $seo = null;
@@ -114,6 +123,9 @@ class PageCreatorService Implements ContainerAwareInterface
             }
 
             $callback($pageTypeInstance, $translationNode, $seo);
+
+            $em->persist($translationNode);
+            $em->flush();
 
             $translationNode->setOnline($setOnline);
 

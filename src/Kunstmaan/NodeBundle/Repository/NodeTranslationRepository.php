@@ -280,4 +280,32 @@ class NodeTranslationRepository extends EntityRepository
 
         return true;
     }
+
+    /**
+     * This will return 1 NodeTranslation by default (if one exists).
+     * Just give it the internal name as defined on the Node in the database and the language.
+     *
+     * It'll only return the latest version. It'll also hide deleted & offline nodes.
+     *
+     * @param $language
+     * @param $internalName
+     */
+    public function getNodeTranslationByLanguageAndInternalName($language, $internalName) {
+        $qb = $this->createQueryBuilder('nt')
+            ->select('nt')
+            ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
+            ->where('n.deleted != 1')
+            ->andWhere('nt.online = 1')
+            ->addOrderBy('n.sequenceNumber', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        $qb->andWhere('nt.lang = :lang')
+            ->setParameter('lang', $language);
+
+        $qb->andWhere('n.internalName = :internal_name')
+            ->setParameter('internal_name', $internalName);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }
