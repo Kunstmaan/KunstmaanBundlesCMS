@@ -16,11 +16,12 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
-        "kunstmaan/node-bundle": "*",
-        "kunstmaan/pagepart-bundle": "*",
-        "kunstmaan/search-bundle": "*",
         "pagerfanta/pagerfanta": "dev-master",
-        "sherlock/sherlock": "0.1.*"
+        "sherlock/sherlock": "0.1.*",
+        "kunstmaan/node-bundle": "self.version",
+        "kunstmaan/pagepart-bundle": "self.version",
+        "kunstmaan/search-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\NodeSearchBundle": "" }
