@@ -16,15 +16,15 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/node-bundle": "*",
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/pagepart-bundle": "*",
         "ddeboer/data-import-bundle": "*",
         "gedmo/doctrine-extensions": "*",
         "gregwar/form-bundle": "dev-master",
         "swiftmailer/swiftmailer": ">=4.2.0",
-        "sensio/framework-extra-bundle": "*"
+        "sensio/framework-extra-bundle": "*",
+        "kunstmaan/adminlist-bundle": "self.version",
+        "kunstmaan/node-bundle": "self.version",
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/pagepart-bundle": "self.version"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\FormBundle": "" }
