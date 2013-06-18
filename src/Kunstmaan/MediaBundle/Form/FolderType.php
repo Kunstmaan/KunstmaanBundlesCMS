@@ -58,6 +58,7 @@ class FolderType extends AbstractType
                       $ids .= $type->addChildren($folder);
                       $qb->andwhere($ids);
                   }
+                  $qb->andWhere('folder.deleted != true');
 
                   return $qb;
               }

@@ -2,10 +2,12 @@
 
 namespace Kunstmaan\MediaBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class that defines a folder from the MediaBundle in the database
@@ -22,6 +24,7 @@ class Folder extends AbstractEntity
      *
      * @Gedmo\Translatable
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $name;
 
