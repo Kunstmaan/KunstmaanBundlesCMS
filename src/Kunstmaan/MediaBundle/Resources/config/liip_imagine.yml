@@ -1,12 +1,3 @@
-parameters:
-    kunstmaan_media.upload_dir: /uploads/media/
-
-twig:
-    globals:
-        upload_dir: "%kunstmaan_media.upload_dir%"
-        mediabundleisactive: true
-        mediamanager: "@kunstmaan_media.media_manager"
-
 liip_imagine:
     cache_prefix: uploads/cache
     driver: imagick
