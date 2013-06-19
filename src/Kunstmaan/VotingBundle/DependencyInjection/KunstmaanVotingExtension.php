@@ -25,6 +25,15 @@ class KunstmaanVotingExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        $possibleActions = array('up_vote', 'down_vote', 'facebook_like', 'facebook_send', 'linkedin_share');
+
+        // When no values are defined, initialize with defaults
+        foreach($possibleActions as $action) {
+            if (!@is_array($config['actions'][$action])) {
+                $config['actions'][$action]['default_value'] = ( $action == 'down_vote' ? -1 * $config['voting_default_value'] : $config['voting_default_value'] );
+            }
+        }
+
         $container->setParameter('kuma_voting.actions', $config['actions']);
     }
 }
