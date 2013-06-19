@@ -74,6 +74,9 @@ class NodeAdminPublisher
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
+        // Remove scheduled task
+        $this->unSchedulePublish($nodeTranslation);
+
         $this->eventDispatcher->dispatch(Events::POST_PUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
     }
 
@@ -126,6 +129,9 @@ class NodeAdminPublisher
 
         $this->em->persist($nodeTranslation);
         $this->em->flush();
+
+        // Remove scheduled task
+        $this->unSchedulePublish($nodeTranslation);
 
         $this->eventDispatcher->dispatch(Events::POST_UNPUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
     }

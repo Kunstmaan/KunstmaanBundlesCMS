@@ -226,7 +226,7 @@ class NodeAdminController extends Controller
 
         if ($request->get('unpub_date')) {
             $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
-            $this->get('kunstmaan_node.admin_node.publisher')->unPpublishLater($nodeTranslation, $date);
+            $this->get('kunstmaan_node.admin_node.publisher')->unPublishLater($nodeTranslation, $date);
             $this->get('session')->getFlashBag()->add('success', 'Unpublishing of the Page has been scheduled!');
         } else {
             $this->get('kunstmaan_node.admin_node.publisher')->unPublish($nodeTranslation);
