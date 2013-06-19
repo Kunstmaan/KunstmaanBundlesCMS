@@ -25,6 +25,20 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->root      = "kuma_voting";
     }
 
+    public function testGetConfigWithOverrideDefaultValue()
+    {
+        $container = $this->getContainer();
+        $container->setParameter('voting_default_value', 2);
+        $this->extension->load(array(array()), $container);
+        $this->assertTrue($container->hasParameter($this->root . ".actions"));
+        $this->assertTrue(is_array($container->getParameter($this->root . ".actions")));
+
+        $actions = $container->getParameter($this->root . ".actions");
+        $this->assertEquals(2, $actions['up_vote']['default_value']);
+        $this->assertEquals(-2, $actions['down_vote']['default_value']);
+        $this->assertEquals(2, $actions['facebook_like']['default_value']);
+    }
+
     public function testGetConfigWithDefaultValues()
     {
         $container = $this->getContainer();
@@ -77,8 +91,6 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function getContainer()
     {
-        $container = new ContainerBuilder();
-        $container->setParameter('kuma_voting_default_value', '1');
-        return $container;
+        return new ContainerBuilder();
     }
 }
