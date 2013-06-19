@@ -31,9 +31,6 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         $config = $processor->processConfiguration($configuration, $configs);
 
-        if(!$container->hasParameter('kunstmaan_media.upload_dir')) {
-            $container->setParameter('kunstmaan_media.upload_dir', '/uploads/media/');
-        }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
@@ -48,6 +45,11 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
     public function prepend(ContainerBuilder $container)
     {
+
+        if(!$container->hasParameter('kunstmaan_media.upload_dir')) {
+            $container->setParameter('kunstmaan_media.upload_dir', '/uploads/media/');
+        }
+
         $twigConfig['globals']['upload_dir'] = $container->getParameter('kunstmaan_media.upload_dir');
         $twigConfig['globals']['mediabundleisactive'] = true;
         $twigConfig['globals']['mediamanager'] = "@kunstmaan_media.media_manager";
