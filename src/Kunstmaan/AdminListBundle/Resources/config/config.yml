@@ -1,6 +1,0 @@
-parameters:
-    datePicker_startDate: '01/01/1970'
-
-twig:
-    globals:
-        datePicker_startDate: %datePicker_startDate%
