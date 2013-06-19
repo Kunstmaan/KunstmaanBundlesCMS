@@ -1,22 +1,24 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Helper\Tabs;
-
-use Doctrine\ORM\EntityManager;
+namespace Kunstmaan\NodeBundle\Helper\FormWidgets;
 
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+
 /**
  * A tab to show permissions
  */
-class PermissionTab implements TabInterface
+class PermissionsFormWidget extends FormWidget
 {
 
     /**
@@ -45,31 +47,17 @@ class PermissionTab implements TabInterface
     protected $node;
 
     /**
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * @param string                 $title           The title
      * @param HasNodeInterface       $page            The page
+     * @param Node                   $node            The node
      * @param PermissionAdmin        $permissionAdmin The permission admin
      * @param PermissionMapInterface $permissionMap   The permission map
      */
-    public function __construct($title, HasNodeInterface $page, Node $node, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
+    public function __construct(HasNodeInterface $page, Node $node, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
     {
-        $this->title = $title;
         $this->page = $page;
         $this->node = $node;
         $this->permissionAdmin = $permissionAdmin;
         $this->permissionMap = $permissionMap;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -110,7 +98,7 @@ class PermissionTab implements TabInterface
      */
     public function getTemplate()
     {
-        return 'KunstmaanNodeBundle:Tabs:permission_tab.html.twig';
+        return 'KunstmaanNodeBundle:FormWidgets\PermissionsFormWidget:widget.html.twig';
     }
 
     /**
@@ -121,6 +109,7 @@ class PermissionTab implements TabInterface
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
+
         return $this;
     }
 
@@ -140,6 +129,7 @@ class PermissionTab implements TabInterface
     public function setPage($page)
     {
         $this->page = $page;
+
         return $this;
     }
 
@@ -159,6 +149,7 @@ class PermissionTab implements TabInterface
     public function setPermissionAdmin($permissionAdmin)
     {
         $this->permissionAdmin = $permissionAdmin;
+
         return $this;
     }
 
@@ -178,6 +169,7 @@ class PermissionTab implements TabInterface
     public function setPermissionMap($permissionMap)
     {
         $this->permissionMap = $permissionMap;
+
         return $this;
     }
 
@@ -191,10 +183,13 @@ class PermissionTab implements TabInterface
 
     /**
      * @param Node $node
+     *
+     * @return PermissionsFormWidget
      */
     public function setNode($node)
     {
         $this->node = $node;
+
         return $this;
     }
 

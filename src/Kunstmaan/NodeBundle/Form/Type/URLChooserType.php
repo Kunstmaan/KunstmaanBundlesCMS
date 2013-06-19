@@ -9,15 +9,6 @@ use Symfony\Component\Form\AbstractType;
  */
 class URLChooserType extends AbstractType
 {
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
-    {
-        return $options;
-    }
 
     /**
      * @return string

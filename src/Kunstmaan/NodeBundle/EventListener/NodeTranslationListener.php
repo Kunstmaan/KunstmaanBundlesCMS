@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager,
 use Kunstmaan\NodeBundle\Entity\Node,
     Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
+use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -121,9 +122,11 @@ class NodeTranslationListener
         return false;
     }
 
-
-
     /**
+     * @param NodeTranslation $translation The node translation
+     * @param EntityManager   $em          The entity manager
+     * @param array           $flashes     Flashes
+     *
      * A function that checks the URL and sees if it's unique.
      * It's allowed to be the same when the node is a StructureNode.
      * When a node is deleted it needs to be ignored in the check.
@@ -147,6 +150,7 @@ class NodeTranslationListener
      *
      * @return bool
      *
+     * @return boolean
      */
     private function ensureUniqueUrl(NodeTranslation &$translation, EntityManager $em, $flashes = array())
     {

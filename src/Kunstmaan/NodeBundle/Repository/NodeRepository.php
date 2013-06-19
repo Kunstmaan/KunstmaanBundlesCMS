@@ -146,13 +146,12 @@ class NodeRepository extends NestedTreeRepository
     {
         $qb = $this->createQueryBuilder('b')
                    ->select('b')
-                   ->innerJoin('b.nodeTranslations', 't')
+                   ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
                    ->where('b.deleted = 0');
 
         if (!$includeHiddenFromNav) {
             $qb->andWhere('b.hiddenFromNav != true');
         }
-        $qb->andWhere('t.lang = :lang');
 
         if (is_null($parentId)) {
             $qb->andWhere('b.parent is NULL');

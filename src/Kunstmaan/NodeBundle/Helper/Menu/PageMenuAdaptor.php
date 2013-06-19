@@ -22,15 +22,24 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private $aclNativeHelper;
     private $treeNodes = null;
     private $activeNodeIds = null;
+    private $fallbackLocales;
 
     /**
      * @param EntityManager   $em              The entity manager
      * @param AclNativeHelper $aclNativeHelper The acl helper
+     * @param string          $fallbackLocales The locales to fall back to fill the three with node items translated in another language
      */
-    public function __construct(EntityManager $em, AclNativeHelper $aclNativeHelper)
+    public function __construct(EntityManager $em, AclNativeHelper $aclNativeHelper, $fallbackLocales = '')
     {
         $this->em              = $em;
         $this->aclNativeHelper = $aclNativeHelper;
+        $this->fallbackLocales = $fallbackLocales;
+        $this->fallbackLocales=array();
+        $help=strtok($fallbackLocales, "|");
+        while ($help !== false) {
+            $this->fallbackLocales[] = $help;
+            $help = strtok("|");
+        }
     }
 
     /**

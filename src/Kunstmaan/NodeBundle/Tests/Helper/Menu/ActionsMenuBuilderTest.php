@@ -129,6 +129,9 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
     }
 
+    /**
+     * testCreateActionsMenuPublic
+     */
     public function testCreateActionsMenuPublic()
     {
         $nodeTranslation = new NodeTranslation();
@@ -161,6 +164,9 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
     }
 
+    /**
+     * testCreateActionsMenuNonEditable
+     */
     public function testCreateActionsMenuNonEditable()
     {
         $nodeTranslation = new NodeTranslation();
@@ -216,32 +222,6 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->builder->setActiveNodeVersion($nodeVersion);
         $this->assertEquals($this->builder->getActiveNodeVersion(), $nodeVersion);
     }
-
-    public function testShouldHideDeleteButtonWhenNoPermissions()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    public function testShouldHidePublishButtonWhenNoPermissions()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    public function testShouldHideUnPublishButtonWhenNoPermissions()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    public function testShouldHideSaveAndSaveAsDraftPublishButtonWhenNoPermissions()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-
 
     /**
      * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu

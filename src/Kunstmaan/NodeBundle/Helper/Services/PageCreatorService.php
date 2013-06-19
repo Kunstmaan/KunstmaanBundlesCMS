@@ -15,15 +15,11 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface,
 /**
  * Service to create new pages.
  */
-
 class PageCreatorService Implements ContainerAwareInterface
 {
     /**
-     *
-     * Automatically calls the ACL + sets the slugs to empty when the page is an Abstract node.
-     *
-     * @param $pageTypeInstance
-     * @param array $translations array containing arrays. Sample:
+     * @param HasNodeInterface $pageTypeInstance The page
+     * @param array            $translations     containing arrays. Sample:
      * [
      *  [   "language" => "nl",
      *      "callback" => function($page, $translation) {
@@ -36,11 +32,13 @@ class PageCreatorService Implements ContainerAwareInterface
      *      }
      *  ]
      * ]
-     * @param array options -
+     * @param array            $options          -
      *      parent: type node, nodetransation or page.
      *      page_internal_name: string. name the page will have in the database.
      *      set_online: bool. if true the page will be set as online after creation.
      *      todo: creator: user?
+     *
+     * Automatically calls the ACL + sets the slugs to empty when the page is an Abstract node.
      *
      * @return Node The new node for the page.
      *

@@ -45,11 +45,12 @@ class RevertNodeAction extends NodeEvent
     /**
      * @param NodeVersion $originNodeVersion
      *
-     * @param ReverPageAction
+     * @return RevertNodeAction
      */
     public function setOriginNodeVersion($originNodeVersion)
     {
         $this->originNodeVersion = $originNodeVersion;
+
         return $this;
     }
 
@@ -69,6 +70,7 @@ class RevertNodeAction extends NodeEvent
     public function setOriginPage($originPage)
     {
         $this->originPage = $originPage;
+
         return $this;
     }
 
