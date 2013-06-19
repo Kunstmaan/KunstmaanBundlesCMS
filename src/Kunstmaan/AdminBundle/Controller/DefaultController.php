@@ -31,7 +31,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         /* @var DashboardConfiguration $dashboardConfiguration */
-        $dashboardConfiguration = $this->getDoctrine()->getEntityManager()->getRepository('KunstmaanAdminBundle:DashboardConfiguration')->findOneBy(array());
+        $dashboardConfiguration = $this->getDoctrine()->getManager()->getRepository('KunstmaanAdminBundle:DashboardConfiguration')->findOneBy(array());
 
         return array('dashboardConfiguration' => $dashboardConfiguration);
     }
@@ -51,7 +51,7 @@ class DefaultController extends Controller
         $request = $this->getRequest();
 
         /* @var DashboardConfiguration $dashboardConfiguration */
-        $dashboardConfiguration = $this->getDoctrine()->getEntityManager()->getRepository('KunstmaanAdminBundle:DashboardConfiguration')->findOneBy(array());
+        $dashboardConfiguration = $this->getDoctrine()->getManager()->getRepository('KunstmaanAdminBundle:DashboardConfiguration')->findOneBy(array());
         if (is_null($dashboardConfiguration)) {
             $dashboardConfiguration = new DashboardConfiguration();
         }
