@@ -39,6 +39,18 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @Given /^I log out$/
+     */
+    public function iLogOut()
+    {
+        $this->iAmOnASpecificPage('dashboard');
+        $this->makeWide();
+
+        $logoutButton = $this->getSession()->getPage()->find('xpath', '//a[text()="Logout"]');
+        $logoutButton->click();
+    }
+
+    /**
      * @Then /^I should (?:be on|see) the dashboard$/
      */
     public function iShouldSeeTheDashboard()
@@ -176,19 +188,6 @@ class FeatureContext extends AbstractContext
             }
         }
 
-    }
-
-
-    /**
-     * @Given /^I log out$/
-     */
-    public function iLogOut()
-    {
-        $this->iAmOnASpecificPage('dashboard');
-        // $this->makeWide();
-
-        $logoutButton = $this->getSession()->getPage()->find('xpath', '//a[text()="Logout"]');
-        $logoutButton->click();
     }
 
     /**
