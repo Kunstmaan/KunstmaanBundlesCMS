@@ -17,7 +17,7 @@
         "symfony/symfony": ">=2.3.0,<2.4.0",
         "gedmo/doctrine-extensions": "*",
         "knplabs/knp-menu-bundle": "*",
-        "symfony-cmf/routing-bundle": "1.1.*@dev",
+        "symfony-cmf/routing-bundle": "1.1.0-beta1",
         "kunstmaan/adminlist-bundle": "self.version",
         "kunstmaan/admin-bundle": "self.version",
         "kunstmaan/utilities-bundle": "self.version"
