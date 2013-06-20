@@ -211,13 +211,8 @@ class NodeMenuItem
             /* @var NodeRepository $nodeRepo */
             $nodeRepo = $this->em->getRepository('KunstmaanNodeBundle:Node');
             $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getPermission(), $this->menu->getAclHelper(), true);
-            $fallbackLocales = $this->menu->getFallbackLocales();
             foreach ($children as $child) {
                 $nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
-                $count = count($fallbackLocales);
-                for ($i=0; (is_null($nodeTranslation) && $i < $count); $i++) {
-                    $nodeTranslation = $child->getNodeTranslation($fallbackLocales[$i], $this->menu->isIncludeOffline());
-                }
                 if (!is_null($nodeTranslation)) {
                     $this->lazyChildren[] = new NodeMenuItem($child, $nodeTranslation, $this, $this->menu);
                 }
