@@ -1,4 +1,4 @@
-# About the KunstmaanSearchBundle
+# About the KunstmaanSearchBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanSearchBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanSearchBundle)
 
 The KunstmaanSearchBundle works with [ElasticSearch](http://www.elasticsearch.org/) and supports different search providers. The bundle currently supports [Sherlock](https://github.com/polyfractal/sherlock) as a provider.
 
