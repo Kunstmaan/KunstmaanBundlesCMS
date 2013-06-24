@@ -55,7 +55,7 @@ class {{ entity_class }}Page extends AbstractArticlePage
 
     public function getDefaultView()
     {
-        return "{{ namespace }}:{{ entity_class }}/{{ entity_class }}Page:view.html.twig";
+        return "{{ bundle.getName() }}:{{ entity_class }}/{{ entity_class }}Page:view.html.twig";
     }
 
     /**
