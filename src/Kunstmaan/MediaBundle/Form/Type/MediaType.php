@@ -92,8 +92,8 @@ class MediaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['chooser'] = $form->get('chooser');
-        $view->vars['mediatype'] = $form->get('mediatype');
+        $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
+        $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
         $view->vars['mediamanager'] = $this->mediaManager;
     }
 }
