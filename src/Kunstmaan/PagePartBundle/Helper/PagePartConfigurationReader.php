@@ -30,28 +30,45 @@ class PagePartConfigurationReader
 
     /**
      * This will read the $name file and parse it to the PageTemplate
-     * @param string $name
      *
+     * @param string $name
      * @return PageTemplate
+     * @throws \Exception
      */
     public function parse($name)
     {
-        if (false === $pos = strpos($name, ':')) {
+        $nameParts = explode(':', $name);
+        if (count($nameParts) != 2)  {
             throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename.yml").', $name));
         }
-        $namespace = substr($name, 0, $pos);
-        $name = substr($name, $pos + 1);
-        $result = new PagePartAdminConfigurator();
+
+        list($namespace, $name) = $nameParts;
         $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pageparts/'.$name.'.yml');
-        $rawdata = Yaml::parse($path);
-        $result->setName($rawdata["name"]);
-        $result->setInternalName($name);
-        $types = array();
-        foreach ($rawdata["types"] as $rawType) {
-            $types[] = array("name"=>$rawType["name"], "class"=>$rawType["class"]);
+        $rawData = Yaml::parse($path);
+        if (!array_key_exists('types', $rawData)) {
+            $rawData['types'] = array();
         }
-        $result->setPossiblePagePartTypes($types);
-        $result->setContext($rawdata["context"]);
+        if (array_key_exists('extends', $rawData)) {
+            $recursiveResult = $this->parse($namespace.':'.$rawData['extends']);
+            $rawData['types'] = array_merge($recursiveResult->getPossiblePagePartTypes(), $rawData['types']);
+        }
+
+        $types = array();
+        foreach ($rawData['types'] as $type) {
+            if ($type['class'] == '' || is_null($type['class'])) {
+                if (array_key_exists($type['name'], $types)) {
+                    unset($types[$type['name']]);
+                }
+            } else {
+                $types[$type['name']] = array('name' => $type['name'], 'class' => $type['class']);
+            }
+        }
+
+        $result = new PagePartAdminConfigurator();
+        $result->setName($rawData['name']);
+        $result->setInternalName($name);
+        $result->setPossiblePagePartTypes(array_values($types));
+        $result->setContext($rawData['context']);
 
         return $result;
     }
