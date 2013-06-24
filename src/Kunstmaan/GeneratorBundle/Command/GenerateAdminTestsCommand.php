@@ -85,6 +85,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new AdminTestsGenerator($this->getContainer()->get('filesystem'), GeneratorUtils::getFullSkeletonPath('admintests'));
+        return new AdminTestsGenerator($this->getContainer()->get('filesystem'), '/admintests');
     }
 }

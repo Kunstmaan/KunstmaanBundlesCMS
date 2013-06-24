@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,6 +25,8 @@ class AdminTestsGenerator extends  Generator
      */
     private $skeletonDir;
 
+    private $fullSkeletonDir;
+
     /**
      * @param Filesystem $filesystem  The filesytem
      * @param string     $skeletonDir The skeleton directory
@@ -32,6 +35,7 @@ class AdminTestsGenerator extends  Generator
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
+        $this->fullSkeletonDir = GeneratorUtils::getFullSkeletonPath($skeletonDir);
     }
 
     /**
@@ -68,12 +72,13 @@ class AdminTestsGenerator extends  Generator
      */
     public function generateBehatTests(Bundle $bundle, OutputInterface $output, array $parameters)
     {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Features';
+        $dirPath = sprintf("%s/Features", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Features", $this->fullSkeletonDir);
 
-        $this->filesystem->copy($fullSkeletonDir . '/AdminLogin.feature', $dirPath . '/Features/AdminLogin.feature', true);
-        $this->filesystem->copy($fullSkeletonDir . '/AdminSettingsUser.feature', $dirPath . '/Features/AdminSettingsUser.feature', true);
-        $this->renderFile($fullSkeletonDir . '/Features/Context/FeatureContext.php', $dirPath . '/Features/Context/FeatureContext.php', $parameters);
+
+        $this->filesystem->copy($skeletonDir . '/AdminLoginLogout.feature', $dirPath . '/Features/AdminLoginLogout.feature', true);
+        $this->filesystem->copy($skeletonDir . '/AdminSettingsUser.feature', $dirPath . '/Features/AdminSettingsUser.feature', true);
+        $this->renderFile('/admintests/Features/Context/FeatureContext.php', $dirPath . '/Features/Context/FeatureContext.php', $parameters);
 
         $output->writeln('Generating Behat Tests : <info>OK</info>');
     }
