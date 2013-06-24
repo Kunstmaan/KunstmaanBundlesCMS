@@ -49,8 +49,13 @@ class PagePartConfigurationReader
             $rawData['types'] = array();
         }
         if (array_key_exists('extends', $rawData)) {
-            $recursiveResult = $this->parse($namespace.':'.$rawData['extends']);
-            $rawData['types'] = array_merge($recursiveResult->getPossiblePagePartTypes(), $rawData['types']);
+            if (!is_array($rawData['extends'])) {
+                $rawData['extends'] = array($rawData['extends']);
+            }
+            foreach ($rawData['extends'] as $extend) {
+                $recursiveResult = $this->parse($namespace.':'.$extend);
+                $rawData['types'] = array_merge($recursiveResult->getPossiblePagePartTypes(), $rawData['types']);
+            }
         }
 
         $types = array();
