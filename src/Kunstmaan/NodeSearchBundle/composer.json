@@ -15,7 +15,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.2.0,<2.3.0",
+        "symfony/symfony": ">=2.3.0,<2.4.0",
         "pagerfanta/pagerfanta": "dev-master",
         "sherlock/sherlock": "0.1.*",
         "kunstmaan/node-bundle": "self.version",
