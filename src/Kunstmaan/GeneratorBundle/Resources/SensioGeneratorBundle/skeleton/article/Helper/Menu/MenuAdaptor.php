@@ -19,7 +19,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
      */
     public function __construct(EntityManager $em)
     {
-        $overviewpageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace }}\\Entity\\{{ entity_class }}\\{{ entity_class }}OverviewPage');
+        $overviewpageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\{{ entity_class }}\\{{ entity_class }}OverviewPage');
         foreach ($overviewpageNodes as $overviewpageNode) {
             $this->overviewpageIds[] = $overviewpageNode->getId();
         }

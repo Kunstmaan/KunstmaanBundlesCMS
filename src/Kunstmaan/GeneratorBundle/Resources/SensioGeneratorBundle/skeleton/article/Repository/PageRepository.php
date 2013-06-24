@@ -54,7 +54,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
         $query .= " WHERE";
         $query .= " n.deleted = 0";
         $query .= " AND";
-        $query .= " n.ref_entity_name = '{{ namespace | replace('\\', '\\\\') }}\\\\Entity\\\\{{ entity_class }}\\\\{{ entity_class }}Page'";
+        $query .= " n.ref_entity_name = '{{ namespace | replace({'\\': '\\\\\\\\'}) }}\\\\Entity\\\\{{ entity_class }}\\\\{{ entity_class }}Page'";
         $query .= " AND";
         $query .= " nt.online = 1 ";
         if ($lang) {
