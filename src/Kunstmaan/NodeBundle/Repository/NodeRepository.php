@@ -144,7 +144,7 @@ class NodeRepository extends EntityRepository
     public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
     {
         $qb = $this->createQueryBuilder('b')
-                   ->select('b')
+                   ->select('b, t')
                    ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
                    ->where('b.deleted = 0');
 
@@ -179,5 +179,46 @@ class NodeRepository extends EntityRepository
         $result = $qb->getQuery()->getResult();
 
         return $result;
+    }
+
+    /**
+     * Get an array of Nodes based on the internal name.
+     *
+     * @param string        $internalName   The internal name of the node
+     * @param string        $lang           The locale
+     * @param int|null|bool $parentId       The parent id
+     * @param bool          $includeOffline Include offline nodes
+     *
+     * @return Node[]
+     */
+    public function getNodesByInternalName($internalName, $lang, $parentId = false, $includeOffline = false)
+    {
+        $qb = $this->createQueryBuilder('n')
+            ->select('n, t')
+            ->innerJoin('n.nodeTranslations', 't')
+            ->where('n.deleted = 0')
+            ->andWhere('n.internalName = :internalName')
+            ->setParameter('internalName', $internalName)
+            ->andWhere('t.lang = :lang')
+            ->setParameter('lang', $lang)
+            ->addOrderBy('t.weight', 'ASC')
+            ->addOrderBy('t.title', 'ASC');
+
+        if (!$includeOffline) {
+            $qb->andWhere('t.online = true');
+        }
+
+        if (is_null($parentId)) {
+            $qb->andWhere('n.parent is NULL');
+        } elseif ($parentId === false) {
+            // Do nothing
+        } else {
+            $qb->andWhere('n.parent = :parent')
+                ->setParameter('parent', $parentId);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
     }
 }
