@@ -28,7 +28,7 @@
                      </a>
                  </div>
                 {% endif %}
-                {% for key, message in app.session.getFlashes() %}
+                {% for key, message in app.session.flashbag.all() %}
                 <div class="alert alert-info {{ key }}">
                      <button class="close" data-dismiss="alert">&times;</button>
                      <strong>{{ 'form.headsup' | trans }}! </strong>
