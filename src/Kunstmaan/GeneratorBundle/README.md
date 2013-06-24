@@ -4,7 +4,7 @@ If you're like us, you like to build applications without having to do the same 
 
 ## Installation
 
-This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
+This bundle is compatible with all Symfony 2.3.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
 
 ## Use
 
@@ -55,3 +55,6 @@ app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Ent
 
 You can find more detailed information about these commands [here](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md)
 
+## Symfony 2.2
+
+If you want to use this bundle for a Symfony 2.2 release, use the 2.2 branch.
