@@ -108,10 +108,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $skeletonDir = sprintf("%s/Resources/views", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
-        #var_dump($skeletonDir . '/Page/layout.html.twig');
-        #var_dump(sprintf($skeletonDir . '/Page/layout.html.twig'));
-        #die;
-
         $this->renderFile('/Page/layout.html.twig', $dirPath . '/Page/layout.html.twig', $parameters);
         $this->renderFile('/Layout/_css.html.twig', $dirPath . '/Layout/_css.html.twig', $parameters);
         $this->renderFile('/Layout/_js_footer.html.twig', $dirPath . '/Layout/_js_footer.html.twig', $parameters);
@@ -137,8 +133,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("~~~CSS~~~", "{% include '" . $bundle->getName() .":Layout:_css.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
         GeneratorUtils::replace("~~~TOP_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_header.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
         GeneratorUtils::replace("~~~FOOTER_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_footer.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
-
-
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');
 
@@ -171,8 +165,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
-     * @param Bundle          $bundle
-     * @param OutputInterface $output
+     * @param Bundle                                            $bundle
+     * @param OutputInterface                                   $output
      */
     public function generateAssets(Bundle $bundle, OutputInterface $output)
     {
@@ -190,7 +184,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             '/img/favicon.ico'
         );
 
-        # /Users/vincent/Development/bundles/GeneratorBundleTest/vendor/kunstmaan/generator-bundle/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/defaultsite/Resources/public/css/app.css
         foreach ($assets as $asset) {
             $this->filesystem->copy(sprintf("%s%s", $skeletonDir, $asset), sprintf("%s%s", $dirPath, $asset));
         }
