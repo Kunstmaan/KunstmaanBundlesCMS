@@ -246,3 +246,16 @@ To override the value of the Shares, simply add the value parameter to your incl
 The LinkedInShareHelper class provides methods to retrieve the shares by reference. It's also possible to retrieve the count or the combined value of the shares.
 
 Name of the service : "kunstmaan_voting.helper.linkedin.share"
+
+# Security
+
+you can configure a max number of vote by ip for a reference
+
+By example for up_vote in your config.yml. An ip can vote only 10 time for a reference
+
+    kunstmaan_voting:
+        actions:
+            facebook_like:
+                default_value: 2
+                max_number_by_ip: 10
+

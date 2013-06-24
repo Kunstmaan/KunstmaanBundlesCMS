@@ -17,7 +17,6 @@ class DownVoteEvent extends Event
 
     private $value;
 
-
     public function __construct(Request $request, $reference, $value)
     {
         $this->request = $request;

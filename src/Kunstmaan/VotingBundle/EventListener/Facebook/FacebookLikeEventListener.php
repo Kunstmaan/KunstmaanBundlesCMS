@@ -20,7 +20,7 @@ class FacebookLikeEventListener
      */
     protected $container;
 
-    function __construct(EntityManager $em, Container $container)
+    public function __construct(EntityManager $em, Container $container)
     {
         $this->em = $em;
         $this->container = $container;

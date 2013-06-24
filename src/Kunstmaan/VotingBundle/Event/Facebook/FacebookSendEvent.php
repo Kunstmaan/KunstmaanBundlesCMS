@@ -27,7 +27,6 @@ class FacebookSendEvent extends Event
      */
     private $value;
 
-
     public function __construct(Request $request, $response, $value)
     {
         $this->request = $request;
@@ -44,6 +43,14 @@ class FacebookSendEvent extends Event
      * @return string
      */
     public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+    * @return string
+    */
+    public function getReference()
     {
         return $this->response;
     }
