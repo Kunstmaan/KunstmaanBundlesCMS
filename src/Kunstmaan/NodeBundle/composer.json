@@ -14,10 +14,10 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.2.0,<2.3.0",
+        "symfony/symfony": ">=2.3.0,<2.4.0",
         "gedmo/doctrine-extensions": "*",
         "knplabs/knp-menu-bundle": "*",
-        "symfony-cmf/routing-extra-bundle": "1.0.0",
+        "symfony-cmf/routing-bundle": "1.1.0-beta1@dev",
         "kunstmaan/adminlist-bundle": "self.version",
         "kunstmaan/admin-bundle": "self.version",
         "kunstmaan/utilities-bundle": "self.version"

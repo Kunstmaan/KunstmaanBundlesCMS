@@ -2,7 +2,7 @@ twig:
     globals:
         nodebundleisactive: true
 
-symfony_cmf_routing_extra:
+cmf_routing:
     chain:
         routers_by_id:
             router.default: 100
