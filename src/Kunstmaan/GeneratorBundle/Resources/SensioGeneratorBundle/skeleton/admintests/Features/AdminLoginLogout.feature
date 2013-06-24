@@ -5,7 +5,7 @@ Feature: Browse and fill in the admin login form
 
   @javascript @resetBrowserAfter
   Scenario: Can't log in with incorrect credentials
-    Given I try to log in with "naam" and "wrongpassword"
+    Given I try to log in with "name" and "wrong_password"
     Then I should see "Wrong"
 
   @javascript
@@ -14,14 +14,14 @@ Feature: Browse and fill in the admin login form
     Then I should see the dashboard
 
   @javascript
-  Scenario: Can log in with correct credentials
+  Scenario: Can log out when logged in
     Given I log in as "admin"
   # https://code.google.com/p/chromedriver/wiki/TroubleshootingAndSupport#Common_issues
     And I log out
     Then I should be on the login page
 
   @javascript @ensureCleanSession
-  Scenario: Can log in with correct credentials
+  Scenario: Can log out and navigate to page required to login and see the login
     Given I log in as "admin"
     And I log out
     And I go to the users page
