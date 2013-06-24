@@ -48,7 +48,7 @@ class MediaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->prependClientTransformer(new IdToMediaTransformer($this->objectManager, $options['current_value_container']));
+        $builder->addViewTransformer(new IdToMediaTransformer($this->objectManager, $options['current_value_container']), true);
         $builder->setAttribute('chooser', $options['chooser']);
         $builder->setAttribute('mediatype', $options['mediatype']);
     }
@@ -92,8 +92,8 @@ class MediaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['chooser'] = $form->getAttribute('chooser');
-        $view->vars['mediatype'] = $form->getAttribute('mediatype');
+        $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
+        $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
         $view->vars['mediamanager'] = $this->mediaManager;
     }
 }
