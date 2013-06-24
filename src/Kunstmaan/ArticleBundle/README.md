@@ -4,7 +4,7 @@ This bundle adds articles to your Kunstmaan Bundles project.
 
 Installation requirements
 -------------------------
-You should be able to get Symfony 2.2 or greater up and running before you can install the KunstmaanArticleBundle.
+You should be able to get Symfony 2.3 or greater up and running before you can install the KunstmaanArticleBundle.
 
 Installation instructions
 -------------------------
@@ -26,3 +26,7 @@ Generate
 --------
 
 This bundle has been developed to work closely with the [KunstmaanGeneratorBundle](https://github.com/Kunstmaan/KunstmaanGeneratorBundle). This bundle contains abstract classes used by the generated article classes. For more information, please read the extended documentation on the [Article generator](https://github.com/Kunstmaan/KunstmaanGeneratorBundle).
+
+## Symfony 2.2
+
+If you want to use this bundle for a Symfony 2.2 release, use the 2.2 branch.
