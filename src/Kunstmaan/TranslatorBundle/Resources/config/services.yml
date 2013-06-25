@@ -1,7 +1,13 @@
 parameters:
 #    kunstmaan_translator_list.example.class: Kunstmaan\TranslatorBundle\Example
+    kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
 
 services:
 #    kunstmaan_translator_list.example:
 #        class: %kunstmaan_translater_list.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    kunstmaan_translator.menu.adaptor:
+        class: "%kunstmaan_translator.menu.adaptor.class%"
+        tags:
+            -  { name: 'kunstmaan_admin.menu.adaptor' }

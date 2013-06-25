@@ -9,5 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TranslatorController extends Controller
 {
+    /**
+     * @Route("/{domainId}", requirements={"domainId" = "\d+"}, name="KunstmaanTranslatorBundle_translations_show")
+     * @Template()
+     *
+     * @return array
+     */
+    public function indexAction($domainId)
+    {
 
+    }
 }
