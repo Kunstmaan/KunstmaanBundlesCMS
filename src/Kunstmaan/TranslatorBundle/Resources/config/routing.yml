@@ -1,0 +1,4 @@
+KunstmaanTranslatorBundle_default:
+    resource: "@KunstmaanTranslatorBundle/Controller/TranslatorController.php"
+    type:     annotation
+    prefix:   /

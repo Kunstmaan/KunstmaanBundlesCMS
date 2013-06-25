@@ -1,0 +1,7 @@
+parameters:
+#    kunstmaan_translator_list.example.class: Kunstmaan\TranslatorBundle\Example
+
+services:
+#    kunstmaan_translator_list.example:
+#        class: %kunstmaan_translater_list.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
