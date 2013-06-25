@@ -11,6 +11,7 @@ use Gaufrette\Adapter\Local;
 use Symfony\Component\HttpFoundation\File\File;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * FileHandler
@@ -115,7 +116,7 @@ class FileHandler extends AbstractMediaHandler
             $file = new File($content);
             $media->setContent($file);
         }
-        if (!$content instanceof UploadedFile) {
+        if ($content instanceof UploadedFile) {
             $media->setName($content->getClientOriginalName());
         }
 
@@ -179,8 +180,14 @@ class FileHandler extends AbstractMediaHandler
     public function createNew($data)
     {
         if ($data instanceof File) {
+            /** @var $data File */
+
             $media = new Media();
-            $media->setName($data->getClientOriginalName());
+            if (method_exists($media, 'getClientOriginalName')) {
+                $media->setName($data->getClientOriginalName());
+            } else {
+                $media->setName($data->getFilename());
+            }
             $media->setContent($data);
 
             return $media;
