@@ -1,0 +1,16 @@
+services:
+#    kunstmaan_translator_list.example:
+#        class: %kunstmaan_translater_list.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    kunstmaan_translator.repository.translation:
+        factory_service: "doctrine.orm.default_entity_manager"
+        factory_method: "getRepository"
+        class: "Kunstmaan\TranslatorBundle\Repository\TranslationRepository"
+        arguments: ["Kunstmaan\TranslatorBundle\Entity\Translation"]
+
+    kunstmaan_translator.repository.translation_domain:
+        factory_service: "doctrine.orm.default_entity_manager"
+        factory_method: "getRepository"
+        class: "Kunstmaan\TranslatorBundle\Repository\TranslationDomainRepository"
+        arguments: ["Kunstmaan\TranslatorBundle\Entity\TranslationDomain"]

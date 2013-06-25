@@ -1,27 +1,30 @@
 <?php
 
-namespace Users\Development\KunstmaanTranslatorBundle\Entity;
+namespace Kunstmaan\TranslatorBundle\Entity;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TranslatorDomain class.
+ * Class that emulates a single symfony2 translations domain
  *
- * This class emulates the translator domains used in Symfony2
+ * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationDomainRepository")
+ * @ORM\Table(name="kuma_translation_domain")
+ * @ORM\HasLifecycleCallbacks
  *
- * Possible to add:
+ * Future ideas
  * - priority rules, domain overrules files or opposite
  * - domain enabled or not
  *
  */
-class TranslatorDomain
+class TranslationDomain extends AbstractEntity
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * Use this field to give a name to your translator domain
@@ -30,7 +33,7 @@ class TranslatorDomain
      *
      * @ORM\Column(type="string")
      */
-    private $name;
+    protected $name;
 
     public function getId()
     {

@@ -1,46 +1,48 @@
 <?php
 
-namespace Users\Development\KunstmaanTranslatorBundle\Entity;
+namespace Kunstmaan\TranslatorBundle\Entity;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Translation class.
+ * Class that emulates a single symfony2 translation
  *
- * This class emulates a translation in Symfony2
- *
+ * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationRepository")
+ * @ORM\Table(name="kuma_translation")
+ * @ORM\HasLifecycleCallbacks
  */
-class Translation
+class Translation extends AbstractEntity
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * The translations keyword to use in your template or call from the translator
      *
      * @var sting
      *
-     * @ORM\Column(type="string", unique="true")
+     * @ORM\Column(type="string", unique=true)
      */
-    private $keyword;
+    protected $keyword;
 
      /**
      * The translations keyword to use in your template or call from the translator
      *
      * @var sting
      *
-     * @ORM\Column(type="string", length="2")
+     * @ORM\Column(type="string", length=2)
      */
-    private $language;
+    protected $language;
 
      /**
-     * @OneToMany(targetEntity="TranslatorDomain", mappedBy="messages", cascade={"all"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="TranslationDomain")
      */
-    private $domain;
+    protected $domain;
 
     public function getId()
     {

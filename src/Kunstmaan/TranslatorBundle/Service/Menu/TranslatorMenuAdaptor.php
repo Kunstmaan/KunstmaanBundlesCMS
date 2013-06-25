@@ -21,6 +21,7 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
+        // Build the top menu when the parent is null
         if (is_null($parent)) {
             $children[] = $this->getTopMenuItem($menu, $request);
         }
