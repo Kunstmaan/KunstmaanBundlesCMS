@@ -80,7 +80,7 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $user = new User();
-        $form = $this->createForm(new UserType(), $user, array('password_required' => true));
+        $form = $this->createForm(new UserType(), $user, array('password_required' => true, 'validation_groups' => array('Registration')));
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
@@ -126,6 +126,7 @@ class SettingsController extends Controller
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
+
             if ($form->isValid()) {
                 if ($user->getPlainpassword() != "") {
                     $manipulator = $this->get('fos_user.util.user_manipulator');
