@@ -6,6 +6,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -24,6 +26,24 @@ class KunstmaanVotingExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        foreach ($config['actions'] as $key => $value) {
+
+            if ($value['max_number_by_ip']) {
+
+                $definition = new Definition('Kunstmaan\VotingBundle\EventListener\Security\MaxNumberByIpEventListener');
+                $definition->addArgument(new Reference('kunstmaan_voting.services.repository_resolver'));
+                $definition->addArgument($value['max_number_by_ip']);
+                $definition->addTag('kernel.event_listener', array(
+                    'event' => 'kunstmaan_voting.' . lcfirst(ContainerBuilder::camelize($key)),
+                    'method' => 'onVote',
+                    'priority' => 100,
+                ));
+
+                $container->setDefinition('kunstmaan_voting.security.' . $key . '.max_number_by_ip_event_listener', $definition);
+            }
+
+        }
 
         $possibleActions = array('up_vote', 'down_vote', 'facebook_like', 'facebook_send', 'linkedin_share');
 

@@ -65,3 +65,8 @@ services:
     kunstmaan_voting.helper.linkedin.share:
         class: Kunstmaan\VotingBundle\Helper\LinkedIn\LinkedInShareHelper
         arguments: ["@doctrine.orm.entity_manager"]
+
+    # SERVICES
+    kunstmaan_voting.services.repository_resolver:
+        class: Kunstmaan\VotingBundle\Services\RepositoryResolver
+        arguments: ["@doctrine.orm.entity_manager"]

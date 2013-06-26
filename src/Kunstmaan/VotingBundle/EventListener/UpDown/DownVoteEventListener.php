@@ -7,7 +7,6 @@ use Kunstmaan\VotingBundle\Entity\UpDown\DownVote;
 use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Symfony\Component\DependencyInjection\Container;
 
-
 class DownVoteEventListener
 {
 
@@ -21,7 +20,7 @@ class DownVoteEventListener
      */
     protected $container;
 
-    function __construct(EntityManager $em, Container $container)
+    public function __construct(EntityManager $em, Container $container)
     {
         $this->em = $em;
         $this->container = $container;

@@ -35,6 +35,7 @@ class Configuration implements ConfigurationInterface
                                     ->thenInvalid('Invalid action default value, should be a number.')
                                 ->end()
                             ->end()
+                            ->scalarNode('max_number_by_ip')->defaultValue(null)->end()
                         ->end()
                     ->end()
                 ->end()
