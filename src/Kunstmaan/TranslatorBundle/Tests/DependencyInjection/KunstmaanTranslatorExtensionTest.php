@@ -28,7 +28,7 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
     public function testEnabledByDefault()
     {
         $container = $this->getContainer();
-        $this->extension->load(array(), $container);
+        $this->extension->load(array( 'kuma_translator' => array('managed_locales' => array('nl'))), $container);
         $this->assertTrue($container->getParameter('kuma_translator.enabled'));
     }
 

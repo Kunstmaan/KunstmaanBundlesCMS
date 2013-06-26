@@ -20,9 +20,36 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('kuma_translator');
 
+        $availableStorageEngines = array('orm');
+        $defaultFileFormats = array('yml','xliff');
+
         $rootNode
             ->children()
                 ->booleanNode('enabled')->defaultTrue()->end()
+
+                ->arrayNode('managed_locales')
+                    ->defaultValue(array())
+                    ->prototype('scalar')->end()
+                ->end()
+
+                ->arrayNode('file_formats')
+                    ->defaultValue($defaultFileFormats)
+                    ->prototype('scalar')->end()
+                ->end()
+
+                ->arrayNode('storage_engine')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('type')
+                            ->cannotBeEmpty()
+                            ->defaultValue('orm')
+                            ->validate()
+                                ->ifNotInArray($availableStorageEngines)
+                                ->thenInvalid('Storage engine should be one of the following: '.implode(', ', $availableStorageEngines))
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

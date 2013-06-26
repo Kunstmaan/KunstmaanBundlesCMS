@@ -8,7 +8,7 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="true"
-         bootstrap="Tests/bootstrap.php"
+         bootstrap="Tests/app/bootstrap.php"
 >
     <testsuites>
         <testsuite name="KunstmaanVotingBundle Test Suite">
@@ -16,8 +16,5 @@
         </testsuite>
     </testsuites>
 
-    <php>
-        <server name="KERNEL_DIR" value="./Tests/Fixtures/App/app" />
-    </php>
 </phpunit>
 

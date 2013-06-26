@@ -27,6 +27,9 @@ class KunstmaanTranslatorExtension extends Extension
         }
 
         $container->setParameter('kuma_translator.enabled', $config['enabled']);
+        $container->setParameter('kuma_translator.managed_locales', $config['managed_locales']);
+        $container->setParameter('kuma_translator.file_formats', $config['file_formats']);
+        $container->setParameter('kuma_translator.storage_engine.type', $config['storage_engine']['type']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

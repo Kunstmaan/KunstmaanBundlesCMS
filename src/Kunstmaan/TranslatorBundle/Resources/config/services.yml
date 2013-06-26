@@ -11,3 +11,15 @@ services:
         class: "%kunstmaan_translator.menu.adaptor.class%"
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
+
+    kunstmaan_translator.service.importer.handler:
+        class: "Kunstmaan\TranslatorBundle\Service\Importer\ImportCommandHandler"
+        calls:
+            - [setManagedLocales, [%kuma_translator.managed_locales%]]
+            - [setKernel, [@kernel]]
+            - [setTranslationFileExplorer, [@kunstmaan_translator.service.file_explorer]]
+
+    kunstmaan_translator.service.file_explorer:
+        class: "Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer"
+        calls:
+            - [setFileFormats, [%kuma_translator.file_formats%]]

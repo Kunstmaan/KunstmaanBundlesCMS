@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * Class that emulates a single symfony2 translation
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationRepository")
- * @ORM\Table(name="kuma_translation")
+ * @ORM\Table(name="kuma_translation", uniqueConstraints={@ORM\UniqueConstraint(name="keyword_per_language", columns={"keyword", "language"})})
+ *
  * @ORM\HasLifecycleCallbacks
  */
 class Translation extends AbstractEntity
@@ -26,7 +27,7 @@ class Translation extends AbstractEntity
      *
      * @var sting
      *
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      */
     protected $keyword;
 

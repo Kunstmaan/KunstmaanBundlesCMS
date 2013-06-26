@@ -17,6 +17,6 @@ class TranslatorController extends Controller
      */
     public function indexAction($domainId)
     {
-        $this->container->get('kunstmaan_translator.repository.translation_domain')->findOneById(1);
+
     }
 }
