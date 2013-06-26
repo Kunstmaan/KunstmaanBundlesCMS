@@ -47,13 +47,20 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     protected $choices = array();
 
     /**
+     * If true, this field will be required.
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $required = false;
+
+    /**
      * Returns the default form type for this FormSubmissionField
      *
      * @return ChoiceFormSubmissionType
      */
     public function getDefaultAdminType()
     {
-        return new ChoiceFormSubmissionType($this->getLabel(), $this->getExpanded(), $this->getMultiple(), $this->getChoices());
+        return new ChoiceFormSubmissionType($this->getLabel(), $this->required, $this->getExpanded(), $this->getMultiple(), $this->getChoices());
     }
 
     /**
@@ -175,6 +182,26 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     public function getChoices()
     {
         return $this->choices;
+    }
+
+    /**
+     * Set the field as required or not
+     *
+     * @param boolean $required
+     */
+    public function setRequired($required)
+    {
+        $this->required = $required;
+    }
+
+    /**
+     * Get the field required status, by default this will be false
+     *
+     * @return boolean
+     */
+    public function getRequired()
+    {
+        return $this->required;
     }
 
 }
