@@ -1,6 +1,0 @@
-parameters:
-  form_submission_rootdir: "%kernel.root_dir%/../web/uploads/formsubmissions"
-  form_submission_webdir: "/uploads/formsubmissions/"
-twig:
-  globals:
-    form_submission_webdir: %form_submission_webdir%
