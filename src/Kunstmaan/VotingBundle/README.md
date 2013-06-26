@@ -28,11 +28,21 @@ KunstmaanVotingBundle:
     prefix:   /
 ```
 
-Import the KunstmaanVotingBundle config to your config.yml :
+Overwrite the KunstmaanVotingBundle config to your needs in config.yml :
 
 ```PHP
-imports:
-    - { resource: @KunstmaanVotingBundle/Resources/config/config.yml }
+kunstmaan_voting:
+    actions:
+        up_vote:
+            default_value: 1
+        down_vote:
+            default_value: -1
+        facebook_like:
+            default_value: 1
+        facebook_send:
+            default_value: 1
+        linkedin_share:
+            default_value: 1
 ```
 
 Use

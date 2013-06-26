@@ -45,6 +45,22 @@ class KunstmaanVotingExtension extends Extension
 
         }
 
+        $possibleActions = array('up_vote', 'down_vote', 'facebook_like', 'facebook_send', 'linkedin_share');
+
+        $votingDefaultValue = $config['voting_default_value'];
+
+        // If the user overwrites the voting_default_value in paramters file, we use this one
+        if ($container->hasParameter('voting_default_value')) {
+            $votingDefaultValue = $container->getParameter('voting_default_value');
+        }
+
+        // When no values are defined, initialize with defaults
+        foreach($possibleActions as $action) {
+            if (!@is_array($config['actions'][$action])) {
+                $config['actions'][$action]['default_value'] = ( $action == 'down_vote' ? -1 * $votingDefaultValue : $votingDefaultValue );
+            }
+        }
+
         $container->setParameter('kuma_voting.actions', $config['actions']);
     }
 }
