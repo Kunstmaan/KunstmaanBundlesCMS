@@ -41,7 +41,7 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
 
         $cmfRoutingExtraConfig['chain']['routers_by_id']['router.default'] = 100;
         $cmfRoutingExtraConfig['chain']['replace_symfony_router'] = true;
-        $container->prependExtensionConfig('symfony_cmf_routing_extra', $cmfRoutingExtraConfig);
+        $container->prependExtensionConfig('cmf_routing', $cmfRoutingExtraConfig);
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $config = $this->processConfiguration(new Configuration(), $configs);

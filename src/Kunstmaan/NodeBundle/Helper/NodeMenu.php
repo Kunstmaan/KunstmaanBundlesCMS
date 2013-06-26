@@ -199,13 +199,13 @@ class NodeMenu
     /**
      * @param string                                        $internalName The internal name
      * @param NodeTranslation|NodeMenuItem|HasNodeInterface $parent       The parent
-     *
      * @param bool                                          $includeOffline
      *
      * @return NodeMenuItem|null
      */
     public function getNodeByInternalName($internalName, $parent = null, $includeOffline = null)
     {
+        $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
         $node = null;
         if ($includeOffline == null) {
             $includeOffline = $this->includeOffline;
@@ -217,11 +217,14 @@ class NodeMenu
             } elseif ($parent instanceof NodeMenuItem) {
                 $parent = $parent->getNode();
             } elseif ($parent instanceof HasNodeInterface) {
-                $parent = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($parent);
+                $parent = $repo->getNodeFor($parent);
             }
-            $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneBy(array('internalName' => $internalName, 'parent' => $parent->getId()));
-            if (is_null($node)) {
-                $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findBy(array('internalName' => $internalName));
+
+            $nodes = $repo->getNodesByInternalName($internalName, $this->lang, $parent->getId(), $includeOffline);
+            if (count($nodes) > 0) {
+                $node = $nodes[0];
+            } else {
+                $nodes = $repo->getNodesByInternalName($internalName, $this->lang, false, $includeOffline);
                 /* @var Node $n */
                 foreach ($nodes as $n) {
                     $p = $n;
@@ -236,8 +239,12 @@ class NodeMenu
                 }
             }
         } else {
-            $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->findOneBy(array('internalName' => $internalName));
+            $nodes = $repo->getNodesByInternalName($internalName, $this->lang, false, $includeOffline);
+            if (count($nodes) == 1) {
+                $node = $nodes[0];
+            }
         }
+
         if (!is_null($node)) {
             $nodeTranslation = $node->getNodeTranslation($this->lang, $includeOffline);
             if (!is_null($nodeTranslation)) {
