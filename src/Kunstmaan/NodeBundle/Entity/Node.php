@@ -3,13 +3,12 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-
 use Kunstmaan\NodeBundle\Form\NodeAdminType;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Tree\Node as GedmoNode;
 
 /**
  * Node
@@ -18,8 +17,9 @@ use Kunstmaan\NodeBundle\Form\NodeAdminType;
  * @ORM\Table(name="kuma_nodes")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @Gedmo\Tree(type="nested")
  */
-class Node extends AbstractEntity
+class Node extends AbstractEntity implements GedmoNode
 {
 
     /**
@@ -27,6 +27,7 @@ class Node extends AbstractEntity
      *
      * @ORM\ManyToOne(targetEntity="Node", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @Gedmo\TreeParent
      */
     protected $parent;
 
@@ -46,6 +47,30 @@ class Node extends AbstractEntity
      * @ORM\OrderBy({"sequenceNumber" = "ASC"})
      */
     protected $children;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="lft", type="integer", nullable=true)
+     * @Gedmo\TreeLeft
+     */
+    protected $lft;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="lvl", type="integer", nullable=true)
+     * @Gedmo\TreeLevel
+     */
+    protected $lvl;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="rgt", type="integer", nullable=true)
+     * @Gedmo\TreeRight
+     */
+    protected $rgt;
 
     /**
      * @var ArrayCollection
@@ -389,6 +414,36 @@ class Node extends AbstractEntity
                 $this->sequenceNumber = 1;
             }
         }
+    }
+
+    /**
+     * Get tree left
+     *
+     * @return int
+     */
+    public function getLeft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * Get tree right
+     *
+     * @return int
+     */
+    public function getRight()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * Get tree level
+     *
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->lvl;
     }
 
     /**

@@ -2,8 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Repository;
 
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query;
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -11,13 +15,10 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
-use Doctrine\ORM\EntityRepository;
-
 /**
  * NodeRepository
- *
  */
-class NodeRepository extends EntityRepository
+class NodeRepository extends NestedTreeRepository
 {
     /**
      * @param string    $lang                 The locale
@@ -164,6 +165,86 @@ class NodeRepository extends EntityRepository
         $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
 
         return $query->getResult();
+    }
+
+    /**
+     * Get all the information needed to build a menu tree with one query.
+     * We only fetch the fields we need, instead of fetching full objects to limit the memory usage.
+     *
+     * @param string          $lang                 The locale
+     * @param string          $permission           The permission (read, write, ...)
+     * @param AclNativeHelper $aclNativeHelper            The acl helper
+     * @param bool            $includeHiddenFromNav Include nodes hidden from navigation or not
+     *
+     * @return array
+     */
+    public function getAllMenuNodes($lang, $permission, AclNativeHelper $aclNativeHelper, $includeHiddenFromNav = false)
+    {
+        $qb = $this->_em->getConnection()->createQueryBuilder();
+        $qb->select('n.id, n.parent_id AS parent,
+                        IF(t.weight IS NULL, v.weight, t.weight) AS weight,
+                        IF(t.title IS NULL, v.title, t.title) AS title,
+                        IF(t.online IS NULL, 0, t.online) AS online')
+            ->from('kuma_nodes', 'n')
+            ->leftJoin('n', 'kuma_node_translations', 't', "(t.node_id = n.id AND t.lang = ?)")
+            ->leftJoin('n', '(SELECT lang, title, weight, node_id FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)', 'v', "(v.node_id = n.id AND v.lang <> ?)")
+            ->where('n.deleted = 0')
+            ->addGroupBy('n.id')
+            ->addOrderBy('parent', 'ASC')
+            ->addOrderBy('weight', 'ASC')
+            ->addOrderBy('title', 'ASC');
+
+        if (!$includeHiddenFromNav) {
+            $qb->andWhere('n.hiddenFromNav <> 0');
+        }
+
+        $permissionDef = new PermissionDefinition(array($permission));
+        $permissionDef->setEntity('Kunstmaan\NodeBundle\Entity\Node');
+        $permissionDef->setAlias('n');
+        $qb = $aclNativeHelper->apply($qb, $permissionDef);
+
+        $stmt = $this->_em->getConnection()->prepare($qb->getSQL());
+        $stmt->bindValue(1, $lang);
+        $stmt->bindValue(2, $lang);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * Get all parents of a given node. We can go multiple levels up.
+     *
+     * @param Node $node
+     * @param string $lang
+     * @return Node[]
+     */
+    public function getAllParents(Node $node = null, $lang = null)
+    {
+        if (is_null($node)) {
+            return array();
+        }
+
+        $qb = $this->createQueryBuilder('node');
+
+        if ($lang) {
+            // Directly fetch the nodeTranslation in one query
+            $qb->select('node, t')
+                ->innerJoin('node.nodeTranslations', 't')
+                ->where('node.deleted = 0')
+                ->andWhere('t.lang = :lang')
+                ->setParameter('lang', $lang);
+        } else {
+            $qb->select('node')
+                ->where('node.deleted = 0');
+        }
+
+        $qb->andWhere($qb->expr()->andX(
+            $qb->expr()->lte('node.lft', $node->getLeft()),
+            $qb->expr()->gte('node.rgt', $node->getRight())
+        ));
+        $qb->addOrderBy('node.lft', 'ASC');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

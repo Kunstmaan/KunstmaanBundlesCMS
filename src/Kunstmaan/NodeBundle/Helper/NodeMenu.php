@@ -4,9 +4,11 @@ namespace Kunstmaan\NodeBundle\Helper;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\CoronaDirectBundle\Entity\LandingPage;
 
 use Doctrine\ORM\EntityManager;
 
+use Kunstmaan\CoronaDirectBundle\Entity\HomePage;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 use Kunstmaan\AdminBundle\Entity\User;
@@ -36,13 +38,11 @@ class NodeMenu
     private $aclHelper;
 
     /**
-     *
      * @var string
      */
     private $lang;
 
     /**
-     *
      * @var array
      */
     private $topNodeMenuItems = array();
@@ -73,11 +73,6 @@ class NodeMenu
     private $user = null;
 
     /**
-     * @var array
-     */
-    private $fallbackLocales = array();
-
-    /**
      * @param EntityManager            $em                   The entity manager
      * @param SecurityContextInterface $securityContext      The security context
      * @param AclHelper                $aclHelper            The ACL helper
@@ -86,9 +81,8 @@ class NodeMenu
      * @param string                   $permission           The permission
      * @param bool                     $includeOffline       Include offline pages
      * @param bool                     $includeHiddenFromNav Include hidden pages
-     * @param array                    $fallbackLocales      Locales to fall back so we can show the node in another language
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $lang, Node $currentNode = null, $permission = PermissionMap::PERMISSION_VIEW, $includeOffline = false, $includeHiddenFromNav = false, array $fallbackLocales = array())
+    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $lang, Node $currentNode = null, $permission = PermissionMap::PERMISSION_VIEW, $includeOffline = false, $includeHiddenFromNav = false)
     {
         $this->em = $em;
         $this->securityContext = $securityContext;
@@ -97,42 +91,29 @@ class NodeMenu
         $this->includeOffline = $includeOffline;
         $this->includeHiddenFromNav = $includeHiddenFromNav;
         $this->permission = $permission;
-        $this->fallbackLocales = $fallbackLocales;
-        $tempNode = $currentNode;
+        $this->user = $this->securityContext->getToken()->getUser();
 
-        //Breadcrumb
-        $nodeBreadCrumb = array();
-        while ($tempNode) {
-            array_unshift($nodeBreadCrumb, $tempNode);
-            $tempNode = $tempNode->getParent();
-        }
-        /* @var NodeMenuItem $parentNodeMenuItem */
+        $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
+
+        // Generate breadcrumb MenuItems
+        $parentNodes = $repo->getAllParents($currentNode, $this->lang);
         $parentNodeMenuItem = null;
-        /* @var Node $nodeBreadCrumbItem */
-        foreach ($nodeBreadCrumb as $nodeBreadCrumbItem) {
-            $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($this->lang, $this->includeOffline);
-            $count = count($fallbackLocales);
-            for ($i=0; (is_null($nodeTranslation) && $i < $count); $i++) {
-                $nodeTranslation = $nodeBreadCrumbItem->getNodeTranslation($fallbackLocales[$i], $this->includeOffline);
-            }
+
+        /* @var Node $parentNode */
+        foreach ($parentNodes as $parentNode) {
+            $nodeTranslation = $parentNode->getNodeTranslation($this->lang, $this->includeOffline);
             if (!is_null($nodeTranslation)) {
-                $nodeMenuItem = new NodeMenuItem($nodeBreadCrumbItem, $nodeTranslation, $parentNodeMenuItem, $this);
+                $nodeMenuItem = new NodeMenuItem($parentNode, $nodeTranslation, $parentNodeMenuItem, $this);
                 $this->breadCrumb[] = $nodeMenuItem;
                 $parentNodeMenuItem = $nodeMenuItem;
             }
         }
 
-        $this->user = $this->securityContext->getToken()->getUser();
-
-        //topNodes
-        $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->lang, $permission, $this->aclHelper, $includeHiddenFromNav);
+        // To be backwards compatible we need to create the top node MenuItems
+        $topNodes = $repo->getTopNodes($this->lang, $permission, $this->aclHelper, $includeHiddenFromNav);
         /* @var Node $topNode */
         foreach ($topNodes as $topNode) {
             $nodeTranslation = $topNode->getNodeTranslation($this->lang, $this->includeOffline);
-            $count = count($fallbackLocales);
-            for ($i=0; (is_null($nodeTranslation) && $i < $count); $i++) {
-                $nodeTranslation = $topNode->getNodeTranslation($fallbackLocales[$i], $this->includeOffline);
-            }
             if (!is_null($nodeTranslation)) {
                 if (sizeof($this->breadCrumb)>0 && $this->breadCrumb[0]->getNode()->getId() == $topNode->getId()) {
                     $this->topNodeMenuItems[] = $this->breadCrumb[0];
@@ -378,14 +359,6 @@ class NodeMenu
     public function isIncludeHiddenFromNav()
     {
         return $this->includeHiddenFromNav;
-    }
-
-    /**
-     * @return array
-     */
-    public function getFallbackLocales()
-    {
-        return $this->fallbackLocales;
     }
 
 }

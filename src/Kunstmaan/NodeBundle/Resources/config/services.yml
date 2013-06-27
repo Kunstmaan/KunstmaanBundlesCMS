@@ -11,20 +11,20 @@ services:
 
     kunstmaan_node.menu.adaptor.pages:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper", "%requiredlocales%"]
+        arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_admin.acl.native.helper"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
-        
+
     kunstmaan_node.form.type.urlchooser:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType
         tags:
             - { name: 'form.type', alias: 'urlchooser' }
-            
+
     kunstmaan_node.form.type.slug:
         class: Kunstmaan\NodeBundle\Form\Type\SlugType
         tags:
             - { name: 'form.type', alias: 'slug' }
-    
+
     kunstmaan_node.admin_node.publisher:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@event_dispatcher"]
@@ -88,3 +88,10 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: twig.extension }
+
+    gedmo.listener.tree:
+        class: Gedmo\Tree\TreeListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
