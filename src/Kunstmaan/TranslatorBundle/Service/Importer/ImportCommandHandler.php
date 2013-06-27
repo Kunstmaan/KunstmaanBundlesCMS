@@ -12,16 +12,10 @@ class ImportCommandHandler
     private $managedLocales;
     private $kernel;
     private $translationFileExplorer;
+    private $importer;
 
     public function executeImportCommand(ImportCommand $importCommand)
     {
-        // bekijk path, 1 of meerdere files
-        // bekijk per file welke soort het is
-        // domain.taal.extensie parsen
-        // bekijken met language of de taal toegevoegd kan worden
-        // bekijk met overwrite of een bestaande mag gewijzigd worden (replace into)
-        // bekijk of het domain al bestaat
-
         if($importCommand->getBundle() === false) {
             return $this->importGlobalTranslationFiles($importCommand);
         }
@@ -32,7 +26,7 @@ class ImportCommandHandler
     public function importGlobalTranslationFiles(ImportCommand $importCommand)
     {
         $finder = $this->translationFileExplorer->find($this->kernel->getRootDir(), $this->determineLocalesToImport($importCommand));
-
+        $this->importTranslationFiles($finder, $importCommand->getForce());
     }
 
     public function importBundleTranslationFiles(ImportCommand $importCommand)
@@ -40,6 +34,18 @@ class ImportCommandHandler
         $this->validateBundleName($importCommand->getBundle());
         $bundles = array_change_key_case($this->kernel->getBundles(), CASE_LOWER);
         $finder = $this->translationFileExplorer->find($bundles[$importCommand->getBundle()]->getPath(), $this->determineLocalesToImport($importCommand));
+        $this->importTranslationFiles($finder, $importCommand->getForce());
+    }
+
+    public function importTranslationFiles(Finder $finder, $force = flase)
+    {
+        if (!$finder instanceof Finder) {
+            throw new \Exception('No files found.');
+        }
+
+        foreach ($finder as $file) {
+            $this->importer->import($file, $force);
+        }
     }
 
     public function validateBundleName($bundle) {
@@ -93,5 +99,10 @@ class ImportCommandHandler
     public function setTranslationFileExplorer($translationFileExplorer)
     {
         $this->translationFileExplorer = $translationFileExplorer;
+    }
+
+    public function setImporter($importer)
+    {
+        $this->importer = $importer;
     }
 }

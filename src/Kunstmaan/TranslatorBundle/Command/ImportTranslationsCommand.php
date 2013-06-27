@@ -38,7 +38,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
             ->setGlobals($globals)
             ->setBundle($bundle);
 
-        $this->getContainer()->get('kunstmaan_translator.service.importer.handler')->executeImportCommand($importCommand);
+        $this->getContainer()->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
 
     }
 }

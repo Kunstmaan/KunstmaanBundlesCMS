@@ -12,7 +12,7 @@ class ImportCommandHandlerTest extends BaseTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->importCommandHandler = $this->getContainer()->get('kunstmaan_translator.service.importer.handler');
+        $this->importCommandHandler = $this->getContainer()->get('kunstmaan_translator.service.importer.command_handler');
     }
 
     public function testExecuteImportCommand()

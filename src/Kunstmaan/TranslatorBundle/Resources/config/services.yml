@@ -12,14 +12,18 @@ services:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    kunstmaan_translator.service.importer.handler:
+    kunstmaan_translator.service.importer.command_handler:
         class: "Kunstmaan\TranslatorBundle\Service\Importer\ImportCommandHandler"
         calls:
             - [setManagedLocales, [%kuma_translator.managed_locales%]]
             - [setKernel, [@kernel]]
             - [setTranslationFileExplorer, [@kunstmaan_translator.service.file_explorer]]
+            - [setImporter, [@kunstmaan_translator.service.importer.importer]]
 
     kunstmaan_translator.service.file_explorer:
         class: "Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer"
         calls:
             - [setFileFormats, [%kuma_translator.file_formats%]]
+
+    kunstmaan_translator.service.importer.importer:
+        class: "Kunstmaan\TranslatorBundle\Service\Importer\Importer"
