@@ -55,6 +55,24 @@ class GeneratorUtils
     }
 
     /**
+     * Append the string in the file
+     *
+     * @param string $string   Text to be added in front of the file
+     * @param string $filename File to prepend in
+     */
+    public static function append($string, $filename)
+    {
+        $context = stream_context_create();
+        $fp = fopen($filename, 'r', 1, $context);
+        $tmpname = md5($string);
+        file_put_contents($tmpname, $fp);
+        file_put_contents($tmpname, $string, FILE_APPEND);
+        fclose($fp);
+        unlink($filename);
+        rename($tmpname, $filename);
+    }
+
+    /**
      * Find and replace the string in the file
      *
      * @param string $toReplace   Text to be replaced
@@ -69,5 +87,25 @@ class GeneratorUtils
             file_put_contents($filename, $content);
         }
 
+    }
+
+
+    public static function getFullSkeletonPath($pathInSkeleton)
+    {
+        $pathInSkeleton = trim($pathInSkeleton);
+
+        // pathInSkeleton needs to be prepended by a /
+        if (substr($pathInSkeleton, 0, 1) !== '/') {
+            $pathInSkeleton = '/' . $pathInSkeleton;
+        }
+
+        // Can't have a / at the end.
+        if (substr($pathInSkeleton, -1) == '/') {
+
+            //substr_replace($pathInSkeleton,"",-1);
+            $pathInSkeleton = rtrim($pathInSkeleton, '/');
+        }
+
+        return __DIR__ . '/../Resources/SensioGeneratorBundle/skeleton' . $pathInSkeleton;
     }
 }

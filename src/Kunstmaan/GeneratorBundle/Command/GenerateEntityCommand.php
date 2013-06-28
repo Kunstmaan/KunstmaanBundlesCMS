@@ -19,8 +19,6 @@ use Doctrine\DBAL\Types\Type;
 class GenerateEntityCommand extends GenerateDoctrineCommand
 {
 
-    private $generator;
-
     /**
      * {@inheritdoc}
      */
@@ -89,7 +87,7 @@ EOT
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundleName);
 
-        $generator = $this->getGenerator();
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($bundle, $entity, $format, array_values($fields), $input->getOption('with-repository'));
 
         $output->writeln('Generating the entity code: <info>OK</info>');
@@ -269,7 +267,7 @@ EOT
         while (true) {
             $output->writeln('');
             $self = $this;
-            $columnName = $dialog->askAndValidate($output, $dialog->getQuestion('New field name (press <return> to stop adding fields)', null), function ($name) use ($fields, $self) {
+            $columnName = $dialog->askAndValidate($output, $dialog->getQuestion('New field name (enter empty name to stop adding fields)', null), function ($name) use ($fields, $self) {
                 if (isset($fields[$name]) || 'id' == $name) {
                     throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
                 }
@@ -312,36 +310,8 @@ EOT
         return $fields;
     }
 
-    /**
-     * @return DoctrineEntityGenerator
-     */
-    public function getGenerator()
+    protected function createGenerator()
     {
-        if (null === $this->generator) {
-            $this->generator = new DoctrineEntityGenerator($this->getContainer()->get('filesystem'), $this->getContainer()->get('doctrine'));
-        }
-
-        return $this->generator;
-    }
-
-    /**
-     * @param DoctrineEntityGenerator $generator
-     */
-    public function setGenerator(DoctrineEntityGenerator $generator)
-    {
-        $this->generator = $generator;
-    }
-
-    /**
-     * @return DialogHelper
-     */
-    protected function getDialogHelper()
-    {
-        $dialog = $this->getHelperSet()->get('dialog');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper') {
-            $this->getHelperSet()->set($dialog = new DialogHelper());
-        }
-
-        return $dialog;
+        return new DoctrineEntityGenerator($this->getContainer()->get('filesystem'), $this->getContainer()->get('doctrine'));
     }
 }

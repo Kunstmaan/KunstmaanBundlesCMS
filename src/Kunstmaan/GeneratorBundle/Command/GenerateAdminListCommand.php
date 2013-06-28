@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
+use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,11 +10,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Generator;
 
 use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
 /**
  * Generates a KunstmaanAdminList
@@ -48,6 +49,9 @@ EOT
      *
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
+     *
+     * @throws \RuntimeException
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -68,7 +72,9 @@ EOT
 
         $dialog->writeSection($output, 'AdminList Generation');
 
-        $this->getGenerator($output, $dialog)->generate($bundle, $entityClass, $metadata[0]);
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator->setDialog($dialog);
+        $generator->generate($bundle, $entityClass, $metadata[0], $output);
 
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
@@ -173,38 +179,8 @@ EOT
     _locale: %requiredlocales%
      */
 
-    /**
-     * @return DialogHelper
-     */
-    protected function getDialogHelper()
+    protected function createGenerator()
     {
-        $dialog = $this
-            ->getHelperSet()
-            ->get('dialog');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper') {
-            $this
-                ->getHelperSet()
-                ->set($dialog = new DialogHelper());
-        }
-
-        return $dialog;
+        return new AdminListGenerator($this->getContainer()->get('filesystem'), GeneratorUtils::getFullSkeletonPath('adminlist'));
     }
-
-    /**
-     * @param OutputInterface $output The output
-     * @param DialogHelper    $dialog The dialog helper
-     *
-     * @return AdminListGenerator
-     */
-    protected function getGenerator(OutputInterface $output, DialogHelper $dialog)
-    {
-        if (null === $this->generator) {
-            $this->generator = new AdminListGenerator($this
-                ->getContainer()
-                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/adminlist', $output, $dialog);
-        }
-
-        return $this->generator;
-    }
-
 }

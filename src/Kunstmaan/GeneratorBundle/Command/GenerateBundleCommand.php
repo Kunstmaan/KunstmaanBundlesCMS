@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\GeneratorBundle\Command;
+use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 use Kunstmaan\GeneratorBundle\Generator\BundleGenerator;
@@ -10,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 use Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator;
@@ -19,7 +19,7 @@ use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 /**
  * Generates bundles.
  */
-class GenerateBundleCommand extends ContainerAwareCommand
+class GenerateBundleCommand extends GeneratorCommand
 {
     private $generator;
 
@@ -63,6 +63,7 @@ EOT
      * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
+     * @throws \RuntimeException
      * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -101,7 +102,7 @@ EOT
             $dir = getcwd() . '/' . $dir;
         }
 
-        $generator = $this->getGenerator();
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($namespace, $bundle, $dir, $format);
 
         $output->writeln('Generating the bundle code: <info>OK</info>');
@@ -142,7 +143,7 @@ EOT
                 'The namespace should begin with a "vendor" name like your company name, your', 'project name, or your client name, followed by one or more optional category',
                 'sub-namespaces, and it should end with the bundle name itself', '(which must have <comment>Bundle</comment> as a suffix).', '',
                 'See http://symfony.com/doc/current/cookbook/bundles/best_practices.html#index-1 for more', 'details on bundle naming conventions.', '',
-                'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.', '',));
+                'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problems.', '',));
 
         $namespace = $dialog
             ->askAndValidate($output, $dialog->getQuestion('Bundle namespace', $input->getOption('namespace')),
@@ -266,42 +267,8 @@ EOT
         }
     }
 
-    /**
-     * @return BundleGenerator
-     */
-    protected function getGenerator()
+    protected function createGenerator()
     {
-        if (null === $this->generator) {
-            $this->generator = new BundleGenerator($this
-                ->getContainer()
-                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/bundle');
-        }
-
-        return $this->generator;
-    }
-
-    /**
-     * @param BundleGenerator $generator
-     */
-    public function setGenerator(BundleGenerator $generator)
-    {
-        $this->generator = $generator;
-    }
-
-    /**
-     * @return DialogHelper
-     */
-    protected function getDialogHelper()
-    {
-        $dialog = $this
-            ->getHelperSet()
-            ->get('dialog');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper') {
-            $this
-                ->getHelperSet()
-                ->set($dialog = new DialogHelper());
-        }
-
-        return $dialog;
+        return new BundleGenerator($this->getContainer()->get('filesystem'));
     }
 }

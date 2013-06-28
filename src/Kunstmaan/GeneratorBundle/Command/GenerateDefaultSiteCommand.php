@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Generator;
 
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
@@ -19,8 +18,6 @@ use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
  */
 class GenerateDefaultSiteCommand extends GenerateDoctrineCommand
 {
-
-    private $siteGenerator;
 
     /**
      * @see Command
@@ -75,7 +72,8 @@ EOT
         $dialog->writeSection($output, 'Site Generation');
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
-        $this->getSiteGenerator($output, $dialog)->generate($bundle, $prefix, $rootDir);
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator->generate($bundle, $prefix, $rootDir, $output);
     }
 
     /**
@@ -123,46 +121,11 @@ EOT
         }
     }
 
-    /**
-     * @return DialogHelper
-     */
-    protected function getDialogHelper()
-    {
-        $dialog = $this
-            ->getHelperSet()
-            ->get('dialog');
-        if (!$dialog || get_class($dialog) !== 'Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper') {
-            $this
-                ->getHelperSet()
-                ->set($dialog = new DialogHelper());
-        }
-
-        return $dialog;
-    }
-
-    /**
+    protected function createGenerator()
      * @param OutputInterface $output The output
      * @param DialogHelper    $dialog The dialog helper
      *
-     * @return DefaultSiteGenerator
-     */
-    protected function getSiteGenerator(OutputInterface $output, DialogHelper $dialog)
     {
-        if (null === $this->siteGenerator) {
-            $this->siteGenerator = new DefaultSiteGenerator($this
-                ->getContainer()
-                ->get('filesystem'), __DIR__ . '/../Resources/skeleton/defaultsite', $output, $dialog);
-        }
-
-        return $this->siteGenerator;
+        return new DefaultSiteGenerator($this->getContainer()->get('filesystem'), '/defaultsite');
     }
-
-    /**
-     * @param DefaultSiteGenerator $siteGenerator
-     */
-    public function setSiteGenerator(DefaultSiteGenerator $siteGenerator)
-    {
-        $this->siteGenerator = $siteGenerator;
-    }
-
 }
