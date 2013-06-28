@@ -121,7 +121,7 @@ EOT
         }
     }
 
-    protected function createGenerator()     
+    protected function createGenerator()
     {
         return new DefaultSiteGenerator($this->getContainer()->get('filesystem'), '/defaultsite');
     }
