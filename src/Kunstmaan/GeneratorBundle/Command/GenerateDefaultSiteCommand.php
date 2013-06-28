@@ -121,10 +121,7 @@ EOT
         }
     }
 
-    protected function createGenerator()
-     * @param OutputInterface $output The output
-     * @param DialogHelper    $dialog The dialog helper
-     *
+    protected function createGenerator()     
     {
         return new DefaultSiteGenerator($this->getContainer()->get('filesystem'), '/defaultsite');
     }
