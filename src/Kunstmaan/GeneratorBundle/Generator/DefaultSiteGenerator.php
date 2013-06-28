@@ -58,10 +58,12 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $this->generateEntities($bundle, $parameters, $output);
         $this->generateForm($bundle, $parameters, $output);
-        $this->generatePagepartConfigs($bundle, $parameters, $output);
-        $this->generatePagetemplateConfigs($bundle, $parameters, $ouput);
         $this->generateFixtures($bundle, $parameters, $output);
         $this->generateAssets($bundle, $output);
+        // CAUTION : Following templates change the skeleton dir array
+        // TODO Find a better way
+        $this->generatePagepartConfigs($bundle, $parameters, $output);
+        $this->generatePagetemplateConfigs($bundle, $parameters, $output);
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
         $this->generateBehatTests($bundle, $output);
         $this->generateUnitTests($bundle, $parameters, $output);
@@ -74,7 +76,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generateUnitTests(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Tests/Controller", $bundle->getPath());
+        $dirPath = sprintf("%s/Tests/Controlapp/console", $bundle->getPath());
         $skeletonDir = sprintf("%s/Tests/Controller", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
@@ -91,6 +93,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     {
         $dirPath = sprintf("%s/Features", $bundle->getPath());
         $skeletonDir = sprintf("%s/Features", $this->fullSkeletonDir);
+        $this->setSkeletonDirs(array($skeletonDir));
 
         $this->filesystem->copy($skeletonDir . '/homepage.feature', $dirPath . '/homepage.feature', true);
 
@@ -179,6 +182,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     {
         $dirPath = sprintf("%s/Resources/public", $bundle->getPath());
         $skeletonDir = sprintf("%s/Resources/public", $this->fullSkeletonDir);
+        $this->setSkeletonDirs(array($skeletonDir));
 
         $assets = array(
             '/css/app.css',
@@ -228,14 +232,15 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generatePagepartConfigs(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Resources/config';
+        $dirPath = sprintf("%s/Resources/config", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/config", $this->fullSkeletonDir);
+        $this->setSkeletonDirs(array($skeletonDir));
 
-        $this->filesystem->copy($fullSkeletonDir . '/pageparts/banners.yml', $dirPath . '/Resources/config/pageparts/banners.yml', true);
-        $this->filesystem->copy($fullSkeletonDir . '/pageparts/form.yml', $dirPath . '/Resources/config/pageparts/form.yml', true);
-        $this->filesystem->copy($fullSkeletonDir . '/pageparts/home.yml', $dirPath . '/Resources/config/pageparts/home.yml', true);
-        $this->filesystem->copy($fullSkeletonDir . '/pageparts/main.yml', $dirPath . '/Resources/config/pageparts/main.yml', true);
-        $this->filesystem->copy($fullSkeletonDir . '/pageparts/footer.yml', $dirPath . '/Resources/config/pageparts/footer.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/banners.yml', $dirPath . '/pageparts/banners.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/form.yml', $dirPath . '/pageparts/form.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/home.yml', $dirPath . '/pageparts/home.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/main.yml', $dirPath . '/pageparts/main.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/footer.yml', $dirPath . '/pageparts/footer.yml', true);
 
         $output->writeln('Generating PagePart Configurators : <info>OK</info>');
     }
@@ -249,19 +254,20 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generatePagetemplateConfigs(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Resources/config';
+        $dirPath = sprintf("%s/Resources/config/pagetemplates", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/config/pagetemplates", $this->fullSkeletonDir);
+        $this->setSkeletonDirs(array($skeletonDir));
 
-        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/contentpage-singlecolumn.yml', $dirPath . '/Resources/config/pagetemplates/contentpage-singlecolumn.yml', true);
-        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/contentpage-singlecolumn.yml');
-        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/contentpage.yml', $dirPath . '/Resources/config/pagetemplates/contentpage.yml', true);
-        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/contentpage.yml');
-        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/formpage-singlecolumn.yml', $dirPath . '/Resources/config/pagetemplates/formpage-singlecolumn.yml', true);
-        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/formpage-singlecolumn.yml');
-        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/formpage.yml', $dirPath . '/Resources/config/pagetemplates/formpage.yml', true);
-        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/formpage.yml');
-        $this->filesystem->copy($fullSkeletonDir . '/pagetemplates/homepage.yml', $dirPath . '/Resources/config/pagetemplates/homepage.yml', true);
-        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Resources/config/pagetemplates/homepage.yml');
+        $this->filesystem->copy($skeletonDir . '/contentpage-singlecolumn.yml', $dirPath . '/contentpage-singlecolumn.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/contentpage-singlecolumn.yml');
+        $this->filesystem->copy($skeletonDir . '/contentpage.yml', $dirPath . '/contentpage.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/contentpage.yml');
+        $this->filesystem->copy($skeletonDir . '/formpage-singlecolumn.yml', $dirPath . '/formpage-singlecolumn.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/formpage-singlecolumn.yml');
+        $this->filesystem->copy($skeletonDir . '/formpage.yml', $dirPath . '/formpage.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/formpage.yml');
+        $this->filesystem->copy($skeletonDir . '/homepage.yml', $dirPath . '/homepage.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage.yml');
 
         $output->writeln('Generating PageTemplate Configurators : <info>OK</info>');
     }
