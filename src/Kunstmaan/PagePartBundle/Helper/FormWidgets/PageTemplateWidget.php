@@ -102,7 +102,9 @@ class PageTemplateWidget extends FormWidget
         $this->pageTemplates = $pageTemplateConfigurationReader->getPageTemplates($page);
         $pagePartConfigurationReader = new PagePartConfigurationReader($kernel);
         $this->pagePartAdminConfigurations = $pagePartConfigurationReader->getPagePartAdminConfigurators($this->page);
-        $this->pageTemplateConfiguration = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration')->findOrCreateFor($page);
+        $repo = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
+        $repo->setContainer($kernel->getContainer());
+        $this->pageTemplateConfiguration = $repo->findOrCreateFor($page);
 
         foreach ($this->getPageTemplate()->getRows() as $row) {
             foreach ($row->getRegions() as $region) {
