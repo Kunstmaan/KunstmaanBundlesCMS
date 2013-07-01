@@ -23,10 +23,9 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('analyzer_languages')
-                    ->useAttributeAsKey('lang')
+                    ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->children()
-                            ->scalarNode('lang')->end()
                             ->scalarNode('analyzer')->end()
                         ->end()
                     ->end()
