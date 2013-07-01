@@ -89,6 +89,7 @@ class PageTemplateTwigExtension extends \Twig_Extension
     {
         /**@var $entityRepository PageTemplateConfigurationRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
+        $entityRepository->setContainer($this->kernel->getContainer());
         $pageTemplateConfiguration = $entityRepository->findOrCreateFor($page);
 
         return $pageTemplateConfiguration->getPageTemplate();
