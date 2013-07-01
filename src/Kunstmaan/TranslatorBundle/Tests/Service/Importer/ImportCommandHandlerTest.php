@@ -15,6 +15,9 @@ class ImportCommandHandlerTest extends BaseTestCase
         $this->importCommandHandler = $this->getContainer()->get('kunstmaan_translator.service.importer.command_handler');
     }
 
+    /**
+     * @group handler
+     */
     public function testExecuteImportCommand()
     {
         $importCommand = new ImportCommand();

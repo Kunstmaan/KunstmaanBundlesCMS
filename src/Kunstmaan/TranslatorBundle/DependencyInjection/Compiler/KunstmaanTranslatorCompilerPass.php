@@ -12,7 +12,7 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
     {
         $loaderRefs = array();
 
-        // look for all translation file loaders
+        // look for all tagged translation file loaders, inject them into the importer
         foreach ($container->findTaggedServiceIds('translation.loader') as $id => $attributes) {
             $loaderRefs[$attributes[0]['alias']] = new Reference($id);
         }

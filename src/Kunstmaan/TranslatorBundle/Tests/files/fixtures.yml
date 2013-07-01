@@ -1,0 +1,28 @@
+Kunstmaan\TranslatorBundle\Entity\TranslationDomain:
+    messages_domain:
+        name: messages
+    validation_domain:
+        name: validation
+
+Kunstmaan\TranslatorBundle\Entity\Translation:
+    errors_{1..50}:
+        keyword: errors.<word()>.<word()>_<randomDigitNotNull()>
+        locale: nl
+        domain: @messages_domain
+        text: <text()>
+        createdAt: <dateTime()>
+        updatedAt: <dateTime()>
+    exceptions_{1..5}:
+        keyword: exceptions.wrong_number.<word()>
+        locale : <languageCode()>
+        text: <text()>
+        createdAt: <dateTime()>
+        updatedAt: <dateTime()>
+        domain: @validation_domain
+    headers_updated:
+        keyword: headers.frontpage
+        text: 'a not yet updated frontpage header'
+        createdAt: <dateTime()>
+        updatedAt: <dateTime()>
+        locale: en
+        domain: @messages_domain

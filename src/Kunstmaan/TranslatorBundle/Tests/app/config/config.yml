@@ -15,3 +15,18 @@ framework:
 
 kunstmaan_translator:
     managed_locales: ['nl','en','de']
+
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_sqlite
+                path:     %kernel.cache_dir%/test.db
+    orm:
+        default_entity_manager:   default
+        entity_managers:
+            default:
+                connection:       default
+                mappings:
+                    KunstmaanTranslatorBundle: ~

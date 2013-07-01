@@ -11,10 +11,14 @@
          bootstrap="Tests/app/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="KunstmaanVotingBundle Test Suite">
+        <testsuite name="KunstmaanTranslationBundle">
             <directory>./Tests/</directory>
         </testsuite>
     </testsuites>
+
+    <listeners>
+        <listener class="TestListener" file="Tests/TestListener.php"/>
+    </listeners>
 
 </phpunit>
 

@@ -27,3 +27,12 @@ services:
 
     kunstmaan_translator.service.importer.importer:
         class: "Kunstmaan\TranslatorBundle\Service\Importer\Importer"
+        calls:
+            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]] # default, maken via config var
+
+    kunstmaan_translator.service.stasher.doctrine_orm:
+        class: "Kunstmaan\TranslatorBundle\Service\Stasher\DoctrineORMStasher"
+        calls:
+            - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
+            - [setTranslationDomainRepository, [@kunstmaan_translator.repository.translation_domain]]
+            - [setEntityManager, [@doctrine.orm.default_entity_manager]]

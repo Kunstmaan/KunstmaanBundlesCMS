@@ -1,6 +1,8 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Tests;
 
+use Doctrine\DBAL\DriverManager;
+
 include __DIR__.'/app/AppKernel.php';
 
 abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
@@ -8,11 +10,13 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     public $container;
     public $kernel;
+    public $connection;
+    public $em;
+    public static $databaseCreated = false;
 
     public function setUp()
     {
         parent::setUp();
-
         $this->bootKernel();
     }
 
