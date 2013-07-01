@@ -18,9 +18,9 @@ class ImportTranslationsCommand extends ContainerAwareCommand
         ->setName('kuma_translator:import')
         ->setDescription('Import translation files into database')
         ->addOption('force',        'f',    InputOption::VALUE_NONE, 'Force import, overwrite all existing database entries')
-        ->addOption('locale',       'l',    InputOption::VALUE_NONE, 'Language import, only import a specific locale')
+        ->addOption('locale',       'l',    InputOption::VALUE_REQUIRED, 'Language import, only import a specific locale')
         ->addOption('globals',      'g',    InputOption::VALUE_NONE, 'Global app import, import the global translations of your app')
-        ->addOption('bundle',       'b',    InputOption::VALUE_NONE, 'Bundle import, import the translations of a specific bundle')
+        ->addOption('bundle',       'b',    InputOption::VALUE_REQUIRED, 'Bundle import, import the translations of a specific bundle, use "all" for all bundles')
         ;
     }
 
@@ -28,13 +28,13 @@ class ImportTranslationsCommand extends ContainerAwareCommand
     {
         $force =        $input->getOption('force');
         $locale =       $input->getOption('locale');
-        $globals =      $input->getArgument('globals');
-        $bundle =       $input->getArgument('bundle');
+        $globals =      $input->getOption('globals');
+        $bundle =       $input->getOption('bundle') ;
 
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce($force)
-            ->setLanguage($locale)
+            ->setLocale($locale)
             ->setGlobals($globals)
             ->setBundle($bundle);
 

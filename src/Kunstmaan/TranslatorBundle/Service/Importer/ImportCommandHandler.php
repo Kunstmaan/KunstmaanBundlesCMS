@@ -16,7 +16,7 @@ class ImportCommandHandler
 
     public function executeImportCommand(ImportCommand $importCommand)
     {
-        if($importCommand->getBundle() === false) {
+        if($importCommand->getBundle() === false || $importCommand->getBundle() === null) {
             return $this->importGlobalTranslationFiles($importCommand);
         }
 
@@ -31,16 +31,35 @@ class ImportCommandHandler
 
     public function importBundleTranslationFiles(ImportCommand $importCommand)
     {
+        if(strtolower($importCommand->getBundle()) == 'all') {
+            $this->importAllBundlesTranslationFiles($importCommand);
+        }
+
+        $this->importSingleBundleTranslationFiles($importCommand);
+    }
+
+    public function importAllBundlesTranslationFiles(ImportCommand $importCommand)
+    {
+        $bundles = array_map('strtolower', array_keys($this->kernel->getBundles()));
+
+        foreach ($bundles as $bundle) {
+            $importCommand->setBundle($bundle);
+            $this->importSingleBundleTranslationFiles($importCommand);
+        }
+    }
+
+    public function importSingleBundleTranslationFiles(ImportCommand $importCommand)
+    {
         $this->validateBundleName($importCommand->getBundle());
         $bundles = array_change_key_case($this->kernel->getBundles(), CASE_LOWER);
         $finder = $this->translationFileExplorer->find($bundles[$importCommand->getBundle()]->getPath(), $this->determineLocalesToImport($importCommand));
         $this->importTranslationFiles($finder, $importCommand->getForce());
     }
 
-    public function importTranslationFiles(Finder $finder, $force = flase)
+    public function importTranslationFiles($finder, $force = flase)
     {
         if (!$finder instanceof Finder) {
-            throw new \Exception('No files found.');
+            return false;
         }
 
         foreach ($finder as $file) {
