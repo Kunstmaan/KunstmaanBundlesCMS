@@ -33,8 +33,8 @@ class KunstmaanSearchExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($container->getParameter("analyzer_languages")));
 
         $analyzers = $container->getParameter("analyzer_languages");
-        $this->assertEquals('ar', $analyzers[0]['lang']);
-        $this->assertEquals('arabic', $analyzers[0]['analyzer']);
+        $this->assertTrue(array_key_exists('ar', $analyzers));
+        $this->assertEquals('arabic', $analyzers['ar']['analyzer']);
     }
 
     /**

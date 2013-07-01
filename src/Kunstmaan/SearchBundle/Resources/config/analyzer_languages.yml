@@ -1,28 +1,28 @@
-- { lang: 'ar', analyzer: 'arabic'}
-- { lang: 'hy', analyzer: 'armenian'}
-- { lang: 'eu', analyzer: 'basque'}
-- { lang: 'bg', analyzer: 'bulgarian'}
-- { lang: 'ca', analyzer: 'catalan'}
-- { lang: 'zh', analyzer: 'chinese'}
-- { lang: 'cs', analyzer: 'czech'}
-- { lang: 'da', analyzer: 'danish'}
-- { lang: 'nl', analyzer: 'dutch'}
-- { lang: 'en', analyzer: 'english'}
-- { lang: 'fi', analyzer: 'finnish'}
-- { lang: 'fr', analyzer: 'french'}
-- { lang: 'gl', analyzer: 'galician'}
-- { lang: 'de', analyzer: 'german'}
-- { lang: 'el', analyzer: 'greek'}
-- { lang: 'hi', analyzer: 'hindi'}
-- { lang: 'hu', analyzer: 'hungarian'}
-- { lang: 'id', analyzer: 'indonesian'}
-- { lang: 'it', analyzer: 'italian'}
-- { lang: 'no', analyzer: 'norwegian'}
-- { lang: 'fa', analyzer: 'persian'}
-- { lang: 'pt', analyzer: 'portuguese'}
-- { lang: 'ro', analyzer: 'romanian'}
-- { lang: 'ru', analyzer: 'russian'}
-- { lang: 'es', analyzer: 'spanish'}
-- { lang: 'sv', analyzer: 'swedish'}
-- { lang: 'tr', analyzer: 'turkish'}
-- { lang: 'th', analyzer: 'thai'}
+ar: { analyzer: 'arabic' }
+hy: { analyzer: 'armenian' }
+eu: { analyzer: 'basque' }
+bg: { analyzer: 'bulgarian' }
+ca: { analyzer: 'catalan' }
+zh: { analyzer: 'chinese' }
+cs: { analyzer: 'czech' }
+da: { analyzer: 'danish' }
+nl: { analyzer: 'dutch' }
+en: { analyzer: 'english' }
+fi: { analyzer: 'finnish' }
+fr: { analyzer: 'french' }
+gl: { analyzer: 'galician' }
+de: { analyzer: 'german' }
+el: { analyzer: 'greek' }
+hi: { analyzer: 'hindi' }
+hu: { analyzer: 'hungarian' }
+id: { analyzer: 'indonesian' }
+it: { analyzer: 'italian' }
+no: { analyzer: 'norwegian' }
+fa: { analyzer: 'persian' }
+pt: { analyzer: 'portuguese' }
+ro: { analyzer: 'romanian' }
+ru: { analyzer: 'russian' }
+es: { analyzer: 'spanish' }
+sv: { analyzer: 'swedish' }
+tr: { analyzer: 'turkish' }
+th: { analyzer: 'thai' }
