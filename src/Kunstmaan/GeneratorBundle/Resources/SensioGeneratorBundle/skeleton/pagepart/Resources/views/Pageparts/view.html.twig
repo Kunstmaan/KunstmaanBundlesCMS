@@ -1,0 +1,13 @@
+<div class="{{ pagepart }}">
+{% for key, fieldArray in fields %}
+{% if key == 'single_line' or key == 'multi_line' %}
+    <p>{{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ " }}" }}</p>
+{% elseif key == 'link' %}
+    <a href="{{ "{{ resource." ~ fieldArray['url']['fieldName'] ~ " }}" }}" {{ "{% if resource." ~ fieldArray['new_window']['fieldName'] ~ " %}target=\"_blank\"{% endif %}" }}>{{ "{{ resource." ~ fieldArray['text']['fieldName'] ~ " }}" }}</a>
+{% elseif key == 'image' %}
+    {{ "{% if resource." ~ fieldArray['image']['fieldName'] ~ " is not empty %}" }}<img src="{{ "{{ asset(resource." ~ fieldArray['image']['fieldName'] ~ ".url) }}" }}" {{ "{% if resource." ~ fieldArray['alt_text']['fieldName'] ~ " is not empty %}" }}alt="{{ "{{ resource." ~ fieldArray['alt_text']['fieldName'] ~ " }}" }}"{{ "{% endif %}" }} />{{ "{% endif %}" }}
+{% elseif key == 'boolean' %}
+    <div>{{ "{% if resource." ~ fieldArray[0]['fieldName'] ~ " %}yes{% else %}no{% endif %}" }}</div>
+{% endif %}
+{% endfor %}
+</div>
