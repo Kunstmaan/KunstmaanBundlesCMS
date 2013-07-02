@@ -75,7 +75,7 @@ EOT
         $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
         $fields = array();
         foreach ($this->fields as $fieldInfo) {
-            $fields = array_merge($fields, $this->getEntityFields($fieldInfo['name'], $fieldInfo['type']));
+            $fields = array_merge($fields, $this->getEntityFields($fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']));
         }
 
         $this->createGenerator()->generate($bundle, $this->pagepartName, $fields, $this->sections);
@@ -245,7 +245,40 @@ EOT
             $typeQuestion = $this->dialog->getQuestion('Field type', null);
             $typeId = $this->dialog->select($this->output, $typeQuestion, $typeSelect, null, false, 'Value "%s" is invalid');
 
-            $data = array('name' => $fieldName, 'type' => $typeStrings[$typeId]);
+            // If single -or multipe entity reference in chosen, we need to ask for the entity name
+            if (in_array($typeStrings[$typeId], array('single_ref', 'multi_ref'))) {
+                $nameQuestion = $this->dialog->getQuestion('Reference entity name (eg. FaqItem, Blog\Comment)', null);
+                while (true) {
+                    $name = $this->dialog->ask($output, $nameQuestion, null);
+                    try {
+                        // Check reserved words
+                        if ($this->getGenerator()->isReservedKeyword($name)){
+                            $this->writeError(sprintf('"%s" is a reserved word', $name));
+                            continue;
+                        }
+
+                        // Check that entity does not already exist
+                        $bundle = $this->getApplication()->getKernel()->getBundle($this->bundleName);
+                        $path = $bundle->getPath().'/Entity/'.str_replace('\\', '/', $name).'.php';
+                        if (!file_exists($path)) {
+                            $this->writeError(sprintf('Entity "%s" not found on this path "%s"', $name, $path));
+                            continue;
+                        }
+
+                        // TODO: add extra validation, entity should not be a Page or Pagepart
+
+                        // If we get here, the name is valid
+                        break;
+                    } catch (\Exception $e) {
+                        $this->writeError(sprintf('Bundle "%s" does not exist', $this->bundleName));
+                    }
+                }
+                $extra = $name;
+            } else {
+                $extra = null;
+            }
+
+            $data = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra);
             $fields[$fieldName] = $data;
         }
 
@@ -332,10 +365,13 @@ EOT
         $types = array();
         $types[$counter++] = $niceNames ? 'Single line text' : 'single_line';
         $types[$counter++] = $niceNames ? 'Multi line text' : 'multi_line';
+        $types[$counter++] = $niceNames ? 'Rich text' : 'rich_text';
         $types[$counter++] = $niceNames ? 'Link (url, text, new window)' : 'link';
         if ($this->isBundleAvailable('KunstmaanMediaPagePartBundle')) {
             $types[$counter++] = $niceNames ? 'Image (media, alt text)' : 'image';
         }
+        $types[$counter++] = $niceNames ? 'Single entity reference' : 'single_ref';
+        $types[$counter++] = $niceNames ? 'Multi entity reference' : 'multi_ref';
         $types[$counter++] = $niceNames ? 'Boolean' : 'boolean';
 
         return $types;
@@ -346,9 +382,10 @@ EOT
      *
      * @param string $name
      * @param string $type
+     * @param string|null $extra
      * @return array
      */
-    private function getEntityFields($name, $type)
+    private function getEntityFields($name, $type, $extra)
     {
         $fields = array();
         switch ($type) {
@@ -361,6 +398,7 @@ EOT
                 );
                 break;
             case 'multi_line':
+            case 'rich_text':
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'text',
@@ -370,13 +408,13 @@ EOT
             case 'link':
                 foreach (array('url', 'text') as $subField) {
                     $fields[$type][$subField] = array(
-                        'fieldName' => lcfirst(Container::camelize($name . '_' . $subField)),
+                        'fieldName' => lcfirst(Container::camelize($name.'_'.$subField)),
                         'type' => 'string',
                         'formType' => $subField == 'url' ? 'urlchooser' : 'text'
                     );
                 }
                 $fields[$type]['new_window'] = array(
-                    'fieldName' => lcfirst(Container::camelize($name . '_new_window')),
+                    'fieldName' => lcfirst(Container::camelize($name.'_new_window')),
                     'type' => 'boolean',
                     'nullable' => true,
                     'formType' => 'checkbox'
@@ -384,20 +422,60 @@ EOT
                 break;
             case 'image':
                 $fields[$type]['image'] = array(
-                    'fieldName' => lcfirst(Container::camelize($name . '_image')),
+                    'fieldName' => lcfirst(Container::camelize($name.'_image')),
                     'type' => 'image',
                     'formType' => 'media',
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
                     'joinColumn' => array(
-                        'name' => str_replace('.', '_', Container::underscore($name . '_image_id')),
+                        'name' => str_replace('.', '_', Container::underscore($name.'_image_id')),
                         'referencedColumnName' => 'id'
                     )
                 );
                 $fields[$type]['alt_text'] = array(
-                    'fieldName' => lcfirst(Container::camelize($name . '_alt_text')),
+                    'fieldName' => lcfirst(Container::camelize($name.'_alt_text')),
                     'type' => 'text',
                     'nullable' => true,
                     'formType' => 'text'
+                );
+                break;
+            case 'single_ref':
+                $em = $this->getContainer()->get('doctrine')->getEntityManager();
+                $entityName = $em->getClassMetadata($this->bundleName.':'.$extra)->name;
+                $fields[$type][] = array(
+                    'fieldName' => lcfirst(Container::camelize($name)),
+                    'type' =>  'entity',
+                    'formType' => 'entity',
+                    'targetEntity' => $entityName,
+                    'joinColumn' => array(
+                        'name' => str_replace('.', '_', Container::underscore($name.'_id')),
+                        'referencedColumnName' => 'id'
+                    )
+                );
+                break;
+            case 'multi_ref':
+                $em = $this->getContainer()->get('doctrine')->getEntityManager();
+                $entityName = $em->getClassMetadata($this->bundleName.':'.$extra)->name;
+                $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
+                list($project, $tmp) = explode("\\", $bundle->getNameSpace());
+                $parts = explode("\\", $entityName);
+                $joinTableName = strtolower($project.'__'.$this->pagepartName.'_'.$parts[count($parts)-1]);
+                $fields[$type][] = array(
+                    'fieldName' => lcfirst(Container::camelize($name)),
+                    'type' => 'entity',
+                    'formType' => 'entity',
+                    'targetEntity' => $entityName,
+                    'joinTable' => array(
+                        'name' => $joinTableName,
+                        'joinColumns' => array(array(
+                            'name' => strtolower($this->pagepartName).'_id',
+                            'referencedColumnName' => 'id'
+                        )),
+                        'inverseJoinColumns' => array(array(
+                            'name' => strtolower($parts[count($parts)-1]).'_id',
+                            'referencedColumnName' => 'id',
+                            'unique' => true
+                        ))
+                    )
                 );
                 break;
             case 'boolean':

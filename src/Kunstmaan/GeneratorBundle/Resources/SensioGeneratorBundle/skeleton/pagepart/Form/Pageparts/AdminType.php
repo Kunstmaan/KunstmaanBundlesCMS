@@ -24,19 +24,31 @@ class {{ className }} extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-{% for field in fields %}
+{% for key, fieldArray in fields %}{% for field in fieldArray %}
         $builder->add(
             '{{ field.fieldName }}',
             '{{ field.formType }}',
             array(
 {% if field.formType == 'media' %}                'pattern' => 'KunstmaanMediaBundle_chooser',
 {% endif %}
+{% if key == 'rich_text' %}                'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'rich_editor'),
+{% endif %}
+{% if key == 'multi_line' %}                'attr' => array('rows' => 10, 'cols' => 600),
+{% endif %}
+{% if key == 'single_ref' %}                'class' => '{{ field.targetEntity }}',
+                'expanded' => false,
+                'multiple' => false,
+{% endif %}
+{% if key == 'multi_ref' %}                'class' => '{{ field.targetEntity }}',
+                'expanded' => true,
+                'multiple' => true,
+{% endif %}
 {% if field.nullable is defined and field.nullable %}                'required' => false,
 {% endif %}
                 'label' => '{{ field.fieldName }}'
             )
         );
-{% endfor %}
+{% endfor %}{% endfor %}
     }
 
     /**

@@ -123,6 +123,8 @@ class PagepartGenerator extends Generator
             foreach ($fieldArray as $field) {
                 if (array_key_exists('joinColumn', $field)) {
                     $class->mapManyToOne($field);
+                } elseif (array_key_exists('joinTable', $field)) {
+                    $class->mapManyToMany($field);
                 } else {
                     $class->mapField($field);
                 }
@@ -159,19 +161,12 @@ class PagepartGenerator extends Generator
         $savePath = $this->bundle->getPath().'/Form/Pageparts/'.$className.'.php';
         $name = str_replace("\\", '_', strtolower($this->bundle->getNamespace())).'_'.strtolower($this->entity).'type';
 
-        $fields = array();
-        foreach ($this->fields as $fieldArray) {
-            foreach ($fieldArray as $field) {
-                $fields[] = $field;
-            }
-        }
-
         $params = array(
             'className' => $className,
             'name' => $name,
             'namespace' => $this->bundle->getNamespace(),
             'entity' => '\\'.$this->bundle->getNamespace().'\Entity\\Pageparts\\'.$this->entity,
-            'fields' => $fields
+            'fields' => $this->fields
         );
         $this->renderFile('/Form/Pageparts/AdminType.php', $savePath, $params);
 
