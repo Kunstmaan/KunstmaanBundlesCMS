@@ -43,13 +43,6 @@ interface StasherInterface
     public function getTranslationGroupByKeywordAndDomain($keyword, $domain);
 
     /**
-     * Get the domain object by specified name
-     *
-     * @return \Kunstmaan\TranslatorBundle\Entity\TranslationDomain
-     **/
-    public function getTranslationDomainByName($name);
-
-    /**
      * Creates and returnes the translationDomain by the given name
      *
      * @return \Kunstmaan\TranslatorBundle\Entity\TranslationDomain

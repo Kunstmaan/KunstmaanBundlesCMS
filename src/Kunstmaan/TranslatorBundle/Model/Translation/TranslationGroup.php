@@ -7,7 +7,7 @@ namespace Kunstmaan\TranslatorBundle\Model\Translation;
 class TranslationGroup
 {
     /**
-     * All translations for the key
+     * All translations for a specific key (Kunstmaan\TranslatorBundle\Model\Translation\Translation)
      *
      * @var Doctrine\Common\Collections\ArrayCollection
      **/
@@ -21,11 +21,15 @@ class TranslationGroup
     private $keyword;
 
     /**
-     * The domain of this group
+     * The domain name of this group
      *
-     * @var Kunstmaan\TranslatorBundle\Entity\TranslationDomain
      **/
-    private $translationDomain;
+    private $domain;
+
+    public function __construct()
+    {
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection;
+    }
 
     public function hasTranslation($locale)
     {
@@ -56,6 +60,11 @@ class TranslationGroup
         return null;
     }
 
+    public function addTranslation(Translation $translation)
+    {
+        $this->translations->add($translation);
+    }
+
     public function getTranslations()
     {
         return $this->translations;
@@ -76,13 +85,13 @@ class TranslationGroup
         $this->keyword = $keyword;
     }
 
-    public function getTranslationDomain()
+    public function getDomain()
     {
-        return $this->translationDomain;
+        return $this->domain;
     }
 
-    public function setTranslationDomain($translationDomain)
+    public function setDomain($domain)
     {
-        $this->translationDomain = $translationDomain;
+        $this->domain = $domain;
     }
 }

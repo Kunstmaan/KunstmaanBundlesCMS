@@ -21,9 +21,22 @@ class ImporterTest extends BaseTestCase
     /**
      * @group importer
      */
-    public function testImportNewDomainFileNonForced()
+    public function testImportNewDomainFileForced()
     {
         foreach ($this->getNewDomainTestFinder() as $file) {
+            $this->importer->import($file, true);
+        }
+
+        $translation = $this->translationRepository->findOneBy(array('keyword' => 'newdomain.name', 'locale' => 'de'));
+        $this->assertEquals('a new domain', $translation->getText());
+    }
+
+    /**
+     * @group importer
+     */
+    public function testImportExistingDomainFileNonForced()
+    {
+        foreach ($this->getExistingDomainTestFinder() as $file) {
             $this->importer->import($file, false);
         }
 
@@ -31,12 +44,12 @@ class ImporterTest extends BaseTestCase
         $this->assertEquals('a not yet updated frontpage header', $translation->getText());
     }
 
-     /**
-     * @group importer-forced
+    /**
+     * @group importer
      */
-    public function testImportNewDomainFileForced()
+    public function testImportExistingDomainFileForced()
     {
-        foreach ($this->getNewDomainTestFinder() as $file) {
+        foreach ($this->getExistingDomainTestFinder() as $file) {
             $this->importer->import($file, true);
         }
 
@@ -45,6 +58,18 @@ class ImporterTest extends BaseTestCase
     }
 
     public function getNewDomainTestFinder()
+    {
+        $finder = new Finder;
+
+        $finder->files()
+                ->name('newdomain.de.yml')
+                ->in($this->getContainer()->getParameter('kernel.root_dir').'/Resources/translations/');
+
+        return $finder;
+    }
+
+
+     public function getExistingDomainTestFinder()
     {
         $finder = new Finder;
 

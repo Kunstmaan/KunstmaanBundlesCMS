@@ -29,6 +29,7 @@ services:
         class: "Kunstmaan\TranslatorBundle\Service\Importer\Importer"
         calls:
             - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]] # default, maken via config var
+            - [setTranslationGroupManager, [@kunstmaan_translator.service.group_manager]] # default, maken via config var
 
     kunstmaan_translator.service.stasher.doctrine_orm:
         class: "Kunstmaan\TranslatorBundle\Service\Stasher\DoctrineORMStasher"
@@ -36,3 +37,10 @@ services:
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
             - [setTranslationDomainRepository, [@kunstmaan_translator.repository.translation_domain]]
             - [setEntityManager, [@doctrine.orm.default_entity_manager]]
+
+    kunstmaan_translator.service.group_manager:
+        class: "Kunstmaan\TranslatorBundle\Service\TranslationGroupManager"
+        calls:
+            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]] # this should be able to change from within the config file
+            - [setTranslationClass, ["Kunstmaan\TranslatorBundle\Entity\Translation"]] # this should be able to change from within the config file
+            - [setTranslationDomainClass, ["Kunstmaan\TranslatorBundle\Entity\TranslationDomain"]] # this should be able to change from within the config file

@@ -35,24 +35,19 @@ class DoctrineORMStasher implements StasherInterface
 
     public function getTranslationGroupByKeywordAndDomain($keyword, $domain)
     {
-        $translations = $this->translationRepository->findBy(array('keyword' => $keyword, 'domain' => $domain));
+        $translationDomain = $this->translationDomainRepository->findOneBy(array('name' => $domain));
+
+        if (! $translationDomain instanceof TranslationDomain) {
+            return null;
+        }
+
+        $translations = $this->translationRepository->findBy(array('keyword' => $keyword, 'domain' => $translationDomain));
         $translationGroup = new TranslationGroup;
-        $translationGroup->setTranslationDomain($domain);
+        $translationGroup->setDomain($domain);
         $translationGroup->setKeyword($keyword);
         $translationGroup->setTranslations($translations);
 
         return $translationGroup;
-    }
-
-    public function getTranslationDomainByName($name)
-    {
-        $result = $this->translationDomainRepository->findBy(array('name' => $name));
-
-        if(is_array($result)) {
-            return reset($result);
-        }
-
-        return null;
     }
 
     public function createTranslationDomain($name)
@@ -60,6 +55,13 @@ class DoctrineORMStasher implements StasherInterface
         $domain = new TranslationDomain;
         $domain->setName($name);
         $this->persist($domain);
+        return $domain;
+    }
+
+    public function getDomainByName($name)
+    {
+        $domain = $this->translationDomainRepository->findOneByName($name);
+
         return $domain;
     }
 

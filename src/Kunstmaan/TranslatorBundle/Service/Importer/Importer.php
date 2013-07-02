@@ -1,8 +1,7 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Service\Importer;
 
-use Kunstmaan\TranslatorBundle\Entity\Translation;
-use Kunstmaan\TranslatorBundle\Entity\TranslationDomain;
+use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 
 class Importer
@@ -10,6 +9,7 @@ class Importer
 
     private $loaders = array();
     private $stasher;
+    private $translationGroupManager;
 
     public function import(\Symfony\Component\Finder\SplFileInfo $file, $force = false)
     {
@@ -25,73 +25,29 @@ class Importer
         $loader = $this->loaders[$extension];
         $messageCatalogue = $loader->load($file->getPathname(), $locale, $domain);
 
-        $translationDomain = $this->stasher->getTranslationDomainByName($domain);
-
-        if (!($translationDomain instanceof TranslationDomain)) {
-            $translationDomain = $this->stasher->createTranslationDomain($domain);
-            $this->stasher->flush($translationDomain);
-        }
-
         foreach ($messageCatalogue->all($domain) as $keyword => $text) {
-            $this->importSingleTranslation($keyword, $text, $locale, $filename, $translationDomain, $force);
+            $this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force);
         }
 
         $this->stasher->flush();
-
     }
 
-    private function importSingleTranslation($keyword, $text, $locale, $filename, $translationDomain, $force = false)
+    private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
-        $translationGroup = $this->stasher->getTranslationGroupByKeywordAndDomain($keyword, $translationDomain);
+
+
+        $translationGroup = $this->stasher->getTranslationGroupByKeywordAndDomain($keyword, $domain);
 
         if (!($translationGroup instanceof TranslationGroup)) {
-            $translationGroup = new TranslationGroup();
-            $translationGroup->setKeyword($keyword);
-            $translationGroup->setTranslationDomain($translationDomain);
+            $translationGroup = $this->translationGroupManager->create($keyword, $domain);
         }
 
-        $translation = $this->addTranslationIfNew($translationGroup, $locale, $text, $filename);
+
+        $translation = $this->translationGroupManager->addTranslation($translationGroup, $locale, $text, $filename);
 
         if ($force === true && ! $translation instanceof Translation) {
-            $translation = $this->updateTranslation($translationGroup, $locale, $text, $filename);
+            $translation = $this->translationGroupManager->updateTranslation($translationGroup, $locale, $text, $filename);
         }
-
-        return $translation;
-    }
-
-
-    /**
-     * Update an existing translation
-     */
-    public function updateTranslation(TranslationGroup $translationGroup, $locale, $text, $filename)
-    {
-        $translation = $translationGroup->getTranslationByLocale($locale);
-        $translation->setText($text);
-        $translation->setFile($filename);
-        return $this->stasher->persist($translation);
-    }
-
-    /**
-     * Checks if the translation exists in the group for this locale, if not, it creates it
-     */
-    public function addTranslationIfNew(TranslationGroup $translationGroup, $locale, $text, $filename)
-    {
-        $translation = null;
-
-        if ($translationGroup->hasTranslation($locale)) {
-            return null;
-        }
-
-        $translation = new Translation;
-        $translation->setLocale($locale);
-        $translation->setText($text);
-        $translation->setDomain($translationGroup->getTranslationDomain());
-        $translation->setFile($filename);
-        $translation->setKeyword($translationGroup->getKeyword());
-        $translation->setCreatedAt(new \DateTime());
-        $translation->setUpdatedAt(new \DateTime());
-
-        $this->stasher->persist($translation);
 
         return $translation;
     }
@@ -114,5 +70,10 @@ class Importer
     public function setStasher($stasher)
     {
         $this->stasher = $stasher;
+    }
+
+    public function setTranslationGroupManager($translationGroupManager)
+    {
+        $this->translationGroupManager = $translationGroupManager;
     }
 }

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\HasLifecycleCallbacks
  */
-class Translation extends AbstractEntity
+class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translation
 {
     /**
      * @ORM\Id
@@ -56,7 +56,7 @@ class Translation extends AbstractEntity
      *
      * @ORM\Column(type="text")
      */
-    private $text;
+    protected $text;
 
      /**
      * @ORM\ManyToOne(targetEntity="TranslationDomain")
