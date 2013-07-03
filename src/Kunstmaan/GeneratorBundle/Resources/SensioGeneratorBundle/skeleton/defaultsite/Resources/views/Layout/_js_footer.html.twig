@@ -1,10 +1,10 @@
 {{ "
     {% javascripts
-        '@" ~ bundle.getName() ~ "/Resources/public/vendor/jquery/jquery.js'
-        '@" ~ bundle.getName() ~ "/Resources/public/vendor/sass-bootstrap/js/bootstrap-modal.js'
-        '@" ~ bundle.getName() ~ "/Resources/public/vendor/sass-bootstrap/js/bootstrap-collapse.js'
-        '@" ~ bundle.getName() ~ "/Resources/public/vendor/flexslider/jquery.flexslider.js'
-        '@" ~ bundle.getName() ~ "/Resources/public/js/script.js'
+        'vendor/jquery/jquery.js'
+        'vendor/sass-bootstrap/js/bootstrap-modal.js'
+        'vendor/sass-bootstrap/js/bootstrap-collapse.js'
+        'vendor/flexslider/jquery.flexslider.js'
+        'js/script.js'
         filter='yui_js'
         output='frontend/footer.js'
     %}
@@ -16,7 +16,7 @@
             {
                 test: Modernizr.inlinesvg,
                     {% javascripts
-                        '@" ~ bundle.getName() ~ "/Resources/public/vendor/svgeezy/svgeezy.js'
+                        'vendor/svgeezy/svgeezy.js'
                         filter='yui_js'
                         output='frontend/svgeezy.js'
                     %}
@@ -29,7 +29,7 @@
             {
                 test: Modernizr.input.placeholder,
                     {% javascripts
-                        '@" ~ bundle.getName() ~ "/Resources/public/vendor/jquery-placeholder/jquery.placeholder.min.js'
+                        'vendor/jquery-placeholder/jquery.placeholder.min.js'
                         filter='yui_js'
                         output='frontend/placeholder.js'
                     %}

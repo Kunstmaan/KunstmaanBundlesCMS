@@ -2,8 +2,8 @@
     {% block css %}
         <!--[if lte IE 8]>
             {% stylesheets
-                '@" ~ bundle.getName() ~ "/Resources/public/vendor/flexslider/flexslider.css'
-                '@" ~ bundle.getName() ~ "/Resources/public/scss/style-old-ie.scss'
+                'vendor/flexslider/flexslider.css'
+                'scss/style-old-ie.scss'
                 filter='scss'
              %}
                 <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
@@ -11,8 +11,8 @@
         <![endif]-->
         <!--[if gt IE 8]><!-->
             {% stylesheets
-                '@" ~ bundle.getName() ~ "/Resources/public/vendor/flexslider/flexslider.css'
-                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
+                'vendor/flexslider/flexslider.css'
+                'scss/style.scss'
                 filter='scss'
             %}
                <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />

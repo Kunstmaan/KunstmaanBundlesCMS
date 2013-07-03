@@ -1,7 +1,6 @@
 {
   "name": "frontendpoc",
   "version": "0.0.0",
-  "bundlePath": "src/{{namespace | replace({'\\': '/'}) }}/Resources",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",

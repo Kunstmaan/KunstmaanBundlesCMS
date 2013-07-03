@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
         watch: {
             scripts: {
-                files: ['<%= pkg.bundlePath %>/public/js/**/*.js'],
+                files: ['public/js/**/*.js'],
                 tasks: ['jshint'],
                 options: {
                     nospawn: true,
@@ -14,14 +14,14 @@ module.exports = function (grunt) {
                 }
             },
             png: {
-                files: ['<%= pkg.bundlePath %>/public/img/**/*.png'],
+                files: ['public/img/**/*.png'],
                 tasks: ['imagemin'],
                 options: {
                     event: ['added', 'changed']
                 }
             },
             svg: {
-                files: ['<%= pkg.bundlePath %>/public/img/**/*.svg'],
+                files: ['public/img/**/*.svg'],
                 tasks: ['svg2png'],
                 options: {
                     event: ['added', 'changed']
@@ -29,9 +29,9 @@ module.exports = function (grunt) {
             },
             modernizr: {
                 files: [
-                    '<%= pkg.bundlePath %>/public/**/*.js',
-                    '<%= pkg.bundlePath %>/public/**/*.scss',
-                    '<%= pkg.bundlePath %>/views/**/*.html.twig'
+                    'public/**/*.js',
+                    'public/**/*.scss',
+                    'views/**/*.html.twig'
                 ],
                 tasks: ['modernizr']
             }
@@ -56,7 +56,7 @@ module.exports = function (grunt) {
                     $: true
                 }
             },
-            all: ['Gruntfile.js', '<%= pkg.bundlePath %>/public/js']
+            all: ['Gruntfile.js', 'public/js']
         },
 
         imagemin: {
@@ -67,9 +67,9 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: '<%= pkg.bundlePath %>/public/img',
+                    cwd: 'public/img',
                     src: '**/*.png',
-                    dest: '<%= pkg.bundlePath %>/public/img',
+                    dest: 'public/img',
                     ext: '.png'
                 }]
             }
@@ -78,16 +78,16 @@ module.exports = function (grunt) {
         svg2png: {
             all: {
                 files: [
-                    { src: ['<%= pkg.bundlePath %>/public/img/**/*.svg'] }
+                    { src: ['public/img/**/*.svg'] }
                 ]
             }
         },
 
         modernizr: {
             devFile: 'remote',
-            outputFile: '<%= pkg.bundlePath %>/public/vendor/modernizr/modernizr-custom.js',
+            outputFile: 'public/vendor/modernizr/modernizr-custom.js',
             parseFiles: true,
-            files: ['<%= pkg.bundlePath %>/public/**/*.*', '<%= pkg.bundlePath %>/views/**/*.html.twig'],
+            files: ['public/**/*.*', 'views/**/*.html.twig'],
             extra: {
                 "shiv" : true,
                 "printshiv" : false,

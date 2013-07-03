@@ -77,7 +77,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->setSkeletonDirs(array($skeletonDir));
 
         $this->filesystem->copy($skeletonDir . '/Gruntfile.js', $dirPath . '/Gruntfile.js', true);
-        $this->renderFile('/package.json',  $dirPath . '/package.json', $parameters);
+        $this->filesystem->copy($skeletonDir . '/package.json', $dirPath . '/package.json', true);
 
         $output->writeln('Generating root files : <info>OK</info>');
     }
