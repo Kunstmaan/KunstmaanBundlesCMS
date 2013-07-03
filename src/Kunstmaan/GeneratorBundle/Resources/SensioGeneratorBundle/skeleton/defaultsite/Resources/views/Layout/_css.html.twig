@@ -3,7 +3,7 @@
         <!--[if lte IE 8]>
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                'scss/style-old-ie.scss'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/style-old-ie.scss'
                 filter='scss'
              %}
                 <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
@@ -12,7 +12,7 @@
         <!--[if gt IE 8]><!-->
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                'scss/style.scss'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
                 filter='scss'
             %}
                <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
