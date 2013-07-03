@@ -1,6 +1,8 @@
 parameters:
 #    kunstmaan_translator_list.example.class: Kunstmaan\TranslatorBundle\Example
     kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
+    kunstmaan_translator.orm.translation.class: 'Kunstmaan\TranslatorBundle\Entity\Translation'
+    kunstmaan_translator.orm.translation_domain.class: 'Kunstmaan\TranslatorBundle\Entity\TranslationDomain'
 
 services:
 #    kunstmaan_translator_list.example:
@@ -41,6 +43,31 @@ services:
     kunstmaan_translator.service.group_manager:
         class: "Kunstmaan\TranslatorBundle\Service\TranslationGroupManager"
         calls:
-            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]] # this should be able to change from within the config file
-            - [setTranslationClass, ["Kunstmaan\TranslatorBundle\Entity\Translation"]] # this should be able to change from within the config file
-            - [setTranslationDomainClass, ["Kunstmaan\TranslatorBundle\Entity\TranslationDomain"]] # this should be able to change from within the config file
+            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
+            - [setTranslationClass, [%kunstmaan_translator.orm.translation.class%]]
+            - [setTranslationDomainClass, [%kunstmaan_translator.orm.translation_domain.class%]]
+
+    kunstmaan_translator.service.manager:
+        class: "Kunstmaan\TranslatorBundle\Service\TranslationManager"
+        calls:
+            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
+            - [setTranslationClass, [%kunstmaan_translator.orm.translation.class%]]
+            - [setTranslationDomainClass, [%kunstmaan_translator.orm.translation_domain.class%]]
+
+    kunstmaan_translator.service.translator.loader:
+        class: Kunstmaan\TranslatorBundle\Service\Translator\Loader
+        tags:
+            - { name: 'translation.loader', alias: 'database' }
+        calls:
+            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
+
+    kunstmaan_translator.service.translator.translator:
+        class: Kunstmaan\TranslatorBundle\Service\Translator\Translator
+        arguments:
+            - @service_container
+            - @translator.selector
+            - []
+            - { cache_dir : %kernel.cache_dir%/translation, debug: %kernel.debug% }
+            - [@session]
+        calls:
+            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]

@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * - domain enabled or not
  *
  */
-class TranslationDomain extends AbstractEntity
+class TranslationDomain extends \Kunstmaan\TranslatorBundle\Model\Translation\TranslationDomain
 {
     /**
      * @ORM\Id

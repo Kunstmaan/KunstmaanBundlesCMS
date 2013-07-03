@@ -47,17 +47,24 @@ class TranslationGroup
 
     public function getTranslationByLocale($locale)
     {
-        if (!is_array($this->translations) || count($this->translations) <= 0) {
+        if (count($this->translations) <= 0) {
             return null;
         }
 
         foreach ($this->translations as $translation) {
-            if($translation->getLocale() == $locale) {
+            if(strtolower($translation->getLocale()) == strtolower($locale)) {
                 return $translation;
             }
         }
 
         return null;
+    }
+
+    public function getTranslationTextByLocale($locale)
+    {
+        $translation = $this->getTranslationByLocale($locale);
+
+        return is_null($translation) ? null : $translation->getText();
     }
 
     public function addTranslation(Translation $translation)

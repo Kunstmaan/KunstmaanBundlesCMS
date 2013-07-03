@@ -34,8 +34,6 @@ class Importer
 
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
-
-
         $translationGroup = $this->stasher->getTranslationGroupByKeywordAndDomain($keyword, $domain);
 
         if (!($translationGroup instanceof TranslationGroup)) {

@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->booleanNode('enabled')->defaultTrue()->end()
+                ->scalarNode('default_bundle')->cannotBeEmpty()->defaultValue('kunstmaantranslatorbundle')->end()
 
                 ->arrayNode('managed_locales')
                     ->defaultValue(array())

@@ -15,7 +15,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-        ->setName('kuma_translator:import')
+        ->setName('kuma:translator:import')
         ->setDescription('Import translation files into database')
         ->addOption('force',        'f',    InputOption::VALUE_NONE, 'Force import, overwrite all existing database entries')
         ->addOption('locale',       'l',    InputOption::VALUE_REQUIRED, 'Language import, only import a specific locale')

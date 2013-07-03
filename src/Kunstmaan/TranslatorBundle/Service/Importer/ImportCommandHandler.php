@@ -52,7 +52,7 @@ class ImportCommandHandler
     {
         $this->validateBundleName($importCommand->getBundle());
         $bundles = array_change_key_case($this->kernel->getBundles(), CASE_LOWER);
-        $finder = $this->translationFileExplorer->find($bundles[$importCommand->getBundle()]->getPath(), $this->determineLocalesToImport($importCommand));
+        $finder = $this->translationFileExplorer->find($bundles[strtolower($importCommand->getBundle())]->getPath(), $this->determineLocalesToImport($importCommand));
         $this->importTranslationFiles($finder, $importCommand->getForce());
     }
 

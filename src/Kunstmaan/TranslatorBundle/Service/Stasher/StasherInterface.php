@@ -7,33 +7,6 @@ use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 interface StasherInterface
 {
-    /**
-     * Checks if the current domain exists in the used storage
-     *
-     * @return boolean
-     **/
-    public function doesDomainExist(TranslationDomain $domain);
-
-    /**
-     * Checks if the current translation exists
-     *
-     * @return boolean
-     **/
-    public function doesTranslationExist(Translation $translation);
-
-    /**
-     * Add a new translation
-     *
-     * @return Translation $translation
-     **/
-    public function addTranslation(Translation $translation);
-
-    /**
-     * Update a existing translation
-     *
-     * @return Translation $translation
-     **/
-    public function updateTranslation(Translation $translation);
 
     /**
      * Get all translations (in all languages) for a specified keyword/domain

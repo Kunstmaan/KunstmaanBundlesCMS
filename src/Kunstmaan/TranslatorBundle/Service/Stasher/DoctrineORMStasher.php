@@ -5,6 +5,7 @@ namespace Kunstmaan\TranslatorBundle\Service\Stasher;
 use Kunstmaan\TranslatorBundle\Entity\TranslationDomain;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class DoctrineORMStasher implements StasherInterface
 {
@@ -13,24 +14,42 @@ class DoctrineORMStasher implements StasherInterface
     private $translationDomainRepository;
     private $entityManager;
 
-    public function doesDomainExist(TranslationDomain $domain)
+    public function getTranslationDomainsByLocale()
     {
-
+        return $this->translationRepository->getAllDomainsByLocale();
     }
 
-    public function doesTranslationExist(Translation $translation)
+    public function getAllDomains()
     {
-
+        return $this->translationDomainRepository->findAll();
     }
 
-    public function addTranslation(Translation $translation)
+    public function getTranslationGroupsByDomain($domain)
     {
+        $translationDomain = $this->translationDomainRepository->findOneBy(array('name' => $domain));
 
-    }
+        if (! $translationDomain instanceof TranslationDomain) {
+            return array();
+        }
 
-    public function updateTranslation(Translation $translation)
-    {
+        $translationGroups = new ArrayCollection;
 
+        $translations =  $this->translationRepository->findBy(array('domain' => $translationDomain));
+
+        foreach ($translations as $translation) {
+            $key = $translation->getKeyword();
+
+            if (!$translationGroups->containsKey($key)) {
+                $translationGroup = new TranslationGroup;
+                $translationGroup->setDomain($domain);
+                $translationGroup->setKeyword($translation->getKeyword());
+                $translationGroups->set($key, $translationGroup);
+            }
+
+            $translationGroups->get($key)->addTranslation($translation);
+        }
+
+        return $translationGroups;
     }
 
     public function getTranslationGroupByKeywordAndDomain($keyword, $domain)
@@ -48,6 +67,13 @@ class DoctrineORMStasher implements StasherInterface
         $translationGroup->setTranslations($translations);
 
         return $translationGroup;
+    }
+
+    public function getTranslationsByLocaleAndDomain($locale, $domain)
+    {
+        $translationDomain = $this->translationDomainRepository->findOneBy(array('name' => $domain));
+
+        return $this->translationRepository->findBy(array('locale' => $locale, 'domain' => $translationDomain));
     }
 
     public function createTranslationDomain($name)
