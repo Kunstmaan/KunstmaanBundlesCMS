@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Colors
+
+   Never add styles directly to this file - set up variables
+   Style guide: https://github.com/necolas/idiomatic-css
+   ========================================================================== */
+
+
+/* Grays
+   ========================================================================== */
+$black:                 #000;
+$grayDarker:            #222;
+$grayDark:              #333;
+$gray:                  #555;
+$grayLight:             #999;
+$grayLighter:           #eee;
+$white:                 #fff;
+
+
+/* Accent colors
+   ========================================================================== */
+$blue:                  #049cdb;
+$blueDark:              #0064cd;
+$green:                 #46a546;
+$red:                   #9d261d;
+$yellow:                #ffc40d;
+$orange:                #f89406;
+$pink:                  #c3325f;
+$purple:                #7a43b6;
+
+
+/* Scaffolding
+   ========================================================================== */
+$bodyBackground:        $white;
+$textColor:             $grayDark;
+
+
+/* Links
+   ========================================================================== */
+$linkColor:             #08c;
+$linkColorHover:        darken($linkColor, 15%);
+
+
+/* Form warnings and alerts
+   ========================================================================== */
+$warningText:             #c09853;
+$warningBackground:       #fcf8e3;
+$warningBorder:           darken(adjust-hue($warningBackground, -10), 3%);
+
+$errorText:               #b94a48;
+$errorBackground:         #f2dede;
+$errorBorder:             darken(adjust-hue($errorBackground, -10), 3%);
+
+$successText:             #468847;
+$successBackground:       #dff0d8;
+$successBorder:           darken(adjust-hue($successBackground, -10), 5%);
+
+$infoText:                #3a87ad;
+$infoBackground:          #d9edf7;
+$infoBorder:              darken(adjust-hue($infoBackground, -10), 7%);
+
+
+/* Input placeholder text color
+   ========================================================================== */
+$placeholderText:         $grayLight;
+
+
+/* Hr border color
+   ========================================================================== */
+$hrBorder:                $grayLighter;
+
+
+/* Wells background
+   ========================================================================== */
+$wellBackground:                  #f5f5f5;
+

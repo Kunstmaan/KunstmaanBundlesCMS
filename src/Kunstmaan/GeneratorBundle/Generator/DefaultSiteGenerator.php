@@ -67,6 +67,19 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
         $this->generateBehatTests($bundle, $output);
         $this->generateUnitTests($bundle, $parameters, $output);
+        $this->generateGruntFiles($bundle, $parameters, $output);
+    }
+
+    public function generateGruntFiles(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $dirPath = sprintf("%s/Resources", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources", $this->fullSkeletonDir);
+        $this->setSkeletonDirs(array($skeletonDir));
+
+        $this->filesystem->copy($skeletonDir . '/Gruntfile.js', $dirPath . '/Gruntfile.js', true);
+        $this->filesystem->copy($skeletonDir . '/package.json', $dirPath . '/package.json', true);
+
+        $output->writeln('Generating root files : <info>OK</info>');
     }
 
     /**
@@ -184,31 +197,104 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $skeletonDir = sprintf("%s/Resources/public", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
-        $assets = array(
-            '/css/app.css',
-            '/css/foundation.css',
-            '/css/foundation.min.css',
-            '/js/app.js',
-            '/js/foundation.min.js',
-            '/js/jquery.js',
-            '/js/modernizr.foundation.js',
-            '/img/favicon.ico'
-        );
-
-        foreach ($assets as $asset) {
-            $this->filesystem->copy(sprintf("%s%s", $skeletonDir, $asset), sprintf("%s%s", $dirPath, $asset));
-        }
+        $this->GenerateImageAssets($skeletonDir, $dirPath);
+        $this->GenerateJavascriptAssets($skeletonDir, $dirPath);
+        $this->GenerateStyleSheetAssets($skeletonDir, $dirPath);
 
         $output->writeln('Generating Assets : <info>OK</info>');
     }
 
     /**
-     * @param Bundle          $bundle     The bundle
-     * @param array           $parameters The template parameters
-     * @param OutputInterface $output
+     * Generate the image assets
      *
-     * @throws \RuntimeException
+     * @param $skeletonDir
+     * @param $dirPath
      */
+    public function generateImageAssets($skeletonDir, $dirPath)
+    {
+        $assets = array(
+            'backgrounds/.gitkeep',
+            'buttons/.gitkeep',
+            'dummy/.gitkeep',
+            'general/.gitkeep',
+            'general/logo.png',
+            'icons/.gitkeep',
+            'icons/favicon.ico'
+        );
+
+        foreach ($assets as $asset) {
+            $this->filesystem->copy(sprintf("%s/img/%s", $skeletonDir, $asset), sprintf("%s/img/%s", $dirPath, $asset));
+        }
+    }
+
+    /**
+     * Generate Javascript assets
+     *
+     * @param $skeletonDir
+     * @param $dirPath
+     */
+    public function generateJavascriptAssets($skeletonDir, $dirPath)
+    {
+        $assets = array(
+            '.gitkeep',
+            'script.js',
+        );
+
+        foreach ($assets as $asset) {
+            $this->filesystem->copy(sprintf("%s/js/%s", $skeletonDir, $asset), sprintf("%s/js/%s", $dirPath, $asset));
+        }
+    }
+
+    /**
+     * Generate Stylesheet assets
+     *
+     * @param $skeletonDir
+     * @param $dirPath
+     */
+    public function generateStylesheetAssets($skeletonDir, $dirPath)
+    {
+        $assets = array(
+            '_base.scss',
+            'style.scss',
+            'style-old-ie.scss',
+            'components/.gitkeep',
+            'config/.gitkeep',
+            'config/_base.scss',
+            'config/_bootstrap-imports.scss',
+            'config/_buttons.scss',
+            'config/_colors.scss',
+            'config/_config.scss',
+            'config/_dropdowns.scss',
+            'config/_forms.scss',
+            'config/_grid.scss',
+            'config/_hero-unit.scss',
+            'config/_navbar.scss',
+            'config/_pagination.scss',
+            'config/_paths.scss',
+            'config/_tables.scss',
+            'config/_tooltips-popover.scss',
+            'config/_typography.scss',
+            'config/_z-index.scss',
+            'helpers/.gitkeep',
+            'legacy/.gitkeep',
+            'legacy/_fallbacks.scss',
+            'legacy/_ie.scss',
+            'theme/.gitkeep',
+            'theme/_grid.scss'
+        );
+
+        foreach ($assets as $asset) {
+            $this->filesystem->copy(sprintf("%s/scss/%s", $skeletonDir, $asset), sprintf("%s/scss/%s", $dirPath, $asset));
+        }
+    }
+
+    /**
+    * @param Bundle          $bundle     The bundle
+    * @param array           $parameters The template parameters
+    * @param OutputInterface $output
+    *
+    * @throws \RuntimeException
+    */
     public function generateFixtures(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $dirPath = $bundle->getPath() . '/DataFixtures/ORM';

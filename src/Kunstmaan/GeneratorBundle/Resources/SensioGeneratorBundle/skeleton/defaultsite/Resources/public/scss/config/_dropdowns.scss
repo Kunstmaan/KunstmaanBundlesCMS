@@ -1,0 +1,19 @@
+/* ==========================================================================
+   Dropdowns
+
+   Never add styles directly to this file - set up variables
+   Style guide: https://github.com/necolas/idiomatic-css
+   ========================================================================== */
+
+
+$dropdownBackground:            $white;
+$dropdownBorder:                rgba(0,0,0,.2);
+$dropdownDividerTop:            #e5e5e5;
+$dropdownDividerBottom:         $white;
+
+$dropdownLinkColor:             $grayDark;
+$dropdownLinkColorHover:        $white;
+$dropdownLinkColorActive:       $white;
+
+$dropdownLinkBackgroundActive:  $linkColor;
+$dropdownLinkBackgroundHover:   $dropdownLinkBackgroundActive;

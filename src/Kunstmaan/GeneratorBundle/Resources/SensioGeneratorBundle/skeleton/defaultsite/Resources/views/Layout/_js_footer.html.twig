@@ -1,11 +1,44 @@
 {{ "
     {% javascripts
-        '@" ~ bundle.getName() ~ "/Resources/public/js/jquery.js'
-        '@" ~ bundle.getName() ~ "/Resources/public/js/foundation.min.js'
-        '@" ~ bundle.getName() ~ "/Resources/public/js/app.js'
+        'vendor/jquery/jquery.js'
+        'vendor/sass-bootstrap/js/bootstrap-modal.js'
+        'vendor/sass-bootstrap/js/bootstrap-collapse.js'
+        'vendor/flexslider/jquery.flexslider.js'
+        '@" ~ bundle.getName() ~ "/Resources/public/js/script.js'
         filter='yui_js'
         output='frontend/footer.js'
     %}
         <script src='{{ asset_url }}'></script>
     {% endjavascripts %}
+
+    <script>
+        Modernizr.load([
+            {
+                test: Modernizr.inlinesvg,
+                    {% javascripts
+                        'vendor/svgeezy/svgeezy.js'
+                        filter='yui_js'
+                        output='frontend/svgeezy.js'
+                    %}
+                nope: '{{ asset_url }}',
+                    {% endjavascripts %}
+                callback : function (url, result, key) {
+                    svgeezy.init('png');
+                }
+            },
+            {
+                test: Modernizr.input.placeholder,
+                    {% javascripts
+                        'vendor/jquery-placeholder/jquery.placeholder.min.js'
+                        filter='yui_js'
+                        output='frontend/placeholder.js'
+                    %}
+                nope: '{{ asset_url }}',
+                    {% endjavascripts %}
+                callback : function (url, result, key) {
+                    $('input, textarea').placeholder();
+                }
+            }
+        ]);
+    </script>
 " }}

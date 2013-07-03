@@ -1,7 +1,22 @@
 {{ "
     {% block css %}
-        {% stylesheets '@" ~ bundle.getName() ~ "/Resources/public/css/*.css' %}
-            <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
-        {% endstylesheets %}
+        <!--[if lte IE 8]>
+            {% stylesheets
+                'vendor/flexslider/flexslider.css'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/style-old-ie.scss'
+                filter='scss'
+             %}
+                <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
+            {% endstylesheets %}
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            {% stylesheets
+                'vendor/flexslider/flexslider.css'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
+                filter='scss'
+            %}
+               <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
+           {% endstylesheets %}
+        <!--<![endif]-->
     {% endblock %}
 " }}

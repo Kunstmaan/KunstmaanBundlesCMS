@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Typography
+
+   Never add styles directly to this file - set up variables
+   Style guide: https://github.com/necolas/idiomatic-css
+   ========================================================================== */
+
+
+/* General
+   ========================================================================== */
+$btnBackground:                     #ddd;
+$btnBackgroundHighlight:            #ddd;
+$btnBorder:                         #ccc;
+
+
+/* Primary
+   ========================================================================== */
+$btnPrimaryBackground:              $linkColor;
+$btnPrimaryBackgroundHighlight:     $linkColor;
+
+
+/* Info
+   ========================================================================== */
+$btnInfoBackground:                 #5bc0de;
+$btnInfoBackgroundHighlight:        #5bc0de;
+
+
+/* Success
+   ========================================================================== */
+$btnSuccessBackground:              #62c462;
+$btnSuccessBackgroundHighlight:     #62c462;
+
+
+/* Warning
+   ========================================================================== */
+$btnWarningBackground:              $orange;
+$btnWarningBackgroundHighlight:     $orange;
+
+
+/* Danger
+   ========================================================================== */
+$btnDangerBackground:               #ee5f5b;
+$btnDangerBackgroundHighlight:      #ee5f5b;
+
+
+/* Inverse
+   ========================================================================== */
+$btnInverseBackground:              #444;
+$btnInverseBackgroundHighlight:     #444;
