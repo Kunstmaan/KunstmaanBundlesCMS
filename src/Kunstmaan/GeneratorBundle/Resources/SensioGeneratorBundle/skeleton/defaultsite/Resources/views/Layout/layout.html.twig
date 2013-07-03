@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if lt IE 7]>       <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="nl"> <![endif]-->
+<!--[if IE 7]>          <html class="no-js lt-ie9 lt-ie8" lang="nl">        <![endif]-->
+<!--[if IE 8]>          <html class="no-js lt-ie9" lang="nl">               <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="nl">                  <!--<![endif]-->
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
@@ -15,73 +15,88 @@
         ~~~TOP_JS~~~
     </head>
     <body>
-
-    <!-- Header and Nav -->
-
-    <div class="row">
-        <div class="twelve columns">
-            <nav class="top-bar">
-                <ul>
-                    <li class="name">
-                        <h1>
-                            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">Generated Website</a>
-                        </h1>
-                    </li>
-                    <li class="toggle-topbar"><a href="#"></a></li>
-                </ul>
-                <section>
-                    {% if nodemenu is defined %}
-                        <ul class="right">
-                            <li class="divider show-for-medium-and-up"></li>
-                            {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                            {% for node in activeSubnode.children %}
-                                <li {% if node.children|length>0 %}class="has-dropdown"{% endif %}>
-                                    <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
-                                    {% if node.children|length>0 %}
-                                        <ul class="dropdown">
-                                            {% for node in node.children %}
-                                                <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
-                                            {% endfor %}
+        <div class="container">
+            <!-- Header -->
+            <header role="header">
+                <div class="row-fluid">
+                    <div class="span10">
+                        {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                        <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
+                            <img src="http://placehold.it/300x100&amp;text=Logo" alt="flicker placeholder">
+                        </a>
+                    </div>
+                    <div class="span2">
+                        <p class="muted">Your generated website using the Kunstmaan Bundles</p>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <nav role="navigation" class="navbar">
+                            <div class="navbar-inner">
+                                <div class="container">
+                                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </a>
+                                    <div class="nav-collapse collapse">
+                                        <ul class="nav">
+                                            {% if nodemenu is defined %}
+                                                {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                                                {% for node in activeSubnode.children %}
+                                                    <li {% if(node.active) %} class="active"{% endif %} {% if node.children|length>0 %}class="has-dropdown"{% endif %}>
+                                                        <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                                        {% if node.children|length>0 %}
+                                                            <ul class="nav nav-pills">
+                                                                {% for node in node.children %}
+                                                                    <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
                                         </ul>
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </section>
-            </nav>
-        </div>
-    </div>
-    <div class="row">
-        <div class="twelve columns">
-            {% block content %}{% endblock %}
-        </div>
-    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </header>
 
-    <footer class="row">
-        <div class="twelve columns">
-            <hr />
-            <div class="row">
-                <div class="twelve columns">
-                    <p>&copy; {{ "now"|date("Y") }}</p>
+            <!-- Main -->
+            <main role="main">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer role="footer" class="footer">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <p>
+                            &copy; {{ "now"|date("Y") }}
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    ~~~FOOTER_JS~~~
 
-    <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
-    mathiasbynens.be/notes/async-analytics-snippet -->
-    <script>
-        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-        (function(d,t){
-            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)
-        }(document,'script'));
-    </script>
+        ~~~FOOTER_JS~~~
+
+        <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+        mathiasbynens.be/notes/async-analytics-snippet -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){
+                var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+                g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+                s.parentNode.insertBefore(g,s)
+            }(document,'script'));
+        </script>
 
     </body>
 </html>
