@@ -1,0 +1,17 @@
+{
+  "name": "frontendpoc",
+  "version": "0.0.0",
+  "bundlePath": "src/{{namespace | replace({'\\': '/'}) }}/Resources",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-imagemin": "~0.1.4",
+    "grunt-notify": "~0.2.4",
+    "grunt-grunticon": "~0.3.3",
+    "grunt-modernizr": "~0.3.0",
+    "grunt-svg2png": "~0.2.0",
+    "grunt-cli": "latest",
+    "bower": "latest"
+  }
+}

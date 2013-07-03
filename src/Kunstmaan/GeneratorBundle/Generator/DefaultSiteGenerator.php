@@ -67,6 +67,19 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
         $this->generateBehatTests($bundle, $output);
         $this->generateUnitTests($bundle, $parameters, $output);
+        $this->generateGruntFiles($bundle, $parameters, $output);
+    }
+
+    public function generateGruntFiles(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $dirPath = sprintf("%s/Resources", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources", $this->fullSkeletonDir);
+        $this->setSkeletonDirs(array($skeletonDir));
+
+        $this->filesystem->copy($skeletonDir . '/Gruntfile.js', $dirPath . '/Gruntfile.js', true);
+        $this->renderFile('/package.json',  $dirPath . '/package.json', $parameters);
+
+        $output->writeln('Generating root files : <info>OK</info>');
     }
 
     /**
