@@ -4,3 +4,5 @@ vendor/*
 composer.lock
 composer.phar
 Tests/app/cache/
+build/logs/
+build/coverage/

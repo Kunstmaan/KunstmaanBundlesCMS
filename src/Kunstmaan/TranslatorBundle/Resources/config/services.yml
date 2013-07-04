@@ -67,7 +67,7 @@ services:
         class: Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
         calls:
             - [setDebug, [%kernel.debug%]]
-            - [setCacheDir, [%kernel.cache_dir%/translations]]
+            - [setCacheDir, [%kuma_translator.cache_dir%]]
             - [setLogger, [@logger]]
 
     kunstmaan_translator.service.translator.translator:
@@ -76,7 +76,7 @@ services:
             - @service_container
             - @translator.selector
             - {}
-            - { cache_dir : %kernel.cache_dir%/translations, debug: %kernel.debug% }
+            - { cache_dir : %kuma_translator.cache_dir%, debug: %kernel.debug% }
             - [@session]
         calls:
             - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]

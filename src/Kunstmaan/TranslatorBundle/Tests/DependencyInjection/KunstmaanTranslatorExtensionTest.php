@@ -54,6 +54,10 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private function getContainer()
     {
-        return new ContainerBuilder();
+        $container = new ContainerBuilder;
+        $container->setParameter('kernel.root_dir', '');
+        $container->setParameter('kernel.bundles', array());
+
+        return $container;
     }
 }

@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('enabled')->defaultTrue()->end()
                 ->scalarNode('default_bundle')->cannotBeEmpty()->defaultValue('kunstmaantranslatorbundle')->end()
+                ->scalarNode('cache_dir')->cannotBeEmpty()->defaultValue("%kernel.cache_dir%/translations")->end()
 
                 ->arrayNode('managed_locales')
                     ->defaultValue(array())

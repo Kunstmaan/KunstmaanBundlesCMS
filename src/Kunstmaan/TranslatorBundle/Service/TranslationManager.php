@@ -35,6 +35,11 @@ class TranslationManager
         return $this->stasher->getTranslationGroupsByDomain($domain);
     }
 
+    public function updateTranslationsFromArray($domain, array $translations)
+    {
+        $this->stasher->updateTranslationsFromArray($domain, $translations);
+    }
+
     public function setStasher($stasher)
     {
         $this->stasher = $stasher;

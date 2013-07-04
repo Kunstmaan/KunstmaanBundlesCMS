@@ -26,3 +26,10 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         updatedAt: <dateTime()>
         locale: en
         domain: @messages_domain
+    validation_messages:
+        keyword: validation.ok
+        text: 'Everything ok'
+        createdAt: <dateTime()>
+        updatedAt: <dateTime()>
+        locale: en
+        domain: @validation_domain

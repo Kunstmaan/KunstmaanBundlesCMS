@@ -32,4 +32,10 @@ class TranslationManagerTest extends BaseTestCase
         $groups = $this->translationManager->getTranslationGroupsByDomain('messages');
         $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup', $groups->first());
     }
+
+    public function testGetFirstDefaultDomainName()
+    {
+        $domainName = $this->translationManager->getFirstDefaultDomainName();
+        $this->assertEquals($domainName, 'messages');
+    }
 }

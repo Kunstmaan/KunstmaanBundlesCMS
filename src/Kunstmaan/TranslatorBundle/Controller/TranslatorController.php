@@ -39,8 +39,9 @@ class TranslatorController extends Controller
      */
     public function saveAction()
     {
-        $domain = $this->getRequest()->get('domain');
-        return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $domain)));
+        $post = $this->getRequest()->request->all();
+        $this->container->get('kunstmaan_translator.service.manager')->updateTranslationsFromArray($post['domain'], $post['translation']);
+        return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $post['domain'])));
     }
 
     /**

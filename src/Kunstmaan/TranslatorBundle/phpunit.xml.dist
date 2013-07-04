@@ -16,6 +16,21 @@
         </testsuite>
     </testsuites>
 
+    <filter>
+        <blacklist>
+            <directory>vendor/</directory>
+            <directory>Tests/</directory>
+            <directory>Resources/</directory>
+            <directory>build/</directory>
+        </blacklist>
+    </filter>
+
+    <logging>
+        <log charset="UTF-8" highLowerBound="70" highlight="true" lowUpperBound="35" target="build/coverage" title="LeadLasso" type="coverage-html" yui="true"/>
+        <log target="build/logs/clover.xml" type="coverage-clover"/>
+        <log logIncompleteSkipped="false" target="build/logs/junit.xml" type="junit"/>
+    </logging>
+
     <listeners>
         <listener class="TestListener" file="Tests/TestListener.php"/>
     </listeners>
