@@ -199,11 +199,30 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $skeletonDir = sprintf("%s/Resources/public", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
+        $this->GenerateFileAssets($skeletonDir, $dirPath);
         $this->GenerateImageAssets($skeletonDir, $dirPath);
         $this->GenerateJavascriptAssets($skeletonDir, $dirPath);
         $this->GenerateStyleSheetAssets($skeletonDir, $dirPath);
 
         $output->writeln('Generating Assets : <info>OK</info>');
+    }
+
+    /**
+     * Generate the file assets
+     *
+     * @param $skeletonDir
+     * @param $dirPath
+     */
+    public function generateFileAssets($skeletonDir, $dirPath)
+    {
+        $assets = array(
+            'dummy/.gitkeep',
+            'dummy/sample.pdf'
+        );
+
+        foreach ($assets as $asset) {
+            $this->filesystem->copy(sprintf("%s/files/%s", $skeletonDir, $asset), sprintf("%s/files/%s", $dirPath, $asset));
+        }
     }
 
     /**
