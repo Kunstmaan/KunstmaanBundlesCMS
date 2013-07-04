@@ -83,14 +83,17 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             ->findOneBy(array('username' => 'Admin'));
 
         $this->rootDir = $this->container->get('kernel')->getRootDir();
-        $this->createMedia($manager);
 
+        // Media
+        $this->createMedia($manager);
         // Homepage
         $homePage = $this->createHomePage($manager, "Home");
         // PageParts
         $this->createPagePartPage($manager, "Content PageParts", $homePage);
         // From PageParts
         $this->createFormPage($manager, "Form PageParts", $homePage);
+        // Styles
+        $this->createStylePage($manager, "Styles", $homePage);
         // Dashboard
         /** @var $dashboard DashboardConfiguration */
         $dashboard = $manager->getRepository("KunstmaanAdminBundle:DashboardConfiguration")->findOneBy(array());
@@ -351,6 +354,43 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     }
 
     /**
+     * Create a ContentPage containing headers
+     *
+     * @param ObjectManager $manager The object manager
+     * @param string        $title   The title
+     * @param PageInterface $parent  The parent
+     */
+    private function createStylePage(ObjectManager $manager, $title, $parent)
+    {
+        $headerpage = $this->createContentPage($manager, $title, $parent);
+        $position = 1;
+
+        $this->createTOCPagePart($headerpage, $position++, $manager);
+
+        $this->createHeaderPagePart("Buttons", 2, $headerpage, $position++, $manager);
+        $this->createHeaderPagePart("Sizes", 3, $headerpage, $position++, $manager);
+        $flex = '<p>
+                    <button class="btn btn-mini">Mini button</button>
+                    <button class="btn btn-small">Small button</button>
+                    <button class="btn">Normal</button>
+                    <button class="btn btn-large">Large button</button>
+                </p>';
+        $this->createRawHTMLPagePart($flex, $headerpage, $position++, $manager);
+        $this->createHeaderPagePart("Styles", 3, $headerpage, $position++, $manager);
+        $flex = '<p>
+                    <button class="btn btn-large">Normal</button>
+                    <button class="btn btn-large btn-primary">Primary</button>
+                    <button class="btn btn-large btn-info">Info</button>
+                    <button class="btn btn-large btn-success">Success</button>
+                    <button class="btn btn-large btn-danger">Danger</button>
+                    <button class="btn btn-large btn-warning">Warning</button>
+                    <button class="btn btn-large btn-inverse">Inverse</button>
+                    <button class="btn btn-large btn-link">Link</button>
+                </p>';
+        $this->createRawHTMLPagePart($flex, $headerpage, $position++, $manager);
+    }
+
+    /**
      * Create a ToTopPagePart
      *
      * @param PageInterface $page     The page where the pagepart needs to be created
@@ -470,44 +510,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     }
 
     /**
-     * @param ObjectManager $manager
-     */
-    public function createMedia(ObjectManager $manager)
-    {
-        // Create dummy image folder and add dummy images
-        {
-            $imageFolder = $this->getReference('images-folder-en');
-
-            $folder = new Folder();
-            $folder->setName('dummy');
-            $folder->setRel('image');
-            $folder->setParent($imageFolder);
-            $folder->setInternalName('dummy_images');
-            $manager->persist($folder);
-            $manager->flush();
-
-            $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/img/general/logo.png';
-            $this->image = $this->createMediaFile($manager, basename($path), $path, $folder);
-        }
-
-        // Create dummy file folder and add dummy files
-        {
-            $filesFolder = $this->getReference('files-folder-en');
-
-            $folder = new Folder();
-            $folder->setName('dummy');
-            $folder->setRel('files');
-            $folder->setParent($filesFolder);
-            $folder->setInternalName('dummy_files');
-            $manager->persist($folder);
-            $manager->flush();
-
-            $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/files/dummy/sample.pdf';
-            $this->file = $this->createMediaFile($manager, basename($path), $path, $folder);
-        }
-    }
-
-    /**
      * Create an ImagePagePart
      *
      * @param Media         $image              The image of the pagepart
@@ -618,6 +620,45 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
 
         return $page;
+    }
+
+
+    /**
+     * @param ObjectManager $manager
+     */
+    public function createMedia(ObjectManager $manager)
+    {
+        // Create dummy image folder and add dummy images
+        {
+            $imageFolder = $this->getReference('images-folder-en');
+
+            $folder = new Folder();
+            $folder->setName('dummy');
+            $folder->setRel('image');
+            $folder->setParent($imageFolder);
+            $folder->setInternalName('dummy_images');
+            $manager->persist($folder);
+            $manager->flush();
+
+            $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/img/general/logo.png';
+            $this->image = $this->createMediaFile($manager, basename($path), $path, $folder);
+        }
+
+        // Create dummy file folder and add dummy files
+        {
+            $filesFolder = $this->getReference('files-folder-en');
+
+            $folder = new Folder();
+            $folder->setName('dummy');
+            $folder->setRel('files');
+            $folder->setParent($filesFolder);
+            $folder->setInternalName('dummy_files');
+            $manager->persist($folder);
+            $manager->flush();
+
+            $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/files/dummy/sample.pdf';
+            $this->file = $this->createMediaFile($manager, basename($path), $path, $folder);
+        }
     }
 
     private function createMediaFile($manager, $name, $path, $folder)
