@@ -8,19 +8,31 @@ use Behat\Behat\Context\Step;
 class FeatureContext extends AbstractContext
 {
 
+    public function __construct(array $parameters) {
+        $this->parameters = $parameters;
+
+        // Load Context Class
+        $this->useContext('group_context', new GroupContext($parameters));
+        $this->useContext('user_context', new UserContext($parameters));
+        $this->useContext('role_context', new RoleContext($parameters));
+    }
+
     /**
      * @Given /^I log in as "([^\']*)"$/
      */
     public function iLogInAs($username)
     {
+        $this->makeWide();
+
         $password = $this->getPasswordForUsername($username);
 
         return $this->iTryToLogInWith($username, $password);
     }
 
-    protected function getPasswordForUsername($username)
+    public function getPasswordForUsername($username)
     {
         $logins = array('admin' => 'admin', 'test' => 'test', 'dummy' => 'dummy');
+
         return $logins[$username];
     }
 
@@ -45,7 +57,6 @@ class FeatureContext extends AbstractContext
     {
         $this->iAmOnASpecificPage('dashboard');
         $this->makeWide();
-
         $logoutButton = $this->getSession()->getPage()->find('xpath', '//a[text()="Logout"]');
         $logoutButton->click();
     }
@@ -88,50 +99,19 @@ class FeatureContext extends AbstractContext
     }
 
 
-    /**
-     * @Then /^I should be on the (.*) page$/
-     */
-    public function iShouldBeOnTheLoginPage($page)
-    {
-        $page = $this->fixStepArgument($page);
-        $this->assertPageAddress($this->getPageUrlForPageName($page));
-    }
-
-
-    private function getPageUrlForPageName($page) {
-        $pages = array("create new user" => "/en/admin/settings/users/add",
+    public function getPageUrlForPageName($page) {
+        $pages = array(
             "users" => "/en/admin/settings/users",
+            "create new user" => "/en/admin/settings/users/add",
+            "groups" => "/en/admin/settings/groups",
+            "create new group" => "/en/admin/settings/groups/add",
+            "roles" => "en/admin/settings/roles",
+            "create new role" => "en/admin/settings/roles/add",
             "dashboard" => "/en/admin",
             "login" => "/en/login",
         );
 
         return $pages[$page];
-    }
-
-    /**
-     * @Given /^I fill in correct user information for username "([^\']*)"$/
-     */
-    public function iFillInCorrectUserInformation($username)
-    {
-        $username = $this->fixStepArgument($username);
-        $password = $this->getPasswordForUsername($username);
-
-        $records = array(
-            "user[username]" => $username,
-            "user[plainPassword][first]" => $password,
-            "user[plainPassword][second]" => $password,
-            "user[email]" => "support+" . $username . "@kunstmaan.be",
-        );
-
-        $steps = array();
-        foreach($records as $field => $value) {
-            $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
-        }
-
-        $steps[] = new Step\When("I check \"user[enabled]\"");
-        $steps[] = new Step\When("I select \"Administrators\" from \"user[groups][]\"");
-
-        return $steps;
     }
 
     /**
@@ -146,48 +126,20 @@ class FeatureContext extends AbstractContext
         );
     }
 
-    /**
-     * @Given /^I edit user "([^"]*)"$/
-     */
-    public function iEditUser($username)
+    public function clickAction($name, $action, $page)
     {
-        $this->clickActionOnUser($username, 'edit');
-    }
+        $this->iAmOnASpecificPage($page);
 
-    private function clickActionOnUser($username, $action) {
-        $this->iAmOnASpecificPage("users");
-
-        $username = $this->fixStepArgument($username);
+        $name = $this->fixStepArgument($name);
         $action = ucfirst($this->fixStepArgument($action));
 
         $page = $this->getSession()->getPage();
-        $td = $page->find('xpath', '//div[@class="content"]//table//td[text()="' . $username . '"]');
+
+        $td = $page->find('xpath', '//div[@class="content"]//table//td[text()="' . $name . '"]');
         $tr = $td->getParent();
         $deleteLink = $tr->find('xpath', '//a[text()="' . $action . '"]');
 
         $deleteLink->click();
-    }
-
-    /**
-     * @Given /^I delete user "([^"]*)"$/
-     */
-    public function iDeleteUser($username)
-    {
-        $this->clickActionOnUser($username, 'delete');
-
-        $page = $this->getSession()->getPage();
-        $modals = $page->findAll('xpath', "//div[contains(@class, 'modal')]");
-
-        // Find the visible modal.
-        // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
-        foreach ($modals as $modal) {
-            if ($modal->hasClass('in')) {
-                $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $confirmButton->click();
-                return;
-            }
-        }
-
     }
 
     /**
@@ -217,5 +169,25 @@ class FeatureContext extends AbstractContext
     public function makeWide()
     {
         $this->getSession()->resizeWindow(1400, 1000);
+    }
+
+    /**
+     * @Given /^I wait (\d+) seconds$/
+     */
+    public function iWaitSeconds($time)
+    {
+        $this->getSession()->wait($time*1000);
+    }
+
+    /**
+     * Calls the protected fixStepArgument in the MinkContext
+     *
+     * @param string $argument
+     *
+     * @return string
+     */
+    public function fixStepArgument($argument)
+    {
+        return parent::fixStepArgument($argument);
     }
 }

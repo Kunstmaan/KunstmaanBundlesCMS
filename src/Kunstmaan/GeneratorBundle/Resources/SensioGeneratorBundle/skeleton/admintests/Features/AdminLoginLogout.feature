@@ -1,5 +1,5 @@
-Feature: Browse and fill in the admin login form
-  To test the login to the admin
+Feature: AdminLoginLogout
+  Browse and fill in the admin login form
   As an admin user
   User has to log in and see the Dashboard
 
