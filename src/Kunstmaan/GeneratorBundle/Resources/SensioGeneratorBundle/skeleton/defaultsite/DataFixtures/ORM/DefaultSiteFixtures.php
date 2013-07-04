@@ -23,6 +23,7 @@ use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
+use Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart;
 use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -49,6 +50,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @var \Kunstmaan\MediaBundle\Entity\Media
      */
     private $image = null;
+
+    /**
+     * @var \Kunstmaan\MediaBundle\Entity\Media
+     */
+    private $file = null;
 
     /**
      * @var UserInterface
@@ -273,10 +279,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         {
             $this->createHeaderPagePart("Downloads (niv=1)", 1, $headerpage, $position++, $manager);
             $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
-            $this->createLinkPagePart("https://github.com/organizations/Kunstmaan", "Kunstmaan on GitHub", true, $headerpage, $position++, $manager);
+            $this->createDownloadPagePart($this->file, $headerpage, $position++, $manager);
             $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
-            $this->createLinkPagePart("http://bundles.kunstmaan.be", "Kunstmaan Bundles site", true, $headerpage, $position++, $manager);
-            $this->createLinkPagePart("http://www.kunstmaan.be", "Kunstmaan site", true, $headerpage, $position++, $manager);
+            $this->createDownloadPagePart($this->file, $headerpage, $position++, $manager);
+            $this->createDownloadPagePart($this->file, $headerpage, $position++, $manager);
             $this->createToTopPagePart($headerpage, $position++, $manager);
             $this->createLinePagePart($headerpage, $position++, $manager);
         }
@@ -468,9 +474,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     public function createMedia(ObjectManager $manager)
     {
-        // Create Media
-        $imageFolder = $this->getReference('images-folder-en');
+        // Create dummy image folder and add dummy images
         {
+            $imageFolder = $this->getReference('images-folder-en');
+
             $folder = new Folder();
             $folder->setName('dummy');
             $folder->setRel('image');
@@ -478,16 +485,30 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $folder->setInternalName('dummy_images');
             $manager->persist($folder);
             $manager->flush();
+
+            $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/img/general/logo.png';
+            $this->image = $this->createMediaFile($manager, basename($path), $path, $folder);
         }
 
-        $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/img/general/logo.png';
-        $this->image = $this->createImage($manager, basename($path), $path, $folder);
+        // Create dummy file folder and add dummy files
+        {
+            $filesFolder = $this->getReference('files-folder-en');
 
-        $manager->getRepository('KunstmaanMediaBundle:Media');
+            $folder = new Folder();
+            $folder->setName('dummy');
+            $folder->setRel('files');
+            $folder->setParent($filesFolder);
+            $folder->setInternalName('dummy_files');
+            $manager->persist($folder);
+            $manager->flush();
+
+            $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/files/dummy/sample.pdf';
+            $this->file = $this->createMediaFile($manager, basename($path), $path, $folder);
+        }
     }
 
     /**
-     * Create a TextPagePart
+     * Create an ImagePagePart
      *
      * @param Media         $image              The image of the pagepart
      * @param string        $link               The link the image should link to
@@ -504,6 +525,23 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $pagepart->setLink($link);
         $pagepart->setOpenInNewWindow($openInNewWindow);
         $pagepart->setAltText($altText);
+        $manager->persist($pagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $position);
+    }
+
+    /**
+     * Create a DownloadPagePart
+     *
+     * @param Media         $image              The image of the pagepart
+     * @param PageInterface $page               The page where the pagepart needs to be created
+     * @param int           $position           The position on the page
+     * @param ObjectManager $manager            The object manager
+     */
+    private function createDownloadPagePart($image, $page, $position, $manager)
+    {
+        $pagepart = new DownloadPagePart;
+        $pagepart->setMedia($image);
         $manager->persist($pagepart);
         $manager->flush();
         $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $position);
@@ -582,7 +620,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         return $page;
     }
 
-    private function createImage($manager, $name, $path, $folder)
+    private function createMediaFile($manager, $name, $path, $folder)
     {
         $file = new UploadedFile(
             $path,
@@ -595,14 +633,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         // Hack for media bundle issue
         $dir = dirname($this->rootDir);
         chdir($dir . '/web');
-        $picture = new Media();
-        $picture->setFolder($folder);
-        $helper = new FileHelper($picture);
+        $media = new Media();
+        $media->setFolder($folder);
+        $helper = new FileHelper($media);
         $helper->setFile($file);
-        $manager->getRepository('KunstmaanMediaBundle:Media')->save($picture);
+        $manager->getRepository('KunstmaanMediaBundle:Media')->save($media);
         chdir($dir);
 
-        return $picture;
+        return $media;
     }
 
     /**
