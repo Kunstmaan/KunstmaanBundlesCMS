@@ -46,14 +46,14 @@ class TranslationManager
         foreach ($groups as $keyword => $group) {
             foreach($translationsUpdate[$keyword] as $locale => $text) {
 
-                if(!$group->hasTranslation($locale)) {
+                if(!$group->hasTranslation($locale) && trim($text) != '') {
                     $newTranslation = new $this->translationClass();
                     $newTranslation->setLocale($locale);
                     $newTranslation->setText($text);
                     $newTranslation->setDomain($translationDomain);
                     $newTranslation->setKeyword($keyword);
                     $group->addTranslation($newTranslation);
-                } else {
+                } elseif (trim($text) != '') {
                     $group->getTranslationByLocale($locale)->setText($text);
                 }
 
