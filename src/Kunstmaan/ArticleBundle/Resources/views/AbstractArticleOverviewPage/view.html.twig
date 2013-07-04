@@ -5,16 +5,16 @@
 
     {% set count = 0 %}
     {% if pagerfanta.nbResults > 0 %}
+        <ul>
         {% for article in pagerfanta.currentPageResults %}
-            {% if count > 0 %}<hr />{% endif %}
-            <div style=" margin-right: 20px;">
+            <li>
                 {% set articlenode = get_node_translation_for(article) %}
                 <h4><a href="{{ articlenode.url }}">{{ article.title }}</a></h4>
                 {{ article.summary }}
-            </div>
+            </li>
             {% set count = count + 1 %}
         {% endfor %}
-
+        </ul>
         {% if pagerfanta.haveToPaginate() %}
             {{ pagerfanta(pagerfanta) }}
         {% endif %}
