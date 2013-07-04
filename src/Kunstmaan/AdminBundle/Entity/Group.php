@@ -243,7 +243,7 @@ class Group implements RoleInterface, GroupInterface
     public function isGroupValid(ExecutionContext $context)
     {
         if (!(count($this->getRoles()) > 0)) {
-            $context->addViolationAtSubPath('rolesCollection', 'At least one option must be selected.', array(), null);
+            $context->addViolationAt('rolesCollection', 'At least one option must be selected.', array(), null);
         }
     }
 }
