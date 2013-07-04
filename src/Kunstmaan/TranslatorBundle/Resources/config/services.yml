@@ -63,6 +63,13 @@ services:
         calls:
             - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
 
+    kunstmaan_translator.service.translator.resource_cacher:
+        class: Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
+        calls:
+            - [setDebug, [%kernel.debug%]]
+            - [setCacheDir, [%kernel.cache_dir%/translations]]
+            - [setLogger, [@logger]]
+
     kunstmaan_translator.service.translator.translator:
         class: Kunstmaan\TranslatorBundle\Service\Translator\Translator
         arguments:
@@ -73,3 +80,4 @@ services:
             - [@session]
         calls:
             - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
+            - [setResourceCacher, [@kunstmaan_translator.service.translator.resource_cacher]]

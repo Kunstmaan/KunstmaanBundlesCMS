@@ -15,12 +15,37 @@ class Translator extends SymfonyTranslator
 {
 
     private $stasher;
+    private $resourceCacher;
 
     public function addDatabaseResources()
     {
-         $resources = $this->stasher->getTranslationDomainsByLocale();
+        if($this->addResourcesFromCacher() === false) {
+            $this->addResourcesFromStasherAndCache();
+        }
+    }
 
-         foreach ($resources as $resource) {
+    public function addResourcesFromCacher()
+    {
+        $resources = $this->resourceCacher->getCachedResources(false);
+
+        if($resources !== false) {
+            $this->addResources($resources);
+            return true;
+        }
+
+        return false;
+    }
+
+    public function addResourcesFromStasherAndCache()
+    {
+        $resources = $this->stasher->getTranslationDomainsByLocale();
+        $this->addResources($resources);
+        $this->resourceCacher->cacheResources($resources);
+    }
+
+    public function addResources($resources)
+    {
+        foreach ($resources as $resource) {
             $this->addResource('database', 'DB', $resource['locale'], $resource['name']);
          }
     }
@@ -30,8 +55,8 @@ class Translator extends SymfonyTranslator
         $this->stasher = $stasher;
     }
 
-    public function setLoaderIds($loaderIds)
+    public function setResourceCacher($resourceCacher)
     {
-        $this->loaderIds = $loaderIds;
+        $this->resourceCacher = $resourceCacher;
     }
 }

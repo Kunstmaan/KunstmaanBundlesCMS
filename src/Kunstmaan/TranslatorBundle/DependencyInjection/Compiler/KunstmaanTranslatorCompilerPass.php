@@ -31,7 +31,6 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
 
         if ($container->hasDefinition('kunstmaan_translator.service.translator.translator')) {
             $container->getDefinition('kunstmaan_translator.service.translator.translator')->replaceArgument(2, $loaderAliases);
-            $container->getDefinition('kunstmaan_translator.service.translator.translator')->addMethodCall('setLoaderIds', array($loaderAliases));
         }
     }
 }
