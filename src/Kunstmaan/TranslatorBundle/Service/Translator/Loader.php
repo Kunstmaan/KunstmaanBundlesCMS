@@ -19,10 +19,10 @@ class Loader implements LoaderInterface
 
         $translations = $this->stasher->getTranslationsByLocaleAndDomain($locale, $domain);
 
-        foreach ($translation as $translation) {
+        foreach ($translations as $translation) {
             $catalogue->set($translation->getKeyword(), $translation->getText(), $domain);
         }
-exit;
+
         return $catalogue;
     }
 

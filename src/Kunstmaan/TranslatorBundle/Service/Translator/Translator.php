@@ -21,12 +21,17 @@ class Translator extends SymfonyTranslator
          $resources = $this->stasher->getTranslationDomainsByLocale();
 
          foreach ($resources as $resource) {
-            //$this->addResource('database', 'DB', $resource['locale'], $resource['name']);
+            $this->addResource('database', 'DB', $resource['locale'], $resource['name']);
          }
     }
 
     public function setStasher($stasher)
     {
         $this->stasher = $stasher;
+    }
+
+    public function setLoaderIds($loaderIds)
+    {
+        $this->loaderIds = $loaderIds;
     }
 }

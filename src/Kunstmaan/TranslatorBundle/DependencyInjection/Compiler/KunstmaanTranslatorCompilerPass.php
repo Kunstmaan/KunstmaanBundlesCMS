@@ -15,19 +15,23 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
 
         // look for all tagged translation file loaders, inject them into the importer
         foreach ($container->findTaggedServiceIds('translation.loader') as $id => $attributes) {
+            $loaderAliases[$id][] = $attributes[0]['alias'];
             $loaderRefs[$attributes[0]['alias']] = new Reference($id);
 
             if(isset($attributes[0]['legacy-alias'])) {
+                $loaderAliases[$id][] = $attributes[0]['legacy-alias'];
                 $loaderRefs[$attributes[0]['legacy-alias']] = new Reference($id);
             }
         }
 
+
         if ($container->hasDefinition('kunstmaan_translator.service.importer.importer')) {
-            $container->findDefinition('kunstmaan_translator.service.importer.importer')->addMethodCall('setLoaders', array($loaderRefs));
+            $container->getDefinition('kunstmaan_translator.service.importer.importer')->addMethodCall('setLoaders', array($loaderRefs));
         }
 
         if ($container->hasDefinition('kunstmaan_translator.service.translator.translator')) {
-            $container->findDefinition('kunstmaan_translator.service.translator.translator')->replaceArgument(2, $loaderRefs);
+            $container->getDefinition('kunstmaan_translator.service.translator.translator')->replaceArgument(2, $loaderAliases);
+            $container->getDefinition('kunstmaan_translator.service.translator.translator')->addMethodCall('setLoaderIds', array($loaderAliases));
         }
     }
 }

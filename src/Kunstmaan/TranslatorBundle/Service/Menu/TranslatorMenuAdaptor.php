@@ -11,6 +11,8 @@ use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 class TranslatorMenuAdaptor implements MenuAdaptorInterface
 {
 
+    private $translationManager;
+
     /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
      *
@@ -29,12 +31,29 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
 
     public function getTopMenuItem(MenuBuilder $menu, Request $request = null)
     {
+
         $menuitem = new TopMenuItem($menu);
         $menuitem->setRoute('KunstmaanTranslatorBundle_translations_show');
-        //$menuitem->setRouteparams(array('domainId' => $domain->getId()));
-        $menuitem->setRouteparams(array('domainId' => 1));
+        $menuitem->setRouteparams(array('domain' => $this->getFirstDefaultDomainName()));
         $menuitem->setInternalname('Translations');
         $menuitem->setParent(null);
         return $menuitem;
+    }
+
+    public function getFirstDefaultDomainName()
+    {
+        $domains = $this->translationManager->getAllDomains();
+
+        if(count($domains) <= 0) {
+            return false;
+        }
+
+        $domain = reset($domains);
+        return $domain->getName();
+    }
+
+    public function setTranslationManager($translationManager)
+    {
+        $this->translationManager = $translationManager;
     }
 }

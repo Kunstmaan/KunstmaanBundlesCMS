@@ -45,9 +45,7 @@ class KunstmaanTranslatorExtension extends Extension
     {
         $container->setAlias('translator', 'kunstmaan_translator.service.translator.translator');
 
-        $translator = $container->findDefinition('kunstmaan_translator.service.translator.translator');
-
-
+        $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
         $translator->addMethodCall('addDatabaseResources', array());
     }
 }

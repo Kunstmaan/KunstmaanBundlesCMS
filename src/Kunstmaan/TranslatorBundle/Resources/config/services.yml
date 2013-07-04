@@ -13,6 +13,8 @@ services:
         class: "%kunstmaan_translator.menu.adaptor.class%"
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
+        calls:
+            - [setTranslationManager, [@kunstmaan_translator.service.manager]]
 
     kunstmaan_translator.service.importer.command_handler:
         class: "Kunstmaan\TranslatorBundle\Service\Importer\ImportCommandHandler"
@@ -66,8 +68,8 @@ services:
         arguments:
             - @service_container
             - @translator.selector
-            - []
-            - { cache_dir : %kernel.cache_dir%/translation, debug: %kernel.debug% }
+            - {}
+            - { cache_dir : %kernel.cache_dir%/translations, debug: %kernel.debug% }
             - [@session]
         calls:
             - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]

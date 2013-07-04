@@ -21,7 +21,7 @@ class DoctrineORMStasher implements StasherInterface
 
     public function getAllDomains()
     {
-        return $this->translationDomainRepository->findAll();
+        return $this->translationDomainRepository->findBy(array(), array('name' => 'asc'));
     }
 
     public function getTranslationGroupsByDomain($domain)
