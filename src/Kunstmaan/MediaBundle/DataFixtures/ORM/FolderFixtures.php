@@ -27,6 +27,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $gal->setRel("media");
         $manager->persist($gal);
         $manager->flush();
+        $this->addReference('media-folder-en', $gal);
 
         $gal->setTranslatableLocale('nl');
         $manager->refresh($gal);
@@ -47,6 +48,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setRel("image");
         $manager->persist($subgal);
         $manager->flush();
+        $this->addReference('images-folder-en', $subgal);
 
         $subgal->setTranslatableLocale('nl');
         $manager->refresh($subgal);
@@ -67,6 +69,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setRel("video");
         $manager->persist($subgal);
         $manager->flush();
+        $this->addReference('videos-folder-en', $subgal);
 
         $subgal->setTranslatableLocale('nl');
         $manager->refresh($subgal);
@@ -87,6 +90,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setRel("slideshow");
         $manager->persist($subgal);
         $manager->flush();
+        $this->addReference('slides-folder-en', $subgal);
 
         $subgal->setTranslatableLocale('nl');
         $manager->refresh($subgal);
@@ -107,6 +111,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setRel("files");
         $manager->persist($subgal);
         $manager->flush();
+        $this->addReference('files-folder-en', $subgal);
 
         $subgal->setTranslatableLocale('nl');
         $manager->refresh($subgal);
