@@ -119,14 +119,16 @@ class PagepartGenerator extends Generator
         }
 
         $class = new ClassMetadataInfo($entityClass, new UnderscoreNamingStrategy());
-        foreach ($this->fields as $fieldArray) {
-            foreach ($fieldArray as $field) {
-                if (array_key_exists('joinColumn', $field)) {
-                    $class->mapManyToOne($field);
-                } elseif (array_key_exists('joinTable', $field)) {
-                    $class->mapManyToMany($field);
-                } else {
-                    $class->mapField($field);
+        foreach ($this->fields as $fieldSet) {
+            foreach ($fieldSet as $fieldArray) {
+                foreach ($fieldArray as $field) {
+                    if (array_key_exists('joinColumn', $field)) {
+                        $class->mapManyToOne($field);
+                    } elseif (array_key_exists('joinTable', $field)) {
+                        $class->mapManyToMany($field);
+                    } else {
+                        $class->mapField($field);
+                    }
                 }
             }
         }

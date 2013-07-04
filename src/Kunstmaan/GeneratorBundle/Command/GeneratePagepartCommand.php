@@ -75,7 +75,7 @@ EOT
         $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
         $fields = array();
         foreach ($this->fields as $fieldInfo) {
-            $fields = array_merge($fields, $this->getEntityFields($fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']));
+            $fields[] = $this->getEntityFields($fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']);
         }
 
         $this->createGenerator()->generate($bundle, $this->pagepartName, $fields, $this->sections);

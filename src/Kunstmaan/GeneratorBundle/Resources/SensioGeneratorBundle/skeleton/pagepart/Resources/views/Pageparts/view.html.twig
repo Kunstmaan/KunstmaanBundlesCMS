@@ -1,5 +1,5 @@
 <div class="{{ pagepart }}">
-{% for key, fieldArray in fields %}
+{% for fieldSet in fields %}{% for key, fieldArray in fieldSet %}
 {% if key == 'single_line' or key == 'multi_line' %}
     <p>{{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ " }}" }}</p>
 {% elseif key == 'rich_text' %}
@@ -21,5 +21,5 @@
 {% elseif key == 'boolean' %}
     <div>{{ "{% if resource." ~ fieldArray[0]['fieldName'] ~ " %}yes{% else %}no{% endif %}" }}</div>
 {% endif %}
-{% endfor %}
+{% endfor %}{% endfor %}
 </div>

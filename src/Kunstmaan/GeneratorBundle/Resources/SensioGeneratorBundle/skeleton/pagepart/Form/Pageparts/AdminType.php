@@ -24,7 +24,7 @@ class {{ className }} extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-{% for key, fieldArray in fields %}{% for field in fieldArray %}
+{% for fieldSet in fields %}{% for key, fieldArray in fieldSet %}{% for field in fieldArray %}
         $builder->add(
             '{{ field.fieldName }}',
             '{{ field.formType }}',
@@ -47,7 +47,7 @@ class {{ className }} extends AbstractType
 {% endif %}
             )
         );
-{% endfor %}{% endfor %}
+{% endfor %}{% endfor %}{% endfor %}
     }
 
     /**
