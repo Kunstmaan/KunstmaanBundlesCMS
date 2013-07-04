@@ -50,6 +50,19 @@ class Translator extends SymfonyTranslator
          }
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function loadCatalogue($locale)
+    {
+
+        if($this->options['debug'] === true) {
+            $this->options['cache_dir'] = null; // disable caching for debug
+        }
+
+        return parent::loadCatalogue($locale);
+    }
+
     public function setStasher($stasher)
     {
         $this->stasher = $stasher;
