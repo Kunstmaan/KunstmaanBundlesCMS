@@ -45,7 +45,6 @@ class {{ className }} extends AbstractType
 {% endif %}
 {% if field.nullable is defined and field.nullable %}                'required' => false,
 {% endif %}
-                'label' => '{{ field.fieldName }}'
             )
         );
 {% endfor %}{% endfor %}
