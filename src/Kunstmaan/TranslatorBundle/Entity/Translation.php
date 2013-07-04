@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationRepository")
  * @ORM\Table(name="kuma_translation", uniqueConstraints={@ORM\UniqueConstraint(name="keyword_per_locale", columns={"keyword", "locale"})})
- *
  * @ORM\HasLifecycleCallbacks
  */
 class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translation
@@ -73,11 +72,11 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
     /**
      * @var \DateTime
      *
-     * * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
 
-    /*
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
@@ -86,7 +85,7 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
         $this->updatedAt = new \DateTime();
     }
 
-    /*
+    /**
      * @ORM\PreUpdate
      */
     public function preUpdate()

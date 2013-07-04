@@ -34,9 +34,11 @@ class TranslationGroup
     public function hasTranslation($locale)
     {
 
-        if (!is_array($this->translations) || count($this->translations) <= 0) {
+        if (count($this->translations) <= 0) {
             return false;
         }
+
+
 
         if ($this->getTranslationByLocale($locale) !== null) {
             return true;
