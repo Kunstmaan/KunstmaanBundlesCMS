@@ -8,27 +8,32 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
+use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
+use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
+use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
+use Kunstmaan\MediaBundle\Entity\Folder;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\File\FileHelper;
+use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\PagePartBundle\Entity\TextPagePart;
-use Kunstmaan\PagePartBundle\Entity\TocPagePart;
 use Kunstmaan\PagePartBundle\Entity\HeaderPagePart;
 use Kunstmaan\PagePartBundle\Entity\LinePagePart;
 use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
 use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
+use Kunstmaan\PagePartBundle\Entity\TextPagePart;
+use Kunstmaan\PagePartBundle\Entity\TocPagePart;
 use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
-use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
-use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
-use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 
 /**
  * DefaultSiteFixtures
@@ -36,9 +41,14 @@ use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
 
-    const PARAGRAPHTEXT = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla. Aenean feugiat, nunc in scelerisque cursus, eros turpis condimentum justo, a tempor orci ligula pharetra velit. Vestibulum a purus interdum tellus eleifend semper. Integer eleifend adipiscing gravida. Phasellus dignissim, quam sagittis molestie sollicitudin, urna ligula pharetra diam, id consequat dui ante eget justo.</p>";
+    const PARAGRAPHTEXT = "<p>Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aenean auctor tempor nisl, <a href='#'>eget mattis</a> dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla. Aenean feugiat, nunc in scelerisque cursus, eros turpis condimentum justo, a tempor orci ligula pharetra velit. Vestibulum a purus interdum tellus eleifend semper. Integer eleifend adipiscing gravida. Phasellus dignissim, quam sagittis molestie sollicitudin, urna ligula pharetra diam, id consequat dui ante eget justo.</p>";
     const SHORT_PARAGRAPHTEXT = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p>";
     const RAW_HTML = '<div class="row"><div class="six columns"><div class="panel"><h5>Lorem ipsum dolor sit amet.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div><div class="six columns"><div class="panel callout radius"><h5>Aenean auctor tempor nisl.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div></div>';
+
+    /**
+     * @var \Kunstmaan\MediaBundle\Entity\Media
+     */
+    private $image = null;
 
     /**
      * @var UserInterface
@@ -51,6 +61,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private $container = null;
 
     /**
+     * @var string
+     */
+    private $rootDir;
+
+    /**
      * Load data fixtures with the passed EntityManager.
      *
      * @param ObjectManager $manager
@@ -60,6 +75,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->adminuser = $manager
             ->getRepository('KunstmaanAdminBundle:User')
             ->findOneBy(array('username' => 'Admin'));
+
+        $this->rootDir = $this->container->get('kernel')->getRootDir();
+        $this->createMedia($manager);
 
         // Homepage
         $homePage = $this->createHomePage($manager, "Home");
@@ -205,7 +223,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $this->createTOCPagePart($headerpage, $position++, $manager);
         }
         {
-            $this->createHeaderPagePart("1. Header (niv=1)", 1, $headerpage, $position++, $manager);
+            $this->createHeaderPagePart("1. Headers (niv=1)", 1, $headerpage, $position++, $manager);
             $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
             {
                 $this->createHeaderPagePart("1.1. Header (niv=2)", 2, $headerpage, $position++, $manager);
@@ -239,44 +257,90 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             }
         }
         {
+            $this->createHeaderPagePart("Raw HTML (niv=1)", 1, $headerpage, $position++, $manager);
             $this->createRawHTMLPagePart(DefaultSiteFixtures::RAW_HTML, $headerpage, $position++, $manager);
         }
         {
-            $this->createHeaderPagePart("2. Header (niv=1)", 1, $headerpage, $position++, $manager);
+            $this->createHeaderPagePart("Links (niv=1)", 1, $headerpage, $position++, $manager);
             $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
-            {
-                $this->createHeaderPagePart("2.1. Header (niv=2)", 2, $headerpage, $position++, $manager);
-                $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
-            }
-            {
-                $this->createHeaderPagePart("2.2. Header (niv=2)", 2, $headerpage, $position++, $manager);
-                $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
-                {
-                    $this->createHeaderPagePart("2.2.2. Header (niv=3)", 3, $headerpage, $position++, $manager);
-                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
-                }
-                {
-                    $this->createHeaderPagePart("2.2.2.2. Header (niv=4)", 4, $headerpage, $position++, $manager);
-                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
-                }
-                {
-                    $this->createHeaderPagePart("2.2.2.2.2. Header (niv=5)", 5, $headerpage, $position++, $manager);
-                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
-                }
-                {
-                    $this->createHeaderPagePart("2.2.2.2.2.2. Header (niv=6)", 6, $headerpage, $position++, $manager);
-                    $this->createTextPagePart(DefaultSiteFixtures::SHORT_PARAGRAPHTEXT, $headerpage, $position++, $manager);
-                }
-            }
-            {
-                $this->createToTopPagePart($headerpage, $position++, $manager);
-            }
-            {
-                $this->createLinePagePart($headerpage, $position++, $manager);
-            }
-            {
-                $this->createLinkPagePart("http://bundles.kunstmaan.be", "Kunstmaan Bundles site", true, $headerpage, $position++, $manager);
-            }
+            $this->createLinkPagePart("https://github.com/organizations/Kunstmaan", "Kunstmaan on GitHub", true, $headerpage, $position++, $manager);
+            $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            $this->createLinkPagePart("http://bundles.kunstmaan.be", "Kunstmaan Bundles site", true, $headerpage, $position++, $manager);
+            $this->createLinkPagePart("http://www.kunstmaan.be", "Kunstmaan site", true, $headerpage, $position++, $manager);
+            $this->createToTopPagePart($headerpage, $position++, $manager);
+            $this->createLinePagePart($headerpage, $position++, $manager);
+        }
+        {
+            $this->createHeaderPagePart("Downloads (niv=1)", 1, $headerpage, $position++, $manager);
+            $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            $this->createLinkPagePart("https://github.com/organizations/Kunstmaan", "Kunstmaan on GitHub", true, $headerpage, $position++, $manager);
+            $this->createTextPagePart(DefaultSiteFixtures::PARAGRAPHTEXT, $headerpage, $position++, $manager);
+            $this->createLinkPagePart("http://bundles.kunstmaan.be", "Kunstmaan Bundles site", true, $headerpage, $position++, $manager);
+            $this->createLinkPagePart("http://www.kunstmaan.be", "Kunstmaan site", true, $headerpage, $position++, $manager);
+            $this->createToTopPagePart($headerpage, $position++, $manager);
+            $this->createLinePagePart($headerpage, $position++, $manager);
+        }
+        {
+            $this->createHeaderPagePart("Tables (niv=1)", 1, $headerpage, $position++, $manager);
+            $this->createHeaderPagePart("Standard (niv=2)", 2, $headerpage, $position++, $manager);
+            $tableTag = "<table class='table'>";
+            $content = "<thead>
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>@twitter</td>
+                            </tr>
+                        </tbody>
+                    </table>";
+            $this->createRawHTMLPagePart($tableTag . " " . $content, $headerpage, $position++, $manager);
+            $this->createHeaderPagePart("Striped (niv=2)", 2, $headerpage, $position++, $manager);
+            $tableTag = "<table class='table table-striped'>";
+            $this->createRawHTMLPagePart($tableTag . " " . $content, $headerpage, $position++, $manager);
+        }
+        {
+            $this->createHeaderPagePart("Images (niv=1)", 1, $headerpage, $position++, $manager);
+            $this->createImagePagePart($this->image, "http://bundles.kunstmaan.be", true, "Alt Text", $headerpage, $position++, $manager);
+        }
+        {
+            $this->createHeaderPagePart("Flex slider (niv=1)", 1, $headerpage, $position++, $manager);
+            $flex = '<div class="flexslider">
+                        <ul class="slides">
+                            <li data-thumb="http://flickholdr.com/1000/400">
+                                <img src="http://flickholdr.com/1000/400" alt="flicker placeholder">
+                            </li>
+                            <li data-thumb="http://flickholdr.com/1000/400/blackandwhite">
+                                <img src="http://flickholdr.com/1000/400/blackandwhite" alt="flicker placeholder">
+                            </li>
+                            <li data-thumb="http://flickholdr.com/1000/400">
+                                <img src="http://flickholdr.com/1000/400" alt="flicker placeholder">
+                            </li>
+                            <li data-thumb="http://flickholdr.com/1000/400/blackandwhite">
+                                <img src="http://flickholdr.com/1000/400/blackandwhite" alt="flicker placeholder">
+                            </li>
+                        </ul>
+                    </div>';
+            $this->createRawHTMLPagePart($flex, $headerpage, $position++, $manager);
         }
     }
 
@@ -400,6 +464,52 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     }
 
     /**
+     * @param ObjectManager $manager
+     */
+    public function createMedia(ObjectManager $manager)
+    {
+        // Create Media
+        $imageFolder = $this->getReference('images-folder-en');
+        {
+            $folder = new Folder();
+            $folder->setName('dummy');
+            $folder->setRel('image');
+            $folder->setParent($imageFolder);
+            $folder->setInternalName('dummy_images');
+            $manager->persist($folder);
+            $manager->flush();
+        }
+
+        $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/img/general/logo.png';
+        $this->image = $this->createImage($manager, basename($path), $path, $folder);
+
+        $manager->getRepository('KunstmaanMediaBundle:Media');
+    }
+
+    /**
+     * Create a TextPagePart
+     *
+     * @param Media         $image              The image of the pagepart
+     * @param string        $link               The link the image should link to
+     * @param bool          $openInNewWindow    Set to true when the link should open in a new window
+     * @param string        $altText            The alternative text for the image
+     * @param PageInterface $page               The page where the pagepart needs to be created
+     * @param int           $position           The position on the page
+     * @param ObjectManager $manager            The object manager
+     */
+    private function createImagePagePart($image, $link, $openInNewWindow, $altText, $page, $position, $manager)
+    {
+        $pagepart = new ImagePagePart;
+        $pagepart->setMedia($image);
+        $pagepart->setLink($link);
+        $pagepart->setOpenInNewWindow($openInNewWindow);
+        $pagepart->setAltText($altText);
+        $manager->persist($pagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $position);
+    }
+
+    /**
      * Create a FormPage
      *
      * @param ObjectManager $manager The object manager
@@ -470,6 +580,29 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
 
         return $page;
+    }
+
+    private function createImage($manager, $name, $path, $folder)
+    {
+        $file = new UploadedFile(
+            $path,
+            $name,
+            mime_content_type($path), // DEPRECATED - just used as quick hack!
+            filesize($path),
+            null
+        );
+
+        // Hack for media bundle issue
+        $dir = dirname($this->rootDir);
+        chdir($dir . '/web');
+        $picture = new Media();
+        $picture->setFolder($folder);
+        $helper = new FileHelper($picture);
+        $helper->setFile($file);
+        $manager->getRepository('KunstmaanMediaBundle:Media')->save($picture);
+        chdir($dir);
+
+        return $picture;
     }
 
     /**
