@@ -38,7 +38,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
     const PARAGRAPHTEXT = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla. Aenean feugiat, nunc in scelerisque cursus, eros turpis condimentum justo, a tempor orci ligula pharetra velit. Vestibulum a purus interdum tellus eleifend semper. Integer eleifend adipiscing gravida. Phasellus dignissim, quam sagittis molestie sollicitudin, urna ligula pharetra diam, id consequat dui ante eget justo.</p>";
     const SHORT_PARAGRAPHTEXT = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p>";
-    const RAW_HTML = '<div class="row"><div class="six columns"><div class="panel"><h5>Lorem ipsum dolor sit amet.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div><div class="six columns"><div class="panel callout radius"><h5>Aenean auctor tempor nisl.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div></div>';
+    const RAW_HTML = '<div class="row-fluid"><div class="span6"><h5>Lorem ipsum dolor sit amet.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div><div class="span6"><h5>Aenean auctor tempor nisl.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean auctor tempor nisl, eget mattis dolor malesuada non. In hac habitasse platea dictumst. Phasellus porttitor tempus neque nec fringilla.</p></div></div>';
 
     /**
      * @var UserInterface
@@ -74,7 +74,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $dashboard = new DashboardConfiguration();
         }
         $dashboard->setTitle("Dashboard");
-        $dashboard->setContent('<div class="alert alert-block alert-error"><strong>Important: </strong>please change these items to the graphs of your own site!</div><iframe src="https://rpm.newrelic.com/public/charts/2h1YQ3W7j7Z" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/1VNlg8JA5ed" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/36A9KcMTMli" width="100%" height="300" scrolling="no" frameborder="no"></iframe>');
+        $dashboard->setContent('<div class="alert alert-info"><strong>Important: </strong>please change these items to the graphs of your own site!</div><iframe src="https://rpm.newrelic.com/public/charts/2h1YQ3W7j7Z" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/1VNlg8JA5ed" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/36A9KcMTMli" width="100%" height="300" scrolling="no" frameborder="no"></iframe>');
         $manager->persist($dashboard);
         $manager->flush();
     }
@@ -167,7 +167,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
         {
             $textpagepart = new TextPagePart();
-            $textpagepart->setContent("<p><strong>Success! It Works!</strong></p><p>This is a barebone frontend template, this can be, but most likely is not, the starting point of your website. This frontend template is built using <a href=\"http://foundation.zurb.com/\">Foundation 3</a>.</p>");
+            $textpagepart->setContent("<p><strong>Success! It Works!</strong></p><p>This is a barebone frontend template, this can be, but most likely is not, the starting point of your website. This frontend template is built using Twitter bootstrap.</p>");
             $manager->persist($textpagepart);
             $manager->flush();
             $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($homepage, $textpagepart, 2);

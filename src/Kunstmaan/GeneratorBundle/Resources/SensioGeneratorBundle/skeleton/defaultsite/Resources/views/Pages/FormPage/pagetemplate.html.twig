@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="nine columns">
+<div class="row-fluid">
+    <div class="span9">
         {% if thanks is defined and thanks %}
             {{ page.thanks|raw }}
         {% else %}
@@ -10,12 +10,12 @@
             </form>
         {% endif %}
     </div>
-    <div class="three columns">
+    <div class="span3">
         {{ render_pageparts(page, 'banners') }}
     </div>
 </div>
-<div class="row">
-    <div class="twelve columns">
+<div class="row-fluid">
+    <div class="span12">
         {{ render_pageparts(page, 'bottom') }}
     </div>
 </div>
