@@ -90,5 +90,5 @@ class Role implements RoleInterface
             'message' => 'This role name already exists.'
         )));
     }
-
+    
 }
