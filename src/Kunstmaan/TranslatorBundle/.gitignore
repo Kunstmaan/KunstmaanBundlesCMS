@@ -6,3 +6,4 @@ composer.phar
 Tests/app/cache/
 build/logs/
 build/coverage/
+Tests/app/logs/
