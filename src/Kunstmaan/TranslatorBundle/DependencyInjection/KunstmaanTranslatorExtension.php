@@ -44,8 +44,65 @@ class KunstmaanTranslatorExtension extends Extension
     public function setTranslationConfiguration($config, $container)
     {
         $container->setAlias('translator', 'kunstmaan_translator.service.translator.translator');
-
         $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
+        $this->discoverTranslationDirectories($config, $container);
+
+        // overwrites everything
         $translator->addMethodCall('addDatabaseResources', array());
+    }
+
+    // FIXME: needs refactoring :)
+    public function discoverTranslationDirectories($config, $container)
+    {
+        $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
+
+        $dirs = array();
+        if (class_exists('Symfony\Component\Validator\Validator')) {
+            $r = new \ReflectionClass('Symfony\Component\Validator\Validator');
+
+            $dirs[] = dirname($r->getFilename()).'/Resources/translations';
+        }
+        if (class_exists('Symfony\Component\Form\Form')) {
+            $r = new \ReflectionClass('Symfony\Component\Form\Form');
+
+            $dirs[] = dirname($r->getFilename()).'/Resources/translations';
+        }
+        $overridePath = $container->getParameter('kernel.root_dir').'/Resources/%s/translations';
+        foreach ($container->getParameter('kernel.bundles') as $bundle => $class) {
+            $reflection = new \ReflectionClass($class);
+            if (is_dir($dir = dirname($reflection->getFilename()).'/Resources/translations')) {
+                $dirs[] = $dir;
+            }
+            if (is_dir($dir = sprintf($overridePath, $bundle))) {
+                $dirs[] = $dir;
+            }
+        }
+        if (is_dir($dir = $container->getParameter('kernel.root_dir').'/Resources/translations')) {
+            $dirs[] = $dir;
+        }
+
+        // Register translation resources
+        if (count($dirs) > 0) {
+            foreach ($dirs as $dir) {
+                $container->addResource(new DirectoryResource($dir));
+            }
+
+            $finder = Finder::create();
+            $finder->files();
+
+
+                $finder->filter(function (\SplFileInfo $file) {
+                    return 2 === substr_count($file->getBasename(), '.') && preg_match('/\.\w+$/', $file->getBasename());
+                });
+
+
+            $finder->in($dirs);
+
+            foreach ($finder as $file) {
+                // filename is domain.locale.format
+                list($domain, $locale, $format) = explode('.', $file->getBasename());
+                $translator->addMethodCall('addResource', array($format, (string) $file, $locale, $domain));
+            }
+        }
     }
 }
