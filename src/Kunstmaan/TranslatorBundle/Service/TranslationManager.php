@@ -35,9 +35,20 @@ class TranslationManager
         return $this->stasher->getTranslationGroupsByDomain($domain);
     }
 
+    // TODO: validation
     public function updateTranslationsFromArray($domain, array $translations)
     {
-        $this->stasher->updateTranslationsFromArray($domain, $translations);
+        $translationsUpdate = $translations[$domain];
+
+        $groups = $this->getTranslationGroupsByDomain($domain);
+
+        foreach ($groups as $keyword => $group) {
+            foreach($group->getTranslations() as $translation) {
+                $translation->setText($translationsUpdate[$keyword][$translation->getLocale()]);
+            }
+        }
+
+        $this->stasher->updateTranslationGroups($groups);
     }
 
     public function setStasher($stasher)

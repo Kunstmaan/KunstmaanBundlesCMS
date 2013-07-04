@@ -52,6 +52,17 @@ class DoctrineORMStasher implements StasherInterface
         return $translationGroups;
     }
 
+    public function updateTranslationGroups(ArrayCollection $groups)
+    {
+        foreach ($groups as $group) {
+            foreach ($group->getTranslations() as $translation) {
+                $this->persist($translation);
+            }
+        }
+
+        $this->flush();
+    }
+
     public function getTranslationGroupByKeywordAndDomain($keyword, $domain)
     {
         $translationDomain = $this->translationDomainRepository->findOneBy(array('name' => $domain));
