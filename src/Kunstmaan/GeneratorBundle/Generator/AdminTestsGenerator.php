@@ -77,8 +77,13 @@ class AdminTestsGenerator extends  Generator
 
 
         $this->filesystem->copy($skeletonDir . '/AdminLoginLogout.feature', $dirPath . '/Features/AdminLoginLogout.feature', true);
+        $this->filesystem->copy($skeletonDir . '/AdminSettingsGroup.feature', $dirPath . '/Features/AdminSettingsUser.feature', true);
+        $this->filesystem->copy($skeletonDir . '/AdminSettingsRole.feature', $dirPath . '/Features/AdminSettingsUser.feature', true);
         $this->filesystem->copy($skeletonDir . '/AdminSettingsUser.feature', $dirPath . '/Features/AdminSettingsUser.feature', true);
         $this->renderFile('/admintests/Features/Context/FeatureContext.php', $dirPath . '/Features/Context/FeatureContext.php', $parameters);
+        $this->renderFile('/admintests/Features/Context/GroupContext.php', $dirPath . '/Features/Context/GroupContext.php', $parameters);
+        $this->renderFile('/admintests/Features/Context/RoleContext.php', $dirPath . '/Features/Context/RoleContext.php', $parameters);
+        $this->renderFile('/admintests/Features/Context/UserContext.php', $dirPath . '/Features/Context/UserContext.php', $parameters);
 
         $output->writeln('Generating Behat Tests : <info>OK</info>');
     }
