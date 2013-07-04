@@ -34,23 +34,13 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
 
         $menuitem = new TopMenuItem($menu);
         $menuitem->setRoute('KunstmaanTranslatorBundle_translations_show');
-        $menuitem->setRouteparams(array('domain' => $this->getFirstDefaultDomainName()));
+        $menuitem->setRouteparams(array('domain' => $this->translationManager->getFirstDefaultDomainName()));
         $menuitem->setInternalname('Translations');
         $menuitem->setParent(null);
         return $menuitem;
     }
 
-    public function getFirstDefaultDomainName()
-    {
-        $domains = $this->translationManager->getAllDomains();
 
-        if(count($domains) <= 0) {
-            return false;
-        }
-
-        $domain = reset($domains);
-        return $domain->getName();
-    }
 
     public function setTranslationManager($translationManager)
     {

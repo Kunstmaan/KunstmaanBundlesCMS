@@ -39,6 +39,12 @@ class ResourceCacher
         return sprintf('%s/resources.cached.php', $this->cacheDir);
     }
 
+    public function flushCache()
+    {
+        $command = sprintf('rm %s/*.php', $this->cacheDir);
+        exec($command);
+    }
+
 
     public function setDebug($debug)
     {

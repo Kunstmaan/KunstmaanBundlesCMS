@@ -12,6 +12,7 @@ class AppKernel extends Kernel
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
+            new \Symfony\Bundle\MonologBundle\MonologBundle(),
         );
 
         return $bundles;

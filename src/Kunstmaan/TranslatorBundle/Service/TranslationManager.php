@@ -18,6 +18,18 @@ class TranslationManager
         return $this->stasher->getAllDomains();
     }
 
+    public function getFirstDefaultDomainName()
+    {
+        $domains = $this->getAllDomains();
+
+        if(count($domains) <= 0) {
+            return false;
+        }
+
+        $domain = reset($domains);
+        return $domain->getName();
+    }
+
     public function getTranslationGroupsByDomain($domain)
     {
         return $this->stasher->getTranslationGroupsByDomain($domain);

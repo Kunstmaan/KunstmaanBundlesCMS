@@ -6,8 +6,8 @@
     <div class="extra_actions_header">
         <div class="btn-group pull-right">
             <a class="btn btn-primary btn-medium" href="">Export</a>
-            <a class="btn btn-primary btn-medium" href="{{ path('KunstmaanTranslatorBundle_translations_import_bundle', { domain: domain }) }}">Import</a>
-            <a class="btn btn-primary btn-medium" href="">Rebuild cache</a>
+            <a class="btn btn-primary btn-medium" href="{{ path('KunstmaanTranslatorBundle_translations_import_bundle') }}">Import</a>
+            <a class="btn btn-primary btn-medium" href="{{ path('KunstmaanTranslatorBundle_translations_flush_cache') }}">Flush cache</a>
         </div>
     </div>
 </div>

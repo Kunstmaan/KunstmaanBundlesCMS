@@ -12,7 +12,7 @@ use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 class TranslatorController extends Controller
 {
     /**
-     * @Route("/{domain}", requirements={"domain"}, name="KunstmaanTranslatorBundle_translations_show")
+     * @Route("/show/{domain}", requirements={"domain"}, name="KunstmaanTranslatorBundle_translations_show")
      * @Template()
      *
      * @return array
@@ -44,13 +44,15 @@ class TranslatorController extends Controller
     }
 
     /**
-     * @Route("/import/{domain}/{bundle}", name="KunstmaanTranslatorBundle_translations_import_bundle")
+     * @Route("/import/{bundle}", name="KunstmaanTranslatorBundle_translations_import_bundle")
      * @Template()
      *
      * @return array
      */
-    public function importAction($domain = false, $bundle = false)
+    public function importAction($bundle = false)
     {
+        $domain = $this->container->get('kunstmaan_translator.service.manager')->getFirstDefaultDomainName();
+
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(false)
@@ -59,6 +61,19 @@ class TranslatorController extends Controller
             ->setBundle($this->container->getParameter('kuma_translator.default_bundle'));
 
         $this->container->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
+        return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $domain)));
+    }
+
+    /**
+     * @Route("/flush", name="KunstmaanTranslatorBundle_translations_flush_cache")
+     * @Template()
+     *
+     * @return array
+     */
+    public function flushCacheAction()
+    {
+        $this->container->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache();
+        $domain = $this->container->get('kunstmaan_translator.service.manager')->getFirstDefaultDomainName();
         return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $domain)));
     }
 }
