@@ -54,8 +54,3 @@ Run PHP CS Fixer, after [installing php-cs-fixer system wide](https://github.com
 ```bash
 php-cs-fixer fix .
 ```
-
-Use
----
-
-* [Documentation](https://github.com/Kunstmaan/KunstmaanVotingBundle/blob/master/Resources/doc/index.md)
