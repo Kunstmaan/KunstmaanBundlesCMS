@@ -172,7 +172,7 @@ class ChoicePagePart extends AbstractFormPagePart
     /**
      * Set the choices for this pagepart
      *
-     * @param array $choices
+     * @param string $choices Seperated by '\n'
      */
     public function setChoices($choices)
     {
@@ -182,7 +182,7 @@ class ChoicePagePart extends AbstractFormPagePart
     /**
      * Get the current choices
      *
-     * @return array
+     * @return string Seperated by '\n'
      */
     public function getChoices()
     {
