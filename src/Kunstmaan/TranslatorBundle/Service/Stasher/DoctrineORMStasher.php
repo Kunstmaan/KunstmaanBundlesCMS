@@ -7,23 +7,49 @@ use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * A Stasher to store translations in a ORM database
+ */
 class DoctrineORMStasher implements StasherInterface
 {
 
+    /**
+     * Repository for Translations
+     * @var \Kunstmaan\TranslatorBundle\Repository\TranslationRepository
+     */
     private $translationRepository;
+
+    /**
+     * Repository for TranslationDomains
+     * @var \Kunstmaan\TranslatorBundle\Repository\TranslationDomainRepository
+     */
     private $translationDomainRepository;
+
+    /**
+     * Doctrine ORM entity Manager
+     * @var \Doctrine\ORM\EntityManager
+     */
     private $entityManager;
 
+    /**
+     * @{@inheritdoc}
+     */
     public function getTranslationDomainsByLocale()
     {
         return $this->translationRepository->getAllDomainsByLocale();
     }
 
+    /**
+     * @{@inheritdoc}
+     */
     public function getAllDomains()
     {
         return $this->translationDomainRepository->findBy(array(), array('name' => 'asc'));
     }
 
+    /**
+     * @{@inheritdoc}
+     */
     public function getTranslationGroupsByDomain($domain)
     {
         $translationDomain = $this->translationDomainRepository->findOneBy(array('name' => $domain));
@@ -52,6 +78,9 @@ class DoctrineORMStasher implements StasherInterface
         return $translationGroups;
     }
 
+    /**
+     * @{@inheritdoc}
+     */
     public function updateTranslationGroups(ArrayCollection $groups)
     {
         foreach ($groups as $group) {
@@ -60,9 +89,12 @@ class DoctrineORMStasher implements StasherInterface
             }
         }
 
-        $this->flush();
+        return $this->flush();
     }
 
+    /**
+     * @{@inheritdoc}
+     */
     public function getTranslationGroupByKeywordAndDomain($keyword, $domain)
     {
         $translationDomain = $this->translationDomainRepository->findOneBy(array('name' => $domain));
@@ -80,6 +112,9 @@ class DoctrineORMStasher implements StasherInterface
         return $translationGroup;
     }
 
+    /**
+     * @{@inheritdoc}
+     */
     public function getTranslationsByLocaleAndDomain($locale, $domain)
     {
         $translationDomain = $this->translationDomainRepository->findOneBy(array('name' => $domain));
@@ -87,19 +122,48 @@ class DoctrineORMStasher implements StasherInterface
         return $this->translationRepository->findBy(array('locale' => $locale, 'domain' => $translationDomain));
     }
 
+    /**
+     * @{@inheritdoc}
+     */
     public function createTranslationDomain($name)
     {
         $domain = new TranslationDomain;
         $domain->setName($name);
         $this->persist($domain);
+
         return $domain;
     }
 
+    /**
+     * @{@inheritdoc}
+     */
     public function getDomainByName($name)
     {
         $domain = $this->translationDomainRepository->findOneByName($name);
 
         return $domain;
+    }
+
+    /**
+     * @{@inheritdoc}
+     */
+    public function persist($entity)
+    {
+        $this->entityManager->persist($entity);
+
+        return $entity;
+    }
+
+    /**
+     * @{@inheritdoc}
+     */
+    public function flush($entity = null)
+    {
+        if ($entity != null) {
+            $this->persist($entity);
+        }
+
+        $this->entityManager->flush();
     }
 
     public function setTranslationRepository($translationRepository)
@@ -110,21 +174,6 @@ class DoctrineORMStasher implements StasherInterface
     public function setTranslationDomainRepository($translationDomainRepository)
     {
         $this->translationDomainRepository = $translationDomainRepository;
-    }
-
-    public function persist($entity)
-    {
-        $this->entityManager->persist($entity);
-        return $entity;
-    }
-
-    public function flush($entity = null)
-    {
-        if($entity != null) {
-            $this->persist($entity);
-        }
-
-        $this->entityManager->flush();
     }
 
     public function getEntityManager()

@@ -11,6 +11,9 @@ use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 class TranslatorMenuAdaptor implements MenuAdaptorInterface
 {
 
+    /**
+     * @var \Kunstmaan\TranslatorBundle\Service\TranslationManager
+     */
     private $translationManager;
 
     /**
@@ -29,18 +32,22 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
         }
     }
 
+    /**
+     * Build a top menu item
+     * @param  MenuBuilder $menu
+     * @param  Request     $request
+     * @return TopMenuItem
+     */
     public function getTopMenuItem(MenuBuilder $menu, Request $request = null)
     {
-
         $menuitem = new TopMenuItem($menu);
         $menuitem->setRoute('KunstmaanTranslatorBundle_translations_show');
         $menuitem->setRouteparams(array('domain' => $this->translationManager->getFirstDefaultDomainName()));
         $menuitem->setInternalname('Translations');
         $menuitem->setParent(null);
+
         return $menuitem;
     }
-
-
 
     public function setTranslationManager($translationManager)
     {

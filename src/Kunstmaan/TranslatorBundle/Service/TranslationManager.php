@@ -2,10 +2,6 @@
 
 namespace Kunstmaan\TranslatorBundle\Service;
 
-use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
-use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
-
-
 class TranslationManager
 {
 
@@ -22,11 +18,12 @@ class TranslationManager
     {
         $domains = $this->getAllDomains();
 
-        if(count($domains) <= 0) {
+        if (count($domains) <= 0) {
             return false;
         }
 
         $domain = reset($domains);
+
         return $domain->getName();
     }
 
@@ -44,9 +41,9 @@ class TranslationManager
         $groups = $this->getTranslationGroupsByDomain($domain);
 
         foreach ($groups as $keyword => $group) {
-            foreach($translationsUpdate[$keyword] as $locale => $text) {
+            foreach ($translationsUpdate[$keyword] as $locale => $text) {
 
-                if(!$group->hasTranslation($locale) && trim($text) != '') {
+                if (!$group->hasTranslation($locale) && trim($text) != '') {
                     $newTranslation = new $this->translationClass();
                     $newTranslation->setLocale($locale);
                     $newTranslation->setText($text);

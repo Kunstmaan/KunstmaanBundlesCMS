@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\TranslatorBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

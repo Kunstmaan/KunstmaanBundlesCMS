@@ -4,27 +4,53 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Symfony\Component\Config\ConfigCache;
 
+/**
+ * ResourceCacher is used to cache all the resource into a file
+ */
 class ResourceCacher
 {
+    /**
+     * AppKernel running in debug or not
+     * @var boolean
+     */
     private $debug;
+
+    /**
+     * Where to store cache files
+     * @var string
+     */
     private $cacheDir;
+
+    /**
+     * Logger
+     * @var \Symfony\Component\HttpKernel\Log\LoggerInterface
+     */
     private $logger;
 
-
-    public function getCachedResources($forceRefresh = false)
+    /**
+     * Retrieve resources from cache file (if any)
+     * @return resources false if empty
+     */
+    public function getCachedResources()
     {
         $resources = false;
 
         $cache = new ConfigCache($this->getCacheFileLocation(), $this->debug);
 
-        if($cache->isFresh()) {
+        if ($cache->isFresh()) {
             $this->logger->debug('Loading translation resources from cache file.');
+
             return include $this->getCacheFileLocation();
         }
 
         return $resources;
     }
 
+    /**
+     * Cache an array of resources into the given cache
+     * @param  array $resources
+     * @return void
+     */
     public function cacheResources(array $resources)
     {
         $cache = new ConfigCache($this->getCacheFileLocation(), $this->debug);
@@ -34,17 +60,24 @@ class ResourceCacher
         $this->logger->debug('Writing translation resources to cache file.');
     }
 
+    /**
+     * Get cache file location
+     * @return string
+     */
     public function getCacheFileLocation()
     {
         return sprintf('%s/resources.cached.php', $this->cacheDir);
     }
 
+    /**
+     * Remove all cached files (translations/resources)
+     * @return void
+     */
     public function flushCache()
     {
         $command = sprintf('rm %s/*.php', $this->cacheDir);
         exec($command);
     }
-
 
     public function setDebug($debug)
     {

@@ -38,8 +38,6 @@ class TranslationGroup
             return false;
         }
 
-
-
         if ($this->getTranslationByLocale($locale) !== null) {
             return true;
         }
@@ -54,7 +52,7 @@ class TranslationGroup
         }
 
         foreach ($this->translations as $translation) {
-            if(strtolower($translation->getLocale()) == strtolower($locale)) {
+            if (strtolower($translation->getLocale()) == strtolower($locale)) {
                 return $translation;
             }
         }

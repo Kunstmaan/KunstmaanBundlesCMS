@@ -5,11 +5,20 @@ namespace Kunstmaan\TranslatorBundle\Service;
 use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 
-
+/**
+ * TranslationGroupManager.
+ * A bridge between a stasher
+ */
 class TranslationGroupManager
 {
 
+    /**
+     * Stasher
+     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
+     */
     private $stasher;
+
+
     private $translationClass;
     private $translationDomainClass;
 
@@ -77,6 +86,7 @@ class TranslationGroupManager
         $translation = $translationGroup->getTranslationByLocale($locale);
         $translation->setText($text);
         $translation->setFile($filename);
+
         return $this->stasher->persist($translation);
     }
 

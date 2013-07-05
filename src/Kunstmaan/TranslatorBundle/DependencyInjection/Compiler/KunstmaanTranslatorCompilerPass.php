@@ -5,7 +5,6 @@ namespace Kunstmaan\TranslatorBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\Definition;
 
 class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
 {
@@ -18,12 +17,11 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
             $loaderAliases[$id][] = $attributes[0]['alias'];
             $loaderRefs[$attributes[0]['alias']] = new Reference($id);
 
-            if(isset($attributes[0]['legacy-alias'])) {
+            if (isset($attributes[0]['legacy-alias'])) {
                 $loaderAliases[$id][] = $attributes[0]['legacy-alias'];
                 $loaderRefs[$attributes[0]['legacy-alias']] = new Reference($id);
             }
         }
-
 
         if ($container->hasDefinition('kunstmaan_translator.service.importer.importer')) {
             $container->getDefinition('kunstmaan_translator.service.importer.importer')->addMethodCall('setLoaders', array($loaderRefs));

@@ -31,7 +31,6 @@ class TranslatorController extends Controller
                 );
     }
 
-
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_translations_save")
      * @Template()
@@ -41,6 +40,7 @@ class TranslatorController extends Controller
     {
         $post = $this->getRequest()->request->all();
         $this->container->get('kunstmaan_translator.service.manager')->updateTranslationsFromArray($post['domain'], $post['translation']);
+
         return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $post['domain'])));
     }
 
@@ -62,6 +62,7 @@ class TranslatorController extends Controller
             ->setBundle($this->container->getParameter('kuma_translator.default_bundle'));
 
         $this->container->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
+
         return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $domain)));
     }
 
@@ -75,6 +76,7 @@ class TranslatorController extends Controller
     {
         $this->container->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache();
         $domain = $this->container->get('kunstmaan_translator.service.manager')->getFirstDefaultDomainName();
+
         return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $domain)));
     }
 }

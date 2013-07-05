@@ -2,19 +2,26 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
-use Kunstmaan\TranslatorBundle\Entity\TranslationDomain;
-use Kunstmaan\TranslatorBundle\Entity\Translation;
-use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\MessageCatalogue;
 
+/**
+ * Translation Loader
+ * Loads translations from the defined stasher
+ */
 class Loader implements LoaderInterface
 {
+    /**
+     * Stasher for storing/retrieving translations
+     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
+     */
     private $stasher;
 
-    public function load($resource, $locale, $domain = 'messages'){
-
+    /**
+     * @{@inheritdoc}
+     */
+    public function load($resource, $locale, $domain = 'messages')
+    {
         $catalogue = new MessageCatalogue($locale);
 
         $translations = $this->stasher->getTranslationsByLocaleAndDomain($locale, $domain);
@@ -26,7 +33,7 @@ class Loader implements LoaderInterface
         return $catalogue;
     }
 
-    public function setStasher($stasher)
+    public function setStasher(\Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface $stasher)
     {
         $this->stasher = $stasher;
     }

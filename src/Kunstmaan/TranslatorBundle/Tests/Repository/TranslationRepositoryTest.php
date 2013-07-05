@@ -2,8 +2,6 @@
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
-use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\Finder\Finder;
 
 class TranslationRepositoryTest extends BaseTestCase
 {

@@ -35,7 +35,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
-        if(strpos($suite->getName(), 'KunstmaanTranslationBundle') === false) {
+        if (strpos($suite->getName(), 'KunstmaanTranslationBundle') === false) {
             return true;
         }
 
@@ -58,7 +58,6 @@ class TestListener implements \PHPUnit_Framework_TestListener
         $persister = new \Nelmio\Alice\ORM\Doctrine($em);
         $persister->persist($objects);
 
-
     //     if (strpos($suite->getName(), 'lead_lasso_app') !== false && $env == 'ci') {
 
     //         require_once dirname(__DIR__) . '/../../../../app/AppKernel.php';
@@ -73,7 +72,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
 
     //         $kernel->shutdown();
     //     } else {
-    //     if(function_exists('xdebug_disable')) { xdebug_disable(); }
+    //     if (function_exists('xdebug_disable')) { xdebug_disable(); }
     // }
 
     }

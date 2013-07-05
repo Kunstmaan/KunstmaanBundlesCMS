@@ -49,7 +49,7 @@ class KunstmaanTranslatorExtension extends Extension
         $this->discoverTranslationDirectories($config, $container);
 
         // overwrites everything
-        $translator->addMethodCall('addDatabaseResources', array());
+        $translator->addMethodCall('addStasherResources', array());
     }
 
     // FIXME: needs refactoring :)
@@ -91,11 +91,9 @@ class KunstmaanTranslatorExtension extends Extension
             $finder = Finder::create();
             $finder->files();
 
-
                 $finder->filter(function (\SplFileInfo $file) {
                     return 2 === substr_count($file->getBasename(), '.') && preg_match('/\.\w+$/', $file->getBasename());
                 });
-
 
             $finder->in($dirs);
 

@@ -1,8 +1,6 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Tests;
 
-use Doctrine\DBAL\DriverManager;
-
 include __DIR__.'/app/AppKernel.php';
 
 abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
