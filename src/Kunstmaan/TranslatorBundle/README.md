@@ -1,6 +1,6 @@
 # UNDER DEVELOPMENT!
 
-# KunstmaanTranslatorBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanTranslatorBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanTranslatorBundle)
+# KunstmaanTranslatorBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanTranslatorBundle.png?branch=develop)](http://travis-ci.org/Kunstmaan/KunstmaanTranslatorBundle)
 
 A bundle which enables editing translations in the admin interface without need for editing the translations files.
 Translations will be stored in a (default) database and retrieved on the most efficient way possible.
