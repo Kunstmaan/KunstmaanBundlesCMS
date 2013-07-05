@@ -637,7 +637,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             {
                 $choicepagepart = new ChoicePagePart();
                 $choicepagepart->setLabel("Choice");
-                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choices = "Subject 1 \n Subject 2 \n Subject 3";
                 $choicepagepart->setChoices($choices);
                 $manager->persist($choicepagepart);
                 $manager->flush();
@@ -647,7 +647,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $choicepagepart = new ChoicePagePart();
                 $choicepagepart->setLabel("Expanded Choice");
                 $choicepagepart->setExpanded(true);
-                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choices = "Subject 1 \n Subject 2 \n Subject 3";
                 $choicepagepart->setChoices($choices);
                 $manager->persist($choicepagepart);
                 $manager->flush();
@@ -657,7 +657,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $choicepagepart = new ChoicePagePart();
                 $choicepagepart->setLabel("Multiple");
                 $choicepagepart->setMultiple(true);
-                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choices = "Subject 1 \n Subject 2 \n Subject 3";
                 $choicepagepart->setChoices($choices);
                 $manager->persist($choicepagepart);
                 $manager->flush();
@@ -668,7 +668,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $choicepagepart->setLabel("Expanded Multiple Choice");
                 $choicepagepart->setExpanded(true);
                 $choicepagepart->setMultiple(true);
-                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choices = "Subject 1 \n Subject 2 \n Subject 3";
                 $choicepagepart->setChoices($choices);
                 $manager->persist($choicepagepart);
                 $manager->flush();
