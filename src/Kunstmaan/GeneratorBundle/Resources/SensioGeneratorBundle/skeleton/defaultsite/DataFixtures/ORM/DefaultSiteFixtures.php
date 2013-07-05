@@ -23,8 +23,11 @@ use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
+use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
 use Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart;
 use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
+use Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart;
+
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
@@ -55,6 +58,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @var \Kunstmaan\MediaBundle\Entity\Media
      */
     private $file = null;
+
+    /**
+     * @var \Kunstmaan\MediaBundle\Entity\Media
+     */
+    private $video = null;
 
     /**
      * @var UserInterface
@@ -351,6 +359,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     </div>';
             $this->createRawHTMLPagePart($flex, $headerpage, $position++, $manager);
         }
+        {
+            $this->createHeaderPagePart("Video (niv=1)", 1, $headerpage, $position++, $manager);
+            $this->createVideoPagePart($this->video, $headerpage, $position++, $manager);
+        }
     }
 
     /**
@@ -522,11 +534,28 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createImagePagePart($image, $link, $openInNewWindow, $altText, $page, $position, $manager)
     {
-        $pagepart = new ImagePagePart;
+        $pagepart = new ImagePagePart();
         $pagepart->setMedia($image);
         $pagepart->setLink($link);
         $pagepart->setOpenInNewWindow($openInNewWindow);
         $pagepart->setAltText($altText);
+        $manager->persist($pagepart);
+        $manager->flush();
+        $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $position);
+    }
+
+    /**
+     * Create an ImagePagePart
+     *
+     * @param Media         $video              The video of the pagepart
+     * @param PageInterface $page               The page where the pagepart needs to be created
+     * @param int           $position           The position on the page
+     * @param ObjectManager $manager            The object manager
+     */
+    private function createVideoPagePart($video, $page, $position, $manager)
+    {
+        $pagepart = new VideoPagePart();
+        $pagepart->setMedia($video);
         $manager->persist($pagepart);
         $manager->flush();
         $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $position);
@@ -542,7 +571,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createDownloadPagePart($image, $page, $position, $manager)
     {
-        $pagepart = new DownloadPagePart;
+        $pagepart = new DownloadPagePart();
         $pagepart->setMedia($image);
         $manager->persist($pagepart);
         $manager->flush();
@@ -659,6 +688,21 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $path = $this->rootDir . '/../src/{{ namespace|replace({"\\" : "/"}) }}/Resources/public/files/dummy/sample.pdf';
             $this->file = $this->createMediaFile($manager, basename($path), $path, $folder);
         }
+
+        // Create dummy video folder and add dummy videos
+        {
+            $filesFolder = $this->getReference('videos-folder-en');
+
+            $folder = new Folder();
+            $folder->setName('dummy');
+            $folder->setRel('videos');
+            $folder->setParent($filesFolder);
+            $folder->setInternalName('dummy_videos');
+            $manager->persist($folder);
+            $manager->flush();
+
+            $this->video = $this->createVideoFile($manager, 'Kunstmaan', 'WPx-Oe2WrUE', $folder);
+        }
     }
 
     private function createMediaFile($manager, $name, $path, $folder)
@@ -678,6 +722,23 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $media->setFolder($folder);
         $helper = new FileHelper($media);
         $helper->setFile($file);
+        $manager->getRepository('KunstmaanMediaBundle:Media')->save($media);
+        chdir($dir);
+
+        return $media;
+    }
+
+    private function createVideoFile($manager, $name, $code, $folder)
+    {
+        // Hack for media bundle issue
+        $dir = dirname($this->rootDir);
+        chdir($dir . '/web');
+        $media = new Media();
+        $media->setFolder($folder);
+        $media->setName($name);
+        $helper = new RemoteVideoHelper($media);
+        $helper->setCode($code);
+        $helper->setType('youtube');
         $manager->getRepository('KunstmaanMediaBundle:Media')->save($media);
         chdir($dir);
 
