@@ -17,6 +17,8 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
+use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
@@ -615,6 +617,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $singlelinetextpagepart, $counter++, "main");
             }
             {
+                $pagepart = new EmailPagePart();
+                $pagepart->setLabel("E-mail");
+                $pagepart->setRequired(true);
+                $pagepart->setErrormessageRequired("Required");
+                $manager->persist($pagepart);
+                $manager->flush();
+                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $counter++, "main");
+            }
+            {
                 $singlelinetextpagepart = new SingleLineTextPagePart();
                 $singlelinetextpagepart->setLabel("Postal code");
                 $singlelinetextpagepart->setRegex("[0-9]{4}");
@@ -623,15 +634,46 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $manager->flush();
                 $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $singlelinetextpagepart, $counter++, "main");
             }
-//            {
-//                $choicepagepart = new ChoicePagePart();
-//                $choicepagepart->setLabel("Subject");
-//                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
-//                $choicepagepart->setChoices($choices);
-//                $manager->persist($choicepagepart);
-//                $manager->flush();
-//                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
-//            }
+            {
+                $choicepagepart = new ChoicePagePart();
+                $choicepagepart->setLabel("Choice");
+                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choicepagepart->setChoices($choices);
+                $manager->persist($choicepagepart);
+                $manager->flush();
+                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
+            }
+            {
+                $choicepagepart = new ChoicePagePart();
+                $choicepagepart->setLabel("Expanded Choice");
+                $choicepagepart->setExpanded(true);
+                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choicepagepart->setChoices($choices);
+                $manager->persist($choicepagepart);
+                $manager->flush();
+                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
+            }
+            {
+                $choicepagepart = new ChoicePagePart();
+                $choicepagepart->setLabel("Multiple");
+                $choicepagepart->setMultiple(true);
+                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choicepagepart->setChoices($choices);
+                $manager->persist($choicepagepart);
+                $manager->flush();
+                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
+            }
+            {
+                $choicepagepart = new ChoicePagePart();
+                $choicepagepart->setLabel("Expanded Multiple Choice");
+                $choicepagepart->setExpanded(true);
+                $choicepagepart->setMultiple(true);
+                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choicepagepart->setChoices($choices);
+                $manager->persist($choicepagepart);
+                $manager->flush();
+                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
+            }
             {
                 $multilinetextpagepart = new MultiLineTextPagePart();
                 $multilinetextpagepart->setLabel("Description");
