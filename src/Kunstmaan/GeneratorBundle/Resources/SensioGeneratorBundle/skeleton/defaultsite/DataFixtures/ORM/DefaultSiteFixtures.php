@@ -17,6 +17,7 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
@@ -680,6 +681,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $manager->persist($multilinetextpagepart);
                 $manager->flush();
                 $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $multilinetextpagepart, $counter++, "main");
+            }
+            {
+                $pagepart = new CheckboxPagePart();
+                $pagepart->setLabel("Checkbox");
+                $pagepart->setRequired(true);
+                $manager->persist($pagepart);
+                $manager->flush();
+                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $counter++, "main");
             }
             {
                 $submitbuttonpagepart = new SubmitButtonPagePart();
