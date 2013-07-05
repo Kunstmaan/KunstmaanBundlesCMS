@@ -53,9 +53,11 @@
 
 {% block form_row %}
 {% spaceless %}
-    {{ form_label(form) }}
-    {{ form_widget(form) }}
-    {{ form_errors(form) }}
+    <div class="controls controls-row control-group {% if errors|length > 0 %}error{% endif %}">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
 {% endspaceless %}
 {% endblock form_row %}
 
@@ -78,7 +80,6 @@
 {% block widget_container_attributes %}
 {% spaceless %}
     {% if id is not empty %}id="{{ id }}" {% endif %}
-    class="controls controls-row control-group error"
     {% for attrname, attrvalue in attr %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
 {% endspaceless %}
 {% endblock widget_container_attributes %}
