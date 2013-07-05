@@ -1,0 +1,4 @@
+KunstmaanTranslatorBundle
+=========================
+
+Manage translations
