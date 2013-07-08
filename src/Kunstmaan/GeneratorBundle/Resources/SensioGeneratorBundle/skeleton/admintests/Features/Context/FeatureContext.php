@@ -15,6 +15,7 @@ class FeatureContext extends AbstractContext
         $this->useContext('group_context', new GroupContext($parameters));
         $this->useContext('user_context', new UserContext($parameters));
         $this->useContext('role_context', new RoleContext($parameters));
+        $this->useContext('media_context', new MediaContext($parameters));
     }
 
     /**
@@ -109,6 +110,16 @@ class FeatureContext extends AbstractContext
             "create new role" => "en/admin/settings/roles/add",
             "dashboard" => "/en/admin",
             "login" => "/en/login",
+            "media" => "/en/admin/media/folder/1",
+            "add new image" => "/en/admin/media/create/2/file",
+            "image" => "en/admin/media/folder/2",
+            "add new video" => "en/admin/media/create/3/video",
+            "video" => "en/admin/media/folder/3",
+            "add new slide" => "en/admin/media/create/4/slide",
+            "slide" => "en/admin/media/folder/4",
+            "add new file" => "en/admin/media/create/5/file",
+            "file" => "en/admin/media/folder/5",
+            "bulkupload" => "/en/admin/media/bulkupload/1"
         );
 
         return $pages[$page];
