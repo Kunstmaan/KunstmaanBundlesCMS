@@ -70,6 +70,14 @@ services:
             - [setCacheDir, [%kuma_translator.cache_dir%]]
             - [setLogger, [@logger]]
 
+
+    kunstmaan_translator.service.translator.cache_validator:
+        class: Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator
+        calls:
+            - [setDebug, [%kernel.debug%]]
+            - [setCacheDir, [%kuma_translator.cache_dir%]]
+            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
+
     kunstmaan_translator.service.translator.translator:
         class: Kunstmaan\TranslatorBundle\Service\Translator\Translator
         arguments:

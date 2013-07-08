@@ -82,4 +82,11 @@ interface StasherInterface
      */
     public function flush($entity = null);
 
+    /**
+     * Get the last changed (updated/created) translation timestamp from the stasher
+     * @return \DateTime
+     */
+    public function getLastChangedTranslationDate();
+
+
 }

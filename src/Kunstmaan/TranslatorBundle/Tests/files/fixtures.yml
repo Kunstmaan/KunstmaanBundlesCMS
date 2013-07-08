@@ -33,3 +33,11 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         updatedAt: <dateTime()>
         locale: en
         domain: @validation_domain
+    future_messages:
+        keyword: validation.in_the_future
+        text: 'This should be the last updated translation'
+        flag: 'new'
+        createdAt: <dateTime()>
+        updatedAt: <dateTimeBetween('+ 1 days', '+ 200 days')>
+        locale: en
+        domain: @validation_domain

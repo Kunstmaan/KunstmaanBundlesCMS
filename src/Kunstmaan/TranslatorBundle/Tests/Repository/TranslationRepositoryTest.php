@@ -21,4 +21,13 @@ class TranslationRepositoryTest extends BaseTestCase
         $this->assertArrayHasKey('locale', $firstItem);
         $this->assertArrayHasKey('name', $firstItem);
     }
+
+    /**
+     * @group translation-repository
+     */
+    public function testGetLastChangedTranslationDate()
+    {
+        $date = $this->translationRepository->getLastChangedTranslationDate();
+        $this->assertInstanceOf('\DateTime', $date);
+    }
 }

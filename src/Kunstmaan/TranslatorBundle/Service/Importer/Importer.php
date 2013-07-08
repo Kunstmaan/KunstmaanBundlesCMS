@@ -50,8 +50,9 @@ class Importer
         $importedTranslations = 0;
 
         foreach ($messageCatalogue->all($domain) as $keyword => $text) {
-            $this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force);
-            $importedTranslations++;
+            if ($this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force)) {
+                $importedTranslations++;
+            }
         }
 
         $this->stasher->flush();
@@ -68,6 +69,7 @@ class Importer
      * @param  string                                                    $domain
      * @param  boolean                                                   $force    override simular translation in the stasher
      * @return \Kunstmaan\TranslatorBundle\Model\Translation\Translation the imported translation
+     * @return boolean  Nothing changed, no translation added, no translation updated
      */
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
@@ -79,11 +81,16 @@ class Importer
 
         $translation = $this->translationGroupManager->addTranslation($translationGroup, $locale, $text, $filename);
 
-        if ($force === true && ! $translation instanceof Translation) {
-            $translation = $this->translationGroupManager->updateTranslation($translationGroup, $locale, $text, $filename);
+        if (null == $translation && false === $force) {
+            return false;
         }
 
-        return $translation;
+        if (true === $force && null == $translation) {
+            $translation = $this->translationGroupManager->updateTranslation($translationGroup, $locale, $text, $filename);
+            return true;
+        }
+
+        return true;
     }
 
     /**

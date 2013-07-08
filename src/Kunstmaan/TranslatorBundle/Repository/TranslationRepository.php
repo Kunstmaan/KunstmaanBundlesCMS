@@ -16,4 +16,34 @@ class TranslationRepository extends AbstractTranslatorRepository
             ->getQuery()
             ->getArrayResult();
     }
+
+    public function getLastChangedTranslationDate()
+    {
+        $em = $this->getEntityManager();
+
+        $sql = <<<EOQ
+SELECT
+    MAX(compare) as newestDate,
+    flag
+FROM (
+    SELECT createdAt as compare, flag FROM %s
+    UNION ALL
+    SELECT updatedAt as compare, flag FROM %s) CACHE_CHECK
+WHERE
+    flag IN ('updated','new')
+    GROUP BY flag
+    HAVING MAX(compare) IS NOT NULL
+EOQ;
+        $table = $em->getClassMetaData('KunstmaanTranslatorBundle:Translation')->getTableName();
+
+        $stmt = $em->getConnection()->prepare(sprintf($sql, $table, $table));
+        $stmt->execute();
+        $result = $stmt->fetch();
+
+        if(is_array($result) && count($result) > 0) {
+            return new \DateTime($result['newestDate']);
+        }
+
+        return null;
+    }
 }

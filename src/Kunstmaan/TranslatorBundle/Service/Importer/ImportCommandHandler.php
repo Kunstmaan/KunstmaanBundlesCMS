@@ -128,8 +128,7 @@ class ImportCommandHandler
         $imported = 0;
 
         foreach ($finder as $file) {
-            $this->importer->import($file, $force);
-            $imported++;
+            $imported += $this->importer->import($file, $force);
         }
 
         return $imported;

@@ -44,7 +44,7 @@ class ImporterTest extends BaseTestCase
     }
 
     /**
-     * @group importer
+     * @group importer-isolated
      */
     public function testImportExistingDomainFileForced()
     {

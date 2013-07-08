@@ -76,12 +76,23 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
     protected $updatedAt;
 
     /**
+     *
+     * A flag which defines the status of a specific translations ('updated', 'new', ..)
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $flag = null;
+
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->flag = 'new';
     }
 
     /**
@@ -90,6 +101,9 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();
+        if($this->flag == null) {
+            $this->flag = 'updated';
+        }
     }
 
     public function getId()

@@ -147,6 +147,14 @@ class DoctrineORMStasher implements StasherInterface
     /**
      * @{@inheritdoc}
      */
+    public function getLastChangedTranslationDate()
+    {
+        return $this->translationRepository->getLastChangedTranslationDate();
+    }
+
+    /**
+     * @{@inheritdoc}
+     */
     public function persist($entity)
     {
         $this->entityManager->persist($entity);
