@@ -7,7 +7,7 @@ class ImportCommand
     private $bundle = false;
     private $globals = true;
     private $force = false;
-    private $locale = false;
+    private $locales = false;
 
     public function getBundle()
     {
@@ -45,14 +45,14 @@ class ImportCommand
         return $this;
     }
 
-    public function getLocale()
+    public function getLocales()
     {
-        return $this->locale;
+        return $this->locales;
     }
 
-    public function setLocale($locale)
+    public function setLocales($locales)
     {
-        $this->locale = $locale;
+        $this->locales = $locales;
 
         return $this;
     }

@@ -23,7 +23,7 @@ class ImportCommandHandlerTest extends BaseTestCase
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(false)
-            ->setLocale(false)
+            ->setLocales(false)
             ->setGlobals(true)
             ->setBundle(false);
 
@@ -35,7 +35,7 @@ class ImportCommandHandlerTest extends BaseTestCase
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(false)
-            ->setLocale(false)
+            ->setLocales(false)
             ->setGlobals(true)
             ->setBundle(false);
 
@@ -77,7 +77,7 @@ class ImportCommandHandlerTest extends BaseTestCase
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(false)
-            ->setLocale(false)
+            ->setLocales(false)
             ->setGlobals(true)
             ->setBundle('kunstmaantranslatorbundle');
 

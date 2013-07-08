@@ -17,13 +17,23 @@ services:
             - [setTranslationManager, [@kunstmaan_translator.service.manager]]
             - [setTranslatorBundleEnabled, [%kuma_translator.enabled%]]
 
-    kunstmaan_translator.service.importer.command_handler:
-        class: "Kunstmaan\TranslatorBundle\Service\Importer\ImportCommandHandler"
+    kunstmaan_translator.service.abstract_command_handler:
+        abstract: true
+        class: "Kunstmaan\TranslatorBundle\Service\AbstractCommandHandler"
         calls:
             - [setManagedLocales, [%kuma_translator.managed_locales%]]
             - [setKernel, [@kernel]]
+
+    kunstmaan_translator.service.importer.command_handler:
+        parent: kunstmaan_translator.service.abstract_command_handler
+        class: "Kunstmaan\TranslatorBundle\Service\Importer\ImportCommandHandler"
+        calls:
             - [setTranslationFileExplorer, [@kunstmaan_translator.service.file_explorer]]
             - [setImporter, [@kunstmaan_translator.service.importer.importer]]
+
+    kunstmaan_translator.service.exporter.command_handler:
+        parent: kunstmaan_translator.service.abstract_command_handler
+        class: "Kunstmaan\TranslatorBundle\Service\Exporter\ExportCommandHandler"
 
     kunstmaan_translator.service.file_explorer:
         class: "Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer"
