@@ -17,6 +17,7 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
@@ -637,7 +638,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             {
                 $choicepagepart = new ChoicePagePart();
                 $choicepagepart->setLabel("Choice");
-                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choices = "Subject 1 \n Subject 2 \n Subject 3";
                 $choicepagepart->setChoices($choices);
                 $manager->persist($choicepagepart);
                 $manager->flush();
@@ -647,7 +648,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $choicepagepart = new ChoicePagePart();
                 $choicepagepart->setLabel("Expanded Choice");
                 $choicepagepart->setExpanded(true);
-                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choices = "Subject 1 \n Subject 2 \n Subject 3";
                 $choicepagepart->setChoices($choices);
                 $manager->persist($choicepagepart);
                 $manager->flush();
@@ -657,7 +658,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $choicepagepart = new ChoicePagePart();
                 $choicepagepart->setLabel("Multiple");
                 $choicepagepart->setMultiple(true);
-                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choices = "Subject 1 \n Subject 2 \n Subject 3";
                 $choicepagepart->setChoices($choices);
                 $manager->persist($choicepagepart);
                 $manager->flush();
@@ -668,7 +669,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $choicepagepart->setLabel("Expanded Multiple Choice");
                 $choicepagepart->setExpanded(true);
                 $choicepagepart->setMultiple(true);
-                $choices = array("sub1" => "Subject 1", "sub2" => "Subject 2", "sub3" =>"Subject 3");
+                $choices = "Subject 1 \n Subject 2 \n Subject 3";
                 $choicepagepart->setChoices($choices);
                 $manager->persist($choicepagepart);
                 $manager->flush();
@@ -680,6 +681,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $manager->persist($multilinetextpagepart);
                 $manager->flush();
                 $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $multilinetextpagepart, $counter++, "main");
+            }
+            {
+                $pagepart = new CheckboxPagePart();
+                $pagepart->setLabel("Checkbox");
+                $pagepart->setRequired(true);
+                $manager->persist($pagepart);
+                $manager->flush();
+                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $counter++, "main");
             }
             {
                 $submitbuttonpagepart = new SubmitButtonPagePart();
