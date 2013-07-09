@@ -3,13 +3,10 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use {{ namespace }}\Form\Pages\ContentPageAdminType;
-use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
-use {{ namespace }}\PagePartAdmin\ContentPagePagePartAdminConfigurator;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Symfony\Component\Form\AbstractType;
 
 /**
