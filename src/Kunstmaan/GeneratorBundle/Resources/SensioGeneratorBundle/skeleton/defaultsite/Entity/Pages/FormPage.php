@@ -3,8 +3,6 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use {{ namespace }}\Form\Pages\FormPageAdminType;
-use {{ namespace }}\PagePartAdmin\FormPagePagePartAdminConfigurator;
-use {{ namespace }}\PagePartAdmin\BannerPagePartAdminConfigurator;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;

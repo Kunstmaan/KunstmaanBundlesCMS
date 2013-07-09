@@ -3,7 +3,6 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use {{ namespace }}\Form\Pages\HomePageAdminType;
-use {{ namespace }}\PagePartAdmin\HomePagePagePartAdminConfigurator;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
