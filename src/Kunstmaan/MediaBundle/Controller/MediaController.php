@@ -126,7 +126,9 @@ class MediaController extends Controller
 
         $formView = $form->createView();
         $filesfield = $formView->children['files'];
-        $filesfield->set('full_name', 'kunstmaan_mediabundle_bulkupload[files][]');
+        $filesfield->vars = array_replace($filesfield->vars, array(
+            'full_name' => 'kunstmaan_mediabundle_bulkupload[files][]'
+        ));
 
         return array(
             'form'      => $formView,
