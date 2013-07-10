@@ -37,13 +37,15 @@ class MigrationsService
         $primaryKeys = array('domain', 'keyword', 'locale');
         $ignoreFields = array('domain', 'keyword', 'locale', 'flag');
         $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_UPDATED));
-        $translations = $this->translationRepository->findBy(array());
 
         if (count($translations) <= 0) {
             return array();
         }
 
-        $fieldNames = $this->entityManager->getClassMetadata($this->translationClass)->getFieldNames();
+        $fieldNames = array_merge(
+                $this->entityManager->getClassMetadata($entityClassName)->getFieldNames(),
+                $this->entityManager->getClassMetadata($entityClassName)->getAssociationNames()
+                );
         $tableName = $this->entityManager->getClassMetadata($this->translationClass)->getTableName();
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
         $fieldNames = array_diff($fieldNames, $ignoreFields, $primaryKeys);
@@ -95,7 +97,11 @@ class MigrationsService
             return null;
         }
 
-        $fieldNames = $this->entityManager->getClassMetadata($entityClassName)->getFieldNames();
+        $fieldNames = array_merge(
+                $this->entityManager->getClassMetadata($entityClassName)->getFieldNames(),
+                $this->entityManager->getClassMetadata($entityClassName)->getAssociationNames()
+                );
+
         $tableName = $this->entityManager->getClassMetadata($entityClassName)->getTableName();
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
         $fieldNames = array_diff($fieldNames, $ignoreFields);
