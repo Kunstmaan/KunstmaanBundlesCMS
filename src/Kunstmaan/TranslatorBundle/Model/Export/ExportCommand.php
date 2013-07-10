@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TranslatorBundle\Model\Import;
+namespace Kunstmaan\TranslatorBundle\Model\Export;
 
 class ExportCommand
 {

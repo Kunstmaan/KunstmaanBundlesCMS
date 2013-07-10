@@ -56,7 +56,7 @@ class MigrationsService
             $updateValues = array();
             $whereValues = array();
 
-            foreach($fieldNames as $fieldName) {
+            foreach ($fieldNames as $fieldName) {
                 $value = $translation->{'get'.$fieldName}();
 
                 if ($value instanceof \DateTime) {
@@ -66,7 +66,7 @@ class MigrationsService
                 $updateValues[] = $this->entityManager->getConnection()->quoteIdentifier($fieldName) . ' = ' . $this->entityManager->getConnection()->quote($value);
             }
 
-            foreach($primaryKeys as $primaryKey) {
+            foreach ($primaryKeys as $primaryKey) {
                 $value = $translation->{'get'.$primaryKey}();
 
                 if ($value instanceof \DateTime) {
@@ -87,13 +87,13 @@ class MigrationsService
     /**
      * Build an sql insert into query by the paramters provided
      * @param  ORM\Entity $entities        Result array with all entities to create an insert for
-     * @param  string $entityClassName Class of the specified entity (same as entities)
-     * @param  array  $ignoreFields    fields not to use in the insert query
-     * @return string                  an insert sql query, of no result nul
+     * @param  string     $entityClassName Class of the specified entity (same as entities)
+     * @param  array      $ignoreFields    fields not to use in the insert query
+     * @return string     an insert sql query, of no result nul
      */
     public function buildInsertSql($entities, $entityClassName, $ignoreFields = array())
     {
-        if(count($entities) <= 0) {
+        if (count($entities) <= 0) {
             return null;
         }
 
@@ -112,7 +112,7 @@ class MigrationsService
 
             $insertValues = array();
 
-            foreach($fieldNames as $fieldName) {
+            foreach ($fieldNames as $fieldName) {
                 $value = $entity->{'get'.$fieldName}();
 
                 if ($value instanceof \DateTime) {
@@ -125,10 +125,10 @@ class MigrationsService
             $values[] = '(' . implode(',', $insertValues) . ')';
         }
 
-
         $fieldNames = array_map(function($fieldName) { return $this->entityManager->getConnection()->quoteIdentifier($fieldName);}, $fieldNames);
 
         $sql = sprintf('INSERT INTO %s (%s) VALUES %s', $tableName, implode(",", $fieldNames), implode(', ', $values));
+
         return $sql;
     }
 
@@ -139,6 +139,7 @@ class MigrationsService
     public function getNewTranslationSql()
     {
         $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_NEW));
+
         return $this->buildInsertSql($translations, $this->translationClass, array('flag'));
     }
 
@@ -149,6 +150,7 @@ class MigrationsService
     public function getNewTranslationDomainSql()
     {
         $domains = $this->translationDomainRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\TranslationDomain::FLAG_NEW));
+
         return $this->buildInsertSql($domains, $this->translationDomainClass, array('flag'));
     }
 

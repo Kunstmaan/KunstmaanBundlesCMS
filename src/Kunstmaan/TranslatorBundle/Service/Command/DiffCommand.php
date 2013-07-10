@@ -6,7 +6,6 @@ use Symfony\Component\Console\Input\InputInterface,
     Doctrine\DBAL\Migrations\Configuration\Configuration,
     Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
 
-
 class DiffCommand extends GenerateCommand
 {
 
@@ -25,7 +24,7 @@ class DiffCommand extends GenerateCommand
         $up = $this->buildCodeFromSql($configuration, $sql);
         $down = '';
 
-        if ( ! $up && ! $down) {
+        if (! $up && ! $down) {
             $output->writeln('No changes detected in your mapping information.', 'ERROR');
 
             return;
