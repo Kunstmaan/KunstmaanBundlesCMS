@@ -1,6 +1,6 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
-{% block title %}{{ 'media.media.new' | trans }}{% endblock%}
+{% block title %}{{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}{% endblock%}
 
 {% block header %}
     <div class="page-header">

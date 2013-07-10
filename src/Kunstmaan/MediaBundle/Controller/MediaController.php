@@ -183,6 +183,33 @@ class MediaController extends Controller
      */
     public function createAction($folderId, $type)
     {
+        return $this->createAndRedirect($folderId, $type, "KunstmaanMediaBundle_folder_show");
+    }
+
+    /**
+     * @param int    $folderId The folder id
+     * @param string $type     The type
+     *
+     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create")
+     * @Method({"GET", "POST"})
+     * @Template()
+     *
+     * @return array|RedirectResponse
+     */
+    public function createModalAction($folderId, $type)
+    {
+        return $this->createAndRedirect($folderId, $type, "KunstmaanMediaBundle_chooser_show_folder");
+    }
+
+    /**
+     * @param int    $folderId    The folder Id
+     * @param string $type        The type
+     * @param string $redirectUrl The url where we want to redirect to on success
+     *
+     * @return array
+     */
+    private function createAndRedirect($folderId, $type, $redirectUrl)
+    {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
 
@@ -206,7 +233,7 @@ class MediaController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', 'Media \''.$media->getName().'\' has been created!');
 
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
+                return new RedirectResponse($this->generateUrl($redirectUrl, array("folderId" => $folder->getId())));
             }
         }
 
