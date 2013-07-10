@@ -24,6 +24,6 @@ class MigrationsServiceTest extends BaseTestCase
         $result = $this->migrationsService->getDiffSqlArray();
         $this->assertGreaterThanOrEqual(1, count($result));
         $this->assertStringStartsWith('INSERT INTO "kuma_translation"', $result[0]);
-        $this->assertStringStartsWith('UPDATE "kuma_translation" SET "file"', $result[3]);
+        $this->assertStringStartsWith('INSERT INTO "kuma_translation_domain"', $result[1]);
     }
 }
