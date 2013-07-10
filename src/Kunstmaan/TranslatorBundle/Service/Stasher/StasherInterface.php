@@ -88,5 +88,4 @@ interface StasherInterface
      */
     public function getLastChangedTranslationDate();
 
-
 }

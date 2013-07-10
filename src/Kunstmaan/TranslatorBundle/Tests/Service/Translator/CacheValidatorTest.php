@@ -52,7 +52,7 @@ class CacheValidatorTest extends BaseTestCase
 
     public function createDummyTranslationFiles()
     {
-        foreach($this->languages as $language) {
+        foreach ($this->languages as $language) {
             $command = sprintf('touch %s/catalogue.%s.php', $this->cacheDir, $language);
             exec($command);
         }
@@ -60,7 +60,7 @@ class CacheValidatorTest extends BaseTestCase
 
     public function deleteDummyTranslationFiles()
     {
-        foreach($this->languages as $language) {
+        foreach ($this->languages as $language) {
             $file = sprintf('%s/catalogue.%s.php', $this->cacheDir, $language);
             unlink($file);
         }

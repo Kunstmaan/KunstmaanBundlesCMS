@@ -24,7 +24,7 @@ class TranslatorController extends Controller
         $domains = $this->container->get('kunstmaan_translator.service.manager')->getAllDomains();
         $cacheFresh = $this->container->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
 
-        if($this->container->getParameter('kernel.debug') === false && $cacheFresh === false) {
+        if ($this->container->getParameter('kernel.debug') === false && $cacheFresh === false) {
             $this->get('session')->getFlashBag()->add('warning', 'Rebuild cache to update to latest translations.');
         }
 
@@ -46,6 +46,7 @@ class TranslatorController extends Controller
         $post = $this->getRequest()->request->all();
         $this->container->get('kunstmaan_translator.service.manager')->updateTranslationsFromArray($post['domain'], $post['translation']);
         $this->get('session')->getFlashBag()->add('success', 'Translations succesful saved!');
+
         return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $post['domain'])));
     }
 
@@ -62,7 +63,7 @@ class TranslatorController extends Controller
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(false)
-            ->setLocale(false)
+            ->setLocales(false)
             ->setGlobals(false)
             ->setBundle($this->container->getParameter('kuma_translator.default_bundle'));
 
@@ -84,6 +85,7 @@ class TranslatorController extends Controller
         $domain = $this->container->get('kunstmaan_translator.service.manager')->getFirstDefaultDomainName();
 
         $this->get('session')->getFlashBag()->add('success', 'Translation cache flushed');
+
         return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $domain)));
     }
 }

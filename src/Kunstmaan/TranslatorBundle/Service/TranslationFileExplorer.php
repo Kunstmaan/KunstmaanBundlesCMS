@@ -21,8 +21,8 @@ class TranslationFileExplorer
 
     /**
      *  Looks in the path for Resources/translation files and returns a finder object with the result
-     * @param  string $path
-     * @param  array  $locales
+     * @param  string                           $path
+     * @param  array                            $locales
      * @return \Symfony\Component\Finder\Finder
      */
     public function find($path, array $locales)

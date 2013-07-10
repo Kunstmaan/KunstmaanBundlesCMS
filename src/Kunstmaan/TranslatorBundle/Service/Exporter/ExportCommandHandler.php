@@ -1,9 +1,8 @@
 <?php
 
-namespace Kunstmaan\TranslatorBundle\Service\Importer;
+namespace Kunstmaan\TranslatorBundle\Service\Exporter;
 
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Parses an ExportCommand

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
-use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -72,12 +71,12 @@ class CacheValidator
         foreach ($finder as $file) {
             $date = new \DateTime();
             $date->setTimestamp($file->getMTime());
+
             return $date;
         }
 
         return null;
     }
-
 
     public function setDebug($debug)
     {

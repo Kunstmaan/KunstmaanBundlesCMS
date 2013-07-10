@@ -18,7 +18,6 @@ class TranslationGroupManager
      */
     private $stasher;
 
-
     private $translationClass;
     private $translationDomainClass;
 

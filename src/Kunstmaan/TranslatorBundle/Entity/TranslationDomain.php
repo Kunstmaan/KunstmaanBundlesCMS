@@ -18,30 +18,44 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TranslationDomain extends \Kunstmaan\TranslatorBundle\Model\Translation\TranslationDomain
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+
+    const FLAG_NEW = 'new';
+    const FLAG_UPDATED = 'updated';
 
     /**
      * Use this field to give a name to your translator domain
      *
      * @var sting
-     *
+     * @ORM\Id
      * @ORM\Column(type="string")
      */
     protected $name;
 
-    public function getId()
+    /**
+     * A flag which defines the status of a specific domain ('updated', 'new', ..)
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $flag = null;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
     {
-        return $this->id;
+        $this->flag = self::FLAG_NEW;
     }
 
-    public function setId($id)
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
     {
-        $this->id = $id;
+        if ($this->flag == null) {
+            $this->flag = self::FLAG_UPDATED;
+        }
     }
 
     public function getName()
@@ -52,5 +66,20 @@ class TranslationDomain extends \Kunstmaan\TranslatorBundle\Model\Translation\Tr
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getFlag()
+    {
+        return $this->flag;
+    }
+
+    public function setFlag($flag)
+    {
+        $this->flag = $flag;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

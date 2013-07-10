@@ -21,6 +21,9 @@ class TranslationRepository extends AbstractTranslatorRepository
     {
         $em = $this->getEntityManager();
 
+        $flagNew = \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_NEW;
+        $flagUpdated = \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_UPDATED;
+
         $sql = <<<EOQ
 SELECT
     MAX(compare) as newestDate,
@@ -30,7 +33,7 @@ FROM (
     UNION ALL
     SELECT updatedAt as compare, flag FROM %s) CACHE_CHECK
 WHERE
-    flag IN ('updated','new')
+    flag IN ('{$flagUpdated}','{$flagNew}')
     GROUP BY flag
     HAVING MAX(compare) IS NOT NULL
 EOQ;
@@ -40,7 +43,7 @@ EOQ;
         $stmt->execute();
         $result = $stmt->fetch();
 
-        if(is_array($result) && count($result) > 0) {
+        if (is_array($result) && count($result) > 0) {
             return new \DateTime($result['newestDate']);
         }
 

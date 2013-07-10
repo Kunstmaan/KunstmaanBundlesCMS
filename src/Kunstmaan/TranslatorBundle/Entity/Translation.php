@@ -13,12 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translation
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+
+    const FLAG_NEW = 'new';
+    const FLAG_UPDATED = 'updated';
 
     /**
      * The translations keyword to use in your template or call from the translator
@@ -26,6 +23,7 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
      * @var string
      *
      * @ORM\Column(type="string")
+     * @ORM\Id
      */
     protected $keyword;
 
@@ -35,6 +33,7 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
      * @var string
      *
      * @ORM\Column(type="string", length=10)
+     * @ORM\Id
      */
     protected $locale;
 
@@ -58,6 +57,7 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
 
      /**
      * @ORM\ManyToOne(targetEntity="TranslationDomain")
+     * @ORM\JoinColumn(name="domain", referencedColumnName="name")
      */
     protected $domain;
 
@@ -92,7 +92,7 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        $this->flag = 'new';
+        $this->flag = self::FLAG_NEW;
     }
 
     /**
@@ -101,19 +101,9 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime();
-        if($this->flag == null) {
-            $this->flag = 'updated';
+        if ($this->flag == null) {
+            $this->flag = self::FLAG_UPDATED;
         }
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     public function getKeyword()

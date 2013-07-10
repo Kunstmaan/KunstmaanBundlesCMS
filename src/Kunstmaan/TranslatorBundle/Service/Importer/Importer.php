@@ -69,7 +69,7 @@ class Importer
      * @param  string                                                    $domain
      * @param  boolean                                                   $force    override simular translation in the stasher
      * @return \Kunstmaan\TranslatorBundle\Model\Translation\Translation the imported translation
-     * @return boolean  Nothing changed, no translation added, no translation updated
+     * @return boolean                                                   Nothing changed, no translation added, no translation updated
      */
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
@@ -87,6 +87,7 @@ class Importer
 
         if (true === $force && null == $translation) {
             $translation = $this->translationGroupManager->updateTranslation($translationGroup, $locale, $text, $filename);
+
             return true;
         }
 
