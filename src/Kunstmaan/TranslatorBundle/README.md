@@ -46,13 +46,12 @@ Migrate dev translations to production
 
 Note: only use this with a SQL stasher.
 
-Use the following command to generate a doctrine migration with all new and updated translations in your environment.
-
+Use the following command to generate a doctrine migration with all new and updated translations from your current environment.
 ```
 app/console kuma:translator:migrations:diff
 ```
 
-When you want to include these migrated translations into your environment use the normal doctrine migrate command.
+When you want to include these migrated translations into your (other) environment use the normal doctrine migrate command.
 
 ```
 app/console doctrine:migrations:migrate
@@ -62,7 +61,7 @@ Import existing translation files
 -------------------------------------
 When migrating your current project you can easily import the existing translation files.
 
-Without parameters, all translations from the current `main` project will be included and all locales.
+Without parameters, all translations, locales from the current `main` project will be included.
 If you have already existing translations in the stasher with the same combination of 'domain', 'keyword', 'locale', non of them will be overwritten
 
 ```
@@ -85,7 +84,7 @@ To import only specific locales:
 app/console kuma:translator:import --locales=nl,fr,de
 ```
 
-How does the caching works?
+How does the cache work
 -------------------------------------
 
 Translations are stored in a database, but cached when not running in debug mode.
