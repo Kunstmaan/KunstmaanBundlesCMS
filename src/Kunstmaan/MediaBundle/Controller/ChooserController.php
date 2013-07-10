@@ -80,7 +80,7 @@ class ChooserController extends Controller
 
     /**
      * @param MediaManager $mediaManager
-     * @param String $type
+     * @param String       $type
      *
      * @return \Symfony\Component\Form\FormView
      */
@@ -89,6 +89,7 @@ class ChooserController extends Controller
         $handler = $mediaManager->getHandlerForType($type);
         $media = new Media();
         $helper = $handler->getFormHelper($media);
+
         return $this->createForm($handler->getFormType(), $helper)->createView();
     }
 
