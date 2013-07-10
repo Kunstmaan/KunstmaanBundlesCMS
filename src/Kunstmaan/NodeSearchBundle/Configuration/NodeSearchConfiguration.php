@@ -161,10 +161,12 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
 
                     $content = '';
                     if ($page instanceof HasPagePartsInterface) {
-                        $this->container->enterScope('request');
-                        $request = new Request();
-                        $request->setLocale($nodeTranslation->getLang());
-                        $this->container->set('request', $request, 'request');
+                        if (!$this->container->hasScope('request')) {
+                            $this->container->enterScope('request');
+                            $request = new Request();
+                            $request->setLocale($nodeTranslation->getLang());
+                            $this->container->set('request', $request, 'request');
+                        }
                         $pageparts = $this->em
                             ->getRepository('KunstmaanPagePartBundle:PagePartRef')
                             ->getPageParts($page);
