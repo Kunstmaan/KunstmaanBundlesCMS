@@ -56,8 +56,11 @@
                                         <!-- Submenu -->
                                         <ul class="cupcake-menu cupcake-menu__sublevel">
                                             {% for node in node.children %}
-                                                <li class="cupcake-menu__item">
-                                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="cupcake-menu__link">{{ node.title }}</a>
+                                                <li class="cupcake-menu__item {% if(node.active) %}cupcake-menu__item--active{% endif %}">
+                                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="cupcake-menu__link">
+                                                        {{ node.title }}
+                                                        {% if(node.active) %}<i class="icon-chevron-right"></i>{% endif %}
+                                                    </a>
                                                 </li>
                                             {% endfor %}
                                         </ul>

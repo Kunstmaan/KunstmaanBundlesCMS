@@ -8,7 +8,26 @@
    ========================================================================== */
 
 
-/* Sprite icons path
+/* Genral
    ========================================================================== */
-$iconSpritePath:          "../../vendor/sass-bootstrap/img/glyphicons-halflings.png";
-$iconWhiteSpritePath:     "../../vendor/sass-bootstrap/img/glyphicons-halflings.png";
+$root:                  "/bundles/websitebundle";
+$vendor:                "../../vendor";
+
+
+/* Imagee folders
+   ========================================================================== */
+$btns:                  "#{$root}/img/btns";
+$css-bg:                "#{$root}/img/css-bg";
+$dummy:                 "#{$root}/img/dummy";
+$general:               "#{$root}/img/general";
+$icons:                 "#{$root}/img/icons";
+
+
+/* Icon folders
+   ========================================================================== */
+// Cupcake
+$cupcake-iconfont-url:  "#{$vendor}/cupcake/icons/fonts";
+
+// Bootstrap
+$iconSpritePath:        "#{$vendor}/sass-bootstrap/img/glyphicons-halflings.png";
+$iconWhiteSpritePath:   "#{$vendor}/sass-bootstrap/img/glyphicons-halflings.png";
