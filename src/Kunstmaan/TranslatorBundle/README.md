@@ -101,6 +101,18 @@ When editing translations in the backend changes aren't immediately visible on y
 The backend will show a warning message when not newer or updated translations aren't loaded into the cache.
 Click on the `flush cache`button to rebuild the cache.
 
+Clear cache and request status
+-------------------------------------
+
+Clear translation cache files, this will trigger a rebuild of the translation cache when visiting a page
+```
+app/console kuma:translator:cache -f
+```
+
+Request status of the current cache
+```
+app/console kuma:translator:cache --status
+```
 
 Development instructions
 -------------------------
