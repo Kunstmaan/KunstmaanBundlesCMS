@@ -24,8 +24,10 @@
     {% endfor %}
 </ul>
 
-{% if translationGroups|length <= 0 %}
+{% if translationGroups|length <= 0 and domain != null %}
     <h3>No translations found for the chosen domain</h3>
+{% elseif domain == null  %}
+    <h3>No domain selected</h3>
 {% else %}
 
 <form method="post" action="{{ path('KunstmaanTranslatorBundle_translations_save') }}">
@@ -48,10 +50,30 @@
                         <td>{{ domain }}</td>
                         <td>{{ group.keyword }}</td>
                         {% for locale in managedLocales %}
-                            <td><input value="{{ group.getTranslationTextByLocale(locale) }}" name="translation[{{ domain }}][{{ group.keyword }}][{{ locale }}]" /></td>
+                            <td>
+                                {% if group.getTranslationTextByLocale(locale)|length <= 20 %}
+                                    <input value="{{ group.getTranslationTextByLocale(locale) }}" name="translation[{{ domain }}][{{ group.keyword }}][{{ locale }}]" />
+                                {% else %}
+                                    <textarea name="translation[{{ domain }}][{{ group.keyword }}][{{ locale }}]">{{ group.getTranslationTextByLocale(locale) }}</textarea>
+                                {% endif %}
+                            </td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
+
+                <tr>
+                    <td>{{ domain }}</td>
+                    <td>
+                        <input type="hidden" name="translation_new[0]['domain']" value="{{ domain }}" />
+                        <input value="" name="translation_new[0]['keyword']" />
+                    </td>
+                    {% for locale in managedLocales %}
+                        <td>
+                            <textarea name="translation_new[0]['locales'][{{ locale }}]"></textarea>
+                        </td>
+                    {% endfor %}
+                </tr>
+
             </tbody>
         </table>
     </div>
