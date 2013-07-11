@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Features\Context;
+namespace Sandbox\SandboxBundle\Features\Context;
 
 use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 use Behat\Behat\Context\Step;
@@ -16,6 +16,7 @@ class FeatureContext extends AbstractContext
         $this->useContext('user_context', new UserContext($parameters));
         $this->useContext('role_context', new RoleContext($parameters));
         $this->useContext('media_context', new MediaContext($parameters));
+        $this->useContext('page_context', new PageContext($parameters));
     }
 
     /**
@@ -119,7 +120,9 @@ class FeatureContext extends AbstractContext
             "slide" => "en/admin/media/folder/4",
             "add new file" => "en/admin/media/create/5/file",
             "file" => "en/admin/media/folder/5",
-            "bulkupload" => "/en/admin/media/bulkupload/1"
+            "bulkupload" => "/en/admin/media/bulkupload/1",
+            "admin home" => "/en/admin/nodes/1",
+            "home" => "/en/admin/nodes/1"
         );
 
         return $pages[$page];
