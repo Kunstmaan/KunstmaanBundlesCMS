@@ -5,11 +5,20 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 
+/**
+ * RoleContext
+ *
+ * Provides the context for the AdminSettingsRole.feature
+ */
 class RoleContext extends BehatContext
 {
 
     /**
+     * @param string $roleName
+     *
      * @Given /^I fill in correct role information for role "([^"]*)"$/
+     *
+     * @return array
      */
     public function iFillInCorrectRoleInformationForRole($roleName)
     {
@@ -18,7 +27,7 @@ class RoleContext extends BehatContext
         $records = array(
             "role[role]" => $this->getMainContext()->fixStepArgument($roleName)
         );
-        foreach($records as $field => $value) {
+        foreach ($records as $field => $value) {
             $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
         }
 
@@ -26,6 +35,8 @@ class RoleContext extends BehatContext
     }
 
     /**
+     * @param string $roleName
+     *
      * @Given /^I edit role "([^"]*)"$/
      */
     public function iEditRole($roleName)
@@ -34,6 +45,8 @@ class RoleContext extends BehatContext
     }
 
     /**
+     * @param string $roleName
+     *
      * @Given /^I delete role "([^"]*)"$/
      */
     public function iDeleteRole($roleName)
@@ -53,9 +66,9 @@ class RoleContext extends BehatContext
             if ($modal->hasClass('in')) {
                 $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
                 $confirmButton->click();
+
                 return;
             }
         }
     }
-
 }

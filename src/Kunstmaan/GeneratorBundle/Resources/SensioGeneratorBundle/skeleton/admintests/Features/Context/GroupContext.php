@@ -5,11 +5,20 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 
+/**
+ * GroupContext
+ *
+ * Provides the context for the AdminSettingsGroup.feature
+ */
 class GroupContext extends BehatContext
 {
 
     /**
+     * @param string $groupName
+     *
      * @Given /^I fill in correct group information for group "([^"]*)"$/
+     *
+     * @return array
      */
     public function iFillInCorrectGroupInformationForGroup($groupName)
     {
@@ -19,7 +28,7 @@ class GroupContext extends BehatContext
             "ROLE_ADMIN",
             "ROLE_PERMISSIONMANAGER"
         );
-        foreach($roles as $role) {
+        foreach ($roles as $role) {
             $steps[] = new Step\When("I additionally select \"$role\" from \"group[rolesCollection][]\"");
         }
 
@@ -27,7 +36,11 @@ class GroupContext extends BehatContext
     }
 
     /**
+     * @param string $groupName
+     *
      * @Given /^I fill in group information for group "([^"]*)" without roles$/
+     *
+     * @return array
      */
     public function iFillInGroupInformationForGroupWithoutRoles($groupName)
     {
@@ -36,7 +49,7 @@ class GroupContext extends BehatContext
         $records = array(
             "group[name]" => $this->getMainContext()->fixStepArgument($groupName)
         );
-        foreach($records as $field => $value) {
+        foreach ($records as $field => $value) {
             $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
         }
 
@@ -44,6 +57,8 @@ class GroupContext extends BehatContext
     }
 
     /**
+     * @param string $groupName
+     *
      * @Given /^I edit group "([^"]*)"$/
      */
     public function iEditGroup($groupName)
@@ -52,6 +67,8 @@ class GroupContext extends BehatContext
     }
 
     /**
+     * @param string $groupName
+     *
      * @Given /^I delete group "([^"]*)"$/
      */
     public function iDeleteGroup($groupName)
@@ -71,6 +88,7 @@ class GroupContext extends BehatContext
             if ($modal->hasClass('in')) {
                 $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
                 $confirmButton->click();
+
                 return;
             }
         }

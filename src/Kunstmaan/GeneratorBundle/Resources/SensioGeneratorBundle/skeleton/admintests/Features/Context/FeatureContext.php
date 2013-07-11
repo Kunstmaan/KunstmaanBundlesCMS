@@ -1,14 +1,23 @@
 <?php
 
-namespace Sandbox\SandboxBundle\Features\Context;
+namespace {{ namespace }}\Features\Context;
 
 use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 use Behat\Behat\Context\Step;
 
+/**
+ * FeatureContext
+ *
+ * Provides the global context that includes the subcontexts
+ */
 class FeatureContext extends AbstractContext
 {
 
-    public function __construct(array $parameters) {
+    /**
+     * @param array $parameters
+     */
+    public function __construct(array $parameters)
+    {
         $this->parameters = $parameters;
 
         // Load Context Class
@@ -20,17 +29,25 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @param string $username
+     *
      * @Given /^I log in as "([^\']*)"$/
+     *
+     * @return array
      */
     public function iLogInAs($username)
     {
         $this->makeWide();
-
         $password = $this->getPasswordForUsername($username);
 
         return $this->iTryToLogInWith($username, $password);
     }
 
+    /**
+     * @param string $username
+     *
+     * @return string
+     */
     public function getPasswordForUsername($username)
     {
         $logins = array('admin' => 'admin', 'test' => 'test', 'dummy' => 'dummy');
@@ -39,7 +56,12 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @param string $username
+     * @param string $password
+     *
      * @Given /^I try to log in with "([^"]*)" and "([^"]*)"$/
+     *
+     * @return array
      */
     public function iTryToLogInWith($username, $password)
     {
@@ -80,6 +102,8 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @param string $element the name of the button you want to press
+     *
      * @Given /^I press "([^\']*)" if present$/
      */
     public function iPressIfPresent($element)
@@ -92,16 +116,23 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @param string $pageName
+     *
      * @Given /^I (?:am on|go to) the (.*) page$/
      */
-    public function iAmOnASpecificPage($page)
+    public function iAmOnASpecificPage($pageName)
     {
-        $page = $this->fixStepArgument($page);
-        $this->visit($this->getPageUrlForPageName($page));
+        $pageName = $this->fixStepArgument($pageName);
+        $this->visit($this->getPageUrlForPageName($pageName));
     }
 
-
-    public function getPageUrlForPageName($page) {
+    /**
+     * @param string $pageName
+     *
+     * @return string
+     */
+    public function getPageUrlForPageName($pageName)
+    {
         $pages = array(
             "users" => "/en/admin/settings/users",
             "create new user" => "/en/admin/settings/users/add",
@@ -125,24 +156,33 @@ class FeatureContext extends AbstractContext
             "home" => "/en/admin/nodes/1"
         );
 
-        return $pages[$page];
+        return $pages[$pageName];
     }
 
     /**
+     * @param string $fieldName
+     *
      * @Given /^I clear "([^"]*)"$/
+     *
+     * @return array
      */
-    public function iClear($field)
+    public function iClear($fieldName)
     {
-        $field = $this->fixStepArgument($field);
+        $fieldName = $this->fixStepArgument($fieldName);
 
         return array(
-            new Step\Given("I fill in \"$field\" with \"\"")
+            new Step\Given("I fill in \"$fieldName\" with \"\"")
         );
     }
 
-    public function clickAction($name, $action, $page)
+    /**
+     * @param string $name     the name of the a tag
+     * @param string $action   the action you want to perform - delete, edit
+     * @param string $pageName the name of the page
+     */
+    public function clickAction($name, $action, $pageName)
     {
-        $this->iAmOnASpecificPage($page);
+        $this->iAmOnASpecificPage($pageName);
 
         $name = $this->fixStepArgument($name);
         $action = ucfirst($this->fixStepArgument($action));
@@ -186,6 +226,8 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @param int $time
+     *
      * @Given /^I wait (\d+) seconds$/
      */
     public function iWaitSeconds($time)

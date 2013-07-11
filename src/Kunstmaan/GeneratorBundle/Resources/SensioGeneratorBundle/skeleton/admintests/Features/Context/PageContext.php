@@ -5,10 +5,17 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 
+/**
+ * PageContext
+ *
+ * Provides the context for the AdminPage.feature
+ */
 class PageContext extends BehatContext
 {
 
     /**
+     * @param string $pageName
+     *
      * @Given /^I preview the (.*) page$/
      */
     public function iPreviewPage($pageName)
@@ -18,7 +25,12 @@ class PageContext extends BehatContext
     }
 
     /**
+     * @param string $pageType The type of the page - contentpage, formpage
+     * @param string $pageName The name of the page
+     *
      * @Given /^I add (.*) "([^"]*)"$/
+     *
+     * @throws ElementNotFoundException
      */
     public function iAddPage($pageType, $pageName)
     {
@@ -34,7 +46,7 @@ class PageContext extends BehatContext
 
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                foreach($records as $field => $value) {
+                foreach ($records as $field => $value) {
                     $modalField = $modal->findField($field);
                     if (null === $modalField) {
                         throw new ElementNotFoundException(
@@ -53,6 +65,8 @@ class PageContext extends BehatContext
     }
 
     /**
+     * @param string $pageName
+     *
      * @Given /^I save page "([^"]*)"$/
      */
     public function iSavePage($pageName)
@@ -61,6 +75,8 @@ class PageContext extends BehatContext
     }
 
     /**
+     * @param string $pageName
+     *
      * @Given /^I save page "([^"]*)" as draft$/
      */
     public function iSavePageAsDraft($pageName)
@@ -69,8 +85,8 @@ class PageContext extends BehatContext
     }
 
     /**
-     * @param $pageName The name of the page
-     * @param $action   The action that needs to be performed (Save, Save as draft)
+     * @param string $pageName The name of the page
+     * @param string $action   The action that needs to be performed - Save, Save as draft
      */
     private function save($pageName, $action)
     {
@@ -83,6 +99,8 @@ class PageContext extends BehatContext
     }
 
     /**
+     * @param string $pageName
+     *
      * @Given /^I publish page "([^"]*)"$/
      */
     public function iPublishPage($pageName)
@@ -91,6 +109,8 @@ class PageContext extends BehatContext
     }
 
     /**
+     * @param string $pageName
+     *
      * @Given /^I unpublish page "([^"]*)"$/
      */
     public function iUnPublishPage($pageName)
@@ -98,6 +118,10 @@ class PageContext extends BehatContext
         $this->placePageInState($pageName, 'Unpublish');
     }
 
+    /**
+     * @param string $pageName the name of the page
+     * @param string $state    the state of the page - Publish, Unpublish
+     */
     private function placePageInState($pageName, $state)
     {
         $states = array(
@@ -118,7 +142,7 @@ class PageContext extends BehatContext
 
         //Wait 1 second for the modal to be visible
         //Else we can get a error when running the tests.
-        //$this->getMainContext()->iWaitSeconds(1);
+        $this->getMainContext()->iWaitSeconds(1);
 
         // Find the visible modal.
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
@@ -133,6 +157,8 @@ class PageContext extends BehatContext
     }
 
     /**
+     * @param string $pageName
+     *
      * @Given /^I delete page "([^"]*)"$/
      */
     public function iDeletePage($pageName)

@@ -5,20 +5,20 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 
+/**
+ * UserContext
+ *
+ * Provides the context for the AdminSettingsUser.feature
+ */
 class UserContext extends BehatContext
 {
 
     /**
-     * @Then /^I should be on the (.*) page$/
-     */
-    public function iShouldBeOnTheLoginPage($page)
-    {
-        $page = $this->getMainContext()->fixStepArgument($page);
-        $this->getMainContext()->assertPageAddress($this->getMainContext()->getPageUrlForPageName($page));
-    }
-
-    /**
+     * @param string $username
+     *
      * @Given /^I fill in correct user information for username "([^\']*)"$/
+     *
+     * @return array
      */
     public function iFillInCorrectUserInformation($username)
     {
@@ -33,18 +33,19 @@ class UserContext extends BehatContext
         );
 
         $steps = array();
-        foreach($records as $field => $value) {
+        foreach ($records as $field => $value) {
             $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
         }
 
         $steps[] = new Step\When("I check \"user[enabled]\"");
         $steps[] = new Step\When("I select \"Administrators\" from \"user[groups][]\"");
 
-
         return $steps;
     }
 
     /**
+     * @param string $username
+     *
      * @Given /^I edit user "([^"]*)"$/
      */
     public function iEditUser($username)
@@ -53,6 +54,8 @@ class UserContext extends BehatContext
     }
 
     /**
+     * @param string $username
+     *
      * @Given /^I delete user "([^"]*)"$/
      */
     public function iDeleteUser($username)
@@ -72,10 +75,9 @@ class UserContext extends BehatContext
             if ($modal->hasClass('in')) {
                 $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
                 $confirmButton->click();
+
                 return;
             }
         }
-
     }
-
 }

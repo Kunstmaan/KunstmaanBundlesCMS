@@ -5,11 +5,20 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 
+/**
+ * MediaContext
+ *
+ * Provides the context for the AdminMedia.feature
+ */
 class MediaContext extends BehatContext
 {
 
     /**
+     * @param string $fileType the type of the file - image, pdf
+     *
      * @Given /^I fill in correct file information for (.*)$/
+     *
+     * @return array
      */
     public function iFillInCorrectFileInformationFor($fileType)
     {
@@ -23,7 +32,7 @@ class MediaContext extends BehatContext
         $records = array(
             "kunstmaan_mediabundle_filetype[name]" => $this->getMainContext()->fixStepArgument($fileType)
         );
-        foreach($records as $field => $value) {
+        foreach ($records as $field => $value) {
             $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
         }
 
@@ -38,7 +47,6 @@ class MediaContext extends BehatContext
     public function iDeleteImage()
     {
         $this->getMainContext()->iAmOnASpecificPage("image");
-
         $this->performDelete();
     }
 
@@ -48,12 +56,16 @@ class MediaContext extends BehatContext
     public function iDeleteFile()
     {
         $this->getMainContext()->iAmOnASpecificPage("file");
-
         $this->performDelete();
     }
 
     /**
+     * @param string $slideType the type - slideshare
+     * @param string $slideName the name of the slides
+     *
      * @Given /^I fill in correct (.*) information for slide "([^"]*)"$/
+     *
+     * @return array
      */
     public function iFillInCorrectInformationForSlide($slideType, $slideName)
     {
@@ -67,7 +79,7 @@ class MediaContext extends BehatContext
             "kunstmaan_mediabundle_slidetype[name]" => $this->getMainContext()->fixStepArgument($slideName),
             "kunstmaan_mediabundle_slidetype[code]" => $slideCodes[$slideType]
         );
-        foreach($records as $field => $value) {
+        foreach ($records as $field => $value) {
             $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
         }
 
@@ -82,12 +94,16 @@ class MediaContext extends BehatContext
     public function iDeleteSlide()
     {
         $this->getMainContext()->iAmOnASpecificPage("slide");
-
         $this->performDelete();
     }
 
     /**
+     * @param string $videoType the type of the video - youtube, vimeo, dailymotion
+     * @param string $videoName the name of the video
+     *
      * @Given /^I fill in correct (.*) information for video "([^"]*)"$/
+     *
+     * @return array
      */
     public function iFillInCorrectInformationForVideo($videoType, $videoName)
     {
@@ -103,7 +119,7 @@ class MediaContext extends BehatContext
             "kunstmaan_mediabundle_videotype[name]" => $this->getMainContext()->fixStepArgument($videoName),
             "kunstmaan_mediabundle_videotype[code]" => $videoCodes[$videoType]
         );
-        foreach($records as $field => $value) {
+        foreach ($records as $field => $value) {
             $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
         }
 
@@ -118,12 +134,15 @@ class MediaContext extends BehatContext
     public function iDeleteVideo()
     {
         $this->getMainContext()->iAmOnASpecificPage("video");
-
         $this->performDelete();
     }
 
     /**
+     * @param string $folderName
+     *
      * @Given /^I create subfolder "([^"]*)"$/
+     *
+     * @throws ElementNotFoundException
      */
     public function iCreateSubFolder($folderName)
     {
@@ -140,7 +159,7 @@ class MediaContext extends BehatContext
 
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                foreach($records as $field => $value) {
+                foreach ($records as $field => $value) {
                     $modalField = $modal->findField($field);
                     if (null === $modalField) {
                         throw new ElementNotFoundException(
@@ -159,6 +178,8 @@ class MediaContext extends BehatContext
     }
 
     /**
+     * @param string $folderName
+     *
      * @Given /^I delete subfolder "([^"]*)"$/
      */
     public function iDeleteSubFolder($folderName)
@@ -174,6 +195,9 @@ class MediaContext extends BehatContext
         $this->performFolderDelete();
     }
 
+    /**
+     * @param string $folderName
+     */
     private function performFolderDelete($folderName = "")
     {
         if ($folderName != "") {
