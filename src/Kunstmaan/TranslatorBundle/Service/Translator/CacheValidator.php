@@ -47,7 +47,7 @@ class CacheValidator
      * Get the last updated or inserted from all database translations
      * @return DateTime last createdAt or updateAt date from the translations stash
      */
-    private function getLastTranslationChangeDate()
+    public function getLastTranslationChangeDate()
     {
         return $this->stasher->getLastChangedTranslationDate();
     }

@@ -40,4 +40,17 @@ class TranslationCacheCommand extends ContainerAwareCommand
             $output->writeln('<info>Translation cache succesfully flushed</info>');
         }
     }
+
+    public function showTranslationCacheStatus(InputInterface $input, OutputInterface $output)
+    {
+        $cacheValidator = $this->getContainer()->get('kunstmaan_translator.service.translator.cache_validator');
+        $oldestFile = $cacheValidator->getOldestCachefileDate();
+        $newestTranslation = $cacheValidator->getLastTranslationChangeDate();
+        $isFresh = $cacheValidator->isCacheFresh();
+
+        $output->writeln(sprintf('Oldest file mtime: <info>%s</info>', $oldestFile instanceof \DateTime ? $oldestFile->format('Y-m-d H:i:s') : 'none found'));
+        $output->writeln(sprintf('Newest translation (in stash): <info>%s</info>', $newestTranslation instanceof \DateTime ? $newestTranslation->format('Y-m-d H:i:s') : 'none found'));
+        $output->writeln(sprintf('Status: <info>%s</info>', $isFresh ? 'fresh' : 'outdated'));
+        return 0;
+    }
 }
