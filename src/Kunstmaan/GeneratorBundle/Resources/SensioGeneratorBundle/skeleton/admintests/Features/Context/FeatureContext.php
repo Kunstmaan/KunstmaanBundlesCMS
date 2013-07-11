@@ -4,6 +4,8 @@ namespace {{ namespace }}\Features\Context;
 
 use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 use Behat\Behat\Context\Step;
+use Behat\Mink\Selector\CssSelector;
+use Behat\Mink\Exception\ElementNotFoundException;
 
 /**
  * FeatureContext
@@ -194,6 +196,40 @@ class FeatureContext extends AbstractContext
         $deleteLink = $tr->find('xpath', '//a[text()="' . $action . '"]');
 
         $deleteLink->click();
+    }
+
+    /**
+     * @param string $filterType
+     * @param string $filterComparator
+     * @param string $filterValue
+     *
+     * @Given /^I filter on "([^"]*)" that "([^"]*)" "([^"]*)"$/
+     *
+     * @throws ElementNotFoundException
+     */
+    public function iFilterOn($filterType, $filterComparator, $filterValue)
+    {
+        $selector = new \Behat\Mink\Selector\CssSelector();
+        $filter = $this->getMainContext()->getSession()->getPage()->find("xpath", $selector->translateToXPath('div.iPhoneCheckHandle'));
+        $filter->click();
+
+        $records = array(
+            "addfilter" => $this->getMainContext()->fixStepArgument($filterType),
+            "filter_comparator_1" => $this->getMainContext()->fixStepArgument($filterComparator),
+            "filter_value_1" => $this->getMainContext()->fixStepArgument($filterValue),
+        );
+
+        foreach ($records as $field => $value) {
+            $filterField = $this->getMainContext()->getSession()->getPage()->findField($field);
+            if (null === $filterField) {
+                throw new ElementNotFoundException(
+                    $this->getSession(), 'form field', 'id|name|label|value', $field
+                );
+            }
+            $filterField->setValue($value);
+        }
+
+        $this->getMainContext()->pressButton("Filter");
     }
 
     /**

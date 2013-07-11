@@ -19,7 +19,7 @@ Feature: AdminSettingsRole
     Then I should see "value should not be blank"
 
   @javascript
-  Scenario: Login and edit role
+  Scenario: Edit role
     Given I log in as "admin"
     And I edit role "TEST_ROLE"
     Then I should see "Edit role"
@@ -28,7 +28,14 @@ Feature: AdminSettingsRole
     Then I should see "has been edited"
 
   @javascript
-  Scenario: Login as admin, delete test role
+  Scenario: Use filter module
+    Given I log in as "admin"
+    And I am on the roles page
+    And I filter on "role" that "contains" "OTHER"
+    Then I should see "OTHER_ROLE_NAME"
+
+  @javascript
+  Scenario: Delete test role
     Given I log in as "admin"
     And I delete role "OTHER_ROLE_NAME"
     Then I should see "has been deleted"
