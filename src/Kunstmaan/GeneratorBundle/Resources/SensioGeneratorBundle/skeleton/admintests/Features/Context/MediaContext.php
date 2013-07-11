@@ -163,8 +163,23 @@ class MediaContext extends BehatContext
      */
     public function iDeleteSubFolder($folderName)
     {
-        //Navigate to the folder we want to delete
-        $this->getMainContext()->clickLink($folderName);
+        $this->performFolderDelete($folderName);
+    }
+
+    /**
+     * @Given /^I delete the folder$/
+     */
+    public function iDeleteTheFolder()
+    {
+        $this->performFolderDelete();
+    }
+
+    private function performFolderDelete($folderName = "")
+    {
+        if ($folderName != "") {
+            //Navigate to the folder we want to delete
+            $this->getMainContext()->clickLink($folderName);
+        }
 
         $this->getMainContext()->pressButton("Delete this folder");
 

@@ -78,3 +78,10 @@ Feature: AdminMedia
     And I am on the media page
     And I delete subfolder "subFolder"
     Then I should see "has been deleted"
+
+  @javascript
+  Scenario: Login as admin, delete a Media
+    Given I log in as "admin"
+    And I am on the media page
+    And I delete the folder
+    Then I should see "can't delete"
