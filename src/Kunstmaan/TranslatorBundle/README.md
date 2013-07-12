@@ -126,6 +126,8 @@ app/console kuma:translator:flag -r
 Features
 -------------------------------------
 * Import bundle/global translations from any type of translation file
+* Import only specific translations (onlu from console command)
+* Force import to overwrite existing translations with same domain/keyword/locale
 * Store translations from any type of resource (default DoctrineORM database (sql))
 * Edit stored translations from the backend interface
 * Add new translations from the backend interface
@@ -141,6 +143,7 @@ TODO
 -----------
 * Export translations to a specific file format
 * Check for conflicts when merging environment translations
+* Add domain from backend
 
 Development instructions
 -------------------------
