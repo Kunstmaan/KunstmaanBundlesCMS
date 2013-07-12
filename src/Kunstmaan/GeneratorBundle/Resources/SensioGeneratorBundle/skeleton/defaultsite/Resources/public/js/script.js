@@ -10,6 +10,7 @@ var myApplication = (function($, window, undefined) {
     var init, initSliders;
 
     init = function() {
+        cupcakeNavigation.init();
         initSliders();
     };
 
@@ -25,7 +26,7 @@ var myApplication = (function($, window, undefined) {
     */
     return {
         init: init
-    }
+    };
 
 }(jQuery, window));
 

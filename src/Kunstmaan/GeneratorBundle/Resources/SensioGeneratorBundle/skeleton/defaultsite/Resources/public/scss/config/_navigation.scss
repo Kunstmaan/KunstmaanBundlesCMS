@@ -1,13 +1,57 @@
 /* ==========================================================================
    Navbar
 
-   Never add styles directly to this file - set up variables
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+
    Style guide: https://github.com/necolas/idiomatic-css
    ========================================================================== */
 
 
-/* General
+/* Cupcake Menu
    ========================================================================== */
+// General
+$cupcake-menu-height: 3em;
+$cupcake-menu-responsive-breakpoint: 40em;
+
+// Menu item
+$cupcake-menu-item-width: auto;
+$cupcake-menu-item-text-align: center;
+$cupcake-menu-item-small-text-align: left;
+$cupcake-menu-item-link-padding: 1.5em;
+
+// Sublevel
+$cupcake-menu-sublevel-z-index: 10;
+
+// Menu toggle
+$cupcake-menu-toggle-top-text-align: right;
+
+// Colors
+$cupcake-menu-background: #444;
+$cupcake-menu-sublevel-background: #ccc;
+
+$cupcake-menu-item-color: #fff;
+$cupcake-menu-item-active-background: #333;
+
+$cupcake-menu-sublevel-item-color: #333;
+$cupcake-menu-sublevel-item-active-background: #aaa;
+
+$cupcake-menu-toggle-color: #fff;
+$cupcake-menu-toggle-top-background: #333;
+$cupcake-menu-toggle-submenu-border-color: #fff;
+
+$cupcake-menu-small-link-border-top-color: #fff;
+
+$cupcake-menu-item-hover-background: #ccc;
+$cupcake-menu-item-hover-color: #333;
+
+$cupcake-menu-sublevel-item-hover-background: #aaa;
+$cupcake-menu-sublevel-item-hover-color: #333;
+
+
+/* Bootstrap Menu
+   ========================================================================== */
+// General
 $navbarCollapseWidth:             979px;
 $navbarCollapseDesktopWidth:      $navbarCollapseWidth + 1;
 
@@ -25,9 +69,7 @@ $navbarLinkBackgroundActive:      darken($navbarBackground, 5%);
 
 $navbarBrandColor:                $navbarLinkColor;
 
-
-/* Inverted
-   ========================================================================== */
+// Inverted
 $navbarInverseBackground:                #111111;
 $navbarInverseBackgroundHighlight:       #222222;
 $navbarInverseBorder:                    #252525;
@@ -45,3 +87,4 @@ $navbarInverseSearchBorder:              $navbarInverseBackground;
 $navbarInverseSearchPlaceholderColor:    #ccc;
 
 $navbarInverseBrandColor:                $navbarInverseLinkColor;
+

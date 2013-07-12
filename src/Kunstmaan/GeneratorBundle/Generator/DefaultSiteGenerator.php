@@ -74,7 +74,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     {
         $skeletonDir = sprintf("%s/grunt/", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
-
+        $dirPath = sprintf("%s/Resources", $bundle->getPath());
+        
+        $this->filesystem->copy($skeletonDir . '/.gitignore', $dirPath . '/.gitignore', true);        
         $this->renderFile('/Gruntfile.js.twig', $rootDir .'/../Gruntfile.js', $parameters);
         $this->renderFile('/package.json.twig', $rootDir .'/../package.json', $parameters);
 
@@ -288,7 +290,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             'config/_forms.scss',
             'config/_grid.scss',
             'config/_hero-unit.scss',
-            'config/_navbar.scss',
+            'config/_icons.scss',
+            'config/_navigation.scss',
             'config/_pagination.scss',
             'config/_paths.scss',
             'config/_tables.scss',

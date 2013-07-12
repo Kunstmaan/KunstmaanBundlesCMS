@@ -1,7 +1,9 @@
 /* ==========================================================================
-   Imports for Bootstrap - Comment or uncomment imports
+   Imports for Bootstrap
 
+   Comment or uncomment imports
    Never add styles directly to this file - set up imports
+
    Style guide: https://github.com/necolas/idiomatic-css
    ========================================================================== */
 
@@ -50,8 +52,8 @@
 
 /* Components: Nav
    ========================================================================== */
-@import "../../../../../../web/vendor/sass-bootstrap/lib/navs";
-@import "../../../../../../web/vendor/sass-bootstrap/lib/navbar";
+//@import "../../../../../../web/vendor/sass-bootstrap/lib/navs";
+//@import "../../../../../../web/vendor/sass-bootstrap/lib/navbar";
 //@import "../../../../../../web/vendor/sass-bootstrap/lib/breadcrumbs";
 //@import "../../../../../../web/vendor/sass-bootstrap/lib/pagination";
 //@import "../../../../../../web/vendor/sass-bootstrap/lib/pager";
@@ -68,11 +70,11 @@
    ========================================================================== */
 //@import "../../../../../../web/vendor/sass-bootstrap/lib/thumbnails";
 @import "../../../../../../web/vendor/sass-bootstrap/lib/media";
-@import "../../../../../../web/vendor/sass-bootstrap/lib/labels-badges";
+//@import "../../../../../../web/vendor/sass-bootstrap/lib/labels-badges";
 //@import "../../../../../../web/vendor/sass-bootstrap/lib/progress-bars";
 //@import "../../../../../../web/vendor/sass-bootstrap/lib/accordion";
 //@import "../../../../../../web/vendor/sass-bootstrap/lib/carousel";
-@import "../../../../../../web/vendor/sass-bootstrap/lib/hero-unit";
+//@import "../../../../../../web/vendor/sass-bootstrap/lib/hero-unit";
 
 
 /* Utility classes
