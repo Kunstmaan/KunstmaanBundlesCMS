@@ -209,18 +209,18 @@ class FeatureContext extends AbstractContext
      */
     public function iFilterOn($filterType, $filterComparator, $filterValue)
     {
-        $selector = new \Behat\Mink\Selector\CssSelector();
-        $filter = $this->getMainContext()->getSession()->getPage()->find("xpath", $selector->translateToXPath('div.iPhoneCheckHandle'));
+        $selector = new CssSelector();
+        $filter = $this->getSession()->getPage()->find("xpath", $selector->translateToXPath('div.iPhoneCheckHandle'));
         $filter->click();
 
         $records = array(
-            "addfilter" => $this->getMainContext()->fixStepArgument($filterType),
-            "filter_comparator_1" => $this->getMainContext()->fixStepArgument($filterComparator),
-            "filter_value_1" => $this->getMainContext()->fixStepArgument($filterValue),
+            "addfilter" => $this->fixStepArgument($filterType),
+            "filter_comparator_1" => $this->fixStepArgument($filterComparator),
+            "filter_value_1" => $this->fixStepArgument($filterValue),
         );
 
         foreach ($records as $field => $value) {
-            $filterField = $this->getMainContext()->getSession()->getPage()->findField($field);
+            $filterField = $this->getSession()->getPage()->findField($field);
             if (null === $filterField) {
                 throw new ElementNotFoundException(
                     $this->getSession(), 'form field', 'id|name|label|value', $field
@@ -229,7 +229,7 @@ class FeatureContext extends AbstractContext
             $filterField->setValue($value);
         }
 
-        $this->getMainContext()->pressButton("Filter");
+        $this->pressButton("Filter");
     }
 
     /**
