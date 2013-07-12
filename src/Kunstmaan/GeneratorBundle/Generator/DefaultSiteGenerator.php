@@ -67,17 +67,16 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
         $this->generateBehatTests($bundle, $output);
         $this->generateUnitTests($bundle, $parameters, $output);
-        $this->generateGruntFiles($bundle, $parameters, $output);
+        $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
     }
 
-    public function generateGruntFiles(Bundle $bundle, array $parameters, OutputInterface $output)
+    public function generateGruntFiles(Bundle $bundle, array $parameters, $rootDir, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Resources", $bundle->getPath());
-        $skeletonDir = sprintf("%s/Resources", $this->fullSkeletonDir);
+        $skeletonDir = sprintf("%s/grunt/", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
-        $this->filesystem->copy($skeletonDir . '/Gruntfile.js', $dirPath . '/Gruntfile.js', true);
-        $this->renderFile('/package.json', $dirPath . '/package.json', $parameters);
+        $this->renderFile('/Gruntfile.js.twig', $rootDir .'/../Gruntfile.js', $parameters);
+        $this->renderFile('/package.json.twig', $rootDir .'/../package.json', $parameters);
 
         $output->writeln('Generating root files : <info>OK</info>');
     }
