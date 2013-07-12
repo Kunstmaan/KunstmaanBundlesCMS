@@ -16,13 +16,18 @@
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "dev-master",
         "knplabs/knp-menu-bundle": "*",
         "monolog/monolog": "1.4.*@dev",
         "sensio/framework-extra-bundle": "*",
         "kunstmaan/adminlist-bundle": "self.version",
         "kunstmaan/utilities-bundle": "self.version"
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
+        "pagerfanta/pagerfanta": "dev-master",
+        "white-october/pagerfanta-bundle": "dev-master",
+        "doctrine/data-fixtures": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
