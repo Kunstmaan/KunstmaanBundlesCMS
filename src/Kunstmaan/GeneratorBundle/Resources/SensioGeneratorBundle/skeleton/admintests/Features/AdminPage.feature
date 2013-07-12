@@ -53,6 +53,14 @@ Feature: AdminPage
     Then I should see "has been unpublished"
 
   @javascript
+  Scenario: Use filter module
+    Given I log in as "admin"
+    And I am on the pages page
+    And I filter on "Title" that "contains" "Contentsub"
+    And I press "Filter"
+    Then I should see "ContentsubPage"
+
+  @javascript
   Scenario: Delete a page
     Given I log in as "admin"
     And I delete page "ContentsubPage"

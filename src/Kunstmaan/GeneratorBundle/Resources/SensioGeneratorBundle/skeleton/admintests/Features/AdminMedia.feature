@@ -2,7 +2,7 @@
 Feature: AdminMedia
   Make use of the media functionality
   As an admin user
-  User has to upload/delete file, slide, video, ...
+  User has to upload file, slide, video, ...
 
   @javascript
   Scenario Outline: Add a new file

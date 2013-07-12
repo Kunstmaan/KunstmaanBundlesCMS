@@ -104,6 +104,17 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @param string $pageName
+     *
+     * @Then /^I should be on the (.*) page$/
+     */
+    public function iShouldBeOnTheLoginPage($pageName)
+    {
+        $pageName = $this->fixStepArgument($pageName);
+        $this->assertPageAddress($this->getPageUrlForPageName($pageName));
+    }
+
+    /**
      * @param string $element the name of the button you want to press
      *
      * @Given /^I press "([^\']*)" if present$/
@@ -136,6 +147,7 @@ class FeatureContext extends AbstractContext
     public function getPageUrlForPageName($pageName)
     {
         $pages = array(
+            "forgot password" => "/en/resetting/request",
             "users" => "/en/admin/settings/users",
             "create new user" => "/en/admin/settings/users/add",
             "groups" => "/en/admin/settings/groups",
@@ -155,7 +167,8 @@ class FeatureContext extends AbstractContext
             "file" => "en/admin/media/folder/5",
             "bulkupload" => "/en/admin/media/bulkupload/1",
             "admin home" => "/en/admin/nodes/1",
-            "home" => "/en/admin/nodes/1"
+            "home" => "/en/admin/nodes/1",
+            "pages" => "/en/admin/nodes"
         );
 
         return $pages[$pageName];
