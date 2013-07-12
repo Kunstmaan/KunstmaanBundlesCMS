@@ -34,18 +34,28 @@ abstract class AbstractCommandHandler
      */
     public function parseRequestedLocales($locales)
     {
-        if (!is_array($locales) && strpos($locales, ',') === false && mb_strlen(trim($locales)) == 2) {
-            return array(strtolower(trim($locales)));
+        return $this->parseCommaSeperatedValuesToArray($locales);
+    }
+
+    public function parseRequestedDomains($domains)
+    {
+        return $this->parseCommaSeperatedValuesToArray($domains);
+    }
+
+    public function parseCommaSeperatedValuesToArray($values)
+    {
+        if (!is_array($values) && strpos($values, ',') === false && mb_strlen(trim($values)) == 2) {
+            return array(strtolower(trim($values)));
         }
 
-        if (!is_array($locales)) {
-            $locales = explode(',', $locales);
+        if (!is_array($values)) {
+            $values = explode(',', $values);
         }
 
-        if (count($locales) >= 1) {
-            return array_map(function($locale) { return strtolower(trim($locale)); }, $locales);
+        if (count($values) >= 1) {
+            return array_map(function($value) { return strtolower(trim($value)); }, $values);
         }
 
-        throw new \Exception('Invalid locales specified');
+        throw new \Exception('Invalid values specified');
     }
 }

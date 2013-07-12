@@ -34,6 +34,17 @@ services:
     kunstmaan_translator.service.exporter.command_handler:
         parent: kunstmaan_translator.service.abstract_command_handler
         class: "Kunstmaan\TranslatorBundle\Service\Exporter\ExportCommandHandler"
+        calls:
+            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
+            - [setExporter, [@kunstmaan_translator.service.exporter.exporter]]
+
+    kunstmaan_translator.service.exporter.exporter:
+        class: "Kunstmaan\TranslatorBundle\Service\Exporter\Exporter"
+
+    kunstmaan_translator.service.exporter.yaml:
+        class: "Kunstmaan\TranslatorBundle\Service\Exporter\YamlFileExporter"
+        tags:
+            - { name: 'translation.exporter', alias: 'yml' }
 
     kunstmaan_translator.service.file_explorer:
         class: "Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer"

@@ -159,3 +159,8 @@ Run PHP CS Fixer, after [installing php-cs-fixer system wide](https://github.com
 ```bash
 php-cs-fixer fix .
 ```
+
+How to create your own file exporter
+-------------------------
+* Tag your exporter with `translation.exporter
+* implement \Kunstmaan\TranslatorBundle\Service\Exporter\FileExporterInterface

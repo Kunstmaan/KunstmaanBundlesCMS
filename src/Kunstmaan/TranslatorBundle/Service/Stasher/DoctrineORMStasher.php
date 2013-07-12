@@ -122,6 +122,11 @@ class DoctrineORMStasher implements StasherInterface
         return $this->translationRepository->findBy(array('locale' => $locale, 'domain' => $translationDomain));
     }
 
+    public function getTranslationsByLocalesAndDomains(array $locales, array $domains)
+    {
+        return $this->translationRepository->getTranslationsByLocalesAndDomains($locales, $domains);
+    }
+
     /**
      * @{@inheritdoc}
      */
