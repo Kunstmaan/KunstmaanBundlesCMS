@@ -20,7 +20,7 @@
                 {% set txt = 'settings.version.unknown'|trans %}
             {% endif %}
             <li style="color: {{ color }}">
-                {{ bundle.name }} ({{ bundle.version }}{% if bundle.version != bundle.reference %} {{ bundle.reference|slice(0, 7) }}){% endif %} {{ txt }}
+                {{ bundle.name }} ({{ bundle.version }}{% if bundle.version != bundle.reference %} {{ bundle.reference|slice(0, 7) }}{% endif %}) {{ txt }}
             </li>
         {% endfor %}
         </ul>
