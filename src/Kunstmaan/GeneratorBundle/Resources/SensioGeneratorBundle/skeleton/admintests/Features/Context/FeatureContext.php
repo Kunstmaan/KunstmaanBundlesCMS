@@ -202,34 +202,73 @@ class FeatureContext extends AbstractContext
      * @param string $filterType
      * @param string $filterComparator
      * @param string $filterValue
+     * @param bool   $additionally
      *
      * @Given /^I filter on "([^"]*)" that "([^"]*)" "([^"]*)"$/
      *
      * @throws ElementNotFoundException
      */
-    public function iFilterOn($filterType, $filterComparator, $filterValue)
+    public function iFilterOn($filterType, $filterComparator, $filterValue, $additionally = false)
     {
-        $selector = new CssSelector();
-        $filter = $this->getSession()->getPage()->find("xpath", $selector->translateToXPath('div.iPhoneCheckHandle'));
-        $filter->click();
+        //Only activate the filter module if it is not an additionally filter
+        if (!$additionally) {
+            $selector = new CssSelector();
+            $this->getSession()->getPage()->find("xpath", $selector->translateToXPath('div.iPhoneCheckHandle'))->click();
+        }
 
-        $records = array(
-            "addfilter" => $this->fixStepArgument($filterType),
-            "filter_comparator_1" => $this->fixStepArgument($filterComparator),
-            "filter_value_1" => $this->fixStepArgument($filterValue),
-        );
+        $records = $this->createFilterRecords($filterType, $filterComparator, $filterValue, $additionally);
 
         foreach ($records as $field => $value) {
-            $filterField = $this->getSession()->getPage()->findField($field);
-            if (null === $filterField) {
+            $filterField = $this->getSession()->getPage()->find('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)));
+            if ($filterField === null) {
                 throw new ElementNotFoundException(
                     $this->getSession(), 'form field', 'id|name|label|value', $field
                 );
             }
             $filterField->setValue($value);
         }
+    }
 
-        $this->pressButton("Filter");
+    /**
+     * @param string $filterType
+     * @param string $filterComparator
+     * @param string $filterValue
+     *
+     * @Given /^I additionally filter on "([^"]*)" that "([^"]*)" "([^"]*)"$/
+     */
+    public function iAdditionallyFilterOn($filterType, $filterComparator, $filterValue)
+    {
+        $this->pressButton("Add filter");
+        $this->iFilterOn($filterType, $filterComparator, $filterValue, true);
+    }
+
+    /**
+     * @param string $filterType
+     * @param string $filterComparator
+     * @param string $filterValue
+     * @param bool   $additionally
+     *
+     * @return array
+     */
+    private function createFilterRecords($filterType, $filterComparator, $filterValue, $additionally)
+    {
+        if ($additionally) {
+            $selector = new CssSelector();
+            //We need to know the number of filter lines present for the comparator and value field
+            $nrOfFilterOptions = count($this->getSession()->getPage()->findAll("xpath", $selector->translateToXPath('form span.filteroptions')));
+
+            return array(
+                "filter_columnname[]" => $this->fixStepArgument($filterType),
+                "filter_comparator_".$nrOfFilterOptions => $this->fixStepArgument($filterComparator),
+                "filter_value_".$nrOfFilterOptions => $this->fixStepArgument($filterValue),
+            );
+        } else {
+            return array(
+                "addfilter" => $this->fixStepArgument($filterType),
+                "filter_comparator_1" => $this->fixStepArgument($filterComparator),
+                "filter_value_1" => $this->fixStepArgument($filterValue),
+            );
+        }
     }
 
     /**

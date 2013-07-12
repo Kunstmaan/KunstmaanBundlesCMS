@@ -32,6 +32,8 @@ Feature: AdminSettingsRole
     Given I log in as "admin"
     And I am on the roles page
     And I filter on "role" that "contains" "OTHER"
+    And I additionally filter on "role" that "doesn't contain" "GUEST"
+    And I press "Filter"
     Then I should see "OTHER_ROLE_NAME"
 
   @javascript
