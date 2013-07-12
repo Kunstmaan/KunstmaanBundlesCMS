@@ -97,10 +97,16 @@ class TranslatorController extends Controller
     {
         $domain = $this->container->get('kunstmaan_translator.service.manager')->getFirstDefaultDomainName();
 
+        $force = false;
+
+        if($this->getRequest()->get('force') == '1') {
+            $force = true;
+        }
+
         try {
             $importCommand = new ImportCommand();
             $importCommand
-                ->setForce(false)
+                ->setForce($force)
                 ->setLocales(false)
                 ->setGlobals(false)
                 ->setBundle($this->container->getParameter('kuma_translator.default_bundle'));

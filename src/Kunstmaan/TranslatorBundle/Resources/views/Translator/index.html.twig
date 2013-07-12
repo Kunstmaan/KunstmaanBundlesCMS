@@ -7,6 +7,7 @@
         <div class="btn-group pull-right">
             <a class="btn btn-primary btn-medium" href="">Export</a>
             <a class="btn btn-primary btn-medium" href="{{ path('KunstmaanTranslatorBundle_translations_import_bundle') }}">Import</a>
+            <a class="btn btn-primary btn-medium" href="{{ path('KunstmaanTranslatorBundle_translations_import_bundle', { 'force' : '1'}) }}">Import Forced</a>
             <a class="btn btn-primary btn-medium" href="{{ path('KunstmaanTranslatorBundle_translations_flush_cache') }}">Flush cache</a>
         </div>
     </div>
@@ -51,10 +52,10 @@
                         <td>{{ group.keyword }}</td>
                         {% for locale in managedLocales %}
                             <td>
-                                {% if group.getTranslationTextByLocale(locale)|length <= 20 %}
-                                    <input value="{{ group.getTranslationTextByLocale(locale) }}" name="translation[{{ domain }}][{{ group.keyword }}][{{ locale }}]" />
+                                {% if group.getTranslationTextByLocale(locale)|length >= 20 %}
+                                <textarea name="translation[{{ domain }}][{{ group.keyword }}][{{ locale }}]">{{ group.getTranslationTextByLocale(locale) }}</textarea>
                                 {% else %}
-                                    <textarea name="translation[{{ domain }}][{{ group.keyword }}][{{ locale }}]">{{ group.getTranslationTextByLocale(locale) }}</textarea>
+                                    <input value="{{ group.getTranslationTextByLocale(locale) }}" name="translation[{{ domain }}][{{ group.keyword }}][{{ locale }}]" />
                                 {% endif %}
                             </td>
                         {% endfor %}
