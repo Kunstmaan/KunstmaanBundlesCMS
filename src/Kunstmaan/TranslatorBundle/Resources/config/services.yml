@@ -66,6 +66,7 @@ services:
             - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
             - [setTranslationClass, [%kunstmaan_translator.orm.translation.class%]]
             - [setTranslationDomainClass, [%kunstmaan_translator.orm.translation_domain.class%]]
+            - [setNewTranslationValidator, [@kunstmaan_translator.validation.new_translation]]
 
     kunstmaan_translator.service.translator.loader:
         class: Kunstmaan\TranslatorBundle\Service\Translator\Loader

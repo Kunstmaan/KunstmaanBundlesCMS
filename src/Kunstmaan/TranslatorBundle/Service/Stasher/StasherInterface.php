@@ -88,4 +88,16 @@ interface StasherInterface
      */
     public function getLastChangedTranslationDate();
 
+    /**
+     * Reset all (updated/new) flags to null
+     * @return void
+     */
+    public function resetTranslationDomainFlags();
+
+    /**
+     * Reset all (updated/new) flags to null
+     * @return void
+     */
+    public function resetTranslationFlags();
+
 }

@@ -49,4 +49,14 @@ EOQ;
 
         return null;
     }
+
+    public function resetAllFlags()
+    {
+        return $this->createQueryBuilder('t')
+            ->update('KunstmaanTranslatorBundle:Translation', 't')
+            ->set('t.flag', "NULL")
+            ->getQuery()
+            ->execute();
+
+    }
 }

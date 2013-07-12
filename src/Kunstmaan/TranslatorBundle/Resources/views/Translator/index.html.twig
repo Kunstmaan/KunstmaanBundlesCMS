@@ -64,12 +64,12 @@
                 <tr>
                     <td>{{ domain }}</td>
                     <td>
-                        <input type="hidden" name="translation_new[0]['domain']" value="{{ domain }}" />
-                        <input value="" name="translation_new[0]['keyword']" />
+                        <input type="hidden" name="translation_new[0][domain]" value="{{ domain }}" />
+                        <input value="" name="translation_new[0][keyword]" />
                     </td>
                     {% for locale in managedLocales %}
                         <td>
-                            <textarea name="translation_new[0]['locales'][{{ locale }}]"></textarea>
+                            <textarea name="translation_new[0][locales][{{ locale }}]"></textarea>
                         </td>
                     {% endfor %}
                 </tr>

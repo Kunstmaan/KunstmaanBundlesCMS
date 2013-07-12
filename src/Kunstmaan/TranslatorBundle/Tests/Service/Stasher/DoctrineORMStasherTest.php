@@ -8,12 +8,14 @@ class DoctrineORMStasherTest extends BaseTestCase
 
     private $doctrineOrmStasher;
     private $translationDomainRepository;
+    private $translationRepository;
 
     public function setUp()
     {
         parent::setUp();
         $this->doctrineOrmStasher = $this->getContainer()->get('kunstmaan_translator.service.stasher.doctrine_orm');
         $this->translationDomainRepository = $this->getContainer()->get('kunstmaan_translator.repository.translation_domain');
+        $this->translationRepository = $this->getContainer()->get('kunstmaan_translator.repository.translation');
     }
 
     public function testCreateTranslationDomain()
@@ -36,5 +38,26 @@ class DoctrineORMStasherTest extends BaseTestCase
     {
         $groups = $this->doctrineOrmStasher->getTranslationGroupsByDomain('nonexistingdomain');
         $this->assertTrue(empty($groups));
+    }
+
+    /**
+     * @group stasher
+     */
+    public function testResetTranslationDomainFlags()
+    {
+        $this->doctrineOrmStasher->resetTranslationDomainFlags();
+        $this->doctrineOrmStasher->resetTranslationFlags();
+        $translationDomain = $this->translationDomainRepository->findOneByName('messages');
+        $this->assertNull($translationDomain->getFlag());
+    }
+
+    /**
+     * @group stasher
+     */
+    public function testResetTranslationFlags()
+    {
+        $this->doctrineOrmStasher->resetTranslationFlags();
+        $translation = $this->translationRepository->findOneByKeyword('headers.frontpage');
+        $this->assertNull($translation->getFlag());
     }
 }

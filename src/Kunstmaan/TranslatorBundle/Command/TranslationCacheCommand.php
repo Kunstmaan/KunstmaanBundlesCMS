@@ -8,8 +8,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
-use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
-
 class TranslationCacheCommand extends ContainerAwareCommand
 {
     protected function configure()
@@ -25,9 +23,9 @@ class TranslationCacheCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        if($input->getOption('flush')) {
+        if ($input->getOption('flush')) {
             return $this->flushTranslationCache($input, $output);
-        }elseif($input->getOption('status')) {
+        } elseif ($input->getOption('status')) {
             return $this->showTranslationCacheStatus($input, $output);
         }
 
@@ -36,7 +34,7 @@ class TranslationCacheCommand extends ContainerAwareCommand
 
     public function flushTranslationCache(InputInterface $input, OutputInterface $output)
     {
-        if( $this->getContainer()->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache() ) {
+        if ( $this->getContainer()->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache() ) {
             $output->writeln('<info>Translation cache succesfully flushed</info>');
         }
     }
@@ -51,6 +49,7 @@ class TranslationCacheCommand extends ContainerAwareCommand
         $output->writeln(sprintf('Oldest file mtime: <info>%s</info>', $oldestFile instanceof \DateTime ? $oldestFile->format('Y-m-d H:i:s') : 'none found'));
         $output->writeln(sprintf('Newest translation (in stash): <info>%s</info>', $newestTranslation instanceof \DateTime ? $newestTranslation->format('Y-m-d H:i:s') : 'none found'));
         $output->writeln(sprintf('Status: <info>%s</info>', $isFresh ? 'fresh' : 'outdated'));
+
         return 0;
     }
 }

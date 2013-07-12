@@ -175,4 +175,14 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
     {
         $this->text = $text;
     }
+
+    public function getFlag()
+    {
+        return $this->flag;
+    }
+
+    public function setFlag($flag)
+    {
+        $this->flag = $flag;
+    }
 }

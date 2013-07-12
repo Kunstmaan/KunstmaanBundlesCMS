@@ -174,6 +174,22 @@ class DoctrineORMStasher implements StasherInterface
         $this->entityManager->flush();
     }
 
+    /**
+     * @{@inheritdoc}
+     */
+    public function resetTranslationDomainFlags()
+    {
+        $this->translationDomainRepository->resetAllFlags();
+    }
+
+    /**
+     * @{@inheritdoc}
+     */
+    public function resetTranslationFlags()
+    {
+        $this->translationRepository->resetAllFlags();
+    }
+
     public function setTranslationRepository($translationRepository)
     {
         $this->translationRepository = $translationRepository;

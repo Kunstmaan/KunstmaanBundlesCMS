@@ -21,15 +21,11 @@ class TranslatorController extends Controller
     public function showAction($domain = false)
     {
         $this->validateDomain($domain);
+        $this->validateCache();
 
         $translationGroups = $this->container->get('kunstmaan_translator.service.manager')->getTranslationGroupsByDomain($domain);
         $managedLocales = $this->container->getParameter('kuma_translator.managed_locales');
         $domains = $this->container->get('kunstmaan_translator.service.manager')->getAllDomains();
-        $cacheFresh = $this->container->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
-
-        if ($this->container->getParameter('kernel.debug') === false && $cacheFresh === false) {
-            $this->get('session')->getFlashBag()->add('warning', 'Rebuild cache to update to latest translations.');
-        }
 
         return array(
                 'translationGroups' => $translationGroups,
@@ -39,21 +35,16 @@ class TranslatorController extends Controller
                 );
     }
 
-
     /**
      * @Route("/", requirements={"domain"}, name="KunstmaanTranslatorBundle_translations_index")
-     * @Template()
+     * @Template("KunstmaanTranslatorBundle:Translator:index.html.twig")
      *
      * @return array
      */
     public function indexAction()
     {
+        $this->validateCache();
         $domains = $this->container->get('kunstmaan_translator.service.manager')->getAllDomains();
-        $cacheFresh = $this->container->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
-
-        if ($this->container->getParameter('kernel.debug') === false && $cacheFresh === false) {
-            $this->get('session')->getFlashBag()->add('warning', 'Rebuild cache to update to latest translations.');
-        }
 
         return array(
                 'translationGroups' => null,
@@ -65,7 +56,7 @@ class TranslatorController extends Controller
 
     /**
      * @Route("/save", name="KunstmaanTranslatorBundle_translations_save")
-     * @Template()
+     * @Template("KunstmaanTranslatorBundle:Translator:index.html.twig")
      *
      */
     public function saveAction()
@@ -75,6 +66,14 @@ class TranslatorController extends Controller
         try {
 
             $this->container->get('kunstmaan_translator.service.manager')->updateTranslationsFromArray($post['domain'], $post['translation']);
+
+            $newTranslations = $post['translation_new'];
+
+            // For now only add one at a time
+            if (trim( (string) $newTranslations[0]['keyword']) != '') {
+                $this->container->get('kunstmaan_translator.service.manager')->newTranslationsFromArray($newTranslations);
+            }
+
             $this->get('session')->getFlashBag()->add('success', 'Translations succesful saved!');
 
             return $this->redirect($this->generateUrl('KunstmaanTranslatorBundle_translations_show', array('domain' => $post['domain'])));
@@ -82,6 +81,10 @@ class TranslatorController extends Controller
         } catch (\Exception $e) {
             throw $e;
         }
+
+        $data = $this->showAction($post['domain']);
+
+        return $data;
     }
 
     /**
@@ -104,7 +107,7 @@ class TranslatorController extends Controller
 
             $nbOfImports = $this->container->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
 
-            if($nbOfImports <= 0) {
+            if ($nbOfImports <= 0) {
                 $this->get('session')->getFlashBag()->add('warning', sprintf('No translations imported, because no new translation were found.', $nbOfImports));
             } else {
                 $this->get('session')->getFlashBag()->add('success', sprintf('%s translations imported', $nbOfImports));
@@ -142,8 +145,17 @@ class TranslatorController extends Controller
 
         $domain = $this->container->get('kunstmaan_translator.repository.translation_domain')->findOneByName($domainName);
 
-        if (!$domain instanceOf \Kunstmaan\TranslatorBundle\Model\Translation\TranslationDomain ) {
+        if (!$domain instanceOf \Kunstmaan\TranslatorBundle\Model\Translation\TranslationDomain) {
             throw new InvalidDomainException(sprintf('"%s" isn\'t a valid domain name.', $domainName));
+        }
+    }
+
+    private function validateCache()
+    {
+        $cacheFresh = $this->container->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
+
+        if ($this->container->getParameter('kernel.debug') === false && $cacheFresh === false) {
+            $this->get('session')->getFlashBag()->add('warning', 'Rebuild cache to update to latest translations.');
         }
     }
 }

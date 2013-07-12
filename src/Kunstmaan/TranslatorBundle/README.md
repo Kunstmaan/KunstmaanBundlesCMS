@@ -114,6 +114,14 @@ Request status of the current cache
 app/console kuma:translator:cache --status
 ```
 
+Reset translation flags
+-------------------------------------
+When all translations are up to date, e.g when migrated all develop translations into production. You need to reset all the flags which mark translations as new or updated.
+
+```
+app/console kuma:translator:flag -r
+```
+
 Development instructions
 -------------------------
 

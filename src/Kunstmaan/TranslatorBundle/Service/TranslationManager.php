@@ -2,12 +2,15 @@
 
 namespace Kunstmaan\TranslatorBundle\Service;
 
+use Kunstmaan\TranslatorBundle\Model\Translation\NewTranslation;
+
 class TranslationManager
 {
 
     private $stasher;
     private $translationClass;
     private $translationDomainClass;
+    private $newTranslationValidator;
 
     public function getAllDomains()
     {
@@ -59,6 +62,57 @@ class TranslationManager
         $this->stasher->updateTranslationGroups($groups);
     }
 
+    /**
+     * Insert translations from an array (mostly from a POST)
+     * @param  array $newTranslations
+     * @return void
+     */
+    public function newTranslationsFromArray(array $newTranslations)
+    {
+        foreach ($newTranslations as $newTranslation) {
+            $translation = new NewTranslation;
+            $translation->setKeyword($newTranslation['keyword']);
+            $translation->setLocales($newTranslation['locales']);
+            $translation->setDomain($newTranslation['domain']);
+            $this->newTranslation($translation);
+        }
+    }
+
+    /**
+     * Insert one new translation in the given locales
+     * @param  NewTranslation $newTranslation
+     * @return void
+     */
+    public function newTranslation(NewTranslation $newTranslation)
+    {
+        $this->newTranslationValidator->validate($newTranslation);
+
+        $translationDomain = $this->stasher->getDomainByName($newTranslation->getDomain());
+        $keyword = $newTranslation->getKeyword();
+
+        foreach ($newTranslation->getLocales() as $locale => $text) {
+            $translation = new $this->translationClass();
+            $translation->setLocale($locale);
+            $translation->setText($text);
+            $translation->setDomain($translationDomain);
+            $translation->setKeyword($keyword);
+            $this->stasher->persist($translation);
+        }
+
+        $this->stasher->flush();
+
+    }
+
+    /**
+     * Reset all translation and translation domain flags to null
+     * @return void
+     */
+    public function resetAllTranslationFlags()
+    {
+        $this->stasher->resetTranslationDomainFlags();
+        $this->stasher->resetTranslationFlags();
+    }
+
     public function setStasher($stasher)
     {
         $this->stasher = $stasher;
@@ -72,5 +126,10 @@ class TranslationManager
     public function setTranslationDomainClass($translationDomainClass)
     {
         $this->translationDomainClass = $translationDomainClass;
+    }
+
+    public function setNewTranslationValidator($newTranslationValidator)
+    {
+        $this->newTranslationValidator = $newTranslationValidator;
     }
 }
