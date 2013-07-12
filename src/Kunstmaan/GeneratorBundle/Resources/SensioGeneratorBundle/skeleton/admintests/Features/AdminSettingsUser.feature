@@ -87,6 +87,15 @@ Feature: AdminSettingsUser
     Then I should not see the dashboard
 
   @javascript
+  Scenario: Use filter module
+    Given I log in as "admin"
+    And I am on the users page
+    And I filter on "Username" that "equals" "test"
+    And I additionally filter on "E-Mail" that "not equals" "guest@domain"
+    And I press "Filter"
+    Then I should see "test"
+
+  @javascript
   Scenario: Login as admin, delete test user
     Given I log in as "admin"
     And I delete user "test"

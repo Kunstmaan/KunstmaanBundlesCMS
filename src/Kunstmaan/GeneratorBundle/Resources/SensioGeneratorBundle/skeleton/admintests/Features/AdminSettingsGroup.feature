@@ -38,6 +38,16 @@ Feature: AdminSettingsGroup
     Then I should see "has been edited"
 
   @javascript
+  Scenario: Use filter module
+    Given I log in as "admin"
+    And I am on the groups page
+    And I filter on "name" that "starts with" "Admin"
+    And I additionally filter on "name" that "ends with" "s"
+    And I press "Filter"
+    Then I should see "Administrators"
+    And I should not see "Guests"
+
+  @javascript
   Scenario: Login as admin, delete test group
     Given I log in as "admin"
     And I delete group "test_group"

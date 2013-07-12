@@ -219,7 +219,14 @@ class FeatureContext extends AbstractContext
         $records = $this->createFilterRecords($filterType, $filterComparator, $filterValue, $additionally);
 
         foreach ($records as $field => $value) {
-            $filterField = $this->getSession()->getPage()->find('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)));
+            //We need this check when adding additionally filters
+            //because the filter_columnname[] is the same for all the filter lines
+            if ($additionally && $field=='filter_columnname[]') {
+                $filterFields = $this->getSession()->getPage()->findAll('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)));
+                $filterField = $filterFields[count($filterFields)-1];
+            } else {
+                $filterField = $this->getSession()->getPage()->find('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)));
+            }
             if ($filterField === null) {
                 throw new ElementNotFoundException(
                     $this->getSession(), 'form field', 'id|name|label|value', $field

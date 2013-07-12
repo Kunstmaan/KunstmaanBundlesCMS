@@ -31,10 +31,11 @@ Feature: AdminSettingsRole
   Scenario: Use filter module
     Given I log in as "admin"
     And I am on the roles page
-    And I filter on "role" that "contains" "OTHER"
+    And I filter on "role" that "contains" "ROLE"
     And I additionally filter on "role" that "doesn't contain" "GUEST"
     And I press "Filter"
     Then I should see "OTHER_ROLE_NAME"
+    And I should not see "ROLE_GUEST"
 
   @javascript
   Scenario: Delete test role
