@@ -88,9 +88,14 @@ class TranslationManager
         $this->newTranslationValidator->validate($newTranslation);
 
         $translationDomain = $this->stasher->getDomainByName($newTranslation->getDomain());
-        $keyword = $newTranslation->getKeyword();
+        $keyword = trim($newTranslation->getKeyword());
 
         foreach ($newTranslation->getLocales() as $locale => $text) {
+
+            if(trim($text) == '') {
+                continue;
+            }
+
             $translation = new $this->translationClass();
             $translation->setLocale($locale);
             $translation->setText($text);

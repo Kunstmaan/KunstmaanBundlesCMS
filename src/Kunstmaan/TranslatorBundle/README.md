@@ -122,6 +122,26 @@ When all translations are up to date, e.g when migrated all develop translations
 app/console kuma:translator:flag -r
 ```
 
+
+Features
+-------------------------------------
+* Import bundle/global translations from any type of translation file
+* Store translations from any type of resource (default DoctrineORM database (sql))
+* Edit stored translations from the backend interface
+* Add new translations from the backend interface
+* Translations are cached (if debug is disabled)
+* Warning when cached translations aren't up to date with the stored translations
+* Clear translation cache to rebuild translations from the stored translations
+* Newer or updated translations are flagged
+* Create a Doctrine Migrations file with all flagged translations
+* Reset all flagged translations (from console command)
+* Clear and check translation cache from console command
+
+TODO
+-----------
+* Export translations to a specific file format
+* Check for conflicts when merging environment translations
+
 Development instructions
 -------------------------
 
