@@ -14,12 +14,13 @@ services:
 
     kunstmaan_admin.menu.adaptor.settings:
         class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
+        arguments: ["@service_container"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_admin.login.listener:
         class: Kunstmaan\AdminBundle\EventListener\LoginListener
-        arguments: ["@security.context", "@doctrine.orm.entity_manager", "@kunstmaan_admin.logger"]
+        arguments: ["@security.context", "@doctrine.orm.entity_manager", "@kunstmaan_admin.logger", "@kunstmaan_admin.versionchecker"]
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
             
@@ -103,3 +104,11 @@ services:
     kunstmaan_admin.permission_creator:
         class: Kunstmaan\AdminBundle\Helper\Creators\AclPermissionCreator
         arguments: ["@security.acl.provider", "@security.acl.object_identity_retrieval_strategy"]
+
+    kunstmaan_admin.versionchecker:
+        class: Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker
+        arguments: ["@service_container", "@kunstmaan_admin.cache"]
+
+    kunstmaan_admin.cache:
+        class: Doctrine\Common\Cache\FilesystemCache
+        arguments: ["%kernel.cache_dir%/fcache"]

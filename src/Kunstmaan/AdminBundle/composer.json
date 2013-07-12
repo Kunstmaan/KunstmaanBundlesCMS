@@ -21,7 +21,8 @@
         "monolog/monolog": "1.4.*@dev",
         "sensio/framework-extra-bundle": "*",
         "kunstmaan/adminlist-bundle": "self.version",
-        "kunstmaan/utilities-bundle": "self.version"
+        "kunstmaan/utilities-bundle": "self.version",
+        "guzzle/guzzle": "dev-master"
     },
     "require-dev": {
         "doctrine/data-fixtures": "1.0.*@dev",

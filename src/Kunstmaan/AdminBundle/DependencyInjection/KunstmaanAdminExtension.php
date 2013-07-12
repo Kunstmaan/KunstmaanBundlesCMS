@@ -28,15 +28,15 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-
         $container->setParameter('security.acl.permission.map.class', 'Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap');
+        $container->setParameter('version_checker.url', 'http://bundles.kunstmaan.be/version-check');
+        $container->setParameter('version_checker.timeframe', 60*60*12);
 
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-
     }
 
     public function prepend(ContainerBuilder $container)

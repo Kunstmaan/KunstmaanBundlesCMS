@@ -411,4 +411,26 @@ class SettingsController extends Controller
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_roles'));
     }
 
+    /**
+     * Show bundles version update information
+     *
+     * @Route("/bundle-version", name="KunstmaanAdminBundle_settings_bundle_version")
+     * @Template("KunstmaanAdminBundle:Settings:bundleVersion.html.twig")
+     *
+     * @return array
+     */
+    public function bundleVersionAction()
+    {
+        // TODO: use JMSSecurityExtraBundle
+        if (!$this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            exit;
+        }
+
+        $verionChecker = $this->container->get('kunstmaan_admin.versionchecker');
+        $data = $verionChecker->check();
+
+        return array(
+            'data' => $data
+        );
+    }
 }

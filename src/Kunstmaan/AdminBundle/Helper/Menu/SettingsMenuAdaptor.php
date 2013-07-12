@@ -6,7 +6,7 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -14,6 +14,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SettingsMenuAdaptor implements MenuAdaptorInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * Constructor
+     *
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
@@ -62,6 +76,18 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
+
+            // Only admins should be able to see this
+            if ($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+                $menuItem = new MenuItem($menu);
+                $menuItem->setRoute('KunstmaanAdminBundle_settings_bundle_version')
+                    ->setInternalName('Bundle versions')
+                    ->setParent($parent);
+                if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                    $menuItem->setActive(true);
+                }
+                $children[] = $menuItem;
+            }
         } else {
             if ('KunstmaanAdminBundle_settings_users' == $parent->getRoute()) {
                 $menuItem = new MenuItem($menu);
