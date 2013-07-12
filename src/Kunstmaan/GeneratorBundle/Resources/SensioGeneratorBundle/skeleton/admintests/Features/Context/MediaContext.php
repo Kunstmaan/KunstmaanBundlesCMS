@@ -4,6 +4,7 @@ namespace {{ namespace }}\Features\Context;
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
+use Behat\Mink\Exception\ElementNotFoundException;
 
 /**
  * MediaContext
