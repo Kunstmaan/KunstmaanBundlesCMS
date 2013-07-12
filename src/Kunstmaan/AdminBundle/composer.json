@@ -24,10 +24,10 @@
         "kunstmaan/utilities-bundle": "self.version"
     },
     "require-dev": {
+        "doctrine/data-fixtures": "1.0.*@dev",
         "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
-        "pagerfanta/pagerfanta": "dev-master",
-        "white-october/pagerfanta-bundle": "dev-master",
-        "doctrine/data-fixtures": "dev-master"
+        "pagerfanta/pagerfanta": "1.0.*@dev",
+        "white-october/pagerfanta-bundle": "1.0.*@dev"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
