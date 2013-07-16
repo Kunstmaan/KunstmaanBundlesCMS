@@ -3,6 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 
 /**
  * Class that emulates a single symfony2 translation
@@ -104,6 +105,16 @@ class Translation extends \Kunstmaan\TranslatorBundle\Model\Translation\Translat
         if ($this->flag == null) {
             $this->flag = self::FLAG_UPDATED;
         }
+    }
+
+    public function getAdminType()
+    {
+        return new TranslationAdminType();
+    }
+
+    public function getDomainName()
+    {
+        return $this->domain->getName();
     }
 
     public function getKeyword()

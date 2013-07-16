@@ -32,27 +32,18 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        // Build the top menu when the parent is null
-        if (is_null($parent) && $this->translatorBundleEnabled === true) {
-            $children[] = $this->getTopMenuItem($menu, $request);
+        if (is_null($parent)) {
+
+        } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+            $menuItem = new MenuItem($menu);
+            $menuItem->setRoute('KunstmaanTranslatorBundle_translations')
+                ->setInternalName('Translations')
+                ->setParent($parent);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
+            }
+            $children[] = $menuItem;
         }
-    }
-
-    /**
-     * Build a top menu item
-     * @param  MenuBuilder $menu
-     * @param  Request     $request
-     * @return TopMenuItem
-     */
-    public function getTopMenuItem(MenuBuilder $menu, Request $request = null)
-    {
-        $menuitem = new TopMenuItem($menu);
-        $menuitem->setRoute('KunstmaanTranslatorBundle_translations_show');
-        $menuitem->setRouteparams(array('domain' => $this->translationManager->getFirstDefaultDomainName()));
-        $menuitem->setInternalname('Translations');
-        $menuitem->setParent(null);
-
-        return $menuitem;
     }
 
     public function setTranslationManager($translationManager)

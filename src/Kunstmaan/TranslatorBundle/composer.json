@@ -27,6 +27,7 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "2.0.*",
         "kunstmaan/admin-bundle": "dev-master",
+        "kunstmaan/adminlist-bundle": "dev-master",
         "phpunit/phpunit": "*",
         "nelmio/alice": "1.4.*@dev"
     },
