@@ -59,7 +59,7 @@
                 this.$element.on({
                     focus: $.proxy(this.highlightUnit, this),
                     click: $.proxy(this.highlightUnit, this),
-                    keypress: $.proxy(this.elementKeypress, this),
+                    keydown: $.proxy(this.elementKeypress, this),
                     blur: $.proxy(this.blurElement, this)
                 });
 
@@ -74,7 +74,7 @@
                     this.$element.on({
                         focus: $.proxy(this.highlightUnit, this),
                         click: $.proxy(this.highlightUnit, this),
-                        keypress: $.proxy(this.elementKeypress, this),
+                        keydown: $.proxy(this.elementKeypress, this),
                         blur: $.proxy(this.blurElement, this)
                     });
                 }
@@ -88,7 +88,7 @@
             if (this.showInputs) {
                 this.$widget.find('input').on({
                     click: function() { this.select(); },
-                    keypress: $.proxy(this.widgetKeypress, this),
+                    keydown: $.proxy(this.widgetKeypress, this),
                     change: $.proxy(this.updateFromWidgetInputs, this)
                 });
             } 
