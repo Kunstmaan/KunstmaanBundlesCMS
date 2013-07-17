@@ -1,0 +1,17 @@
+/* ==========================================================================
+   Footer
+
+   Style guide: https://github.com/necolas/idiomatic-css
+   ========================================================================== */
+
+footer {
+    .created-by {
+        a {
+            margin-left: 2px;
+            display: inline-block;
+        }
+        img {
+            vertical-align: text-top;
+        }
+    }
+}

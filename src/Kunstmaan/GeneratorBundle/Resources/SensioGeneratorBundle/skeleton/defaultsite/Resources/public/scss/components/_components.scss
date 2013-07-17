@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Components
+
+   Never add styles directly to this file - set up imports
+   Style guide: https://github.com/necolas/idiomatic-css
+   ========================================================================== */
+
+@import "grid";
+
+@import "header";
+@import "footer";
+
+/* Cupcake components
+   ========================================================================== */
+@import "cupcake-components/navigation";
