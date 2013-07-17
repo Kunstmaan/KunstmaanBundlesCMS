@@ -9,7 +9,7 @@ More information about our bundles: [http://bundles.kunstmaan.be](http://bundles
 composer.json
 ```json
     "require": {
-        "kunstmaan/live-reload-bundle": "*"
+        "kunstmaan/live-reload-bundle": "1.0.*"
     },
 ```
 
