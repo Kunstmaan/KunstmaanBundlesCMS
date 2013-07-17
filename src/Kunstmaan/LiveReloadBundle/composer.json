@@ -1,0 +1,24 @@
+{
+    "name": "kunstmaan/live-reload-bundle",
+    "type": "symfony-bundle",
+    "description": "The KunstmaanLiveReloadBundle injects the livereload script from grunt-contrib-watch into your html page.",
+    "keywords": [ "kunstmaan", "cms", "livereload"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanLiveReloadBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+	    "symfony/symfony": ">=2.1.0,<2.3.0"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\LiveReloadBundle": "" }
+    },
+    "target-dir": "Kunstmaan/LiveReloadBundle"
+}
