@@ -20,8 +20,6 @@ Generate an Entity based on the [KunstmaanAdminBundle](https://github.com/Kunstm
 app/console kuma:generate:entity
 ```
 
-```
-
 Generate a [KunstmaanAdminList](https://github.com/Kunstmaan/KunstmaanAdminListBundle) for an Entity :
 
 ```
@@ -34,6 +32,7 @@ Generate a default website using the Kunstmaan bundles :
 
 ```
 app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
+```
 
 #### Search page
 
