@@ -78,7 +78,7 @@ class NodeAdminPublisher
         $node = $nodeTranslation->getNode();
 
         $nodeVersion = $nodeTranslation->getNodeVersion('draft');
-        if (!is_null($nodeVersion)) {
+        if (!is_null($nodeVersion) && $nodeTranslation->isOnline()) {
             $page = $nodeVersion->getRef($this->em);
             /** @var $nodeVersion NodeVersion */
             $nodeVersion = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, $user);
