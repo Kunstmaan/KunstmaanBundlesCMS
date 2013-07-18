@@ -501,7 +501,7 @@ class NodeAdminController extends Controller
                 if ($thresholdDate >= $updatedDate) {
                     $page = $nodeVersion->getRef($this->em);
                     if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
-                        $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, false);
+                        $this->get('kunstmaan_node.admin_node.publisher')->createPublicVersion($page, $nodeTranslation, $nodeVersion);
                     } else {
                         $this->createDraftVersion($page, $nodeTranslation, $nodeVersion);
                     }
