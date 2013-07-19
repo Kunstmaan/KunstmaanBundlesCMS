@@ -10,7 +10,7 @@ var myApplication = (function($, window, undefined) {
     var init, initSliders;
 
     init = function() {
-        cupcakeNavigation.init();
+        cupcake.navigation.init();
         initSliders();
     };
 
