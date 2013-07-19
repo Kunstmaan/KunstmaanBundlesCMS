@@ -219,7 +219,7 @@ class NodeAdminPublisher
         $newNodeVersion->setOwner($nodeVersion->getOwner());
         $newNodeVersion->setUpdated($nodeVersion->getUpdated());
         $newNodeVersion->setCreated($nodeVersion->getCreated());
-        $nodeVersion->setOwner($this->user);
+        $nodeVersion->setOwner($user);
         $nodeVersion->setCreated(new \DateTime());
         $nodeVersion->setOrigin($newNodeVersion);
 
