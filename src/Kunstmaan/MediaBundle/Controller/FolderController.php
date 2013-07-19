@@ -61,16 +61,20 @@ class FolderController extends Controller
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $foldername = $folder->getName();
+        $folderName = $folder->getName();
         $parentFolder = $folder->getParent();
 
-        $folder->setDeleted(true);
-        $em->persist($folder);
-        $em->flush();
+        if (empty($parentFolder)) {
+            $this->get('session')->getFlashBag()->add('failure', 'You can\'t delete the \''.$folderName.'\' Folder!');
+        } else {
+            $folder->setDeleted(true);
+            $em->persist($folder);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Folder \''.$folderName.'\' has been deleted!');
+            $folderId = $parentFolder->getId();
+        }
 
-        $this->get('session')->getFlashBag()->add('success', 'Folder \''.$foldername.'\' has been deleted!');
-
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $parentFolder->getId())));
+        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folderId)));
     }
 
     /**
