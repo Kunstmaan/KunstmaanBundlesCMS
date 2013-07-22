@@ -8,3 +8,36 @@ View more screenshots and information [http://bundles.kunstmaan.be](http://bundl
 ## Installation
 
 This bundle is compatible with all Symfony 2.1.* releases. More information about installing can be found in this line by line walkthrough of installing Symfony and all our bundles, please refer to the [Getting Started guide](http://bundles.kunstmaan.be/doc/01_GettingStarted.html) and enjoy the full blown experience.
+
+## Usage
+
+In your template define the following to import all SEO metadata.
+
+```
+    {% if page is defined %}
+        {{ render_seo_metadata_for(page) }}
+    {% endif %}
+```
+
+For the title there are several options.
+There are several twig functions which return a title based on which is found first.
+If they are all null or empty it'll return an empty string.
+
+The ```get_title_for``` twig function used the following order:
+* SEO title
+* Page title
+If nothing is set it'll return an empty string.
+
+Another option is ```get_title_for_page_or_default```. This twig function accepts a default string that is used as a fallback.
+* SEO title
+* default string
+* Page title
+
+You can also access the SEO object through the ```get_seo_for``` function.
+
+And finally the SEO bundle is also capable of generating 'social widgets' such as a facebook like button.
+For now only facebook like & linkedin product are supported.
+
+Use the ```get_social_widget_for``` function. Example: ```get_social_widget_for(page, 'linkedin')```.
+
+You can override the views for all the functions that generate HTML output.
