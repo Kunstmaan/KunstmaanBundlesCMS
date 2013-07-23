@@ -52,6 +52,11 @@ class FixGuestCommand extends ContainerAwareCommand
         $guestRole->setRole('IS_AUTHENTICATED_ANONYMOUSLY');
         $this->em->persist($guestRole);
         $this->em->flush();
+
+        // ACL security identities
+        $sql = 'UPDATE acl_security_identities SET identifier=? WHERE identifier=?';
+        $this->em->getConnection()->executeUpdate($sql, array('IS_AUTHENTICATED_ANONYMOUSLY', 'ROLE_GUEST'));
+
         $output->writeln('<info>The ROLE_GUEST dependency was successfully removed.</info>');
       } catch(Exception $e) {
         $output->writeln('<error>A fatal error occured while trying to remove the ROLE_GUEST dependency.</error>');
