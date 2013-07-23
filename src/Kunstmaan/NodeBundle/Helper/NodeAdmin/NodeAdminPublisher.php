@@ -169,9 +169,9 @@ class NodeAdminPublisher
     public function unSchedulePublish(NodeTranslation $nodeTranslation)
     {
         /* @var Node $node */
-        $queuedNodeTranslationActions = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findAll(array('nodeTranslation' => $nodeTranslation->getId()));
+        $queuedNodeTranslationAction = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findOneBy(array('nodeTranslation' => $nodeTranslation));
 
-        foreach ($queuedNodeTranslationActions as $queuedNodeTranslationAction) {
+        if (!is_null($queuedNodeTranslationAction)) {
             $this->em->remove($queuedNodeTranslationAction);
             $this->em->flush();
         }
