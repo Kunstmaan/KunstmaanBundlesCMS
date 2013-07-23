@@ -60,6 +60,7 @@ class SeoTwigExtension extends Twig_Extension
             'render_seo_metadata_for'  => new \Twig_Function_Method($this, 'renderSeoMetadataFor', array('is_safe' => array('html'))),
             'get_seo_for'  => new \Twig_Function_Method($this, 'getSeoFor'),
             'get_title_for'  => new \Twig_Function_Method($this, 'getTitleFor'),
+            'get_title_for_page_or_default' => new \Twig_Function_Method($this, 'getTitleForPageOrDefault'),
             'get_social_widget_for'  => new \Twig_Function_Method($this, 'getSocialWidgetFor', array('is_safe' => array('html')))
         );
     }
@@ -85,13 +86,42 @@ class SeoTwigExtension extends Twig_Extension
     {
         $arr = array();
 
-        // Check if there is an SEO entity for this abstractpage.
-        $seoRepo = $this->em->getRepository('KunstmaanSeoBundle:Seo');
-        $seo = $seoRepo->findFor($entity);
+        $arr[] = $this->getSeoTitle($entity);
+
+        $arr[] = $entity->getTitle();
+
+        return $this->getPreferredValue($arr);
+    }
+
+
+    private function getSeoTitle(AbstractPage $entity)
+    {
+        $seo = $this->getSeoFor($entity);
 
         if (!is_null($seo)) {
-            $arr[] = $seo->getMetaTitle();
+            $title = $seo->getMetaTitle();
+            if (!empty($title)) {
+                return $title;
+            }
         }
+
+        return null;
+    }
+
+
+    /**
+     *
+     * @param AbstractPage $entity
+     * @param null $default If given we'll return this text if no SEO title was found.
+     * @return string
+     */
+    public function getTitleForPageOrDefault(AbstractPage $entity, $default = null)
+    {
+        $arr = array();
+
+        $arr[] = $this->getSeoTitle($entity);
+
+        $arr[] = $default;
 
         $arr[] = $entity->getTitle();
 
