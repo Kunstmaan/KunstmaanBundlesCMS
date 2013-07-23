@@ -81,7 +81,7 @@ $strategy = $this->get('security.acl.object_identity_retrieval_strategy');
 $objectIdentity = $strategy->getObjectIdentity($entity);
 $acl = $aclProvider->createAcl($objectIdentity);
 
-$securityIdentity = new RoleSecurityIdentity('ROLE_GUEST');
+$securityIdentity = new RoleSecurityIdentity('ROLE_CUSTOM');
 $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_VIEW);
 
 $aclProvider->updateAcl($acl);
