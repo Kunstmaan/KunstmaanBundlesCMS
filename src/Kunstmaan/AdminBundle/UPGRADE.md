@@ -7,7 +7,11 @@ Since ROLE_GUEST and the guest user were superfluous - the default Symfony IS_AU
 cover the same use case - we decided to drop them in favor of the Symfony defaults. This is a BC breaking change, so
 a migration path is provided.
 
-To upgrade, first pull in the new version of all bundles, and then execute the following command :
+To upgrade, first pull in the new version of all bundles. 
+
+Remove guest_user: true from app/config/security.yml.
+
+And finally execute the following command :
 ```app/console kuma:fix:guest```
 
 This should execute the necessary changes (you could delete/rename the guest user afterwards as well - we just leave
