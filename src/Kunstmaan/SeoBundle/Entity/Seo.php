@@ -100,14 +100,6 @@ class Seo extends AbstractEntity
     protected $extraMetadata;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="cim_keyword", type="string", length=24, nullable=true)
-     * @Assert\Regex(pattern="/^[a-zA-Z0-9\/]*$/")
-     */
-    protected $cimKeyword;
-
-    /**
      * @var int
      *
      * @ORM\Column(type="bigint", name="ref_id")
@@ -404,30 +396,6 @@ class Seo extends AbstractEntity
     public function getOgType()
     {
         return $this->ogType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCimKeyword()
-    {
-        return $this->cimKeyword;
-    }
-
-    /**
-     * @param string $cimKeyword
-     *
-     * @return Seo
-     */
-    public function setCimKeyword($cimKeyword)
-    {
-        // CIM keyword is limited to 24 characters
-        if (strlen($cimKeyword) > 24) {
-            $cimKeyword = substr($cimKeyword, 0, 24);
-        }
-        $this->cimKeyword = $cimKeyword;
-
-        return $this;
     }
 
     /**

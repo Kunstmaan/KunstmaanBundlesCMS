@@ -24,8 +24,7 @@ class SeoType extends AbstractType
                 ->add('metaKeywords', null, array('label' => 'Meta keywords'))
                 ->add('metaRobots', null, array('label' => 'Meta robots'))
                 ->add('metaRevised', null, array('label' => 'Meta revised'))
-                ->add('extraMetadata', 'textarea', array('label' => 'Extra metadata', 'required' => false))
-                ->add('cimKeyword', 'text', array('label' => 'Cim keyword', 'required' => false, 'max_length' => 24));
+                ->add('extraMetadata', 'textarea', array('label' => 'Extra metadata', 'required' => false));
     }
 
     /**
