@@ -45,8 +45,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
                 if ($queuedNodeTranslationAction->getDate()->getTimestamp() < $now->getTimestamp()) {
                     $action = $queuedNodeTranslationAction->getAction();
                     {
-                        //set user security context
-                        $securityContext = $this->getContainer()->get('security.context');
+                        // Set user security context
                         $user = $em->getRepository('KunstmaanAdminBundle:User')->findOneBy(array('id' => $queuedNodeTranslationAction->getUserId()));
                         $runAsToken = new UsernamePasswordToken($user, null, 'foo', $user->getRoles());
                         $this->getContainer()->get('security.context')->setToken($runAsToken);
@@ -54,7 +53,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
                     $nodeTranslation = $queuedNodeTranslationAction->getNodeTranslation();
                     switch ($action) {
                         case QueuedNodeTranslationAction::ACTION_PUBLISH:
-                            $this->getContainer()->get('kunstmaan_node.admin_node.publisher')->publish($nodeTranslation);
+                            $this->getContainer()->get('kunstmaan_node.admin_node.publisher')->publish($nodeTranslation, $user);
                             $output->writeln("Published the page " . $nodeTranslation->getTitle());
                             break;
                         case QueuedNodeTranslationAction::ACTION_UNPUBLISH:
@@ -71,4 +70,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
             $output->writeln('No queued jobs');
         }
     }
+
+
+
 }
