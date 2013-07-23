@@ -73,7 +73,8 @@ $newMask = $builder->get();
 ```
 
 ### Creating an ACL
-To create a new ACL and grant the VIEW permission to the guest role for a domain object (ie. an entity) you would use :
+
+To create a new ACL and grant the VIEW permission to ROLE_CUSTOM for a domain object (ie. an entity) you would use :
 
 ```php
 $aclProvider = $this->get('security.acl.provider');
@@ -183,18 +184,6 @@ DBAL QueryBuilder doesn't know about your entities.
 
 One important thing to note is that ACL permissions currently can only be applied to entities with a single
 unique primary key (so in fact there's no support for composite keys).
-
-### Enable the GuestUserListener
-
-To enable the GuestUserListener, which will remap the default anonymous user to a guest user (including default
- guest user roles), you have to add the following to the security.yml of your project :
-
-```yaml
-security:
-    firewalls:
-        main:
-            guest_user: true
-```
 
 ### References
 

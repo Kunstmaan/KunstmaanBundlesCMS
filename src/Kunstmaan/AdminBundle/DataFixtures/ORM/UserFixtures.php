@@ -20,8 +20,6 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $user1 = $this->createUser($manager, "admin", "admin", "admin@domain.com", array("ROLE_SUPER_ADMIN"), array($manager->merge($this->getReference('admins-group'))), true);
-        $this->createUser($manager, "anonymous", "anonymous", "anonymous@domain.com", array("IS_AUTHENTICATED_ANONYMOUSLY"), array($manager->merge($this->getReference('guests-group'))));
-
         $manager->flush();
 
         $this->setReference('adminuser', $user1);
