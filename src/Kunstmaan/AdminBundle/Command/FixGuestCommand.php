@@ -32,6 +32,30 @@ class FixGuestCommand extends ContainerAwareCommand
       ->setHelp("The <info>kuma:fix:guest</info> command can be used to remove the ROLE_GUEST dependency.");
   }
 
+  public function setEntityManager(EntityManager $em)
+  {
+    $this->em = $em;
+  }
+
+  /**
+   * Check if the specified role is in use, both in the roles and the acl security identities tables
+   *
+   * @param $roleName
+   *
+   * @return bool
+   */
+  private function isRoleInUse($roleName)
+  {
+    /* @var EntityRepository $repo */
+    $repo = $this->em->getRepository('KunstmaanAdminBundle:Role');
+    $role = $repo->findOneByRole($roleName);
+    $sql = 'SELECT id FROM acl_security_identities WHERE identifier=?';
+    $stmt = $this->em->getConnection()->executeQuery($sql, array($roleName));
+    $aclIdentity = $stmt->fetch();
+
+    return !is_null($role) || ($aclIdentity !== false);
+  }
+
   /**
    * Modify ROLE_GUEST (if it exists)
    *
@@ -42,7 +66,13 @@ class FixGuestCommand extends ContainerAwareCommand
    */
   protected function execute(InputInterface $input, OutputInterface $output)
   {
-    $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
+    $this->setEntityManager($this->getContainer()->get('doctrine.orm.entity_manager'));
+
+    if ($this->isRoleInUse('IS_AUTHENTICATED_ANONYMOUSLY')) {
+      $output->writeln('<error>The IS_AUTHENTICATED_ANONYMOUSLY role is already in use : you\'re on your own!</error>');
+
+      return 1;
+    }
 
     /* @var EntityRepository $repo */
     $repo = $this->em->getRepository('KunstmaanAdminBundle:Role');
