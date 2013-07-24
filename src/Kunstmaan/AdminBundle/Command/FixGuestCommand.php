@@ -89,7 +89,7 @@ class FixGuestCommand extends ContainerAwareCommand
 
         $output->writeln('<info>The ROLE_GUEST dependency was successfully removed.</info>');
       } catch(Exception $e) {
-        $output->writeln('<error>A fatal error occured while trying to remove the ROLE_GUEST dependency.</error>');
+        $output->writeln('<error>A fatal error occurred while trying to remove the ROLE_GUEST dependency.</error>');
         $output->writeln(array('<error>Error : ', $e->getMessage(), '</error>'));
       }
     } else {
