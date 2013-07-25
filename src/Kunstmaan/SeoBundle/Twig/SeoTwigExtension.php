@@ -94,8 +94,12 @@ class SeoTwigExtension extends Twig_Extension
     }
 
 
-    private function getSeoTitle(AbstractPage $entity)
+    private function getSeoTitle(AbstractPage $entity = null)
     {
+        if (is_null($entity)) {
+            return null;
+        }
+
         $seo = $this->getSeoFor($entity);
 
         if (!is_null($seo)) {
@@ -115,8 +119,12 @@ class SeoTwigExtension extends Twig_Extension
      * @param null $default If given we'll return this text if no SEO title was found.
      * @return string
      */
-    public function getTitleForPageOrDefault(AbstractPage $entity, $default = null)
+    public function getTitleForPageOrDefault(AbstractPage $entity = null, $default = null)
     {
+        if (is_null($entity)) {
+            return $default;
+        }
+
         $arr = array();
 
         $arr[] = $this->getSeoTitle($entity);
