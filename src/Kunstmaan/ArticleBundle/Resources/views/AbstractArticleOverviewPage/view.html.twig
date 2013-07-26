@@ -5,9 +5,9 @@
 
     {% set count = 0 %}
     {% if pagerfanta.nbResults > 0 %}
-        <ul>
+        <ul class="article__overview--list">
         {% for article in pagerfanta.currentPageResults %}
-            <li>
+            <li class="article__overview--list-item">
                 {% set articlenode = get_node_translation_for(article) %}
                 <h4><a href="{{ articlenode.url }}">{{ article.title }}</a></h4>
                 {{ article.summary }}
