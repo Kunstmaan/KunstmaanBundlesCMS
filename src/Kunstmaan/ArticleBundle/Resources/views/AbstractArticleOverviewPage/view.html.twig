@@ -11,7 +11,7 @@
                 {% set articlenode = get_node_translation_for(article) %}
                 <h4><a href="{{ articlenode.url }}">{{ article.title }}</a></h4>
                 {{ article.summary }}
-                <time>{{ article.date }}</time>
+                <time>{{ article.date | date("d/m/Y")}}</time>
             </li>
             {% set count = count + 1 %}
         {% endfor %}
