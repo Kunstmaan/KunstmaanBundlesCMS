@@ -56,9 +56,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             'prefix'            => $prefix
         );
 
-        #$this->generateEntities($bundle, $parameters, $output);
-        #$this->generateForm($bundle, $parameters, $output);
-        #$this->generateFixtures($bundle, $parameters, $output);
+        $this->generateEntities($bundle, $parameters, $output);
+        $this->generateForm($bundle, $parameters, $output);
+        $this->generateFixtures($bundle, $parameters, $output);
         $this->generateAssets($bundle, $output);
         // CAUTION : Following templates change the skeleton dir array
         // TODO Find a better way
