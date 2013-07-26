@@ -10,11 +10,9 @@
    ========================================================================== */
 @import "config/config";
 
-
 /* Bourbon
    ========================================================================== */
 @import "../../../../../../web/vendor/bourbon/app/assets/stylesheets/bourbon";
-
 
 /* CSS Framework (Bootstrap 2)
    ========================================================================== */
@@ -26,21 +24,23 @@
 /* Base */
 @import "../../../../../../web/vendor/cupcake/scss/base";
 
+/* Components */
+@import "config/cupcake-config/cupcake-imports";
 
 /* Vendor CSS
    ========================================================================== */
 
 
-
 /* Website Theme
    ========================================================================== */
 /* helpers */
+@import "helpers/helpers";
 
 /* components */
+@import "components/components";
 
 /* theme */
 //@import "../../../../../../web/vendor/flat-ui/sass/flat-ui";
-@import "theme/grid";
 
 /* legacy */
 @import "legacy/fallbacks";
