@@ -56,9 +56,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             'prefix'            => $prefix
         );
 
-        $this->generateEntities($bundle, $parameters, $output);
-        $this->generateForm($bundle, $parameters, $output);
-        $this->generateFixtures($bundle, $parameters, $output);
+        #$this->generateEntities($bundle, $parameters, $output);
+        #$this->generateForm($bundle, $parameters, $output);
+        #$this->generateFixtures($bundle, $parameters, $output);
         $this->generateAssets($bundle, $output);
         // CAUTION : Following templates change the skeleton dir array
         // TODO Find a better way
@@ -200,115 +200,30 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $skeletonDir = sprintf("%s/Resources/public", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
-        $this->GenerateFileAssets($skeletonDir, $dirPath);
-        $this->GenerateImageAssets($skeletonDir, $dirPath);
-        $this->GenerateJavascriptAssets($skeletonDir, $dirPath);
-        $this->GenerateStyleSheetAssets($skeletonDir, $dirPath);
+        $assetsTypes = array(
+            'files',
+            'img',
+            'js',
+            'scss'
+        );
+
+        foreach ($assetsTypes as $type) {
+            $this->generateAssetsForType($skeletonDir, $dirPath, $type);
+        }
 
         $output->writeln('Generating Assets : <info>OK</info>');
     }
 
     /**
-     * Generate the file assets
+     * Generate the assets for assetsType
      *
      * @param $skeletonDir
      * @param $dirPath
+     * @param $assetsType
      */
-    public function generateFileAssets($skeletonDir, $dirPath)
+    public function generateAssetsForType($skeletonDir, $dirPath, $assetsType)
     {
-        $assets = array(
-            'dummy/.gitkeep',
-            'dummy/sample.pdf'
-        );
-
-        foreach ($assets as $asset) {
-            $this->filesystem->copy(sprintf("%s/files/%s", $skeletonDir, $asset), sprintf("%s/files/%s", $dirPath, $asset));
-        }
-    }
-
-    /**
-     * Generate the image assets
-     *
-     * @param $skeletonDir
-     * @param $dirPath
-     */
-    public function generateImageAssets($skeletonDir, $dirPath)
-    {
-        $assets = array(
-            'backgrounds/.gitkeep',
-            'buttons/.gitkeep',
-            'dummy/.gitkeep',
-            'general/.gitkeep',
-            'general/logo.png',
-            'icons/.gitkeep',
-            'icons/favicon.ico'
-        );
-
-        foreach ($assets as $asset) {
-            $this->filesystem->copy(sprintf("%s/img/%s", $skeletonDir, $asset), sprintf("%s/img/%s", $dirPath, $asset));
-        }
-    }
-
-    /**
-     * Generate Javascript assets
-     *
-     * @param $skeletonDir
-     * @param $dirPath
-     */
-    public function generateJavascriptAssets($skeletonDir, $dirPath)
-    {
-        $assets = array(
-            '.gitkeep',
-            'script.js',
-        );
-
-        foreach ($assets as $asset) {
-            $this->filesystem->copy(sprintf("%s/js/%s", $skeletonDir, $asset), sprintf("%s/js/%s", $dirPath, $asset));
-        }
-    }
-
-    /**
-     * Generate Stylesheet assets
-     *
-     * @param $skeletonDir
-     * @param $dirPath
-     */
-    public function generateStylesheetAssets($skeletonDir, $dirPath)
-    {
-        $assets = array(
-            '_base.scss',
-            'style.scss',
-            'style-old-ie.scss',
-            'components/.gitkeep',
-            'config/.gitkeep',
-            'config/_base.scss',
-            'config/_bootstrap-imports.scss',
-            'config/_buttons.scss',
-            'config/_colors.scss',
-            'config/_config.scss',
-            'config/_dropdowns.scss',
-            'config/_forms.scss',
-            'config/_grid.scss',
-            'config/_hero-unit.scss',
-            'config/_icons.scss',
-            'config/_navigation.scss',
-            'config/_pagination.scss',
-            'config/_paths.scss',
-            'config/_tables.scss',
-            'config/_tooltips-popover.scss',
-            'config/_typography.scss',
-            'config/_z-index.scss',
-            'helpers/.gitkeep',
-            'legacy/.gitkeep',
-            'legacy/_fallbacks.scss',
-            'legacy/_ie.scss',
-            'theme/.gitkeep',
-            'theme/_grid.scss'
-        );
-
-        foreach ($assets as $asset) {
-            $this->filesystem->copy(sprintf("%s/scss/%s", $skeletonDir, $asset), sprintf("%s/scss/%s", $dirPath, $asset));
-        }
+        $this->filesystem->mirror(sprintf("%s/$assetsType/", $skeletonDir), sprintf("%s/$assetsType/", $dirPath));
     }
 
     /**
