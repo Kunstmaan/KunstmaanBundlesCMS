@@ -95,8 +95,9 @@ class VersionChecker
                 )
             ));
             $request = $client->post('', null, $jsonData);
-            $data = $request->send()->json();
+            $call = $request->send();
             //echo $request->getResponse();
+            $data = $call->json();
 
             // Save the result in the cache to make sure we don't do the check too often
             $this->cache->save('version_check', $data, $this->cacheTimeframe);

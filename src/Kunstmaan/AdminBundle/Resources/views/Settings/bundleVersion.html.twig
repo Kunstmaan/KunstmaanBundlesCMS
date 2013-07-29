@@ -14,7 +14,7 @@
                 {% set txt = 'settings.version.uptodate'|trans %}
             {% elseif bundle.status == 'TO_UPDATE' %}
                 {% set color = '#9F6000' %}
-                {% set txt = 'settings.version.toupdate'|trans ~ ' (' ~ bundle.new_version ~ (bundle.version != bundle.reference ? ' ' ~  bundle.new_reference|slice(0, 7) : '') ~ ')' %}
+                {% set txt = 'settings.version.toupdate'|trans ~ ' (' ~ bundle.new_version ~ (bundle.version != bundle.reference ? ' ' ~  bundle.new_reference|slice(0, 7) : '') ~ ', updated on ' ~ bundle.new_date|date('Y-m-d H:i') ~ ')' %}
             {% else %}
                 {% set color = '#00529B' %}
                 {% set txt = 'settings.version.unknown'|trans %}
