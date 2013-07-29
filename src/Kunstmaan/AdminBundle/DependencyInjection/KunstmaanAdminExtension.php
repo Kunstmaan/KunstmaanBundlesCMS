@@ -31,6 +31,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('security.acl.permission.map.class', 'Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap');
         $container->setParameter('version_checker.url', 'http://bundles.kunstmaan.be/version-check');
         $container->setParameter('version_checker.timeframe', 60*60*12);
+        $container->setParameter('version_checker.enabled', true);
 
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);

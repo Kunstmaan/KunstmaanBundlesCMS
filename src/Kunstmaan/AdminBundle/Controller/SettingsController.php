@@ -427,10 +427,10 @@ class SettingsController extends Controller
         }
 
         $verionChecker = $this->container->get('kunstmaan_admin.versionchecker');
-        $data = $verionChecker->check();
+        if (!$verionChecker->isEnabled()) exit;
 
         return array(
-            'data' => $data
+            'data' => $verionChecker->check()
         );
     }
 }

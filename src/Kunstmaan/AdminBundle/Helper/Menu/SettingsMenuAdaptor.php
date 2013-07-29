@@ -79,14 +79,16 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
 
             // Only admins should be able to see this
             if ($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-                $menuItem = new MenuItem($menu);
-                $menuItem->setRoute('KunstmaanAdminBundle_settings_bundle_version')
-                    ->setInternalName('Bundle versions')
-                    ->setParent($parent);
-                if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                    $menuItem->setActive(true);
+                if ($this->container->getParameter('version_checker.enabled')) {
+                    $menuItem = new MenuItem($menu);
+                    $menuItem->setRoute('KunstmaanAdminBundle_settings_bundle_version')
+                        ->setInternalName('Bundle versions')
+                        ->setParent($parent);
+                    if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                        $menuItem->setActive(true);
+                    }
+                    $children[] = $menuItem;
                 }
-                $children[] = $menuItem;
             }
         } else {
             if ('KunstmaanAdminBundle_settings_users' == $parent->getRoute()) {

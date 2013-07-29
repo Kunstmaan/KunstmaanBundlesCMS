@@ -30,6 +30,11 @@ class VersionChecker
     private $cacheTimeframe;
 
     /**
+     * @var bool
+     */
+    private $enabled;
+
+    /**
      * Constructor
      *
      * @param ContainerInterface $container
@@ -42,6 +47,17 @@ class VersionChecker
 
         $this->webserviceUrl = $this->container->getParameter('version_checker.url');
         $this->cacheTimeframe = $this->container->getParameter('version_checker.timeframe');
+        $this->enabled = $this->container->getParameter('version_checker.enabled');
+    }
+
+    /**
+     * Check that the version check is enabled.
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
     }
 
     /**
@@ -49,6 +65,8 @@ class VersionChecker
      */
     public function periodicallyCheck()
     {
+        if (!$this->enabled) return;
+
         $data = $this->cache->fetch('version_check');
         if (!is_array($data)) {
             $this->check();
@@ -60,10 +78,13 @@ class VersionChecker
      */
     public function check()
     {
-        $bundles = $this->parseComposer();
-        $host = $this->container->get('request')->getHttpHost();
-        $installed = filectime($this->container->get('kernel')->getRootDir().'/console');
-        $jsonData = json_encode(array('host' => $host, 'installed' => $installed, 'bundles' => $bundles));
+        if (!$this->enabled) return;
+
+        $jsonData = json_encode(array(
+            'host' => $this->container->get('request')->getHttpHost(),
+            'installed' => filectime($this->container->get('kernel')->getRootDir().'/console'),
+            'bundles' => $this->parseComposer()
+        ));
 
         try {
             $client = new Client($this->webserviceUrl, array(
