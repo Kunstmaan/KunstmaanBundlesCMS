@@ -29,13 +29,18 @@ class SeoTwigExtension extends Twig_Extension
      */
     protected $environment;
 
+
+    protected $accountId;
+
     /**
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $accountId = null)
     {
         $this->em = $em;
+        $this->accountId = $accountId;
     }
+
 
     /**
      * Initializes the runtime environment.
@@ -61,7 +66,8 @@ class SeoTwigExtension extends Twig_Extension
             'get_seo_for'  => new \Twig_Function_Method($this, 'getSeoFor'),
             'get_title_for'  => new \Twig_Function_Method($this, 'getTitleFor'),
             'get_title_for_page_or_default' => new \Twig_Function_Method($this, 'getTitleForPageOrDefault'),
-            'get_social_widget_for'  => new \Twig_Function_Method($this, 'getSocialWidgetFor', array('is_safe' => array('html')))
+            'get_social_widget_for'  => new \Twig_Function_Method($this, 'getSocialWidgetFor', array('is_safe' => array('html'))),
+            'initialize_google_analytics' => new \Twig_Function_Method($this, 'initializeGoogleAnalytics', array('is_safe' => array('html'), 'needs_environment' => true)),
         );
     }
 
@@ -73,6 +79,70 @@ class SeoTwigExtension extends Twig_Extension
     public function getSeoFor(AbstractPage $entity)
     {
         return $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
+    }
+
+    protected $accountVarName = 'account_id';
+
+    /**
+     * Renders the default Google Analytics JavaScript.
+     *
+     * If the options are not set it'll try and load the account ID from your parameters (google.analytics.account_id)
+     *
+     * @param Twig_Environment $environment
+     * @param array|null $options {account_id: 'UA-XXXXX-Y'}
+     */
+    public function initializeGoogleAnalytics(\Twig_Environment $environment, $options = null)
+    {
+        if (is_null($options)) {
+            $options = array();
+        }
+
+        $defaults = array();
+
+        $this->setOptionIfNotSet($defaults, $this->accountVarName, $this->accountId);
+        // $this->setOptionIfNotSet($defaults, $this->accountVarName, $this->getGlobal($environment, 'ga_code')); // Global logic not working.
+
+        // Things set in $options will override things set in $defaults.
+        $options = array_merge($defaults, $options);
+
+        if (!$this->isOptionSet($options, $this->accountVarName)) {
+            throw new \Twig_Error_Runtime("The KunstmaanSeoBundle depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'.");
+        }
+
+        $template = $environment->loadTemplate('KunstmaanSeoBundle:SeoTwigExtension:google_analytics_init.html.twig');
+        return $template->render($options);
+
+    }
+
+    /**
+     * Prefer the given
+     * @param Twig_Environment $environment
+     */
+    private function setOptionIfNotSet(&$arr, $option, $value) {
+        if ($this->isOptionSet($arr, $option)) {
+            $arr[$option] = $value;
+        }
+    }
+
+    private function isOptionSet($arr, $option) {
+        return (!isset($arr[$option]) || !empty($arr[$option]));
+    }
+
+    /**
+     * Not sure if this works ... doesn't appear to see all the globals.
+     *
+     * @param Twig_Environment $environment
+     * @param $name
+     * @return null
+     */
+    private function getGlobal(\Twig_Environment $environment, $name) {
+        foreach ($environment->getGlobals() as $k => $v) {
+            if ($k == $name) {
+                return $v;
+            }
+        }
+
+        return null;
     }
 
     /**
