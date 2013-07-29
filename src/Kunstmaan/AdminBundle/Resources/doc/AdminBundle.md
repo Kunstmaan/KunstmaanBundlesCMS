@@ -196,6 +196,18 @@ security:
             guest_user: true
 ```
 
+## Kunstmaan bundles version check
+
+All logged in admins with the `ROLE_SUPER_ADMIN` role will be able to see a page with a list of the used
+Kunstmaan bundles with their version information. This list will indicate which bundles are up-to-date and
+which can be updated.<br/>
+If you don't want that the version check is performed periodically, you can disable it via your config.yml
+
+```yaml
+parameters:
+    version_checker.enabled: false
+```
+
 ### References
 
 - [How to use Access Control Lists (ACLs)](http://symfony.com/doc/current/cookbook/security/acl.html)
