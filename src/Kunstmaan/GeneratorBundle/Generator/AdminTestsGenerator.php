@@ -79,7 +79,7 @@ class AdminTestsGenerator extends  Generator
         $this->filesystem->mirror($this->fullSkeletonDir, $bundle->getPath());
 
         // Now render the Context files to replace the namespace etc.
-        if ($handle = opendir($skeletonDir)) {
+        if ($handle = opendir($skeletonDir) . "/Context") {
 
             while (false !== ($entry = readdir($handle))) {
                 // Check to make sure we skip hidden folders
