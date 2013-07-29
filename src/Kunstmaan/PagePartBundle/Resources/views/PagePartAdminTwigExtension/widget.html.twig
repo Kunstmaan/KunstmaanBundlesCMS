@@ -71,7 +71,6 @@
 			        } else {
 			        	result = jQuery(select).closest('section').after(data);
 				    }
-				    console.log(result);
 				    result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
 				    disableCKEditors();
 				    enableCKEditors();
@@ -120,6 +119,15 @@
 
     $(document).ready(function () {
 
+        var heightenEmptyDropZones = function(elementHeight) {
+            var $empty = jQuery('.pageparts_sortable:not(:has(>section))');
+            $empty.css({'height': elementHeight});
+        }
+
+        var autoHeightDropZones = function() {
+            jQuery('.pageparts_sortable').css({'height': ''});
+        }
+
         $('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
         $('body').mouseup(
             function() {
@@ -150,6 +158,9 @@
     			disableCKEditors();
     	        $('.draggable').css('opacity', ".4");
     			$('.ui-sortable-helper .new_pagepart').slideUp("fast");
+
+                // Temporarily change the height of empty pagepart containers.
+                heightenEmptyDropZones(ui.item.outerHeight(true));
     		},
             stop: function(e, ui) {
                 jQuery(ui.item).find('.new_pagepart').html(jQuery(ui.item).parents('.pagepartscontainer').find('.new_pagepart.first').html());
@@ -159,6 +170,9 @@
                     jQuery(this).attr('name', context + jQuery(this).data('suffix'));
                 });
     			enableCKEditors();
+
+                // Revert the height for the dropzones.
+                autoHeightDropZones();
 
     			$('.draggable').css('opacity', "1");
     		}
