@@ -39,8 +39,8 @@ class AdminTestsGenerator extends  Generator
     }
 
     /**
-     * @param Bundle $bundle  The bundle
-     * @param string $rootDir The root directory
+     * @param Bundle          $bundle
+     * @param OutputInterface $output
      */
     public function generate(Bundle $bundle, OutputInterface $output)
     {
@@ -54,8 +54,7 @@ class AdminTestsGenerator extends  Generator
     }
 
     /**
-     * @param Bundle          $bundle     The bundle
-     * @param array           $parameters The template parameters
+     * @param Bundle          $bundle
      * @param OutputInterface $output
      */
     public function generateUnitTests(Bundle $bundle, OutputInterface $output)
@@ -69,21 +68,29 @@ class AdminTestsGenerator extends  Generator
     /**
      * @param Bundle          $bundle
      * @param OutputInterface $output
+     * @param array           $parameters
      */
     public function generateBehatTests(Bundle $bundle, OutputInterface $output, array $parameters)
     {
         $dirPath = sprintf("%s/Features", $bundle->getPath());
         $skeletonDir = sprintf("%s/Features", $this->fullSkeletonDir);
 
+        // First copy all the content
+        $this->filesystem->mirror($this->fullSkeletonDir, $bundle->getPath());
 
-        $this->filesystem->copy($skeletonDir . '/AdminLoginLogout.feature', $dirPath . '/Features/AdminLoginLogout.feature', true);
-        $this->filesystem->copy($skeletonDir . '/AdminSettingsGroup.feature', $dirPath . '/Features/AdminSettingsGroup.feature', true);
-        $this->filesystem->copy($skeletonDir . '/AdminSettingsRole.feature', $dirPath . '/Features/AdminSettingsRole.feature', true);
-        $this->filesystem->copy($skeletonDir . '/AdminSettingsUser.feature', $dirPath . '/Features/AdminSettingsUser.feature', true);
-        $this->renderFile('/admintests/Features/Context/FeatureContext.php', $dirPath . '/Features/Context/FeatureContext.php', $parameters);
-        $this->renderFile('/admintests/Features/Context/GroupContext.php', $dirPath . '/Features/Context/GroupContext.php', $parameters);
-        $this->renderFile('/admintests/Features/Context/RoleContext.php', $dirPath . '/Features/Context/RoleContext.php', $parameters);
-        $this->renderFile('/admintests/Features/Context/UserContext.php', $dirPath . '/Features/Context/UserContext.php', $parameters);
+        // Now render the Context files to replace the namespace etc.
+        if ($handle = opendir($skeletonDir)) {
+
+            while (false !== ($entry = readdir($handle))) {
+                // Check to make sure we skip hidden folders
+                // And we render the files ending in .php
+                if (substr($entry, 0, 1) != '.' && substr($entry, -strlen(".php")) === ".php") {
+                    $this->renderFile("/admintests/Features/Context/" . $entry, $dirPath . "/Context/" . $entry, $parameters);
+                }
+            }
+
+            closedir($handle);
+        }
 
         $output->writeln('Generating Behat Tests : <info>OK</info>');
     }
