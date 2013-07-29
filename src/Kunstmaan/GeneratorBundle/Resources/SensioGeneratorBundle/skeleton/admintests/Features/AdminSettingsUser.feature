@@ -2,18 +2,10 @@
 # Should actually run on test DB and run all the fixtures + run everything in a big transaction so
 # we can roll back after every Feature.
 
-Feature: Browse the admin and perform CRUD on an admin user
-  To test the user CRUD
+Feature: AdminSettingsUser
+  Browse the admin and perform CRUD on an admin user
   As an admin user
   A new user has to be created, updated, be able to log in and be deleted
-
-  @javascript
-  Scenario: Create a new user
-    Given I log in as "admin"
-    And I am on the create new user page
-    And I fill in correct user information for username "test"
-    When I press "Add User"
-    Then I should see "has been created"
 
   @javascript
   Scenario: Can't create a new user without email
@@ -22,7 +14,7 @@ Feature: Browse the admin and perform CRUD on an admin user
     And I fill in correct user information for username "dummy"
     And I clear "user[email]"
     When I press "Add User"
-    Then I should see "email is required"
+    Then I should see "Please enter an email"
 
   @javascript
   Scenario: Can't create a new user without valid email
@@ -31,7 +23,7 @@ Feature: Browse the admin and perform CRUD on an admin user
     And I fill in correct user information for username "dummy"
     When I fill in "user[email]" with "dummy"
     When I press "Add User"
-    Then I should see "not a valid email address"
+    Then I should see "email is not valid"
 
   @javascript
   Scenario: Can't create a new user without username
@@ -40,7 +32,7 @@ Feature: Browse the admin and perform CRUD on an admin user
     And I fill in correct user information for username "dummy"
     And I clear "user[username]"
     When I press "Add User"
-    Then I should see "username is required"
+    Then I should see "Please enter a username"
 
   @javascript
   Scenario: Can't create a new user without password
@@ -49,7 +41,7 @@ Feature: Browse the admin and perform CRUD on an admin user
     And I fill in correct user information for username "dummy"
     And I clear "user[plainPassword][first]"
     When I press "Add User"
-    Then I should see "password is required"
+    Then I should see "passwords don't match"
 
   @javascript
   Scenario: Can't create a new user without matching passwords
@@ -62,7 +54,18 @@ Feature: Browse the admin and perform CRUD on an admin user
     Then I should see "passwords don't match"
 
   @javascript
-  Scenario: Login as the newly created user and edit self
+  Scenario: Create a new user and try login
+    Given I log in as "admin"
+    And I am on the create new user page
+    And I fill in correct user information for username "test"
+    When I press "Add User"
+    Then I should see "has been created"
+    When I log out
+    And I log in as "test"
+    Then I should see the dashboard
+
+  @javascript
+  Scenario: Login and edit own user
     Given I log in as "test"
     And I edit user "test"
     Then I should see "Edit user"
@@ -82,6 +85,15 @@ Feature: Browse the admin and perform CRUD on an admin user
   Scenario: Try to log in as the previously disabled test user
     Given I log in as "test"
     Then I should not see the dashboard
+
+  @javascript
+  Scenario: Use filter module
+    Given I log in as "admin"
+    And I am on the users page
+    And I filter on "Username" that "equals" "test"
+    And I additionally filter on "E-Mail" that "not equals" "guest@domain"
+    And I press "Filter"
+    Then I should see "test"
 
   @javascript
   Scenario: Login as admin, delete test user
