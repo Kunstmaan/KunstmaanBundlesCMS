@@ -9,7 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * The admin type for form pages
  *
- * @SuppressWarnings(PHPMD)
  */
 class FormPageAdminType extends AbstractType
 {
@@ -24,7 +23,7 @@ class FormPageAdminType extends AbstractType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     * @SuppressWarnings("unused")
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
