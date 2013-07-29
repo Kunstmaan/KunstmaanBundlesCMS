@@ -120,12 +120,12 @@
     $(document).ready(function () {
 
         var heightenEmptyDropZones = function(elementHeight) {
-            var $empty = jQuery('.pageparts_sortable:not(:has(>section))');
+            var $empty = jQuery('.connectedSortable:not(:has(>section))');
             $empty.css({'height': elementHeight});
         }
 
         var autoHeightDropZones = function() {
-            jQuery('.pageparts_sortable').css({'height': ''});
+            jQuery('.connectedSortable').css({'height': ''});
         }
 
         $('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
@@ -173,6 +173,9 @@
 
                 // Revert the height for the dropzones.
                 autoHeightDropZones();
+
+                // Remove connectedSortable when stopped dropping.
+                $('.connectedSortable').removeClass('connectedSortable');
 
     			$('.draggable').css('opacity', "1");
     		}
