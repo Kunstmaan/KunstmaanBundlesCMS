@@ -29,14 +29,22 @@
         <!-- Header -->
         <header role="header">
             <div class="row-fluid">
-                <div class="span10">
+                <div class="span8">
                     {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
                     <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
-                        <img src="http://placehold.it/300x100&amp;text=Logo" alt="flicker placeholder">
+                        <img src="http://placehold.it/300x100&amp;text=Logo" alt="placeholder">
                     </a>
                 </div>
                 <div class="span2">
                     <p class="muted">Your generated website using the Kunstmaan Bundles</p>
+                </div>
+                <div class="span2">
+                    <a href="http://twitter.com/share" class="socialite twitter-share" data-url="http://www.kunstmaan.be" rel="nofollow" target="_blank">
+                        Twitter
+                    </a>
+                    <a href="http://www.facebook.com/sharer.php?u=http://www.kunstmaan.be" class="socialite facebook-like" data-href="http://www.kunstmaan.be" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false" rel="nofollow" target="_blank">
+                        Facebook
+                    </a>
                 </div>
             </div>
             <div class="row-fluid">
