@@ -22,7 +22,7 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     {
         return array(
             'google_analytics_initialize' => new \Twig_Function_Method($this, 'renderInitialize', array('is_safe' => array('html'), 'needs_environment' => true)),
-            'google_analytics_ecommerce_tracking' => new \Twig_Function_Method($this, 'renderECommerceTracking', array('is_safe' => array('html'), 'needs_environment' => true)),
+            'google_analytics_track_order' => new \Twig_Function_Method($this, 'renderECommerceTracking', array('is_safe' => array('html'), 'needs_environment' => true)),
         );
     }
 
