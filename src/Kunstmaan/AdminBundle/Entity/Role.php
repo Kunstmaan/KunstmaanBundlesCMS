@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\RoleInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Role Entity
@@ -27,7 +27,7 @@ class Role implements RoleInterface
     /**
      * @ORM\Column(type="string", name="role", unique=true, length=70)
      *
-     * @Assert\NotBlank()
+     * @NotBlank()
      */
     protected $role;
 
