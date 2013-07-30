@@ -7,12 +7,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Role Entity
  *
  * @ORM\Entity
  * @ORM\Table( name="kuma_roles" )
+ * @UniqueEntity("role")
  */
 class Role implements RoleInterface
 {
@@ -26,6 +28,8 @@ class Role implements RoleInterface
 
     /**
      * @ORM\Column(type="string", name="role", unique=true, length=70)
+     *
+     * @Assert\NotBlank()
      */
     protected $role;
 
@@ -77,18 +81,6 @@ class Role implements RoleInterface
     public function setRole($role)
     {
         $this->role = $role;
-    }
-
-    /**
-     * @param ClassMetadata $metadata
-     */
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('role', new NotBlank());
-        $metadata->addConstraint(new UniqueEntity(array(
-            'fields' => 'role',
-            'message' => 'This role name already exists.'
-        )));
     }
     
 }
