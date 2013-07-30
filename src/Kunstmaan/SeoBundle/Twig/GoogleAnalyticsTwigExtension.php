@@ -3,7 +3,7 @@
 namespace Kunstmaan\SeoBundle\Twig;
 
 use Kunstmaan\SeoBundle\Helper\Order;
-use Kunstmaan\SeoBundle\Helper\OrderItem;
+use Kunstmaan\SeoBundle\Helper\OrderPreparer;
 use Twig_Extension;
 use Twig_Environment;
 
@@ -31,9 +31,16 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
 
     protected $accountId;
 
-    public function __construct($accountId = null)
+    /** @var OrderPreparer */
+    protected $orderPreparer;
+
+    protected $orderConverter;
+
+    public function __construct($accountId = null, $orderPreparer, $orderConverter)
     {
         $this->accountId = $accountId;
+        $this->orderPreparer = $orderPreparer;
+        $this->orderConverter = $orderConverter;
     }
 
 
@@ -72,43 +79,14 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
      * @param Twig_Environment $environment
      * @param $order Order
      */
-    public function renderECommerceTracking(\Twig_Environment $environment, $order) {
-        // TODO: Split out formatting (add a formatter)
-        // TODO: Ensure every orderItem has a unique SKU.
-        // Only one request is made per order/SKU.
-        // So the same SKUs on multiple lines need to be grouped.
-
-        $orderItems = array();
-        foreach ($order->orderItems as $orderItem) {
-            /** @var $orderItem OrderItem */
-            $orderItems[] = array(
-                'sku' => $orderItem->getSKU(),
-                'quantity' => $this->formatNumber($orderItem->getQuantity()),
-                'unit_price' => $this->formatNumber($orderItem->getUnitPrice()),
-                'taxes' => $this->formatNumber($orderItem->getTaxes()),
-                'category_or_variation' => $orderItem->getCategoryOrVariation(),
-                'name' => $orderItem->getName(),
-            );
-        }
-        $options = array(
-            'transaction_id' => $order->getTransactionID(),
-            'store_name' => $order->getStoreName(),
-            'total' => $this->formatNumber($order->getTotal()),
-            'taxes_total' => $this->formatNumber($order->getTaxesTotal()),
-            'shipping_total' => $this->formatNumber($order->getShippingTotal()),
-            'city' => $order->getCity(),
-            'state_or_province' => $order->getStateOrProvince(),
-            'country' => $order->getCountry(),
-            'order_items' => $orderItems
-        );
-
+    public function renderECommerceTracking(\Twig_Environment $environment, Order $order) {
+        $order = $this->orderPreparer->prepare($order);
+        $options = $this->orderConverter->convert($order);
         $template = $environment->loadTemplate('KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:ecommerce_tracking.html.twig');
         return $template->render($options);
     }
 
-    protected function formatNumber($number) {
-        return number_format($number, 2, '.', '');
-    }
+
 
     /**
      * Prefer the given
