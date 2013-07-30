@@ -25,12 +25,14 @@
 
     {% if app.debug %}
         _gaq.push = function() {
-            console.log('pushed:', arguments[0]);
+            if (console) {
+                console.log('pushed:', arguments[0]);
+            }
         }
     {% endif %}
 
 
-    var googleAnalyticsApi = (function(exports, $, gaq) {
+    var googleAnalyticsApi = (function($, gaq) {
         /**
          * Returns the normalized tracker name configuration parameter.
          *
@@ -66,7 +68,14 @@
 
         var clickHandler = function () {
             var $a = $(this);
+
+            if ($a.is('input[type=button]')) {
+                gaq.push(['_trackEvent', 'Button', 'Click']);
+                return;
+            }
+
             var href = $a.attr('href');
+
             if ((href == null) || (href === '#')) {
                 return;
             }
@@ -172,16 +181,19 @@
             trackTwitter(opt_pageUrl, opt_trackerName);
         };
 
+        // Track clicks
+        $('a, input[type=button]').on('click', clickHandler);
+
         return {
             'clickHandler': clickHandler,
             'trackFacebook': trackFacebook,
             'trackTwitter': trackTwitter,
             'trackSocial': trackSocial
         }
-    })(window, jQuery, _gaq);
+    })(jQuery, _gaq);
 
 
-    if (jQuery) { jQuery('a').on('click', googleAnalyticsApi.clickHandler); }
+
 
     // TODO: We need to call the trackSocial function because otherwise it'll never track social.
     // The events will only get bound when googleAnalyticsApi.trackSocial is called.
@@ -203,7 +215,9 @@
         <!-- DEBUG MODE: not initializing Google Analytics. -->
         for (var key in _gaq) {
             if (_gaq.hasOwnProperty(key) && typeof(_gaq[key]) != "function" ) {
-                console.log('pushed:', _gaq[key]);
+                if (console) {
+                    console.log('pushed:', _gaq[key]);
+                }
             }
         }
     {% endif %}
