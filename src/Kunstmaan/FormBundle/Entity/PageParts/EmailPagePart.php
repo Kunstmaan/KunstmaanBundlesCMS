@@ -139,7 +139,8 @@ class EmailPagePart extends AbstractFormPagePart
             new EmailFormSubmissionType(),
             array(
                 'label' => $this->getLabel(),
-                'constraints' => $constraints
+                'constraints' => $constraints,
+                'required' => $this->getRequired()
             )
         );
         $formBuilder->setData($data);
