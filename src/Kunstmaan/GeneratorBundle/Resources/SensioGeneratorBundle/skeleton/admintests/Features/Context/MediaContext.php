@@ -24,7 +24,7 @@ class MediaContext extends BehatContext
     public function iFillInCorrectFileInformationFor($fileType)
     {
         $fileTypes = array(
-            "image" => "image.jpg",
+            "image" => "image.png",
             "pdf" => "pdf.pdf"
         );
 
