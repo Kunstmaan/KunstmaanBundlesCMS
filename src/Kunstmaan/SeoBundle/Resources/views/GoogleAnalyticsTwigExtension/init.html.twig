@@ -201,6 +201,11 @@
     })();
     {% else %}
         <!-- DEBUG MODE: not initializing Google Analytics. -->
+        for (var key in _gaq) {
+            if (_gaq.hasOwnProperty(key) && typeof(_gaq[key]) != "function" ) {
+                console.log('pushed:', _gaq[key]);
+            }
+        }
     {% endif %}
 
 </script>

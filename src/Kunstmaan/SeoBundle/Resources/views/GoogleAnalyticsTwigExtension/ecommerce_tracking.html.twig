@@ -1,0 +1,30 @@
+<script>
+    var _gaq = _gaq || [];
+
+    _gaq.push(['_trackPageview']);
+
+    _gaq.push(['_addTrans',
+        '{{ transaction_id }}',
+        '{{ store_name }}',
+        '{{ total }}',
+        '{{ taxes_total }}',
+        '{{ shipping_total }}',
+        '{{ city }}',
+        '{{ state_or_province }}',
+        '{{ country }}'
+    ]);
+
+
+    {% for item in order_items %}
+    _gaq.push(['_addItem',
+        '{{ transaction_id }}',
+        '{{ item.sku }}',
+        '{{ item.name }}',
+        '{{ item.category_or_variation }}',
+        '{{ item.unit_price }}',
+        '{{ item.quantity }}'
+    ]);
+    {% endfor %}
+
+    _gaq.push(['_trackTrans']);
+</script>

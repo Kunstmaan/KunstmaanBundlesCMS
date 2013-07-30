@@ -4,9 +4,15 @@ parameters:
 services:
     kunstmaan_seo.twig.extension:
         class: Kunstmaan\SeoBundle\Twig\SeoTwigExtension
-        arguments: ["@doctrine.orm.entity_manager", "%google.analytics.account_id%"]
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: twig.extension }
+
+    kunstmaan_seo.google_analytics.twig.extension:
+            class: Kunstmaan\SeoBundle\Twig\GoogleAnalyticsTwigExtension
+            arguments: ["%google.analytics.account_id%"]
+            tags:
+                - { name: twig.extension }
 
     kunstmaan_seo.node.listener:
         class: Kunstmaan\SeoBundle\EventListener\NodeListener

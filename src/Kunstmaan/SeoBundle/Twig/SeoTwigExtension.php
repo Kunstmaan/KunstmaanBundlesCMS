@@ -25,33 +25,11 @@ class SeoTwigExtension extends Twig_Extension
     protected $em;
 
     /**
-     * @var Twig_Environment
-     */
-    protected $environment;
-
-
-    protected $accountId;
-
-    /**
      * @param EntityManager $em
      */
-    public function __construct(EntityManager $em, $accountId = null)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->accountId = $accountId;
-    }
-
-
-    /**
-     * Initializes the runtime environment.
-     *
-     * This is where you can load some file that contains filter functions for instance.
-     *
-     * @param Twig_Environment $environment The current Twig_Environment instance
-     */
-    public function initRuntime(Twig_Environment $environment)
-    {
-        $this->environment = $environment;
     }
 
     /**
@@ -62,12 +40,11 @@ class SeoTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_seo_metadata_for'  => new \Twig_Function_Method($this, 'renderSeoMetadataFor', array('is_safe' => array('html'))),
+            'render_seo_metadata_for'  => new \Twig_Function_Method($this, 'renderSeoMetadataFor', array('is_safe' => array('html'), 'needs_environment' => true)),
             'get_seo_for'  => new \Twig_Function_Method($this, 'getSeoFor'),
             'get_title_for'  => new \Twig_Function_Method($this, 'getTitleFor'),
             'get_title_for_page_or_default' => new \Twig_Function_Method($this, 'getTitleForPageOrDefault'),
-            'get_social_widget_for'  => new \Twig_Function_Method($this, 'getSocialWidgetFor', array('is_safe' => array('html'))),
-            'initialize_google_analytics' => new \Twig_Function_Method($this, 'initializeGoogleAnalytics', array('is_safe' => array('html'), 'needs_environment' => true)),
+            'get_social_widget_for'  => new \Twig_Function_Method($this, 'getSocialWidgetFor', array('is_safe' => array('html'), 'needs_environment' => true)),
         );
     }
 
@@ -81,69 +58,6 @@ class SeoTwigExtension extends Twig_Extension
         return $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
     }
 
-    protected $accountVarName = 'account_id';
-
-    /**
-     * Renders the default Google Analytics JavaScript.
-     *
-     * If the options are not set it'll try and load the account ID from your parameters (google.analytics.account_id)
-     *
-     * @param Twig_Environment $environment
-     * @param array|null $options {account_id: 'UA-XXXXX-Y'}
-     */
-    public function initializeGoogleAnalytics(\Twig_Environment $environment, $options = null)
-    {
-        if (is_null($options)) {
-            $options = array();
-        }
-
-        $defaults = array();
-
-        $this->setOptionIfNotSet($defaults, $this->accountVarName, $this->accountId);
-        // $this->setOptionIfNotSet($defaults, $this->accountVarName, $this->getGlobal($environment, 'ga_code')); // Global logic not working.
-
-        // Things set in $options will override things set in $defaults.
-        $options = array_merge($defaults, $options);
-
-        if (!$this->isOptionSet($options, $this->accountVarName)) {
-            throw new \Twig_Error_Runtime("The KunstmaanSeoBundle depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'.");
-        }
-
-        $template = $environment->loadTemplate('KunstmaanSeoBundle:SeoTwigExtension:google_analytics_init.html.twig');
-        return $template->render($options);
-
-    }
-
-    /**
-     * Prefer the given
-     * @param Twig_Environment $environment
-     */
-    private function setOptionIfNotSet(&$arr, $option, $value) {
-        if ($this->isOptionSet($arr, $option)) {
-            $arr[$option] = $value;
-        }
-    }
-
-    private function isOptionSet($arr, $option) {
-        return (!isset($arr[$option]) || !empty($arr[$option]));
-    }
-
-    /**
-     * Not sure if this works ... doesn't appear to see all the globals.
-     *
-     * @param Twig_Environment $environment
-     * @param $name
-     * @return null
-     */
-    private function getGlobal(\Twig_Environment $environment, $name) {
-        foreach ($environment->getGlobals() as $k => $v) {
-            if ($k == $name) {
-                return $v;
-            }
-        }
-
-        return null;
-    }
 
     /**
      * The first value that is not null or empty will be returned.
@@ -213,7 +127,7 @@ class SeoTwigExtension extends Twig_Extension
      * @throws \InvalidArgumentException
      * @return boolean|string
      */
-    public function getSocialWidgetFor(AbstractPage $entity, $platform)
+    public function getSocialWidgetFor(\Twig_Environment $environment, AbstractPage $entity, $platform)
     {
         $seo = $this->getSeoFor($entity);
 
@@ -246,7 +160,7 @@ class SeoTwigExtension extends Twig_Extension
         }
 
         $template = 'KunstmaanSeoBundle:SeoTwigExtension:' . $platform . '_widget.html.twig';
-        $template = $this->environment->loadTemplate($template);
+        $template = $environment->loadTemplate($template);
 
         return $template->render($arguments);
     }
@@ -274,10 +188,10 @@ class SeoTwigExtension extends Twig_Extension
      *
      * @return string
      */
-    public function renderSeoMetadataFor(AbstractEntity $entity, $currentNode = null, $template='KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig')
+    public function renderSeoMetadataFor(\Twig_Environment $environment, AbstractEntity $entity, $currentNode = null, $template='KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig')
     {
         $seo = $this->getSeoFor($entity);
-        $template = $this->environment->loadTemplate($template);
+        $template = $environment->loadTemplate($template);
 
         return $template->render(array(
             'seo' => $seo,
