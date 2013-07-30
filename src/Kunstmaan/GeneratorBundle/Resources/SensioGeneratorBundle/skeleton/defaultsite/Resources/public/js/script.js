@@ -7,11 +7,12 @@ var myApplication = (function($, window, undefined) {
     /*
         declare all your methods here
     */
-    var init, initSliders;
+    var init, initSliders, initSocial;
 
     init = function() {
         cupcake.navigation.init();
         initSliders();
+        initSocial();
     };
 
     initSliders = function() {
@@ -19,6 +20,10 @@ var myApplication = (function($, window, undefined) {
             animation: "slide",
             controlNav: "thumbnails"
         });
+    };
+
+    initSocial = function () {
+        Socialite.load();
     };
 
     /*
