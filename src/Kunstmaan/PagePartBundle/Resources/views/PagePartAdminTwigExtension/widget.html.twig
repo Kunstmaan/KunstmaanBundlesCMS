@@ -54,35 +54,35 @@
             },
     	sortableClicked: false,
 	    addPagepart: function (select){
-		    pagepartscontainer = jQuery(select).closest('.pagepartscontainer');
-	        jQuery.ajax({
+		    pagepartscontainer = $(select).closest('.pagepartscontainer');
+	        $.ajax({
 	            url: '{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}',
 	            data: {
 	            	'pageclassname': pagepartscontainer.data('pageclassname'),
 	            	'pageid': pagepartscontainer.data('pageid'),
 	            	'context': pagepartscontainer.data('context'),
-		            'type': jQuery(select).val()
+		            'type': $(select).val()
 		        },
 	            async: true,
 	            success: function(data) {
 		            var result = null;
-		            if(jQuery(select).parent().hasClass('first')) {
-		            	result = jQuery('#parts_'+pagepartscontainer.data('context')).prepend(data);
+		            if($(select).parent().hasClass('first')) {
+		            	result = $('#parts_'+pagepartscontainer.data('context')).prepend(data);
 			        } else {
-			        	result = jQuery(select).closest('section').after(data);
+			        	result = $(select).closest('section').after(data);
 				    }
 				    result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
 				    disableCKEditors();
 				    enableCKEditors();
 	            }
 		    });
-	        jQuery(select).val('');
+	        $(select).val('');
 	        return false;
 	    },
 	    deletePagepart: function (id){
 	    	isEdited = true; // enabling the "leave page" popup
 	    	document.getElementById(id + '_deleted').checked = 'checked';
-	    	var container = jQuery('#' + id + '_container');
+	    	var container = $('#' + id + '_container');
 	    	container.slideUp(function(){
 	        	container.html('');
 	        });
@@ -104,7 +104,7 @@
     }
 
     function enableCKEditors(){
-    	jQuery('textarea.rich_editor').each(function(item){
+    	$('textarea.rich_editor').each(function(item){
 			var config = {};
         	if($(this).attr('height')){
         		config.height = $(this).attr('height');
@@ -154,7 +154,7 @@
             revert: 100,
             opacity: 1,
     		start: function(e, ui) {
-    			jQuery(ui.item).find('.new_pagepart').html('');
+    			$(ui.item).find('.new_pagepart').html('');
     			disableCKEditors();
     	        $('.draggable').css('opacity', ".4");
     			$('.ui-sortable-helper .new_pagepart').slideUp("fast");
@@ -163,11 +163,11 @@
                 heightenEmptyDropZones(ui.item.outerHeight(true));
     		},
             stop: function(e, ui) {
-                jQuery(ui.item).find('.new_pagepart').html(jQuery(ui.item).parents('.pagepartscontainer').find('.new_pagepart.first').html());
+                $(ui.item).find('.new_pagepart').html($(ui.item).parents('.pagepartscontainer').find('.new_pagepart.first').html());
                 //update context names
-                var context = jQuery(ui.item).parents('.pagepartscontainer').data('context');
-                jQuery(ui.item).find('.pagepartadmin_field_updatecontextname').each(function(){
-                    jQuery(this).attr('name', context + jQuery(this).data('suffix'));
+                var context = $(ui.item).parents('.pagepartscontainer').data('context');
+                $(ui.item).find('.pagepartadmin_field_updatecontextname').each(function(){
+                    $(this).attr('name', context + $(this).data('suffix'));
                 });
     			enableCKEditors();
 
