@@ -8,7 +8,7 @@
 
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_users_add') }}" method="post" {{ form_enctype(form) }} novalidate>
+    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_users_add') }}" method="post" {{ form_enctype(form) }} novalidate autocomplete="off">
 	    <fieldset>
             {{ form_rest(form) }}
 	        <div class="form-actions">
