@@ -94,3 +94,15 @@ The 'prefix' parameter is optional and will allow you to add a prefix to all tab
 ```
 app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
 ```
+
+## PagePart
+
+Using this command you can generate a new page part that can be used in page sections. This command will
+generate an entity class, a form type class and a twig template. It will also update the yml section
+configuration file(s), so that the page part can be used in the section(s).
+
+### Command
+
+```
+app/console kuma:generate:pagepart
+```

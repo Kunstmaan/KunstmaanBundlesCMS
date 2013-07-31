@@ -50,6 +50,14 @@ Generate an overview page with article pages. The overview page contains a pagin
 app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
 ```
 
+#### PagePart
+
+Generate a new page part page based on the [KunstmaanPagePartBundle](https://github.com/Kunstmaan/KunstmaanPagePartBundle) :
+
+```
+app/console kuma:generate:pagepart
+```
+
 ## More
 
 You can find more detailed information about these commands [here](https://github.com/Kunstmaan/KunstmaanGeneratorBundle/blob/master/Resources/doc/GeneratorBundle.md)
