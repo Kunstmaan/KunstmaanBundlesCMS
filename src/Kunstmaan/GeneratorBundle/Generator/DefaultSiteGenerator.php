@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Kunstmaan\GeneratorBundle\Generator\AdminTestsGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -65,8 +66,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generatePagepartConfigs($bundle, $parameters, $output);
         $this->generatePagetemplateConfigs($bundle, $parameters, $output);
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
-        $this->generateBehatTests($bundle, $output);
-        $this->generateUnitTests($bundle, $parameters, $output);
+        $this->generateAdminTests($bundle, $parameters, $output);
         $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
     }
 
@@ -83,35 +83,12 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln('Generating root files : <info>OK</info>');
     }
 
-    /**
-     * @param Bundle          $bundle
-     * @param array           $parameters The template parameters
-     * @param OutputInterface $output
-     */
-    public function generateUnitTests(Bundle $bundle, array $parameters, OutputInterface $output)
+    public function generateAdminTests(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Tests/Controlapp/console", $bundle->getPath());
-        $skeletonDir = sprintf("%s/Tests/Controller", $this->fullSkeletonDir);
-        $this->setSkeletonDirs(array($skeletonDir));
+        $adminTests = new AdminTestsGenerator($this->filesystem, '/admintests');
+        $adminTests->generate($bundle,$output);
 
-        $this->renderFile('/DefaultControllerTest.php', $dirPath . '/DefaultControllerTest.php', $parameters);
-
-        $output->writeln('Generating Unit Tests : <info>OK</info>');
-    }
-
-    /**
-     * @param Bundle          $bundle
-     * @param OutputInterface $output
-     */
-    public function generateBehatTests(Bundle $bundle, OutputInterface $output)
-    {
-        $dirPath = sprintf("%s/Features", $bundle->getPath());
-        $skeletonDir = sprintf("%s/Features", $this->fullSkeletonDir);
-        $this->setSkeletonDirs(array($skeletonDir));
-
-        $this->filesystem->copy($skeletonDir . '/homepage.feature', $dirPath . '/homepage.feature', true);
-
-        $output->writeln('Generating Behat Tests : <info>OK</info>');
+        $output->writeln('Generating Admin Tests : <info>OK</info>');
     }
 
     /**
