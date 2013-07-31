@@ -2,15 +2,10 @@
 
 namespace Kunstmaan\TranslatorBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -160,6 +155,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
     public function getCount()
     {
         $number = $this->getPreparedQueryBuilder()->select('COUNT(d)')->getQuery()->getSingleScalarResult();
+
         return $number;
     }
 

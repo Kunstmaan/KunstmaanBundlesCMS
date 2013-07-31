@@ -6,13 +6,16 @@ namespace Kunstmaan\TranslatorBundle\Repository;
  */
 class TranslationRepository extends AbstractTranslatorRepository
 {
+    /**
+     * Get an array of all domains group by locales
+     * @return array array[0] = ["name" => "messages", "locale" => "nl"]
+     */
     public function getAllDomainsByLocale()
     {
         return $this->createQueryBuilder('t')
-            ->select('t.locale, td.name')
-            ->leftJoin('t.domain', 'td')
+            ->select('t.locale, t.domain name')
             ->addGroupBy('t.locale')
-            ->addGroupBy('td.name')
+            ->addGroupBy('t.domain')
             ->getQuery()
             ->getArrayResult();
     }
@@ -66,17 +69,15 @@ EOQ;
         $qb = $em->createQueryBuilder();
         $qb
             ->select('t')
-            ->from('KunstmaanTranslatorBundle:Translation', 't')
-            ->leftJoin('t.domain', 'td');
+            ->from('KunstmaanTranslatorBundle:Translation', 't');
 
         if (count($locales) > 0) {
             $qb->andWhere($qb->expr()->in('t.locale', $locales));
         }
 
         if (count($domains) > 0) {
-            $qb->andWhere($qb->expr()->in('td.name', $domains));
+            $qb->andWhere($qb->expr()->in('t.domain', $domains));
         }
-
 
         $result = $qb
             ->getQuery()

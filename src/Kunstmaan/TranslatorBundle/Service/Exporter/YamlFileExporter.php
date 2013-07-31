@@ -1,7 +1,6 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Service\Exporter;
 
-use Kunstmaan\TranslatorBundle\Model\Export\ExportFile;
 use Symfony\Component\Yaml\Dumper;
 
 /**
@@ -16,9 +15,9 @@ class YamlFileExporter implements FileExporterInterface
     {
         $ymlDumper = new Dumper();
         $ymlContent = $ymlDumper->dump($translations);
+
         return $ymlContent;
     }
-
 
     /**
      * {@inheritdoc}

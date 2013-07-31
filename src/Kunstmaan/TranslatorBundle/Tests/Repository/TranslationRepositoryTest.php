@@ -14,6 +14,9 @@ class TranslationRepositoryTest extends BaseTestCase
         $this->translationRepository = $this->getContainer()->get('kunstmaan_translator.repository.translation');
     }
 
+    /**
+     * @group translation-repository
+     */
     public function testGetAllDomainsByLocale()
     {
         $result = $this->translationRepository->getAllDomainsByLocale();
@@ -29,5 +32,15 @@ class TranslationRepositoryTest extends BaseTestCase
     {
         $date = $this->translationRepository->getLastChangedTranslationDate();
         $this->assertInstanceOf('\DateTime', $date);
+    }
+
+    /**
+     * @group translation-repository
+     */
+    public function testGetTranslationsByLocalesAndDomains()
+    {
+        $result = $this->translationRepository->getTranslationsByLocalesAndDomains(array('nl'), array('messages'));
+        $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Entity\Translation', $result[0]);
+        $this->assertGreaterThan(0, count($result));
     }
 }

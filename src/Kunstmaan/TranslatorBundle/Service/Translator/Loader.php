@@ -11,11 +11,7 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class Loader implements LoaderInterface
 {
-    /**
-     * Stasher for storing/retrieving translations
-     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
-     */
-    private $stasher;
+    private $translationRepository;
 
     /**
      * @{@inheritdoc}
@@ -24,7 +20,7 @@ class Loader implements LoaderInterface
     {
         $catalogue = new MessageCatalogue($locale);
 
-        $translations = $this->stasher->getTranslationsByLocaleAndDomain($locale, $domain);
+        $translations = $this->translationRepository->findBy(array('locale' => $locale, 'domain' => $domain));
 
         foreach ($translations as $translation) {
             $catalogue->set($translation->getKeyword(), $translation->getText(), $domain);
@@ -33,8 +29,8 @@ class Loader implements LoaderInterface
         return $catalogue;
     }
 
-    public function setStasher(\Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface $stasher)
+    public function setTranslationRepository($translationRepository)
     {
-        $this->stasher = $stasher;
+        $this->translationRepository = $translationRepository;
     }
 }

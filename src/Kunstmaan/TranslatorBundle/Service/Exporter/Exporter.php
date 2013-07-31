@@ -36,7 +36,6 @@ class Exporter
         throw new \Exception(sprintf('No %s file exporter found or defined.', $extension));
     }
 
-
     public function setExporters($exporters)
     {
         $this->exporters = $exporters;

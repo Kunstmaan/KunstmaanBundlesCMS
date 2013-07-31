@@ -1,14 +1,8 @@
-Kunstmaan\TranslatorBundle\Entity\TranslationDomain:
-    messages_domain:
-        name: messages
-    validation_domain:
-        name: validation
-
 Kunstmaan\TranslatorBundle\Entity\Translation:
     errors_{1..50}:
         keyword: errors.<word()>.<word()>_<randomDigitNotNull()>
         locale: nl
-        domain: @messages_domain
+        domain: messages
         text: <text()>
         createdAt: <dateTime()>
         updatedAt: <dateTime()>
@@ -18,21 +12,21 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         text: <text()>
         createdAt: <dateTime()>
         updatedAt: <dateTime()>
-        domain: @validation_domain
+        domain: validation
     headers_updated:
         keyword: headers.frontpage
         text: 'a not yet updated frontpage header'
         createdAt: <dateTime()>
         updatedAt: <dateTime()>
         locale: en
-        domain: @messages_domain
+        domain: messages
     validation_messages:
         keyword: validation.ok
         text: 'Everything ok'
         createdAt: <dateTime()>
         updatedAt: <dateTime()>
         locale: en
-        domain: @validation_domain
+        domain: validation
     future_messages:
         keyword: validation.in_the_future
         text: 'This should be the last updated translation'
@@ -40,4 +34,4 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         createdAt: <dateTime()>
         updatedAt: <dateTimeBetween('+ 1 days', '+ 200 days')>
         locale: en
-        domain: @validation_domain
+        domain: validation

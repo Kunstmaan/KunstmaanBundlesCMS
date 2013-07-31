@@ -92,7 +92,7 @@ class TranslationManager
 
         foreach ($newTranslation->getLocales() as $locale => $text) {
 
-            if(trim($text) == '') {
+            if (trim($text) == '') {
                 continue;
             }
 

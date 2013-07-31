@@ -16,7 +16,6 @@ class NewTranslationValidator implements ValidatorInterface
 
         $this->validateKeyword($object->getKeyword());
         // TODO : validate all locales, if they are managed by this bundle (config)
-
         return true;
     }
 
@@ -28,8 +27,7 @@ class NewTranslationValidator implements ValidatorInterface
             throw new \Exception('A keyword should not contain a whitespace.');
         }
 
-        if (!preg_match('/[A-Za-z\.]/i', $keyword))
-        {
+        if (!preg_match('/[A-Za-z\.]/i', $keyword)) {
             throw new \Exception('A keyword should only contain letter or a dot.');
         }
     }

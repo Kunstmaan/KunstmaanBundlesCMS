@@ -17,11 +17,7 @@ class ExportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\AbstractC
      */
     private $exporter;
 
-    /**
-     * Stasher
-     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
-     */
-    private $stasher;
+    private $translationRepository;
 
     /**
      * Execute an export command
@@ -40,13 +36,13 @@ class ExportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\AbstractC
     /**
      * Convert an exportCommand into an array of ExportFiles
      * @param  ExportCommand $exportCommand
-     * @return array                       an array of ExportFiles (without filecontent filled in)
+     * @return array         an array of ExportFiles (without filecontent filled in)
      */
     public function getExportFiles(ExportCommand $exportCommand)
     {
         $locales = $this->determineLocalesToImport($exportCommand);
         $domains = $this->determineDomainsToImport($exportCommand);
-        $translations = $this->stasher->getTranslationsByLocalesAndDomains($locales, $domains);
+        $translations = $this->translationRepository->getTranslationsByLocalesAndDomains($locales, $domains);
 
         $translationFiles = new ArrayCollection;
 
@@ -107,8 +103,8 @@ class ExportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\AbstractC
         $this->exporter = $exporter;
     }
 
-    public function setStasher($stasher)
+    public function setTranslationRepository($translationRepository)
     {
-        $this->stasher = $stasher;
+        $this->translationRepository = $translationRepository;
     }
 }

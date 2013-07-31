@@ -3,7 +3,6 @@ namespace Kunstmaan\TranslatorBundle\Model\Export;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-
 /**
  * A representation of a translation export into a file
  */
@@ -43,7 +42,8 @@ class ExportFile
         }
     }
 
-    public function assignArrayByPath(&$arr, $path, $value) {
+    public function assignArrayByPath(&$arr, $path, $value)
+    {
         $keys = explode('.', $path);
 
         while ($key = array_shift($keys)) {

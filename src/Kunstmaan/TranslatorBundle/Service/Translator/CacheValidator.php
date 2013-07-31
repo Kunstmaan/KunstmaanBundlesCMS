@@ -21,11 +21,7 @@ class CacheValidator
      */
     private $cacheDir;
 
-    /**
-     * Stasher
-     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
-     */
-    private $stasher;
+    private $translationRepository;
 
     /**
      * Checks the caching files of they are even with the stasher content
@@ -49,7 +45,7 @@ class CacheValidator
      */
     public function getLastTranslationChangeDate()
     {
-        return $this->stasher->getLastChangedTranslationDate();
+        return $this->translationRepository->getLastChangedTranslationDate();
     }
 
     /**
@@ -93,8 +89,9 @@ class CacheValidator
         $this->logger = $logger;
     }
 
-    public function setStasher($stasher)
+    public function setTranslationRepository($translationRepository)
     {
-        $this->stasher = $stasher;
+        $this->translationRepository = $translationRepository;
     }
+
 }

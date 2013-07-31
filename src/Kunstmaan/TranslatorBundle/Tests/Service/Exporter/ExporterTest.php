@@ -2,7 +2,6 @@
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
-use Symfony\Component\Finder\Finder;
 
 class ExporterTest extends BaseTestCase
 {
@@ -34,6 +33,5 @@ class ExporterTest extends BaseTestCase
         $exporter = $this->exporter->getExporterByExtension('exotic');
 
     }
-
 
 }

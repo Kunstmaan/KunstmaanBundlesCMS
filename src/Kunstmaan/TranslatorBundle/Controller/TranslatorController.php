@@ -127,9 +127,9 @@ class TranslatorController extends AdminListController
         if (!isset($this->adminListConfigurator)) {
             $this->adminListConfigurator = new TranslationAdminListConfigurator($this->getDoctrine()->getManager());
         }
+
         return $this->adminListConfigurator;
     }
-
 
     // /**
     //  * @Route("/show/{domain}", requirements={"domain"}, name="KunstmaanTranslatorBundle_translations_show")
@@ -218,7 +218,7 @@ class TranslatorController extends AdminListController
 
     //     $force = false;
 
-    //     if($this->getRequest()->get('force') == '1') {
+    //     if ($this->getRequest()->get('force') == '1') {
     //         $force = true;
     //     }
 

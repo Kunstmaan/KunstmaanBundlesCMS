@@ -11,10 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
 class Translator extends SymfonyTranslator
 {
 
-    /**
-     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
-     */
-    private $stasher;
+    private $translationRepository;
 
     /**
      * Resource Cacher
@@ -56,7 +53,7 @@ class Translator extends SymfonyTranslator
      */
     public function addResourcesFromStasherAndCache($cacheResources = true)
     {
-        $resources = $this->stasher->getTranslationDomainsByLocale();
+        $resources = $this->translationRepository->getAllDomainsByLocale();
         $this->addResources($resources);
 
         if ($cacheResources === true) {
@@ -91,9 +88,14 @@ class Translator extends SymfonyTranslator
         return parent::loadCatalogue($locale);
     }
 
-    public function setStasher($stasher)
+    public function getTranslationRepository()
     {
-        $this->stasher = $stasher;
+        return $this->translationRepository;
+    }
+
+    public function setTranslationRepository($translationRepository)
+    {
+        $this->translationRepository = $translationRepository;
     }
 
     public function setResourceCacher($resourceCacher)
