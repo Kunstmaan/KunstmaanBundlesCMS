@@ -44,6 +44,10 @@ class AdminTestsGenerator extends  Generator
      */
     public function generate(Bundle $bundle, OutputInterface $output)
     {
+        // This is needed so the renderFile method will search for the files
+        // in the correct location
+        $this->setSkeletonDirs(array($this->fullSkeletonDir));
+
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle
@@ -85,7 +89,7 @@ class AdminTestsGenerator extends  Generator
                 // Check to make sure we skip hidden folders
                 // And we render the files ending in .php
                 if (substr($entry, 0, 1) != '.' && substr($entry, -strlen(".php")) === ".php") {
-                    $this->renderFile("/admintests/Features/Context/" . $entry, $dirPath . "/Context/" . $entry, $parameters);
+                    $this->renderFile("/Features/Context/" . $entry, $dirPath . "/Context/" . $entry, $parameters);
                 }
             }
 
