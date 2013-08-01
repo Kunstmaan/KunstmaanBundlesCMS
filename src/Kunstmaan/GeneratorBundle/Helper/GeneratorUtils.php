@@ -11,6 +11,17 @@ class GeneratorUtils
 {
 
     /**
+     * Cleans the prefix. Prevents a double underscore from happening.
+     *
+     * @param $prefixString
+     * @return string
+     */
+    public static function cleanPrefix($prefixString)
+    {
+        return preg_replace('/_*/i', '', $prefixString) . '_';
+    }
+
+    /**
      * Returns an array of fields. Fields can be both column fields and
      * association fields.
      *

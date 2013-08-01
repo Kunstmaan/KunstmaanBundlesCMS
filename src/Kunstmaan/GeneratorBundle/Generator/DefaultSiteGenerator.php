@@ -54,7 +54,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
-            'prefix'            => $prefix
+            'prefix'            => GeneratorUtils::cleanPrefix($prefix)
         );
 
         $this->generateEntities($bundle, $parameters, $output);

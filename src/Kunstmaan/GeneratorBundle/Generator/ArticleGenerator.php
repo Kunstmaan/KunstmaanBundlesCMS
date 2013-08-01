@@ -58,7 +58,7 @@ class ArticleGenerator extends Generator
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
-            'prefix'            => $prefix,
+            'prefix'            => GeneratorUtils::cleanPrefix($prefix),
             'entity_class'      => $entity,
         );
 
