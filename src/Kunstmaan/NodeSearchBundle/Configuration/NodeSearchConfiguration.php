@@ -161,7 +161,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
 
                     $content = '';
                     if ($page instanceof HasPagePartsInterface) {
-                        if (!$this->container->hasScope('request')) {
+                        if (!$this->container->isScopeActive('request')) {
                             $this->container->enterScope('request');
                             $request = new Request();
                             $request->setLocale($nodeTranslation->getLang());
