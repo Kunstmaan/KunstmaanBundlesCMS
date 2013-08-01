@@ -111,9 +111,10 @@ EOT
                 'The name of your article entity: <comment>News</comment>',
                 '',
             ));
-
-            $entity = $dialog->ask($output, $dialog->getQuestion('Entity', $entity), $entity);
-            $input->setOption('entity', empty($entity) ? null : $entity);
+            while (empty($entity)):
+                $entity = $dialog->ask($output, $dialog->getQuestion('Entity', $entity), $entity);
+            endwhile;
+            $input->setOption('entity', $entity);
         }
 
         // prefix
