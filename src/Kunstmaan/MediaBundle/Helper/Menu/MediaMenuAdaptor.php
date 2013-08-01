@@ -41,10 +41,10 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
     {
 
         $mediaRoutes = array(
-            'Show media' => 'KunstmaanMediaBundle_media_show',
+            'Show media'    => 'KunstmaanMediaBundle_media_show',
             'Edit metadata' => 'KunstmaanMediaBundle_metadata_edit',
-            'Edit slide' => 'KunstmaanMediaBundle_slide_edit',
-            'Edit video' => 'KunstmaanMediaBundle_video_edit'
+            'Edit slide'    => 'KunstmaanMediaBundle_slide_edit',
+            'Edit video'    => 'KunstmaanMediaBundle_video_edit'
         );
 
         $createRoutes = array(

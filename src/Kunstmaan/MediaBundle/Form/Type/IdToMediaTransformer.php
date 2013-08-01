@@ -60,9 +60,11 @@ class IdToMediaTransformer implements DataTransformerInterface
 
         $this->currentValueContainer->setCurrentValue($entity);
 
-        return array("ent"=>$entity,
-        "id" => $entity->getId());
 
+        return array(
+            "ent"=>$entity,
+            "id" => $entity->getId()
+        );
     }
 
     /**
