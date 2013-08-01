@@ -7,6 +7,8 @@ The KunstmaanSearchBundle works with [ElasticSearch](http://www.elasticsearch.or
 
 More about these features can be found in our bundle [documentation](https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/master/Resources/doc/SearchBundle.md)
 
+Make sure you run ElasticSearch. You can downloade it [here](http://www.elasticsearch.org/download/) and extract the files. Then run the executable in elasticsearch in the bin directory.
+
 ## Installation
 
 composer.json
