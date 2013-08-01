@@ -29,7 +29,7 @@ class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdm
      */
     public function getEntityName()
     {
-        return "{{ entity_class }}\{{ entity_class }}Page";
+        return "{{ entity_class }}\\{{ entity_class }}Page";
     }
 
     /**
