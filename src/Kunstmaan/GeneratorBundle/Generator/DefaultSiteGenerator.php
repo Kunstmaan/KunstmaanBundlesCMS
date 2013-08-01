@@ -31,6 +31,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
     private $fullSkeletonDir;
 
+
+    private $rootDir;
+
     /**
      * @param Filesystem $filesystem  The filesytem
      * @param string     $skeletonDir The skeleton directory
@@ -44,6 +47,18 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
+     * Returns true if we detect ths site uses the locale.
+     *
+     * @return bool
+     */
+    private function isMultiLangEnvironment() {
+        // This is a pretty silly implementation.
+        // It just checks if it can find _locale in the routing.yml
+        $routingFile = file_get_contents($this->rootDir . '/config/routing.yml');
+        return preg_match('/_locale:/i', $routingFile);
+    }
+
+    /**
      * @param Bundle          $bundle  The bundle
      * @param string          $prefix  The prefix
      * @param string          $rootDir The root directory
@@ -51,16 +66,20 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     public function generate(Bundle $bundle, $prefix, $rootDir, OutputInterface $output)
     {
+        $this->rootDir = $rootDir;
+
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
             'prefix'            => $prefix
         );
 
+        if ($this->isMultiLangEnvironment()) { $this->generateDefaultLocaleFallbackCode($bundle, $parameters, $output); }
         $this->generateEntities($bundle, $parameters, $output);
         $this->generateForm($bundle, $parameters, $output);
         $this->generateFixtures($bundle, $parameters, $output);
         $this->generateAssets($bundle, $output);
+
         // CAUTION : Following templates change the skeleton dir array
         // TODO Find a better way
         $this->generatePagepartConfigs($bundle, $parameters, $output);
@@ -336,6 +355,39 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     }
 
     /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output
+     *
+     * @throws \RuntimeException
+     */
+    public function generateDefaultLocaleFallbackCode(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $step = 'Generating code for defaultlocale fallback';
+
+        try {
+            $dirPath = sprintf("%s/EventListener", $bundle->getPath());
+            $skeletonDir = sprintf("%s/EventListener", $this->skeletonDir);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultLocaleListener', $parameters);
+
+            $dirPath = sprintf("%s/Controller", $bundle->getPath());
+            $skeletonDir = sprintf("%s/Controller", $this->skeletonDir);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultController', $parameters, true);
+
+            $dirPath = sprintf("%s/Resources/config", $bundle->getPath());
+            $skeletonDir = sprintf("%s/Resources/config", $this->fullSkeletonDir);
+            $this->filesystem->copy($skeletonDir . '/services.yml', $dirPath . '/services.yml', true);
+            GeneratorUtils::replace("~~~APPNAME~~~", strtolower($bundle->getName()), $dirPath . '/services.yml');
+            GeneratorUtils::replace("~~~NAMESPACE~~~", $parameters['namespace'], $dirPath . '/services.yml');
+        } catch (\Exception $error) {
+            $output->writeln($step . ' : <error>FAILED</error>');
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $output->writeln($step . ' : <info>OK</info>');
+    }
+
+    /**
      * @param string $skeletonDir The dir of the entity skeleton
      * @param string $dirPath     The full fir of where the entity should be created
      * @param string $className   The class name of the entity to create
@@ -343,12 +395,16 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      *
      * @throws \RuntimeException
      */
-    private function generateSkeletonBasedClass($skeletonDir, $dirPath, $className, array $parameters)
+    private function generateSkeletonBasedClass($skeletonDir, $dirPath, $className, array $parameters, $override = false)
     {
         $classPath = sprintf("%s/%s.php", $dirPath, $className);
         $skeletonPath = sprintf("%s/%s.php", $skeletonDir, $className);
         if (file_exists($classPath)) {
-            throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
+            if ($override) {
+                unlink($classPath);
+            } else {
+                throw new \RuntimeException(sprintf('Unable to generate the %s class as it already exists under the %s file', $className, $classPath));
+            }
         }
         $this->renderFile($skeletonPath, $classPath, $parameters);
     }

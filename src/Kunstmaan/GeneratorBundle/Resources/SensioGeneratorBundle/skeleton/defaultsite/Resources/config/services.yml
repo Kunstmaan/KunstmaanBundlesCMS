@@ -1,0 +1,6 @@
+services:
+  ~~~APPNAME~~~.default_locale_listener:
+    class: ~~~NAMESPACE~~~\EventListener\DefaultLocaleListener
+    tags:
+      - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+    arguments: [%defaultlocale%]
