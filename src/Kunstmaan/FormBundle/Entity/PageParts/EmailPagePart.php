@@ -81,7 +81,7 @@ class EmailPagePart extends AbstractFormPagePart
      */
     public function getErrorMessageRequired()
     {
-        return empty($this->errorMessageRequired) ? 'This value should not be blank.' : $this->errorMessageRequired;
+        return empty($this->errorMessageRequired) ? 'This value can not be blank.' : $this->errorMessageRequired;
     }
 
     /**
@@ -101,7 +101,7 @@ class EmailPagePart extends AbstractFormPagePart
      */
     public function getErrorMessageInvalid()
     {
-        return empty($this->errorMessageInvalid) ? 'This value is not a valid email address.' : $this->errorMessageInvalid;
+        return empty($this->errorMessageInvalid) ? 'Please enter a valid email address.' : $this->errorMessageInvalid;
     }
 
 
