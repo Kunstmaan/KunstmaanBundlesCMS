@@ -38,7 +38,7 @@ Add the following parameter to your parameters file (ini, yml, ...), the prefix 
 
 ## Documentation
 
-Further documentation on how to use and extend this bundle can be found [here](https://github.com/Kunstmaan/KunstmaanSearchBundle/tree/sherlock/Resources/doc/SearchBundle.md).
+Further documentation on how to use and extend this bundle can be found [here](https://github.com/Kunstmaan/KunstmaanSearchBundle/tree/master/Resources/doc/SearchBundle.md).
 
 ## Reporting an issue or a feature request
 
