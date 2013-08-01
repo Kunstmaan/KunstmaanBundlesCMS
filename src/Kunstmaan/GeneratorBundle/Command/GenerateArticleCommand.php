@@ -28,7 +28,8 @@ class GenerateArticleCommand extends GenerateDoctrineCommand
                 array(
                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the Article classes in'),
                     new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The article class name ("News", "Press", ..."'),
-                    new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
+                    new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities'),
+                    new InputOption('dummydata', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database')
                 )
             )
             ->setDescription('Generates Article classes based on KunstmaanArticleBundle')
@@ -40,6 +41,10 @@ The <info>kuma:generate:article</info> command generates classes for Articles us
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
 <info>php app/console kuma:generate:article --namespace=Namespace/NamedBundle --prefix=demo_</info>
+
+Add the <info>--dummydata</info> option to create data fixtures to populate your database
+
+<info>php app/console kuma:generate:article --namespace=Namespace/NamedBundle --dummydata</info>
 EOT
             )
             ->setName('kuma:generate:article');
@@ -66,6 +71,8 @@ EOT
         $entity = $input->getOption('entity');
 
         $prefix = $input->getOption('prefix');
+        $dummydata = $input->getOption('dummydata');
+
         $bundle = $this
             ->getApplication()
             ->getKernel()
@@ -73,7 +80,7 @@ EOT
         $dialog->writeSection($output, 'Article Generation');
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
-        $generator->generate($bundle, $entity, $prefix, $output);
+        $generator->generate($bundle, $entity, $prefix, $dummydata, $output);
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)

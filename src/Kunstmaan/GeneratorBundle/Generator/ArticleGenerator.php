@@ -51,9 +51,10 @@ class ArticleGenerator extends Generator
      * @param Bundle          $bundle The bundle
      * @param string          $entity
      * @param string          $prefix The prefix
+     * @param bool            $dummydata
      * @param OutputInterface $output
      */
-    public function generate(Bundle $bundle, $entity, $prefix, OutputInterface $output)
+    public function generate(Bundle $bundle, $entity, $prefix, $dummydata, OutputInterface $output)
     {
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
@@ -72,7 +73,9 @@ class ArticleGenerator extends Generator
         $this->generateRouting($bundle, $entity, $parameters, $output);
         $this->generateMenu($bundle, $entity, $parameters, $output);
         $this->generateServices($bundle, $entity, $parameters, $output);
-
+        if ($dummydata) {
+            $this->generateFixtures($bundle, $entity, $parameters, $output);
+        }
     }
 
     /**
@@ -338,6 +341,28 @@ class ArticleGenerator extends Generator
         }
 
         $output->writeln('Generating entities : <info>OK</info>');
+    }
+
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param string          $entity     The name of the entity
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output
+     *
+     * @throws \RuntimeException
+     */
+    public function generateFixtures(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
+    {
+        $dirPath = $bundle->getPath() . '/DataFixtures/ORM';
+        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM';
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'ArticleFixtures', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $output->writeln('Generating fixtures : <info>OK</info>');
     }
 
     /**
