@@ -63,7 +63,7 @@ EOT
 
         $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
         $bundle = strtr($namespace, array('\\' => ''));
-        $entity = $input->getOption('entity');
+        $entity = ucfirst($input->getOption('entity'));
 
         $prefix = $input->getOption('prefix');
         $bundle = $this
