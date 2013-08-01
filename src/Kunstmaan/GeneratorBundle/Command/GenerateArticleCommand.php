@@ -134,6 +134,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new ArticleGenerator($this->getContainer()->get('filesystem'), '/article');
+        return new ArticleGenerator($this->getContainer()->get('filesystem'), '/article', $this->getContainer()->getParameter('multilanguage'));
     }
 }

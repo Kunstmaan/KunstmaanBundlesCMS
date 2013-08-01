@@ -3,7 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-
+use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -11,7 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Generates an Article section
  */
-class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
+class ArticleGenerator extends Generator
 {
 
     /**
@@ -24,18 +24,27 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
      */
     private $skeletonDir;
 
+    /**
+     * @var string
+     */
     private $fullSkeletonDir;
 
     /**
-     * @param Filesystem $filesystem  The filesytem
-     * @param string     $skeletonDir The skeleton directory
-
+     * @var bool
      */
-    public function __construct(Filesystem $filesystem, $skeletonDir)
+    private $multilanguage;
+
+    /**
+     * @param Filesystem $filesystem    The filesytem
+     * @param string     $skeletonDir   The skeleton directory
+     * @param bool       $multilanguage If the site is multilanguage
+     */
+    public function __construct(Filesystem $filesystem, $skeletonDir, $multilanguage)
     {
         $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
         $this->fullSkeletonDir = __DIR__.'/../Resources/SensioGeneratorBundle/skeleton' . $skeletonDir;
+        $this->multilanguage = $multilanguage;
     }
 
     /**
@@ -114,7 +123,11 @@ class ArticleGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generato
     {
         $dirPath = sprintf("%s/Resources/config", $bundle->getPath());
         $skeletonDir = sprintf("%s/Resources/config", $this->skeletonDir);
-        $routing = $this->render($skeletonDir . '/routing.yml', $parameters);
+        if($this->multilanguage) {
+            $routing = $this->render($skeletonDir . '/routing_multilanguage.yml', $parameters);
+        } else {
+            $routing = $this->render($skeletonDir . '/routing_singlelanguage.yml', $parameters);
+        }
         GeneratorUtils::append($routing, $dirPath . '/routing.yml');
 
         $output->writeln('Generating routing : <info>OK</info>');
