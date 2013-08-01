@@ -6,21 +6,17 @@ use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 
 /**
- * TranslationGroupManager.
- * A bridge between a stasher
+ * TranslationGroupManager
+ * For managing/creating TranslationGroup objects
  */
 class TranslationGroupManager
 {
 
+    private $translationRepository;
+
     /**
-     * Stasher
-     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
+     * Get an empty TranslationGroup with the given keyword and domain
      */
-    private $stasher;
-
-    private $translationClass;
-    private $translationDomainClass;
-
     public function create($keyword, $domain)
     {
         $translationGroup = $this->newGroupInstance();
@@ -30,13 +26,17 @@ class TranslationGroupManager
         return $translationGroup;
     }
 
+    /**
+     * Create new TranslationGroup instance (with the given locales of any are set)
+     * @param  array  $locales
+     * @return TranslationGroup
+     */
     public function newGroupInstance($locales = array())
     {
-        $translationClass = $this->translationClass;
         $translationGroup = new TranslationGroup;
 
         foreach ($locales as $locale) {
-            $translation = new $translationClass();
+            $translation = new \Kunstmaan\TranslatorBundle\Entity\Translation();
             $translation->setlocale($locale);
             $translationGroup->addTranslation($translation);
         }
@@ -55,27 +55,16 @@ class TranslationGroupManager
             return null;
         }
 
-        $translationDomainClass = $this->translationDomainClass;
-
-        $domain = $this->stasher->getDomainByName($translationGroup->getDomain());
-
-        if (! $domain instanceof $translationDomainClass) {
-            $domain = new $translationDomainClass;
-            $domain->setName($translationGroup->getDomain());
-            $this->stasher->flush($domain);
-        }
-
-        $translationClass = $this->translationClass;
-        $translation = new $translationClass();
+        $translation = new \Kunstmaan\TranslatorBundle\Entity\Translation;
         $translation->setLocale($locale);
         $translation->setText($text);
-        $translation->setDomain($domain);
+        $translation->setDomain($translationGroup->getDomain());
         $translation->setFile($filename);
         $translation->setKeyword($translationGroup->getKeyword());
         $translation->setCreatedAt(new \DateTime());
         $translation->setUpdatedAt(new \DateTime());
 
-        $this->stasher->persist($translation);
+        $this->translationRepository->persist($translation);
 
         return $translation;
     }
@@ -86,21 +75,54 @@ class TranslationGroupManager
         $translation->setText($text);
         $translation->setFile($filename);
 
-        return $this->stasher->persist($translation);
+        return $this->translationRepository->persist($translation);
     }
 
-    public function setStasher($stasher)
+    /**
+     * Returns a TranslationGroup with the given keyword and domain, and fills in the translations
+     */
+    public function getTranslationGroupByKeywordAndDomain($keyword, $domain)
     {
-        $this->stasher = $stasher;
+        $translations = $this->translationRepository->findBy(array('keyword' => $keyword, 'domain' => $domain));
+        $translationGroup = new TranslationGroup;
+        $translationGroup->setDomain($domain);
+        $translationGroup->setKeyword($keyword);
+        $translationGroup->setTranslations($translations);
+        return $translationGroup;
     }
 
-    public function setTranslationClass($translationClass)
+    public function getTranslationGroupsByDomain($domain)
     {
-        $this->translationClass = $translationClass;
+        $domain = $this->translationRepository->findOneBy(array('name' => $domain));
+
+        if (! $translationDomain instanceof TranslationDomain) {
+            return array();
+        }
+
+        $translationGroups = new ArrayCollection;
+
+        $translations =  $this->translationRepository->findBy(array('domain' => $translationDomain));
+
+        foreach ($translations as $translation) {
+            $key = $translation->getKeyword();
+
+            if (!$translationGroups->containsKey($key)) {
+                $translationGroup = new TranslationGroup;
+                $translationGroup->setDomain($domain);
+                $translationGroup->setKeyword($translation->getKeyword());
+                $translationGroups->set($key, $translationGroup);
+            }
+
+            $translationGroups->get($key)->addTranslation($translation);
+        }
+
+        return $translationGroups;
     }
 
-    public function setTranslationDomainClass($translationDomainClass)
+    public function setTranslationRepository($translationRepository)
     {
-        $this->translationDomainClass = $translationDomainClass;
+        $this->translationRepository = $translationRepository;
     }
+
+
 }

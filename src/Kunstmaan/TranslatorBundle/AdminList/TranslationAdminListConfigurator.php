@@ -47,18 +47,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
         //     ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
-    /**
-     * @param mixed $item
-     *
-     * @return array
-     */
-    public function getEditUrlFor($item)
-    {
-        return array(
-            'path'   => 'KunstmaanTranslatorBundle_translations_edit',
-            'params' => array('keyword' => $item->getKeyword(), 'locale' => $item->getLocale(), 'domain' => $item->getDomain()->getName())
-        );
-    }
+
 
     /**
      * @return bool
@@ -77,21 +66,9 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
      */
     public function canDelete($item)
     {
-        return false;
+        return true;
     }
 
-    /**
-     * @param object $item
-     *
-     * @return array
-     */
-    public function getDeleteUrlFor($item)
-    {
-        return array(
-            'path'   => 'KunstmaanTranslatorBundle_translations_delete',
-            'params' => array('keyword' => $item->getKeyword(), 'locale' => $item->getLocale(), 'domain' => $item->getDomain()->getName())
-        );
-    }
 
     /**
      * @return string
@@ -135,67 +112,6 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
         return 'KunstmaanTranslatorBundle:Index';
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder The query builder
-     */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
-    {
-        parent::adaptQueryBuilder($queryBuilder);
-        $queryBuilder->innerJoin('b.domain', 'd', 'WITH', 'd.name = b.domain');
-    }
 
-    public function getItems()
-    {
-        return $this->getQuery()->getResult();
-    }
-
-    /**
-     * @return int
-     */
-    public function getCount()
-    {
-        $number = $this->getPreparedQueryBuilder()->select('COUNT(d)')->getQuery()->getSingleScalarResult();
-
-        return $number;
-    }
-
-    public function getPreparedQueryBuilder()
-    {
-        $queryBuilder = $this->getQueryBuilder();
-        $this->adaptQueryBuilder($queryBuilder);
-
-        // Apply filters
-        $filters = $this->getFilterBuilder()->getCurrentFilters();
-
-        /* @var Filter $filter */
-        foreach ($filters as $filter) {
-            /* @var AbstractORMFilterType $type */
-            $type = $filter->getType();
-            $type->setQueryBuilder($queryBuilder);
-            $filter->apply();
-        }
-
-        // Apply sorting
-        if (!empty($this->orderBy)) {
-            $orderBy = $this->orderBy;
-            if (!strpos($orderBy, '.')) {
-                $orderBy = 'b.' . $orderBy;
-            }
-            $queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
-        }
-
-        return $queryBuilder;
-    }
-
-    public function getQuery()
-    {
-        if (!is_null($this->query)) {
-            return $this->query;
-        }
-
-        $this->query =  $this->getPreparedQueryBuilder()->getQuery();
-
-        return $this->query;
-    }
 
 }

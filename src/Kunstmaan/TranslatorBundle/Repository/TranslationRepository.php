@@ -85,4 +85,18 @@ EOQ;
 
         return $result;
     }
+
+    public function flush($entity = null)
+    {
+        if ($entity !== null ){
+            $this->persist($entity);
+        }
+
+        return $this->getEntityManager()->flush();
+    }
+
+    public function persist($entity)
+    {
+        return $this->getEntityManager()->persist($entity);
+    }
 }

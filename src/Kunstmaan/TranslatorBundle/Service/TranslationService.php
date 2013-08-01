@@ -3,13 +3,12 @@
 namespace Kunstmaan\TranslatorBundle\Service;
 
 use Kunstmaan\TranslatorBundle\Model\Translation\NewTranslation;
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 
-class TranslationManager
+class TranslationService
 {
 
     private $stasher;
-    private $translationClass;
-    private $translationDomainClass;
     private $newTranslationValidator;
 
     public function getAllDomains()
@@ -41,13 +40,13 @@ class TranslationManager
         $translationsUpdate = $translations[$domain];
         $translationDomain = $this->stasher->getDomainByName($domain);
 
-        $groups = $this->getTranslationGroupsByDomain($domain);
+        $groups = $this->translationGroupManager->getTranslationGroupsByDomain($domain);
 
         foreach ($groups as $keyword => $group) {
             foreach ($translationsUpdate[$keyword] as $locale => $text) {
 
                 if (!$group->hasTranslation($locale) && trim($text) != '') {
-                    $newTranslation = new $this->translationClass();
+                    $newTranslation = new Translation;
                     $newTranslation->setLocale($locale);
                     $newTranslation->setText($text);
                     $newTranslation->setDomain($translationDomain);
@@ -59,7 +58,18 @@ class TranslationManager
 
             }
         }
-        $this->stasher->updateTranslationGroups($groups);
+        $this->translationGroupManager->updateTranslationGroups($groups);
+    }
+
+    public function updateTranslationGroups(ArrayCollection $groups)
+    {
+        foreach ($groups as $group) {
+            foreach ($group->getTranslations() as $translation) {
+                $this->persist($translation);
+            }
+        }
+
+        return $this->flush();
     }
 
     /**
@@ -96,7 +106,7 @@ class TranslationManager
                 continue;
             }
 
-            $translation = new $this->translationClass();
+            $translation = new Translation;
             $translation->setLocale($locale);
             $translation->setText($text);
             $translation->setDomain($translationDomain);
@@ -121,16 +131,6 @@ class TranslationManager
     public function setStasher($stasher)
     {
         $this->stasher = $stasher;
-    }
-
-    public function setTranslationClass($translationClass)
-    {
-        $this->translationClass = $translationClass;
-    }
-
-    public function setTranslationDomainClass($translationDomainClass)
-    {
-        $this->translationDomainClass = $translationDomainClass;
     }
 
     public function setNewTranslationValidator($newTranslationValidator)

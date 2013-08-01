@@ -11,44 +11,37 @@ class MigrationsService
      */
     private $translationRepository;
 
-    /**
-     * Repository for TranslationDomains
-     * @var \Kunstmaan\TranslatorBundle\Repository\TranslationDomainRepository
-     */
-    private $translationDomainRepository;
-
-    private $translationClass;
-    private $translationDomainClass;
     private $entityManager;
 
     public function getDiffSqlArray()
     {
         $sql = array();
         $sql[] = $this->getNewTranslationSql();
-        $sql[] = $this->getNewTranslationDomainSql();
         $sql = array_merge($sql, $this->getUpdatedTranslationSqlArray());
 
         return $sql;
     }
 
+    // XXX : broken
     // FIXME: needs refactoring
     public function getUpdatedTranslationSqlArray()
     {
-        $primaryKeys = array('domain', 'keyword', 'locale');
-        $ignoreFields = array('domain', 'keyword', 'locale', 'flag');
+        $ignoreFields = array('id');
+        $uniqueKeys = array('domain', 'locale', 'keyword');
+
         $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_UPDATED));
 
         if (count($translations) <= 0) {
             return array();
         }
 
-        $fieldNames = array_merge(
-                $this->entityManager->getClassMetadata($entityClassName)->getFieldNames(),
-                $this->entityManager->getClassMetadata($entityClassName)->getAssociationNames()
-                );
-        $tableName = $this->entityManager->getClassMetadata($this->translationClass)->getTableName();
+        $fieldNames =  $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getFieldNames();
+
+        $tableName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getTableName();
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
+
         $fieldNames = array_diff($fieldNames, $ignoreFields, $primaryKeys);
+
         $sql = array();
 
         foreach ($translations as $translation) {
@@ -140,38 +133,12 @@ class MigrationsService
     {
         $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_NEW));
 
-        return $this->buildInsertSql($translations, $this->translationClass, array('flag'));
-    }
-
-    /**
-     * Get the sql query for all new domains added
-     * @return string sql query
-     */
-    public function getNewTranslationDomainSql()
-    {
-        $domains = $this->translationDomainRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\TranslationDomain::FLAG_NEW));
-
-        return $this->buildInsertSql($domains, $this->translationDomainClass, array('flag'));
+        return $this->buildInsertSql($translations, '\Kunstmaan\TranslatorBundle\Entity\Translation', array('flag'));
     }
 
     public function setTranslationRepository($translationRepository)
     {
         $this->translationRepository = $translationRepository;
-    }
-
-    public function setTranslationDomainRepository($translationDomainRepository)
-    {
-        $this->translationDomainRepository = $translationDomainRepository;
-    }
-
-    public function setTranslationClass($translationClass)
-    {
-        $this->translationClass = $translationClass;
-    }
-
-    public function setTranslationDomainClass($translationDomainClass)
-    {
-        $this->translationDomainClass = $translationDomainClass;
     }
 
     public function setEntityManager($entityManager)

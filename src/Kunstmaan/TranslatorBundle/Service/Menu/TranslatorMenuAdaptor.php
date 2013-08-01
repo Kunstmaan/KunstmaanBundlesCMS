@@ -9,12 +9,6 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 
 class TranslatorMenuAdaptor implements MenuAdaptorInterface
 {
-
-    /**
-     * @var \Kunstmaan\TranslatorBundle\Service\TranslationManager
-     */
-    private $translationManager;
-
     /**
      * Is the bundle enabled?
      * @var boolean
@@ -43,11 +37,6 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
             }
             $children[] = $menuItem;
         }
-    }
-
-    public function setTranslationManager($translationManager)
-    {
-        $this->translationManager = $translationManager;
     }
 
     public function setTranslatorBundleEnabled($translatorBundleEnabled)

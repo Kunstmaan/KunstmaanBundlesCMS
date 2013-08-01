@@ -3,7 +3,7 @@
 	[
 		{
 			"path": ".",
-            "folder_exclude_patterns": ["**/build/coverage/*", "build/logs/*"]
+            "folder_exclude_patterns": ["**/build/coverage/*", "build/logs/*", "/Users/joeri/Development/bundles/KunstmaanTranslatorBundle/build/coverage/"]
 
 		}
 	]

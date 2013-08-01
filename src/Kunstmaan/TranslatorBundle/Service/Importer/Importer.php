@@ -4,9 +4,6 @@ namespace Kunstmaan\TranslatorBundle\Service\Importer;
 use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 
-/**
- * Responsible for importing translation files into the stasher by defined loaders
- */
 class Importer
 {
     /**
@@ -15,11 +12,7 @@ class Importer
      */
     private $loaders = array();
 
-    /**
-     * Stasher for saving data into a resource
-     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
-     */
-    private $stasher;
+    private $translationRepository;
 
     /**
      * TranslationGroupManager
@@ -27,13 +20,6 @@ class Importer
      */
     private $translationGroupManager;
 
-    /**
-     * Import translation files into the stasher from the given file source
-     * @param  \Symfony\Component\Finder\SplFileInfo $file
-     * @param  boolean                               $force override simular translations in the stasher with the one from the file
-     * @return int                                   number of single translations imported into stasher
-     * @throws \Exception                            If the requested file has no loader registered
-     */
     public function import(\Symfony\Component\Finder\SplFileInfo $file, $force = false)
     {
         $this->validateLoaders($this->loaders);
@@ -55,25 +41,15 @@ class Importer
             }
         }
 
-        $this->stasher->flush();
+        $this->translationRepository->flush();
 
         return $importedTranslations;
     }
 
-    /**
-     * Import a single translation into the stasher
-     * @param  string                                                    $keyword
-     * @param  string                                                    $text
-     * @param  string                                                    $locale
-     * @param  string                                                    $filename
-     * @param  string                                                    $domain
-     * @param  boolean                                                   $force    override simular translation in the stasher
-     * @return \Kunstmaan\TranslatorBundle\Model\Translation\Translation the imported translation
-     * @return boolean                                                   Nothing changed, no translation added, no translation updated
-     */
+
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
-        $translationGroup = $this->stasher->getTranslationGroupByKeywordAndDomain($keyword, $domain);
+        $translationGroup = $this->translationGroupManager->getTranslationGroupByKeywordAndDomain($keyword, $domain);
 
         if (!($translationGroup instanceof TranslationGroup)) {
             $translationGroup = $this->translationGroupManager->create($keyword, $domain);
@@ -112,13 +88,14 @@ class Importer
         $this->loaders = $loaders;
     }
 
-    public function setStasher($stasher)
+    public function setTranslationRepository($translationRepository)
     {
-        $this->stasher = $stasher;
+        $this->translationRepository = $translationRepository;
     }
 
     public function setTranslationGroupManager($translationGroupManager)
     {
         $this->translationGroupManager = $translationGroupManager;
     }
+
 }
