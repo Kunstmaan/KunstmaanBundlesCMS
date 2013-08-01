@@ -21,7 +21,7 @@ class {{ entity_class }}Page extends AbstractArticlePage
      * @var {{ entity_class }}Author
      *
      * @ORM\ManyToOne(targetEntity="{{ entity_class }}Author")
-     * @ORM\JoinColumn(name="{{ entity_class|lower }}_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="{{ entity_class|lower }}_author_id", referencedColumnName="id")
      */
     protected $author;
 
@@ -65,10 +65,10 @@ class {{ entity_class }}Page extends AbstractArticlePage
      * @ORM\PrePersist
      */
     public function _prePersist()
-{
-    // Set date to now when none is set
-    if ($this->date == null) {
-        $this->setDate(new \DateTime());
+    {
+        // Set date to now when none is set
+        if ($this->date == null) {
+            $this->setDate(new \DateTime());
+        }
     }
-}
 }
