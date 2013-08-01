@@ -51,7 +51,7 @@ class PageCreatorService Implements ContainerAwareInterface
         }
 
         if (is_null($translations) or (count($translations) == 0)) {
-            throw new \InvalidArgumentException('Needs at least 1 translation in the translations array');
+            throw new \InvalidArgumentException('There has to be at least 1 translation in the translations array');
         }
 
         // TODO: Wrap it all in a transaction.

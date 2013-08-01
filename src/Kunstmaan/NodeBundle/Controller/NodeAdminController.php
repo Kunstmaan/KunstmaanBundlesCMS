@@ -199,10 +199,10 @@ class NodeAdminController extends Controller
         if ($request->get('pub_date')) {
             $date = new \DateTime($request->get('pub_date') . ' ' . $request->get('pub_time'));
             $this->get('kunstmaan_node.admin_node.publisher')->publishLater($nodeTranslation, $date);
-            $this->get('session')->getFlashBag()->add('success', 'Publishing of the Page has been scheduled!');
+            $this->get('session')->getFlashBag()->add('success', 'Publishing of the page has been scheduled');
         } else {
             $this->get('kunstmaan_node.admin_node.publisher')->publish($nodeTranslation);
-            $this->get('session')->getFlashBag()->add('success', 'Page has been published!');
+            $this->get('session')->getFlashBag()->add('success', 'The page has been published');
         }
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
@@ -228,10 +228,10 @@ class NodeAdminController extends Controller
         if ($request->get('unpub_date')) {
             $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
             $this->get('kunstmaan_node.admin_node.publisher')->unPublishLater($nodeTranslation, $date);
-            $this->get('session')->getFlashBag()->add('success', 'Unpublishing of the Page has been scheduled!');
+            $this->get('session')->getFlashBag()->add('success', 'Unpublishing of the page has been scheduled');
         } else {
             $this->get('kunstmaan_node.admin_node.publisher')->unPublish($nodeTranslation);
-            $this->get('session')->getFlashBag()->add('success', 'Page has been unpublished!');
+            $this->get('session')->getFlashBag()->add('success', 'The page has been unpublished');
         }
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
@@ -255,7 +255,7 @@ class NodeAdminController extends Controller
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $this->get('kunstmaan_node.admin_node.publisher')->unSchedulePublish($nodeTranslation);
 
-        $this->get('session')->getFlashBag()->add('success', 'Scheduling canceled!');
+        $this->get('session')->getFlashBag()->add('success', 'The scheduling has been canceled');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
     }
@@ -293,7 +293,7 @@ class NodeAdminController extends Controller
 
         $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
-        $this->get('session')->getFlashBag()->add('success', 'Page has been deleted!');
+        $this->get('session')->getFlashBag()->add('success', 'The page is deleted!');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeParent->getId())));
     }
@@ -320,7 +320,7 @@ class NodeAdminController extends Controller
         $version = $request->get('version');
 
         if (empty($version) || !is_numeric($version)) {
-            throw new InvalidArgumentException('No version specified!');
+            throw new InvalidArgumentException('No version was specified');
         }
 
         /* @var NodeVersionRepository $nodeVersionRepo */
@@ -329,7 +329,7 @@ class NodeAdminController extends Controller
         $nodeVersion = $nodeVersionRepo->find($version);
 
         if (is_null($nodeVersion)) {
-            throw new InvalidArgumentException('Version does not exist!');
+            throw new InvalidArgumentException('Version does not exist');
         }
 
         /* @var NodeTranslation $nodeTranslation */
@@ -345,7 +345,7 @@ class NodeAdminController extends Controller
 
         $this->get('event_dispatcher')->dispatch(Events::REVERT, new RevertNodeAction($node, $nodeTranslation, $newNodeVersion, $clonedPage, $nodeVersion, $page));
 
-        $this->get('session')->getFlashBag()->add('success', 'Page has been reverted!');
+        $this->get('session')->getFlashBag()->add('success', 'The page contents has been reverted');
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array(
             'id' => $id,
@@ -379,7 +379,7 @@ class NodeAdminController extends Controller
         $type = $request->get('type');
 
         if (empty($type)) {
-            throw new InvalidArgumentException('Please specify a type of page to create!');
+            throw new InvalidArgumentException('Please specify a type of page you want to create');
         }
 
         /* @var HasNodeInterface $newPage */
@@ -559,7 +559,7 @@ class NodeAdminController extends Controller
 
                 $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
-                $this->get('session')->getFlashBag()->add('success', 'Page has been edited!');
+                $this->get('session')->getFlashBag()->add('success', 'The page has been edited');
 
                 $params = array(
                     'id' => $node->getId(),
