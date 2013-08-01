@@ -18,6 +18,11 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface,
 class PageCreatorService Implements ContainerAwareInterface
 {
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @param HasNodeInterface $pageTypeInstance The page
      * @param array            $translations     containing arrays. Sample:
      * [
@@ -36,7 +41,7 @@ class PageCreatorService Implements ContainerAwareInterface
      *      parent: type node, nodetransation or page.
      *      page_internal_name: string. name the page will have in the database.
      *      set_online: bool. if true the page will be set as online after creation.
-     *      todo: creator: user?
+     *      creator: username
      *
      * Automatically calls the ACL + sets the slugs to empty when the page is an Abstract node.
      *
@@ -62,8 +67,8 @@ class PageCreatorService Implements ContainerAwareInterface
         $userRepo = $em->getRepository('KunstmaanAdminBundle:User');
         $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
 
-        // TODO: Get this from options.
-        $creator = $userRepo->findOneBy(array('username' => 'pagecreator'));
+        $pagecreator = array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
+        $creator = $userRepo->findOneBy(array('username' => $pagecreator));
 
         $parent = isset($options['parent']) ? $options['parent'] : null;
 
@@ -145,7 +150,6 @@ class PageCreatorService Implements ContainerAwareInterface
         return $rootNode;
     }
 
-    protected $container;
     /**
      * Sets the Container.
      *
