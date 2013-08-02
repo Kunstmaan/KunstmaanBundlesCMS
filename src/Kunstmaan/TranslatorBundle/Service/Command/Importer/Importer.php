@@ -46,7 +46,6 @@ class Importer
         return $importedTranslations;
     }
 
-
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
         $translationGroup = $this->translationGroupManager->getTranslationGroupByKeywordAndDomain($keyword, $domain);

@@ -6,8 +6,6 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
-use Doctrine\ORM\QueryBuilder;
-
 /**
  * TranslationAdminListConfigurator
  */
@@ -47,8 +45,6 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
         //     ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
-
-
     /**
      * @return bool
      */
@@ -68,7 +64,6 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
     {
         return true;
     }
-
 
     /**
      * @return string
@@ -111,7 +106,5 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
     {
         return 'KunstmaanTranslatorBundle:Index';
     }
-
-
 
 }

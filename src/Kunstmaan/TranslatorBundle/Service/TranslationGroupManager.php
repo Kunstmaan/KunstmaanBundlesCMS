@@ -28,7 +28,7 @@ class TranslationGroupManager
 
     /**
      * Create new TranslationGroup instance (with the given locales of any are set)
-     * @param  array  $locales
+     * @param  array            $locales
      * @return TranslationGroup
      */
     public function newGroupInstance($locales = array())
@@ -88,6 +88,7 @@ class TranslationGroupManager
         $translationGroup->setDomain($domain);
         $translationGroup->setKeyword($keyword);
         $translationGroup->setTranslations($translations);
+
         return $translationGroup;
     }
 
@@ -123,6 +124,5 @@ class TranslationGroupManager
     {
         $this->translationRepository = $translationRepository;
     }
-
 
 }

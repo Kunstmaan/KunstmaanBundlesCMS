@@ -52,11 +52,6 @@ services:
             - [setTranslationGroupManager, [@kunstmaan_translator.service.group_manager]] # default, maken via config var
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
 
-    kunstmaan_translator.service.stasher.doctrine_orm:
-        class: "Kunstmaan\TranslatorBundle\Service\Stasher\DoctrineORMStasher"
-        calls:
-            - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
-
     kunstmaan_translator.service.group_manager:
         class: "Kunstmaan\TranslatorBundle\Service\TranslationGroupManager"
         calls:
@@ -65,8 +60,8 @@ services:
     kunstmaan_translator.service.translation:
         class: "Kunstmaan\TranslatorBundle\Service\TranslationService"
         calls:
-            - [setStasher, [@kunstmaan_translator.service.stasher.doctrine_orm]]
             - [setNewTranslationValidator, [@kunstmaan_translator.validation.new_translation]]
+            - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
 
     kunstmaan_translator.service.translator.loader:
         class: Kunstmaan\TranslatorBundle\Service\Translator\Loader
@@ -81,7 +76,6 @@ services:
             - [setDebug, [%kernel.debug%]]
             - [setCacheDir, [%kuma_translator.cache_dir%]]
             - [setLogger, [@logger]]
-
 
     kunstmaan_translator.service.translator.cache_validator:
         class: Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator

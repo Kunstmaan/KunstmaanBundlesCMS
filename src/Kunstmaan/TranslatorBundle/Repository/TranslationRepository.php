@@ -88,7 +88,7 @@ EOQ;
 
     public function flush($entity = null)
     {
-        if ($entity !== null ){
+        if ($entity !== null) {
             $this->persist($entity);
         }
 

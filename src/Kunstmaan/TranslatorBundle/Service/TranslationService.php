@@ -13,7 +13,12 @@ class TranslationService
 
     public function getAllDomains()
     {
-        return $this->stasher->getAllDomains();
+        return $this->translationDomainRepository->findBy(array(), array('name' => 'asc'));
+    }
+
+    public function resetTranslationFlags()
+    {
+        $this->translationRepository->resetAllFlags();
     }
 
     public function getFirstDefaultDomainName()

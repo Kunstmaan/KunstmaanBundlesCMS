@@ -15,7 +15,7 @@ class TranslationAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('text', 'text');
-        $builder->add('domainName', 'hidden');
+        $builder->add('domain', 'hidden');
         $builder->add('locale', 'hidden');
         $builder->add('keyword', 'hidden');
     }
