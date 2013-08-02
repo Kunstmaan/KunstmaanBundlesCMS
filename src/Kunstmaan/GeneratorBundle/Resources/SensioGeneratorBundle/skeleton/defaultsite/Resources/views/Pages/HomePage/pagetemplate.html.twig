@@ -2,6 +2,16 @@
     <div class="span9">
         {{ render_pageparts(page, 'main') }}
     </div>
+    <div class="span9">
+        <!-- some content before the slides here -->
+        {{ render_pageparts(page, 'slider') }}
+
+        {% set pps = getpageparts(page, 'slider') %}
+        {% for pp in pps %}
+            {{ loop.index }}: {% if pp.tickText is not empty %}{{ pp.tickText }}{% endif %}<br/>
+        {% endfor %}
+        <!-- some content after the slides here -->
+    </div>
     <div class="span3">
         {{ render_pageparts(page, 'banners') }}
     </div>
