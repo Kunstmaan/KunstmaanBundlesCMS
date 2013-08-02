@@ -73,7 +73,7 @@ class AclNativeHelper
         $token = $this->securityContext->getToken(); // for now lets imagine we will have token i.e user is logged in
         $user  = $token->getUser();
 
-        $uR = array();
+        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
         if (is_object($user)) {
             $userRoles = $user->getRoles();
             foreach ($userRoles as $role) {

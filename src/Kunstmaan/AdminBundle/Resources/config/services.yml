@@ -58,10 +58,6 @@ services:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper
         arguments: ["@doctrine.orm.entity_manager", "@security.context"]
 
-    kunstmaan_admin.guest.security.authentication.listener:
-        class: Kunstmaan\AdminBundle\Helper\Security\Http\Firewall\GuestUserListener
-        arguments: ["@security.context", "user_provider", "provider_key"]
-        
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@event_dispatcher", "@kunstmaan_utilities.shell", "@kernel"]

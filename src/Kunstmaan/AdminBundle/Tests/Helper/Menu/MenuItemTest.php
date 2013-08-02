@@ -68,8 +68,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSetRole()
     {
-        $this->object->setRole('ROLE_GUEST');
-        $this->assertEquals('ROLE_GUEST', $this->object->getRole());
+        $this->object->setRole('ROLE_CUSTOM');
+        $this->assertEquals('ROLE_CUSTOM', $this->object->getRole());
     }
 
     /**

@@ -104,10 +104,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testHasRole()
     {
-        $this->object->addRole('ROLE_GUEST');
-        $this->assertTrue($this->object->hasRole('ROLE_GUEST'));
+        $this->object->addRole('ROLE_CUSTOM');
+        $this->assertTrue($this->object->hasRole('ROLE_CUSTOM'));
 
-        $this->object->removeRole('ROLE_GUEST');
-        $this->assertFalse($this->object->hasRole('ROLE_GUEST'));
+        $this->object->removeRole('ROLE_CUSTOM');
+        $this->assertFalse($this->object->hasRole('ROLE_CUSTOM'));
     }
 }
