@@ -47,14 +47,18 @@ class KunstmaanTranslatorExtension extends Extension
     {
         $container->setAlias('translator', 'kunstmaan_translator.service.translator.translator');
         $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
-        $this->discoverTranslationDirectories($config, $container);
+        $this->registerTranslatorConfiguration($config, $container);
 
         // overwrites everything
-        $translator->addMethodCall('addStasherResources', array());
+        $translator->addMethodCall('addDatabaseResources', array());
     }
 
-    // FIXME: needs refactoring :)
-    public function discoverTranslationDirectories($config, $container)
+    /**
+     * Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension
+     * $this->registerTranslatorConfiguration($config['translator'], $container);
+     * Used to load all other translation files
+     */
+    public function registerTranslatorConfiguration($config, $container)
     {
         $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
 

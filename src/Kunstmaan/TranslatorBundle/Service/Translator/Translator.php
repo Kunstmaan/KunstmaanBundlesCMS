@@ -20,14 +20,14 @@ class Translator extends SymfonyTranslator
     private $resourceCacher;
 
     /**
-     * Add resources from the stasher into the translator resources
+     * Add resources from the database
      * So the translator knows where to look (first) for specific translations
      * This function will also look if these resources are loaded from the stash or from the cache
      */
-    public function addStasherResources()
+    public function addDatabaseResources()
     {
         if ($this->addResourcesFromCacher() === false) {
-            $this->addResourcesFromStasherAndCache();
+            $this->addResourcesFromDatabaseAndCacheThem();
         }
     }
 
@@ -51,7 +51,7 @@ class Translator extends SymfonyTranslator
      * Add resources from the stash and cache them
      * @param boolean $cacheResources cache resources after retrieving them from the stasher
      */
-    public function addResourcesFromStasherAndCache($cacheResources = true)
+    public function addResourcesFromDatabaseAndCacheThem($cacheResources = true)
     {
         $resources = $this->translationRepository->getAllDomainsByLocale();
         $this->addResources($resources);
