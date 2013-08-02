@@ -2,8 +2,15 @@
 
 namespace Kunstmaan\SeoBundle\Helper;
 
-
-class OrderPreparer {
+/**
+ * Prepares an order with it's orderitems for conversion.
+ *
+ * Class OrderPreparer
+ *
+ * @package Kunstmaan\SeoBundle\Helper
+ */
+class OrderPreparer
+{
 
     /**
      * Fully prepares an order for conversion.
@@ -14,22 +21,23 @@ class OrderPreparer {
      * So the same SKUs on multiple lines need to be grouped.
      *
      * @param Order $order
+     *
      * @return Order
      */
     public function prepare(Order $order)
     {
-        /** @var $orderitems OrderItem[] */
-        $orderitems = $order->orderItems;
+        /** @var $orderItems OrderItem[] */
+        $orderItems = $order->orderItems;
 
         /** @var $newOrderItems OrderItem[] */
         $newOrderItems = array();
 
-        foreach ($orderitems as $item) {
+        foreach ($orderItems as $item) {
             if (!isset($newOrderItems[$item->getSKU()])) {
                 $newOrderItems[$item->getSKU()] = $item;
             } else {
-                $newOrderItems[$item->getSKU()]->setQuantity( $newOrderItems[$item->getSKU()]->getQuantity() + $item->getQuantity() );
-                $newOrderItems[$item->getSKU()]->setTaxes( $newOrderItems[$item->getSKU()]->getTaxes() + $item->getTaxes() );
+                $newOrderItems[$item->getSKU()]->setQuantity($newOrderItems[$item->getSKU()]->getQuantity() + $item->getQuantity());
+                $newOrderItems[$item->getSKU()]->setTaxes($newOrderItems[$item->getSKU()]->getTaxes() + $item->getTaxes());
             }
         }
 

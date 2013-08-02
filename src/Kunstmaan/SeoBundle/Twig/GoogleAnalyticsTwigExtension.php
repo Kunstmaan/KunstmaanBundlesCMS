@@ -2,10 +2,12 @@
 
 namespace Kunstmaan\SeoBundle\Twig;
 
-use Kunstmaan\SeoBundle\Helper\Order;
-use Kunstmaan\SeoBundle\Helper\OrderPreparer;
-use Twig_Extension;
-use Twig_Environment;
+use Kunstmaan\SeoBundle\Helper\Order,
+    Kunstmaan\SeoBundle\Helper\OrderConverter,
+    Kunstmaan\SeoBundle\Helper\OrderPreparer;
+
+use Twig_Extension,
+    Twig_Environment;
 
 /**
  * Twig extensions for Google Analytics
@@ -31,16 +33,34 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
 
     protected $accountId;
 
+    /**
+     * @param string $id The Google Analytics Account ID.
+     */
+    public function setAccountID($id)
+    {
+        $this->accountId = $id;
+    }
+
     /** @var OrderPreparer */
     protected $orderPreparer;
 
+    /**
+     * @param OrderPreparer $preparer
+     */
+    public function setOrderPreparer($preparer)
+    {
+        $this->orderConverter = $preparer;
+    }
+
+    /** @var OrderConverter */
     protected $orderConverter;
 
-    public function __construct($accountId = null, $orderPreparer, $orderConverter)
+    /**
+     * @param OrderConverter $converter
+     */
+    public function setOrderConverter($converter)
     {
-        $this->accountId = $accountId;
-        $this->orderPreparer = $orderPreparer;
-        $this->orderConverter = $orderConverter;
+        $this->orderConverter = $converter;
     }
 
 
@@ -49,8 +69,13 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
      *
      * If the options are not set it'll try and load the account ID from your parameters (google.analytics.account_id)
      *
-     * @param Twig_Environment $environment
-     * @param array|null $options {account_id: 'UA-XXXXX-Y'}
+     * @param $environment \Twig_Environment
+     * @param $options     array|null        Example: {account_id: 'UA-XXXXX-Y'}
+     *
+     * @return string The HTML rendered.
+     *
+     * @throws \Twig_Error_Runtime When the Google Analytics ID is nowhere to be found.
+     *
      */
     public function renderInitialize(\Twig_Environment $environment, $options = null)
     {
@@ -71,52 +96,24 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         }
 
         $template = $environment->loadTemplate('KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:init.html.twig');
+
         return $template->render($options);
     }
 
 
     /**
-     * @param Twig_Environment $environment
-     * @param $order Order
+     * @param Twig_Environment  $environment
+     * @param Order             $order
+     *
+     * @return string The HTML rendered.
      */
-    public function renderECommerceTracking(\Twig_Environment $environment, Order $order) {
+    public function renderECommerceTracking(\Twig_Environment $environment, Order $order)
+    {
         $order = $this->orderPreparer->prepare($order);
         $options = $this->orderConverter->convert($order);
         $template = $environment->loadTemplate('KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:ecommerce_tracking.html.twig');
+
         return $template->render($options);
-    }
-
-
-
-    /**
-     * Prefer the given
-     * @param Twig_Environment $environment
-     */
-    private function setOptionIfNotSet(&$arr, $option, $value) {
-        if ($this->isOptionSet($arr, $option)) {
-            $arr[$option] = $value;
-        }
-    }
-
-    private function isOptionSet($arr, $option) {
-        return (!isset($arr[$option]) || !empty($arr[$option]));
-    }
-
-    /**
-     * Not sure if this works ... doesn't appear to see all the globals.
-     *
-     * @param Twig_Environment $environment
-     * @param $name
-     * @return null
-     */
-    private function getGlobal(\Twig_Environment $environment, $name) {
-        foreach ($environment->getGlobals() as $k => $v) {
-            if ($k == $name) {
-                return $v;
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -127,4 +124,52 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         return 'kuma_google_analytics_twig_extension';
     }
 
+
+
+    /**
+     * Prefer the given option if already set. Otherwise set the value given.
+     *
+     * @param array  &$arr   This is modified in place.
+     * @param string $option The key in the $arr array.
+     * @param mixed  $value  The new value if the option wasn't set already.
+     */
+    private function setOptionIfNotSet(&$arr, $option, $value)
+    {
+        if ($this->isOptionSet($arr, $option)) {
+            $arr[$option] = $value;
+        }
+    }
+
+    /**
+     * Check if an option is set.
+     *
+     * @param array  $arr    The array to check.
+     * @param string $option The key in the $arr array.
+     *
+     * @return bool
+     */
+    private function isOptionSet($arr, $option)
+    {
+        return (!isset($arr[$option]) || !empty($arr[$option]));
+    }
+
+    /**
+     * Not sure if this works ... doesn't appear to see all the globals.
+     * If this works we could search the globals for a Google Analytics ID as well.
+     *
+     * @param Twig_Environment $environment
+     * @param string           $name
+     *
+     * @return null
+     */
+    private function getGlobal(\Twig_Environment $environment, $name)
+    {
+        foreach ($environment->getGlobals() as $k => $v) {
+            if ($k == $name) {
+                return $v;
+            }
+        }
+
+        return null;
+    }
 }

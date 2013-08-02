@@ -11,22 +11,34 @@ namespace Kunstmaan\SeoBundle\Helper;
  * API: https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingEcommerce?hl=nl
  *
  * Class Order
+ *
  * @package Kunstmaan\SeoBundle\Helper
  */
-class Order {
-
+class Order
+{
 
     /**
      * @var string REQUIRED! The unique identifier for this Order/Transaction.
-     *
-     * @returns Order
      */
     protected $transactionID;
-    public function setTransactionID($id) {
+
+    /**
+     * @param $id number The ID.
+     *
+     * @return $this
+     */
+    public function setTransactionID($id)
+    {
         $this->transactionID = $id;
+
         return $this;
     }
-    public function getTransactionID() {
+
+    /**
+     * @return string
+     */
+    public function getTransactionID()
+    {
         return $this->transactionID;
     }
 
@@ -34,34 +46,65 @@ class Order {
      * @var string The name of the store that handled the Order/Transaction.
      */
     protected $storeName = '';
-    public function setStoreName($name) {
+
+    /**
+     * @param $name string The name of the store.
+     *
+     * @return $this
+     */
+    public function setStoreName($name)
+    {
         $this->storeName = $name;
+
         return $this;
     }
-    public function getStoreName() {
+
+    /**
+     * @return string
+     */
+    public function getStoreName()
+    {
         return $this->storeName;
     }
 
     /**
-     * REQUIRED! The total. Calculated automatically and returned as string.
+     * REQUIREd!
+     * @return string The total. Calculated automatically and returned as string.
      */
-    public function getTotal() {
+    public function getTotal()
+    {
         return $this->accumulatePropertyOnOrderItems('getValue');
     }
 
-    // MAYBE: Make a setting to include taxes for shipping or not? ;o
-    public function getTaxesTotal() {
+    /**
+     * @todo Make a setting to include taxes for shipping or not? ;o
+     *
+     * @return int|string
+     */
+    public function getTaxesTotal()
+    {
         return $this->accumulatePropertyOnOrderItems('getTaxes');
     }
 
-
-
     protected $shippingTotal = '';
-    public function setShippingTotal($total) {
+
+    /**
+     * @param $total string|number
+     *
+     * @return $this
+     */
+    public function setShippingTotal($total)
+    {
         $this->shippingTotal = (Double)$total;
+
         return $this;
     }
-    public function getShippingTotal() {
+
+    /**
+     * @return string
+     */
+    public function getShippingTotal()
+    {
         return $this->shippingTotal;
     }
 
@@ -74,11 +117,24 @@ class Order {
      * @var string City the order was shipped to.
      */
     protected $city = '';
-    public function setCity($city) {
+
+    /**
+     * @param $city string
+     *
+     * @return $this
+     */
+    public function setCity($city)
+    {
         $this->city = $city;
+
         return $this;
     }
-    public function getCity() {
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
         return $this->city;
     }
 
@@ -86,28 +142,61 @@ class Order {
      * @var string State or province the order was shipped to.
      */
     protected $stateOrProvince = '';
-    public function setStateOrProvince($stateOrProvince) {
+
+    /**
+     * @param $stateOrProvince string
+     *
+     * @return $this
+     */
+    public function setStateOrProvince($stateOrProvince)
+    {
         $this->stateOrProvince = $stateOrProvince;
+
         return $this;
     }
-    public function getStateOrProvince() {
+
+    /**
+     * @return string
+     */
+   public function getStateOrProvince()
+   {
         return $this->stateOrProvince;
-    }
+   }
 
     /**
      * @var string Country the order was shipped to.
      */
     protected $country = '';
-    public function setCountry($country) {
+
+    /**
+     * @param $country string
+     *
+     * @return $this
+     */
+    public function setCountry($country)
+    {
         $this->country = $country;
+
         return $this;
     }
-    public function getCountry() {
+
+    /**
+     * @return string
+     */
+    public function getCountry()
+    {
         return $this->country;
     }
 
 
-    private function accumulatePropertyOnOrderItems($property) {
+    /**
+     * Loops over the OrderItems and accumulates the value of the given property. Can also be a getter.
+     *
+     * @param $property
+     * @return int|string
+     */
+    private function accumulatePropertyOnOrderItems($property)
+    {
         if (count($this->orderItems) == 0) {
             return '';
         }

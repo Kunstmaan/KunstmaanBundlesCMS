@@ -2,18 +2,25 @@
 
 namespace Kunstmaan\SeoBundle\Helper;
 
-
-class OrderConverter {
+/**
+ * Class OrderConverter
+ *
+ * @package Kunstmaan\SeoBundle\Helper
+ */
+class OrderConverter
+{
 
     /**
      * Converts an Order object to an Array.
      *
      * @param Order $order
+     *
      * @return array
      */
     public function convert(Order $order)
     {
         $orderItems = array();
+
         foreach ($order->orderItems as $orderItem) {
             /** @var $orderItem OrderItem */
             $orderItems[] = array(
@@ -39,7 +46,15 @@ class OrderConverter {
         );
     }
 
-    protected function formatNumber($number) {
+    /**
+     * Formats a number to a format google an easily comprehend.
+     *
+     * @param $number number
+     *
+     * @return string
+     */
+    protected function formatNumber($number)
+    {
         return number_format($number, 2, '.', '');
     }
 }

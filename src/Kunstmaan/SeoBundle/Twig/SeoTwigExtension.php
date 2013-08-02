@@ -49,7 +49,7 @@ class SeoTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param AbstractEntity $entity
+     * @param AbstractPage $entity
      *
      * @return Seo
      */
@@ -58,13 +58,12 @@ class SeoTwigExtension extends Twig_Extension
         return $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
     }
 
-
     /**
      * The first value that is not null or empty will be returned.
      *
-     * @param AbstractEntity $entity The entity for which you want the page title.
+     * @param AbstractPage $entity The entity for which you want the page title.
      *
-     * @return The page title. Will look in the SEO meta first, then the NodeTranslation, then the page.
+     * @return string The page title. Will look in the SEO meta first, then the NodeTranslation, then the page.
      */
     public function getTitleFor(AbstractPage $entity)
     {
@@ -77,30 +76,10 @@ class SeoTwigExtension extends Twig_Extension
         return $this->getPreferredValue($arr);
     }
 
-
-    private function getSeoTitle(AbstractPage $entity = null)
-    {
-        if (is_null($entity)) {
-            return null;
-        }
-
-        $seo = $this->getSeoFor($entity);
-
-        if (!is_null($seo)) {
-            $title = $seo->getMetaTitle();
-            if (!empty($title)) {
-                return $title;
-            }
-        }
-
-        return null;
-    }
-
-
     /**
-     *
      * @param AbstractPage $entity
-     * @param null $default If given we'll return this text if no SEO title was found.
+     * @param null|string  $default If given we'll return this text if no SEO title was found.
+     *
      * @return string
      */
     public function getTitleForPageOrDefault(AbstractPage $entity = null, $default = null)
@@ -121,8 +100,9 @@ class SeoTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param AbstractPage $entity   The page
-     * @param string       $platform The platform
+     * @param \Twig_Environment $environment
+     * @param AbstractPage      $entity      The page
+     * @param string            $platform    The platform like facebook or linkedin.
      *
      * @throws \InvalidArgumentException
      * @return boolean|string
@@ -166,25 +146,10 @@ class SeoTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param array $values
-     *
-     * @return string
-     */
-    protected function getPreferredValue(array $values)
-    {
-        foreach ($values as $v) {
-            if (!is_null($v) && !empty($v)) {
-                return $v;
-            }
-        }
-
-        return '';
-    }
-
-    /**
-     * @param AbstractEntity $entity      The entity
-     * @param object         $currentNode The current node
-     * @param string         $template    The template
+     * @param \Twig_Environment $environment
+     * @param AbstractEntity    $entity      The entity
+     * @param mixed             $currentNode The current node
+     * @param string            $template    The template
      *
      * @return string
      */
@@ -206,6 +171,47 @@ class SeoTwigExtension extends Twig_Extension
     public function getName()
     {
         return 'kuma_seo_twig_extension';
+    }
+
+
+
+    /**
+     * @param array $values
+     *
+     * @return string
+     */
+    protected function getPreferredValue(array $values)
+    {
+        foreach ($values as $v) {
+            if (!is_null($v) && !empty($v)) {
+                return $v;
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * @param AbstractPage $entity
+     *
+     * @return null|string
+     */
+    private function getSeoTitle(AbstractPage $entity = null)
+    {
+        if (is_null($entity)) {
+            return null;
+        }
+
+        $seo = $this->getSeoFor($entity);
+
+        if (!is_null($seo)) {
+            $title = $seo->getMetaTitle();
+            if (!empty($title)) {
+                return $title;
+            }
+        }
+
+        return null;
     }
 
 }

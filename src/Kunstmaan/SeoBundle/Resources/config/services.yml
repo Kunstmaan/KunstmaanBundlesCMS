@@ -9,16 +9,19 @@ services:
             - { name: twig.extension }
 
     kunstmaan_seo.google_analytics.order_preparer:
-            class: Kunstmaan\SeoBundle\Helper\OrderPreparer
+        class: Kunstmaan\SeoBundle\Helper\OrderPreparer
 
     kunstmaan_seo.google_analytics.order_converter:
         class: Kunstmaan\SeoBundle\Helper\OrderConverter
 
     kunstmaan_seo.google_analytics.twig.extension:
-            class: Kunstmaan\SeoBundle\Twig\GoogleAnalyticsTwigExtension
-            arguments: ["%google.analytics.account_id%", "@kunstmaan_seo.google_analytics.order_preparer", "@kunstmaan_seo.google_analytics.order_converter"]
-            tags:
-                - { name: twig.extension }
+        class: Kunstmaan\SeoBundle\Twig\GoogleAnalyticsTwigExtension
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [ setAccountID, [ "%google.analytics.account_id%" ] ]
+            - [ setOrderPreparer, [ "@kunstmaan_seo.google_analytics.order_preparer" ] ]
+            - [ setOrderConverter, [ "@kunstmaan_seo.google_analytics.order_converter" ] ]
 
     kunstmaan_seo.node.listener:
         class: Kunstmaan\SeoBundle\EventListener\NodeListener

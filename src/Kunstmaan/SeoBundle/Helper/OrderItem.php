@@ -2,18 +2,36 @@
 
 namespace Kunstmaan\SeoBundle\Helper;
 
-
-class OrderItem {
+/**
+ * Class OrderItem
+ *
+ * @package Kunstmaan\SeoBundle\Helper
+ */
+class OrderItem
+{
 
     /**
      * @var string REQUIRED! The unique productcode.
      */
     protected $sku;
-    public function setSKU($sku) {
+
+    /**
+     * @param $sku string
+     *
+     * @return $this
+     */
+    public function setSKU($sku)
+    {
         $this->sku = $sku;
+
         return $this;
     }
-    public function getSKU() {
+
+    /**
+     * @return string
+     */
+    public function getSKU()
+    {
         return $this->sku;
     }
 
@@ -21,11 +39,24 @@ class OrderItem {
      * @var string The name of the product.
      */
     protected $name = '';
-    public function setName($name) {
+
+    /**
+     * @param $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
         $this->name = $name;
+
         return $this;
     }
-    public function getName() {
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -33,11 +64,24 @@ class OrderItem {
      * @var string Category or variation.
      */
     protected $categoryOrVariation = '';
-    public function setCategoryOrVariation($catOrVar) {
+
+    /**
+     * @param $catOrVar string
+     *
+     * @return $this
+     */
+    public function setCategoryOrVariation($catOrVar)
+    {
         $this->categoryOrVariation = $catOrVar;
+
         return $this;
     }
-    public function getCategoryOrVariation() {
+
+    /**
+     * @return string
+     */
+    public function getCategoryOrVariation()
+    {
         return $this->categoryOrVariation;
     }
 
@@ -45,11 +89,26 @@ class OrderItem {
      * @var number REQUIRED! The price of a single unity.
      */
     protected $unitPrice;
-    public function setUnitPrice($unitPrice) {
-        $this->unitPrice = (Double)$unitPrice;
+
+    /**
+     * REQUIRED!
+     *
+     * @param $unitPrice number|string
+     *
+     * @return $this
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = (Double) $unitPrice;
+
         return $this;
     }
-    public function getUnitPrice() {
+
+    /**
+     * @return number
+     */
+    public function getUnitPrice()
+    {
         return $this->unitPrice;
     }
 
@@ -57,15 +116,35 @@ class OrderItem {
      * @var number REQUIRED! The quantity in which the item was ordered.
      */
     protected $quantity = 1;
-    public function setQuantity($quantity) {
-        $this->quantity = (Double)$quantity;
+
+    /**
+     * REQUIRED!
+     *
+     * @param $quantity
+     *
+     * @return $this
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = (Double) $quantity;
+
         return $this;
     }
-    public function getQuantity() {
+
+    /**
+     * @return int|number
+     */
+    public function getQuantity()
+    {
         return $this->quantity;
     }
 
-    public function getValue() {
+    /**
+     * The total value of the OrderItem (excluding taxes)
+     * @return number
+     */
+    public function getValue()
+    {
         return ($this->unitPrice * $this->quantity);
     }
 
@@ -73,11 +152,24 @@ class OrderItem {
      * @var number The amount of taxes. Not a percentage value but the actual value. In total. Not for a single item.
      */
     protected $taxes;
-    public function setTaxes($taxes) {
-        $this->taxes = (Double)$taxes;
+
+    /**
+     * @param $taxes
+     *
+     * @return $this
+     */
+    public function setTaxes($taxes)
+    {
+        $this->taxes = (Double) $taxes;
+
         return $this;
     }
-    public function getTaxes() {
+
+    /**
+     * @return number
+     */
+    public function getTaxes()
+    {
         return $this->taxes;
     }
 }
