@@ -111,9 +111,11 @@ EOT
                 'The name of your article entity: <comment>News</comment>',
                 '',
             ));
-            while (empty($entity)):
+            while (empty($entity)) {
                 $entity = $dialog->ask($output, $dialog->getQuestion('Entity', $entity), $entity);
-            endwhile;
+            }
+            //$entity = Validators::validateEntityName($input->getOption('entity'));
+            die('test');
             $input->setOption('entity', $entity);
         }
 
