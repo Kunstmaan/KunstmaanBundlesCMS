@@ -111,9 +111,7 @@ EOT
                 'The name of your article entity: <comment>News</comment>',
                 '',
             ));
-            while (empty($entity)) {
-                $entity = $dialog->ask($output, $dialog->getQuestion('Entity', $entity), $entity);
-            }
+            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('Entity', $entity), function ($entity) { $this->validateEntityName($entity); });
             $input->setOption('entity', $entity);
         }
 
@@ -130,6 +128,15 @@ EOT
 
             $prefix = $dialog->ask($output, $dialog->getQuestion('Tablename prefix', $prefix), $prefix);
             $input->setOption('prefix', empty($prefix) ? null : $prefix);
+        }
+    }
+
+    private function validateEntityName($entity)
+    {
+        if (empty($entity)) {
+            throw new \RuntimeException('You have to provide a entity name!');
+        } else {
+            return $entity;
         }
     }
 
