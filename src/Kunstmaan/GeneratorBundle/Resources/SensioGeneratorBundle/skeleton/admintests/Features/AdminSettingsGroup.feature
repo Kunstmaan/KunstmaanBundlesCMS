@@ -33,7 +33,7 @@ Feature: AdminSettingsGroup
     Given I log in as "admin"
     And I edit group "test_group"
     Then I should see "Edit group"
-    When I additionally select "ROLE_GUEST" from "group[rolesCollection][]"
+    When I additionally select "IS_AUTHENTICATED_ANONYMOUSLY" from "group[rolesCollection][]"
     And I press "Edit group"
     Then I should see "has been edited"
 
