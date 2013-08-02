@@ -26,35 +26,41 @@ use Symfony\Component\HttpFoundation\File\File;
  * Class MediaCreatorService
  * @package Kunstmaan\MediaBundle\Helper\Services
  */
-class MediaCreatorService {
+class MediaCreatorService
+{
 
     /** @var EntityManager */
     protected $em;
     /** @var FolderRepository */
     protected $folderRepository;
 
+    /**
+     * @param EntityManager $em
+     */
     public function setEntityManager(EntityManager $em)
     {
         $this->em = $em;
         $this->folderRepository = $em->getRepository('KunstmaanMediaBundle:Folder');
     }
 
-    const CONTEXT_console = 'console';
-    const CONTEXT_web = 'web';
+    const CONTEXT_CONSOLE = 'console';
+    const CONTEXT_WEB = 'web';
 
     /**
-     * @param $filePath string The full filepath of the asset you want to upload. The filetype will be automatically detected.
+     * @param $filePath string  The full filepath of the asset you want to upload. The filetype will be automatically detected.
      * @param $folderId integer For now you still have to manually pass the correct folder ID.
-     * @param string $context This is needed because the Filesystem basepath differs between web & console application env.
+     * @param string $context   This is needed because the Filesystem basepath differs between web & console application env.
+     *
      * @return Media
      */
-    public function createFile($filePath, $folderId, $context = MediaCreatorService::CONTEXT_web) {
+    public function createFile($filePath, $folderId, $context = MediaCreatorService::CONTEXT_WEB)
+    {
         $fileHandler = new FileHandler();
 
         // Get file from FilePath.
         $data = new File($filePath, true);
 
-        if ($context == MediaCreatorService::CONTEXT_console) {
+        if ($context == MediaCreatorService::CONTEXT_CONSOLE) {
             $fileHandler->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local("web/uploads/media/", true));
         }
 
