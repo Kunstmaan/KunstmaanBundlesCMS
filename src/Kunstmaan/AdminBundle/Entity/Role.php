@@ -3,15 +3,16 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Role Entity
  *
  * @ORM\Entity
  * @ORM\Table( name="kuma_roles" )
+ * @UniqueEntity("role")
  */
 class Role implements RoleInterface
 {
@@ -25,6 +26,7 @@ class Role implements RoleInterface
 
     /**
      * @ORM\Column(type="string", name="role", unique=true, length=70)
+     * @NotBlank()
      */
     protected $role;
 
@@ -77,13 +79,5 @@ class Role implements RoleInterface
     {
         $this->role = $role;
     }
-
-    /**
-     * @param ClassMetadata $metadata
-     */
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('role', new NotBlank());
-    }
-
+    
 }
