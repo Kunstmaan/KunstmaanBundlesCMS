@@ -114,8 +114,6 @@ EOT
             while (empty($entity)) {
                 $entity = $dialog->ask($output, $dialog->getQuestion('Entity', $entity), $entity);
             }
-            //$entity = Validators::validateEntityName($input->getOption('entity'));
-            die('test');
             $input->setOption('entity', $entity);
         }
 
