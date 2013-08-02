@@ -134,6 +134,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("~~~CSS~~~", "{% include '" . $bundle->getName() .":Layout:_css.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
         GeneratorUtils::replace("~~~TOP_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_header.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
         GeneratorUtils::replace("~~~FOOTER_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_footer.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
+        GeneratorUtils::replace("~~~BUNDLENAME~~~", $this->getBundleNameWithoutBundle($bundle), $dirPath . '/Layout/layout.html.twig');
 
         $this->filesystem->copy($skeletonDir  . '/Form/fields.html.twig', $dirPath . '/Form/fields.html.twig', true);
 
@@ -145,6 +146,11 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("[ \"KunstmaanAdminBundle\"", "[ \"KunstmaanAdminBundle\", \"". $bundle->getName()  ."\"", $rootDir . '/config/config.yml');
 
         $output->writeln('Configure assetic : <info>OK</info>');
+    }
+
+    private function getBundleNameWithoutBundle(Bundle $bundle)
+    {
+        return preg_replace('/bundle$/i', '', strtolower($bundle->getName()));
     }
 
     /**
