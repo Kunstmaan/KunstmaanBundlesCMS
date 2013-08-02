@@ -26,7 +26,6 @@ class Role implements RoleInterface
 
     /**
      * @ORM\Column(type="string", name="role", unique=true, length=70)
-     *
      * @NotBlank()
      */
     protected $role;
