@@ -31,7 +31,7 @@ class TranslationAdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\TranslatorBundle\Entity\Translation',
+            'data_class' => '\Kunstmaan\TranslatorBundle\Entity\Translation',
         ));
     }
 }

@@ -1,8 +1,5 @@
 parameters:
-#    kunstmaan_translator_list.example.class: Kunstmaan\TranslatorBundle\Example
     kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
-    kunstmaan_translator.orm.translation.class: 'Kunstmaan\TranslatorBundle\Entity\Translation'
-    kunstmaan_translator.orm.translation_domain.class: 'Kunstmaan\TranslatorBundle\Entity\TranslationDomain'
 
 services:
     kunstmaan_translator.menu.adaptor:
@@ -100,8 +97,6 @@ services:
         class: "Kunstmaan\TranslatorBundle\Service\Migrations\MigrationsService"
         calls:
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
-            - [setTranslationClass, [%kunstmaan_translator.orm.translation.class%]]
-            - [setTranslationDomainClass, [%kunstmaan_translator.orm.translation_domain.class%]]
             - [setEntityManager, [@doctrine.orm.default_entity_manager]]
 
     kunstmaan_translator.service.command.diff:

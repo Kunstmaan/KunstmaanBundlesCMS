@@ -102,11 +102,6 @@ class Translation
        }
    }
 
-   public function getAdminType()
-   {
-        return new \Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
-   }
-
     public function getId()
     {
         return $this->id;

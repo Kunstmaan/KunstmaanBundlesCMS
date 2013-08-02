@@ -3,13 +3,13 @@
 namespace Kunstmaan\TranslatorBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminBundle\AdminList\AbstractSettingsAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
  * TranslationAdminListConfigurator
  */
-class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
+class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
 
     /**
@@ -24,8 +24,8 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
      */
     public function buildFilters()
     {
-        $this->addFilter('text', new StringFilterType('text'), 'Text');
-        $this->addFilter('domain', new StringFilterType('name', 'd'), 'domain');
+        $this->addFilter('text', new StringFilterType('text'), 'text');
+        $this->addFilter('domain', new StringFilterType('domain'), 'domain');
         $this->addFilter('keyword', new StringFilterType('keyword'), 'keyword');
         $this->addFilter('locale', new StringFilterType('locale'), 'locale');
     }
@@ -45,66 +45,23 @@ class TranslationAdminListConfigurator extends AbstractDoctrineORMAdminListConfi
         //     ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
-    /**
-     * @return bool
-     */
     public function canAdd()
     {
-        return true;
+        return false;
     }
 
-    /**
-     * Return if current user can delete the specified item
-     *
-     * @param array|object $item
-     *
-     * @return bool
-     */
-    public function canDelete($item)
-    {
-        return true;
-    }
-
-    /**
-     * @return string
-     */
     public function getBundleName()
     {
         return 'KunstmaanTranslatorBundle';
     }
 
-    /**
-     * @return string
-     */
     public function getEntityName()
     {
         return 'Translation';
     }
 
-    /**
-     * Override path convention (because settings is a virtual admin subtree)
-     *
-     * @param string $suffix
-     *
-     * @return string
-     */
-    public function getPathByConvention($suffix = null)
-    {
-        if (empty($suffix)) {
-            return sprintf('%s_translations', $this->getBundleName());
-        }
-
-        return sprintf('%s_translations_%s', $this->getBundleName(), $suffix);
-    }
-
-    /**
-     * Override controller path (because actions for different entities are defined in a single Settings controller).
-     *
-     * @return string
-     */
     public function getControllerPath()
     {
         return 'KunstmaanTranslatorBundle:Index';
     }
-
 }

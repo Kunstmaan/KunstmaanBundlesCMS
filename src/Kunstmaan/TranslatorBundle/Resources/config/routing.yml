@@ -1,4 +1,4 @@
 KunstmaanTranslatorBundle_translations:
     resource: "@KunstmaanTranslatorBundle/Controller/TranslatorController.php"
     type:     annotation
-    prefix:   /admin/translations
+    prefix:   /admin/settings/translations

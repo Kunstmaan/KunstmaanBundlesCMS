@@ -6,9 +6,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 
 class TranslatorController extends AdminListController
 {
@@ -18,28 +20,27 @@ class TranslatorController extends AdminListController
      */
     private $adminListConfigurator;
 
+
     /**
-     * @Route("/all", name="KunstmaanTranslatorBundle_translations")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
+     * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
+     * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
      */
     public function indexAction()
     {
-        return parent::doIndexAction($this->getAdminListConfigurator());
-    }
+        $request = $this->getRequest();
+        /* @var AdminList $adminList */
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($this->getAdminListConfigurator());
+        $adminList->bindRequest($request);
 
-    /**
-     * @Route("/all", name="KunstmaanTranslatorBundle_translations_show")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-     */
-    public function showAction()
-    {
-        return parent::doIndexAction($this->getAdminListConfigurator());
+        return array(
+            'adminlist' => $adminList,
+        );
     }
 
     /**
      * The add action
      *
-     * @Route("/add", name="KunstmaanTranslatorBundle_translations_add")
+     * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
@@ -56,13 +57,36 @@ class TranslatorController extends AdminListController
      * @internal param $eid
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_translations_edit")
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_edit")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
+     * @Template("KunstmaanTranslatorBundle:Translator:editTranslation.html.twig")
      */
     public function editAction($id)
     {
-        return parent::doEditAction($this->getAdminListConfigurator(), $id);
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+
+        $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->find($id);
+        $form = $this->createForm(new TranslationAdminType(), $translation);
+
+        if ('POST' == $request->getMethod()) {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+
+                $em->persist($translation);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'Translation has been edited!');
+
+                return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_translations'));
+            }
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'translation' => $translation
+        );
     }
 
     /**
@@ -70,7 +94,7 @@ class TranslatorController extends AdminListController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws NotFoundHttpException
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_translations_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete")
      * @Method({"GET", "POST"})
      */
     public function deleteAction($id)
