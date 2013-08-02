@@ -38,7 +38,7 @@ class ACLPermissionCreatorService Implements ContainerAwareInterface
         }
         $acl = $aclProvider->createAcl($objectIdentity);
 
-        $securityIdentity = new RoleSecurityIdentity('ROLE_GUEST');
+        $securityIdentity = new RoleSecurityIdentity('IS_AUTHENTICATED_ANONYMOUSLY');
         $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_VIEW);
 
         $securityIdentity = new RoleSecurityIdentity('ROLE_ADMIN');
