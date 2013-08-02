@@ -89,6 +89,18 @@ services:
         tags:
             - { name: twig.extension }
 
+    kunstmaan_node.page_creator_service:
+        class: Kunstmaan\NodeBundle\Helper\Services\PageCreatorService
+        calls:
+            - [ setEntityManager, [ "@doctrine.orm.entity_manager" ] ]
+            - [ setACLPermissionCreatorService, [ "@kunstmaan_node.acl_permission_creator_service" ] ]
+
+    kunstmaan_node.acl_permission_creator_service:
+        class: Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService
+        calls:
+            - [ setAclProvider, [ "@security.acl.provider" ] ]
+            - [ setObjectIdentityRetrievalStrategy, [ "@security.acl.object_identity_retrieval_strategy" ] ]
+
     gedmo.listener.tree:
         class: Gedmo\Tree\TreeListener
         tags:

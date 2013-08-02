@@ -2,25 +2,59 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface,
-    Kunstmaan\NodeBundle\Entity\Node;
+use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\NodeBundle\Repository\NodeRepository,
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Kunstmaan\AdminBundle\Repository\UserRepository;
+
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface,
+    Kunstmaan\NodeBundle\Entity\Node,
+    Kunstmaan\NodeBundle\Repository\NodeRepository,
     Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
 
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface,
-    Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Kunstmaan\SeoBundle\Repository\SeoRepository;
+
+
 
 /**
  * Service to create new pages.
+ *
  */
-class PageCreatorService Implements ContainerAwareInterface
+class PageCreatorService
 {
+    /** @var EntityManager */
+    protected $entityManager;
+    public function setEntityManager($entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /** @var ACLPermissionCreatorService */
+    protected $aclPermissionCreatorService;
+    public function setACLPermissionCreatorService($aclPermissionCreatorService)
+    {
+        $this->aclPermissionCreatorService = $aclPermissionCreatorService;
+    }
+
     /**
-     * @var ContainerInterface
+     * Sets the Container. This is still here for backwards compatibility.
+     * The ContainerAwareInterface has been removed so the container won't be injected automatically.
+     * This function is just there for code that calls it manually.
+     *
+     * @param ContainerInterface $container A ContainerInterface instance
+     *
+     * @api
      */
-    protected $container;
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->setEntityManager($container->get('doctrine.orm.entity_manager'));
+        $this->setACLPermissionCreatorService($container->get('kunstmaan_node.acl_permission_creator_service'));
+    }
+
+
 
     /**
      * @param HasNodeInterface $pageTypeInstance The page
@@ -60,11 +94,13 @@ class PageCreatorService Implements ContainerAwareInterface
         }
 
         // TODO: Wrap it all in a transaction.
-        $em = $this->container->get('doctrine.orm.entity_manager');
+        $em = $this->entityManager;
 
-        /* @var NodeRepository $nodeRepo */
+        /** @var NodeRepository $nodeRepo */
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
+        /** @var $userRepo UserRepository */
         $userRepo = $em->getRepository('KunstmaanAdminBundle:User');
+        /** @var $seoRepo SeoRepository */
         $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
 
         $pagecreator = array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
@@ -143,22 +179,9 @@ class PageCreatorService Implements ContainerAwareInterface
         }
 
         // ACL
-        $aclService = new ACLPermissionCreatorService();
-        $aclService->setContainer($this->container);
-        $aclService->createPermission($rootNode);
+        $this->aclPermissionCreatorService->createPermission($rootNode);
 
         return $rootNode;
     }
 
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
 }
