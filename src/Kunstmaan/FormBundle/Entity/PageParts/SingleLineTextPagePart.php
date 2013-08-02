@@ -157,7 +157,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $sfsf;
         $label = $this->getLabel();
-        $formBuilder->add('formwidget_' . $this->getUniqueId(), new StringFormSubmissionType($label));
+        $formBuilder->add('formwidget_' . $this->getUniqueId(), new StringFormSubmissionType($label), array('required' => $this->getRequired()));
         $formBuilder->setData($data);
         if ($this->getRequired()) {
             $thiss = $this;

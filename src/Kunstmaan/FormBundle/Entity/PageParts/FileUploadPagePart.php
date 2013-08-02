@@ -57,7 +57,7 @@ class FileUploadPagePart extends AbstractFormPagePart
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $ffsf;
         $label = $this->getLabel();
-        $formBuilder->add('formwidget_' . $this->getUniqueId(), new FileFormSubmissionType($label, $this->getRequired()));
+        $formBuilder->add('formwidget_' . $this->getUniqueId(), new FileFormSubmissionType($label, $this->getRequired()), array('required' => $this->getRequired()));
         $formBuilder->setData($data);
 
         if ($this->getRequired()) {

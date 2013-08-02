@@ -114,7 +114,8 @@ class CheckboxPagePart extends AbstractFormPagePart
             new BooleanFormSubmissionType(),
             array(
                 'label' => $this->getLabel(),
-                'constraints' => $constraints
+                'constraints' => $constraints,
+                'required' => $this->getRequired()
             )
         );
         $formBuilder->setData($data);
