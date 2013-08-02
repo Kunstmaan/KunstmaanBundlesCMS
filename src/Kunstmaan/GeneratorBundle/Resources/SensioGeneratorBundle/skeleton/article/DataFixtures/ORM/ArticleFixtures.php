@@ -50,18 +50,18 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $overviewPage = new {{ entity_class }}OverviewPage();
         $overviewPage->setTitle('Article overview page');
 
-        $translations = [];
-        $translations[] = ['language' =>  'en', 'callback' => function($page, $translation, $seo) {
+        $translations = array();
+        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Article overview page');
             $translation->setSlug('article-overview');
-        }];
+        });
 
-        $options = [
+        $options = array(
             'parent' => $homePage,
             'page_internal_name' => 'article_overview_page',
             'set_online' => true,
             'creator' => 'Admin'
-        ];
+        );
 
         $pageCreator->createPage($overviewPage, $translations, $options);
 
@@ -79,17 +79,17 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
 
-            $translations = [];
-            $translations[] = ['language' =>  'en', 'callback' => function($page, $translation, $seo) use($i) {
+            $translations = array();
+            $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) use($i) {
                 $translation->setTitle('Article title '.$i);
                 $translation->setSlug('article-1'.$i);
-            }];
+            });
 
-            $options = [
+            $options = array(
                 'parent' => $overviewPage,
                 'set_online' => true,
                 'creator' => 'Admin'
-            ];
+            );
 
             $articlePage = $pageCreator->createPage($articlePage, $translations, $options);
 
