@@ -41,10 +41,11 @@ class PageCreatorService
 
     /**
      * Sets the Container. This is still here for backwards compatibility.
+     *
      * The ContainerAwareInterface has been removed so the container won't be injected automatically.
      * This function is just there for code that calls it manually.
      *
-     * @param ContainerInterface $container A ContainerInterface instance
+     * @param ContainerInterface $container A ContainerInterface instance.
      *
      * @api
      */
@@ -57,8 +58,8 @@ class PageCreatorService
 
 
     /**
-     * @param HasNodeInterface $pageTypeInstance The page
-     * @param array            $translations     containing arrays. Sample:
+     * @param HasNodeInterface $pageTypeInstance The page.
+     * @param array            $translations     Containing arrays. Sample:
      * [
      *  [   "language" => "nl",
      *      "callback" => function($page, $translation) {
@@ -71,7 +72,9 @@ class PageCreatorService
      *      }
      *  ]
      * ]
-     * @param array            $options          -
+     * Perhaps it's cleaner when you create one array and append another array for each language.
+     *
+     * @param array            $options          Possible options:
      *      parent: type node, nodetransation or page.
      *      page_internal_name: string. name the page will have in the database.
      *      set_online: bool. if true the page will be set as online after creation.
@@ -104,7 +107,7 @@ class PageCreatorService
         $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
 
         $pagecreator = array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
-        $creator = $userRepo->findOneBy(array('username' => $pagecreator));
+        $creator     = $userRepo->findOneBy(array('username' => $pagecreator));
 
         $parent = isset($options['parent']) ? $options['parent'] : null;
 
@@ -114,7 +117,7 @@ class PageCreatorService
 
         // We need to get the language of the first translation so we can create the rootnode.
         // This will also create a translationnode for that language attached to the rootnode.
-        $first = true;
+        $first    = true;
         $rootNode = null;
 
         /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo*/

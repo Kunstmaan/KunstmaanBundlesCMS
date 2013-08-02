@@ -39,7 +39,7 @@ class ACLPermissionCreatorService
      * The ContainerAwareInterface has been removed so the container won't be injected automatically.
      * This function is just there for code that calls it manually.
      *
-     * @param ContainerInterface $container A ContainerInterface instance
+     * @param ContainerInterface $container A ContainerInterface instance.
      *
      * @api
      */
