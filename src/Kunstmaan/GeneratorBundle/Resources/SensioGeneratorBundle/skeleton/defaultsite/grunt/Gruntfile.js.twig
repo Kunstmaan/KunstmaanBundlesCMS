@@ -22,29 +22,38 @@ module.exports = function (grunt) {
                 files: {{ bundle.getName() }}.js,
                 tasks: ['modernizr:{{ bundle.getName() }}', 'jshint:{{ bundle.getName() }}'],
                 options: {
-                    nospawn: true
+                    nospawn: true,
+                    livereload: true
                 }
             },
             {{ bundle.getName() }}_scss: {
                 files: {{ bundle.getName() }}.scss,
-                tasks: ['modernizr:{{ bundle.getName() }}']
+                tasks: ['modernizr:{{ bundle.getName() }}'],
+                options: {
+                    livereload: true
+                }
             },
             {{ bundle.getName() }}_twig: {
                 files: {{ bundle.getName() }}.twig,
-                tasks: ['modernizr:{{ bundle.getName() }}']
+                tasks: ['modernizr:{{ bundle.getName() }}'],
+                options: {
+                    livereload: true
+                }
             },
             {{ bundle.getName() }}_images: {
                 files: {{ bundle.getName() }}.img,
                 tasks: ['imagemin:{{ bundle.getName() }}'],
                 options: {
-                    event: ['added', 'changed']
+                    event: ['added', 'changed'],
+                    livereload: true
                 }
             },
             {{ bundle.getName() }}_svg: {
                 files: {{ bundle.getName() }}.svg,
                 tasks: ['svg2png:{{ bundle.getName() }}'],
                 options: {
-                    event: ['added', 'changed']
+                    event: ['added', 'changed'],
+                    livereload: true
                 }
             },
         },
