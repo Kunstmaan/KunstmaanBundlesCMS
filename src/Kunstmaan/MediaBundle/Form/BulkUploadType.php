@@ -38,13 +38,14 @@ class BulkUploadType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('files', 'file', array(
-                  "required" => false,
-                  "attr" => array(
-                      "accept" => $this->accept,
-                      "multiple" => "multiple",
-                  ),
-                  'data_class' => null
+        $builder->add(
+                'files', 'file', array(
+                "required" => false,
+                "attr" => array(
+                    "accept" => $this->accept,
+                    "multiple" => "multiple",
+                ),
+                'data_class' => null
              )
         );
     }

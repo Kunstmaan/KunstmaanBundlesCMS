@@ -82,7 +82,7 @@ class MediaController extends Controller
 
         $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
 
-        $this->get('session')->getFlashBag()->add('success', 'Media \''.$medianame.'\' has been deleted!');
+        $this->get('session')->getFlashBag()->add('success', 'Entry \''.$medianame.'\' has been deleted!');
 
         return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
     }
@@ -118,7 +118,7 @@ class MediaController extends Controller
                     $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
                 }
 
-                $this->get('session')->getFlashBag()->add('success', 'New media has been uploaded!');
+                $this->get('session')->getFlashBag()->add('success', 'New entry has been uploaded');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
             }
