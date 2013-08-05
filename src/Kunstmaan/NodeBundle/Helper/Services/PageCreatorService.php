@@ -41,6 +41,7 @@ class PageCreatorService Implements ContainerAwareInterface
      *      parent: type node, nodetransation or page.
      *      page_internal_name: string. name the page will have in the database.
      *      set_online: bool. if true the page will be set as online after creation.
+     *      hidden_from_nav: bool. if true the page will not be show in the navigation
      *      creator: username
      *
      * Automatically calls the ACL + sets the slugs to empty when the page is an Abstract node.
@@ -99,12 +100,17 @@ class PageCreatorService Implements ContainerAwareInterface
                 // This returns the rootnode.
                 $rootNode = $nodeRepo->createNodeFor($pageTypeInstance, $language, $creator, $pageInternalName);
 
+                if (array_key_exists('hidden_from_nav', $options)) {
+                    $rootNode->setHiddenFromNav($options['hidden_from_nav']);
+                }
+
                 if (!is_null($parent)) {
                     if ($parent instanceof HasPagePartsInterface) {
                         $parent = $nodeRepo->getNodeFor($parent);
                     }
                     $rootNode->setParent($parent);
                 }
+
                 $em->persist($rootNode);
                 $em->flush();
 
