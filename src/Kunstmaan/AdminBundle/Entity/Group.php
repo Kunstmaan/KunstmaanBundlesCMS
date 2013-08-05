@@ -3,15 +3,12 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use InvalidArgumentException;
+
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ExecutionContext;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-
-use FOS\UserBundle\Model\GroupInterface;
-
 use Symfony\Component\Security\Core\Role\RoleInterface;
-
+use FOS\UserBundle\Model\GroupInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_groups")
+ * @Assert\Callback(methods={"isGroupValid"})
  */
 class Group implements RoleInterface, GroupInterface
 {
@@ -32,6 +30,7 @@ class Group implements RoleInterface, GroupInterface
     protected $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     protected $name;
@@ -224,17 +223,6 @@ class Group implements RoleInterface, GroupInterface
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * @param ClassMetadata $metadata
-     */
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('name', new NotBlank());
-        $metadata->addConstraint(new Callback(array(
-            'methods' => array('isGroupValid'),
-        )));
     }
 
     /**
