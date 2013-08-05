@@ -128,8 +128,6 @@ EOT
             };
 
             $entity = $dialog->askAndValidate($output, $dialog->getQuestion('entity', $entity), $entityValidation, false, $entity);
-            echo($entity."\n");
-            die("sdkfhskljghsdf");
             $input->setOption('entity', $entity);
         }
 
