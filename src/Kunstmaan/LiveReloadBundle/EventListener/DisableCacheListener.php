@@ -31,7 +31,6 @@ class DisableCacheListener implements EventSubscriberInterface {
         }
 
         if (!$this->enabled
-            // || $response->isRedirection()
             || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'), 'text/css'))
             || 'css' !== $request->getRequestFormat()
         ) {
