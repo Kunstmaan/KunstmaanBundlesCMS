@@ -66,27 +66,31 @@
                         {% if nodemenu is defined %}
                             {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                             {% for node in activeSubnode.children %}
-                                <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
-                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">{{ node.title }}</a>
-                                    {% if node.children|length>0 %}
-                                        <!-- Mobile submenu toggle -->
-                                        <div class="js-navigation__toggle navigation__toggle navigation__toggle--submenu">
-                                            <i class="icon-chevron-down"></i>
-                                            <i class="icon-chevron-up"></i>
-                                        </div>
-                                        <!-- Submenu -->
-                                        <ul class="navigation navigation__sublevel">
-                                            {% for node in node.children %}
-                                                <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
-                                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">
-                                                        {{ node.title }}
-                                                        {% if(node.active) %}<i class="icon-chevron-right"></i>{% endif %}
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </li>
+                                {% if not node.node.isHiddenFromNav() %}
+                                    <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">{{ node.title }}</a>
+                                        {% if node.children|length>0 %}
+                                            <!-- Mobile submenu toggle -->
+                                            <div class="js-navigation__toggle navigation__toggle navigation__toggle--submenu">
+                                                <i class="icon-chevron-down"></i>
+                                                <i class="icon-chevron-up"></i>
+                                            </div>
+                                            <!-- Submenu -->
+                                            <ul class="navigation navigation__sublevel">
+                                                {% for node in node.children %}
+                                                    {% if not node.node.isHiddenFromNav() %}
+                                                        <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
+                                                            <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">
+                                                                {{ node.title }}
+                                                                {% if(node.active) %}<i class="icon-chevron-right"></i>{% endif %}
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
                             {% endfor %}
                         {% endif %}
                     </nav>
