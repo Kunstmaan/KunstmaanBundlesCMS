@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  *
  * @ORM\Entity
  * @ORM\Table( name="kuma_roles" )
+ * @UniqueEntity("role")
  */
 class Role implements RoleInterface
 {
@@ -25,6 +26,7 @@ class Role implements RoleInterface
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string", name="role", unique=true, length=70)
+     * @NotBlank()
      */
     protected $role;
 

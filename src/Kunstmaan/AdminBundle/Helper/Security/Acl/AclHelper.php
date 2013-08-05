@@ -143,7 +143,7 @@ class AclHelper
 
         if (is_object($user)) {
             $userRoles = $user->getRoles();
-            $uR        = array();
+          $uR        = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
             foreach ($userRoles as $role) {
                 // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
                 if ($role !== 'ROLE_USER') {
@@ -158,7 +158,7 @@ class AclHelper
             ) . '-' . $user->getUserName() . '"';
         } else {
             $userRoles = $token->getRoles();
-            $uR        = array();
+            $uR        = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
             /* @var $role RoleInterface */
             foreach ($userRoles as $role) {
                 $role = $role->getRole();

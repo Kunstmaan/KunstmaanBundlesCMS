@@ -23,7 +23,7 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $role1 = $this->createRole($manager, 'ROLE_PERMISSIONMANAGER');
         $role2 = $this->createRole($manager, 'ROLE_ADMIN');
         $role3 = $this->createRole($manager, 'ROLE_SUPER_ADMIN');
-        $role4 = $this->createRole($manager, 'ROLE_GUEST');
+        $role4 = $this->createRole($manager, 'IS_AUTHENTICATED_ANONYMOUSLY');
 
         $manager->flush();
 
