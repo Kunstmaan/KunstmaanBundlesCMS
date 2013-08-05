@@ -24,7 +24,7 @@ class UserType extends AbstractType
                 ->add('plainPassword', 'repeated', array(
                     'type' => 'password',
                     'required' => $options['password_required'],
-                    'invalid_message' => "The passwords don't match!",
+                    'invalid_message' => "errors.password.dontmatch",
                     'first_options' => array(
                         'label' => 'settings.user.password'
                     ),

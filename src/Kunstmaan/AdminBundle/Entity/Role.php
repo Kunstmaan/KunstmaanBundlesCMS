@@ -3,9 +3,8 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\Role\RoleInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Role Entity
@@ -25,6 +24,7 @@ class Role implements RoleInterface
     protected $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", name="role", unique=true, length=70)
      * @NotBlank()
      */
@@ -33,7 +33,7 @@ class Role implements RoleInterface
     /**
      * Populate the role field
      *
-     * @param string $role ROLE_FOO etc
+     * @param string $role
      */
     public function __construct($role)
     {
@@ -79,5 +79,4 @@ class Role implements RoleInterface
     {
         $this->role = $role;
     }
-    
 }

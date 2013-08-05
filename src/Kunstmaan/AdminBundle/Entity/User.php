@@ -106,11 +106,11 @@ class User extends AbstractUser
         $metadata->addPropertyConstraint('email', new Email());
         $metadata->addConstraint(new UniqueEntity(array(
                 'fields'  => 'username',
-                'message' => 'This username already exists.',
+                'message' => 'errors.user.loginexists',
         )));
         $metadata->addConstraint(new UniqueEntity(array(
                 'fields'  => 'email',
-                'message' => 'There is already a user with this email address.',
+                'message' => 'errors.user.emailexists',
         )));
     }
 
