@@ -31,7 +31,7 @@ class DisableCacheListener implements EventSubscriberInterface {
         }
 
         if (!$this->enabled
-            || $response->isRedirection()
+            // || $response->isRedirection()
             || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'), 'text/css'))
             || 'css' !== $request->getRequestFormat()
         ) {
@@ -40,6 +40,10 @@ class DisableCacheListener implements EventSubscriberInterface {
 
         $response->headers->set('Cache-Control', 'no-cache');
         $response->headers->set('ETag', null);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->setPrivate();
+        $response->setMaxAge(0);
+        $event->setResponse($response);
     }
 
     public static function getSubscribedEvents()
