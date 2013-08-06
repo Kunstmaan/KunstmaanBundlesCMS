@@ -29,8 +29,8 @@ class FeatureContext extends AbstractContext
     {
         $this->parameters = $parameters;
 
-        if ($this->parameters['multilanguage']) {
-            $this->lang = "/".$this->parameters['language'];
+        if ($this->parameters['language'] === 'multi') {
+            $this->lang = "/en";
         }
 
         // Load Context Class
