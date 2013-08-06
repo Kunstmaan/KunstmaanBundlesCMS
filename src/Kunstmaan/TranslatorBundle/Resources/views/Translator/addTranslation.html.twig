@@ -1,0 +1,20 @@
+{% extends 'KunstmaanTranslatorBundle::Default/layout.html.twig' %}
+
+{% block subbreadcrumb %}
+    <li><a href="{{ path('KunstmaanAdminBundle_settings') }}">{{ 'settings.title' | trans }}</a></li>
+    <li><a href="{{ path('KunstmaanAdminBundle_settings_translations') }}">{{ 'settings.translations' | trans }}</a></li>
+    <li class="active">{{ 'settings.translation.add' | trans }}</li>
+{% endblock %}
+
+{% block content %}
+    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+    <form class="form-horizontal" action="{{ path('KunstmaanTranslatorBundle_settings_translations_add') }}" method="post" {{ form_enctype(form) }} novalidate>
+        <fieldset>
+            {{ form_rest(form) }}
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">{{ 'settings.user.add' | trans }}</button>
+                <button onclick="window.location = '{{ path('KunstmaanTranslatorBundle_settings_translations') }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

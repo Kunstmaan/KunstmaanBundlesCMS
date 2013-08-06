@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 class TranslatorController extends AdminListController
 {
@@ -49,12 +50,37 @@ class TranslatorController extends AdminListController
      *
      * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
+     * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
      * @return array
      */
     public function addAction()
     {
-        return parent::doAddAction($this->getAdminListConfigurator());
+        /* @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $translation = new Translation();
+
+        $form = $this->createForm(new TranslationAdminType(), $translation);
+        $form->add('locale','language', array('choices' => $this->container->getParameter('kuma_translator.managed_locales'), 'empty_value' => 'Choose a language'));
+        $form->add('domain','text');
+        $form->add('keyword','text');
+
+
+        if ('POST' == $request->getMethod()) {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $em->persist($translation);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'Translation succesful created');
+
+                return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+            }
+        }
+
+        return array(
+            'form' => $form->createView(),
+        );
     }
 
     /**
@@ -107,15 +133,6 @@ class TranslatorController extends AdminListController
     public function deleteAction($id)
     {
         return parent::doDeleteAction($this->getAdminListConfigurator(), $id);
-    }
-
-    /**
-     * @Route("/all", name="KunstmaanAdminBundle_settings_translations")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
-     */
-    public function settings()
-    {
-        return parent::doIndexAction($this->getAdminListConfigurator());
     }
 
     public function setAdminListConfigurator($adminListConfigurator)

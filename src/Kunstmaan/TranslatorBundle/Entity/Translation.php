@@ -2,6 +2,7 @@
 namespace Kunstmaan\TranslatorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationRepository")
@@ -17,6 +18,7 @@ class Translation
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
      */
     protected $id;
 
@@ -24,6 +26,7 @@ class Translation
      * The translations keyword to use in your template or call from the translator
      *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $keyword;
 
@@ -31,6 +34,7 @@ class Translation
      * The translations keyword to use in your template or call from the translator
      *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $locale;
 
@@ -46,11 +50,13 @@ class Translation
      *
      * @var string
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     protected $text;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $domain;
 

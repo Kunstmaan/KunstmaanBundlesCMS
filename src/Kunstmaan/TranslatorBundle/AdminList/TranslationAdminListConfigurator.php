@@ -47,7 +47,7 @@ class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigur
 
     public function canAdd()
     {
-        return false;
+        return true;
     }
 
     public function getBundleName()
