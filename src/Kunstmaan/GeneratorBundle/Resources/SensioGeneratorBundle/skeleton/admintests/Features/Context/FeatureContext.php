@@ -143,6 +143,20 @@ class FeatureContext extends AbstractContext
     /**
      * @param string $pageName
      *
+     * @Given /^(?:|I )am on page "(?P<page>[^"]+)"$/
+     * @When /^(?:|I )go to page "(?P<page>[^"]+)"$/
+     */
+    public function goToPage($pageName)
+    {
+        if (strncmp($pageName, "/", strlen("/"))) {
+            $pageName = "/".$pageName;
+        }
+        $this->getSession()->visit($this->locatePath($this->lang.$pageName));
+    }
+
+    /**
+     * @param string $pageName
+     *
      * @Given /^I (?:am on|go to) the (.*) page$/
      */
     public function iAmOnASpecificPage($pageName)

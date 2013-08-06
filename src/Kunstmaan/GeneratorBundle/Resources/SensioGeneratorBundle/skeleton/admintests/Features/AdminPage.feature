@@ -31,7 +31,7 @@ Feature: AdminPage
 
   @javascript
   Scenario: Navigate to the page
-    Given I go to "en/contentsubpage"
+    Given I go to "/contentsubpage"
     Then I should see "page is not online"
 
   @javascript
@@ -43,7 +43,7 @@ Feature: AdminPage
   #ensureCleanSession is required to clear the cache
   @javascript @ensureCleanSession
   Scenario: Navigate to the page
-    Given I go to "en/contentsubpage"
+    Given I go to "/contentsubpage"
     Then I should not see "page is not online"
 
   @javascript
