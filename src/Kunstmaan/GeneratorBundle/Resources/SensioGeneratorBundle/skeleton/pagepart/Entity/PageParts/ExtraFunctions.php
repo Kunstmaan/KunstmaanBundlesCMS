@@ -5,7 +5,7 @@
      */
     public function getDefaultView()
     {
-        return "{{ bundle }}:Pageparts:{{ pagepart }}/view.html.twig";
+        return "{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig";
     }
 
     /**

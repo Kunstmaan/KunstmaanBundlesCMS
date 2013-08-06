@@ -70,7 +70,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->dialog->writeSection($output, 'Pagepart generation');
+        $this->dialog->writeSection($output, 'PagePart generation');
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
         $fields = array();
@@ -80,7 +80,7 @@ EOT
 
         $this->createGenerator()->generate($bundle, $this->pagepartName, $fields, $this->sections);
 
-        $this->dialog->writeSection($output, 'Pagepart successfully created', 'bg=green;fg=black');
+        $this->dialog->writeSection($output, 'PagePart successfully created', 'bg=green;fg=black');
         $this->output->writeln('Make sure you update your database first before you test the pagepart:');
         $this->output->writeln('    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>');
         $this->output->writeln('    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>');
@@ -128,7 +128,7 @@ EOT
         /**
          * Ask the name of the pagepart
          */
-        $nameQuestion = $this->dialog->getQuestion('Pagepart name (eg. ContentBoxPagePart)', null);
+        $nameQuestion = $this->dialog->getQuestion('PagePart name (eg. ContentBoxPagePart)', null);
         while (true) {
             $name = $this->dialog->ask($output, $nameQuestion, null);
             try {
@@ -152,8 +152,8 @@ EOT
 
                 // Check that entity does not already exist
                 $bundle = $this->getApplication()->getKernel()->getBundle($this->bundleName);
-                if (file_exists($bundle->getPath().'/Entity/Pageparts/'.$name.'.php')) {
-                    $this->writeError(sprintf('Pagepart or entity "%s" already exists', $name));
+                if (file_exists($bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
+                    $this->writeError(sprintf('PagePart or entity "%s" already exists', $name));
                     continue;
                 }
 
@@ -265,7 +265,7 @@ EOT
                             continue;
                         }
 
-                        // TODO: add extra validation, entity should not be a Page or Pagepart
+                        // TODO: add extra validation, entity should not be a Page or PagePart
 
                         // If we get here, the name is valid
                         break;
