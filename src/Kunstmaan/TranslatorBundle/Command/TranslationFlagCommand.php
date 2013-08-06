@@ -36,6 +36,6 @@ class TranslationFlagCommand extends ContainerAwareCommand
      */
     public function resetAllTranslationFlags()
     {
-        $this->getContainer()->get('kunstmaan_translator.service.manager')->resetAllTranslationFlags();
+        $this->getContainer()->get('kunstmaan_translator.repository.translation')->resetAllFlags();
     }
 }

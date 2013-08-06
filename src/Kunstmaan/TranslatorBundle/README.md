@@ -111,7 +111,7 @@ Clear cache and request status
 
 Clear translation cache files, this will trigger a rebuild of the translation cache when visiting a page
 ```
-app/console kuma:translator:cache -f
+app/console kuma:translator:cache --flush
 ```
 
 Request status of the current cache
@@ -124,7 +124,7 @@ Reset translation flags
 When all translations are up to date, e.g when migrated all develop translations into production. You need to reset all the flags which mark translations as new or updated.
 
 ```
-app/console kuma:translator:flag -r
+app/console kuma:translator:flag --reset
 ```
 
 

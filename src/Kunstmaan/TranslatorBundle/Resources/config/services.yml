@@ -57,7 +57,6 @@ services:
     kunstmaan_translator.service.translation:
         class: "Kunstmaan\TranslatorBundle\Service\TranslationService"
         calls:
-            - [setNewTranslationValidator, [@kunstmaan_translator.validation.new_translation]]
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
 
     kunstmaan_translator.service.translator.loader:
