@@ -54,15 +54,15 @@
             </div>
             <div class="row-fluid">
                 <div class="span12">
-                    <nav role="navigation" class="js-responsive-nav">
-                        <!-- Mobile menu toggle -->
+                    <nav role="navigation" class="js-navigation navigation navigation--big">
+                        <!-- Mobile navigation toggle -->
                         <div class="js-navigation__toggle navigation__toggle navigation__toggle--top">
                             MENU
                             <i class="icon-reorder"></i>
                             <i class="icon-remove"></i>
                         </div>
-                        <!-- Menu -->
-                        <ul class="js-navigation navigation">
+                        <!-- Navigation level -->
+                        <ul class="js-main-navigation-level navigation__level">
                         {% if nodemenu is defined %}
                             {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                             {% for node in activeSubnode.children %}
@@ -76,7 +76,7 @@
                                                 <i class="icon-chevron-up"></i>
                                             </div>
                                             <!-- Submenu -->
-                                            <ul class="navigation navigation__sublevel">
+                                            <ul class="navigation__level navigation__level--sublevel">
                                                 {% for node in node.children %}
                                                     {% if not node.node.isHiddenFromNav() %}
                                                         <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">

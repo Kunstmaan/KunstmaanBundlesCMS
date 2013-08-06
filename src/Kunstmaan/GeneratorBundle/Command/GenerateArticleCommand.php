@@ -81,6 +81,10 @@ EOT
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($bundle, $entity, $prefix, $dummydata, $output);
+        $output->writeln('Make sure you update your database first before using the created entities:');
+        $output->writeln('    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>');
+        $output->writeln('    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>');
+        $output->writeln('');
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -118,7 +122,16 @@ EOT
                 'The name of your article entity: <comment>News</comment>',
                 '',
             ));
-            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('Entity', $entity), function ($entity) { $this->validateEntityName($entity); });
+
+            $entityValidation = function ($entity) {
+                if (empty($entity)) {
+                    throw new \RuntimeException('You have to provide a entity name!');
+                } else {
+                    return $entity;
+                }
+            };
+
+            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('entity', $entity), $entityValidation, false, $entity);
             $input->setOption('entity', $entity);
         }
 
@@ -135,15 +148,6 @@ EOT
 
             $prefix = $dialog->ask($output, $dialog->getQuestion('Tablename prefix', $prefix), $prefix);
             $input->setOption('prefix', empty($prefix) ? null : $prefix);
-        }
-    }
-
-    private function validateEntityName($entity)
-    {
-        if (empty($entity)) {
-            throw new \RuntimeException('You have to provide a entity name!');
-        } else {
-            return $entity;
         }
     }
 
