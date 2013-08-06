@@ -74,6 +74,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             'prefix'            => GeneratorUtils::cleanPrefix($prefix)
         );
 
+        $this->overrideDefaultController($bundle, $parameters, $output);
         if ($this->isMultiLangEnvironment()) { $this->generateDefaultLocaleFallbackCode($bundle, $parameters, $output); }
         $this->generateEntities($bundle, $parameters, $output);
         $this->generateForm($bundle, $parameters, $output);
@@ -368,6 +369,22 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln('Generating entities : <info>OK</info>');
     }
 
+    public function overrideDefaultController(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $step = 'Overriding DefaultController';
+
+        try {
+            $dirPath = sprintf("%s/Controller", $bundle->getPath());
+            $skeletonDir = sprintf("%s/Controller", $this->skeletonDir);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultController', $parameters, true);
+        } catch (\Exception $error) {
+            $output->writeln($step . ' : <error>FAILED</error>');
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $output->writeln($step . ' : <info>OK</info>');
+    }
+
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
@@ -383,10 +400,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             $dirPath = sprintf("%s/EventListener", $bundle->getPath());
             $skeletonDir = sprintf("%s/EventListener", $this->skeletonDir);
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultLocaleListener', $parameters);
-
-            $dirPath = sprintf("%s/Controller", $bundle->getPath());
-            $skeletonDir = sprintf("%s/Controller", $this->skeletonDir);
-            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultController', $parameters, true);
 
             $dirPath = sprintf("%s/Resources/config", $bundle->getPath());
             $skeletonDir = sprintf("%s/Resources/config", $this->fullSkeletonDir);
