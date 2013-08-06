@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Slider
+
+   Never add styles directly to this file - set up variables
+   Style guide: https://github.com/necolas/idiomatic-css
+   ========================================================================== */
+
+/* Viewport max-height
+   ========================================================================== */
+
+$viewportHeight:                100% !default;
+
+/* Slide controls
+   ========================================================================== */
+
+$slideBackgroundColor:          lighten(tomato, 5%) !default;
+$slidePosition:                 relative !default;
+
+/* Aside nav controls */
+
+$asideThumbWidth:               20% !default;
+$asideSlideWidth:               (100% - $asideThumbWidth) !default;
+$asideLeftMarginLeft:           $asideThumbWidth !default;
+
+/* Caption Controls */
+
+//Setup for caption aside of slides: change floats, imageWidth and captionPosition for other lay-out options
+
+$captionFloat:                  left !default;
+$captionWidth:                  20% !default;
+$captionHeight:                 100% !default;
+$captionPadding:                1.5% !default;
+$captionPosition:               static !default;
+$captionPositionTop:            auto !default;
+$captionPositionRight:          auto !default;
+$captionPositionBottom:         auto !default;
+$captionPositionLeft:           auto !default;
+
+$captionBackground:             none !default;
+
+//Button
+$buttonBackground:              #FFF !default;
+$buttonStateBackground:         #F5F5F5 !default;
+$buttonColor:                   tomato !default;
+$buttonBorder:                  none !default;
+$buttonBorderRadius:            5px !default;
+$buttonPadding:                 0 .6em !default;
+
+//Fallbacks
+$captionPaddingFallback:        $captionPadding !default;
+$captionWidthFallback:          $captionWidth - ($captionPaddingFallback * 2) - 0.3% !default;
+
+/* Image Controls */
+
+$imageWidth:                    (100% - $captionWidth) !default; //defines the width of the images according to the width of the caption defined above. (When using the caption aside of the slides and not on top of them)
+$imageFloat:                    left !default;
+
+/* Direction Controls */
+
+$directionDisplay:              none !default;
+$directionColor:                tomato !default;
+$directionHoverColor:           lighten($directionColor, 10%) !default;
+
+$directionImage:                url(../img/buttons/slider_nav.svg) !default;
+$directionImageFallback:        url(../img/buttons/slider_nav.png) !default;
+$directionImageRepeat:          no-repeat !default;
+$directionImageWidth:           50px !default;
+$directionImageHeight:          50px !default;
+$directionImageMargin:          -25px 0 0 0 !default;
+
+$directionPostion:              absolute !default;
+$directionPostionTop:           50% !default;
+$directionPostionRight:         auto !default;
+$directionPostionBottom:        auto !default;
+$directionPostionLeft:          auto !default;
+
+$nextPositionTop:               $directionPostionTop !default;
+$nextPositionRight:             -50px !default;
+$nextPositionBottom:            auto !default;
+$nextPositionLeft:              auto !default;
+$nextBackgroundPosition:        100% 0 !default;
+
+$prevPositionTop:               $directionPostionTop !default;
+$prevPositionRight:             auto !default;
+$prevPositionBottom:            auto !default;
+$prevPositionLeft:              -50px !default;
+$prevBackgroundPosition:        0 0 !default;
+
+/* Navbar controls
+   ========================================================================== */
+
+$idleItemBackground:             #555 !default;
+$idleItemText:                   #EBEBEB !default;
+$hoverItemBackground:            #EBEBEB !default;
+$hoverItemText:                  #555 !default;
+$activeItemBackground:           tomato !default;
+$activeItemText:                 #fff !default;
+
+$itemAmount:                     3 !default;
+$itemSize:                       100%/$itemAmount !default; //only change the amount of items, item width is calculated automatically
+$itemPadding:                    3% !default;
+
+$idleItemDevider:                1px solid #ddd !default;
+$activeItemDevider:              1px solid #555 !default;
+
+//Fallbacks
+$itemPaddingFallback:           $itemPadding !default;
+$itemSizeFallback:              $itemSize - ($itemPaddingFallback * 2) !default;
+
+//IE 7 doesn't calculate the padding of elements which are stacked vertically logically.
+//(Normaly padding is added on top and bottom of the element, hence the previous line of code
+//which calculates the size of the item minus 2 times the padding value).
+//This does not work in IE 7 for which you only have to subtract the padding value once.
+//The following two lines of code are fixes for that problem. Review needed.
+$itemIE7HeightFallback:         $itemSize - ($itemPaddingFallback) !default;
+$itemIE7WidthFallback:          100% - ($itemPaddingFallback * 2) !default;
+
+/* Slider Animations
+   ========================================================================== */
+
+$animateContent :                true !default;
+$animateKeyframe0:               translateX(220px) !default;
+$animateKeyframe50:              translateX(220px) !default;
+$animateKeyframe100:             translateX(0) !default;
+
+@if $animateContent == true {
+  .flex-animateIn .slider-pp__caption {
+    @extend %slider-pp__caption__animate-in;
+  }
+}

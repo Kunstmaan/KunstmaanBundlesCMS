@@ -60,7 +60,7 @@ class SliderFixtures extends AbstractFixture implements OrderedFixtureInterface,
             $pageparts['slider'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('{{ namespace }}\Entity\PageParts\SlidePagePart',
                 array(
                     'setTitle'           => 'Title '.($key+1),
-                    'setDescription'     => Lorem::paragraph(4),
+                    'setDescription'     => Lorem::paragraph(2),
                     'setTickText'        => 'thick text '.($key+1),
                     'setButtonText'      => 'Click me!',
                     'setButtonUrl'       => 'http://www.kunstmaan.be',
