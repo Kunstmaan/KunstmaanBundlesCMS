@@ -148,7 +148,7 @@ class FeatureContext extends AbstractContext
      */
     public function goToPage($pageName)
     {
-        if (strncmp($pageName, "/", strlen("/"))) {
+        if (!empty($this->lang) && strncmp($pageName, "/", strlen("/"))) {
             $pageName = "/".$pageName;
         }
         $this->getSession()->visit($this->locatePath($this->lang.$pageName));
