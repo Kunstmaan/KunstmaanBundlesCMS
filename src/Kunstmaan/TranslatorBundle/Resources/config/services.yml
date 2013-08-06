@@ -11,14 +11,14 @@ services:
 
     kunstmaan_translator.service.abstract_command_handler:
         abstract: true
-        class: "Kunstmaan\TranslatorBundle\Service\AbstractCommandHandler"
+        class: "Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler"
         calls:
             - [setManagedLocales, [%kuma_translator.managed_locales%]]
             - [setKernel, [@kernel]]
 
     kunstmaan_translator.service.importer.command_handler:
         parent: kunstmaan_translator.service.abstract_command_handler
-        class: "Kunstmaan\TranslatorBundle\Service\Importer\ImportCommandHandler"
+        class: "Kunstmaan\TranslatorBundle\Service\Command\Importer\ImportCommandHandler"
         calls:
             - [setTranslationFileExplorer, [@kunstmaan_translator.service.file_explorer]]
             - [setImporter, [@kunstmaan_translator.service.importer.importer]]
@@ -44,7 +44,7 @@ services:
             - [setFileFormats, [%kuma_translator.file_formats%]]
 
     kunstmaan_translator.service.importer.importer:
-        class: "Kunstmaan\TranslatorBundle\Service\Importer\Importer"
+        class: "Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer"
         calls:
             - [setTranslationGroupManager, [@kunstmaan_translator.service.group_manager]] # default, maken via config var
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]

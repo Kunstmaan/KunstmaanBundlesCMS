@@ -27,13 +27,13 @@ class TranslationFileExplorer
      */
     public function find($path, array $locales)
     {
-        $finder = null;
+        $finder = new Finder();
 
         $exploreDir = $path.'/'.$this->defaultTranslationFolder;
 
         if (is_dir($exploreDir)) {
 
-            $finder = new Finder();
+
             $finder->files()
                 ->name(sprintf('/(.*(%s)\.(%s))/', implode('|', $locales), implode('|', $this->fileFormats)))
                 ->in($exploreDir);

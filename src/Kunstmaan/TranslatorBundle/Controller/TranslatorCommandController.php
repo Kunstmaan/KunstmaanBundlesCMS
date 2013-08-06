@@ -5,37 +5,59 @@ namespace Kunstmaan\TranslatorBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
+use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 
-class TranslatorController extends AdminListController
+class TranslatorCommandController extends Controller
 {
 
-    /**
-     * @var AdminListConfiguratorInterface
-     */
-    private $adminListConfigurator;
-
 
     /**
-     * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
-     * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
+     * @Route("/clear-cache", name="KunstmaanTranslatorBundle_command_clear_cache")
      */
-    public function indexAction()
+    public function clearCacheAction()
     {
-        $request = $this->getRequest();
-        /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($this->getAdminListConfigurator());
-        $adminList->bindRequest($request);
 
-        return array(
-            'adminlist' => $adminList,
-        );
+        $this->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache();
+        $this->get('session')->getFlashBag()->add('success', 'All live translations are up to date.');
 
+        return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+    }
+
+    /**
+     * @Route("/import", name="KunstmaanTranslatorBundle_command_import")
+     */
+    public function importAction()
+    {
+        $importCommand = new ImportCommand();
+        $importCommand
+            ->setForce(false)
+            ->setBundle($this->container->getParameter('kuma_translator.default_bundle'))
+            ->setGlobals(true);
+
+        $this->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
+
+        $this->get('session')->getFlashBag()->add('success', 'Translations successfully imported, none existing translations were overwritten.');
+
+        return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+    }
+
+    /**
+     * @Route("/import-forced", name="KunstmaanTranslatorBundle_command_import_forced")
+     */
+    public function importForcedAction()
+    {
+        $importCommand = new ImportCommand();
+        $importCommand
+            ->setForce(true)
+            ->setBundle($this->container->getParameter('kuma_translator.default_bundle'))
+            ->setGlobals(false);
+
+        $this->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
+
+        $this->get('session')->getFlashBag()->add('success', 'Translations successfully imported, all existing translations were overwritten.');
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
     }

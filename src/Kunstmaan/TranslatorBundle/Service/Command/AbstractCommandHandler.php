@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TranslatorBundle\Service;
+namespace Kunstmaan\TranslatorBundle\Service\Command;
 
 abstract class AbstractCommandHandler
 {

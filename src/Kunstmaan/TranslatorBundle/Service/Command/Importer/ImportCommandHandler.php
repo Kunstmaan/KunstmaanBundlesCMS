@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TranslatorBundle\Service\Importer;
+namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Symfony\Component\Finder\Finder;
@@ -8,7 +8,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Parses an ImportCommand
  */
-class ImportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\AbstractCommandHandler
+class ImportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler
 {
 
     /**

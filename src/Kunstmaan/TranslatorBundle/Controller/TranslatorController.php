@@ -32,7 +32,10 @@ class TranslatorController extends AdminListController
         $adminList = $this->get("kunstmaan_adminlist.factory")->createList($this->getAdminListConfigurator());
         $adminList->bindRequest($request);
 
-        if(! $this->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh()) {
+        $cacheFresh = $this->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
+        $debugMode = $this->container->getParameter('kernel.debug') === true;
+
+        if(!$cacheFresh && !$debugMode) {
             $this->get('session')->getFlashBag()->add('notice', "Translations on the live website aren't up to date, hit 'Refresh live' to update to the latest translations.");
         }
 

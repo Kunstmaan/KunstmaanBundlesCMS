@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\TranslatorBundle\Service\Importer;
+namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
