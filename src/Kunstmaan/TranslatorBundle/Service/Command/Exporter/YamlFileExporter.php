@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\TranslatorBundle\Service\Exporter;
+namespace Kunstmaan\TranslatorBundle\Service\Command\Exporter;
 
 use Symfony\Component\Yaml\Dumper;
 

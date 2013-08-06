@@ -12,7 +12,6 @@ class MigrationsServiceTest extends BaseTestCase
     {
         parent::setUp();
         $this->translationRepository = $this->getContainer()->get('kunstmaan_translator.repository.translation');
-        $this->translationDomainRepository = $this->getContainer()->get('kunstmaan_translator.repository.translation_domain');
         $this->migrationsService = $this->getContainer()->get('kunstmaan_translator.service.migrations.migrations');
     }
 
@@ -24,6 +23,5 @@ class MigrationsServiceTest extends BaseTestCase
         $result = $this->migrationsService->getDiffSqlArray();
         $this->assertGreaterThanOrEqual(1, count($result));
         $this->assertStringStartsWith('INSERT INTO "kuma_translation"', $result[0]);
-        $this->assertStringStartsWith('INSERT INTO "kuma_translation_domain"', $result[1]);
     }
 }

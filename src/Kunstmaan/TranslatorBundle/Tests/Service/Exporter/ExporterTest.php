@@ -21,7 +21,7 @@ class ExporterTest extends BaseTestCase
     public function testGetExporterByExtension()
     {
         $exporter = $this->exporter->getExporterByExtension('yml');
-        $this->assertInstanceOf('\Kunstmaan\TranslatorBundle\Service\Exporter\YamlFileExporter', $exporter);
+        $this->assertInstanceOf('\Kunstmaan\TranslatorBundle\Service\Command\Exporter\YamlFileExporter', $exporter);
     }
 
     /**

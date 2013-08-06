@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TranslatorBundle\Service\Exporter;
+namespace Kunstmaan\TranslatorBundle\Service\Command\Exporter;
 
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,7 +8,7 @@ use Kunstmaan\TranslatorBundle\Model\Export\ExportFile;
 /**
  * Parses an ExportCommand
  */
-class ExportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\AbstractCommandHandler
+class ExportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler
 {
 
     /**
@@ -42,17 +42,18 @@ class ExportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\AbstractC
     {
         $locales = $this->determineLocalesToImport($exportCommand);
         $domains = $this->determineDomainsToImport($exportCommand);
+
         $translations = $this->translationRepository->getTranslationsByLocalesAndDomains($locales, $domains);
 
         $translationFiles = new ArrayCollection;
 
         foreach ($translations as $translation) {
-            $exportFileKey = $translation->getDomain()->getName() . '.' . $translation->getLocale().'.'.$exportCommand->getFormat();
+            $exportFileKey = $translation->getDomain(). '.' . $translation->getLocale().'.'.$exportCommand->getFormat();
 
             if (!$translationFiles->containsKey($exportFileKey)) {
                 $exportFile = new ExportFile;
                 $exportFile->setExtension($exportCommand->getFormat());
-                $exportFile->setDomain($translation->getDomain()->getName());
+                $exportFile->setDomain($translation->getDomain());
                 $exportFile->setLocale($translation->getLocale());
                 $translationFiles->set($exportFileKey, $exportFile);
             }

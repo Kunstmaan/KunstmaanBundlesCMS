@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\TranslatorBundle\Service\Exporter;
+namespace Kunstmaan\TranslatorBundle\Service\Command\Exporter;
 
 interface FileExporterInterface
 {

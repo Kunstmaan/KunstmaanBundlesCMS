@@ -25,16 +25,16 @@ services:
 
     kunstmaan_translator.service.exporter.command_handler:
         parent: kunstmaan_translator.service.abstract_command_handler
-        class: "Kunstmaan\TranslatorBundle\Service\Exporter\ExportCommandHandler"
+        class: "Kunstmaan\TranslatorBundle\Service\Command\Exporter\ExportCommandHandler"
         calls:
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
             - [setExporter, [@kunstmaan_translator.service.exporter.exporter]]
 
     kunstmaan_translator.service.exporter.exporter:
-        class: "Kunstmaan\TranslatorBundle\Service\Exporter\Exporter"
+        class: "Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter"
 
     kunstmaan_translator.service.exporter.yaml:
-        class: "Kunstmaan\TranslatorBundle\Service\Exporter\YamlFileExporter"
+        class: "Kunstmaan\TranslatorBundle\Service\Command\Exporter\YamlFileExporter"
         tags:
             - { name: 'translation.exporter', alias: 'yml' }
 

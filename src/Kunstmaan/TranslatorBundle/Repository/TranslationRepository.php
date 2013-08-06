@@ -37,6 +37,7 @@ FROM (
     SELECT updatedAt as compare, flag FROM %s) CACHE_CHECK
 WHERE
     flag IN ('{$flagUpdated}','{$flagNew}')
+    GROUP BY flag
     HAVING MAX(compare) IS NOT NULL
     ORDER BY newestDate DESC
 EOQ;

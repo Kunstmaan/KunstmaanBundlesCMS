@@ -16,13 +16,20 @@ class MigrationsService
     public function getDiffSqlArray()
     {
         $sql = array();
-        $sql[] = $this->getNewTranslationSql();
-        $sql = array_merge($sql, $this->getUpdatedTranslationSqlArray());
+        $inserts = $this->getNewTranslationSql();
+        $updates = $this->getUpdatedTranslationSqlArray();
+
+        if($inserts != '' && !is_null($inserts)) {
+            $sql[] = $inserts;
+        }
+
+        if(count($updates) > 0 && is_array($updates)) {
+            $sql = array_merge($sql, $updates);
+        }
 
         return $sql;
     }
 
-    // XXX : broken
     // FIXME: needs refactoring
     public function getUpdatedTranslationSqlArray()
     {
@@ -36,11 +43,10 @@ class MigrationsService
         }
 
         $fieldNames =  $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getFieldNames();
-
         $tableName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getTableName();
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
 
-        $fieldNames = array_diff($fieldNames, $ignoreFields, $primaryKeys);
+        $fieldNames = array_diff($fieldNames, $ignoreFields, $uniqueKeys);
 
         $sql = array();
 
@@ -59,14 +65,14 @@ class MigrationsService
                 $updateValues[] = $this->entityManager->getConnection()->quoteIdentifier($fieldName) . ' = ' . $this->entityManager->getConnection()->quote($value);
             }
 
-            foreach ($primaryKeys as $primaryKey) {
-                $value = $translation->{'get'.$primaryKey}();
+            foreach ($uniqueKeys as $uniqueKey) {
+                $value = $translation->{'get'.$uniqueKey}();
 
                 if ($value instanceof \DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }
 
-                $whereValues[] = $this->entityManager->getConnection()->quoteIdentifier($primaryKey) . ' = ' . $this->entityManager->getConnection()->quote($value);
+                $whereValues[] = $this->entityManager->getConnection()->quoteIdentifier($uniqueKey) . ' = ' . $this->entityManager->getConnection()->quote($value);
             }
 
             $sql[] = sprintf('UPDATE %s SET %s WHERE %s', $tableName, implode(",", $updateValues), implode(' AND ', $whereValues));
@@ -90,16 +96,15 @@ class MigrationsService
             return null;
         }
 
-        $fieldNames = array_merge(
-                $this->entityManager->getClassMetadata($entityClassName)->getFieldNames(),
-                $this->entityManager->getClassMetadata($entityClassName)->getAssociationNames()
-                );
+        $fieldNames = $this->entityManager->getClassMetadata($entityClassName)->getFieldNames();
 
         $tableName = $this->entityManager->getClassMetadata($entityClassName)->getTableName();
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
         $fieldNames = array_diff($fieldNames, $ignoreFields);
 
+
         $values = array();
+
 
         foreach ($entities as $entity) {
 
@@ -133,7 +138,7 @@ class MigrationsService
     {
         $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_NEW));
 
-        return $this->buildInsertSql($translations, '\Kunstmaan\TranslatorBundle\Entity\Translation', array('flag'));
+        return $this->buildInsertSql($translations, '\Kunstmaan\TranslatorBundle\Entity\Translation', array('flag', 'id'));
     }
 
     public function setTranslationRepository($translationRepository)
