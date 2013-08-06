@@ -32,6 +32,10 @@ class TranslatorController extends AdminListController
         $adminList = $this->get("kunstmaan_adminlist.factory")->createList($this->getAdminListConfigurator());
         $adminList->bindRequest($request);
 
+        if(! $this->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh()) {
+            $this->get('session')->getFlashBag()->add('notice', "Translations on the live website aren't up to date, hit 'Refresh live' to update to the latest translations.");
+        }
+
         return array(
             'adminlist' => $adminList,
         );
@@ -79,7 +83,7 @@ class TranslatorController extends AdminListController
 
                 $this->get('session')->getFlashBag()->add('success', 'Translation has been edited!');
 
-                return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_translations'));
+                return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
             }
         }
 
