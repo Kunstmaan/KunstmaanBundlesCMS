@@ -88,6 +88,7 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
             $options = array(
                 'parent' => $overviewPage,
                 'set_online' => true,
+                'hidden_from_nav' => true,
                 'creator' => 'Admin'
             );
 

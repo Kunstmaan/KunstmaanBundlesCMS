@@ -69,6 +69,7 @@ class FeatureContext extends AbstractContext
     {
         return array(
             new Step\Given("I am on \"/en/admin\""),
+            new Step\Given("I wait 2 seconds"),
             new Step\Given("I press \"×\" if present"),
             new Step\Given("I fill in \"username\" with \"". $username . "\""),
             new Step\Given("I fill in \"password\" with \"" . $password . "\""),

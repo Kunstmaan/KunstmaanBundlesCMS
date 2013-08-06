@@ -81,7 +81,7 @@ EOT
         $this->createGenerator()->generate($bundle, $this->pagepartName, $fields, $this->sections);
 
         $this->dialog->writeSection($output, 'Pagepart successfully created', 'bg=green;fg=black');
-        $this->output->writeln('Make sure you update your database first before your test the pagepart:');
+        $this->output->writeln('Make sure you update your database first before you test the pagepart:');
         $this->output->writeln('    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>');
         $this->output->writeln('    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>');
         $this->output->writeln('');
