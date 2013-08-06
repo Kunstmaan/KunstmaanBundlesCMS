@@ -121,10 +121,13 @@
         </main>
     </div>
 
-    <!-- Doormap -->
-    <div class="doormap">
+    <!-- Doormat -->
+    <doormat role="doormat" class="doormat">
         <div class="container">
             <div class="row-fluid">
+                <div class="span12 description">
+                    <p>Some footer navigation:</p>
+                </div>
                 {% if nodemenu is defined %}
                     {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                     <div class="span3">
@@ -160,7 +163,7 @@
                 <div class="span6"></div>
             </div>
         </div>
-    </div>
+    </doormat>
 
     <!-- Footer -->
     <footer role="footer" class="footer">
