@@ -99,17 +99,20 @@
         </header>
 
         {% block breadcrumbs %}
-            <ul class="breadcrumb">
-                {% for node in nodemenu.breadCrumb %}
-                    {% if not loop.first %}
-                        {% if loop.last %}
-                            <li class="active">{{ node.title }}</a></li>
-                        {% else %}
-                            <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a> <span class="divider">/</span></li>
+            {% if nodemenu.breadCrumb|length > 1 %}
+                <ul class="breadcrumb">
+                    <li>You are here: </li>
+                    {% for node in nodemenu.breadCrumb %}
+                        {% if not loop.first %}
+                            {% if loop.last %}
+                                <li class="active">{{ node.title }}</a></li>
+                            {% else %}
+                                <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a> <span class="divider">/</span></li>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </ul>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         {% endblock breadcrumbs %}
 
         <!-- Main -->
