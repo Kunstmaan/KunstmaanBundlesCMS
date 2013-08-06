@@ -157,6 +157,13 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $this->filesystem->copy($skeletonDir  . '/Form/fields.html.twig', $dirPath . '/Form/fields.html.twig', true);
 
+        $skeletonDir = sprintf("%s/app/KunstmaanSitemapBundle/views/SitemapPage/", $this->fullSkeletonDir);
+        $dirPath = $rootDir .'/../app/Resources/KunstmaanSitemapBundle/views/SitemapPage/';
+        $this->setSkeletonDirs(array($skeletonDir));
+
+        $this->filesystem->copy($skeletonDir . '/view.html.twig', $dirPath . 'view.html.twig', true);
+        GeneratorUtils::replace("~~~BUNDLENAME~~~", $bundle->getName(), $dirPath . 'view.html.twig');
+
         $output->writeln('Generating Twig Templates : <info>OK</info>');
 
         $this->generateErrorTemplates($bundle, $parameters, $rootDir, $output);
@@ -242,6 +249,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultSiteFixtures', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SitemapFixtures', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }

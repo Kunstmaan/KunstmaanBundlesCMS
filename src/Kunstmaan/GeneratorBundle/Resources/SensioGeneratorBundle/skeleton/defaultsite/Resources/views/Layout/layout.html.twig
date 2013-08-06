@@ -128,6 +128,8 @@
                 <div class="span12">
                     <p class="pull-left">
                         &copy; {{ "now"|date("Y") }}
+                        {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
+                        {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}">{{ sitemap.title }}</a>{% endif %}
                     </p>
                     <p class="pull-right created-by">
                         Created by <a href="http://www.kunstmaan.be"><img src="{{ asset('bundles/~~~BUNDLENAME~~~/img/general/km-logo.svg') }}" alt="Kunstmaan"></a>
