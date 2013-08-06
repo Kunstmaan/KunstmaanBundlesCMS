@@ -84,6 +84,11 @@ To import only specific locales:
 app/console kuma:translator:import --locales=nl,fr,de
 ```
 
+To import translations from the global Resources (app/Resources/translations)
+```
+app/console kuma:translator:import --globals
+```
+
 How does the cache work
 -------------------------------------
 
