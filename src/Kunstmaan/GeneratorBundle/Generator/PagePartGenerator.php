@@ -50,6 +50,11 @@ class PagePartGenerator extends Generator
     private $entity;
 
     /**
+     * @var string
+     */
+    private $prefix;
+
+    /**
      * @var array
      */
     private $fields;
@@ -80,15 +85,17 @@ class PagePartGenerator extends Generator
      *
      * @param BundleInterface $bundle         The bundle
      * @param string          $entity         The entity name
+     * @param string          $prefix         The database prefix
      * @param array           $fields         The fields
      * @param array           $sections       The page sections
      *
      * @throws \RuntimeException
      */
-    public function generate(BundleInterface $bundle, $entity, array $fields, array $sections)
+    public function generate(BundleInterface $bundle, $entity, $prefix, array $fields, array $sections)
     {
         $this->bundle = $bundle;
         $this->entity = $entity;
+        $this->prefix = $prefix;
         $this->fields = $fields;
         $this->sections = $sections;
 
@@ -132,8 +139,12 @@ class PagePartGenerator extends Generator
                 }
             }
         }
-        list($project, $bundle) = explode("\\", $this->bundle->getNameSpace());
-        $class->setPrimaryTable(array('name' => strtolower($project.'__'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
+        if (!is_null($this->prefix)) {
+            $class->setPrimaryTable(array('name' => strtolower($this->prefix.'__'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
+        } else {
+            list($project, $bundle) = explode("\\", $this->bundle->getNameSpace());
+            $class->setPrimaryTable(array('name' => strtolower($project.'__'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
+        }
         $entityCode = $this->getEntityGenerator()->generateEntityClass($class);
 
         // Add some extra functions in the generated entity :s

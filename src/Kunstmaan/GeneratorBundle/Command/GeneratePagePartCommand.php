@@ -41,6 +41,11 @@ class GeneratePagePartCommand extends GenerateDoctrineCommand
     private $pagepartName;
 
     /**
+     * @var string
+     */
+    private $prefix;
+
+    /**
      * @var array
      */
     private $fields;
@@ -78,7 +83,7 @@ EOT
             $fields[] = $this->getEntityFields($fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']);
         }
 
-        $this->createGenerator()->generate($bundle, $this->pagepartName, $fields, $this->sections);
+        $this->createGenerator()->generate($bundle, $this->pagepartName, $this->prefix, $fields, $this->sections);
 
         $this->dialog->writeSection($output, 'PagePart successfully created', 'bg=green;fg=black');
         $this->output->writeln('Make sure you update your database first before you test the pagepart:');
@@ -126,9 +131,25 @@ EOT
         }
 
         /**
+         * Ask the prefix for the database
+         */
+        $output->writeln(array(
+            '',
+            'You can add a prefix to the table names of the generated entities for example: <comment>demo_</comment>',
+            "Leave empty if you don't want to specify a tablename prefix.",
+            '',
+        ));
+        $this->prefix = $this->dialog->ask($output, $this->dialog->getQuestion('Tablename prefix', null));
+
+        /**
          * Ask the name of the pagepart
          */
-        $nameQuestion = $this->dialog->getQuestion('PagePart name (eg. ContentBoxPagePart)', null);
+        $output->writeln(array(
+            '',
+            'The name of your PagePart: For example: <comment>ContentBoxPagePart</comment>',
+            '',
+        ));
+        $nameQuestion = $this->dialog->getQuestion('PagePart name', null);
         while (true) {
             $name = $this->dialog->ask($output, $nameQuestion, null);
             try {
