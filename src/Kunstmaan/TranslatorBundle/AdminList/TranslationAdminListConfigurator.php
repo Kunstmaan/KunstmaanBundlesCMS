@@ -35,9 +35,9 @@ class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigur
      */
     public function buildFields()
     {
-        $this->addField('domain', 'domain', true);
-        $this->addField('keyword', 'keyword', true);
-        $this->addField('locale', 'locale', true);
+        $this->addField('domain', 'Domain', true);
+        $this->addField('keyword', 'Keyword', true);
+        $this->addField('locale', 'Locale', true);
         $this->addField('text', 'Text', true);
         // $this->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
         //     ->addField('created', 'Created At', false)
