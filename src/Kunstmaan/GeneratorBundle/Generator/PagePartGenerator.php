@@ -133,7 +133,7 @@ class PagePartGenerator extends Generator
             }
         }
         list($project, $bundle) = explode("\\", $this->bundle->getNameSpace());
-        $class->setPrimaryTable(array('name' => strtolower($project.'__'.$this->entity)));
+        $class->setPrimaryTable(array('name' => strtolower($project.'__'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
         $entityCode = $this->getEntityGenerator()->generateEntityClass($class);
 
         // Add some extra functions in the generated entity :s
