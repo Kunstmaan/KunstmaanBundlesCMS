@@ -16,7 +16,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Generates all classes/files for a new pagepart
  */
-class PagepartGenerator extends Generator
+class PagePartGenerator extends Generator
 {
 
     /**
@@ -50,6 +50,11 @@ class PagepartGenerator extends Generator
     private $entity;
 
     /**
+     * @var string
+     */
+    private $prefix;
+
+    /**
      * @var array
      */
     private $fields;
@@ -80,15 +85,17 @@ class PagepartGenerator extends Generator
      *
      * @param BundleInterface $bundle         The bundle
      * @param string          $entity         The entity name
+     * @param string          $prefix         The database prefix
      * @param array           $fields         The fields
      * @param array           $sections       The page sections
      *
      * @throws \RuntimeException
      */
-    public function generate(BundleInterface $bundle, $entity, array $fields, array $sections)
+    public function generate(BundleInterface $bundle, $entity, $prefix, array $fields, array $sections)
     {
         $this->bundle = $bundle;
         $this->entity = $entity;
+        $this->prefix = $prefix;
         $this->fields = $fields;
         $this->sections = $sections;
 
@@ -108,12 +115,12 @@ class PagepartGenerator extends Generator
         // configure the bundle (needed if the bundle does not contain any Entities yet)
         $config = $this->registry->getEntityManager(null)->getConfiguration();
         $config->setEntityNamespaces(array_merge(
-            array($this->bundle->getName() => $this->bundle->getNamespace().'\\Entity\\Pageparts'),
+            array($this->bundle->getName() => $this->bundle->getNamespace().'\\Entity\\PageParts'),
             $config->getEntityNamespaces()
         ));
 
-        $entityClass = $this->registry->getEntityNamespace($this->bundle->getName()).'\\Pageparts\\'.$this->entity;
-        $entityPath = $this->bundle->getPath().'/Entity/Pageparts/'.str_replace('\\', '/', $this->entity).'.php';
+        $entityClass = $this->registry->getEntityNamespace($this->bundle->getName()).'\\PageParts\\'.$this->entity;
+        $entityPath = $this->bundle->getPath().'/Entity/PageParts/'.str_replace('\\', '/', $this->entity).'.php';
         if (file_exists($entityPath)) {
             throw new \RuntimeException(sprintf('Entity "%s" already exists.', $entityClass));
         }
@@ -132,17 +139,21 @@ class PagepartGenerator extends Generator
                 }
             }
         }
-        list($project, $bundle) = explode("\\", $this->bundle->getNameSpace());
-        $class->setPrimaryTable(array('name' => strtolower($project.'__'.$this->entity)));
+        if (!is_null($this->prefix)) {
+            $class->setPrimaryTable(array('name' => strtolower($this->prefix.'__'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
+        } else {
+            list($project, $bundle) = explode("\\", $this->bundle->getNameSpace());
+            $class->setPrimaryTable(array('name' => strtolower($project.'__'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
+        }
         $entityCode = $this->getEntityGenerator()->generateEntityClass($class);
 
         // Add some extra functions in the generated entity :s
         $params = array(
             'bundle' => $this->bundle->getName(),
             'pagepart' => $this->entity,
-            'adminType' => '\\'.$this->bundle->getNamespace().'\\Form\\Pageparts\\'.$this->entity.'AdminType'
+            'adminType' => '\\'.$this->bundle->getNamespace().'\\Form\\PageParts\\'.$this->entity.'AdminType'
         );
-        $extraCode = $this->render('/Entity/Pageparts/ExtraFunctions.php', $params);
+        $extraCode = $this->render('/Entity/PageParts/ExtraFunctions.php', $params);
 
         $pos = strrpos($entityCode, "}");
         $trimmed = substr($entityCode, 0, $pos);
@@ -160,17 +171,17 @@ class PagepartGenerator extends Generator
     private function generateFormType()
     {
         $className = $this->entity.'AdminType';
-        $savePath = $this->bundle->getPath().'/Form/Pageparts/'.$className.'.php';
+        $savePath = $this->bundle->getPath().'/Form/PageParts/'.$className.'.php';
         $name = str_replace("\\", '_', strtolower($this->bundle->getNamespace())).'_'.strtolower($this->entity).'type';
 
         $params = array(
             'className' => $className,
             'name' => $name,
             'namespace' => $this->bundle->getNamespace(),
-            'entity' => '\\'.$this->bundle->getNamespace().'\Entity\\Pageparts\\'.$this->entity,
+            'entity' => '\\'.$this->bundle->getNamespace().'\Entity\\PageParts\\'.$this->entity,
             'fields' => $this->fields
         );
-        $this->renderFile('/Form/Pageparts/AdminType.php', $savePath, $params);
+        $this->renderFile('/Form/PageParts/AdminType.php', $savePath, $params);
 
         $this->output->writeln('Generating form type : <info>OK</info>');
     }
@@ -180,13 +191,13 @@ class PagepartGenerator extends Generator
      */
     private function generateResourceTemplate()
     {
-        $savePath = $this->bundle->getPath().'/Resources/views/Pageparts/'.$this->entity.'/view.html.twig';
+        $savePath = $this->bundle->getPath().'/Resources/views/PageParts/'.$this->entity.'/view.html.twig';
 
         $params = array(
-            'pagepart' => $this->entity,
+            'pagepart' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $this->entity)),
             'fields' => $this->fields
         );
-        $this->renderFile('/Resources/views/Pageparts/view.html.twig', $savePath, $params);
+        $this->renderFile('/Resources/views/PageParts/view.html.twig', $savePath, $params);
 
         $this->output->writeln('Generating template : <info>OK</info>');
     }
@@ -205,7 +216,7 @@ class PagepartGenerator extends Generator
                 }
                 $data['types'][] = array(
                     'name' => str_replace('PagePart', '', $this->entity),
-                    'class' => $this->bundle->getNamespace().'\\Entity\\Pageparts\\'.$this->entity
+                    'class' => $this->bundle->getNamespace().'\\Entity\\PageParts\\'.$this->entity
                 );
 
                 $ymlData = Yaml::dump($data, $inline = 2, $indent = 4, $exceptionOnInvalidType = false, $objectSupport = false);
