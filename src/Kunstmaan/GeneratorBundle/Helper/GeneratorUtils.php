@@ -18,6 +18,10 @@ class GeneratorUtils
      */
     public static function cleanPrefix($prefixString)
     {
+        if (empty($prefixString)) {
+            return '';
+        }
+
         return preg_replace('/_*/i', '', $prefixString) . '_';
     }
 
