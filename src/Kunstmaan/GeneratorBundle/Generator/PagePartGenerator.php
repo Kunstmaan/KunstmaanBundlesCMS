@@ -194,7 +194,7 @@ class PagePartGenerator extends Generator
         $savePath = $this->bundle->getPath().'/Resources/views/PageParts/'.$this->entity.'/view.html.twig';
 
         $params = array(
-            'pagepart' => $this->entity,
+            'pagepart' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $this->entity)),
             'fields' => $this->fields
         );
         $this->renderFile('/Resources/views/PageParts/view.html.twig', $savePath, $params);
