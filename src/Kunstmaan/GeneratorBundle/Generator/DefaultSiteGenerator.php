@@ -8,6 +8,7 @@ use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
 // TODO: Add the Bundle to assetic:bundles configuration.
 
@@ -88,6 +89,26 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
         $this->generateAdminTests($bundle, $parameters, $output);
         $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
+        $this->generateConfig($bundle, $parameters, $rootDir, $output);
+    }
+
+    /**
+     * Update the global config.yml
+     *
+     * @param Bundle $bundle
+     * @param array $parameters
+     * @param $rootDir
+     * @param OutputInterface $output
+     */
+    public function generateConfig(Bundle $bundle, array $parameters, $rootDir, OutputInterface $output)
+    {
+        $configFile = $rootDir.'/config/config.yml';
+
+        $data = Yaml::parse($configFile);
+        if (!array_key_exists('white_october_pagerfanta', $data)) {
+            $ymlData = "\n\nwhite_october_pagerfanta:\n    default_view: twitter_bootstrap\n";
+            file_put_contents($configFile, $ymlData, FILE_APPEND);
+        }
     }
 
     public function generateGruntFiles(Bundle $bundle, array $parameters, $rootDir, OutputInterface $output)
