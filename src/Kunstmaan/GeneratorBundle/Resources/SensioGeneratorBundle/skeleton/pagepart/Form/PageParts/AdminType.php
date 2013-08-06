@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Form\Pageparts;
+namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;

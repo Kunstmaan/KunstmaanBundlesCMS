@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
-use Kunstmaan\GeneratorBundle\Generator\PagepartGenerator;
+use Kunstmaan\GeneratorBundle\Generator\PagePartGenerator;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 /**
  * Generates a new pagepart
  */
-class GeneratePagepartCommand extends GenerateDoctrineCommand
+class GeneratePagePartCommand extends GenerateDoctrineCommand
 {
 
     /**
@@ -39,6 +39,11 @@ class GeneratePagepartCommand extends GenerateDoctrineCommand
      * @var string
      */
     private $pagepartName;
+
+    /**
+     * @var string
+     */
+    private $prefix;
 
     /**
      * @var array
@@ -70,7 +75,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->dialog->writeSection($output, 'Pagepart generation');
+        $this->dialog->writeSection($output, 'PagePart generation');
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
         $fields = array();
@@ -78,10 +83,10 @@ EOT
             $fields[] = $this->getEntityFields($fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']);
         }
 
-        $this->createGenerator()->generate($bundle, $this->pagepartName, $fields, $this->sections);
+        $this->createGenerator()->generate($bundle, $this->pagepartName, $this->prefix, $fields, $this->sections);
 
-        $this->dialog->writeSection($output, 'Pagepart successfully created', 'bg=green;fg=black');
-        $this->output->writeln('Make sure you update your database first before your test the pagepart:');
+        $this->dialog->writeSection($output, 'PagePart successfully created', 'bg=green;fg=black');
+        $this->output->writeln('Make sure you update your database first before you test the pagepart:');
         $this->output->writeln('    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>');
         $this->output->writeln('    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>');
         $this->output->writeln('');
@@ -126,9 +131,25 @@ EOT
         }
 
         /**
+         * Ask the prefix for the database
+         */
+        $output->writeln(array(
+            '',
+            'You can add a prefix to the table names of the generated entities for example: <comment>demo_</comment>',
+            "Leave empty if you don't want to specify a tablename prefix.",
+            '',
+        ));
+        $this->prefix = $this->dialog->ask($output, $this->dialog->getQuestion('Tablename prefix', null));
+
+        /**
          * Ask the name of the pagepart
          */
-        $nameQuestion = $this->dialog->getQuestion('Pagepart name (eg. ContentBoxPagePart)', null);
+        $output->writeln(array(
+            '',
+            'The name of your PagePart: For example: <comment>ContentBoxPagePart</comment>',
+            '',
+        ));
+        $nameQuestion = $this->dialog->getQuestion('PagePart name', null);
         while (true) {
             $name = $this->dialog->ask($output, $nameQuestion, null);
             try {
@@ -152,8 +173,8 @@ EOT
 
                 // Check that entity does not already exist
                 $bundle = $this->getApplication()->getKernel()->getBundle($this->bundleName);
-                if (file_exists($bundle->getPath().'/Entity/Pageparts/'.$name.'.php')) {
-                    $this->writeError(sprintf('Pagepart or entity "%s" already exists', $name));
+                if (file_exists($bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
+                    $this->writeError(sprintf('PagePart or entity "%s" already exists', $name));
                     continue;
                 }
 
@@ -265,7 +286,7 @@ EOT
                             continue;
                         }
 
-                        // TODO: add extra validation, entity should not be a Page or Pagepart
+                        // TODO: add extra validation, entity should not be a Page or PagePart
 
                         // If we get here, the name is valid
                         break;
@@ -288,13 +309,13 @@ EOT
     /**
      * Get the generator.
      *
-     * @return PagepartGenerator
+     * @return PagePartGenerator
      */
     protected function createGenerator()
     {
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
-        return new PagepartGenerator($filesystem, $registry, '/pagepart', $this->output);
+        return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->output);
     }
 
     /**
