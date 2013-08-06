@@ -87,6 +87,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generatePagetemplateConfigs($bundle, $parameters, $output);
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
         $this->generateAdminTests($bundle, $parameters, $output);
+        $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
         $this->generateConfig($bundle, $parameters, $rootDir, $output);
     }
 
