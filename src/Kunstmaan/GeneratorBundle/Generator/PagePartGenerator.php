@@ -16,7 +16,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Generates all classes/files for a new pagepart
  */
-class PagepartGenerator extends Generator
+class PagePartGenerator extends Generator
 {
 
     /**

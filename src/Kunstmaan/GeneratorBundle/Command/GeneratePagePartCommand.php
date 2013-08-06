@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
-use Kunstmaan\GeneratorBundle\Generator\PagepartGenerator;
+use Kunstmaan\GeneratorBundle\Generator\PagePartGenerator;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 /**
  * Generates a new pagepart
  */
-class GeneratePagepartCommand extends GenerateDoctrineCommand
+class GeneratePagePartCommand extends GenerateDoctrineCommand
 {
 
     /**
@@ -288,13 +288,13 @@ EOT
     /**
      * Get the generator.
      *
-     * @return PagepartGenerator
+     * @return PagePartGenerator
      */
     protected function createGenerator()
     {
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
-        return new PagepartGenerator($filesystem, $registry, '/pagepart', $this->output);
+        return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->output);
     }
 
     /**
