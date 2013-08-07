@@ -17,7 +17,7 @@ class UtilitiesTwigExtension extends Twig_Extension
     public function getFilters()
     {
         return array(
-            'slugify' => new \Twig_Filter_Method($this, 'slugify', array('is_safe' => array('html'))),
+            'slugify' => new \Twig_Filter_Method($this, 'slugify'),
         );
     }
 
