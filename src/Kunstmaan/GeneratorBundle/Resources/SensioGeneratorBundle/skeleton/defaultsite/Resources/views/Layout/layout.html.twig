@@ -119,19 +119,17 @@
         <main role="main">
             {% block content %}{% endblock %}
         </main>
-    </div>
 
-    <!-- Doormat -->
-    <doormat role="doormat" class="doormat">
-        <div class="container">
+        <!-- Doormat -->
+        <div class="doormat">
             <div class="row-fluid">
-                <div class="span12 description">
+                <div class="doormat__description span12">
                     <p>Some footer navigation:</p>
                 </div>
                 {% if nodemenu is defined %}
                     {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                     <div class="span3">
-                        <ul>
+                        <ul class="doormat__list">
                             {% for node in activeSubnode.children %}
                                 {% if not node.node.isHiddenFromNav() and node.node.internalName != '4_level_navigation' %}
                                     <li {% if(node.active) %} class="active" {% endif %}>
@@ -146,10 +144,10 @@
                 {% set fourLevelNav = nodemenu.getNodeByInternalName('4_level_navigation') %}
                 {% if (fourLevelNav != null and fourLevelNav.online) %}
                     <div class="span3">
-                        <ul>
+                        <ul class="doormat__list">
                             <li {% if(fourLevelNav.active) %} class="active" {% endif %}>
                                 <a href="{{ path('_slug', { 'url': fourLevelNav.slug }) }}">{{ fourLevelNav.title }}</a>
-                                <ul>
+                                <ul class="doormat__list">
                                     {% for node in fourLevelNav.children if not node.node.isHiddenFromNav() %}
                                         <li {% if(node.active) %} class="active" {% endif %}>
                                             <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
@@ -160,10 +158,9 @@
                         </ul>
                     </div>
                 {% endif %}
-                <div class="span6"></div>
             </div>
         </div>
-    </doormat>
+    </div>
 
     <!-- Footer -->
     <footer role="footer" class="footer">
