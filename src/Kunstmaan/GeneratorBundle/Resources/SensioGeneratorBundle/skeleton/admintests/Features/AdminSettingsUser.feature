@@ -41,7 +41,7 @@ Feature: AdminSettingsUser
     And I fill in correct user information for username "dummy"
     And I clear "user[plainPassword][first]"
     When I press "Add User"
-    Then I should see "passwords don't match"
+    Then I should see "passwords you entered don't match"
 
   @javascript
   Scenario: Can't create a new user without matching passwords
@@ -51,7 +51,7 @@ Feature: AdminSettingsUser
     When I fill in "user[plainPassword][first]" with "1"
     When I fill in "user[plainPassword][second]" with "2"
     When I press "Add User"
-    Then I should see "passwords don't match"
+    Then I should see "passwords you entered don't match"
 
   @javascript
   Scenario: Create a new user and try login
