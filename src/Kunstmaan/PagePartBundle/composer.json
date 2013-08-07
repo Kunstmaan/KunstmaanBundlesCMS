@@ -19,6 +19,7 @@
         "kunstmaan/utilities-bundle": "self.version",
         "kunstmaan/node-bundle": "self.version"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Kunstmaan\\PagePartBundle": "" }
     },
