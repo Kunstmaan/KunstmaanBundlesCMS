@@ -64,4 +64,4 @@ Feature: AdminPage
   Scenario: Delete a page
     Given I log in as "admin"
     And I delete page "ContentsubPage"
-    Then I should see "Page has been deleted"
+    Then I should see "The page is deleted"
