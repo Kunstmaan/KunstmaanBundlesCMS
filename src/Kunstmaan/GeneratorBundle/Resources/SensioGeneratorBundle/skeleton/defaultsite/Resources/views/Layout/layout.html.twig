@@ -121,6 +121,50 @@
         </main>
     </div>
 
+    <!-- Doormat -->
+    <doormat role="doormat" class="doormat">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span12 description">
+                    <p>Some footer navigation:</p>
+                </div>
+                {% if nodemenu is defined %}
+                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                    <div class="span3">
+                        <ul>
+                            {% for node in activeSubnode.children %}
+                                {% if not node.node.isHiddenFromNav() and node.node.internalName != '4_level_navigation' %}
+                                    <li {% if(node.active) %} class="active" {% endif %}>
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {% set fourLevelNav = nodemenu.getNodeByInternalName('4_level_navigation') %}
+                {% if (fourLevelNav != null and fourLevelNav.online) %}
+                    <div class="span3">
+                        <ul>
+                            <li {% if(fourLevelNav.active) %} class="active" {% endif %}>
+                                <a href="{{ path('_slug', { 'url': fourLevelNav.slug }) }}">{{ fourLevelNav.title }}</a>
+                                <ul>
+                                    {% for node in fourLevelNav.children if not node.node.isHiddenFromNav() %}
+                                        <li {% if(node.active) %} class="active" {% endif %}>
+                                            <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="span6"></div>
+            </div>
+        </div>
+    </doormat>
+
     <!-- Footer -->
     <footer role="footer" class="footer">
         <div class="container">
