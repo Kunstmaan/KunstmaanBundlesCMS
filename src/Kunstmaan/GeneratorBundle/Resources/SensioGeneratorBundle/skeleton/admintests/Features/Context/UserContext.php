@@ -4,7 +4,6 @@ namespace {{ namespace }}\Features\Context;
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
-use Behat\Mink\Exception\ExpectationException;
 
 /**
  * UserContext
@@ -58,8 +57,6 @@ class UserContext extends BehatContext
      * @param string $username
      *
      * @Given /^I delete user "([^"]*)"$/
-     *
-     * @throws ExpectationException
      */
     public function iDeleteUser($username)
     {

@@ -4,7 +4,6 @@ namespace {{ namespace }}\Features\Context;
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
-use Behat\Mink\Exception\ExpectationException;
 
 /**
  * GroupContext
@@ -71,8 +70,6 @@ class GroupContext extends BehatContext
      * @param string $groupName
      *
      * @Given /^I delete group "([^"]*)"$/
-     *
-     * @throws ExpectationException
      */
     public function iDeleteGroup($groupName)
     {

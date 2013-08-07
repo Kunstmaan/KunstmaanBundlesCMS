@@ -4,7 +4,6 @@ namespace {{ namespace }}\Features\Context;
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
-use Behat\Mink\Exception\ExpectationException;
 
 /**
  * RoleContext
@@ -49,8 +48,6 @@ class RoleContext extends BehatContext
      * @param string $roleName
      *
      * @Given /^I delete role "([^"]*)"$/
-     *
-     * @throws ExpectationException
      */
     public function iDeleteRole($roleName)
     {

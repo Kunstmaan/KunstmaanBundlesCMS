@@ -4,10 +4,11 @@ namespace {{ namespace }}\Features\Context;
 
 use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 use Behat\Behat\Context\Step;
-use Behat\Mink\Selector\CssSelector;
+use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ResponseTextException;
 use Behat\Mink\Exception\ExpectationException;
+use Behat\Mink\Selector\CssSelector;
 
 /**
  * FeatureContext
@@ -97,13 +98,7 @@ class FeatureContext extends AbstractContext
     {
         $this->iAmOnASpecificPage('dashboard');
         $this->makeWide();
-        $logoutButton = $this->getSession()->getPage()->find('xpath', '//a[text()="Logout"]');
-        if (!is_null($logoutButton)) {
-            $logoutButton->click();
-        } else {
-            $message = sprintf('The logout button was not found');
-            throw new ExpectationException($message, $this->getSession());
-        }
+        $this->findAndClickButton($this->getSession()->getPage(), 'xpath', '//a[text()="Logout"]');
     }
 
     /**
@@ -227,8 +222,6 @@ class FeatureContext extends AbstractContext
      * @param string $name     the name of the a tag
      * @param string $action   the action you want to perform - delete, edit
      * @param string $pageName the name of the page
-     *
-     * @throws ExpectationException
      */
     public function clickAction($name, $action, $pageName)
     {
@@ -242,12 +235,7 @@ class FeatureContext extends AbstractContext
         $td = $page->find('xpath', '//div[@class="content"]//table//td[text()="' . $name . '"]');
         if (!is_null($td)) {
             $tr = $td->getParent();
-            $deleteLink = $tr->find('xpath', '//a[text()="' . $action . '"]');
-
-            $deleteLink->click();
-        } else {
-            $message = sprintf('Expected "%s" was not found anywhere on the current page.', $name);
-            throw new ExpectationException($message, $this->getSession());
+            $this->findAndClickButton($tr, 'xpath', '//a[text()="' . $action . '"]');
         }
     }
 

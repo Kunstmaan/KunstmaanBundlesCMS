@@ -5,7 +5,6 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 use Behat\Mink\Exception\ElementNotFoundException;
-use Behat\Mink\Exception\ExpectationException;
 
 /**
  * PageContext
@@ -33,7 +32,6 @@ class PageContext extends BehatContext
      * @Given /^I add (.*) "([^"]*)"$/
      *
      * @throws ElementNotFoundException
-     * @throws ExpectationException
      */
     public function iAddPage($pageType, $pageName)
     {
@@ -122,8 +120,6 @@ class PageContext extends BehatContext
     /**
      * @param string $pageName the name of the page
      * @param string $state    the state of the page - Publish, Unpublish
-     *
-     * @throws ExpectationException
      */
     private function placePageInState($pageName, $state)
     {
@@ -162,8 +158,6 @@ class PageContext extends BehatContext
      * @param string $pageName
      *
      * @Given /^I delete page "([^"]*)"$/
-     *
-     * @throws ExpectationException
      */
     public function iDeletePage($pageName)
     {

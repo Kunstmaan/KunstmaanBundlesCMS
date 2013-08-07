@@ -5,7 +5,6 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 use Behat\Mink\Exception\ElementNotFoundException;
-use Behat\Mink\Exception\ExpectationException;
 
 /**
  * MediaContext
@@ -145,7 +144,6 @@ class MediaContext extends BehatContext
      * @Given /^I create subfolder "([^"]*)"$/
      *
      * @throws ElementNotFoundException
-     * @throws ExpectationException
      */
     public function iCreateSubFolder($folderName)
     {
@@ -199,7 +197,6 @@ class MediaContext extends BehatContext
     /**
      * @param string $folderName
      *
-     * @throws ExpectationException
      */
     private function performFolderDelete($folderName = "")
     {
