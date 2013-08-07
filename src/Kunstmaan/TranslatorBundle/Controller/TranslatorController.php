@@ -60,8 +60,10 @@ class TranslatorController extends AdminListController
         $request = $this->getRequest();
         $translation = new Translation();
 
+        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+
         $form = $this->createForm(new TranslationAdminType(), $translation);
-        $form->add('locale','language', array('choices' => $this->container->getParameter('kuma_translator.managed_locales'), 'empty_value' => 'Choose a language'));
+        $form->add('locale','language', array('choices' => array_combine($locales, $locales), 'empty_value' => 'Choose a language'));
         $form->add('domain','text');
         $form->add('keyword','text');
 

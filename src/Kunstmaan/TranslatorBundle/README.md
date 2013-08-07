@@ -125,6 +125,16 @@ When all translations are up to date, e.g when migrated all develop translations
 app/console kuma:translator:flag --reset
 ```
 
+Lookup keyword/domain of your translations
+-------------------------------------------
+You probably don't always remember which keyword and/or domain your translations on specific pages are using. To solve this problem you can add an extra GET parameter to your request. Add `?transSource=1` to your url to see all sources of the translated labels.
+
+You instead of "Hello world" you might see `header.hello_world (messages)`. This means:
+
+* keyword is header.hello_world
+* domain is messages
+
+
 
 Features
 -------------------------------------
@@ -140,6 +150,7 @@ Features
 * Create a Doctrine Migrations file with all flagged translations
 * Reset all flagged translations (from console command)
 * Clear and check translation cache from console command
+* Check your page with the keyword and domain of all translations
 
 
 Development instructions

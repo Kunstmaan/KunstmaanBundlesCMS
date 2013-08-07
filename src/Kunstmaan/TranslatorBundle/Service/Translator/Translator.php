@@ -19,6 +19,8 @@ class Translator extends SymfonyTranslator
      */
     private $resourceCacher;
 
+    private $request;
+
     /**
      * Add resources from the database
      * So the translator knows where to look (first) for specific translations
@@ -88,6 +90,17 @@ class Translator extends SymfonyTranslator
         return parent::loadCatalogue($locale);
     }
 
+    public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
+    {
+        $showTranslationsSource = $this->container->get('request')->get('transSource');
+
+        if($showTranslationsSource !== null) {
+            return sprintf('%s (%s)', $id, $domain);
+        }
+
+        return parent::trans($id, $parameters, $domain, $locale);
+    }
+
     public function getTranslationRepository()
     {
         return $this->translationRepository;
@@ -101,5 +114,10 @@ class Translator extends SymfonyTranslator
     public function setResourceCacher($resourceCacher)
     {
         $this->resourceCacher = $resourceCacher;
+    }
+
+    public function setRequest($request)
+    {
+        $this->request = $request;
     }
 }
