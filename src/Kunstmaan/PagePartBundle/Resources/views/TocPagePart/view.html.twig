@@ -5,7 +5,7 @@
 {% for pagepart in getpageparts(page, "main") %}
     {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
       {% if pagepart.getNiv() == 2 %}
-          {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|url_encode~'">'~pagepart.getTitle~'</a></li>' %}
+          {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|slugify~'">'~pagepart.getTitle~'</a></li>' %}
       {% endif %}
     {% endif %}
 {% endfor %}
