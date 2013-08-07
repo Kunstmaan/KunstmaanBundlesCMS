@@ -1,0 +1,49 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <span>
+            <img height="28" alt="Translations" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAcCAMAAABWBG9SAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoyMjY5ODc3MjRFRDIxMUUyOUQzNUI2QTkwQjU4RkU2QiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoyMjY5ODc3MzRFRDIxMUUyOUQzNUI2QTkwQjU4RkU2QiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjIyNjk4NzcwNEVEMjExRTI5RDM1QjZBOTBCNThGRTZCIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjIyNjk4NzcxNEVEMjExRTI5RDM1QjZBOTBCNThGRTZCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+aeuERwAAASBQTFRFQD8/RUVFubi49/f3e3p6rKurmJeXsbGxr6+v7u7uU1NT19bWyMjI5+fnY2JiQUFBxMTE2dnZt7e3YWBg39/faGdnS0tLUE9PgYCAgIB/5+bmUVFRTk5OYmJhvb299/b2ycnJr66tUlJSpqWkurm5kZGQsbCw0dDQd3d2kI+PcnBwxsXFvLu7oaCgWVlYy8vKTU1MW1patLOzy8vLenp6oqGglZWVRkZGp6eml5aWaWlpcXFxRkVFvby8gYB/aWlo/Pz8Y2NjQD9ApaWkP0BAf39/lJOTeHd3p6amr66uw8PDlZWU+/v73d3deXh4RUVG7e3tcXBwcnFwjYyM6+vrxsbGxsbFl5eX2travb2829vbs7OzT09PPz8/QEBA////blEBcwAAAGB0Uk5T//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8Ac23kQwAAANRJREFUeNpiiMcCGKgkKG8byYwm6OOrphVkJOKAEAzR9hZlZIiNjTW3Cg8NAAmK6AYaxMXGxoFBbKyLjLWpFIOCsqseA0IwzlDSQ53BUUJRwMvZLwYkIW1iESbgaSfLIBYby2hvqWKsE6wpp89kJmoTGyvGEAPRpeQeEaUhDjE8BiwINo6DA2owkmBcdHQc/QX9ndAFYxkZVIX5IT6HCMbG8gu7McQzC7KycMXFMrCzM8TGcbGwCjJDA5mTh41PSIiPjYcTJTp4mbi5mXipHMXIACDAAPMEsv90Bi2uAAAAAElFTkSuQmCC"/>
+
+            <span>Translations ({{ collector.totalTranslations }})</span>
+        </span>
+    {% endset %}
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Translations used:</b>
+            <span>{{ collector.totalTranslations }}</span>
+        </div>
+    {% endset %}
+    {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': profiler_url } %}
+{% endblock %}
+
+
+{% block menu %}
+<span class="label">
+    <span class="icon">
+        <img height="30" alt="Translations" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAcCAMAAABWBG9SAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIE1hY2ludG9zaCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoyMjY5ODc3MjRFRDIxMUUyOUQzNUI2QTkwQjU4RkU2QiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoyMjY5ODc3MzRFRDIxMUUyOUQzNUI2QTkwQjU4RkU2QiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjIyNjk4NzcwNEVEMjExRTI5RDM1QjZBOTBCNThGRTZCIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjIyNjk4NzcxNEVEMjExRTI5RDM1QjZBOTBCNThGRTZCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+aeuERwAAASBQTFRFQD8/RUVFubi49/f3e3p6rKurmJeXsbGxr6+v7u7uU1NT19bWyMjI5+fnY2JiQUFBxMTE2dnZt7e3YWBg39/faGdnS0tLUE9PgYCAgIB/5+bmUVFRTk5OYmJhvb299/b2ycnJr66tUlJSpqWkurm5kZGQsbCw0dDQd3d2kI+PcnBwxsXFvLu7oaCgWVlYy8vKTU1MW1patLOzy8vLenp6oqGglZWVRkZGp6eml5aWaWlpcXFxRkVFvby8gYB/aWlo/Pz8Y2NjQD9ApaWkP0BAf39/lJOTeHd3p6amr66uw8PDlZWU+/v73d3deXh4RUVG7e3tcXBwcnFwjYyM6+vrxsbGxsbFl5eX2travb2829vbs7OzT09PPz8/QEBA////blEBcwAAAGB0Uk5T//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8Ac23kQwAAANRJREFUeNpiiMcCGKgkKG8byYwm6OOrphVkJOKAEAzR9hZlZIiNjTW3Cg8NAAmK6AYaxMXGxoFBbKyLjLWpFIOCsqseA0IwzlDSQ53BUUJRwMvZLwYkIW1iESbgaSfLIBYby2hvqWKsE6wpp89kJmoTGyvGEAPRpeQeEaUhDjE8BiwINo6DA2owkmBcdHQc/QX9ndAFYxkZVIX5IT6HCMbG8gu7McQzC7KycMXFMrCzM8TGcbGwCjJDA5mTh41PSIiPjYcTJTp4mbi5mXipHMXIACDAAPMEsv90Bi2uAAAAAElFTkSuQmCC"/>
+    </span>
+    <strong>Translations</strong>
+</span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Translations ({{ collector.totalTranslations }})</h2>
+
+    <table>
+        <tr>
+            <th>Domain</th>
+            <th>Locale</th>
+            <th>Keyword</th>
+            <th>Text</th>
+        </tr>
+        {% for translation in collector.translations %}
+        <tr>
+            <td>{{ translation.domain }}</td>
+            <td>{{ translation.locale }}</td>
+            <td>{{ translation.keyword }}</td>
+            <td>{{ translation.text | truncate(40) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

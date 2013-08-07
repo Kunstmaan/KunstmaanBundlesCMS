@@ -34,6 +34,7 @@ class KunstmaanTranslatorExtension extends Extension
         $container->setParameter('kuma_translator.managed_locales', $config['managed_locales']);
         $container->setParameter('kuma_translator.file_formats', $config['file_formats']);
         $container->setParameter('kuma_translator.storage_engine.type', $config['storage_engine']['type']);
+        $container->setParameter('kuma_translator.profiler', $container->getParameter('kernel.debug'));
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
@@ -51,6 +52,10 @@ class KunstmaanTranslatorExtension extends Extension
 
         // overwrites everything
         $translator->addMethodCall('addDatabaseResources', array());
+
+        $collector = $container->getDefinition('kunstmaan.data_collector.translator');
+        $collector->addArgument($translator);
+
     }
 
     /**

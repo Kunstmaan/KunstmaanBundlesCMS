@@ -2,6 +2,12 @@ parameters:
     kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
 
 services:
+
+    kunstmaan.data_collector.translator:
+        class: Kunstmaan\TranslatorBundle\Component\HttpKernel\DataCollector\TranslatorDataCollector
+        tags:
+            - { name: data_collector,  template: "KunstmaanTranslatorBundle:DataCollector:translator", id: "translator", priority: "255" }
+
     kunstmaan_translator.menu.adaptor:
         class: "%kunstmaan_translator.menu.adaptor.class%"
         tags:

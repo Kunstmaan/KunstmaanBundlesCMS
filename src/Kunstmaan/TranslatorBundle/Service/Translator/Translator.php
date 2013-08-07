@@ -4,6 +4,7 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Translator
@@ -20,6 +21,8 @@ class Translator extends SymfonyTranslator
     private $resourceCacher;
 
     private $request;
+
+    private $usedTranslations;
 
     /**
      * Add resources from the database
@@ -92,13 +95,49 @@ class Translator extends SymfonyTranslator
 
     public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
     {
-        $showTranslationsSource = $this->container->get('request')->get('transSource');
 
+
+
+        $showTranslationsSource = $this->container->get('request')->get('transSource');
         if($showTranslationsSource !== null) {
-            return sprintf('%s (%s)', $id, $domain);
+            $trans =  sprintf('%s (%s)', $id, $domain);
+        } else {
+            $trans = parent::trans($id, $parameters, $domain, $locale);
+
         }
 
-        return parent::trans($id, $parameters, $domain, $locale);
+        $this->profileTranslation($id, $parameters, $domain, $locale, $trans);
+
+        return $trans;
+    }
+
+    public function profileTranslation($id, $parameters, $domain, $locale, $trans)
+    {
+
+        if ($this->container->getParameter('kuma_translator.profiler') === false) {
+            return;
+        }
+
+        if ($locale === null) {
+            $locale = $this->container->getParameter('locale');
+        }
+
+        $translation = new Translation;
+        $translation->setKeyword($id);
+        $translation->setDomain($domain);
+        $translation->setLocale($locale);
+        $translation->setText($trans);
+
+        $translationCollection = $this->container->get('request')->request->get('usedTranslations');
+
+        if (!$translationCollection instanceof \Doctrine\Common\Collections\ArrayCollection) {
+            $translationCollection = new ArrayCollection;
+        }
+
+        $translationCollection->set($domain.$id.$locale, $translation);
+
+        $this->container->get('request')->request->set('usedTranslations', $translationCollection);
+
     }
 
     public function getTranslationRepository()
@@ -116,8 +155,9 @@ class Translator extends SymfonyTranslator
         $this->resourceCacher = $resourceCacher;
     }
 
-    public function setRequest($request)
+    public function getUsedTranslations()
     {
-        $this->request = $request;
+        return $this->usedTranslations;
     }
+
 }
