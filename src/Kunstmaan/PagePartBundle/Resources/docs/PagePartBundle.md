@@ -3,9 +3,12 @@
 ## Pageparts
 The KunstmaanPagePartBundle is the basis of our content management framework. A page built using a composition of blocks names pageparts. These pageparts allow you to fully separate the data from the presentation so non-technical webmasters can manage the website. Every page can have it's own list of possible pageparts, and pageparts are easy to create for your specific project to allow for rapid development.
 
-### Configuration
-For each page you can configure multiple contexts which pageparts in it. (For example "main", "banners", "right column").
 
+### Configuration
+
+For each page you can configure multiple contexts which pageparts in it. (For example "main", "banners", "right column", "footer").
+
+#### Configuration in PHP
 ```PHP
 
 class HomePage extends AbstractPage implements HasPagePartsInterface
@@ -89,6 +92,7 @@ class HomepageMainPagePartAdminConfigurator extends AbstractPagePartAdminConfigu
 }
 ```
 
+#### Configuration in YAML
 You can also specify the pagepart configuration in yml:
 
 ```PHP
@@ -125,10 +129,11 @@ Or if you need to manipulate the list with extra html:
 ```
 
 ## PageTemplates
-Until now we had fixed specified the positions of each pagepart context (pagepart list). But it's also possible to define multiple templates for these contexts. Then there is a 'switch template' button in the backend which shows a popup like this:
+Until now we had specified some pagepart contexts (= pagepart list) and we can include them in our templates at fixed positions. But it's also possible to define multiple templates for these contexts. For example you can have multiple columns, or a singe column and switch between them in the backend. Then there is a 'switch template' button which shows a popup like this:
 [TODO screenshot]
 
 ### Configuration
+#### Configuration in PHP
 ```PHP
 
 class HomePage extends AbstractPage implements HasPagePartsInterface
@@ -138,12 +143,44 @@ class HomePage extends AbstractPage implements HasPagePartsInterface
 
 public function getPageTemplates()
 {
-    return array("BoleroOpenWebsiteBundle:news");
+    return array(new HomepagePageTemplate(), new HomepageExtendedPageTemplate());
 }
 
 
 ```
 
+```PHP
+class HomepagePageTemplate extends PageTemplate
+{
+    /**
+     * constructor
+     */
+    public function __construct()
+    {
+        $this->setName("Homepage")
+             ->setRows(array(
+                new Row(array(new Region("main", 12))),
+             ))
+             ->setTemplate("KunstmaanKumasandboxBundle::PageTemplate\ContentPageTemplate");
+    }
+}
+class HomepageExtendedPageTemplate extends PageTemplate
+{
+    /**
+     * constructor
+     */
+    public function __construct()
+    {
+        $this->setName("Homepage extended")
+             ->setRows(array(
+                new Row(array(new Region("main", 9), new Region("banners", 3))),
+                new Row(array(new Region("bottom", 12)))))
+             ->setTemplate("KunstmaanKumasandboxBundle::PageTemplate\ContentPageTemplate");
+    }
+}
+```
+
+#### Configuration in YAML
 You can also specify the template configuration in yml:
 
 ```PHP
@@ -184,6 +221,8 @@ rows:
 template: "KunstmaanWebsiteBundle::Pages\ContentPage\extended-pagetemplate.html.twig"
     
 ```
+PRO-TIP: The name of the region is linked to the context in the pagepart configuration, not the name of the pagepart configuration file.
+
 ### Rendering
 This is an example of the extended-pagetemplate.html.twig file:
 ```TWIG
