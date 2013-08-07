@@ -36,7 +36,7 @@ Overwrite the KunstmaanTranslatorBundle config to your needs in config.yml :
 
 ```PHP
 kuma_translator:
-    enable: true
+    enabled: true
 ```
 
 Migrate dev translations to production
