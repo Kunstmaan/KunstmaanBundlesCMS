@@ -1,3 +1,4 @@
+@clean_session
 Feature: AdminSettingsRole
   Browse the admin and perform CRUD on an role
   As an admin user

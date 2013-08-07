@@ -56,9 +56,7 @@ class PageContext extends BehatContext
                     }
                     $modalField->setValue($value);
                 }
-
-                $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $confirmButton->click();
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }
@@ -149,8 +147,7 @@ class PageContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $button = $modal->find('xpath', '//a[text()="'.$state.'"]');
-                $button->click();
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[text()='".$state."']");
 
                 return;
             }
@@ -182,8 +179,7 @@ class PageContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $deleteButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $deleteButton->click();
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }

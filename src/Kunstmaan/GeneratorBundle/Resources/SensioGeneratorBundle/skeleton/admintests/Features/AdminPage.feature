@@ -1,3 +1,4 @@
+@clean_session
 Feature: AdminPage
   Make use of pages
   As an admin user

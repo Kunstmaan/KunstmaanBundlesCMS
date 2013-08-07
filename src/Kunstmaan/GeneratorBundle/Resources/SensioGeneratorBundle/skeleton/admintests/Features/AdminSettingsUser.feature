@@ -1,7 +1,7 @@
 # TODO: Before the Feature runs we should delete the test user if it exists.
 # Should actually run on test DB and run all the fixtures + run everything in a big transaction so
 # we can roll back after every Feature.
-
+@clean_session
 Feature: AdminSettingsUser
   Browse the admin and perform CRUD on an admin user
   As an admin user

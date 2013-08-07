@@ -1,3 +1,4 @@
+@clean_session
 Feature: AdminSettingsGroup
   Browse the admin and perform CRUD on an group
   As an admin user
