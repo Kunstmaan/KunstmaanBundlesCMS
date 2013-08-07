@@ -3,6 +3,10 @@
 namespace Kunstmaan\GeneratorBundle\Helper;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * GeneratorUtils
@@ -19,10 +23,16 @@ class GeneratorUtils
     public static function cleanPrefix($prefixString)
     {
         if (empty($prefixString)) {
-            return '';
+            return null;
         }
 
-        return preg_replace('/_*/i', '', $prefixString) . '_';
+        $result = preg_replace('/_*$/i', '', strtolower($prefixString)) . '_';
+
+        if ($result == '_') {
+            return null;
+        }
+
+        return $result;
     }
 
     /**
@@ -122,5 +132,23 @@ class GeneratorUtils
         }
 
         return __DIR__ . '/../Resources/SensioGeneratorBundle/skeleton' . $pathInSkeleton;
+    }
+
+
+    /**
+     * Returns an inputAssistant.
+     *
+     * This probably isn't the cleanest way.
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     * @param DialogHelper    $dialog
+     * @param Kernel          $kernel
+     *
+     * @return InputAssistant
+     */
+    public static function getInputAssistant(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel)
+    {
+        return new InputAssistant($input, $output, $dialog, $kernel);
     }
 }
