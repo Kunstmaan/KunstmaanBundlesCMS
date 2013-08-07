@@ -171,14 +171,7 @@ class MediaContext extends BehatContext
                     }
                     $modalField->setValue($value);
                 }
-
-                $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                if (!is_null($confirmButton)) {
-                    $confirmButton->click();
-                } else {
-                    $message = sprintf('The submit button was not found');
-                    throw new ExpectationException($message, $this->getSession());
-                }
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }
@@ -228,14 +221,7 @@ class MediaContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $deleteLink = $modal->find('xpath', '//a[text()="Delete"]');
-                $deleteLink->click();
-                if (!is_null($deleteLink)) {
-                    $deleteLink->click();
-                } else {
-                    $message = sprintf('The delete button was not found');
-                    throw new ExpectationException($message, $this->getSession());
-                }
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[text()='Delete']");
 
                 return;
             }
@@ -245,7 +231,6 @@ class MediaContext extends BehatContext
     private function performDelete()
     {
         $page = $this->getMainContext()->getSession()->getPage();
-        $deleteButton = $page->find('xpath', "//a[contains(@class, 'del')]");
-        $deleteButton->click();
+        $this->getMainContext()->findAndClickButton($page, 'xpath', "//a[contains(@class, 'del')]");
     }
 }

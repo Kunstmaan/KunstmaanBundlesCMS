@@ -58,14 +58,7 @@ class PageContext extends BehatContext
                     }
                     $modalField->setValue($value);
                 }
-
-                $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                if (!is_null($confirmButton)) {
-                    $confirmButton->click();
-                } else {
-                    $message = sprintf('The submit button was not found');
-                    throw new ExpectationException($message, $this->getSession());
-                }
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }
@@ -158,13 +151,7 @@ class PageContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $button = $modal->find('xpath', '//a[text()="'.$state.'"]');
-                if (!is_null($button)) {
-                    $button->click();
-                } else {
-                    $message = sprintf('The "%s" button was not found', $state);
-                    throw new ExpectationException($message, $this->getSession());
-                }
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[text()='".$state."']");
 
                 return;
             }
@@ -198,13 +185,7 @@ class PageContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $deleteButton = $modal->find('xpath', "//form//button[@type='submit']");
-                if (!is_null($deleteButton)) {
-                    $deleteButton->click();
-                } else {
-                    $message = sprintf('The delete button was not found');
-                    throw new ExpectationException($message, $this->getSession());
-                }
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }

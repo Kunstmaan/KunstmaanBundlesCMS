@@ -349,6 +349,27 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * Finds an element with specified selector.
+     *
+     * @param Element $element  the element
+     * @param string  $selector selector engine name e.g. xpath
+     * @param string  $locator  selector locator
+     *
+     * @return array
+     * @throws ExpectationException
+     */
+    public function findAndClickButton($element, $selector, $locator)
+    {
+        $button = $element->find($selector, $locator);
+        if (!is_null($button)) {
+            $button->click();
+        } else {
+            $message = sprintf('The button was not found');
+            throw new ExpectationException($message, $this->getSession());
+        }
+    }
+
+    /**
      * Place this on a scenario that leaves the page in a faulty state that's difficult to recover.
      * This is for example placed on a scenario that fails to log in a user.
      *
