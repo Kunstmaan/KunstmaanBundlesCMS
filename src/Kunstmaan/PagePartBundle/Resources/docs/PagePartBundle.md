@@ -98,7 +98,7 @@ You can also specify the pagepart configuration in yml:
 ```PHP
 public function getPagePartAdminConfigurations()
 {
-    return array("WebsiteBundle:homepage_main");
+    return array("KunstmaanWebsiteBundle:homepage_main");
 }
 ```
 
@@ -130,7 +130,7 @@ Or if you need to manipulate the list with extra html:
 
 ## PageTemplates
 Until now we had specified some pagepart contexts (= pagepart list) and we can include them in our templates at fixed positions. But it's also possible to define multiple templates for these contexts. For example you can have multiple columns, or a singe column and switch between them in the backend. Then there is a 'switch template' button which shows a popup like this:
-[TODO screenshot]
+![Screenshot template chooser](screenshot_template_chooser.png "Screenshot template chooser")
 
 ### Configuration
 #### Configuration in PHP
@@ -161,7 +161,7 @@ class HomepagePageTemplate extends PageTemplate
              ->setRows(array(
                 new Row(array(new Region("main", 12))),
              ))
-             ->setTemplate("KunstmaanKumasandboxBundle::PageTemplate\ContentPageTemplate");
+             ->setTemplate("KunstmaanWebsiteBundle::PageTemplate\ContentPageTemplate");
     }
 }
 class HomepageExtendedPageTemplate extends PageTemplate
@@ -175,7 +175,7 @@ class HomepageExtendedPageTemplate extends PageTemplate
              ->setRows(array(
                 new Row(array(new Region("main", 9), new Region("banners", 3))),
                 new Row(array(new Region("bottom", 12)))))
-             ->setTemplate("KunstmaanKumasandboxBundle::PageTemplate\ContentPageTemplate");
+             ->setTemplate("KunstmaanWebsiteBundle::PageTemplate\ContentPageTemplate");
     }
 }
 ```
@@ -192,7 +192,7 @@ class HomePage extends AbstractPage implements HasPagePartsInterface
 
 public function getPageTemplates()
 {
-    return array("WebsiteBundle:homepage", "WebsiteBundle:two-column-homepage");
+    return array("KunstmaanWebsiteBundle:homepage", "KunstmaanWebsiteBundle:two-column-homepage");
 }
 
 ```
