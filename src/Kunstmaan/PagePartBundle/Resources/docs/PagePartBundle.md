@@ -221,7 +221,7 @@ rows:
 template: "KunstmaanWebsiteBundle::Pages\ContentPage\extended-pagetemplate.html.twig"
     
 ```
-PRO-TIP: The name of the region is linked to the context in the pagepart configuration, not the name of the pagepart configuration file.
+**PRO-TIP: The name of the region is linked to the context in the pagepart configuration, not the name of the pagepart configuration file.**
 
 ### Rendering
 This is an example of the extended-pagetemplate.html.twig file:
