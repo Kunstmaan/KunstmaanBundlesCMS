@@ -4,6 +4,7 @@ namespace {{ namespace }}\Features\Context;
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
+use Behat\Mink\Exception\ExpectationException;
 
 /**
  * GroupContext
@@ -70,6 +71,8 @@ class GroupContext extends BehatContext
      * @param string $groupName
      *
      * @Given /^I delete group "([^"]*)"$/
+     *
+     * @throws ExpectationException
      */
     public function iDeleteGroup($groupName)
     {
@@ -87,7 +90,12 @@ class GroupContext extends BehatContext
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
                 $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $confirmButton->click();
+                if (!is_null($confirmButton)) {
+                    $confirmButton->click();
+                } else {
+                    $message = sprintf('The submit button was not found');
+                    throw new ExpectationException($message, $this->getSession());
+                }
 
                 return;
             }

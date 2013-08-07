@@ -5,6 +5,7 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 use Behat\Mink\Exception\ElementNotFoundException;
+use Behat\Mink\Exception\ExpectationException;
 
 /**
  * MediaContext
@@ -144,6 +145,7 @@ class MediaContext extends BehatContext
      * @Given /^I create subfolder "([^"]*)"$/
      *
      * @throws ElementNotFoundException
+     * @throws ExpectationException
      */
     public function iCreateSubFolder($folderName)
     {
@@ -171,7 +173,12 @@ class MediaContext extends BehatContext
                 }
 
                 $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $confirmButton->click();
+                if (!is_null($confirmButton)) {
+                    $confirmButton->click();
+                } else {
+                    $message = sprintf('The submit button was not found');
+                    throw new ExpectationException($message, $this->getSession());
+                }
 
                 return;
             }
@@ -198,6 +205,8 @@ class MediaContext extends BehatContext
 
     /**
      * @param string $folderName
+     *
+     * @throws ExpectationException
      */
     private function performFolderDelete($folderName = "")
     {
@@ -221,6 +230,12 @@ class MediaContext extends BehatContext
             if ($modal->hasClass('in')) {
                 $deleteLink = $modal->find('xpath', '//a[text()="Delete"]');
                 $deleteLink->click();
+                if (!is_null($deleteLink)) {
+                    $deleteLink->click();
+                } else {
+                    $message = sprintf('The delete button was not found');
+                    throw new ExpectationException($message, $this->getSession());
+                }
 
                 return;
             }

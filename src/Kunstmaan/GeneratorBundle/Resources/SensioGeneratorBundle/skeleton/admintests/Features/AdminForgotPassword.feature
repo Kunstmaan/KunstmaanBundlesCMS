@@ -1,3 +1,4 @@
+@clean_session
 Feature: AdminForgotPassword
   Browse and fill in the forgot password form
   As a user

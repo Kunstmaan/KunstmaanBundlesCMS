@@ -5,6 +5,7 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 use Behat\Mink\Exception\ElementNotFoundException;
+use Behat\Mink\Exception\ExpectationException;
 
 /**
  * PageContext
@@ -32,6 +33,7 @@ class PageContext extends BehatContext
      * @Given /^I add (.*) "([^"]*)"$/
      *
      * @throws ElementNotFoundException
+     * @throws ExpectationException
      */
     public function iAddPage($pageType, $pageName)
     {
@@ -58,7 +60,12 @@ class PageContext extends BehatContext
                 }
 
                 $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $confirmButton->click();
+                if (!is_null($confirmButton)) {
+                    $confirmButton->click();
+                } else {
+                    $message = sprintf('The submit button was not found');
+                    throw new ExpectationException($message, $this->getSession());
+                }
 
                 return;
             }
@@ -122,6 +129,8 @@ class PageContext extends BehatContext
     /**
      * @param string $pageName the name of the page
      * @param string $state    the state of the page - Publish, Unpublish
+     *
+     * @throws ExpectationException
      */
     private function placePageInState($pageName, $state)
     {
@@ -150,7 +159,12 @@ class PageContext extends BehatContext
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
                 $button = $modal->find('xpath', '//a[text()="'.$state.'"]');
-                $button->click();
+                if (!is_null($button)) {
+                    $button->click();
+                } else {
+                    $message = sprintf('The "%s" button was not found', $state);
+                    throw new ExpectationException($message, $this->getSession());
+                }
 
                 return;
             }
@@ -161,6 +175,8 @@ class PageContext extends BehatContext
      * @param string $pageName
      *
      * @Given /^I delete page "([^"]*)"$/
+     *
+     * @throws ExpectationException
      */
     public function iDeletePage($pageName)
     {
@@ -183,7 +199,12 @@ class PageContext extends BehatContext
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
                 $deleteButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $deleteButton->click();
+                if (!is_null($deleteButton)) {
+                    $deleteButton->click();
+                } else {
+                    $message = sprintf('The delete button was not found');
+                    throw new ExpectationException($message, $this->getSession());
+                }
 
                 return;
             }
