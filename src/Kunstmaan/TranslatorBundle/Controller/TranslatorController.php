@@ -49,16 +49,20 @@ class TranslatorController extends AdminListController
      * The add action
      *
      * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add")
+     * @Route("/add/{domain}/{locale}/{keyword}", name="KunstmaanTranslatorBundle_settings_translations_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
      * @return array
      */
-    public function addAction()
+    public function addAction($keyword = '', $domain = '', $locale = '')
     {
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $translation = new Translation();
+        $translation->setDomain($domain);
+        $translation->setKeyword($keyword);
+        $translation->setLocale($locale);
 
         $locales = $this->container->getParameter('kuma_translator.managed_locales');
 
@@ -122,6 +126,17 @@ class TranslatorController extends AdminListController
             'form' => $form->createView(),
             'translation' => $translation
         );
+    }
+
+    /**
+     * @Route("/edit/{domain}/{locale}/{keyword}", name="KunstmaanTranslatorBundle_settings_translations_edit_search")
+     * @Method({"GET"})
+     */
+    public function editSearchAction($domain, $locale, $keyword)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->findOneBy(array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale));
+        return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations_edit', array('id' => $translation->getId())));
     }
 
     /**

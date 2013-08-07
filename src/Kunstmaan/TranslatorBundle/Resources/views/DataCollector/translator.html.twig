@@ -10,7 +10,7 @@
     {% endset %}
     {% set text %}
         <div class="sf-toolbar-info-piece">
-            <b>Translations used:</b>
+            <b>Translations used</b>
             <span>{{ collector.totalTranslations }}</span>
         </div>
     {% endset %}
@@ -36,6 +36,7 @@
             <th>Locale</th>
             <th>Keyword</th>
             <th>Text</th>
+            <th>Backend</th>
         </tr>
         {% for translation in collector.translations %}
         <tr>
@@ -43,6 +44,13 @@
             <td>{{ translation.locale }}</td>
             <td>{{ translation.keyword }}</td>
             <td>{{ translation.text | truncate(40) }}</td>
+            <td>
+                {% if translation.keyword == translation.text %}
+                    <a href="{{ path('KunstmaanTranslatorBundle_settings_translations_add', { locale: translation.locale, domain: translation.domain, keyword: translation.keyword }) }}" target="_blank">add</a>
+                {% else %}
+                    <a href="{{ path('KunstmaanTranslatorBundle_settings_translations_edit_search', { locale: translation.locale, domain: translation.domain, keyword: translation.keyword }) }}" target="_blank">edit</a>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>

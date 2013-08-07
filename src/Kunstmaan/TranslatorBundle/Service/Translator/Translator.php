@@ -20,10 +20,6 @@ class Translator extends SymfonyTranslator
      */
     private $resourceCacher;
 
-    private $request;
-
-    private $usedTranslations;
-
     /**
      * Add resources from the database
      * So the translator knows where to look (first) for specific translations
@@ -96,8 +92,6 @@ class Translator extends SymfonyTranslator
     public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
     {
 
-
-
         $showTranslationsSource = $this->container->get('request')->get('transSource');
         if($showTranslationsSource !== null) {
             $trans =  sprintf('%s (%s)', $id, $domain);
@@ -119,7 +113,7 @@ class Translator extends SymfonyTranslator
         }
 
         if ($locale === null) {
-            $locale = $this->container->getParameter('locale');
+            $locale = $this->container->get('request')->get('_locale');
         }
 
         $translation = new Translation;
@@ -155,9 +149,5 @@ class Translator extends SymfonyTranslator
         $this->resourceCacher = $resourceCacher;
     }
 
-    public function getUsedTranslations()
-    {
-        return $this->usedTranslations;
-    }
 
 }
