@@ -318,6 +318,23 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @Then /^I should see "([^"]*)" or "([^"]*)"$/
+     *
+     * @throws ResponseTextException
+     */
+    public function iShouldSeeOr($text1, $text2)
+    {
+        $actual = $this->getSession()->getPage()->getText();
+        $regex1  = '/'.preg_quote($text1, '/').'/ui';
+        $regex2  = '/'.preg_quote($text2, '/').'/ui';
+
+        if (!(preg_match($regex1, $actual) || preg_match($regex2, $actual))) {
+            $message = sprintf('The text "%s" was not found anywhere in the text of the current page.', $text2);
+            throw new ResponseTextException($message, $this->getSession());
+        }
+    }
+
+    /**
      * Place this on a scenario that leaves the page in a faulty state that's difficult to recover.
      * This is for example placed on a scenario that fails to log in a user.
      *
