@@ -349,7 +349,7 @@ class FeatureContext extends AbstractContext
     }
 
     /**
-     * Finds an element with specified selector.
+     * Finds an element with specified selector and clicks it.
      *
      * @param Element $element  the element
      * @param string  $selector selector engine name e.g. xpath
