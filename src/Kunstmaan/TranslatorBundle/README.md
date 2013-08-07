@@ -134,6 +134,17 @@ You instead of "Hello world" you might see `header.hello_world (messages)`. This
 * keyword is header.hello_world
 * domain is messages
 
+Symfony Profiler integration
+-----------------------------
+
+The Symfony2 Profiler show the number of translations used on the current request:
+
+![Symfony2 Profiler Example](Resources/doc/sf2_profiler_bar.png)
+
+When you click on this item, you can see all translations used on the current request and a link to add or edit them in the Kunstmaan Admin backend.
+
+![Symfony2 Profiler Example Table](Resources/doc/sf2_profiler_table.png)
+
 
 
 Features
