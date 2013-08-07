@@ -3,7 +3,7 @@
 A bundle which enables editing translations in the admin interface without need for editing the translations files.
 Translations will be stored in a (default) database and retrieved on the most efficient way possible.
 
-It's possible to create your own stasher to store your translation files.
+![Symfony2 Profiler Example](Resources/doc/sf2_preview.png)
 
 Installation requirements
 -------------------------
@@ -42,15 +42,12 @@ kuma_translator:
 Migrate dev translations to production
 ------------------------------------------
 
-Note: only use this with a SQL stasher.
-
 Use the following command to generate a doctrine migration with all new and updated translations from your current environment.
 ```
 app/console kuma:translator:migrations:diff
 ```
 
 When you want to include these migrated translations into your (other) environment use the normal doctrine migrate command.
-
 ```
 app/console doctrine:migrations:migrate
 ```
@@ -60,7 +57,7 @@ Import existing translation files
 When migrating your current project you can easily import the existing translation files.
 
 Without parameters, all translations, locales from the current `main` project will be included.
-If you have already existing translations in the stasher with the same combination of 'domain', 'keyword', 'locale', non of them will be overwritten
+If you have already existing translations in the database with the same combination of 'domain', 'keyword', 'locale', non of them will be overwritten
 
 ```
 app/console kuma:translator:import
@@ -73,6 +70,7 @@ app/console kuma:translator:import --force
 ```
 
 To import translations from a specific bundle:
+
 ```
 app/console kuma:translator:import --bundle=superCoolNewApplicationBundle
 ```
@@ -90,7 +88,7 @@ app/console kuma:translator:import --globals
 How does the cache work
 -------------------------------------
 
-Translations are stored in a database, but cached when not running in debug mode.
+Translations are stored in a database, but cached (as Symfony2 normally does) when not running in debug mode.
 
 ```php
 $kernel = new AppKernel('prod', false); // translations are cached an read from this cache
@@ -102,7 +100,7 @@ $kernel = new AppKernel('dev', true); // translations are always loaded from the
 
 When editing translations in the backend changes aren't immediately visible on your website.
 The backend will show a warning message when not newer or updated translations aren't loaded into the cache.
-Click on the `flush cache`button to rebuild the cache.
+Click on the `Refresh live` button to rebuild the cache.
 
 Clear cache and request status
 -------------------------------------
@@ -120,6 +118,7 @@ app/console kuma:translator:cache --status
 Reset translation flags
 -------------------------------------
 When all translations are up to date, e.g when migrated all develop translations into production. You need to reset all the flags which mark translations as new or updated.
+Otherwise already migrated translations will be added into later migrations again (which can cause errors with inserts and unique keys)
 
 ```
 app/console kuma:translator:flag --reset
@@ -179,7 +178,9 @@ Run PHP CS Fixer, after [installing php-cs-fixer system wide](https://github.com
 php-cs-fixer fix .
 ```
 
+
 How to create your own file exporter
 -------------------------
 * Tag your exporter with `translation.exporter
 * implement \Kunstmaan\TranslatorBundle\Service\Exporter\FileExporterInterface
+__NOTE__ : exporting isn't stable (yet)
