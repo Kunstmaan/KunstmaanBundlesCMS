@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\ArrayInput;
 use Kunstmaan\GeneratorBundle\Generator\DoctrineEntityGenerator;
@@ -77,6 +78,8 @@ EOT
                 return 1;
             }
         }
+
+        GeneratorUtils::ensureOptionsProvided($input, array('entity', 'fields'));
 
         $entityInput = Validators::validateEntityName($input->getOption('entity'));
         list($bundleName, $entity) = $this->parseShortcutNotation($entityInput);

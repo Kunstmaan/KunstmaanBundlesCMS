@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\PagePartGenerator;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
@@ -115,6 +116,8 @@ EOT
             $this->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
         }
 
+        $namespace = '';
+
         // If we only have 1 bundle, we don't need to ask
         if (count($ownBundles) > 1) {
             $bundleSelect = array();
@@ -124,22 +127,22 @@ EOT
             $bundleQuestion = $this->dialog->getQuestion('In which bundle do you want to create the pagepart', null);
             $bundleId = $this->dialog->select($output, $bundleQuestion, $bundleSelect, null, false, 'Value "%s" is invalid');
             $this->bundleName = $ownBundles[$bundleId]['namespace'].$ownBundles[$bundleId]['name'];
+
+            $namespace = $ownBundles[$bundleId]['namespace'] . '/' . $ownBundles[$bundleId]['name'];
+
             $this->output->writeln('');
         } else {
             $this->bundleName = $ownBundles[1]['namespace'] . $ownBundles[1]['name'];
             $output->writeln(array("The pagepart will be created for the <comment>".$this->bundleName."</comment> bundle.\n"));
+
+            $namespace = $ownBundles[1]['namespace'] . '/' . $ownBundles[1]['name'];
         }
 
         /**
          * Ask the prefix for the database
          */
-        $output->writeln(array(
-            '',
-            'You can add a prefix to the table names of the generated entities for example: <comment>demo_</comment>',
-            "Leave empty if you don't want to specify a tablename prefix.",
-            '',
-        ));
-        $this->prefix = $this->dialog->ask($output, $this->dialog->getQuestion('Tablename prefix', null));
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $this->dialog, $this->getApplication()->getKernel());
+        $this->prefix = $inputAssistant->askForPrefix(null, $namespace);
 
         /**
          * Ask the name of the pagepart

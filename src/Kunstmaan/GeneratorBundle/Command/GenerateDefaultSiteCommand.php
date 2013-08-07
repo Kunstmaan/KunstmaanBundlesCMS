@@ -60,6 +60,8 @@ EOT
         $dialog = $this->getDialogHelper();
         $dialog->writeSection($output, 'Site Generation');
 
+        GeneratorUtils::ensureOptionsProvided($input, array('namespace'));
+
         $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
         $bundle = strtr($namespace, array('\\' => ''));
 
@@ -83,7 +85,6 @@ EOT
         $dialog = $this->getDialogHelper();
         $dialog->writeSection($output, 'Welcome to the Kunstmaan default site generator');
 
-        /** @var $inputAssistant InputAssistant */
         $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel());
 
         $inputAssistant->askForNamespace(array(
@@ -94,12 +95,7 @@ EOT
             '',
         ));
 
-        $inputAssistant->askForPrefix(array(
-            '',
-            'You can add a prefix to the table names of the generated entities for example: <comment>projectname_bundlename</comment>',
-            "Leave empty if you don't want to specify a tablename prefix.",
-            '',
-        ));
+        $inputAssistant->askForPrefix();
     }
 
     protected function createGenerator()

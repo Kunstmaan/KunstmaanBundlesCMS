@@ -57,11 +57,7 @@ EOT
     {
         $dialog = $this->getDialogHelper();
 
-        foreach (array('entity') as $option) {
-            if (null === $input->getOption($option)) {
-                throw new \RuntimeException(sprintf('The "%s" option must be provided.', $option));
-            }
-        }
+        GeneratorUtils::ensureOptionsProvided($input, array('entity'));
 
         $entity = Validators::validateEntityName($input->getOption('entity'));
         list($bundle, $entity) = $this->parseShortcutNotation($entity);

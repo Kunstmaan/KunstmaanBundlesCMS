@@ -124,4 +124,13 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
         $response = GeneratorUtils::cleanPrefix('____');
         $this->assertEquals(null, $response);
     }
+
+    /**
+     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     */
+    public function testSpacesShouldCreateEmptyPrefix()
+    {
+        $response = GeneratorUtils::cleanPrefix('  ');
+        $this->assertEquals(null, $response);
+    }
 }

@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\ArticleGenerator;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\Console\Input\InputOption;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
@@ -59,12 +60,9 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dialog = $this->getDialogHelper();
+        $dialog->writeSection($output, 'Article Generation');
 
-        foreach (array('namespace') as $option) {
-            if (null === $input->getOption($option)) {
-                throw new \RuntimeException(sprintf('The "%s" option must be provided.', $option));
-            }
-        }
+        GeneratorUtils::ensureOptionsProvided($input, array('namespace', 'entity'));
 
         $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
         $bundle = strtr($namespace, array('\\' => ''));
@@ -77,10 +75,10 @@ EOT
             ->getApplication()
             ->getKernel()
             ->getBundle($bundle);
-        $dialog->writeSection($output, 'Article Generation');
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($bundle, $entity, $prefix, $dummydata, $output);
+
         $output->writeln('Make sure you update your database first before using the created entities:');
         $output->writeln('    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>');
         $output->writeln('    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>');
@@ -92,26 +90,15 @@ EOT
         $dialog = $this->getDialogHelper();
         $dialog->writeSection($output, 'Welcome to the Kunstmaan Article generator');
 
-        // namespace
-        $namespace = null;
-        try {
-            $namespace = $input->getOption('namespace') ? Validators::validateBundleNamespace($input->getOption('namespace')) : null;
-        } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel());
 
-        if (is_null($namespace)) {
-            $output->writeln(array(
-                '',
-                'This command helps you to generate the Article classes.',
-                'You must specify the namespace of the bundle where you want to generate the classes in.',
-                'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
-                '',
-            ));
-
-            $namespace = $dialog->askAndValidate($output, $dialog->getQuestion('Bundle namespace', $namespace), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $namespace);
-            $input->setOption('namespace', $namespace);
-        }
+        $inputAssistant->askForNamespace(array(
+            '',
+            'This command helps you to generate the Article classes.',
+            'You must specify the namespace of the bundle where you want to generate the classes in.',
+            'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
+            '',
+        ));
 
         // entity
         $entity = $input->getOption('entity') ? $input->getOption('entity') : null;
@@ -135,20 +122,7 @@ EOT
             $input->setOption('entity', $entity);
         }
 
-        // prefix
-        $prefix = $input->getOption('prefix') ? $input->getOption('prefix') : null;
-
-        if (is_null($prefix)) {
-            $output->writeln(array(
-                '',
-                'You can add a prefix to the table names of the generated entities for example: <comment>demo_</comment>',
-                "Leave empty if you don't want to specify a tablename prefix.",
-                '',
-            ));
-
-            $prefix = $dialog->ask($output, $dialog->getQuestion('Tablename prefix', $prefix), $prefix);
-            $input->setOption('prefix', empty($prefix) ? null : $prefix);
-        }
+        $inputAssistant->askForPrefix();
     }
 
     protected function createGenerator()

@@ -22,6 +22,7 @@ class GeneratorUtils
      */
     public static function cleanPrefix($prefixString)
     {
+        $prefixString = trim($prefixString);
         if (empty($prefixString)) {
             return null;
         }
@@ -134,11 +135,22 @@ class GeneratorUtils
         return __DIR__ . '/../Resources/SensioGeneratorBundle/skeleton' . $pathInSkeleton;
     }
 
+    public static function ensureOptionsProvided(InputInterface $input, array $options)
+    {
+        foreach ($options as $option) {
+            if (null === $input->getOption($option)) {
+                throw new \RuntimeException(sprintf('The "%s" option must be provided.', $option));
+            }
+        }
+    }
+
 
     /**
      * Returns an inputAssistant.
      *
-     * This probably isn't the cleanest way.
+     * This probably isn't the cleanest way. It'd be nicer if we could make a KunstmaanGenerator class
+     * which all generators inherit from. It then provides a bunch of helper functions and a uniform manner
+     * in which the input options are handled.
      *
      * @param InputInterface  $input
      * @param OutputInterface $output

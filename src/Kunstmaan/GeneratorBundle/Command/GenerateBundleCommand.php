@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\GeneratorBundle\Command;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -78,11 +79,7 @@ EOT
             }
         }
 
-        foreach (array('namespace', 'dir') as $option) {
-            if (null === $input->getOption($option)) {
-                throw new \RuntimeException(sprintf('The "%s" option must be provided.', $option));
-            }
-        }
+        GeneratorUtils::ensureOptionsProvided($input, array('namespace', 'dir'));
 
         $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
         if (!$bundle = $input->getOption('bundle-name')) {

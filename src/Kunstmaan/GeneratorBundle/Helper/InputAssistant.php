@@ -45,10 +45,10 @@ class InputAssistant
      */
     public function askForNamespace(array $text = null)
     {
-        $namespace = null;
+        $namespace = $this->input->hasOption('namespace') ? $this->input->getOption('namespace') : null;
 
         try {
-            $namespace = $this->input->getOption('namespace') ? Validators::validateBundleNamespace($this->input->getOption('namespace')) : null;
+            $namespace = $namespace ? Validators::validateBundleNamespace($namespace) : null;
         } catch (\Exception $error) {
             $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
@@ -79,7 +79,7 @@ class InputAssistant
      * Asks for the prefix and sets it on the InputInterface as the 'prefix' option, if this option is not set yet.
      * Will set the default to a snake_cased namespace when the namespace has been set on the InputInterface.
      *
-     * @param array  $text What you want printed before the prefix is asked.
+     * @param array  $text What you want printed before the prefix is asked. If null is provided it'll write a default text.
      * @param string $namespace An optional namespace. If this is set it'll create the default based on this prefix.
      *  If it's not provided it'll check if the InputInterface already has the namespace option.
      *
@@ -87,10 +87,19 @@ class InputAssistant
      */
     public function askForPrefix(array $text = null, $namespace = null)
     {
-        $prefix = $this->input->getOption('prefix') ? $this->input->getOption('prefix') : null;
+        $prefix = $this->input->hasOption('prefix') ? $this->input->getOption('prefix') : null;
+
+        if (is_null($text)) {
+            $text = array(
+                '',
+                'You can add a prefix to the table names of the generated entities for example: <comment>projectname_bundlename_</comment>',
+                'Enter an underscore \'_\' if you don\'t want a prefix.',
+                ''
+            );
+        }
 
         if (is_null($prefix)) {
-            if (!is_null($text) && (count($text) > 0)) {
+            if (count($text) > 0) {
                 $this->output->writeln($text);
             }
 
@@ -99,10 +108,10 @@ class InputAssistant
             } else {
                 $namespace = $this->fixNamespace($namespace);
             }
-            $defaultPrefix = $this->convertNamespaceToSnakeCase($namespace);
+            $defaultPrefix = GeneratorUtils::cleanPrefix($this->convertNamespaceToSnakeCase($namespace));
             $prefix = $this->dialog->ask($this->output, $this->dialog->getQuestion('Tablename prefix', $defaultPrefix), $defaultPrefix);
-
-            $this->input->setOption('prefix', GeneratorUtils::cleanPrefix($prefix));
+            $prefix = GeneratorUtils::cleanPrefix($prefix);
+            $this->input->setOption('prefix', $prefix);
         }
 
         return $prefix;
