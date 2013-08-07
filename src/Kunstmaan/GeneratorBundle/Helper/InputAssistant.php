@@ -9,6 +9,7 @@ use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper,
 use Symfony\Component\Console\Input\InputInterface,
     Symfony\Component\Console\Output\OutputInterface;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 class InputAssistant
@@ -22,18 +23,35 @@ class InputAssistant
     private $dialog;
     /** @var Kernel */
     private $kernel;
+    /** @var ContainerInterface */
+    private $container;
 
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
      * @param DialogHelper    $dialog
      */
-    public function __construct(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel)
+    public function __construct(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel, ContainerInterface $container)
     {
         $this->input = $input;
         $this->output = $output;
         $this->dialog = $dialog;
         $this->kernel = $kernel;
+        $this->container = $container;
+    }
+
+    /**
+     * Helper function to display errors in the console.
+     *
+     * @param $message
+     * @param bool $exit
+     */
+    private function writeError($message, $exit = false)
+    {
+        $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
+        if ($exit) {
+            exit;
+        }
     }
 
     /**
@@ -47,11 +65,30 @@ class InputAssistant
     {
         $namespace = $this->input->hasOption('namespace') ? $this->input->getOption('namespace') : null;
 
+        // When the Namespace is filled in return it immediately if valid.
         try {
-            $namespace = $namespace ? Validators::validateBundleNamespace($namespace) : null;
+            if (!is_null($namespace) && !empty($namespace)) {
+                Validators::validateBundleNamespace($namespace);
+                return $namespace;
+            }
         } catch (\Exception $error) {
-            $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $this->writeError(array("Namespace '$namespace' is incorrect. Please provide a correct value.", $error->getMessage()));
+            exit;
         }
+
+        $ownBundles = $this->getOwnBundles();
+        if (count($ownBundles) <= 0) {
+            $this->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
+        }
+
+        $namespace = '';
+
+        // If we only have 1 or more bundles, we can prefill it.
+        if (count($ownBundles) > 0) {
+            $namespace = $ownBundles[1]['namespace'] . '/' . $ownBundles[1]['name'];
+        }
+
+
 
         $namespaces = $this->getNamespaceAutoComplete($this->kernel);
 
@@ -60,7 +97,7 @@ class InputAssistant
                 $this->output->writeln($text);
             }
 
-            $namespace = $this->dialog->askAndValidate($this->output, $this->dialog->getQuestion('Bundle Namespace', $namespace), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, null, $namespaces);
+            $namespace = $this->dialog->askAndValidate($this->output, $this->dialog->getQuestion('Bundle Namespace', $namespace), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $namespace, $namespaces);
 
             try {
                 Validators::validateBundleNamespace($namespace);
@@ -164,5 +201,42 @@ class InputAssistant
     private function fixNamespace($namespace)
     {
         return str_replace('\\', '/', $namespace);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * Get an array with all the bundles the user has created.
+     *
+     * @return array
+     */
+    private function getOwnBundles()
+    {
+        $bundles = array();
+        $counter = 1;
+
+        $dir = dirname($this->container->getParameter('kernel.root_dir')).'/src/';
+        $files = scandir($dir);
+        foreach ($files as $file) {
+            if (is_dir($dir.$file) && !in_array($file, array('.', '..'))) {
+                $bundleFiles = scandir($dir.$file);
+                foreach ($bundleFiles as $bundleFile) {
+                    if (is_dir($dir.$file.'/'.$bundleFile) && !in_array($bundleFile, array('.', '..'))) {
+                        $bundles[$counter++] = array(
+                            'name' => $bundleFile,
+                            'namespace' => $file,
+                            'dir' => $dir.$file.'/'.$bundleFile
+                        );
+                    }
+                }
+            }
+        }
+
+        return $bundles;
     }
 }

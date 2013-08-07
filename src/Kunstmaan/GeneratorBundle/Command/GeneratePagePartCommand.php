@@ -141,7 +141,7 @@ EOT
         /**
          * Ask the prefix for the database
          */
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $this->dialog, $this->getApplication()->getKernel());
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $this->dialog, $this->getApplication()->getKernel(), $this->getContainer());
         $this->prefix = $inputAssistant->askForPrefix(null, $namespace);
 
         /**

@@ -90,7 +90,7 @@ EOT
         $dialog = $this->getDialogHelper();
         $dialog->writeSection($output, 'Welcome to the Kunstmaan Article generator');
 
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel());
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
 
         $inputAssistant->askForNamespace(array(
             '',

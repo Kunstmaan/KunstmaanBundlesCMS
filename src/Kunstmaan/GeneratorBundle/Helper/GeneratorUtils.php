@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
@@ -152,15 +153,16 @@ class GeneratorUtils
      * which all generators inherit from. It then provides a bunch of helper functions and a uniform manner
      * in which the input options are handled.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     * @param DialogHelper    $dialog
-     * @param Kernel          $kernel
+     * @param InputInterface     $input
+     * @param OutputInterface    $output
+     * @param DialogHelper       $dialog
+     * @param Kernel             $kernel
+     * @param ContainerInterface $container
      *
      * @return InputAssistant
      */
-    public static function getInputAssistant(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel)
+    public static function getInputAssistant(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel, ContainerInterface $container)
     {
-        return new InputAssistant($input, $output, $dialog, $kernel);
+        return new InputAssistant($input, $output, $dialog, $kernel, $container);
     }
 }
