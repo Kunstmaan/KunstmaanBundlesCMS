@@ -67,7 +67,16 @@ class NodeListener
         $tabPane = $event->getTabPane();
 
         if ($page instanceof HasPageTemplateInterface) {
-            $tabPane->addTab(new Tab("Content", new PageTemplateWidget($page, $event->getRequest(), $this->em, $this->kernel, $this->formFactory, $this->pagePartAdminFactory)), 0);
+            $pageTemplateWidget = new PageTemplateWidget($page, $event->getRequest(), $this->em, $this->kernel, $this->formFactory, $this->pagePartAdminFactory);
+            /* @var Tab $propertiesTab */
+            $propertiesTab = $tabPane->getTabByTitle('Properties');
+            if (!is_null($propertiesTab)) {
+                $propertiesWidget = $propertiesTab->getWidget();
+                $tabPane->removeTab($propertiesTab);
+                $tabPane->addTab(new Tab("Content", new ListWidget(array($propertiesWidget, $pageTemplateWidget))), 0);
+            } else {
+                $tabPane->addTab(new Tab("Content", $pageTemplateWidget), 0);
+            }
         } else if ($page instanceof HasPagePartsInterface) {
             /* @var HasPagePartsInterface $page */
             $pagePartConfigurationReader = new PagePartConfigurationReader($this->kernel);
