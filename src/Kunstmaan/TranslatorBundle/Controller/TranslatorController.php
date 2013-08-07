@@ -136,6 +136,11 @@ class TranslatorController extends AdminListController
     {
         $em = $this->getDoctrine()->getManager();
         $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->findOneBy(array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale));
+
+        if ($translation == null) {
+            throw new \Exception('Translation could not be found.');
+        }
+
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations_edit', array('id' => $translation->getId())));
     }
 
