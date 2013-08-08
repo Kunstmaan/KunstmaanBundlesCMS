@@ -123,7 +123,9 @@ class MigrationsService
             $values[] = '(' . implode(',', $insertValues) . ')';
         }
 
-        $fieldNames = array_map(function($fieldName) { return $this->entityManager->getConnection()->quoteIdentifier($fieldName);}, $fieldNames);
+        foreach ($fieldNames as $key => $fieldName) {
+            $fieldNames[$key] = $this->entityManager->getConnection()->quoteIdentifier($fieldName);
+        }
 
         $sql = sprintf('INSERT INTO %s (%s) VALUES %s', $tableName, implode(",", $fieldNames), implode(', ', $values));
 
