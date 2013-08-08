@@ -3,9 +3,9 @@
         <!--[if IE 7]>
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                '@TestprojectWebsiteBundle/Resources/public/scss/style.scss'
-                '@TestprojectWebsiteBundle/Resources/public/scss/legacy/ie/ie8.scss'
-                '@TestprojectWebsiteBundle/Resources/public/scss/legacy/ie/ie7.scss'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/legacy/ie/ie8.scss'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/legacy/ie/ie7.scss'
                 filter='scss'
                 output='frontend/style_ie7.css'
              %}
@@ -15,8 +15,8 @@
         <!--[if IE 8]>
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                '@TestprojectWebsiteBundle/Resources/public/scss/style.scss'
-                '@TestprojectWebsiteBundle/Resources/public/scss/legacy/ie/ie8.scss'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/legacy/ie/ie8.scss'
                 filter='scss'
                 output='frontend/style_ie8.css'
              %}
@@ -26,7 +26,7 @@
         <!--[if gt IE 8]><!-->
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                '@TestprojectWebsiteBundle/Resources/public/scss/style.scss'
+                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
                 filter='scss'
                 output='frontend/style.css'
             %}
