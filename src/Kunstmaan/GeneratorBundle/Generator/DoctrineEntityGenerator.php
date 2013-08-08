@@ -92,7 +92,7 @@ class DoctrineEntityGenerator extends Generator
         return $this->convertCamelCaseToSnakeCase($entityName);
     }
 
-    private function convertCamelCaseToSnakeCase($text)
+    public static function convertCamelCaseToSnakeCase($text)
     {
         $text = preg_replace_callback('/[A-Z]/', create_function('$match', 'return "_" . strtolower($match[0]);'), $text);
         // remove first underscore.
