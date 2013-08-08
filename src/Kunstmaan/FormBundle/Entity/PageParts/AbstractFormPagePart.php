@@ -14,8 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
 
-    const ERROR_REQUIRED_FIELD = "error.field.required";
-
     /**
      * The label
      *

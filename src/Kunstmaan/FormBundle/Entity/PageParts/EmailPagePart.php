@@ -81,7 +81,7 @@ class EmailPagePart extends AbstractFormPagePart
      */
     public function getErrorMessageRequired()
     {
-        return empty($this->errorMessageRequired) ? 'This value can not be blank.' : $this->errorMessageRequired;
+        return $this->errorMessageRequired;
     }
 
     /**
@@ -101,7 +101,7 @@ class EmailPagePart extends AbstractFormPagePart
      */
     public function getErrorMessageInvalid()
     {
-        return empty($this->errorMessageInvalid) ? 'Please enter a valid email address.' : $this->errorMessageInvalid;
+        return $this->errorMessageInvalid;
     }
 
 
@@ -131,16 +131,24 @@ class EmailPagePart extends AbstractFormPagePart
 
         $constraints = array();
         if ($this->getRequired()) {
-            $constraints[] = new NotBlank(array('message' => $this->getErrorMessageRequired()));
+            $options = array();
+            if (!empty($this->errorMessageRequired)) {
+                $options['message'] = $this->errorMessageRequired;
+            }
+            $constraints[] = new NotBlank($options);
         }
-        $constraints[] = new Email(array('message' => $this->getErrorMessageInvalid()));
+        $options = array();
+        if (!empty($this->errorMessageInvalid)) {
+            $options['message'] = $this->getErrorMessageInvalid();
+        }
+        $constraints[] = new Email($options);
 
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
             new EmailFormSubmissionType(),
             array(
-                'label' => $this->getLabel(),
+                'label'       => $this->getLabel(),
                 'constraints' => $constraints,
-                'required' => $this->getRequired()
+                'required'    => $this->getRequired()
             )
         );
         $formBuilder->setData($data);

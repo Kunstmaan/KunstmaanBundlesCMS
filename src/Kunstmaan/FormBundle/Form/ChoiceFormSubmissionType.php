@@ -13,68 +13,16 @@ class ChoiceFormSubmissionType extends AbstractType
 {
 
     /**
-     * @var string
-     */
-    private $label;
-
-    /**
-     * @var bool
-     */
-    private $required;
-
-    /**
-     * @var bool
-     */
-    private $expanded;
-
-    /**
-     * @var bool
-     */
-    private $multiple;
-
-    /**
-     * @var array
-     */
-    private $choices;
-
-    /**
-     * @var string
-     */
-    private $emptyValue;
-
-    /**
-     * @param string $label      The label
-     * @param        $required
-     * @param bool   $expanded   Expanded or not
-     * @param bool   $multiple   Multiple or not
-     * @param array  $choices    The choices array
-     * @param array  $emptyValue The empty value
-     */
-    public function __construct($label, $required, $expanded, $multiple, array $choices, $emptyValue = null)
-    {
-        $this->label = $label;
-        $this->required = $required;
-        $this->expanded = $expanded;
-        $this->multiple = $multiple;
-        $this->choices = $choices;
-        $this->emptyValue = $emptyValue;
-    }
-
-    /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('value', 'choice', array(
-            'label' => $this->label,
-            'required' => $this->required,
-            'expanded' => $this->expanded,
-            'multiple' => $this->multiple,
-            'choices' => $this->choices,
-            'empty_value' => $this->emptyValue,
-            'empty_data' => null
-        ));
+        $keys = array_fill_keys(array('label', 'required', 'expanded', 'multiple', 'choices', 'empty_value', 'constraints'), null);
+        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
+        $fieldOptions['empty_data'] = null;
+
+        $builder->add('value', 'choice', $fieldOptions);
     }
 
     /**
@@ -89,6 +37,10 @@ class ChoiceFormSubmissionType extends AbstractType
     {
         $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField',
+                'choices' => array(),
+                'empty_value' => null,
+                'expanded' => null,
+                'multiple' => null,
         ));
     }
 }

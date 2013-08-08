@@ -6,6 +6,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 
 use Gedmo\Sluggable\Util\Urlizer;
 
+use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
@@ -144,6 +145,16 @@ class FileFormSubmissionField extends FormSubmissionField
     public function getSubmissionTemplate()
     {
         return "KunstmaanFormBundle:FileUploadPagePart:submission.html.twig";
+    }
+
+    /**
+     * Returns the default form type for this FormSubmissionField
+     *
+     * @return FileFormSubmissionType
+     */
+    public function getDefaultAdminType()
+    {
+        return new FileFormSubmissionType();
     }
 
 }

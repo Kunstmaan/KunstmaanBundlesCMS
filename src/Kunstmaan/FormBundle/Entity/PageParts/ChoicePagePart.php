@@ -5,10 +5,7 @@ namespace Kunstmaan\FormBundle\Entity\PageParts;
 use ArrayObject;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
@@ -100,22 +97,29 @@ class ChoicePagePart extends AbstractFormPagePart
         $cfsf->setRequired($this->required);
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $cfsf;
-        $label = $this->getLabel();
-        $formBuilder->add('formwidget_' . $this->getUniqueId(), new ChoiceFormSubmissionType($label, $this->required, $this->getExpanded(), $this->getMultiple(), $choices, $this->getEmptyValue()), array('required' => $this->getRequired()));
-        $formBuilder->setData($data);
+        $constraints = array();
         if ($this->getRequired()) {
-            $thiss = $this;
-            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($cfsf, $thiss) {
-                $form = $formEvent->getForm();
-
-                if ($cfsf->isNull()) {
-                    $errormsg = $thiss->getErrorMessageRequired();
-                    $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                    $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
-                    $v->addError($formError);
-                }
-            });
+            $options = array();
+            if (!empty($this->errorMessageRequired)) {
+                $options['message'] = $this->errorMessageRequired;
+            }
+            $constraints[] = new NotBlank($options);
         }
+
+        $formBuilder->add(
+            'formwidget_' . $this->getUniqueId(),
+            new ChoiceFormSubmissionType(),
+            array(
+                'label'       => $this->getLabel(),
+                'required'    => $this->getRequired(),
+                'expanded'    => $this->getExpanded(),
+                'multiple'    => $this->getMultiple(),
+                'choices'     => $choices,
+                'empty_value' => $this->getEmptyValue(),
+                'constraints' => $constraints,
+            )
+        );
+        $formBuilder->setData($data);
         $fields[] = $cfsf;
     }
 

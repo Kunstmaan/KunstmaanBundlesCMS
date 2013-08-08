@@ -13,27 +13,14 @@ class StringFormSubmissionType extends AbstractType
 {
 
     /**
-     * @var string
-     */
-    private $label;
-
-    /**
-     * @param string $label
-     */
-    public function __construct($label)
-    {
-        $this->label = $label;
-    }
-
-    /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('value', 'text', array(
-            'label' => $this->label
-        ));
+        $keys = array_fill_keys(array('label', 'required', 'constraints'), null);
+        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
+        $builder->add('value', 'text', $fieldOptions);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

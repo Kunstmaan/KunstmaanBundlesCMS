@@ -10,11 +10,9 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
 
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * The multi-line text page part can be used to create forms with multi-line text fields
@@ -156,34 +154,34 @@ class MultiLineTextPagePart extends AbstractFormPagePart
         $mfsf->setLabel($this->getLabel());
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $mfsf;
-        $label = $this->getLabel();
-        $formBuilder->add('formwidget_' . $this->getUniqueId(), new TextFormSubmissionType($label), array('required' => $this->getRequired()));
-        $formBuilder->setData($data);
-        if ($this->getRequired()) {
-            $thiss = $this;
-            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($mfsf, $thiss) {
-                $form = $formEvent->getForm();
 
-                $value = $mfsf->getValue();
-                if (is_null($value) || !is_string($value) || empty($value)) {
-                    $errormsg = $thiss->getErrorMessageRequired();
-                    $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                    $v->addError(new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg));
-                }
-            });
+        $constraints = array();
+        if ($this->getRequired()) {
+            $options = array();
+            if (!empty($this->errorMessageRequired)) {
+                $options['message'] = $this->errorMessageRequired;
+            }
+            $constraints[] = new NotBlank($options);
         }
         if ($this->getRegex()) {
-            $thiss = $this;
-            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($mfsf, $thiss) {
-                $form = $formEvent->getForm();
-
-                $value = $mfsf->getValue();
-                if (!is_null($value) && is_string($value) && !preg_match('/' . $thiss->getRegex() . '/', $value)) {
-                    $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('value');
-                    $v->addError(new FormError($thiss->getErrorMessageRegex()));
-                }
-            });
+            $options = array('pattern' => $this->getRegex());
+            if (!empty($this->errorMessageRegex)) {
+                $options['message'] = $this->errorMessageRegex;
+            }
+            $constraints[] = new Regex($options);
         }
+
+        $formBuilder->add(
+            'formwidget_' . $this->getUniqueId(),
+            new TextFormSubmissionType(),
+            array(
+                'label'       => $this->getLabel(),
+                'constraints' => $constraints,
+                'required'    => $this->getRequired()
+            )
+        );
+        $formBuilder->setData($data);
+
         $fields[] = $mfsf;
     }
 
