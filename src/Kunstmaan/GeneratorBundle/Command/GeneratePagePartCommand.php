@@ -484,7 +484,7 @@ EOT
                 $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
                 list($project, $tmp) = explode("\\", $bundle->getNameSpace());
                 $parts = explode("\\", $entityName);
-                $joinTableName = strtolower($project.'__'.$this->pagepartName.'_'.$parts[count($parts)-1]);
+                $joinTableName = strtolower($project.'_'.$this->pagepartName.'_'.$parts[count($parts)-1]);
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'entity',
