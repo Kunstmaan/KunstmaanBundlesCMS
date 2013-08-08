@@ -1,7 +1,3 @@
-<!--<script>
-    var _gaq=[['_setAccount','{ { ga_code }}'],['_setDomainName', 'bolero.be'],['_trackPageview']];
-</script>-->
-
 {{ "
     {% javascripts
         'vendor/jquery/jquery.js'
@@ -12,7 +8,7 @@
         'vendor/socialite/socialite.js'
         'vendor/fancybox/source/jquery.fancybox.js'
         'vendor/cupcake/js/navigation/jquery.navigation.js'
-        '@" ~ bundle.getName() ~ "/Resources/public/js/analytics.js'
+        '@KunstmaanSeoBundle/Resources/public/js/analytics.js'
         '@" ~ bundle.getName() ~ "/Resources/public/js/script.js'
         filter='yui_js'
         output='frontend/footer.js'
@@ -67,4 +63,6 @@
             }
         ]);
     </script>
+
+    {{ google_analytics_initialize({'account_id': 'UA-XXXXX-X'}) }}
 " }}
