@@ -92,20 +92,11 @@ class InputAssistant
 
         $namespaces = $this->getNamespaceAutoComplete($this->kernel);
 
-        while (true) {
-            if (!is_null($text) && (count($text) > 0)) {
-                $this->output->writeln($text);
-            }
-
-            $namespace = $this->dialog->askAndValidate($this->output, $this->dialog->getQuestion('Bundle Namespace', $namespace), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $namespace, $namespaces);
-
-            try {
-                Validators::validateBundleNamespace($namespace);
-                break;
-            }  catch (\Exception $e) {
-                $this->output->writeln(sprintf('<bg=red>Namespace "%s" does not exist.</>', $namespace));
-            }
+        if (!is_null($text) && (count($text) > 0)) {
+            $this->output->writeln($text);
         }
+
+        $namespace = $this->dialog->askAndValidate($this->output, $this->dialog->getQuestion('Bundle Namespace', $namespace), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $namespace, $namespaces);
 
         if ($this->input->hasOption('namespace')) {
             $this->input->setOption('namespace', $namespace);
