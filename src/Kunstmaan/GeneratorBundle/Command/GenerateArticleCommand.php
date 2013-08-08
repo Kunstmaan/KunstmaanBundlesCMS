@@ -112,7 +112,10 @@ EOT
         if (is_null($entity)) {
             $output->writeln(array(
                 '',
-                'The name of your article entity: <comment>News</comment>',
+                'You must specify a name for the collection of Article entities.',
+                'This name will be prefixed before every new entity.',
+                'For example entering <comment>News</comment> will result in:',
+                '<comment>News</comment>OverviewPage, <comment>News</comment>Page and <comment>News</comment>Author',
                 '',
             ));
 
@@ -124,7 +127,7 @@ EOT
                 }
             };
 
-            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('entity', $entity), $entityValidation, false, $entity);
+            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('Name', $entity), $entityValidation, false, $entity);
             $input->setOption('entity', $entity);
         }
 
