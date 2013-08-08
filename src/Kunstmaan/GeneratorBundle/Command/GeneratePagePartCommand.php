@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\PagePartGenerator;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
@@ -67,6 +68,7 @@ The <info>kuma:generate:pagepart</info> command generates a new pagepart and the
 <info>php app/console kuma:generate:pagepart</info>
 EOT
             )
+            ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->setName('kuma:generate:pagepart');
     }
 
@@ -86,10 +88,12 @@ EOT
         $this->createGenerator()->generate($bundle, $this->pagepartName, $this->prefix, $fields, $this->sections);
 
         $this->dialog->writeSection($output, 'PagePart successfully created', 'bg=green;fg=black');
-        $this->output->writeln('Make sure you update your database first before you test the pagepart:');
-        $this->output->writeln('    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>');
-        $this->output->writeln('    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>');
-        $this->output->writeln('');
+        $this->output->writeln(array(
+            'Make sure you update your database first before you test the pagepart:',
+            '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
+            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
+            '')
+        );
     }
 
     /**
@@ -115,6 +119,8 @@ EOT
             $this->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
         }
 
+        $namespace = '';
+
         // If we only have 1 bundle, we don't need to ask
         if (count($ownBundles) > 1) {
             $bundleSelect = array();
@@ -124,22 +130,22 @@ EOT
             $bundleQuestion = $this->dialog->getQuestion('In which bundle do you want to create the pagepart', null);
             $bundleId = $this->dialog->select($output, $bundleQuestion, $bundleSelect, null, false, 'Value "%s" is invalid');
             $this->bundleName = $ownBundles[$bundleId]['namespace'].$ownBundles[$bundleId]['name'];
+
+            $namespace = $ownBundles[$bundleId]['namespace'] . '/' . $ownBundles[$bundleId]['name'];
+
             $this->output->writeln('');
         } else {
             $this->bundleName = $ownBundles[1]['namespace'] . $ownBundles[1]['name'];
             $output->writeln(array("The pagepart will be created for the <comment>".$this->bundleName."</comment> bundle.\n"));
+
+            $namespace = $ownBundles[1]['namespace'] . '/' . $ownBundles[1]['name'];
         }
 
         /**
          * Ask the prefix for the database
          */
-        $output->writeln(array(
-            '',
-            'You can add a prefix to the table names of the generated entities for example: <comment>demo_</comment>',
-            "Leave empty if you don't want to specify a tablename prefix.",
-            '',
-        ));
-        $this->prefix = $this->dialog->ask($output, $this->dialog->getQuestion('Tablename prefix', null));
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $this->dialog, $this->getApplication()->getKernel(), $this->getContainer());
+        $this->prefix = $inputAssistant->askForPrefix(null, $namespace);
 
         /**
          * Ask the name of the pagepart
@@ -479,7 +485,7 @@ EOT
                 $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
                 list($project, $tmp) = explode("\\", $bundle->getNameSpace());
                 $parts = explode("\\", $entityName);
-                $joinTableName = strtolower($project.'__'.$this->pagepartName.'_'.$parts[count($parts)-1]);
+                $joinTableName = strtolower($project.'_'.$this->pagepartName.'_'.$parts[count($parts)-1]);
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'entity',

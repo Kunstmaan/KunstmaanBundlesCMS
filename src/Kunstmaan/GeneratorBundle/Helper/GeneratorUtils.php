@@ -3,6 +3,11 @@
 namespace Kunstmaan\GeneratorBundle\Helper;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * GeneratorUtils
@@ -18,7 +23,18 @@ class GeneratorUtils
      */
     public static function cleanPrefix($prefixString)
     {
-        return preg_replace('/_*/i', '', $prefixString) . '_';
+        $prefixString = trim($prefixString);
+        if (empty($prefixString)) {
+            return null;
+        }
+
+        $result = preg_replace('/_*$/i', '', strtolower($prefixString)) . '_';
+
+        if ($result == '_') {
+            return null;
+        }
+
+        return $result;
     }
 
     /**
@@ -118,5 +134,35 @@ class GeneratorUtils
         }
 
         return __DIR__ . '/../Resources/SensioGeneratorBundle/skeleton' . $pathInSkeleton;
+    }
+
+    public static function ensureOptionsProvided(InputInterface $input, array $options)
+    {
+        foreach ($options as $option) {
+            if (null === $input->getOption($option)) {
+                throw new \RuntimeException(sprintf('The "%s" option must be provided.', $option));
+            }
+        }
+    }
+
+
+    /**
+     * Returns an inputAssistant.
+     *
+     * This probably isn't the cleanest way. It'd be nicer if we could make a KunstmaanGenerator class
+     * which all generators inherit from. It then provides a bunch of helper functions and a uniform manner
+     * in which the input options are handled.
+     *
+     * @param InputInterface     $input
+     * @param OutputInterface    $output
+     * @param DialogHelper       $dialog
+     * @param Kernel             $kernel
+     * @param ContainerInterface $container
+     *
+     * @return InputAssistant
+     */
+    public static function getInputAssistant(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel, ContainerInterface $container)
+    {
+        return new InputAssistant($input, $output, $dialog, $kernel, $container);
     }
 }

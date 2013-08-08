@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Kunstmaan\GeneratorBundle\Generator\AdminTestsGenerator;
 use Symfony\Component\Console\Input\InputOption;
@@ -43,12 +44,9 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dialog = $this->getDialogHelper();
+        $dialog->writeSection($output, 'Admin Tests Generation');
 
-        foreach (array('namespace') as $option) {
-            if (null === $input->getOption($option)) {
-                throw new \RuntimeException(sprintf('The "%s" option must be provided.', $option));
-            }
-        }
+        GeneratorUtils::ensureOptionsProvided($input, array('namespace'));
 
         $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
         $bundle = strtr($namespace, array('\\' => ''));
@@ -57,7 +55,6 @@ EOT
             ->getApplication()
             ->getKernel()
             ->getBundle($bundle);
-        $dialog->writeSection($output, 'Admin Tests Generation');
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($bundle, $output);
@@ -71,26 +68,15 @@ EOT
         $dialog = $this->getDialogHelper();
         $dialog->writeSection($output, 'Welcome to the Kunstmaan default site generator');
 
-        // namespace
-        $namespace = null;
-        try {
-            $namespace = $input->getOption('namespace') ? Validators::validateBundleNamespace($input->getOption('namespace')) : null;
-        } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
-        }
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
 
-        if (is_null($namespace)) {
-            $output->writeln(array(
-                '',
-                'This command helps you to generate tests to test the admin of the default site setup.',
-                'You must specify the namespace of the bundle where you want to generate the tests.',
-                'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
-                '',
-            ));
-
-            $namespace = $dialog->askAndValidate($output, $dialog->getQuestion('Bundle namespace', $namespace), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $namespace);
-            $input->setOption('namespace', $namespace);
-        }
+        $inputAssistant->askForNamespace(array(
+            '',
+            'This command helps you to generate tests to test the admin of the default site setup.',
+            'You must specify the namespace of the bundle where you want to generate the tests.',
+            'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
+            '',
+        ));
     }
 
     protected function createGenerator()

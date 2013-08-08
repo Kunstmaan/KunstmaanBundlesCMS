@@ -34,10 +34,11 @@ class DoctrineEntityGenerator extends Generator
      * @param string          $format         The format
      * @param array           $fields         The fields
      * @param boolean         $withRepository With repository
+     * @param string          $prefix         A prefix
      *
      * @throws \RuntimeException
      */
-    public function generate(BundleInterface $bundle, $entity, $format, array $fields, $withRepository)
+    public function generate(BundleInterface $bundle, $entity, $format, array $fields, $withRepository, $prefix)
     {
         // configure the bundle (needed if the bundle does not contain any Entities yet)
         $config = $this->registry->getEntityManager(null)->getConfiguration();
@@ -62,6 +63,8 @@ class DoctrineEntityGenerator extends Generator
             $class->mapField($field);
         }
 
+        $class->setPrimaryTable(array('name' => $prefix . $this->getTableNameFromEntityName($entity)));
+
         $entityGenerator = $this->getEntityGenerator();
 
         $entityGenerator->setGenerateAnnotations(true);
@@ -80,6 +83,21 @@ class DoctrineEntityGenerator extends Generator
             $path = $bundle->getPath().str_repeat('/..', substr_count(get_class($bundle), '\\'));
             $this->getRepositoryGenerator()->writeEntityRepositoryClass($class->customRepositoryClassName, $path);
         }
+    }
+
+    private function getTableNameFromEntityName($entityName)
+    {
+        // Only look at the last part. We split on '\'
+        $entityName = str_replace('\\', '', $entityName);
+        return $this->convertCamelCaseToSnakeCase($entityName);
+    }
+
+    private function convertCamelCaseToSnakeCase($text)
+    {
+        $text = preg_replace_callback('/[A-Z]/', create_function('$match', 'return "_" . strtolower($match[0]);'), $text);
+        // remove first underscore.
+        $text = preg_replace('/^_/', '', $text);
+        return strtolower($text);
     }
 
     /**
