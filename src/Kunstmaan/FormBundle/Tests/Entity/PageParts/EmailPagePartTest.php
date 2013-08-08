@@ -44,9 +44,9 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
     {
         $object = $this->object;
         $object->setErrorMessageRequired('');
-        $this->assertEquals('This value should not be blank.', $object->getErrorMessageRequired());
+        $this->assertEquals('', $object->getErrorMessageRequired());
 
-        $message = "Some example error message";
+        $message = "Some example required message";
         $object->setErrorMessageRequired($message);
         $this->assertEquals($message, $object->getErrorMessageRequired());
     }
@@ -59,9 +59,9 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
     {
         $object = $this->object;
         $object->setErrorMessageInvalid('');
-        $this->assertEquals('This value is not a valid email address.', $object->getErrorMessageInvalid());
+        $this->assertEquals('', $object->getErrorMessageInvalid());
 
-        $message = "Some example error message";
+        $message = "Some example invalid message";
         $object->setErrorMessageInvalid($message);
         $this->assertEquals($message, $object->getErrorMessageInvalid());
     }
