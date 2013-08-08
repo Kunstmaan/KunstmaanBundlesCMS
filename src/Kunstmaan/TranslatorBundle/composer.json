@@ -30,7 +30,8 @@
         "kunstmaan/admin-bundle": "2.3.*",
         "kunstmaan/adminlist-bundle": "2.3.*",
         "phpunit/phpunit": "*",
-        "nelmio/alice": "1.4.*@dev"
+        "nelmio/alice": "1.4.*@dev",
+        "doctrine/doctrine-migrations-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\TranslatorBundle": "" }
