@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\DBAL\Types\Type;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * GenerateEntityCommand
@@ -30,6 +31,7 @@ class GenerateEntityCommand extends GenerateDoctrineCommand
             ->setDescription('Generates a new Doctrine entity inside a bundle')
             ->addOption('entity', null, InputOption::VALUE_REQUIRED, 'The entity class name to initialize (shortcut notation)')
             ->addOption('fields', null, InputOption::VALUE_REQUIRED, 'The fields to create with the new entity')
+            ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->addOption('with-repository', null, InputOption::VALUE_NONE, 'Whether to generate the entity repository or not')
             ->addOption('with-adminlist', null, InputOption::VALUE_NONE, 'Whether to generate the entity AdminList or not')
             ->setHelp(<<<EOT
@@ -56,6 +58,10 @@ The command can also generate the corresponding entity AdminList with the
 
 <info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-adminlist</info>
 
+Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
+
+<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --prefix=demo_</info>
+
 To deactivate the interaction mode, simply use the `--no-interaction` option
 without forgetting to pass all needed options:
 
@@ -79,19 +85,21 @@ EOT
             }
         }
 
-        GeneratorUtils::ensureOptionsProvided($input, array('entity', 'fields'));
+        GeneratorUtils::ensureOptionsProvided($input, array('entity', 'fields', 'prefix'));
 
         $entityInput = Validators::validateEntityName($input->getOption('entity'));
         list($bundleName, $entity) = $this->parseShortcutNotation($entityInput);
         $format = 'annotation';
         $fields = $this->parseFields($input->getOption('fields'));
 
+        $prefix = $input->getOption('prefix');
+
         $dialog->writeSection($output, 'Entity generation');
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundleName);
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
-        $generator->generate($bundle, $entity, $format, array_values($fields), $input->getOption('with-repository'));
+        $generator->generate($bundle, $entity, $format, array_values($fields), $input->getOption('with-repository'), $prefix);
 
         $output->writeln('Generating the entity code: <info>OK</info>');
 
@@ -108,7 +116,7 @@ EOT
 
         $dialog->writeGeneratorSummary($output, array());
 
-        $this->output->writeln(array(
+        $output->writeln(array(
                 'Make sure you update your database first before you test the pagepart:',
                 '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
                 '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
@@ -135,6 +143,8 @@ EOT
         ));
 
         $bundleNames = array_keys($this->getContainer()->get('kernel')->getBundles());
+        /** @var $b Bundle */
+        $b = null;
 
         while (true) {
             $entity = $dialog->askAndValidate($output, $dialog->getQuestion('The Entity shortcut name', $input->getOption('entity')), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'), false, $input->getOption('entity'), $bundleNames);
@@ -160,6 +170,9 @@ EOT
             }
         }
         $input->setOption('entity', $bundle.':'.$entity);
+
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
+        $inputAssistant->askForPrefix(null, $b->getNamespace());
 
         // fields
         $input->setOption('fields', $this->addFields($input, $output, $dialog));

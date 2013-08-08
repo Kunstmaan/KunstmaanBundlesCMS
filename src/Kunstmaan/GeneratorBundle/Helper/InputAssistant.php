@@ -141,7 +141,7 @@ class InputAssistant
             }
 
             if (is_null($namespace) || empty($namespace)) {
-                $namespace = $this->input->getOption('namespace');
+                $namespace = $this->input->hasOption('namespace') ? $this->input->getOption('namespace') : null;
             } else {
                 $namespace = $this->fixNamespace($namespace);
             }
