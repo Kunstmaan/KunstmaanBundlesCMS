@@ -132,18 +132,6 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getCimKeyword
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setCimKeyword
-     */
-    public function testGetSetCimKeyword()
-    {
-        $this->object->setCimKeyword('CIM keyword');
-        $this->assertEquals('CIM keyword', $this->object->getCimKeyword());
-        $this->object->setCimKeyword('CIM keyword should be limited to 24 characters');
-        $this->assertEquals('CIM keyword should be li', $this->object->getCimKeyword());
-    }
-
-    /**
      * @covers Kunstmaan\SeoBundle\Entity\Seo::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
