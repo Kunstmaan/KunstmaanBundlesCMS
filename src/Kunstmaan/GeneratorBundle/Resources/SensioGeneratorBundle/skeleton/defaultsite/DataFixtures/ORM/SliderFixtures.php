@@ -43,7 +43,7 @@ class SliderFixtures extends AbstractFixture implements OrderedFixtureInterface,
         $allFiles = glob($sliderDir.'slide*');
         $mediaImages = array();
         foreach ($allFiles as $file) {
-            $mediaImages[] = $mediaCreatorService->createFile($file, $folder->getId(), MediaCreatorService::CONTEXT_console);
+            $mediaImages[] = $mediaCreatorService->createFile($file, $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
         }
 
         // Create slide page parts
