@@ -254,7 +254,7 @@ class FeatureContext extends AbstractContext
         //Only activate the filter module if it is not an additionally filter
         if (!$additionally) {
             $selector = new CssSelector();
-            $this->getSession()->getPage()->find("xpath", $selector->translateToXPath('div.iPhoneCheckHandle'))->click();
+            $this->findAndClickButton($this->getSession()->getPage(), 'xpath', $selector->translateToXPath('div.iPhoneCheckHandle'));
         }
 
         $records = $this->createFilterRecords($filterType, $filterComparator, $filterValue, $additionally);
