@@ -50,7 +50,7 @@ class SliderFixtures extends AbstractFixture implements OrderedFixtureInterface,
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
-        $ppCreatorService = new PagePartCreatorService($em);
+        $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
 
         $pageparts = array('slider' => array());
         foreach ($mediaImages as $key => $media) {

@@ -41,7 +41,7 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $pageCreator = new PageCreatorService();
         $pageCreator->setContainer($this->container);
 
-        $ppCreatorService = new PagePartCreatorService($em);
+        $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
 
         // Create article overview page
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
