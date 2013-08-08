@@ -107,7 +107,9 @@ class InputAssistant
             }
         }
 
-        $this->input->setOption('namespace', $namespace);
+        if ($this->input->hasOption('namespace')) {
+            $this->input->setOption('namespace', $namespace);
+        }
 
         return $namespace;
     }
@@ -148,7 +150,9 @@ class InputAssistant
             $defaultPrefix = GeneratorUtils::cleanPrefix($this->convertNamespaceToSnakeCase($namespace));
             $prefix = $this->dialog->ask($this->output, $this->dialog->getQuestion('Tablename prefix', $defaultPrefix), $defaultPrefix);
             $prefix = GeneratorUtils::cleanPrefix($prefix);
-            $this->input->setOption('prefix', $prefix);
+            if ($this->input->hasOption('prefix')) {
+                $this->input->setOption('prefix', $prefix);
+            }
         }
 
         return $prefix;

@@ -68,6 +68,7 @@ The <info>kuma:generate:pagepart</info> command generates a new pagepart and the
 <info>php app/console kuma:generate:pagepart</info>
 EOT
             )
+            ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->setName('kuma:generate:pagepart');
     }
 
