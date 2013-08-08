@@ -68,3 +68,19 @@ form
 ### Class:
 
 Kunstmaan\MediaBundle\Form\Type\MediaType
+
+## Uploading Media in Your Code
+
+Using the ```MediaCreatorService``` you can easily upload a media-asset to a Folder.
+
+The API is straightforward:
+
+```
+    $mediaCreatorService = $this->container->get('kunstmaan_media.media_creator_service');
+    $media = $mediaCreatorService->createFile('./app/Content/Images/placeholder.jpg', 1, MediaCreatorService::CONTEXT_CONSOLE);
+```
+
+The path is relevant to the root of your Symfony project. The context can be either web or console.
+You'll have to set this to console when you are calling the code from an environment outside of your webserver.
+For example for a migration you would use the console context. Otherwise you can just omit the parameter
+so the default web context is used.
