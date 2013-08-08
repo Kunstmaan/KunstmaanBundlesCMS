@@ -72,7 +72,7 @@ EOT
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($bundle, $prefix, $rootDir, $output);
 
-        $this->output->writeln(array(
+        $output->writeln(array(
                 'Make sure you update your database first before you test the pagepart:',
                 '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
                 '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
