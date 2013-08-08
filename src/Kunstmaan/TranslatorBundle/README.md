@@ -145,6 +145,26 @@ When you click on this item, you can see all translations used on the current re
 ![Symfony2 Profiler Example Table](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_table.png)
 
 
+Workflow example (new project)
+------------------
+
+1. Add translations (with keywords) in your template files (dev)
+2. Add the translations of (1) into your backend via "Add Translation" (dev)
+3. Repeat 1 & 2
+4. Create migrations diff `app/console kuma:translator:migrations:diff`(dev)
+5. Reset translation flags `app/console kuma:translator:flag --reset` (dev)
+5. Deploy your application
+6. Execute doctrine migrations `app/console doctrine:migrations:migrate` (prod)
+7. Edit/add translations (prod)
+8. When ready editing/adding, click `Refresh live` or `app/console kuma:translator:cache --flush` (prod)
+9. Repeat 7 & 8 when editing/adding translations in prod
+
+Workflow example (existing project)
+-------------------------------------
+
+1. Import current translations, click `Import -> Import` or `app/console kuma:translator:import` (prod/dev)
+2. If you did 1 in dev, go to 4 of `"Workflow example (new project)"`, otherwise go to 7 `"Workflow example (new project)"`
+
 
 Features
 -------------------------------------
