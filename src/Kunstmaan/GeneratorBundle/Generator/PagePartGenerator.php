@@ -140,7 +140,7 @@ class PagePartGenerator extends Generator
             }
         }
         if (!is_null($this->prefix)) {
-            $class->setPrimaryTable(array('name' => strtolower($this->prefix.'_'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
+            $class->setPrimaryTable(array('name' => strtolower($this->prefix.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
         } else {
             list($project, $bundle) = explode("\\", $this->bundle->getNameSpace());
             $class->setPrimaryTable(array('name' => strtolower($project.'_'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
