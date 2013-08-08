@@ -143,8 +143,8 @@ EOT
         ));
 
         $bundleNames = array_keys($this->getContainer()->get('kernel')->getBundles());
-        /** @var $b Bundle */
-        $b = null;
+        /** @var $foundBundle Bundle */
+        $foundBundle = $bundle = $entity = null;
 
         while (true) {
             $entity = $dialog->askAndValidate($output, $dialog->getQuestion('The Entity shortcut name', $input->getOption('entity')), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'), false, $input->getOption('entity'), $bundleNames);
@@ -158,9 +158,9 @@ EOT
             }
 
             try {
-                $b = $this->getContainer()->get('kernel')->getBundle($bundle);
+                $foundBundle = $this->getContainer()->get('kernel')->getBundle($bundle);
 
-                if (!file_exists($b->getPath().'/Entity/'.str_replace('\\', '/', $entity).'.php')) {
+                if (!file_exists($foundBundle->getPath().'/Entity/'.str_replace('\\', '/', $entity).'.php')) {
                     break;
                 }
 
@@ -172,7 +172,7 @@ EOT
         $input->setOption('entity', $bundle.':'.$entity);
 
         $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
-        $inputAssistant->askForPrefix(null, $b->getNamespace());
+        $inputAssistant->askForPrefix(null, $foundBundle->getNamespace());
 
         // fields
         $input->setOption('fields', $this->addFields($input, $output, $dialog));
