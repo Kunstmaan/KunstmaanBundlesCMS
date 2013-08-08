@@ -1,7 +1,7 @@
 # TODO: Before the Feature runs we should delete the test user if it exists.
 # Should actually run on test DB and run all the fixtures + run everything in a big transaction so
 # we can roll back after every Feature.
-
+@clean_session
 Feature: AdminSettingsUser
   Browse the admin and perform CRUD on an admin user
   As an admin user
@@ -41,7 +41,7 @@ Feature: AdminSettingsUser
     And I fill in correct user information for username "dummy"
     And I clear "user[plainPassword][first]"
     When I press "Add User"
-    Then I should see "passwords don't match"
+    Then I should see "passwords you entered don't match"
 
   @javascript
   Scenario: Can't create a new user without matching passwords
@@ -51,7 +51,7 @@ Feature: AdminSettingsUser
     When I fill in "user[plainPassword][first]" with "1"
     When I fill in "user[plainPassword][second]" with "2"
     When I press "Add User"
-    Then I should see "passwords don't match"
+    Then I should see "passwords you entered don't match"
 
   @javascript
   Scenario: Create a new user and try login

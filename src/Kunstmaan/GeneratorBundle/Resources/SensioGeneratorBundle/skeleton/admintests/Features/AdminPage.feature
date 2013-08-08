@@ -1,3 +1,4 @@
+@clean_session
 Feature: AdminPage
   Make use of pages
   As an admin user
@@ -31,7 +32,7 @@ Feature: AdminPage
 
   @javascript
   Scenario: Navigate to the page
-    Given I go to "en/contentsubpage"
+    Given I go to page "/contentsubpage"
     Then I should see "page is not online"
 
   @javascript
@@ -43,7 +44,7 @@ Feature: AdminPage
   #ensureCleanSession is required to clear the cache
   @javascript @ensureCleanSession
   Scenario: Navigate to the page
-    Given I go to "en/contentsubpage"
+    Given I go to page "/contentsubpage"
     Then I should not see "page is not online"
 
   @javascript
@@ -64,4 +65,4 @@ Feature: AdminPage
   Scenario: Delete a page
     Given I log in as "admin"
     And I delete page "ContentsubPage"
-    Then I should see "Page has been deleted"
+    Then I should see "The page is deleted"

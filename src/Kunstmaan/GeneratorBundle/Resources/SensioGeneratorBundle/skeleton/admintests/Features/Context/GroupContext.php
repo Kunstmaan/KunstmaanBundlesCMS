@@ -86,8 +86,7 @@ class GroupContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $confirmButton->click();
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }

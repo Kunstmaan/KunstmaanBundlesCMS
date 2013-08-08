@@ -169,9 +169,7 @@ class MediaContext extends BehatContext
                     }
                     $modalField->setValue($value);
                 }
-
-                $confirmButton = $modal->find('xpath', "//form//button[@type='submit']");
-                $confirmButton->click();
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }
@@ -198,6 +196,7 @@ class MediaContext extends BehatContext
 
     /**
      * @param string $folderName
+     *
      */
     private function performFolderDelete($folderName = "")
     {
@@ -219,8 +218,7 @@ class MediaContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $deleteLink = $modal->find('xpath', '//a[text()="Delete"]');
-                $deleteLink->click();
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[text()='Delete']");
 
                 return;
             }
@@ -230,7 +228,6 @@ class MediaContext extends BehatContext
     private function performDelete()
     {
         $page = $this->getMainContext()->getSession()->getPage();
-        $deleteButton = $page->find('xpath', "//a[contains(@class, 'del')]");
-        $deleteButton->click();
+        $this->getMainContext()->findAndClickButton($page, 'xpath', "//a[contains(@class, 'del')]");
     }
 }

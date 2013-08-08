@@ -1,3 +1,4 @@
+@clean_session
 Feature: AdminLoginLogout
   Browse and fill in the admin login form
   As an admin user

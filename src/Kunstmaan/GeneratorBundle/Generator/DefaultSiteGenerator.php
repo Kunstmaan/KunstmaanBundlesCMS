@@ -8,6 +8,7 @@ use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
 // TODO: Add the Bundle to assetic:bundles configuration.
 
@@ -37,7 +38,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     /**
      * @param Filesystem $filesystem  The filesytem
      * @param string     $skeletonDir The skeleton directory
-
      */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
@@ -74,6 +74,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             'prefix'            => GeneratorUtils::cleanPrefix($prefix)
         );
 
+        $this->overrideDefaultController($bundle, $parameters, $output);
         if ($this->isMultiLangEnvironment()) { $this->generateDefaultLocaleFallbackCode($bundle, $parameters, $output); }
         $this->generateEntities($bundle, $parameters, $output);
         $this->generateForm($bundle, $parameters, $output);
@@ -87,6 +88,26 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
         $this->generateAdminTests($bundle, $parameters, $output);
         $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
+        $this->generateConfig($bundle, $parameters, $rootDir, $output);
+    }
+
+    /**
+     * Update the global config.yml
+     *
+     * @param Bundle $bundle
+     * @param array $parameters
+     * @param $rootDir
+     * @param OutputInterface $output
+     */
+    public function generateConfig(Bundle $bundle, array $parameters, $rootDir, OutputInterface $output)
+    {
+        $configFile = $rootDir.'/config/config.yml';
+
+        $data = Yaml::parse($configFile);
+        if (!array_key_exists('white_october_pagerfanta', $data)) {
+            $ymlData = "\n\nwhite_october_pagerfanta:\n    default_view: twitter_bootstrap\n";
+            file_put_contents($configFile, $ymlData, FILE_APPEND);
+        }
     }
 
     public function generateGruntFiles(Bundle $bundle, array $parameters, $rootDir, OutputInterface $output)
@@ -94,8 +115,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $skeletonDir = sprintf("%s/grunt/", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
         $dirPath = sprintf("%s/Resources", $bundle->getPath());
-        
-        $this->filesystem->copy($skeletonDir . '/.gitignore', $dirPath . '/.gitignore', true);        
+
+        $this->filesystem->copy($skeletonDir . '/.gitignore', $dirPath . '/.gitignore', true);
         $this->renderFile('/Gruntfile.js.twig', $rootDir .'/../Gruntfile.js', $parameters);
         $this->renderFile('/package.json.twig', $rootDir .'/../package.json', $parameters);
 
@@ -160,6 +181,13 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("~~~BUNDLENAME~~~", $this->getBundleNameWithoutBundle($bundle), $dirPath . '/Layout/layout.html.twig');
 
         $this->filesystem->copy($skeletonDir  . '/Form/fields.html.twig', $dirPath . '/Form/fields.html.twig', true);
+
+        $skeletonDir = sprintf("%s/app/KunstmaanSitemapBundle/views/SitemapPage/", $this->fullSkeletonDir);
+        $dirPath = $rootDir .'/../app/Resources/KunstmaanSitemapBundle/views/SitemapPage/';
+        $this->setSkeletonDirs(array($skeletonDir));
+
+        $this->filesystem->copy($skeletonDir . '/view.html.twig', $dirPath . 'view.html.twig', true);
+        GeneratorUtils::replace("~~~BUNDLENAME~~~", $bundle->getName(), $dirPath . 'view.html.twig');
 
         $output->writeln('Generating Twig Templates : <info>OK</info>');
 
@@ -247,6 +275,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultSiteFixtures', $parameters);
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SliderFixtures', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SitemapFixtures', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
@@ -385,6 +414,22 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln('Generating entities : <info>OK</info>');
     }
 
+    public function overrideDefaultController(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $step = 'Overriding DefaultController';
+
+        try {
+            $dirPath = sprintf("%s/Controller", $bundle->getPath());
+            $skeletonDir = sprintf("%s/Controller", $this->skeletonDir);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultController', $parameters, true);
+        } catch (\Exception $error) {
+            $output->writeln($step . ' : <error>FAILED</error>');
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $output->writeln($step . ' : <info>OK</info>');
+    }
+
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
@@ -400,10 +445,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             $dirPath = sprintf("%s/EventListener", $bundle->getPath());
             $skeletonDir = sprintf("%s/EventListener", $this->skeletonDir);
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultLocaleListener', $parameters);
-
-            $dirPath = sprintf("%s/Controller", $bundle->getPath());
-            $skeletonDir = sprintf("%s/Controller", $this->skeletonDir);
-            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultController', $parameters, true);
 
             $dirPath = sprintf("%s/Resources/config", $bundle->getPath());
             $skeletonDir = sprintf("%s/Resources/config", $this->fullSkeletonDir);

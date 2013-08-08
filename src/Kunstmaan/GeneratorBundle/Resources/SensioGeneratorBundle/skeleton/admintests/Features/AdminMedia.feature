@@ -1,4 +1,5 @@
 # TODO: Test the bulk upload functionality
+@clean_session
 Feature: AdminMedia
   Make use of the media functionality
   As an admin user

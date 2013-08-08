@@ -1,3 +1,4 @@
+@clean_session
 Feature: AdminForgotPassword
   Browse and fill in the forgot password form
   As a user
@@ -29,7 +30,7 @@ Feature: AdminForgotPassword
     Given I am on the forgot password page
     And I fill in "username" with "admin"
     And I press "Reset password"
-    Then I should see "We have sent you"
+    Then I should see "We have sent you" or "already been requested"
 
   @javascript
   Scenario: Use the cancel button

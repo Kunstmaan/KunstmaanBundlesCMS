@@ -4,8 +4,11 @@ namespace {{ namespace }}\Features\Context;
 
 use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 use Behat\Behat\Context\Step;
-use Behat\Mink\Selector\CssSelector;
+use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\ElementNotFoundException;
+use Behat\Mink\Exception\ResponseTextException;
+use Behat\Mink\Exception\ExpectationException;
+use Behat\Mink\Selector\CssSelector;
 
 /**
  * FeatureContext
@@ -16,11 +19,22 @@ class FeatureContext extends AbstractContext
 {
 
     /**
+     * The language to prefix the url with e.g. /en/admin
+     *
+     * @var string
+     */
+    private $lang;
+
+    /**
      * @param array $parameters
      */
     public function __construct(array $parameters)
     {
         $this->parameters = $parameters;
+
+        if ($this->parameters['language'] === 'multi') {
+            $this->lang = "/en";
+        }
 
         // Load Context Class
         $this->useContext('group_context', new GroupContext($parameters));
@@ -68,8 +82,8 @@ class FeatureContext extends AbstractContext
     public function iTryToLogInWith($username, $password)
     {
         return array(
-            new Step\Given("I am on \"/en/admin\""),
-            new Step\Given("I wait 2 seconds"),
+            new Step\Given("I am on \"".$this->lang."/admin\""),
+            new Step\Given("I wait 1 seconds"),
             new Step\Given("I press \"×\" if present"),
             new Step\Given("I fill in \"username\" with \"". $username . "\""),
             new Step\Given("I fill in \"password\" with \"" . $password . "\""),
@@ -84,8 +98,7 @@ class FeatureContext extends AbstractContext
     {
         $this->iAmOnASpecificPage('dashboard');
         $this->makeWide();
-        $logoutButton = $this->getSession()->getPage()->find('xpath', '//a[text()="Logout"]');
-        $logoutButton->click();
+        $this->findAndClickButton($this->getSession()->getPage(), 'xpath', '//a[text()="Logout"]');
     }
 
     /**
@@ -132,6 +145,20 @@ class FeatureContext extends AbstractContext
     /**
      * @param string $pageName
      *
+     * @Given /^(?:|I )am on page "(?P<page>[^"]+)"$/
+     * @When /^(?:|I )go to page "(?P<page>[^"]+)"$/
+     */
+    public function goToPage($pageName)
+    {
+        if (!empty($this->lang) && strncmp($pageName, "/", strlen("/"))) {
+            $pageName = "/".$pageName;
+        }
+        $this->getSession()->visit($this->locatePath($this->lang.$pageName));
+    }
+
+    /**
+     * @param string $pageName
+     *
      * @Given /^I (?:am on|go to) the (.*) page$/
      */
     public function iAmOnASpecificPage($pageName)
@@ -148,28 +175,28 @@ class FeatureContext extends AbstractContext
     public function getPageUrlForPageName($pageName)
     {
         $pages = array(
-            "forgot password" => "/en/resetting/request",
-            "users" => "/en/admin/settings/users",
-            "create new user" => "/en/admin/settings/users/add",
-            "groups" => "/en/admin/settings/groups",
-            "create new group" => "/en/admin/settings/groups/add",
-            "roles" => "en/admin/settings/roles",
-            "create new role" => "en/admin/settings/roles/add",
-            "dashboard" => "/en/admin",
-            "login" => "/en/login",
-            "media" => "/en/admin/media/folder/1",
-            "add new image" => "/en/admin/media/create/2/file",
-            "image" => "en/admin/media/folder/2",
-            "add new video" => "en/admin/media/create/3/video",
-            "video" => "en/admin/media/folder/3",
-            "add new slide" => "en/admin/media/create/4/slide",
-            "slide" => "en/admin/media/folder/4",
-            "add new file" => "en/admin/media/create/5/file",
-            "file" => "en/admin/media/folder/5",
-            "bulkupload" => "/en/admin/media/bulkupload/1",
-            "admin home" => "/en/admin/nodes/1",
-            "home" => "/en/admin/nodes/1",
-            "pages" => "/en/admin/nodes"
+            "forgot password" => $this->lang."/resetting/request",
+            "users" => $this->lang."/admin/settings/users",
+            "create new user" => $this->lang."/admin/settings/users/add",
+            "groups" => $this->lang."/admin/settings/groups",
+            "create new group" => $this->lang."/admin/settings/groups/add",
+            "roles" => $this->lang."/admin/settings/roles",
+            "create new role" => $this->lang."/admin/settings/roles/add",
+            "dashboard" => $this->lang."/admin",
+            "login" => $this->lang."/login",
+            "media" => $this->lang."/admin/media/folder/1",
+            "add new image" => $this->lang."/admin/media/create/2/file",
+            "image" => $this->lang."/admin/media/folder/2",
+            "add new video" => $this->lang."/admin/media/create/3/video",
+            "video" => $this->lang."/admin/media/folder/3",
+            "add new slide" => $this->lang."/admin/media/create/4/slide",
+            "slide" => $this->lang."/admin/media/folder/4",
+            "add new file" => $this->lang."/admin/media/create/5/file",
+            "file" => $this->lang."/admin/media/folder/5",
+            "bulkupload" => $this->lang."/admin/media/bulkupload/1",
+            "admin home" => $this->lang."/admin/nodes/1",
+            "home" => $this->lang."/admin/nodes/1",
+            "pages" => $this->lang."/admin/nodes"
         );
 
         return $pages[$pageName];
@@ -206,10 +233,10 @@ class FeatureContext extends AbstractContext
         $page = $this->getSession()->getPage();
 
         $td = $page->find('xpath', '//div[@class="content"]//table//td[text()="' . $name . '"]');
-        $tr = $td->getParent();
-        $deleteLink = $tr->find('xpath', '//a[text()="' . $action . '"]');
-
-        $deleteLink->click();
+        if (!is_null($td)) {
+            $tr = $td->getParent();
+            $this->findAndClickButton($tr, 'xpath', '//a[text()="' . $action . '"]');
+        }
     }
 
     /**
@@ -289,6 +316,44 @@ class FeatureContext extends AbstractContext
                 "filter_comparator_1" => $this->fixStepArgument($filterComparator),
                 "filter_value_1" => $this->fixStepArgument($filterValue),
             );
+        }
+    }
+
+    /**
+     * @Then /^I should see "([^"]*)" or "([^"]*)"$/
+     *
+     * @throws ResponseTextException
+     */
+    public function iShouldSeeOr($text1, $text2)
+    {
+        $actual = $this->getSession()->getPage()->getText();
+        $regex1  = '/'.preg_quote($text1, '/').'/ui';
+        $regex2  = '/'.preg_quote($text2, '/').'/ui';
+
+        if (!(preg_match($regex1, $actual) || preg_match($regex2, $actual))) {
+            $message = sprintf('The text "%s" was not found anywhere in the text of the current page.', $text2);
+            throw new ResponseTextException($message, $this->getSession());
+        }
+    }
+
+    /**
+     * Finds an element with specified selector and clicks it.
+     *
+     * @param Element $element  the element
+     * @param string  $selector selector engine name e.g. xpath
+     * @param string  $locator  selector locator
+     *
+     * @return array
+     * @throws ExpectationException
+     */
+    public function findAndClickButton($element, $selector, $locator)
+    {
+        $button = $element->find($selector, $locator);
+        if (!is_null($button)) {
+            $button->click();
+        } else {
+            $message = sprintf('The button was not found');
+            throw new ExpectationException($message, $this->getSession());
         }
     }
 
