@@ -2,19 +2,52 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface,
-    Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission,
-    Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity,
-    Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder,
-    Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+    Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity,
+    Symfony\Component\Security\Acl\Exception\AclNotFoundException,
+    Symfony\Component\Security\Acl\Model\MutableAclProviderInterface,
+    Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 /**
  * Service to add the correct permissions to new HasNodeInterface objects.
+ *
  */
-class ACLPermissionCreatorService Implements ContainerAwareInterface
+class ACLPermissionCreatorService
 {
+
+    /* @var MutableAclProviderInterface $aclProvider */
+    protected $aclProvider;
+    public function setAclProvider($aclProvider)
+    {
+        $this->aclProvider = $aclProvider;
+    }
+
+    /* @var ObjectIdentityRetrievalStrategyInterface $oidStrategy */
+    protected $oidStrategy;
+    public function setObjectIdentityRetrievalStrategy($oidStrategy)
+    {
+        $this->oidStrategy = $oidStrategy;
+    }
+
+
+    /**
+     * Sets the Container. This is still here for backwards compatibility.
+     * The ContainerAwareInterface has been removed so the container won't be injected automatically.
+     * This function is just there for code that calls it manually.
+     *
+     * @param ContainerInterface $container A ContainerInterface instance.
+     *
+     * @api
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->setAclProvider($container->get('security.acl.provider'));
+        $this->setObjectIdentityRetrievalStrategy($container->get('security.acl.object_identity_retrieval_strategy'));
+    }
 
     /**
      * @param object $object
@@ -23,18 +56,15 @@ class ACLPermissionCreatorService Implements ContainerAwareInterface
      */
     public function createPermission($object)
     {
-        $container = $this->container;
+        $aclProvider = $this->aclProvider;
 
-        /* @var MutableAclProviderInterface $aclProvider */
-        $aclProvider = $container->get('security.acl.provider');
-        /* @var ObjectIdentityRetrievalStrategyInterface $oidStrategy */
-        $oidStrategy = $container->get('security.acl.object_identity_retrieval_strategy');
+        $oidStrategy = $this->oidStrategy;
 
         $objectIdentity = $oidStrategy->getObjectIdentity($object);
         try {
             $aclProvider->deleteAcl($objectIdentity);
         } catch (AclNotFoundException $e) {
-            // Do nothing
+            // Don't fail when the ACL didn't exist yet.
         }
         $acl = $aclProvider->createAcl($objectIdentity);
 
@@ -52,17 +82,4 @@ class ACLPermissionCreatorService Implements ContainerAwareInterface
         $aclProvider->updateAcl($acl);
     }
 
-
-    protected $container;
-    /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
 }
