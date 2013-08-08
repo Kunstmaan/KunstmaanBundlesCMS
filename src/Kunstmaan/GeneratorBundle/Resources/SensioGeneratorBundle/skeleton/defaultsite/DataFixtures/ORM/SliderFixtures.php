@@ -40,13 +40,10 @@ class SliderFixtures extends AbstractFixture implements OrderedFixtureInterface,
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
 
         $sliderDir = dirname(__FILE__).'/../../Resources/public/files/slider/';
-
-        $allFiles = scandir($sliderDir);
+        $allFiles = glob($sliderDir.'slide*');
         $mediaImages = array();
         foreach ($allFiles as $file) {
-            if (preg_match('/^slide/', $file)) {
-                $mediaImages[] = $mediaCreatorService->createFile($sliderDir.$file, $folder->getId(), MediaCreatorService::CONTEXT_console);
-            }
+            $mediaImages[] = $mediaCreatorService->createFile($file, $folder->getId(), MediaCreatorService::CONTEXT_console);
         }
 
         // Create slide page parts
