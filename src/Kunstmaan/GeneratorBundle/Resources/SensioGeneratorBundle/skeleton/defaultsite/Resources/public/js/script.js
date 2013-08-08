@@ -16,9 +16,21 @@ var myApplication = (function($, window, undefined) {
     };
 
     initSliders = function() {
-        $('.flexslider').flexslider({
+        $('.js-flexslider').flexslider({
             animation: "slide",
-            controlNav: "thumbnails"
+            controlNav: true,
+            slideshow: false,
+            startAt: 0,
+            manualControls: ".js-thumbs .js-thumbs--item",
+            start: function(slider){
+                $(slider.slides.eq(0)).addClass('flex-animateIn');
+            },
+            before: function(slider){
+                var thisSlide = slider.slides.eq(slider.currentSlide),
+                    animateSlide = slider.slides.eq(slider.animatingTo);
+                $(thisSlide).removeClass('flex-animateIn');
+                $(animateSlide).addClass('flex-animateIn');
+            }
         });
     };
 

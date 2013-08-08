@@ -50,7 +50,7 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPagePartAdminConfigurations()
     {
-        return array("{{ bundle.getName() }}:main", "{{ bundle.getName() }}:banners", "{{ bundle.getName() }}:footer");
+        return array("{{ bundle.getName() }}:main", "{{ bundle.getName() }}:slider", "{{ bundle.getName() }}:banners", "{{ bundle.getName() }}:footer");
     }
 
     /**

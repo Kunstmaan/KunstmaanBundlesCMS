@@ -1,0 +1,8 @@
+<li>
+    {% if resource.image is not empty %}<img src="{{ asset(resource.image.url) }}" />{% endif %}
+    <div class="slider-pp__caption">
+        {% if resource.title is not empty %}<h3 class="slider-pp__caption--title">{{ resource.title }}</h3>{% endif %}
+        {% if resource.description is not empty %}<p class="slider-pp__caption--text">{{ resource.description }}</p>{% endif %}
+        {% if resource.buttonUrl is not empty %}<a href="{{ resource.buttonUrl }}" class="slider-pp__caption--button btn" {% if resource.buttonNewWindow %}target="_blank"{% endif %} type="button">{{ resource.buttonText }}</a>{% endif %}
+    </div>
+</li>

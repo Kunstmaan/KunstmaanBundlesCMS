@@ -38,7 +38,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     /**
      * @param Filesystem $filesystem  The filesytem
      * @param string     $skeletonDir The skeleton directory
-
      */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
@@ -116,8 +115,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $skeletonDir = sprintf("%s/grunt/", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
         $dirPath = sprintf("%s/Resources", $bundle->getPath());
-        
-        $this->filesystem->copy($skeletonDir . '/.gitignore', $dirPath . '/.gitignore', true);        
+
+        $this->filesystem->copy($skeletonDir . '/.gitignore', $dirPath . '/.gitignore', true);
         $this->renderFile('/Gruntfile.js.twig', $rootDir .'/../Gruntfile.js', $parameters);
         $this->renderFile('/package.json.twig', $rootDir .'/../package.json', $parameters);
 
@@ -169,6 +168,10 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/view.html.twig', $dirPath . '/Pages/HomePage/view.html.twig', true);
             GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/HomePage/view.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate.html.twig', $dirPath . '/Pages/HomePage/pagetemplate.html.twig', true);
+        }
+
+        { //SlidePagePart
+            $this->filesystem->copy($skeletonDir . '/PageParts/SlidePagePart/view.html.twig', $dirPath . '/PageParts/SlidePagePart/view.html.twig', true);
         }
 
         $this->filesystem->copy($skeletonDir  . '/Layout/layout.html.twig', $dirPath . '/Layout/layout.html.twig', true);
@@ -271,6 +274,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultSiteFixtures', $parameters);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SliderFixtures', $parameters);
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SitemapFixtures', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
@@ -297,6 +301,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->filesystem->copy($skeletonDir . '/pageparts/home.yml', $dirPath . '/pageparts/home.yml', true);
         $this->filesystem->copy($skeletonDir . '/pageparts/main.yml', $dirPath . '/pageparts/main.yml', true);
         $this->filesystem->copy($skeletonDir . '/pageparts/footer.yml', $dirPath . '/pageparts/footer.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/slider.yml', $dirPath . '/pageparts/slider.yml', true);
+        GeneratorUtils::replace("~~~NAMESPACE~~~", $parameters['namespace'], $dirPath . '/pageparts/slider.yml');
 
         $output->writeln('Generating PagePart Configurators : <info>OK</info>');
     }
@@ -356,6 +362,15 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             throw new \RuntimeException($error->getMessage());
         }
 
+        $dirPath = $bundle->getPath() . '/Form/PageParts';
+        $skeletonDir = $this->skeletonDir . '/Form/PageParts';
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SlidePagePartAdminType', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
         $output->writeln('Generating forms : <info>OK</info>');
     }
 
@@ -383,6 +398,15 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         }
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'HomePage', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $dirPath = sprintf("%s/Entity/PageParts", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Entity/PageParts", $this->skeletonDir);
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SlidePagePart', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
