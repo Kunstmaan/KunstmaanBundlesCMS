@@ -75,6 +75,13 @@ EOT
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($bundle, $prefix, $rootDir, $output);
+
+        $output->writeln(array('Make sure you update your database first before using the created entities:',
+            '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
+            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
+            '    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --append</comment>',
+            '')
+        );
     }
 
     /**

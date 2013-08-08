@@ -72,10 +72,12 @@ EOT
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($bundle, $prefix, $rootDir, $output);
 
-        $output->writeln('Make sure you update your database first before using the created entities:');
-        $output->writeln('    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>');
-        $output->writeln('    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>');
-        $output->writeln('');
+        $this->output->writeln(array(
+                'Make sure you update your database first before you test the pagepart:',
+                '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
+                '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
+                '')
+        );
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
