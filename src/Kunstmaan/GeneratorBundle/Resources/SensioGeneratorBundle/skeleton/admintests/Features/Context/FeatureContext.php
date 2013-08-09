@@ -66,7 +66,7 @@ class FeatureContext extends AbstractContext
      */
     public function getPasswordForUsername($username)
     {
-        $logins = array('admin' => 'admin', 'test' => 'test', 'dummy' => 'dummy');
+        $logins = array('admin' => 'admin', 'test' => 'test', 'dummy' => 'dummy', 'wronguser' => 'wrongpassword');
 
         return $logins[$username];
     }
@@ -82,7 +82,7 @@ class FeatureContext extends AbstractContext
     public function iTryToLogInWith($username, $password)
     {
         return array(
-            new Step\Given("I am on \"".$this->lang."/admin\""),
+            new Step\Given("I am on \"".$this->lang."/login\""),
             new Step\Given("I wait 1 seconds"),
             new Step\Given("I press \"×\" if present"),
             new Step\Given("I fill in \"username\" with \"". $username . "\""),

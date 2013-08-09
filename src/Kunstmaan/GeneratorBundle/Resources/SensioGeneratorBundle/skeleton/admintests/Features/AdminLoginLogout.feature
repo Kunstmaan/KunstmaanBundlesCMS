@@ -12,6 +12,7 @@ Feature: AdminLoginLogout
   @javascript
   Scenario: log in with correct credentials
     Given I log in as "admin"
+    And I go to page "dashboard"
     Then I should see the dashboard
 
   @javascript
