@@ -5,6 +5,7 @@ namespace Kunstmaan\TranslatorBundle\Component\HttpKernel\DataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class TranslatorDataCollector extends DataCollector
 {
@@ -32,6 +33,11 @@ class TranslatorDataCollector extends DataCollector
     public function getTranslations()
     {
         $translationsCollection =  $this->data['translations'];
+
+        if (!$translationsCollection instanceof \Doctrine\Common\Collections\ArrayCollection) {
+            return new ArrayCollection;
+        }
+
         $iterator = $translationsCollection->getIterator();
 
         $iterator->uasort(function ($first, $second) {

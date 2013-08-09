@@ -41,6 +41,13 @@ kunstmaan_translator:
     enabled: true
 ```
 
+Update your database schema
+```php
+app/console doctrine:schema:update --force
+
+Database schema updated successfully! "1" queries were executed
+``
+
 Migrate dev translations to production
 ------------------------------------------
 
