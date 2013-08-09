@@ -18,13 +18,8 @@ class EmailFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $fieldOptions = array();
-        if (isset($options['label'])) {
-            $fieldOptions['label'] = $options['label'];
-        }
-        if (isset($options['constraints'])) {
-            $fieldOptions['constraints'] = $options['constraints'];
-        }
+        $keys = array_fill_keys(array('label', 'required', 'constraints'), null);
+        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
         $builder->add('value', 'email', $fieldOptions);
     }
 

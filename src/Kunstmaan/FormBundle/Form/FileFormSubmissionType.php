@@ -4,6 +4,7 @@ namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * This class represents the type for the file FileFormSubmissionField
@@ -11,36 +12,24 @@ use Symfony\Component\Form\FormBuilderInterface;
 class FileFormSubmissionType extends AbstractType
 {
     /**
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * @var bool
-     */
-    protected $required;
-
-    /**
-     * @param string $label    The label
-     * @param bool   $required Is required
-     */
-    public function __construct($label, $required)
-    {
-        $this->label = $label;
-        $this->required = $required;
-    }
-
-    /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options An array with options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('file', 'file', array(
-            'label' => $this->label,
-            'required' => $this->required
+        $keys = array_fill_keys(array('label', 'required', 'constraints'), null);
+        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
+
+        $builder->add('file', 'file', $fieldOptions);
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField',
         ));
     }
+
 
     /**
      * @return string

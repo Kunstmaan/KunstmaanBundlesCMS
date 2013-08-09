@@ -6,12 +6,8 @@ use ArrayObject;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -56,23 +52,26 @@ class FileUploadPagePart extends AbstractFormPagePart
         $ffsf->setLabel($this->getLabel());
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $ffsf;
-        $label = $this->getLabel();
-        $formBuilder->add('formwidget_' . $this->getUniqueId(), new FileFormSubmissionType($label, $this->getRequired()), array('required' => $this->getRequired()));
-        $formBuilder->setData($data);
 
+        $constraints = array();
         if ($this->getRequired()) {
-            $thiss = $this;
-            $formBuilder->addEventListener(FormEvents::POST_BIND, function(FormEvent $formEvent) use ($ffsf, $thiss) {
-                $form = $formEvent->getForm();
-
-                if ($ffsf->isNull()) {
-                    $errormsg = $thiss->getErrorMessageRequired();
-                    $v = $form->get('formwidget_' . $thiss->getUniqueId())->get('file');
-                    $formError = new FormError(empty($errormsg) ? AbstractFormPagePart::ERROR_REQUIRED_FIELD : $errormsg);
-                    $v->addError($formError);
-                }
-            });
+            $options = array();
+            if (!empty($this->errorMessageRequired)) {
+                $options['message'] = $this->errorMessageRequired;
+            }
+            $constraints[] = new NotBlank($options);
         }
+
+        $formBuilder->add(
+            'formwidget_' . $this->getUniqueId(),
+            new FileFormSubmissionType(),
+            array(
+                'label'       => $this->getLabel(),
+                'constraints' => $constraints,
+                'required'    => $this->getRequired()
+            )
+        );
+        $formBuilder->setData($data);
 
         $fields[] = $ffsf;
     }

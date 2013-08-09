@@ -60,7 +60,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      */
     public function getDefaultAdminType()
     {
-        return new ChoiceFormSubmissionType($this->getLabel(), $this->required, $this->getExpanded(), $this->getMultiple(), $this->getChoices());
+        return new ChoiceFormSubmissionType();
     }
 
     /**
