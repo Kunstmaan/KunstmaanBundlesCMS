@@ -20,7 +20,7 @@ $ composer require kunstmaan/translator-bundle 2.3.*@dev
 Add the KunstmaanTranslatorBundle to your AppKernel.php file:
 
 ```PHP
-new Kunstmaan\Translator\KunstmaanTranslatorBundle(),
+new Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle(),
 new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
 ```
 
