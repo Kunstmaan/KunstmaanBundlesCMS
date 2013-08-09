@@ -44,7 +44,8 @@ class ImportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\A
      */
     public function importGlobalTranslationFiles(ImportCommand $importCommand)
     {
-        $finder = $this->translationFileExplorer->find($this->kernel->getRootDir(), $this->determineLocalesToImport($importCommand));
+        $locales = $this->determineLocalesToImport($importCommand);
+        $finder = $this->translationFileExplorer->find($this->kernel->getRootDir(), $locales);
 
         return $this->importTranslationFiles($finder, $importCommand->getForce());
     }
@@ -148,7 +149,7 @@ class ImportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\A
      */
     public function determineLocalesToImport(ImportCommand $importCommand)
     {
-        if ($importCommand->getLocales() === false) {
+        if ($importCommand->getLocales() === false || $importCommand->getLocales() === null) {
             return $this->managedLocales;
         }
 

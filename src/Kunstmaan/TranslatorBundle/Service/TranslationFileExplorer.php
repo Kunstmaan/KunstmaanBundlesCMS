@@ -37,9 +37,11 @@ class TranslationFileExplorer
             $finder->files()
                 ->name(sprintf('/(.*(%s)\.(%s))/', implode('|', $locales), implode('|', $this->fileFormats)))
                 ->in($exploreDir);
+            return $finder;
         }
 
-        return $finder;
+        throw new \Exception('Directory `' . $exploreDir . '` does not exist, translations could not be found.');
+
     }
 
     public function setFileFormats($fileFormats)
