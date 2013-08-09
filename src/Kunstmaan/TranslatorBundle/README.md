@@ -34,11 +34,12 @@ KunstmaanTranslatorBundle:
     prefix:   /
 ```
 
-Overwrite the KunstmaanTranslatorBundle config to your needs in config.yml :
+Overwrite the KunstmaanTranslatorBundle config to your needs in config.yml:
 
 ```PHP
 kunstmaan_translator:
     enabled: true
+    managed_locales: ['nl','en','de']
 ```
 
 Update your database schema
