@@ -15,6 +15,8 @@ Assuming you have installed composer.phar or composer binary:
 
 ``` bash
 $ composer require kunstmaan/translator-bundle 2.3.*@dev
+$ composer require doctrine/migrations dev-master
+$ composer require doctrine/doctrine-migrations-bundle dev-master
 ```
 
 Add the KunstmaanTranslatorBundle to your AppKernel.php file:

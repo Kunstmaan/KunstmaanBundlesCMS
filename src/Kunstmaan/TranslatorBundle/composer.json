@@ -32,10 +32,6 @@
         "phpunit/phpunit": "*",
         "nelmio/alice": "1.4.*@dev"
     },
-    "require-dev": {
-        "doctrine/doctrine-migrations-bundle": "dev-master",
-        "doctrine/migrations": "dev-master"
-    },
     "autoload": {
         "psr-0": { "Kunstmaan\\TranslatorBundle": "" }
     },
