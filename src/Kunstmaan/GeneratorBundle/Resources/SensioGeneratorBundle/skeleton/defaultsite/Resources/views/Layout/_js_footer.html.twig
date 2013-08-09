@@ -24,16 +24,28 @@
         Modernizr.load([
             {
                 test: Modernizr.inlinesvg,
+                nope: [
+                    {% stylesheets
+                        '@" ~ bundle.getName() ~ "/Resources/public/scss/legacy/fallbacks/no-inlinesvg.scss'
+                        filter='scss'
+                        output='frontend/no-inlinesvg.css'
+                    %}
+                    '{{ asset_url }}'
+                    {% endstylesheets %}
+                    ,
                     {% javascripts
                         'vendor/svgeezy/svgeezy.js'
                         filter='yui_js'
                         combine=true
                         output='frontend/svgeezy.js'
                     %}
-                nope: '{{ asset_url }}',
+                    '{{ asset_url }}'
                     {% endjavascripts %}
+                ],
                 callback : function (url, result, key) {
-                    svgeezy.init('png');
+                    if(key == 1) {
+                        svgeezy.init('png');
+                    }
                 }
             },
             {

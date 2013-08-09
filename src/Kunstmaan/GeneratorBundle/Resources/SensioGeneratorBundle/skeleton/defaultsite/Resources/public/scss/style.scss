@@ -1,13 +1,47 @@
 @charset "UTF-8";
 
 /* ==========================================================================
-   Stylesheet for all browsers except IE8 and below
+   Stylesheet for all browsers
 
    Never add styles directly to this file - set up imports
    Style guide: https://github.com/necolas/idiomatic-css
    ========================================================================== */
 
 
-/* Base
+/* General config
    ========================================================================== */
-@import "base";
+@import "config/config";
+
+
+/* Bourbon
+   ========================================================================== */
+@import "../../../../../../web/vendor/bourbon/app/assets/stylesheets/bourbon";
+
+
+/* CSS Framework (Bootstrap 2)
+   ========================================================================== */
+@import "config/bootstrap-imports";
+
+
+/* CSS Framework (Cupcake)
+   ========================================================================== */
+/* Base */
+@import "../../../../../../web/vendor/cupcake/scss/base";
+
+/* Components */
+@import "config/cupcake-config/cupcake-imports";
+
+
+/* Website Theme
+   ========================================================================== */
+/* helpers */
+@import "helpers/helpers";
+
+/* general */
+@import "general/general";
+
+/* components */
+@import "components/components";
+
+/* theme */
+//@import "../../../../../../web/vendor/flat-ui/sass/flat-ui";
