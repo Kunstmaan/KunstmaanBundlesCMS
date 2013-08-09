@@ -1,7 +1,7 @@
 {
     "name": "kunstmaan/search-bundle",
     "type": "symfony-bundle",
-    "description": "The KunstmaanSearchBundle",
+    "description": "The KunstmaanSearchBundle works with ElasticSearch and supports different search providers. The bundle currently supports Sherlock as a provider. Add your own objects to index using a tagged service which implements the SearchConfigurationInterface",
     "keywords": ["kunstmaan", "search", "elasticsearch"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanSearchBundle",
     "license": "MIT",
