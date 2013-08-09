@@ -55,7 +55,7 @@ app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Ent
 Generate a new page part page based on the [KunstmaanPagePartBundle](https://github.com/Kunstmaan/KunstmaanPagePartBundle) :
 
 ```
-app/console kuma:generate:pagepart
+app/console kuma:generate:pagepart --prefix=tableprefix_
 ```
 
 ## More
