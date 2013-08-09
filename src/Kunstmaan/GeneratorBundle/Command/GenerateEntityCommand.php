@@ -319,6 +319,8 @@ EOT
                 $defaultType = 'boolean';
             }
 
+            $columnName = DoctrineEntityGenerator::convertCamelCaseToSnakeCase($columnName);
+
             $type = $dialog->askAndValidate($output, $dialog->getQuestion('Field type', $defaultType), $fieldValidator, false, $defaultType, $types);
 
             $data = array('columnName' => $columnName, 'fieldName' => lcfirst(Container::camelize($columnName)), 'type' => $type);
