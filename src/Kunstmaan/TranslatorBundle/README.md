@@ -14,7 +14,7 @@ Installation instructions
 Assuming you have installed composer.phar or composer binary:
 
 ``` bash
-$ composer require kunstmaan/translator-bundle
+$ composer require kunstmaan/translator-bundle 2.3.*@dev
 ```
 
 Add the KunstmaanTranslatorBundle to your AppKernel.php file:
