@@ -21,13 +21,13 @@
         "fzaninotto/faker": "1.2.0"
     },
     "suggest": {
-        "kunstmaan/admin-bundle": "*",
-        "kunstmaan/adminlist-bundle": "*",
-        "kunstmaan/form-bundle": "*",
-        "kunstmaan/media-bundle": "*",
-        "kunstmaan/media-pagepart-bundle": "*",
-        "kunstmaan/node-bundle": "*",
-        "kunstmaan/pagepart-bundle": "*"
+        "kunstmaan/admin-bundle": "dev-master",
+        "kunstmaan/adminlist-bundle": "dev-master",
+        "kunstmaan/form-bundle": "dev-master",
+        "kunstmaan/media-bundle": "dev-master",
+        "kunstmaan/media-pagepart-bundle": "dev-master",
+        "kunstmaan/node-bundle": "dev-master",
+        "kunstmaan/pagepart-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
