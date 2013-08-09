@@ -7,10 +7,12 @@ Feature: AdminSettingsUser
   As an admin user
   A new user has to be created, updated, be able to log in and be deleted
 
+  Background:
+    Given I log in as "admin"
+
   @javascript
   Scenario: Can't create a new user without email
-    Given I log in as "admin"
-    And I am on the create new user page
+    Given I am on the create new user page
     And I fill in correct user information for username "dummy"
     And I clear "user[email]"
     When I press "Add User"
@@ -18,8 +20,7 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Can't create a new user without valid email
-    Given I log in as "admin"
-    And I am on the create new user page
+    Given I am on the create new user page
     And I fill in correct user information for username "dummy"
     When I fill in "user[email]" with "dummy"
     When I press "Add User"
@@ -27,8 +28,7 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Can't create a new user without username
-    Given I log in as "admin"
-    And I am on the create new user page
+    Given I am on the create new user page
     And I fill in correct user information for username "dummy"
     And I clear "user[username]"
     When I press "Add User"
@@ -36,8 +36,7 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Can't create a new user without password
-    Given I log in as "admin"
-    And I am on the create new user page
+    Given I am on the create new user page
     And I fill in correct user information for username "dummy"
     And I clear "user[plainPassword][first]"
     When I press "Add User"
@@ -45,8 +44,7 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Can't create a new user without matching passwords
-    Given I log in as "admin"
-    And I am on the create new user page
+    Given I am on the create new user page
     And I fill in correct user information for username "dummy"
     When I fill in "user[plainPassword][first]" with "1"
     When I fill in "user[plainPassword][second]" with "2"
@@ -55,8 +53,7 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Create a new user and try login
-    Given I log in as "admin"
-    And I am on the create new user page
+    Given I am on the create new user page
     And I fill in correct user information for username "test"
     When I press "Add User"
     Then I should see "has been created"
@@ -66,7 +63,8 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Login and edit own user
-    Given I log in as "test"
+    Given I log out
+    And I log in as "test"
     And I edit user "test"
     Then I should see "Edit user"
     When I fill in "user[email]" with "support-edited@kunstmaan.be"
@@ -75,8 +73,7 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Login as admin, disable test user
-    Given I log in as "admin"
-    And I edit user "test"
+    Given I edit user "test"
     When I uncheck "user[enabled]"
     And I press "Edit User"
     Then I should see "has been edited"
@@ -88,8 +85,7 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Use filter module
-    Given I log in as "admin"
-    And I am on the users page
+    Given I am on the users page
     And I filter on "Username" that "equals" "test"
     And I additionally filter on "E-Mail" that "not equals" "guest@domain"
     And I press "Filter"
@@ -97,6 +93,5 @@ Feature: AdminSettingsUser
 
   @javascript
   Scenario: Login as admin, delete test user
-    Given I log in as "admin"
-    And I delete user "test"
+    Given I delete user "test"
     Then I should see "has been deleted"

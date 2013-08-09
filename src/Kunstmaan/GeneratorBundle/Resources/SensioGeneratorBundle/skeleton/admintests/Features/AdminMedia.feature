@@ -5,10 +5,12 @@ Feature: AdminMedia
   As an admin user
   User has to upload file, slide, video, ...
 
+  Background:
+    Given I log in as "admin"
+
   @javascript
   Scenario Outline: Add a new file
-    Given I log in as "admin"
-    And I am on the add new <fileTypePage> page
+    Given I am on the add new <fileTypePage> page
     And I fill in correct file information for <fileType>
     When I press "Add File"
     Then I should see "has been created"
@@ -20,8 +22,7 @@ Feature: AdminMedia
 
   @javascript
   Scenario Outline: Login as admin, delete created image
-    Given I log in as "admin"
-    And I delete <fileType>
+    Given I delete <fileType>
     Then I should see "has been deleted"
 
   Examples:
@@ -31,8 +32,7 @@ Feature: AdminMedia
 
   @javascript
   Scenario Outline: Add a new videoType
-    Given I log in as "admin"
-    And I am on the add new video page
+    Given I am on the add new video page
     And I fill in correct <videoType> information for video <videoName>
     When I press "Add File"
     Then I should see "has been created"
@@ -46,43 +46,37 @@ Feature: AdminMedia
 
   @javascript
   Scenario: Login as admin, delete a video
-    Given I log in as "admin"
-    And I delete video
+    Given I delete video
     Then I should see "has been deleted"
 
   @javascript
   Scenario: Add a new slideshare
-    Given I log in as "admin"
-    And I am on the add new slide page
+    Given I am on the add new slide page
     And I fill in correct slideshare information for slide "Slideshare"
     When I press "Add File"
     Then I should see "has been created"
 
   @javascript
   Scenario: Login as admin, delete created slide
-    Given I log in as "admin"
-    And I delete slide
+    Given I delete slide
     Then I should see "has been deleted"
 
 
 
   @javascript
   Scenario: Login as admin, create a subfolder
-    Given I log in as "admin"
-    And I am on the media page
+    Given I am on the media page
     And I create subfolder "subFolder"
     Then I should see "has been created"
 
   @javascript
   Scenario: Login as admin, delete a subfolder
-    Given I log in as "admin"
-    And I am on the media page
+    Given I am on the media page
     And I delete subfolder "subFolder"
     Then I should see "has been deleted"
 
   @javascript
   Scenario: Login as admin, delete a Media
-    Given I log in as "admin"
-    And I am on the media page
+    Given I am on the media page
     And I delete the folder
     Then I should see "can't delete"
