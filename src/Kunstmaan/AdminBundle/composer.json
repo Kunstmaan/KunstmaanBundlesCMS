@@ -30,6 +30,7 @@
         "pagerfanta/pagerfanta": "1.0.*@dev",
         "white-october/pagerfanta-bundle": "1.0.*@dev"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
     },
