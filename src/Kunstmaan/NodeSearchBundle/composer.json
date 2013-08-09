@@ -1,7 +1,7 @@
 {
     "name": "kunstmaan/node-search-bundle",
     "type": "symfony-bundle",
-    "description": "The KunstmaanNodeSearchBundle",
+    "description": "This bundle uses the KunstmaanSearchBundle to search through Nodes from the KunstmaanNodeBundle",
     "keywords": ["kunstmaan", "node", "search", "elasticsearch"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanNodeSearchBundle",
     "license": "MIT",
