@@ -103,6 +103,8 @@ configuration file(s), so that the page part can be used in the section(s).
 
 ### Command
 
+The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
+
 ```
-app/console kuma:generate:pagepart
+app/console kuma:generate:pagepart --prefix=tableprefix_
 ```
