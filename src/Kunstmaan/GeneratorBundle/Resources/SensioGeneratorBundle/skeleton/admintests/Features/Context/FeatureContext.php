@@ -66,7 +66,7 @@ class FeatureContext extends AbstractContext
      */
     public function getPasswordForUsername($username)
     {
-        $logins = array('admin' => 'admin', 'test' => 'test', 'dummy' => 'dummy', 'wronguser' => 'wrongpassword');
+        $logins = array('admin' => 'admin', 'test' => 'test', 'dummy' => 'dummy');
 
         return $logins[$username];
     }
