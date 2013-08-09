@@ -56,6 +56,19 @@ You can override the views for all the functions that generate HTML output.
 
 Added to the SEO bundle are a few helpers to control Google Analytics.
 
+These helpers rely on the inclusion of the analytics.js file that's provided in this bundle.
+The script itself relies on jQuery to be present.
+
+```TWIG
+    {% javascripts
+        'vendor/jquery/jquery.js'
+        '@KunstmaanSeoBundle/Resources/public/js/analytics.js'
+        output='frontend/footer.js'
+    %}
+        <script src='{{ asset_url }}'></script>
+    {% endjavascripts %}
+```
+
 First up is ```google_analytics_initialize``` which looks for the Google Analytics Account ID in your config.
 
 ```YAML
@@ -70,7 +83,7 @@ You can also optionally pass the ```account_id``` as an argument to the function
 
 This script will set up a queue with commands (_gaq) and the Google Analytics script itself (_ga).
 When Twig is in debug mode it'll not initialize the script but instead it'll just dump all requests to the console.
-This way you can easily monitor what Google Analytics is doing.
+This way you can easily monitor what Google Analytics is planning on doing in your production environment.
 
 The script will automatically track downloads, external links, links to email addresses & button clicks.
 
@@ -116,4 +129,3 @@ and pass it along to the ```google_analytics_track_order``` twig function. This 
 ```TWIG
     {{ google_analytics_track_order(order) }}
 ```
-
