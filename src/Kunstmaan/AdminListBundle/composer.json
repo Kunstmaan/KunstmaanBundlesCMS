@@ -22,6 +22,7 @@
         "kunstmaan/utilities-bundle": "self.version"
 
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminListBundle": "" }
     },
