@@ -104,7 +104,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private function getActiveNodeIds($request)
     {
         if (is_null($this->activeNodeIds)) {
-            if ($request->attributes->get('_route') == 'KunstmaanNodeBundle_nodes_edit') {
+            if (stripos($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes_edit') === 0) {
                 $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
                 $currentNode = $repo->findOneById($request->attributes->get('id'));
