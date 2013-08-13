@@ -31,7 +31,9 @@ Add the KunstmaanTranslatorBundle to your routing.yml. Take your own routing int
 ```PHP
 KunstmaanTranslatorBundle:
     resource: "@KunstmaanTranslatorBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
 ```
 
 Overwrite the KunstmaanTranslatorBundle config to your needs in config.yml:
