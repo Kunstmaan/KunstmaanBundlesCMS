@@ -47,7 +47,7 @@ Update your database schema
 app/console doctrine:schema:update --force
 
 Database schema updated successfully! "1" queries were executed
-``
+```
 
 Migrate dev translations to production
 ------------------------------------------
