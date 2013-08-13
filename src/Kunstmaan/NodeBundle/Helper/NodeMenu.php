@@ -95,8 +95,8 @@ class NodeMenu
 
         $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
-        // Generate breadcrumb MenuItems
-        $parentNodes = $repo->getAllParents($currentNode, $this->lang);
+        // Generate breadcrumb MenuItems - fetch *all* languages so you can link translations if needed
+        $parentNodes = $repo->getAllParents($currentNode);
         $parentNodeMenuItem = null;
 
         /* @var Node $parentNode */
