@@ -52,6 +52,7 @@ class KunstmaanTranslatorExtension extends Extension
 
         // overwrites everything
         $translator->addMethodCall('addDatabaseResources', array());
+        $translator->addMethodCall('setFallbackLocales', array(array($container->getParameter('defaultlocale'))));
 
         $collector = $container->getDefinition('kunstmaan.data_collector.translator');
         $collector->addArgument($translator);
