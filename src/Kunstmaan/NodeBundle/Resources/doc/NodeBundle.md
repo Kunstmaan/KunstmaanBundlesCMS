@@ -21,10 +21,6 @@ TODO : Add documentation on which events exists and how they can be used.
 
 TODO : Write down how slugs and the router works.
 
-## Known Issues
-
-* Even though you click on 'Save as draft' after creating and modifying pageparts on your public version, the modifications will also be saved to the public version. It is advised to first "Save as draft" before you start altering pageparts.
-
 ## Publish later
 
 Nodes can be published on a specified date, you have to configure a cronjob for this:
