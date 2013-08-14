@@ -33,10 +33,10 @@ class DateFilterType extends AbstractDBALFilterType
             $date = DateTime::createFromFormat('d/m/Y', $data['value'])->format('Y-m-d');
             switch ($data['comparator']) {
                 case 'before':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
                     break;
                 case 'after':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->alias . '.' . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
                     break;
             }
             $this->queryBuilder->setParameter('var_' . $uniqueId, $date);
