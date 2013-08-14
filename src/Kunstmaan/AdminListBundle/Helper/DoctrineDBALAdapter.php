@@ -19,15 +19,18 @@ class DoctrineDBALAdapter implements AdapterInterface
 
     private $countField;
 
+    private $useDistinct;
+
     /**
      * Constructor.
      *
      * @param QueryBuilder $queryBuilder A DBAL query builder.
      * @param string $countField Primary key for the table in query. Used in count expression. Must include table alias
+     * @param boolean $useDistinct When set to true it'll count the countfield with a distinct in front of it.
      *
      * @api
      */
-    public function __construct(QueryBuilder $queryBuilder, $countField)
+    public function __construct(QueryBuilder $queryBuilder, $countField, $useDistinct)
     {
         if (strpos($countField, '.') === false) {
             throw new LogicException('The $countField must contain a table alias in the string.');
@@ -59,7 +62,11 @@ class DoctrineDBALAdapter implements AdapterInterface
     public function getNbResults()
     {
         $query = clone $this->queryBuilder;
-        $statement = $query->select('COUNT(DISTINCT '.$this->countField.') AS total_results')
+        $distinctString = '';
+        if ($this->useDistinct) {
+            $distinctString = 'DISTINCT ';
+        }
+        $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
           ->setMaxResults(1)
           ->execute()
         ;
