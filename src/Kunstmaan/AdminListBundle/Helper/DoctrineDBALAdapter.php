@@ -42,6 +42,8 @@ class DoctrineDBALAdapter implements AdapterInterface
 
         $this->queryBuilder = $queryBuilder;
         $this->countField = $countField;
+
+        $this->useDistinct = $useDistinct;
     }
 
     /**
