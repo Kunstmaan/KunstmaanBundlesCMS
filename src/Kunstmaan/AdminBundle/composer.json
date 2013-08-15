@@ -19,7 +19,6 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "dev-master",
         "knplabs/knp-menu-bundle": "*",
-        "monolog/monolog": "1.4.*@dev",
         "sensio/framework-extra-bundle": "*",
         "kunstmaan/adminlist-bundle": "self.version",
         "kunstmaan/utilities-bundle": "self.version"
