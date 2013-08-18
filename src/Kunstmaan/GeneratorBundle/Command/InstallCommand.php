@@ -19,7 +19,6 @@ class InstallCommand extends ContainerAwareCommand {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->runCommand('kuma:generate:bundle', 'Generating a new bundle', $input, $output);
-        $this->getApplication()->getKernel()->registerBundles();
 
         $this->runCommand('kuma:generate:default-site', 'Generating the default site', $input, $output)
             ->runCommand('kuma:generate:admin-tests', 'Generating the admin test suite', $input, $output)
