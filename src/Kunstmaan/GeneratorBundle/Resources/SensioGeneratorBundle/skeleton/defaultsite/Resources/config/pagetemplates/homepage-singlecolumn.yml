@@ -6,4 +6,4 @@ rows:
         - { name: "slider", span: 12 }
     - regions:
         - { name: "footer", span: 12 }
-template: "KunstmaanWebsiteBundle::Pages\\HomePage\\pagetemplate-singlecolumn.html.twig"
+template: "~~~BUNDLE~~~::Pages\\HomePage\\pagetemplate-singlecolumn.html.twig"

@@ -333,6 +333,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/formpage.yml');
         $this->filesystem->copy($skeletonDir . '/homepage.yml', $dirPath . '/homepage.yml', true);
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage.yml');
+        $this->filesystem->copy($skeletonDir . '/homepage-singlecolumn.yml', $dirPath . '/homepage-singlecolumn.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage-singlecolumn.yml');
 
         $output->writeln('Generating PageTemplate Configurators : <info>OK</info>');
     }
