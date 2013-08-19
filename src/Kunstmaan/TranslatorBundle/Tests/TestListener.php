@@ -57,24 +57,6 @@ class TestListener implements \PHPUnit_Framework_TestListener
         $objects = \Nelmio\Alice\Fixtures::load($fixtures, $em);
         $persister = new \Nelmio\Alice\ORM\Doctrine($em);
         $persister->persist($objects);
-
-    //     if (strpos($suite->getName(), 'lead_lasso_app') !== false && $env == 'ci') {
-
-    //         require_once dirname(__DIR__) . '/../../../../app/AppKernel.php';
-
-    //         $kernel = new AppKernel($env, true);
-    //         $kernel->boot();
-
-    //         $application = new \Symfony\Bundle\FrameworkBundle\Console\Application($kernel);
-    //         $application->setAutoExit(false);
-    //         $options = array('command' => 'lead_lasso_app:database:create',"--fix" => true);
-    //         $application->run(new \Symfony\Component\Console\Input\ArrayInput($options));
-
-    //         $kernel->shutdown();
-    //     } else {
-    //     if (function_exists('xdebug_disable')) { xdebug_disable(); }
-    // }
-
     }
 
     public function endTestSuite(PHPUnit_Framework_TestSuite $suite)

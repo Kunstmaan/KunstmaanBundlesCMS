@@ -58,6 +58,7 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
         $container->setParameter('kernel.root_dir', '');
         $container->setParameter('kernel.bundles', array());
         $container->setParameter('kernel.debug', true);
+        $container->setParameter('defaultlocale', 'en');
 
         return $container;
     }
