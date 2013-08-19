@@ -1,0 +1,9 @@
+name: "Home page single column"
+rows:
+    - regions:
+        - { name: "main", span: 12 }
+    - regions:
+        - { name: "slider", span: 12 }
+    - regions:
+        - { name: "footer", span: 12 }
+template: "KunstmaanWebsiteBundle::Pages\\HomePage\\pagetemplate-singlecolumn.html.twig"

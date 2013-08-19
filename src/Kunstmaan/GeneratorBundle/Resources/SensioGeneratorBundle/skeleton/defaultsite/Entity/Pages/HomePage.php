@@ -58,7 +58,7 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array("{{ bundle.getName() }}:homepage");
+        return array("{{ bundle.getName() }}:homepage", "{{ bundle.getName() }}:homepage-singlecolumn");
     }
 
     /**

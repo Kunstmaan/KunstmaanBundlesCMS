@@ -168,6 +168,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/view.html.twig', $dirPath . '/Pages/HomePage/view.html.twig', true);
             GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/HomePage/view.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate.html.twig', $dirPath . '/Pages/HomePage/pagetemplate.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate.html.twig');
+            $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig', $dirPath . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig');
         }
 
         { //SlidePagePart
