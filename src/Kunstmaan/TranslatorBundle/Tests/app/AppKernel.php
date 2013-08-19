@@ -13,6 +13,7 @@ class AppKernel extends Kernel
             new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
+            new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         );
 
         return $bundles;
