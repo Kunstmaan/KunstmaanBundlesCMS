@@ -154,6 +154,8 @@ class MediaContext extends BehatContext
         );
 
         $this->getMainContext()->pressButton("Add subfolder");
+        //Wait 1 second so the modal is completely visible
+        $this->getMainContext()->iWaitSeconds(1);
 
         $page = $this->getMainContext()->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@id, 'addsub-modal')]");
