@@ -2,34 +2,36 @@
 
 namespace Kunstmaan\GeneratorBundle\Helper;
 
-
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper,
-    Sensio\Bundle\GeneratorBundle\Command\Validators;
-
-use Symfony\Component\Console\Input\InputInterface,
-    Symfony\Component\Console\Output\OutputInterface;
-
+use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 class InputAssistant
 {
-
     /** @var InputInterface */
     private $input;
+
     /** @var OutputInterface */
     private $output;
+
     /** @var DialogHelper */
     private $dialog;
+
     /** @var Kernel */
     private $kernel;
+
     /** @var ContainerInterface */
     private $container;
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     * @param DialogHelper    $dialog
+     * @param InputInterface     $input
+     * @param OutputInterface    $output
+     * @param DialogHelper       $dialog
+     * @param Kernel             $kernel
+     * @param ContainerInterface $container
      */
     public function __construct(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel, ContainerInterface $container)
     {
@@ -161,14 +163,7 @@ class InputAssistant
             return null;
         }
 
-        $namespace = $this->fixNamespace($namespace);
-
-        $parts = explode('/', $namespace);
-        $parts = array_map(function($k) {
-            return strtolower($k);
-        }, $parts);
-
-        return implode('_', $parts);
+        return str_replace('/', '_', strtolower($this->fixNamespace($namespace)));
     }
 
     /**
@@ -198,19 +193,12 @@ class InputAssistant
         return str_replace('\\', '/', $namespace);
     }
 
-
-
-
-
-
-
-
     /**
      * Get an array with all the bundles the user has created.
      *
      * @return array
      */
-    private function getOwnBundles()
+    public function getOwnBundles()
     {
         $bundles = array();
         $counter = 1;

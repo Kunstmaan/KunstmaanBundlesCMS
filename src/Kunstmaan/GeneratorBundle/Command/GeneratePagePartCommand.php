@@ -105,6 +105,9 @@ EOT
         $this->output = $output;
         $this->dialog->writeSection($output, 'Welcome to the Kunstmaan pagepart generator');
 
+        /* @var $inputAssistant \Kunstmaan\GeneratorBundle\Helper\InputAssistant */
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $this->dialog, $this->getApplication()->getKernel(), $this->getContainer());
+
         if (!$this->isBundleAvailable('KunstmaanPagePartBundle')) {
             $this->writeError('KunstmaanPagePartBundle not found', true);
         }
@@ -114,7 +117,7 @@ EOT
         /**
          * Ask for which bundle we need to create the pagepart
          */
-        $ownBundles = $this->getOwnBundles();
+        $ownBundles = $inputAssistant->getOwnBundles();
         if (count($ownBundles) <= 0) {
             $this->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
         }
@@ -144,7 +147,6 @@ EOT
         /**
          * Ask the prefix for the database
          */
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $this->dialog, $this->getApplication()->getKernel(), $this->getContainer());
         $this->prefix = $inputAssistant->askForPrefix(null, $namespace);
 
         /**
@@ -325,36 +327,6 @@ EOT
     }
 
     /**
-     * Get an array with all the bundles the user has created.
-     *
-     * @return array
-     */
-    private function getOwnBundles()
-    {
-        $bundles = array();
-        $counter = 1;
-
-        $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src/';
-        $files = scandir($dir);
-        foreach ($files as $file) {
-            if (is_dir($dir.$file) && !in_array($file, array('.', '..'))) {
-                $bundleFiles = scandir($dir.$file);
-                foreach ($bundleFiles as $bundleFile) {
-                    if (is_dir($dir.$file.'/'.$bundleFile) && !in_array($bundleFile, array('.', '..'))) {
-                        $bundles[$counter++] = array(
-                            'name' => $bundleFile,
-                            'namespace' => $file,
-                            'dir' => $dir.$file.'/'.$bundleFile
-                        );
-                    }
-                }
-            }
-        }
-
-        return $bundles;
-    }
-
-    /**
      * Get an array with the available page sections.
      *
      * @param BundleInterface $bundle
@@ -389,6 +361,7 @@ EOT
     private function getTypes($niceNames = false)
     {
         $counter = 1;
+
         $types = array();
         $types[$counter++] = $niceNames ? 'Single line text' : 'single_line';
         $types[$counter++] = $niceNames ? 'Multi line text' : 'multi_line';
@@ -400,6 +373,9 @@ EOT
         $types[$counter++] = $niceNames ? 'Single entity reference' : 'single_ref';
         $types[$counter++] = $niceNames ? 'Multi entity reference' : 'multi_ref';
         $types[$counter++] = $niceNames ? 'Boolean' : 'boolean';
+        $types[$counter++] = $niceNames ? 'Integer' : 'integer';
+        $types[$counter++] = $niceNames ? 'Decimal number' : 'decimal';
+        $types[$counter++] = $niceNames ? 'DateTime' : 'datetime';
 
         return $types;
     }
@@ -510,6 +486,29 @@ EOT
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'boolean',
                     'formType' => 'checkbox'
+                );
+                break;
+            case 'integer':
+                $fields[$type][] = array(
+                    'fieldName' => lcfirst(Container::camelize($name)),
+                    'type' => 'integer',
+                    'formType' => 'integer'
+                );
+                break;
+            case 'decimal':
+                $fields[$type][] = array(
+                    'fieldName' => lcfirst(Container::camelize($name)),
+                    'type' => 'decimal',
+                    'precision' => 10,
+                    'scale' => 2,
+                    'formType' => 'number'
+                );
+                break;
+            case 'datetime':
+                $fields[$type][] = array(
+                    'fieldName' => lcfirst(Container::camelize($name)),
+                    'type' => 'datetime',
+                    'formType' => 'datetime'
                 );
                 break;
         }
