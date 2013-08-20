@@ -84,12 +84,12 @@ class PageTemplateWidget extends FormWidget
     protected $pageTemplateConfiguration;
 
     /**
-     * @param HasNodeInterface     $page                 The page
-     * @param Request              $request              The request
-     * @param EntityManager        $em                   The entity manager
-     * @param KernelInterface      $kernel               The kernel
-     * @param FormFactoryInterface $formFactory          The form factory
-     * @param PagePartAdminFactory $pagePartAdminFactory The page part admin factory
+     * @param HasPageTemplateInterface $page                 The page
+     * @param Request                  $request              The request
+     * @param EntityManager            $em                   The entity manager
+     * @param KernelInterface          $kernel               The kernel
+     * @param FormFactoryInterface     $formFactory          The form factory
+     * @param PagePartAdminFactory     $pagePartAdminFactory The page part admin factory
      */
     public function __construct(HasPageTemplateInterface $page, Request $request, EntityManager $em, KernelInterface $kernel, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
     {
@@ -110,7 +110,7 @@ class PageTemplateWidget extends FormWidget
             foreach ($row->getRegions() as $region) {
                 $pagePartAdminConfiguration = null;
                 foreach ($this->pagePartAdminConfigurations as $ppac) {
-                    if ($ppac->getInternalName() == $region->getName()) {
+                    if ($ppac->getContext() == $region->getName()) {
                         $pagePartAdminConfiguration = $ppac;
                     }
                 }
