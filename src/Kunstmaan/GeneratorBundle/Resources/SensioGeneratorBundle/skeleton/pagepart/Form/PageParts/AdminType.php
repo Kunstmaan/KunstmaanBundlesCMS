@@ -39,6 +39,10 @@ class {{ className }} extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
 {% endif %}
+{% if key == 'datetime' %}                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
+                'date_format' => 'dd/MM/yyyy',
+{% endif %}
 {% if key == 'multi_ref' %}                'class' => '{{ field.targetEntity }}',
                 'expanded' => true,
                 'multiple' => true,
