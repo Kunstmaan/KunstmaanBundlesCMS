@@ -353,6 +353,8 @@ class FeatureContext extends AbstractContext
      */
     public function findAndClickButton($element, $selector, $locator)
     {
+        //Wait for the button to be visible
+        $this->iWaitSeconds(1);
         $button = $element->find($selector, $locator);
         if (!is_null($button)) {
             $button->click();
