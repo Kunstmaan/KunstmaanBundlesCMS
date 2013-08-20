@@ -61,8 +61,6 @@ Feature: AdminMedia
     Given I delete slide
     Then I should see "has been deleted"
 
-
-
   @javascript
   Scenario: Login as admin, create a subfolder
     Given I am on the media page
