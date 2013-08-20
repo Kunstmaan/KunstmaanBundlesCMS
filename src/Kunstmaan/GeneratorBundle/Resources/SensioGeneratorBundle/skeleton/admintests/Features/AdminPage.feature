@@ -32,7 +32,7 @@ Feature: AdminPage
   @javascript
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
-    Then I should see "page is not online"
+    Then I should see "page you requested could not be found"
 
   @javascript
   Scenario: Publish the page
@@ -43,7 +43,7 @@ Feature: AdminPage
   @javascript @ensureCleanSession
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
-    Then I should not see "page is not online"
+    Then I should not see "page you requested could not be found"
 
   @javascript
   Scenario: Publish the page
