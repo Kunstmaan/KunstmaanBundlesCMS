@@ -92,10 +92,11 @@ class BundleGenerator extends Generator
 
         $basename = substr($bundle, 0, -6);
         $parameters = array(
-            'namespace'       => $namespace,
-            'bundle'          => $bundle,
-            'bundle_basename' => $basename,
-            'extension_alias' => Container::underscore($basename),
+            'namespace'         => $namespace,
+            'bundle'            => $bundle,
+            'bundle_lowercase'  => strtolower($bundle),
+            'bundle_basename'   => $basename,
+            'extension_alias'   => Container::underscore($basename),
         );
 
         $this->renderFile('/bundle/Bundle.php', $dir . '/' . $bundle . '.php', $parameters);
