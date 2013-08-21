@@ -2,7 +2,7 @@
 
 namespace {{ namespace }}\Form\Pages;
 
-use Symfony\Component\Form\AbstractType;
+use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * The admin type for content pages
  *
  */
-class ContentPageAdminType extends AbstractType
+class ContentPageAdminType extends PageAdminType
 {
     /**
      * Builds the form.
