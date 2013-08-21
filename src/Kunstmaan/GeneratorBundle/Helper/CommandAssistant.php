@@ -110,14 +110,14 @@ class CommandAssistant
         return $this->getDialog()->askConfirmation($this->output, $this->getDialog()->getQuestion($question, $defaultString, $separator), $defaultValue);
     }
 
-    public function ask($question, $default = null, $separator = ':')
+    public function ask($question, $default = null, array $autoComplete = null)
     {
-        return $this->getDialog()->ask($this->output, $this->getDialog()->getQuestion($question, $default, $separator), $default);
+        return $this->getDialog()->ask($this->output, $this->getDialog()->getQuestion($question, $default), $default, $autoComplete);
     }
 
-    public function askSelect($question, $choices, $default = null, $multiSelect = false, $separator = ':', $errorMessage = 'Value "%s" is invalid')
+    public function askSelect($question, $choices, $default = null, $multiSelect = false, $errorMessage = 'Value "%s" is invalid')
     {
-        $bundleQuestion = $this->dialog->getQuestion($question, $default, $separator);
+        $bundleQuestion = $this->dialog->getQuestion($question, $default);
         return $this->dialog->select($this->output, $bundleQuestion, $choices, $default, false, $errorMessage, $multiSelect);
     }
 
