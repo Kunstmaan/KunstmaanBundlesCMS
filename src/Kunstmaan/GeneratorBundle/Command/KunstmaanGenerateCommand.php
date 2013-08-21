@@ -8,6 +8,9 @@ use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
 
 abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 {
@@ -86,7 +89,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      *
      * @return array
      */
-    public function getOwnBundles()
+    protected function getOwnBundles()
     {
         $bundles = array();
         $counter = 1;
@@ -140,7 +143,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         if (is_null($text)) {
             $text = array(
                 '',
-                'You can add a prefix to the table names of the generated entities for example: <comment>projectname_bundlename_</comment>',
+                'You can add a prefix to the table names of the generated entities for example: '.
+                '<comment>projectname_bundlename_</comment>',
                 'Enter an underscore \'_\' if you don\'t want a prefix.',
                 ''
             );
@@ -201,7 +205,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         $ownBundles = $this->getOwnBundles();
         if (count($ownBundles) <= 0) {
-            $this->assistant->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
+            $this->assistant->writeError("Looks like you don't have created any bundles for your project...", true);
         }
 
         // If we only have 1 bundle, we don't need to ask
@@ -221,5 +225,85 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $bundle = $this->assistant->getKernel()->getBundle($bundleName);
 
         return $bundle;
+    }
+
+    /**
+     * Ask the end user to select one (or more) section configuration(s).
+     *
+     * @param string $question
+     * @param BundleInterface $bundle
+     * @param bool $multiple
+     * @param string|null $context
+     * @return array
+     */
+    protected function askForSections($question, BundleInterface $bundle, $multiple = false, $context = null)
+    {
+        $allSections = $this->getAvailableSections($bundle, $context);
+        $sections = array();
+
+        if (count($allSections) > 0) {
+            $sectionSelect = array();
+            foreach ($allSections as $key => $sectionInfo) {
+                $sectionSelect[$key] = $sectionInfo['name'].' ('.$sectionInfo['file'].')';
+            }
+            $this->assistant->writeLine('');
+            $sectionIds = $this->assistant->askSelect($question, $sectionSelect, null, $multiple);
+            foreach ($sectionIds as $id) {
+                $sections[] = $allSections[$id]['file'];
+            }
+        }
+
+        return $sections;
+    }
+
+    /**
+     * Get an array with the available page sections. We also parse the yaml files to get more information about
+     * the sections.
+     *
+     * @param BundleInterface $bundle  The bundle for which we want to get the section configuration
+     * @param string|null     $context If provided, only return configurations with this context
+     * @return array
+     */
+    protected function getAvailableSections(BundleInterface $bundle, $context = null) {
+        $configs = array();
+        $counter = 1;
+
+        $dir = $bundle->getPath().'/Resources/config/pageparts/';
+        if (file_exists($dir) && is_dir($dir)) {
+            $files = scandir($dir);
+            foreach ($files as $file) {
+                if (is_file($dir.$file) && !in_array($file, array('.', '..')) && substr($file, -4) == '.yml') {
+                    $info = $this->getSectionInfo($dir, $file);
+                    if (is_array($info) && (is_null($context) || $info['context'] == $context)) {
+                        $configs[$counter++] = $info;
+                    }
+                }
+            }
+        }
+
+        return $configs;
+    }
+
+    /**
+     * Get the information about a pagepart section configuration file.
+     *
+     * @param string $dir
+     * @param string$file
+     * @return array|null
+     */
+    private function getSectionInfo($dir, $file)
+    {
+        $info = null;
+        try {
+            $data = Yaml::parse($dir.$file);
+            $info = array(
+                'name' => $data['name'],
+                'context' => $data['name'],
+                'file' => $file,
+                //'file_clean' => substr($file, 0, strlen($file)-4)
+            );
+        } catch (ParseException $e) {}
+
+        return $info;
     }
 }

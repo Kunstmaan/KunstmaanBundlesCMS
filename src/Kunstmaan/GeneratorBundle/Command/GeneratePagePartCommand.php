@@ -118,38 +118,36 @@ EOT
             'The name of your PagePart: For example: <comment>ContentBoxPagePart</comment>',
             '',
         ));
-         while (true) {
-            $name = $this->assistant->ask('PagePart name');
-            try {
-                // Check reserved words
-                if ($this->getGenerator()->isReservedKeyword($name)){
-                    $this->assistant->writeError(sprintf('"%s" is a reserved word', $name));
-                    continue;
-                }
+        $self = $this;
+        while (true) {
+            $name = $this->assistant->askAndValidate(
+                'PagePart name',
+                function ($name) use ($self) {
+                    // Check reserved words
+                    if ($self->getGenerator()->isReservedKeyword($name)){
+                        throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
+                    }
 
-                // Name should end on PagePart
-                if (!preg_match('/PagePart$/', $name)) {
-                    $this->assistant->writeError('The pagepart name must end with PagePart');
-                    continue;
-                }
+                    // Name should end on PagePart
+                    if (!preg_match('/PagePart$/', $name)) {
+                        throw new \InvalidArgumentException('The pagepart name must end with PagePart');
+                    }
 
-                // Name should contain more characters than PagePart
-                if (strlen($name) <= strlen('PagePart') || !preg_match('/^[a-zA-Z]+$/', $name)) {
-                    $this->assistant->writeError('Invalid pagepart name');
-                    continue;
-                }
+                    // Name should contain more characters than PagePart
+                    if (strlen($name) <= strlen('PagePart') || !preg_match('/^[a-zA-Z]+$/', $name)) {
+                        throw new \InvalidArgumentException('Invalid pagepart name');
+                    }
 
-                // Check that entity does not already exist
-                if (file_exists($this->bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
-                    $this->assistant->writeError(sprintf('PagePart or entity "%s" already exists', $name));
-                    continue;
+                    // Check that entity does not already exist
+                    if (file_exists($self->bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
+                        throw new \InvalidArgumentException(sprintf('PagePart or entity "%s" already exists', $name));
+                    }
+                    return $name;
                 }
+            );
 
-                // If we get here, the name is valid
-                break;
-            } catch (\Exception $e) {
-                $this->assistant->writeError(sprintf('Bundle "%s" does not exist', $this->bundle->getName()));
-            }
+            // If we get here, the name is valid
+            break;
         }
         $this->pagepartName = $name;
 
@@ -161,20 +159,8 @@ EOT
         /**
          * Ask for which page sections we should enable this pagepart
          */
-        $allSections = $this->getAvailableSections($this->bundle);
-        $this->sections = array();
-
-        if (count($allSections) > 0) {
-            $sectionSelect = array();
-            foreach ($allSections as $key => $sectionInfo) {
-                $sectionSelect[$key] = $sectionInfo['name'];
-            }
-            $this->assistant->writeLine('');
-            $sectionIds = $this->assistant->askSelect('In which page section configuration file(s) do you want to add the pagepart (multiple possible, separated by comma)', $sectionSelect, null, true);
-            foreach ($sectionIds as $id) {
-                $this->sections[] = $allSections[$id]['file'];
-            }
-        }
+        $question = 'In which page section configuration file(s) do you want to add the pagepart (multiple possible, separated by comma)';
+        $this->sections = $this->askForSections($question, $this->bundle, true);
     }
 
     /**
@@ -272,32 +258,6 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
         return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant);
-    }
-
-    /**
-     * Get an array with the available page sections.
-     *
-     * @param BundleInterface $bundle
-     * @return array
-     */
-    private function getAvailableSections(BundleInterface $bundle) {
-        $configs = array();
-        $counter = 1;
-
-        $dir = $bundle->getPath().'/Resources/config/pageparts/';
-        if (file_exists($dir) && is_dir($dir)) {
-            $files = scandir($dir);
-            foreach ($files as $file) {
-                if (is_file($dir.$file) && !in_array($file, array('.', '..')) && substr($file, -4) == '.yml') {
-                    $configs[$counter++] = array(
-                        'file' => $file,
-                        'name' => substr($file, 0, strlen($file)-4)
-                    );
-                }
-            }
-        }
-
-        return $configs;
     }
 
     /**
