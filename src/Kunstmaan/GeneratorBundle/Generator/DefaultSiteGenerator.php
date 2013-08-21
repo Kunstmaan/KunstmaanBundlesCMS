@@ -168,6 +168,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/view.html.twig', $dirPath . '/Pages/HomePage/view.html.twig', true);
             GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/HomePage/view.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate.html.twig', $dirPath . '/Pages/HomePage/pagetemplate.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate.html.twig');
+            $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig', $dirPath . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig');
         }
 
         { //SlidePagePart
@@ -330,6 +333,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/formpage.yml');
         $this->filesystem->copy($skeletonDir . '/homepage.yml', $dirPath . '/homepage.yml', true);
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage.yml');
+        $this->filesystem->copy($skeletonDir . '/homepage-singlecolumn.yml', $dirPath . '/homepage-singlecolumn.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage-singlecolumn.yml');
 
         $output->writeln('Generating PageTemplate Configurators : <info>OK</info>');
     }
