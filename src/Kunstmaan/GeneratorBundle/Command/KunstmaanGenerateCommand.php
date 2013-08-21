@@ -36,12 +36,10 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @throws \RuntimeException
-     *
-     * @return int|null|void
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -312,9 +310,10 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      * Get an array of fields that need to be added to the entity.
      *
      * @param BundleInterface $bundle
+     * @param array $reservedFields
      * @return array
      */
-    protected function askEntityFields(BundleInterface $bundle)
+    protected function askEntityFields(BundleInterface $bundle, array $reservedFields = array('id'))
     {
         $this->assistant->writeLine('<info>Available field types:</info> ');
         $typeSelect = $this->getTypes(true);
@@ -331,9 +330,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
             $fieldName = $this->assistant->askAndValidate(
                 'New field name (press <return> to stop adding fields)',
-                function ($name) use ($fields, $self) {
+                function ($name) use ($fields, $self, $reservedFields) {
+                    // The fields cannot exist in the reserved field list
+                    if (in_array($name, $reservedFields)) {
+                        throw new \InvalidArgumentException(sprintf('Field "%s" is already defined in the parent class', $name));
+                    }
+
                     // The fields cannot exist already
-                    if (isset($fields[$name]) || 'id' == $name) {
+                    if (isset($fields[$name])) {
                         throw new \InvalidArgumentException(sprintf('Field "%s" is already defined', $name));
                     }
 
@@ -417,19 +421,19 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $counter = 1;
 
         $types = array();
-        $types[$counter++] = $niceNames ? 'Single line text' : 'single_line';
-        $types[$counter++] = $niceNames ? 'Multi line text' : 'multi_line';
-        $types[$counter++] = $niceNames ? 'Rich text' : 'rich_text';
+        $types[$counter++] = $niceNames ? 'Single line text'             : 'single_line';
+        $types[$counter++] = $niceNames ? 'Multi line text'              : 'multi_line';
+        $types[$counter++] = $niceNames ? 'Rich text'                    : 'rich_text';
         $types[$counter++] = $niceNames ? 'Link (url, text, new window)' : 'link';
         if ($this->isBundleAvailable('KunstmaanMediaPagePartBundle')) {
-            $types[$counter++] = $niceNames ? 'Image (media, alt text)' : 'image';
+            $types[$counter++] = $niceNames ? 'Image (media, alt text)'  : 'image';
         }
-        $types[$counter++] = $niceNames ? 'Single entity reference' : 'single_ref';
-        $types[$counter++] = $niceNames ? 'Multi entity reference' : 'multi_ref';
-        $types[$counter++] = $niceNames ? 'Boolean' : 'boolean';
-        $types[$counter++] = $niceNames ? 'Integer' : 'integer';
-        $types[$counter++] = $niceNames ? 'Decimal number' : 'decimal';
-        $types[$counter++] = $niceNames ? 'DateTime' : 'datetime';
+        $types[$counter++] = $niceNames ? 'Single entity reference'      : 'single_ref';
+        $types[$counter++] = $niceNames ? 'Multi entity reference'       : 'multi_ref';
+        $types[$counter++] = $niceNames ? 'Boolean'                      : 'boolean';
+        $types[$counter++] = $niceNames ? 'Integer'                      : 'integer';
+        $types[$counter++] = $niceNames ? 'Decimal number'               : 'decimal';
+        $types[$counter++] = $niceNames ? 'DateTime'                     : 'datetime';
 
         return $types;
     }

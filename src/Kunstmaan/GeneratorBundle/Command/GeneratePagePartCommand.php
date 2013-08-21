@@ -18,12 +18,12 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
     /**
      * @var string
      */
-    private $pagepartName;
+    private $prefix;
 
     /**
      * @var string
      */
-    private $prefix;
+    private $pagepartName;
 
     /**
      * @var array
