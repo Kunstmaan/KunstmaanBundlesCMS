@@ -190,4 +190,36 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         return str_replace('\\', '/', $namespace);
     }
 
+    /**
+     * Ask for which bundle we need to generate something. It there is only one custome bundle
+     * created by the user, we don't ask anything and just use that bundle.
+     *
+     * @param string $objectName
+     * @return BundleInterface
+     */
+    protected function askForBundleName($objectName)
+    {
+        $ownBundles = $this->getOwnBundles();
+        if (count($ownBundles) <= 0) {
+            $this->assistant->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
+        }
+
+        // If we only have 1 bundle, we don't need to ask
+        if (count($ownBundles) > 1) {
+            $bundleSelect = array();
+            foreach ($ownBundles as $key => $bundleInfo) {
+                $bundleSelect[$key] = $bundleInfo['namespace'].':'.$bundleInfo['name'];
+            }
+            $bundleId = $this->assistant->askSelect('In which bundle do you want to create the '.$objectName, $bundleSelect);
+            $bundleName = $ownBundles[$bundleId]['namespace'].$ownBundles[$bundleId]['name'];
+
+            $this->assistant->writeLine('');
+        } else {
+            $bundleName = $ownBundles[1]['namespace'].$ownBundles[1]['name'];
+            $this->assistant->writeLine(array("The $objectName will be created for the <comment>$bundleName</comment> bundle.\n"));
+        }
+        $bundle = $this->assistant->getKernel()->getBundle($bundleName);
+
+        return $bundle;
+    }
 }

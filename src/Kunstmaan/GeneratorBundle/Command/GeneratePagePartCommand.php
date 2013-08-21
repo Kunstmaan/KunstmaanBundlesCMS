@@ -18,9 +18,9 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 class GeneratePagePartCommand extends KunstmaanGenerateCommand
 {
     /**
-     * @var string
+     * @var BundleInterface
      */
-    private $bundleName;
+    private $bundle;
 
     /**
      * @var string
@@ -54,7 +54,7 @@ The <info>kuma:generate:pagepart</info> command generates a new pagepart and the
 <info>php app/console kuma:generate:pagepart</info>
 EOT
             )
-            ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
+            ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table name of the generated entity')
             ->setName('kuma:generate:pagepart');
     }
 
@@ -73,13 +73,12 @@ EOT
     {
         $this->assistant->writeSection('PagePart generation');
 
-        $bundle = $this->assistant->getKernel()->getBundle($this->bundleName);
         $fields = array();
         foreach ($this->fields as $fieldInfo) {
             $fields[] = $this->getEntityFields($fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']);
         }
 
-        $this->createGenerator()->generate($bundle, $this->pagepartName, $this->prefix, $fields, $this->sections);
+        $this->createGenerator()->generate($this->bundle, $this->pagepartName, $this->prefix, $fields, $this->sections);
 
         $this->assistant->writeSection('PagePart successfully created', 'bg=green;fg=black');
         $this->assistant->writeLine(array(
@@ -104,34 +103,12 @@ EOT
         /**
          * Ask for which bundle we need to create the pagepart
          */
-        $ownBundles = $this->getOwnBundles();
-        if (count($ownBundles) <= 0) {
-            $this->assistant->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
-        }
-
-        // If we only have 1 bundle, we don't need to ask
-        if (count($ownBundles) > 1) {
-            $bundleSelect = array();
-            foreach ($ownBundles as $key => $bundleInfo) {
-                $bundleSelect[$key] = $bundleInfo['namespace'].':'.$bundleInfo['name'];
-            }
-            $bundleId = $this->assistant->askSelect('In which bundle do you want to create the pagepart', $bundleSelect);
-            $this->bundleName = $ownBundles[$bundleId]['namespace'].$ownBundles[$bundleId]['name'];
-
-            $namespace = $ownBundles[$bundleId]['namespace'].'/'.$ownBundles[$bundleId]['name'];
-
-            $this->assistant->writeLine('');
-        } else {
-            $this->bundleName = $ownBundles[1]['namespace'].$ownBundles[1]['name'];
-            $this->assistant->writeLine(array("The pagepart will be created for the <comment>".$this->bundleName."</comment> bundle.\n"));
-
-            $namespace = $ownBundles[1]['namespace'].'/'.$ownBundles[1]['name'];
-        }
+        $this->bundle = $this->askForBundleName('pagepart');
 
         /**
-         * Ask the prefix for the database
+         * Ask the database table prefix
          */
-        $this->prefix = $this->askForPrefix(null, $namespace);
+        $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
 
         /**
          * Ask the name of the pagepart
@@ -163,8 +140,7 @@ EOT
                 }
 
                 // Check that entity does not already exist
-                $bundle = $this->getApplication()->getKernel()->getBundle($this->bundleName);
-                if (file_exists($bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
+                if (file_exists($this->bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
                     $this->assistant->writeError(sprintf('PagePart or entity "%s" already exists', $name));
                     continue;
                 }
@@ -172,7 +148,7 @@ EOT
                 // If we get here, the name is valid
                 break;
             } catch (\Exception $e) {
-                $this->assistant->writeError(sprintf('Bundle "%s" does not exist', $this->bundleName));
+                $this->assistant->writeError(sprintf('Bundle "%s" does not exist', $this->bundle->getName()));
             }
         }
         $this->pagepartName = $name;
@@ -185,8 +161,7 @@ EOT
         /**
          * Ask for which page sections we should enable this pagepart
          */
-        $bundle = $this->assistant->getKernel()->getBundle($this->bundleName);
-        $allSections = $this->getAvailableSections($bundle);
+        $allSections = $this->getAvailableSections($this->bundle);
         $this->sections = array();
 
         if (count($allSections) > 0) {
@@ -263,8 +238,7 @@ EOT
                         }
 
                         // Check that entity does not already exist
-                        $bundle = $this->assistant->getKernel()->getBundle($this->bundleName);
-                        $path = $bundle->getPath().'/Entity/'.str_replace('\\', '/', $name).'.php';
+                        $path = $this->bundle->getPath().'/Entity/'.str_replace('\\', '/', $name).'.php';
                         if (!file_exists($path)) {
                             $this->assistant->writeError(sprintf('Entity "%s" not found on this path "%s"', $name, $path));
                             continue;
@@ -273,7 +247,7 @@ EOT
                         // If we get here, the name is valid
                         break;
                     } catch (\Exception $e) {
-                        $this->assistant->writeError(sprintf('Bundle "%s" does not exist', $this->bundleName));
+                        $this->assistant->writeError(sprintf('Bundle "%s" does not exist', $this->bundle->getName()));
                     }
                 }
                 $extra = $name;
@@ -417,7 +391,7 @@ EOT
                 break;
             case 'single_ref':
                 $em = $this->getContainer()->get('doctrine')->getEntityManager();
-                $entityName = $em->getClassMetadata($this->bundleName.':'.$extra)->name;
+                $entityName = $em->getClassMetadata($this->bundle->getName().':'.$extra)->name;
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' =>  'entity',
@@ -431,9 +405,8 @@ EOT
                 break;
             case 'multi_ref':
                 $em = $this->getContainer()->get('doctrine')->getEntityManager();
-                $entityName = $em->getClassMetadata($this->bundleName.':'.$extra)->name;
-                $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
-                list($project, $tmp) = explode("\\", $bundle->getNameSpace());
+                $entityName = $em->getClassMetadata($this->bundle->getName().':'.$extra)->name;
+                list($project, $tmp) = explode("\\", $this->bundle->getNameSpace());
                 $parts = explode("\\", $entityName);
                 $joinTableName = strtolower($project.'_'.$this->pagepartName.'_'.$parts[count($parts)-1]);
                 $fields[$type][] = array(
