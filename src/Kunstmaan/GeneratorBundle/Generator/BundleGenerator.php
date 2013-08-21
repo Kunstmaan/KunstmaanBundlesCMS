@@ -94,7 +94,6 @@ class BundleGenerator extends Generator
         $parameters = array(
             'namespace'         => $namespace,
             'bundle'            => $bundle,
-            'bundle_lowercase'  => strtolower($bundle),
             'bundle_basename'   => $basename,
             'extension_alias'   => Container::underscore($basename),
         );

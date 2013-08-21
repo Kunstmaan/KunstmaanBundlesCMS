@@ -1,4 +1,4 @@
-{{ bundle_lowercase }}_default:
+{{ bundle|lower }}_default:
     resource: "@{{ bundle }}/Controller/DefaultController.php"
     type:     annotation
     prefix:   /
