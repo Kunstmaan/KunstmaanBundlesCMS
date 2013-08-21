@@ -5,40 +5,15 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\Tools\EntityGenerator;
-use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
  * Generates all classes/files for a new pagepart
  */
-class PagePartGenerator extends Generator
+class PagePartGenerator extends KunstmaanGenerator
 {
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var RegistryInterface
-     */
-    private $registry;
-
-    /**
-     * @var string
-     */
-    private $skeletonDir;
-
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
     /**
      * @var BundleInterface
      */
@@ -63,22 +38,6 @@ class PagePartGenerator extends Generator
      * @var array
      */
     private $sections;
-
-    /**
-     * @param Filesystem        $filesystem  The filesystem
-     * @param RegistryInterface $registry    The registry
-     * @param string            $skeletonDir The directory of the skeleton
-     * @param OutputInterface   $output      The output
-     */
-    public function __construct(Filesystem $filesystem, RegistryInterface $registry, $skeletonDir, OutputInterface $output)
-    {
-        $this->filesystem = $filesystem;
-        $this->registry = $registry;
-        $this->skeletonDir = GeneratorUtils::getFullSkeletonPath($skeletonDir);
-        $this->output = $output;
-
-        $this->setSkeletonDirs(array($this->skeletonDir));
-    }
 
     /**
      * Generate the pagepart.
@@ -139,12 +98,7 @@ class PagePartGenerator extends Generator
                 }
             }
         }
-        if (!is_null($this->prefix)) {
-            $class->setPrimaryTable(array('name' => strtolower($this->prefix.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
-        } else {
-            list($project, $bundle) = explode("\\", $this->bundle->getNameSpace());
-            $class->setPrimaryTable(array('name' => strtolower($project.'_'.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
-        }
+        $class->setPrimaryTable(array('name' => strtolower($this->prefix.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
         $entityCode = $this->getEntityGenerator()->generateEntityClass($class);
 
         // Add some extra functions in the generated entity :s
@@ -162,7 +116,7 @@ class PagePartGenerator extends Generator
         $this->filesystem->mkdir(dirname($entityPath));
         file_put_contents($entityPath, $entityCode);
 
-        $this->output->writeln('Generating entity : <info>OK</info>');
+        $this->assistant->writeLine('Generating entity : <info>OK</info>');
     }
 
     /**
@@ -183,7 +137,7 @@ class PagePartGenerator extends Generator
         );
         $this->renderFile('/Form/PageParts/AdminType.php', $savePath, $params);
 
-        $this->output->writeln('Generating form type : <info>OK</info>');
+        $this->assistant->writeLine('Generating form type : <info>OK</info>');
     }
 
     /**
@@ -199,7 +153,7 @@ class PagePartGenerator extends Generator
         );
         $this->renderFile('/Resources/views/PageParts/view.html.twig', $savePath, $params);
 
-        $this->output->writeln('Generating template : <info>OK</info>');
+        $this->assistant->writeLine('Generating template : <info>OK</info>');
     }
 
     /**
@@ -223,19 +177,8 @@ class PagePartGenerator extends Generator
                 file_put_contents($dir.$section, $ymlData);
             }
 
-            $this->output->writeln('Updating section config : <info>OK</info>');
+            $this->assistant->writeLine('Updating section config : <info>OK</info>');
         }
-    }
-
-    /**
-     * Check that the keyword is a reserved word for the database system.
-     *
-     * @param string $keyword
-     * @return boolean
-     */
-    public function isReservedKeyword($keyword)
-    {
-        return $this->registry->getConnection()->getDatabasePlatform()->getReservedKeywordsList()->isKeyword($keyword);
     }
 
     /**

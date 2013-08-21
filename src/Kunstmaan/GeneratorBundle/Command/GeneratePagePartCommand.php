@@ -3,10 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\PagePartGenerator;
-use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Sensio\Bundle\GeneratorBundle\Generator;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,19 +15,8 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 /**
  * Generates a new pagepart
  */
-class GeneratePagePartCommand extends GenerateDoctrineCommand
+class GeneratePagePartCommand extends KunstmaanGenerateCommand
 {
-
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    /**
-     * @var DialogHelper
-     */
-    private $dialog;
-
     /**
      * @var string
      */
@@ -75,11 +61,19 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function getWelcomeText()
     {
-        $this->dialog->writeSection($output, 'PagePart generation');
+        return 'Welcome to the Kunstmaan pagepart generator';
+    }
 
-        $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
+    /**
+     * {@inheritdoc}
+     */
+    protected function doExecute()
+    {
+        $this->assistant->writeSection('PagePart generation');
+
+        $bundle = $this->assistant->getKernel()->getBundle($this->bundleName);
         $fields = array();
         foreach ($this->fields as $fieldInfo) {
             $fields[] = $this->getEntityFields($fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']);
@@ -87,42 +81,33 @@ EOT
 
         $this->createGenerator()->generate($bundle, $this->pagepartName, $this->prefix, $fields, $this->sections);
 
-        $this->dialog->writeSection($output, 'PagePart successfully created', 'bg=green;fg=black');
-        $this->output->writeln(array(
+        $this->assistant->writeSection('PagePart successfully created', 'bg=green;fg=black');
+        $this->assistant->writeLine(array(
             'Make sure you update your database first before you test the pagepart:',
             '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
-            '')
-        );
+            ''
+        ));
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function doInteract()
     {
-        $this->dialog = $this->getDialogHelper();
-        $this->output = $output;
-        $this->dialog->writeSection($output, 'Welcome to the Kunstmaan pagepart generator');
-
-        /* @var $inputAssistant \Kunstmaan\GeneratorBundle\Helper\InputAssistant */
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $this->dialog, $this->getApplication()->getKernel(), $this->getContainer());
-
         if (!$this->isBundleAvailable('KunstmaanPagePartBundle')) {
-            $this->writeError('KunstmaanPagePartBundle not found', true);
+            $this->assistant->writeError('KunstmaanPagePartBundle not found', true);
         }
 
-        $output->writeln(array("This command helps you to generate a new pagepart.\n"));
+        $this->assistant->writeLine(array("This command helps you to generate a new pagepart.\n"));
 
         /**
          * Ask for which bundle we need to create the pagepart
          */
-        $ownBundles = $inputAssistant->getOwnBundles();
+        $ownBundles = $this->getOwnBundles();
         if (count($ownBundles) <= 0) {
-            $this->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
+            $this->assistant->writeError("Looks like you don't have created a bundle for your project, create one first.", true);
         }
-
-        $namespace = '';
 
         // If we only have 1 bundle, we don't need to ask
         if (count($ownBundles) > 1) {
@@ -130,66 +115,64 @@ EOT
             foreach ($ownBundles as $key => $bundleInfo) {
                 $bundleSelect[$key] = $bundleInfo['namespace'].':'.$bundleInfo['name'];
             }
-            $bundleQuestion = $this->dialog->getQuestion('In which bundle do you want to create the pagepart', null);
-            $bundleId = $this->dialog->select($output, $bundleQuestion, $bundleSelect, null, false, 'Value "%s" is invalid');
+            $bundleId = $this->assistant->askSelect('In which bundle do you want to create the pagepart', $bundleSelect);
             $this->bundleName = $ownBundles[$bundleId]['namespace'].$ownBundles[$bundleId]['name'];
 
-            $namespace = $ownBundles[$bundleId]['namespace'] . '/' . $ownBundles[$bundleId]['name'];
+            $namespace = $ownBundles[$bundleId]['namespace'].'/'.$ownBundles[$bundleId]['name'];
 
-            $this->output->writeln('');
+            $this->assistant->writeLine('');
         } else {
-            $this->bundleName = $ownBundles[1]['namespace'] . $ownBundles[1]['name'];
-            $output->writeln(array("The pagepart will be created for the <comment>".$this->bundleName."</comment> bundle.\n"));
+            $this->bundleName = $ownBundles[1]['namespace'].$ownBundles[1]['name'];
+            $this->assistant->writeLine(array("The pagepart will be created for the <comment>".$this->bundleName."</comment> bundle.\n"));
 
-            $namespace = $ownBundles[1]['namespace'] . '/' . $ownBundles[1]['name'];
+            $namespace = $ownBundles[1]['namespace'].'/'.$ownBundles[1]['name'];
         }
 
         /**
          * Ask the prefix for the database
          */
-        $this->prefix = $inputAssistant->askForPrefix(null, $namespace);
+        $this->prefix = $this->askForPrefix(null, $namespace);
 
         /**
          * Ask the name of the pagepart
          */
-        $output->writeln(array(
+        $this->assistant->writeLine(array(
             '',
             'The name of your PagePart: For example: <comment>ContentBoxPagePart</comment>',
             '',
         ));
-        $nameQuestion = $this->dialog->getQuestion('PagePart name', null);
-        while (true) {
-            $name = $this->dialog->ask($output, $nameQuestion, null);
+         while (true) {
+            $name = $this->assistant->ask('PagePart name');
             try {
                 // Check reserved words
                 if ($this->getGenerator()->isReservedKeyword($name)){
-                    $this->writeError(sprintf('"%s" is a reserved word', $name));
+                    $this->assistant->writeError(sprintf('"%s" is a reserved word', $name));
                     continue;
                 }
 
                 // Name should end on PagePart
                 if (!preg_match('/PagePart$/', $name)) {
-                    $this->writeError('The pagepart name must end with PagePart');
+                    $this->assistant->writeError('The pagepart name must end with PagePart');
                     continue;
                 }
 
                 // Name should contain more characters than PagePart
                 if (strlen($name) <= strlen('PagePart') || !preg_match('/^[a-zA-Z]+$/', $name)) {
-                    $this->writeError('Invalid pagepart name');
+                    $this->assistant->writeError('Invalid pagepart name');
                     continue;
                 }
 
                 // Check that entity does not already exist
                 $bundle = $this->getApplication()->getKernel()->getBundle($this->bundleName);
                 if (file_exists($bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
-                    $this->writeError(sprintf('PagePart or entity "%s" already exists', $name));
+                    $this->assistant->writeError(sprintf('PagePart or entity "%s" already exists', $name));
                     continue;
                 }
 
                 // If we get here, the name is valid
                 break;
             } catch (\Exception $e) {
-                $this->writeError(sprintf('Bundle "%s" does not exist', $this->bundleName));
+                $this->assistant->writeError(sprintf('Bundle "%s" does not exist', $this->bundleName));
             }
         }
         $this->pagepartName = $name;
@@ -202,7 +185,7 @@ EOT
         /**
          * Ask for which page sections we should enable this pagepart
          */
-        $bundle = $this->getContainer()->get('kernel')->getBundle($this->bundleName);
+        $bundle = $this->assistant->getKernel()->getBundle($this->bundleName);
         $allSections = $this->getAvailableSections($bundle);
         $this->sections = array();
 
@@ -211,9 +194,8 @@ EOT
             foreach ($allSections as $key => $sectionInfo) {
                 $sectionSelect[$key] = $sectionInfo['name'];
             }
-            $this->output->writeln('');
-            $sectionQuestion = $this->dialog->getQuestion('In which page sections you want to use this pagepart (multiple possible, separated by comma)', null);
-            $sectionIds = $this->dialog->select($output, $sectionQuestion, $sectionSelect, null, false, 'Value "%s" is invalid', true);
+            $this->assistant->writeLine('');
+            $sectionIds = $this->assistant->askSelect('In which page section configuration file(s) do you want to add the pagepart (multiple possible, separated by comma)', $sectionSelect, null, true);
             foreach ($sectionIds as $id) {
                 $this->sections[] = $allSections[$id]['file'];
             }
@@ -226,27 +208,24 @@ EOT
      */
     private function addFields()
     {
-        $this->output->writeln(array("\nInstead of starting with a blank pagepart, you can add some fields now.\n"));
+        $this->assistant->writeLine(array("\nInstead of starting with a blank pagepart, you can add some fields now.\n"));
 
-        $this->output->writeln('<info>Available field types:</info> ');
+        $this->assistant->writeLine('<info>Available field types:</info> ');
         $typeSelect = $this->getTypes(true);
         foreach ($typeSelect as $type) {
-            $this->output->writeln(sprintf('<comment>- %s</comment>', $type));
+            $this->assistant->writeLine(sprintf('<comment>- %s</comment>', $type));
         }
 
         $fields = array();
         $self = $this;
-        $output = $this->output;
-        $dialog = $this->dialog;
         $typeStrings = $this->getTypes();
 
         while (true) {
-            $this->output->writeln('');
+            $this->assistant->writeLine('');
 
-            $fieldName = $this->dialog->askAndValidate(
-                $this->output,
-                $dialog->getQuestion('New field name (press <return> to stop adding fields)', null),
-                function ($name) use ($fields, $self, $output, $dialog) {
+            $fieldName = $this->assistant->askAndValidate(
+                'New field name (press <return> to stop adding fields)',
+                function ($name) use ($fields, $self) {
                     // The fields cannot exist already
                     if (isset($fields[$name]) || 'id' == $name) {
                         throw new \InvalidArgumentException(sprintf('Field "%s" is already defined', $name));
@@ -271,35 +250,30 @@ EOT
                 break;
             }
 
-            $typeQuestion = $this->dialog->getQuestion('Field type', null);
-            $typeId = $this->dialog->select($this->output, $typeQuestion, $typeSelect, null, false, 'Value "%s" is invalid');
-
+            $typeId = $this->assistant->askSelect('Field type', $typeSelect);
             // If single -or multipe entity reference in chosen, we need to ask for the entity name
             if (in_array($typeStrings[$typeId], array('single_ref', 'multi_ref'))) {
-                $nameQuestion = $this->dialog->getQuestion('Reference entity name (eg. FaqItem, Blog\Comment)', null);
                 while (true) {
-                    $name = $this->dialog->ask($output, $nameQuestion, null);
+                    $name = $this->assistant->ask('Reference entity name (eg. FaqItem, Blog\Comment)');
                     try {
                         // Check reserved words
                         if ($this->getGenerator()->isReservedKeyword($name)){
-                            $this->writeError(sprintf('"%s" is a reserved word', $name));
+                            $this->assistant->writeError(sprintf('"%s" is a reserved word', $name));
                             continue;
                         }
 
                         // Check that entity does not already exist
-                        $bundle = $this->getApplication()->getKernel()->getBundle($this->bundleName);
+                        $bundle = $this->assistant->getKernel()->getBundle($this->bundleName);
                         $path = $bundle->getPath().'/Entity/'.str_replace('\\', '/', $name).'.php';
                         if (!file_exists($path)) {
-                            $this->writeError(sprintf('Entity "%s" not found on this path "%s"', $name, $path));
+                            $this->assistant->writeError(sprintf('Entity "%s" not found on this path "%s"', $name, $path));
                             continue;
                         }
-
-                        // TODO: add extra validation, entity should not be a Page or PagePart
 
                         // If we get here, the name is valid
                         break;
                     } catch (\Exception $e) {
-                        $this->writeError(sprintf('Bundle "%s" does not exist', $this->bundleName));
+                        $this->assistant->writeError(sprintf('Bundle "%s" does not exist', $this->bundleName));
                     }
                 }
                 $extra = $name;
@@ -323,7 +297,7 @@ EOT
     {
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
-        return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->output);
+        return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant);
     }
 
     /**
@@ -515,31 +489,4 @@ EOT
 
         return $fields;
     }
-
-    /**
-     * Helper function to display errors in the console.
-     *
-     * @param $message
-     * @param bool $exit
-     */
-    private function writeError($message, $exit = false)
-    {
-        $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
-        if ($exit) {
-            exit;
-        }
-    }
-
-    /**
-     * Check that a bundle is available
-     *
-     * @param string $bundleName
-     * @return bool
-     */
-    private function isBundleAvailable($bundleName)
-    {
-        $allBundles = array_keys($this->getContainer()->get('kernel')->getBundles());
-        return in_array($bundleName, $allBundles);
-    }
-
 }

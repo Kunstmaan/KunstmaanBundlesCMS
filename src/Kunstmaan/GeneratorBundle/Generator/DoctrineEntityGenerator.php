@@ -67,7 +67,6 @@ class DoctrineEntityGenerator extends Generator
 
         $entityGenerator = $this->getEntityGenerator();
 
-        $entityGenerator->setGenerateAnnotations(true);
         $entityCode = $entityGenerator->generateEntityClass($class);
         $mappingPath = $mappingCode = false;
 
@@ -117,7 +116,7 @@ class DoctrineEntityGenerator extends Generator
     {
         $entityGenerator = new EntityGenerator();
         $entityGenerator->setClassToExtend('Kunstmaan\AdminBundle\Entity\AbstractEntity');
-        $entityGenerator->setGenerateAnnotations(false);
+        $entityGenerator->setGenerateAnnotations(true);
         $entityGenerator->setGenerateStubMethods(true);
         $entityGenerator->setRegenerateEntityIfExists(false);
         $entityGenerator->setUpdateEntityIfExists(true);
