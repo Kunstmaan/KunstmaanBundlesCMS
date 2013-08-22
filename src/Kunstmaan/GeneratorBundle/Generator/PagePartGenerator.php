@@ -71,7 +71,7 @@ class PagePartGenerator extends KunstmaanGenerator
      */
     private function generatePagePartEntity()
     {
-        list($entityCode, $entityPath) = $this->generateEntity($this->bundle, $this->entity, 'PageParts', $this->prefix, 'Kunstmaan\PagePartBundle\Entity\AbstractPagePart');
+        list($entityCode, $entityPath) = $this->generateEntity($this->bundle, $this->entity, $this->fields, 'PageParts', $this->prefix, 'Kunstmaan\PagePartBundle\Entity\AbstractPagePart');
 
         // Add some extra functions in the generated entity :s
         $params = array(
@@ -97,18 +97,7 @@ class PagePartGenerator extends KunstmaanGenerator
      */
     private function generateFormType()
     {
-        $className = $this->entity.'AdminType';
-        $savePath = $this->bundle->getPath().'/Form/PageParts/'.$className.'.php';
-        $name = str_replace("\\", '_', strtolower($this->bundle->getNamespace())).'_'.strtolower($this->entity).'type';
-
-        $params = array(
-            'className' => $className,
-            'name' => $name,
-            'namespace' => $this->bundle->getNamespace(),
-            'entity' => '\\'.$this->bundle->getNamespace().'\Entity\\PageParts\\'.$this->entity,
-            'fields' => $this->fields
-        );
-        $this->renderFile('/Form/PageParts/AdminType.php', $savePath, $params);
+        $this->generateEntityAdminType($this->bundle, $this->entity, 'PageParts', $this->fields);
 
         $this->assistant->writeLine('Generating form type : <info>OK</info>');
     }

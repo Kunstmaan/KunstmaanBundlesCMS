@@ -41,7 +41,7 @@ class KunstmaanGenerator extends Generator
      * @param Filesystem        $filesystem  The filesystem
      * @param RegistryInterface $registry    The registry
      * @param string            $skeletonDir The directory of the skeleton
-     * @param CommandAssistant  $assistant  The command assistant
+     * @param CommandAssistant  $assistant   The command assistant
      */
     public function __construct(Filesystem $filesystem, RegistryInterface $registry, $skeletonDir, CommandAssistant $assistant)
     {
@@ -50,7 +50,7 @@ class KunstmaanGenerator extends Generator
         $this->skeletonDir = GeneratorUtils::getFullSkeletonPath($skeletonDir);
         $this->assistant = $assistant;
 
-        $this->setSkeletonDirs(array($this->skeletonDir));
+        $this->setSkeletonDirs(array($this->skeletonDir, GeneratorUtils::getFullSkeletonPath('/common')));
     }
 
     /**
@@ -69,13 +69,14 @@ class KunstmaanGenerator extends Generator
      *
      * @param BundleInterface $bundle
      * @param string $name
+     * @param array $fields
      * @param string $namePrefix
      * @param string $dbPrefix
      * @param string|null $extendClass
      * @return array
      * @throws \RuntimeException
      */
-    protected function generateEntity(BundleInterface $bundle, $name, $namePrefix, $dbPrefix, $extendClass = null)
+    protected function generateEntity(BundleInterface $bundle, $name, $fields, $namePrefix, $dbPrefix, $extendClass = null)
     {
         // configure the bundle (needed if the bundle does not contain any Entities yet)
         $config = $this->registry->getEntityManager(null)->getConfiguration();
@@ -91,7 +92,7 @@ class KunstmaanGenerator extends Generator
         }
 
         $class = new ClassMetadataInfo($entityClass, new UnderscoreNamingStrategy());
-        foreach ($this->fields as $fieldSet) {
+        foreach ($fields as $fieldSet) {
             foreach ($fieldSet as $fieldArray) {
                 foreach ($fieldArray as $field) {
                     if (array_key_exists('joinColumn', $field)) {
@@ -130,5 +131,76 @@ class KunstmaanGenerator extends Generator
         $entityGenerator->setAnnotationPrefix('ORM\\');
 
         return $entityGenerator;
+    }
+
+    /**
+     * Generate the entity admin type.
+     *
+     * @param $bundle
+     * @param $entityName
+     * @param $entityPrefix
+     * @param array $fields
+     * @param string $extendClass
+     */
+    protected function generateEntityAdminType($bundle, $entityName, $entityPrefix, array $fields, $extendClass = '\Symfony\Component\Form\AbstractType')
+    {
+        $className = $entityName.'AdminType';
+        $savePath = $bundle->getPath().'/Form/'.$entityPrefix.'/'.$className.'.php';
+        $name = str_replace("\\", '_', strtolower($bundle->getNamespace())).'_'.strtolower($entityName).'type';
+
+        $params = array(
+            'className' => $className,
+            'name' => $name,
+            'namespace' => $bundle->getNamespace(),
+            'entity' => '\\'.$bundle->getNamespace().'\Entity\\'.$entityPrefix.'\\'.$entityName,
+            'fields' => $fields,
+            'entity_prefix' => $entityPrefix,
+            'extend_class' => $extendClass
+        );
+        $this->renderFile('/Form/EntityAdminType.php', $savePath, $params);
+    }
+
+    /**
+     * Install the default page templates.
+     *
+     * @param BundleInterface $bundle
+     */
+    protected function installDefaultPageTemplates($bundle)
+    {
+        // Configuration templates
+        $dirPath = sprintf("%s/Resources/config/pagetemplates/", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/config/pagetemplates/", GeneratorUtils::getFullSkeletonPath('/common'));
+
+        $files = array('default-one-column.yml', 'default-two-column-left.yml', 'default-two-column-right.yml', 'default-three-column.yml');
+        foreach ($files as $file) {
+            $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath.$file);
+        }
+
+        // Twig templates
+        $dirPath = sprintf("%s/Resources/views/Pages/Common/", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/views/Pages/Common/", GeneratorUtils::getFullSkeletonPath('/common'));
+
+        $files = array('view.html.twig', 'one-column-pagetemplate.html.twig', 'two-column-left-pagetemplate.html.twig', 'two-column-right-pagetemplate.html.twig', 'three-column-pagetemplate.html.twig');
+        foreach ($files as $file) {
+            $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
+        }
+    }
+
+    /**
+     * Install the default pagepart configuration.
+     *
+     * @param BundleInterface $bundle
+     */
+    protected function installDefaultPagePartConfiguration($bundle)
+    {
+        // Pagepart configuration
+        $dirPath = sprintf("%s/Resources/config/pageparts/", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/config/pageparts/", GeneratorUtils::getFullSkeletonPath('/common'));
+
+        $files = array('footer.yml', 'main.yml', 'left-sidebar.yml', 'right-sidebar.yml');
+        foreach ($files as $file) {
+            $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
+        }
     }
 }
