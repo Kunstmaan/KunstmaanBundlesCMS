@@ -162,7 +162,7 @@ EOT
         $fields = $this->askEntityFields($this->bundle, array('title', 'pageTitle', 'parent', 'id'));
         $this->fields = array();
         foreach ($fields as $fieldInfo) {
-            $this->fields[] = $this->getEntityFields($this->bundle, $this->pageName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']);
+            $this->fields[] = $this->getEntityFields($this->bundle, $this->pageName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
         }
 
         /**
@@ -181,7 +181,7 @@ EOT
         $this->assistant->writeLine(array("\nThe select page template consists of these contexts: ".implode(', ', $templateConfig['contexts'])));
         $this->section = array();
         $defaultSectionConfiguration = $this->getDefaultSectionConfigurations();
-        foreach ($this->template['contexts'] as $context) {
+        foreach ($templateConfig['contexts'] as $context) {
             $question = "Which pagepart configuration would you like to use for the '$context' context";
             $section = $this->askForSections($question, $this->bundle, false, $context, $defaultSectionConfiguration);
             if (is_null($section)) {
@@ -189,8 +189,6 @@ EOT
             }
             $this->sections[] = $section;
         }
-
-        var_dump($this->sections);
     }
 
     /**

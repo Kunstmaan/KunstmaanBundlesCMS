@@ -141,7 +141,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         if (is_null($text)) {
             $text = array(
-                '',
                 'You can add a prefix to the table names of the generated entities for example: '.
                 '<comment>projectname_bundlename_</comment>',
                 'Enter an underscore \'_\' if you don\'t want a prefix.',
@@ -211,7 +210,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         if (count($ownBundles) > 1) {
             $bundleSelect = array();
             foreach ($ownBundles as $key => $bundleInfo) {
-                $bundleSelect[$key] = $bundleInfo['namespace'].':'.$bundleInfo['name'];
+                $bundleSelect[$key] = $bundleInfo['namespace'].$bundleInfo['name'];
             }
             $bundleId = $this->assistant->askSelect('In which bundle do you want to create the '.$objectName, $bundleSelect);
             $bundleName = $ownBundles[$bundleId]['namespace'].$ownBundles[$bundleId]['name'];
@@ -468,10 +467,11 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      * @param $prefix
      * @param $name
      * @param $type
-     * @param null $extra
+     * @param string|null $extra
+     * @param bool $allNullable
      * @return array
      */
-    protected function getEntityFields(BundleInterface $bundle, $objectName, $prefix, $name, $type, $extra = null)
+    protected function getEntityFields(BundleInterface $bundle, $objectName, $prefix, $name, $type, $extra = null, $allNullable = false)
     {
         $fields = array();
         switch ($type) {
@@ -480,7 +480,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'string',
                     'length' => '255',
-                    'formType' => 'text'
+                    'formType' => 'text',
+                    'nullable' => $allNullable
                 );
                 break;
             case 'multi_line':
@@ -488,7 +489,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'text',
-                    'formType' => 'textarea'
+                    'formType' => 'textarea',
+                    'nullable' => $allNullable
                 );
                 break;
             case 'link':
@@ -496,7 +498,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     $fields[$type][$subField] = array(
                         'fieldName' => lcfirst(Container::camelize($name.'_'.$subField)),
                         'type' => 'string',
-                        'formType' => $subField == 'url' ? 'urlchooser' : 'text'
+                        'formType' => $subField == 'url' ? 'urlchooser' : 'text',
+                        'nullable' => $allNullable
                     );
                 }
                 $fields[$type]['new_window'] = array(
@@ -515,7 +518,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'joinColumn' => array(
                         'name' => str_replace('.', '_', Container::underscore($name.'_image_id')),
                         'referencedColumnName' => 'id'
-                    )
+                    ),
+                    'nullable' => $allNullable
                 );
                 $fields[$type]['alt_text'] = array(
                     'fieldName' => lcfirst(Container::camelize($name.'_alt_text')),
@@ -535,7 +539,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'joinColumn' => array(
                         'name' => str_replace('.', '_', Container::underscore($name.'_id')),
                         'referencedColumnName' => 'id'
-                    )
+                    ),
+                    'nullable' => $allNullable
                 );
                 break;
             case 'multi_ref':
@@ -559,21 +564,24 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                             'referencedColumnName' => 'id',
                             'unique' => true
                         ))
-                    )
+                    ),
+                    'nullable' => $allNullable
                 );
                 break;
             case 'boolean':
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'boolean',
-                    'formType' => 'checkbox'
+                    'formType' => 'checkbox',
+                    'nullable' => $allNullable
                 );
                 break;
             case 'integer':
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'integer',
-                    'formType' => 'integer'
+                    'formType' => 'integer',
+                    'nullable' => $allNullable
                 );
                 break;
             case 'decimal':
@@ -582,14 +590,16 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'type' => 'decimal',
                     'precision' => 10,
                     'scale' => 2,
-                    'formType' => 'number'
+                    'formType' => 'number',
+                    'nullable' => $allNullable
                 );
                 break;
             case 'datetime':
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'datetime',
-                    'formType' => 'datetime'
+                    'formType' => 'datetime',
+                    'nullable' => $allNullable
                 );
                 break;
         }
