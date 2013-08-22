@@ -135,7 +135,12 @@ class PageContext extends BehatContext
         $page = $this->getMainContext()->getSession()->getPage();
 
         $publishButton = $page->find('xpath', "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), ' main_actions ')]/descendant-or-self::*/a");
-        $publishButton->click();
+        if (!is_null($publishButton)) {
+            $publishButton->click();
+        } else {
+            $message = sprintf('No publish button was found');
+            throw new ExpectationException($message, $this->getSession());
+        }
 
         $modals = $page->findAll('xpath', "//div[contains(@id, $states[$state])]");
 
