@@ -58,7 +58,7 @@ class PagePartGenerator extends KunstmaanGenerator
         $this->fields = $fields;
         $this->sections = $sections;
 
-        $this->generateEntity();
+        $this->generatePagePartEntity();
         $this->generateFormType();
         $this->generateResourceTemplate();
         $this->generateSectionConfig();
@@ -69,37 +69,9 @@ class PagePartGenerator extends KunstmaanGenerator
      *
      * @throws \RuntimeException
      */
-    private function generateEntity()
+    private function generatePagePartEntity()
     {
-        // configure the bundle (needed if the bundle does not contain any Entities yet)
-        $config = $this->registry->getEntityManager(null)->getConfiguration();
-        $config->setEntityNamespaces(array_merge(
-            array($this->bundle->getName() => $this->bundle->getNamespace().'\\Entity\\PageParts'),
-            $config->getEntityNamespaces()
-        ));
-
-        $entityClass = $this->registry->getEntityNamespace($this->bundle->getName()).'\\PageParts\\'.$this->entity;
-        $entityPath = $this->bundle->getPath().'/Entity/PageParts/'.str_replace('\\', '/', $this->entity).'.php';
-        if (file_exists($entityPath)) {
-            throw new \RuntimeException(sprintf('Entity "%s" already exists.', $entityClass));
-        }
-
-        $class = new ClassMetadataInfo($entityClass, new UnderscoreNamingStrategy());
-        foreach ($this->fields as $fieldSet) {
-            foreach ($fieldSet as $fieldArray) {
-                foreach ($fieldArray as $field) {
-                    if (array_key_exists('joinColumn', $field)) {
-                        $class->mapManyToOne($field);
-                    } elseif (array_key_exists('joinTable', $field)) {
-                        $class->mapManyToMany($field);
-                    } else {
-                        $class->mapField($field);
-                    }
-                }
-            }
-        }
-        $class->setPrimaryTable(array('name' => strtolower($this->prefix.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)))));
-        $entityCode = $this->getEntityGenerator()->generateEntityClass($class);
+        list($entityCode, $entityPath) = $this->generateEntity($this->bundle, $this->entity, 'PageParts', $this->prefix, 'Kunstmaan\PagePartBundle\Entity\AbstractPagePart');
 
         // Add some extra functions in the generated entity :s
         $params = array(
@@ -113,6 +85,7 @@ class PagePartGenerator extends KunstmaanGenerator
         $trimmed = substr($entityCode, 0, $pos);
         $entityCode = $trimmed."\n".$extraCode."\n}";
 
+        // Write class to filesystem
         $this->filesystem->mkdir(dirname($entityPath));
         file_put_contents($entityPath, $entityCode);
 
@@ -180,24 +153,4 @@ class PagePartGenerator extends KunstmaanGenerator
             $this->assistant->writeLine('Updating section config : <info>OK</info>');
         }
     }
-
-    /**
-     * Get a Doctrine EntityGenerator instance.
-     *
-     * @return \Doctrine\ORM\Tools\EntityGenerator
-     */
-    private function getEntityGenerator()
-    {
-        $entityGenerator = new EntityGenerator();
-        $entityGenerator->setClassToExtend('Kunstmaan\PagePartBundle\Entity\AbstractPagePart');
-        $entityGenerator->setGenerateAnnotations(true);
-        $entityGenerator->setGenerateStubMethods(true);
-        $entityGenerator->setRegenerateEntityIfExists(false);
-        $entityGenerator->setUpdateEntityIfExists(true);
-        $entityGenerator->setNumSpaces(4);
-        $entityGenerator->setAnnotationPrefix('ORM\\');
-
-        return $entityGenerator;
-    }
-
 }
