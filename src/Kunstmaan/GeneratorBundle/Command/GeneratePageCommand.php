@@ -71,13 +71,6 @@ EOT
     {
         $this->assistant->writeSection('Page generation');
 
-        $this->bundle = $this->assistant->getKernel()->getBundle('KunstmaanWebsiteBundle');
-        $this->pageName = 'TestPage';
-        $this->prefix = 'my_prefix_';
-        $this->fields = array();
-        $this->template = 'default-three-column.yml';
-        $this->sections = array('main.yml', 'left-sidebar.yml', 'right-sidebar.yml', 'footer.yml');
-
         $this->createGenerator()->generate($this->bundle, $this->pageName, $this->prefix, $this->fields, $this->template, $this->sections);
 
         $this->assistant->writeSection('Page successfully created', 'bg=green;fg=black');
