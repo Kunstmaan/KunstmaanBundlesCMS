@@ -7,7 +7,7 @@
         {% for region in row.regions %}
         <div class="span{{ region.span }}">
             <div class="template-block">
-                <h5>{{ region.name|capitalize }}</h5>
+                <h5>{{ region.name|replace({'_':' '})|title }}</h5>
                 {% set widget = resource.getFormWidget(region.name) %}
                 {% if widget is not null %}
                     {% set pagepartadmin = widget.pagepartadmin %}
@@ -39,7 +39,7 @@
                             {% for region in row.regions %}
                             <div class="span{{ region.span }}" style="margin-top: 10px;">
                                 <div style="background-color: #EEEEEE;border-radius: 3px 3px 3px 3px;line-height: 40px;min-height: 40px;text-align: center;">
-                                    {{ region.name|capitalize }}
+                                    {{ region.name|replace({'_':' '})|title }}
                                 </div><!-- end template-block -->
                             </div>
                             {% endfor %}
