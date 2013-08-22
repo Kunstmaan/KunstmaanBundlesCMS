@@ -1,3 +1,13 @@
+UPGRADE
+=======================
+
+### BC BREAK AbstractAdminListConfigurator
+
+  * The getPathByConvention() method is changed
+
+    The method returns the name of the route in lowercase now. All the names of the routes
+    in the controllers have to be lowercase.
+
 UPGRADE FROM 1.x TO 2.x
 =======================
 
