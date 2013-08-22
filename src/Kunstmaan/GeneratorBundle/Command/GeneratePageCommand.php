@@ -96,7 +96,7 @@ EOT
      * {@inheritdoc}
      */
     protected function doInteract()
-    {return;
+    {
         if (!$this->isBundleAvailable('KunstmaanPagePartBundle')) {
             $this->assistant->writeError('KunstmaanPagePartBundle not found', true);
         }
