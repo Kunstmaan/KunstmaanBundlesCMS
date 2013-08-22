@@ -95,6 +95,19 @@ The 'prefix' parameter is optional and will allow you to add a prefix to all tab
 app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
 ```
 
+## Page
+
+Using this command you can generate a new page class. This command will generate an entity class and a form type class.
+It will also configure the page template and page sections for the created page.
+
+### Command
+
+The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
+
+```
+app/console kuma:generate:page --prefix=tableprefix_
+```
+
 ## PagePart
 
 Using this command you can generate a new page part that can be used in page sections. This command will
