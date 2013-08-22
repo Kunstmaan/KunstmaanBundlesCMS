@@ -228,18 +228,19 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
     /**
      * Ask the end user to select one (or more) section configuration(s).
-     *
      * @param string $question
      * @param BundleInterface $bundle
      * @param bool $multiple
      * @param string|null $context
-     * @return array
+     * @param array $defaultSections
+     * @return array|null
      */
-    protected function askForSections($question, BundleInterface $bundle, $multiple = false, $context = null)
+    protected function askForSections($question, BundleInterface $bundle, $multiple = false, $context = null, $defaultSections = array())
     {
-        $allSections = $this->getAvailableSections($bundle, $context);
+        $allSections = $this->getAvailableSections($bundle, $context, $defaultSections);
         $sections = array();
 
+        // If there are more options to choose from, we ask the end user
         if (count($allSections) > 0) {
             $sectionSelect = array();
             foreach ($allSections as $key => $sectionInfo) {
@@ -247,36 +248,57 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             }
             $this->assistant->writeLine('');
             $sectionIds = $this->assistant->askSelect($question, $sectionSelect, null, $multiple);
-            foreach ($sectionIds as $id) {
-                $sections[] = $allSections[$id]['file'];
+            if (is_array($sectionIds)) {
+                foreach ($sectionIds as $id) {
+                    $sections[] = $allSections[$id]['file'];
+                }
+            } else {
+                $sections[] = $allSections[$sectionIds]['file'];
             }
         }
 
-        return $sections;
+        if ($multiple) {
+            return $sections;
+        } else {
+            return count($sections) > 0 ? $sections[0] : null;
+        }
     }
 
     /**
      * Get an array with the available page sections. We also parse the yaml files to get more information about
      * the sections.
      *
-     * @param BundleInterface $bundle  The bundle for which we want to get the section configuration
-     * @param string|null     $context If provided, only return configurations with this context
+     * @param BundleInterface $bundle          The bundle for which we want to get the section configuration
+     * @param string|null     $context         If provided, only return configurations with this context
+     * @param array           $defaultSections The default section configurations that are always available
      * @return array
      */
-    protected function getAvailableSections(BundleInterface $bundle, $context = null) {
+    protected function getAvailableSections(BundleInterface $bundle, $context = null, $defaultSections = array()) {
         $configs = array();
         $counter = 1;
 
+        // Get the available sections from disc
         $dir = $bundle->getPath().'/Resources/config/pageparts/';
         if (file_exists($dir) && is_dir($dir)) {
             $files = scandir($dir);
             foreach ($files as $file) {
                 if (is_file($dir.$file) && !in_array($file, array('.', '..')) && substr($file, -4) == '.yml') {
                     $info = $this->getSectionInfo($dir, $file);
+
                     if (is_array($info) && (is_null($context) || $info['context'] == $context)) {
                         $configs[$counter++] = $info;
+                        if (array_key_exists($info['file'], $defaultSections)) {
+                            unset($defaultSections[$info['file']]);
+                        }
                     }
                 }
+            }
+        }
+
+        // Add the default sections
+        foreach ($defaultSections as $file => $info) {
+            if (is_null($context) || $info['context'] == $context) {
+                $configs[$counter++] = $info;
             }
         }
 
@@ -297,7 +319,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             $data = Yaml::parse($dir.$file);
             $info = array(
                 'name' => $data['name'],
-                'context' => $data['name'],
+                'context' => $data['context'],
                 'file' => $file,
                 //'file_clean' => substr($file, 0, strlen($file)-4)
             );
