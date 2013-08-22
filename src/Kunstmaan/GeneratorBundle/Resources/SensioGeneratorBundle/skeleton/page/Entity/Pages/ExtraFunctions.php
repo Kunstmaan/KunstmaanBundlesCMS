@@ -48,5 +48,5 @@
      */
     public function getDefaultView()
     {
-        return "{{ bundle }}:Pages:{{ page }}/view.html.twig";
+        return "{{ bundle }}:Pages:Common/view.html.twig";
     }

@@ -181,10 +181,13 @@ class KunstmaanGenerator extends Generator
         $dirPath = sprintf("%s/Resources/views/Pages/Common/", $bundle->getPath());
         $skeletonDir = sprintf("%s/Resources/views/Pages/Common/", GeneratorUtils::getFullSkeletonPath('/common'));
 
-        $files = array('view.html.twig', 'one-column-pagetemplate.html.twig', 'two-column-left-pagetemplate.html.twig', 'two-column-right-pagetemplate.html.twig', 'three-column-pagetemplate.html.twig');
+        $files = array('one-column-pagetemplate.html.twig', 'two-column-left-pagetemplate.html.twig', 'two-column-right-pagetemplate.html.twig', 'three-column-pagetemplate.html.twig');
         foreach ($files as $file) {
             $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
         }
+
+        $this->filesystem->copy($skeletonDir.'view.html.twig', $dirPath.'view.html.twig', false);
+        GeneratorUtils::prepend("{% extends '".$bundle->getName().":Page:layout.html.twig' %}\n", $dirPath.'view.html.twig');
     }
 
     /**
