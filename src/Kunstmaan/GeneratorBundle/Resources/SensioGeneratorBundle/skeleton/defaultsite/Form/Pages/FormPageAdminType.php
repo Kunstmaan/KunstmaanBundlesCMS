@@ -2,7 +2,7 @@
 
 namespace {{ namespace }}\Form\Pages;
 
-use Symfony\Component\Form\AbstractType;
+use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * The admin type for form pages
  *
  */
-class FormPageAdminType extends AbstractType
+class FormPageAdminType extends PageAdminType
 {
     /**
      * Builds the form.
@@ -27,8 +27,8 @@ class FormPageAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title')
-                ->add('thanks', 'textarea', array(
+        parent::buildForm($builder, $options);
+        $builder->add('thanks', 'textarea', array(
                     'required' => false,
                     'attr' => array(
                         'class' => 'rich_editor'
