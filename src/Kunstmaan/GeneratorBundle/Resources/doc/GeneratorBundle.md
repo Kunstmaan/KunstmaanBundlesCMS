@@ -97,7 +97,7 @@ app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Ent
 
 ## Page
 
-Using this command you can generate a new page class. This command will generate an entity class and a form type class.
+Using this command you can generate a new page. This command will generate an entity class and a form type class.
 It will also configure the page template and page sections for the created page.
 
 ### Command
