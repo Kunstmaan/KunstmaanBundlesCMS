@@ -107,37 +107,32 @@ EOT
             '',
         ));
         $self = $this;
-        while (true) {
-            $name = $this->assistant->askAndValidate(
-                'PagePart name',
-                function ($name) use ($self) {
-                    // Check reserved words
-                    if ($self->getGenerator()->isReservedKeyword($name)){
-                        throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
-                    }
-
-                    // Name should end on PagePart
-                    if (!preg_match('/PagePart$/', $name)) {
-                        throw new \InvalidArgumentException('The pagepart name must end with PagePart');
-                    }
-
-                    // Name should contain more characters than PagePart
-                    if (strlen($name) <= strlen('PagePart') || !preg_match('/^[a-zA-Z]+$/', $name)) {
-                        throw new \InvalidArgumentException('Invalid pagepart name');
-                    }
-
-                    // Check that entity does not already exist
-                    if (file_exists($self->bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
-                        throw new \InvalidArgumentException(sprintf('PagePart or entity "%s" already exists', $name));
-                    }
-
-                    return $name;
+        $name = $this->assistant->askAndValidate(
+            'PagePart name',
+            function ($name) use ($self) {
+                // Check reserved words
+                if ($self->getGenerator()->isReservedKeyword($name)){
+                    throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
                 }
-            );
 
-            // If we get here, the name is valid
-            break;
-        }
+                // Name should end on PagePart
+                if (!preg_match('/PagePart$/', $name)) {
+                    throw new \InvalidArgumentException('The pagepart name must end with PagePart');
+                }
+
+                // Name should contain more characters than PagePart
+                if (strlen($name) <= strlen('PagePart') || !preg_match('/^[a-zA-Z]+$/', $name)) {
+                    throw new \InvalidArgumentException('Invalid pagepart name');
+                }
+
+                // Check that entity does not already exist
+                if (file_exists($self->bundle->getPath().'/Entity/PageParts/'.$name.'.php')) {
+                    throw new \InvalidArgumentException(sprintf('PagePart or entity "%s" already exists', $name));
+                }
+
+                return $name;
+            }
+        );
         $this->pagepartName = $name;
 
         /**

@@ -385,40 +385,36 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
             // If single -or multipe entity reference in chosen, we need to ask for the entity name
             if (in_array($typeStrings[$typeId], array('single_ref', 'multi_ref'))) {
-                while (true) {
-                    $bundleName = $bundle->getName();
-                    $question = "Reference entity name (eg. $bundleName:FaqItem, $bundleName:Blog/Comment)";
-                    $name = $this->assistant->askAndValidate(
-                        $question,
-                        function ($name) use ($fields, $self, $bundle) {
-                            $parts = explode(':', $name);
+                $bundleName = $bundle->getName();
+                $question = "Reference entity name (eg. $bundleName:FaqItem, $bundleName:Blog/Comment)";
+                $name = $this->assistant->askAndValidate(
+                    $question,
+                    function ($name) use ($fields, $self, $bundle) {
+                        $parts = explode(':', $name);
 
-                            // Should contain colon
-                            if (count($parts) != 2) {
-                                throw new \InvalidArgumentException(sprintf('"%s" is an invalid entity name', $name));
-                            }
+                        // Should contain colon
+                        if (count($parts) != 2) {
+                            throw new \InvalidArgumentException(sprintf('"%s" is an invalid entity name', $name));
+                        }
 
-                            // Check reserved words
-                            if ($self->getGenerator()->isReservedKeyword($parts[1])){
-                                throw new \InvalidArgumentException(sprintf('"%s" contains a reserved word', $name));
-                            }
+                        // Check reserved words
+                        if ($self->getGenerator()->isReservedKeyword($parts[1])){
+                            throw new \InvalidArgumentException(sprintf('"%s" contains a reserved word', $name));
+                        }
 
-                            $em = $self->getContainer()->get('doctrine')->getEntityManager();
-                            try {
-                                $em->getClassMetadata($name);
-                            } catch (\Exception $e) {
-                                throw new \InvalidArgumentException(sprintf('Entity "%s" not found', $name));
-                            }
+                        $em = $self->getContainer()->get('doctrine')->getEntityManager();
+                        try {
+                            $em->getClassMetadata($name);
+                        } catch (\Exception $e) {
+                            throw new \InvalidArgumentException(sprintf('Entity "%s" not found', $name));
+                        }
 
-                            return $name;
-                        },
-                        null,
-                        array($bundleName)
-                    );
+                        return $name;
+                    },
+                    null,
+                    array($bundleName)
+                );
 
-                    // If we get here, the name is valid
-                    break;
-                }
                 $extra = $name;
             } else {
                 $extra = null;

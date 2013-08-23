@@ -122,37 +122,33 @@ EOT
             '',
         ));
         $self = $this;
-        while (true) {
-            $name = $this->assistant->askAndValidate(
-                'Page name',
-                function ($name) use ($self) {
-                    // Check reserved words
-                    if ($self->getGenerator()->isReservedKeyword($name)){
-                        throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
-                    }
 
-                    // Name should end on Page
-                    if (!preg_match('/Page$/', $name)) {
-                        throw new \InvalidArgumentException('The page name must end with Page');
-                    }
-
-                    // Name should contain more characters than Page
-                    if (strlen($name) <= strlen('Page') || !preg_match('/^[a-zA-Z]+$/', $name)) {
-                        throw new \InvalidArgumentException('Invalid page name');
-                    }
-
-                    // Check that entity does not already exist
-                    if (file_exists($self->bundle->getPath().'/Entity/Pages/'.$name.'.php')) {
-                        throw new \InvalidArgumentException(sprintf('Page or entity "%s" already exists', $name));
-                    }
-
-                    return $name;
+        $name = $this->assistant->askAndValidate(
+            'Page name',
+            function ($name) use ($self) {
+                // Check reserved words
+                if ($self->getGenerator()->isReservedKeyword($name)){
+                    throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
                 }
-            );
 
-            // If we get here, the name is valid
-            break;
-        }
+                // Name should end on Page
+                if (!preg_match('/Page$/', $name)) {
+                    throw new \InvalidArgumentException('The page name must end with Page');
+                }
+
+                // Name should contain more characters than Page
+                if (strlen($name) <= strlen('Page') || !preg_match('/^[a-zA-Z]+$/', $name)) {
+                    throw new \InvalidArgumentException('Invalid page name');
+                }
+
+                // Check that entity does not already exist
+                if (file_exists($self->bundle->getPath().'/Entity/Pages/'.$name.'.php')) {
+                    throw new \InvalidArgumentException(sprintf('Page or entity "%s" already exists', $name));
+                }
+
+                return $name;
+            }
+        );
         $this->pageName = $name;
 
         /**
