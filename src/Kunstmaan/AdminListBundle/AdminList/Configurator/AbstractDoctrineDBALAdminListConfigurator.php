@@ -39,6 +39,11 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     private $countField = 'b.id';
 
     /**
+     * @var bool
+     */
+    private $useDistinctCount = true;
+
+    /**
      * @param Connection $connection
      */
     public function __construct(Connection $connection)
@@ -88,7 +93,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter          = new DoctrineDBALAdapter($this->getQueryBuilder(), $this->getCountField());
+            $adapter          = new DoctrineDBALAdapter($this->getQueryBuilder(), $this->getCountField(), $this->getUseDistinctCount());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setCurrentPage($this->getPage());
             $this->pagerfanta->setMaxPerPage($this->getLimit());
@@ -184,5 +189,30 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getCountField()
     {
         return $this->countField;
+    }
+
+
+    /**
+     * When doing the count you can turn the distinct on or off.
+     *
+     * @param bool $value
+     *
+     * @return AbstractDoctrineDBALAdminListConfigurator
+     */
+    public function setUseDistinctCount($value)
+    {
+        $this->useDistinctCount = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get current doDistinctCount
+     *
+     * @return bool
+     */
+    public function getUseDistinctCount()
+    {
+        return $this->useDistinctCount;
     }
 }
