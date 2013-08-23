@@ -1,0 +1,9 @@
+name: "Three column page"
+rows:
+    - regions:
+        - { name: "left_sidebar", span: 3 }
+        - { name: "main", span: 6 }
+        - { name: "right_sidebar", span: 3 }
+    - regions:
+        - { name: "footer", span: 12 }
+template: "~~~BUNDLE~~~::Pages\\Common\\three-column-pagetemplate.html.twig"

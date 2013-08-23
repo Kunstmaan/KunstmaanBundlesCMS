@@ -1,0 +1,8 @@
+name: "Two column page (right sidebar)"
+rows:
+    - regions:
+        - { name: "main", span: 9 }
+        - { name: "right_sidebar", span: 3 }
+    - regions:
+        - { name: "footer", span: 12 }
+template: "~~~BUNDLE~~~::Pages\\Common\\two-column-right-pagetemplate.html.twig"
