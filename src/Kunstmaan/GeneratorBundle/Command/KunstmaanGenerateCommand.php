@@ -9,6 +9,7 @@ use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -94,20 +95,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $counter = 1;
 
         $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src/';
-        $files = scandir($dir);
-        foreach ($files as $file) {
-            if (is_dir($dir.$file) && !in_array($file, array('.', '..'))) {
-                $bundleFiles = scandir($dir.$file);
-                foreach ($bundleFiles as $bundleFile) {
-                    if (is_dir($dir.$file.'/'.$bundleFile) && !in_array($bundleFile, array('.', '..'))) {
-                        $bundles[$counter++] = array(
-                            'name' => $bundleFile,
-                            'namespace' => $file,
-                            'dir' => $dir.$file.'/'.$bundleFile
-                        );
-                    }
-                }
-            }
+        $finder = new Finder();
+        $finder->directories()->in($dir)->depth('== 1');
+        foreach ($finder as $file) {
+            $bundles[$counter++] = array(
+                'name' => $file->getFileName(),
+                'namespace' => $file->getRelativePath(),
+                'dir' => $file->getPathname()
+            );
         }
 
         return $bundles;
@@ -227,6 +222,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
     /**
      * Ask the end user to select one (or more) section configuration(s).
+     *
      * @param string $question
      * @param BundleInterface $bundle
      * @param bool $multiple
@@ -279,18 +275,18 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         // Get the available sections from disc
         $dir = $bundle->getPath().'/Resources/config/pageparts/';
         if (file_exists($dir) && is_dir($dir)) {
-            $files = scandir($dir);
-            foreach ($files as $file) {
-                if (is_file($dir.$file) && !in_array($file, array('.', '..')) && substr($file, -4) == '.yml') {
-                    $info = $this->getSectionInfo($dir, $file);
+            $finder = new Finder();
+            $finder->files()->in($dir)->depth('== 0');
+            foreach ($finder as $file) {
+                $info = $this->getSectionInfo($dir, $file->getFileName());
 
-                    if (is_array($info) && (is_null($context) || $info['context'] == $context)) {
-                        $configs[$counter++] = $info;
-                        if (array_key_exists($info['file'], $defaultSections)) {
-                            unset($defaultSections[$info['file']]);
-                        }
+                if (is_array($info) && (is_null($context) || $info['context'] == $context)) {
+                    $configs[$counter++] = $info;
+                    if (array_key_exists($info['file'], $defaultSections)) {
+                        unset($defaultSections[$info['file']]);
                     }
                 }
+
             }
         }
 

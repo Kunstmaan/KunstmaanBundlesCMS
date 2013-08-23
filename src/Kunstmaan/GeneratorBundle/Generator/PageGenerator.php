@@ -2,12 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
-use Doctrine\ORM\Tools\EntityGenerator;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Generates all classes/files for a new page

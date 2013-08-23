@@ -161,6 +161,7 @@ EOT
     {
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
+
         return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant);
     }
 }

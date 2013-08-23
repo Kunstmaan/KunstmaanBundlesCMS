@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * DEPRECATED: the functions in this class should be moved to the KunstmaanGenerateCommand class.
+ * @deprecated the functions in this class should be moved to the KunstmaanGenerateCommand class.
  */
 class InputAssistant
 {
