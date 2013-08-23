@@ -27,7 +27,7 @@ class HomePageAdminType extends PageAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title');
+        parent::buildForm($builder, $options);
     }
 
     /**

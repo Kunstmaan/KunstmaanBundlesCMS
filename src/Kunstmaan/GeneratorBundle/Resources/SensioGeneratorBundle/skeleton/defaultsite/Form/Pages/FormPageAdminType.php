@@ -27,8 +27,8 @@ class FormPageAdminType extends PageAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title')
-                ->add('thanks', 'textarea', array(
+        parent::buildForm($builder, $options);
+        $builder->add('thanks', 'textarea', array(
                     'required' => false,
                     'attr' => array(
                         'class' => 'rich_editor'
