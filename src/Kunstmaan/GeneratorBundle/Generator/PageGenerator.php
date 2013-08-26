@@ -40,6 +40,11 @@ class PageGenerator extends KunstmaanGenerator
     private $sections;
 
     /**
+     * @var array
+     */
+    private $parentPages;
+
+    /**
      * Generate the page.
      *
      * @param BundleInterface $bundle         The bundle
@@ -48,10 +53,11 @@ class PageGenerator extends KunstmaanGenerator
      * @param array           $fields         The fields
      * @param string          $template       The page template
      * @param array           $sections       The page sections
+     * @param array           $parentPages    The parent pages
      *
      * @throws \RuntimeException
      */
-    public function generate(BundleInterface $bundle, $entity, $prefix, array $fields, $template, array $sections)
+    public function generate(BundleInterface $bundle, $entity, $prefix, array $fields, $template, array $sections, array $parentPages)
     {
         $this->bundle = $bundle;
         $this->entity = $entity;
@@ -59,10 +65,12 @@ class PageGenerator extends KunstmaanGenerator
         $this->fields = $fields;
         $this->template = $template;
         $this->sections = $sections;
+        $this->parentPages = $parentPages;
 
         $this->generatePageEntity();
         $this->generatePageFormType();
         $this->generatePageTemplateConfiguration();
+        $this->updateParentPages();
     }
 
     /**
@@ -119,5 +127,22 @@ class PageGenerator extends KunstmaanGenerator
         $this->installDefaultPagePartConfiguration($this->bundle);
 
         $this->assistant->writeLine('Generating template configuration : <info>OK</info>');
+    }
+
+    /**
+     * Update the getPossibleChildTypes function of the parent Page classes
+     */
+    private function updateParentPages()
+    {
+        $phpCode  = "            array(\n";
+        $phpCode .= "                'name' => '".$this->entity."',\n";
+        $phpCode .= "                'class'=> '".$this->bundle->getNamespace()."\Entity\Pages\\".$this->entity."'\n";
+        $phpCode .= "            ),";
+
+        foreach ($this->parentPages as $file) {
+            $data = file_get_contents($file);
+            $data = preg_replace('/(function\s*getPossibleChildTypes\s*\(\)\s*\{\s*return\s*array\s*\()/', "$1\n$phpCode", $data);
+            file_put_contents($file, $data);
+        }
     }
 }
