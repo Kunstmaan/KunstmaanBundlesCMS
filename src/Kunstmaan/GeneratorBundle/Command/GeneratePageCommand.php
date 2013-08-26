@@ -4,6 +4,7 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\PageGenerator;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Generates a new page
@@ -41,6 +42,11 @@ class GeneratePageCommand extends KunstmaanGenerateCommand
     private $sections;
 
     /**
+     * @var array
+     */
+    private $parentPages;
+
+    /**
      * @see Command
      */
     protected function configure()
@@ -71,18 +77,20 @@ EOT
     {
         $this->assistant->writeSection('Page generation');
 
-        $this->createGenerator()->generate($this->bundle, $this->pageName, $this->prefix, $this->fields, $this->template, $this->sections);
+        $this->createGenerator()->generate($this->bundle, $this->pageName, $this->prefix, $this->fields, $this->template, $this->sections, $this->parentPages);
 
         $this->assistant->writeSection('Page successfully created', 'bg=green;fg=black');
 
-        $this->assistant->writeLine(array(
-            "To use this page you must first add the definition below to the <comment>getPossibleChildTypes</comment> funtion of the parent page:",
-            "<comment>    array(</comment>",
-            "<comment>        'name' => '".$this->pageName."',</comment>",
-            "<comment>        'class'=> '".$this->bundle->getNamespace()."\Entity\Pages\\".$this->pageName."'</comment>",
-            "<comment>    ),</comment>",
-            ""
-        ));
+        if (count($this->parentPages) == 0) {
+            $this->assistant->writeLine(array(
+                "To use this page you must first add the definition below to the <comment>getPossibleChildTypes</comment> funtion of the parent page:",
+                "<comment>    array(</comment>",
+                "<comment>        'name' => '".$this->pageName."',</comment>",
+                "<comment>        'class'=> '".$this->bundle->getNamespace()."\Entity\Pages\\".$this->pageName."'</comment>",
+                "<comment>    ),</comment>",
+                ""
+            ));
+        }
 
         $this->assistant->writeLine(array(
             'Make sure you update your database first before you use the page:',
@@ -184,6 +192,33 @@ EOT
                 $this->assistant->writeError(sprintf('No section pagepart configuration found for context "%s"', $context), true);
             }
             $this->sections[] = $section;
+        }
+
+        /**
+         * Ask the parent pages
+         */
+        $counter = 1;
+        $pagesSelect = $parentPages = array();
+        $this->parentPages = array();
+        // Get the available pages from disc
+        $dir = $this->bundle->getPath().'/Entity/Pages/';
+        if (file_exists($dir) && is_dir($dir)) {
+            $finder = new Finder();
+            $finder->files()->in($dir)->depth('== 0');
+            foreach ($finder as $file) {
+                $temp = $counter++;
+                $pagesSelect[$temp] = substr($file->getFileName(), 0, strlen($file->getFileName())-4);
+                $parentPages[$temp] = array(
+                    'path' => $file->getPathName()
+                );
+            }
+        }
+        if (count($pagesSelect) > 0) {
+            $this->assistant->writeLine('');
+            $parentPageIds = $this->assistant->askSelect('Which existing page(s) can have the new page as sub-page (multiple possible, separated by comma)', $pagesSelect, null, true);
+            foreach ($parentPageIds as $id) {
+                $this->parentPages[] = $parentPages[$id]['path'];
+            }
         }
     }
 
