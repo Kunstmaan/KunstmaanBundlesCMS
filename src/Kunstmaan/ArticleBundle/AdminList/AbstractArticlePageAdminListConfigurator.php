@@ -154,8 +154,8 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     public function getOverviewPage()
     {
         $repository = $this->getOverviewPageRepository();
-        $pages = $overviewpage = $repository->findAll();
-        if (isset($pages) and count($pages) > 0) {
+        $pages = $repository->findActiveOverviewPages();
+        if (isset($pages) && count($pages) > 0) {
             return $pages[0];
         }
 
