@@ -74,7 +74,7 @@ class ACLPermissionCreatorService
         $securityIdentity = new RoleSecurityIdentity('ROLE_ADMIN');
         $acl->insertObjectAce(
             $securityIdentity,
-            MaskBuilder::MASK_VIEW | MaskBuilder::MASK_EDIT | MaskBuilder::MASK_PUBLISH | MaskBuilder::MASK_UNPUBLISH
+            MaskBuilder::MASK_VIEW | MaskBuilder::MASK_EDIT | MaskBuilder::MASK_DELETE | MaskBuilder::MASK_PUBLISH | MaskBuilder::MASK_UNPUBLISH
         );
 
         $securityIdentity = new RoleSecurityIdentity('ROLE_SUPER_ADMIN');
