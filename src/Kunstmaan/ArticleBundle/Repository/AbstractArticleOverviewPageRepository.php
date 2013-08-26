@@ -15,15 +15,15 @@ abstract class AbstractArticleOverviewPageRepository extends EntityRepository
     public function findActiveOverviewPages()
     {
         $rsm = new ResultSetMappingBuilder($this->_em);
-        $rsm->addRootEntityFromClassMetadata($this->getEntityName(), 'articleoverviewpage');
+        $rsm->addRootEntityFromClassMetadata($this->getEntityName(), 'overviewpage');
         $query = "
             SELECT
-                newsoverviewpage.*
+                overviewpage.*
             FROM ";
         $query .= $this->_em->getClassMetadata($this->getEntityName())->getTableName();
-        $query .= " AS newsoverviewpage
+        $query .= " AS overviewpage
             INNER JOIN
-                kuma_node_versions nv ON nv.ref_id = newsoverviewpage.id
+                kuma_node_versions nv ON nv.ref_id = overviewpage.id
             INNER JOIN
                 kuma_node_translations nt ON nt.public_node_version_id = nv.id AND nt.id = nv.node_translation_id
             INNER JOIN

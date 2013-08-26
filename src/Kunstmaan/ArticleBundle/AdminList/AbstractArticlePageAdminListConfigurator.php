@@ -10,7 +10,6 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminLis
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-use Kunstmaan\ArticleBundle\Repository\AbstractArticleOverviewPageRepository;
 
 /**
  * The AdminList configurator for the AbstractArticlePage
