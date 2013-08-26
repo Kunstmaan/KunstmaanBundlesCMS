@@ -10,6 +10,7 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminLis
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\ArticleBundle\Repository\AbstractArticleOverviewPageRepository;
 
 /**
  * The AdminList configurator for the AbstractArticlePage
@@ -154,8 +155,8 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     public function getOverviewPage()
     {
         $repository = $this->getOverviewPageRepository();
-        $pages = $overviewpage = $repository->findAll();
-        if (isset($pages) and count($pages) > 0) {
+        $pages = $repository->findActiveOverviewPages();
+        if (isset($pages) && count($pages) > 0) {
             return $pages[0];
         }
 
