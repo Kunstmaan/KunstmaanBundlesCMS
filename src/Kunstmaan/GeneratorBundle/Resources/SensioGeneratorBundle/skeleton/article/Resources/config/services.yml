@@ -1,6 +1,5 @@
 
-
-    {{ bundle.getName()|lower }}.menu.adaptor:
+    {{ bundle.getName()|lower }}.{{ entity_class|lower }}.menu.adaptor:
         class: {{ namespace }}\Helper\Menu\{{ entity_class }}MenuAdaptor
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
