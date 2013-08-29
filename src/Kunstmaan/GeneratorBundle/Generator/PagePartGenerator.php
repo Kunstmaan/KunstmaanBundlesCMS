@@ -106,7 +106,7 @@ class PagePartGenerator extends KunstmaanGenerator
         $savePath = $this->bundle->getPath().'/Resources/views/PageParts/'.$this->entity.'/view.html.twig';
 
         $params = array(
-            'pagepart' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $this->entity)),
+            'pagepart' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))) . '-pp',
             'fields' => $this->fields
         );
         $this->renderFile('/Resources/views/PageParts/view.html.twig', $savePath, $params);
