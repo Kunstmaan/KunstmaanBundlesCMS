@@ -27,7 +27,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
     /**
      * The index action
      *
-     * @Route("/", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author")
+     * @Route("/", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
@@ -38,7 +38,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author_add")
+     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
@@ -53,7 +53,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author_edit")
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author_edit")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      *
@@ -69,7 +69,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author_delete")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      *
@@ -85,7 +85,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @param $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author_export")
      * @Method({"GET", "POST"})
      *
      * @return array

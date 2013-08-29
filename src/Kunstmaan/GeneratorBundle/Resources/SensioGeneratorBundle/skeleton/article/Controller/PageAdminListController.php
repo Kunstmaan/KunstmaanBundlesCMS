@@ -27,7 +27,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
     /**
      * The index action
      *
-     * @Route("/", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page")
+     * @Route("/", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
@@ -38,7 +38,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_add")
+     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
@@ -53,7 +53,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_edit")
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_edit")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      *
@@ -69,7 +69,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_delete")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      *
@@ -85,7 +85,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_export")
      * @Method({"GET", "POST"})
      *
      * @return array

@@ -30,7 +30,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             // Page
             $menuitem = new TopMenuItem($menu);
-            $menuitem->setRoute('{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page');
+            $menuitem->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page');
             $menuitem->setInternalName('{{ entity_class }}');
             $menuitem->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
@@ -40,7 +40,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
             $children[] = $menuitem;
             // Author
             $menuitem = new TopMenuItem($menu);
-            $menuitem->setRoute('{{ bundle.getName() }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author');
+            $menuitem->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author');
             $menuitem->setInternalName('{{ entity_class }} Authors');
             $menuitem->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
