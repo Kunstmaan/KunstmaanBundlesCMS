@@ -69,9 +69,9 @@ class DoctrineDBALAdapter implements AdapterInterface
             $distinctString = 'DISTINCT ';
         }
         $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
-          ->setMaxResults(1)
-          ->execute()
-        ;
+            ->orderBy($this->countField)
+            ->setMaxResults(1)
+            ->execute();
 
         return ($results = $statement->fetchColumn(0)) ? $results : 0;
     }
@@ -84,9 +84,8 @@ class DoctrineDBALAdapter implements AdapterInterface
         $query = clone $this->queryBuilder;
 
         $result = $query->setMaxResults($length)
-          ->setFirstResult($offset)
-          ->execute()
-        ;
+            ->setFirstResult($offset)
+            ->execute();
 
         return $result->fetchAll();
     }
