@@ -503,12 +503,12 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 break;
             case 'image':
                 $fields[$type]['image'] = array(
-                    'fieldName' => lcfirst(Container::camelize($name.'_image')),
+                    'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'image',
                     'formType' => 'media',
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
                     'joinColumn' => array(
-                        'name' => str_replace('.', '_', Container::underscore($name.'_image_id')),
+                        'name' => str_replace('.', '_', Container::underscore($name.'_id')),
                         'referencedColumnName' => 'id'
                     ),
                     'nullable' => $allNullable
