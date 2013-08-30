@@ -2,22 +2,25 @@
 
 namespace Kunstmaan\TranslatorBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 class TranslatorController extends AdminListController
 {
 
     /**
-     * @var AdminListConfiguratorInterface
+     * @var AbstractAdminListConfigurator
      */
     private $adminListConfigurator;
 
@@ -29,8 +32,10 @@ class TranslatorController extends AdminListController
     public function indexAction()
     {
         $request = $this->getRequest();
+        $configurator = $this->getAdminListConfigurator();
+
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($this->getAdminListConfigurator());
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator);
         $adminList->bindRequest($request);
 
         $cacheFresh = $this->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
@@ -42,6 +47,7 @@ class TranslatorController extends AdminListController
 
         return array(
             'adminlist' => $adminList,
+            'adminlistconfigurator' => $configurator
         );
     }
 
@@ -59,6 +65,8 @@ class TranslatorController extends AdminListController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        $configurator = $this->getAdminListConfigurator();
+
         $translation = new Translation();
         $translation->setDomain($domain);
         $translation->setKeyword($keyword);
@@ -80,12 +88,14 @@ class TranslatorController extends AdminListController
 
                 $this->get('session')->getFlashBag()->add('success', 'Translation succesful created');
 
-                return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+                $indexUrl = $configurator->getIndexUrl();
+                return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
             }
         }
 
         return array(
             'form' => $form->createView(),
+            'adminlistconfigurator' => $configurator
         );
     }
 
@@ -104,6 +114,7 @@ class TranslatorController extends AdminListController
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        $configurator = $this->getAdminListConfigurator();
 
         $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->find($id);
         $form = $this->createForm(new TranslationAdminType(), $translation);
@@ -118,13 +129,15 @@ class TranslatorController extends AdminListController
 
                 $this->get('session')->getFlashBag()->add('success', 'Translation has been edited!');
 
-                return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+                $indexUrl = $configurator->getIndexUrl();
+                return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
             }
         }
 
         return array(
             'form' => $form->createView(),
-            'translation' => $translation
+            'translation' => $translation,
+            'adminlistconfigurator' => $configurator
         );
     }
 
@@ -134,14 +147,17 @@ class TranslatorController extends AdminListController
      */
     public function editSearchAction($domain, $locale, $keyword)
     {
+        $configurator = $this->getAdminListConfigurator();
         $em = $this->getDoctrine()->getManager();
         $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->findOneBy(array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale));
 
         if ($translation == null) {
-            return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations_add', array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale)));
+            $addUrl = $configurator->getAddUrlFor(array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale));
+            return new RedirectResponse($this->generateUrl($addUrl['path'], $addUrl['params']));
         }
 
-        return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations_edit', array('id' => $translation->getId())));
+        $editUrl = $configurator->getEditUrlFor(array('id' => $translation->getId()));
+        return new RedirectResponse($this->generateUrl($editUrl['path'], $editUrl['params']));
     }
 
     /**
@@ -163,7 +179,7 @@ class TranslatorController extends AdminListController
     }
 
     /**
-     * @return AdminListConfiguratorInterface
+     * @return AbstractAdminListConfigurator
      */
     public function getAdminListConfigurator()
     {
