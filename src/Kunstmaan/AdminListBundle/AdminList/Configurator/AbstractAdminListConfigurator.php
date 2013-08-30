@@ -655,10 +655,10 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $entityName = strtolower($this->getEntityName());
         $entityName = str_replace('\\', '_', $entityName);
         if (empty($suffix)) {
-            return sprintf('%s_admin_%s', $this->getBundleName(), $entityName);
+            return sprintf('%s_admin_%s', strtolower($this->getBundleName()), $entityName);
         }
 
-        return sprintf('%s_admin_%s_%s', $this->getBundleName(), $entityName, $suffix);
+        return sprintf('%s_admin_%s_%s', strtolower($this->getBundleName()), $entityName, $suffix);
     }
 
     /**
