@@ -13,7 +13,8 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}\{{ entity_class }}AuthorRepository")
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_authors")
  */
-class {{ entity_class }}Author extends AbstractAuthor {
+class {{ entity_class }}Author extends AbstractAuthor
+{
 
     /**
      * Returns the default backend form type for this page
