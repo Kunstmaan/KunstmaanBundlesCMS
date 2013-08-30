@@ -7,9 +7,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Component\HttpKernel\Event\FilterResponseEvent,
     Symfony\Component\HttpFoundation\Request;
 
-class DefaultLocaleListener {
+class DefaultLocaleListener
+{
 
     private $defaultLocale;
+
     public function __construct($defaultLocale)
     {
         $this->defaultLocale = $defaultLocale;
@@ -20,7 +22,8 @@ class DefaultLocaleListener {
      *
      * @param FilterResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event) {
+    public function onKernelResponse(FilterResponseEvent $event)
+    {
         $request = $event->getRequest();
         $response = $event->getResponse();
 
@@ -36,6 +39,5 @@ class DefaultLocaleListener {
         $url = $request->getPathInfo();
         return (empty($url) || ($url == '/'));
     }
-
 
 }

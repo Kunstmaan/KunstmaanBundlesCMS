@@ -5,7 +5,8 @@ namespace {{namespace}}\Form\{{ entity_class }};
 use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType {
+class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType
+{
 
     /**
      * Sets the default options for this type.
@@ -22,7 +23,8 @@ class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType {
     /**
      * @return string
      */
-    function getName() {
+    function getName()
+    {
         return "{{ entity_class }}author_form";
     }
 
