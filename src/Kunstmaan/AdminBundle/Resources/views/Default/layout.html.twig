@@ -159,12 +159,10 @@
 
             <!--Content-header-->
             {% block header %}
-            {% if adminmenu.current %}
             <div class="page-header">
-                <h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>
+                {% if adminmenu.current %}<h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>{% endif %}
                 {% block extra_actions_header %}{% endblock %}
             </div>
-            {% endif %}
             {% endblock %}
 
             <!--Content-->
