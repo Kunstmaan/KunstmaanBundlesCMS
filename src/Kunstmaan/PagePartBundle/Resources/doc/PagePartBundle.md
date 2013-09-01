@@ -61,7 +61,7 @@ Below is an example of what you can do with this with all the styles interchange
     $ppCreatorService = new PagePartCreatorService($this->container->get('doctrine.orm.entity_manager'));
 
     $logo = new Logo();
-    $logo.setUrl('http://kunstmaan.be');
+    $logo->setUrl('http://kunstmaan.be');
 
     $pageparts = array(
         'banners' => array(function() {
