@@ -115,9 +115,12 @@ liip_imagine:
                 strip: ~
 ```
 
-So let's add an entry named service_pp_thumbnail to the filter_sets :
+So let's add an entry named service_pp_thumbnail to the filter_sets in app/config/config.yml :
 
 ```yml
+...
+liip_imagine:
+    ...
     filter_sets:
     ...
         service_pp_thumbnail:
@@ -133,16 +136,10 @@ Now, clear the cache.
 And have a look at the front-end (/app_dev.php/en/content-pageparts), the Service page part should now be rendered
 as just defined.
 
-
-4) Styling
-----------
-
-And now for the finishing touch : styling.
-
-TODO : Front-end
+For more information on the Liip Imagine configuration refer to the [Liip Imagine Bundle documentation][2].
 
 
-5) Overriding a page part template
+4) Overriding a page part template
 ----------------------------------
 
 Suppose you want to use one of our default page parts, but change the rendering to your liking. You could of course
@@ -241,3 +238,4 @@ Creating a basic page part is as simple as this :
 
 
 [1]:  http://imagine.readthedocs.org/en/latest/
+[2]:  https://github.com/liip/LiipImagineBundle/blob/master/Resources/doc/index.md
