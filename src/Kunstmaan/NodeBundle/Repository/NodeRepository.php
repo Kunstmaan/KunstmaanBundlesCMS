@@ -145,7 +145,7 @@ class NodeRepository extends NestedTreeRepository
     public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
     {
         $qb = $this->createQueryBuilder('b')
-                   ->select('b, t')
+                   ->select('b')
                    ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
                    ->where('b.deleted = 0');
 
