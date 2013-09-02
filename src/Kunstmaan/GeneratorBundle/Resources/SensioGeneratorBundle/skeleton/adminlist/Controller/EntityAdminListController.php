@@ -36,7 +36,7 @@ class {{ entity_class }}AdminListController extends AdminListController
     /**
      * The index action
      *
-     * @Route("/", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}")
+     * @Route("/", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
@@ -47,7 +47,7 @@ class {{ entity_class }}AdminListController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_add")
+     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
@@ -62,7 +62,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_edit")
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_edit")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      *
@@ -78,7 +78,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_delete")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      *
@@ -90,7 +90,7 @@ class {{ entity_class }}AdminListController extends AdminListController
     }
 
     /**
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName() }}_admin_{{ entity_class|lower }}_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_export")
      * @Method({"GET", "POST"})
      * @return array
      */
