@@ -8,6 +8,7 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -50,6 +51,9 @@ abstract class AdminListController extends Controller
      */
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format)
     {
+        if (!$configurator->canExport()) {
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+        }
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
@@ -81,6 +85,10 @@ abstract class AdminListController extends Controller
      */
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null)
     {
+        if (!$configurator->canAdd()) {
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+        }
+
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
@@ -99,7 +107,7 @@ abstract class AdminListController extends Controller
         $form = $this->createForm($configurator->getAdminType($helper), $helper);
 
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+            $form->submit($request);
             if ($form->isValid()) {
                 $em->persist($helper);
                 $em->flush();
@@ -131,10 +139,15 @@ abstract class AdminListController extends Controller
         if ($helper == null) {
             throw new NotFoundHttpException("Entity not found.");
         }
+
+        if (!$configurator->canEdit($helper)) {
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+        }
+
         $form = $this->createForm($configurator->getAdminType($helper), $helper);
 
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+            $form->submit($request);
             if ($form->isValid()) {
                 $em->persist($helper);
                 $em->flush();
@@ -168,6 +181,10 @@ abstract class AdminListController extends Controller
         if ($helper == null) {
             throw new NotFoundHttpException("Entity not found.");
         }
+        if (!$configurator->canDelete($helper)) {
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+        }
+
         $indexUrl = $configurator->getIndexUrl();
         if ('POST' == $request->getMethod()) {
             $em->remove($helper);

@@ -11,25 +11,27 @@
 {% endblock %}
 
 {% block extra_actions_header %}
-    {% if adminlist.canAdd() %}
+    {% if adminlist.canAdd() or adminlist.canExport() %}
         <div class="extra_actions_header">
             <div class="btn-group pull-right">
-                {% if adminlist.getIndexUrl()['params'] is defined %}
-                    {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
-                {% else %}
-                    {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()) %}
-                {% endif %}
-                {% if adminaddlist|length > 1 %}
-                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{ 'form.add' | trans }}<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
+                {% if adminlist.canAdd() %}
+                    {% if adminlist.getIndexUrl()['params'] is defined %}
+                        {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
+                    {% else %}
+                        {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()) %}
+                    {% endif %}
+                    {% if adminaddlist|length > 1 %}
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{ 'form.add' | trans }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {% for key,add in adminaddlist %}
+                                <li><a href="{{ path(add["path"], add[("params")]) }}" >{{ key }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
                         {% for key,add in adminaddlist %}
-                            <li><a href="{{ path(add["path"], add[("params")]) }}" >{{ key }}</a></li>
+                            <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">{{ 'form.add' | trans }} {{ key }}</a>
                         {% endfor %}
-                    </ul>
-                {% else %}
-                    {% for key,add in adminaddlist %}
-                        <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">{{ 'form.add' | trans }} {{ key }}</a>
-                    {% endfor %}
+                    {% endif %}
                 {% endif %}
                 {% if adminlist.canExport() %}
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -42,20 +44,6 @@
                         <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">CSV</a></li>
                     </ul>
                 {% endif %}
-            </div>
-        </div>
-    {% elseif adminlist.canExport() %}
-        <div class="extra_actions_header">
-            <div class="btn-group pull-right">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="icon-download-alt"></i>
-                    Export to
-                    <i class="icon-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
-                    <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">CSV</a></li>
-                </ul>
             </div>
         </div>
     {% endif %}
