@@ -28,16 +28,22 @@ And a web server...
 
 To install the required dependencies (apart from the database and web server) :
 - On OS X (using [Homebrew][8]):
-    brew install node
-    gem install sass # maybe you need sudo...
-    npm install -g bower
-    npm install -g grunt
+
+```
+brew install node
+gem install sass # maybe you need sudo...
+npm install -g bower
+npm install -g grunt
+```
 
 - On Linux ([Debian][9] / [Ubuntu][10]):
-    sudo apt-get install node
-    gem install sass # maybe you need sudo...
-    npm install -g bower
-    npm install -g grunt
+
+```
+sudo apt-get install node
+gem install sass # maybe you need sudo...
+npm install -g bower
+npm install -g grunt
+```
 
 - On Windows:
     we kindly suggest installing [VirtualBox][11], [VMware][12] or another virtualization platform and running a Linux
