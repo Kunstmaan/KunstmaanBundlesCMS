@@ -15,13 +15,14 @@ class LanguageChooserController extends Controller
      */
     public function indexAction()
     {
-        $enableAutodetect = $this->container->getParameter('autodetectlanguage');
-        $enableSplashpage = $this->container->getParameter('showlanguagechooser');
+        $enableAutodetect = $this->container->getParameter('kunstmaan_language_chooser.autodetectlanguage');
+        $enableSplashpage = $this->container->getParameter('kunstmaan_language_chooser.showlanguagechooser');
 
         $defaultLocale    = $this->container->getParameter('defaultlocale');
 
         if ($enableAutodetect) {
             $localeGuesserManager   = $this->get('lunetics_locale.guesser_manager');
+
             $request                = $this->getRequest();
 
             $locale = $localeGuesserManager->runLocaleGuessing($request);
@@ -43,7 +44,7 @@ class LanguageChooserController extends Controller
         }
 
         if ($enableSplashpage) {
-            $viewPath = $this->container->getParameter('languagechoosertemplate');
+            $viewPath = $this->container->getParameter('kunstmaan_language_chooser.languagechoosertemplate');
 
             return $this->render($viewPath);
         }

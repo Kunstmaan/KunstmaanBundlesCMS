@@ -61,8 +61,8 @@ class LanguageChooserRouter implements RouterInterface
      */
     public function match($pathinfo)
     {
-        $enableAutodetect = $this->container->getParameter('autodetectlanguage');
-        $enableSplashpage = $this->container->getParameter('showlanguagechooser');
+        $enableAutodetect = $this->container->getParameter('kunstmaan_language_chooser.autodetectlanguage');
+        $enableSplashpage = $this->container->getParameter('kunstmaan_language_chooser.showlanguagechooser');
 
         // splashpage AND autodetect are disabled, this request may not be routed
         if (!$enableSplashpage && !$enableAutodetect) {
