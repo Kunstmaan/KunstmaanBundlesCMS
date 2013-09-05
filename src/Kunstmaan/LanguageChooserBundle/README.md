@@ -30,17 +30,12 @@ _languagechooser:
 
 Overwrite the KunstmaanLanguageChooserBundle config to your needs in config.yml:
 
-```PHP
+``` php
 kunstmaan_language_chooser:
     autodetectlanguage: false
     showlanguagechooser: true
     languagechoosertemplate: CompanyYourBundle:Default:language-chooser.html.twig
-```
-
-Add a new parameter which defines the available languages in your parameters.yml:
-
-```yaml
-languagechooserlocales: [en, nl, fr]
+    languagechooserlocales: [en, nl, fr]
 ```
 
 Usage
