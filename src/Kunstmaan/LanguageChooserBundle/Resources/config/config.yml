@@ -1,3 +1,7 @@
+twig:
+    globals:
+      languagechooser_languages: %languagechooserlocales%
+
 lunetics_locale:
     allowed_locales: %languagechooserlocales%
     cookie:
