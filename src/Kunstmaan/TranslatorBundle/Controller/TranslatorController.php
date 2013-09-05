@@ -54,8 +54,6 @@ class TranslatorController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add")
-     * @Route("/add/{domain}/{locale}/{keyword}", name="KunstmaanTranslatorBundle_settings_translations_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
      * @return array
@@ -142,7 +140,6 @@ class TranslatorController extends AdminListController
     }
 
     /**
-     * @Route("/edit/{domain}/{locale}/{keyword}", name="KunstmaanTranslatorBundle_settings_translations_edit_search")
      * @Method({"GET"})
      */
     public function editSearchAction($domain, $locale, $keyword)

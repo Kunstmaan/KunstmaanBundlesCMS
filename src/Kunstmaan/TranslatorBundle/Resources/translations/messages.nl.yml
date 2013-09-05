@@ -1,3 +1,8 @@
 translator:
     translator:
         title: Vertalingen
+
+settings:
+    translation:
+        add: Vertaling toevoegen
+        edit: Vertaling wijzigen

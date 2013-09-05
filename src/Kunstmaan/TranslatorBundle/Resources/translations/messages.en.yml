@@ -1,3 +1,8 @@
 translator:
     translator:
         title: Translations
+
+settings:
+    translation:
+        add: Add translation
+        edit: Edit translation
