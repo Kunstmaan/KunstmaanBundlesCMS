@@ -6,7 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
-
 /**
  * This is the class that loads and manages your bundle configuration
  *
@@ -28,5 +27,14 @@ class KunstmaanLanguageChooserExtension extends Extension
         $container->setParameter('kunstmaan_language_chooser.autodetectlanguage', $config['autodetectlanguage']);
         $container->setParameter('kunstmaan_language_chooser.showlanguagechooser', $config['showlanguagechooser']);
         $container->setParameter('kunstmaan_language_chooser.languagechoosertemplate', $config['languagechoosertemplate']);
+        $container->setParameter('kunstmaan_language_chooser.languagechooserlocales', $config['languagechooserlocales']);
+
+        $luneticsLocaleConfig['allowed_locales'] = $config['languagechooserlocales'];
+        $luneticsLocaleConfig['cookie']['set_on_change'] = true;
+        $luneticsLocaleConfig['cookie']['secure'] = true;
+        $luneticsLocaleConfig['guessing_order'] = array('query', 'cookie', 'session', 'browser', 'router');
+        $container->prependExtensionConfig('lunetics_locale', $luneticsLocaleConfig);
     }
+
+
 }

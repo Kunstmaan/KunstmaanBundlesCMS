@@ -16,9 +16,11 @@ $ composer require kunstmaan/languagechooser-bundle dev-master
 Add the KunstmaanLanguageChooserBundle and the LuneticsLocaleBundle to your AppKernel.php file:
 
 ``` php
-new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
 new Kunstmaan\LanguageChooserBundle\KunstmaanLanguageChooserBundle(),
+new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
 ```
+
+Remark: The KunstmaanLanguageChooserBundle should be loaded __BEFORE__ the LuneticsLocaleBundle
 
 Add the KunstmaanLanguageChooserBundle to your routing.yml:
 
@@ -30,17 +32,12 @@ _languagechooser:
 
 Overwrite the KunstmaanLanguageChooserBundle config to your needs in config.yml:
 
-```PHP
+``` php
 kunstmaan_language_chooser:
     autodetectlanguage: false
     showlanguagechooser: true
     languagechoosertemplate: CompanyYourBundle:Default:language-chooser.html.twig
-```
-
-Add a new parameter which defines the available languages in your parameters.yml:
-
-```yaml
-languagechooserlocales: [en, nl, fr]
+    languagechooserlocales: [en, nl, fr]
 ```
 
 Usage

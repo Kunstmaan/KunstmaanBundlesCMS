@@ -22,6 +22,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('languagechooserlocales')->isRequired()
+                    ->prototype('scalar')->end()
+                ->end()
                 ->scalarNode('autodetectlanguage')->defaultValue(true)->end()
                 ->scalarNode('showlanguagechooser')->defaultValue(true)->end()
                 ->scalarNode('languagechoosertemplate')->defaultValue('KunstmaanLanguageChooserBundle:Default:language-chooser.html.twig')->end()
