@@ -1,4 +1,64 @@
 KunstmaanLanguageChooserBundle
 ==============================
 
-Handles autodetection of language or shows a splash page
+Handles autodetection of the language of the end user or shows a splash page with a language choice.
+
+
+Installation instructions
+-------------------------
+
+Assuming you have installed composer.phar or composer binary:
+
+``` bash
+$ composer require kunstmaan/languagechooser-bundle dev-master
+```
+
+Add the KunstmaanLanguageChooserBundle and the LuneticsLocaleBundle to your AppKernel.php file:
+
+``` php
+new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
+new Kunstmaan\LanguageChooserBundle\KunstmaanLanguageChooserBundle(),
+```
+
+Add the KunstmaanLanguageChooserBundle to your routing.yml:
+
+``` yaml
+# KunstmaanLanguageChooserBundle
+_languagechooser:
+    resource: .
+```
+
+Overwrite the KunstmaanLanguageChooserBundle config to your needs in config.yml:
+
+```PHP
+kunstmaan_language_chooser:
+    autodetectlanguage: false
+    showlanguagechooser: true
+    languagechoosertemplate: CompanyYourBundle:Default:language-chooser.html.twig
+```
+
+Add a new parameter which defines the available languages in your parameters.yml:
+
+```yaml
+languagechooserlocales: [en, nl, fr]
+```
+
+Usage
+-----
+
+When the user arrives on the root page of your website (eg. http://domain.com/) he:
+- is automatically redirect to his language of choice (eg. http://domain.com/en) when the `autodetectlanguage` is set to `true`
+- sees a splash page where he can select his language manually when the `showlanguagechooser` is set to `true`
+
+The template path of the splash page can we set via the `languagechoosertemplate` configuration parameter.
+
+In all your Twig templates, there is a global variable available with an array of the available languages: `languagechooser_languages`.
+This can be usefull on your custom spash page, or when you want to show the language choice on other pages.
+
+```
+<ul>
+    {% for lang in languagechooser_languages %}
+        <li>{{ lang }}</li>
+    {% endfor %}
+</ul>
+```

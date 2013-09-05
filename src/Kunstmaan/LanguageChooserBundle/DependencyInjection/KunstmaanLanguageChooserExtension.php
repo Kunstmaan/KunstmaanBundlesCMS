@@ -24,5 +24,9 @@ class KunstmaanLanguageChooserExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->setParameter('kunstmaan_language_chooser.autodetectlanguage', $config['autodetectlanguage']);
+        $container->setParameter('kunstmaan_language_chooser.showlanguagechooser', $config['showlanguagechooser']);
+        $container->setParameter('kunstmaan_language_chooser.languagechoosertemplate', $config['languagechoosertemplate']);
     }
 }

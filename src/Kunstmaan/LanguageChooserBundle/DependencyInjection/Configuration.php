@@ -20,9 +20,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('kunstmaan_language_chooser');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('autodetectlanguage')->defaultValue(true)->end()
+                ->scalarNode('showlanguagechooser')->defaultValue(true)->end()
+                ->scalarNode('languagechoosertemplate')->defaultValue('KunstmaanLanguageChooserBundle:Default:language-chooser.html.twig')->end()
+            ->end();
 
         return $treeBuilder;
     }
