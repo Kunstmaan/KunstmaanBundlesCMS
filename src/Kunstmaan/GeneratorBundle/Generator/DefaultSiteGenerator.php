@@ -75,7 +75,11 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         );
 
         $this->overrideDefaultController($bundle, $parameters, $output);
-        if ($this->isMultiLangEnvironment()) { $this->generateDefaultLocaleFallbackCode($bundle, $parameters, $output); }
+        if ($this->isMultiLangEnvironment()) {
+            $this->generateDefaultLocaleFallbackCode($bundle, $parameters, $output);
+            $this->addLanguageChooserRouting($rootDir);
+            $this->addLanguageChooserConfig($bundle, $rootDir);
+        }
         $this->generateEntities($bundle, $parameters, $output);
         $this->generateForm($bundle, $parameters, $output);
         $this->generateFixtures($bundle, $parameters, $output);
@@ -89,6 +93,42 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateAdminTests($bundle, $parameters, $output);
         $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
         $this->generateConfig($bundle, $parameters, $rootDir, $output);
+    }
+
+    /**
+     * Update the global routing.yml
+     *
+     * @param string $rootDir
+     */
+    public function addLanguageChooserRouting($rootDir)
+    {
+        $file = $rootDir.'/config/routing.yml';
+        $ymlData = "\n\n# KunstmaanLanguageChooserBundle\n_languagechooser:\n    resource: .\n";
+        file_put_contents($file, $ymlData, FILE_APPEND);
+    }
+
+    /**
+     * Update the global config.yml
+     *
+     * @param Bundle $bundle
+     * @param $rootDir
+     */
+    public function addLanguageChooserConfig(Bundle $bundle, $rootDir)
+    {
+        $params = Yaml::parse($rootDir.'/config/parameters.yml');
+        if (is_array($params) && array_key_exists('parameters', $params) && is_array($params['parameters'] && array_key_exists('requiredlocales', $params['parameters'])) ) {
+            $languages = explode('|', $params['parameters']['requiredlocales']);
+        } else {
+            $languages = array('en', 'nl', 'fr');
+        }
+
+        $file = $rootDir.'/config/config.yml';
+        $ymlData = "\n\nkunstmaan_language_chooser:";
+        $ymlData .= "\n    autodetectlanguage: false";
+        $ymlData .= "\n    showlanguagechooser: true";
+        $ymlData .= "\n    languagechoosertemplate: ".$bundle->getNamespace().":Default:language-chooser.html.twig";
+        $ymlData .= "\n    languagechooserlocales: [".implode(', ', $languages)."]\n";
+        file_put_contents($file, $ymlData, FILE_APPEND);
     }
 
     /**
@@ -176,6 +216,12 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         { //SlidePagePart
             $this->filesystem->copy($skeletonDir . '/PageParts/SlidePagePart/view.html.twig', $dirPath . '/PageParts/SlidePagePart/view.html.twig', true);
+        }
+
+        // LanguageChooser
+        if ($this->isMultiLangEnvironment()) {
+            $this->filesystem->copy($skeletonDir . '/Default/language-chooser.html.twig', $dirPath . '/Default/language-chooser.html.twig', true);
+            GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Default/language-chooser.html.twig');
         }
 
         $this->filesystem->copy($skeletonDir  . '/Layout/layout.html.twig', $dirPath . '/Layout/layout.html.twig', true);

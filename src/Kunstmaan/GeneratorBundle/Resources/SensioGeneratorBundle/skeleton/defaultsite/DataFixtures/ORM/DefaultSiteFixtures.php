@@ -30,7 +30,6 @@ use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
 use Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart;
 use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
 use Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart;
-
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
@@ -41,6 +40,7 @@ use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
 use Kunstmaan\PagePartBundle\Entity\TextPagePart;
 use Kunstmaan\PagePartBundle\Entity\TocPagePart;
 use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
  * DefaultSiteFixtures
@@ -94,6 +94,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             ->findOneBy(array('username' => 'Admin'));
 
         $this->rootDir = $this->container->get('kernel')->getRootDir();
+
+        // Translations
+        $this->createTranslations($manager);
 
         // Media
         $this->createMedia($manager);
@@ -702,6 +705,37 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         return $page;
     }
 
+    /**
+     * @param ObjectManager $manager
+     */
+    public function createTranslations(ObjectManager $manager)
+    {
+        $welcome_en = new Translation;
+        $welcome_en->setKeyword('lang_chooser.welcome');
+        $welcome_en->setLocale('en');
+        $welcome_en->setText('Welcome, continue in English');
+        $welcome_en->setDomain('messages');
+        $welcome_en->setCreatedAt(new \DateTime());
+        $welcome_en->setFlag(Translation::FLAG_NEW);
+
+        $welcome_fr = clone $welcome_en;
+        $welcome_fr->setText('Bienvenu, continuer en Français‎');
+        $welcome_fr->setLocale('fr');
+
+        $welcome_nl = clone $welcome_en;
+        $welcome_nl->setText('Welkom, ga verder in het Nederlands');
+        $welcome_nl->setLocale('nl');
+
+        $welcome_de = clone $welcome_en;
+        $welcome_de->setText('Willkommen, gehe weiter in Deutsch');
+        $welcome_de->setLocale('de');
+
+        $manager->persist($welcome_en);
+        $manager->persist($welcome_fr);
+        $manager->persist($welcome_nl);
+        $manager->persist($welcome_de);
+        $manager->flush();
+    }
 
     /**
      * @param ObjectManager $manager
@@ -710,7 +744,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     {
         // Create dummy image folder and add dummy images
         {
-            $imageFolder = $this->getReference('images-folder-en');
+            $imageFolder = $manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
 
             $folder = new Folder();
             $folder->setName('dummy');
@@ -726,7 +760,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         // Create dummy file folder and add dummy files
         {
-            $filesFolder = $this->getReference('files-folder-en');
+            $filesFolder = $manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
 
             $folder = new Folder();
             $folder->setName('dummy');
@@ -742,12 +776,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         // Create dummy video folder and add dummy videos
         {
-            $filesFolder = $this->getReference('videos-folder-en');
+            $videoFolder = $manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
 
             $folder = new Folder();
             $folder->setName('dummy');
             $folder->setRel('videos');
-            $folder->setParent($filesFolder);
+            $folder->setParent($videoFolder);
             $folder->setInternalName('dummy_videos');
             $manager->persist($folder);
             $manager->flush();
