@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('languagechooserlocales')->isRequired()
+                ->arrayNode('languagechooserlocales')->defaultValue(array('en'))
                     ->prototype('scalar')->end()
                 ->end()
                 ->scalarNode('autodetectlanguage')->defaultValue(true)->end()
