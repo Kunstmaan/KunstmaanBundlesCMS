@@ -1,7 +1,9 @@
 Ok, so you've succesfully installed the Kunstmaan Bundles CMS, and (hopefully) played around a bit. Now it's time to
 start development.
 
-We'll gradually introduce all concepts, starting off with the basics.
+We'll gradually introduce all concepts, starting off with the basics. Throughout the manual we'll set up a small
+site for a virtual company. So if you follow all chapters, you should have a full featured site by the end of
+the manual.
 
 
 1) What is a page part?
