@@ -42,7 +42,8 @@ class TranslatorController extends AdminListController
         $debugMode = $this->container->getParameter('kernel.debug') === true;
 
         if(!$cacheFresh && !$debugMode) {
-            $this->get('session')->getFlashBag()->add('notice', "Translations on the live website aren't up to date, hit 'Refresh live' to update to the latest translations.");
+            $noticeText = $this->get('translator')->trans('settings.translator.not_live_warning');
+            $this->get('session')->getFlashBag()->add('notice', $noticeText);
         }
 
         return array(
@@ -72,8 +73,9 @@ class TranslatorController extends AdminListController
 
         $locales = $this->container->getParameter('kuma_translator.managed_locales');
 
+        $choicesText = $this->get('translator')->trans('settings.translator.succesful_added');
         $form = $this->createForm(new TranslationAdminType(), $translation);
-        $form->add('locale','language', array('choices' => array_combine($locales, $locales), 'empty_value' => 'Choose a language'));
+        $form->add('locale','language', array('choices' => array_combine($locales, $locales), 'empty_value' => $choicesText));
         $form->add('domain','text');
         $form->add('keyword','text');
 
@@ -84,7 +86,7 @@ class TranslatorController extends AdminListController
                 $em->persist($translation);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'Translation succesful created');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('settings.translator.succesful_added'));
 
                 $indexUrl = $configurator->getIndexUrl();
                 return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
@@ -125,7 +127,7 @@ class TranslatorController extends AdminListController
                 $em->persist($translation);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'Translation has been edited!');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('settings.translator.succesful_edited'));
 
                 $indexUrl = $configurator->getIndexUrl();
                 return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
