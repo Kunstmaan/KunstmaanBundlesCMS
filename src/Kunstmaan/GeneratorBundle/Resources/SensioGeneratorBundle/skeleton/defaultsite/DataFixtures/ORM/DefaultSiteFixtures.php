@@ -27,20 +27,11 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
-use Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart;
-use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
-use Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\PagePartBundle\Entity\HeaderPagePart;
-use Kunstmaan\PagePartBundle\Entity\LinePagePart;
-use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
-use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
-use Kunstmaan\PagePartBundle\Entity\TextPagePart;
-use Kunstmaan\PagePartBundle\Entity\TocPagePart;
-use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+
 use {{ namespace }}\Entity\Pages\ContentPage;
 use {{ namespace }}\Entity\Pages\HomePage;
 
@@ -723,30 +714,38 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     public function createTranslations(ObjectManager $manager)
     {
-        $welcome_en = new Translation;
-        $welcome_en->setKeyword('lang_chooser.welcome');
-        $welcome_en->setLocale('en');
-        $welcome_en->setText('Welcome, continue in English');
-        $welcome_en->setDomain('messages');
-        $welcome_en->setCreatedAt(new \DateTime());
-        $welcome_en->setFlag(Translation::FLAG_NEW);
+        // Splashpage
+        $trans['lang_chooser.welcome']['en'] = 'Welcome, continue in English';
+        $trans['lang_chooser.welcome']['fr'] = 'Bienvenu, continuer en Français';
+        $trans['lang_chooser.welcome']['nl'] = 'Welkom, ga verder in het Nederlands';
+        $trans['lang_chooser.welcome']['de'] = 'Willkommen, gehe weiter in Deutsch';
 
-        $welcome_fr = clone $welcome_en;
-        $welcome_fr->setText('Bienvenu, continuer en Français‎');
-        $welcome_fr->setLocale('fr');
+        // AdminList page with satellites
+        $trans['satellite.name']['en'] = 'name';
+        $trans['satellite.launched']['en'] = 'launched';
+        $trans['satellite.weight']['en'] = 'launch mass';
+        $trans['satellite.communication']['en'] = 'Communication satellites';
+        $trans['satellite.climate_research']['en'] = 'Climate research satellites';
+        $trans['satellite.name']['nl'] = 'naam';
+        $trans['satellite.launched']['nl'] = 'lanceringsdatum';
+        $trans['satellite.weight']['nl'] = 'gewicht';
+        $trans['satellite.communication']['nl'] = 'Communicatie satellieten';
+        $trans['satellite.climate_research']['nl'] = 'Klimatologische onderzoekssatellieten';
 
-        $welcome_nl = clone $welcome_en;
-        $welcome_nl->setText('Welkom, ga verder in het Nederlands');
-        $welcome_nl->setLocale('nl');
+        foreach ($trans as $key => $array) {
+            foreach ($array as $lang => $value) {
+                $t = new Translation;
+                $t->setKeyword($key);
+                $t->setLocale($lang);
+                $t->setText($value);
+                $t->setDomain('messages');
+                $t->setCreatedAt(new \DateTime());
+                $t->setFlag(Translation::FLAG_NEW);
 
-        $welcome_de = clone $welcome_en;
-        $welcome_de->setText('Willkommen, gehe weiter in Deutsch');
-        $welcome_de->setLocale('de');
+                $manager->persist($t);
+            }
+        }
 
-        $manager->persist($welcome_en);
-        $manager->persist($welcome_fr);
-        $manager->persist($welcome_nl);
-        $manager->persist($welcome_de);
         $manager->flush();
     }
 

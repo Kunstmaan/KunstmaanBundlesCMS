@@ -4,3 +4,9 @@ services:
         tags:
           - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
         arguments: [%defaultlocale%]
+
+    ~~~APPNAME~~~.admin_menu_adaptor:
+        class: ~~~NAMESPACE~~~\Helper\Menu\AdminMenuAdaptor
+        arguments: ["@security.context"]
+        tags:
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
