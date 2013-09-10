@@ -3,6 +3,9 @@ translator:
         title: Translations
 
 settings:
-    translation:
+    translator:
         add: Add translation
         edit: Edit translation
+        refresh_live: Refresh live
+        import_translations: Import
+        import_translations_forced: Import forced

@@ -3,6 +3,9 @@ translator:
         title: Vertalingen
 
 settings:
-    translation:
+    translator:
         add: Vertaling toevoegen
         edit: Vertaling wijzigen
+        refresh_live: Live herladen
+        import_translations: Importeer
+        import_translations_forced: Importeer geforceerd

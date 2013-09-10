@@ -6,7 +6,7 @@
         <fieldset>
             {{ form_rest(form) }}
             <div class="form-actions">
-                <button class="btn btn-primary" type="submit">{{ 'settings.translation.add' | trans }}</button>
+                <button class="btn btn-primary" type="submit">{{ 'settings.translator.add' | trans }}</button>
                 <button onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>
             </div>
         </fieldset>

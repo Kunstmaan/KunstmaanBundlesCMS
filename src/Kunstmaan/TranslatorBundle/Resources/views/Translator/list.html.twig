@@ -7,16 +7,16 @@
             {% if adminlist.canAdd() %}
                 {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
                 {% for key,add in adminaddlist %}
-                    <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">Add translation</a>
+                    <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">{{ 'settings.translator.add' | trans }}</a>
                 {% endfor %}
             {%  endif %}
 
-            <a class="btn btn btn-medium" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">Refresh live</a>
+            <a class="btn btn btn-medium" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">{{ 'settings.translator.refresh_live' | trans }}</a>
 
-            <a class="btn btn dropdown-toggle" data-toggle="dropdown" href="#">Import <span class="caret"></span></a>
+            <a class="btn btn dropdown-toggle" data-toggle="dropdown" href="#">{{ 'settings.translator.import_translations' | trans }}<span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a href="{{ path('KunstmaanTranslatorBundle_command_import') }}" >Import</a></li>
-                <li><a href="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" >Import forced</a></li>
+                <li><a href="{{ path('KunstmaanTranslatorBundle_command_import') }}" >{{ 'settings.translator.import_translations' | trans }}</a></li>
+                <li><a href="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" >{{ 'settings.translator.import_translations_forced' | trans }}</a></li>
             </ul>
         </div>
     </div>
