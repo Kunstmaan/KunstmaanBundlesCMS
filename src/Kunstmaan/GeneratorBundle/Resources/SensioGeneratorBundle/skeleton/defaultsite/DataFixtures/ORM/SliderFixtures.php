@@ -68,6 +68,23 @@ class SliderFixtures extends AbstractFixture implements OrderedFixtureInterface,
         }
 
         $ppCreatorService->addPagePartsToPage($homePage, $pageparts, 'en');
+
+        $pageparts = array('slider' => array());
+        foreach ($mediaImages as $key => $media) {
+            $pageparts['slider'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('{{ namespace }}\Entity\PageParts\SlidePagePart',
+                array(
+                    'setTitle'           => 'Titel '.($key+1),
+                    'setDescription'     => Lorem::paragraph(2),
+                    'setTickText'        => 'thick tekst '.($key+1),
+                    'setButtonText'      => 'Klik hier!',
+                    'setButtonUrl'       => 'http://www.kunstmaan.be',
+                    'setButtonNewWindow' => true,
+                    'setImage'           => $media
+                )
+            );
+        }
+
+        $ppCreatorService->addPagePartsToPage($homePage, $pageparts, 'nl');
     }
 
     /**

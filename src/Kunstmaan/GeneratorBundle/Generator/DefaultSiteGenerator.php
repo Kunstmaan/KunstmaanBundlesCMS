@@ -116,7 +116,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     public function addLanguageChooserConfig(Bundle $bundle, $rootDir)
     {
         $params = Yaml::parse($rootDir.'/config/parameters.yml');
-        if (is_array($params) && array_key_exists('parameters', $params) && is_array($params['parameters'] && array_key_exists('requiredlocales', $params['parameters'])) ) {
+
+        if (is_array($params) || array_key_exists('parameters', $params) && is_array($params['parameters']) && array_key_exists('requiredlocales', $params['parameters']))  {
             $languages = explode('|', $params['parameters']['requiredlocales']);
         } else {
             $languages = array('en', 'nl', 'fr');
@@ -126,7 +127,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $ymlData = "\n\nkunstmaan_language_chooser:";
         $ymlData .= "\n    autodetectlanguage: false";
         $ymlData .= "\n    showlanguagechooser: true";
-        $ymlData .= "\n    languagechoosertemplate: ".$bundle->getNamespace().":Default:language-chooser.html.twig";
+        $ymlData .= "\n    languagechoosertemplate: ".$bundle->getName().":Default:language-chooser.html.twig";
         $ymlData .= "\n    languagechooserlocales: [".implode(', ', $languages)."]\n";
         file_put_contents($file, $ymlData, FILE_APPEND);
     }
@@ -209,8 +210,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/HomePage/view.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate.html.twig', $dirPath . '/Pages/HomePage/pagetemplate.html.twig', true);
             GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate.html.twig');
-            $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig', $dirPath . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig', true);
-            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate-singlecolumn.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/slider.html.twig', $dirPath . '/Pages/HomePage/slider.html.twig', true);
         }
 
@@ -351,6 +350,9 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->filesystem->copy($skeletonDir . '/pageparts/home.yml', $dirPath . '/pageparts/home.yml', true);
         $this->filesystem->copy($skeletonDir . '/pageparts/main.yml', $dirPath . '/pageparts/main.yml', true);
         $this->filesystem->copy($skeletonDir . '/pageparts/footer.yml', $dirPath . '/pageparts/footer.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/middle-column.yml', $dirPath . '/pageparts/middle-column.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/left-column.yml', $dirPath . '/pageparts/left-column.yml', true);
+        $this->filesystem->copy($skeletonDir . '/pageparts/right-column.yml', $dirPath . '/pageparts/right-column.yml', true);
         $this->filesystem->copy($skeletonDir . '/pageparts/slider.yml', $dirPath . '/pageparts/slider.yml', true);
         GeneratorUtils::replace("~~~NAMESPACE~~~", $parameters['namespace'], $dirPath . '/pageparts/slider.yml');
 
@@ -380,8 +382,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/formpage.yml');
         $this->filesystem->copy($skeletonDir . '/homepage.yml', $dirPath . '/homepage.yml', true);
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage.yml');
-        $this->filesystem->copy($skeletonDir . '/homepage-singlecolumn.yml', $dirPath . '/homepage-singlecolumn.yml', true);
-        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage-singlecolumn.yml');
 
         $output->writeln('Generating PageTemplate Configurators : <info>OK</info>');
     }

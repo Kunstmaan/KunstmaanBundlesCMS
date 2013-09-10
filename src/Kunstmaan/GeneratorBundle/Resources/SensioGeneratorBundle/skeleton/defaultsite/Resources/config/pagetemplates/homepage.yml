@@ -1,10 +1,9 @@
 name: "Home page"
 rows:
-    - regions: 
-        - { name: "main", span: 9 }
-        - { name: "banners", span: 3 }
     - regions:
-        - { name: "slider", span: 9 }
-    - regions: 
-        - { name: "footer", span: 12 }
+        - { name: "slider", span: 12 }
+    - regions:
+        - { name: "left_column", span: 4 }
+        - { name: "middle_column", span: 4 }
+        - { name: "right_column", span: 4 }
 template: "~~~BUNDLE~~~::Pages\\HomePage\\pagetemplate.html.twig"

@@ -41,6 +41,7 @@ use Kunstmaan\PagePartBundle\Entity\TextPagePart;
 use Kunstmaan\PagePartBundle\Entity\TocPagePart;
 use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+use {{ namespace }}\Entity\Pages\HomePage;
 
 /**
  * DefaultSiteFixtures
@@ -100,8 +101,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         // Media
         $this->createMedia($manager);
+
         // Homepage
-        $homePage = $this->createHomePage($manager, "Home");
+        $homePage = $this->createHomePage($manager);
+
         // PageParts
         $this->createPagePartPage($manager, "Content PageParts", $homePage);
         // From PageParts
@@ -191,30 +194,113 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * Create a Homepage
      *
      * @param ObjectManager $manager The object manager
-     * @param string        $title   The title
-     *
      * @return HomePage
      */
-    private function createHomePage(ObjectManager $manager, $title)
+    private function createHomePage(ObjectManager $manager)
     {
-        $homepage = $this->createAndPersistPage($manager, '{{ namespace }}\Entity\Pages\HomePage', $title, null, "", "homepage");
-        {
-            $headerpagepart = new HeaderPagePart();
-            $headerpagepart->setNiv(1);
-            $headerpagepart->setTitle("Welcome to your new website");
-            $manager->persist($headerpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($homepage, $headerpagepart, 1);
-        }
-        {
-            $textpagepart = new TextPagePart();
-            $textpagepart->setContent("<p><strong>Success! It Works!</strong></p><p>This is a barebone frontend template, this can be, but most likely is not, the starting point of your website. This frontend template is built using Twitter bootstrap.</p>");
-            $manager->persist($textpagepart);
-            $manager->flush();
-            $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($homepage, $textpagepart, 2);
-        }
+        $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
+        $pageCreator->setContainer($this->container);
 
-        return $homepage;
+        $homePage = new HomePage();
+        $homePage->setTitle('Home');
+
+        $translations = array();
+        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Home');
+            $translation->setSlug('');
+        });
+        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Home');
+            $translation->setSlug('');
+        });
+
+        $options = array(
+            'parent' => null,
+            'page_internal_name' => 'homepage',
+            'set_online' => true,
+            'hidden_from_nav' => true,
+            'creator' => 'Admin'
+        );
+
+        $pageCreator->createPage($homePage, $translations, $options);
+
+        $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
+
+        $pageparts = array();
+        $pageparts['left_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+            array(
+                'setTitle' => 'First column heading',
+                'setNiv'   => 1
+            )
+        );
+        $pageparts['left_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+            array(
+                'setContent' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+            )
+        );
+        $pageparts['middle_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+            array(
+                'setTitle' => 'Second column heading',
+                'setNiv'   => 1
+            )
+        );
+        $pageparts['middle_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+            array(
+                'setContent' => 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable.'
+            )
+        );
+        $pageparts['right_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+            array(
+                'setTitle' => 'Third column heading',
+                'setNiv'   => 1
+            )
+        );
+        $pageparts['right_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+            array(
+                'setContent' => 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.'
+            )
+        );
+
+        $ppCreatorService->addPagePartsToPage('homepage', $pageparts, 'en');
+
+        $pageparts = array();
+        $pageparts['left_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+            array(
+                'setTitle' => 'Eerste title',
+                'setNiv'   => 1
+            )
+        );
+        $pageparts['left_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+            array(
+                'setContent' => 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken.'
+            )
+        );
+        $pageparts['middle_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+            array(
+                'setTitle' => 'Tweede title',
+                'setNiv'   => 1
+            )
+        );
+        $pageparts['middle_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+            array(
+                'setContent' => 'Er zijn vele variaties van passages van Lorem Ipsum beschikbaar maar het merendeel heeft te lijden gehad van wijzigingen in een of andere vorm, door ingevoegde humor of willekeurig gekozen woorden die nog niet half geloofwaardig ogen.'
+            )
+        );
+        $pageparts['right_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+            array(
+                'setTitle' => 'Derde titel',
+                'setNiv'   => 1
+            )
+        );
+        $pageparts['right_column'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+            array(
+                'setContent' => 'Het standaard stuk van Lorum Ipsum wat sinds de 16e eeuw wordt gebruikt is hieronder, voor wie er interesse in heeft, weergegeven. Secties 1.10.32 en 1.10.33 van "de Finibus Bonorum et Malorum" door Cicero zijn ook weergegeven in hun exacte originele vorm, vergezeld van engelse versies van de 1914 vertaling door H. Rackham.'
+            )
+        );
+
+        $ppCreatorService->addPagePartsToPage('homepage', $pageparts, 'nl');
+
+        return $homePage;
     }
 
     /**
