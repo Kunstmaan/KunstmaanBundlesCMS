@@ -1,7 +1,8 @@
 /* ==========================================================================
-   Bootstrap grid adjustments
+   Bootstrap Components
+
+   Never add styles directly to this file - set up imports
+   Style guide: https://github.com/necolas/idiomatic-css
    ========================================================================== */
 
-.row-fluid, .row{
-    padding: 1em 0;
-}
+@import "grid";
