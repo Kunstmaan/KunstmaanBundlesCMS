@@ -3,6 +3,13 @@ translator:
         title: Translations
 
 settings:
-    translation:
+    translator:
         add: Add translation
         edit: Edit translation
+        refresh_live: Refresh live
+        import_translations: Import
+        import_translations_forced: Import forced
+        not_live_warning: "Translations on the live website aren't up to date, hit 'Refresh live' to update to the latest translations."
+        choose_language: "Choose a language"
+        succesful_added: "Translation succesful created"
+        succesful_edited: "Translation succesful edited"
