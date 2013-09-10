@@ -19,6 +19,9 @@ class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigur
 
     protected $query;
 
+    const MAX_TEXT_CHARS = 50;
+    const SHOW_TEXT_CHARS = 20;
+
     /**
      * Configure filters
      */
@@ -39,10 +42,6 @@ class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigur
         $this->addField('keyword', 'Keyword', true);
         $this->addField('locale', 'Locale', true);
         $this->addField('text', 'Text', true);
-        // $this->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
-        //     ->addField('created', 'Created At', false)
-        //     ->addField('updated', 'Updated At', false)
-        //     ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
     public function canAdd()
@@ -63,5 +62,19 @@ class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigur
     public function getControllerPath()
     {
         return 'KunstmaanTranslatorBundle:Index';
+    }
+
+    public function getValue($object, $attribute)
+    {
+        $value = $object->{'get' . $attribute}();
+
+        if ($object instanceof \Kunstmaan\TranslatorBundle\Entity\Translation && "text" == strtolower($attribute) ) {
+            if (mb_strlen($object->getText()) >= self::MAX_TEXT_CHARS) {
+                return substr($value, 0, self::SHOW_TEXT_CHARS). " ... " . substr( $value, -1 * self::SHOW_TEXT_CHARS);
+            }
+        }
+
+        return $value;
+
     }
 }

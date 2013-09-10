@@ -11,9 +11,9 @@
                 {% endfor %}
             {%  endif %}
 
-            <a class="btn btn-primary btn-medium" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">Refresh live</a>
+            <a class="btn btn btn-medium" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">Refresh live</a>
 
-            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Import <span class="caret"></span></a>
+            <a class="btn btn dropdown-toggle" data-toggle="dropdown" href="#">Import <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="{{ path('KunstmaanTranslatorBundle_command_import') }}" >Import</a></li>
                 <li><a href="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" >Import forced</a></li>
