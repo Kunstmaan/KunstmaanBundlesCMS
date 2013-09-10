@@ -5,23 +5,7 @@
    Style guide: https://github.com/necolas/idiomatic-css
    ========================================================================== */
 
-@import "colors";
-@import "typography";
-@import "base";
-@import "tables";
-@import "buttons";
-@import "forms";
-@import "dropdowns";
-@import "z-index";
 @import "paths";
-@import "navigation";
-@import "pagination";
-@import "hero-unit";
-@import "tooltips-popover";
-@import "grid";
-@import "iconfont";
 
-/* Cupcake config
-   ========================================================================== */
-@import "cupcake-config/iconfont";
-@import "cupcake-config/navigation";
+@import "boostrap-config";
+@import "cupcake-config";

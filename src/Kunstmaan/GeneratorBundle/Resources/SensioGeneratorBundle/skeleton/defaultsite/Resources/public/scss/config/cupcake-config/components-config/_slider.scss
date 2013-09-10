@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Slider
+
+   Never add styles directly to this file - set up variables
+   Style guide: https://github.com/necolas/idiomatic-css
+   ========================================================================== */
+
+/* Viewport max-height
+   ========================================================================== */
+$viewportHeight:                100%;
+
+/* Slide controls
+   ========================================================================== */
+$slideBackgroundColor:          lighten(tomato, 5%);
+$slidePosition:                 relative;
+
+/* Aside nav controls */
+$asideThumbWidth:               20%;
+$asideSlideWidth:               (100% - $asideThumbWidth);
+$asideLeftMarginLeft:           $asideThumbWidth;
+
+/* Caption Controls */
+//Setup for caption aside of slides: change floats, imageWidth and captionPosition for other lay-out options
+$captionFloat:                  left;
+$captionWidth:                  20%;
+$captionHeight:                 100%;
+$captionPadding:                1.5%;
+$captionPosition:               static;
+$captionPositionTop:            auto;
+$captionPositionRight:          auto;
+$captionPositionBottom:         auto;
+$captionPositionLeft:           auto;
+
+$captionBackground:             none;
+
+//Button
+$buttonBackground:              #FFF;
+$buttonStateBackground:         #F5F5F5;
+$buttonColor:                   tomato;
+$buttonBorder:                  none;
+$buttonBorderRadius:            5px;
+$buttonPadding:                 0 .6em;
+
+//Fallbacks
+$captionPaddingFallback:        $captionPadding;
+$captionWidthFallback:          $captionWidth - ($captionPaddingFallback * 2) - 0.3%;
+
+/* Image Controls */
+$imageWidth:                    (100% - $captionWidth); //defines the width of the images ackording to the width of the caption defined above. (When using the caption aside of the slides and not on top of them)
+$imageFloat:                    left;
+
+/* Direction Controls */
+$directionDisplay:              block; //overwrite manually, in the component scss file, when using multiple sliders, with multiple lay-outs on one page (the left and right thumbnail sliders don't use the direction nav by default)
+$directionColor:                tomato;
+$directionHoverColor:           lighten($directionColor, 10%);
+
+$directionImage:                url(../img/buttons/slider_nav.svg);
+$directionImageFallback:        url(../img/buttons/slider_nav.png);
+$directionImageRepeat:          no-repeat;
+$directionImageWidth:           50px;
+$directionImageHeight:          50px;
+$directionImageMargin:          -25px 0 0 0;
+
+$directionPostion:              absolute;
+$directionPostionTop:           50%;
+$directionPostionRight:         auto;
+$directionPostionBottom:        auto;
+$directionPostionLeft:          auto;
+
+$nextPositionTop:               $directionPostionTop;
+$nextPositionRight:             -50px;
+$nextPositionBottom:            auto;
+$nextPositionLeft:              auto;
+$nextBackgroundPosition:        100% 0;
+
+$prevPositionTop:               $directionPostionTop;
+$prevPositionRight:             auto;
+$prevPositionBottom:            auto;
+$prevPositionLeft:              -50px;
+$prevBackgroundPosition:        0 0;
+
+/* Navbar controls
+   ========================================================================== */
+$idleItemBackground:             #555;
+$idleItemText:                   #EBEBEB;
+$hoverItemBackground:            #EBEBEB;
+$hoverItemText:                  #555;
+$activeItemBackground:           tomato;
+$activeItemText:                 #fff;
+
+$itemAmount:                     3;
+$itemSize:                       100%/$itemAmount; //only change the amount of items, item width is calculated automatically
+$itemPadding:                    3%;
+
+$idleItemDevider:                1px solid #ddd;
+$activeItemDevider:              1px solid #555;
+
+//Fallbacks
+$itemPaddingFallback:           $itemPadding;
+$itemSizeFallback:              $itemSize - ($itemPaddingFallback * 2);
+
+//IE 7 doesn't calculate the padding of elements which are stacked vertically logically.
+//(Normaly padding is added on top and bottom of the element, hence the previous line of code
+//which calculates the size of the item minus 2 times the padding value).
+//This does not work in IE 7 for which you only have to subtract the padding value once.
+//The following two lines of code are fixes for that problem. Review needed.
+$itemIE7HeightFallback:         $itemSize - ($itemPaddingFallback);
+$itemIE7WidthFallback:          100% - ($itemPaddingFallback * 2);
+
+/* Slider Animations
+   ========================================================================== */
+$animateContent :                true;
+$animateKeyframe0:               translateX(220px);
+$animateKeyframe50:              translateX(220px);
+$animateKeyframe100:             translateX(0);

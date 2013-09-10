@@ -8,28 +8,19 @@
    ========================================================================== */
 
 
-/* General config
-   ========================================================================== */
-@import "config/config";
-
-
 /* Bourbon
    ========================================================================== */
 @import "../../../../../../web/vendor/bourbon/app/assets/stylesheets/bourbon";
 
 
-/* CSS Framework (Bootstrap 2)
+/* General config
    ========================================================================== */
-@import "config/bootstrap-imports";
+@import "config/config";
 
 
-/* CSS Framework (Cupcake)
+/* Cupcake
    ========================================================================== */
-/* Base */
 @import "../../../../../../web/vendor/cupcake/scss/base";
-
-/* Components */
-@import "config/cupcake-config/cupcake-imports";
 
 
 /* Website Theme
@@ -42,6 +33,3 @@
 
 /* components */
 @import "components/components";
-
-/* theme */
-//@import "../../../../../../web/vendor/flat-ui/sass/flat-ui";

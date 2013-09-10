@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Navigation
+
+   This file is exclusively intended for setting up variables.
+   Never add styles directly to this file
+   ========================================================================== */
+
+//General
+$navigation-height:                             3em;
+$navigation-responsive-breakpoint:              40em;
+
+//Menu item
+$navigation-item-width:                         auto;
+$navigation-item-text-align:                    center;
+$navigation-item-small-text-align:              left;
+$navigation-item-link-padding:                  1.5em;
+
+//Sublevel
+$navigation-sublevel-z-index:                   10;
+
+//Menu toggle
+$navigation-toggle-top-text-align:              right;
+
+//Colors
+$navigation-background:                         #444;
+$navigation-sublevel-background:                #ccc;
+
+$navigation-item-color:                         #fff;
+$navigation-item-active-background:             #333;
+
+$navigation-sublevel-item-color:                #333;
+$navigation-sublevel-item-active-background:    #aaa;
+
+$navigation-toggle-color:                       #fff;
+$navigation-toggle-top-background:              #333;
+$navigation-toggle-submenu-border-color:        #fff;
+
+$navigation-small-link-border-top-color:        #fff;
+
+$navigation-item-hover-background:              #ccc;
+$navigation-item-hover-color:                   #333;
+
+$navigation-item-link-hover-color:              #333;
+
+$navigation-sublevel-item-hover-background:     #aaa;
+$navigation-sublevel-item-hover-color:          #333;
