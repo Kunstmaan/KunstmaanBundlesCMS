@@ -76,6 +76,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         );
 
         $this->generateControllers($bundle, $parameters, $output);
+        $this->generateAdminLists($bundle, $parameters, $output);
         if ($this->isMultiLangEnvironment()) {
             $this->generateDefaultLocaleFallbackCode($bundle, $parameters, $output);
             $this->addLanguageChooserRouting($rootDir);
@@ -95,7 +96,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateAdminTests($bundle, $parameters, $output);
         $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
         $this->generateConfig($bundle, $parameters, $rootDir, $output);
-        $this->generateRouting($bundle, $parameters, $rootDir, $output);
+        $this->generateRouting($bundle, $parameters, $output);
     }
 
     /**
@@ -539,6 +540,23 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $output->writeln($step . ' : <info>OK</info>');
     }
+
+    public function generateAdminLists(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $step = 'Generating admin lists';
+
+        try {
+            $dirPath = sprintf("%s/AdminList", $bundle->getPath());
+            $skeletonDir = sprintf("%s/AdminList", $this->skeletonDir);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SatelliteAdminListConfigurator', $parameters, true);
+        } catch (\Exception $error) {
+            $output->writeln($step . ' : <error>FAILED</error>');
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $output->writeln($step . ' : <info>OK</info>');
+    }
+
 
     /**
      * @param Bundle          $bundle     The bundle
