@@ -48,7 +48,7 @@ class SatelliteOverviewPage extends \Kunstmaan\NodeBundle\Entity\AbstractPage im
     /**
      * Returns the default backend form type for this page
      *
-     * @return \Kunstmaan\WebsiteBundle\Form\Pages\SatelliteOverviewPageAdminType
+     * @return \{{ namespace }}\Form\Pages\SatelliteOverviewPageAdminType
      */
     public function getDefaultAdminType()
     {

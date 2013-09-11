@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Satellite extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {
+    const TYPE_COMMUNICATION = 'communication';
+    const TYPE_CLIMATE       = 'climate_research';
+
     /**
      * @var string
      *

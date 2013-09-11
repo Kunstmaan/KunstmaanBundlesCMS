@@ -2,6 +2,7 @@
 
 namespace {{ namespace }}\Form\Pages;
 
+use {{ namespace }}\Entity\Satellite;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -28,7 +29,7 @@ class SatelliteOverviewPageAdminType extends \Kunstmaan\NodeBundle\Form\PageAdmi
             'type',
             'choice',
             array(
-                'choices' => array('communication' => 'Communication satellite', 'climate_research' => 'Climate research satellite'),
+                'choices' => array(Satellite::TYPE_COMMUNICATION => 'Communication satellite', Satellite::TYPE_CLIMATE => 'Climate research satellite'),
                 'required' => false,
             )
         );

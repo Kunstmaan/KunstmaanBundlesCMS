@@ -2,6 +2,7 @@
 
 namespace {{ namespace }}\Form;
 
+use {{ namespace }}\Entity\Satellite;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -32,7 +33,7 @@ class SatelliteAdminType extends AbstractType
         $builder->add('link');
         $builder->add('weight', 'integer', array('label' => 'Launch mass (kg)'));
         $builder->add('type', 'choice', array(
-            'choices' => array('communication' => 'Communication satellite', 'climate_research' => 'Climate research satellite')
+            'choices' => array(Satellite::TYPE_COMMUNICATION => 'Communication satellite', Satellite::TYPE_CLIMATE => 'Climate research satellite')
         ));
     }
 
