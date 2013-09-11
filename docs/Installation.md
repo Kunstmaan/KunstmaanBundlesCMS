@@ -6,6 +6,8 @@ Welcome to the Kunstmaan Bundles Standard Edition - a fully-functional CMS (cont
 
 This document contains information on how to download, install, and start using the Kunstmaan Bundles CMS.
 
+We assume you have read the official Symfony documentation and know the basics of creating Symfony applications.
+
 
 1) Minimal requirements
 -----------------------

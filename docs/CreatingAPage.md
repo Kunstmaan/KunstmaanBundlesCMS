@@ -174,6 +174,8 @@ use Symfony\Component\HttpFoundation\Request;
 As you can see we just fetch all employees (using Doctrine), and pass them into the RenderContext (which is passed
 into Twig, so you'll get the list in your Twig template as the "employees" variable).
 
+This function might be deprecated in the (near) future (ideally a controller action should be executed instead of having
+this code here).
 
 
 5) Summary
