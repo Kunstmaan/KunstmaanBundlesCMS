@@ -1,0 +1,9 @@
+{% for node in items %}
+    {% if not node.node.isHiddenFromNav() %}
+        <li class="{% if(node.active) %}active{% endif %}">
+            <a href="{{ path('_slug', { 'url': node.slug }) }}">
+                {{ node.title }}
+            </a>
+        </li>
+    {% endif %}
+{% endfor %}
