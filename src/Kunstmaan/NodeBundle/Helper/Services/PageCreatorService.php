@@ -174,6 +174,10 @@ class PageCreatorService
 
             $callback($pageTypeInstance, $translationNode, $seo);
 
+            // Overwrite the page title with the translated title
+            $pageTypeInstance->setTitle($translationNode->getTitle());
+            $em->persist($pageTypeInstance);
+
             $em->persist($translationNode);
             $em->flush();
 
