@@ -1,4 +1,9 @@
-<section class="slider-pp slider-pp--left">
+<section class="slider-pp slider-pp--bottom">
+    <div class="slider-pp__flexslider js-flexslider flexslider">
+        <ul class="slides">
+            {{ render_pageparts(page, 'slider') }}
+        </ul>
+    </div>
     <nav class="slider-pp__thumbs js-thumbs">
         <div class="slider-pp__thumbs-wrapper">
             {% set pps = getpageparts(page, 'slider') %}
@@ -9,9 +14,4 @@
             {% endfor %}
         </div>
     </nav>
-    <div class="slider-pp__flexslider js-flexslider flexslider">
-        <ul class="slides">
-            {{ render_pageparts(page, 'slider') }}
-        </ul>
-    </div>
 </section>
