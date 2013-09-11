@@ -98,4 +98,16 @@ class FolderRepository extends EntityRepository
         return $folder;
     }
 
+    public function getFirstTopFolder()
+    {
+        $em = $this->getEntityManager();
+
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('parent' => NULL));
+        if (!$folder) {
+            throw new EntityNotFoundException('No first top folder found (where parent is NULL)');
+        }
+
+        return $folder;
+    }
+
 }
