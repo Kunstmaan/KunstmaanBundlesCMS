@@ -27,22 +27,15 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
-use Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart;
-use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
-use Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\PagePartBundle\Entity\HeaderPagePart;
-use Kunstmaan\PagePartBundle\Entity\LinePagePart;
-use Kunstmaan\PagePartBundle\Entity\LinkPagePart;
-use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
-use Kunstmaan\PagePartBundle\Entity\TextPagePart;
-use Kunstmaan\PagePartBundle\Entity\TocPagePart;
-use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+
+use {{ namespace }}\Entity\Satellite;
 use {{ namespace }}\Entity\Pages\ContentPage;
 use {{ namespace }}\Entity\Pages\HomePage;
+use {{ namespace }}\Entity\Pages\SatelliteOverviewPage;
 
 /**
  * DefaultSiteFixtures
@@ -103,6 +96,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         // ContentPages
         $this->createContentPages($manager, $homePage);
+
+        // AdminList pages
+        $this->createAdminListPages($manager);
 
         // Styles
         $this->createStylePage($manager, $homePage);
@@ -511,6 +507,93 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     }
 
     /**
+     * Create a ContentPages
+     *
+     * @param ObjectManager $manager The object manager
+     */
+    private function createAdminListPages(ObjectManager $manager)
+    {
+        $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
+        $pageCreator->setContainer($this->container);
+
+        $nodeRepo = $manager->getRepository('KunstmaanNodeBundle:Node');
+        $satellitePage = $nodeRepo->findOneBy(array('internalName' => 'satellite'));
+
+        $satelliteOverviewPage = new SatelliteOverviewPage();
+        $satelliteOverviewPage->setTitle('Communication satellites');
+        $satelliteOverviewPage->setType(Satellite::TYPE_COMMUNICATION);
+
+        $translations = array();
+        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Communication satellites');
+            $translation->setSlug('communication-satellites');
+        });
+        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Communicatie satellieten');
+            $translation->setSlug('communicatie-satellieten');
+        });
+
+        $options = array(
+            'parent' => $satellitePage,
+            'page_internal_name' => 'communication-satellites',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => 'Admin'
+        );
+
+        $pageCreator->createPage($satelliteOverviewPage, $translations, $options);
+
+        $satelliteOverviewPage = new SatelliteOverviewPage();
+        $satelliteOverviewPage->setTitle('Climate research satellites');
+        $satelliteOverviewPage->setType(Satellite::TYPE_CLIMATE);
+
+        $translations = array();
+        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Climate research satellites');
+            $translation->setSlug('climate-research-satellites');
+        });
+        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Klimatologische onderzoekssatellieten');
+            $translation->setSlug('klimatologische-onderzoekssatellieten');
+        });
+
+        $options = array(
+            'parent' => $satellitePage,
+            'page_internal_name' => 'climate-research-satellites',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => 'Admin'
+        );
+
+        $pageCreator->createPage($satelliteOverviewPage, $translations, $options);
+
+        $list = array(
+            array('Sputnik 1', '1957-10-04', 'http://en.wikipedia.org/wiki/Sputnik_1', 84, Satellite::TYPE_COMMUNICATION),
+            array('Echo 1', '1960-08-12', 'http://en.wikipedia.org/wiki/Echo_satellite', 180, Satellite::TYPE_COMMUNICATION),
+            array('Telstar 1', '1962-07-10', 'http://en.wikipedia.org/wiki/Telstar', 70, Satellite::TYPE_COMMUNICATION),
+            array('Intelsat I', '1965-04-06', 'http://en.wikipedia.org/wiki/Intelsat_I', 149, Satellite::TYPE_COMMUNICATION),
+
+            array('ACRIMSAT', '1999-12-20', 'http://en.wikipedia.org/wiki/ACRIMSAT', 288, Satellite::TYPE_CLIMATE),
+            array('Terra', '1999-12-18', 'http://en.wikipedia.org/wiki/Terra_(satellite)', 4864, Satellite::TYPE_CLIMATE),
+            array('GRACE', '2002-03-14', 'http://en.wikipedia.org/wiki/Gravity_Recovery_and_Climate_Experiment', 487, Satellite::TYPE_CLIMATE),
+            array('Landsat 7', '1999-04-15', 'http://en.wikipedia.org/wiki/Landsat-7', 1973, Satellite::TYPE_CLIMATE),
+            array('SORCE', '2003-01-25', 'http://en.wikipedia.org/wiki/SORCE', 315, Satellite::TYPE_CLIMATE),
+        );
+        foreach ($list as $info) {
+            $satellite = new Satellite();
+            $satellite->setName($info[0]);
+            $satellite->setLaunched(new \DateTime($info[1]));
+            $satellite->setLink($info[2]);
+            $satellite->setWeight($info[3]);
+            $satellite->setType($info[4]);
+
+            $manager->persist($satellite);
+        }
+
+        $manager->flush();
+    }
+
+    /**
      * Create a ContentPage containing headers
      *
      * @param ObjectManager $manager The object manager
@@ -723,30 +806,38 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     public function createTranslations(ObjectManager $manager)
     {
-        $welcome_en = new Translation;
-        $welcome_en->setKeyword('lang_chooser.welcome');
-        $welcome_en->setLocale('en');
-        $welcome_en->setText('Welcome, continue in English');
-        $welcome_en->setDomain('messages');
-        $welcome_en->setCreatedAt(new \DateTime());
-        $welcome_en->setFlag(Translation::FLAG_NEW);
+        // Splashpage
+        $trans['lang_chooser.welcome']['en'] = 'Welcome, continue in English';
+        $trans['lang_chooser.welcome']['fr'] = 'Bienvenu, continuer en Français';
+        $trans['lang_chooser.welcome']['nl'] = 'Welkom, ga verder in het Nederlands';
+        $trans['lang_chooser.welcome']['de'] = 'Willkommen, gehe weiter in Deutsch';
 
-        $welcome_fr = clone $welcome_en;
-        $welcome_fr->setText('Bienvenu, continuer en Français‎');
-        $welcome_fr->setLocale('fr');
+        // AdminList page with satellites
+        $trans['satellite.name']['en'] = 'name';
+        $trans['satellite.launched']['en'] = 'launched';
+        $trans['satellite.weight']['en'] = 'launch mass';
+        $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['en'] = 'Communication satellites';
+        $trans['satellite.'.Satellite::TYPE_CLIMATE]['en'] = 'Climate research satellites';
+        $trans['satellite.name']['nl'] = 'naam';
+        $trans['satellite.launched']['nl'] = 'lanceringsdatum';
+        $trans['satellite.weight']['nl'] = 'gewicht';
+        $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['nl'] = 'Communicatie satellieten';
+        $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische onderzoekssatellieten';
 
-        $welcome_nl = clone $welcome_en;
-        $welcome_nl->setText('Welkom, ga verder in het Nederlands');
-        $welcome_nl->setLocale('nl');
+        foreach ($trans as $key => $array) {
+            foreach ($array as $lang => $value) {
+                $t = new Translation;
+                $t->setKeyword($key);
+                $t->setLocale($lang);
+                $t->setText($value);
+                $t->setDomain('messages');
+                $t->setCreatedAt(new \DateTime());
+                $t->setFlag(Translation::FLAG_NEW);
 
-        $welcome_de = clone $welcome_en;
-        $welcome_de->setText('Willkommen, gehe weiter in Deutsch');
-        $welcome_de->setLocale('de');
+                $manager->persist($t);
+            }
+        }
 
-        $manager->persist($welcome_en);
-        $manager->persist($welcome_fr);
-        $manager->persist($welcome_nl);
-        $manager->persist($welcome_de);
         $manager->flush();
     }
 

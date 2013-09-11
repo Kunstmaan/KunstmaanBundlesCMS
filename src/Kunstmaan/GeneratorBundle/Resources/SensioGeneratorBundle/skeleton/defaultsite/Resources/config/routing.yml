@@ -1,0 +1,11 @@
+~~~BUNDLENAMELOWER~~~_default:
+    resource: "@~~~BUNDLENAME~~~/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /
+
+~~~BUNDLENAMELOWER~~~_satellite_admin_list:
+    resource: @~~~BUNDLENAME~~~/Controller/SatelliteAdminListController.php
+    type:     annotation
+    prefix:   /{_locale}/admin/satellite/
+    requirements:
+         _locale: %requiredlocales%

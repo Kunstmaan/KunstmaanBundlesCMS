@@ -71,10 +71,12 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
+            'bundle_name'       => $bundle->getName(),
             'prefix'            => GeneratorUtils::cleanPrefix($prefix)
         );
 
-        $this->overrideDefaultController($bundle, $parameters, $output);
+        $this->generateControllers($bundle, $parameters, $output);
+        $this->generateAdminLists($bundle, $parameters, $output);
         if ($this->isMultiLangEnvironment()) {
             $this->generateDefaultLocaleFallbackCode($bundle, $parameters, $output);
             $this->addLanguageChooserRouting($rootDir);
@@ -82,6 +84,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         }
         $this->generateEntities($bundle, $parameters, $output);
         $this->generateForm($bundle, $parameters, $output);
+        $this->generateHelpers($bundle, $parameters, $output);
         $this->generateFixtures($bundle, $parameters, $output);
         $this->generateAssets($bundle, $output);
 
@@ -93,6 +96,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateAdminTests($bundle, $parameters, $output);
         $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
         $this->generateConfig($bundle, $parameters, $rootDir, $output);
+        $this->generateRouting($bundle, $parameters, $output);
     }
 
     /**
@@ -210,6 +214,12 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate.html.twig', $dirPath . '/Pages/HomePage/pagetemplate.html.twig', true);
             GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/slider.html.twig', $dirPath . '/Pages/HomePage/slider.html.twig', true);
+        }
+
+        { //SatelliteOverviewPage
+            $this->filesystem->copy($skeletonDir . '/Pages/SatelliteOverviewPage/view.html.twig', $dirPath . '/Pages/SatelliteOverviewPage/view.html.twig', true);
+            GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/SatelliteOverviewPage/view.html.twig');
+            $this->filesystem->copy($skeletonDir . '/Pages/SatelliteOverviewPage/pagetemplate.html.twig', $dirPath . '/Pages/SatelliteOverviewPage/pagetemplate.html.twig', true);
         }
 
         { //SlidePagePart
@@ -379,6 +389,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/formpage.yml');
         $this->filesystem->copy($skeletonDir . '/homepage.yml', $dirPath . '/homepage.yml', true);
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage.yml');
+        $this->filesystem->copy($skeletonDir . '/satelliteoverviewpage.yml', $dirPath . '/satelliteoverviewpage.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/satelliteoverviewpage.yml');
 
         $output->writeln('Generating PageTemplate Configurators : <info>OK</info>');
     }
@@ -410,6 +422,11 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SatelliteOverviewPageAdminType', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
 
         $dirPath = $bundle->getPath() . '/Form/PageParts';
         $skeletonDir = $this->skeletonDir . '/Form/PageParts';
@@ -420,7 +437,37 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             throw new \RuntimeException($error->getMessage());
         }
 
+        $dirPath = $bundle->getPath() . '/Form';
+        $skeletonDir = $this->skeletonDir . '/Form';
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SatelliteAdminType', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
         $output->writeln('Generating forms : <info>OK</info>');
+    }
+
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output
+     *
+     * @throws \RuntimeException
+     */
+    public function generateHelpers(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $dirPath = $bundle->getPath() . '/Helper/Menu';
+        $skeletonDir = $this->skeletonDir . '/Helper/Menu';
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'AdminMenuAdaptor', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $output->writeln('Generating helper classes : <info>OK</info>');
     }
 
     /**
@@ -450,6 +497,11 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SatelliteOverviewPage', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
 
         $dirPath = sprintf("%s/Entity/PageParts", $bundle->getPath());
         $skeletonDir = sprintf("%s/Entity/PageParts", $this->skeletonDir);
@@ -460,17 +512,27 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             throw new \RuntimeException($error->getMessage());
         }
 
+        $dirPath = sprintf("%s/Entity", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Entity", $this->skeletonDir);
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'Satellite', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
         $output->writeln('Generating entities : <info>OK</info>');
     }
 
-    public function overrideDefaultController(Bundle $bundle, array $parameters, OutputInterface $output)
+    public function generateControllers(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $step = 'Overriding DefaultController';
+        $step = 'Generating controllers';
 
         try {
             $dirPath = sprintf("%s/Controller", $bundle->getPath());
             $skeletonDir = sprintf("%s/Controller", $this->skeletonDir);
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultController', $parameters, true);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SatelliteAdminListController', $parameters, true);
         } catch (\Exception $error) {
             $output->writeln($step . ' : <error>FAILED</error>');
             throw new \RuntimeException($error->getMessage());
@@ -478,6 +540,23 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $output->writeln($step . ' : <info>OK</info>');
     }
+
+    public function generateAdminLists(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $step = 'Generating admin lists';
+
+        try {
+            $dirPath = sprintf("%s/AdminList", $bundle->getPath());
+            $skeletonDir = sprintf("%s/AdminList", $this->skeletonDir);
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SatelliteAdminListConfigurator', $parameters, true);
+        } catch (\Exception $error) {
+            $output->writeln($step . ' : <error>FAILED</error>');
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $output->writeln($step . ' : <info>OK</info>');
+    }
+
 
     /**
      * @param Bundle          $bundle     The bundle
@@ -507,6 +586,27 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $output->writeln($step . ' : <info>OK</info>');
     }
+
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output
+     *
+     * @throws \RuntimeException
+     */
+    public function generateRouting(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $step = 'Generating routing';
+
+        $dirPath = sprintf("%s/Resources/config", $bundle->getPath());
+        $skeletonDir = sprintf("%s/Resources/config", $this->fullSkeletonDir);
+        $this->filesystem->copy($skeletonDir . '/routing.yml', $dirPath . '/routing.yml', true);
+        GeneratorUtils::replace("~~~BUNDLENAME~~~", $bundle->getName(), $dirPath . '/routing.yml');
+        GeneratorUtils::replace("~~~BUNDLENAMELOWER~~~", strtolower($bundle->getName()), $dirPath . '/routing.yml');
+
+        $output->writeln($step . ' : <info>OK</info>');
+    }
+
 
     /**
      * @param string $skeletonDir The dir of the entity skeleton
