@@ -178,7 +178,7 @@ This function might be deprecated in the (near) future (ideally a controller act
 this code here).
 
 
-5) Summary
+2) Summary
 ----------
 
 Creating a custom page type is as simple as this :
@@ -186,7 +186,7 @@ Creating a custom page type is as simple as this :
     app/console kuma:generate:page
 
 
-6) Under the hood
+3) Under the hood
 -----------------
 
 - src/YourVendor/YourWebsiteBundle/Resources/config/pagetemplates contains the YML files defining page templates you can use.
