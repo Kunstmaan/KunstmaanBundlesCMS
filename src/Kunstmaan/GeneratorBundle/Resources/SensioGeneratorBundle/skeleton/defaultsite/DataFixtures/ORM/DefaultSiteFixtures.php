@@ -17,12 +17,6 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
-use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
-use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
-use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
-use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
-use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
@@ -34,6 +28,7 @@ use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 use {{ namespace }}\Entity\Satellite;
 use {{ namespace }}\Entity\Pages\ContentPage;
+use {{ namespace }}\Entity\Pages\FormPage;
 use {{ namespace }}\Entity\Pages\HomePage;
 use {{ namespace }}\Entity\Pages\SatelliteOverviewPage;
 
@@ -103,9 +98,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         // Styles
         $this->createStylePage($manager, $homePage);
 
-
         // From PageParts
-        $this->createFormPage($manager, "Form PageParts", $homePage);
+        $this->createFormPage($manager);
 
         // Dashboard
         /** @var $dashboard DashboardConfiguration */
@@ -117,73 +111,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $dashboard->setContent('<div class="alert alert-info"><strong>Important: </strong>please change these items to the graphs of your own site!</div><iframe src="https://rpm.newrelic.com/public/charts/2h1YQ3W7j7Z" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/1VNlg8JA5ed" width="100%" height="300" scrolling="no" frameborder="no"></iframe><iframe src="https://rpm.newrelic.com/public/charts/36A9KcMTMli" width="100%" height="300" scrolling="no" frameborder="no"></iframe>');
         $manager->persist($dashboard);
         $manager->flush();
-    }
-
-    /**
-     * Initialize the permissions for the given Node
-     *
-     * @param Node $node
-     */
-    private function initPermissions(Node $node)
-    {
-        /* @var MutableAclProviderInterface $aclProvider */
-        $aclProvider = $this->container->get('security.acl.provider');
-        /* @var ObjectIdentityRetrievalStrategyInterface $oidStrategy */
-        $oidStrategy = $this->container->get('security.acl.object_identity_retrieval_strategy');
-        $objectIdentity = $oidStrategy->getObjectIdentity($node);
-        try {
-            $acl = $aclProvider->findAcl($objectIdentity);
-            $aclProvider->deleteAcl($objectIdentity);
-        } catch (AclNotFoundException $e) {
-        }
-        $acl = $aclProvider->createAcl($objectIdentity);
-
-        $securityIdentity = new RoleSecurityIdentity('IS_AUTHENTICATED_ANONYMOUSLY');
-        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_VIEW);
-
-        $securityIdentity = new RoleSecurityIdentity('ROLE_ADMIN');
-        $acl->insertObjectAce(
-            $securityIdentity,
-            MaskBuilder::MASK_VIEW | MaskBuilder::MASK_EDIT | MaskBuilder::MASK_PUBLISH | MaskBuilder::MASK_UNPUBLISH
-        );
-
-        $securityIdentity = new RoleSecurityIdentity('ROLE_SUPER_ADMIN');
-        $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_IDDQD);
-        $aclProvider->updateAcl($acl);
-    }
-
-    /**
-     * @param ObjectManager $manager      The object manager
-     * @param string        $class        The class
-     * @param string        $title        The title
-     * @param PageInterface $parent       The parent
-     * @param string        $slug         The slug
-     * @param string        $internalName The internal name
-     *
-     * @return PageInterface
-     */
-    private function createAndPersistPage(ObjectManager $manager, $class, $title, $parent = null, $slug = null, $internalName = null)
-    {
-        /* @var PageInterface $page */
-        $page = new $class();
-        $page->setTitle($title);
-        if (!is_null($parent)) {
-            $page->setParent($parent);
-        }
-        $manager->persist($page);
-        $manager->flush();
-        $node = $manager->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($page, 'en', $this->adminuser, $internalName);
-        /** @var $nodeTranslation NodeTranslation */
-        $nodeTranslation = $node->getNodeTranslation('en', true);
-        $nodeTranslation->setOnline(true);
-        if (!is_null($slug)) {
-            $nodeTranslation->setSlug($slug);
-        }
-        $manager->persist($nodeTranslation);
-        $manager->flush();
-        $this->initPermissions($node);
-
-        return $page;
     }
 
     /**
@@ -684,121 +611,131 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * Create a FormPage
      *
      * @param ObjectManager $manager The object manager
-     * @param string        $title   The title
-     * @param PageInterface $parent  The parent
-     *
-     * @return FormPage
      */
-    private function createFormPage(ObjectManager $manager, $title, $parent)
+    private function createFormPage(ObjectManager $manager)
     {
-        $page = $this->createAndPersistPage($manager, '{{ namespace }}\Entity\Pages\FormPage', $title, $parent);
+        $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
+        $pageCreator->setContainer($this->container);
+
+        $nodeRepo = $manager->getRepository('KunstmaanNodeBundle:Node');
+        $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
+
+        $formPage = new FormPage();
+        $formPage->setTitle('Contact form');
+
+        $translations = array();
+        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Contact');
+            $translation->setSlug('contact');
+        });
+        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Contacteer ons');
+            $translation->setSlug('contact');
+        });
+
+        $options = array(
+            'parent' => $homePage,
+            'page_internal_name' => 'contact',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => 'Admin'
+        );
+
+        $node = $pageCreator->createPage($formPage, $translations, $options);
+
+        $nodeTranslation = $node->getNodeTranslation('en', true);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+        $page = $nodeVersion->getRef($manager);
         $page->setThanks("<p>We have received your submission.</p>");
         $manager->persist($page);
-        $manager->flush();
-        $manager->refresh($page);
-        { // Text page
-            $counter = 1;
-            {
-                $singlelinetextpagepart = new SingleLineTextPagePart();
-                $singlelinetextpagepart->setLabel("Firstname");
-                $singlelinetextpagepart->setRequired(true);
-                $singlelinetextpagepart->setErrormessageRequired("Required");
-                $manager->persist($singlelinetextpagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $singlelinetextpagepart, $counter++, "main");
-            }
-            {
-                $singlelinetextpagepart = new SingleLineTextPagePart();
-                $singlelinetextpagepart->setLabel("Lastname");
-                $singlelinetextpagepart->setRequired(true);
-                $singlelinetextpagepart->setErrormessageRequired("Required");
-                $manager->persist($singlelinetextpagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $singlelinetextpagepart, $counter++, "main");
-            }
-            {
-                $pagepart = new EmailPagePart();
-                $pagepart->setLabel("E-mail");
-                $pagepart->setRequired(true);
-                $pagepart->setErrormessageRequired("Required");
-                $manager->persist($pagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $counter++, "main");
-            }
-            {
-                $singlelinetextpagepart = new SingleLineTextPagePart();
-                $singlelinetextpagepart->setLabel("Postal code");
-                $singlelinetextpagepart->setRegex("[0-9]{4}");
-                $singlelinetextpagepart->setErrormessageRegex("This is not a valid postal code");
-                $manager->persist($singlelinetextpagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $singlelinetextpagepart, $counter++, "main");
-            }
-            {
-                $choicepagepart = new ChoicePagePart();
-                $choicepagepart->setLabel("Choice");
-                $choices = "Subject 1 \n Subject 2 \n Subject 3";
-                $choicepagepart->setChoices($choices);
-                $manager->persist($choicepagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
-            }
-            {
-                $choicepagepart = new ChoicePagePart();
-                $choicepagepart->setLabel("Expanded Choice");
-                $choicepagepart->setExpanded(true);
-                $choices = "Subject 1 \n Subject 2 \n Subject 3";
-                $choicepagepart->setChoices($choices);
-                $manager->persist($choicepagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
-            }
-            {
-                $choicepagepart = new ChoicePagePart();
-                $choicepagepart->setLabel("Multiple");
-                $choicepagepart->setMultiple(true);
-                $choices = "Subject 1 \n Subject 2 \n Subject 3";
-                $choicepagepart->setChoices($choices);
-                $manager->persist($choicepagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
-            }
-            {
-                $choicepagepart = new ChoicePagePart();
-                $choicepagepart->setLabel("Expanded Multiple Choice");
-                $choicepagepart->setExpanded(true);
-                $choicepagepart->setMultiple(true);
-                $choices = "Subject 1 \n Subject 2 \n Subject 3";
-                $choicepagepart->setChoices($choices);
-                $manager->persist($choicepagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $choicepagepart, $counter++, "main");
-            }
-            {
-                $multilinetextpagepart = new MultiLineTextPagePart();
-                $multilinetextpagepart->setLabel("Description");
-                $manager->persist($multilinetextpagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $multilinetextpagepart, $counter++, "main");
-            }
-            {
-                $pagepart = new CheckboxPagePart();
-                $pagepart->setLabel("Checkbox");
-                $pagepart->setRequired(true);
-                $manager->persist($pagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $pagepart, $counter++, "main");
-            }
-            {
-                $submitbuttonpagepart = new SubmitButtonPagePart();
-                $submitbuttonpagepart->setLabel("Send");
-                $manager->persist($submitbuttonpagepart);
-                $manager->flush();
-                $manager->getRepository('KunstmaanPagePartBundle:PagePartRef')->addPagePart($page, $submitbuttonpagepart, $counter++, "main");
-            }
-        }
 
-        return $page;
+        $nodeTranslation = $node->getNodeTranslation('nl', true);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+        $page = $nodeVersion->getRef($manager);
+        $page->setThanks("<p>Bedankt, we hebben je bericht succesvol ontvangen.</p>");
+        $manager->persist($page);
+
+        $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
+
+        $pageparts = array();
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
+            array(
+                'setLabel' => 'Name',
+                'setRequired' => true,
+                'setErrorMessageRequired' => 'Name is required'
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
+            array(
+                'setLabel' => 'Email',
+                'setRequired' => true,
+                'setErrorMessageRequired' => 'Email is required',
+                'setErrorMessageInvalid' => 'Fill in a valid email address'
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
+            array(
+                'setLabel' => 'Subject',
+                'setRequired' => true,
+                'setErrorMessageRequired' => 'Subject is required',
+                'setChoices' => "I want to make a website with the Kunstmaan bundles \n I'm testing the website \n I want to get a quote for a website built by Kunstmaan"
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
+            array(
+                'setLabel' => 'Message',
+                'setRequired' => true,
+                'setErrorMessageRequired' => 'Message is required'
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
+            array(
+                'setLabel' => 'Send'
+            )
+        );
+
+        $ppCreatorService->addPagePartsToPage('contact', $pageparts, 'en');
+
+        $pageparts = array();
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
+            array(
+                'setLabel' => 'Naam',
+                'setRequired' => true,
+                'setErrorMessageRequired' => 'Naam is verplicht'
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
+            array(
+                'setLabel' => 'Email',
+                'setRequired' => true,
+                'setErrorMessageRequired' => 'Email is verplicht',
+                'setErrorMessageInvalid' => 'Vul een geldif email adres in'
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
+            array(
+                'setLabel' => 'Onderwerp',
+                'setRequired' => true,
+                'setErrorMessageRequired' => 'Onderwerp is verplicht',
+                'setChoices' => "Ik wil een website maken met de Kunstmaan bundles \n Ik ben een website aan het testen \n Ik wil dat Kunstmaan een website voor mij maakt"
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
+            array(
+                'setLabel' => 'Bericht',
+                'setRequired' => true,
+                'setErrorMessageRequired' => 'Bericht is verplicht'
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
+            array(
+                'setLabel' => 'Verzenden'
+            )
+        );
+
+        $ppCreatorService->addPagePartsToPage('contact', $pageparts, 'nl');
+
+        $manager->flush();
     }
 
     /**
