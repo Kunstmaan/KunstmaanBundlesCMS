@@ -32,8 +32,7 @@ class ChooserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $firstFolder */
-        $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder(1);
-        //TODO get the first topfolder
+        $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFirstTopFolder();
 
         return $this->redirect($this->generateUrl("KunstmaanMediaBundle_chooser_show_folder", array("folderId" => $firstFolder->getId(), "type" => $type, "CKEditorFuncNum" => $cKEditorFuncNum)));
     }
