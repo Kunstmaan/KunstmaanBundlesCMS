@@ -192,11 +192,13 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->renderFile('/Layout/_css.html.twig', $dirPath . '/Layout/_css.html.twig', $parameters);
         $this->renderFile('/Layout/_js_footer.html.twig', $dirPath . '/Layout/_js_footer.html.twig', $parameters);
         $this->renderFile('/Layout/_js_header.html.twig', $dirPath . '/Layout/_js_header.html.twig', $parameters);
+        $this->filesystem->copy($skeletonDir . '/Layout/submenu.html.twig', $dirPath . '/Layout/submenu.html.twig', true);
 
         { //ContentPage
             $this->filesystem->copy($skeletonDir . '/Pages/ContentPage/view.html.twig', $dirPath . '/Pages/ContentPage/view.html.twig', true);
             GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/ContentPage/view.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/ContentPage/pagetemplate.html.twig', $dirPath . '/Pages/ContentPage/pagetemplate.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/ContentPage/pagetemplate.html.twig');
         }
 
         { //FormPage
@@ -220,6 +222,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             $this->filesystem->copy($skeletonDir . '/Pages/SatelliteOverviewPage/view.html.twig', $dirPath . '/Pages/SatelliteOverviewPage/view.html.twig', true);
             GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/SatelliteOverviewPage/view.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/SatelliteOverviewPage/pagetemplate.html.twig', $dirPath . '/Pages/SatelliteOverviewPage/pagetemplate.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/SatelliteOverviewPage/pagetemplate.html.twig');
         }
 
         { //SlidePagePart
