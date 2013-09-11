@@ -214,7 +214,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             'parent' => null,
             'page_internal_name' => 'homepage',
             'set_online' => true,
-            'hidden_from_nav' => true,
+            'hidden_from_nav' => false,
             'creator' => 'Admin'
         );
 
