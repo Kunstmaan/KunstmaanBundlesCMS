@@ -117,7 +117,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createHomePage(ObjectManager $manager)
     {
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-        $pageCreator->setContainer($this->container);
 
         $homePage = new HomePage();
         $homePage->setTitle('Home');
@@ -230,7 +229,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createContentPages(ObjectManager $manager, $parent)
     {
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-        $pageCreator->setContainer($this->container);
 
         $nodeRepo = $manager->getRepository('KunstmaanNodeBundle:Node');
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
@@ -466,7 +464,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createAdminListPages(ObjectManager $manager)
     {
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-        $pageCreator->setContainer($this->container);
 
         $nodeRepo = $manager->getRepository('KunstmaanNodeBundle:Node');
         $satellitePage = $nodeRepo->findOneBy(array('internalName' => 'satellite'));
@@ -554,7 +551,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createStylePage(ObjectManager $manager, $parent)
     {
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-        $pageCreator->setContainer($this->container);
 
         $nodeRepo = $manager->getRepository('KunstmaanNodeBundle:Node');
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
@@ -642,7 +638,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createFormPage(ObjectManager $manager)
     {
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-        $pageCreator->setContainer($this->container);
 
         $nodeRepo = $manager->getRepository('KunstmaanNodeBundle:Node');
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));

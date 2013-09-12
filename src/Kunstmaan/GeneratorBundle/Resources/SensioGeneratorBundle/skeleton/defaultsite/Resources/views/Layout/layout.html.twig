@@ -41,7 +41,7 @@
                         Demosite
                     </a>
                 </div>
-                <div class="span9 js-navigation-space-hook">
+                <div class="span7 js-navigation-space-hook">
                     <nav role="navigation" class="js-navigation navigation navigation--big">
                         <!-- Mobile navigation toggle -->
                         <div class="js-navigation__toggle navigation__toggle navigation__toggle--top">
@@ -82,6 +82,15 @@
                             {% endfor %}
                         {% endif %}
                     </nav>
+                </div>
+                <div class="span2">
+                    {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                    {% if searchPageNode %}
+                        <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}">
+                            <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" />
+                            <input type="submit" name="search" id="search" value="Q" />
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </section>

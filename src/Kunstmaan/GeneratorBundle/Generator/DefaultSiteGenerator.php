@@ -250,6 +250,13 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->filesystem->copy($skeletonDir . '/view.html.twig', $dirPath . 'view.html.twig', true);
         GeneratorUtils::replace("~~~BUNDLENAME~~~", $bundle->getName(), $dirPath . 'view.html.twig');
 
+        $skeletonDir = sprintf("%s/app/KunstmaanArticleBundle/views/", $this->fullSkeletonDir);
+        $dirPath = $rootDir .'/../app/Resources/KunstmaanArticleBundle/views/';
+        $this->setSkeletonDirs(array($skeletonDir));
+
+        $this->filesystem->copy($skeletonDir . '/AbstractArticleOverviewPage/view.html.twig', $dirPath . 'AbstractArticleOverviewPage/view.html.twig', true);
+        $this->filesystem->copy($skeletonDir . '/AbstractArticlePage/view.html.twig', $dirPath . 'AbstractArticlePage/view.html.twig', true);
+
         $output->writeln('Generating Twig Templates : <info>OK</info>');
 
         $this->generateErrorTemplates($bundle, $parameters, $rootDir, $output);
