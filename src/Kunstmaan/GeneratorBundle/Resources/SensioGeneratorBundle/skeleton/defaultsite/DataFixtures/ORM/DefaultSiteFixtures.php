@@ -17,6 +17,7 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
+use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
@@ -259,6 +260,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $pageCreator->createPage($contentPage, $translations, $options);
 
+        // Add images to database
+        $mediaCreatorService = $this->container->get('kunstmaan_media.media_creator_service');
+        $folder = $manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+        $imgDir = dirname(__FILE__).'/../../Resources/public/files/content/';
+        $satelliteMedia = $mediaCreatorService->createFile($imgDir.'satellite.jpg', $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
+        $orbitsMedia = $mediaCreatorService->createFile($imgDir.'orbits.jpg', $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
+
+        // Add pageparts
         $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
 
         $pageparts = array();
@@ -277,6 +286,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             array(
                 'setTitle' => 'History',
                 'setNiv'   => 2
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
+            array(
+                'setMedia' => $satelliteMedia
             )
         );
         $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
@@ -312,6 +326,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             array(
                 'setTitle' => 'Orbits',
                 'setNiv'   => 2
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
+            array(
+                'setMedia' => $orbitsMedia
             )
         );
         $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
@@ -364,6 +383,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setNiv'   => 2
             )
         );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
+            array(
+                'setMedia' => $satelliteMedia
+            )
+        );
         $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
             array(
                 'setContent' => '<p>Afhankelijk van de toepassing kunnen satellieten als volgt worden geclassificeerd:</p>
@@ -404,6 +428,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             array(
                 'setTitle' => 'Plaatsing',
                 'setNiv'   => 2
+            )
+        );
+        $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
+            array(
+                'setMedia' => $orbitsMedia
             )
         );
         $pageparts['main'][] = $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',

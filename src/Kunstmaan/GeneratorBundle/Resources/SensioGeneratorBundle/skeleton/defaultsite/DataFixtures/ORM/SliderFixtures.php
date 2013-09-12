@@ -9,7 +9,6 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Faker\Provider\Lorem;
 
 use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
-use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -34,8 +33,7 @@ class SliderFixtures extends AbstractFixture implements OrderedFixtureInterface,
         $em = $this->container->get('doctrine.orm.entity_manager');
 
         // Add slider images to database
-        $mediaCreatorService = new MediaCreatorService();
-        $mediaCreatorService->setEntityManager($em);
+        $mediaCreatorService = $this->container->get('kunstmaan_media.media_creator_service');
 
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
 

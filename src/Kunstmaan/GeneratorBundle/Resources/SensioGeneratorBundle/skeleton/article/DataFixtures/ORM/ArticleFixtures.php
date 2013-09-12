@@ -89,20 +89,20 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         // Create articles
         for($i=1; $i<=rand(13,18); $i++) {
-            if ($lang == 'nl') {
-                $title = 'Artikel titel '.$i;
-            } else {
-                $title = 'Article title '.$i;
-            }
-
             $articlePage = new {{ entity_class }}Page();
-            $articlePage->setTitle($title);
+            $articlePage->setTitle('Artikel titel '.$i);
             $articlePage->setAuthor($author);
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
 
             $translations = array();
             foreach ($languages as $lang) {
+                if ($lang == 'nl') {
+                    $title = 'Artikel titel '.$i;
+                } else {
+                    $title = 'Article title '.$i;
+                }
+
                 $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
                     $translation->setTitle($title);
                     $translation->setSlug(Slugifier::slugify($title));
