@@ -169,10 +169,10 @@ It would be neat to display the picture (if there is one) in the admin list as w
 But as the picture field has a toString method that just returns the id of the relevant record in the media table
 this will display a number instead of the actual image, which is not what we want. So let's fix that. First add
 a template file to display the column. So first create a new folder (we like a consistent naming scheme, so we'll
-add these custom column templates in AdminLists/<Entity>/<column>.twig.html) :
+add these custom column templates in AdminList/<Entity>/<column>.twig.html) :
 
 ```
-mkdir -p src/Sandbox/WebsiteBundle/Resources/views/AdminLists/Employee
+mkdir -p src/Sandbox/WebsiteBundle/Resources/views/AdminList/Employee
 ```
 
 Then create a new file called picture.html.twig in this folder:
@@ -210,7 +210,7 @@ And finally specify this template in the buildFields method in src/Sandbox/Websi
         $this->addField('firstName', 'First name', true);
         $this->addField('lastName', 'Last name', true);
         $this->addField('twitterHandle', 'Twitter handle', true);
-        $this->addField('picture', 'Picture', false, 'SandboxWebsiteBundle:AdminLists\Employee:picture.html.twig');
+        $this->addField('picture', 'Picture', false, 'SandboxWebsiteBundle:AdminList\Employee:picture.html.twig');
     }
 ```
 

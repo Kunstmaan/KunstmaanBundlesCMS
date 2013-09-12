@@ -9,3 +9,4 @@ Table of contents
 2. [Create a pagepart](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/CreatingAPagePart.md)
 3. [Create an admin list](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/CreatingAnAdminList.md)
 4. [Create a page](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/CreatingAPage.md)
+5. [Adding articles](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/AddingArticles.md)
