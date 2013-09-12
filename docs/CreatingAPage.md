@@ -129,17 +129,19 @@ render this list below the page parts.
 {% extends 'SandboxWebsiteBundle:Page:layout.html.twig' %}
 {% block content %}
     {{ render_pagetemplate(page) }}
-    <div class="employees">
+    <ul class="media-list employees">
     {% if employees is defined %}
         {% for employee in employees %}
-        <div class="employee">
+        <li class="media employee">
             {% set fullName = employee.firstName ~ ' ' ~ employee.lastName %}
-            {% if employee.picture is not empty %}<img src="{{ asset(employee.picture.url | imagine_filter('employee_thumbnail')) }}" alt="{{ fullName }}" align="left" />{% endif %}
-            <p>{{ fullName }}</p>
-        </div>
+            {% if employee.picture is not empty %}<img class="media-object" src="{{ asset(employee.picture.url | imagine_filter('employee_thumbnail')) }}" alt="{{ fullName }}" />{% endif %}
+            <div class="media-body">
+                <h4 class="media-heading">{{ fullName }}</h4>
+            </div>
+        </li>
         {% endfor %}
     {% endif %}
-    </div>
+    </ul>
 {% endblock %}
 ```
 
