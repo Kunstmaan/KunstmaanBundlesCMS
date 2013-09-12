@@ -32,58 +32,78 @@
 <body>
     {% block header %}
     <!-- Header -->
-    <header role="header" class="container">
-        <div class="row-fluid">
-            <div class="span3">
-                {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
-                    Demosite
-                </a>
+    <header role="header">
+        <section class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3">
+                    {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
+                        Demosite
+                    </a>
+                </div>
+                <div class="span9 js-navigation-space-hook">
+                    <nav role="navigation" class="js-navigation navigation navigation--big">
+                        <!-- Mobile navigation toggle -->
+                        <div class="js-navigation__toggle navigation__toggle navigation__toggle--top">
+                            MENU
+                            <i class="icon-reorder"></i>
+                            <i class="icon-remove"></i>
+                        </div>
+                        <!-- Navigation level -->
+                        <ul class="js-main-navigation-level navigation__level">
+                        {% if nodemenu is defined %}
+                            {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                            {% for node in activeSubnode.children %}
+                                {% if not node.node.isHiddenFromNav() %}
+                                    <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">{{ node.title }}</a>
+                                        {% if node.children|length>0 %}
+                                            <!-- Mobile submenu toggle -->
+                                            <div class="js-navigation__toggle navigation__toggle navigation__toggle--submenu">
+                                                <i class="icon-chevron-down"></i>
+                                                <i class="icon-chevron-up"></i>
+                                            </div>
+                                            <!-- Submenu -->
+                                            <ul class="navigation__level navigation__level--sublevel">
+                                                {% for node in node.children %}
+                                                    {% if not node.node.isHiddenFromNav() %}
+                                                        <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
+                                                            <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">
+                                                                {{ node.title }}
+                                                                {% if(node.active) %}<i class="icon-chevron-right"></i>{% endif %}
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </nav>
+                </div>
             </div>
-            <div class="span9 js-navigation-space-hook">
-                <nav role="navigation" class="js-navigation navigation navigation--big">
-                    <!-- Mobile navigation toggle -->
-                    <div class="js-navigation__toggle navigation__toggle navigation__toggle--top">
-                        MENU
-                        <i class="icon-reorder"></i>
-                        <i class="icon-remove"></i>
-                    </div>
-                    <!-- Navigation level -->
-                    <ul class="js-main-navigation-level navigation__level">
-                    {% if nodemenu is defined %}
-                        {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                        {% for node in activeSubnode.children %}
-                            {% if not node.node.isHiddenFromNav() %}
-                                <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
-                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">{{ node.title }}</a>
-                                    {% if node.children|length>0 %}
-                                        <!-- Mobile submenu toggle -->
-                                        <div class="js-navigation__toggle navigation__toggle navigation__toggle--submenu">
-                                            <i class="icon-chevron-down"></i>
-                                            <i class="icon-chevron-up"></i>
-                                        </div>
-                                        <!-- Submenu -->
-                                        <ul class="navigation__level navigation__level--sublevel">
-                                            {% for node in node.children %}
-                                                {% if not node.node.isHiddenFromNav() %}
-                                                    <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
-                                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">
-                                                            {{ node.title }}
-                                                            {% if(node.active) %}<i class="icon-chevron-right"></i>{% endif %}
-                                                        </a>
-                                                    </li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </nav>
+        </section>
+        <section class="container-fluid">
+            <div class="row-fluid">
+                <h1 class="span12">
+                    {% block pagetitle %}{% endblock %}
+                </h1>
+            </div>
+        </section>
+    </header>
+    {% endblock %}
+
+    {% block social %}
+    <section class="container-fluid">
+        <div class="row-fluid">
+            <div class="span2 offset10">
+                <a href="#">Twitter</a>
+                <a href="#">Facebook</a>
             </div>
         </div>
-    </header>
+    </section>
     {% endblock %}
 
     {% block breadcrumbs %}
@@ -111,7 +131,7 @@
     {% block footer %}
     <!-- Footer -->
     <footer role="footer" class="footer">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row-fluid">
                 {% if nodemenu is defined %}
                 {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
