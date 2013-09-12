@@ -213,6 +213,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Pages/HomePage/view.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate.html.twig', $dirPath . '/Pages/HomePage/pagetemplate.html.twig', true);
             GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate.html.twig');
+            $this->filesystem->copy($skeletonDir . '/Pages/HomePage/pagetemplate-no-slider.html.twig', $dirPath . '/Pages/HomePage/pagetemplate-no-slider.html.twig', true);
+            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/Pages/HomePage/pagetemplate-no-slider.html.twig');
             $this->filesystem->copy($skeletonDir . '/Pages/HomePage/slider.html.twig', $dirPath . '/Pages/HomePage/slider.html.twig', true);
         }
 
@@ -388,6 +390,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/formpage.yml');
         $this->filesystem->copy($skeletonDir . '/homepage.yml', $dirPath . '/homepage.yml', true);
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage.yml');
+        $this->filesystem->copy($skeletonDir . '/homepage-no-slider.yml', $dirPath . '/homepage-no-slider.yml', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/homepage-no-slider.yml');
         $this->filesystem->copy($skeletonDir . '/satelliteoverviewpage.yml', $dirPath . '/satelliteoverviewpage.yml', true);
         GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . '/satelliteoverviewpage.yml');
 
