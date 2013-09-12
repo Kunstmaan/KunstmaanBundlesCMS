@@ -24,7 +24,10 @@ At least, if you're running Debian or Ubuntu :p.
 
 For OS X users we suggest installing it using [Homebrew][5], so you can simply run :
 
-    brew install elasticsearch
+```
+brew install elasticsearch
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
+```
 
 And you should be good to go!
 
