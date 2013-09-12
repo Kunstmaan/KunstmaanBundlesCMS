@@ -1,30 +1,19 @@
-@charset "UTF-8";
-
 /* ==========================================================================
-   Stylesheet for all browsers
+   Vendor
 
    Never add styles directly to this file - set up imports
-   Style guide: https://github.com/necolas/idiomatic-css
    ========================================================================== */
 
-
-/* General config
+/* Bourbon
    ========================================================================== */
-@import "config/config";
+@import "../../../../../../../web/vendor/bourbon/app/assets/stylesheets/bourbon";
 
 
-/* Vendor
+/* Boostrap
    ========================================================================== */
-@import "vendors/vendors";
+@import "bootstrap-imports";
 
 
-/* Website Theme
+/* Cupcake
    ========================================================================== */
-/* helpers */
-@import "helpers/helpers";
-
-/* general */
-@import "general/general";
-
-/* components */
-@import "components/components";
+@import "../../../../../../web/vendor/cupcake/scss/base";
