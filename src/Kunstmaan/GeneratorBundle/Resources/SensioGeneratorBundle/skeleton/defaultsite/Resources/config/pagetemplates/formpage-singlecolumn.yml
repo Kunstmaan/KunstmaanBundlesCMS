@@ -1,5 +1,0 @@
-name: "Content page single column"
-rows:
-    - regions: 
-        - { name: "form", span: 12 }
-template: "~~~BUNDLE~~~::Pages\\FormPage\\pagetemplate-singlecolumn.html.twig"
