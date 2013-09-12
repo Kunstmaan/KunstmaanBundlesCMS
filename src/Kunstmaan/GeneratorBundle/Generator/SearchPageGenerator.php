@@ -36,12 +36,13 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     }
 
     /**
-     * @param Bundle          $bundle  The bundle
-     * @param string          $prefix  The prefix
-     * @param string          $rootDir The root directory
+     * @param Bundle          $bundle     The bundle
+     * @param string          $prefix     The prefix
+     * @param string          $rootDir    The root directory
+     * @param string          $createPage Create data fixtures or not
      * @param OutputInterface $output
      */
-    public function generate(Bundle $bundle, $prefix, $rootDir, OutputInterface $output)
+    public function generate(Bundle $bundle, $prefix, $rootDir, $createPage, OutputInterface $output)
     {
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
@@ -51,6 +52,9 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
 
         $this->generateEntities($bundle, $parameters, $output);
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
+        if ($createPage) {
+            $this->generateFixtures($bundle, $parameters, $output);
+        }
     }
 
     /**
@@ -90,6 +94,27 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         }
 
         $output->writeln('Generating entities : <info>OK</info>');
+    }
+
+    /**
+     * @param Bundle          $bundle     The bundle
+     * @param array           $parameters The template parameters
+     * @param OutputInterface $output
+     *
+     * @throws \RuntimeException
+     */
+    public function generateFixtures(Bundle $bundle, array $parameters, OutputInterface $output)
+    {
+        $dirPath = $bundle->getPath() . '/DataFixtures/ORM/';
+        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM/';
+
+        try {
+            $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SearchFixtures', $parameters);
+        } catch (\Exception $error) {
+            throw new \RuntimeException($error->getMessage());
+        }
+
+        $output->writeln('Generating fixtures : <info>OK</info>');
     }
 
     /**

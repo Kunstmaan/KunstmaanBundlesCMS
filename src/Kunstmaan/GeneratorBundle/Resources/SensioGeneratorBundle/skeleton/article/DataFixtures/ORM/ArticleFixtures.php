@@ -45,8 +45,7 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $em = $this->container->get('doctrine.orm.entity_manager');
 
-        $pageCreator = new PageCreatorService();
-        $pageCreator->setContainer($this->container);
+        $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
 
         $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
 

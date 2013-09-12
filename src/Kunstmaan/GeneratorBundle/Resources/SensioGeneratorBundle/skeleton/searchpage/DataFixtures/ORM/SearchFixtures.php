@@ -6,16 +6,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
-use Kunstmaan\SitemapBundle\Entity\SitemapPage;
+use Faker\Provider\Lorem;
+use Faker\Provider\DateTime;
+
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use {{ namespace }}\Entity\Pages\Search\SearchPage;
+
 /**
- * SitemapFixtures
+ * SearchFixtures
  */
-class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -29,35 +33,47 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        if ($this->container->getParameter('multilanguage')) {
+            $languages = explode('|', $this->container->getParameter('requiredlocales'));
+        }
+        if (!is_array($languages) || count($languages) < 1) {
+            $languages = array('en');
+        }
+
         $em = $this->container->get('doctrine.orm.entity_manager');
 
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
 
+        // Create article overview page
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
-        $sitemapPage = new SitemapPage();
-        $sitemapPage->setTitle('Sitemap');
+        $searchPage = new SearchPage();
+        $searchPage->setTitle('Search');
 
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Sitemap');
-            $translation->setSlug('sitemap');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Sitemap');
-            $translation->setSlug('sitemap');
-        });
+        foreach ($languages as $lang) {
+            if ($lang == 'nl') {
+                $title = 'Zoeken';
+            } else {
+                $title = 'Search';
+            }
+
+            $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
+                $translation->setTitle($title);
+                $translation->setSlug(Slugifier::slugify($title));
+                $translation->setWeight(50);
+            });
+        }
 
         $options = array(
             'parent' => $homePage,
-            'page_internal_name' => 'sitemap',
+            'page_internal_name' => 'search',
             'set_online' => true,
-            'hidden_from_nav' => true,
             'creator' => 'Admin'
         );
 
-        $pageCreator->createPage($sitemapPage, $translations, $options);
+        $pageCreator->createPage($searchPage, $translations, $options);
     }
 
     /**
@@ -67,7 +83,7 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 90;
+        return 70;
     }
 
     /**
