@@ -110,7 +110,7 @@
     {% block social %}
     <section class="container">
         <div class="row">
-            <div class="col-md-2 offset10">
+            <div class="col-md-2 col-md-offset-10">
                 <a href="#">Twitter</a>
                 <a href="#">Facebook</a>
             </div>
@@ -119,20 +119,26 @@
     {% endblock %}
 
     {% block breadcrumbs %}
-    {% if nodemenu.breadCrumb|length > 1 %}
-        <ul class="breadcrumb">
-            <li>You are here: </li>
-            {% for node in nodemenu.breadCrumb %}
-                {% if not loop.first %}
-                    {% if loop.last %}
-                        <li class="active">{{ node.title }}</a></li>
-                    {% else %}
-                        <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a> <span class="divider">/</span></li>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <section class="container">
+        <div class="row">
+            <nav class="col-md-12">
+            {% if nodemenu.breadCrumb|length > 1 %}
+                <ul class="breadcrumb">
+                    <li>You are here: </li>
+                    {% for node in nodemenu.breadCrumb %}
+                        {% if not loop.first %}
+                            {% if loop.last %}
+                                <li class="active">{{ node.title }}</a></li>
+                            {% else %}
+                                <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a> <span class="divider">/</span></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            </nav>
+        </div>
+    </section>
     {% endblock breadcrumbs %}
 
     <!-- Main -->
