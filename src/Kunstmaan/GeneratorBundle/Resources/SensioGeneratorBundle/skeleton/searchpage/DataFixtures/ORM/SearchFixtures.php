@@ -6,9 +6,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-use Faker\Provider\Lorem;
-use Faker\Provider\DateTime;
-
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
