@@ -49,17 +49,19 @@ $link-hover-color:      darken($link-color, 15%);
 $font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-family-serif:       Georgia, "Times New Roman", Times, serif;
 $font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
+$font-family-open-sans:   "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-family-base:        $font-family-sans-serif;
+$font-family-headers:     $font-family-open-sans;
 
-$font-size-base:          14px;
-$font-size-large:         ceil($font-size-base * 1.25); // ~18px
-$font-size-small:         ceil($font-size-base * 0.85); // ~12px
+$font-size-base:          15px;
+$font-size-large:         ceil($font-size-base * 1.25);
+$font-size-small:         ceil($font-size-base * 0.85);
 
-$line-height-base:        1.428571429; // 20/14
-$line-height-computed:    floor($font-size-base * $line-height-base); // ~20px
+$line-height-base:        1.5;
+$line-height-computed:    floor($font-size-base * $line-height-base);
 
-$headings-font-family:    $font-family-base;
-$headings-font-weight:    500;
+$headings-font-family:    $font-family-headers;
+$headings-font-weight:    100;
 $headings-line-height:    1.1;
 
 // Iconography
