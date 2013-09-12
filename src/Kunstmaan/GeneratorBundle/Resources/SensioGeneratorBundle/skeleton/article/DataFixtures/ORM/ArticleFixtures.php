@@ -36,6 +36,13 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        if ($this->container->getParameter('multilanguage')) {
+            $languages = explode('|', $this->container->getParameter('requiredlocales'));
+        }
+        if (!is_array($languages) || count($languages) < 1) {
+            $languages = array('en');
+        }
+
         $em = $this->container->get('doctrine.orm.entity_manager');
 
         $pageCreator = new PageCreatorService();
@@ -51,10 +58,12 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $overviewPage->setTitle('Article overview page');
 
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Article overview page');
-            $translation->setSlug('article-overview');
-        });
+        foreach ($languages as $lang) {
+             $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) {
+                $translation->setTitle('Article overview page');
+                $translation->setSlug('article-overview');
+            });
+        }
 
         $options = array(
             'parent' => $homePage,
@@ -80,10 +89,12 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
             $articlePage->setSummary(Lorem::paragraph(5));
 
             $translations = array();
-            $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) use($i) {
-                $translation->setTitle('Article title '.$i);
-                $translation->setSlug('article-1'.$i);
-            });
+            foreach ($languages as $lang) {
+                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($i) {
+                    $translation->setTitle('Article title '.$i);
+                    $translation->setSlug('article-1'.$i);
+                });
+            }
 
             $options = array(
                 'parent' => $overviewPage,
@@ -94,15 +105,17 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
 
             $articlePage = $pageCreator->createPage($articlePage, $translations, $options);
 
-            $pageparts = array(
-                'main' => array(
-                    $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
-                        array('setContent' => '<p>'.Lorem::paragraph(15).'</p>')
+            foreach ($languages as $lang) {
+                $pageparts = array(
+                    'main' => array(
+                        $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+                            array('setContent' => '<p>'.Lorem::paragraph(15).'</p>')
+                        )
                     )
-                )
-            );
+                );
 
-            $ppCreatorService->addPagePartsToPage($articlePage, $pageparts, 'en');
+                $ppCreatorService->addPagePartsToPage($articlePage, $pageparts, $lang);
+            }
         }
     }
 
