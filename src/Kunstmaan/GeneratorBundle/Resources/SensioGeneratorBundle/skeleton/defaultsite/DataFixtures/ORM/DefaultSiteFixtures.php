@@ -10,10 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
-use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
-use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
@@ -21,8 +17,6 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
-use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
@@ -247,10 +241,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Satellite');
             $translation->setSlug('satellite');
+            $translation->setWeight(20);
         });
         $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Satelliet');
             $translation->setSlug('satelliet');
+            $translation->setWeight(20);
         });
 
         $options = array(
@@ -541,10 +537,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Styles');
             $translation->setSlug('styles');
+            $translation->setWeight(40);
         });
         $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Styles');
             $translation->setSlug('styles');
+            $translation->setWeight(40);
         });
 
         $options = array(
@@ -627,10 +625,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Contact');
             $translation->setSlug('contact');
+            $translation->setWeight(60);
         });
         $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Contacteer ons');
             $translation->setSlug('contact');
+            $translation->setWeight(60);
         });
 
         $options = array(

@@ -10,7 +10,7 @@ use Faker\Provider\Lorem;
 use Faker\Provider\DateTime;
 
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
-use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -59,9 +59,16 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $translations = array();
         foreach ($languages as $lang) {
-             $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) {
-                $translation->setTitle('Article overview page');
-                $translation->setSlug('article-overview');
+            if ($lang == 'nl') {
+                $title = 'Artikels overzicht';
+            } else {
+                $title = 'Article overview page';
+            }
+
+            $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
+                $translation->setTitle($title);
+                $translation->setSlug(Slugifier::slugify($title));
+                $translation->setWeight(30);
             });
         }
 
@@ -82,17 +89,23 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         // Create articles
         for($i=1; $i<=rand(13,18); $i++) {
+            if ($lang == 'nl') {
+                $title = 'Artikel titel '.$i;
+            } else {
+                $title = 'Article title '.$i;
+            }
+
             $articlePage = new {{ entity_class }}Page();
-            $articlePage->setTitle('Article title '.$i);
+            $articlePage->setTitle($title);
             $articlePage->setAuthor($author);
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
 
             $translations = array();
             foreach ($languages as $lang) {
-                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($i) {
-                    $translation->setTitle('Article title '.$i);
-                    $translation->setSlug('article-1'.$i);
+                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
+                    $translation->setTitle($title);
+                    $translation->setSlug(Slugifier::slugify($title));
                 });
             }
 
