@@ -10,3 +10,4 @@ Table of contents
 3. [Create an admin list](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/CreatingAnAdminList.md)
 4. [Create a page](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/CreatingAPage.md)
 5. [Adding articles](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/AddingArticles.md)
+6. [Adding search](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/AddingSearch.md)
