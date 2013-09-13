@@ -34,18 +34,18 @@ wiring, so go ahead and execute the following :
 First this will ask for a table name prefix, I'll stick to `sb_` (but you're free to use another one if you'd like).
 
 Then it will ask for a name, this is the class name for your page part. It's best to use something sensible, preferably
-ending in PagePart. I'll call it the ServicePagePart.
+ending in PagePart, so let's call it the `ServicePagePart`.
 
 Now the generator will ask for a list of fields to add to the page part, so just enter the following at the respective
 prompts :
 
-- Field name : title,       field type : 1 (Single line text)
-- Field name : image,       field type : 5 (Image)
-- Field name : description, field type : 2 (Multi line text)
+- Field name : `title`,       field type : `1` (Single line text)
+- Field name : `image`,       field type : `5` (Image)
+- Field name : `description`, field type : `2` (Multi line text)
 
 And finally press return at the field name prompt without entering a field name to continue.
 
-Now you will be prompted to select the section(s) you want to add this page part to, for now just enter 5 (Main).
+Now you will be prompted to select the section(s) you want to add this page part to, for now just enter `5` (Main).
 
 If all goes well, the necessary code should have been created, and you'll get a hint on how to update your database to
 reflect the changes that were made.  You can either forcibly update your database (which might make it harder to
@@ -158,29 +158,25 @@ looks like this :
 
 ```html
 {% set tocContent = '' %}
-
 {% if page is defined %}
-
-{% for pagepart in getpageparts(page, "main") %}
-    {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
-      {% if pagepart.getNiv() == 2 %}
-          {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|slugify~'">'~pagepart.getTitle~'</a></li>' %}
-      {% endif %}
+    {% for pagepart in getpageparts(page, "main") %}
+        {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
+          {% if pagepart.getNiv() == 2 %}
+              {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|slugify~'">'~pagepart.getTitle~'</a></li>' %}
+          {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% if tocContent %}
+        <div class="toc-pp">
+            <ul>{{ tocContent|raw }}</ul>
+        </div>
     {% endif %}
-{% endfor %}
-
-{% if tocContent %}
-    &lt;div class="toc-pp"&gt;
-        &lt;ul&gt;{{ tocContent|raw }}&lt;/ul&gt;
-    &lt;/div&gt;
-{% endif %}
-
 {% endif %}
 ```
 
 Now suppose you want to have an ordered list instead of the unordered one.
 
-First create the folder that will contain the template override, in the root folder of your web app :
+First create the folder that will contain the template override, in the root folder of your web application :
 
     mkdir -p app/Resources/KunstmaanPagePartBundle/views/TocPagePart
 
@@ -188,23 +184,19 @@ Now create a new `view.html.twig` file that contains the code you wish to use to
 
 ```html
 {% set tocContent = '' %}
-
 {% if page is defined %}
-
-{% for pagepart in getpageparts(page, "main") %}
-    {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
-      {% if pagepart.getNiv() == 2 %}
-          {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|slugify~'">'~pagepart.getTitle~'</a></li>' %}
-      {% endif %}
+    {% for pagepart in getpageparts(page, "main") %}
+        {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
+          {% if pagepart.getNiv() == 2 %}
+              {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|slugify~'">'~pagepart.getTitle~'</a></li>' %}
+          {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% if tocContent %}
+        <div class="toc-pp">
+            <ol>{{ tocContent|raw }}</ol>
+        </div>
     {% endif %}
-{% endfor %}
-
-{% if tocContent %}
-    &lt;div class="toc-pp"&gt;
-        &lt;ol&gt;{{ tocContent|raw }}&lt;/ol&gt;
-    &lt;/div&gt;
-{% endif %}
-
 {% endif %}
 ```
 

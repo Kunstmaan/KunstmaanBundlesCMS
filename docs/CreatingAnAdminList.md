@@ -21,17 +21,17 @@ The first thing to do is create an entity to store this information. To do that,
 
 And enter the following data at the respective prompts :
 
-- Entity shortcut name : SandboxWebsiteBundle:Employee
-- Tablename prefix : sb_
-- Field name : first_name, type : string, length : 25
-- Field name : last_name, type : string, length : 50
-- Field name : twitter_handle, type : string, length : 20
+- Entity shortcut name : `SandboxWebsiteBundle:Employee`
+- Tablename prefix : `sb_`
+- Field name : `first_name`, type : `string`, length : `25`
+- Field name : `last_name`, type : `string`, length : `50`
+- Field name : `twitter_handle`, type : `string`, length : `20`
 
 We don't need an empty repository class, but would like an admin list, generate the source skeleton and initialize
 the routing, so answer these prompts accordingly.
 
 So, now we have the skeleton ready, but as mentioned before we would like to add a picture of the employee. We'll
-add this field manually, so open up src/Sandbox/WebsiteBundle/Entity/Employee.php and add the following :
+add this field manually, so open up `src/Sandbox/WebsiteBundle/Entity/Employee.php` and add the following :
 
 ```php
 ...
@@ -72,7 +72,7 @@ add this field manually, so open up src/Sandbox/WebsiteBundle/Entity/Employee.ph
 ```
 
 Since we've added an extra field to our entity, we'll also have to update the entry form (AdminType) that is attached
-to our Employee entity, so open up src/Sandbox/WebsiteBundle/Form/EmployeeAdminType.php and add the picture field there
+to our Employee entity, so open up `src/Sandbox/WebsiteBundle/Form/EmployeeAdminType.php` and add the picture field there
 as well :
 
 ```php
@@ -96,7 +96,7 @@ it immediately :
 
     app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
 
-If all went well, you should see a bare bones admin list when you go to /app_dev.php/en/admin/employee/.
+If all went well, you should see a bare bones admin list when you go to `/app_dev.php/en/admin/employee/`.
 
 
 3). Adding validation constraints
@@ -104,7 +104,7 @@ If all went well, you should see a bare bones admin list when you go to /app_dev
 
 As all fields (except for the picture) should be required, we can add the default NotBlank annotation to make sure
 validation errors are triggered when people don't fill out the form correctly, so open
-src/Sandbox/WebsiteBundle/Entity/Employee.php and add the following:
+`src/Sandbox/WebsiteBundle/Entity/Employee.php` and add the following:
 
 ```php
 ...
@@ -149,9 +149,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 4). Using a custom column template
 ----------------------------------
 
-It would be neat to display the picture (if there is one) in the admin list as well, and if we had proper column names
- (instead of the field name) so open src/Sandbox/WebsiteBundle/AdminList/EmployeeAdminListConfigurator.php and add
- these changes :
+It would be neat to display the picture (if there is one) in the admin list as well, and while we're at it, we would
+like to use proper column names (instead of the field name) as well. So open
+`src/Sandbox/WebsiteBundle/AdminList/EmployeeAdminListConfigurator.php` and make the following changes :
 
 ```php
     /**
@@ -166,10 +166,10 @@ It would be neat to display the picture (if there is one) in the admin list as w
     }
 ```
 
-But as the picture field has a toString method that just returns the id of the relevant record in the media table
-this will display a number instead of the actual image, which is not what we want. So let's fix that. First add
-a template file to display the column. So first create a new folder (we like a consistent naming scheme, so we'll
-add these custom column templates in AdminList/<Entity>/<column>.twig.html) :
+As the picture field has a toString method that just returns the id of the relevant record in the media table
+this will display a number instead of the actual image, which is not what we want. So let's fix that. First we'll
+a template file to display the column. So create a new folder (we like a consistent naming scheme, so we'll
+add these custom column templates in `AdminList/entity-name/column-name.twig.html`) :
 
 ```
 mkdir -p src/Sandbox/WebsiteBundle/Resources/views/AdminList/Employee
@@ -185,7 +185,7 @@ No picture!
 {% endif %}
 ```
 
-Add an extra entry for the employee_thumbnail filter to the filter_sets in app/config/config.yml :
+Add an extra entry for the `employee_thumbnail` filter to the `filter_sets` in `app/config/config.yml` :
 
 ```yml
 ...
@@ -199,7 +199,7 @@ liip_imagine:
                 thumbnail: { size: [100, 100], mode: outbound }
 ```
 
-And finally specify this template in the buildFields method in src/Sandbox/WebsiteBundle/AdminList/EmployeeAdminListConfigurator.php :
+And finally specify this template in the `buildFields` method in `src/Sandbox/WebsiteBundle/AdminList/EmployeeAdminListConfigurator.php` :
 
 ```php
     /**
@@ -219,7 +219,7 @@ And finally specify this template in the buildFields method in src/Sandbox/Websi
 -----------------------------------------------------------
 
 If you want to use the admin list for entities you already created, you will have to refactor your code (and probably
-create a database migration as well) so your entity extends our AbstractEntity (\Kunstmaan\AdminBundle\Entity\AbstractEntity).
+create a database migration as well) so your entity extends our AbstractEntity (`\Kunstmaan\AdminBundle\Entity\AbstractEntity`).
 
 And then you can simply run the admin list generator to generate the basic admin list skeleton:
 
@@ -233,18 +233,18 @@ Everything works great thus far, but when you look around the admin area, you'll
 admin list yet. So let's remedy this and make sure the admin list will appear in the Modules menu, so people using
 the back-end can simply click on a menu item to access the admin list.
 
-To do this, you have to create a service which implements the Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface
-interface, and this service should provide an implementation for the adaptChildren(MenuBuilder $menu, array &amp;$children,
-MenuItem $parent = null, Request $request = null) function.
+To do this, you have to create a service which implements the `Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface`
+interface, and this service should provide an implementation for the `adaptChildren(MenuBuilder $menu, array &amp;$children,
+MenuItem $parent = null, Request $request = null)` function.
 
-So, let's first create the necessary folder (by convention we put these in src/<WebsiteBundle>/Helper/Menu, but you're
+So, let's first create the necessary folder (by convention we put these in `src/Vendor/WebsiteBundle/Helper/Menu`, but you're
 free to use your own naming scheme of course) :
 
 ```
 mkdir -p src/Sandbox/WebsiteBundle/Helper/Menu
 ```
 
-Create a new menu adaptor class file (ModulesMenuAdaptor.php) in this folder with the following code :
+Create a new menu adaptor class file (`ModulesMenuAdaptor.php`) in this folder with the following code :
 
 ```php
 <?php
@@ -280,10 +280,10 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
 }
 ```
 
-The route name used above (sandboxwebsitebundle_admin_employee) should match the route name for the index method of the
-admin list.
+The route name used above (`sandboxwebsitebundle_admin_employee`) should match the route name for the index method of
+the admin list.
 
-And finally register this service in src/Sandbox/WebsiteBundle/Resources/config/services.yml by adding the following
+And finally register this service in `src/Sandbox/WebsiteBundle/Resources/config/services.yml` by adding the following
 snippet:
 
 ```yml
@@ -293,7 +293,7 @@ snippet:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 ```
 
-If you reload the page in the backend, you should see a new "Employee" menu item in the Modules menu.
+If you reload the page in the backend, you should now see a new "Employee" menu item in the Modules menu.
 
 That's about it for now!
 
@@ -305,6 +305,6 @@ You can easily define an admin list for new entities using :
 
     app/console kuma:generate:entity
 
-And for existing entities (that extend \Kunstmaan\AdminBundle\Entity\AbstractEntity) using :
+For existing entities (that extend `\Kunstmaan\AdminBundle\Entity\AbstractEntity`) use :
 
     app/console kuma:generate:adminlist

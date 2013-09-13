@@ -37,7 +37,7 @@ To test if it actually is running you can run :
 
 Which should return something like this :
 
-```
+```json
 {
   "ok" : true,
   "status" : 200,
@@ -71,7 +71,7 @@ changes :
 This should make sure the necessary table (which will store the search pages) is created.
 
 As before, we would like to be able to add the search page as a subpage of the homepage, so we need to add it to the
-```getPossibleChildTypes``` in the HomePage class, so open src/Sandbox/WebsiteBundle/Entity/Pages/HomePage.php, and add
+`getPossibleChildTypes` in the HomePage class, so open `src/Sandbox/WebsiteBundle/Entity/Pages/HomePage.php`, and add
 it :
 
 ```php
@@ -92,9 +92,9 @@ it :
 ```
 
 After adding this snippet, you should be able to add a search page on the homepage in the backend, so go ahead
-and do that (use 'Search' as title) - and make sure you publish it after it is created.
+and do that (use `Search` as title) - and make sure you publish it after it is created.
 
-If you now go to /app_dev.php/en/search in your browser you should see the search page, but currently it's not yet
+If you now go to `/app_dev.php/en/search` in your browser you should see the search page, but currently it's not yet
 indexing anything, so let's set up the index first, go ahead and run :
 
 ```
@@ -106,15 +106,16 @@ This should create the search index (if it does not exist yet) and populate it a
 
 If you would like to take a quick look at what is indexed, you could run the following :
 
-    curl -X GET http://localhost:9200/sandboxnodeindex/page/_search?q=*
+    curl -X GET http://localhost:9200/sandboxnodeindex/page/_search
 
 This will list all pages that were indexed in the index that was created.
 
-If you return to the search page, and enter 'Styles' in the search box (or open /app_dev.php/en/search?query=Styles&search=Search
+If you return to the search page, and enter `Styles` in the search box (or open `/app_dev.php/en/search?query=Styles&search=Search`
 in your browser), you should see the Styles page (unless you already deleted it of course, just enter any page title
 or some content).
 
 For background information on our node search implementation refer to the [KunstmaanNodeSearchBundle documentation][6].
+
 For background information on how to add your own custom indexes refer to the [KunstmaanSearchBundle documentation][7].
 
 

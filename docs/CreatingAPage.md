@@ -1,3 +1,7 @@
+There are times when a basic content page does not suffice, because you want to do some extra processing or
+want to integrate external services, and that's when you'll probably want to add your own custom page types.
+
+
 1) Creating your first custom page type
 ---------------------------------------
 
@@ -12,8 +16,8 @@ The first thing to do is to create a skeleton for the page, and again, we've got
 app/console kuma:generate:page
 ```
 
-It will ask for a table prefix name (I'm still using sb_) and a page name, which is the PHP class name of the
-page to generate. Since I want to display my Employees on this page, I'll call it EmployeesPage.
+It will ask for a table prefix name (I'm still using `sb_`) and a page name, which is the PHP class name of the
+page to generate. Since I want to display my Employees on this page, I'll call it `EmployeesPage`.
 
 Now, the generator will ask for custom fields to add to this page. By default a title and page title field will always
 be created. As we don't need any extra fields, just press return to continue.
@@ -25,7 +29,7 @@ Next up is the page part configuration to use. You can use any of the page part 
 for the main context. Select the number corresponding with the (default) 'Main' configuration.
 
 For the footer context select the 'Footer' page part configuration and lastly select the HomePage as page type that
-can have this page as sub-page. This will make sure you can only add the Employees page below the homepage
+can have this page as sub-page. This will make sure you can only add the Employees page as a subpage of the homepage
 in the page tree.
 
 The basic code skeleton should now be generated, so go ahead and create (and apply) a migration for the database
@@ -35,13 +39,13 @@ changes :
 app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
 ```
 
-If you head over to the admin area, to the Pages menu and click on the home page in the tree on the left, you should be
-able to add the EmployeesPage as a subpage. So just go ahead and do that, using "Employees" as title.
+If you head over to the admin area, to the Pages menu and click on the homepage in the tree on the left, you should be
+able to add the EmployeesPage as a subpage. So just go ahead and do that, using `Employees` as title.
 
-So now you've got your first custom page, which currently still acts like a basic content page, you can add
+So now you've got your first custom page, which currently still acts like a basic content page - ie. you can add
 page parts, set menu properties, change permissions, SEO and social settings. But what about the actual custom rendering?
 
-To customize the rendering of the page you'll have to dig into the source code, so open src/Sandbox/WebsiteBundle/Entity/Pages/EmployeesPage.php
+To customize the rendering of the page you'll have to dig into the source code, so open `src/Sandbox/WebsiteBundle/Entity/Pages/EmployeesPage.php`
 
 First note the following :
 
@@ -58,9 +62,11 @@ First note the following :
 ```
 
 The ```getPossibleChildTypes()``` function should return an array returning the page types that can be added as subpage
-of the page type. For every page you should return an associative array with key 'name' - containing the label that will
-be shown in the select box on the page - , and 'class'
-Since we don't really need any subpages, we can just return an empty array, so replace it with :
+of this page type. For every page type that you want to be able to add as a sub page, you should return an associative
+array  with key `name`, containing the label that will be shown in the select box on the page, and `class` which is the
+PHP class name (with full namespace) for that page type.
+
+Since we don't really need any subpages for our Employees page, we can just return an empty array, so replace it with :
 
 ```php
     public function getPossibleChildTypes()
@@ -69,9 +75,9 @@ Since we don't really need any subpages, we can just return an empty array, so r
     }
 ```
 
-If you do that and reload the Employees page you created, you should see the "Add subpage" button disappear.
+If you do that and reload the Employees page you created in the backend, you should see the "Add subpage" button disappear.
 
-The next function that needs or attention is :
+The next function that needs or attention is `getDefaultView` :
 
 ```php
     /**
@@ -107,7 +113,7 @@ mkdir -p src/Sandbox/WebsiteBundle/Resources/views/Pages/EmployeesPage
 cp src/Sandbox/WebsiteBundle/Resources/views/Pages/Common/view.html.twig src/Sandbox/WebsiteBundle/Resources/views/Pages/EmployeesPage/view.html.twig
 ```
 
-Next open up src/Sandbox/WebsiteBundle/Resources/views/Pages/EmployeesPage/view.html.twig.
+Next open up `src/Sandbox/WebsiteBundle/Resources/views/Pages/EmployeesPage/view.html.twig`.
 
 By default the contents of this file should match the following :
 
@@ -119,11 +125,11 @@ By default the contents of this file should match the following :
 ```
 
 The content block will be injected in the page layout, and as you can see by default we just render the page template
-defined for the page instance, by passing the current page reference into the ```render_pagetemplate``` Twig function.
+defined for the page instance, by passing the current page reference into the `render_pagetemplate` Twig function.
 
 It would be nice for the user to be able to add some custom page parts (some headers and introductory text) before we
 display the list of employees, so we'll just make sure to pass the list of employees as a variable to the template and
-render this list below the page parts.
+render it below the page parts.
 
 ```php
 {% extends 'SandboxWebsiteBundle:Page:layout.html.twig' %}
@@ -145,10 +151,10 @@ render this list below the page parts.
 {% endblock %}
 ```
 
-Next we'll have to pass the employees to the twig function. To do that we currently have a ```service``` function that
+Next we'll have to pass the employees to the Twig function. To do that we currently have a `service` function that
 you can override in the page type class.
 
-So add the following in EmployeesPage.php :
+So add the following in `EmployeesPage.php` :
 
 ```php
 ...
@@ -174,7 +180,7 @@ use Symfony\Component\HttpFoundation\Request;
 ```
 
 As you can see we just fetch all employees (using Doctrine), and pass them into the RenderContext (which is passed
-into Twig, so you'll get the list in your Twig template as the "employees" variable).
+into Twig, so you'll get the list in your Twig template as the `employees` variable).
 
 This function might be deprecated in the (near) future (ideally a controller action should be executed instead of having
 this code here).
@@ -191,7 +197,7 @@ Creating a custom page type is as simple as this :
 3) Under the hood
 -----------------
 
-- src/YourVendor/YourWebsiteBundle/Resources/config/pagetemplates contains the YML files defining page templates you can use.
-- src/YourVendor/YourWebsiteBundle/Entity/Pages contains the source code of the page type entities.
-- src/YourVendor/YourWebsiteBundle/Form/Pages contains the source code of the AdminTypes for your page types (ie. the definition of the page entry form).
-- src/YourVendor/YourWebsiteBundle/Resources/views/Pages contains the Twig views for your page types (every page type will be stored in a separate folder).
+- `src/YourVendor/YourWebsiteBundle/Resources/config/pagetemplates` contains the YML files defining page templates you can use.
+- `src/YourVendor/YourWebsiteBundle/Entity/Pages` contains the source code of the page type entities.
+- `src/YourVendor/YourWebsiteBundle/Form/Pages` contains the source code of the AdminTypes for your page types (ie. the definition of the page entry form).
+- `src/YourVendor/YourWebsiteBundle/Resources/views/Pages` contains the Twig views for your page types (every page type will be stored in a separate folder).

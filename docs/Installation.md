@@ -110,7 +110,7 @@ Next, generate the default website setup.
 
     app/console kuma:generate:default-site
 
-This will ask for a bundle namespace (just leave that to the default) and for the prefix enter sb_ (or enter one as
+This will ask for a bundle namespace (just leave that to the default) and for the prefix enter `sb_` (or enter one as
 you see fit).
 
 When this is done, create the database (if you haven't done so already) and the schema.
@@ -122,7 +122,7 @@ To get it to a usable state, load the default site fixtures :
 
     app/console doctrine:fixtures:load
 
-Just answer 'Y' at the prompt.
+Just answer `Y` at the prompt.
 
 To get started with Behat tests, you can generate basic tests for your admin interface by running the following :
 
