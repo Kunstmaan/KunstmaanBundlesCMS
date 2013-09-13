@@ -43,10 +43,12 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
         $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Sitemap');
             $translation->setSlug('sitemap');
+            $translation->setWeight(100);
         });
         $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Sitemap');
             $translation->setSlug('sitemap');
+            $translation->setWeight(100);
         });
 
         $options = array(
