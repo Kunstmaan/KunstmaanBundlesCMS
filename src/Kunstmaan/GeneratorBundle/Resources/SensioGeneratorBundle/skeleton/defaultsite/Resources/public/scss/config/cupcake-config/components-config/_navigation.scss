@@ -5,42 +5,103 @@
    Never add styles directly to this file
    ========================================================================== */
 
-//General
-$navigation-height:                             3em;
-$navigation-responsive-breakpoint:              40em;
 
-//Menu item
-$navigation-item-width:                         auto;
-$navigation-item-text-align:                    center;
-$navigation-item-small-text-align:              left;
-$navigation-item-link-padding:                  1.5em;
+/* General
+   ========================================================================== */
+$use-navigation-big-animated:                       true;
+$use-navigation-small:                              true;
+$use-navigation-small-animated:                     true;
+
+
+
+/* Scafolding
+   ========================================================================== */
+//General
+$navigation-height:                                 4em;
+
+
+//Navigation item
+$navigation-item-float:                             left;
+$navigation-item-width:                             auto;
+$navigation-item-text-align:                        center;
+$navigation-item-small-text-align:                  left;
+$navigation-item-link-padding:                      1.5em;
+
 
 //Sublevel
-$navigation-sublevel-z-index:                   10;
+$navigation-sublevel-z-index:                       10;
+$navigation-sublevel-width:                         auto;
 
-//Menu toggle
-$navigation-toggle-top-text-align:              right;
+$navigation-sublevel-item-float:                    none;
+$navigation-sublevel-item-text-align:               left;
 
-//Colors
-$navigation-background:                         #444;
-$navigation-sublevel-background:                #ccc;
 
-$navigation-item-color:                         #fff;
-$navigation-item-active-background:             #333;
+//Navigation toggle
+$navigation-toggle-top-text-align:                  right;
 
-$navigation-sublevel-item-color:                #333;
-$navigation-sublevel-item-active-background:    #aaa;
 
-$navigation-toggle-color:                       #fff;
-$navigation-toggle-top-background:              #333;
-$navigation-toggle-submenu-border-color:        #fff;
 
-$navigation-small-link-border-top-color:        #fff;
+/* Colors
+   ========================================================================== */
+//General
+$navigation-background:                             $gray-lighter;
+$navigation-small-background:                       $gray-lighter;
 
-$navigation-item-hover-background:              #ccc;
-$navigation-item-hover-color:                   #333;
 
-$navigation-item-link-hover-color:              #333;
+//Navigation item
+$navigation-item-color:                             $gray-dark;
 
-$navigation-sublevel-item-hover-background:     #aaa;
-$navigation-sublevel-item-hover-color:          #333;
+$navigation-item-active-background:                 $green;
+$navigation-item-active-color:                      $white;
+
+$navigation-item-hover-background:                  $gray-dark;
+$navigation-item-hover-color:                       $white;
+
+$navigation-small-item-color:                       $gray-dark;
+
+$navigation-small-item-active-background:           $green;
+$navigation-small-item-active-color:                $white;
+
+
+//Sublevel
+$navigation-sublevel-background:                    $gray-dark;
+
+$navigation-sublevel-item-color:                    $white;
+$navigation-sublevel-item-active-background:        $green;
+$navigation-sublevel-item-hover-background:         $green-dark;
+$navigation-sublevel-item-hover-color:              $white;
+
+$navigation-small-sublevel-item-color:              $black;
+$navigation-small-sublevel-background:              $gray-light;
+
+$navigation-small-sublevel-item-active-background:  $green-dark;
+$navigation-small-sublevel-item-active-color:       $white;
+
+
+//Navigation toggle
+$navigation-toggle-color:                           $gray-dark;
+$navigation-toggle-top-background:                  $gray-lighter;
+
+$navigation-sublevel-toggle-color:                  $green;
+$navigation-sublevel-toggle-border-color:           $white;
+$navigation-sublevel-toggle-active-color:           $white;
+
+
+//Navigation small
+$navigation-small-link-border-top-color:            $white;
+
+
+
+/* Animation
+   ========================================================================== */
+$navigation-big-animation-duration:                 .4s;
+$navigation-small-animation-duration:               .6s;
+
+
+
+
+
+
+
+
+

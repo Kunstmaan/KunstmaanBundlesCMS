@@ -33,18 +33,18 @@
 <body>
     {% block header %}
     <!-- Header -->
-    <header role="header">
+    <header role="header" class="main-header">
         <section class="container">
             <div class="row">
                 <div class="col-md-3">
                     {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
-                        Demosite
+                    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="site-logo">
+                        <img src="{{ asset('bundles/kunstmaanwebsite/img/general/demo-logo.svg') }}" alt="Demosite" />
                     </a>
                 </div>
                 {% if nodemenu is defined %}
                 <div class="col-md-8 js-navigation-space-hook">
-                    <nav role="navigation" class="js-navigation navigation navigation--big">
+                    <nav role="navigation" class="js-navigation navigation navigation--big navigation--animated">
                         <!-- Mobile navigation toggle -->
                         <div class="js-navigation__toggle navigation__toggle navigation__toggle--top">
                             MENU
@@ -53,36 +53,39 @@
                         </div>
                         <!-- Navigation level -->
                         <ul class="js-main-navigation-level navigation__level">
-                        {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                        {% for node in activeSubnode.children %}
-                            {% if not node.node.isHiddenFromNav() %}
-                                <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
-                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">{{ node.title }}</a>
-                                    {% if node.children|length>0 %}
-                                        <!-- Mobile submenu toggle -->
-                                        <div class="js-navigation__toggle navigation__toggle navigation__toggle--submenu">
-                                            <i class="icon-chevron-down"></i>
-                                            <i class="icon-chevron-up"></i>
-                                        </div>
-                                        <!-- Submenu -->
-                                        <ul class="navigation__level navigation__level--sublevel">
-                                        {% for node in node.children %}
-                                            {% if not node.node.isHiddenFromNav() %}
-                                                <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
-                                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">
-                                                        {{ node.title }}
-                                                        {% if(node.active) %}
-                                                            <i class="icon-chevron-right"></i>
-                                                        {% endif %}
-                                                    </a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
+                            <li class="navigation__item {% if(homepagePageNode.active) %}navigation__item--active{% endif %}">
+                                <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="navigation__link">Home</a>
+                            </li>
+                            {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                            {% for node in activeSubnode.children %}
+                                {% if not node.node.isHiddenFromNav() %}
+                                    <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">{{ node.title }}</a>
+                                        {% if node.children|length>0 %}
+                                            <!-- Mobile submenu toggle -->
+                                            <div class="js-navigation__toggle navigation__toggle navigation__toggle--sublevel">
+                                                <i class="icon-chevron-down"></i>
+                                                <i class="icon-chevron-up"></i>
+                                            </div>
+                                            <!-- Submenu -->
+                                            <ul class="navigation__level navigation__level--sublevel">
+                                            {% for node in node.children %}
+                                                {% if not node.node.isHiddenFromNav() %}
+                                                    <li class="navigation__item navigation__item--sublevel {% if(node.active) %}navigation__item--active{% endif %}">
+                                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link navigation__link--sublevel">
+                                                            {{ node.title }}
+                                                            {% if(node.active) %}
+                                                                <i class="icon-chevron-right"></i>
+                                                            {% endif %}
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
                         </ul>
                     </nav>
                 </div>
@@ -98,22 +101,20 @@
                 </div>
             </div>
         </section>
-        <section class="container">
-            <div class="row">
-                <h1 class="col-md-12">
-                    {% block pagetitle %}{% endblock %}
-                </h1>
-            </div>
-        </section>
+        {% block pagetitle %}{% endblock %}
     </header>
     {% endblock %}
 
     {% block social %}
     <section class="container">
-        <div class="row">
-            <div class="col-md-2 col-md-offset-10">
-                <a href="#">Twitter</a>
-                <a href="#">Facebook</a>
+        <div class="row row--padded">
+            <div class="col-md-12 text-right">
+                <a href="http://twitter.com/share" class="socialite twitter-share" data-url="http://www.kunstmaan.be" data-text="" data-count="true" rel="nofollow" target="_blank" class="social-link">
+                    Twitter
+                </a>
+                <a href="http://www.facebook.com/sharer.php?u=http://www.kunstmaan.be" class="socialite facebook-like" data-href="http://www.kunstmaan.be" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false" rel="nofollow" target="_blank" class="social-link">
+                    Facebook
+                </a>
             </div>
         </div>
     </section>

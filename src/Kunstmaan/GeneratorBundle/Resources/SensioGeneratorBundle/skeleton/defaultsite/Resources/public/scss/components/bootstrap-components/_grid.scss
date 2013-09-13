@@ -2,6 +2,12 @@
    Bootstrap grid adjustments
    ========================================================================== */
 
-.row-fluid, .row{
-    padding: 1em 0;
+.row--padded {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.row--padded-large {
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
 }

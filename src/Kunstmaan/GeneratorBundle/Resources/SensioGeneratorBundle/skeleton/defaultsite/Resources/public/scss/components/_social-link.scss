@@ -1,7 +1,8 @@
 /* ==========================================================================
-   Mixins
-
-   Never add styles directly to this file - set up imports
+   Site logo
    ========================================================================== */
 
-//@import "...";
+.social-link, .socialite-instance {
+    display: inline-block;
+    margin-left: 1em;
+}

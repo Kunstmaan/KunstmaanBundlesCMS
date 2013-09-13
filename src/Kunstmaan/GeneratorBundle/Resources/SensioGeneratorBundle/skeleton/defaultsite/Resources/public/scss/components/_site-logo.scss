@@ -1,7 +1,9 @@
 /* ==========================================================================
-   Mixins
-
-   Never add styles directly to this file - set up imports
+   Site logo
    ========================================================================== */
 
-//@import "...";
+.site-logo {
+    display: block;
+    height: $navigation-height;
+    line-height: $navigation-height;
+}

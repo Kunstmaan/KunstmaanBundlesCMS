@@ -1,31 +1,30 @@
 /* ==========================================================================
-   Components
-
-   Never add styles directly to this file - set up imports
+   Splash
    ========================================================================== */
 
-
-/* Bootstrap components
+/* General
    ========================================================================== */
-@import "bootstrap-components/bootstrap-components";
+.splash {
+    line-height: 160%;
+    border-bottom: .8em solid $gray-dark;
+}
 
 
-/* Cupcake components
+/* Title
    ========================================================================== */
-@import "cupcake-components/cupcake-components";
+.splash__title {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 120%;
+}
 
 
-/* Custom components
+/* Splash states
    ========================================================================== */
-@import "typography";
+.splash--green {
+    background-color: $green;
+    .splash__title {
+        color: $white;
+    }
 
-@import "header";
-@import "footer";
-
-@import "splash";
-@import "doormat";
-
-@import "site-logo";
-@import "social-link";
-
-//@import "iconfont";
+}
