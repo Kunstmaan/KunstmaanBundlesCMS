@@ -1,5 +1,5 @@
 Ok, so you've succesfully installed the Kunstmaan Bundles CMS, and (hopefully) played around a bit. Now it's time to
-start development.
+start coding.
 
 We'll gradually introduce all concepts, starting off with the basics. Throughout the manual we'll set up a small
 site for a virtual company. So if you follow all chapters, you should have a full featured site by the end of
@@ -10,8 +10,9 @@ the manual.
 -----------------------
 
 A piece of information that should be displayed on a page (/node), anywhere on the site, in a consistent and
-reusable way. It can be as simple as a heading or an image or a complex combination of different fields that
-belong together.
+reusable way. So basically it's a page building block you can add to pages of your site, that allows non technical
+users to add content to the site. It can be as simple as a heading or an image or a complex combination of different
+fields that belong together.
 
 Every page on your website can (optionally) contain one or more different page parts. You can limit the page parts
 to specific sections on specific pages as well if needed.
@@ -37,6 +38,7 @@ ending in PagePart. I'll call it the ServicePagePart.
 
 Now the generator will ask for a list of fields to add to the page part, so just enter the following at the respective
 prompts :
+
 - Field name : title,       field type : 1 (Single line text)
 - Field name : image,       field type : 5 (Image)
 - Field name : description, field type : 2 (Multi line text)
@@ -54,8 +56,8 @@ We prefer the latter, so go ahead and execute :
 
     app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
 
-This will create a migration and update your database. Now head on over to the back-end (/app_dev.php/en/admin) and
-have a look at the Content PageParts page (/app_dev.php/en/admin/nodes/2). If all went well, you should see 'Service'
+This will create a migration and update your database. Now head on over to the back-end (`/app_dev.php/en/admin`) and
+have a look at the Content PageParts page (`/app_dev.php/en/admin/nodes/2`). If all went well, you should see 'Service'
 at the bottom of the 'Add a pagepart' combobox and you should be able to add, edit and delete Service page parts as well.
 
 
@@ -65,8 +67,8 @@ at the bottom of the 'Add a pagepart' combobox and you should be able to add, ed
 Ok, all sweet and dandy, but the default template will probably not be what you would like it to be, so let's see how
 and where to change it.
 
-Head on over to src/Sandbox/WebsiteBundle/Resources/views/PageParts/ServicePagePart and have a look at the
-view.html.twig file located there. This file should contain the following :
+Head on over to `src/Sandbox/WebsiteBundle/Resources/views/PageParts/ServicePagePart` and have a look at the
+`view.html.twig` file located there. This file should contain the following :
 
 ```html
 <div class="service-pp">
@@ -77,19 +79,19 @@ view.html.twig file located there. This file should contain the following :
 ```
 
 We would like to have the service title as a second level heading, the image should be displayed as a 150x150 pixels
-thumbnail and the description should keep new lines entered in the textarea (but still be plain text). So let's modify
+thumbnail and the description should keep new lines entered in the text area (but still be plain text). So let's modify
 the template accordingly :
 
 ```html
 <div class="service-pp">
     <h2>{{ resource.title }}</h2>
-    {% if resource.image is not empty %}<img src="{{ asset(resource.image.url | imagine_filter('service_pp_thumbnail')) }}" {% if resource.imageAltText is not empty %}alt="{{ resource.imageAltText }}"{% endif %} align="left" />{% endif %}
+    {% if resource.image is not empty %}<img src="{{ asset(resource.image.url | imagine_filter('service_pp_thumbnail')) }}" {% if resource.imageAltText is not empty %}alt="{{ resource.imageAltText }}"{% endif %} align="left" class="img-thumbnail" />{% endif %}
     <p>{{ resource.description|nl2br }}</p>
 </div>
 ```
 
 Since we're using an [Imagine][1] filter to create a thumbnail of the image we selected, we'll have to edit the
-configuration settings to define it, so open app/config/config.yml and look for the liip_imagine section inside. By
+configuration settings to define it, so open `app/config/config.yml` and look for the liip_imagine section inside. By
 default it will look like this :
 
 ```yml
@@ -117,7 +119,7 @@ liip_imagine:
                 strip: ~
 ```
 
-So let's add an entry named service_pp_thumbnail to the filter_sets in app/config/config.yml :
+So let's add an entry named `service_pp_thumbnail` to the `filter_sets` in `app/config/config.yml` :
 
 ```yml
 ...
@@ -135,10 +137,10 @@ Now, clear the cache.
 
     app/console cache:clear
 
-And have a look at the front-end (/app_dev.php/en/content-pageparts), the Service page part should now be rendered
+And have a look at the front-end (`/app_dev.php/en/content-pageparts`), the Service page part should now be rendered
 as just defined.
 
-For more information on the Liip Imagine configuration refer to the [Liip Imagine Bundle documentation][2].
+For more information on the Liip Imagine bundle configuration options refer to the [Liip Imagine Bundle documentation][2].
 
 
 4) Overriding a page part template
@@ -151,7 +153,7 @@ So, how would you do that?
 It's quite simple actually. Let's have a look at the TocPagePart, which renders a simple table of contents containing
 all second level headings (HeaderPageParts where niv equals 2) on a page.
 
-The default template (located in vendor/kunstmaan/pagepart-bundle/Kunstmaan/PagePartBundle/Resources/views/TocPagePart/view.html.twig)
+The default template (located in `vendor/kunstmaan/pagepart-bundle/Kunstmaan/PagePartBundle/Resources/views/TocPagePart/view.html.twig`)
 looks like this :
 
 ```html
@@ -168,11 +170,9 @@ looks like this :
 {% endfor %}
 
 {% if tocContent %}
-    <div class="toc-pp">
-        <ul>
-        {{ tocContent|raw }}
-        </ul>
-    </div>
+    &lt;div class="toc-pp"&gt;
+        &lt;ul&gt;{{ tocContent|raw }}&lt;/ul&gt;
+    &lt;/div&gt;
 {% endif %}
 
 {% endif %}
@@ -184,7 +184,7 @@ First create the folder that will contain the template override, in the root fol
 
     mkdir -p app/Resources/KunstmaanPagePartBundle/views/TocPagePart
 
-Now create a new view.html.twig file that contains the code you wish to use to render the page part :
+Now create a new `view.html.twig` file that contains the code you wish to use to render the page part :
 
 ```html
 {% set tocContent = '' %}
@@ -200,11 +200,9 @@ Now create a new view.html.twig file that contains the code you wish to use to r
 {% endfor %}
 
 {% if tocContent %}
-    <div class="toc-pp">
-        <ol>
-        {{ tocContent|raw }}
-        </ol>
-    </div>
+    &lt;div class="toc-pp"&gt;
+        &lt;ol&gt;{{ tocContent|raw }}&lt;/ol&gt;
+    &lt;/div&gt;
 {% endif %}
 
 {% endif %}
@@ -214,7 +212,7 @@ Clear the cache :
 
     app/console cache:clear
 
-And reload the Content PageParts page (/app_dev.php/en/content-pageparts). The table of contents on top of the page
+And reload the Content PageParts page (`/app_dev.php/en/content-pageparts`). The table of contents on top of the page
 should now be rendered as an ordered list instead of the default unordered one.
 
 It's that simple! You just have to make sure you use the correct page part template folder names (watch out for case
@@ -232,11 +230,11 @@ Creating a basic page part is as simple as this :
 6) Under the hood
 -----------------
 
-- src/YourVendor/YourWebsiteBundle/Resources/config/pageparts contains the YML files for every page section.
-- src/YourVendor/YourWebsiteBundle/Entity/PageParts contains the source code of the page part entities.
-- src/YourVendor/YourWebsiteBundle/Form/PageParts contains the source code of the AdminTypes for your page parts (ie. the definition of the page part entry form).
-- src/YourVendor/YourWebsiteBundle/Resources/views/PageParts contains the Twig views for your page parts (every page part will be stored in a separate folder).
-- app/Resources/KunstmaanPagePartBundle/views contains template overrides you defined.
+- `src/YourVendor/YourWebsiteBundle/Resources/config/pageparts` contains the YML files for every page section.
+- `src/YourVendor/YourWebsiteBundle/Entity/PageParts` contains the source code of the page part entities.
+- `src/YourVendor/YourWebsiteBundle/Form/PageParts` contains the source code of the AdminTypes for your page parts (ie. the definition of the page part entry form).
+- `src/YourVendor/YourWebsiteBundle/Resources/views/PageParts` contains the Twig views for your page parts (every page part will be stored in a separate folder).
+- `app/Resources/KunstmaanPagePartBundle/views` contains template overrides you defined.
 
 
 [1]:  http://imagine.readthedocs.org/en/latest/

@@ -20,15 +20,16 @@ Since we use the Symfony framework, the [minimal requirements of Symfony][2] app
 - Your PHP.ini needs to have the date.timezone setting
 
 Apart from these you will also need the following :
+
 - [Node.js][3]
 - [Sass][4]
 - [Bower][5]
 - [Grunt][6]
 - a database server, preferrably [MySQL][7] 5.x (we haven't tried any other DB yet...)
-
-And a web server...
+- a web server...
 
 To install the required dependencies (apart from the database and web server) :
+
 - On OS X (using [Homebrew][8]):
 
 ```
@@ -48,8 +49,11 @@ npm install -g grunt
 ```
 
 - On Windows:
-    we kindly suggest installing [VirtualBox][11], [VMware][12] or another virtualization platform and running a Linux
-    VM on it, or basically : you're on your own.
+
+```
+We kindly suggest installing [VirtualBox][11], [VMware][12] or another virtualization platform and running a Linux
+VM on it, or basically : you're on your own.
+```
 
 
 2) Installing the Kunstmaan Bundles SE
@@ -58,7 +62,7 @@ npm install -g grunt
 As both the Kunstmaan Bundles and Symfony use [Composer][13] to manage their dependencies, the recommended way to
 create a new project is to use Composer.
 
-If you don't have Composer yet, download it following the instructions on http://getcomposer.org/ or just run the
+If you don't have Composer yet, download it following the instructions on [http://getcomposer.org/][13] or just run the
 following command :
 
     curl -s http://getcomposer.org/installer | php
@@ -109,7 +113,7 @@ Next, generate the default website setup.
 This will ask for a bundle namespace (just leave that to the default) and for the prefix enter sb_ (or enter one as
 you see fit).
 
-When this done, create the database (if you haven't done that already) and the schema.
+When this is done, create the database (if you haven't done so already) and the schema.
 
     app/console doctrine:database:create
     app/console doctrine:schema:create
@@ -120,7 +124,7 @@ To get it to a usable state, load the default site fixtures :
 
 Just answer 'Y' at the prompt.
 
-To get started with Behat tests, you can generate custom tests for your admin interface by running the following :
+To get started with Behat tests, you can generate basic tests for your admin interface by running the following :
 
     app/console kuma:generate:admin-tests
 
@@ -128,11 +132,13 @@ Just accept the default Bundle Namespace at the prompt.
 
 Now that all your code is generated, let's make sure all front-end assets are available :
 
-    bower install
-    npm install # you might need sudo here depending on your setup...
-    grunt build
-    app/console assets:install web
-    app/console assetic:dump
+```
+bower install
+npm install # you might need sudo here depending on your setup...
+grunt build
+app/console assets:install web
+app/console assetic:dump
+```
 
 
 5) Browsing the CMS administration pages
@@ -150,18 +156,20 @@ Log in using admin/admin.
 
 You should first check that your system setup matches the minimum requirements, but other than that here's the gist of it :
 
-    curl -s http://getcomposer.org/installer | php
-    php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install -s dev
-    app/console kuma:generate:bundle
-    app/console kuma:generate:default-site
-    app/console doctrine:schema:create
-    app/console doctrine:fixtures:load
-    app/console kuma:generate:admin-tests
-    bower install
-    npm install # you might need sudo here depending on your setup...
-    grunt build
-    app/console assets:install web
-    app/console assetic:dump
+```
+curl -s http://getcomposer.org/installer | php
+php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install -s dev
+app/console kuma:generate:bundle
+app/console kuma:generate:default-site
+app/console doctrine:schema:create
+app/console doctrine:fixtures:load
+app/console kuma:generate:admin-tests
+bower install
+npm install # you might need sudo here depending on your setup...
+grunt build
+app/console assets:install web
+app/console assetic:dump
+```
 
 Enjoy!
 
