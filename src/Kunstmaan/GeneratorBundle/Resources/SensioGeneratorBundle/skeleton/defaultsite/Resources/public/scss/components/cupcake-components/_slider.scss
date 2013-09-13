@@ -1,0 +1,8 @@
+/* ==========================================================================
+   Cupcake Slider adjustments
+   ========================================================================== */
+
+.slider-pp__flexslider {
+    background: $gray-lighter;
+    @include transition (all .3s ease-in-out);
+}

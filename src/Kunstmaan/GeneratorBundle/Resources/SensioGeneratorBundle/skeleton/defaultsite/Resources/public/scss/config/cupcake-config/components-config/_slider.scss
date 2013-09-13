@@ -11,7 +11,7 @@ $viewportHeight:                100%;
 
 /* Slide controls
    ========================================================================== */
-$slideBackgroundColor:          lighten(tomato, 5%);
+$slideBackgroundColor:          $gray-light;
 $slidePosition:                 relative;
 
 /* Aside nav controls */
@@ -21,22 +21,22 @@ $asideLeftMarginLeft:           $asideThumbWidth;
 
 /* Caption Controls */
 //Setup for caption aside of slides: change floats, imageWidth and captionPosition for other lay-out options
-$captionFloat:                  left;
-$captionWidth:                  20%;
+$captionFloat:                  none;
+$captionWidth:                  100%;
 $captionHeight:                 100%;
 $captionPadding:                1.5%;
-$captionPosition:               static;
-$captionPositionTop:            auto;
+$captionPosition:               absolute;
+$captionPositionTop:            0;
 $captionPositionRight:          auto;
 $captionPositionBottom:         auto;
-$captionPositionLeft:           auto;
+$captionPositionLeft:           0;
 
 $captionBackground:             none;
 
 //Button
-$buttonBackground:              #FFF;
-$buttonStateBackground:         #F5F5F5;
-$buttonColor:                   tomato;
+$buttonBackground:              $green;
+$buttonStateBackground:         $green-dark;
+$buttonColor:                   $white;
 $buttonBorder:                  none;
 $buttonBorderRadius:            5px;
 $buttonPadding:                 0 .6em;
@@ -46,13 +46,13 @@ $captionPaddingFallback:        $captionPadding;
 $captionWidthFallback:          $captionWidth - ($captionPaddingFallback * 2) - 0.3%;
 
 /* Image Controls */
-$imageWidth:                    (100% - $captionWidth); //defines the width of the images ackording to the width of the caption defined above. (When using the caption aside of the slides and not on top of them)
-$imageFloat:                    left;
+$imageWidth:                    100%; //defines the width of the images ackording to the width of the caption defined above. (When using the caption aside of the slides and not on top of them)
+$imageFloat:                    none;
 
 /* Direction Controls */
 $directionDisplay:              block; //overwrite manually, in the component scss file, when using multiple sliders, with multiple lay-outs on one page (the left and right thumbnail sliders don't use the direction nav by default)
-$directionColor:                tomato;
-$directionHoverColor:           lighten($directionColor, 10%);
+$directionColor:                $green;
+$directionHoverColor:           $green-dark;
 
 $directionImage:                url(../img/buttons/slider_nav.svg);
 $directionImageFallback:        url(../img/buttons/slider_nav.png);
@@ -68,7 +68,7 @@ $directionPostionBottom:        auto;
 $directionPostionLeft:          auto;
 
 $nextPositionTop:               $directionPostionTop;
-$nextPositionRight:             -50px;
+$nextPositionRight:             0;
 $nextPositionBottom:            auto;
 $nextPositionLeft:              auto;
 $nextBackgroundPosition:        100% 0;
@@ -76,24 +76,24 @@ $nextBackgroundPosition:        100% 0;
 $prevPositionTop:               $directionPostionTop;
 $prevPositionRight:             auto;
 $prevPositionBottom:            auto;
-$prevPositionLeft:              -50px;
+$prevPositionLeft:              0;
 $prevBackgroundPosition:        0 0;
 
 /* Navbar controls
    ========================================================================== */
-$idleItemBackground:             #555;
-$idleItemText:                   #EBEBEB;
-$hoverItemBackground:            #EBEBEB;
-$hoverItemText:                  #555;
-$activeItemBackground:           tomato;
-$activeItemText:                 #fff;
+$idleItemBackground:             $gray-dark;
+$idleItemText:                   $white;
+$hoverItemBackground:            $green-dark;
+$hoverItemText:                  $white;
+$activeItemBackground:           $black;
+$activeItemText:                 $white;
 
 $itemAmount:                     3;
 $itemSize:                       100%/$itemAmount; //only change the amount of items, item width is calculated automatically
 $itemPadding:                    3%;
 
-$idleItemDevider:                1px solid #ddd;
-$activeItemDevider:              1px solid #555;
+$idleItemDevider:                1px solid $gray-light;
+$activeItemDevider:              1px solid $gray-dark;
 
 //Fallbacks
 $itemPaddingFallback:           $itemPadding;

@@ -90,15 +90,15 @@
                     </nav>
                 </div>
                 {% endif %}
+                {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                {% if searchPageNode %}
                 <div class="col-md-1">
-                    {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-                    {% if searchPageNode %}
-                        <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}">
-                            <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" />
-                            <input type="submit" name="search" id="search" value="Q" />
-                        </form>
-                    {% endif %}
+                    <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}">
+                        <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" />
+                        <input type="submit" name="search" id="search" value="Q" />
+                    </form>
                 </div>
+                {% endif %}
             </div>
         </section>
         {% block pagetitle %}{% endblock %}
@@ -121,10 +121,10 @@
     {% endblock %}
 
     {% block breadcrumbs %}
+    {% if nodemenu.breadCrumb|length > 1 %}
     <section class="container">
         <div class="row">
             <nav class="col-md-12">
-            {% if nodemenu.breadCrumb|length > 1 %}
                 <ul class="breadcrumb">
                     <li>You are here: </li>
                     {% for node in nodemenu.breadCrumb %}
@@ -137,10 +137,10 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-            {% endif %}
             </nav>
         </div>
     </section>
+    {% endif %}
     {% endblock breadcrumbs %}
 
     <!-- Main -->
@@ -151,88 +151,94 @@
     {% block footer %}
     <!-- Footer -->
     <footer role="footer" class="footer">
-        <div class="container">
-            <div class="row">
-                {% if nodemenu is defined %}
-                {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                <nav class="col-md-2">
-                    <h4>Footer title</h4>
-                    <ul>
-                        {% for node in activeSubnode.children %}
-                            {% if not node.node.isHiddenFromNav() and node.node.internalName != '4_level_navigation' %}
-                                <li {% if(node.active) %} class="active" {% endif %}>
-                                    <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </nav>
-                {% endif %}
-
-                <nav class="col-md-2">
-                    <h4>Footer title</h4>
-                    <ul>
-                        <li>
-                            <a href="#">Footer link</a>
-                        </li>
-                        <li>
-                            <a href="#">Footer link</a>
-                        </li>
-                        <li>
-                            <a href="#">Footer link</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <nav class="col-md-2">
-                    <h4>Footer title</h4>
-                    <ul>
-                        <li>
-                            <a href="#">Footer link</a>
-                        </li>
-                        <li>
-                            <a href="#">Footer link</a>
-                        </li>
-                        <li>
-                            <a href="#">Footer link</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                {% set fourLevelNav = nodemenu.getNodeByInternalName('4_level_navigation') %}
-                {% if (fourLevelNav != null and fourLevelNav.online) %}
-                <nav class="col-md-2">
-                    <ul>
-                        <li {% if(fourLevelNav.active) %} class="active" {% endif %}>
-                            <a href="{{ path('_slug', { 'url': fourLevelNav.slug }) }}">{{ fourLevelNav.title }}</a>
-                            <ul class="doormat__list">
-                                {% for node in fourLevelNav.children if not node.node.isHiddenFromNav() %}
+        <section class="splash splash--gray-dark splash--border-top">
+            <div class="container">
+                <div class="row row--padded">
+                    {% if nodemenu is defined %}
+                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                    <nav class="col-md-2">
+                        <h4>Footer title</h4>
+                        <ul>
+                            {% for node in activeSubnode.children %}
+                                {% if not node.node.isHiddenFromNav() and node.node.internalName != '4_level_navigation' %}
                                     <li {% if(node.active) %} class="active" {% endif %}>
                                         <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
                                     </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-                {% endif %}
-                <div class="col-md-2 pull-right">
-                    Social links
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+
+                    <nav class="col-md-2">
+                        <h4>Footer title</h4>
+                        <ul>
+                            <li>
+                                <a href="#">Footer link</a>
+                            </li>
+                            <li>
+                                <a href="#">Footer link</a>
+                            </li>
+                            <li>
+                                <a href="#">Footer link</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <nav class="col-md-2">
+                        <h4>Footer title</h4>
+                        <ul>
+                            <li>
+                                <a href="#">Footer link</a>
+                            </li>
+                            <li>
+                                <a href="#">Footer link</a>
+                            </li>
+                            <li>
+                                <a href="#">Footer link</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    {% set fourLevelNav = nodemenu.getNodeByInternalName('4_level_navigation') %}
+                    {% if (fourLevelNav != null and fourLevelNav.online) %}
+                    <nav class="col-md-2">
+                        <ul>
+                            <li {% if(fourLevelNav.active) %} class="active" {% endif %}>
+                                <a href="{{ path('_slug', { 'url': fourLevelNav.slug }) }}">{{ fourLevelNav.title }}</a>
+                                <ul class="doormat__list">
+                                    {% for node in fourLevelNav.children if not node.node.isHiddenFromNav() %}
+                                        <li {% if(node.active) %} class="active" {% endif %}>
+                                            <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    {% endif %}
+                    <div class="col-md-2 pull-right">
+                        Social links
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="pull-left">
-                        &copy; {{ "now"|date("Y") }}
-                        {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
-                        {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}">{{ sitemap.title }}</a>{% endif %}
-                    </p>
-                    <p class="pull-right created-by">
-                        Created by <a href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanwebsite/img/general/km-logo.svg') }}" alt="Kunstmaan"></a>
-                    </p>
+        </section>
+        <section>
+            <div class="container">
+                <div class="row row--padded">
+                    <div class="col-md-12">
+                        <p class="pull-left">
+                            &copy; {{ "now"|date("Y") }}
+                            {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
+                            {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}">{{ sitemap.title }}</a>{% endif %}
+                        </p>
+                        <p class="pull-right created-by">
+                            Created by <a href="http://www.kunstmaan.be"><img src="{{ asset('bundles/kunstmaanwebsite/img/general/km-logo.svg') }}" alt="Kunstmaan"></a>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </footer>
     {% endblock %}
 

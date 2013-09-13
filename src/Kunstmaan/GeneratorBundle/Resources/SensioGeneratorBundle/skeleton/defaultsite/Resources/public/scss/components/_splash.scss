@@ -6,7 +6,6 @@
    ========================================================================== */
 .splash {
     line-height: 160%;
-    border-bottom: .8em solid $gray-dark;
 }
 
 
@@ -21,10 +20,25 @@
 
 /* Splash states
    ========================================================================== */
+.splash--border-bottom {
+    border-bottom: .8em solid $gray-light;
+}
+.splash--border-top {
+    border-top: .8em solid $gray-light;
+}
+
 .splash--green {
     background-color: $green;
+    border-color: $gray-dark;
     .splash__title {
         color: $white;
     }
+}
 
+.splash--gray-dark {
+    background-color: $gray-dark;
+    border-color: $green;
+    .splash__title {
+        color: $white;
+    }
 }
