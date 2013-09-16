@@ -36,14 +36,14 @@
     <header role="header" class="main-header">
         <section class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                     {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
                     <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="site-logo">
                         <img src="{{ asset('bundles/kunstmaanwebsite/img/general/demo-logo.svg') }}" alt="Demosite" />
                     </a>
                 </div>
                 {% if nodemenu is defined %}
-                <div class="col-md-8 js-navigation-space-hook">
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-8 js-navigation-space-hook">
                     <nav role="navigation" class="js-navigation navigation navigation--big navigation--animated">
                         <!-- Mobile navigation toggle -->
                         <div class="js-navigation__toggle navigation__toggle navigation__toggle--top">
@@ -92,10 +92,14 @@
                 {% endif %}
                 {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
                 {% if searchPageNode %}
-                <div class="col-md-1">
-                    <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}">
-                        <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" />
-                        <input type="submit" name="search" id="search" value="Q" />
+                <div class="visible-lg col-lg-1">
+                    <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox searchbox--small">
+                        <div class="searchbox-box">
+                            <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="search" class="searchbox__input" />
+                            <button type="submit" id="search" class="searchbox__submit">
+                                <i class="icon-search searchbox__submit__icon"></i>
+                            </button>
+                        </div>
                     </form>
                 </div>
                 {% endif %}
@@ -153,56 +157,82 @@
     <footer role="footer" class="footer">
         <section class="splash splash--gray-dark splash--border-top">
             <div class="container">
+                {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                {% if searchPageNode %}
+                <div class="row row--padded hidden-lg">
+                    <div class="col-xs-12 col-sm-5 col-sm-offset-7">
+                        <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox">
+                            <div class="searchbox-box">
+                                <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="search" class="searchbox__input" />
+                                <button type="submit" id="search" class="searchbox__submit">
+                                    <i class="icon-search searchbox__submit__icon"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+                {% if nodemenu is defined %}
+                {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                 <div class="row row--padded">
-                    {% if nodemenu is defined %}
-                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                    <nav class="col-md-2">
-                        <h4>Footer title</h4>
-                        <ul>
+                    <nav class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col--padded doormat">
+                        <h5 class="doormat__title">Footer title</h5>
+                        <ul class="list-reset doormat__link-list">
                             {% for node in activeSubnode.children %}
                                 {% if not node.node.isHiddenFromNav() and node.node.internalName != '4_level_navigation' %}
-                                    <li {% if(node.active) %} class="active" {% endif %}>
-                                        <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                    <li class="doormat__list-item {% if(node.active) %}active{% endif %}">
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="link--gray doormat__link">{{ node.title }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
                     </nav>
-                    {% endif %}
-
-                    <nav class="col-md-2">
-                        <h4>Footer title</h4>
-                        <ul>
-                            <li>
-                                <a href="#">Footer link</a>
+                    <nav class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col--padded doormat">
+                        <h5 class="doormat__title">Footer title</h5>
+                        <ul class="list-reset doormat__link-list">
+                            <li class="doormat__list-item">
+                                <a href="#" class="link--gray doormat__link">Footer link</a>
                             </li>
-                            <li>
-                                <a href="#">Footer link</a>
+                            <li class="doormat__list-item">
+                                <a href="#" class="link--gray doormat__link">Footer link</a>
                             </li>
-                            <li>
-                                <a href="#">Footer link</a>
+                            <li class="doormat__list-item">
+                                <a href="#" class="link--gray doormat__link">Footer link</a>
                             </li>
                         </ul>
                     </nav>
-
-                    <nav class="col-md-2">
-                        <h4>Footer title</h4>
-                        <ul>
-                            <li>
-                                <a href="#">Footer link</a>
+                    <nav class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col--padded doormat">
+                        <h5 class="doormat__title">Footer title</h5>
+                        <ul class="list-reset doormat__link-list">
+                            <li class="doormat__list-item">
+                                <a href="#" class="link--gray doormat__link">Footer link</a>
                             </li>
-                            <li>
-                                <a href="#">Footer link</a>
+                            <li class="doormat__list-item">
+                                <a href="#" class="link--gray doormat__link">Footer link</a>
                             </li>
-                            <li>
-                                <a href="#">Footer link</a>
+                            <li class="doormat__list-item">
+                                <a href="#" class="link--gray doormat__link">Footer link</a>
                             </li>
                         </ul>
                     </nav>
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-lg-offset-4 col--padded text-right">
+                        <a href="https://twitter.com/kunstmaan" class="social-link">
+                            <i class="social-link__icon icon-twitter"></i>
+                        </a>
+                        <a href="https://www.facebook.com/pages/Kunstmaan-Communication-Agency/203938002969326?fref=ts" class="social-link">
+                            <i class="social-link__icon icon-facebook"></i>
+                        </a>
+                        <a href="https://github.com/Kunstmaan" class="social-link">
+                            <i class="social-link__icon icon-github"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
 
-                    {% set fourLevelNav = nodemenu.getNodeByInternalName('4_level_navigation') %}
-                    {% if (fourLevelNav != null and fourLevelNav.online) %}
-                    <nav class="col-md-2">
+                {% set fourLevelNav = nodemenu.getNodeByInternalName('4_level_navigation') %}
+                {% if (fourLevelNav != null and fourLevelNav.online) %}
+                <div class="row row--padded">
+                    <nav class="col-md-12">
                         <ul>
                             <li {% if(fourLevelNav.active) %} class="active" {% endif %}>
                                 <a href="{{ path('_slug', { 'url': fourLevelNav.slug }) }}">{{ fourLevelNav.title }}</a>
@@ -216,11 +246,8 @@
                             </li>
                         </ul>
                     </nav>
-                    {% endif %}
-                    <div class="col-md-2 pull-right">
-                        Social links
-                    </div>
                 </div>
+                {% endif %}
             </div>
         </section>
         <section>

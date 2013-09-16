@@ -3,15 +3,20 @@
    ========================================================================== */
 
 .doormat {
-    background-color: #F5F5F5;
+
 }
 
-.doormat__description {
-    p {
-        margin-left: 25px;
-    }
+.doormat__title {
+    text-transform: uppercase;
+    color: $white;
+    margin-bottom: 1.5em;
 }
 
-.doormat__list {
-    list-style-type:none;
+.doormat__link-list {
+
+}
+
+.doormat__link {
+    line-height: 200%;
+    @include transition(all .15s ease-in-out);
 }

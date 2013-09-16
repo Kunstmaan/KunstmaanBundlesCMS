@@ -7,9 +7,9 @@
 
 // Which components would you like to use?
 $use-cookie-consent:    true;
-$use-full-img-bg:       true;
+$use-full-img-bg:       false;
 $use-navigation:        true;
-$use-iconfont:          true;
+$use-iconfont:          false;
 $use-slider:            true;
 
 @import "components-config/cookie-consent";
@@ -19,4 +19,4 @@ $use-slider:            true;
 @import "components-config/slider";
 
 // Which overrides would you like to use?
-$use-bootstrap-overrides:    true;
+$use-bootstrap-overrides:    false;

@@ -1,9 +1,9 @@
 /* ==========================================================================
-   Cupcake Navigation adjustments
+   Lists
    ========================================================================== */
 
-.navigation {}
-
-.navigation--small {
-    overflow: hidden;
+.list-reset {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }

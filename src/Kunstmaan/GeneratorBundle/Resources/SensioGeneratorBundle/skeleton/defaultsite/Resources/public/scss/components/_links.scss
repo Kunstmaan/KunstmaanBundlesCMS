@@ -1,9 +1,10 @@
 /* ==========================================================================
-   Cupcake Navigation adjustments
+   Lists
    ========================================================================== */
 
-.navigation {}
-
-.navigation--small {
-    overflow: hidden;
+.link--gray {
+    color: $gray;
+    &:hover, &:focus {
+        color: $green;
+    }
 }
