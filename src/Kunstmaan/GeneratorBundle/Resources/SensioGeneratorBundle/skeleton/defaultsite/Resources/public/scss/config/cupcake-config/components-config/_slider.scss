@@ -11,7 +11,7 @@ $viewportHeight:                100%;
 
 /* Slide controls
    ========================================================================== */
-$slideBackgroundColor:          $gray-light;
+$slideBackgroundColor:          $gray-dark;
 $slidePosition:                 relative;
 
 /* Aside nav controls */
@@ -24,7 +24,7 @@ $asideLeftMarginLeft:           $asideThumbWidth;
 $captionFloat:                  none;
 $captionWidth:                  100%;
 $captionHeight:                 100%;
-$captionPadding:                1.5%;
+$captionPadding:                4%;
 $captionPosition:               absolute;
 $captionPositionTop:            0;
 $captionPositionRight:          auto;
@@ -51,11 +51,11 @@ $imageFloat:                    none;
 
 /* Direction Controls */
 $directionDisplay:              block; //overwrite manually, in the component scss file, when using multiple sliders, with multiple lay-outs on one page (the left and right thumbnail sliders don't use the direction nav by default)
-$directionColor:                $green;
-$directionHoverColor:           $green-dark;
+$directionColor:                transparent;
+$directionHoverColor:           transparent;
 
-$directionImage:                url(../img/buttons/slider_nav.svg);
-$directionImageFallback:        url(../img/buttons/slider_nav.png);
+$directionImage:                none;
+$directionImageFallback:        none;
 $directionImageRepeat:          no-repeat;
 $directionImageWidth:           50px;
 $directionImageHeight:          50px;
@@ -68,7 +68,7 @@ $directionPostionBottom:        auto;
 $directionPostionLeft:          auto;
 
 $nextPositionTop:               $directionPostionTop;
-$nextPositionRight:             0;
+$nextPositionRight:             40px;
 $nextPositionBottom:            auto;
 $nextPositionLeft:              auto;
 $nextBackgroundPosition:        100% 0;
@@ -76,7 +76,7 @@ $nextBackgroundPosition:        100% 0;
 $prevPositionTop:               $directionPostionTop;
 $prevPositionRight:             auto;
 $prevPositionBottom:            auto;
-$prevPositionLeft:              0;
+$prevPositionLeft:              40px;
 $prevBackgroundPosition:        0 0;
 
 /* Navbar controls
@@ -90,7 +90,7 @@ $activeItemText:                 $white;
 
 $itemAmount:                     3;
 $itemSize:                       100%/$itemAmount; //only change the amount of items, item width is calculated automatically
-$itemPadding:                    3%;
+$itemPadding:                    2%;
 
 $idleItemDevider:                1px solid $gray-light;
 $activeItemDevider:              1px solid $gray-dark;
