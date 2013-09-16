@@ -304,6 +304,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
 
         $assetsTypes = array(
             'files',
+            'fonts',
             'img',
             'js',
             'scss'
