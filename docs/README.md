@@ -5,9 +5,9 @@ To guide you through setting up a website using the Kunstmaan Bundles CMS, we've
 
 Table of contents
 -----------------
-1. [Installation](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/Installation.md)
-2. [Create a pagepart](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/CreatingAPagePart.md)
-3. [Create an admin list](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/CreatingAnAdminList.md)
-4. [Create a page](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/CreatingAPage.md)
-5. [Adding articles](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/AddingArticles.md)
-6. [Adding search](https://github.com/Kunstmaan/KunstmaanBundlesDocs/blob/master/AddingSearch.md)
+1. [Installation](http://bundles.kunstmaan.be/getting-started/installation)
+2. [Create a pagepart](http://bundles.kunstmaan.be/getting-started/creating-a-pagepart)
+3. [Create an admin list](http://bundles.kunstmaan.be/getting-started/creating-an-adminlist)
+4. [Create a page](http://bundles.kunstmaan.be/getting-started/creating-a-page)
+5. [Adding articles](http://bundles.kunstmaan.be/getting-started/adding-news-articles)
+6. [Adding search](http://bundles.kunstmaan.be/getting-started/adding-search)
