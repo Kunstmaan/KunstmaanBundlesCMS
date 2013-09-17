@@ -1,7 +1,7 @@
-KunstmaanBundlesDocs
-====================
+Getting Started
+===============
 
-Documentation for the Kunstmaan Bundles
+To guide you through setting up a website using the Kunstmaan Bundles CMS, we've created a series of documentation pages that guide you through this process. At the end of this guide you will have a fully functional website with content pages and custom content bocks, an introduction to lists of objects in the backend, a news section and an integrated search engine.
 
 Table of contents
 -----------------
