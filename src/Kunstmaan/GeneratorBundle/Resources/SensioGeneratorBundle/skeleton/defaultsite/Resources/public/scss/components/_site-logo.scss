@@ -3,7 +3,28 @@
    ========================================================================== */
 
 .site-logo {
+    position: relative;
+    z-index: 1;
     display: block;
-    height: $navigation-height;
-    line-height: $navigation-height;
+    float: left;
+    line-height: 3.5em;
+    margin-bottom: -3.5em;
+    @media (min-width: $screen-xs) {
+        float: none;
+        margin-bottom: 0;
+        line-height: $navigation-height;
+    }
+}
+
+.site-logo__img {
+    display: inline-block;
+    width: auto;
+    height: 1.5em;
+     @media (min-width: $screen-xs) {
+        height: 1.9em;
+    }
+}
+.site-logo__img--big {
+    width: auto;
+    height: 4em;
 }

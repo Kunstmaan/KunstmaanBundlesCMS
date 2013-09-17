@@ -1,12 +1,9 @@
 /* ==========================================================================
-   Cupcake Navigation adjustments
+   Bootstrap pagination fallback (until fanta has it right)
    ========================================================================== */
 
-.navigation--small {
-    overflow: hidden;
-}
-
-.navigation__level--sublevel {
-    left: auto;
-    top: 100%;
+.pagination {
+    ul {
+        @extend .pagination;
+    }
 }

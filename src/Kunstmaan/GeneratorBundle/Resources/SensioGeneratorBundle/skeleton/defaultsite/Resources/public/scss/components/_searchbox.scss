@@ -24,7 +24,7 @@
     padding: 0 2.5em 0 .5em;
     border: 1px solid $black;
     border-right: none;
-    background: $gray-light;
+    background: $white;
     @include transition(border-color .2s ease-in-out);
     &:focus, &:active {
         outline: none;
@@ -47,8 +47,6 @@
 .searchbox__submit__icon {
     font-size: 1.3em;
 }
-
-
 
 .searchbox--small {
     .searchbox-box {

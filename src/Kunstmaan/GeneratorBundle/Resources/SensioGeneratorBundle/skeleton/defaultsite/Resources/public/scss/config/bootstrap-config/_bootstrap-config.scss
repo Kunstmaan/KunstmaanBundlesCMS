@@ -331,13 +331,13 @@ $nav-pills-active-link-hover-color:         #fff;
 // Pagination
 // -------------------------
 
-$pagination-bg:                        #fff;
-$pagination-border:                    #ddd;
+$pagination-bg:                        $white;
+$pagination-border:                    $gray-light;
 
 $pagination-hover-bg:                  $gray-lighter;
 
-$pagination-active-bg:                 $brand-primary;
-$pagination-active-color:              #fff;
+$pagination-active-bg:                 $green;
+$pagination-active-color:              $white;
 
 $pagination-disabled-color:            $gray-light;
 
@@ -550,9 +550,9 @@ $badge-border-radius:         10px;
 
 // Breadcrumbs
 // -------------------------
-$breadcrumb-bg:               #f5f5f5;
-$breadcrumb-color:            #ccc;
-$breadcrumb-active-color:     $gray-light;
+$breadcrumb-bg:               transparent;
+$breadcrumb-color:            $black;
+$breadcrumb-active-color:     $gray-dark;
 
 
 // Carousel

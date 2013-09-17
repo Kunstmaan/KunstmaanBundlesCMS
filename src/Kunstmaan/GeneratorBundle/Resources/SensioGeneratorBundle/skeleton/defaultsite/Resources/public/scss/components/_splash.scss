@@ -7,7 +7,14 @@
 .splash {
     line-height: 160%;
 }
-
+.splash__container {
+    position: relative;
+    .language-nav {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
 
 /* Title
    ========================================================================== */
@@ -30,6 +37,13 @@
 .splash--green {
     background-color: $green;
     border-color: $gray-dark;
+    .splash__title {
+        color: $white;
+    }
+}
+.splash--blue {
+    background-color: $blue;
+    border-color: $blue-dark;
     .splash__title {
         color: $white;
     }

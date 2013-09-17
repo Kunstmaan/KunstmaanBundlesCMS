@@ -1,31 +1,32 @@
-<div class="row-fluid">
-    <div class="span3">
-        {% set children = nodemenu.getNodeByInternalName('satellite').children %}
-        {% include '~~~BUNDLE~~~:Layout:submenu.html.twig' with {'items': children} %}
-    </div>
-    <div class="span9">
-        {% set trans_title = 'satellite.' ~ page.type %}
-        <h2>{{ trans_title|trans }}</h2>
-        {% if satellites|length > 0%}
-            <table class="table table-striped table-bordered table-sortable responsive">
-                <thead>
-                <tr>
-                    <th>{{ 'satellite.name'|trans|capitalize }}</th>
-                    <th>{{ 'satellite.launched'|trans|capitalize }}</th>
-                    <th>{{ 'satellite.weight'|trans|capitalize }} (kg)</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for satellite in satellites %}
-                <tr>
-                    <td><a href="{{ satellite.link }}" target="_blank">{{ satellite.name }}</a></td>
-                    <td>{{ satellite.launched|date('F j, Y') }}</td>
-                    <td>{{ satellite.weight }}</td>
-                <tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
+<div class="container">
+    <div class="row row--padded-large">
+        <div class="col-md-3 col--padded">
+            {% set children = nodemenu.getNodeByInternalName('satellite').children %}
+            {% include '~~~BUNDLE~~~:Layout:submenu.html.twig' with {'items': children} %}
+        </div>
+        <div class="col-md-9 col--padded">
+            {% if satellites|length > 0%}
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ 'satellite.name'|trans|capitalize }}</th>
+                        <th>{{ 'satellite.launched'|trans|capitalize }}</th>
+                        <th>{{ 'satellite.weight'|trans|capitalize }} (kg)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for satellite in satellites %}
+                    <tr>
+                        <td><a href="{{ satellite.link }}" target="_blank">{{ satellite.name }}</a></td>
+                        <td>{{ satellite.launched|date('F j, Y') }}</td>
+                        <td>{{ satellite.weight }}</td>
+                    <tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
     </div>
 </div>
-

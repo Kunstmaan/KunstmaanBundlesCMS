@@ -77,7 +77,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->createHomePage();
         $this->createContentPages();
         $this->createAdminListPages();
-        $this->createStylePage();
+        // $this->createStylePage();
         $this->createFormPage();
         $this->createDashboard();
     }
@@ -734,12 +734,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['satellite.launched']['en'] = 'launched';
         $trans['satellite.weight']['en'] = 'launch mass';
         $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['en'] = 'Communication satellites';
-        $trans['satellite.'.Satellite::TYPE_CLIMATE]['en'] = 'Climate research satellites';
+        $trans['satellite.'.Satellite::TYPE_CLIMATE]['en'] = 'Climate satellites';
         $trans['satellite.name']['nl'] = 'naam';
         $trans['satellite.launched']['nl'] = 'lanceringsdatum';
         $trans['satellite.weight']['nl'] = 'gewicht';
         $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['nl'] = 'Communicatie satellieten';
-        $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische onderzoekssatellieten';
+        $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische satellieten';
+
+        $trans['article.readmore']['en'] = 'Read more';
+        $trans['satellite.readmore']['nl'] = 'Lees meer';
 
         foreach ($trans as $key => $array) {
             foreach ($array as $lang => $value) {

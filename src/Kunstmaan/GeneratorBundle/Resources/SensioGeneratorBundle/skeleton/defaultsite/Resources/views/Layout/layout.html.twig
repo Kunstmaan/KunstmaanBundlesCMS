@@ -30,7 +30,7 @@
     <!-- js -->
     ~~~TOP_JS~~~
 </head>
-<body>
+<body {% block extra_body_attributes %}{% endblock %}>
     {% block header %}
     <!-- Header -->
     <header role="header" class="main-header">
@@ -39,7 +39,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                     {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
                     <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="site-logo">
-                        <img src="{{ asset('bundles/kunstmaanwebsite/img/general/demo-logo.svg') }}" alt="Demosite" />
+                        <img src="{{ asset('bundles/kunstmaanwebsite/img/general/demo-logo.svg') }}" alt="Demosite" class="site-logo__img"/>
                     </a>
                 </div>
                 {% if nodemenu is defined %}
@@ -53,7 +53,7 @@
                         </div>
                         <!-- Navigation level -->
                         <ul class="js-main-navigation-level navigation__level">
-                            <li class="navigation__item {% if(homepagePageNode.active) %}navigation__item--active{% endif %}">
+                            <li class="navigation__item {% if nodemenu.getActiveForDepth(2) is null %}navigation__item--active{% endif %}">
                                 <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="navigation__link">Home</a>
                             </li>
                             {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
@@ -105,14 +105,68 @@
                 {% endif %}
             </div>
         </section>
-        {% block pagetitle %}{% endblock %}
+        <section class="splash splash--{% block pagetitleColor %}green{% endblock %} splash--border-bottom">
+            <div class="container splash__container">
+                <div class="row row--padded-large">
+                    <h1 class="col-md-9 splash__title">
+                        {% block pagetitleText %}
+                        {% if page is defined %}
+                            {{ get_title_for(page) }}
+                        {% endif %}
+                        {% endblock %}
+                    </h1>
+                    <nav class="col-md-2 language-nav">
+                        <span class="language-nav__active-lang">
+                            {{ app.request.locale }}
+                            <i class="icon-chevron-down"></i>
+                        </span>
+                        <ul class="list-reset language-nav__list">
+                            {% for lang in languagechooser_languages %}
+                            <li class="language-nav__list-item">
+                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
+                                    {{ lang }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
     </header>
     {% endblock %}
 
-    {% block social %}
     <section class="container">
-        <div class="row row--padded">
-            <div class="col-md-12 text-right">
+        <div class="row">
+            <div class="col-md-6 col--padded">
+                {% block breadcrumbs %}
+                {% if nodemenu.breadCrumb|length > 1 %}
+                <nav role="navigation">
+                    <ol class="breadcrumb">
+                        <li>
+                            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="breadcrumb__home-link">
+                                <i class="icon-home"></i>
+                            </a>
+                        </li>
+                        {% for node in nodemenu.breadCrumb %}
+                            {% if not loop.first %}
+                                {% if loop.last %}
+                                    <li class="active">{{ node.title }}</a></li>
+                                {% else %}
+                                    <li>
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                </nav>
+                {% endif %}
+                {% endblock breadcrumbs %}
+            </div>
+            {% block social %}
+            <div class="col-md-6 col--padded text-right">
                 <a href="http://twitter.com/share" class="socialite twitter-share" data-url="http://www.kunstmaan.be" data-text="" data-count="true" rel="nofollow" target="_blank" class="social-link">
                     Twitter
                 </a>
@@ -120,32 +174,9 @@
                     Facebook
                 </a>
             </div>
+            {% endblock %}
         </div>
     </section>
-    {% endblock %}
-
-    {% block breadcrumbs %}
-    {% if nodemenu.breadCrumb|length > 1 %}
-    <section class="container">
-        <div class="row">
-            <nav class="col-md-12">
-                <ul class="breadcrumb">
-                    <li>You are here: </li>
-                    {% for node in nodemenu.breadCrumb %}
-                        {% if not loop.first %}
-                            {% if loop.last %}
-                                <li class="active">{{ node.title }}</a></li>
-                            {% else %}
-                                <li><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a> <span class="divider">/</span></li>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </nav>
-        </div>
-    </section>
-    {% endif %}
-    {% endblock breadcrumbs %}
 
     <!-- Main -->
     <main role="main">
