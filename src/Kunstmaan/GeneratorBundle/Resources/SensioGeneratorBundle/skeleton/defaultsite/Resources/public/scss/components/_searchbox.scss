@@ -6,28 +6,18 @@
     position: relative;
 }
 
-.searchbox-box {
-    &:hover {
-        .searchbox__submit {
-            background: $green-dark;
-        }
-        .searchbox__input {
-            border-color: $green-dark;
-        }
-    }
-}
-
 .searchbox__input {
     float: left;
     width: 100%;
     height: 2em;
     padding: 0 2.5em 0 .5em;
-    border: 1px solid $black;
+    border: 1px solid $gray;
     border-right: none;
     background: $white;
     @include transition(border-color .2s ease-in-out);
     &:focus, &:active {
         outline: none;
+        border-color: $green-dark;
     }
 }
 
@@ -42,6 +32,9 @@
     line-height: 100%;
     text-align: center;
     @include transition(background .2s ease-in-out);
+    &:hover, &:focus {
+        background: $green-dark;
+    }
 }
 
 .searchbox__submit__icon {
