@@ -11,7 +11,7 @@ $viewportHeight:                100%;
 
 /* Slide controls
    ========================================================================== */
-$slideBackgroundColor:          $gray-dark;
+$slideBackgroundColor:          $green;
 $slidePosition:                 relative;
 
 /* Aside nav controls */
@@ -109,7 +109,7 @@ $itemIE7WidthFallback:          100% - ($itemPaddingFallback * 2);
 
 /* Slider Animations
    ========================================================================== */
-$animateContent :                true;
+$animateContent :                false;
 $animateKeyframe0:               translateX(220px);
-$animateKeyframe50:              translateX(220px);
+$animateKeyframe50:              translateX(0);
 $animateKeyframe100:             translateX(0);

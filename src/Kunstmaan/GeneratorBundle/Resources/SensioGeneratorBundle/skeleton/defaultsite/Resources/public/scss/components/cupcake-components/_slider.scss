@@ -3,11 +3,13 @@
    ========================================================================== */
 
 .slider-pp__caption--title {
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
     color: $green;
     text-transform: uppercase;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
     @media (max-width: $screen-sm) {
+        color: $white;
         font-size: 1.5em;
+        text-shadow: none;
     }
 }
 
@@ -15,18 +17,22 @@
     display: block;
     margin: 0 auto;
     padding: 0 0 1em;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
     @media (min-width: $screen-sm) {
-        font-size: 1.5em;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
     }
     @media (min-width: $screen-md) {
+        font-size: 1.5em;
         max-width: 25em;
     }
 }
 .slider-pp__caption {
+    padding: 8% 4% 0 0;
     p {
         margin: 0 auto;
         padding: 0 0 1em;
+    }
+    .btn-primary {
+        background: $green-dark;
     }
 }
 
@@ -75,3 +81,4 @@
         @extend .icon-chevron-left;
     }
 }
+
