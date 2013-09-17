@@ -205,11 +205,12 @@
                     </div>
                 </div>
                 {% endif %}
+
                 {% if nodemenu is defined %}
                 {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                 <div class="row row--padded">
-                    <nav class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col--padded doormat">
-                        <h5 class="doormat__title">Footer title</h5>
+                    <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
+                        <h5 class="doormat__title">Satelliet</h5>
                         <ul class="list-reset doormat__link-list">
                             {% for node in activeSubnode.children %}
                                 {% if not node.node.isHiddenFromNav() and node.node.internalName != '4_level_navigation' %}
@@ -220,35 +221,24 @@
                             {% endfor %}
                         </ul>
                     </nav>
-                    <nav class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col--padded doormat">
-                        <h5 class="doormat__title">Footer title</h5>
+                    <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
+                        <h5 class="doormat__title">Articles</h5>
                         <ul class="list-reset doormat__link-list">
                             <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">Footer link</a>
+                                <a href="#" class="link--gray doormat__link">Article 1</a>
                             </li>
                             <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">Footer link</a>
+                                <a href="#" class="link--gray doormat__link">Article 2</a>
                             </li>
                             <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">Footer link</a>
+                                <a href="#" class="link--gray doormat__link">More ...</a>
                             </li>
                         </ul>
                     </nav>
-                    <nav class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col--padded doormat">
-                        <h5 class="doormat__title">Footer title</h5>
-                        <ul class="list-reset doormat__link-list">
-                            <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">Footer link</a>
-                            </li>
-                            <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">Footer link</a>
-                            </li>
-                            <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">Footer link</a>
-                            </li>
-                        </ul>
+                    <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
+                        <h5 class="doormat__title">Contact</h5>
                     </nav>
-                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-lg-offset-4 col--padded text-right">
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-lg-offset-1 col--padded text-right">
                         <a href="https://twitter.com/kunstmaan" class="social-link">
                             <i class="social-link__icon icon-twitter"></i>
                         </a>
