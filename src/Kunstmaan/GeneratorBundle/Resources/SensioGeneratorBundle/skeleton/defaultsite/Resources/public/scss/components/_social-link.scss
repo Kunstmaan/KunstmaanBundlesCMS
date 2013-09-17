@@ -14,3 +14,15 @@
 .social-link__icon {
     font-size: 1.5em;
 }
+
+.socialite {
+    opacity: 0;
+    @include transition(opacity .2s ease-in-out);
+    &.socialite-loaded {
+        opacity: 1;
+    }
+}
+
+.socialite-container {
+    height: 2em;
+}
