@@ -20,7 +20,7 @@
 
 /* Icons
    ========================================================================== */
-.icon-home, .icon-chevron-up, .icon-chevron-down, .icon-chevron-left, .icon-chevron-right, .icon-remove, .icon-reorder, .icon-search, .icon-twitter, .icon-facebook, .icon-github, .icon-Untitled-1 {
+.icon-home, .icon-chevron-up, .icon-chevron-down, .icon-chevron-left, .icon-chevron-right, .icon-remove, .icon-reorder, .icon-search, .icon-twitter, .icon-github, .icon-Untitled-1, .icon-linkedin, .icon-facebook {
     font-family: $iconfont-name;
     speak: none;
     font-style: normal;
@@ -57,12 +57,15 @@
 .icon-twitter:before {
     content: "\f099";
 }
-.icon-facebook:before {
-    content: "\f09a";
-}
 .icon-github:before {
     content: "\f09b";
 }
 .icon-Untitled-1:before {
     content: "\e000";
+}
+.icon-linkedin:before {
+    content: "\f0e1";
+}
+.icon-facebook:before {
+    content: "\f09a";
 }

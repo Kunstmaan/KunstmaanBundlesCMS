@@ -15,9 +15,10 @@ window.onload = function() {
 			'icon-reorder' : '&#xf0c9;',
 			'icon-search' : '&#xf002;',
 			'icon-twitter' : '&#xf099;',
-			'icon-facebook' : '&#xf09a;',
 			'icon-github' : '&#xf09b;',
-			'icon-Untitled-1' : '&#xe000;'
+			'icon-Untitled-1' : '&#xe000;',
+			'icon-linkedin' : '&#xf0e1;',
+			'icon-facebook' : '&#xf09a;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;
