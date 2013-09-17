@@ -1,3 +1,6 @@
+Creating a page
+===============
+
 There are times when a basic content page does not suffice, because you want to do some extra processing or
 want to integrate external services, and that's when you'll probably want to add your own custom page types.
 
