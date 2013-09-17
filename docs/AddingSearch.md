@@ -1,3 +1,6 @@
+Adding search
+=============
+
 Another thing that almost every site needs is some sort of search functionality. And we've also written a bundle
 that should make your life a bit easier when you want to implement it.
 
