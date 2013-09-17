@@ -1,3 +1,6 @@
+Creating an adminlist
+=====================
+
 So you already created a page part and had it shown on the front-end website, but what if you want to manage
 other entities, that don't really belong in the nodes tree? We've got a bundle for that!
 
