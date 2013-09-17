@@ -1,5 +1,5 @@
-Kunstmaan Bundles Standard Edition (SE)
-=======================================
+Installation
+============
 
 Welcome to the Kunstmaan Bundles Standard Edition - a fully-functional CMS (content management system) based on
 [Symfony][1] that you can use as a skeleton for your websites.
