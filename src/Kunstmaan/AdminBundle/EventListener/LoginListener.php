@@ -2,16 +2,14 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use Monolog\Logger;
-
 use Doctrine\ORM\EntityManager;
-
+use Kunstmaan\AdminBundle\Entity\LogItem;
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
+use Monolog\Logger;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-
-use Kunstmaan\AdminBundle\Entity\LogItem;
-use Kunstmaan\AdminBundle\Entity\User;
 
 /**
  * Login listener to log login actions
@@ -34,17 +32,24 @@ class LoginListener
     private $logger;
 
     /**
+     * @var VersionChecker
+     */
+    private $versionChecker;
+
+    /**
      * Constructor
      *
-     * @param SecurityContext $context The security context
-     * @param EntityManager   $em      The entity manager
-     * @param Logger          $logger  The logger
+     * @param SecurityContext $context        The security context
+     * @param EntityManager   $em             The entity manager
+     * @param Logger          $logger         The logger
+     * @param $versionChecker $versionChecker The version checker
      */
-    public function __construct(SecurityContext $context, EntityManager $em, Logger $logger)
+    public function __construct(SecurityContext $context, EntityManager $em, Logger $logger, VersionChecker $versionChecker)
     {
-        $this->context = $context;
-        $this->em      = $em;
-        $this->logger  = $logger;
+        $this->context        = $context;
+        $this->em             = $em;
+        $this->logger         = $logger;
+        $this->versionChecker = $versionChecker;
     }
 
     /**
@@ -59,6 +64,7 @@ class LoginListener
 
         if ($user instanceof UserInterface) {
             $this->logger->addInfo($user . " succesfully logged in to the cms");
+            $this->versionChecker->periodicallyCheck();
         }
     }
 }

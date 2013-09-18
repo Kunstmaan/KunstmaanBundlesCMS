@@ -37,7 +37,16 @@ settings:
       role: Role
       add: Add Role
       edit: Edit Role
-      
+  version:
+      bundle: Bundle versions
+      composer_lock_not_found: No composer.lock file found in your project root
+      error_parsing_composer: Error parsing composer.lock file, no valid json
+      error: Something went wrong while fetching the version information. Please try again later.
+      moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+      uptodate: is up-to-date
+      toupdate: can be updated to
+      unknown: version information unknown
+
 # Tools
 tools:
   title: Tools
@@ -77,3 +86,4 @@ omnext:
   title: Welcome!
   welcome: Welcome.
   information: <strong>Information.</strong> There are no new notifications.
+
