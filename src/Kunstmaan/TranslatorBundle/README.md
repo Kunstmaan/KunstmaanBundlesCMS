@@ -42,7 +42,10 @@ Overwrite the KunstmaanTranslatorBundle config to your needs in config.yml:
 kunstmaan_translator:
     enabled: true
     managed_locales: ['nl','en','de']
+    default_bundle: YourNewWebsiteBundle
 ```
+
+the ```default_bundle``` is the bundle used when you import translations from the backend. The ```default_bundle``` will default to 'kunstmaantranslatorbundle'
 
 Update your database schema
 ```php
