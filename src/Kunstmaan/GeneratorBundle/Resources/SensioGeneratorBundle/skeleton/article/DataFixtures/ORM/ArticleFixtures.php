@@ -94,6 +94,7 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
 
+            $weight = $articlePage->getDate()->getTimestamp();
             $translations = array();
             foreach ($languages as $lang) {
                 if ($lang == 'nl') {
@@ -102,9 +103,10 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
                     $title = 'Article title '.$i;
                 }
 
-                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
+                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title, $weight) {
                     $translation->setTitle($title);
                     $translation->setSlug(Slugifier::slugify($title));
+                    $translation->setWeight($weight);
                 });
             }
 

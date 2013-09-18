@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ websitetitle | trans }}{% block title %}{% if page is defined %} - {{ get_title_for(page) }}{% endif %}{% endblock %}</title>
+    <title>{{ websitetitle | trans }}{% block title %}{% if page is defined and nodemenu.getActiveForDepth(2) is not null %} - {{ get_title_for(page) }}{% endif %}{% endblock %}</title>
     <meta name="description" content="">
     {% if page is defined %}
         {{ render_seo_metadata_for(page) }}
@@ -95,7 +95,7 @@
                 <div class="visible-lg col-lg-3">
                     <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox">
                         <div class="searchbox-box">
-                            <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="search" class="searchbox__input" />
+                            <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
                             <button type="submit" id="search" class="searchbox__submit">
                                 <i class="icon-search searchbox__submit__icon"></i>
                             </button>
@@ -207,49 +207,54 @@
                 {% endif %}
 
                 {% if nodemenu is defined %}
-                {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                <div class="row row--padded">
-                    <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
-                        <h5 class="doormat__title">Satelliet</h5>
-                        <ul class="list-reset doormat__link-list">
-                            {% for node in activeSubnode.children %}
-                                {% if not node.node.isHiddenFromNav() and node.node.internalName != '4_level_navigation' %}
-                                    <li class="doormat__list-item {% if(node.active) %}active{% endif %}">
-                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="link--gray doormat__link">{{ node.title }}</a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </nav>
-                    <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
-                        <h5 class="doormat__title">Articles</h5>
-                        <ul class="list-reset doormat__link-list">
-                            <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">Article 1</a>
-                            </li>
-                            <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">Article 2</a>
-                            </li>
-                            <li class="doormat__list-item">
-                                <a href="#" class="link--gray doormat__link">More ...</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
-                        <h5 class="doormat__title">Contact</h5>
-                    </nav>
-                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-lg-offset-1 col--padded text-right">
-                        <a href="https://twitter.com/kunstmaan" class="social-link">
-                            <i class="social-link__icon icon-twitter"></i>
-                        </a>
-                        <a href="http://www.linkedin.com/company/kunstmaan" class="social-link">
-                            <i class="social-link__icon icon-linkedin"></i>
-                        </a>
-                        <a href="https://github.com/Kunstmaan" class="social-link">
-                            <i class="social-link__icon icon-github"></i>
-                        </a>
+                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                    <div class="row row--padded">
+                        {% for node in activeSubnode.children %}
+                            {% if not node.node.isHiddenFromNav() %}
+                                <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
+                                    <h5 class="doormat__title"><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></h5>
+                                    <ul class="list-reset doormat__link-list">
+                                        {% if node.children|length>0 %}
+                                            {% if node.node.internalName == 'article_overview_page' %}
+                                                {% for node2 in node.children %}
+                                                    {% if loop.index < 4 %}
+                                                        {% if node2.title|length > 40 %}
+                                                            {% set ltitle = node2.title[:40] ~ '...' %}
+                                                        {% else %}
+                                                            {% set ltitle = node2.title %}
+                                                        {% endif %}
+                                                        <li class="doormat__list-item {% if(node2.active) %}active{% endif %}">
+                                                            <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="link--gray doormat__link">{{ ltitle }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for node2 in node.children %}
+                                                    {% if not node.node.isHiddenFromNav() or true %}
+                                                        <li class="doormat__list-item {% if(node2.active) %}active{% endif %}">
+                                                            <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="link--gray doormat__link">{{ node2.title }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-lg-offset-1 col--padded text-right">
+                            <a href="https://twitter.com/kunstmaan" class="social-link">
+                                <i class="social-link__icon icon-twitter"></i>
+                            </a>
+                            <a href="http://www.linkedin.com/company/kunstmaan" class="social-link">
+                                <i class="social-link__icon icon-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/Kunstmaan" class="social-link">
+                                <i class="social-link__icon icon-github"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
                 {% endif %}
 
                 {% set fourLevelNav = nodemenu.getNodeByInternalName('4_level_navigation') %}

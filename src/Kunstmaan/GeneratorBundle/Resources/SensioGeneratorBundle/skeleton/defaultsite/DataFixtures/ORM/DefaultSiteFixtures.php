@@ -744,6 +744,13 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['article.readmore']['en'] = 'Read more';
         $trans['satellite.readmore']['nl'] = 'Lees meer';
 
+        $trans['results']['en'] = 'results';
+        $trans['results']['nl'] = 'resultaten';
+        $trans['search']['en'] = 'search';
+        $trans['search']['nl'] = 'zoeken';
+        $trans['search.looking_for']['en'] = 'You were looking for';
+        $trans['search.looking_for']['nl'] = 'U zocht naar';
+
         foreach ($trans as $key => $array) {
             foreach ($array as $lang => $value) {
                 $t = new Translation;
