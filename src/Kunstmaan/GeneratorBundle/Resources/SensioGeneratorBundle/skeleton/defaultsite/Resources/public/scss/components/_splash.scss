@@ -22,6 +22,13 @@
     margin-top: 0;
     margin-bottom: 0;
     line-height: 120%;
+    @media (max-width: $screen-sm) {
+        &, &:first-child {
+            margin-top: 1em;
+            font-size: 1.5em;
+            line-height: 140%;
+        }
+    }
 }
 
 

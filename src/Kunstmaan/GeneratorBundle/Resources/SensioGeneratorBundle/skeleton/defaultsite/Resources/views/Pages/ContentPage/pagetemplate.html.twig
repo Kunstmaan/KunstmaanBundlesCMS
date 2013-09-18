@@ -2,7 +2,7 @@
     <div class="row row--padded">
         {% set children = nodemenu.current.node.children %}
         {% if nodemenu.current.node.children|length > 0 %}
-        <div class="col-md-3 col--padded">
+        <div class="col-md-3 col--padded hidden-sm">
             {% set activeSubnode = nodemenu.getActiveForDepth(2) %}
             {% include '~~~BUNDLE~~~:Layout:submenu.html.twig' with {'items': activeSubnode.children} %}
         </div>

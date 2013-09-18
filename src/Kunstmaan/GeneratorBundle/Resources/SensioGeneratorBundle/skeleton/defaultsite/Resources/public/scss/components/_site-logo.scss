@@ -9,7 +9,7 @@
     float: left;
     line-height: 3.5em;
     margin-bottom: -3.5em;
-    @media (min-width: $screen-xs) {
+    @media (min-width: $screen-sm) {
         float: none;
         margin-bottom: 0;
     }
@@ -19,7 +19,7 @@
     display: inline-block;
     width: auto;
     height: 1.5em;
-     @media (min-width: $screen-xs) {
+     @media (min-width: $screen-sm) {
         height: 2em;
     }
 }
