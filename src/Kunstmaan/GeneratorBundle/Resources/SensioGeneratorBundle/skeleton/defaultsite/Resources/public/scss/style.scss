@@ -13,23 +13,9 @@
 @import "config/config";
 
 
-/* Bourbon
+/* Vendor
    ========================================================================== */
-@import "../../../../../../web/vendor/bourbon/app/assets/stylesheets/bourbon";
-
-
-/* CSS Framework (Bootstrap 2)
-   ========================================================================== */
-@import "config/bootstrap-imports";
-
-
-/* CSS Framework (Cupcake)
-   ========================================================================== */
-/* Base */
-@import "../../../../../../web/vendor/cupcake/scss/base";
-
-/* Components */
-@import "config/cupcake-config/cupcake-imports";
+@import "vendors/vendors";
 
 
 /* Website Theme
@@ -42,6 +28,3 @@
 
 /* components */
 @import "components/components";
-
-/* theme */
-//@import "../../../../../../web/vendor/flat-ui/sass/flat-ui";

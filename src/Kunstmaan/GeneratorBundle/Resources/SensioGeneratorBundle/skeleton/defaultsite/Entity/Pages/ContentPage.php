@@ -39,8 +39,8 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface
                 'class'=> "{{ namespace }}\Entity\Pages\ContentPage"
             ),
             array(
-                'name' => 'FormPage',
-                'class'=> "{{ namespace }}\Entity\Pages\FormPage"
+                'name' => 'SatelliteOverviewPage',
+                'class'=> '{{ namespace }}\Entity\Pages\SatelliteOverviewPage'
             )
         );
     }
@@ -50,7 +50,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPagePartAdminConfigurations()
     {
-        return array("{{ bundle.getName() }}:main", "{{ bundle.getName() }}:banners", "{{ bundle.getName() }}:footer");
+        return array("{{ bundle.getName() }}:main");
     }
 
     /**
@@ -58,7 +58,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array("{{ bundle.getName() }}:contentpage", "{{ bundle.getName() }}:contentpage-singlecolumn");
+        return array("{{ bundle.getName() }}:contentpage");
     }
 
     /**

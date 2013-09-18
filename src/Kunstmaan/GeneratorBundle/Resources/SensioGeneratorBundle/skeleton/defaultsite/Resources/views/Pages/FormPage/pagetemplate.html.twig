@@ -1,21 +1,15 @@
-<div class="row-fluid">
-    <div class="span9">
-        {% if thanks is defined and thanks %}
-            {{ page.thanks|raw }}
-        {% else %}
-            {% form_theme frontendform '~~~BUNDLE~~~:Form:fields.html.twig' %}
-            <form action='{{ path('_slug', { 'url': nodemenu.current.slug }) }}' method='post' {{ form_enctype(frontendform) }} novalidate='true'>
-                {{ render_pageparts(page, 'main') }}
-                {{ form_rest(frontendform) }}
-            </form>
-        {% endif %}
-    </div>
-    <div class="span3">
-        {{ render_pageparts(page, 'banners') }}
-    </div>
-</div>
-<div class="row-fluid">
-    <div class="span12">
-        {{ render_pageparts(page, 'bottom') }}
+<div class="container">
+    <div class="row row--padded-large">
+        <div class="col-md-12">
+            {% if thanks is defined and thanks %}
+                {{ page.thanks|raw }}
+            {% else %}
+                {% form_theme frontendform '~~~BUNDLE~~~:Form:fields.html.twig' %}
+                <form action='{{ path('_slug', { 'url': nodemenu.current.slug }) }}' method="post" {{ form_enctype(frontendform) }} novalidate="true" class="form-horizontal" role="form">
+                    {{ render_pageparts(page, 'main') }}
+                    {{ form_rest(frontendform) }}
+                </form>
+            {% endif %}
+        </div>
     </div>
 </div>

@@ -1,13 +1,16 @@
-<div class="row-fluid">
-    <div class="span9">
-        {{ render_pageparts(page, 'main') }}
-    </div>
-    <div class="span3">
-        {{ render_pageparts(page, 'banners') }}
-    </div>
-</div>
-<div class="row-fluid">
-    <div class="span12">
-        {{ render_pageparts(page, 'footer') }}
+<div class="container">
+    <div class="row row--padded">
+        {% set children = nodemenu.current.node.children %}
+        {% if nodemenu.current.node.children|length > 0 %}
+        <div class="col-md-3 col--padded">
+            {% set activeSubnode = nodemenu.getActiveForDepth(2) %}
+            {% include '~~~BUNDLE~~~:Layout:submenu.html.twig' with {'items': activeSubnode.children} %}
+        </div>
+        <div class="col-md-9 col--padded">
+            {% else %}
+        <div class="col-md-12 col--padded">
+            {% endif %}
+            {{ render_pageparts(page, 'main') }}
+        </div>
     </div>
 </div>

@@ -28,7 +28,7 @@ class DefaultLocaleListener
         $response = $event->getResponse();
 
         // When we're on root and it's NOT succesful, redirect to the root for the defaultLocale.
-        if (($this->isRootUrl($request)) && !$response->isSuccessful()) {
+        if (($this->isRootUrl($request)) && !$response->isSuccessful() && !$response->isRedirection()) {
             $response = new RedirectResponse($request->getBaseUrl() . '/' . $this->defaultLocale);
             $event->setResponse($response);
         }

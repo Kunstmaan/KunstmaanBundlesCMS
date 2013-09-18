@@ -50,7 +50,7 @@ class FormPage extends AbstractFormPage implements HasPageTemplateInterface
      */
     public function getPagePartAdminConfigurations()
     {
-        return array("{{ bundle.getName() }}:form", "{{ bundle.getName() }}:banners", "{{ bundle.getName() }}:footer");
+        return array("{{ bundle.getName() }}:form");
     }
 
     /**
@@ -58,7 +58,7 @@ class FormPage extends AbstractFormPage implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array("{{ bundle.getName() }}:formpage", "{{ bundle.getName() }}:formpage-singlecolumn");
+        return array("{{ bundle.getName() }}:formpage");
     }
 
     /**

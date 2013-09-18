@@ -27,8 +27,9 @@ class GenerateSearchPageCommand extends GenerateDoctrineCommand
         $this
             ->setDefinition(
                 array(
-                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the SearchPage in'),
-                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
+                    new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the SearchPage in'),
+                    new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities'),
+                    new InputOption('createpage', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database with a search page')
                 )
             )
             ->setDescription('Generates a SearchPage based on KunstmaanNodeSearchBundle')
@@ -40,6 +41,10 @@ The <info>kuma:generate:searchpage</info> command generates a SearchPage using t
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
 <info>php app/console kuma:generate:searchpage --namespace=Namespace/NamedBundle --prefix=demo_</info>
+
+Add the <info>--createpage</info> option to create data fixtures to populate your database with a search page
+
+<info>php app/console kuma:generate:article --namespace=Namespace/NamedBundle --createpage</info>
 EOT
             )
             ->setName('kuma:generate:searchpage');
@@ -62,6 +67,7 @@ EOT
         $bundle = strtr($namespace, array('\\' => ''));
 
         $prefix = $input->getOption('prefix');
+        $createPage = $input->getOption('createpage');
         $bundle = $this
             ->getApplication()
             ->getKernel()
@@ -70,14 +76,19 @@ EOT
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
-        $generator->generate($bundle, $prefix, $rootDir, $output);
+        $generator->generate($bundle, $prefix, $rootDir, $createPage, $output);
 
         $output->writeln(array(
                 'Make sure you update your database first before you test the pagepart:',
                 '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
-                '')
+                '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>')
         );
+
+        if ($createPage) {
+            $output->writeln('    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --append</comment>');
+        }
+
+        $output->writeln('');
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)

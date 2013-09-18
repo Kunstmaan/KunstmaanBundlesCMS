@@ -1,9 +1,10 @@
 /* ==========================================================================
    Header
-
-   Style guide: https://github.com/necolas/idiomatic-css
    ========================================================================== */
 
-header {
-
+.main-header {
+    background: $gray-lighter;
+    .searchbox {
+        margin-top: 1em;
+    }
 }

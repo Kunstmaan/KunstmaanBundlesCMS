@@ -10,7 +10,7 @@ use Faker\Provider\Lorem;
 use Faker\Provider\DateTime;
 
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
-use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -36,10 +36,16 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        if ($this->container->getParameter('multilanguage')) {
+            $languages = explode('|', $this->container->getParameter('requiredlocales'));
+        }
+        if (!is_array($languages) || count($languages) < 1) {
+            $languages = array('en');
+        }
+
         $em = $this->container->get('doctrine.orm.entity_manager');
 
-        $pageCreator = new PageCreatorService();
-        $pageCreator->setContainer($this->container);
+        $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
 
         $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
 
@@ -48,13 +54,22 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $overviewPage = new {{ entity_class }}OverviewPage();
-        $overviewPage->setTitle('Article overview page');
+        $overviewPage->setTitle('Articles');
 
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Article overview page');
-            $translation->setSlug('article-overview');
-        });
+        foreach ($languages as $lang) {
+            if ($lang == 'nl') {
+                $title = 'Artikels';
+            } else {
+                $title = 'Articles';
+            }
+
+            $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
+                $translation->setTitle($title);
+                $translation->setSlug(Slugifier::slugify($title));
+                $translation->setWeight(30);
+            });
+        }
 
         $options = array(
             'parent' => $homePage,
@@ -72,18 +87,27 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
 
         // Create articles
-        for($i=1; $i<=rand(13,18); $i++) {
+        for($i=1; $i<=14; $i++) {
             $articlePage = new {{ entity_class }}Page();
-            $articlePage->setTitle('Article title '.$i);
+            $articlePage->setTitle('Artikel titel '.(15-$i));
             $articlePage->setAuthor($author);
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
 
             $translations = array();
-            $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) use($i) {
-                $translation->setTitle('Article title '.$i);
-                $translation->setSlug('article-1'.$i);
-            });
+            foreach ($languages as $lang) {
+                if ($lang == 'nl') {
+                    $title = 'Artikel titel '.(15-$i);
+                } else {
+                    $title = 'Article title '.(15-$i);
+                }
+
+                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title, $i) {
+                    $translation->setTitle($title);
+                    $translation->setSlug(Slugifier::slugify($title));
+                    $translation->setWeight(100 + $i);
+                });
+            }
 
             $options = array(
                 'parent' => $overviewPage,
@@ -94,15 +118,17 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
 
             $articlePage = $pageCreator->createPage($articlePage, $translations, $options);
 
-            $pageparts = array(
-                'main' => array(
-                    $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
-                        array('setContent' => '<p>'.Lorem::paragraph(15).'</p>')
+            foreach ($languages as $lang) {
+                $pageparts = array(
+                    'main' => array(
+                        $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+                            array('setContent' => '<p>'.Lorem::paragraph(15).'</p>')
+                        )
                     )
-                )
-            );
+                );
 
-            $ppCreatorService->addPagePartsToPage($articlePage, $pageparts, 'en');
+                $ppCreatorService->addPagePartsToPage($articlePage, $pageparts, $lang);
+            }
         }
     }
 

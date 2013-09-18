@@ -1,0 +1,16 @@
+<nav role="navigation">
+    <ul class="list-reset sub-navigation">
+    {% for node in items %}
+        {% if not node.node.isHiddenFromNav() %}
+            <li class="sub-navigation__item {% if(node.active) %}sub-navigation__item--active{% endif %}">
+                <a href="{{ path('_slug', { 'url': node.slug }) }}" class="sub-navigation__link">
+                    {{ node.title }}
+                    {% if(node.active) %}
+                        <i class="icon-chevron-right sub-navigation__link__icon"></i>
+                    {% endif %}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</nav>

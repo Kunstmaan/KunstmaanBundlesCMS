@@ -31,8 +31,7 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
-        $pageCreator = new PageCreatorService();
-        $pageCreator->setContainer($this->container);
+        $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
 
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
@@ -44,6 +43,12 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
         $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Sitemap');
             $translation->setSlug('sitemap');
+            $translation->setWeight(100);
+        });
+        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Sitemap');
+            $translation->setSlug('sitemap');
+            $translation->setWeight(100);
         });
 
         $options = array(

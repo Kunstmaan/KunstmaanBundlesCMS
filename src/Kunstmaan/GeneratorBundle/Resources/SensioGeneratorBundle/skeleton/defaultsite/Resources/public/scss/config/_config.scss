@@ -1,27 +1,12 @@
 /* ==========================================================================
    Config
 
-   Never add styles directly to this file - set up imports
-   Style guide: https://github.com/necolas/idiomatic-css
+   This file is exclusively intended for setting up imports
+   Never add styles directly to this file
    ========================================================================== */
 
-@import "colors";
-@import "typography";
-@import "base";
-@import "tables";
-@import "buttons";
-@import "forms";
-@import "dropdowns";
-@import "z-index";
 @import "paths";
-@import "navigation";
-@import "pagination";
-@import "hero-unit";
-@import "tooltips-popover";
-@import "grid";
-@import "iconfont";
+@import "colors";
 
-/* Cupcake config
-   ========================================================================== */
-@import "cupcake-config/iconfont";
-@import "cupcake-config/navigation";
+@import "bootstrap-config/bootstrap-config";
+@import "cupcake-config/cupcake-config";

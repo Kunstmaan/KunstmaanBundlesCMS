@@ -1,8 +1,5 @@
 name: "Content page"
 rows:
-    - regions: 
-        - { name: "main", span: 9 }
-        - { name: "banners", span: 3 }
-    - regions: 
-        - { name: "footer", span: 12 }
+    - regions:
+        - { name: "main", span: 12 }
 template: "~~~BUNDLE~~~::Pages\\ContentPage\\pagetemplate.html.twig"
