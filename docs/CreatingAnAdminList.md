@@ -1,15 +1,18 @@
+Creating an adminlist
+=====================
+
 So you already created a page part and had it shown on the front-end website, but what if you want to manage
 other entities, that don't really belong in the nodes tree? We've got a bundle for that!
 
 So, on to the admin list bundle.
 
-1). What is an admin list?
+1) What is an admin list?
 --------------------------
 
 In its most basic form it's a paged view of entities, with options to add, edit and delete entities.
 
 
-2). Creating your first admin list
+2) Creating your first admin list
 ----------------------------------
 
 Suppose we want to manage the employees of our virtual company. For every employee we'll store the first and last name,
@@ -99,7 +102,7 @@ it immediately :
 If all went well, you should see a bare bones admin list when you go to `/app_dev.php/en/admin/employee/`.
 
 
-3). Adding validation constraints
+3) Adding validation constraints
 ---------------------------------
 
 As all fields (except for the picture) should be required, we can add the default NotBlank annotation to make sure
@@ -146,7 +149,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 ```
 
-4). Using a custom column template
+4) Using a custom column template
 ----------------------------------
 
 It would be neat to display the picture (if there is one) in the admin list as well, and while we're at it, we would
@@ -215,7 +218,7 @@ And finally specify this template in the `buildFields` method in `src/Sandbox/We
 ```
 
 
-5). Creating an admin list for entities you already created
+5) Creating an admin list for entities you already created
 -----------------------------------------------------------
 
 If you want to use the admin list for entities you already created, you will have to refactor your code (and probably
@@ -226,7 +229,7 @@ And then you can simply run the admin list generator to generate the basic admin
     app/console kuma:generate:adminlist
 
 
-6). Adding the admin list to the Modules menu
+6) Adding the admin list to the Modules menu
 ---------------------------------------------
 
 Everything works great thus far, but when you look around the admin area, you'll notice that there's no entry for the
@@ -298,7 +301,7 @@ If you reload the page in the backend, you should now see a new "Employee" menu 
 That's about it for now!
 
 
-7). Summary
+7) Summary
 -----------
 
 You can easily define an admin list for new entities using :

@@ -1,3 +1,6 @@
+Creating a pagepart
+===================
+
 Ok, so you've succesfully installed the Kunstmaan Bundles CMS, and (hopefully) played around a bit. Now it's time to
 start coding.
 

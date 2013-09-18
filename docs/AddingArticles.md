@@ -1,3 +1,6 @@
+Adding news articles
+====================
+
 Now that we've covered the main topics, let's have a look at some extra utilities bundles we've prepared. Since quite
 a lot of the sites we make need some kind of news section - with news authors, news pages and a news overview page -
 we decided to create a bundle to make implementing these a lot easier.
