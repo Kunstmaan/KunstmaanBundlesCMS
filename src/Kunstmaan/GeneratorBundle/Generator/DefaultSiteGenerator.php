@@ -257,6 +257,12 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->filesystem->copy($skeletonDir . '/AbstractArticleOverviewPage/view.html.twig', $dirPath . 'AbstractArticleOverviewPage/view.html.twig', true);
         $this->filesystem->copy($skeletonDir . '/AbstractArticlePage/view.html.twig', $dirPath . 'AbstractArticlePage/view.html.twig', true);
 
+        $skeletonDir = sprintf("%s/app/KunstmaanFormBundle/views/SubmitButtonPagePart/", $this->fullSkeletonDir);
+        $dirPath = $rootDir .'/../app/Resources/KunstmaanFormBundle/views/SubmitButtonPagePart/';
+        $this->setSkeletonDirs(array($skeletonDir));
+
+        $this->filesystem->copy($skeletonDir . '/view.html.twig', $dirPath . 'view.html.twig', true);
+
         $output->writeln('Generating Twig Templates : <info>OK</info>');
 
         $this->generateErrorTemplates($bundle, $parameters, $rootDir, $output);

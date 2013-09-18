@@ -54,14 +54,14 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $overviewPage = new {{ entity_class }}OverviewPage();
-        $overviewPage->setTitle('Article overview page');
+        $overviewPage->setTitle('Articles');
 
         $translations = array();
         foreach ($languages as $lang) {
             if ($lang == 'nl') {
-                $title = 'Artikels overzicht';
+                $title = 'Artikels';
             } else {
-                $title = 'Article overview page';
+                $title = 'Articles';
             }
 
             $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {

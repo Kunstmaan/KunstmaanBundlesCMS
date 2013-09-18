@@ -610,7 +610,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $translation->setWeight(60);
         });
         $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Contacteer ons');
+            $translation->setTitle('Contact');
             $translation->setSlug('contact');
             $translation->setWeight(60);
         });

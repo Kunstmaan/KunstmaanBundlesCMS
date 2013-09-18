@@ -67,6 +67,7 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
             'parent' => $homePage,
             'page_internal_name' => 'search',
             'set_online' => true,
+            'hidden_from_nav' => true,
             'creator' => 'Admin'
         );
 
