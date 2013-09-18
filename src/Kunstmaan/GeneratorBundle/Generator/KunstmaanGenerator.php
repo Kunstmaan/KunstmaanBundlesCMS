@@ -187,7 +187,10 @@ class KunstmaanGenerator extends Generator
         }
 
         $this->filesystem->copy($skeletonDir.'view.html.twig', $dirPath.'view.html.twig', false);
-        GeneratorUtils::prepend("{% extends '".$bundle->getName().":Page:layout.html.twig' %}\n", $dirPath.'view.html.twig');
+        $contents = file_get_contents($dirPath.'view.html.twig');
+        if (strpos($contents, '{% extends ') === false) {
+            GeneratorUtils::prepend("{% extends '".$bundle->getName().":Page:layout.html.twig' %}\n", $dirPath.'view.html.twig');
+        }
     }
 
     /**
