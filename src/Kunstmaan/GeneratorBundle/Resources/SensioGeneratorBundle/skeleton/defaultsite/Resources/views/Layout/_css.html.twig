@@ -3,11 +3,10 @@
         <!--[if IE 7]>
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
-                '@" ~ bundle.getName() ~ "/Resources/public/scss/legacy/ie/ie8.scss'
-                '@" ~ bundle.getName() ~ "/Resources/public/scss/legacy/ie/ie7.scss'
-                filter='scss'
-                output='frontend/style_ie7.css'
+                'frontend/style.css'
+                'frontend/ie8.scss'
+                'frontend/ie7.scss'
+                output='frontend/style_combined_ie7.css'
              %}
                 <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
             {% endstylesheets %}
@@ -15,10 +14,9 @@
         <!--[if IE 8]>
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
-                '@" ~ bundle.getName() ~ "/Resources/public/scss/legacy/ie/ie8.scss'
-                filter='scss'
-                output='frontend/style_ie8.css'
+                'frontend/style.css'
+                'frontend/ie8.scss'
+                output='frontend/style_combined_ie8.css'
              %}
                 <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
             {% endstylesheets %}
@@ -26,12 +24,11 @@
         <!--[if gt IE 8]><!-->
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                '@" ~ bundle.getName() ~ "/Resources/public/scss/style.scss'
-                filter='scss'
-                output='frontend/style.css'
+                'frontend/style.css'
+                output='frontend/style_combined.css'
             %}
                <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
            {% endstylesheets %}
-        <!--<![endif]-->
+       <!--<![endif]-->
     {% endblock %}
 " }}
