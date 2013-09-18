@@ -1,3 +1,4 @@
+{{
     {% block css %}
         <!--[if IE 7]>
             {% stylesheets
@@ -21,12 +22,13 @@
             {% endstylesheets %}
         <![endif]-->
         <!--[if gt IE 8]><!-->
-        {% stylesheets
-            'vendor/flexslider/flexslider.css'
-            'frontend/style.css'
-            output='frontend/style_combined.css'
-        %}
-           <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
-       {% endstylesheets %}
+            {% stylesheets
+                'vendor/flexslider/flexslider.css'
+                'frontend/style.css'
+                output='frontend/style_combined.css'
+            %}
+               <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
+           {% endstylesheets %}
        <!--<![endif]-->
     {% endblock %}
+}}
