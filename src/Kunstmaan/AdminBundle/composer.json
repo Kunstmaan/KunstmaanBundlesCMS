@@ -16,9 +16,9 @@
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "friendsofsymfony/user-bundle": "dev-master",
         "knplabs/knp-menu-bundle": "*",
-        "monolog/monolog": "1.4.*@dev",
         "sensio/framework-extra-bundle": "*",
         "kunstmaan/adminlist-bundle": "self.version",
         "kunstmaan/utilities-bundle": "self.version",
@@ -30,6 +30,7 @@
         "pagerfanta/pagerfanta": "1.0.*@dev",
         "white-october/pagerfanta-bundle": "1.0.*@dev"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
     },
