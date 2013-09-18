@@ -81,3 +81,28 @@ You can also request the current cache status:
 app/console kuma:translator:cache --status
 ```
 
+3) Configuration
+---
+
+The ```kunstmaan_translator``` namespace has a few configuration options, a quick summary with their defaults:
+
+```
+kunstmaan_translator:
+	enabled: 			true
+	default_bundle: 	kunstmaantranslatorbundle
+	cache_dir: 			%kernel.cache_dir%/translations
+	managed_locales:	[]
+	file_formats:		['yml', 'xliff']
+	
+```
+
+* ```enabled``` : Enabled or disable the KunstmaanTranslatorBundle
+* ```default_bundle``` : Default bundle used for the import from within the backend (not case-sensitive)
+* ```cache_dir```: Cached translations dir
+* ```managed_locales```: Which locale translation files should be imported
+* ```file_formats```: Which type of translation files should be imported
+
+We advise you to overwrite the ```default_bundle``` configuration, as you will otherwise only include the KunstmaanTranslatorBundle translations.
+
+
+
