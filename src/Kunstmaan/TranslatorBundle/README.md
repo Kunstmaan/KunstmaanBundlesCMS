@@ -66,7 +66,11 @@ kunstmaan_translator:
 
 ```
 
-Update your database schema
+Database schema
+---
+
+Update your database schema with doctrine
+
 ```php
 app/console doctrine:schema:update --force
 
