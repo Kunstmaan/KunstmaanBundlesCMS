@@ -769,7 +769,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische satellieten';
 
         $trans['article.readmore']['en'] = 'Read more';
-        $trans['satellite.readmore']['nl'] = 'Lees meer';
+        $trans['article.readmore']['nl'] = 'Lees meer';
 
         $trans['results']['en'] = 'results';
         $trans['results']['nl'] = 'resultaten';
