@@ -15,6 +15,7 @@ class Satellite extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {
     const TYPE_COMMUNICATION = 'communication';
     const TYPE_CLIMATE       = 'climate_research';
+    const TYPE_PASSIVE       = 'passive';
 
     /**
      * @var string
@@ -55,7 +56,7 @@ class Satellite extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @ORM\Column(name="type", type="string", length=25)
      * @Assert\NotBlank()
-     * @Assert\Choice(choices = {"communication", "climate_research"})
+     * @Assert\Choice(choices = {"communication", "climate_research", "passive"})
      */
     private $type;
 

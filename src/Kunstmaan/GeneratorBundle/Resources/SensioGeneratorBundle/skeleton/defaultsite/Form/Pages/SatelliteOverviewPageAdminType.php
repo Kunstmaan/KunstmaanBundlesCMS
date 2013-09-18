@@ -29,7 +29,11 @@ class SatelliteOverviewPageAdminType extends \Kunstmaan\NodeBundle\Form\PageAdmi
             'type',
             'choice',
             array(
-                'choices' => array(Satellite::TYPE_COMMUNICATION => 'Communication satellite', Satellite::TYPE_CLIMATE => 'Climate research satellite'),
+                'choices' => array(
+                    Satellite::TYPE_COMMUNICATION => 'Communication satellite',
+                    Satellite::TYPE_CLIMATE => 'Climate research satellite',
+                    Satellite::TYPE_PASSIVE => 'Passive satellite'
+                ),
                 'required' => false,
             )
         );

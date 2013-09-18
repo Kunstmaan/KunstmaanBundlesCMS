@@ -485,6 +485,30 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
 
+        $satelliteOverviewPage = new SatelliteOverviewPage();
+        $satelliteOverviewPage->setTitle('Passive satellites');
+        $satelliteOverviewPage->setType(Satellite::TYPE_PASSIVE);
+
+        $translations = array();
+        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Passive satellites');
+            $translation->setSlug('passive-satellites');
+        });
+        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+            $translation->setTitle('Passieve satellieten');
+            $translation->setSlug('passieve-satellieten');
+        });
+
+        $options = array(
+            'parent' => $satellitePage,
+            'page_internal_name' => 'passive-satellites',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
+
         $list = array(
             array('Sputnik 1', '1957-10-04', 'http://en.wikipedia.org/wiki/Sputnik_1', 84, Satellite::TYPE_COMMUNICATION),
             array('Echo 1', '1960-08-12', 'http://en.wikipedia.org/wiki/Echo_satellite', 180, Satellite::TYPE_COMMUNICATION),
@@ -496,6 +520,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             array('GRACE', '2002-03-14', 'http://en.wikipedia.org/wiki/Gravity_Recovery_and_Climate_Experiment', 487, Satellite::TYPE_CLIMATE),
             array('Landsat 7', '1999-04-15', 'http://en.wikipedia.org/wiki/Landsat-7', 1973, Satellite::TYPE_CLIMATE),
             array('SORCE', '2003-01-25', 'http://en.wikipedia.org/wiki/SORCE', 315, Satellite::TYPE_CLIMATE),
+
+            array('LARES', '2012-02-13', 'http://en.wikipedia.org/wiki/LARES_(satellite)', 400, Satellite::TYPE_PASSIVE),
+            array('LAGEOS 1', '1976-05-04', 'http://en.wikipedia.org/wiki/LAGEOS', 411, Satellite::TYPE_PASSIVE),
         );
         foreach ($list as $info) {
             $satellite = new Satellite();

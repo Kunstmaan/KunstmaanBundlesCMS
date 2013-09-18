@@ -33,7 +33,11 @@ class SatelliteAdminType extends AbstractType
         $builder->add('link');
         $builder->add('weight', 'integer', array('label' => 'Launch mass (kg)'));
         $builder->add('type', 'choice', array(
-            'choices' => array(Satellite::TYPE_COMMUNICATION => 'Communication satellite', Satellite::TYPE_CLIMATE => 'Climate research satellite')
+            'choices' => array(
+                Satellite::TYPE_COMMUNICATION => 'Communication satellite',
+                Satellite::TYPE_CLIMATE => 'Climate research satellite',
+                Satellite::TYPE_PASSIVE => 'Passive satellite'
+            )
         ));
     }
 
