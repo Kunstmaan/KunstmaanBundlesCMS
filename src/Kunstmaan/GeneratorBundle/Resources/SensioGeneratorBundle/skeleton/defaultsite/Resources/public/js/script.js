@@ -21,7 +21,6 @@ var myApplication = (function($, window, undefined) {
             controlNav: true,
             slideshow: false,
             startAt: 0,
-            smoothHeight: true,
             manualControls: ".js-thumbs .js-thumbs--item",
             start: function(slider){
                 $(slider.slides.eq(0)).addClass('flex-animateIn');
