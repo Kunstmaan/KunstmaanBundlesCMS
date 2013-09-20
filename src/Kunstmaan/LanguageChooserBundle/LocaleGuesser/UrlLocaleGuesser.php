@@ -43,7 +43,7 @@ class UrlLocaleGuesser extends AbstractLocaleGuesser
             $parts = array_filter(explode("/", $path));
             $locale = array_shift($parts);
 
-            if (strlen($locale) == 2 && $localeValidator->isAllowed($locale)) {
+            if ($localeValidator->isAllowed($locale)) {
                 $this->identifiedLocale = $locale;
 
                 return true;
