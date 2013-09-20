@@ -32,9 +32,8 @@ class KunstmaanLanguageChooserExtension extends Extension
         $luneticsLocaleConfig['allowed_locales'] = $config['languagechooserlocales'];
         $luneticsLocaleConfig['cookie']['set_on_change'] = true;
         $luneticsLocaleConfig['cookie']['secure'] = true;
-        $luneticsLocaleConfig['guessing_order'] = array('query', 'cookie', 'session', 'browser', 'router');
+        $luneticsLocaleConfig['guessing_order'] = array('query', 'router', 'kuma_url_guesser', 'cookie', 'session', 'browser');
         $container->prependExtensionConfig('lunetics_locale', $luneticsLocaleConfig);
     }
-
 
 }

@@ -11,3 +11,9 @@ services:
              - [setLanguageChooserLanguages, [%kunstmaan_language_chooser.languagechooserlocales%]]
         tags:
             - { name: twig.extension }
+
+    kunstmaan_languagechooser.url_locale_guesser:
+        class: Kunstmaan\LanguageChooserBundle\LocaleGuesser\UrlLocaleGuesser
+        arguments: ["@lunetics_locale.validator.meta"]
+        tags:
+            - { name: lunetics_locale.guesser, alias: kuma_url_guesser }
