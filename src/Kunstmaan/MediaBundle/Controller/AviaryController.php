@@ -35,7 +35,7 @@ class AviaryController extends Controller
         $mediaManager = $this->get('kunstmaan_media.media_manager');
 
         $handler = $mediaManager->getHandler($media);
-        $fileHelper = $handler->getFormTypeHelper($media);
+        $fileHelper = $handler->getFormHelper($media);
         $fileHelper->getMediaFromUrl($this->getRequest()->get('url'));
         $media = $fileHelper->getMedia();
 
