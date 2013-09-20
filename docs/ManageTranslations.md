@@ -1,3 +1,6 @@
+Manage translations
+====================
+
 For those who want to make a multi-language website and edit translations easily, life became much easier.
 We've created a Translator bundle to edit your translations from withing our backend.
 
