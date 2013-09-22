@@ -14,7 +14,7 @@ mv app/config/routing.singlelang.yml app/config/routing.yml
 
 *WARNING: If you generated bundles before going single language, checht that you have all routing moved over to the new routing file!*
 
-## 1) Change the security.yml
+## 2) Change the security.yml
 
 Switch out the default [security.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/security.yml) with [security.singlelang.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/security.singlelang.yml)
 
@@ -22,3 +22,15 @@ Switch out the default [security.yml](https://github.com/Kunstmaan/KunstmaanBund
 mv app/config/security.yml app/config/security.multilang.yml 
 mv app/config/security.singlelang.yml app/config/security.yml 
 ```
+
+## 3) Change parameters.yml
+
+Configure the parameters.yml file like so:
+
+```
+    requiredlocales: en
+    defaultlocale: en
+    multilanguage: false
+```
+
+And that's it, you now have a singlelanguage website. 
