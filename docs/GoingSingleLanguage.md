@@ -12,6 +12,8 @@ mv app/config/routing.yml app/config/routing.multilang.yml
 mv app/config/routing.singlelang.yml app/config/routing.yml 
 ```
 
+*WARNING: If you generated bundles before going single language, checht that you have all routing moved over to the new routing file!*
+
 ## 1) Change the security.yml
 
 Switch out the default [security.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/security.yml) with [security.singlelang.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/security.singlelang.yml)
