@@ -11,3 +11,4 @@ Table of contents
 4. [Create a page](http://bundles.kunstmaan.be/getting-started/creating-a-page)
 5. [Adding articles](http://bundles.kunstmaan.be/getting-started/adding-news-articles)
 6. [Adding search](http://bundles.kunstmaan.be/getting-started/adding-search)
+7. [Advanced](http://bundles.kunstmaan.be/getting-started/advanced)
