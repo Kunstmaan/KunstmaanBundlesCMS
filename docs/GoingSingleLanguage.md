@@ -11,3 +11,12 @@ Switch out the default [routing.yml](https://github.com/Kunstmaan/KunstmaanBundl
 mv app/config/routing.yml app/config/routing.multilang.yml 
 mv app/config/routing.singlelang.yml app/config/routing.yml 
 ```
+
+## 1) Change the security.yml
+
+Switch out the default [security.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/security.yml) with [security.singlelang.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/security.singlelang.yml)
+
+```
+mv app/config/security.yml app/config/security.multilang.yml 
+mv app/config/security.singlelang.yml app/config/security.yml 
+```
