@@ -55,7 +55,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $treeNodes = $this->getTreeNodes($request->getLocale(), PermissionMap::PERMISSION_EDIT, $this->aclNativeHelper, true);
             $activeNodeIds = $this->getActiveNodeIds($request);
 
-            if ('KunstmaanNodeBundle_nodes' == $parent->getRoute()) {
+            if ('KunstmaanNodeBundle_nodes' == $parent->getRoute()  && isset($treeNodes[0])) {
                 $this->processNodes($menu, $children, $treeNodes[0], $parent, $activeNodeIds);
             } elseif ('KunstmaanNodeBundle_nodes_edit' == $parent->getRoute()) {
                 $parentRouteParams = $parent->getRouteparams();
