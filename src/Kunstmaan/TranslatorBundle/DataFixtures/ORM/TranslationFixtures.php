@@ -22,24 +22,43 @@ class TranslationFixtures extends AbstractFixture implements OrderedFixtureInter
     {
         $helloWorld = new Translation;
         $helloWorld->setKeyword('heading.hello_world');
-        $helloWorld->setLocale('en');
-        $helloWorld->setText('Hello World!');
         $helloWorld->setDomain('messages');
         $helloWorld->setCreatedAt(new \DateTime());
         $helloWorld->setFlag(Translation::FLAG_NEW);
 
-        $bonjour = clone $helloWorld;
-        $bonjour->setText('Bonjour tout le monde');
-        $bonjour->setLocale('fr');
+        $needForFlush = false;
 
-        $hallo = clone $helloWorld;
-        $hallo->setText('Hallo wereld!');
-        $hallo->setLocale('nl');
+        if (!$this->hasFixtureInstalled($manager, 'messages', 'heading.hello_world', 'en')) {
+            $helloWorld->setLocale('en');
+            $helloWorld->setText('Hello World!');
+            $manager->persist($helloWorld);
+            $needForFlush = true;
+        }
 
-        $manager->persist($helloWorld);
-        $manager->persist($bonjour);
-        $manager->persist($hallo);
-        $manager->flush();
+        if (!$this->hasFixtureInstalled($manager, 'messages', 'heading.hello_world', 'fr')) {
+            $bonjour = clone $helloWorld;
+            $bonjour->setText('Bonjour tout le monde');
+            $bonjour->setLocale('fr');
+            $manager->persist($bonjour);
+            $needForFlush = true;
+        }
+
+        if (!$this->hasFixtureInstalled($manager, 'messages', 'heading.hello_world', 'nl')) {
+            $hallo = clone $helloWorld;
+            $hallo->setText('Hallo wereld!');
+            $hallo->setLocale('nl');
+            $manager->persist($hallo);
+            $needForFlush = true;
+        }
+
+        if ($needForFlush === true) {
+            $manager->flush();
+        }
+    }
+
+    public function hasFixtureInstalled(ObjectManager $manager, $domain, $keyword, $locale)
+    {
+        return $manager->getRepository('Kunstmaan\TranslatorBundle\Entity\Translation')->findOneBy(array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale)) instanceof \Kunstmaan\TranslatorBundle\Entity\Translation;
     }
 
     /**
