@@ -19,7 +19,7 @@
                     {% for satellite in satellites %}
                     <tr>
                         <td><a href="{{ satellite.link }}" target="_blank">{{ satellite.name }}</a></td>
-                        <td>{{ satellite.launched|date('F j, Y') }}</td>
+                        <td>{{ satellite.launched|localizeddate('medium', 'none', app.request.locale) }}</td>
                         <td>{{ satellite.weight }}</td>
                     <tr>
                         {% endfor %}
