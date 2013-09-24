@@ -97,16 +97,42 @@ class PagePartAdmin
     {
         /** @var PagePartRef[] $pagepartrefs */
         $pagepartrefs = $this->getPagePartRefs();
-        { //remove pageparts
+
+        $allPostFields = $request->request->all();
+        $ppToDelete = array();
+        foreach (array_keys($allPostFields) as $key) {
+            // Example value: delete_pagepartadmin_74_tags_3
+            if (preg_match("/^delete_pagepartadmin_(\\d+)_(\\w+)_(\\d+)$/i", $key, $matches)) {
+                $ppToDelete[$matches[1]][] = array('name' => $matches[2], 'id' => $matches[3]);
+            }
+        }
+
+        {
             foreach ($pagepartrefs as &$pagepartref) {
+                // Remove pageparts
                 if ("true" == $request->get($pagepartref->getId() . "_deleted")) {
                     $pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
                     $this->em->remove($pagepart);
                     $this->em->remove($pagepartref);
                 }
+
+                // Remove sub-entities from pageparts
+                if (array_key_exists($pagepartref->getId(), $ppToDelete)) {
+                    $pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
+                    foreach ($ppToDelete[$pagepartref->getId()] as $deleteInfo) {
+                        $objects = call_user_func(array($pagepart, 'get'.ucfirst($deleteInfo['name'])));
+
+                        foreach ($objects as $object) {
+                            if ($object->getId() == $deleteInfo['id']) {
+                                $this->em->remove($object);
+                            }
+                        }
+                    }
+                }
             }
             $this->em->flush();
         }
+
         $this->newpps = array();
         $newids = $request->get($this->context . "_new");
         for ($i = 0; $i < sizeof($newids); $i++) {
@@ -154,6 +180,7 @@ class PagePartAdmin
             $newppref = $entityRepository->addPagePart($this->page, $newpagepart, 1 /*TODO addposition*/, $this->context);
             $newpprefs[$key] = $newppref;
         }
+
         { //re-order and save pageparts
             $sequences = $request->get($this->context . "_sequence");
             for ($i = 0; $i < sizeof($sequences); $i++) {
@@ -164,6 +191,7 @@ class PagePartAdmin
                 } else {
                     $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->find($sequence);
                 }
+
                 if (is_object($pagepartref)) {
                     $pagepartref->setSequencenumber($i + 1);
                     $pagepartref->setContext($this->context);
