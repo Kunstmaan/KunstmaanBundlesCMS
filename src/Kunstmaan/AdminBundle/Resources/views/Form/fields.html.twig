@@ -40,7 +40,49 @@
         <div class="input_prop{% if errors|length > 0 %} error{% endif %}">
             {{ form_label(form) }}
             <div class="input">
-                {{ form_widget(form) }}
+                <style>
+                    ul.nested_form {
+                        clear:both;
+                        list-style-type:none;
+                        padding-left:30px;
+                    }
+                    ul.nested_form li.nested_form_item {
+                        border-radius:3px;
+                        border:1px solid #ddd;
+                        margin-bottom:10px;
+                        padding:10px 10px 0 10px;
+                    }
+                </style>
+                {% if attr['nested_form'] is defined %}
+                    <ul class="nested_form ul_{{ form.vars.id }}" {% if form.vars.allow_add %}data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
+                        {% for obj in form %}
+                            <li class="nested_form_item" delkey='{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}'>
+                                {% for child in obj.children %}
+                                    {{ form_row(child) }}
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <script>
+                        // Get the ul that holds the collection of tags
+                        var collectionHolder = $('ul.ul_{{ form.vars.id }}');
+                        // setup an "add a tag" link
+                        var $addLink = $('<a href="#">Add new</a>');
+                        var $newLinkLi = $('<li></li>').append($addLink);
+                        $(document).ready(function () {
+                            {% if form.vars.allow_add %}
+                                addObjectFormAddLink(collectionHolder, $addLink, $newLinkLi, {% if form.vars.allow_delete %}true{% else %}false{% endif %});
+                            {% endif %}
+                            {% if form.vars.allow_delete %}
+                                addObjectFormDeleteLinks(collectionHolder);
+                            {% endif %}
+                        });
+                    </script>
+                {% else %}
+                    {{ form_widget(form) }}
+                {% endif %}
+
                 {% if max_length %}
                     <script>
                         jQuery(document).ready(function(){
@@ -61,13 +103,7 @@
                         });
                     </script>
                 {% endif %}
-                {% if attr['title'] is defined %}
-                    <script>
-                        jQuery(document).ready(function(){
-                            $("#{{ id }}").tooltip();
-                        });
-                    </script>
-                {% endif %}
+
                 {{ form_errors(form) }}
             </div>
         </div>

@@ -648,3 +648,85 @@ function initSaveKeyListener() {
         };
     }
 }
+
+/**
+ * Add the 'add new object' link
+ */
+function addObjectFormAddLink(collectionHolder, $addLink, $newLinkLi, allowDelete) {
+    // add the "add a tag" anchor and li to the tags ul
+    collectionHolder.append($newLinkLi);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    collectionHolder.data('index', collectionHolder.find(':input').length);
+
+    $addLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addObjectFormField(collectionHolder, $newLinkLi, allowDelete);
+
+
+    });
+}
+
+/**
+ * Add new form in a new li tag.
+ */
+function addObjectFormField(collectionHolder, $newLinkLi, allowDelete) {
+    // Get the data-prototype explained earlier
+    var prototype = collectionHolder.data('prototype');
+
+    // get the new index
+    var index = collectionHolder.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add object" link li
+    var $newFormLi = $('<li class="nested_form_item"></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+
+    // Add a delete link if needed
+    if (allowDelete) {
+        addTagFormDeleteLink($newFormLi);
+    }
+}
+
+/**
+ * For each li we will add a 'delete object' link
+ */
+function addObjectFormDeleteLinks(collectionHolder) {
+    collectionHolder.find('.nested_form_item').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+}
+
+/**
+ * Add a 'delete object' link to the li
+ */
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeLink = $('<a href="#">Delete</a>');
+    $tagFormLi.append($removeLink);
+
+    $removeLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        var delKey = $tagFormLi.attr("delkey");
+        if (typeof delKey === "undefined") {
+            // We don't need to do anything
+        } else {
+            var form = $tagFormLi.parents('form:first');
+            $("<input type='hidden' name='" + delKey + "' value='1' />").appendTo(form);
+        }
+
+        // remove the li for the tag form
+        $tagFormLi.remove();
+    });
+}

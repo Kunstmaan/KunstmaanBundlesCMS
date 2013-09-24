@@ -29,25 +29,27 @@
 		}; 
 			
 		var options = $.extend(defaults, options); 
-		
-		function calculate(obj){
-			var count = $(obj).val().length;
+		var helpField = null;
+
+		function calculate(field){
+			var count = $(field).val().length;
 			var available = options.allowed - count;
 			if(available <= options.warning && available >= 0){
-				$(obj).next().addClass(options.cssWarning);
+                helpField.addClass(options.cssWarning);
 			} else {
-				$(obj).next().removeClass(options.cssWarning);
+                helpField.removeClass(options.cssWarning);
 			}
 			if(available < 0){
-				$(obj).next().addClass(options.cssExceeded);
+                helpField.addClass(options.cssExceeded);
 			} else {
-				$(obj).next().removeClass(options.cssExceeded);
+                helpField.removeClass(options.cssExceeded);
 			}
-			$(obj).next().html(options.counterText + available);
+            helpField.html(options.counterText + available);
 		};
 				
-		this.each(function() {  			
+		this.each(function() {
 			$(this).after('<'+ options.counterElement +' class="' + options.css + '">'+ options.counterText +'</'+ options.counterElement +'>');
+			helpField = $(this).next();
 			calculate(this);
 			$(this).keyup(function(){calculate(this)});
 			$(this).change(function(){calculate(this)});
