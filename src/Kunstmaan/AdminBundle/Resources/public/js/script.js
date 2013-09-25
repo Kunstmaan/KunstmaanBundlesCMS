@@ -650,83 +650,123 @@ function initSaveKeyListener() {
 }
 
 /**
- * Add the 'add new object' link
+ * Logic for showing nested forms in pageparts.
  */
-function addObjectFormAddLink(collectionHolder, $addLink, $newLinkLi, allowDelete) {
-    // add the "add a tag" anchor and li to the tags ul
-    collectionHolder.append($newLinkLi);
+function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowAdd, allowDelete, min, max) {
 
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    collectionHolder.data('index', collectionHolder.find(':input').length);
+    this.collectionHolder = collectionHolder;
+    this.addButtonLi = addButtonLi;
+    this.removeButtonHtml = removeButtonHtml;
+    this.allowAdd = allowAdd;
+    this.allowDelete = allowDelete;
+    this.min = min;
+    this.max = max;
 
-    $addLink.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
+    this.init = function() {
+        var self = this;
 
-        // add a new tag form (see next code block)
-        addObjectFormField(collectionHolder, $newLinkLi, allowDelete);
+        // Count the current entity form we already have
+        var nrEntityForms = this.getNumberOfFormEntities();
 
+        // Use that as the new index when inserting a new entity form
+        this.collectionHolder.data('index', nrEntityForms);
 
-    });
-}
+        // Add the "add new" button and li to the ul
+        this.collectionHolder.append(this.addButtonLi);
 
-/**
- * Add new form in a new li tag.
- */
-function addObjectFormField(collectionHolder, $newLinkLi, allowDelete) {
-    // Get the data-prototype explained earlier
-    var prototype = collectionHolder.data('prototype');
-
-    // get the new index
-    var index = collectionHolder.data('index');
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
-    collectionHolder.data('index', index + 1);
-
-    // Display the form in the page in an li, before the "Add object" link li
-    var $newFormLi = $('<li class="nested_form_item"></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-
-    // Add a delete link if needed
-    if (allowDelete) {
-        addTagFormDeleteLink($newFormLi);
-    }
-}
-
-/**
- * For each li we will add a 'delete object' link
- */
-function addObjectFormDeleteLinks(collectionHolder) {
-    collectionHolder.find('.nested_form_item').each(function() {
-        addTagFormDeleteLink($(this));
-    });
-}
-
-/**
- * Add a 'delete object' link to the li
- */
-function addTagFormDeleteLink($tagFormLi) {
-    var $removeLink = $('<a href="#">Delete</a>');
-    $tagFormLi.append($removeLink);
-
-    $removeLink.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        var delKey = $tagFormLi.attr("delkey");
-        if (typeof delKey === "undefined") {
-            // We don't need to do anything
-        } else {
-            var form = $tagFormLi.parents('form:first');
-            $("<input type='hidden' name='" + delKey + "' value='1' />").appendTo(form);
+        // Make sure we have at least as many entity forms than minimally required
+        if (this.min > 0 && this.min > nrEntityForms) {
+            var newNeeded = this.min - nrEntityForms;
+            for (var i=0; i<newNeeded; i++) {
+                this.addNewEntityForm();
+            }
         }
 
-        // remove the li for the tag form
-        $tagFormLi.remove();
-    });
+        // For each of the entity forms add a delete button
+        this.collectionHolder.find('.nested_form_item').each(function() {
+            self.addEntityFormDeleteButton($(this));
+        });
+
+        // Add listerners on add button
+        this.addButtonLi.find('.add-btn').on('click', function(e) {
+            // Prevent the link from creating a "#" on the URL
+            e.preventDefault();
+
+            // Add a new entity form
+            self.addNewEntityForm();
+        });
+
+        // Check that we need to show/hide the add/delete buttons
+        this.recalculateShowAddDeleteButtons();
+    };
+
+    this.getNumberOfFormEntities = function() {
+        return this.collectionHolder.find('li.nested_form_item').length;
+    };
+
+    this.recalculateShowAddDeleteButtons = function() {
+        var nrEntityForms = this.getNumberOfFormEntities();
+
+        if (this.allowAdd && (this.max === false || nrEntityForms < this.max)) {
+            this.collectionHolder.find('li .add-btn').show();
+        } else {
+            this.collectionHolder.find('li .add-btn').hide();
+        }
+
+        if (this.allowDelete && nrEntityForms > this.min) {
+            this.collectionHolder.find('li .del-btn').show();
+        } else {
+            this.collectionHolder.find('li .del-btn').hide();
+        }
+    };
+
+    this.addNewEntityForm = function() {
+        // Get the data-prototype
+        var prototype = this.collectionHolder.data('prototype');
+
+        // Get the new index
+        var index = this.collectionHolder.data('index');
+
+        // Replace '__name__' in the prototype's HTML to a number based on how many entity forms we have
+        var newForm = prototype.replace(/__name__/g, index);
+
+        // Increase the index with one for the next item
+        this.collectionHolder.data('index', index + 1);
+
+        // Display the form in the page in an li, before the "Add new" link li
+        var $newFormLi = $('<li class="nested_form_item"></li>').append(newForm);
+        this.addButtonLi.before($newFormLi);
+
+        // Add a delete button
+        this.addEntityFormDeleteButton($newFormLi);
+
+        // Check that we need to show/hide the add/delete buttons
+        this.recalculateShowAddDeleteButtons();
+    }
+
+    this.addEntityFormDeleteButton = function($entityFormLi) {
+        var self = this;
+
+        var $removeLink = $(this.removeButtonHtml);
+        $entityFormLi.prepend($removeLink);
+
+        $removeLink.on('click', function(e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
+
+            var delKey = $entityFormLi.attr("delkey");
+            if (typeof delKey === "undefined") {
+                // We don't need to do anything, the entity was not yet saved in the database
+            } else {
+                var form = $entityFormLi.parents('form:first');
+                $("<input type='hidden' name='" + delKey + "' value='1' />").appendTo(form);
+            }
+
+            // remove the li for the tag form
+            $entityFormLi.remove();
+
+            // Check that we need to show/hide the add/delete buttons
+            self.recalculateShowAddDeleteButtons();
+        });
+    }
 }

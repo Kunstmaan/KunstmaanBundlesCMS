@@ -40,19 +40,6 @@
         <div class="input_prop{% if errors|length > 0 %} error{% endif %}">
             {{ form_label(form) }}
             <div class="input">
-                <style>
-                    ul.nested_form {
-                        clear:both;
-                        list-style-type:none;
-                        padding-left:30px;
-                    }
-                    ul.nested_form li.nested_form_item {
-                        border-radius:3px;
-                        border:1px solid #ddd;
-                        margin-bottom:10px;
-                        padding:10px 10px 0 10px;
-                    }
-                </style>
                 {% if attr['nested_form'] is defined %}
                     <ul class="nested_form ul_{{ form.vars.id }}" {% if form.vars.allow_add %}data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
                         {% for obj in form %}
@@ -65,18 +52,17 @@
                     </ul>
 
                     <script>
-                        // Get the ul that holds the collection of tags
                         var collectionHolder = $('ul.ul_{{ form.vars.id }}');
-                        // setup an "add a tag" link
-                        var $addLink = $('<a href="#">Add new</a>');
-                        var $newLinkLi = $('<li></li>').append($addLink);
+                        var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
+                        var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
+
+                        var allow_add = {{ form.vars.allow_delete|default('0') }};
+                        var allow_delete = {{ form.vars.allow_delete|default('0') }};
+                        var min = {{ attr['nested_form_min']|default('0') }};
+                        var max = {{ attr['nested_form_max']|default('false') }};
+
                         $(document).ready(function () {
-                            {% if form.vars.allow_add %}
-                                addObjectFormAddLink(collectionHolder, $addLink, $newLinkLi, {% if form.vars.allow_delete %}true{% else %}false{% endif %});
-                            {% endif %}
-                            {% if form.vars.allow_delete %}
-                                addObjectFormDeleteLinks(collectionHolder);
-                            {% endif %}
+                            new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max).init();
                         });
                     </script>
                 {% else %}
@@ -86,13 +72,13 @@
                 {% if max_length %}
                     <script>
                         jQuery(document).ready(function(){
-                        	$("#{{ id }}").charCount({
+                            $("#{{ id }}").charCount({
                                 allowed: {{ max_length }},
                                 counterText: 'Characters left: ',
                                 css: 'help-inline',
                                 cssExceeded: 'error'
                             });
-                        	$("#{{ id }}").attr('maxlength', '');
+                            $("#{{ id }}").attr('maxlength', '');
                         });
                     </script>
                 {% endif %}
