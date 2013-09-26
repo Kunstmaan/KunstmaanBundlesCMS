@@ -353,8 +353,8 @@ class ArticleGenerator extends Generator
      */
     public function generateFixtures(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath() . '/DataFixtures/ORM';
-        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM';
+        $dirPath = $bundle->getPath() . '/DataFixtures/ORM/ArticleGenerator';
+        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM/ArticleGenerator';
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'ArticleFixtures', $parameters);

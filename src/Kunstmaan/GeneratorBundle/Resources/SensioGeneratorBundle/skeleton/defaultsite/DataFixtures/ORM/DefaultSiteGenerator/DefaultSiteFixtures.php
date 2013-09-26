@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\DataFixtures\ORM;
+namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -236,7 +236,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         // Add images to database
         $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-        $imgDir = dirname(__FILE__).'/../../Resources/public/files/content/';
+        $imgDir = dirname(__FILE__).'/../../../Resources/public/files/content/';
         $satelliteMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
         $orbitsMedia = $this->mediaCreator->createFile($imgDir.'orbits.jpg', $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
 
@@ -803,7 +803,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         // Add images to database
         $imageFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
         $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
-        $publicDir = dirname(__FILE__).'/../../Resources/public/';
+        $publicDir = dirname(__FILE__).'/../../../Resources/public/';
         $this->mediaCreator->createFile($publicDir.'img/general/logo.png', $imageFolder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
         $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
 
