@@ -17,26 +17,25 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            // {{ bundle.getName() }}
-            {{ bundle.getName() }}_js: {
+            {{ bundle.getName() }}Js: {
                 files: {{ bundle.getName() }}.js,
                 tasks: 'jshint:{{ bundle.getName() }}',
                 options: {
                     nospawn: true
                 }
             },
-            {{ bundle.getName() }}_scss: {
+            {{ bundle.getName() }}Scss: {
                 files: {{ bundle.getName() }}.scss,
                 tasks: 'sass'
             },
-            {{ bundle.getName() }}_images: {
+            {{ bundle.getName() }}Images: {
                 files: {{ bundle.getName() }}.img,
                 tasks: ['imagemin:{{ bundle.getName() }}'],
                 options: {
                     event: ['added', 'changed']
                 }
             },
-            {{ bundle.getName() }}_svg: {
+            {{ bundle.getName() }}Svg: {
                 files: {{ bundle.getName() }}.svg,
                 tasks: ['svg2png:{{ bundle.getName() }}'],
                 options: {
@@ -44,7 +43,7 @@ module.exports = function (grunt) {
                 }
             },
             livereload: {
-                files: [KunstmaanWebsiteBundle.js, KunstmaanWebsiteBundle.twig, KunstmaanWebsiteBundle.img, KunstmaanWebsiteBundle.svg, 'web/frontend/style.css'],
+                files: [{{ bundle.getName() }}.js, {{ bundle.getName() }}.twig, {{ bundle.getName() }}.img, {{ bundle.getName() }}.svg, 'web/frontend/style.css'],
                 options: {
                     livereload: true
                 }
