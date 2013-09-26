@@ -344,8 +344,8 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
     */
     public function generateFixtures(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath() . '/DataFixtures/ORM';
-        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM';
+        $dirPath = $bundle->getPath() . '/DataFixtures/ORM/DefaultSiteGenerator';
+        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM/DefaultSiteGenerator';
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'DefaultSiteFixtures', $parameters);

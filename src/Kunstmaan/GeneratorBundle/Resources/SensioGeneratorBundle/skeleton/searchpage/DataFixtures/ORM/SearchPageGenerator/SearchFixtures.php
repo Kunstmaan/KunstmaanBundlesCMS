@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\DataFixtures\ORM;
+namespace {{ namespace }}\DataFixtures\ORM\SearchPageGenerator;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;

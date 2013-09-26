@@ -85,7 +85,7 @@ EOT
         );
 
         if ($dummydata) {
-            $output->writeln('    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --append</comment>');
+            $output->writeln('    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --fixtures=src/'.str_replace('\\', '/', $bundle->getNamespace()).'/DataFixtures/ORM/ArticleGenerator/ --append</comment>');
         }
 
         $output->writeln('');

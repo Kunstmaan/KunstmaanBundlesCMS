@@ -105,8 +105,8 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
      */
     public function generateFixtures(Bundle $bundle, array $parameters, OutputInterface $output)
     {
-        $dirPath = $bundle->getPath() . '/DataFixtures/ORM/';
-        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM/';
+        $dirPath = $bundle->getPath() . '/DataFixtures/ORM/SearchPageGenerator/';
+        $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM/SearchPageGenerator/';
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $dirPath, 'SearchFixtures', $parameters);

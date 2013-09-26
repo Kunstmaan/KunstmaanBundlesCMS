@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\DataFixtures\ORM;
+namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -37,7 +37,7 @@ class SliderFixtures extends AbstractFixture implements OrderedFixtureInterface,
 
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
 
-        $sliderDir = dirname(__FILE__).'/../../Resources/public/files/slider/';
+        $sliderDir = dirname(__FILE__).'/../../../Resources/public/files/slider/';
         $allFiles = glob($sliderDir.'slide*');
         $mediaImages = array();
         foreach ($allFiles as $file) {
