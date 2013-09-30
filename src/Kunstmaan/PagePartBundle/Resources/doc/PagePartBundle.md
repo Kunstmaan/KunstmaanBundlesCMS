@@ -1,5 +1,312 @@
 # PagePartBundle Documentation
 
+## Using sub entities in pageparts
+
+In some cases, pageparts need to contain a set of repetive fields. The best way to achieve this, is by using
+sub entities in pageparts. Below you'll find a simple example to illustratate this.
+
+### Example
+
+Let's say you want to display a contact block pagepart on some pages. The pagepart itself has a description
+and the contact information of some employees (name + contact email). Assume that the employees will be
+different for each pagepart.
+
+#### How the pagepart will look like
+
+We create the pagepart with these fields:
+
+* comment (string)
+* contacts (ArrayCollection of ContactInfo objects)
+
+In the admin interface it will look like this:
+
+![Sub entities in admin interface](https://github.com/Kunstmaan/KunstmaanPagePartBundle/raw/master/Resources/doc/pagepart_sub_entities.png)
+
+#### The code
+
+```php
+<?php
+
+namespace Kunstmaan\WebsiteBundle\Entity\PageParts;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Kunstmaan\WebsiteBundle\Entity\ContactInfo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * ContactPagePart
+ *
+ * @ORM\Table(name="kunstmaan_websitebundle_contact_page_part")
+ * @ORM\Entity
+ */
+class ContactPagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="string", length=255)
+     */
+    private $comment;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="\Kunstmaan\WebsiteBundle\Entity\ContactInfo", mappedBy="contactPagePart", cascade={"persist", "remove"}, orphanRemoval=true)
+     **/
+    private $contacts;
+
+    /**
+     * @param ArrayCollection $contacts
+     */
+    public function setContacts($contacts)
+    {
+        $this->contacts = $contacts;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    /**
+     * @param ContactInfo $contactInfo
+     */
+    public function addContact(ContactInfo $contactInfo)
+    {
+        $contactInfo->setContactPagePart($this);
+
+        $this->contacts->add($contactInfo);
+    }
+
+    /**
+     * @param ContactInfo $contactInfo
+     */
+    public function removeContact(ContactInfo $contactInfo)
+    {
+        $this->contacts->removeElement($contactInfo);
+    }
+
+    // ...
+```
+
+```php
+<?php
+
+namespace Kunstmaan\WebsiteBundle\Form\PageParts;
+
+use Kunstmaan\WebsiteBundle\Form\ContactInfoAdminType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+
+/**
+ * ContactPagePartAdminType
+ */
+class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
+{
+    /**
+     * Builds the form.
+     *
+     * This method is called for each type in the hierarchy starting form the
+     * top most type. Type extensions can further modify the form.
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     *
+     * @see FormTypeExtensionInterface::buildForm()
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+
+        $builder->add('comment', 'text');
+
+        $builder->add('contacts', 'collection', array(
+            'type' => new ContactInfoAdminType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'cascade_validation' => true,
+            'attr' => array(
+                'nested_form' => true,
+                'nested_form_min' => 1,
+                'nested_form_max' => 4,
+            )
+        ));
+    }
+
+    /**
+     * Sets the default options for this type.
+     *
+     * @param OptionsResolverInterface $resolver The resolver for the options.
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => '\Kunstmaan\WebsiteBundle\Entity\PageParts\ContactPagePart',
+            'cascade_validation' => true,
+        ));
+    }
+
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
+    public function getName()
+    {
+        return 'kunstmaan_websitebundle_contactpageparttype';
+    }
+}
+```
+
+```php
+<?php
+
+namespace Kunstmaan\WebsiteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\WebsiteBundle\Entity\PageParts\ContactPagePart;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * ContactInfo
+ *
+ * @ORM\Table(name="kunstmaan_websitebundle_contactinfo")
+ * @ORM\Entity()
+ */
+class ContactInfo extends AbstractEntity
+{
+    /**
+     * @ORM\Column(name="name", type="string", length=100)
+     * @Assert\NotBlank()
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(name="email", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Email(checkMX = true)
+     */
+    private $email;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Kunstmaan\WebsiteBundle\Entity\PageParts\ContactPagePart", inversedBy="contacts")
+     * @ORM\JoinColumn(name="contact_pp_id", referencedColumnName="id")
+     **/
+    private $contactPagePart;
+
+    // ...
+
+    /**
+     * @param ContactPagePart $contactPagePart
+     */
+    public function setContactPagePart(ContactPagePart $contactPagePart)
+    {
+        $this->contactPagePart = $contactPagePart;
+    }
+
+    /**
+     * @return ContactPagePart
+     */
+    public function getContactPagePart()
+    {
+        return $this->contactPagePart;
+    }
+}
+```
+
+```php
+<?php
+
+namespace Kunstmaan\WebsiteBundle\Form;
+
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+
+/**
+ * ContactInfoAdminType
+ */
+class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
+{
+    /**
+     * Builds the form.
+     *
+     * This method is called for each type in the hierarchy starting form the
+     * top most type. Type extensions can further modify the form.
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     *
+     * @see FormTypeExtensionInterface::buildForm()
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+
+        $builder->add('name', 'text', array(
+            'max_length' => 35,
+        ));
+
+        $builder->add('email', 'text', array(
+            'attr' => array('title' => 'Publicly visible on the website'),
+        ));
+    }
+
+    /**
+     * Sets the default options for this type.
+     *
+     * @param OptionsResolverInterface $resolver The resolver for the options.
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => '\Kunstmaan\WebsiteBundle\Entity\ContactInfo'
+        ));
+    }
+
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
+    public function getName()
+    {
+        return 'kunstmaan_websitebundle_contactinfotype';
+    }
+}
+```
+
+#### The available options
+
+There are a few options you can use when you add a collection field in a FormType class:
+
+* __allow_add__
+    * default Symfony option
+    * makes it possible to add new object to the collection (show add button)
+    * optional, default false
+* __allow_delete__
+    * default Symfony option
+    * makes it possible to delete objects from the collection (show delete buttons)
+    * optional, default false
+* __attr.nested_form__
+    * custom option
+    * indication that the field will contain sub forms
+    * required
+* __attr.nested_form_min__
+    * custom option
+    * how many objects the collection should minimally contain
+    * optional, default 0
+* __attr.nested_form_max__
+    * custom option
+    * how many objects the collection can maximally contain
+    * optional, default no maximum limit
+
+
+# PagePartBundle Documentation
+
 ## Creating PageParts in Your Code
 
 We've provided a ```PagePartCreatorService``` that simplifies the creation of pageparts for your pages.
