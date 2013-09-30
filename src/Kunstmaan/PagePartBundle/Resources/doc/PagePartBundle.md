@@ -283,23 +283,23 @@ class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
 
 There are a few options you can use when you add a collection field in a FormType class:
 
-* allow_add
+* __allow_add__
     * default Symfony option
     * makes it possible to add new object to the collection (show add button)
     * optional, default false
-* allow_delete
+* __allow_delete__
     * default Symfony option
     * makes it possible to delete objects from the collection (show delete buttons)
     * optional, default false
-* attr.nested_form
+* __attr.nested_form__
     * custom option
     * indication that the field will contain sub forms
     * required
-* attr.nested_form_min
+* __attr.nested_form_min__
     * custom option
     * how many objects the collection should minimally contain
     * optional, default 0
-* attr.nested_form_max
+* __attr.nested_form_max__
     * custom option
     * how many objects the collection can maximally contain
     * optional, default no maximum limit
