@@ -99,9 +99,9 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $finder->directories()->in($dir)->depth('== 1');
         foreach ($finder as $file) {
             $bundles[$counter++] = array(
-                'name' => $file->getFileName(),
-                'namespace' => $file->getRelativePath(),
-                'dir' => $file->getPathname()
+                'name'      => $file->getRelativePath().$file->getFileName(),
+                'namespace' => $file->getRelativePath().'\\'.$file->getFileName(),
+                'dir'       => $file->getPathname()
             );
         }
 
@@ -188,33 +188,52 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     }
 
     /**
-     * Ask for which bundle we need to generate something. It there is only one custome bundle
-     * created by the user, we don't ask anything and just use that bundle.
+     * Ask for which bundle we need to generate something. It there is only one custom bundle
+     * created by the user, we don't ask anything and just use that bundle. If the user provided
+     * a namespace as input option, we try to get that bundle first.
      *
-     * @param string $objectName
+     * @param string            $objectName    The thing we are going to create (pagepart, bundle, layout, ...)
+     * @param string|null       $namespace     The namespace provided as input option
      * @return BundleInterface
      */
-    protected function askForBundleName($objectName)
+    protected function askForBundleName($objectName, $namespace = null)
     {
         $ownBundles = $this->getOwnBundles();
         if (count($ownBundles) <= 0) {
             $this->assistant->writeError("Looks like you don't have created any bundles for your project...", true);
         }
 
-        // If we only have 1 bundle, we don't need to ask
-        if (count($ownBundles) > 1) {
-            $bundleSelect = array();
+        // If the user provided the namespace as input option
+        if (!is_null($namespace)) {
             foreach ($ownBundles as $key => $bundleInfo) {
-                $bundleSelect[$key] = $bundleInfo['namespace'].$bundleInfo['name'];
+                if (GeneratorUtils::fixNamespace($namespace) == GeneratorUtils::fixNamespace($bundleInfo['namespace'])) {
+                    $bundleName = $bundleInfo['namespace'];
+                }
             }
-            $bundleId = $this->assistant->askSelect('In which bundle do you want to create the '.$objectName, $bundleSelect);
-            $bundleName = $ownBundles[$bundleId]['namespace'].$ownBundles[$bundleId]['name'];
 
-            $this->assistant->writeLine('');
-        } else {
-            $bundleName = $ownBundles[1]['namespace'].$ownBundles[1]['name'];
-            $this->assistant->writeLine(array("The $objectName will be created for the <comment>$bundleName</comment> bundle.\n"));
+            // When the provided namespace was not found, we show an error on the screen and ask the bundle again
+            if (empty($bundleName)) {
+                $this->assistant->writeError("The provided bundle namespace '$namespace' was not found...");
+            }
         }
+
+        if (empty($bundleName)) {
+            // If we only have 1 bundle, we don't need to ask
+            if (count($ownBundles) > 1) {
+                $bundleSelect = array();
+                foreach ($ownBundles as $key => $bundleInfo) {
+                    $bundleSelect[$key] = $bundleInfo['name'];
+                }
+                $bundleId = $this->assistant->askSelect('In which bundle do you want to create the '.$objectName, $bundleSelect);
+                $bundleName = $ownBundles[$bundleId]['name'];
+
+                $this->assistant->writeLine('');
+            } else {
+                $bundleName = $ownBundles[1]['name'];
+                $this->assistant->writeLine(array("The $objectName will be created for the <comment>$bundleName</comment> bundle.\n"));
+            }
+        }
+
         $bundle = $this->assistant->getKernel()->getBundle($bundleName);
 
         return $bundle;
