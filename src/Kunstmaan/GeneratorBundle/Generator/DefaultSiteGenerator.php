@@ -155,18 +155,7 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         }
     }
 
-    public function generateGruntFiles(Bundle $bundle, array $parameters, $rootDir, OutputInterface $output)
-    {
-        $skeletonDir = sprintf("%s/grunt/", $this->fullSkeletonDir);
-        $this->setSkeletonDirs(array($skeletonDir));
-        $dirPath = sprintf("%s/Resources", $bundle->getPath());
 
-        $this->filesystem->copy($skeletonDir . '/.gitignore', $dirPath . '/.gitignore', true);
-        $this->renderFile('/Gruntfile.js.twig', $rootDir .'/../Gruntfile.js', $parameters);
-        $this->renderFile('/package.json.twig', $rootDir .'/../package.json', $parameters);
-
-        $output->writeln('Generating root files : <info>OK</info>');
-    }
 
     public function generateAdminTests(Bundle $bundle, array $parameters, OutputInterface $output)
     {

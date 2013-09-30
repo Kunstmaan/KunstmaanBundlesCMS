@@ -145,6 +145,16 @@ class GeneratorUtils
         }
     }
 
+    /**
+     * Replaces '\' with '/'.
+     *
+     * @param $namespace
+     * @return string
+     */
+    public static function fixNamespace($namespace)
+    {
+        return str_replace('\\', '/', $namespace);
+    }
 
     /**
      * Returns an inputAssistant.

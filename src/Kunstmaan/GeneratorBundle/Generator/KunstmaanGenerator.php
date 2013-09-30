@@ -209,4 +209,36 @@ class KunstmaanGenerator extends Generator
             $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
         }
     }
+
+    /**
+     * Render all files in the source directory and copy them to the target directory.
+     *
+     * @param string $sourceDir  The source directory where we need to look in
+     * @param string $targetDir  The target directory where we need to copy the files too
+     * @param array  $parameters The parameters that will be passed to the templates
+     * @param bool   $override   Whether to override an existing file or not
+     * @param bool   $recursive  Whether to render all files recursively or not
+     */
+    public function renderFiles($sourceDir, $targetDir, array $parameters, $override = false, $recursive = true)
+    {
+        // Make sure the source -and target dir contain a trailing slash
+        if (substr($sourceDir, -1) != "/") $sourceDir .= "/";
+        if (substr($targetDir, -1) != "/") $targetDir .= "/";
+
+        $this->setSkeletonDirs(array($sourceDir));
+
+        // Get all files in the source directory
+        foreach (glob("$sourceDir*") as $name) {
+            // When it is a directory, we recursively call this function if required
+            if (is_dir($sourceDir.$name) && $recursive) {
+                $this->renderFiles($sourceDir.$name, $targetDir.$name, $parameters, $override, $recursive);
+            } else {
+                // Check that we are allowed the overwrite the file if it already exists
+                if (!is_file($targetDir.$name) || $override == true) {
+                    echo "rendering file: $name\n";
+                    $this->renderFile($name, $targetDir.$name, $parameters);
+                }
+            }
+        }
+    }
 }
