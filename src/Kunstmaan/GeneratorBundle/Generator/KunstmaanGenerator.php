@@ -229,15 +229,43 @@ class KunstmaanGenerator extends Generator
 
         // Get all files in the source directory
         foreach (glob("$sourceDir*") as $name) {
+            $name = substr($name, strrpos($name, '/' ) + 1);
+
             // When it is a directory, we recursively call this function if required
             if (is_dir($sourceDir.$name) && $recursive) {
                 $this->renderFiles($sourceDir.$name, $targetDir.$name, $parameters, $override, $recursive);
             } else {
                 // Check that we are allowed the overwrite the file if it already exists
                 if (!is_file($targetDir.$name) || $override == true) {
-                    echo "rendering file: $name\n";
                     $this->renderFile($name, $targetDir.$name, $parameters);
                 }
+            }
+        }
+    }
+
+    /**
+     * Copy all files in the source directory to the target directory.
+     *
+     * @param string $sourceDir  The source directory where we need to look in
+     * @param string $targetDir  The target directory where we need to copy the files too
+     * @param bool   $override   Whether to override an existing file or not
+     * @param bool   $recursive  Whether to render all files recursively or not
+     */
+    public function copyFiles($sourceDir, $targetDir, $override = false, $recursive = true)
+    {
+        // Make sure the source -and target dir contain a trailing slash
+        if (substr($sourceDir, -1) != "/") $sourceDir .= "/";
+        if (substr($targetDir, -1) != "/") $targetDir .= "/";
+
+        // Get all files in the source directory
+        foreach (glob("$sourceDir*") as $name) {
+            $name = substr($name, strrpos($name, '/' ) + 1);
+
+            // When it is a directory, we recursively call this function if required
+            if (is_dir($sourceDir.$name) && $recursive) {
+                $this->copyFiles($sourceDir.$name, $targetDir.$name, $override, $recursive);
+            } else {
+                $this->filesystem->copy($sourceDir.$name, $targetDir.$name, $override);
             }
         }
     }

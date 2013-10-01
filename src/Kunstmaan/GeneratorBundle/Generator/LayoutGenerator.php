@@ -35,11 +35,11 @@ class LayoutGenerator extends KunstmaanGenerator
         $parameters = array(
             'namespace'         => $bundle->getNamespace(),
             'bundle'            => $bundle,
-            'bundle_name'       => $bundle->getName(),
-            'prefix'            => GeneratorUtils::cleanPrefix($prefix)
+            'bundle_name'       => $bundle->getName()
         );
 
         $this->generateGruntFiles($parameters);
+        $this->generateAssets();
         //$this->generatePagePartEntity();
         //$this->generateFormType();
         //$this->generateResourceTemplate();
@@ -53,9 +53,19 @@ class LayoutGenerator extends KunstmaanGenerator
      */
     public function generateGruntFiles(array $parameters)
     {
-        $this->renderFiles($this->skeletonDir.'/grunt/', $parameters, true);
+        $this->renderFiles($this->skeletonDir.'/grunt/', $this->rootDir, $parameters, true);
 
         $this->assistant->writeLine('Generating grunt configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate the public asset files.
+     */
+    public function generateAssets()
+    {
+        $this->copyFiles($this->skeletonDir.'/Resources/public/', $this->bundle->getPath().'/Resources/public/', true);
+
+        $this->assistant->writeLine('Generating assets : <info>OK</info>');
     }
 
     /**

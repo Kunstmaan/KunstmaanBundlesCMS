@@ -86,7 +86,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generateForm($bundle, $parameters, $output);
         $this->generateHelpers($bundle, $parameters, $output);
         $this->generateFixtures($bundle, $parameters, $output);
-        $this->generateAssets($bundle, $output);
 
         // CAUTION : Following templates change the skeleton dir array
         // TODO Find a better way
@@ -94,7 +93,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->generatePagetemplateConfigs($bundle, $parameters, $output);
         $this->generateTemplates($bundle, $parameters, $rootDir, $output);
         $this->generateAdminTests($bundle, $parameters, $output);
-        $this->generateGruntFiles($bundle, $parameters, $rootDir, $output);
         $this->generateConfig($bundle, $parameters, $rootDir, $output);
         $this->generateRouting($bundle, $parameters, $output);
     }
@@ -285,43 +283,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $this->renderFile('/error503.html.twig', $rootDir . '/Resources/TwigBundle/views/Exception/error503.html.twig', $parameters);
 
         $output->writeln('Generating Error Twig Templates : <info>OK</info>');
-    }
-
-    /**
-     * @param Bundle                                            $bundle
-     * @param OutputInterface                                   $output
-     */
-    public function generateAssets(Bundle $bundle, OutputInterface $output)
-    {
-        $dirPath = sprintf("%s/Resources/public", $bundle->getPath());
-        $skeletonDir = sprintf("%s/Resources/public", $this->fullSkeletonDir);
-        $this->setSkeletonDirs(array($skeletonDir));
-
-        $assetsTypes = array(
-            'files',
-            'fonts',
-            'img',
-            'js',
-            'scss'
-        );
-
-        foreach ($assetsTypes as $type) {
-            $this->generateAssetsForType($skeletonDir, $dirPath, $type);
-        }
-
-        $output->writeln('Generating Assets : <info>OK</info>');
-    }
-
-    /**
-     * Generate the assets for assetsType
-     *
-     * @param $skeletonDir
-     * @param $dirPath
-     * @param $assetsType
-     */
-    public function generateAssetsForType($skeletonDir, $dirPath, $assetsType)
-    {
-        $this->filesystem->mirror(sprintf("%s/$assetsType/", $skeletonDir), sprintf("%s/$assetsType/", $dirPath));
     }
 
     /**
