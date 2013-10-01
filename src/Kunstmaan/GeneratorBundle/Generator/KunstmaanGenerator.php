@@ -237,7 +237,12 @@ class KunstmaanGenerator extends Generator
             } else {
                 // Check that we are allowed the overwrite the file if it already exists
                 if (!is_file($targetDir.$name) || $override == true) {
-                    $this->renderFile($name, $targetDir.$name, $parameters);
+                    $fileParts = explode('.', $name);
+                    if (end($fileParts) == 'twig') {
+                        $this->renderTwigFile($name, $targetDir.$name, $parameters, $sourceDir);
+                    } else {
+                        $this->renderFile($name, $targetDir.$name, $parameters);
+                    }
                 }
             }
         }
@@ -268,5 +273,52 @@ class KunstmaanGenerator extends Generator
                 $this->filesystem->copy($sourceDir.$name, $targetDir.$name, $override);
             }
         }
+    }
+
+    /**
+     * Render a twig file with custom twig tags.
+     *
+     * @param string $template
+     * @param array $parameters
+     * @param string $sourceDir
+     * @return string
+     */
+    public function renderTwig($template, array $parameters, $sourceDir)
+    {
+        $twig = new \Twig_Environment(new \Twig_Loader_Filesystem(array($sourceDir)), array(
+            'debug'            => true,
+            'cache'            => false,
+            'strict_variables' => true,
+            'autoescape'       => false
+        ));
+
+        // Ruby erb template syntax
+        $lexer = new \Twig_Lexer($twig, array(
+            'tag_comment'  => array('<%#', '%>'),
+            'tag_block'    => array('<%', '%>'),
+            'tag_variable' => array('<%=', '%>'),
+        ));
+
+        $twig->setLexer($lexer);
+
+        return $twig->render($template, $parameters);
+    }
+
+    /**
+     * Render a twig file, and save it to disk.
+     *
+     * @param string $template
+     * @param string $target
+     * @param array $parameters
+     * @param string $sourceDir
+     * @return int
+     */
+    public function renderTwigFile($template, $target, array $parameters, $sourceDir)
+    {
+        if (!is_dir(dirname($target))) {
+            mkdir(dirname($target), 0777, true);
+        }
+
+        return file_put_contents($target, $this->renderTwig($template, $parameters, $sourceDir));
     }
 }
