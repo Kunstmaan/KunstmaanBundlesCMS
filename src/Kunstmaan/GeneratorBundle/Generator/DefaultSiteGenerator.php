@@ -30,9 +30,14 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
      */
     private $skeletonDir;
 
+    /**
+     * @var string
+     */
     private $fullSkeletonDir;
 
-
+    /**
+     * @var string
+     */
     private $rootDir;
 
     /**
@@ -153,8 +158,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         }
     }
 
-
-
     public function generateAdminTests(Bundle $bundle, array $parameters, OutputInterface $output)
     {
         $adminTests = new AdminTestsGenerator($this->filesystem, '/admintests');
@@ -175,10 +178,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $skeletonDir = sprintf("%s/Resources/views", $this->fullSkeletonDir);
         $this->setSkeletonDirs(array($skeletonDir));
 
-        $this->renderFile('/Page/layout.html.twig', $dirPath . '/Page/layout.html.twig', $parameters);
-        $this->renderFile('/Layout/_css.html.twig', $dirPath . '/Layout/_css.html.twig', $parameters);
-        $this->renderFile('/Layout/_js_footer.html.twig', $dirPath . '/Layout/_js_footer.html.twig', $parameters);
-        $this->renderFile('/Layout/_js_header.html.twig', $dirPath . '/Layout/_js_header.html.twig', $parameters);
         $this->filesystem->copy($skeletonDir . '/Layout/submenu.html.twig', $dirPath . '/Layout/submenu.html.twig', true);
 
         { //ContentPage
@@ -221,14 +220,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
             $this->filesystem->copy($skeletonDir . '/Default/language-chooser.html.twig', $dirPath . '/Default/language-chooser.html.twig', true);
             GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Default/language-chooser.html.twig');
         }
-
-        $this->filesystem->copy($skeletonDir  . '/Layout/layout.html.twig', $dirPath . '/Layout/layout.html.twig', true);
-        GeneratorUtils::replace("~~~CSS~~~", "{% include '" . $bundle->getName() .":Layout:_css.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
-        GeneratorUtils::replace("~~~TOP_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_header.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
-        GeneratorUtils::replace("~~~FOOTER_JS~~~", "{% include '" . $bundle->getName() .":Layout:_js_footer.html.twig' %}\n", $dirPath . '/Layout/layout.html.twig');
-        GeneratorUtils::replace("~~~BUNDLENAME~~~", $this->getBundleNameWithoutBundle($bundle), $dirPath . '/Layout/layout.html.twig');
-
-        $this->filesystem->copy($skeletonDir  . '/Form/fields.html.twig', $dirPath . '/Form/fields.html.twig', true);
 
         $skeletonDir = sprintf("%s/app/KunstmaanSitemapBundle/views/SitemapPage/", $this->fullSkeletonDir);
         $dirPath = $rootDir .'/../app/Resources/KunstmaanSitemapBundle/views/SitemapPage/';
@@ -524,7 +515,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln($step . ' : <info>OK</info>');
     }
 
-
     /**
      * @param Bundle          $bundle     The bundle
      * @param array           $parameters The template parameters
@@ -574,7 +564,6 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         $output->writeln($step . ' : <info>OK</info>');
     }
 
-
     /**
      * @param string $skeletonDir The dir of the entity skeleton
      * @param string $dirPath     The full fir of where the entity should be created
@@ -596,5 +585,4 @@ class DefaultSiteGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gene
         }
         $this->renderFile($skeletonPath, $classPath, $parameters);
     }
-
 }
