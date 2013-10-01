@@ -232,7 +232,7 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "{{ bundle.getName() }}:PageParts:SlidePagePart/view.html.twig";
+        return '{{ bundle.getName() }}:PageParts:SlidePagePart/view.html.twig';
     }
 
     /**

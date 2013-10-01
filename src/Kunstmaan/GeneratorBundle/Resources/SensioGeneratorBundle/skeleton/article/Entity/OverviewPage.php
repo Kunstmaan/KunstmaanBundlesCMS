@@ -48,7 +48,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
      */
     public function getDefaultView()
     {
-        return "{{ bundle.getName() }}:{{ entity_class }}/{{ entity_class }}OverviewPage:view.html.twig";
+        return '{{ bundle.getName() }}:{{ entity_class }}/{{ entity_class }}OverviewPage:view.html.twig';
     }
 
     /**
