@@ -31,7 +31,10 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         $this->setInputAndOutput($input, $output);
 
-        $this->assistant->writeSection($this->getWelcomeText());
+        $welcomeText = $this->getWelcomeText();
+        if (!empty($welcomeText)) {
+            $this->assistant->writeSection($this->getWelcomeText());
+        }
 
         $this->doInteract();
     }
@@ -207,7 +210,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         if (!is_null($namespace)) {
             foreach ($ownBundles as $key => $bundleInfo) {
                 if (GeneratorUtils::fixNamespace($namespace) == GeneratorUtils::fixNamespace($bundleInfo['namespace'])) {
-                    $bundleName = $bundleInfo['namespace'];
+                    $bundleName = $bundleInfo['name'];
+                    break;
                 }
             }
 

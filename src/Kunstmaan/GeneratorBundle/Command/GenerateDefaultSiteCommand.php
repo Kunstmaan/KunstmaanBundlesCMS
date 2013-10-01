@@ -5,6 +5,7 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Kunstmaan\GeneratorBundle\Helper\InputAssistant;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -72,6 +73,18 @@ EOT
             ->getBundle($bundle);
 
         $rootDir = $this->getApplication()->getKernel()->getRootDir();
+
+        // First we generate the layout if it is not yet generated
+        if (!is_file($bundle->getPath().'/Resources/views/Layout/layout.html.twig')) {
+            $command = $this->getApplication()->find('kuma:generate:layout');
+            $arguments = array(
+                'command'      => 'kuma:generate:layout',
+                '--namespace'  => str_replace('\\', '/', $namespace),
+                '--subcommand' => true
+            );
+            $input = new ArrayInput($arguments);
+            $command->run($input, $output);
+        }
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->generate($bundle, $prefix, $rootDir, $output);
