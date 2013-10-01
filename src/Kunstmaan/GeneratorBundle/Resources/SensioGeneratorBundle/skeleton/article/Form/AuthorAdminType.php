@@ -25,7 +25,7 @@ class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType
      */
     function getName()
     {
-        return "{{ entity_class }}author_form";
+        return '{{ entity_class }}author_form';
     }
 
 }

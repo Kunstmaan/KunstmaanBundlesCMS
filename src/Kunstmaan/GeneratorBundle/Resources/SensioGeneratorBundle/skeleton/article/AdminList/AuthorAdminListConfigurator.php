@@ -18,7 +18,7 @@ class {{ entity_class }}AuthorAdminListConfigurator extends AbstractArticleAutho
      */
     public function getBundleName()
     {
-        return "{{ bundle.getName() }}";
+        return '{{ bundle.getName() }}';
     }
 
     /**
@@ -28,7 +28,7 @@ class {{ entity_class }}AuthorAdminListConfigurator extends AbstractArticleAutho
      */
     public function getEntityName()
     {
-        return "{{ entity_class }}\\{{ entity_class }}Author";
+        return '{{ entity_class }}\{{ entity_class }}Author';
     }
 
 }

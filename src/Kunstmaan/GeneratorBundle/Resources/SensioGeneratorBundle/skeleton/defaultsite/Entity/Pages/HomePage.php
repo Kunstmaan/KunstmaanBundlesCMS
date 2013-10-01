@@ -35,12 +35,12 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
     {
         return array(
             array(
-                'name' => 'ContentPage',
-                'class'=> "{{ namespace }}\Entity\Pages\ContentPage"
+                'name'  => 'ContentPage',
+                'class' => '{{ namespace }}\Entity\Pages\ContentPage'
             ),
             array(
-                'name' => 'FormPage',
-                'class'=> "{{ namespace }}\Entity\Pages\FormPage"
+                'name'  => 'FormPage',
+                'class' => '{{ namespace }}\Entity\Pages\FormPage'
             )
         );
     }
@@ -50,7 +50,7 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPagePartAdminConfigurations()
     {
-        return array("{{ bundle.getName() }}:middle-column", "{{ bundle.getName() }}:slider", "{{ bundle.getName() }}:left-column", "{{ bundle.getName() }}:right-column");
+        return array('{{ bundle.getName() }}:middle-column', '{{ bundle.getName() }}:slider', '{{ bundle.getName() }}:left-column', '{{ bundle.getName() }}:right-column');
     }
 
     /**
@@ -58,7 +58,7 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array("{{ bundle.getName() }}:homepage", "{{ bundle.getName() }}:homepage-no-slider");
+        return array('{{ bundle.getName() }}:homepage', '{{ bundle.getName() }}:homepage-no-slider');
     }
 
     /**
@@ -66,6 +66,6 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getDefaultView()
     {
-        return "{{ bundle.getName() }}:Pages\HomePage:view.html.twig";
+        return '{{ bundle.getName() }}:Pages\HomePage:view.html.twig';
     }
 }
