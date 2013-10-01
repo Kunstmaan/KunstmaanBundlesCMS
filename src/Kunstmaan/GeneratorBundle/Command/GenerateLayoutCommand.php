@@ -52,7 +52,8 @@ EOT
      * {@inheritdoc}
      */
     protected function doExecute()
-    {   if (!$this->isSubCommand()) {
+    {
+        if (!$this->isSubCommand()) {
             $this->assistant->writeSection('Layout generation');
         }
 
