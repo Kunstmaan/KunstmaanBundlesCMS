@@ -1,11 +1,13 @@
-~~~BUNDLENAMELOWER~~~_default:
-    resource: "@~~~BUNDLENAME~~~/Controller/DefaultController.php"
+{{ bundle.name|lower }}_default:
+    resource: "@{{ bundle.name }}/Controller/DefaultController.php"
     type:     annotation
     prefix:   /
 
-~~~BUNDLENAMELOWER~~~_satellite_admin_list:
-    resource: @~~~BUNDLENAME~~~/Controller/SatelliteAdminListController.php
+{% if demosite %}
+{{ bundle.name|lower }}_satellite_admin_list:
+    resource: @{{ bundle.name }}/Controller/SatelliteAdminListController.php
     type:     annotation
     prefix:   /{_locale}/admin/satellite/
     requirements:
          _locale: %requiredlocales%
+{% endif %}

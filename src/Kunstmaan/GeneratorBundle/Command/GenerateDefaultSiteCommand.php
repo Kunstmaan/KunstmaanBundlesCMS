@@ -2,27 +2,29 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
-
-use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-use Kunstmaan\GeneratorBundle\Helper\InputAssistant;
+use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
-
-use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Sensio\Bundle\GeneratorBundle\Generator;
-
-use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Generates a default website based on Kunstmaan bundles
  */
-class GenerateDefaultSiteCommand extends GenerateDoctrineCommand
+class GenerateDefaultSiteCommand extends KunstmaanGenerateCommand
 {
+    /**
+     * @var BundleInterface
+     */
+    private $bundle;
+
+    /**
+     * @var string
+     */
+    private $prefix;
+
+    /**
+     * @var bool
+     */
+    private $demosite;
 
     /**
      * @see Command
@@ -30,13 +32,6 @@ class GenerateDefaultSiteCommand extends GenerateDoctrineCommand
     protected function configure()
     {
         $this
-            ->setDefinition(
-                array(
-                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the default website in'),
-                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
-                )
-            )
-            ->setDescription('Generates a basic website based on Kunstmaan bundles with default templates')
             ->setHelp(<<<EOT
 The <info>kuma:generate:site</info> command generates an website using the Kunstmaan bundles
 
@@ -47,79 +42,87 @@ Use the <info>--prefix</info> option to add a prefix to the table names of the g
 <info>php app/console kuma:generate:default-site --namespace=Namespace/NamedBundle --prefix=demo_</info>
 EOT
             )
+            ->setDescription('Generates a basic website based on Kunstmaan bundles with default templates')
+            ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace to generate the default website in')
+            ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
+            ->addOption('demosite', '', InputOption::VALUE_OPTIONAL, 'Whether to generate a website with demo contents or a basic website')
             ->setName('kuma:generate:default-site');
-    }
-
-    /**
-     * Executes the command.
-     *
-     * @param InputInterface  $input  An InputInterface instance.
-     * @param OutputInterface $output An OutputInterface instance.
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Site Generation');
-
-        GeneratorUtils::ensureOptionsProvided($input, array('namespace'));
-
-        $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
-        $bundle = strtr($namespace, array('\\' => ''));
-
-        $prefix = GeneratorUtils::cleanPrefix($input->getOption('prefix'));
-        $bundle = $this
-            ->getApplication()
-            ->getKernel()
-            ->getBundle($bundle);
-
-        $rootDir = $this->getApplication()->getKernel()->getRootDir();
-
-        // First we generate the layout if it is not yet generated
-        if (!is_file($bundle->getPath().'/Resources/views/Layout/layout.html.twig')) {
-            $command = $this->getApplication()->find('kuma:generate:layout');
-            $arguments = array(
-                'command'      => 'kuma:generate:layout',
-                '--namespace'  => str_replace('\\', '/', $namespace),
-                '--subcommand' => true
-            );
-            $input = new ArrayInput($arguments);
-            $command->run($input, $output);
-        }
-
-        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
-        $generator->generate($bundle, $prefix, $rootDir, $output);
-
-        $output->writeln(array('Make sure you update your database first before using the created entities:',
-            '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
-            '    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --fixtures=src/'.str_replace('\\', '/', $bundle->getNamespace()).'/DataFixtures/ORM/DefaultSiteGenerator/ --append</comment>',
-            '')
-        );
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function getWelcomeText()
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Kunstmaan default site generator');
-
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
-
-        $inputAssistant->askForNamespace(array(
-            '',
-            'This command helps you to generate a default site setup.',
-            'You must specify the namespace of the bundle where you want to generate the default site setup.',
-            'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problem.',
-            '',
-        ));
-
-        $inputAssistant->askForPrefix();
+        return 'Welcome to the Kunstmaan default site generator';
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function doExecute()
+    {
+        $this->assistant->writeSection('Site generation');
+
+        // First we generate the layout if it is not yet generated
+        if (!is_file($this->bundle->getPath().'/Resources/views/Layout/layout.html.twig')) {
+            $command = $this->getApplication()->find('kuma:generate:layout');
+            $arguments = array(
+                'command'      => 'kuma:generate:layout',
+                '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
+                '--subcommand' => true
+            );
+            $input = new ArrayInput($arguments);
+            $command->run($input, $this->assistant->getOutput());
+        }
+
+        $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
+        $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
+
+        $this->assistant->writeSection('Site successfully created', 'bg=green;fg=black');
+        $this->assistant->writeLine(array(
+            'Make sure you update your database first before using the created entities:',
+            '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
+            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
+            '    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --fixtures=src/'.str_replace('\\', '/', $this->bundle->getNamespace()).'/DataFixtures/ORM/DefaultSiteGenerator/ --append</comment>',
+            ''
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doInteract()
+    {
+        $this->assistant->writeLine(array("This command helps you to generate a default site setup.\n"));
+
+        /**
+         * Ask for which bundle we need to create the layout
+         */
+        $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
+        $this->bundle = $this->askForBundleName('layout', $bundleNamespace);
+
+        /**
+         * Ask the database table prefix
+         */
+        $this->prefix = $this->askForPrefix();
+
+        /**
+         * If we need to generate a full iste, or only the basic structure
+         */
+        $this->demosite = $this->assistant->getOptionOrDefault('demosite', false);
+    }
+
+    /**
+     * Get the generator.
+     *
+     * @return DefaultSiteGenerator
+     */
     protected function createGenerator()
     {
-        return new DefaultSiteGenerator($this->getContainer()->get('filesystem'), '/defaultsite');
+        $filesystem = $this->getContainer()->get('filesystem');
+        $registry = $this->getContainer()->get('doctrine');
+
+        return new DefaultSiteGenerator($filesystem, $registry, '/defaultsite', $this->assistant);
     }
 }

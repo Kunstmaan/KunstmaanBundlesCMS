@@ -2,7 +2,7 @@
     <div class="row row--padded-large">
         <div class="col-md-3 col--padded hidden-xs">
             {% set children = nodemenu.getNodeByInternalName('satellite').children %}
-            {% include '~~~BUNDLE~~~:Layout:submenu.html.twig' with {'items': children} %}
+            {% include '<%= bundle.name %>:Layout:submenu.html.twig' with {'items': children} %}
         </div>
         <div class="col-md-9 col--padded">
             {% if satellites|length > 0%}

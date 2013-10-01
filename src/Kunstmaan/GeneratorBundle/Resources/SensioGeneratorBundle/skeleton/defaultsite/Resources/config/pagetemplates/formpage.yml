@@ -2,4 +2,4 @@ name: "Form page"
 rows:
     - regions: 
         - { name: "main", span: 12 }
-template: "~~~BUNDLE~~~::Pages\\FormPage\\pagetemplate.html.twig"
+template: "{{ bundle.name }}::Pages\\FormPage\\pagetemplate.html.twig"

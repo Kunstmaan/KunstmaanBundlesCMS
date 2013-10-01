@@ -2,14 +2,15 @@
 
 namespace {{ namespace }}\EventListener;
 
-
-use Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpKernel\Event\FilterResponseEvent,
-    Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultLocaleListener
 {
-
+    /**
+     * @var string
+     */
     private $defaultLocale;
 
     public function __construct($defaultLocale)
@@ -39,5 +40,4 @@ class DefaultLocaleListener
         $url = $request->getPathInfo();
         return (empty($url) || ($url == '/'));
     }
-
 }
