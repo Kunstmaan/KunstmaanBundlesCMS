@@ -13,7 +13,7 @@
 {% block content %}
     <div class="container">
         <header role="header" class="text-center language-chooser__header">
-            <img src="{{ asset('bundles/kunstmaanwebsite/img/general/demo-logo--white.svg') }}" alt="Demosite" class="site-logo__img--big"/>
+            <img src="{{ asset('bundles/<%= bundle.name|lower|replace({"bundle": ""}) %>/img/general/demo-logo--white.svg') }}" alt="Demosite" class="site-logo__img--big"/>
         </header>
         <nav role="navigation">
             <ul class="list-reset language-chooser__list">
