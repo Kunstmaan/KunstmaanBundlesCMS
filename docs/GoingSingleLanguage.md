@@ -12,7 +12,7 @@ mv app/config/routing.yml app/config/routing.multilang.yml
 mv app/config/routing.singlelang.yml app/config/routing.yml 
 ```
 
-*WARNING: If you generated bundles before going single language, checht that you have all routing moved over to the new routing file!*
+*WARNING: If you generated bundles before going single language, check that you have all routing moved over to the new routing file!*
 
 ## 2) Change the security.yml
 
@@ -23,7 +23,40 @@ mv app/config/security.yml app/config/security.multilang.yml
 mv app/config/security.singlelang.yml app/config/security.yml 
 ```
 
-## 3) Change parameters.yml
+## 3) Change your AppKernel
+
+Comment out the `KunstmaanLanguageChooserBundle` and `LuneticsLocaleBundle` in your [AppKernel.php](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/AppKernel.php)
+
+```
+//new Kunstmaan\LanguageChooserBundle\KunstmaanLanguageChooserBundle(),
+//new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
+```
+
+## 4) Change your config.yml
+
+Comment out the `kunstmaan_language_chooser` configuration section in your [config.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/config.yml)
+
+```
+#kunstmaan_language_chooser:
+#    autodetectlanguage: false
+#    showlanguagechooser: true
+#    languagechoosertemplate: CompanyYourBundle:Default:language-chooser.html.twig
+#    languagechooserlocales: [nl, fr, de, en]
+```
+
+## 5) Change your bundle's service.yml
+
+Comment out the default locale listener in your bundle's `service.yml`
+
+```
+#    companyyourbundle.default_locale_listener:
+#        class: Company\YourBundle\EventListener\DefaultLocaleListener
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+#        arguments: [%defaultlocale%]
+```
+
+## 6) Change parameters.yml
 
 Configure the parameters.yml file like so:
 
