@@ -1,9 +1,11 @@
 <div class="container">
+    <% if demosite %>
     <div class="row">
         <div class="col-md-12">
-            {% include '~~~BUNDLE~~~:Pages:HomePage/slider.html.twig' %}
+            {% include '<%= bundle.name %>:Pages:HomePage/slider.html.twig' %}
         </div>
     </div>
+    <% endif %>
     <div class="row row--padded-large">
         <div class="col-md-4 col--padded">
             {{ render_pageparts(page, 'left_column') }}

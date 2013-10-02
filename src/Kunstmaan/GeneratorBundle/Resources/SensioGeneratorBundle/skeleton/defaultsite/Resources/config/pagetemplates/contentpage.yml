@@ -2,4 +2,4 @@ name: "Content page"
 rows:
     - regions:
         - { name: "main", span: 12 }
-template: "~~~BUNDLE~~~::Pages\\ContentPage\\pagetemplate.html.twig"
+template: "{{ bundle.name }}::Pages\\ContentPage\\pagetemplate.html.twig"

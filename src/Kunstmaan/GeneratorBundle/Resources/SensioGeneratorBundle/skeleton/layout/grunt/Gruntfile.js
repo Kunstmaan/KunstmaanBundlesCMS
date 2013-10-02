@@ -146,5 +146,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-notify');
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['modernizr']);
+    grunt.registerTask('build', ['modernizr', 'sass']);
 };

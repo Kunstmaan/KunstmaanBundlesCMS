@@ -18,11 +18,13 @@ use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
-use {{ namespace }}\Entity\Satellite;
 use {{ namespace }}\Entity\Pages\ContentPage;
-use {{ namespace }}\Entity\Pages\FormPage;
 use {{ namespace }}\Entity\Pages\HomePage;
+{% if demosite %}
+use {{ namespace }}\Entity\Pages\FormPage;
+use {{ namespace }}\Entity\Satellite;
 use {{ namespace }}\Entity\Pages\SatelliteOverviewPage;
+{% endif %}
 
 /**
  * DefaultSiteFixtures
@@ -76,9 +78,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->createMedia();
         $this->createHomePage();
         $this->createContentPages();
+{% if demosite %}
         $this->createAdminListPages();
         // $this->createStylePage();
         $this->createFormPage();
+{% endif %}
         $this->createDashboard();
     }
 
@@ -233,12 +237,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         );
 
         $this->pageCreator->createPage($contentPage, $translations, $options);
+{% if demosite %}
 
         // Add images to database
         $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
         $imgDir = dirname(__FILE__).'/../../../Resources/public/files/content/';
         $satelliteMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
         $orbitsMedia = $this->mediaCreator->createFile($imgDir.'orbits.jpg', $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
+{% endif %}
 
         // Add pageparts
         $pageparts = array();
@@ -253,6 +259,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setContent' => '<p>A <b>satellite</b> is an object that orbits another object. In space, satellites may be made by man, or they may be natural. The moon is a natural satellite that orbits the Earth. Most man-made satellites also orbit the Earth, but some orbit other planets, such as Saturn, Venus or Mars, or the moon.</p>'
             )
         );
+{% if demosite %}
         $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
             array(
                 'setTitle' => 'History',
@@ -321,6 +328,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setContent' => '<p><a href="http://simple.wikipedia.org/wiki/Satellite_(artificial)">Wikipedia</a></p>'
             )
         );
+{% endif %}
 
         $this->pagePartCreator->addPagePartsToPage('satellite', $pageparts, 'en');
 
@@ -336,6 +344,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setContent' => '<p>Een <b>kunstmaan</b> of <b>satelliet</b> is een door mensen gemaakt object in een baan om een hemellichaam. Kunstmanen zijn onbemande toestellen die door de mens in een baan zijn gebracht. Natuurlijke manen zijn meestal objecten met de structuur van een kleine planeet of planetoïde die door de zwaartekracht van de planeet in hun baan worden gehouden.</p>'
             )
         );
+{% if demosite %}
+
         $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
             array(
                 'setTitle' => 'Historie',
@@ -425,10 +435,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setContent' => '<p><a href="http://nl.wikipedia.org/wiki/Kunstmaan">Wikipedia</a></p>'
             )
         );
+{% endif %}
 
         $this->pagePartCreator->addPagePartsToPage('satellite', $pageparts, 'nl');
     }
 
+{% if demosite %}
     /**
      * Create a ContentPages based on an admin list
      */
@@ -744,6 +756,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $this->manager->flush();
     }
+{% endif %}
 
     /**
      * Insert all translations
@@ -755,6 +768,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['lang_chooser.welcome']['fr'] = 'Bienvenu, continuer en Français';
         $trans['lang_chooser.welcome']['nl'] = 'Welkom, ga verder in het Nederlands';
         $trans['lang_chooser.welcome']['de'] = 'Willkommen, gehe weiter in Deutsch';
+{% if demosite %}
 
         // AdminList page with satellites
         $trans['satellite.name']['en'] = 'name';
@@ -777,6 +791,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['search']['nl'] = 'zoeken';
         $trans['search.looking_for']['en'] = 'You were looking for';
         $trans['search.looking_for']['nl'] = 'U zocht naar';
+{% endif %}
 
         foreach ($trans as $key => $array) {
             foreach ($array as $lang => $value) {

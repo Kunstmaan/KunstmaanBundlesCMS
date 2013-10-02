@@ -46,6 +46,14 @@ class CommandAssistant
     }
 
     /**
+     * @return OutputInterface
+     */
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    /**
      * @return DialogHelper
      */
     private function getDialog()

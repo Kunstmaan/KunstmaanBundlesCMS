@@ -209,4 +209,146 @@ class KunstmaanGenerator extends Generator
             $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
         }
     }
+
+    /**
+     * Render all files in the source directory and copy them to the target directory.
+     *
+     * @param string $sourceDir  The source directory where we need to look in
+     * @param string $targetDir  The target directory where we need to copy the files too
+     * @param array  $parameters The parameters that will be passed to the templates
+     * @param bool   $override   Whether to override an existing file or not
+     * @param bool   $recursive  Whether to render all files recursively or not
+     */
+    public function renderFiles($sourceDir, $targetDir, array $parameters, $override = false, $recursive = true)
+    {
+        // Make sure the source -and target dir contain a trailing slash
+        $sourceDir = rtrim($sourceDir, "/")."/";
+        $targetDir = rtrim($targetDir, "/")."/";
+
+        $this->setSkeletonDirs(array($sourceDir));
+
+        // Get all files in the source directory
+        foreach (glob("$sourceDir*") as $name) {
+            $name = basename($name);
+
+            // When it is a directory, we recursively call this function if required
+            if (is_dir($sourceDir.$name) && $recursive) {
+                $this->renderFiles($sourceDir.$name, $targetDir.$name, $parameters, $override, $recursive);
+            } else {
+                // Check that we are allowed the overwrite the file if it already exists
+                if (!is_file($targetDir.$name) || $override == true) {
+                    $fileParts = explode('.', $name);
+                    if (end($fileParts) == 'twig') {
+                        $this->renderTwigFile($name, $targetDir.$name, $parameters, $sourceDir);
+                    } else {
+                        $this->renderFile($name, $targetDir.$name, $parameters);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Render all files in the source directory and copy them to the target directory.
+     *
+     * @param string $sourceDir  The source directory where we need to look in
+     * @param string $targetDir  The target directory where we need to copy the files too
+     * @param string $filename   The name of the file that needs to be rendered
+     * @param array  $parameters The parameters that will be passed to the templates
+     * @param bool   $override   Whether to override an existing file or not
+     */
+    public function renderSingleFile($sourceDir, $targetDir, $filename, array $parameters, $override = false)
+    {
+        // Make sure the source -and target dir contain a trailing slash
+        $sourceDir = rtrim($sourceDir, "/")."/";
+        $targetDir = rtrim($targetDir, "/")."/";
+
+        $this->setSkeletonDirs(array($sourceDir));
+
+        if (is_file($sourceDir.$filename)) {
+            // Check that we are allowed the overwrite the file if it already exists
+            if (!is_file($targetDir.$filename) || $override == true) {
+                $fileParts = explode('.', $filename);
+                if (end($fileParts) == 'twig') {
+                    $this->renderTwigFile($filename, $targetDir.$filename, $parameters, $sourceDir);
+                } else {
+                    $this->renderFile($filename, $targetDir.$filename, $parameters);
+                }
+            }
+        }
+    }
+
+    /**
+     * Copy all files in the source directory to the target directory.
+     *
+     * @param string $sourceDir  The source directory where we need to look in
+     * @param string $targetDir  The target directory where we need to copy the files too
+     * @param bool   $override   Whether to override an existing file or not
+     * @param bool   $recursive  Whether to render all files recursively or not
+     */
+    public function copyFiles($sourceDir, $targetDir, $override = false, $recursive = true)
+    {
+        // Make sure the source -and target dir contain a trailing slash
+        $sourceDir = rtrim($sourceDir, "/")."/";
+        $targetDir = rtrim($targetDir, "/")."/";
+
+        // Get all files in the source directory
+        foreach (glob("$sourceDir*") as $name) {
+            $name = basename($name);
+
+            // When it is a directory, we recursively call this function if required
+            if (is_dir($sourceDir.$name) && $recursive) {
+                $this->copyFiles($sourceDir.$name, $targetDir.$name, $override, $recursive);
+            } else {
+                $this->filesystem->copy($sourceDir.$name, $targetDir.$name, $override);
+            }
+        }
+    }
+
+    /**
+     * Render a twig file with custom twig tags.
+     *
+     * @param string $template
+     * @param array $parameters
+     * @param string $sourceDir
+     * @return string
+     */
+    public function renderTwig($template, array $parameters, $sourceDir)
+    {
+        $twig = new \Twig_Environment(new \Twig_Loader_Filesystem(array($sourceDir)), array(
+            'debug'            => true,
+            'cache'            => false,
+            'strict_variables' => true,
+            'autoescape'       => false
+        ));
+
+        // Ruby erb template syntax
+        $lexer = new \Twig_Lexer($twig, array(
+            'tag_comment'  => array('<%#', '%>'),
+            'tag_block'    => array('<%', '%>'),
+            'tag_variable' => array('<%=', '%>'),
+        ));
+
+        $twig->setLexer($lexer);
+
+        return $twig->render($template, $parameters);
+    }
+
+    /**
+     * Render a twig file, and save it to disk.
+     *
+     * @param string $template
+     * @param string $target
+     * @param array $parameters
+     * @param string $sourceDir
+     * @return int
+     */
+    public function renderTwigFile($template, $target, array $parameters, $sourceDir)
+    {
+        if (!is_dir(dirname($target))) {
+            mkdir(dirname($target), 0777, true);
+        }
+
+        return file_put_contents($target, $this->renderTwig($template, $parameters, $sourceDir));
+    }
 }
