@@ -76,7 +76,7 @@ class SatelliteOverviewPage extends \Kunstmaan\NodeBundle\Entity\AbstractPage im
      */
     public function getPageTemplates()
     {
-        return array("{{ bundle_name }}:satelliteoverviewpage");
+        return array('{{ bundle_name }}:satelliteoverviewpage');
     }
 
     /**
@@ -86,7 +86,7 @@ class SatelliteOverviewPage extends \Kunstmaan\NodeBundle\Entity\AbstractPage im
      */
     public function getDefaultView()
     {
-        return "{{ bundle_name }}:Pages:SatelliteOverviewPage/view.html.twig";
+        return '{{ bundle_name }}:Pages:SatelliteOverviewPage/view.html.twig';
     }
 
     /**

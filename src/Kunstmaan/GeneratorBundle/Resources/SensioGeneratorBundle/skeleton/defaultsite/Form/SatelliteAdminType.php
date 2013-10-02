@@ -48,7 +48,7 @@ class SatelliteAdminType extends AbstractType
      */
     public function getName()
     {
-        return "satellite_form";
+        return 'satellite_form';
     }
 
 }

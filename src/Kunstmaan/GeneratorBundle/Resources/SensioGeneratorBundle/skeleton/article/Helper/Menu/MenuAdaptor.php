@@ -55,7 +55,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
             foreach ($children as $key => $child) {
                 if ('KunstmaanNodeBundle_nodes_edit' == $child->getRoute()){
                     $params = $child->getRouteParams();
-                    $id = $params["id"];
+                    $id = $params['id'];
                     if (in_array($id, $this->overviewpageIds)) {
                         $child->setChildren(array());
                     }
