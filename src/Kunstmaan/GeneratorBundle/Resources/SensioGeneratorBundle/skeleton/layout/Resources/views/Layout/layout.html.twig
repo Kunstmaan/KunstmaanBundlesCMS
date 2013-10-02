@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>       <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="nl"> <![endif]-->
-<!--[if IE 7]>          <html class="no-js lt-ie9 lt-ie8" lang="nl">        <![endif]-->
-<!--[if IE 8]>          <html class="no-js lt-ie9" lang="nl">               <![endif]-->
-<!--[if gt IE 8]><!-->  <html class="no-js" lang="nl">                  <!--<![endif]-->
+{% set htmlLocale = app.request.locale|default(defaultlocale)|slice(0,2) %}
+<!--[if lt IE 7]>       <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ htmlLocale }}"> <![endif]-->
+<!--[if IE 7]>          <html class="no-js lt-ie9 lt-ie8" lang="{{ htmlLocale }}">        <![endif]-->
+<!--[if IE 8]>          <html class="no-js lt-ie9" lang="{{ htmlLocale }}">               <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="{{ htmlLocale }}">                  <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
