@@ -222,14 +222,14 @@ class KunstmaanGenerator extends Generator
     public function renderFiles($sourceDir, $targetDir, array $parameters, $override = false, $recursive = true)
     {
         // Make sure the source -and target dir contain a trailing slash
-        if (substr($sourceDir, -1) != "/") $sourceDir .= "/";
-        if (substr($targetDir, -1) != "/") $targetDir .= "/";
+        $sourceDir = rtrim($sourceDir, "/")."/";
+        $targetDir = rtrim($targetDir, "/")."/";
 
         $this->setSkeletonDirs(array($sourceDir));
 
         // Get all files in the source directory
         foreach (glob("$sourceDir*") as $name) {
-            $name = substr($name, strrpos($name, '/' ) + 1);
+            $name = basename($name);
 
             // When it is a directory, we recursively call this function if required
             if (is_dir($sourceDir.$name) && $recursive) {
@@ -260,8 +260,8 @@ class KunstmaanGenerator extends Generator
     public function renderSingleFile($sourceDir, $targetDir, $filename, array $parameters, $override = false)
     {
         // Make sure the source -and target dir contain a trailing slash
-        if (substr($sourceDir, -1) != "/") $sourceDir .= "/";
-        if (substr($targetDir, -1) != "/") $targetDir .= "/";
+        $sourceDir = rtrim($sourceDir, "/")."/";
+        $targetDir = rtrim($targetDir, "/")."/";
 
         $this->setSkeletonDirs(array($sourceDir));
 
@@ -289,12 +289,12 @@ class KunstmaanGenerator extends Generator
     public function copyFiles($sourceDir, $targetDir, $override = false, $recursive = true)
     {
         // Make sure the source -and target dir contain a trailing slash
-        if (substr($sourceDir, -1) != "/") $sourceDir .= "/";
-        if (substr($targetDir, -1) != "/") $targetDir .= "/";
+        $sourceDir = rtrim($sourceDir, "/")."/";
+        $targetDir = rtrim($targetDir, "/")."/";
 
         // Get all files in the source directory
         foreach (glob("$sourceDir*") as $name) {
-            $name = substr($name, strrpos($name, '/' ) + 1);
+            $name = basename($name);
 
             // When it is a directory, we recursively call this function if required
             if (is_dir($sourceDir.$name) && $recursive) {
