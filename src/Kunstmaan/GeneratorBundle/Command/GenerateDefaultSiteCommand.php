@@ -108,7 +108,7 @@ EOT
         $this->prefix = $this->askForPrefix();
 
         /**
-         * If we need to generate a full iste, or only the basic structure
+         * If we need to generate a full site, or only the basic structure
          */
         $this->demosite = $this->assistant->getOption('demosite');
     }
