@@ -58,7 +58,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->generateAdminLists($parameters);
         if ($this->isMultiLangEnvironment()) {
             $this->generateDefaultLocaleFallbackCode($parameters);
-            $this->addLanguageChooserRouting();
             $this->addLanguageChooserConfig();
         }
         $this->generateEntities($parameters);
@@ -130,7 +129,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function addLanguageChooserConfig()
     {
-        $params = Yaml::parse($this->rootDir.'/config/parameters.yml');
+        $params = Yaml::parse($this->rootDir.'/app/config/parameters.yml');
 
         if (is_array($params) || array_key_exists('parameters', $params) && is_array($params['parameters']) && array_key_exists('requiredlocales', $params['parameters']))  {
             $languages = explode('|', $params['parameters']['requiredlocales']);
@@ -138,24 +137,12 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $languages = array('en', 'nl', 'fr');
         }
 
-        $file = $this->rootDir.'/config/config.yml';
+        $file = $this->rootDir.'/app/config/config.yml';
         $ymlData = "\n\nkunstmaan_language_chooser:";
         $ymlData .= "\n    autodetectlanguage: false";
         $ymlData .= "\n    showlanguagechooser: true";
         $ymlData .= "\n    languagechoosertemplate: ".$this->bundle->getName().":Default:language-chooser.html.twig";
         $ymlData .= "\n    languagechooserlocales: [".implode(', ', $languages)."]\n";
-        file_put_contents($file, $ymlData, FILE_APPEND);
-    }
-
-    /**
-     * Update the global routing.yml
-     */
-    public function addLanguageChooserRouting()
-    {
-        $file = $this->rootDir.'/config/routing.yml';
-        $ymlData = "\n\n# KunstmaanLanguageChooserBundle";
-        $ymlData .= "\n_languagechooser:";
-        $ymlData .= "\n    resource: .\n";
         file_put_contents($file, $ymlData, FILE_APPEND);
     }
 
@@ -252,6 +239,8 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $file = $this->bundle->getPath().'/Resources/config/services.yml';
             if (!is_file($file)) {
                 $ymlData = "services:";
+            } else {
+                $ymlData = "";
             }
             $ymlData .= "\n\n    ".strtolower($this->bundle->getName()).".admin_menu_adaptor:";
             $ymlData .= "\n        class: ".$this->bundle->getNamespace()."\Helper\Menu\AdminMenuAdaptor";
@@ -339,7 +328,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generateConfig()
     {
-        $configFile = $this->rootDir.'/config/config.yml';
+        $configFile = $this->rootDir.'/app/config/config.yml';
 
         $data = Yaml::parse($configFile);
         if (!array_key_exists('white_october_pagerfanta', $data)) {
@@ -359,7 +348,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $sourceDir = $this->skeletonDir.$relPath;
         $targetDir = $this->bundle->getPath().$relPath;
 
-        $this->renderSingleFile($sourceDir, $targetDir, 'routing.yml', $parameters);
+        $this->renderSingleFile($sourceDir, $targetDir, 'routing.yml', $parameters, true);
 
         $this->assistant->writeLine('Generating routing : <info>OK</info>');
     }
@@ -420,16 +409,16 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $sourcePath = '/app/KunstmaanSitemapBundle/';
-            $targetPath = $this->rootDir.'/Resources/KunstmaanSitemapBundle/';
+            $targetPath = $this->rootDir.'/app/Resources/KunstmaanSitemapBundle/';
 
             $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
 
             $sourcePath = '/app/KunstmaanArticleBundle/';
-            $targetPath = $this->rootDir.'/Resources/KunstmaanArticleBundle/';
+            $targetPath = $this->rootDir.'/app/Resources/KunstmaanArticleBundle/';
             $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
 
             $sourcePath = '/app/KunstmaanFormBundle/';
-            $targetPath = $this->rootDir.'/Resources/KunstmaanFormBundle/';
+            $targetPath = $this->rootDir.'/app/Resources/KunstmaanFormBundle/';
             $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
         }
 
@@ -449,7 +438,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
     private function isMultiLangEnvironment() {
         // This is a pretty silly implementation.
         // It just checks if it can find _locale in the routing.yml
-        $routingFile = file_get_contents($this->rootDir.'/config/routing.yml');
+        $routingFile = file_get_contents($this->rootDir.'/app/config/routing.yml');
         return preg_match('/_locale:/i', $routingFile);
     }
 }

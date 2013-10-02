@@ -38,12 +38,12 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
                 'name' => 'ContentPage',
                 'class'=> "{{ namespace }}\Entity\Pages\ContentPage"
             ),
-            {% if demosite %}
+{% if demosite %}
             array(
                 'name' => 'FormPage',
                 'class'=> "{{ namespace }}\Entity\Pages\FormPage"
             )
-            {% endif %}
+{% endif %}
         );
     }
 

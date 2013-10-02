@@ -4,10 +4,3 @@ services:
         tags:
           - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
         arguments: [%defaultlocale%]
-{% if demosite %}
-    {{ bundle.name|lower }}.admin_menu_adaptor:
-        class: {{ bundle.namespace }}\Helper\Menu\AdminMenuAdaptor
-        arguments: ["@security.context"]
-        tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
-{% endif %}

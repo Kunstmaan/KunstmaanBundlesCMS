@@ -53,7 +53,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $relPath = '/Resources/public/';
         $this->copyFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, true);
 
-        $this->assistant->writeLine('Generating assets : <info>OK</info>');
+        $this->assistant->writeLine('Generating public assets : <info>OK</info>');
     }
 
     /**

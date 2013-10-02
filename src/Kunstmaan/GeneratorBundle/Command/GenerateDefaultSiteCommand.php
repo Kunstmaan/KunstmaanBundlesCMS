@@ -45,7 +45,7 @@ EOT
             ->setDescription('Generates a basic website based on Kunstmaan bundles with default templates')
             ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace to generate the default website in')
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
-            ->addOption('demosite', '', InputOption::VALUE_OPTIONAL, 'Whether to generate a website with demo contents or a basic website')
+            ->addOption('demosite', '', InputOption::VALUE_NONE, 'Whether to generate a website with demo contents or a basic website')
             ->setName('kuma:generate:default-site');
     }
 
@@ -110,7 +110,7 @@ EOT
         /**
          * If we need to generate a full iste, or only the basic structure
          */
-        $this->demosite = $this->assistant->getOptionOrDefault('demosite', false);
+        $this->demosite = $this->assistant->getOption('demosite');
     }
 
     /**
