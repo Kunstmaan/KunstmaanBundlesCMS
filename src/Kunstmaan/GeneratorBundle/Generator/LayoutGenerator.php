@@ -50,8 +50,14 @@ class LayoutGenerator extends KunstmaanGenerator
      */
     private function generateAssets()
     {
+        $sourceDir = $this->skeletonDir;
+        $targetDir = $this->bundle->getPath();
+
         $relPath = '/Resources/public/';
-        $this->copyFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, true);
+        $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
+
+        $relPath = '/Resources/public/scss/config/';
+        $this->renderSingleFile($sourceDir.$relPath, $targetDir.$relPath, '_paths.scss', array('bundle' => $this->bundle), true);
 
         $this->assistant->writeLine('Generating public assets : <info>OK</info>');
     }
