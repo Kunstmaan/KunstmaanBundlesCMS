@@ -50,4 +50,23 @@ abstract class AbstractFilterType implements FilterTypeInterface
      * @return string
      */
     abstract public function getTemplate();
+
+
+    /**
+     * Returns empty string if no alias, otherwise make sure the alias has just one '.' after it.
+     *
+     * @return string
+     */
+    protected function getAlias()
+    {
+        if (empty($this->alias)) {
+            return '';
+        }
+
+        if (strpos($this->alias, '.') !== false) {
+            return $this->alias;
+        }
+
+        return $this->alias . '.';
+    }
 }

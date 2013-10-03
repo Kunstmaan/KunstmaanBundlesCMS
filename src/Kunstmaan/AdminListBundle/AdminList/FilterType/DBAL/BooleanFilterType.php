@@ -28,10 +28,10 @@ class BooleanFilterType extends AbstractDBALFilterType
         if (isset($data['value'])) {
             switch ($data['value']) {
                 case 'true':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->eq($this->alias . '.' . $this->columnName, 'true'));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->eq($this->getAlias() . $this->columnName, 'true'));
                     break;
                 case 'false':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->eq($this->alias . '.' . $this->columnName, 'false'));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->eq($this->getAlias() . $this->columnName, 'false'));
                     break;
             }
         }
