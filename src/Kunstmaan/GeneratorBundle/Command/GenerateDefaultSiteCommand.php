@@ -105,7 +105,7 @@ EOT
         /**
          * Ask the database table prefix
          */
-        $this->prefix = $this->askForPrefix();
+        $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
 
         /**
          * If we need to generate a full site, or only the basic structure
