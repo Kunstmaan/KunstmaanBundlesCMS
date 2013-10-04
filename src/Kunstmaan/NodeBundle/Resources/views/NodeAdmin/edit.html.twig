@@ -41,6 +41,8 @@
 
 {% block header %}
     {% if adminmenu.current %}
+        <!-- PageClassName: {{ node.refEntityName }} -->
+        <input type="hidden" name="PageClassName" value="{{ node.refEntityName }}">
         <h1>
             {{ adminmenu.current.internalname | trans }}
             {% if draft %}
