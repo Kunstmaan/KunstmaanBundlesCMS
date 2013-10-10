@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,11 @@ class PagePartAdmin
     protected $context;
 
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @var array
      */
     protected $pagepartmap = array();
@@ -56,10 +62,11 @@ class PagePartAdmin
      * @param EntityManager                     $em           The entity manager
      * @param HasPagePartsInterface             $page         The page
      * @param null|string                       $context      The context
+     * @param null|ContainerInterface           $container    The container
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, HasPagePartsInterface $page, $context = null)
+    public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, HasPagePartsInterface $page, $context = null, ContainerInterface $container = null)
     {
         if (!($page instanceof AbstractEntity)) {
             throw new \InvalidArgumentException("Page must be an instance of AbstractEntity.");
@@ -67,6 +74,7 @@ class PagePartAdmin
         $this->configurator = $configurator;
         $this->em = $em;
         $this->page = $page;
+        $this->container = $container;
         if ($context) {
             $this->context = $context;
         } else {
@@ -318,17 +326,26 @@ class PagePartAdmin
     public function adaptForm(FormBuilderInterface $formbuilder)
     {
         $pagepartrefs = $this->getPagePartRefs();
+
         // if (sizeof($pagepartrefs) > 0) {
         $data = $formbuilder->getData();
         for ($i = 0; $i < sizeof($pagepartrefs); $i++) {
             $pagepartref = $pagepartrefs[$i];
             $pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
             $data['pagepartadmin_' . $pagepartref->getId()] = $pagepart;
-            $formbuilder->add('pagepartadmin_' . $pagepartref->getId(), $pagepart->getDefaultAdminType());
+            $adminType = $pagepart->getDefaultAdminType();
+            if (!is_object($adminType) && is_string($adminType)) {
+                $adminType = $this->container->get($adminType);
+            }
+            $formbuilder->add('pagepartadmin_' . $pagepartref->getId(), $adminType);
         }
         foreach ($this->newpps as $id => $newpagepart) {
             $data['pagepartadmin_' . $id] = $newpagepart;
-            $formbuilder->add('pagepartadmin_' . $id, $newpagepart->getDefaultAdminType());
+            $adminType = $newpagepart->getDefaultAdminType();
+            if (!is_object($adminType) && is_string($adminType)) {
+                $adminType = $this->container->get($adminType);
+            }
+            $formbuilder->add('pagepartadmin_' . $id, $adminType);
         }
         $formbuilder->setData($data);
         //}
