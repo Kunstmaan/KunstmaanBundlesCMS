@@ -4,6 +4,7 @@ namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
  * Parses an ImportCommand
@@ -76,7 +77,12 @@ class ImportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\A
 
         foreach ($bundles as $bundle) {
             $importCommand->setBundle($bundle);
-            $imported += $this->importSingleBundleTranslationFiles($importCommand);
+
+            try {
+                $imported += $this->importSingleBundleTranslationFiles($importCommand);
+            } catch (FileNotFoundException $e) {
+                continue;
+            }
         }
 
         return $imported;

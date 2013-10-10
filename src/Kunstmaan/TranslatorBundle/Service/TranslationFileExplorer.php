@@ -3,6 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Service;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class TranslationFileExplorer
 {
@@ -40,7 +41,7 @@ class TranslationFileExplorer
             return $finder;
         }
 
-        throw new \Exception('Directory `' . $exploreDir . '` does not exist, translations could not be found.');
+        throw new FileNotFoundException($exploreDir . ' does not exist, translations could not be found.');
 
     }
 
