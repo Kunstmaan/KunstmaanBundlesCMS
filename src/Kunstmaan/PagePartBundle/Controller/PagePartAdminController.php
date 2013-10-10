@@ -59,7 +59,11 @@ class PagePartAdminController extends Controller
 
         $data = $formBuilder->getData();
         $data['pagepartadmin_' . $id] = $pagePart;
-        $formBuilder->add('pagepartadmin_' . $id, $pagePart->getDefaultAdminType());
+        $adminType = $pagePart->getDefaultAdminType();
+        if (!is_object($adminType) && is_string($adminType)) {
+            $adminType = $this->container->get($adminType);
+        }
+        $formBuilder->add('pagepartadmin_' . $id, $adminType);
         $formBuilder->setData($data);
         $form = $formBuilder->getForm();
         $formview = $form->createView();

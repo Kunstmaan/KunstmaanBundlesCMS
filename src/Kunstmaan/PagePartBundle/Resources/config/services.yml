@@ -10,6 +10,7 @@ services:
 
     kunstmaan_pagepartadmin.factory:
         class: Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory
+        arguments: ['@service_container']
 
     kunstmaan_pagepartadmin.twig.extension:
         class: Kunstmaan\PagePartBundle\Twig\Extension\PagePartAdminTwigExtension
