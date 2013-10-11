@@ -48,7 +48,7 @@ class ScriptInjectorListener implements EventSubscriberInterface {
     }
 
     /**
-     * Injects the web debug toolbar into the given Response.
+     * Injects the livereload script.
      *
      * @param Response $response A Response instance
      */
