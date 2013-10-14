@@ -159,11 +159,16 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * Get the url to export the listed items
      *
-     * @return string
+     * @return array
      */
     public function getExportUrl()
     {
-        return '';
+        $params = $this->getExtraParameters();
+
+        return array(
+            'path' => $this->getPathByConvention($this::SUFFIX_EXPORT),
+            'params' => array_merge($params, array('_format' => 'csv'))
+        );
     }
 
     /**
