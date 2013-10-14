@@ -167,7 +167,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
         return array(
             'path' => $this->getPathByConvention($this::SUFFIX_EXPORT),
-            'params' => array_merge($params, array('_format' => 'csv'))
+            'params' => array_merge(array('_format' => 'csv'), $params)
         );
     }
 
