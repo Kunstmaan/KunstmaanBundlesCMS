@@ -216,12 +216,13 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
         $request->query($query);
         $response = $this->search->search($this->indexName, $this->indexType, $request->toJSON(), true);
 
-        foreach ($response['hits']['hits'] as $hit) {
-            $nodetranslation_id = $hit['_source']['nodetranslation_id'];
-            $childNodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodetranslation_id);
-            $this->deleteNodeTranslation($childNodeTranslation);
+        if (is_array($response) && array_key_exists('hits', $response)) {
+            foreach ($response['hits']['hits'] as $hit) {
+                $nodetranslation_id = $hit['_source']['nodetranslation_id'];
+                $childNodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodetranslation_id);
+                $this->deleteNodeTranslation($childNodeTranslation);
+            }
         }
-
     }
 
     public function deleteIndex()
