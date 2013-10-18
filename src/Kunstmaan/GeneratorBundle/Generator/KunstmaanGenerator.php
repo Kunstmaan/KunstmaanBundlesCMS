@@ -105,7 +105,7 @@ class KunstmaanGenerator extends Generator
                 }
             }
         }
-        $class->setPrimaryTable(array('name' => strtolower($dbPrefix.strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name)))));
+        $class->setPrimaryTable(array('name' => strtolower($dbPrefix . strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name))) . 's'));
         $entityCode = $this->getEntityGenerator($extendClass)->generateEntityClass($class);
 
         return array($entityCode, $entityPath);
