@@ -16,7 +16,6 @@
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-fixtures-bundle": ">=2.1,<2.3",
         "friendsofsymfony/user-bundle": "dev-master",
         "knplabs/knp-menu-bundle": "*",
         "sensio/framework-extra-bundle": "*",
@@ -26,7 +25,7 @@
     },
     "require-dev": {
         "doctrine/data-fixtures": "1.0.*@dev",
-        "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
+        "doctrine/doctrine-fixtures-bundle": ">=2.1, <2.3",
         "pagerfanta/pagerfanta": "1.0.*@dev",
         "white-october/pagerfanta-bundle": "1.0.*@dev"
     },
