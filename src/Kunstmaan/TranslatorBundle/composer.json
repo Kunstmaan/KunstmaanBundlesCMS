@@ -28,10 +28,13 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "2.0.*",
         "kunstmaan/admin-bundle": "dev-master",
-        "kunstmaan/adminlist-bundle": "dev-master",
+        "kunstmaan/adminlist-bundle": "dev-master"
+    
+    },
+    "require-dev": {
         "phpunit/phpunit": "*",
         "nelmio/alice": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*@dev"
+        "doctrine/doctrine-fixtures-bundle": ">=2.1, <2.3"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\TranslatorBundle": "" }
