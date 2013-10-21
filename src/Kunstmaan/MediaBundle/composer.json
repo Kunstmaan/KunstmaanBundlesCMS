@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
-        "doctrine/doctrine-fixtures-bundle": "2.1.*",
+        "doctrine/doctrine-fixtures-bundle": ">=2.1.*",
         "stof/doctrine-extensions-bundle": "dev-master",
         "liip/imagine-bundle": "*",
         "knplabs/knp-gaufrette-bundle": "*",
