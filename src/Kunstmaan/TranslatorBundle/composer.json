@@ -30,7 +30,7 @@
         "kunstmaan/admin-bundle": "dev-master",
         "kunstmaan/adminlist-bundle": "dev-master",
         "phpunit/phpunit": "*",
-        "nelmio/alice": "1.4.*@dev",
+        "nelmio/alice": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "2.2.*@dev"
     },
     "autoload": {
