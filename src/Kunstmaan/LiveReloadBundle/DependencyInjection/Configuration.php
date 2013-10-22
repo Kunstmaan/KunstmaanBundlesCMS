@@ -32,6 +32,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('port')
                     ->defaultValue(35729)
                 ->end()
+                ->booleanNode('check_server_presence')
+                    ->defaultTrue()
+                ->end()
             ->end()
         ;
 
