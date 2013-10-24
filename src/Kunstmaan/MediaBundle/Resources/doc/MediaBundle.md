@@ -77,7 +77,7 @@ The API is straightforward:
 
 ```
     $mediaCreatorService = $this->container->get('kunstmaan_media.media_creator_service');
-    $media = $mediaCreatorService->createFile('./app/Content/Images/placeholder.jpg', 1, MediaCreatorService::CONTEXT_CONSOLE);
+    $media = $mediaCreatorService->createFile('./app/Content/Images/placeholder.jpg', 1);
 ```
 
 The path is relevant to the root of your Symfony project. The context can be either web or console.

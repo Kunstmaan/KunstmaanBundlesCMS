@@ -17,6 +17,11 @@ class MediaManager
     protected $handlers = array();
 
     /**
+     * @var AbstractMediaHandler
+     */
+    protected $defaultHandler;
+
+    /**
      * @param AbstractMediaHandler $handler Media handler
      *
      * @return void
@@ -24,6 +29,16 @@ class MediaManager
     public function addHandler(AbstractMediaHandler $handler)
     {
         $this->handlers[$handler->getName()] = $handler;
+    }
+
+    /**
+     * @param AbstractMediaHandler $handler Media handler
+     *
+     * @return void
+     */
+    public function setDefaultHandler(AbstractMediaHandler $handler)
+    {
+        $this->defaultHandler = $handler;
     }
 
     /**
@@ -40,7 +55,7 @@ class MediaManager
                 return $handler;
             }
         }
-        return new FileHandler();
+        return $this->defaultHandler;
     }
 
     /**
@@ -58,7 +73,7 @@ class MediaManager
             }
         }
 
-        return new FileHandler();
+        return $this->defaultHandler;
     }
 
     /**

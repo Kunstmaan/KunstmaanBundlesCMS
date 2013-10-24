@@ -35,14 +35,24 @@ class FileHandler extends AbstractMediaHandler
     public $mimeTypeGuesser = null;
 
     /**
-     * constructor
+     * Constructor
      */
     public function __construct()
     {
-        $this->fileSystem = new Filesystem(new \Gaufrette\Adapter\Local("uploads/media/", true));
         //we use a specific symfony mimetypeguesser because de default (FileinfoMimeTypeGuesser) is unable to recognize MS documents
         $this->mimeTypeGuesser = new FileBinaryMimeTypeGuesser();
     }
+
+    /**
+     * Inject the root dir so we know the full path where we need to store the file.
+     *
+     * @param string $kernelRootDir
+     */
+    public function setMediaPath($kernelRootDir)
+    {
+        $this->fileSystem = new Filesystem(new Local($kernelRootDir. '/../web/uploads/media/', true));
+    }
+
     /**
      * @return string
      */
