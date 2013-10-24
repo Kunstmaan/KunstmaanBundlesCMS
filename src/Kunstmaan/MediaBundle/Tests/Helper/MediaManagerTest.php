@@ -1,6 +1,7 @@
 <?php
 namespace Kunstmaan\MediaBundle\Tests\Helper;
 
+use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 
 /**
@@ -19,7 +20,10 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new MediaManager;
+        $fileHandler = new FileHandler();
+        $fileHandler->setMediaPath(realpath(dirname(__DIR__).'/../../../../../../app/'));
+        $this->object = new MediaManager();
+        $this->object->setDefaultHandler($fileHandler);
     }
 
     /**

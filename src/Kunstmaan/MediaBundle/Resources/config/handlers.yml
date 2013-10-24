@@ -21,11 +21,14 @@ services:
     kunstmaan_media.media_handlers.image:
         class: "%kunstmaan_media.media_handler.image.class%"
         arguments: ["%aviary_api_key%"]
+        calls:
+            - [ setMediaPath, [ "%kernel.root_dir%" ] ]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
-            
+
     kunstmaan_media.media_handlers.file:
         class: "%kunstmaan_media.media_handler.file.class%"
+        calls:
+            - [ setMediaPath, [ "%kernel.root_dir%" ] ]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
-    
