@@ -242,8 +242,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         // Add images to database
         $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
         $imgDir = dirname(__FILE__).'/../../../Resources/public/files/content/';
-        $satelliteMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
-        $orbitsMedia = $this->mediaCreator->createFile($imgDir.'orbits.jpg', $folder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
+        $satelliteMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
+        $orbitsMedia = $this->mediaCreator->createFile($imgDir.'orbits.jpg', $folder->getId());
 {% endif %}
 
         // Add pageparts
@@ -819,8 +819,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $imageFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
         $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
         $publicDir = dirname(__FILE__).'/../../../Resources/public/';
-        $this->mediaCreator->createFile($publicDir.'img/general/logo.png', $imageFolder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
-        $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId(), MediaCreatorService::CONTEXT_CONSOLE);
+        $this->mediaCreator->createFile($publicDir.'img/general/logo.png', $imageFolder->getId());
+        $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId());
 
         // Create dummy video folder and add dummy videos
         {
