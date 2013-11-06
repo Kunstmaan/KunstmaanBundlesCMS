@@ -4,7 +4,7 @@ pagepart:
         title: 'Título'
 
     link:
-        choose: 'Elija un linl'
+        choose: 'Elija un link'
         openinnewwindow: 'Abrir en ventana nueva'
         text: 'Texto'
 
