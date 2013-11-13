@@ -1,0 +1,71 @@
+# Media
+media: 
+  aviary:
+    title: Aviary
+    nothing: Rien à voir ici.
+  
+  media:
+    no: Pas encore de fichier dans ce dossier.
+    bulkupload:
+      addto: Charger des fichiers dans "%folder%"
+    contenttab:
+      title: Contenu
+    propertiestab:
+      title: Propriétés
+    title: Média
+    edit:
+      action: Modifier
+    download:
+      action: Télécharger
+    mediainfo:
+      name: Nom
+      contenttype: Content-type
+      createdat: Ajouté
+      updatedat: Modifié
+      downloadlink: Lien de téléchargement
+    addto: Ajouter le média dans "%folder%"
+    deletesure: Etes-vous certain de vouloir supprimer cet élément ?
+    new: Ajouter un média dans "%folder%"
+
+  folder:
+    addsub:
+      action: Ajouter un sous-dossier
+      modal:
+        title: Ajouter un sous-dossier
+        save: Ajouter
+    sub:
+      no: Pas encore de sous-dossiers.
+    delete:
+      action: Supprimer ce dossier
+      modal:
+        title: Supprimer le dossier
+        text: Etes-vous certain de vouloir supprimer "%folder%"? 
+    save: Sauver
+    contenttab:
+      title: Contenu
+    propertiestab:
+      title: Propriétés
+
+  bulkupload:
+    upload: Upload
+    bulkupload: Bulk upload
+    
+  slide:
+    add: Ajouer un slide
+    modal:
+      title: Ajouter un slide
+      save: Ajouter
+  video:
+    add: Ajouter une vidéo
+    modal:
+      title: Ajouter une vidéo
+      save: Ajouter
+  file:
+    add: Ajouter un fichier
+    modal:
+      title: Ajouter un fichier
+      save: Ajouter
+    
+  widget:
+    choose: Choisir
+    delete: Supprimer
