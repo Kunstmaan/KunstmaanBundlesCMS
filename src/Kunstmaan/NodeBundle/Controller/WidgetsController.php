@@ -37,11 +37,9 @@ class WidgetsController extends Controller
         /* @var AclHelper $aclHelper */
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
-        $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, true, true);
 
         return array(
-            'topnodes' => $topNodes,
             'nodemenu' => $nodeMenu,
         );
     }
@@ -65,11 +63,9 @@ class WidgetsController extends Controller
         /* @var AclHelper $aclHelper */
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
-        $topNodes = $em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($locale, PermissionMap::PERMISSION_VIEW, $aclHelper, true);
         $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, true, true);
 
         return array(
-            'topnodes' => $topNodes,
             'nodemenu' => $nodeMenu
         );
     }

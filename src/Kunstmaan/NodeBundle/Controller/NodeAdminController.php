@@ -100,16 +100,12 @@ class NodeAdminController extends Controller
     public function indexAction()
     {
         $this->init();
-        /* @var Node[] $topNodes */
-        $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_EDIT, $this->aclHelper, true);
-        $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, null, PermissionMap::PERMISSION_EDIT, true, true);
+
         /* @var AdminList $adminlist */
         $adminlist = $this->get('kunstmaan_adminlist.factory')->createList(new NodeAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT));
         $adminlist->bindRequest($this->getRequest());
 
         return array(
-            'topnodes' => $topNodes,
-            'nodemenu' => $nodeMenu,
             'adminlist' => $adminlist,
         );
     }
@@ -471,9 +467,11 @@ class NodeAdminController extends Controller
                 $parentsAreOk = true;
             }
 
-            $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
-
-            return $this->render('KunstmaanNodeBundle:NodeAdmin:pagenottranslated.html.twig', array('node' => $node, 'nodeTranslations' => $node->getNodeTranslations(true), 'nodemenu' => $nodeMenu, 'copyfromotherlanguages' => $parentsAreOk));
+            return $this->render('KunstmaanNodeBundle:NodeAdmin:pagenottranslated.html.twig', array(
+                'node' => $node,
+                'nodeTranslations' => $node->getNodeTranslations(true),
+                'copyfromotherlanguages' => $parentsAreOk
+            ));
         }
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -508,8 +506,6 @@ class NodeAdminController extends Controller
                 }
             }
             $page = $nodeVersion->getRef($this->em);
-
-
         }
 
         $isStructureNode = $page->isStructureNode();
@@ -566,18 +562,13 @@ class NodeAdminController extends Controller
             }
         }
 
-        $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->aclHelper, $this->locale, $node, PermissionMap::PERMISSION_EDIT, true, true);
-        $topNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getTopNodes($this->locale, PermissionMap::PERMISSION_EDIT, $this->aclHelper);
         $nodeVersions = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->findBy(array('nodeTranslation' => $nodeTranslation), array('updated'=> 'ASC'));
-
         $queuedNodeTranslationAction = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findOneBy(array('nodeTranslation' => $nodeTranslation));
 
         return array(
-            'topnodes' => $topNodes,
             'page' => $page,
             'entityname' => ClassLookup::getClass($page),
             'nodeVersions' => $nodeVersions,
-            'nodemenu' => $nodeMenu,
             'node' => $node,
             'nodeTranslation' => $nodeTranslation,
             'draft' => $draft,
