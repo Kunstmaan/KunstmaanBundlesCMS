@@ -33,13 +33,6 @@
 	class="media_popup_temp"
 {% endblock %}
 
-{% block subbreadcrumb %}
-    {% for parent in folder.parents %}
-        <li><a href="{{ path('KunstmaanMediaBundle_image_chooser_show_folder', { 'folderId': parent.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ parent.name | trans }}</a></li>
-    {% endfor %}
-	<li class="active">{{ folder.name | trans }}</li>
-{% endblock %}
-
 {% block body %}
 	<div class="container-fluid">
 		<aside class="sidebar">
