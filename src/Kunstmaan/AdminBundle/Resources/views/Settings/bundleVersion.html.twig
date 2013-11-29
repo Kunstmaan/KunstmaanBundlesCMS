@@ -1,10 +1,5 @@
 {% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
 
-{% block subbreadcrumb %}
-    <li><a href="{{ path('KunstmaanAdminBundle_settings') }}">{{ 'settings.title'|trans }}</a> </li>
-    <li class="active">{{ 'settings.version.bundle'|trans }}</li>
-{% endblock %}
-
 {% block content %}
     {% if data is iterable %}
         <ul>
