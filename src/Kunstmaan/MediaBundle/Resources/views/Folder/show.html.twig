@@ -168,7 +168,7 @@
 
            {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-       		<form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}" method="post" {{ form_enctype(editform) }}>
+       		<form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}#properties" method="post" {{ form_enctype(editform) }}>
                 <div class="prop_wrp">
                     {{ form_widget(editform) }}
                     <div class="input_prop">
@@ -188,4 +188,18 @@
     {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
     {# include 'KunstmaanMediaBundle:Image:create-modal.html.twig' #}
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Javascript to enable link to tab
+            var url = document.location.toString();
+            if (url.match('#')) {
+                $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
+            }
+
+            // Change hash for page-reload
+            $('.nav-tabs a').on('shown', function (e) {
+                window.location.hash = e.target.hash;
+            })
+        });
+    </script>
 {% endblock %}

@@ -5,16 +5,15 @@ namespace Kunstmaan\MediaBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Form\FolderType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * folder controller.
- *
+ * FolderController.
  */
 class FolderController extends Controller
 {
@@ -29,6 +28,7 @@ class FolderController extends Controller
     public function showAction($folderId)
     {
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
@@ -38,6 +38,15 @@ class FolderController extends Controller
         $sub->setParent($folder);
         $subForm = $this->createForm(new FolderType($sub), $sub);
         $editForm = $this->createForm(new FolderType($folder), $folder);
+
+        if ('POST' == $request->getMethod()) {
+            $editForm->submit($request);
+            if ($editForm->isValid()) {
+                $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
+
+                $this->get('session')->getFlashBag()->add('success', 'Folder \''.$folder->getName().'\' has been updated!');
+            }
+        }
 
         return array(
             'mediamanager'  => $this->get('kunstmaan_media.media_manager'),
