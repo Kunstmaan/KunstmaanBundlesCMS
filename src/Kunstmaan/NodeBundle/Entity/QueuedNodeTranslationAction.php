@@ -2,26 +2,19 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use DateTime;
-
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\AdminBundle\Entity\User;
 
 /**
  * QueuedNodeTranslationAction
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_node_queued_node_translation_actions")
- * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class QueuedNodeTranslationAction extends AbstractEntity
 {
-
     const ACTION_PUBLISH   = 'publish';
     const ACTION_UNPUBLISH = 'unpublish';
 
@@ -41,11 +34,12 @@ class QueuedNodeTranslationAction extends AbstractEntity
     protected $action;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\AdminBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $userId;
+    protected $user;
 
     /**
      * @var \DateTime
@@ -58,7 +52,6 @@ class QueuedNodeTranslationAction extends AbstractEntity
      * Set nodeTranslation
      *
      * @param NodeTranslation $nodeTranslation
-     *
      * @return QueuedNodeTranslationAction
      */
     public function setNodeTranslation(NodeTranslation $nodeTranslation)
@@ -92,7 +85,6 @@ class QueuedNodeTranslationAction extends AbstractEntity
      * Set action
      *
      * @param string $action
-     *
      * @return QueuedNodeTranslationAction
      */
     public function setAction($action)
@@ -103,37 +95,35 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param string $userId
-     *
+     * @param User $user
      * @return QueuedNodeTranslationAction
      */
-    public function setUserId($userId)
+    public function setUser(User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
      * @return string
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
      * Set date
      *
-     * @param DateTime $date
-     *
+     * @param \DateTime $date
      * @return QueuedNodeTranslationAction
      */
-    public function setDate(DateTime $date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
 

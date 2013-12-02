@@ -123,11 +123,10 @@ class NodeAdminPublisher
         $queuedNodeTranslationAction
            ->setNodeTranslation($nodeTranslation)
            ->setAction(QueuedNodeTranslationAction::ACTION_PUBLISH)
-           ->setUserId($user->getId())
+           ->setUser($user)
            ->setDate($date);
         $this->em->persist($queuedNodeTranslationAction);
         $this->em->flush();
-
     }
 
     /**
@@ -179,7 +178,7 @@ class NodeAdminPublisher
         $queuedNodeTranslationAction
         ->setNodeTranslation($nodeTranslation)
         ->setAction(QueuedNodeTranslationAction::ACTION_UNPUBLISH)
-        ->setUserId($user->getId())
+        ->setUser($user)
         ->setDate($date);
         $this->em->persist($queuedNodeTranslationAction);
         $this->em->flush();
@@ -198,8 +197,6 @@ class NodeAdminPublisher
             $this->em->flush();
         }
     }
-
-
 
     /**
      * This shouldn't be here either but it's an improvement.

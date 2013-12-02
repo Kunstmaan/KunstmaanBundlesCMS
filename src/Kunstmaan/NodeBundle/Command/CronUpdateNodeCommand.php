@@ -46,7 +46,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
                     $action = $queuedNodeTranslationAction->getAction();
                     {
                         // Set user security context
-                        $user = $em->getRepository('KunstmaanAdminBundle:User')->findOneBy(array('id' => $queuedNodeTranslationAction->getUserId()));
+                        $user = $queuedNodeTranslationAction->getUser();
                         $runAsToken = new UsernamePasswordToken($user, null, 'foo', $user->getRoles());
                         $this->getContainer()->get('security.context')->setToken($runAsToken);
                     }
@@ -70,7 +70,5 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
             $output->writeln('No queued jobs');
         }
     }
-
-
 
 }
