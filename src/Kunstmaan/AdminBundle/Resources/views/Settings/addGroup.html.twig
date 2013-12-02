@@ -1,11 +1,5 @@
 {% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
 
-{% block subbreadcrumb %}
-	<li><a href="{{ path('KunstmaanAdminBundle_settings') }}">{{ 'settings.title' | trans }}</a></li>
-    <li><a href="{{ path('KunstmaanAdminBundle_settings_groups') }}">{{ 'settings.groups' | trans }}</a></li>
-	<li class="active">{{ 'settings.group.add' | trans }}</li>
-{% endblock %}
-
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
     <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_settings_groups_add') }}" method="post" {{ form_enctype(form) }} novalidate >
