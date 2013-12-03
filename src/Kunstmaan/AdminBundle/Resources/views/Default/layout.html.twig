@@ -27,12 +27,9 @@
 
     <!--=========== CSS ===========-->
     <!--Combine-->
-    {% stylesheets
-        'bundles/kunstmaanadmin/css/style.css'
-        output='generated-css/style.css'
-        filter='cssrewrite'
-    %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% stylesheets filter="scss" "@KunstmaanAdminBundle/Resources/public/scss/style.scss" %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
     <!--Customizable color brand-->
     <style type="text/css">
         {% if titlecolor is not defined or titlecolor is empty %}
@@ -49,7 +46,6 @@
             border-left-color: {{ titlebgcolor }};
         }
     </style>
-    {% endstylesheets %}
     <!--Extra CSS-->
     {% block extracss %}{% endblock %}
 
