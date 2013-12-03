@@ -636,7 +636,7 @@ header{
         }
     }
     &.error{
-        input, textarea{
+        input, textarea, .input_media{
             color: #dd4b39;
             border-color: #dd4b39;
             @include single_transition(all, .3s, ease-in-out);
@@ -2218,6 +2218,14 @@ label.iPhoneCheckLabelOff {
         &:last-child {
             margin-left: 4px;
         }
+    }
+    input.form_timepicker {
+        width: 45px;
+        min-width: 45px;
+    }
+    input.form_datepicker {
+        width: 80px;
+        min-width: 80px;
     }
 }
 
