@@ -111,15 +111,12 @@
         <script>
             jQuery(document).ready(function(){
                 $("#{{ id }}").inputmask("date");
+                $("#{{ id }}").addClass('form_datepicker');
+                $("#{{ id }}").datepicker({'format': 'dd/mm/yyyy'});
             });
         </script>
     {% endif %}
     {{ block('base_date_widget') }}
-    {% if widget == 'single_text' %}
-        <script>
-            $("#{{ id }}").addClass('form_datepicker');
-        </script>
-    {% endif %}
 {% endblock date_widget %}
 
 {% block time_widget %}
@@ -129,6 +126,11 @@
             jQuery(document).ready(function(){
                 $("#{{ id }}").inputmask("hh:mm");
                 $("#{{ id }}").addClass('form_timepicker');
+                $("#{{ id }}").timepicker({
+                    'showMeridian': false,
+                    'minuteStep': 1,
+                    'defaultTime': false
+                });
             });
         </script>
     {% endif %}

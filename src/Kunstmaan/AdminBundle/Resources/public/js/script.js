@@ -9,8 +9,6 @@ $(document).ready(function () {
     initCustomSelect();
     initDel();
     initFilter();
-    initDatePicker();
-    initTimePicker();
     initDropdownButton();
     initModalFocus();
     initSaveKeyListener();
@@ -503,24 +501,6 @@ function updateOptions(el, options){
             $(this).datepicker(options);
         }
     });
-}
-
-function initDatePicker() {
-    // http://www.eyecon.ro/bootstrap-datepicker/
-    if($('.form_datepicker').length > 0) {
-        $(".form_datepicker").datepicker({'format': 'dd/mm/yyyy'});
-    }
-}
-
-function initTimePicker() {
-    // http://jdewit.github.com/bootstrap-timepicker/
-    if($('.form_timepicker').length > 0) {
-        $(".form_timepicker").timepicker({
-            'showMeridian': false,
-            'minuteStep': 1,
-            'defaultTime': 'value'
-        });
-    }
 }
 
 function initDropdownButton() {
