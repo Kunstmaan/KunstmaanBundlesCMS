@@ -80,7 +80,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
                     $result[] = array_key_exists($value, $choices) ? $choices[$value] : $value;
                 }
                 return implode(", ", $result);
-            } elseif (is_array($values)) {
+            } else {
                 if (isset($choices[$values])) {
                     return $choices[$values];
                 }
