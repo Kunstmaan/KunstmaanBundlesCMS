@@ -150,6 +150,10 @@ Congratulations! You're now ready to use the Kunstmaan Bundles CMS. Browse to:
 
 Log in using admin/admin.
 
+*NOTE:* Make sure you change at least the password before putting your site online! You can do this by navigating to Settings > Users in the back-end, and changing it there or by running the following :
+
+    app/console fos:user:change-password admin
+
 
 6) Summary
 ----------
