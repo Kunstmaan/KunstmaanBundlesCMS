@@ -30,7 +30,7 @@ class DoctrineDBALAdapter implements AdapterInterface
      *
      * @api
      */
-    public function __construct(QueryBuilder $queryBuilder, $countField, $useDistinct)
+    public function __construct(QueryBuilder $queryBuilder, $countField, $useDistinct = true)
     {
         if (strpos($countField, '.') === false) {
             throw new LogicException('The $countField must contain a table alias in the string.');
