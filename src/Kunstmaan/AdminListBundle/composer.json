@@ -15,12 +15,16 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
+        "sensio/framework-extra-bundle": "2.3.*",
         "white-october/pagerfanta-bundle": "dev-master",
         "pagerfanta/pagerfanta": "dev-master",
-        "sensio/framework-extra-bundle": "2.3.*",
         "kunstmaan/admin-bundle": "self.version",
         "kunstmaan/utilities-bundle": "self.version"
-
+    },
+    "require-dev": {
+        "doctrine/data-fixtures": "1.0.*@dev",
+        "doctrine/doctrine-fixtures-bundle": ">=2.1, <2.3",
+        "friendsofsymfony/user-bundle": "dev-master"
     },
     "minimum-stability": "dev",
     "autoload": {
