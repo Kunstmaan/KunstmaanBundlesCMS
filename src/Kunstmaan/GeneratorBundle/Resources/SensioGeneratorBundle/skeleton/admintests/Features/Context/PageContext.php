@@ -29,7 +29,7 @@ class PageContext extends BehatContext
      * @param string $pageType The type of the page - contentpage, formpage
      * @param string $pageName The name of the page
      *
-     * @Given /^I add (.*) "([^"]*)"$/
+     * @Given /^I add ([a-zA-Z0-9]*) "([^"]*)"$/
      *
      * @throws ElementNotFoundException
      */
@@ -41,26 +41,34 @@ class PageContext extends BehatContext
         );
 
         $this->getMainContext()->pressButton("Add subpage");
+        $this->getMainContext()->iWaitSeconds(1);
 
         $page = $this->getMainContext()->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@id, 'add-subpage-modal')]");
 
         foreach ($modals as $modal) {
-            if ($modal->hasClass('in')) {
-                foreach ($records as $field => $value) {
-                    $modalField = $modal->findField($field);
-                    if (null === $modalField) {
-                        throw new ElementNotFoundException(
-                            $this->getSession(), 'form field', 'id|name|label|value', $field
-                        );
-                    }
-                    $modalField->setValue($value);
+            foreach ($records as $field => $value) {
+                $modalField = $modal->findField($field);
+                if (null === $modalField) {
+                    throw new ElementNotFoundException(
+                        $this->getSession(), 'form field', 'id|name|label|value', $field
+                    );
                 }
-                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
-
-                return;
+                $modalField->setValue($value);
             }
+            $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
+
+            return;
         }
+    }
+
+    /**
+     * @Given /^I save the current page$/
+     */
+    public function iSaveCurrentPage()
+    {
+        $this->getMainContext()->iScrollToTop();
+        $this->getMainContext()->pressButton("Save");
     }
 
     /**
@@ -100,6 +108,29 @@ class PageContext extends BehatContext
     /**
      * @param string $pageName
      *
+     * @Given /^I go to admin page "([^"]*)"$/
+     */
+    public function iGoToAdminPage($pageName)
+    {
+        // Navigate to the admin home page to see the tree
+        $this->getMainContext()->iAmOnASpecificPage("admin home");
+        $this->iClickAdminPage($pageName);
+    }
+
+    /**
+     * @param string $pageName
+     *
+     * @Given /^I click on admin page "([^"]*)"$/
+     */
+    public function iClickAdminPage($pageName)
+    {
+        // Navigate to the page we want to publish
+        $this->getMainContext()->clickLink($pageName);
+    }
+
+    /**
+     * @param string $pageName
+     *
      * @Given /^I publish page "([^"]*)"$/
      */
     public function iPublishPage($pageName)
@@ -108,8 +139,22 @@ class PageContext extends BehatContext
     }
 
     /**
-     * @param string $pageName
-     *
+     * @Given /^I publish the current page$/
+     */
+    public function iPublishCurrentPage()
+    {
+        $this->placePageInState(null, 'Publish');
+    }
+
+    /**
+     * @Given /^I unpublish the current page$/
+     */
+    public function iUnPublishCurrentPage()
+    {
+        $this->placePageInState(null, 'Unpublish');
+    }
+
+    /**
      * @Given /^I unpublish page "([^"]*)"$/
      */
     public function iUnPublishPage($pageName)
@@ -118,8 +163,10 @@ class PageContext extends BehatContext
     }
 
     /**
-     * @param string $pageName the name of the page
-     * @param string $state    the state of the page - Publish, Unpublish
+     * @param string $pageName The name of the page, if null the current page
+     * @param string $state    The state of the page - Publish, Unpublish
+     *
+     * @throws ExpectationException
      */
     private function placePageInState($pageName, $state)
     {
@@ -127,10 +174,15 @@ class PageContext extends BehatContext
             'Publish' => 'pub',
             'Unpublish' => 'unpub_publish_action'
         );
-        // Navigate to the admin home page to see the tree
-        $this->getMainContext()->iAmOnASpecificPage("admin home");
-        // Navigate to the page we want to publish
-        $this->getMainContext()->clickLink($pageName);
+
+        if (!is_null($pageName)) {
+            // Navigate to the admin home page to see the tree
+            $this->getMainContext()->iAmOnASpecificPage("admin home");
+            // Navigate to the page we want to publish
+            $this->getMainContext()->clickLink($pageName);
+        } else {
+            $this->getMainContext()->iScrollToTop();
+        }
 
         $page = $this->getMainContext()->getSession()->getPage();
 
