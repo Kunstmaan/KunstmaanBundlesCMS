@@ -71,7 +71,6 @@ class ExportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\A
             $exportFile->fillArray();
             $content = $this->exporter->getExportedContent($exportFile);
             $exportFile->setContent($content);
-            var_dump($content);
         }
     }
 

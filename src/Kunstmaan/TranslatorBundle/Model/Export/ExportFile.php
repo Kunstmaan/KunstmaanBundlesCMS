@@ -37,7 +37,6 @@ class ExportFile
     {
         foreach ($this->translations as $keyword => $text) {
             $this->assignArrayByPath($array, $keyword, $text);
-            var_dump($array);
             $this->array = array_merge_recursive($array, $this->array);
         }
     }
