@@ -20,6 +20,8 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+        $treeBuilder->root('kunstmaan_media');
+
         return $treeBuilder;
     }
 }
