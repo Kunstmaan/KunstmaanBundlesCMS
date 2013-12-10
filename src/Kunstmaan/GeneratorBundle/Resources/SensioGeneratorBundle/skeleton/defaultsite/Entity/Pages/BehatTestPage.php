@@ -2,7 +2,7 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use {{ namespace }}\Form\Pages\HomePageAdminType;
+use {{ namespace }}\Form\Pages\BehatTestPageAdminType;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
@@ -10,12 +10,12 @@ use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * HomePage
+ * BehatTestPage
  *
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}home_pages")
  */
-class HomePage extends AbstractPage  implements HasPageTemplateInterface
+class BehatTestPage extends AbstractPage  implements HasPageTemplateInterface
 {
 
     /**
@@ -25,7 +25,7 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getDefaultAdminType()
     {
-        return new HomePageAdminType();
+        return new BehatTestPageAdminType();
     }
 
     /**
@@ -35,6 +35,10 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
     {
         return array(
             array(
+                'name'  => 'HomePage',
+                'class' => '{{ namespace }}\Entity\Pages\HomePage'
+            ),
+            array(
                 'name'  => 'ContentPage',
                 'class' => '{{ namespace }}\Entity\Pages\ContentPage'
             ),
@@ -43,11 +47,11 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
                 'name'  => 'FormPage',
                 'class' => '{{ namespace }}\Entity\Pages\FormPage'
             ),
-{% endif %}
             array(
-                'name'  => 'BehatTestPage',
-                'class' => '{{ namespace }}\Entity\Pages\BehatTestPage'
-            )
+                'name'  => 'SatelliteOverviewPage',
+                'class' => '{{ namespace }}\Entity\Pages\SatelliteOverviewPage'
+            ),
+{% endif %}
         );
     }
 
@@ -56,7 +60,7 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPagePartAdminConfigurations()
     {
-        return array('{{ bundle.getName() }}:middle-column', {% if demosite %}'{{ bundle.getName() }}:slider', {% endif %}'{{ bundle.getName() }}:left-column', '{{ bundle.getName() }}:right-column');
+        return array();
     }
 
     /**
@@ -64,7 +68,7 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:homepage'{% if demosite %}, '{{ bundle.getName() }}:homepage-no-slider'{% endif %});
+        return array('{{ bundle.getName() }}:behat-test-page');
     }
 
     /**
@@ -72,6 +76,6 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:Pages\HomePage:view.html.twig';
+        return '';
     }
 }

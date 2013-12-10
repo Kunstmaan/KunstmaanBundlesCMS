@@ -159,6 +159,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         $this->renderSingleFile($sourceDir, $targetDir, 'HomePage.php', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'ContentPage.php', $parameters);
+        $this->renderSingleFile($sourceDir, $targetDir, 'BehatTestPage.php', $parameters);
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPage.php', $parameters);
@@ -197,6 +198,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         $this->renderSingleFile($sourceDir, $targetDir, 'HomePageAdminType.php', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'ContentPageAdminType.php', $parameters);
+        $this->renderSingleFile($sourceDir, $targetDir, 'BehatTestPageAdminType.php', $parameters);
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPageAdminType.php', $parameters);
@@ -313,6 +315,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         $this->renderSingleFile($sourceDir, $targetDir, 'homepage.yml', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'contentpage.yml', $parameters);
+        $this->renderSingleFile($sourceDir, $targetDir, 'behat-test-page.yml', $parameters);
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'homepage-no-slider.yml', $parameters);
