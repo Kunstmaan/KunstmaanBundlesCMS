@@ -34,8 +34,8 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
      */
     public function buildFields()
     {
-{% for fieldName, filterType in fields %}
-        $this->addField('{{ fieldName }}', '{{ fieldName }}', true);
+{% for fieldName, data in fields %}
+        $this->addField('{{ fieldName }}', '{{ data.fieldTitle }}', true);
 {% endfor %}
     }
 
@@ -44,8 +44,8 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
      */
     public function buildFilters()
     {
-{% for fieldName, filterType in fields %}
-        $this->addFilter('{{ fieldName }}', new {{ filterType }}('{{ fieldName }}'), '{{ fieldName|capitalize }}');
+{% for fieldName, data in fields %}
+        $this->addFilter('{{ fieldName }}', new {{ data.filterType }}('{{ fieldName }}'), '{{ data.fieldTitle }}');
 {% endfor %}
     }
 

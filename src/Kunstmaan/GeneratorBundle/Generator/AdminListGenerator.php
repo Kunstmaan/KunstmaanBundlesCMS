@@ -201,8 +201,11 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             $type = $metadata->getTypeOfField($fieldName);
             $filterType = isset($mapping[$type]) ? $mapping[$type] : null;
 
+            preg_match_all('/((?:^|[A-Z])[a-z]+)/', $fieldName, $matches);
+            $fieldTitle = ucfirst(strtolower(implode(' ', $matches[0])));
+
             if (!is_null($filterType)) {
-                $fields[$fieldName] = $filterType;
+                $fields[$fieldName] = array('filterType' => $filterType, 'fieldTitle' => $fieldTitle);
             }
         }
 
