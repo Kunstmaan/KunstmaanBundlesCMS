@@ -3,10 +3,7 @@
 namespace Kunstmaan\MediaBundle\Helper\RemoteSlide;
 
 use Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
-
 use Kunstmaan\MediaBundle\Entity\Media;
-
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Video
@@ -50,7 +47,6 @@ class RemoteSlideHelper
      */
     public function getMedia()
     {
-        //TODO: update location here?
         return $this->media;
     }
 

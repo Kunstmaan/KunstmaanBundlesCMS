@@ -3,10 +3,7 @@
 namespace Kunstmaan\MediaBundle\Helper\Image;
 
 use Symfony\Component\HttpFoundation\File\File;
-
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
-use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**

@@ -1,9 +1,8 @@
 <?php
 
 namespace Kunstmaan\MediaBundle\Helper\RemoteVideo;
-use Kunstmaan\MediaBundle\Entity\Media;
 
-use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Video
@@ -47,7 +46,6 @@ class RemoteVideoHelper
      */
     public function getMedia()
     {
-        //TODO: update location here?
         return $this->media;
     }
 

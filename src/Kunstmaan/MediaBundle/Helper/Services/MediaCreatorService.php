@@ -9,11 +9,6 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
-// TODO: Would be cool if we could pass on the folder name. Or the path with a locale.
-// TODO: Needs severe cleanup where the filesystem is not manipulated. But how do you detect the context of a running process?
-//       Also, the FileHandler would be a better place to put that logic.
-// TODO: Write tests for this. Once called as a command, once as an action on a controller.
-
 /**
  * Service to easily add a media file to an existing media folder.
  * This is especially useful in migrations or places where you want to automate the uploading of media.

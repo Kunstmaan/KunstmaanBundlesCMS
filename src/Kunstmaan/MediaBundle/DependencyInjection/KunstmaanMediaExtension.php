@@ -29,9 +29,6 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $processor = new Processor();
         $configuration = new Configuration();
 
-        $config = $processor->processConfiguration($configuration, $configs);
-
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter('twig.form.resources', array_merge(
@@ -59,7 +56,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());
-        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->processConfiguration(new Configuration(), $configs);
     }
 
     /**
