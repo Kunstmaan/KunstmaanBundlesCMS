@@ -4,7 +4,6 @@ parameters:
     kunstmaan_media.media_handler.image.class: 'Kunstmaan\MediaBundle\Helper\Image\ImageHandler'
     kunstmaan_media.media_handler.file.class: 'Kunstmaan\MediaBundle\Helper\File\FileHandler'
     aviary_api_key: null
-
 services:
     kunstmaan_media.media_handlers.remote_slide:
         class: "%kunstmaan_media.media_handler.remote_slide.class%"
