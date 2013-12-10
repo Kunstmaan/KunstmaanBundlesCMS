@@ -139,6 +139,12 @@ class PageGenerator extends KunstmaanGenerator
         $phpCode .= "                'class'=> '".$this->bundle->getNamespace()."\Entity\Pages\\".$this->entity."'\n";
         $phpCode .= "            ),";
 
+        // When there is a BehatTestPage, we should also allow the new page as sub page
+        $behatTestPage = $this->bundle->getPath().'/Entity/Pages/BehatTestPage.php';
+        if (file_exists($behatTestPage)) {
+            $this->parentPages[] = $behatTestPage;
+        }
+
         foreach ($this->parentPages as $file) {
             $data = file_get_contents($file);
             $data = preg_replace('/(function\s*getPossibleChildTypes\s*\(\)\s*\{\s*return\s*array\s*\()/', "$1\n$phpCode", $data);
