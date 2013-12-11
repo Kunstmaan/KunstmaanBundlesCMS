@@ -6,7 +6,6 @@
         'vendor/socialite/socialite.js'
         'vendor/fancybox/source/jquery.fancybox.js'
         'vendor/cupcake/js/navigation/jquery.navigation.js'
-        '@KunstmaanSeoBundle/Resources/public/js/analytics.js'
         '@<%= bundle.getName() %>/Resources/public/js/script.js'
         filter='yui_js'
         output='frontend/footer.js'
@@ -59,4 +58,13 @@
         ]);
     </script>
 
-    {{ google_analytics_initialize({'account_id': ga_code}) }}
+    {% if gtm_code is defined %}
+        {% javascripts
+            '@KunstmaanSeoBundle/Resources/public/js/analytics.js'
+            filter='yui_js'
+            output='frontend/footer-ga.js'
+        %}
+            <script src='{{ asset_url }}'></script>
+        {% endjavascripts %}
+        {{ google_analytics_initialize({'account_id': ga_code}) }}
+    {% endif %}
