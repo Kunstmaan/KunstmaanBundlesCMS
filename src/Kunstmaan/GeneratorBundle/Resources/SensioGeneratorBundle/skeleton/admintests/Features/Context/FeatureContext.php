@@ -484,4 +484,12 @@ class FeatureContext extends AbstractContext
         $this->getSession()->executeScript("window.scrollTo(0, 0)");
     }
 
+    /**
+     * @Then /^I scroll to bottom$/
+     */
+    public function iScrollToBottom()
+    {
+        $this->getSession()->executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
 }

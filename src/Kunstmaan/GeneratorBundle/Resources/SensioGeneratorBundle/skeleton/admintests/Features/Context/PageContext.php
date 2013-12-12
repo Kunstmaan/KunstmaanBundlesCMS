@@ -243,4 +243,29 @@ class PageContext extends BehatContext
         }
     }
 
+    /**
+     * @param string $pageTemplateName
+     *
+     * @Given /^I change page template "([^"]*)"$/
+     * @throws ElementNotFoundException
+     */
+    public function iChangePageTemplate($pageTemplateName)
+    {
+        $this->getMainContext()->iScrollToBottom();
+        $this->getMainContext()->pressButton("change-template-button");
+
+        // Wait 1 second for the modal to be visible
+        // Else we can get a error when running the tests.
+        $this->getMainContext()->iWaitSeconds(1);
+
+        $page = $this->getMainContext()->getSession()->getPage();
+        $radioButton = $page->findField($pageTemplateName);
+        if (null === $radioButton) {
+            throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $pageTemplateName);
+        }
+        $radioButton->click();
+
+        $this->getMainContext()->pressButton("change-template");
+    }
+
 }
