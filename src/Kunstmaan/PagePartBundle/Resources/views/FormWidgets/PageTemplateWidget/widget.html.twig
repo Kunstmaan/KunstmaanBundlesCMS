@@ -20,9 +20,9 @@
         {% endfor %}
     </div>
 {% endfor %}
-    <button class="btn" data-keyboard="true" data-toggle="modal" data-target="#change-template-modal{{id}}"><i class=" icon-align-justify"></i> Change template</button>
+    <button class="btn" data-keyboard="true" data-toggle="modal" data-target="#change-template-modal{{id}}" name="change-template-button"><i class="icon-align-justify"></i> Change template</button>
     <!--Change template modal-->
-	<div id="change-template-modal{{id}}" class="modal hide fade">
+	<div id="change-template-modal{{id}}" class="modal hide fade change-template-modal">
 		<div class="modal-header">
 			<button class="close" data-dismiss="modal">&times;</button>
 			<h3>Change template</h3>
@@ -51,7 +51,7 @@
 		</div>
 		<div class="modal-footer">
 			<div class="btn_group">
-				<button type="button" onclick="PageTemplateEditor.changeTemplate(jQuery('input[name=pagetemplate_template_choice]:checked')); $('#change-template-modal{{id}}').modal('hide');" class="btn btn-primary">Change</button>
+				<button type="button" onclick="PageTemplateEditor.changeTemplate(jQuery('input[name=pagetemplate_template_choice]:checked')); $('#change-template-modal{{id}}').modal('hide');" class="btn btn-primary" name="change-template">Change</button>
 				<button class="btn" data-dismiss="modal">Cancel</button>
 			</div>
 		</div>

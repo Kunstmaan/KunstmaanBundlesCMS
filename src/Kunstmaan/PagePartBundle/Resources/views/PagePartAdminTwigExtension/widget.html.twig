@@ -55,6 +55,7 @@
     	sortableClicked: false,
 	    addPagepart: function (select){
 		    pagepartscontainer = $(select).closest('.pagepartscontainer');
+
 	        $.ajax({
 	            url: '{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}',
 	            data: {
@@ -114,6 +115,17 @@
 	         		config.shiftEnterMode = CKEDITOR.ENTER_P;
             }
     		CKEDITOR.replace( $(this).attr('id'), config);
+
+            // Add id on iframe so that behat tests can interact
+            var id = $(this).attr('id');
+            var checkExist = setInterval(function() {
+                if ($('.pagepart .cke_editor_' + id + ' iframe').length) {
+                    var parts = id.split("_");
+                    var name = parts[parts.length-1];
+                    $('.pagepart .cke_editor_' + id + ' iframe').attr('id', 'cke_iframe_' + name);
+                    clearInterval(checkExist);
+                }
+            }, 150);
 		});
     }
 

@@ -56,7 +56,11 @@ class PagePartRefRepository extends EntityRepository
      */
     public function getPagePartRefs(HasPagePartsInterface $page, $context = "main")
     {
-        return $this->findBy(array('pageId' => $page->getId(), 'pageEntityname' => ClassLookup::getClass($page), 'context' => $context), array('sequencenumber' => 'ASC'));
+        return $this->findBy(array(
+            'pageId' => $page->getId(),
+            'pageEntityname' => ClassLookup::getClass($page),
+            'context' => $context
+        ), array('sequencenumber' => 'ASC'));
     }
 
     /**
