@@ -5,7 +5,7 @@ module.exports = function (grunt) {
 
     var {{ bundle.getName() }};
 
-    var resourcesPath = 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources';
+    var resourcesPath = 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/';
 
     {{ bundle.getName() }} = {
         'destination':  'web/frontend/',
@@ -130,7 +130,7 @@ module.exports = function (grunt) {
         sass: {
             {{ bundle.getName() }}: {
                 options: {
-                    style: 'expanded'
+                    style: 'compressed'
                 },
                 files: {
                     'web/frontend/css/style.css': resourcesPath + 'public/scss/style.scss',
