@@ -42,6 +42,29 @@ class FeatureContext extends AbstractContext
         $this->useContext('role_context', new RoleContext($parameters));
         $this->useContext('media_context', new MediaContext($parameters));
         $this->useContext('page_context', new PageContext($parameters));
+        $this->useContext('pagepart_context', new PagePartContext($parameters));
+    }
+
+    /**
+     * Fills in form field with specified id|name|label|value.
+     * This function also allows spaces in field name and value
+     *
+     * @When /^I fill in spaced field "([^"]*)" with "([^"]*)"$/
+     */
+    public function iFillField($field, $value)
+    {
+        $this->fillField($field, $value);
+    }
+
+    /**
+     * Checks checkbox with specified id|name|label|value.
+     *This function also allows spaces in field name
+     *
+     * @When /^I check spaced field "([^"]*)"$/
+     */
+    public function iCheckOption($option)
+    {
+        $this->checkOption($option);
     }
 
     /**
@@ -342,6 +365,66 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @Then /^I should see link "([^"]*)" with name "([^"]*)"$/
+     *
+     * @throws ResponseTextException
+     */
+    public function iShouldSeeLink($href, $value)
+    {
+        $this->checkLink($href, $value);
+    }
+
+    /**
+     * @Then /^I should see link "([^"]*)" with name "([^"]*)" that opens in a new window$/
+     *
+     * @throws ResponseTextException
+     */
+    public function iShouldSeeLinkNewWindow($href, $value)
+    {
+        $this->checkLink($href, $value, true);
+    }
+
+    /**
+     * Check if link exists on page.
+     *
+     * @param string $href
+     * @param string $value
+     * @param bool $newWindow
+     *
+     * @return bool
+     * @throws \Behat\Mink\Exception\ResponseTextException
+     */
+    protected function checkLink($href, $value, $newWindow = false) {
+        $page = $this->getSession()->getPage();
+        $element = $page->find('xpath', "//a[contains(@href, '" . $href . "')".($newWindow ? 'and contains(@target, "_blank")' : '')."]");
+        if ($element) {
+            if ($value == $element->getText()) {
+                return true;
+            }
+        }
+
+        $message = sprintf('The link "%s" was not found anywhere on the current page.', $href);
+        throw new ResponseTextException($message, $this->getSession());
+    }
+
+    /**
+     * @Then /^I should see image "([^"]*)" with alt text "([^"]*)"$/
+     *
+     * @throws ResponseTextException
+     */
+    public function iShouldSeeImage($path, $altText = "")
+    {
+        $page = $this->getSession()->getPage();
+        $element = $page->find('xpath', "//img[contains(@src, '" . $path . "')".($altText ? 'and contains(@alt, "' . $altText . '")' : '')."]");
+        if ($element) {
+            return true;
+        }
+
+        $message = sprintf('The link "%s" was not found anywhere on the current page.', $path);
+        throw new ResponseTextException($message, $this->getSession());
+    }
+
+    /**
      * Finds an element with specified selector and clicks it.
      *
      * @param Element $element  the element
@@ -414,4 +497,21 @@ class FeatureContext extends AbstractContext
     {
         return parent::fixStepArgument($argument);
     }
+
+    /**
+     * @Then /^I scroll to top$/
+     */
+    public function iScrollToTop()
+    {
+        $this->getSession()->executeScript("window.scrollTo(0, 0)");
+    }
+
+    /**
+     * @Then /^I scroll to bottom$/
+     */
+    public function iScrollToBottom()
+    {
+        $this->getSession()->executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
+
 }

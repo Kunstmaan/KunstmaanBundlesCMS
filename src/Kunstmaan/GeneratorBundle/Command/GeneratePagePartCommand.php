@@ -36,6 +36,11 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
     private $sections;
 
     /**
+     * @var bool
+     */
+    private $behatTest;
+
+    /**
      * @see Command
      */
     protected function configure()
@@ -66,14 +71,14 @@ EOT
     {
         $this->assistant->writeSection('PagePart generation');
 
-        $this->createGenerator()->generate($this->bundle, $this->pagepartName, $this->prefix, $this->fields, $this->sections);
+        $this->createGenerator()->generate($this->bundle, $this->pagepartName, $this->prefix, $this->fields, $this->sections, $this->behatTest);
 
         $this->assistant->writeSection('PagePart successfully created', 'bg=green;fg=black');
         $this->assistant->writeLine(array(
             'Make sure you update your database first before you test the pagepart:',
             '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
             '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
-            ''
+            ($this->behatTest ? 'A new behat test is created, to run it: <comment>bin/behat --tags \'@'.$this->pagepartName.'\' @'.$this->bundle->getName().'</comment>' : '')
         ));
     }
 
@@ -150,6 +155,21 @@ EOT
          */
         $question = 'In which page section configuration file(s) do you want to add the pagepart (multiple possible, separated by comma)';
         $this->sections = $this->askForSections($question, $this->bundle, true);
+
+        /**
+         * Ask that you want to create behat tests for the new pagepart, if possible
+         */
+        if (count($this->sections) > 0) {
+            $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir')) . '/behat.yml';
+            $pagePartContext = $this->bundle->getPath() . '/Features/Context/PagePartContext.php';
+            $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
+            // Make sure behat is configured and the PagePartContext and BehatTestPage exits
+            if (file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage)) {
+                $this->behatTest = $this->assistant->askConfirmation('Do you want to generate behat tests for this pagepart? (y/n)', 'y');
+            } else {
+                $this->behatTest = false;
+            }
+        }
     }
 
     /**
@@ -162,6 +182,7 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant);
+        return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant, $this->getContainer());
     }
+
 }

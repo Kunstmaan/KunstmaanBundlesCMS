@@ -8,7 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * The admin type for content pages
- *
  */
 class ContentPageAdminType extends PageAdminType
 {
