@@ -5,6 +5,7 @@ namespace Kunstmaan\PagePartBundle\Repository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
+use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
@@ -82,21 +83,24 @@ class PagePartRefRepository extends EntityRepository
 
     /**
      * @param EntityManager         $em       The entity manager
-     * @param HasPagePartsInterface $frompage The page from where you copy the pageparts
-     * @param HasPagePartsInterface $topage   The page to where you want to copy the pageparts
+     * @param HasPagePartsInterface $fromPage The page from where you copy the pageparts
+     * @param HasPagePartsInterface $toPage   The page to where you want to copy the pageparts
      * @param string                $context  The pagepart context
      */
-    public function copyPageParts(EntityManager $em, HasPagePartsInterface $frompage, HasPagePartsInterface $topage, $context = "main")
+    public function copyPageParts(EntityManager $em, HasPagePartsInterface $fromPage, HasPagePartsInterface $toPage, $context = "main")
     {
-        $frompageparts = $this->getPageParts($frompage, $context);
-        $sequencenumber = 1;
-        foreach ($frompageparts as $frompagepart) {
-            $toppagepart = clone $frompagepart;
-            $toppagepart->setId(null);
-            $em->persist($toppagepart);
+        $fromPageParts = $this->getPageParts($fromPage, $context);
+        $sequenceNumber = 1;
+        foreach ($fromPageParts as $fromPagePart) {
+            $toPagePart = clone $fromPagePart;
+            $toPagePart->setId(null);
+            if ($toPagePart instanceof DeepCloneInterface) {
+                $toPagePart->deepClone();
+            }
+            $em->persist($toPagePart);
             $em->flush();
-            $this->addPagePart($topage, $toppagepart, $sequencenumber, $context);
-            $sequencenumber++;
+            $this->addPagePart($toPage, $toPagePart, $sequenceNumber, $context);
+            $sequenceNumber++;
         }
     }
 
