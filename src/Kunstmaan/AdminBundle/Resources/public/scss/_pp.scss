@@ -162,7 +162,7 @@
     .pagepartscontainer{
         padding: 10px;
     }
-    .span3 {
+    .span3, .span4 {
         .input{
             display: inline-block;
             clear: both;
@@ -170,7 +170,7 @@
             overflow: scroll;
         }
         span.cke_skin_kCK, span.cke_skin_kCK:focus{
-            width: 100%;
+            //width: 100%;
             overflow: scroll;
         }
         .input-append{
