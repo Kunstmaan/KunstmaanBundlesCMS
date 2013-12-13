@@ -50,7 +50,7 @@ When the user arrives on the root page of your website (eg. http://domain.com/) 
 The template path of the splash page can we set via the `languagechoosertemplate` configuration parameter.
 
 In all your Twig templates, there is a global variable available with an array of the available languages: `languagechooser_languages`.
-This can be usefull on your custom spash page, or when you want to show the language choice on other pages.
+This can be usefull on your custom splash page, or when you want to show the language choice on other pages.
 
 ```
 <ul>
