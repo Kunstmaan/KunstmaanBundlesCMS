@@ -110,28 +110,27 @@ module.exports = function (grunt) {
 
         modernizr: {
             {{ bundle.getName() }}: {
-                files: {
-                    devFile: "remote",
-                    files: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.scss, {{ bundle.getName() }}.twig),
-                    outputFile: "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/vendor/modernizr/modernizr-custom.js"
-                },
+                devFile: 'remote',
+                outputFile: paths['tmp'] + 'modernizr-custom.js',
+                files: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.scss, {{ bundle.getName() }}.twig),
+                outputFile: "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/vendor/modernizr/modernizr-custom.js"
                 parseFiles: true,
                 extra: {
-                    "shiv" : true,
-                    "printshiv" : false,
-                    "load" : true,
-                    "mq" : false,
-                    "cssclasses" : true
+                    'shiv' : true,
+                    'printshiv' : false,
+                    'load' : true,
+                    'mq' : false,
+                    'cssclasses' : true
                 },
                 extensibility: {
-                    "addtest" : false,
-                    "prefixed" : false,
-                    "teststyles" : false,
-                    "testprops" : false,
-                    "testallprops" : false,
-                    "hasevents" : false,
-                    "prefixes" : false,
-                    "domprefixes" : false
+                    'addtest' : false,
+                    'prefixed' : false,
+                    'teststyles' : false,
+                    'testprops' : false,
+                    'testallprops' : false,
+                    'hasevents' : false,
+                    'prefixes' : false,
+                    'domprefixes' : false
                 }
             }
         }
