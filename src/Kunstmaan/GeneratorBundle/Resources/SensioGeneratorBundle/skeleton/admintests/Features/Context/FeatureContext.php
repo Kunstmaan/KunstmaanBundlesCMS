@@ -46,6 +46,28 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * Fills in form field with specified id|name|label|value.
+     * This function also allows spaces in field name and value
+     *
+     * @When /^I fill in spaced field "([^"]*)" with "([^"]*)"$/
+     */
+    public function iFillField($field, $value)
+    {
+        $this->fillField($field, $value);
+    }
+
+    /**
+     * Checks checkbox with specified id|name|label|value.
+     *This function also allows spaces in field name
+     *
+     * @When /^I check spaced field "([^"]*)"$/
+     */
+    public function iCheckOption($option)
+    {
+        $this->checkOption($option);
+    }
+
+    /**
      * @param string $username
      *
      * @Given /^I log in as "([^\']*)"$/
