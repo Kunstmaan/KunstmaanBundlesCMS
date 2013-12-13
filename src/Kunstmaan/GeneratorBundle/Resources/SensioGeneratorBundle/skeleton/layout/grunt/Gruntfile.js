@@ -111,9 +111,9 @@ module.exports = function (grunt) {
         modernizr: {
             {{ bundle.getName() }}: {
                 files: {
-                    dev: "remote",
-                    src: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.scss, {{ bundle.getName() }}.twig),
-                    dest: "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/vendor/modernizr/modernizr-custom.js"
+                    devFile: "remote",
+                    files: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.scss, {{ bundle.getName() }}.twig),
+                    outputFile: "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/vendor/modernizr/modernizr-custom.js"
                 },
                 parseFiles: true,
                 extra: {
