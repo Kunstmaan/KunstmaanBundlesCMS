@@ -1,7 +1,1 @@
-    {% javascripts
-        '@<%= bundle.getName() %>/Resources/public/vendor/modernizr/modernizr-custom.js'
-        filter='yui_js'
-        output='frontend/header.js'
-    %}
-        <script src='{{ asset_url }}'></script>
-    {% endjavascripts %}
+<script src='{{ asset('/frontend/js/modernizr-custom.js') }}'></script>

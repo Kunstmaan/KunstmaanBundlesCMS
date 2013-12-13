@@ -129,13 +129,14 @@ module.exports = function (grunt) {
 
         sass: {
             {{ bundle.getName() }}: {
-                files: [{
-                    expand: true,
-                    cwd: {{ bundle.getName() }}.resources + 'public/scss/',
-                    src: {{ bundle.getName() }}.scss,
-                    dest: {{ bundle.getName() }}.destination + 'css/',
-                    ext: '.css'
-                }]
+                options: {
+                    style: 'expanded'
+                },
+                files: {
+                    'web/frontend/css/style.css': resourcesPath + 'public/scss/style.scss',
+                    'web/frontend/css/ie8.css': resourcesPath + 'public/scss/legacy/ie/ie8.scss',
+                    'web/frontend/css/ie7.css': resourcesPath + 'public/scss/legacy/ie/ie7.scss'
+                }
             }
         }
     });

@@ -2,9 +2,9 @@
         <!--[if IE 7]>
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                'frontend/style.css'
-                'frontend/ie8.css'
-                'frontend/ie7.css'
+                'frontend/css/style.css'
+                'frontend/css/ie8.css'
+                'frontend/css/ie7.css'
                 output='frontend/style_combined_ie7.css'
              %}
                 <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
@@ -13,8 +13,8 @@
         <!--[if IE 8]>
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                'frontend/style.css'
-                'frontend/ie8.css'
+                'frontend/css/style.css'
+                'frontend/css/ie8.css'
                 output='frontend/style_combined_ie8.css'
              %}
                 <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
@@ -23,7 +23,7 @@
         <!--[if gt IE 8]><!-->
             {% stylesheets
                 'vendor/flexslider/flexslider.css'
-                'frontend/style.css'
+                'frontend/css/style.css'
                 output='frontend/style_combined.css'
             %}
                <link rel='stylesheet' href='{{ asset_url }}' type='text/css' />
