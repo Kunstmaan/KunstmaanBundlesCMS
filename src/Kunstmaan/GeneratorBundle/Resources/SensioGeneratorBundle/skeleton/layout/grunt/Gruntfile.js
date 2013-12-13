@@ -111,7 +111,6 @@ module.exports = function (grunt) {
         modernizr: {
             {{ bundle.getName() }}: {
                 devFile: 'remote',
-                outputFile: paths['tmp'] + 'modernizr-custom.js',
                 files: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.scss, {{ bundle.getName() }}.twig),
                 outputFile: "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/vendor/modernizr/modernizr-custom.js"
                 parseFiles: true,
