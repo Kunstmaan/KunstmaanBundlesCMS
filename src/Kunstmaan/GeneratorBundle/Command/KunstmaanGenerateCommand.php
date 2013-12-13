@@ -72,7 +72,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     /**
      * Do the interaction with the end user.
      */
-    abstract protected function doInteract();
+     protected abstract function doInteract();
 
     /**
      * This function implements the final execution of the Generator.

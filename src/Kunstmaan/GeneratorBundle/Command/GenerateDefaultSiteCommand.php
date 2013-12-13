@@ -72,11 +72,11 @@ EOT
         $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
         $this->bundle = $this->askForBundleName('layout', $bundleNamespace);
 
+
         /**
          * Ask the database table prefix
          */
-        $bundlePrefix = $this->assistant->getOptionOrDefault('prefix', $this->bundle->getNamespace());
-        $this->prefix = $this->askForPrefix(null, $bundlePrefix);
+        $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
 
         /**
          * If we need to generate a full site, or only the basic structure
@@ -106,6 +106,13 @@ EOT
             '    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --fixtures=src/'.str_replace('\\', '/', $this->bundle->getNamespace()).'/DataFixtures/ORM/DefaultSiteGenerator/ --append</comment>',
             ''
         ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doInteract()
+    {
     }
 
     /**
