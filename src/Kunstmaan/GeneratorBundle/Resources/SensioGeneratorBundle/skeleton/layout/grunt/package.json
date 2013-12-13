@@ -1,18 +1,18 @@
 {
-  "name": "{{ bundle.getName() }}",
-  "version": "0.0.0",
-  "devDependencies": {
-    "grunt": "latest",
-    "grunt-sass": "latest",
-    "grunt-contrib-jshint": "latest",
-    "grunt-contrib-watch": "latest",
-    "grunt-contrib-imagemin": "latest",
-    "grunt-notify": "latest",
-    "grunt-grunticon": "latest",
-    "grunt-modernizr": "latest",
-    "grunt-svg2png": "latest",
-    "grunt-cli": "latest",
-    "bower": "latest",
-    "underscore": "latest"
-  }
+    "name": "{{ bundle.getName() }}",
+    "version": "1.0.0",
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-jshint": "~0.6.0",
+        "grunt-contrib-watch": "~0.4.4",
+        "grunt-contrib-imagemin": "~0.1.4",
+        "grunt-contrib-sass": "~0.4.1",
+        "grunt-notify": "~0.2.4",
+        "grunt-grunticon": "~0.3.3",
+        "grunt-modernizr": "~0.4.1",
+        "grunt-svg2png": "~0.2.0",
+        "grunt-cli": "latest",
+        "bower": "latest",
+        "underscore": "latest"
+    }
 }

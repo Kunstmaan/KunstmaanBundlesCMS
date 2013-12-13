@@ -5,12 +5,16 @@ module.exports = function (grunt) {
 
     var {{ bundle.getName() }};
 
+    var resourcesPath = 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources';
+
     {{ bundle.getName() }} = {
-        'js':   ['src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/**/*.js', '!src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/vendor/**/*.js', 'Gruntfile.js'],
-        'scss': ['src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/scss/**/*.scss'],
-        'twig': ['src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/views/**/*.html.twig'],
-        'img':  ['src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/img/**/*.{png,jpg,jpeg,gif,webp}'],
-        'svg':  ['src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/img/**/*.svg']
+        'destination':  'web/frontend/',
+        'js':           [resourcesPath + 'public/**/*.js', '!'+ resourcesPath + 'public/vendor/**/*.js', 'Gruntfile.js'],
+        'all_scss':     [resourcesPath + 'public/scss/**/*.scss'],
+        'scss':         [resourcesPath + 'public/scss/style.scss', resourcesPath + 'public/scss/legacy/ie/ie7.scss', resourcesPath + 'public/scss/legacy/ie/ie8.scss'],
+        'twig':         [resourcesPath + 'views/**/*.html.twig'],
+        'img':          [resourcesPath + 'public/img/**/*.{png,jpg,jpeg,gif,webp}'],
+        'svg':          [resourcesPath + 'public/img/**/*.svg']
     };
 
     grunt.initConfig({
@@ -46,16 +50,6 @@ module.exports = function (grunt) {
                 files: [{{ bundle.getName() }}.js, {{ bundle.getName() }}.twig, {{ bundle.getName() }}.img, {{ bundle.getName() }}.svg, 'web/frontend/style.css'],
                 options: {
                     livereload: true
-                }
-            }
-        },
-
-        sass: {
-            dist: {
-                files: {
-                    'web/frontend/style.css': 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/scss/style.scss',
-                    'web/frontend/ie8.css': 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/scss/legacy/ie/ie8.scss',
-                    'web/frontend/ie7.css': 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/scss/legacy/ie/ie7.scss'
                 }
             }
         },
@@ -108,21 +102,21 @@ module.exports = function (grunt) {
             }
         },
 
+
         modernizr: {
-            {{ bundle.getName() }}: {
-                devFile: 'remote',
-                files: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.scss, {{ bundle.getName() }}.twig),
-                outputFile: "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/vendor/modernizr/modernizr-custom.js",
+            devFile: 'remote',
+                outputFile: {{ bundle.getName() }}.destination + 'js/modernizr-custom.js',
+                files: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.all_scss, {{ bundle.getName() }}.twig),
                 parseFiles: true,
                 extra: {
-                    'shiv' : true,
+                'shiv' : true,
                     'printshiv' : false,
                     'load' : true,
                     'mq' : false,
                     'cssclasses' : true
-                },
-                extensibility: {
-                    'addtest' : false,
+            },
+            extensibility: {
+                'addtest' : false,
                     'prefixed' : false,
                     'teststyles' : false,
                     'testprops' : false,
@@ -130,19 +124,30 @@ module.exports = function (grunt) {
                     'hasevents' : false,
                     'prefixes' : false,
                     'domprefixes' : false
-                }
+            }
+        },
+
+        sass: {
+            {{ bundle.getName() }}: {
+                files: [{
+                    expand: true,
+                    cwd: {{ bundle.getName() }}.resources + 'public/scss/',
+                    src: {{ bundle.getName() }}.scss,
+                    dest: {{ bundle.getName() }}.destination + 'css/',
+                    ext: '.css'
+                }]
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-sass');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-svg2png');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks("grunt-modernizr");
     grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
-    grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['modernizr', 'sass']);
+    grunt.registerTask('default', ['build']);
+    grunt.registerTask('build', ['sass', 'modernizr']);
 };
