@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
+use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
@@ -20,6 +21,9 @@ class CloneListener
 
         if ($clonedEntity instanceof AbstractEntity) {
             $clonedEntity->setId(null);
+        }
+        if ($clonedEntity instanceof DeepCloneInterface) {
+            $clonedEntity->deepClone();
         }
     }
 
