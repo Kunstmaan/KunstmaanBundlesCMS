@@ -32,7 +32,7 @@ Feature: AdminPage
   @javascript
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
-    Then I should see "No route found for"
+    Then the response status code should be 404
 
   @javascript
   Scenario: Publish the page
