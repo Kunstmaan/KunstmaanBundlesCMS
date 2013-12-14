@@ -32,7 +32,7 @@ Feature: AdminPage
   @javascript
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
-    Then I should see "page you requested could not be found"
+    Then I should see "No route found for"
 
   @javascript
   Scenario: Publish the page
