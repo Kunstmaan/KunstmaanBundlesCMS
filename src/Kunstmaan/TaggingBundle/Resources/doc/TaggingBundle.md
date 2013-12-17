@@ -1,4 +1,4 @@
-KunstmaanGeneratorBundle by Kunstmaan
+KunstmaanTaggingBundle by Kunstmaan
 =================================
 
 # Config
