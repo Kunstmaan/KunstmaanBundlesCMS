@@ -111,16 +111,26 @@ class MediaController extends Controller
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
+                $mediaAdded = false;
+                
                 foreach ($helper->getFiles() as $file) {
-                    /* @var Media $media */
-                    $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
-                    $media->setFolder($folder);
-                    $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+                    if (!is_null($file)) {
+                        /* @var Media $media */
+                        $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
+                        $media->setFolder($folder);
+                        $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+
+                        $mediaAdded = true;
+                    }
                 }
 
-                $this->get('session')->getFlashBag()->add('success', 'New entry has been uploaded');
+                if ($mediaAdded) {
+                    $this->get('session')->getFlashBag()->add('success', 'New entry has been uploaded');
 
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
+                    return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
+                } else {
+                    $this->get('session')->getFlashBag()->add('error', 'Please select at least one file');
+                }
             }
         }
 
@@ -134,7 +144,6 @@ class MediaController extends Controller
             'form'      => $formView,
             'folder'   => $folder
         );
-
     }
 
     /**
