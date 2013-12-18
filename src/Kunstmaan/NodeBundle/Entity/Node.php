@@ -352,10 +352,14 @@ class Node extends AbstractEntity implements GedmoNode
      * Set class name of referenced entity
      *
      * @param string $refEntityName
+     *
+     * @return Node
      */
     protected function setRefEntityName($refEntityName)
     {
         $this->refEntityName = $refEntityName;
+
+        return $this;
     }
 
     /**
