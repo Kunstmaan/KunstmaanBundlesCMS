@@ -29,10 +29,14 @@ class SubmitButtonPagePart extends AbstractPagePart
      * Set the label
      *
      * @param int $label
+     *
+     * @return SubmitButtonPagePart
      */
     public function setLabel($label)
     {
         $this->label = $label;
+
+        return $this;
     }
 
     /**

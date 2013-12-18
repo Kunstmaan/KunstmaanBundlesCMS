@@ -61,10 +61,14 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      * Sets the thanks text, shown when the form was successfully submitted
      *
      * @param string $thanks
+     *
+     * @return AbstractFormPage
      */
     public function setThanks($thanks)
     {
         $this->thanks = $thanks;
+
+        return $this;
     }
 
     /**
@@ -91,10 +95,14 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      * Set the subject of the administrative email
      *
      * @param string $subject
+     *
+     * @return AbstractFormPage
      */
     public function setSubject($subject)
     {
         $this->subject = $subject;
+
+        return $this;
     }
 
     /**
@@ -111,10 +119,14 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      * Set the email address of the recipient from the administrative email
      *
      * @param string $toEmail
+     *
+     * @return AbstractFormPage
      */
     public function setToEmail($toEmail)
     {
         $this->toEmail = $toEmail;
+
+        return $this;
     }
 
     /**
@@ -131,10 +143,14 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
      * Sets the email address of the sender of the administrative email
      *
      * @param string $fromEmail
+     *
+     * @return AbstractFormPage
      */
     public function setFromEmail($fromEmail)
     {
         $this->fromEmail = $fromEmail;
+
+        return $this;
     }
 
     /**

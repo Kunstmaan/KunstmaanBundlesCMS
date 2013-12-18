@@ -86,10 +86,14 @@ class FormSubmission
      * Set id
      *
      * @param string $id
+     *
+     * @return FormSubmission
      */
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -106,10 +110,14 @@ class FormSubmission
      * Set the ip address
      *
      * @param string $ipAddress
+     *
+     * @return FormSubmission
      */
     public function setIpAddress($ipAddress)
     {
         $this->ipAddress = $ipAddress;
+
+        return $this;
     }
 
     /**
@@ -126,20 +134,28 @@ class FormSubmission
      * Set the node of the form which created this form submission
      *
      * @param Node $node
+     *
+     * @return FormSubmission
      */
     public function setNode($node)
     {
         $this->node = $node;
+
+        return $this;
     }
 
     /**
      * Sets the language of this form submission
      *
      * @param string $lang
+     *
+     * @return FormSubmission
      */
     public function setLang($lang)
     {
         $this->lang = $lang;
+
+        return $this;
     }
 
     /**
@@ -156,10 +172,14 @@ class FormSubmission
      * Set the date when the form submission was created
      *
      * @param datetime $created
+     *
+     * @return FormSubmission
      */
     public function setCreated($created)
     {
         $this->created = $created;
+
+        return $this;
     }
 
     /**

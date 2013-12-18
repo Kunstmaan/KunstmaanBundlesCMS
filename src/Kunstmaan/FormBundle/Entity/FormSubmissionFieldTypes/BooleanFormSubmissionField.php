@@ -36,10 +36,14 @@ class BooleanFormSubmissionField extends FormSubmissionField
      * Set the value of this field
      *
      * @param boolean $value
+     *
+     * @return BooleanFormSubmissionField
      */
     public function setValue($value)
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**

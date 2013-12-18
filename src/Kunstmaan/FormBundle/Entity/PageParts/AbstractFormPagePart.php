@@ -35,10 +35,14 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
      * Set the label used for this page part
      *
      * @param int $label
+     *
+     * @return AbstractFormPagePart
      */
     public function setLabel($label)
     {
         $this->label = $label;
+
+        return $this;
     }
 
     /**

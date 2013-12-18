@@ -137,10 +137,14 @@ class ChoicePagePart extends AbstractFormPagePart
      * Set the expanded value, default this is false
      *
      * @param bool $expanded
+     *
+     * @return ChoicePagePart
      */
     public function setExpanded($expanded)
     {
         $this->expanded = $expanded;
+
+        return $this;
     }
 
     /**
@@ -157,10 +161,14 @@ class ChoicePagePart extends AbstractFormPagePart
      * Set the multple value, default this is false
      *
      * @param bool $multiple
+     *
+     * @return ChoicePagePart
      */
     public function setMultiple($multiple)
     {
         $this->multiple = $multiple;
+
+        return $this;
     }
 
     /**
@@ -177,10 +185,14 @@ class ChoicePagePart extends AbstractFormPagePart
      * Set the choices for this pagepart
      *
      * @param string $choices Seperated by '\n'
+     *
+     * @return ChoicePagePart
      */
     public function setChoices($choices)
     {
         $this->choices = $choices;
+
+        return $this;
     }
 
     /**
@@ -197,10 +209,14 @@ class ChoicePagePart extends AbstractFormPagePart
      * Set emptyValue
      *
      * @param string $emptyValue
+     *
+     * @return ChoicePagePart
      */
     public function setEmptyValue($emptyValue)
     {
         $this->emptyValue = $emptyValue;
+
+        return $this;
     }
 
     /**
@@ -217,10 +233,14 @@ class ChoicePagePart extends AbstractFormPagePart
      * Sets the required valud of this page part
      *
      * @param bool $required
+     *
+     * @return ChoicePagePart
      */
     public function setRequired($required)
     {
         $this->required = $required;
+
+        return $this;
     }
 
     /**
@@ -237,10 +257,14 @@ class ChoicePagePart extends AbstractFormPagePart
      * Sets the message shown when the page part is required and no value was entered
      *
      * @param string $errorMessageRequired
+     *
+     * @return ChoicePagePart
      */
     public function setErrorMessageRequired($errorMessageRequired)
     {
         $this->errorMessageRequired = $errorMessageRequired;
+
+        return $this;
     }
 
     /**

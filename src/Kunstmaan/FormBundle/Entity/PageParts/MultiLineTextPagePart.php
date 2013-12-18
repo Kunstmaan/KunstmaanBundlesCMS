@@ -55,10 +55,14 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      * Set the regular expression to match the entered value against
      *
      * @param string $regex
+     *
+     * @return MultiLineTextPagePart
      */
     public function setRegex($regex)
     {
         $this->regex = $regex;
+
+        return $this;
     }
 
     /**
@@ -75,10 +79,14 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      * Set the error message which will be shown when the entered value doesn't match the regular expression
      *
      * @param string $errorMessageRegex
+     *
+     * @return MultiLineTextPagePart
      */
     public function setErrorMessageRegex($errorMessageRegex)
     {
         $this->errorMessageRegex = $errorMessageRegex;
+
+        return $this;
     }
 
     /**
@@ -105,10 +113,14 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      * Sets the required valud of this page part
      *
      * @param bool $required
+     *
+     * @return MultiLineTextPagePart
      */
     public function setRequired($required)
     {
         $this->required = $required;
+
+        return $this;
     }
 
     /**
@@ -125,10 +137,14 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      * Sets the message shown when the page part is required and no value was entered
      *
      * @param string $errorMessageRequired
+     *
+     * @return MultiLineTextPagePart
      */
     public function setErrorMessageRequired($errorMessageRequired)
     {
         $this->errorMessageRequired = $errorMessageRequired;
+
+        return $this;
     }
 
     /**

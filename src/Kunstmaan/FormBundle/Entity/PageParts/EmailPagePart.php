@@ -48,10 +48,14 @@ class EmailPagePart extends AbstractFormPagePart
      * Sets the required value of this page part
      *
      * @param bool $required
+     *
+     * @return EmailPagePart
      */
     public function setRequired($required)
     {
         $this->required = $required;
+
+        return $this;
     }
 
     /**
@@ -68,10 +72,14 @@ class EmailPagePart extends AbstractFormPagePart
      * Sets the message shown when the page part is required and no value was entered
      *
      * @param string $errorMessageRequired
+     *
+     * @return EmailPagePart
      */
     public function setErrorMessageRequired($errorMessageRequired)
     {
         $this->errorMessageRequired = $errorMessageRequired;
+
+        return $this;
     }
 
     /**
@@ -88,10 +96,14 @@ class EmailPagePart extends AbstractFormPagePart
      * Sets the message shown when the value is invalid
      *
      * @param string $errorMessageInvalid
+     *
+     * @return EmailPagePart
      */
     public function setErrorMessageInvalid($errorMessageInvalid)
     {
         $this->errorMessageInvalid = $errorMessageInvalid;
+
+        return $this;
     }
 
     /**

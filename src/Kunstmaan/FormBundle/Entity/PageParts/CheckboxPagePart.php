@@ -47,10 +47,14 @@ class CheckboxPagePart extends AbstractFormPagePart
      * Sets the required valud of this page part
      *
      * @param bool $required
+     *
+     * @return CheckboxPagePart
      */
     public function setRequired($required)
     {
         $this->required = $required;
+
+        return $this;
     }
 
     /**
@@ -67,10 +71,14 @@ class CheckboxPagePart extends AbstractFormPagePart
      * Sets the message shown when the page part is required and no value was entered
      *
      * @param string $errorMessageRequired
+     *
+     * @return CheckboxPagePart
      */
     public function setErrorMessageRequired($errorMessageRequired)
     {
         $this->errorMessageRequired = $errorMessageRequired;
+
+        return $this;
     }
 
     /**

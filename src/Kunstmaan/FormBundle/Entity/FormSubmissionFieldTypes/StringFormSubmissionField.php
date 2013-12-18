@@ -37,10 +37,14 @@ class StringFormSubmissionField extends FormSubmissionField
      * Sets the current value of this field
      *
      * @param string $value
+     *
+     * @return StringFormSubmissionField
      */
     public function setValue($value)
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**

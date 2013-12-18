@@ -80,10 +80,14 @@ class FileUploadPagePart extends AbstractFormPagePart
      * Sets the required valud of this page part
      *
      * @param bool $required
+     *
+     * @return FileUploadPagePart
      */
     public function setRequired($required)
     {
         $this->required = $required;
+
+        return $this;
     }
 
     /**
@@ -100,10 +104,14 @@ class FileUploadPagePart extends AbstractFormPagePart
      * Sets the message shown when the page part is required and no value was entered
      *
      * @param string $errorMessageRequired
+     *
+     * @return FileUploadPagePart
      */
     public function setErrorMessageRequired($errorMessageRequired)
     {
         $this->errorMessageRequired = $errorMessageRequired;
+
+        return $this;
     }
 
     /**
