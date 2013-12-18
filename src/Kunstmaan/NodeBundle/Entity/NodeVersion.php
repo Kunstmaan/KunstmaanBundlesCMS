@@ -272,11 +272,15 @@ class NodeVersion extends AbstractEntity
 
     /**
      * @param HasNodeInterface $entity
+     *
+     * @return NodeVersion
      */
     public function setRef(HasNodeInterface $entity)
     {
         $this->setRefId($entity->getId());
         $this->setRefEntityName(ClassLookup::getClass($entity));
+
+        return $this;
     }
 
     /**
