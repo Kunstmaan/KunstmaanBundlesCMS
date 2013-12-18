@@ -28,10 +28,14 @@ class RawHTMLPagePart extends AbstractPagePart
 
     /**
      * @param string $content
+     *
+     * @return RawHTMLPagePart
      */
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**

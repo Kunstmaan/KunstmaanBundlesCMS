@@ -30,10 +30,14 @@ class LinkPagePart extends AbstractPagePart
 
     /**
      * @param string $url
+     *
+     * @return LinkPagePart
      */
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 
     /**
@@ -54,18 +58,26 @@ class LinkPagePart extends AbstractPagePart
 
     /**
      * @param boolean $openInNewWindow
+     *
+     * @return LinkPagePart
      */
     public function setOpenInNewWindow($openInNewWindow)
     {
         $this->openinnewwindow = $openInNewWindow;
+
+        return $this;
     }
 
     /**
      * @param string $text
+     *
+     * @return LinkPagePart
      */
     public function setText($text)
     {
         $this->text = $text;
+
+        return $this;
     }
 
     /**
