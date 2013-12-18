@@ -37,10 +37,14 @@ class EmailFormSubmissionField extends FormSubmissionField
      * Sets the current value of this field
      *
      * @param string $value
+     *
+     * @return EmailFormSubmissionField
      */
     public function setValue($value)
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**

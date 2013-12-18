@@ -73,10 +73,14 @@ class FormSubmissionField
      * Set id
      *
      * @param string $id
+     *
+     * @return FormSubmissionField
      */
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -93,10 +97,14 @@ class FormSubmissionField
      * Set the field name
      *
      * @param string $fieldName
+     *
+     * @return FormSubmissionField
      */
     public function setFieldName($fieldName)
     {
         $this->fieldName = $fieldName;
+
+        return $this;
     }
 
     /**
@@ -113,10 +121,14 @@ class FormSubmissionField
      * Set the label
      *
      * @param string $label
+     *
+     * @return FormSubmissionField
      */
     public function setLabel($label)
     {
         $this->label = $label;
+
+        return $this;
     }
 
     /**
@@ -133,10 +145,14 @@ class FormSubmissionField
      * Set the FormSubmission this field is part of
      *
      * @param FormSubmission $formSubmission
+     *
+     * @return FormSubmissionField
      */
     public function setSubmission(FormSubmission $formSubmission)
     {
         $this->formSubmission = $formSubmission;
+
+        return $this;
     }
 
     /**

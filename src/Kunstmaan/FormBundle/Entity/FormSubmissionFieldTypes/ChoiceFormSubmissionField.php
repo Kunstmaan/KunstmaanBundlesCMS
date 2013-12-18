@@ -121,20 +121,28 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      * Set the value of this field
      *
      * @param array $values
+     *
+     * @return ChoiceFormSubmissionField
      */
     public function setValue($values = array())
     {
         $this->value = $values;
+
+        return $this;
     }
 
     /**
      * Set the expanded value
      *
      * @param bool $expanded
+     *
+     * @return ChoiceFormSubmissionField
      */
     public function setExpanded($expanded)
     {
         $this->expanded = $expanded;
+
+        return $this;
     }
 
     /**
@@ -151,10 +159,14 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      * Set the multiple value
      *
      * @param bool $multiple
+     *
+     * @return ChoiceFormSubmissionField
      */
     public function setMultiple($multiple)
     {
         $this->multiple = $multiple;
+
+        return $this;
     }
 
     /**
@@ -171,10 +183,14 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      * Set the possible choices for this field
      *
      * @param array $choices
+     *
+     * @return ChoiceFormSubmissionField
      */
     public function setChoices($choices)
     {
         $this->choices = $choices;
+
+        return $this;
     }
 
     /**
@@ -191,10 +207,14 @@ class ChoiceFormSubmissionField extends FormSubmissionField
      * Set the field as required or not
      *
      * @param boolean $required
+     *
+     * @return ChoiceFormSubmissionField
      */
     public function setRequired($required)
     {
         $this->required = $required;
+
+        return $this;
     }
 
     /**

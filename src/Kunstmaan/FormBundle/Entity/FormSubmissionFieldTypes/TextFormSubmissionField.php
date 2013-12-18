@@ -35,10 +35,14 @@ class TextFormSubmissionField extends FormSubmissionField
      * Sets the string value for this FormSubmissionField
      *
      * @param string $value
+     *
+     * @return TextFormSubmissionField
      */
     public function setValue($value)
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**

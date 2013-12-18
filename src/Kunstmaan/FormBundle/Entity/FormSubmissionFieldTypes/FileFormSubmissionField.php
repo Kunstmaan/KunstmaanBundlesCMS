@@ -121,10 +121,14 @@ class FileFormSubmissionField extends FormSubmissionField
      * Set the filename for the uploaded file
      *
      * @param string $fileName
+     *
+     * @return FileFormSubmissionField
      */
     public function setFileName($fileName)
     {
         $this->fileName = $fileName;
+
+        return $this;
     }
 
     /**
