@@ -36,10 +36,14 @@ class SlidePagePart extends AbstractPagePart
      * Set media
      *
      * @param Media $media
+     *
+     * @return SlidePagePart
      */
     public function setMedia($media)
     {
         $this->media = $media;
+
+        return $this;
     }
 
     /**
