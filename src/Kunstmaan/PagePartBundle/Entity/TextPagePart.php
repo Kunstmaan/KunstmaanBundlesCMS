@@ -29,10 +29,14 @@ class TextPagePart extends AbstractPagePart
 
     /**
      * @param string $content
+     *
+     * @return TextPagePart
      */
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**

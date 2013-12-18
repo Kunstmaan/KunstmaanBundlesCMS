@@ -39,10 +39,14 @@ class HeaderPagePart extends AbstractPagePart
      * Set niv
      *
      * @param int $niv
+     *
+     * @return HeaderPagePart
      */
     public function setNiv($niv)
     {
         $this->niv = $niv;
+
+        return $this;
     }
 
     /**
@@ -57,10 +61,14 @@ class HeaderPagePart extends AbstractPagePart
 
     /**
      * @param string $title
+     *
+     * @return HeaderPagePart
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
