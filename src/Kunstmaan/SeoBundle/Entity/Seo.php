@@ -132,10 +132,14 @@ class Seo extends AbstractEntity
 
     /**
      * @param string $url
+     *
+     * @return Seo
      */
     public function setOgUrl($url)
     {
         $this->ogUrl = $url;
+
+        return $this;
     }
 
     /**
@@ -148,10 +152,14 @@ class Seo extends AbstractEntity
 
     /**
      * @param string $var
+     *
+     * @return Seo
      */
     public function setLinkedInRecommendProductID($var)
     {
         $this->linkedInRecommendProductID = $var;
+
+        return $this;
     }
 
     /**
@@ -164,10 +172,14 @@ class Seo extends AbstractEntity
 
     /**
      * @param string $var
+     *
+     * @return Seo
      */
     public function setLinkedInRecommendLink($var)
     {
         $this->linkedInRecommendLink = $var;
+
+        return $this;
     }
 
     /**
@@ -448,11 +460,15 @@ class Seo extends AbstractEntity
 
     /**
      * @param AbstractEntity $entity
+     *
+     * @return Seo
      */
     public function setRef(AbstractEntity $entity)
     {
         $this->setRefId($entity->getId());
         $this->setRefEntityName(ClassLookup::getClass($entity));
+
+        return $this;
     }
 
     /**
