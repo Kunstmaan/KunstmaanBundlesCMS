@@ -32,10 +32,14 @@ class DashboardConfiguration extends AbstractEntity
 
     /**
      * @param string $title
+     *
+     * @return DashboardConfiguration
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -48,10 +52,13 @@ class DashboardConfiguration extends AbstractEntity
 
     /**
      * @param string $content
+     *
+     * @return DashboardConfiguration
      */
     public function setContent($content)
     {
         $this->content = $content;
-    }
 
+        return $this;
+    }
 }

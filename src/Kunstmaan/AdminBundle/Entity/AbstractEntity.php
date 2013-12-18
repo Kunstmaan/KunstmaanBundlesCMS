@@ -30,10 +30,14 @@ abstract class AbstractEntity
      * Set id
      *
      * @param int $id The unique identifier
+     *
+     * @return AbstractEntity
      */
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**

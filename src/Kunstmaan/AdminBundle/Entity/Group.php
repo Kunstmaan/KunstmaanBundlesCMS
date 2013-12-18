@@ -195,10 +195,14 @@ class Group implements RoleInterface, GroupInterface
      * Directly set the ArrayCollection of Roles. Type hinted as Collection which is the parent of (Array|Persistent)Collection.
      *
      * @param Collection $collection
+     *
+     * @return GroupInterface
      */
     public function setRolesCollection(Collection $collection)
     {
         $this->roles = $collection;
+
+        return $this;
     }
 
     /**

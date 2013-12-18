@@ -74,9 +74,13 @@ class Role implements RoleInterface
      * Modify the role field.
      *
      * @param string $role ROLE_FOO etc
+     *
+     * @return RoleInterface
      */
     public function setRole($role)
     {
         $this->role = $role;
+
+        return $this;
     }
 }
