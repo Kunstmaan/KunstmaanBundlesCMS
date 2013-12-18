@@ -130,20 +130,28 @@ class Media extends AbstractEntity
 
     /**
      * @param int $filesize
+     *
+     * @return Media
      */
     public function setFileSize($filesize)
     {
         $this->filesize = $filesize;
+
+        return $this;
     }
 
     /**
      * Set uuid
      *
      * @param string $uuid
+     *
+     * @return Media
      */
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
+
+        return $this;
     }
 
     /**
@@ -160,10 +168,14 @@ class Media extends AbstractEntity
      * Set name
      *
      * @param string $name
+     *
+     * @return Media
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -180,10 +192,14 @@ class Media extends AbstractEntity
      * Set location
      *
      * @param string $location
+     *
+     * @return Media
      */
     public function setLocation($location)
     {
         $this->location = $location;
+
+        return $this;
     }
 
     /**
@@ -200,10 +216,14 @@ class Media extends AbstractEntity
      * Set contentType
      *
      * @param string $contentType
+     *
+     * @return Media
      */
     public function setContentType($contentType)
     {
         $this->contentType = $contentType;
+
+        return $this;
     }
 
     /**
@@ -388,10 +408,14 @@ class Media extends AbstractEntity
 
     /**
      * @param bool $deleted
+     *
+     * @return Media
      */
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
+
+        return $this;
     }
 
     /**
@@ -404,10 +428,14 @@ class Media extends AbstractEntity
 
     /**
      * @param string $url
+     *
+     * @return Media
      */
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 
     /**
