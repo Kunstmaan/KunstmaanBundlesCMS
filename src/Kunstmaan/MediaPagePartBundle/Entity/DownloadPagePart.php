@@ -37,10 +37,14 @@ class DownloadPagePart extends AbstractPagePart
      * Set media
      *
      * @param Media $media
+     *
+     * @return DownloadPagePart
      */
     public function setMedia($media)
     {
         $this->media = $media;
+
+        return $this;
     }
 
     /**

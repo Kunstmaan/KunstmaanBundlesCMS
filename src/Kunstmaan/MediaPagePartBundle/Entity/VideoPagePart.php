@@ -36,10 +36,14 @@ class VideoPagePart extends AbstractPagePart
      * Set media
      *
      * @param Media $media
+     *
+     * @return VideoPagePart
      */
     public function setMedia($media)
     {
         $this->media = $media;
+
+        return $this;
     }
 
     /**

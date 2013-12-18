@@ -51,20 +51,28 @@ class ImagePagePart extends AbstractPagePart
      * Set openwinnewwindow
      *
      * @param bool $openInNewWindow
+     *
+     * @return ImagePagePart
      */
     public function setOpenInNewWindow($openInNewWindow)
     {
         $this->openInNewWindow = $openInNewWindow;
+
+        return $this;
     }
 
     /**
      * Set link
      *
      * @param string $link
+     *
+     * @return ImagePagePart
      */
     public function setLink($link)
     {
         $this->link = $link;
+
+        return $this;
     }
 
     /**
@@ -81,10 +89,14 @@ class ImagePagePart extends AbstractPagePart
      * Set alt text
      *
      * @param string $altText
+     *
+     * @return ImagePagePart
      */
     public function setAltText($altText)
     {
         $this->altText = $altText;
+
+        return $this;
     }
 
     /**
@@ -101,10 +113,14 @@ class ImagePagePart extends AbstractPagePart
      * Set media
      *
      * @param Media $media
+     *
+     * @return ImagePagePart
      */
     public function setMedia($media)
     {
         $this->media = $media;
+
+        return $this;
     }
 
     /**
