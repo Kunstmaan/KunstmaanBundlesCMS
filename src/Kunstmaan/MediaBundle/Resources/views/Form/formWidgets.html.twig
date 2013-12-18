@@ -1,6 +1,6 @@
 {% block media_widget %}
 {% spaceless %}
-	<div id="{{ id }}_widget" class="clearfix">
+	<div id="{{ id }}_widget" class="clearfix {{ attr.class|default('') }}" style="{{ attr.style|default('') }}">
 		<input type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}"/>
 
 		<div class="input_media hasnomedia">
