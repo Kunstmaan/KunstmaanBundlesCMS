@@ -93,7 +93,7 @@ class NodeListener
                         $tabPane->removeTab($propertiesTab);
                         $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), new ListWidget(array($propertiesWidget, $pagePartWidget))), 0);
 
-                        return;
+                        continue;
                     }
                 }
                 $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), $pagePartWidget), sizeof($tabPane->getTabs()));
