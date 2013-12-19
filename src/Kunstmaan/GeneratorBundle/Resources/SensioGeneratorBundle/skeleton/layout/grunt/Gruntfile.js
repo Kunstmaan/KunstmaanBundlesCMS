@@ -9,12 +9,12 @@ module.exports = function (grunt) {
 
     {{ bundle.getName() }} = {
         'destination':  'web/frontend/',
-        'js':           [resourcesPath + 'public/**/*.js', '!'+ resourcesPath + 'public/vendor/**/*.js', 'Gruntfile.js'],
-        'all_scss':     [resourcesPath + 'public/scss/**/*.scss'],
-        'scss':         [resourcesPath + 'public/scss/style.scss', resourcesPath + 'public/scss/legacy/ie/ie7.scss', resourcesPath + 'public/scss/legacy/ie/ie8.scss'],
-        'twig':         [resourcesPath + 'views/**/*.html.twig'],
-        'img':          [resourcesPath + 'public/img/**/*.{png,jpg,jpeg,gif,webp}'],
-        'svg':          [resourcesPath + 'public/img/**/*.svg']
+        'js':           [resourcesPath+'public/**/*.js', '!'+ resourcesPath+'public/vendor/**/*.js', 'Gruntfile.js'],
+        'all_scss':     [resourcesPath+'public/scss/**/*.scss'],
+        'scss':         [resourcesPath+'public/scss/style.scss', resourcesPath+'public/scss/legacy/ie/ie7.scss', resourcesPath+'public/scss/legacy/ie/ie8.scss'],
+        'twig':         [resourcesPath+'views/**/*.html.twig'],
+        'img':          [resourcesPath+'public/img/**/*.{png,jpg,jpeg,gif,webp}'],
+        'svg':          [resourcesPath+'public/img/**/*.svg']
     };
 
     grunt.initConfig({
@@ -47,7 +47,7 @@ module.exports = function (grunt) {
                 }
             },
             livereload: {
-                files: [{{ bundle.getName() }}.js, {{ bundle.getName() }}.twig, {{ bundle.getName() }}.img, {{ bundle.getName() }}.svg, 'web/frontend/style.css'],
+                files: [{{ bundle.getName() }}.js, {{ bundle.getName() }}.twig, {{ bundle.getName() }}.img, {{ bundle.getName() }}.svg, 'web/frontend/css/style.css'],
                 options: {
                     livereload: true
                 }
@@ -133,9 +133,9 @@ module.exports = function (grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    'web/frontend/css/style.css': resourcesPath + 'public/scss/style.scss',
-                    'web/frontend/css/ie8.css': resourcesPath + 'public/scss/legacy/ie/ie8.scss',
-                    'web/frontend/css/ie7.css': resourcesPath + 'public/scss/legacy/ie/ie7.scss'
+                    'web/frontend/css/style.css': resourcesPath+'public/scss/style.scss',
+                    'web/frontend/css/ie8.css': resourcesPath+'public/scss/legacy/ie/ie8.scss',
+                    'web/frontend/css/ie7.css': resourcesPath+'public/scss/legacy/ie/ie7.scss'
                 }
             }
         }
@@ -149,6 +149,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-sass');
 
-    grunt.registerTask('default', ['build']);
+    grunt.registerTask('default', ['watch']);
     grunt.registerTask('build', ['sass', 'modernizr']);
 };
