@@ -29,7 +29,7 @@ module.exports = function (grunt) {
                 }
             },
             {{ bundle.getName() }}Scss: {
-                files: {{ bundle.getName() }}.scss,
+                files: {{ bundle.getName() }}.all_scss,
                 tasks: 'sass'
             },
             {{ bundle.getName() }}Images: {
