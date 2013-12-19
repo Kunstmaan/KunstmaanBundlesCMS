@@ -32,6 +32,7 @@
     {% include '<%= bundle.getName() %>:Layout:_js_header.html.twig' %}
 </head>
 <body {% block extra_body_attributes %}{% endblock %}>
+{% include '<%= bundle.getName() %>:Layout:_googletagmanager.html.twig' %}
 {% block header %}
     <!-- Header -->
     <header role="header" class="main-header">
