@@ -92,6 +92,7 @@ class NodeAdminPublisher
         $this->eventDispatcher->dispatch(Events::PRE_PUBLISH, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
         $nodeTranslation->setOnline(true);
+        $nodeTranslation->setPublicNodeVersion($nodeVersion);
 
         $this->em->persist($nodeTranslation);
         $this->em->flush();
