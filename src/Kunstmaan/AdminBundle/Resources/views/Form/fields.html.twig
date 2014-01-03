@@ -52,16 +52,16 @@
                     </ul>
 
                     <script>
-                        var collectionHolder = $('ul.ul_{{ form.vars.id }}');
-                        var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
-                        var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
-
-                        var allow_add = {{ form.vars.allow_delete|default('0') }};
-                        var allow_delete = {{ form.vars.allow_delete|default('0') }};
-                        var min = {{ attr['nested_form_min']|default('0') }};
-                        var max = {{ attr['nested_form_max']|default('false') }};
-
                         $(document).ready(function () {
+                            var collectionHolder = $('ul.ul_{{ form.vars.id }}');
+                            var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
+                            var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
+
+                            var allow_add = {{ form.vars.allow_delete|default('0') }};
+                            var allow_delete = {{ form.vars.allow_delete|default('0') }};
+                            var min = {{ attr['nested_form_min']|default('0') }};
+                            var max = {{ attr['nested_form_max']|default('false') }};
+
                             new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max).init();
                         });
                     </script>
