@@ -1,6 +1,11 @@
 KunstmaanLanguageChooserBundle
 ==============================
 
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanLanguageChooserBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanLanguageChooserBundle)
+[![Total Downloads](https://poser.pugx.org/kunstmaan/languagechooser-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/languagechooser-bundle)
+[![Latest Stable Version](https://poser.pugx.org/kunstmaan/languagechooser-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/languagechooser-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanLanguageChooserBundle)](https://github.com/igrigorik/ga-beacon)
+
 Handles autodetection of the language of the end user or shows a splash page with a language choice.
 
 
