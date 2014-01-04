@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanGeneratorBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanGeneratorBundle)
 [![Total Downloads](https://poser.pugx.org/kunstmaan/generator-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/generator-bundle)
 [![Latest Stable Version](https://poser.pugx.org/kunstmaan/generator-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/generator-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanGeneratorBundle)](https://github.com/igrigorik/ga-beacon)
 
 If you're like us, you like to build applications without having to do the same things over and over again and dislike copy/pasting code and change a couple of words every time you need feature X. The KunstmaanGeneratorBundle gives you the possibility to generate code for new bundles, adminlists and can even make you a basic default website. That way you don't have to wait too long before you see some results and you have more time to do other things. Easy no?
 
