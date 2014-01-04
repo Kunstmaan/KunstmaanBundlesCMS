@@ -1,5 +1,10 @@
 # KunstmaanBehatBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanBehatBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanBehatBundle)
 
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanBehatBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanBehatBundle)
+[![Total Downloads](https://poser.pugx.org/kunstmaan/behat-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/behat-bundle)
+[![Latest Stable Version](https://poser.pugx.org/kunstmaan/behat-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/behat-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanBehatBundle)](https://github.com/igrigorik/ga-beacon)
+
 An extension on the Behat Mink feature contexts. You can extend the FeatureContext from this bundle or simply use the SubContexts in your own.
 
 ## FeatureContext
