@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanAdminListBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanAdminListBundle)
 [![Total Downloads](https://poser.pugx.org/kunstmaan/adminlist-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/adminlist-bundle)
 [![Latest Stable Version](https://poser.pugx.org/kunstmaan/adminlist-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/adminlist-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanAdminListBundle)](https://github.com/igrigorik/ga-beacon)
+
 
 Every website contains several lists of content ranging from articles on a blog, to drop down values. The KunstlaanAdminListBundles takes CRUD a step further by supplying filtering, exports to csv and editing capabilities to these content entities.
 
