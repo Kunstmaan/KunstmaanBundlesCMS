@@ -1,4 +1,10 @@
-# KunstmaanTaggingBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanTaggingBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanTaggingBundle)
+# KunstmaanTaggingBundle
+
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanTaggingBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanTaggingBundle)
+[![Total Downloads](https://poser.pugx.org/kunstmaan/tagging-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/tagging-bundle)
+[![Latest Stable Version](https://poser.pugx.org/kunstmaan/tagging-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/tagging-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanTaggingBundle)](https://github.com/igrigorik/ga-beacon)
+
 
 This bundle adds tagging to your Kunstmaan Bundles project.
 
