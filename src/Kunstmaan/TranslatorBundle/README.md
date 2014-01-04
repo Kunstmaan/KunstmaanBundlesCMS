@@ -1,4 +1,9 @@
-# KunstmaanTranslatorBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanTranslatorBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanTranslatorBundle)
+# KunstmaanTranslatorBundle
+
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanTranslatorBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanTranslatorBundle)
+[![Total Downloads](https://poser.pugx.org/kunstmaan/translator-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/translator-bundle)
+[![Latest Stable Version](https://poser.pugx.org/kunstmaan/translator-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/translator-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanTranslatorBundle)](https://github.com/igrigorik/ga-beacon)
 
 A bundle which enables editing translations in the admin interface without need for editing the translations files.
 Translations will be stored in a (default) database and retrieved on the most efficient way possible.
