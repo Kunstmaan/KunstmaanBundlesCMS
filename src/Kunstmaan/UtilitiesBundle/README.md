@@ -1,4 +1,9 @@
-# KunstmaanUtilitiesBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle)
+# KunstmaanUtilitiesBundle
+
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanUtilitiesBundle)
+[![Total Downloads](https://poser.pugx.org/kunstmaan/utities-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/utities-bundle)
+[![Latest Stable Version](https://poser.pugx.org/kunstmaan/utities-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/utities-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanUtilitiesBundle)](https://github.com/igrigorik/ga-beacon)
 
 The KunstmaanUtilitiesBundle makes your life easier by providing a couple of small but usefull helper services you can use and re-use in your applications. We already implemented an easy to use cipher service and a shell helper service for you but feel free to send in a pull request with your additions. The shell helper allows you to run apps in the background, see if a process is running and has a method to kill a running process. The cipher service allow you to encode and decode strings using the Rijndael 256 cipher.
 
