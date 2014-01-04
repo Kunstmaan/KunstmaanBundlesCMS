@@ -12,3 +12,5 @@ Table of contents
 5. [Adding articles](http://bundles.kunstmaan.be/getting-started/adding-news-articles)
 6. [Adding search](http://bundles.kunstmaan.be/getting-started/adding-search)
 7. [Advanced](http://bundles.kunstmaan.be/getting-started/advanced)
+
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanBundlesDocs)](https://github.com/igrigorik/ga-beacon)
