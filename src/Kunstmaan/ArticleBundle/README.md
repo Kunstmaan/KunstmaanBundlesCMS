@@ -1,4 +1,9 @@
-# KunstmaanArticleBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanArticleBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanArticleBundle)
+# KunstmaanArticleBundle
+
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanArticleBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanArticleBundle)
+[![Total Downloads](https://poser.pugx.org/kunstmaan/article-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/article-bundle)
+[![Latest Stable Version](https://poser.pugx.org/kunstmaan/article-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/article-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanArticleBundle)](https://github.com/igrigorik/ga-beacon)
 
 This bundle adds articles to your Kunstmaan Bundles project.
 
