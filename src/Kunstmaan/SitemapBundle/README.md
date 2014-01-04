@@ -1,4 +1,9 @@
-# KunstmaanSitemapBundle [![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanSitemapBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanSitemapBundle)
+# KunstmaanSitemapBundle
+
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanSitemapBundle.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanSitemapBundle)
+[![Total Downloads](https://poser.pugx.org/kunstmaan/sitemap-bundle/downloads.png)](https://packagist.org/packages/kunstmaan/sitemap-bundle)
+[![Latest Stable Version](https://poser.pugx.org/kunstmaan/sitemap-bundle/v/stable.png)](https://packagist.org/packages/kunstmaan/sitemap-bundle)
+[![Analytics](https://ga-beacon.appspot.com/UA-3160735-7/Kunstmaan/KunstmaanSitemapBundle)](https://github.com/igrigorik/ga-beacon)
 
 The KunstmaanSitemapBundle adds a sitemap to your website. it will generate a sitemap recursively from all the children of the top nodes.
 
