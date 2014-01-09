@@ -412,8 +412,9 @@ class FeatureContext extends AbstractContext
                 if ($value == $element->getText()) {
                     return true;
                 }
+            } else {
+                return true;
             }
-            return true;
         }
 
         $message = sprintf('The link "%s" was not found anywhere on the current page.', $href);
