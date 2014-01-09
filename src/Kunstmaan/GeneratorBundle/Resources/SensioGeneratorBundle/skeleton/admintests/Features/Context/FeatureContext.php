@@ -375,6 +375,16 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @Then /^I should see link "([^"]*)"$/
+     *
+     * @throws ResponseTextException
+     */
+    public function iShouldSeeSimpleLink($href)
+    {
+        $this->checkLink($href);
+    }
+
+    /**
      * @Then /^I should see link "([^"]*)" with name "([^"]*)" that opens in a new window$/
      *
      * @throws ResponseTextException
@@ -394,13 +404,16 @@ class FeatureContext extends AbstractContext
      * @return bool
      * @throws \Behat\Mink\Exception\ResponseTextException
      */
-    protected function checkLink($href, $value, $newWindow = false) {
+    protected function checkLink($href, $value = null, $newWindow = false) {
         $page = $this->getSession()->getPage();
         $element = $page->find('xpath', "//a[contains(@href, '" . $href . "')".($newWindow ? 'and contains(@target, "_blank")' : '')."]");
         if ($element) {
-            if ($value == $element->getText()) {
-                return true;
+            if (!is_null($value)) {
+                if ($value == $element->getText()) {
+                    return true;
+                }
             }
+            return true;
         }
 
         $message = sprintf('The link "%s" was not found anywhere on the current page.', $href);
