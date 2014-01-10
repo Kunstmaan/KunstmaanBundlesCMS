@@ -822,6 +822,14 @@ h1, h2, h3, h4, h5, h6{
     margin-bottom: 50px;
     .block{
         border: none;
+         .row {
+            width: 100%;
+            *zoom: 1;
+            margin: 0;
+            [class*="col"]:first-child {
+                margin-left: 0;
+            }
+        }
     }
     &:hover{
         border-color: #ddd;
