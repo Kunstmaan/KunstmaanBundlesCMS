@@ -32,10 +32,10 @@
             </div>
         </div>
 
-        <div class="block" id="{{id}}_view" {% if editmode %}style="display:none"{% endif %} {% if editable %}onDblclick="return edit_{{id}}()"{% endif %}>
+        <div class="block clearfix" id="{{id}}_view" {% if editmode %}style="display:none"{% endif %} {% if editable %}onDblclick="return edit_{{id}}()"{% endif %}>
             {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
         </div>
-        <div class="block" id="{{id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
+        <div class="block clearfix" id="{{id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
             {% set pagepartid = 'pagepart'~id %}
             {% if pagepart.editTemplate is defined %}
                 {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~id]} %}
