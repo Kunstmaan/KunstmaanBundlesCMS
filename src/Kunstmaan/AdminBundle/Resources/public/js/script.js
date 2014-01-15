@@ -654,6 +654,11 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
         // Add the "add new" button and li to the ul
         this.collectionHolder.append(this.addButtonLi);
 
+        // For each of the entity forms add a delete button
+        this.collectionHolder.find('.nested_form_item').each(function() {
+            self.addEntityFormDeleteButton($(this));
+        });
+
         // Make sure we have at least as many entity forms than minimally required
         if (this.min > 0 && this.min > nrEntityForms) {
             var newNeeded = this.min - nrEntityForms;
@@ -661,11 +666,6 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
                 this.addNewEntityForm();
             }
         }
-
-        // For each of the entity forms add a delete button
-        this.collectionHolder.find('.nested_form_item').each(function() {
-            self.addEntityFormDeleteButton($(this));
-        });
 
         // Add listerners on add button
         this.addButtonLi.find('.add-btn').on('click', function(e) {
@@ -722,11 +722,18 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
 
         // Check that we need to show/hide the add/delete buttons
         this.recalculateShowAddDeleteButtons();
+
+        /*
+        // Quickfix to trigger CK editors...
+        if (typeof enableCKEditors !== "undefined") {
+            disableCKEditors();
+            enableCKEditors();
+        }
+        */
     }
 
     this.addEntityFormDeleteButton = function($entityFormLi) {
         var self = this;
-
         var $removeLink = $(this.removeButtonHtml);
         $entityFormLi.prepend($removeLink);
 
