@@ -1499,55 +1499,57 @@ h1, h2, h3, h4, h5, h6{
 
 
 
-//TEMP FIX POPUP
+//TEMPORARY FIX POPUP
 .media_popup_temp{
-    overflow: auto;
-    .sidebar{
-        padding-top: 0px;
-        h2{
-            margin-bottom: 15px;
-            padding-bottom: 0;
-            border-bottom: 1px solid #CCC;
-            text-shadow: 0 1px 1px #FFF;
-            font-size: 18px;
+    overflow: hidden;
+    height: 100%;
+    .container-fluid{
+        height: 100%;
+        .sidebar{
+            padding-top: 0px;
+            h2{
+                margin-bottom: 15px;
+                padding-bottom: 0;
+                border-bottom: 1px solid #CCC;
+                text-shadow: 0 1px 1px #FFF;
+                font-size: 18px;
+            }
+        }
+        .content{
+            padding-top: 20px;
+            height: 100%;
+            h1{
+                float: left;
+                line-height: 100%;
+            }
+
+            .main_actions{
+                float: right;
+            }
+
+            .cont-images--chooser {
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                height: 100%;
+                padding-bottom: 100px;
+            }
+
+            .map-list{
+                margin-top: 45px;
+                border: 1px solid #eee;
+                padding: 0;
+                height: auto;
+            }
+
+            .thumbnails{
+                height: 100%;
+                overflow: scroll;
+                
+            }
         }
     }
-    .content{
-        padding-top: 20px;
-        min-height: 500px;
 
-        h1{
-            float: left;
-            line-height: 100%;
-        }
-
-        .main_actions{
-            float: right;
-        }
-
-
-    }
-
-    .map-list{
-        margin-top: 45px;
-        border: 1px solid #eee;
-        padding: 0;
-
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //Anis
