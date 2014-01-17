@@ -723,13 +723,11 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
         // Check that we need to show/hide the add/delete buttons
         this.recalculateShowAddDeleteButtons();
 
-        /*
-        // Quickfix to trigger CK editors...
+        // Quickfix to trigger CK editors on sub-entities - there should be a better way to do this...
         if (typeof enableCKEditors !== "undefined") {
             disableCKEditors();
             enableCKEditors();
         }
-        */
     }
 
     this.addEntityFormDeleteButton = function($entityFormLi) {
