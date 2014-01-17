@@ -25,6 +25,12 @@ class SeoTwigExtension extends Twig_Extension
     protected $em;
 
     /**
+     * Website title defined in your parameters
+     * @var string
+     */
+    private $websiteTitle;
+
+    /**
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
@@ -203,15 +209,40 @@ class SeoTwigExtension extends Twig_Extension
         }
 
         $seo = $this->getSeoFor($entity);
-
         if (!is_null($seo)) {
             $title = $seo->getMetaTitle();
             if (!empty($title)) {
-                return $title;
+                return str_replace('%websitetitle%', $this->getWebsiteTitle(), $title);
             }
         }
+
+
 
         return null;
     }
 
+
+    /**
+     * Gets the Website title defined in your parameters.
+     *
+     * @return string
+     */
+    public function getWebsiteTitle()
+    {
+        return $this->websiteTitle;
+    }
+
+    /**
+     * Sets the Website title defined in your parameters.
+     *
+     * @param string $websiteTitle the website title
+     *
+     * @return self
+     */
+    public function setWebsiteTitle($websiteTitle)
+    {
+        $this->websiteTitle = $websiteTitle;
+
+        return $this;
+    }
 }
