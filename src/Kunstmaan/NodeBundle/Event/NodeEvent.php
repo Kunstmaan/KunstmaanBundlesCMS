@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Response;
 
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -33,6 +34,11 @@ class NodeEvent extends Event
      * @var NodeTranslation
      */
     protected $nodeTranslation;
+
+    /**
+     * @var Response
+     */
+    private $response = null;
 
     /**
      * @param Node             $node            The node
@@ -126,5 +132,24 @@ class NodeEvent extends Event
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * @param Response $response
+     * @return NodeEvent
+     */
+    public function setResponse(Response $response)
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+
+    /**
+     * @return Response|null
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

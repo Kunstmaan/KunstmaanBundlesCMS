@@ -279,7 +279,6 @@ class NodeAdminController extends Controller
 
         $this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
-        $nodeParent = $node->getParent();
         $node->setDeleted(true);
         $this->em->persist($node);
 
@@ -287,11 +286,17 @@ class NodeAdminController extends Controller
         $this->deleteNodeChildren($this->em, $this->user, $this->locale, $children);
         $this->em->flush();
 
-        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
+        $event = new NodeEvent($node, $nodeTranslation, $nodeVersion, $page);
+        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, $event);
+        if (null === $response = $event->getResponse()) {
+            $nodeParent = $node->getParent();
+            $url = $this->container->get('router')->generate('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeParent->getId()));
+            $response = new RedirectResponse($url);
+        }
 
         $this->get('session')->getFlashBag()->add('success', 'The page is deleted!');
 
-        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeParent->getId())));
+        return $response;
     }
 
     /**
