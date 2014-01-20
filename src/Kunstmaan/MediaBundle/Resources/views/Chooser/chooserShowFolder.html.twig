@@ -67,29 +67,29 @@
         			</tbody>
                 </table>
             </section>
-        	<section class="cont-images--chooser">
-        		<ul class="thumbnails" id="file-list">
-        		    {% for media in folder.media %}
-        		        {% if not handler or handler.canHandle(media) %}
-            		        <li>
-            		            {% set handler = mediamanager.getHandler(media) %}
-                                {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
-            		            <a onclick="handleOK({imgpath: '{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}', path:'{{ media.url }}', title:'{{ media.name|escape('js') }}', id:'{{media.id}}'});return false;" class="thumbnail" href="#">
-            		                {% if thumbnailurl %}
-            		                    <img src="{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
-            		                {% else %}
-                		                <div style="font-size: 135px;text-align:center">
+            <section class="cont-images--chooser">
+                <ul class="thumbnails" id="file-list">
+                    {% for media in folder.media %}
+                        {% if not handler or handler.canHandle(media) %}
+                            <li>
+                                {% set mediaHandler = mediamanager.getHandler(media) %}
+                                {% set thumbnailurl =  mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) %}
+                                <a onclick="handleOK({imgpath: '{{ mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) }}', path:'{{ media.url }}', title:'{{ media.name|escape('js') }}', id:'{{media.id}}'});return false;" class="thumbnail" href="#">
+                                    {% if thumbnailurl %}
+                                        <img src="{{ mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+                                    {% else %}
+                                        <div style="font-size: 135px;text-align:center">
                                             <i class="icon-file"></i>
                                         </div>
-            		                {% endif %}
-            		                <p class="img_name">{{ media.name }}</p>
-            		            </a>
-            		            <span class="helper">Click to select</span>
-            		         </li>
-        		         {% endif %}
-        		    {% endfor %}
-        	    </ul>
-        	</section>
+                                    {% endif %}
+                                    <p class="img_name">{{ media.name }}</p>
+                                </a>
+                                <span class="helper">Click to select</span>
+                             </li>
+                         {% endif %}
+                    {% endfor %}
+                </ul>
+            </section>
 		</div>
 	</div>
 
