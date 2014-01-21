@@ -259,6 +259,11 @@ class PagePartGenerator extends KunstmaanGenerator
             if (strpos($contents, 'abstract class') === false && strpos($contents, 'interface ') === false) {
                 $classNamespace = '\\'.$this->bundle->getNamespace().'\Entity\Pages\\'.$className;
                 $entity = new $classNamespace;
+
+                if (!method_exists($entity, 'getPagePartAdminConfigurations') || !method_exists($entity, 'getPageTemplates')) {
+                    continue;
+                }
+
                 $ppConfigs = $entity->getPagePartAdminConfigurations();
                 $ptConfigs = $entity->getPageTemplates();
 
