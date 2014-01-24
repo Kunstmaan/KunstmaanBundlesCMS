@@ -364,6 +364,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $fields = array();
         $self = $this;
         $typeStrings = $this->getTypes();
+        $mediaTypeSelect = $this->getMediaTypes();
 
         while (true) {
             $this->assistant->writeLine('');
@@ -439,6 +440,17 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $extra = null;
             }
 
+            // If image type, force image media filter
+            if ($typeStrings[$typeId] == 'image') {
+                $extra = 'image';
+            }
+
+            // If media type, ask for media filter
+            if ($typeStrings[$typeId] == 'media') {
+                $mediaTypeId = $this->assistant->askSelect('Media filter', $mediaTypeSelect);
+                $extra = strtolower($mediaTypeSelect[$mediaTypeId]);
+            }
+
             $data = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra);
             $fields[$fieldName] = $data;
         }
@@ -463,6 +475,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $types[$counter++] = $niceNames ? 'Link (url, text, new window)' : 'link';
         if ($this->isBundleAvailable('KunstmaanMediaPagePartBundle')) {
             $types[$counter++] = $niceNames ? 'Image (media, alt text)'  : 'image';
+            $types[$counter++] = $niceNames ? 'Media (File or Video or Slideshow)'  : 'media';
         }
         $types[$counter++] = $niceNames ? 'Single entity reference'      : 'single_ref';
         $types[$counter++] = $niceNames ? 'Multi entity reference'       : 'multi_ref';
@@ -470,6 +483,24 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $types[$counter++] = $niceNames ? 'Integer'                      : 'integer';
         $types[$counter++] = $niceNames ? 'Decimal number'               : 'decimal';
         $types[$counter++] = $niceNames ? 'DateTime'                     : 'datetime';
+
+        return $types;
+    }
+
+    /**
+     * Get all available media types.
+     *
+     * @return array
+     */
+    private function getMediaTypes()
+    {
+        $counter = 1;
+
+        $types = array();
+        $types[$counter++] = 'None';
+        $types[$counter++] = 'File';
+        $types[$counter++] = 'Image';
+        $types[$counter++] = 'Video';
 
         return $types;
     }
@@ -529,6 +560,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type' => 'image',
                     'formType' => 'media',
+                    'mediaType' => $extra,
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
                     'joinColumn' => array(
                         'name' => str_replace('.', '_', Container::underscore($name.'_id')),
@@ -541,6 +573,20 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'type' => 'text',
                     'nullable' => true,
                     'formType' => 'text'
+                );
+                break;
+            case 'media':
+                $fields[$type][] = array(
+                    'fieldName' => lcfirst(Container::camelize($name)),
+                    'type' => 'media',
+                    'formType' => 'media',
+                    'mediaType' => $extra,
+                    'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
+                    'joinColumn' => array(
+                        'name' => str_replace('.', '_', Container::underscore($name.'_id')),
+                        'referencedColumnName' => 'id'
+                    ),
+                    'nullable' => $allNullable
                 );
                 break;
             case 'single_ref':
