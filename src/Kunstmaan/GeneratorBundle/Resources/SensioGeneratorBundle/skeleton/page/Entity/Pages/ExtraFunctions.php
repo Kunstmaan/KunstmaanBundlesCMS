@@ -13,12 +13,7 @@
      */
     public function getPossibleChildTypes()
     {
-        return array(
-            array(
-                'name' => '{{ page }}',
-                'class'=> '{{ namespace }}'
-            )
-        );
+        return array();
     }
 
     /**
@@ -28,7 +23,7 @@
     {
         return array(
 {% for section in sections %}
-            "{{ bundle }}:{{ section }}",
+            '{{ bundle }}:{{ section }}',
 {% endfor %}
         );
     }
@@ -38,7 +33,7 @@
      */
     public function getPageTemplates()
     {
-        return array("{{ bundle }}:{{ template }}");
+        return array('{{ bundle }}:{{ template }}');
     }
 
     /**
@@ -48,5 +43,5 @@
      */
     public function getDefaultView()
     {
-        return "{{ bundle }}:Pages:Common/view.html.twig";
+        return '{{ bundle }}:Pages:Common/view.html.twig';
     }
