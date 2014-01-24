@@ -2,15 +2,20 @@
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
 {% block content %}
-    <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate="novalidate">
+    <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}"
+          method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate="novalidate">
         <div class="main_actions btn-group">
             <button type="submit" class="btn btn-primary">{{ 'Save' | trans }}</button>
-            <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+            <button type="reset"
+                    onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'"
+                    class="btn">{{ 'form.cancel' | trans }}</button>
             {% if adminlistconfigurator.hasItemActions() %}
                 {% for itemAction in adminlistconfigurator.getItemActions() %}
-                    <a class="btn" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                    <a class="btn"
+                       href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
                         {% if itemAction.getIconFor(entity) is not null %}
-                            <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}"/>
+                            <img src="{{ asset(itemAction.getIconFor(entity)) }}"
+                                 alt="{{ itemAction.getLabelFor(entity) }}"/>
                         {% else %}
                             {{ itemAction.getLabelFor(entity) }}
                         {% endif %}
@@ -23,13 +28,17 @@
         <div class="main_actions top" id="main_actions_top">
             <div class="pull-right btn-group">
                 <button type="submit" class="btn btn-primary">{{ 'Save' | trans }}</button>
-                <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" class="btn">{{ 'form.cancel' | trans }}</button>
+                <button type="reset"
+                        onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'"
+                        class="btn">{{ 'form.cancel' | trans }}</button>
 
                 {% if adminlistconfigurator.hasItemActions() %}
                     {% for itemAction in adminlistconfigurator.getItemActions() %}
-                        <a class="btn" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                        <a class="btn"
+                           href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
                             {% if itemAction.getIconFor(entity) is not null %}
-                                <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}"/>
+                                <img src="{{ asset(itemAction.getIconFor(entity)) }}"
+                                     alt="{{ itemAction.getLabelFor(entity) }}"/>
                             {% else %}
                                 {{ itemAction.getLabelFor(entity) }}
                             {% endif %}

@@ -59,12 +59,12 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @var string
      */
-    private $addTemplate = 'KunstmaanAdminListBundle:Default:add.html.twig';
+    private $addTemplate = 'KunstmaanAdminListBundle:Default:add_or_edit.html.twig';
 
     /**
      * @var string
      */
-    private $editTemplate = 'KunstmaanAdminListBundle:Default:edit.html.twig';
+    private $editTemplate = 'KunstmaanAdminListBundle:Default:add_or_edit.html.twig';
 
     /**
      * @var string
