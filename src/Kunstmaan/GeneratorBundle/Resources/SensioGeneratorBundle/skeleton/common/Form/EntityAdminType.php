@@ -24,35 +24,33 @@ class {{ className }} extends {{ extend_class }}
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-    {% for fieldSet in fields %}{% for key, fieldArray in fieldSet %}{% for field in fieldArray %}
-    $builder->add(
-        '{{ field.fieldName }}',
-        '{{ field.formType }}',
-        array(
-{% if field.formType == 'media' %}                'pattern' => 'KunstmaanMediaBundle_chooser',
+{% for fieldSet in fields %}{% for key, fieldArray in fieldSet %}{% for field in fieldArray %}
+        $builder->add('{{ field.fieldName }}', '{{ field.formType }}', array(
+{% if field.formType == 'media' %}            'pattern' => 'KunstmaanMediaBundle_chooser',
 {% endif %}
-{% if key == 'rich_text' %}                'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'rich_editor'),
+{% if field.mediaType is defined and field.mediaType != 'none' %}            'mediatype' => '{{ field.mediaType }}',
 {% endif %}
-{% if key == 'multi_line' %}                'attr' => array('rows' => 10, 'cols' => 600),
+{% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'rich_editor'),
 {% endif %}
-{% if key == 'single_ref' %}                'class' => '{{ field.targetEntity }}',
-                'expanded' => false,
-                'multiple' => false,
+{% if key == 'multi_line' %}            'attr' => array('rows' => 10, 'cols' => 600),
 {% endif %}
-{% if key == 'datetime' %}                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
-                'date_format' => 'dd/MM/yyyy',
+{% if key == 'single_ref' %}            'class' => '{{ field.targetEntity }}',
+            'expanded' => false,
+            'multiple' => false,
 {% endif %}
-{% if key == 'multi_ref' %}                'class' => '{{ field.targetEntity }}',
-                'expanded' => true,
-                'multiple' => true,
+{% if key == 'datetime' %}            'date_widget' => 'single_text',
+            'time_widget' => 'single_text',
+            'date_format' => 'dd/MM/yyyy',
 {% endif %}
-{% if field.nullable is defined and field.nullable %}                'required' => false,
+{% if key == 'multi_ref' %}            'class' => '{{ field.targetEntity }}',
+            'expanded' => true,
+            'multiple' => true,
 {% endif %}
-            )
-        );
+{% if field.nullable is defined and field.nullable %}            'required' => false,
+{% endif %}
+        ));
 {% endfor %}{% endfor %}{% endfor %}
-}
+    }
 
     /**
      * Returns the name of this type.
