@@ -28,7 +28,6 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      * The index action
      *
      * @Route("/", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
     {
@@ -40,7 +39,6 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_add")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
      */
     public function addAction()
@@ -55,7 +53,6 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_edit")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      *
      * @return array
      */
@@ -71,7 +68,6 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_delete")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      *
      * @return array
      */
