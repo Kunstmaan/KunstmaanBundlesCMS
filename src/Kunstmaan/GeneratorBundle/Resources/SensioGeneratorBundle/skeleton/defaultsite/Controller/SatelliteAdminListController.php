@@ -37,7 +37,6 @@ class SatelliteAdminListController extends AdminListController
      * The index action
      *
      * @Route("/", name="{{ bundle_name|lower }}_admin_satellite")
-     * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction()
     {
@@ -49,7 +48,6 @@ class SatelliteAdminListController extends AdminListController
      *
      * @Route("/add", name="{{ bundle_name|lower }}_admin_satellite_add")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
      */
     public function addAction()
@@ -64,7 +62,6 @@ class SatelliteAdminListController extends AdminListController
      *
      * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_satellite_edit")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      *
      * @return array
      */
@@ -80,7 +77,6 @@ class SatelliteAdminListController extends AdminListController
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_satellite_delete")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      *
      * @return array
      */
