@@ -142,7 +142,7 @@ The add action method will build the form to add a new entity.
      *
      * @Route("/add", name="yourbundle_admin_document_add")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
+     * @Template("KunstmaanAdminListBundle:Default:add_or_edit.html.twig")
      * @return array
      */
     public function addAction()
@@ -163,7 +163,7 @@ The edit action method will build and process the edit form.
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="yourbundle_admin_document_edit")
      * @Method({"GET", "POST"})
-     * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
+     * @Template("KunstmaanAdminListBundle:Default:add_or_edit.html.twig")
      */
     public function editAction($id)
     {
