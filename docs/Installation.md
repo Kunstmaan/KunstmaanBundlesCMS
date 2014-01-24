@@ -119,7 +119,7 @@ Just answer `Y` at the prompt.
 
 Next, generate the default website setup.
 
-    app/console kuma:generate:default-site
+    app/console kuma:generate:default-site --demosite
 
 This will ask for a bundle namespace (just leave that to the default) and for the prefix enter `sb_` (or enter one as
 you see fit). When the task is finished, just update your database schema and run the fixtures, like hinted in the console output.
@@ -164,7 +164,7 @@ You should first check that your system setup matches the minimum requirements, 
 curl -s http://getcomposer.org/installer | php
 php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install -s dev
 app/console kuma:generate:bundle
-app/console kuma:generate:default-site
+app/console kuma:generate:default-site --demosite
 app/console doctrine:schema:create
 app/console doctrine:fixtures:load
 app/console kuma:generate:admin-tests
