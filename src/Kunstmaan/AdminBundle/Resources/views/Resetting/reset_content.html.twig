@@ -1,3 +1,5 @@
+<h1>{{ 'Choose a new password' |trans }}</h1>
+
 <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
     {{ form_widget(form) }}
     <div class="actions">
