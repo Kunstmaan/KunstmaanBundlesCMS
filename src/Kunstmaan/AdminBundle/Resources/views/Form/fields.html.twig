@@ -1,5 +1,19 @@
 {# Widgets #}
 
+{% block color_widget %}
+    {% spaceless %}
+        {{ form_widget(form) }}
+        <script>
+            jQuery(document).ready(function(){
+                $('#{{ id }}').colorpicker({
+                    format: 'hex'
+                });
+
+            });
+        </script>
+    {% endspaceless %}
+{% endblock %}
+
 {% block choice_widget_expanded %}
     {% spaceless %}
         <div {{ block('widget_container_attributes') }} class="nested_input_prop_container choice">
