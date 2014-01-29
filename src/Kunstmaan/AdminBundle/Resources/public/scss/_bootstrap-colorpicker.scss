@@ -13,7 +13,7 @@
   width: 100px;
   height: 100px;
   cursor: crosshair;
-  background-image: url("../img/bootstrap-colorpicker/saturation.png");
+  background-image: url("/bundles/kunstmaanadmin/img/colorpicker/saturation.png");
   i {
     position: absolute;
     top: 0;
@@ -60,12 +60,12 @@
 }
 
 .colorpicker-hue {
-  background-image: url("../img/bootstrap-colorpicker/hue.png");
+  background-image: url("/bundles/kunstmaanadmin/img/colorpicker/hue.png");
 }
 
 .colorpicker-alpha {
   display: none;
-  background-image: url("../img/bootstrap-colorpicker/alpha.png");
+  background-image: url("/bundles/kunstmaanadmin/img/colorpicker/alpha.png");
 }
 
 .colorpicker {
@@ -126,7 +126,7 @@
   height: 10px;
   margin-top: 5px;
   clear: both;
-  background-image: url("../img/bootstrap-colorpicker/alpha.png");
+  background-image: url("/bundles/kunstmaanadmin/img/colorpicker/alpha.png");
   background-position: 0 100%;
   div {
     height: 10px;
@@ -176,10 +176,10 @@
       border: 0;
     }
     .colorpicker-hue {
-      background-image: url("../img/bootstrap-colorpicker/hue-horizontal.png");
+      background-image: url("/bundles/kunstmaanadmin/img/colorpicker/hue-horizontal.png");
     }
     .colorpicker-alpha {
-      background-image: url("../img/bootstrap-colorpicker/alpha-horizontal.png");
+      background-image: url("/bundles/kunstmaanadmin/img/colorpicker/alpha-horizontal.png");
     }
   }
   &.colorpicker-hidden {
