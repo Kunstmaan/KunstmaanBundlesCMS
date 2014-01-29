@@ -3,8 +3,6 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Validator\Constraints\NotBlank;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,7 +42,11 @@ class UserType extends AbstractType
                         },
                         'multiple' => true,
                         'expanded' => false,
-                        'required' => false
+                        'required' => false,
+                        'attr' => array(
+                            'class' => 'chzn-select',
+                            'data-placeholder' => 'Choose the permission groups...'
+                        )
                     )
                 );
     }
