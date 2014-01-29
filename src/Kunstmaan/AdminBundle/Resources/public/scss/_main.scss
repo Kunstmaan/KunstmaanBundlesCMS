@@ -1544,7 +1544,7 @@ h1, h2, h3, h4, h5, h6{
             .thumbnails{
                 height: 100%;
                 overflow: scroll;
-                
+
             }
         }
     }
@@ -2453,6 +2453,22 @@ input[type="file"] {
             min-width: 335px;
             float: right;
             padding-left: 5px;
+        }
+    }
+    //nested checkboxes and radiobuttons
+    &.choice {
+        display: inline-block;
+        margin-left: 0;
+        .input_prop {
+            .input {
+                float: left;
+                display: inline-block;
+                input {
+                    width: auto;
+                    max-width: 100%;
+                    margin-top: 12px;
+                }
+            }
         }
     }
 }
