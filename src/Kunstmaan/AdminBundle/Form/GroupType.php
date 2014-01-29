@@ -28,7 +28,11 @@ class GroupType extends AbstractType
                         },
                         'multiple' => true,
                         'expanded' => false,
-                        'required' => true
+                        'required' => true,
+                        'attr' => array(
+                            'class' => 'chzn-select',
+                            'data-placeholder' => 'Choose the roles...'
+                        )
                     )
                 );
     }
