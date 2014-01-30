@@ -29,7 +29,7 @@ class PageCreatorService
     /**
      * @var string
      */
-    protected $userClassName;
+    protected $userEntityClass;
 
 
     public function setEntityManager($entityManager)
@@ -42,9 +42,9 @@ class PageCreatorService
         $this->aclPermissionCreatorService = $aclPermissionCreatorService;
     }
 
-    public function setUserEntityClass($userClassName)
+    public function setUserEntityClass($userEntityClass)
     {
-        $this->userClassName = $userClassName;
+        $this->userEntityClass = $userEntityClass;
     }
 
     /**
@@ -110,7 +110,7 @@ class PageCreatorService
         /** @var NodeRepository $nodeRepo */
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         /** @var $userRepo UserRepository */
-        $userRepo = $em->getRepository($this->userClassName);
+        $userRepo = $em->getRepository($this->userEntityClass);
         /** @var $seoRepo SeoRepository */
         $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
 
