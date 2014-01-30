@@ -3,20 +3,13 @@
 namespace Kunstmaan\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\AdminBundle\Entity\User;
-use Kunstmaan\AdminBundle\Form\UserType;
-use Kunstmaan\AdminBundle\AdminList\UserAdminListConfigurator;
+use FOS\UserBundle\Util\UserManipulator;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
-use FOS\UserBundle\Util\UserManipulator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list
@@ -38,8 +31,13 @@ class UsersController extends BaseSettingsController
 
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+
+        $userObject= $this->getUserClassInstance();
+        $configuratorClassName = $userObject->getAdminListConfiguratorClass();
+        $configurator = new $configuratorClassName($em);
+
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new UserAdminListConfigurator($em));
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator);
         $adminList->bindRequest($request);
 
         return array(
@@ -64,8 +62,12 @@ class UsersController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        $user = new User();
-        $form = $this->createForm(new UserType(), $user, array('password_required' => true, 'validation_groups' => array('Registration')));
+
+        $user = $this->getUserClassInstance();
+        $formTypeClassName = $user->getFormTypeClass();
+        $formType = new $formTypeClassName();
+
+        $form = $this->createForm($formType, $user, array('password_required' => true, 'validation_groups' => array('Registration')));
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
@@ -107,10 +109,12 @@ class UsersController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-        /* @var User $user */
-        $user = $em->getRepository('KunstmaanAdminBundle:User')->find($id);
 
-        $form = $this->createForm(new UserType(), $user, array('password_required' => false));
+        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $formTypeClassName = $user->getFormTypeClass();
+        $formType = new $formTypeClassName();
+
+        $form = $this->createForm($formType, $user, array('password_required' => false));
 
         if ('POST' == $request->getMethod()) {
             $form->bind($request);
@@ -153,7 +157,7 @@ class UsersController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var User $user */
-        $user = $em->getRepository('KunstmaanAdminBundle:User')->find($id);
+        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         if (!is_null($user)) {
             $username = $user->getUsername();
             $em->remove($user);
@@ -164,4 +168,15 @@ class UsersController extends BaseSettingsController
         return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users'));
     }
 
+    /**
+     * Get an instance of the admin user class.
+     *
+     * @return BaseUser
+     */
+    private function getUserClassInstance()
+    {
+        $userClassName = $this->container->getParameter('fos_user.model.user.class');
+
+        return new $userClassName();
+    }
 }

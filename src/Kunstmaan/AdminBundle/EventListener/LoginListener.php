@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\LogItem;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
 use Monolog\Logger;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -59,7 +58,7 @@ class LoginListener
      */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
-        /* @var User $user */
+        /* @var BaseUser $user */
         $user = $this->context->getToken()->getUser();
 
         if ($user instanceof UserInterface) {

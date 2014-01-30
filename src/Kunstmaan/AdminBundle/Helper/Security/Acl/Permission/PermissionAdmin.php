@@ -5,12 +5,8 @@ namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\Event\ApplyAclChangesetEvent;
-use Kunstmaan\AdminBundle\Event\Events;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 
 use Doctrine\ORM\EntityManager;
 
@@ -244,7 +240,7 @@ class PermissionAdmin
         $aclChangeset = new AclChangeset();
         $aclChangeset->setRef($entity);
         $aclChangeset->setChangeset($changes);
-        /* @var $user User */
+        /* @var $user BaseUser */
         $aclChangeset->setUser($user);
         $this->em->persist($aclChangeset);
         $this->em->flush();

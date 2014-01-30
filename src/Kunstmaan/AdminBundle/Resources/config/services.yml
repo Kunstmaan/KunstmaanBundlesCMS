@@ -113,3 +113,9 @@ services:
         class: Kunstmaan\AdminBundle\Form\ColorType
         tags:
             - { name: form.type, alias: color }
+
+    kunstmaan_admin.doctrine_mapping.listener:
+        class: Kunstmaan\AdminBundle\EventListener\MappingListener
+        arguments: ["%fos_user.model.user.class%"]
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
