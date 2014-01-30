@@ -2,24 +2,20 @@
 
 namespace Kunstmaan\NodeBundle\Helper\NodeAdmin;
 
-use Kunstmaan\AdminBundle\Helper\CloneHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * NodeAdminPublisher
@@ -205,11 +201,11 @@ class NodeAdminPublisher
      * @param HasNodeInterface $page            The page
      * @param NodeTranslation  $nodeTranslation The node translation
      * @param NodeVersion      $nodeVersion     The node version
-     * @param boolean          $publish         Publish node
+     * @param BaseUser         $user            The user
      *
      * @return mixed
      */
-    public function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, $user)
+    public function createPublicVersion(HasNodeInterface $page, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, BaseUser $user)
     {
         $newPublicPage = $this->cloneHelper->deepCloneAndSave($page);
         $newNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($newPublicPage, $nodeTranslation, $user, $nodeVersion);

@@ -2,20 +2,18 @@
 
 namespace Kunstmaan\NodeBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
-use Kunstmaan\AdminBundle\Entity\User as Baseuser;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * NodeRepository
- *
  */
 class NodeTranslationRepository extends EntityRepository
 {
@@ -191,13 +189,13 @@ class NodeTranslationRepository extends EntityRepository
      * @param HasNodeInterface $hasNode The hasNode
      * @param string           $lang    The locale
      * @param Node             $node    The node
-     * @param Baseuser         $owner   The user
+     * @param BaseUser         $owner   The user
      *
      * @throws \InvalidArgumentException
      *
      * @return NodeTranslation
      */
-    public function createNodeTranslationFor(HasNodeInterface $hasNode, $lang, Node $node, Baseuser $owner)
+    public function createNodeTranslationFor(HasNodeInterface $hasNode, $lang, Node $node, BaseUser $owner)
     {
         $em        = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);

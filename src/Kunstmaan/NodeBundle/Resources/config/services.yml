@@ -94,6 +94,7 @@ services:
         calls:
             - [ setEntityManager, [ "@doctrine.orm.entity_manager" ] ]
             - [ setACLPermissionCreatorService, [ "@kunstmaan_node.acl_permission_creator_service" ] ]
+            - [ setUserEntityClass, [ "%fos_user.model.user.class%" ] ]
 
     kunstmaan_node.acl_permission_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService
@@ -107,3 +108,9 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ @annotation_reader ] ]
+
+    kunstmaan_node.doctrine_mapping.listener:
+        class: Kunstmaan\NodeBundle\EventListener\MappingListener
+        arguments: ["%fos_user.model.user.class%"]
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata }
