@@ -3,16 +3,10 @@
 namespace Kunstmaan\ArticleBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -41,7 +35,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
     protected $securityContext;
 
     /**
-     * @var User $user
+     * @var BaseUser $user
      */
     protected $user;
 
