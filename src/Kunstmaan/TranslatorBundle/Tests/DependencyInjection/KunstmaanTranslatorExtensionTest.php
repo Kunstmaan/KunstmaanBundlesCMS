@@ -3,10 +3,10 @@
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Kunstmaan\TranslatorBundle\DependencyInjection\KunstmaanTranslatorExtension;
 
-class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
+class KunstmaanTranslatorExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var KunstmaanVotingExtension
+     * @var KunstmaanTranslatorExtension
      */
     private $extension;
 

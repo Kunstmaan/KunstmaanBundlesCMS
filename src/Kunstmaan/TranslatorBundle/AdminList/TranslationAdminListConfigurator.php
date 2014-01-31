@@ -2,35 +2,42 @@
 
 namespace Kunstmaan\TranslatorBundle\AdminList;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineDBALAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-use Kunstmaan\AdminBundle\AdminList\AbstractSettingsAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
  * TranslationAdminListConfigurator
  */
-class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigurator
+class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConfigurator
 {
+
+    /**
+     * @var array $locales
+     */
+    protected $locales;
 
     /**
      * @var string
      */
     protected $locale;
 
-    protected $query;
-
-    const MAX_TEXT_CHARS = 50;
-    const SHOW_TEXT_CHARS = 20;
+    public function __construct(Connection $connection, array $locales)
+    {
+        parent::__construct($connection);
+        $this->locales = $locales;
+        $this->setCountField('CONCAT(t.keyword,t.domain)');
+    }
 
     /**
      * Configure filters
      */
     public function buildFilters()
     {
-        $this->addFilter('text', new StringFilterType('text'), 'text');
         $this->addFilter('domain', new StringFilterType('domain'), 'domain');
         $this->addFilter('keyword', new StringFilterType('keyword'), 'keyword');
-        $this->addFilter('locale', new StringFilterType('locale'), 'locale');
     }
 
     /**
@@ -40,13 +47,47 @@ class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigur
     {
         $this->addField('domain', 'Domain', true);
         $this->addField('keyword', 'Keyword', true);
-        $this->addField('locale', 'Locale', true);
-        $this->addField('text', 'Text', true);
+        foreach ($this->locales as $locale) {
+            $this->addField($locale, strtoupper($locale), false, 'KunstmaanTranslatorBundle:Translator:inline_edit.html.twig');
+        }
     }
 
     public function canAdd()
     {
         return true;
+    }
+
+    public function canEdit($item)
+    {
+        return false;
+    }
+
+    /**
+     * Override path convention (because settings is a virtual admin subtree)
+     *
+     * @param string $suffix
+     *
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        if (empty($suffix)) {
+            return sprintf('%s_settings_%ss', $this->getBundleName(), strtolower($this->getEntityName()));
+        }
+
+        return sprintf('%s_settings_%ss_%s', $this->getBundleName(), strtolower($this->getEntityName()), $suffix);
+    }
+
+    /**
+     * Get admin type of entity
+     *
+     * @param mixed $item
+     *
+     * @return AbstractType|null
+     */
+    public function getAdminType($item)
+    {
+        return null;
     }
 
     public function getBundleName()
@@ -64,17 +105,26 @@ class TranslationAdminListConfigurator extends AbstractSettingsAdminListConfigur
         return 'KunstmaanTranslatorBundle:Index';
     }
 
-    public function getValue($object, $attribute)
+    public function adaptQueryBuilder(
+      QueryBuilder $queryBuilder,
+      /** @noinspection PhpUnusedParameterInspection */
+      array $params = array())
     {
-        $value = $object->{'get' . $attribute}();
+        parent::adaptQueryBuilder($queryBuilder, $params);
 
-        if ($object instanceof \Kunstmaan\TranslatorBundle\Entity\Translation && "text" == strtolower($attribute) ) {
-            if (mb_strlen($object->getText()) >= self::MAX_TEXT_CHARS) {
-                return substr($value, 0, self::SHOW_TEXT_CHARS). " ... " . substr( $value, -1 * self::SHOW_TEXT_CHARS);
-            }
+        $queryBuilder
+          ->select('DISTINCT CONCAT(t.domain, ":", t.keyword) AS id, t.keyword, t.domain')
+          ->from('kuma_translation', 't');
+
+        // Add join for every locale
+        foreach ($this->locales as $locale) {
+            $queryBuilder->addSelect('t_' . $locale . '.`text` AS ' . $locale);
+            $queryBuilder->addSelect('t_' . $locale . '.id AS ' . $locale . '_id');
+            $queryBuilder->leftJoin('t', 'kuma_translation', 't_' . $locale,
+              't.keyword = t_' . $locale . '.keyword and t.domain = t_' . $locale . '.domain and t_' . $locale . '.locale=:locale_' . $locale);
+            $queryBuilder->setParameter('locale_' . $locale, $locale);
         }
 
-        return $value;
-
+        return $queryBuilder;
     }
 }

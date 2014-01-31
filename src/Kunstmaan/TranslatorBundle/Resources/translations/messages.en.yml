@@ -1,6 +1,8 @@
 translator:
     translator:
         title: Translations
+        inline_edit_title: Enter translation
+        emptytext: Not translated
 
 settings:
     translator:
