@@ -4,7 +4,7 @@ namespace Kunstmaan\NodeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 
 /**
  * QueuedNodeTranslationAction
@@ -34,10 +34,9 @@ class QueuedNodeTranslationAction extends AbstractEntity
     protected $action;
 
     /**
-     * @var User
+     * @var BaseUser
      *
-     * @ORM\ManyToOne(targetEntity="Kunstmaan\AdminBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * The doctrine metadata is set dynamically in Kunstmaan\NodeBundle\EventListener\MappingListener
      */
     protected $user;
 
@@ -97,10 +96,10 @@ class QueuedNodeTranslationAction extends AbstractEntity
     /**
      * Set user
      *
-     * @param User $user
+     * @param BaseUser $user
      * @return QueuedNodeTranslationAction
      */
-    public function setUser(User $user)
+    public function setUser(BaseUser $user)
     {
         $this->user = $user;
 

@@ -5,7 +5,7 @@ namespace Kunstmaan\NodeBundle\Repository;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Kunstmaan\AdminBundle\Entity\User as Baseuser;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -100,14 +100,14 @@ class NodeRepository extends NestedTreeRepository
     /**
      * @param HasNodeInterface $hasNode      The object to link to
      * @param string           $lang         The locale
-     * @param Baseuser         $owner        The user
+     * @param BaseUser         $owner        The user
      * @param string           $internalName The internal name (may be null)
      *
      * @throws \InvalidArgumentException
      *
      * @return Node
      */
-    public function createNodeFor(HasNodeInterface $hasNode, $lang, Baseuser $owner, $internalName = null)
+    public function createNodeFor(HasNodeInterface $hasNode, $lang, BaseUser $owner, $internalName = null)
     {
         $em = $this->getEntityManager();
         $node = new Node();

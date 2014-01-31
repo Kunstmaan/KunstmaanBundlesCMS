@@ -2,19 +2,13 @@
 
 namespace Kunstmaan\NodeBundle\Helper;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\CoronaDirectBundle\Entity\LandingPage;
-
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\CoronaDirectBundle\Entity\HomePage;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * NodeMenu
@@ -314,7 +308,7 @@ class NodeMenu
     }
 
     /**
-     * @return User
+     * @return BaseUser
      */
     public function getUser()
     {

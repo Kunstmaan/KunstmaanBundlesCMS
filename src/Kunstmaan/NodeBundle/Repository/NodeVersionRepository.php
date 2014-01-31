@@ -3,18 +3,15 @@
 namespace Kunstmaan\NodeBundle\Repository;
 
 use DateTime;
-
+use Doctrine\ORM\EntityRepository;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-
-use Doctrine\ORM\EntityRepository;
 
 /**
  * NodeRepository
- *
  */
 class NodeVersionRepository extends EntityRepository
 {
@@ -31,14 +28,14 @@ class NodeVersionRepository extends EntityRepository
     /**
      * @param HasNodeInterface $hasNode         The object
      * @param NodeTranslation  $nodeTranslation The nodetranslation
-     * @param User             $owner           The user
+     * @param BaseUser         $owner           The user
      * @param NodeVersion      $origin          The nodeVersion this nodeVersion originated from
      * @param string           $type            (public|draft)
      * @param DateTime         $created         The date this nodeversion is created
      *
      * @return NodeVersion
      */
-    public function createNodeVersionFor(HasNodeInterface $hasNode, NodeTranslation $nodeTranslation, $owner, NodeVersion $origin = null, $type = "public", $created = null)
+    public function createNodeVersionFor(HasNodeInterface $hasNode, NodeTranslation $nodeTranslation, BaseUser $owner, NodeVersion $origin = null, $type = "public", $created = null)
     {
         $em = $this->getEntityManager();
 

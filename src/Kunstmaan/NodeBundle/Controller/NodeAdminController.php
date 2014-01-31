@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use InvalidArgumentException;
@@ -10,9 +11,7 @@ use InvalidArgumentException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
@@ -21,14 +20,11 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\NodeBundle\AdminList\NodeAdminListConfigurator;
@@ -37,7 +33,6 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\RevertNodeAction;
-use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
@@ -47,7 +42,6 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
-use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 
 /**
  * NodeAdminController
@@ -70,7 +64,7 @@ class NodeAdminController extends Controller
     private $securityContext;
 
     /**
-     * @var User $user
+     * @var BaseUser $user
      */
     private $user;
 
@@ -626,11 +620,11 @@ class NodeAdminController extends Controller
 
     /**
      * @param EntityManager   $em       The Entity Manager
-     * @param User            $user     The user who deletes the children
+     * @param BaseUser        $user     The user who deletes the children
      * @param string          $locale   The locale that was used
      * @param ArrayCollection $children The children array
      */
-    private function deleteNodeChildren(EntityManager $em, User $user, $locale, ArrayCollection $children)
+    private function deleteNodeChildren(EntityManager $em, BaseUser $user, $locale, ArrayCollection $children)
     {
         /* @var Node $childNode */
         foreach ($children as $childNode) {

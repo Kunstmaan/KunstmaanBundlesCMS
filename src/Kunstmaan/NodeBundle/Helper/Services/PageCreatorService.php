@@ -3,40 +3,48 @@
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Kunstmaan\AdminBundle\Repository\UserRepository;
-
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface,
-    Kunstmaan\NodeBundle\Entity\Node,
-    Kunstmaan\NodeBundle\Repository\NodeRepository,
-    Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
-
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-
 use Kunstmaan\SeoBundle\Repository\SeoRepository;
-
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Service to create new pages.
- *
  */
 class PageCreatorService
 {
-    /** @var EntityManager */
+    /**
+     * @var EntityManager
+     */
     protected $entityManager;
+
+    /**
+     * @var ACLPermissionCreatorService
+     */
+    protected $aclPermissionCreatorService;
+
+    /**
+     * @var string
+     */
+    protected $userEntityClass;
+
+
     public function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-    /** @var ACLPermissionCreatorService */
-    protected $aclPermissionCreatorService;
     public function setACLPermissionCreatorService($aclPermissionCreatorService)
     {
         $this->aclPermissionCreatorService = $aclPermissionCreatorService;
+    }
+
+    public function setUserEntityClass($userEntityClass)
+    {
+        $this->userEntityClass = $userEntityClass;
     }
 
     /**
@@ -53,9 +61,8 @@ class PageCreatorService
     {
         $this->setEntityManager($container->get('doctrine.orm.entity_manager'));
         $this->setACLPermissionCreatorService($container->get('kunstmaan_node.acl_permission_creator_service'));
+        $this->setUserEntityClass($container->getParameter('fos_user.model.user.class'));
     }
-
-
 
     /**
      * @param HasNodeInterface $pageTypeInstance The page.
@@ -103,7 +110,7 @@ class PageCreatorService
         /** @var NodeRepository $nodeRepo */
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         /** @var $userRepo UserRepository */
-        $userRepo = $em->getRepository('KunstmaanAdminBundle:User');
+        $userRepo = $em->getRepository($this->userEntityClass);
         /** @var $seoRepo SeoRepository */
         $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
 
