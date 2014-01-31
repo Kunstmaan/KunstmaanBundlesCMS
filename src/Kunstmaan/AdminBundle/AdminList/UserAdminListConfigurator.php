@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
@@ -31,6 +30,17 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
         $this->addField('enabled', 'Enabled', true);
         $this->addField('lastLogin', 'Last Login', false);
         $this->addField('groups', 'Groups', false);
+    }
+
+    /**
+     * Override path convention (because settings is a virtual admin subtree)
+     *
+     * @param string $suffix
+     * @return string
+     */
+    public function getPathByConvention($suffix = null)
+    {
+        return 'KunstmaanAdminBundle_settings_users' . (empty($suffix) ? '' : '_' . $suffix);
     }
 
     /**

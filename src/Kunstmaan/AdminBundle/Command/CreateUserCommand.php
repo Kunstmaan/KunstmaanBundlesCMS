@@ -2,16 +2,13 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\AdminBundle\Entity\User;
 
 /**
  * Symfony CLI command to create a user using app/console kuma:user:create <username_of_the_user>
@@ -94,14 +91,16 @@ EOT
         $command->run($input, $output);
 
         // Fetch user that was just created
-        /* @var User $user */
-        $user = $em->getRepository('KunstmaanAdminBundle:User')->findOneBy(array('username' => $username));
+        $userClassName = $this->getContainer()->getParameter('fos_user.model.user.class');
+        $user = $em->getRepository($userClassName)->findOneBy(array('username' => $username));
 
         // Attach groups
         $groupNames = explode(',', $groupOption);
         foreach ($groupNames as $groupName) {
             $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
-            $user->getGroups()->add($group);
+            if (!empty($group)) {
+                $user->getGroups()->add($group);
+            }
         }
         // Persist
         $em->persist($user);

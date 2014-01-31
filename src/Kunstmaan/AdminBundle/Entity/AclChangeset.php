@@ -3,11 +3,8 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use DateTime;
-
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * An Acl changeset will be added to the queue whenever a change is made to the permissions. The {@link ApplyAclCommand}
@@ -52,8 +49,7 @@ class AclChangeset extends AbstractEntity
     protected $refEntityName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kunstmaan\AdminBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * The doctrine metadata is set dynamically in Kunstmaan\AdminBundle\EventListener\MappingListener
      */
     protected $user;
 
@@ -278,7 +274,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Set user
      *
-     * @param User $user
+     * @param BaseUser $user
      *
      * @return AclChangeset
      */
@@ -292,7 +288,7 @@ class AclChangeset extends AbstractEntity
     /**
      * Get user
      *
-     * @return User
+     * @return BaseUser
      */
     public function getUser()
     {
