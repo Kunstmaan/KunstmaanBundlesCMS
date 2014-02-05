@@ -17,7 +17,6 @@
         "grunt-svg2png": "~0.2.0",
         "grunt-svgmin": "latest",
         "grunt-cli": "latest",
-        "bower": "latest",
-        "underscore": "latest"
+        "bower": "latest"
     }
 }

@@ -1,5 +1,3 @@
-var _ = require('underscore');
-
 module.exports = function (grunt) {
     "use strict";
 
@@ -44,7 +42,7 @@ module.exports = function (grunt) {
                 }
             },
             livereload: {
-                files: ['web/frontend/style.min.css', 'web/frontend/footer.min.js'],
+                files: ['web/frontend/css/style.min.css', 'web/frontend/js/footer.min.js'],
                 options: {
                     livereload: true
                 }
@@ -67,7 +65,7 @@ module.exports = function (grunt) {
         cmq: {
             {{ bundle.getName() }}: {
                 files: {
-                    'web/frontend/css/': 'web/frontend/css/style.css'
+                    'web/frontend/.temp/css/': 'web/frontend/.temp/css/style.css'
                 }
             }
         },
@@ -75,14 +73,17 @@ module.exports = function (grunt) {
         cssmin: {
             {{ bundle.getName() }}: {
                 files: {
-                    'web/frontend/style.min.css': [
-                        'web/frontend/css/style.css'
+                    'web/frontend/css/style.min.css': [
+                        'web/vendor/flexslider/flexslider.css',
+                        'web/frontend/.temp/css/style.css'
                     ],
-                    'web/frontend/ie8.min.css': [
-                        'web/frontend/css/ie8.css'
+                    'web/frontend/css/ie8.min.css': [
+                        'web/vendor/flexslider/flexslider.css',
+                        'web/frontend/.temp/css/ie8.css'
                     ],
-                    'web/frontend/ie7.min.css': [
-                        'web/frontend/css/ie7.css'
+                    'web/frontend/css/ie7.min.css': [
+                        'web/vendor/flexslider/flexslider.css',
+                        'web/frontend/.temp/css/ie7.css'
                     ]
                 }
             }
@@ -116,7 +117,7 @@ module.exports = function (grunt) {
         uglify: {
             analytics: {
                 files: {
-                    'web/frontend/analytics.min.js': [
+                    'web/frontend/js/analytics.min.js': [
                         'vendor/kunstmaan/seo-bundle/Kunstmaan/SeoBundle/Resources/public/js/analytics.js'
                     ]
                 }
@@ -128,9 +129,12 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    'web/frontend/vendors.min.js': [
+                    'web/frontend/.temp/js/vendors.min.js': [
                         'web/vendor/jquery/jquery.js',
+                        'web/vendor/sass-bootstrap/js/modal.js',
+                        'web/vendor/flexslider/jquery.flexslider.js',
                         'web/vendor/fitvids/jquery.fitvids.js',
+                        'web/vendor/socialite/socialite.js',
                         'web/vendor/fancybox/source/jquery.fancybox.js',
                         'web/vendor/cupcake/js/navigation/jquery.navigation.js',
                     ]
@@ -138,7 +142,7 @@ module.exports = function (grunt) {
             },
             {{ bundle.getName() }}: {
                 files: {
-                    'web/frontend/app.min.js': [resourcesPath+'public/js/**/*.js']
+                    'web/frontend/.temp/js/app.min.js': [resourcesPath+'public/js/**/*.js']
                 }
             }
         },
@@ -146,10 +150,11 @@ module.exports = function (grunt) {
         concat: {
             js: {
                 src: [
-                    'web/frontend/vendors.min.js',
-                    'web/frontend/app.min.js'
+                    'web/frontend/js/modernizr-custom.js',
+                    'web/frontend/.temp/js/vendors.min.js',
+                    'web/frontend/.temp/js/app.min.js'
                 ],
-                dest: 'web/frontend/footer.min.js'
+                dest: 'web/frontend/js/footer.min.js'
             }
         },
 
@@ -193,26 +198,35 @@ module.exports = function (grunt) {
         },
 
         modernizr: {
-            devFile: 'remote',
-                outputFile: {{ bundle.getName() }}.destination + 'js/modernizr-custom.js',
-                files: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.all_scss, {{ bundle.getName() }}.twig),
+            {{ bundle.getName() }}: {
+                devFile: 'remote',
                 parseFiles: true,
+                files: {
+                    src: [
+                        {{ bundle.getName() }}.js,
+                        {{ bundle.getName() }}.all_scss,
+                        {{ bundle.getName() }}.twig
+                    ]
+                },
+                outputFile: {{ bundle.getName() }}.destination + 'js/modernizr-custom.js',
+
                 extra: {
-                    'shiv' : true,
+                    'shiv' : false,
                     'printshiv' : false,
                     'load' : true,
                     'mq' : false,
                     'cssclasses' : true
-            },
-            extensibility: {
-                'addtest' : false,
-                'prefixed' : false,
-                'teststyles' : false,
-                'testprops' : false,
-                'testallprops' : false,
-                'hasevents' : false,
-                'prefixes' : false,
-                'domprefixes' : false
+                },
+                extensibility: {
+                    'addtest' : false,
+                    'prefixed' : false,
+                    'teststyles' : false,
+                    'testprops' : false,
+                    'testallprops' : false,
+                    'hasevents' : false,
+                    'prefixes' : false,
+                    'domprefixes' : false
+                }
             }
         }
 
