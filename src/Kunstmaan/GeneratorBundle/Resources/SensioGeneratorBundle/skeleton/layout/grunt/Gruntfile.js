@@ -21,16 +21,13 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         watch: {
-            {{ bundle.getName() }}Js: {
-                files: {{ bundle.getName() }}.js,
-                tasks: 'jshint:{{ bundle.getName() }}',
-                options: {
-                    nospawn: true
-                }
-            },
             {{ bundle.getName() }}Scss: {
                 files: {{ bundle.getName() }}.all_scss,
-                tasks: 'sass'
+                tasks: ['sass', 'cmq', 'cssmin']
+            },
+            {{ bundle.getName() }}Js: {
+                files: {{ bundle.getName() }}.js,
+                tasks: ['uglify', 'concat']
             },
             {{ bundle.getName() }}Images: {
                 files: {{ bundle.getName() }}.img,
@@ -41,15 +38,52 @@ module.exports = function (grunt) {
             },
             {{ bundle.getName() }}Svg: {
                 files: {{ bundle.getName() }}.svg,
-                tasks: ['svg2png:{{ bundle.getName() }}'],
+                tasks: ['svg2png:{{ bundle.getName() }}', 'svgmin'],
                 options: {
                     event: ['added', 'changed']
                 }
             },
             livereload: {
-                files: [{{ bundle.getName() }}.js, {{ bundle.getName() }}.twig, {{ bundle.getName() }}.img, {{ bundle.getName() }}.svg, 'web/frontend/css/style.css'],
+                files: ['web/frontend/style.min.css', 'web/frontend/footer.min.js'],
                 options: {
                     livereload: true
+                }
+            }
+        },
+
+        sass: {
+            {{ bundle.getName() }}: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'web/frontend/css/style.css': resourcesPath+'public/scss/style.scss',
+                    'web/frontend/css/ie8.css': resourcesPath+'public/scss/legacy/ie/ie8.scss',
+                    'web/frontend/css/ie7.css': resourcesPath+'public/scss/legacy/ie/ie7.scss'
+                }
+            }
+        },
+
+        cmq: {
+            {{ bundle.getName() }}: {
+                files: {
+                    'web/frontend/css/': 'web/frontend/css/style.css'
+                }
+            }
+        },
+
+        cssmin: {
+            {{ bundle.getName() }}: {
+                files: {
+                    'web/frontend/style.min.css': [
+                        'web/frontend/css/style.css'
+                    ],
+                    'web/frontend/ie8.min.css': [
+                        'web/frontend/css/ie8.css'
+                    ],
+                    'web/frontend/ie7.min.css': [
+                        'web/frontend/css/ie7.css'
+                    ]
                 }
             }
         },
@@ -79,6 +113,46 @@ module.exports = function (grunt) {
             }
         },
 
+        uglify: {
+            analytics: {
+                files: {
+                    'web/frontend/analytics.min.js': [
+                        'vendor/kunstmaan/seo-bundle/Kunstmaan/SeoBundle/Resources/public/js/analytics.js'
+                    ]
+                }
+            },
+            vendors: {
+                options: {
+                    mangle: {
+                        except: ['jQuery']
+                    }
+                },
+                files: {
+                    'web/frontend/vendors.min.js': [
+                        'web/vendor/jquery/jquery.js',
+                        'web/vendor/fitvids/jquery.fitvids.js',
+                        'web/vendor/fancybox/source/jquery.fancybox.js',
+                        'web/vendor/cupcake/js/navigation/jquery.navigation.js',
+                    ]
+                }
+            },
+            {{ bundle.getName() }}: {
+                files: {
+                    'web/frontend/app.min.js': [resourcesPath+'public/js/**/*.js']
+                }
+            }
+        },
+
+        concat: {
+            js: {
+                src: [
+                    'web/frontend/vendors.min.js',
+                    'web/frontend/app.min.js'
+                ],
+                dest: 'web/frontend/footer.min.js'
+            }
+        },
+
         imagemin: {
             {{ bundle.getName() }}: {
                 options: {
@@ -102,6 +176,21 @@ module.exports = function (grunt) {
             }
         },
 
+        svgmin: {
+            {{ bundle.getName() }}: {
+                options: {
+                    plugins: [{
+                        removeViewBox: false
+                    }]
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/img',
+                    src: '**/*.svg',
+                    dest: 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/public/img'
+                }]
+            }
+        },
 
         modernizr: {
             devFile: 'remote',
@@ -109,7 +198,7 @@ module.exports = function (grunt) {
                 files: _.union({{ bundle.getName() }}.js, {{ bundle.getName() }}.all_scss, {{ bundle.getName() }}.twig),
                 parseFiles: true,
                 extra: {
-                'shiv' : true,
+                    'shiv' : true,
                     'printshiv' : false,
                     'load' : true,
                     'mq' : false,
@@ -117,38 +206,31 @@ module.exports = function (grunt) {
             },
             extensibility: {
                 'addtest' : false,
-                    'prefixed' : false,
-                    'teststyles' : false,
-                    'testprops' : false,
-                    'testallprops' : false,
-                    'hasevents' : false,
-                    'prefixes' : false,
-                    'domprefixes' : false
-            }
-        },
-
-        sass: {
-            {{ bundle.getName() }}: {
-                options: {
-                    style: 'compressed'
-                },
-                files: {
-                    'web/frontend/css/style.css': resourcesPath+'public/scss/style.scss',
-                    'web/frontend/css/ie8.css': resourcesPath+'public/scss/legacy/ie/ie8.scss',
-                    'web/frontend/css/ie7.css': resourcesPath+'public/scss/legacy/ie/ie7.scss'
-                }
+                'prefixed' : false,
+                'teststyles' : false,
+                'testprops' : false,
+                'testallprops' : false,
+                'hasevents' : false,
+                'prefixes' : false,
+                'domprefixes' : false
             }
         }
+
     });
 
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-svg2png');
+    grunt.loadNpmTasks('grunt-svgmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks("grunt-modernizr");
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-combine-media-queries');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['sass', 'modernizr']);
+    grunt.registerTask('build', ['sass', 'cmq', 'cssmin', 'modernizr', 'uglify', 'concat']);
 };
