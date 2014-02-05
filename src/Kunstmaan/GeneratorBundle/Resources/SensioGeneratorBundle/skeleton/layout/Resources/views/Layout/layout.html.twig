@@ -32,8 +32,26 @@
     {% include '<%= bundle.getName() %>:Layout:_js_header.html.twig' %}
 </head>
 <body {% block extra_body_attributes %}{% endblock %}>
+
 {% include '<%= bundle.getName() %>:Layout:_googletagmanager.html.twig' %}
+
 {% block header %}
+
+    <!--[if lte IE 8]>
+    <div class="outdated">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="outdated__title">You are using an outdated browser.</h1>
+                    <h3 class="outdated__subtitle">Some content may be lost or not displayed correctly.</h3>
+                    <p class="outdated__description">Please consider upgrading to a more recent browser.</p>
+                    <a href="http://browsehappy.com/?locale=en" target="_blank" class="outdated__link">Upgrade your browser</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <![endif]-->
+
     <!-- Header -->
     <header role="header" class="main-header">
         <section class="container">
