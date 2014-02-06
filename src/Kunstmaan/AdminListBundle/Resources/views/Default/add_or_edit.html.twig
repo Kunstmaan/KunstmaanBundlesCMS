@@ -52,7 +52,9 @@
             &nbsp;
         </div>
         <fieldset class="properties">
-            {{ form_widget(form) }}
+            {% block form_content %}
+                {{ form_widget(form) }}
+            {% endblock %}
         </fieldset>
     </form>
 {% endblock %}
