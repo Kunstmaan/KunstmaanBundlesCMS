@@ -4,15 +4,19 @@
     "devDependencies": {
         "grunt": "~0.4.1",
         "grunt-contrib-jshint": "~0.6.0",
+        "grunt-contrib-uglify": "latest",
+        "grunt-contrib-concat": "latest",
         "grunt-contrib-watch": "~0.4.4",
         "grunt-contrib-imagemin": "~0.1.4",
         "grunt-contrib-sass": "~0.4.1",
+        "grunt-combine-media-queries": "latest",
+        "grunt-contrib-cssmin": "latest",
         "grunt-notify": "~0.2.4",
         "grunt-grunticon": "~0.3.3",
-        "grunt-modernizr": "~0.4.1",
+        "grunt-modernizr": "latest",
         "grunt-svg2png": "~0.2.0",
+        "grunt-svgmin": "latest",
         "grunt-cli": "latest",
-        "bower": "latest",
-        "underscore": "latest"
+        "bower": "latest"
     }
 }
