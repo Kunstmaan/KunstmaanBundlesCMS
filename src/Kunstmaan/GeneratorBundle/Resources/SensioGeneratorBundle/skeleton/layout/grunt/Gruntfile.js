@@ -55,9 +55,9 @@ module.exports = function (grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    'web/frontend/css/style.css': resourcesPath+'public/scss/style.scss',
-                    'web/frontend/css/ie8.css': resourcesPath+'public/scss/legacy/ie/ie8.scss',
-                    'web/frontend/css/ie7.css': resourcesPath+'public/scss/legacy/ie/ie7.scss'
+                    'web/frontend/.temp/css/style.css': resourcesPath+'public/scss/style.scss',
+                    'web/frontend/.temp/css/ie8.css': resourcesPath+'public/scss/legacy/ie/ie8.scss',
+                    'web/frontend/.temp/css/ie7.css': resourcesPath+'public/scss/legacy/ie/ie7.scss'
                 }
             }
         },
