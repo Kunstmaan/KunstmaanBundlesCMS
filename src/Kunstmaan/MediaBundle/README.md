@@ -17,3 +17,12 @@ This bundle is compatible with all Symfony 2.3.* releases. More information abou
 ## Symfony 2.2
 
 If you want to use this bundle for a Symfony 2.2 release, use the 2.2 branch.
+
+## Audio
+
+If you want to use your own api key for SoundCloud, you can define this in the config.yml of your application but it works fine without it aswell.
+
+```yml
+kunstmaan_media:
+    soundcloud_api_key: YOUR_CLIENT_ID
+```
