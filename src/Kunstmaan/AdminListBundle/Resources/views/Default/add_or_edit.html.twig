@@ -4,6 +4,8 @@
 {% block content %}
     <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}"
           method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate="novalidate">
+
+        {% block main_actions %}
         <div class="main_actions btn-group">
             <button type="submit" class="btn btn-primary">{{ 'Save' | trans }}</button>
             <button type="reset"
@@ -24,9 +26,13 @@
             {% endif %}
         </div>
 
+        {% endblock %}
+
         <!--Scroll Actions-->
         <div class="main_actions top" id="main_actions_top">
             <div class="pull-right btn-group">
+
+
                 <button type="submit" class="btn btn-primary">{{ 'Save' | trans }}</button>
                 <button type="reset"
                         onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'"
