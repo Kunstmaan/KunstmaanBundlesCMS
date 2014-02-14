@@ -60,6 +60,12 @@ media:
     modal:
       title: Add Video
       save: Add
+  audio:
+    add: Add Audio
+    modal:
+          title: Add Audio
+          save: Add
+
   file:
     add: Add File
     modal:
