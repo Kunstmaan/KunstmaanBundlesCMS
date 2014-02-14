@@ -71,7 +71,8 @@ class ChooserController extends Controller
                 'folders' => $folders,
                 'fileform' => $this->createTypeFormView($mediaHandler, "file"),
                 'videoform' => $this->createTypeFormView($mediaHandler, "video"),
-                'slideform' => $this->createTypeFormView($mediaHandler, "slide")
+                'slideform' => $this->createTypeFormView($mediaHandler, "slide"),
+                'audioform' => $this->createTypeFormView($mediaHandler, "audio")
         );
     }
 

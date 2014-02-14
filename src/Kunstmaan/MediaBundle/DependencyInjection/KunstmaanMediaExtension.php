@@ -26,12 +26,17 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
             array('KunstmaanMediaBundle:Form:formWidgets.html.twig')
         ));
+        $container->setParameter('kunstmaan_media.soundcloud_api_key', $config['soundcloud_api_key']);
+
 
         $loader->load('services.yml');
         $loader->load('handlers.yml');

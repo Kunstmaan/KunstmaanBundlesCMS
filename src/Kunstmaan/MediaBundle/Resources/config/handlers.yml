@@ -1,6 +1,7 @@
 parameters:
     kunstmaan_media.media_handler.remote_slide.class: 'Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler'
     kunstmaan_media.media_handler.remote_video.class: 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler'
+    kunstmaan_media.media_handler.remote_audio.class: 'Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler'
     kunstmaan_media.media_handler.image.class: 'Kunstmaan\MediaBundle\Helper\Image\ImageHandler'
     kunstmaan_media.media_handler.file.class: 'Kunstmaan\MediaBundle\Helper\File\FileHandler'
     aviary_api_key: null
@@ -11,6 +12,11 @@ services:
             -  { name: 'kunstmaan_media.media_handler' }
     kunstmaan_media.media_handlers.remote_video:
         class: "%kunstmaan_media.media_handler.remote_video.class%"
+        tags:
+            -  { name: 'kunstmaan_media.media_handler' }
+    kunstmaan_media.media_handlers.remote_audio:
+        class: "%kunstmaan_media.media_handler.remote_audio.class%"
+        arguments: ["%kunstmaan_media.soundcloud_api_key%"]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
     kunstmaan_media.media_handlers.image:
