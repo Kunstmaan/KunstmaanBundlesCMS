@@ -26,25 +26,4 @@ class RemoteAudioHelper extends AbstractRemoteHelper implements RemoteInterface
         $this->media = $media;
         $this->media->setContentType(RemoteAudioHandler::CONTENT_TYPE);
     }
-
-    /**
-    * @return string|null
-    */
-    public function getThumbnailUrl()
-    {
-        return $this->media->getMetadataValue('thumbnail_url');
-    }
-
-    /**
-     * Set thumbnail url
-     * @param string $url
-     *
-     * @return self
-     */
-    public function setThumbnailUrl($url)
-    {
-        $this->media->setMetadataValue('thumbnail_url', $url);
-
-        return $this;
-    }
 }
