@@ -127,8 +127,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         $classPath = sprintf("%s/%s.php", $dirPath, str_replace('\\', '/', $className));
         $extensions = 'csv';
         if (class_exists("\\Kunstmaan\\AdminListBundle\\Service\\ExportService")) {
-            $exportService = new \Kunstmaan\AdminListBundle\Service\ExportService();
-            $extensions = implode('|', $exportService->getSupportedExtensions());
+            $extensions = implode('|', \Kunstmaan\AdminListBundle\Service\ExportService::getSupportedExtensions());
         }
 
         if (file_exists($classPath)) {
