@@ -12,15 +12,17 @@ class ExportService
     const EXT_CSV = 'csv';
     const EXT_EXCEL = 'xlsx';
 
-    public function getSupportedExtensions()
+    public static function getSupportedExtensions()
     {
-        $rfl = new \ReflectionClass($this);
+        $rfl = new \ReflectionClass(new self());
         $data = $rfl->getConstants();
 
         $extensions = array();
         foreach ($data as $name => $ext) {
-            $key = ucfirst(strtolower(str_replace('EXT_', '', $name)));
-            $extensions[$key] = $ext;
+            if (strpos($name, 'EXT_') !== false) {
+                $key = ucfirst(strtolower(str_replace('EXT_', '', $name)));
+                $extensions[$key] = $ext;
+            }
         }
 
         return $extensions;

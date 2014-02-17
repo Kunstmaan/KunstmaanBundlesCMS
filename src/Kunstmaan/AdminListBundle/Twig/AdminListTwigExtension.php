@@ -114,8 +114,7 @@ class AdminListTwigExtension extends \Twig_Extension
 
     public function getSupportedExtensions()
     {
-        $service = new ExportService();
-        return $service->getSupportedExtensions();
+        return ExportService::getSupportedExtensions();
     }
 
     /**
