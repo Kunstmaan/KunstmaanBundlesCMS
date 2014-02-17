@@ -41,7 +41,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
-                        <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">CSV</a></li>
+                        {% for name, ext in supported_export_extensions() %}
+                            {% set exportparams = exportparams|merge({"_format": ext}) %}
+                            <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">{{ name }}</a></li>
+                        {% endfor %}
                     </ul>
                 {% endif %}
             </div>

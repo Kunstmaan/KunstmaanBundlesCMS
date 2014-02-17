@@ -19,7 +19,8 @@
         "white-october/pagerfanta-bundle": "dev-master",
         "pagerfanta/pagerfanta": "dev-master",
         "kunstmaan/admin-bundle": "self.version",
-        "kunstmaan/utilities-bundle": "self.version"
+        "kunstmaan/utilities-bundle": "self.version",
+        "phpoffice/phpexcel": "dev-master"
     },
     "require-dev": {
         "doctrine/data-fixtures": "1.0.*@dev",
