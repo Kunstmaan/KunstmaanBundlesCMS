@@ -26,13 +26,16 @@ class ExportService
         return $extensions;
     }
 
-    public function getDownloadableResponse($adminlist, $_format, $template = null){
+    public function getDownloadableResponse($adminlist, $_format, $template = null)
+    {
         switch ($_format) {
             case self::EXT_EXCEL:
-                $response = $this->createExcelSheet($adminlist);
+                $writer = $this->createExcelSheet($adminlist);
+                $response = $this->createResponseForExcel($writer);
                 break;
             default:
-                $response = $this->createFromTemplate($adminlist, $_format, $template);
+                $content = $this->createFromTemplate($adminlist, $_format, $template);
+                $response = $this->createResponse($content, $_format);
                 break;
         }
 
@@ -47,17 +50,17 @@ class ExportService
         }
 
         $allIterator = $adminlist->getAllIterator();
-        $response = new Response();
-        $response->headers->set('Content-Type', sprintf('text/%s', $_format));
-        $response->setContent($this->renderer->render($template, array(
+        return $this->renderer->render($template, array(
             "iterator" => $allIterator,
             "adminlist" => $adminlist,
             "queryparams" => array()
-        )));
-
-        return $response;
+        ));
     }
 
+    /**
+     * @param $adminlist
+     * @return \PHPExcel_Writer_Excel2007
+     */
     public function createExcelSheet($adminlist)
     {
         $objPHPExcel = new \PHPExcel();
@@ -83,15 +86,7 @@ class ExportService
         }
 
         $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
-        $response = new StreamedResponse(
-            function () use ($objWriter) {
-                $objWriter->save('php://output');
-            }
-        );
-
-        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-
-        return $response;
+        return $objWriter;
     }
 
     private function convertToString($var)
@@ -101,6 +96,28 @@ class ExportService
         }
 
         return $var;
+    }
+
+    public function createResponse($content, $_format)
+    {
+        $response = new Response();
+        $response->headers->set('Content-Type', sprintf('text/%s', $_format));
+        $response->setContent($content);
+
+        return $response;
+    }
+
+    public function createResponseForExcel($writer)
+    {
+        $response = new StreamedResponse(
+            function () use ($writer) {
+                $writer->save('php://output');
+            }
+        );
+
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        return $response;
     }
 
     public function setRenderer($renderer)
