@@ -9,6 +9,11 @@ services:
   kunstmaan_adminlist.factory:
         class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
 
+  kunstmaan_adminlist.service.export:
+        class: Kunstmaan\AdminListBundle\Service\ExportService
+        calls:
+            -  [ setRenderer, [ "@templating" ] ]
+
   kunstmaan_adminlist.twig.extension:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
         tags:

@@ -54,25 +54,14 @@ abstract class AdminListController extends Controller
         if (!$configurator->canExport()) {
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
+
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         /* @var AdminList $adminlist */
         $adminlist = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
         $adminlist->bindRequest($request);
-        $allIterator = $adminlist->getAllIterator();
 
-        $response = new Response();
-        $filename = sprintf('entries.%s', $_format);
-        $template = sprintf("KunstmaanAdminListBundle:Default:export.%s.twig", $_format);
-        $response->headers->set('Content-Type', sprintf('text/%s', $_format));
-        $response->headers->set('Content-Disposition', sprintf('attachment; filename=%s', $filename));
-        $response->setContent($this->renderView($template, array(
-            "iterator" => $allIterator,
-            "adminlist" => $adminlist,
-            "queryparams" => array()
-        )));
-
-        return $response;
+        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminlist, $_format);
     }
 
     /**

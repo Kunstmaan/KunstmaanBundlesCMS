@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Twig;
 
+use Kunstmaan\AdminListBundle\Service\ExportService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Router;
@@ -49,7 +50,8 @@ class AdminListTwigExtension extends \Twig_Extension
     {
         return array(
             'adminlist_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
-            'my_router_params' => new \Twig_Function_Method($this, 'routerParams')
+            'my_router_params' => new \Twig_Function_Method($this, 'routerParams'),
+            'supported_export_extensions' => new \Twig_Function_Method($this, 'getSupportedExtensions')
         );
     }
 
@@ -108,6 +110,12 @@ class AdminListTwigExtension extends \Twig_Extension
         }
 
         return $routeParams;
+    }
+
+    public function getSupportedExtensions()
+    {
+        $service = new ExportService();
+        return $service->getSupportedExtensions();
     }
 
     /**
