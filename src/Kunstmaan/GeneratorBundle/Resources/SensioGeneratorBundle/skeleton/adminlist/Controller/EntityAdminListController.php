@@ -90,7 +90,7 @@ class {{ entity_class }}AdminListController extends AdminListController
      *
      * @param string $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_export")
+     * @Route("/export.{_format}", requirements={"_format" = "{{ export_extensions }}"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_export")
      * @Method({"GET", "POST"})
      * @return array
      */
