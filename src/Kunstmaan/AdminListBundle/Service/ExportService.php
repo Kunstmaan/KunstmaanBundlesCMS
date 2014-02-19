@@ -73,7 +73,7 @@ class ExportService
 
         $row = array();
         foreach ($adminlist->getExportColumns() as $column) {
-            $row[] = $this->convertToString($column->getHeader());
+            $row[] = $column->getHeader();
         }
         $objWorksheet->fromArray($row,NULL,'A'.$number++);
 
@@ -81,23 +81,22 @@ class ExportService
         foreach($allIterator as $item){
             $row = array();
             foreach ($adminlist->getExportColumns() as $column) {
-                $method = 'get'.$column->getName();
-                $row[] = $this->convertToString($item[0]->$method());
+                $data = $adminlist->getStringValue($item[0], $column->getName());
+                if ($data instanceof \Doctrine\Common\Persistence\Proxy) {
+                    if (!$this->renderer->exists($column->getTemplate())) {
+                        throw new \Exception('No export template defined for ' . get_class($data));
+                    }
+
+                    $data = $this->renderer->render($column->getTemplate(), array("object" => $data));
+                }
+
+                $row[] = $data;
             }
             $objWorksheet->fromArray($row,NULL,'A'.$number++);
         }
 
         $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
         return $objWriter;
-    }
-
-    private function convertToString($var)
-    {
-        if ($var instanceof \DateTime) {
-            return $var->format('Y-m-d H:i:s');
-        }
-
-        return $var;
     }
 
     public function createResponse($content, $_format)
