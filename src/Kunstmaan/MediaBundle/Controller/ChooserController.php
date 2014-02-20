@@ -2,17 +2,16 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
-use Kunstmaan\MediaBundle\Helper\MediaManager;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * chooser controller.
- *
+ * ChooserController.
  */
 class ChooserController extends Controller
 {
@@ -25,14 +24,21 @@ class ChooserController extends Controller
     public function chooserIndexAction()
     {
         $type = $this->getRequest()->get('type');
-        $cKEditorFuncNum = $this->getRequest()->get("CKEditorFuncNum");
+        $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
+        $linkChooser = $this->getRequest()->get('linkChooser');
 
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $firstFolder */
         $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFirstTopFolder();
 
-        return $this->redirect($this->generateUrl("KunstmaanMediaBundle_chooser_show_folder", array("folderId" => $firstFolder->getId(), "type" => $type, "CKEditorFuncNum" => $cKEditorFuncNum)));
+        $params = array(
+            'folderId'        => $firstFolder->getId(),
+            'type'            => $type,
+            'CKEditorFuncNum' => $cKEditorFuncNum,
+            'linkChooser'     => $linkChooser
+        );
+        return $this->redirect($this->generateUrl('KunstmaanMediaBundle_chooser_show_folder', $params));
     }
 
     /**
@@ -46,7 +52,8 @@ class ChooserController extends Controller
     public function chooserShowFolderAction($folderId)
     {
         $type = $this->getRequest()->get('type');
-        $cKEditorFuncNum = $this->getRequest()->get("CKEditorFuncNum");
+        $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
+        $linkChooser = $this->getRequest()->get('linkChooser');
 
         $em = $this->getDoctrine()->getManager();
         /* @var MediaManager $mediaHandler */
@@ -62,17 +69,31 @@ class ChooserController extends Controller
             $handler = $mediaHandler->getHandlerForType($type);
         }
 
+        $linkChooserLink = null;
+        if (!empty($linkChooser)) {
+            $params = array();
+            if (!empty($cKEditorFuncNum)) {
+                $params['CKEditorFuncNum'] = $cKEditorFuncNum;
+                $routeName = 'KunstmaanNodeBundle_ckselecturl';
+            } else {
+                $routeName = 'KunstmaanNodeBundle_selecturl';
+            }
+            $linkChooserLink = $this->generateUrl($routeName, $params);
+        }
+
         return array(
-                "cKEditorFuncNum" => $cKEditorFuncNum,
-                'mediamanager' => $mediaHandler,
-                'handler' => $handler,
-                'type'    => $type,
-                'folder'  => $folder,
-                'folders' => $folders,
-                'fileform' => $this->createTypeFormView($mediaHandler, "file"),
-                'videoform' => $this->createTypeFormView($mediaHandler, "video"),
-                'slideform' => $this->createTypeFormView($mediaHandler, "slide"),
-                'audioform' => $this->createTypeFormView($mediaHandler, "audio")
+            'cKEditorFuncNum' => $cKEditorFuncNum,
+            'linkChooser'     => $linkChooser,
+            'linkChooserLink' => $linkChooserLink,
+            'mediamanager'    => $mediaHandler,
+            'handler'         => $handler,
+            'type'            => $type,
+            'folder'          => $folder,
+            'folders'         => $folders,
+            'fileform'        => $this->createTypeFormView($mediaHandler, "file"),
+            'videoform'       => $this->createTypeFormView($mediaHandler, "video"),
+            'slideform'       => $this->createTypeFormView($mediaHandler, "slide"),
+            'audioform'       => $this->createTypeFormView($mediaHandler, "audio")
         );
     }
 
