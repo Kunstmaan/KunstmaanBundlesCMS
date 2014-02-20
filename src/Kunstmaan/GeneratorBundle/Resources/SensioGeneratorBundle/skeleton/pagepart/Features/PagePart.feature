@@ -184,6 +184,8 @@ Feature: {{ name }}
 
 {% endfor %}
 
-    # delete the BehatTestPage
+  # delete the BehatTestPage
+  @javascript
+  Scenario: Delete the BehatTestPage
     Given I delete page "BehatTestPage"
     Then I should see "The page is deleted"
