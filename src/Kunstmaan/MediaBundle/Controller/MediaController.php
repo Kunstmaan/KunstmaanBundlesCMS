@@ -207,17 +207,29 @@ class MediaController extends Controller
      */
     public function createModalAction($folderId, $type)
     {
-        return $this->createAndRedirect($folderId, $type, "KunstmaanMediaBundle_chooser_show_folder");
+        $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
+        $linkChooser = $this->getRequest()->get('linkChooser');
+
+        $extraParams = array();
+        if (!empty($cKEditorFuncNum)) {
+            $extraParams['CKEditorFuncNum'] = $cKEditorFuncNum;
+        }
+        if (!empty($linkChooser)) {
+            $extraParams['linkChooser'] = $linkChooser;
+        }
+
+        return $this->createAndRedirect($folderId, $type, "KunstmaanMediaBundle_chooser_show_folder", $extraParams);
     }
 
     /**
      * @param int    $folderId    The folder Id
      * @param string $type        The type
      * @param string $redirectUrl The url where we want to redirect to on success
+     * @param array  $extraParams The extra parameters that will be passed wen redirecting
      *
      * @return array
      */
-    private function createAndRedirect($folderId, $type, $redirectUrl)
+    private function createAndRedirect($folderId, $type, $redirectUrl, $extraParams = array())
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
@@ -242,7 +254,9 @@ class MediaController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', 'Media \''.$media->getName().'\' has been created!');
 
-                return new RedirectResponse($this->generateUrl($redirectUrl, array("folderId" => $folder->getId())));
+                $params = array('folderId' => $folder->getId());
+                $params = array_merge($params, $extraParams);
+                return new RedirectResponse($this->generateUrl($redirectUrl, $params));
             }
         }
 

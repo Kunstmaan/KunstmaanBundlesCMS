@@ -2,7 +2,7 @@
 
     {% form_theme fileform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-    <form action="{{ path('KunstmaanMediaBundle_media_modal_create', { 'folderId' : folder.id, 'type': 'file' }  ) }}" method="post" {{ form_enctype(fileform) }}>
+    <form action="{{ path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': 'file'})) }}" method="post" {{ form_enctype(fileform) }}>
         <div class="modal-header">
             <button class="close" data-dismiss="modal">&times;</button>
             <h3>{{ 'media.file.modal.title' | trans }}</h3>
