@@ -1,5 +1,5 @@
 <li {% if (folder.id is defined and (folder.id == child.id)) %}class="active jstree-open"{% endif %} {% if folder.id is defined and child.hasActive(folder.id) %}class="jstree-open blub"{% endif %} {%  if child.rel %}rel="{{ child.rel }}"{% else %}rel="folder"{% endif %}>
-    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', { 'folderId': child.id, 'type': type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name | trans }}</a>
+    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}">{{ child.name | trans }}</a>
     {% if child.children is defined %}
         <ul>
             {% for child in child.children %}

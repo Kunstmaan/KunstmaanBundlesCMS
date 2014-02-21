@@ -34,6 +34,14 @@
 {% endblock %}
 
 {% block body %}
+    {% set urlParams = {'type': type} %}
+    {% if cKEditorFuncNum %}
+        {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
+    {% endif %}
+    {% if linkChooser %}
+        {% set urlParams = urlParams|merge({'linkChooser': linkChooser}) %}
+    {% endif %}
+
     {% if linkChooserLink %}
         <header>
             <div class="navbar navbar-inverse navbar-fixed-top" data-dropdown="dropdown">
@@ -87,7 +95,7 @@
                     {% for child in folder.children %}
                         <tr>
                             <td>
-                                <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', { 'folderId' :child.id, 'type' : type, 'CKEditorFuncNum': cKEditorFuncNum }) }}">{{ child.name | trans }}</a>
+                                <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}">{{ child.name | trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -123,17 +131,7 @@
     </div>
 
     <!--=========Modals=========-->
-
-
-    {% set urlParams = {'folderId' : folder.id, 'type': 'file'} %}
-    {% if cKEditorFuncNum %}
-        {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
-    {% endif %}
-    {% if linkChooser %}
-        {% set urlParams = urlParams|merge({'linkChooser': linkChooser}) %}
-    {% endif %}
-    {% set actionUrl = path('KunstmaanMediaBundle_media_modal_create', urlParams) %}
-
+    {% set urlParams = urlParams|merge({'folderId': folder.id}) %}
     {% include 'KunstmaanMediaBundle:Media:addfile-modal.html.twig' %}
     {% include 'KunstmaanMediaBundle:Media:addvideo-modal.html.twig' %}
     {% include 'KunstmaanMediaBundle:Media:addslide-modal.html.twig' %}

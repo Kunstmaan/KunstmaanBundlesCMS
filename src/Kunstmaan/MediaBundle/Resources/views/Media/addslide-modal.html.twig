@@ -2,7 +2,7 @@
 
     {% form_theme slideform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-    <form action="{{ actionUrl }}" method="post" {{ form_enctype(slideform) }}>
+    <form action="{{ path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': 'slide'})) }}" method="post" {{ form_enctype(slideform) }}>
         <div class="modal-header">
             <button class="close" data-dismiss="modal">&times;</button>
             <h3>{{ 'media.slide.modal.title' | trans }}</h3>
