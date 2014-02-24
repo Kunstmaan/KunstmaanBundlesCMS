@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Response;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
@@ -30,9 +31,16 @@ class FolderController extends Controller
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
 
+        /* @var MediaManager $mediaManager */
+        $mediaManager = $this->get('kunstmaan_media.media_manager');
+
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
+
+        $adminListConfigurator = new MediaAdminListConfigurator($em, null, $mediaManager);
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminList->bindRequest($request);
 
         $sub = new Folder();
         $sub->setParent($folder);
@@ -54,6 +62,7 @@ class FolderController extends Controller
             'editform'      => $editForm->createView(),
             'folder'        => $folder,
             'folders'       => $folders,
+            'adminlist'     => $adminList
         );
     }
 

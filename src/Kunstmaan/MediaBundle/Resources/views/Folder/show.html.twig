@@ -1,6 +1,13 @@
-{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+
+{% block extra_actions_header %}{% endblock %}
 
 {% block content %}
+
+    <div class="btn-group" style="position:absolute;right:20px;margin-top:-90px;">
+        <button type="button" class="btn active" style="font-size:14px;"><i class="icon-th-large"></i></button>
+        <button type="button" class="btn" style="font-size:14px;"><i class="icon-list"></i></button>
+    </div>
 
     <!--=========Actions=========-->
     <!--Main-->
