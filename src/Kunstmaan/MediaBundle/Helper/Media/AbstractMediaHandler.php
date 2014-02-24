@@ -68,6 +68,13 @@ abstract class AbstractMediaHandler
     public abstract function removeMedia(Media $media);
 
     /**
+     * @param mixed $data
+     *
+     * @return Media
+     */
+    public abstract function createNew($data);
+
+    /**
      * {@inheritDoc}
      */
     public function getShowTemplate(Media $media)
