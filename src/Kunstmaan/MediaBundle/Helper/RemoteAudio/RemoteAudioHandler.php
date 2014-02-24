@@ -136,8 +136,14 @@ class RemoteAudioHandler extends AbstractMediaHandler
      */
     public function updateMedia(Media $media)
     {
+    }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    public function createNew($data)
+    {
+        return null;
     }
 
     /**
