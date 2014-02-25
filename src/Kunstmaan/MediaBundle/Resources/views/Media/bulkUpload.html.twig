@@ -13,17 +13,91 @@
 {% endblock %}
 
 {% block content %}
-    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-
-    <form action="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal properties">
-        <div class="prop_wrp">
-            {{ form_widget(form) }}
-            <div class="input_prop">
-                <div class="btn_group">
-                    <button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' | trans }}</button>
-                    <button class="btn btn-primary" type="submit">{{ 'media.bulkupload.upload' | trans }}</button>
-                </div>
+    <div id="file-list"><p>{{ 'media.bulkupload.not_available' | trans }}</p></div>
+    <br />
+    <div id="bulk-upload-container">
+        <div class="btn_group" id="bulk-button-wrapper">
+            <button id="pick-files" class="btn btn-primary">{{ 'media.bulkupload.select_files' | trans }}</button>
+            <button id="upload-files" class="btn disabled" disabled>{{ 'media.bulkupload.upload' | trans }}</button>
+            <button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) }}'" type="reset">{{ 'form.cancel' | trans }}</button>
+        </div>
+        <div id="completed-button-wrapper" style="display:none;">
+            <p>{{ 'media.bulkupload.upload_finished' | trans }}</p>
+            <div class="btn_group">
+                <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.upload_more' | trans }}</a>
+                <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.back_to_folder' | trans }}</a>
             </div>
         </div>
-    </form>
+    </div>
+
+    <script src="{{ asset('bundles/kunstmaanadmin/js/plupload/plupload.full.min.js') }}"></script>
+    <script type="text/javascript">
+        var uploader = new plupload.Uploader({
+            runtimes : 'html5,flash,silverlight',
+            browse_button : 'pick-files', // you can pass in id...
+            container: document.getElementById('bulk-upload-container'),
+            url : '{{ path('KunstmaanMediaBundle_media_bulk_upload_submit', { 'folderId' : folder.id }) }}',
+            flash_swf_url : '{{ asset('bundles/kunstmaanadmin/js/plupload/Moxie.swf') }}',
+            silverlight_xap_url : '{{ asset('bundles/kunstmaanadmin/js/plupload/Moxie.xap') }}',
+
+            processing_id: null,
+
+            filters : {
+                max_file_size : '2mb'
+            },
+
+            init: {
+                PostInit: function() {
+                    document.getElementById('file-list').innerHTML = '';
+                    document.getElementById('upload-files').onclick = function() {
+                        uploader.start();
+                        return false;
+                    };
+
+                },
+
+                FilesAdded: function(up, files) {
+                    plupload.each(files, function(file) {
+                        document.getElementById('file-list').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+                    });
+
+                    $('#upload-files').removeClass('disabled');
+                    $('#upload-files').prop('disabled', false);
+                    $('#upload-files').addClass('btn-primary');
+                    $('#pick-files').removeClass('btn-primary');
+                },
+
+                UploadProgress: function(up, file) {
+                    document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+                },
+
+                Error: function(up, err) {
+                    document.getElementById(up.processing_id).getElementsByTagName('b')[0].innerHTML = '<span>ERROR: ' + err.message + "</span>";
+                },
+
+                FileUploaded: function(up, file, res) {
+                    var obj = null;
+                    if ($.browser.msie && $.browser.version <= 8) {
+                        obj = eval('(' + jsonString + ')');
+                    } else {
+                        obj = JSON.parse(jsonString);
+                    }
+                    if (obj.error) {
+                        document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>ERROR: ' + obj.error.message + "</span>";
+                    }
+                },
+
+                UploadComplete: function(up, files) {
+                    $('#completed-button-wrapper').show();
+                },
+
+                BeforeUpload: function(up, file) {
+                    up.processing_id = file.id;
+                    $('#bulk-button-wrapper').hide();
+                }
+            }
+        });
+
+        uploader.init();
+    </script>
 {% endblock %}
