@@ -77,6 +77,13 @@ class Filter
         return $this->filterDefinition['type'];
     }
 
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->filterDefinition['options'];
+    }
 
     /**
      * Apply the filter
