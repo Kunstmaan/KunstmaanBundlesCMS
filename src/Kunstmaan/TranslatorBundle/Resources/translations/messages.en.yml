@@ -3,6 +3,10 @@ translator:
         title: Translations
         inline_edit_title: Enter translation
         emptytext: Not translated
+        invalid_translation: Invalid translation!
+        fatal_error_occurred: A fatal error occured while saving the translation. Please try again later.
+    translations: Translations
+    translation_not_unique: The translation should be unique
 
 settings:
     translator:
@@ -11,7 +15,7 @@ settings:
         refresh_live: Refresh live
         import_translations: Import
         import_translations_forced: Import forced
-        not_live_warning: "Translations on the live website aren't up to date, hit 'Refresh live' to update to the latest translations."
+        not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
         choose_language: "Choose a language"
-        succesful_added: "Translation succesful created"
-        succesful_edited: "Translation succesful edited"
+        succesful_added: "Translation succesfully created"
+        succesful_edited: "Translation succesfully edited"

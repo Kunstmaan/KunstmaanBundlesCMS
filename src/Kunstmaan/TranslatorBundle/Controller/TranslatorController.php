@@ -9,6 +9,8 @@ use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,66 +71,29 @@ class TranslatorController extends AdminListController
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
         $configurator = $this->getAdminListConfigurator();
-        /*
-                $translation = new Translation();
-                $translation->setDomain($domain);
-                $translation->setKeyword($keyword);
-                $translation->setLocale($locale);
-        */
+        $translator = $this->get('translator');
+
+        $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
         $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        foreach ($locales as $locale) {
+            $translation->addText($locale, '');
+        }
 
-        $form = $this->createFormBuilder()
-          ->add(
-            'domain',
-            'text',
-            array(
-              'constraints' => array(
-                new NotBlank()
-              ),
-            )
-          )
-          ->add(
-            'keyword',
-            'text',
-            array(
-              'constraints' => array(
-                new NotBlank()
-              ),
-            )
-          )
-          ->add(
-            'locale',
-            'choice',
-            array(
-              'constraints' => array(
-                new NotBlank()
-              ),
-              'choices' => array_combine($locales, $locales),
-              'empty_value' => '',
-            )
-          )
-          ->add(
-            'text',
-            'textarea',
-            array(
-              'constraints' => array(
-                new NotBlank()
-              ),
-            )
-          )->getForm();
-
+        $form = $this->createForm(new TranslationAdminType(), $translation);
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
+
+            // Fetch form data
+            $data = $form->getData();
+            if (!$em->getRepository('KunstmaanTranslatorBundle:Translation')->isUnique($data)) {
+                $error = new FormError($translator->trans('translator.translation_not_unique'));
+                $form->get('domain')->addError($error);
+                $form->get('keyword')->addError($error);
+            }
+
             if ($form->isValid()) {
                 // Create translation
-                $data = $form->getData();
-
-                $translation = new Translation();
-                $translation->setDomain($data['domain']);
-                $translation->setKeyword($data['keyword']);
-                $translation->setLocale($data['locale']);
-                $translation->setText($data['text']);
-                $em->persist($translation);
+                $em->getRepository('KunstmaanTranslatorBundle:Translation')->createTranslations($data);
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add(
@@ -232,9 +197,17 @@ class TranslatorController extends AdminListController
      * @Route("/{id}/delete", requirements={"id" = "[a-z0-9\:\.\-\_]+"}, name="KunstmaanTranslatorBundle_settings_translations_delete")
      * @Method({"GET", "POST"})
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::doDeleteAction($this->getAdminListConfigurator(), $id);
+        /* @var $em EntityManager */
+        $em = $this->getDoctrine()->getManager();
+
+        $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
+        if ($request->isMethod('POST')) {
+            $em->getRepository('KunstmaanTranslatorBundle:Translation')->removeTranslations($id);
+        }
+
+        return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
     }
 
     public function setAdminListConfigurator($adminListConfigurator)
@@ -264,25 +237,29 @@ class TranslatorController extends AdminListController
     public function inlineEditAction(Request $request)
     {
         $values = $request->request->all();
-        $translationId = isset($values['pk']) ? (int) $values['pk'] : 0;
+        $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
-
-        if ($translationId !== 0) {
-            // Find existing translation
-            $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->find($translationId);
-
-            if (is_null($translation)) {
-                return new Response('Invalid translation!', 500);
-            }
-        } else {
-            // Create new translation
-            $translation = new Translation();
-            $translation->setDomain($values['domain']);
-            $translation->setKeyword($values['keyword']);
-            $translation->setLocale($values['locale']);
-        }
+        /**
+         * @var Translator $translator
+         */
+        $translator = $this->get('translator');
 
         try {
+            if ($id !== 0) {
+                // Find existing translation
+                $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->find($id);
+
+                if (is_null($translation)) {
+                    return new Response($translator->trans('translator.translator.invalid_translation'), 500);
+                }
+            } else {
+                // Create new translation
+                $translation = new Translation();
+                $translation->setDomain($values['domain']);
+                $translation->setKeyword($values['keyword']);
+                $translation->setLocale($values['locale']);
+                $translation->setTranslationId($values['translationId']);
+            }
             $translation->setText($values['value']);
             $em->persist($translation);
             $em->flush();
@@ -292,7 +269,7 @@ class TranslatorController extends AdminListController
               'uid' => $translation->getId()
             ), 200);
         } catch (\Exception $e) {
-            return new Response('A fatal error occured!', 500);
+            return new Response($translator->trans('translator.translator.fatal_error_occurred'), 500);
         }
     }
 }

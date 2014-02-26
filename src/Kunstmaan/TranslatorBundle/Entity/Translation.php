@@ -6,7 +6,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationRepository")
- * @ORM\Table(name="kuma_translation", uniqueConstraints={@ORM\UniqueConstraint(name="keyword_per_locale", columns={"keyword", "locale", "domain"})})
+ * @ORM\Table(
+ *      name="kuma_translation",
+ *      uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="keyword_per_locale", columns={"keyword", "locale", "domain"}),
+ *          @ORM\UniqueConstraint(name="translation_id_per_locale", columns={"translation_id", "locale"}),
+ *      }
+ * )
  * @ORM\HasLifecycleCallbacks
  */
 class Translation
@@ -18,9 +24,14 @@ class Translation
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="integer", name="translation_id", nullable=true)
+     * @Assert\NotBlank()
+     */
+    protected $translationId;
 
     /**
      * The translations keyword to use in your template or call from the translator
@@ -30,7 +41,7 @@ class Translation
      */
     protected $keyword;
 
-     /**
+    /**
      * The translations keyword to use in your template or call from the translator
      *
      * @ORM\Column(type="string")
@@ -63,14 +74,14 @@ class Translation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_at")
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="updated_at")
      */
     protected $updatedAt;
 
@@ -85,34 +96,41 @@ class Translation
     protected $flag = null;
 
     /**
-    * @ORM\PrePersist
-    */
+     * @ORM\PrePersist
+     */
     public function prePersist()
     {
-       $this->createdAt = new \DateTime();
-       $this->updatedAt = new \DateTime();
-       $this->flag = self::FLAG_NEW;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $this->flag = self::FLAG_NEW;
 
-       return $this->id;
-     }
+        return $this->id;
+    }
 
-   /**
-    * @ORM\PreUpdate
-    */
+    /**
+     * @ORM\PreUpdate
+     */
     public function preUpdate()
     {
-       $this->updatedAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
 
-       if ($this->flag == null) {
-           $this->flag = self::FLAG_UPDATED;
-       }
-   }
+        if ($this->flag == null) {
+            $this->flag = self::FLAG_UPDATED;
+        }
+    }
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @param string $id
+     * @return Translation
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -120,11 +138,18 @@ class Translation
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getKeyword()
     {
         return $this->keyword;
     }
 
+    /**
+     * @param string $keyword
+     * @return Translation
+     */
     public function setKeyword($keyword)
     {
         $this->keyword = $keyword;
@@ -132,11 +157,18 @@ class Translation
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getLocale()
     {
         return $this->locale;
     }
 
+    /**
+     * @param string $locale
+     * @return Translation
+     */
     public function setLocale($locale)
     {
         $this->locale = $locale;
@@ -144,11 +176,18 @@ class Translation
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getFile()
     {
         return $this->file;
     }
 
+    /**
+     * @param string $file
+     * @return Translation
+     */
     public function setFile($file)
     {
         $this->file = $file;
@@ -156,11 +195,18 @@ class Translation
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getText()
     {
         return $this->text;
     }
 
+    /**
+     * @param string $text
+     * @return Translation
+     */
     public function setText($text)
     {
         $this->text = $text;
@@ -168,11 +214,18 @@ class Translation
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDomain()
     {
         return $this->domain;
     }
 
+    /**
+     * @param string $domain
+     * @return Translation
+     */
     public function setDomain($domain)
     {
         $this->domain = $domain;
@@ -180,11 +233,18 @@ class Translation
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param \DateTime $createdAt
+     * @return Translation
+     */
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
@@ -192,11 +252,18 @@ class Translation
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @param \DateTime $updatedAt
+     * @return Translation
+     */
     public function setUpdatedAt(\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
@@ -204,15 +271,41 @@ class Translation
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getFlag()
     {
         return $this->flag;
     }
 
+    /**
+     * @param string $flag
+     * @return Translation
+     */
     public function setFlag($flag)
     {
         $this->flag = $flag;
 
         return $this;
+    }
+
+    /**
+     * @param string $translationId
+     * @return Translation
+     */
+    public function setTranslationId($translationId)
+    {
+        $this->translationId = $translationId;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslationId()
+    {
+        return $this->translationId;
     }
 }

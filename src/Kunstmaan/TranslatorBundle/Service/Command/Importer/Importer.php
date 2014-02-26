@@ -38,10 +38,9 @@ class Importer
         foreach ($messageCatalogue->all($domain) as $keyword => $text) {
             if ($this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force)) {
                 $importedTranslations++;
+                $this->translationRepository->flush();
             }
         }
-
-        $this->translationRepository->flush();
 
         return $importedTranslations;
     }

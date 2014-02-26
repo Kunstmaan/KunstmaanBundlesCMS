@@ -1,6 +1,9 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Repository;
 
+use Kunstmaan\TranslatorBundle\Entity\Translation;
+use Kunstmaan\TranslatorBundle\Model\TextWithLocale;
+
 /**
  * Translator Repository class
  */
@@ -13,11 +16,11 @@ class TranslationRepository extends AbstractTranslatorRepository
     public function getAllDomainsByLocale()
     {
         return $this->createQueryBuilder('t')
-            ->select('t.locale, t.domain name')
-            ->addGroupBy('t.locale')
-            ->addGroupBy('t.domain')
-            ->getQuery()
-            ->getArrayResult();
+          ->select('t.locale, t.domain name')
+          ->addGroupBy('t.locale')
+          ->addGroupBy('t.domain')
+          ->getQuery()
+          ->getArrayResult();
     }
 
     public function getLastChangedTranslationDate()
@@ -32,9 +35,9 @@ SELECT
     MAX(compare) as newestDate,
     flag
 FROM (
-    SELECT createdAt as compare, flag FROM %s
+    SELECT created_at as compare, flag FROM %s
     UNION ALL
-    SELECT updatedAt as compare, flag FROM %s) CACHE_CHECK
+    SELECT updated_at as compare, flag FROM %s) CACHE_CHECK
 WHERE
     flag IN ('{$flagUpdated}','{$flagNew}')
     GROUP BY flag
@@ -57,10 +60,10 @@ EOQ;
     public function resetAllFlags()
     {
         return $this->createQueryBuilder('t')
-            ->update('KunstmaanTranslatorBundle:Translation', 't')
-            ->set('t.flag', "NULL")
-            ->getQuery()
-            ->execute();
+          ->update('KunstmaanTranslatorBundle:Translation', 't')
+          ->set('t.flag', "NULL")
+          ->getQuery()
+          ->execute();
 
     }
 
@@ -69,8 +72,8 @@ EOQ;
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
         $qb
-            ->select('t')
-            ->from('KunstmaanTranslatorBundle:Translation', 't');
+          ->select('t')
+          ->from('KunstmaanTranslatorBundle:Translation', 't');
 
         if (count($locales) > 0) {
             $qb->andWhere($qb->expr()->in('t.locale', $locales));
@@ -81,8 +84,8 @@ EOQ;
         }
 
         $result = $qb
-            ->getQuery()
-            ->getResult();
+          ->getQuery()
+          ->getResult();
 
         return $result;
     }
@@ -99,5 +102,78 @@ EOQ;
     public function persist($entity)
     {
         return $this->getEntityManager()->persist($entity);
+    }
+
+    public function isUnique(\Kunstmaan\TranslatorBundle\Model\Translation $translationModel)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $count = $qb->select('COUNT(t.id)')
+          ->where('t.domain = :domain')
+          ->andWhere('t.keyword = :keyword')
+          ->setParameter('domain', $translationModel->getDomain())
+          ->setParameter('keyword', $translationModel->getKeyword())
+          ->getQuery()
+          ->getSingleScalarResult();
+
+        return $count == 0;
+    }
+
+    public function createTranslations(\Kunstmaan\TranslatorBundle\Model\Translation $translationModel)
+    {
+        $this->getEntityManager()->beginTransaction();
+        try {
+            // Fetch new translation ID
+            $translationId = $this->getUniqueTranslationId();
+            /**
+             * @var TextWithLocale $textWithLocale
+             */
+            foreach ($translationModel->getTexts() as $textWithLocale) {
+                $text = $textWithLocale->getText();
+                if (empty($text)) {
+                    continue;
+                }
+
+                $translation = new Translation();
+                $translation
+                  ->setDomain($translationModel->getDomain())
+                  ->setKeyword($translationModel->getKeyword())
+                  ->setTranslationId($translationId)
+                  ->setLocale($textWithLocale->getLocale())
+                  ->setText($textWithLocale->getText());
+                $this->getEntityManager()->persist($translation);
+            }
+            $this->getEntityManager()->commit();
+        } catch (\Exception $e) {
+            $this->getEntityManager()->rollback();
+        }
+    }
+
+    /**
+     * Removes all translations with the given translation id
+     *
+     * @param string $translationId
+     * @return mixed
+     */
+    public function removeTranslations($translationId)
+    {
+        return $this->createQueryBuilder('t')
+          ->delete()
+          ->where('t.translationId = :translationId')
+          ->setParameter('translationId', $translationId)
+          ->getQuery()
+          ->execute();
+    }
+
+    public function getUniqueTranslationId()
+    {
+        $qb = $this->createQueryBuilder('t');
+        $newId = $qb->select('MAX(t.translationId)+1')
+          ->getQuery()
+          ->getSingleScalarResult();
+        if (is_null($newId)) {
+            $newId = 1;
+        }
+
+        return $newId;
     }
 }

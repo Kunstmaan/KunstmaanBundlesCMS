@@ -8,5 +8,5 @@ if (!is_file($loaderFile = __DIR__.'/../../vendor/autoload.php')) {
 $loader = require $loaderFile;
 
 # Needed to load entities from the cli
-AnnotationRegistry::registerFile(__DIR__."/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php");
-AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", __DIR__."/../../vendor/symfony/symfony/src");
+AnnotationRegistry::registerFile(__DIR__.'/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+AnnotationRegistry::registerAutoloadNamespace('Symfony\Component\Validator\Constraint', __DIR__.'/../../vendor/symfony/symfony/src');

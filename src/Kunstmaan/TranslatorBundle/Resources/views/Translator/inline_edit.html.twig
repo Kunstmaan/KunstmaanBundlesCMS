@@ -1,10 +1,10 @@
 {% set uid = attribute(row, columnName ~ '_id') %}
 <a href="#" class="editable editable-pre-wrapped"
    data-type="textarea"
-   data-name="{{ row.id }}"
    data-url="{{ path('KunstmaanTranslatorBundle_settings_translations_inline_edit') }}"
    data-title="{{ 'translator.translator.inline_edit_title'|trans }}"
    data-uid="{{ uid }}"
+   data-tid="{{ row.id }}"
    data-locale="{{ columnName }}"
    data-domain="{{ row.domain }}"
    data-keyword="{{ row.keyword }}">{{ object }}</a>
