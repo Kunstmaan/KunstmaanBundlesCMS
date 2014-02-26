@@ -9,9 +9,13 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminLis
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaDeleteItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaEditItemAction;
+use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaSelectItemAction;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;
+use Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
+use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -115,8 +119,12 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildItemActions()
     {
-        $this->addItemAction(new MediaEditItemAction());
-        $this->addItemAction(new MediaDeleteItemAction($this->request->getRequestUri()));
+        if ($this->request->get('_route') == 'KunstmaanMediaBundle_chooser_show_folder') {
+            $this->addItemAction(new MediaSelectItemAction());
+        } else {
+            $this->addItemAction(new MediaEditItemAction());
+            $this->addItemAction(new MediaDeleteItemAction($this->request->getRequestUri()));
+        }
     }
 
     /**
@@ -148,5 +156,33 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
             ->setParameter('folder',  $this->folder->getId())
             ->andWhere('b.deleted = 0')
             ->orderBy('b.updatedAt', 'DESC');
+
+        if ($this->request->get('_route') == 'KunstmaanMediaBundle_chooser_show_folder') {
+            $type = $this->request->query->get('type');
+            if ($type) {
+                switch ($type) {
+                    case 'file':
+                        $queryBuilder->andWhere('b.location = :location')
+                            ->setParameter('location', 'local');
+                        break;
+                    case 'image':
+                        $queryBuilder->andWhere('b.contentType LIKE :ctype')
+                            ->setParameter('ctype', '%image%');
+                        break;
+                    case RemoteAudioHandler::TYPE:
+                        $queryBuilder->andWhere('b.contentType = :ctype')
+                            ->setParameter('ctype', RemoteAudioHandler::CONTENT_TYPE);
+                        break;
+                    case RemoteSlideHandler::TYPE:
+                        $queryBuilder->andWhere('b.contentType = :ctype')
+                            ->setParameter('ctype', RemoteSlideHandler::CONTENT_TYPE);
+                        break;
+                    case RemoteVideoHandler::TYPE:
+                        $queryBuilder->andWhere('b.contentType = :ctype')
+                            ->setParameter('ctype', RemoteVideoHandler::CONTENT_TYPE);
+                        break;
+                }
+            }
+        }
     }
 }

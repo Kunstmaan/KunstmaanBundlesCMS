@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
@@ -51,9 +52,21 @@ class ChooserController extends Controller
      */
     public function chooserShowFolderAction($folderId)
     {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
         $type = $this->getRequest()->get('type');
         $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
         $linkChooser = $this->getRequest()->get('linkChooser');
+
+        // Check when user switches between thumb -and list view
+        $viewMode = $request->query->get('viewMode');
+        if ($viewMode && $viewMode == 'list-view') {
+            $session->set('media-list-view', true);
+        } elseif ($viewMode && $viewMode == 'thumb-view') {
+            $session->remove('media-list-view');
+        }
 
         $em = $this->getDoctrine()->getManager();
         /* @var MediaManager $mediaHandler */
@@ -68,6 +81,13 @@ class ChooserController extends Controller
         if ($type) {
             $handler = $mediaHandler->getHandlerForType($type);
         }
+
+        /* @var MediaManager $mediaManager */
+        $mediaManager = $this->get('kunstmaan_media.media_manager');
+
+        $adminListConfigurator = new MediaAdminListConfigurator($em, null, $mediaManager, $folder, $request);
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminList->bindRequest($request);
 
         $linkChooserLink = null;
         if (!empty($linkChooser)) {
@@ -90,6 +110,7 @@ class ChooserController extends Controller
             'type'            => $type,
             'folder'          => $folder,
             'folders'         => $folders,
+            'adminlist'       => $adminList,
             'fileform'        => $this->createTypeFormView($mediaHandler, "file"),
             'videoform'       => $this->createTypeFormView($mediaHandler, "video"),
             'slideform'       => $this->createTypeFormView($mediaHandler, "slide"),
