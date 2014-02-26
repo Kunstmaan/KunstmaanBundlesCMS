@@ -73,6 +73,7 @@ class MediaController extends Controller
     public function deleteAction($mediaId)
     {
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
 
         /* @var Media $media */
         $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
@@ -83,7 +84,13 @@ class MediaController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', 'Entry \''.$medianame.'\' has been deleted!');
 
-        return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId())));
+        // If the redirect url is passed via the url we use it
+        $redirectUrl = $request->query->get('redirectUrl');
+        if (empty($redirectUrl)) {
+            $redirectUrl = $this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId()));
+        }
+
+        return new RedirectResponse($redirectUrl);
     }
 
     /**
