@@ -35,7 +35,7 @@
                         <input type="hidden" name="filter_uniquefilterid[]" class="uniquefilterid" value="{{value.uniqueid}}" />
                         <span class="filteroptions">
                             {% set namesuffix %}_{{value.uniqueid}}{%endset%}
-                            {% include value.type.template with {'filtertype': value.type, 'data': value.data, 'nameprefix':'filter_', 'namesuffix': namesuffix} %}
+                            {% include value.type.template with {'filtertype': value.type, 'data': value.data, 'options': value.options, 'nameprefix': 'filter_', 'namesuffix': namesuffix} %}
                         </span>
                         <button class="remove_filter" type="button" onclick="return removeThisFilter(this)"><i class="icon-remove-sign"></i></button>
                     </li>
@@ -69,7 +69,7 @@
 
     {% for columnname, value in filter.filterdefinitions %}
     <div id="filterdummyoptions_{{columnname|replace({'.': '_'})}}" class="hidden">
-        {% include value.type.template with {'filtertype': value.type, 'nameprefix': '', 'namesuffix': ''} %}
+        {% include value.type.template with {'filtertype': value.type, 'options': value.options, 'nameprefix': '', 'namesuffix': ''} %}
     </div>
     {% endfor %}
 

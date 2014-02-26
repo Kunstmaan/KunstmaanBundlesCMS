@@ -21,12 +21,12 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     /**
      * @var Connection
      */
-    private $connection = null;
+    protected $connection = null;
 
     /**
      * @var QueryBuilder
      */
-    private $queryBuilder = null;
+    protected $queryBuilder = null;
 
     /**
      * @var Pagerfanta
