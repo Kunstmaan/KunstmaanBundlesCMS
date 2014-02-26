@@ -17,7 +17,9 @@ class CacheValidatorTest extends BaseTestCase
 
         $this->languages = array('nl', 'fr', 'de', 'es');
         $this->cacheDir = sprintf('%s/translations/', $this->getContainer()->getParameter('kernel.cache_dir'));
-        if (!is_dir($this->cacheDir)) { mkdir($this->cacheDir, true);}
+        if (!is_dir($this->cacheDir)) {
+            mkdir($this->cacheDir, 0777, true);
+        }
     }
 
     /**
