@@ -22,3 +22,38 @@
     </div>
 
 {% endblock %}
+
+{% block extracss %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block extrajavascript %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.fn.editable.defaults.mode = 'inline';
+            $('.editable').each(function() {
+                $(this).editable({
+                    showbuttons: 'bottom',
+                    pk: function() {
+                        return $(this).data("uid");
+                    },
+                    emptytext: '{{ 'translator.translator.emptytext'|trans }}',
+                    params: function(params) {
+                        params.locale = $(this).data('locale');
+                        params.domain = $(this).data('domain');
+                        params.keyword = $(this).data('keyword');
+                        params.translationId = $(this).data('tid');
+
+                        return params;
+                    },
+                    success: function(response, newValue) {
+                        if (response.success) {
+                            $(this).data("uid", response.uid);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

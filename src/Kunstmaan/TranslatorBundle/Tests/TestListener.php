@@ -33,6 +33,10 @@ class TestListener implements \PHPUnit_Framework_TestListener
     {
     }
 
+    public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
+    {
+    }
+
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
         if (strpos($suite->getName(), 'KunstmaanTranslationBundle') === false) {

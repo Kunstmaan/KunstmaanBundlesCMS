@@ -22,6 +22,7 @@ class TranslationGroupManager
         $translationGroup = $this->newGroupInstance();
         $translationGroup->setKeyword($keyword);
         $translationGroup->setDomain($domain);
+        $translationGroup->setId($this->translationRepository->getUniqueTranslationId());
 
         return $translationGroup;
     }
@@ -63,6 +64,7 @@ class TranslationGroupManager
         $translation->setKeyword($translationGroup->getKeyword());
         $translation->setCreatedAt(new \DateTime());
         $translation->setUpdatedAt(new \DateTime());
+        $translation->setTranslationId($translationGroup->getId());
 
         $this->translationRepository->persist($translation);
 
@@ -87,6 +89,11 @@ class TranslationGroupManager
         $translationGroup = new TranslationGroup;
         $translationGroup->setDomain($domain);
         $translationGroup->setKeyword($keyword);
+        if (empty($translations)) {
+            $translationGroup->setId($this->translationRepository->getUniqueTranslationId());
+        } else {
+            $translationGroup->setId($translations[0]->getTranslationId());
+        }
         $translationGroup->setTranslations($translations);
 
         return $translationGroup;
@@ -96,13 +103,13 @@ class TranslationGroupManager
     {
         $domain = $this->translationRepository->findOneBy(array('name' => $domain));
 
-        if (! $translationDomain instanceof TranslationDomain) {
+        if (! $domain instanceof TranslationDomain) {
             return array();
         }
 
         $translationGroups = new ArrayCollection;
 
-        $translations =  $this->translationRepository->findBy(array('domain' => $translationDomain));
+        $translations =  $this->translationRepository->findBy(array('domain' => $domain));
 
         foreach ($translations as $translation) {
             $key = $translation->getKeyword();

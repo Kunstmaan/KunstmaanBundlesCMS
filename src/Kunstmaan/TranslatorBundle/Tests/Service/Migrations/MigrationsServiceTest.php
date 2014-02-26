@@ -6,7 +6,8 @@ use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 class MigrationsServiceTest extends BaseTestCase
 {
 
-    private $translationDomainRepository;
+    private $translationRepository;
+    private $migrationsService;
 
     public function setUp()
     {

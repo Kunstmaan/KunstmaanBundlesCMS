@@ -32,7 +32,7 @@
     
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
+        "phpunit/phpunit": "~3.7",
         "nelmio/alice": "dev-master",
         "doctrine/doctrine-fixtures-bundle": ">=2.1, <2.3"
     },

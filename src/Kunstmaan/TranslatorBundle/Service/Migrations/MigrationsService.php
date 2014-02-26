@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Migrations;
 
+use Doctrine\ORM\EntityManager;
+
 class MigrationsService
 {
 
@@ -11,6 +13,9 @@ class MigrationsService
      */
     private $translationRepository;
 
+    /**
+     * @var EntityManager
+     */
     private $entityManager;
 
     public function getDiffSqlArray()
@@ -57,12 +62,12 @@ class MigrationsService
 
             foreach ($fieldNames as $fieldName) {
                 $value = $translation->{'get'.$fieldName}();
-
+                $columnName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getColumnName($fieldName);
                 if ($value instanceof \DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }
 
-                $updateValues[] = $this->entityManager->getConnection()->quoteIdentifier($fieldName) . ' = ' . $this->entityManager->getConnection()->quote($value);
+                $updateValues[] = $this->entityManager->getConnection()->quoteIdentifier($columnName) . ' = ' . $this->entityManager->getConnection()->quote($value);
             }
 
             foreach ($uniqueKeys as $uniqueKey) {
@@ -124,7 +129,8 @@ class MigrationsService
         }
 
         foreach ($fieldNames as $key => $fieldName) {
-            $fieldNames[$key] = $this->entityManager->getConnection()->quoteIdentifier($fieldName);
+            $columnName = $this->entityManager->getClassMetadata($entityClassName)->getColumnName($fieldName);
+            $fieldNames[$key] = $this->entityManager->getConnection()->quoteIdentifier($columnName);
         }
 
         $sql = sprintf('INSERT INTO %s (%s) VALUES %s', $tableName, implode(",", $fieldNames), implode(', ', $values));

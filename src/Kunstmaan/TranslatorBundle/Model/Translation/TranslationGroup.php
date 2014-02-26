@@ -7,6 +7,11 @@ namespace Kunstmaan\TranslatorBundle\Model\Translation;
 class TranslationGroup
 {
     /**
+     * Translation ID
+     */
+    private $id;
+
+    /**
      * All translations for a specific key (Kunstmaan\TranslatorBundle\Model\Translation\Translation)
      *
      * @var Doctrine\Common\Collections\ArrayCollection
@@ -69,6 +74,7 @@ class TranslationGroup
 
     public function addTranslation(Translation $translation)
     {
+        $translation->setTranslationId($this->getId());
         $this->translations->add($translation);
     }
 
@@ -79,7 +85,26 @@ class TranslationGroup
 
     public function setTranslations($translations)
     {
+        foreach ($translations as $translation) {
+            $translation->setTranslationId($this->getId());
+        }
         $this->translations = $translations;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getKeyword()

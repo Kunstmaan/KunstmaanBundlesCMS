@@ -1,6 +1,12 @@
 translator:
     translator:
         title: Vertalingen
+        inline_edit_title: Wijzig vertaling
+        emptytext: Niet vertaald
+        invalid_translation: Ongeldige vertaling
+        fatal_error_occurred: Er is een fatale fout opgetreden tijdens het bewaren van de vertaling. Probeer later opnieuw.
+    translations: Vertalingen
+    translation_not_unique: De vertaling moet uniek zijn
 
 settings:
     translator:

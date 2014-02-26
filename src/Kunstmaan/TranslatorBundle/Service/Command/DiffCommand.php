@@ -9,8 +9,6 @@ use Symfony\Component\Console\Input\InputInterface,
 class DiffCommand extends GenerateCommand
 {
 
-    private $migrationsService;
-
     protected function configure()
     {
         parent::configure();
