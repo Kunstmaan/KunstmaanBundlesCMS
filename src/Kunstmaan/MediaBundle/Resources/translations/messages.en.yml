@@ -49,6 +49,11 @@ media:
   bulkupload:
     upload: Upload
     bulkupload: Bulk upload
+    select_files: Select files
+    upload_more: Upload more files
+    back_to_folder: Back to folder
+    upload_finished: The file upload has finished.
+    not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
     
   slide:
     add: Add Slide

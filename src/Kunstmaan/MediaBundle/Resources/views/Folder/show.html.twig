@@ -13,10 +13,13 @@
     <!--Main-->
     <div class="main_actions btn-group">
         {% block actions %}
-            {% for addaction in mediamanager.getFolderAddActions() %}
-                <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
-            {% endfor %}
-            <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn">{{ 'media.bulkupload.bulkupload' |trans }}</a>
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Add media <i class="icon-caret-down"></i></a>
+            <ul class="dropdown-menu">
+                {% for addaction in mediamanager.getFolderAddActions() %}
+                    <li><a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}">{{ addaction.name |trans }}</a></li>
+                {% endfor %}
+                <li><a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}">{{ 'media.bulkupload.bulkupload' |trans }}</a></li>
+            </ul>
             <button class="btn" data-target="#addsub-modal" data-toggle="modal" type="button">{{ 'media.folder.addsub.action' |trans }}</button>
             <button class="btn" data-target="#delete-modal" data-toggle="modal" type="button">{{ 'media.folder.delete.action' |trans }}</button>
         {% endblock %}
