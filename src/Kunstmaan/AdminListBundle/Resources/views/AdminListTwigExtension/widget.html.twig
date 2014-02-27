@@ -55,10 +55,7 @@
                             {% include itemAction.template with {'row': item, 'item': item, 'action': itemAction} %}
                         {% else %}
                             <a href="{{ path(itemAction.getUrlFor(item)["path"], itemAction.getUrlFor(item)[("params")] ) }}">
-                                {% if itemAction.getIconFor(item) is not null %}
-                                    <i class="icon-{{ itemAction.getIconFor(item) }}"></i>
-                                {% endif %}
-                                {{ itemAction.getLabelFor(item) }}
+                                {% if itemAction.getIconFor(item) is not null %}<i class="icon-{{ itemAction.getIconFor(item) }}"></i>{% endif %}{{ itemAction.getLabelFor(item) }}
                             </a>
                         {% endif %}
                         {% endfor %}
