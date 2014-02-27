@@ -4,9 +4,6 @@
 </select>
 
 <select name="{{nameprefix}}value{{namesuffix}}[]" size="4" multiple>
-{% if data.value is defined %}
-    {{ dump(data.value) }}
-{% endif %}
 {% for key,option in options %}
     <option value="{{ key }}"{% if data.value is defined and key in data.value %} selected{% endif %}>{{ option }}</option>
 {% endfor %}
