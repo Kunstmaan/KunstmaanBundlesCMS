@@ -1,0 +1,3 @@
+{% set mediaHandler = mediamanager.getHandler(item) %}
+{% set thumbnailurl =  mediaHandler.getImageUrl(item, app.request.basePath, 210, 150) %}
+<a onclick="handleOK({imgpath: '{{ mediaHandler.getImageUrl(item, app.request.basePath, 210, 150) }}', path:'{{ item.url }}', title:'{{ item.name|escape('js') }}', id:'{{ item.id }}'});return false;" href="#"><i class="icon-chevron-right"></i>Select</a>

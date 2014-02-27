@@ -1,4 +1,8 @@
-{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+
+{% block extra_actions_header %}{% endblock %}
+{% block top_menu %}{% endblock %}
+{% block footer %}{% endblock %}
 
 {% block extrajavascript %}
     {{ parent() }}
@@ -33,7 +37,36 @@
     class="media_popup_temp"
 {% endblock %}
 
-{% block body %}
+{% block sidebar %}
+    {% set urlParams = {'type': type} %}
+    {% if cKEditorFuncNum %}
+        {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
+    {% endif %}
+    {% if linkChooser %}
+        {% set urlParams = urlParams|merge({'linkChooser': linkChooser}) %}
+    {% endif %}
+
+    <aside class="sidebar" {% if linkChooserLink %}style="margin-top:40px;"{% endif %}>
+        <h2>Media Chooser</h2>
+        <div id="tree" class="tree">
+            {% for topfolder in folders %}
+                <ul>
+                    {% for child in topfolder.children %}
+                        {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    </aside>
+{% endblock %}
+
+{% block header %}
+    <div {% if linkChooserLink %}style="margin-top:40px;padding-bottom:1px;"{% endif %}>
+        <h1>{{ folder.name | trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
     {% set urlParams = {'type': type} %}
     {% if cKEditorFuncNum %}
         {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
@@ -64,71 +97,67 @@
         </header>
     {% endif %}
 
-    <div class="container-fluid" {% if linkChooserLink %}style="margin-top:40px;"{% endif %}>
-        <aside class="sidebar">
-            <h2>Media Chooser</h2>
-            <div id="tree" class="tree">
-                {% for topfolder in folders %}
-                    <ul>
-                        {% for child in topfolder.children %}
-                            {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
-                        {% endfor %}
-                    </ul>
-                {% endfor %}
-            </div>
-        </aside>
-        <div class="content">
-            <h1>{{ folder.name | trans }}</h1>
+    <div class="main_actions btn-group">
+        <div class="btn-group main_actions" style="margin-left:15px;">
+            <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'thumb-view'})) }}" class="btn {% if not app.session.get('media-list-view') %}active{% endif %}" style="font-size:14px;"><i class="icon-th-large"></i></a>
+            <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'list-view'})) }}" class="btn {% if app.session.get('media-list-view') %}active{% endif %}" style="font-size:14px;"><i class="icon-list"></i></a>
+        </div>
 
-            <div class="main_actions btn-group">
-                <div class="main_actions btn-group">
-                    {% for addaction in mediamanager.getFolderAddActions() %}
+        <div class="main_actions btn-group">
+            <a class="btn dropdown-toggle btn-primary last-child" data-toggle="dropdown" href="#">Add media <i class="icon-caret-down"></i></a>
+            <ul class="dropdown-menu">
+                {% for addaction in mediamanager.getFolderAddActions() %}
+                    <li>
                         <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}"
                            data-toggle="modal" data-target="#add{{ addaction.type }}-modal"
-                           class="btn {% if loop.first %}btn-primary{% endif %}">{{ addaction.name |trans }}</a>
-                    {% endfor %}
-                </div>
-            </div>
-            <section class="map-list">
-                <table class="table">
-                    <tbody>
-                    {% for child in folder.children %}
-                        <tr>
-                            <td>
-                                <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}">{{ child.name | trans }}</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </section>
-            <section class="cont-images--chooser">
-                <ul class="thumbnails" id="file-list">
-                    {% for media in folder.media %}
-                        {% if not handler or handler.canHandle(media) %}
-                            <li>
-                                {% set mediaHandler = mediamanager.getHandler(media) %}
-                                {% set thumbnailurl =  mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) %}
-                                <a onclick="handleOK({imgpath: '{{ mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) }}', path:'{{ media.url }}', title:'{{ media.name|escape('js') }}', id:'{{ media.id }}'});return false;"
-                                   class="thumbnail" href="#">
-                                    {% if thumbnailurl %}
-                                        <img src="{{ mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) }}"
-                                             alt="{{ media.name }}"/>
-                                    {% else %}
-                                        <div style="font-size: 135px;text-align:center">
-                                            <i class="icon-file"></i>
-                                        </div>
-                                    {% endif %}
-                                    <p class="img_name">{{ media.name }}</p>
-                                </a>
-                                <span class="helper">Click to select</span>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
+                           >{{ addaction.name |trans }}</a>
+                    </li>
+                {% endfor %}
                 </ul>
-            </section>
         </div>
     </div>
+    <section class="map-list">
+        <table class="table">
+            <tbody>
+            {% for child in folder.children %}
+                <tr>
+                    <td>
+                        <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}">{{ child.name | trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <section class="cont-images--chooser">
+        {% if app.session.get('media-list-view') %}
+            {{ parent() }}
+        {% else %}
+            <ul class="thumbnails" id="file-list">
+                {% for media in folder.media %}
+                    {% if not handler or handler.canHandle(media) %}
+                        <li>
+                            {% set mediaHandler = mediamanager.getHandler(media) %}
+                            {% set thumbnailurl =  mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) %}
+                            <a onclick="handleOK({imgpath: '{{ mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) }}', path:'{{ media.url }}', title:'{{ media.name|escape('js') }}', id:'{{ media.id }}'});return false;"
+                               class="thumbnail" href="#">
+                                {% if thumbnailurl %}
+                                    <img src="{{ mediaHandler.getImageUrl(media, app.request.basePath, 210, 150) }}"
+                                         alt="{{ media.name }}"/>
+                                {% else %}
+                                    <div style="font-size: 135px;text-align:center">
+                                        <i class="icon-file"></i>
+                                    </div>
+                                {% endif %}
+                                <p class="img_name">{{ media.name }}</p>
+                            </a>
+                            <span class="helper">Click to select</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
 
     <!--=========Modals=========-->
     {% set urlParams = urlParams|merge({'folderId': folder.id}) %}

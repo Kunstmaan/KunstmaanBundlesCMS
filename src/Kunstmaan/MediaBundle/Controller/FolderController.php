@@ -2,8 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-
+use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\FolderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * FolderController.
@@ -29,10 +29,26 @@ class FolderController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+        $session = $request->getSession();
+
+        // Check when user switches between thumb -and list view
+        $viewMode = $request->query->get('viewMode');
+        if ($viewMode && $viewMode == 'list-view') {
+            $session->set('media-list-view', true);
+        } elseif ($viewMode && $viewMode == 'thumb-view') {
+            $session->remove('media-list-view');
+        }
+
+        /* @var MediaManager $mediaManager */
+        $mediaManager = $this->get('kunstmaan_media.media_manager');
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
+
+        $adminListConfigurator = new MediaAdminListConfigurator($em, null, $mediaManager, $folder, $request);
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminList->bindRequest($request);
 
         $sub = new Folder();
         $sub->setParent($folder);
@@ -54,6 +70,7 @@ class FolderController extends Controller
             'editform'      => $editForm->createView(),
             'folder'        => $folder,
             'folders'       => $folders,
+            'adminlist'     => $adminList
         );
     }
 

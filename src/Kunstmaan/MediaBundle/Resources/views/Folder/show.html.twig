@@ -1,6 +1,12 @@
-{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+
+{% block extra_actions_header %}{% endblock %}
 
 {% block content %}
+    <div class="btn-group" style="position:absolute;right:20px;margin-top:-90px;">
+        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': folder.id, viewMode: 'thumb-view'}) }}" class="btn {% if not app.session.get('media-list-view') %}active{% endif %}" style="font-size:14px;"><i class="icon-th-large"></i></a>
+        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': folder.id, viewMode: 'list-view'}) }}" class="btn {% if app.session.get('media-list-view') %}active{% endif %}" style="font-size:14px;"><i class="icon-list"></i></a>
+    </div>
 
     <!--=========Actions=========-->
     <!--Main-->
@@ -18,7 +24,7 @@
         {% endblock %}
     </div>
 
-	<!--Scroll-->
+    <!--Scroll-->
     <div id="main_actions_top" class="main_actions top">
         <div class="pull-right btn-group">
             {{ block('actions') }}
@@ -54,42 +60,44 @@
                     </tbody>
                 </table>
             </section>
-            <section id="dropprogressinfo">
-
-            </section>
+            <section id="dropprogressinfo"></section>
             <section>
-            	<ul class="thumbnails" id="file-list">
-                {% for media in folder.media %}
-                    {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
-                    <li>
-                        <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
-                            {% set handler = mediamanager.getHandler(media) %}
-                            {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
-                            {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
-                            {% if imageurl %}
-                                <img src="{{ imageurl}}" alt="{{ media.name }}" />
-                            {% else %}
-                                <div style="font-size: 135px;text-align:center">
-                                    <i class="icon-file"></i>
-                                </div>
-                           {% endif %}
-                            <p class="img_name">{{ media.name }}</p>
-                        </a>
-                        <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
-                     	<span class="helper">Click to edit</span>
-                     </li>
+                {% if app.session.get('media-list-view') %}
+                    {{ parent() }}
                 {% else %}
-            		<li class="no_item">
-            			{{ 'media.media.no' |trans }}
-            		</li>
-                {% endfor %}
-                </ul>
+                    <ul class="thumbnails" id="file-list">
+                        {% for media in folder.media %}
+                            {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
+                            <li>
+                                <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
+                                    {% set handler = mediamanager.getHandler(media) %}
+                                    {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
+                                    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                                    {% if imageurl %}
+                                        <img src="{{ imageurl}}" alt="{{ media.name }}" />
+                                    {% else %}
+                                        <div style="font-size: 135px;text-align:center">
+                                            <i class="icon-file"></i>
+                                        </div>
+                                   {% endif %}
+                                    <p class="img_name">{{ media.name }}</p>
+                                </a>
+                                <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
+                                <span class="helper">Click to edit</span>
+                             </li>
+                        {% else %}
+                            <li class="no_item">
+                                {{ 'media.media.no' |trans }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            initDel();
+                        });
+                    </script>
+                {% endif %}
             </section>
-            <script type="text/javascript">
-            	$(document).ready(function () {
-            		initDel();
-            	});
-            </script>
        </div>
        <script>
        $(function(){
@@ -171,7 +179,7 @@
 
            {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-       		<form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}#properties" method="post" {{ form_enctype(editform) }}>
+           <form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}#properties" method="post" {{ form_enctype(editform) }}>
                 <div class="prop_wrp">
                     {{ form_widget(editform) }}
                     <div class="input_prop">

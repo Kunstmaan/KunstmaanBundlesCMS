@@ -22,6 +22,7 @@
         "gedmo/doctrine-extensions": "*",
         "sensio/framework-extra-bundle": "*",
         "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/adminlist-bundle": "self.version",
         "kunstmaan/utilities-bundle": "self.version"
     },
     "minimum-stability": "dev",
