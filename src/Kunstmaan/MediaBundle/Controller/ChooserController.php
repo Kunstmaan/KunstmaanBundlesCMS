@@ -24,26 +24,35 @@ class ChooserController extends Controller
      */
     public function chooserIndexAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
+
         $type = $this->getRequest()->get('type');
         $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
         $linkChooser = $this->getRequest()->get('linkChooser');
 
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var Folder $firstFolder */
-        $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFirstTopFolder();
+        // Go to the last visited folder
+        if ($session->get('last-media-folder')) {
+            $folderId = $session->get('last-media-folder');
+        } else {
+            // Redirect to the first top folder
+            /* @var Folder $firstFolder */
+            $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFirstTopFolder();
+            $folderId = $firstFolder->getId();
+        }
 
         $params = array(
-            'folderId'        => $firstFolder->getId(),
+            'folderId'        => $folderId,
             'type'            => $type,
             'CKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser'     => $linkChooser
         );
+
         return $this->redirect($this->generateUrl('KunstmaanMediaBundle_chooser_show_folder', $params));
     }
 
     /**
-     * @param int $folderId The filder id
+     * @param int $folderId The folder id
      *
      * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_chooser_show_folder")
      * @Template()
@@ -60,6 +69,9 @@ class ChooserController extends Controller
         $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
         $linkChooser = $this->getRequest()->get('linkChooser');
 
+        // Remember the last visited folder in the session
+        $session->set('last-media-folder', $folderId);
+
         // Check when user switches between thumb -and list view
         $viewMode = $request->query->get('viewMode');
         if ($viewMode && $viewMode == 'list-view') {
@@ -68,7 +80,6 @@ class ChooserController extends Controller
             $session->remove('media-list-view');
         }
 
-        $em = $this->getDoctrine()->getManager();
         /* @var MediaManager $mediaHandler */
         $mediaHandler = $this->get('kunstmaan_media.media_manager');
 
