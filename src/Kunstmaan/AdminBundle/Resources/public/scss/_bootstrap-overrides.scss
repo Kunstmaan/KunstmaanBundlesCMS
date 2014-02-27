@@ -104,7 +104,9 @@ input[type="checkbox"] + span, input[type="radio"] + span {
         background: #d14836;
     }
 }
-
+.btn-group > .btn ~ .btn {
+  margin-left: -1px;
+}
 
 //NEW DROPDOWN STYLE
 .dropdown-menu{
