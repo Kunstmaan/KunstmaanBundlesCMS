@@ -63,7 +63,13 @@
             <section id="dropprogressinfo"></section>
             <section>
                 {% if app.session.get('media-list-view') %}
-                    {{ parent() }}
+                    {% if adminlist.count > 0 %}
+                        {{ parent() }}
+                    {% else %}
+                        <p class="no_item">
+                            {{ 'media.media.no' |trans }}
+                        </p>
+                    {% endif %}
                 {% else %}
                     <ul class="thumbnails" id="file-list">
                         {% for media in folder.media %}
