@@ -32,6 +32,15 @@
 				<p class="title"></p>
 			{% endif %}
 		</div>
+
+        {% if attr['info_media'] is defined %}
+            &nbsp; <strong title="{{ attr['info_media'] }}" id="{{ id }}_info_media" style="cursor:help;">?</strong>
+            <script>
+                jQuery(document).ready(function(){
+                    $("#{{ id }}_info_media").tooltip();
+                });
+            </script>
+        {% endif %}
 	</div>
 
 	<script type="text/javascript">
