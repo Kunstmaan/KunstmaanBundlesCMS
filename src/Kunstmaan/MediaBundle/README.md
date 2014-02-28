@@ -26,3 +26,20 @@ If you want to use your own api key for SoundCloud, you can define this in the c
 kunstmaan_media:
     soundcloud_api_key: YOUR_CLIENT_ID
 ```
+
+## Tooltips
+
+If you want to add a nifty tooltip to your media chooser in the admin, you can just add the following to your form type:
+
+```php
+$builder
+    ->add(
+      'media',
+      'media',
+      array(
+          'pattern' => 'KunstmaanMediaBundle_chooser',
+          'mediatype' => 'image',
+          'attr' => array('info_text' => 'YOUR TOOLTIP TEXT'),
+      )
+    );
+```
