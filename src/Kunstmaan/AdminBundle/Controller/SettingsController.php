@@ -24,7 +24,7 @@ class SettingsController extends BaseSettingsController
      */
     public function indexAction()
     {
-        $this->checkPermission();
+        $this->checkPermission('ROLE_ADMIN');
 
         return array();
     }
