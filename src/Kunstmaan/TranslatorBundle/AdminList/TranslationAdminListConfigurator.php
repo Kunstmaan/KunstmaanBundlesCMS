@@ -42,7 +42,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
         $this->addFilter('keyword', new StringFilterType('keyword'), 'keyword');
         $this->addFilter('locale', new EnumerationFilterType('locale'), 'locale', array_combine(
             $this->locales, $this->locales
-          ));
+        ));
     }
 
     /**
@@ -54,14 +54,32 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
         $this->addField('keyword', 'Keyword', true);
     }
 
+    /**
+     * @return bool
+     */
     public function canAdd()
     {
         return true;
     }
 
+    /**
+     * @param object|array $item
+     *
+     * @return bool
+     */
     public function canEdit($item)
     {
         return false;
+    }
+
+    /**
+     * @param object|array $item
+     *
+     * @return bool
+     */
+    public function canEditInline($item)
+    {
+        return true;
     }
 
     /**

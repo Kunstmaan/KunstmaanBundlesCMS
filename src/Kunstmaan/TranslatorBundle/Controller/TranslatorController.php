@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -237,6 +238,12 @@ class TranslatorController extends AdminListController
     public function inlineEditAction(Request $request)
     {
         $values = $request->request->all();
+
+        $adminListConfigurator = $this->getAdminListConfigurator();
+        if (!$adminListConfigurator->canEditInline($values)) {
+            throw new AccessDeniedHttpException("Not allowed to edit this translation");
+        }
+
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
         /**
