@@ -96,14 +96,18 @@ class Translation
     /**
      * @param string $locale
      * @param string $text
+     * @param int|null $id
      * @return Translation
      */
-    public function addText($locale, $text)
+    public function addText($locale, $text, $id = null)
     {
         $textWithLocale = new TextWithLocale();
         $textWithLocale
           ->setLocale($locale)
           ->setText($text);
+        if (!is_null($id)) {
+            $textWithLocale->setId($id);
+        }
         $this->texts->add($textWithLocale);
 
         return $this;

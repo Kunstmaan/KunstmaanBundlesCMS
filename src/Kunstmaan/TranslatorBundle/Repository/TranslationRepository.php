@@ -148,6 +148,41 @@ EOQ;
         }
     }
 
+    public function updateTranslations(\Kunstmaan\TranslatorBundle\Model\Translation $translationModel, $translationId)
+    {
+        $this->getEntityManager()->beginTransaction();
+        try {
+            /**
+             * @var TextWithLocale $textWithLocale
+             */
+            foreach ($translationModel->getTexts() as $textWithLocale) {
+                if ($textWithLocale->getId()) {
+                    $translation = $this->find($textWithLocale->getId());
+                    $translation->setLocale($textWithLocale->getLocale())
+                        ->setText($textWithLocale->getText());
+                    $this->getEntityManager()->persist($translation);
+                } else {
+                    $text = $textWithLocale->getText();
+                    if (empty($text)) {
+                        continue;
+                    }
+
+                    $translation = new Translation();
+                    $translation
+                        ->setDomain($translationModel->getDomain())
+                        ->setKeyword($translationModel->getKeyword())
+                        ->setTranslationId($translationId)
+                        ->setLocale($textWithLocale->getLocale())
+                        ->setText($textWithLocale->getText());
+                    $this->getEntityManager()->persist($translation);
+                }
+            }
+            $this->getEntityManager()->commit();
+        } catch (\Exception $e) {
+            $this->getEntityManager()->rollback();
+        }
+    }
+
     /**
      * Removes all translations with the given translation id
      *
