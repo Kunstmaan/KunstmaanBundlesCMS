@@ -10,8 +10,21 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * UserType defines the form used for {@link User}
  */
-class UserType extends AbstractType
+class UserType extends AbstractType implements RoleDependentUserFormInterface
 {
+
+    private $canEditAllFields = false;
+
+    /**
+     * Setter to check if we can display all form fields
+     *
+     * @param $canEditAllFields
+     * @return bool
+     */
+    public function setCanEditAllFields($canEditAllFields)
+    {
+        $this->canEditAllFields = (bool)$canEditAllFields;
+    }
 
     /**
      * {@inheritdoc}
@@ -31,24 +44,27 @@ class UserType extends AbstractType
                     )
                     )
                 )
-                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'))
-                ->add('enabled', 'checkbox', array('required' => false, 'label' => 'settings.user.enabled'))
-                ->add('groups', 'entity', array(
-                        'label' => 'settings.user.roles',
-                        'class' => 'KunstmaanAdminBundle:Group',
-                        'query_builder' => function(EntityRepository $er) {
-                            return $er->createQueryBuilder('g')
-                                ->orderBy('g.name', 'ASC');
-                        },
-                        'multiple' => true,
-                        'expanded' => false,
-                        'required' => false,
-                        'attr' => array(
-                            'class' => 'chzn-select',
-                            'data-placeholder' => 'Choose the permission groups...'
+                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'));
+
+        if ($this->canEditAllFields) {
+            $builder->add('enabled', 'checkbox', array('required' => false, 'label' => 'settings.user.enabled'))
+                    ->add('groups', 'entity', array(
+                            'label' => 'settings.user.roles',
+                            'class' => 'KunstmaanAdminBundle:Group',
+                            'query_builder' => function(EntityRepository $er) {
+                                return $er->createQueryBuilder('g')
+                                    ->orderBy('g.name', 'ASC');
+                            },
+                            'multiple' => true,
+                            'expanded' => false,
+                            'required' => false,
+                            'attr' => array(
+                                'class' => 'chzn-select',
+                                'data-placeholder' => 'Choose the permission groups...'
+                            )
                         )
-                    )
-                );
+                    );
+        }
     }
 
     /**

@@ -13,9 +13,9 @@ class BaseSettingsController extends Controller
      *
      * @throws AccessDeniedException
      */
-    protected function checkPermission()
+    protected function checkPermission($roleToCheck = 'ROLE_SUPER_ADMIN')
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.context')->isGranted($roleToCheck)) {
             throw new AccessDeniedException();
         }
     }

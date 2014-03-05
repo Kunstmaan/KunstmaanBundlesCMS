@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Util\UserManipulator;
+use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -104,7 +105,7 @@ class UsersController extends BaseSettingsController
      */
     public function editUserAction($id)
     {
-        $this->checkPermission();
+        $this->checkPermission('ROLE_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -113,6 +114,11 @@ class UsersController extends BaseSettingsController
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
+
+        if ($formType instanceof RoleDependentUserFormInterface) {
+            // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
+            $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
+        }
 
         $form = $this->createForm($formType, $user, array('password_required' => false));
 
@@ -129,7 +135,7 @@ class UsersController extends BaseSettingsController
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'User \''.$user->getUsername().'\' has been edited!');
 
-                return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users'));
+                return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_settings_users_edit', array('id' => $id)));
             }
         }
 
