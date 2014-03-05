@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Dashboard Tabs
+   ========================================================================== */
+
+.db-tabs {
+    @include clearfix;
+    margin: 40px 0 0;
+    list-style: none;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    background-color: $bg-light;
+    border: 1px solid $hr-color;
+    border-bottom: none;
+}
+.db-tabs__item {
+    -webkit-box-flex: 1;
+       -moz-box-flex: 1;
+        -webkit-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+
+    @include single_transition(all, .3s, ease-in-out);
+    text-align: center;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-bottom-color: $hr-color;
+    &:first-child {
+        margin-left: -1px; // to avoid double border
+    }
+    &:last-child {
+        margin-right: -2px; // to avoid double border + make up for first-child margin
+    }
+    &:hover, &:focus {
+        background-color: #fff;
+        border: 1px solid $hr-color;
+        margin-top: -10px;
+    }
+}
+.db-tabs__item--active {
+    background-color: #fff;
+    border: 1px solid $hr-color;
+    border-bottom-color: #fff;
+    margin-top: -10px;
+}
+.db-tabs__controller {
+    display: block;
+}
+
+.db-tabs__item__title {
+    color: $text-color-lighter;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+.db-tabs__item__number {
+    color: $text-color;
+    font-size: 26px;
+    font-family: $custom-font;
+}
+.db-tabs__item__subtitle {
+    color: $text-color;
+    font-size: 12px;
+}

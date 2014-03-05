@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Dashboard General
+   ========================================================================== */
+
+.db-content {
+    padding: 20px 0;
+    border: 1px solid $hr-color;
+    border-width: 0 1px 1px;
+    margin-bottom: 40px;
+    @include clearfix;
+}
+
+.db-col {
+    float: left;
+    margin: 0 20px;
+}
+.db-col--5 {
+    width: calc( ( 100% - 140px ) / 12 * 5);
+}
+.db-col--4 {
+    width: calc( ( 100% - 140px ) / 12 * 4);
+}
+.db-col--3 {
+    width: calc( ( 100% - 140px ) / 12 * 3);
+}
