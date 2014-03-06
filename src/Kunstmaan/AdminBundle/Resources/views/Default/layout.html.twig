@@ -60,11 +60,11 @@
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
+    <!-- polyfill for Dashboard Chart in IE8 -->
     <!--[if lte IE 8]>
-        <script src="@KunstmaanAdminBundle/Resources/public/js/libs/excanvas.js"></script>
+        <script src="{{ asset('bundles/kunstmaanadmin/js/libs/excanvas.js') }}"></script>
     <![endif]-->
 </head>
-
 
 
 <body {% block extraparamsinbody %}{% endblock %}>

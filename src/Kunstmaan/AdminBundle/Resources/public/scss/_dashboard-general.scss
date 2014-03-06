@@ -29,6 +29,28 @@
     width: 25%;
 }
 
-#canvas {
-    width: 100%;
+.dashboard-chart {
+    margin-bottom: 20px;
+}
+
+@media(max-width: 1023px) {
+    .db-col--5 {
+        width: 70%;
+    }
+    .db-col--3 {
+        width: 30%;
+    }
+    .db-col--4 {
+        width: 100%;
+        @include clearfix;
+        .db-col__inner {
+            width: 50%;
+            float: left;
+            padding-left: 20px;
+            &:first-child {
+                padding-left: 0;
+                padding-right: 20px;
+            }
+        }
+    }
 }

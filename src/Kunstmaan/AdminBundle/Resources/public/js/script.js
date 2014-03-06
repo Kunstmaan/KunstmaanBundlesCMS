@@ -35,7 +35,14 @@ initChart = function() {
 
     var chartWidth = $('#js-dashboard-chart').parent().width();
     $('#js-dashboard-chart').attr('width', chartWidth );
-    var myLine = new Chart(document.getElementById("js-dashboard-chart").getContext("2d")).Bar(barChartData);
+
+    // only use animation in browsers who are not IE8
+    // in IE8 the animation is too slow and jerky
+    if (!$('html').hasClass('ie8')) {
+        var myLine = new Chart(document.getElementById("js-dashboard-chart").getContext("2d")).Bar(barChartData);
+    } else {
+        var myLine = new Chart(document.getElementById("js-dashboard-chart").getContext("2d")).Bar(barChartData, {animation:false});
+    }
 };
 
 //JS-tree

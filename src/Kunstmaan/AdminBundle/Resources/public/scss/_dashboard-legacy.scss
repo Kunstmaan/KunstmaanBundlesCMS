@@ -29,4 +29,17 @@
         }
     }
 
+    // chart: polyfill sets a fixed height with overflow hidden which cuts off the chart
+    .dashboard-chart {
+        > div {
+            height: auto !important;
+            overflow: visible !important;
+        }
+    }
+
+    // Newrelic iframes: not supported in IE8
+    .newrelic-iframes {
+        display: none;
+    }
+
 }

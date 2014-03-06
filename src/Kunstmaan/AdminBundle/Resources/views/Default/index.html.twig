@@ -64,7 +64,7 @@
                     </h2>
 
                     <!-- CHART -->
-                    <canvas id="js-dashboard-chart" height="290"></canvas>
+                    <canvas id="js-dashboard-chart" class="dashboard-chart" height="290"></canvas>
                     <!-- end CHART -->
                 </div>
             </div>
@@ -103,7 +103,7 @@
 
             <!-- COL -->
             <div class="db-col db-col--4">
-                <div class="db-block">
+                <div class="db-block db-col__inner">
                     <h2 class="db-block__title">Top Referrals</h2>
                     <ul class="db-block__list">
                         <li class="db-block__list__item">
@@ -121,7 +121,7 @@
                     </ul>
                 </div>
 
-                <div class="db-block">
+                <div class="db-block db-col__inner">
                     <h2 class="db-block__title">Top Search Terms</h2>
                     <!-- if there's no data available -->
                     <p class="db-block__text">No data available for Top Search Terms</p>
@@ -147,7 +147,9 @@
         </section>
         <!-- end TAB CONTENT -->
 
-        {{ dashboardConfiguration.content | raw }}
+        <div class="newrelic-iframes">
+            {{ dashboardConfiguration.content | raw }}
+        </div>
 
     {% else %}
         <div class="page-header">
