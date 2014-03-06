@@ -526,7 +526,14 @@ function updateOptions(el, options){
         }
     });
     $(el).parent(".filterline").find(".filteroptions").find("input:not(.uniquefilterid), select").each(function(){
-        $(this).attr("name", $(this).attr("name") + "_" + uniqueid);
+        var name = $(this).attr("name");
+        if (name.indexOf("[]", name.length - 2) !== -1) {
+            name = name.substr(0, name.length - 2);
+            $(this).attr("name", name + "_" + uniqueid + "[]");
+        } else {
+            $(this).attr("name", $(this).attr("name") + "_" + uniqueid);
+        }
+        console.log($(this).attr("name"));
         if($(this).hasClass("datepick")){
             $(this).datepicker(options);
         }

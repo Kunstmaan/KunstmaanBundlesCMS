@@ -1508,11 +1508,12 @@ h1, h2, h3, h4, h5, h6{
 
 
 //TEMPORARY FIX POPUP
+//UPDATE by Kevin on 05/03/14 - media chooser popup : file list didn't scroll
 .media_popup_temp{
-    overflow: hidden;
+//    overflow: hidden;
     height: 100%;
     .container-fluid{
-        height: 100%;
+//        height: 100%;
         .sidebar{
             padding-top: 0px;
             h2{
