@@ -8,20 +8,25 @@
     border-width: 0 1px 1px;
     margin-bottom: 40px;
     @include clearfix;
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 }
 
 .db-col {
     float: left;
-    margin: 0 20px;
+    padding: 0 20px;
 }
 .db-col--5 {
-    width: calc( ( 100% - 140px ) / 12 * 5);
+    width: 42%;
 }
 .db-col--4 {
-    width: calc( ( 100% - 140px ) / 12 * 4);
+    width: 33%;
 }
 .db-col--3 {
-    width: calc( ( 100% - 140px ) / 12 * 3);
+    width: 25%;
 }
 
 #canvas {

@@ -6,24 +6,18 @@
     @include clearfix;
     margin: 40px 0 0;
     list-style: none;
-
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-
     background-color: $bg-light;
     border: 1px solid $hr-color;
     border-bottom: none;
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 }
 .db-tabs__item {
-    -webkit-box-flex: 1;
-       -moz-box-flex: 1;
-        -webkit-flex: 1;
-            -ms-flex: 1;
-                flex: 1;
-
+    width: 20%;
+    float: left;
     @include single_transition(all, .3s, ease-in-out);
     text-align: center;
     padding: 10px;
@@ -31,14 +25,19 @@
     border-bottom-color: $hr-color;
     &:first-child {
         margin-left: -1px; // to avoid double border
+        width: -webkit-calc(20% + 1px);
+        width: calc(20% + 1px);
     }
     &:last-child {
-        margin-right: -2px; // to avoid double border + make up for first-child margin
+        margin-right: -1px; // to avoid double border
+        width: -webkit-calc(20% + 1px);
+        width: calc(20% + 1px);
     }
     &:hover, &:focus {
         background-color: #fff;
         border: 1px solid $hr-color;
         margin-top: -10px;
+        padding-bottom: 20px;
     }
 }
 .db-tabs__item--active {
@@ -46,6 +45,7 @@
     border: 1px solid $hr-color;
     border-bottom-color: #fff;
     margin-top: -10px;
+    padding-bottom: 20px;
 }
 .db-tabs__controller {
     display: block;

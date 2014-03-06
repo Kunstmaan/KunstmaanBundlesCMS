@@ -55,12 +55,14 @@
     {% javascripts
         '@KunstmaanAdminBundle/Resources/public/js/libs/modernizr.custom.2.6.2.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-1.9.0.min.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/chart.min.js'
-        '@KunstmaanAdminBundle/Resources/public/js/script.js'
         output='generated-js/scripts.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    <!--[if lte IE 8]>
+        <script src="@KunstmaanAdminBundle/Resources/public/js/libs/excanvas.js"></script>
+    <![endif]-->
 </head>
 
 
@@ -209,6 +211,7 @@
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-timepicker.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/iphone-style-checkboxes.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-colorpicker.js'
+        '@KunstmaanAdminBundle/Resources/public/js/libs/chart.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/script.js'
         output='generated-js/scripts_bottom.js'
     %}
