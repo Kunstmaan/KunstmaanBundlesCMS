@@ -58,7 +58,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->generateAdminLists($parameters);
         if ($this->isMultiLangEnvironment()) {
             $this->generateDefaultLocaleFallbackCode($parameters);
-            $this->addLanguageChooserConfig();
         }
         $this->generateEntities($parameters);
         $this->generateFormTypes($parameters);
@@ -122,28 +121,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->renderSingleFile($sourceDir, $targetDir, 'services.yml', $parameters, true);
 
         $this->assistant->writeLine('Generating code for defaultlocale fallback : <info>OK</info>');
-    }
-
-    /**
-     * Update the global config.yml
-     */
-    public function addLanguageChooserConfig()
-    {
-        $params = Yaml::parse($this->rootDir.'/app/config/parameters.yml');
-
-        if (is_array($params) || array_key_exists('parameters', $params) && is_array($params['parameters']) && array_key_exists('requiredlocales', $params['parameters']))  {
-            $languages = explode('|', $params['parameters']['requiredlocales']);
-        } else {
-            $languages = array('en', 'nl', 'fr');
-        }
-
-        $file = $this->rootDir.'/app/config/config.yml';
-        $ymlData = "\n\nkunstmaan_language_chooser:";
-        $ymlData .= "\n    autodetectlanguage: false";
-        $ymlData .= "\n    showlanguagechooser: true";
-        $ymlData .= "\n    languagechoosertemplate: ".$this->bundle->getName().":Default:language-chooser.html.twig";
-        $ymlData .= "\n    languagechooserlocales: [".implode(', ', $languages)."]\n";
-        file_put_contents($file, $ymlData, FILE_APPEND);
     }
 
     /**
