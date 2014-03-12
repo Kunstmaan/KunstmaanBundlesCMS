@@ -68,6 +68,11 @@ class UsersController extends BaseSettingsController
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
 
+        if ($formType instanceof RoleDependentUserFormInterface) {
+            // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
+            $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
+        }
+        
         $form = $this->createForm($formType, $user, array('password_required' => true, 'validation_groups' => array('Registration')));
 
         if ('POST' == $request->getMethod()) {
