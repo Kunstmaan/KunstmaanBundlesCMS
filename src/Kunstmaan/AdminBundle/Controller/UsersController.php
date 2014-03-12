@@ -105,7 +105,13 @@ class UsersController extends BaseSettingsController
      */
     public function editUserAction($id)
     {
-        $this->checkPermission('ROLE_ADMIN');
+        // The logged in user should be able to change his own password/username/email and not for other users
+        if ($id == $this->get('security.context')->getToken()->getUser()->getId()) {
+            $requiredRole = 'ROLE_ADMIN';
+        } else {
+            $requiredRole = 'ROLE_SUPER_ADMIN';
+        }
+        $this->checkPermission($requiredRole);
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -123,7 +129,7 @@ class UsersController extends BaseSettingsController
         $form = $this->createForm($formType, $user, array('password_required' => false));
 
         if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 if ($user->getPlainpassword() != "") {
