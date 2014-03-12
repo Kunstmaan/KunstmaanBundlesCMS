@@ -4,11 +4,9 @@ namespace Kunstmaan\TranslatorBundle\AdminList;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineDBALAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType;
-use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
  * TranslationAdminListConfigurator
@@ -26,11 +24,15 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
      */
     protected $locale;
 
+    /**
+     * @param Connection $connection
+     * @param array $locales
+     */
     public function __construct(Connection $connection, array $locales)
     {
         parent::__construct($connection);
         $this->locales = $locales;
-        $this->setCountField('CONCAT(t.keyword,t.domain)');
+        $this->setCountField('CONCAT(b.translation_id)');
     }
 
     /**
@@ -134,8 +136,8 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
             $this->queryBuilder = new QueryBuilder($this->connection);
             // $this->adaptQueryBuilder($this->queryBuilder);
             $this->queryBuilder
-              ->select('DISTINCT t.translation_id AS id, t.keyword, t.domain')
-              ->from('kuma_translation', 't');
+              ->select('DISTINCT b.translation_id AS id, b.keyword, b.domain')
+              ->from('kuma_translation', 'b');
 
             // Apply filters
             $filters = $this->getFilterBuilder()->getCurrentFilters();
@@ -172,8 +174,8 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
             foreach ($this->locales as $locale) {
                 $this->queryBuilder->addSelect('t_' . $locale . '.`text` AS ' . $locale);
                 $this->queryBuilder->addSelect('t_' . $locale . '.id AS ' . $locale . '_id');
-                $this->queryBuilder->leftJoin('t', 'kuma_translation', 't_' . $locale,
-                  't.keyword = t_' . $locale . '.keyword and t.domain = t_' . $locale . '.domain and t_' . $locale . '.locale=:locale_' . $locale);
+                $this->queryBuilder->leftJoin('b', 'kuma_translation', 't_' . $locale,
+                  'b.keyword = t_' . $locale . '.keyword and b.domain = t_' . $locale . '.domain and t_' . $locale . '.locale=:locale_' . $locale);
                 $this->queryBuilder->setParameter('locale_' . $locale, $locale);
             }
 
