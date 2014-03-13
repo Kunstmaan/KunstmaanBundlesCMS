@@ -96,8 +96,8 @@
            </div>
            <div id="tree" class="tree">
                <ul>
-                   {% for node in nodemenu.topnodes %}
-                       {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' with {'cke': (cke ? true : false)} %}
+                   {% for item in tree.rootItems %}
+                       {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
                    {% endfor %}
                </ul>
            </div>

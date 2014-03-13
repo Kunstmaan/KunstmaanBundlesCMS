@@ -3,6 +3,8 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\NodeBundle\Helper\Menu\SimpleTreeView;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
@@ -57,12 +59,31 @@ class WidgetsController extends Controller
         /* @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $locale = $this->getRequest()->getLocale();
-        /* @var SecurityContextInterface $securityContext */
-        $securityContext = $this->container->get('security.context');
-        /* @var AclHelper $aclHelper */
-        $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, null, PermissionMap::PERMISSION_VIEW, true, true);
+        $qb = $em->getConnection()->createQueryBuilder();
+        $qb->select('n.id, n.parent_id, t.weight, t.title, t.online, t.url')
+            ->from('kuma_nodes', 'n')
+            ->leftJoin('n', 'kuma_node_translations', 't', "(t.node_id = n.id AND t.lang = ?)")
+            ->where('n.deleted = 0')
+            ->andWhere('t.online = 1')
+            ->addOrderBy('parent_id', 'ASC')
+            ->addOrderBy('weight', 'ASC')
+            ->addOrderBy('title', 'ASC');
+
+        $permissionDef = new PermissionDefinition(array(PermissionMap::PERMISSION_VIEW));
+        $permissionDef->setEntity('Kunstmaan\NodeBundle\Entity\Node');
+        $permissionDef->setAlias('n');
+        $qb = $this->get('kunstmaan_admin.acl.native.helper')->apply($qb, $permissionDef);
+
+        $stmt = $em->getConnection()->prepare($qb->getSQL());
+        $stmt->bindValue(1, $locale);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        $simpleTreeView = new SimpleTreeView();
+        foreach ($result as $data) {
+            $simpleTreeView->addItem($data['parent_id'], $data);
+        }
 
         // When the media bundle is available, we show a link in the header to the media chooser
         $allBundles = $this->container->getParameter('kernel.bundles');
@@ -76,7 +97,7 @@ class WidgetsController extends Controller
         }
 
         return array(
-            'nodemenu' => $nodeMenu,
+            'tree' => $simpleTreeView,
             'mediaChooserLink' => $mediaChooserLink
         );
     }

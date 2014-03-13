@@ -1,10 +1,8 @@
-{% if node.node.deleted == false and (not cke or node.nodetranslation.online) %}
-    <li class="{% if node.active %}jstree-open{% endif %} {% if nodemenu.current is not null and nodemenu.current.id == node.id %}active{% endif %}" rel="page">
-        <a onclick="jQuery('#selection').text('Selection: {{ path('_slug', { 'url': node.url }) }}'); ckurl = '{{ path('_slug', { 'url': node.url }) }}'; ckid = '{{ node.id }}';" class="item" href="#">{{ node.title }}</a>
-        <ul>
-            {% for node in node.children %}
-                {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' with {'cke': true} %}
-            {% endfor %}
-        </ul>
-    </li>
-{% endif %}
+<li rel="page">
+    <a onclick="jQuery('#selection').text('Selection: {{ path('_slug', { 'url': item.url }) }}'); ckurl = '{{ path('_slug', { 'url': item.url }) }}'; ckid = '{{ item.id }}';" class="item" href="#">{{ item.title }}</a>
+    <ul>
+        {% for item in tree.children(item.id) %}
+            {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
+        {% endfor %}
+    </ul>
+</li>
