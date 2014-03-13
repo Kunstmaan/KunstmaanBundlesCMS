@@ -1,6 +1,6 @@
 CKEDITOR.editorConfig = function( config )
 {
-    config.skin = 'kCK';
+    config.skin = 'bootstrapck';
     config.startupFocus = false;
     config.height = 500;
     config.bodyClass = 'CKEditor';
@@ -19,7 +19,7 @@ CKEDITOR.editorConfig = function( config )
         config.filebrowserImageBrowseLinkUrl = '';
     {% endif %}
     config.filebrowserImageUploadUrl = '';
-    config.toolbar_Full =
+    config.toolbar =
         [
             { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike', '-', 'Subscript','Superscript' ] },
             { name: 'lists', items : [ 'NumberedList','BulletedList' ] },
