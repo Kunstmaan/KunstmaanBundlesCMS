@@ -173,7 +173,7 @@ class NodeRepository extends NestedTreeRepository
      *
      * @param string          $lang                 The locale
      * @param string          $permission           The permission (read, write, ...)
-     * @param AclNativeHelper $aclNativeHelper            The acl helper
+     * @param AclNativeHelper $aclNativeHelper      The acl helper
      * @param bool            $includeHiddenFromNav Include nodes hidden from navigation or not
      *
      * @return array
