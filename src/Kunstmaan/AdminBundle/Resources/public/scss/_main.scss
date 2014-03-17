@@ -622,6 +622,7 @@ header{
     input[type=checkbox]{
         min-width: 0;
         margin: 9px 0 5px;
+        width: auto; //17/03/2014 added for IE9 to align checkbox to the left
     }
 
     .input-small {

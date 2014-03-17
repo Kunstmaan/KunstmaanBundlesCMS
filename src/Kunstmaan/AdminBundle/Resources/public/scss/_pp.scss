@@ -167,7 +167,7 @@
             display: inline-block;
             clear: both;
             width: 100%;
-            overflow: scroll;
+            overflow: auto; //17/03/2014 changed from scroll to auto (IE9 unnecessary scrollbars in sidebar on every input)
         }
         span.cke_skin_kCK, span.cke_skin_kCK:focus{
             //width: 100%;
