@@ -107,7 +107,7 @@ class SlugController extends Controller
         /** @noinspection PhpUndefinedMethodInspection */
         $response = $entity->service($this->container, $request, $renderContext);
 
-        if ($response instanceof RedirectResponse) {
+        if ($response instanceof Response) {
             return $response;
         }
 
