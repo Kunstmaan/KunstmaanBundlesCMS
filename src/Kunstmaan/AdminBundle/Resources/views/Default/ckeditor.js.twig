@@ -13,7 +13,7 @@ CKEDITOR.editorConfig = function( config )
     {% if mediabundleisactive is defined %}
         config.filebrowserImageBrowseUrl = '{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}';
         config.filebrowserImageBrowseLinkUrl = '{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}';
-        config.filebrowserImageWindowWidth = '900';
+        config.filebrowserImageWindowWidth = '970';
     {% else %}
         config.filebrowserImageBrowseUrl = '';
         config.filebrowserImageBrowseLinkUrl = '';
