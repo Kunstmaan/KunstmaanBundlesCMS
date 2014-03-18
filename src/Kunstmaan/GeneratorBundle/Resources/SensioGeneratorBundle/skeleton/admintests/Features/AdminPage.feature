@@ -11,7 +11,6 @@ Feature: AdminPage
   Scenario: Preview the home page
     Given I preview the home page
     Then I should not see "Not found"
-    And I should not see "No route found"
 
   @javascript @ensureCleanSession
   Scenario: Add a new page
@@ -34,7 +33,6 @@ Feature: AdminPage
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
     Then I should see "Not found"
-    And I should see "The requested page is not online"
 
   @javascript
   Scenario: Publish the page
@@ -68,4 +66,3 @@ Feature: AdminPage
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
     Then I should see "Not found"
-    And I should see "No route found"
