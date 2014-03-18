@@ -65,8 +65,8 @@ Feature: AdminSettingsUser
   Scenario: Login and edit own user
     Given I log out
     And I log in as "test"
-    And I edit user "test"
-    Then I should see "Edit user"
+    And I follow "Logged in as test"
+    Then I should see "Settings"
     When I fill in "user[email]" with "support-edited@kunstmaan.be"
     And I press "Edit User"
     Then I should see "has been edited"

@@ -30,7 +30,7 @@ Feature: AdminPage
     Then I should see "Page has been edited"
     And I should see "Draft version"
 
-  @javascript
+  @javascript @ensureCleanSession
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
     Then I should see "Not found"
@@ -64,7 +64,7 @@ Feature: AdminPage
     Given I delete page "ContentsubPage"
     Then I should see "The page is deleted"
 
-  @javascript
+  @javascript @ensureCleanSession
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
     Then I should see "Not found"
