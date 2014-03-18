@@ -29,7 +29,7 @@ Feature: AdminPage
     Then I should see "Page has been edited"
     And I should see "Draft version"
 
-  @javascript
+  @mink:goutte
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
     Then the response status code should be 404
@@ -40,10 +40,11 @@ Feature: AdminPage
     Then I should see "has been published"
 
   #ensureCleanSession is required to clear the cache
-  @javascript @ensureCleanSession
+  @mink:goutte @ensureCleanSession
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
-    Then I should not see "page you requested could not be found"
+    Then the response status code should be 200
+    And I should not see "page you requested could not be found"
 
   @javascript
   Scenario: Publish the page
