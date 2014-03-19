@@ -53,7 +53,7 @@ class SlugRouter implements RouterInterface
             $this->routeCollection->add(
                 '_slug_preview',
                 new Route(
-                    '/{_locale}/preview/{url}',
+                    '/{_locale}/admin/preview/{url}',
                     array(
                             '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
                             'preview'       => true,
@@ -78,7 +78,7 @@ class SlugRouter implements RouterInterface
             $this->routeCollection->add(
                 '_slug_preview',
                 new Route(
-                    '/preview/{url}',
+                    '/admin/preview/{url}',
                     array(
                             '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
                             'preview'       => true,
