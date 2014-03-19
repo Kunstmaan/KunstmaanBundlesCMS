@@ -35,6 +35,11 @@ Feature: AdminPage
     Then I should see "Not found"
 
   @javascript
+  Scenario: Navigate to the preview of the page
+    Given I go to page "/admin/preview/contentsubpage"
+    Then I should not see "Not found"
+
+  @javascript
   Scenario: Publish the page
     Given I publish page "ContentsubPage"
     Then I should see "has been published"
@@ -43,7 +48,7 @@ Feature: AdminPage
   @javascript @ensureCleanSession
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
-    Then I should not see "page you requested could not be found"
+    Then I should not see "Not found"
 
   @javascript
   Scenario: Publish the page
@@ -65,4 +70,9 @@ Feature: AdminPage
   @javascript @ensureCleanSession
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
+    Then I should see "Not found"
+
+  @javascript
+  Scenario: Navigate to the preview of the page
+    Given I go to page "/admin/preview/contentsubpage"
     Then I should see "Not found"
