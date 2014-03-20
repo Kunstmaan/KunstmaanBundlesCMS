@@ -8,8 +8,8 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
@@ -35,7 +35,7 @@ class SlugController extends Controller
      * @param bool   $preview Show in preview mode
      *
      * @throws NotFoundHttpException
-     * @throws AccessDeniedHttpException
+     * @throws AccessDeniedException
      *
      * @return Response|array
      */
@@ -78,7 +78,7 @@ class SlugController extends Controller
         /* @var SecurityContextInterface $securityContext */
         $securityContext = $this->get('security.context');
         if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw new AccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         /* @var AclHelper $aclHelper */
