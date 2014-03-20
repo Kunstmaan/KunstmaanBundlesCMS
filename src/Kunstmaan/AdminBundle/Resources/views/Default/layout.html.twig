@@ -59,12 +59,8 @@
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-
-    <!-- polyfill for Dashboard Chart in IE8 -->
-    <!--[if lte IE 8]>
-        <script src="{{ asset('bundles/kunstmaanadmin/js/libs/excanvas.js') }}"></script>
-    <![endif]-->
 </head>
+
 
 
 <body {% block extraparamsinbody %}{% endblock %}>
@@ -211,7 +207,6 @@
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-timepicker.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/iphone-style-checkboxes.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-colorpicker.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/chart.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/script.js'
         output='generated-js/scripts_bottom.js'
     %}
