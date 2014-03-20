@@ -1,18 +1,160 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
+{% block header %}{% endblock %}
 
 {% block content %}
-{% if is_granted('ROLE_SUPER_ADMIN') %}
-    <a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-medium" style="float:right">{{ 'Edit dashboard' | trans }}</a>
-{% endif %}
-{% if dashboardConfiguration %}
-    <div class="page-header">
-        <h1>{{ dashboardConfiguration.title }}</h1>
-    </div>
-    {{ dashboardConfiguration.content | raw }}
-{% else %}
-    <div class="page-header">
-        <h1>{{ 'omnext.welcome' | trans | raw }}</h1>
-    </div>
-{% endif %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-medium" style="float:right">{{ 'Edit dashboard' | trans }}</a>
+    {% endif %}
+
+    {% if dashboardConfiguration %}
+        <div class="page-header">
+            <h1>{{ dashboardConfiguration.title }}</h1>
+        </div>
+
+        <!-- TABS -->
+        <ul class="db-tabs">
+            <li class="db-tabs__item">
+                <a href="#" class="db-tabs__controller">
+                    <h6 class="db-tabs__item__title">Today</h6>
+                    <p class="db-tabs__item__number">63</p>
+                    <p class="db-tabs__item__subtitle">visitors</p>
+                </a>
+            </li>
+            <li class="db-tabs__item">
+                <a href="#" class="db-tabs__controller">
+                    <h6 class="db-tabs__item__title">Yesterday</h6>
+                    <p class="db-tabs__item__number">23</p>
+                    <p class="db-tabs__item__subtitle">visitors</p>
+                </a>
+            </li>
+            <li class="db-tabs__item db-tabs__item--active">
+                <a href="#" class="db-tabs__controller">
+                    <h6 class="db-tabs__item__title">Last week</h6>
+                    <p class="db-tabs__item__number">206</p>
+                    <p class="db-tabs__item__subtitle">visitors</p>
+                </a>
+            </li>
+            <li class="db-tabs__item">
+                <a href="#" class="db-tabs__controller">
+                    <h6 class="db-tabs__item__title">Last month</h6>
+                    <p class="db-tabs__item__number">751</p>
+                    <p class="db-tabs__item__subtitle">visitors</p>
+                </a>
+            </li>
+            <li class="db-tabs__item">
+                <a href="#" class="db-tabs__controller">
+                    <h6 class="db-tabs__item__title">Last 3 months</h6>
+                    <p class="db-tabs__item__number">2144</p>
+                    <p class="db-tabs__item__subtitle">visitors</p>
+                </a>
+            </li>
+        </ul>
+        <!-- end TABS -->
+
+        <!-- TAB CONTENT -->
+        <section class="db-content">
+
+            <!-- COL -->
+            <div class="db-col db-col--5">
+                <div class="db-block">
+                    <h2 class="db-block__title">
+                        Visitors
+                        <span class="db-block__title__stats"><strong>185 Visitors</strong> (82 unique)</span>
+                    </h2>
+
+                    <!-- CHART -->
+                    <canvas id="js-dashboard-chart" class="dashboard-chart" height="290"></canvas>
+                    <!-- end CHART -->
+                </div>
+            </div>
+            <!-- end COL -->
+
+            <!-- COL -->
+            <div class="db-col db-col--3">
+                <div class="db-block">
+                    <h2 class="db-block__title">Traffic Source</h2>
+                    <ul class="db-block__list">
+                        <li class="db-block__list__item db-block__list__item--icon db-block__list__item--icon-direct">
+                            <p class="db-block__text">Direct</p>
+                            <p class="db-block__stats">
+                                <span class="db-block__stats--enlarged">82%</span>
+                                157
+                            </p>
+                        </li>
+                        <li class="db-block__list__item db-block__list__item--icon db-block__list__item--icon-referral">
+                            <p class="db-block__text">Referrals</p>
+                            <p class="db-block__stats">
+                                <span class="db-block__stats--enlarged">15%</span>
+                                28
+                            </p>
+                        </li>
+                        <li class="db-block__list__item db-block__list__item--icon db-block__list__item--icon-search">
+                            <p class="db-block__text">Search Engines</p>
+                            <p class="db-block__stats">
+                                <span class="db-block__stats--enlarged">3%</span>
+                                2
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end COL -->
+
+            <!-- COL -->
+            <div class="db-col db-col--4">
+                <div class="db-block db-col__inner">
+                    <h2 class="db-block__title">Top Referrals</h2>
+                    <ul class="db-block__list">
+                        <li class="db-block__list__item">
+                            <p class="db-block__text db-block__text--left">www.google.be</p>
+                            <p class="db-block__stats db-block__stats--right">13</p>
+                        </li>
+                        <li class="db-block__list__item">
+                            <p class="db-block__text db-block__text--left">gimv.be</p>
+                            <p class="db-block__stats db-block__stats--right">7</p>
+                        </li>
+                        <li class="db-block__list__item">
+                            <p class="db-block__text db-block__text--left">veeltelange-url-die-niet-inhetvakje-gaat-passen.be</p>
+                            <p class="db-block__stats db-block__stats--right">6</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="db-block db-col__inner">
+                    <h2 class="db-block__title">Top Search Terms</h2>
+                    <!-- if there's no data available -->
+                    <p class="db-block__text">No data available for Top Search Terms</p>
+                    <!-- -->
+                    <ul class="db-block__list">
+                        <li class="db-block__list__item">
+                            <p class="db-block__text db-block__text--left">Gimv</p>
+                            <p class="db-block__stats db-block__stats--right">20</p>
+                        </li>
+                        <li class="db-block__list__item">
+                            <p class="db-block__text db-block__text--left">investment focus</p>
+                            <p class="db-block__stats db-block__stats--right">14</p>
+                        </li>
+                        <li class="db-block__list__item">
+                            <p class="db-block__text db-block__text--left">consumer2020</p>
+                            <p class="db-block__stats db-block__stats--right">11</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end COL -->
+
+        </section>
+        <!-- end TAB CONTENT -->
+
+        <div class="newrelic-iframes">
+            {{ dashboardConfiguration.content | raw }}
+        </div>
+
+    {% else %}
+        <div class="page-header">
+            <h1>{{ 'omnext.welcome' | trans | raw }}</h1>
+        </div>
+    {% endif %}
+
 {% endblock %}

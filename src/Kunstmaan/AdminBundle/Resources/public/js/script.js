@@ -1,5 +1,5 @@
 //Init functions needed on every page
-$(document).ready(function () {
+$(document).ready(function (){
     if($('.tree').length > 0) {
         init_tree();
     }
@@ -13,7 +13,37 @@ $(document).ready(function () {
     initModalFocus();
     initSaveKeyListener();
     initSidenavSize();
+    initChart();
 });
+
+$(window).resize(function (){
+    initChart();
+});
+
+// Dashboard Chart
+initChart = function() {
+    var barChartData = {
+        labels : ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        datasets : [
+            {
+                fillColor : "rgb(41, 151, 206)",
+                strokeColor : "rgb(41, 151, 206)",
+                data : [65,59,90,81,56,55,40]
+            }
+        ]
+    };
+
+    var chartWidth = $('#js-dashboard-chart').parent().width();
+    $('#js-dashboard-chart').attr('width', chartWidth );
+
+    // only use animation in browsers who are not IE8
+    // in IE8 the animation is too slow and jerky
+    if (!$('html').hasClass('ie8')) {
+        var myLine = new Chart(document.getElementById("js-dashboard-chart").getContext("2d")).Bar(barChartData);
+    } else {
+        var myLine = new Chart(document.getElementById("js-dashboard-chart").getContext("2d")).Bar(barChartData, {animation:false});
+    }
+};
 
 //JS-tree
 function init_tree() {

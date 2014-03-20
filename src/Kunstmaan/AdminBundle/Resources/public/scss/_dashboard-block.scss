@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Dashboard Block
+   ========================================================================== */
+
+// BLOCK TITLE
+.db-block__title {
+    font-size: 12px;
+    border-bottom: 1px solid $hr-color;
+    padding-bottom: 10px;
+    line-height: 120%;
+}
+.db-block__title__stats {
+    float: right;
+    color: $text-color-light;
+    font-weight: normal;
+}
+
+// BLOCK CONTENT
+.db-block__list {
+    list-style: none;
+    margin: 0 0 20px;
+}
+.db-block__list__item {
+    @include clearfix;
+    line-height: 120%;
+    margin-bottom: 3px;
+    position: relative;
+}
+.db-block__text {
+    color: $text-color-light;
+    margin-bottom: 8px;
+}
+.db-block__text--left {
+    padding-right: 55px;
+}
+.db-block__stats--enlarged {
+    font-size: 20px;
+    color: $text-color;
+}
+.db-block__stats--right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+// icons (icomoon icons used as base, made custom)
+.db-block__list__item--icon {
+    margin-bottom: 25px;
+    &:after {
+        content: " ";
+        background-color: $blue;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        margin-top: -16px;
+        border-radius: 100%;
+    }
+}
+.db-block__list__item--icon-direct {
+    &:after {
+        background-image: url(#{$icons}/dashboard/direct.svg);
+        background-position: 55% 45%;
+    }
+}
+.db-block__list__item--icon-referral {
+    &:after {
+        background-image: url(#{$icons}/dashboard/link.svg);
+    }
+}
+.db-block__list__item--icon-search {
+    &:after {
+        background-image: url(#{$icons}/dashboard/search.svg);
+    }
+}

@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Dashboard Tabs
+   ========================================================================== */
+
+.db-tabs {
+    @include clearfix;
+    margin: 40px 0 0;
+    list-style: none;
+    background-color: $bg-light;
+    border: 1px solid $hr-color;
+    border-bottom: none;
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+}
+.db-tabs__item {
+    width: 20%;
+    float: left;
+    @include single_transition(all, .3s, ease-in-out);
+    text-align: center;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-bottom-color: $hr-color;
+    &:first-child {
+        margin-left: -1px; // to avoid double border
+        width: -webkit-calc(20% + 1px);
+        width: calc(20% + 1px);
+    }
+    &:last-child {
+        margin-right: -1px; // to avoid double border
+        width: -webkit-calc(20% + 1px);
+        width: calc(20% + 1px);
+    }
+    &:hover, &:focus {
+        background-color: #fff;
+        border: 1px solid $hr-color;
+        margin-top: -10px;
+        padding-bottom: 20px;
+    }
+}
+.db-tabs__item--active {
+    background-color: #fff;
+    border: 1px solid $hr-color;
+    border-bottom-color: #fff;
+    margin-top: -10px;
+    padding-bottom: 20px;
+}
+.db-tabs__controller {
+    display: block;
+}
+
+.db-tabs__item__title {
+    color: $text-color-lighter;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+.db-tabs__item__number {
+    color: $text-color;
+    font-size: 26px;
+    font-family: $custom-font;
+}
+.db-tabs__item__subtitle {
+    color: $text-color;
+    font-size: 12px;
+}
