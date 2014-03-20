@@ -137,6 +137,18 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
+     * Reset all built members
+     */
+    public function resetBuilds()
+    {
+        $this->fields = array();
+        $this->exportFields = array();
+        $this->filterBuilder = null;
+        $this->itemActions = array();
+        $this->listActions = array();
+    }
+
+    /**
      * Configure the types of items you can add
      *
      * @param array $params
