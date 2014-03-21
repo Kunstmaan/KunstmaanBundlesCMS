@@ -53,11 +53,11 @@ services:
 
     kunstmaan_admin.acl.helper:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper
-        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.role_hierarchy"]
 
     kunstmaan_admin.acl.native.helper:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper
-        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.role_hierarchy"]
 
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
