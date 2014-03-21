@@ -1508,13 +1508,18 @@ h1, h2, h3, h4, h5, h6{
 
 
 
-//TEMPORARY FIX POPUP
-//UPDATE by Kevin on 05/03/14 - media chooser popup : file list didn't scroll
+// TEMPORARY FIX POPUP
+// UPDATE by Kevin on 05/03/14 - media chooser popup : file list didn't scroll
+// UPDATE by Indri on 21/03/14 - image chooser popup IE9 : not scrollable nor resizable
+.overflow-scroll {
+    overflow: auto; // 21032014
+}
 .media_popup_temp{
-//    overflow: hidden;
+//    overflow: hidden; // 05032014
     height: 100%;
+    overflow: auto;
     .container-fluid{
-//        height: 100%;
+//        height: 100%; // 05032014
         .sidebar{
             padding-top: 0px;
             h2{
@@ -1527,7 +1532,7 @@ h1, h2, h3, h4, h5, h6{
         }
         .content{
             padding-top: 20px;
-            height: 100%;
+            // height: 100%; // 21032014
             h1{
                 float: left;
                 line-height: 100%;
@@ -1552,9 +1557,8 @@ h1, h2, h3, h4, h5, h6{
             }
 
             .thumbnails{
-                height: 100%;
-                overflow: scroll;
-
+                //height: 100%; // 21032014
+                //overflow: scroll; // 21032014
             }
         }
     }
