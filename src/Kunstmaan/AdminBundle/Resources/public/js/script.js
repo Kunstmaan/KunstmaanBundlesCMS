@@ -503,7 +503,6 @@ function updateOptions(el, options){
         } else {
             $(this).attr("name", $(this).attr("name") + "_" + uniqueid);
         }
-        console.log($(this).attr("name"));
         if($(this).hasClass("datepick")){
             $(this).datepicker(options);
         }
