@@ -355,6 +355,7 @@ header{
                 background-color: #2997CE;
                 text-shadow: none;
                 position: relative;
+                z-index: 3;
                 color: #FFF;
                 font-weight: bold;
                 height: 40px;
@@ -391,6 +392,8 @@ header{
         margin: 10px 10px 0 0;
     }
     .nav {
+        position: relative;
+        z-index: 2;
         > li{
             &:first-child{
                 a{

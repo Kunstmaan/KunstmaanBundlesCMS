@@ -30,6 +30,11 @@
     {% stylesheets filter="scss" "@KunstmaanAdminBundle/Resources/public/scss/style.scss" %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
+    <!--[if lte IE 8]>
+    {% stylesheets filter="scss" "@KunstmaanAdminBundle/Resources/public/scss/ie8.scss" %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+    <![endif]-->
     <!--Customizable color brand-->
     <style type="text/css">
         {% if titlecolor is not defined or titlecolor is empty %}
@@ -42,7 +47,7 @@
             color: {{ titlecolor }};
             background-color: {{ titlebgcolor }};
         }
-        header .navbar .container-fluid .brand::after {
+        header .navbar .container-fluid .brand:after {
             border-left-color: {{ titlebgcolor }};
         }
     </style>
