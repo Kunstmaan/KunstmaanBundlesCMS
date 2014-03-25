@@ -14,6 +14,11 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
 {
 
     private $canEditAllFields = false;
+    private $langs = [];
+
+    public function setLangs(array $langs) {
+        $this->langs = $langs;
+    }
 
     /**
      * Setter to check if we can display all form fields
@@ -26,11 +31,14 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
         $this->canEditAllFields = (bool)$canEditAllFields;
     }
 
+
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder->add('username', 'text', array ('required' => true, 'label' => 'settings.user.username'))
                 ->add('plainPassword', 'repeated', array(
                     'type' => 'password',
@@ -44,7 +52,11 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                     )
                     )
                 )
-                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'));
+                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'))
+                ->add('localeAdmin', 'choice', array(
+                    'choices'   => $this->langs,
+                    'required'  => true,
+                ));
 
         if ($this->canEditAllFields) {
             $builder->add('enabled', 'checkbox', array('required' => false, 'label' => 'settings.user.enabled'))
@@ -63,7 +75,11 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                                 'data-placeholder' => 'Choose the permission groups...'
                             )
                         )
-                    );
+                    )
+                    ->add('localeAdmin', 'choice', array(
+                        'choices'   => $this->langs,
+                        'required'  => true,
+                    ));
         }
     }
 

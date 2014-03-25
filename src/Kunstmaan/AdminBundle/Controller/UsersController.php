@@ -72,7 +72,7 @@ class UsersController extends BaseSettingsController
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
             $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
         }
-        
+
         $form = $this->createForm($formType, $user, array('password_required' => true, 'validation_groups' => array('Registration')));
 
         if ('POST' == $request->getMethod()) {
@@ -125,6 +125,12 @@ class UsersController extends BaseSettingsController
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
+
+        // create an array with all languages to pass to the form
+        $langs = explode('|', $this->container->getParameter('requiredlocales'));
+        $langs = array_combine($langs, $langs);
+        array_unshift($langs, '');
+        $formType->setLangs($langs);
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
