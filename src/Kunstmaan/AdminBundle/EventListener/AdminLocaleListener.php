@@ -10,19 +10,33 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\SecurityContext;
 
 
-
+/**
+ * AdminLocaleListener to override default locale if user-specific locale is set in database
+ */
 class AdminLocaleListener implements EventSubscriberInterface
 {
-    private $translator;
+    /** @var SecurityContext $context */
     private $context;
+    /** @var TranslatorInterface $translator */
+    private $translator;
 
-
+    /**
+     * constructor
+     *
+     * @param SecurityContext $context
+     * @param TranslatorInterface $translator
+     */
     public function __construct(SecurityContext $context, TranslatorInterface $translator)
     {
         $this->translator = $translator;
         $this->context = $context;
     }
 
+    /**
+     * onKernelView event
+     *
+     * @param GetResponseEvent $event
+     */
     public function onKernelView(GetResponseEvent $event)
     {
         $url = $event->getRequest()->getRequestUri();
@@ -39,7 +53,9 @@ class AdminLocaleListener implements EventSubscriberInterface
 
     }
 
-
+    /**
+     * getSubscribedEvents
+     */
     static public function getSubscribedEvents()
     {
         return array(
