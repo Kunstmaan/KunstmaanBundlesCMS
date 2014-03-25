@@ -134,20 +134,24 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
     {
         if (is_null($this->queryBuilder)) {
             $this->queryBuilder = new QueryBuilder($this->connection);
-            // $this->adaptQueryBuilder($this->queryBuilder);
             $this->queryBuilder
-              ->select('DISTINCT b.translation_id AS id, b.keyword, b.domain')
-              ->from('kuma_translation', 'b');
+                ->select('DISTINCT b.translation_id AS id, b.keyword, b.domain')
+                ->from('kuma_translation', 'b');
 
             // Apply filters
             $filters = $this->getFilterBuilder()->getCurrentFilters();
             $locales = array();
 
             foreach ($filters as $filter) {
-                if ($filter->getType() instanceof EnumerationFilterType) {
+                if ($filter->getType() instanceof EnumerationFilterType && $filter->getColumnName() == 'locale') {
                     // Override default enumeration filter handling ... catch selected locales here
                     $data = $filter->getData();
-                    $locales = $data['value'];
+                    $comparator = $filter->getType()->getComparator();
+                    if ($comparator == 'in') {
+                        $locales = $data['value'];
+                    } elseif ($comparator == 'notin') {
+                        $locales = array_diff($this->locales, $data['value']);
+                    }
                 } else {
                     /* @var AbstractDBALFilterType $type */
                     $type = $filter->getType();
@@ -168,7 +172,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
             // Field filter hack...
             $this->addFilter('locale', new EnumerationFilterType('locale'), 'locale', array_combine(
                 $this->locales, $this->locales
-              ));
+            ));
 
             // Add join for every locale
             foreach ($this->locales as $locale) {
