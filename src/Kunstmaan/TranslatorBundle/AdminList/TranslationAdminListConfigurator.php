@@ -42,6 +42,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
     {
         $this->addFilter('domain', new StringFilterType('domain'), 'domain');
         $this->addFilter('keyword', new StringFilterType('keyword'), 'keyword');
+        $this->addFilter('text', new StringFilterType('text'), 'text');
         $this->addFilter('locale', new EnumerationFilterType('locale'), 'locale', array_combine(
             $this->locales, $this->locales
         ));
@@ -142,6 +143,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
             $filters = $this->getFilterBuilder()->getCurrentFilters();
             $locales = array();
 
+            $textValue = $textComparator = null;
             foreach ($filters as $filter) {
                 if ($filter->getType() instanceof EnumerationFilterType && $filter->getColumnName() == 'locale') {
                     // Override default enumeration filter handling ... catch selected locales here
@@ -152,6 +154,11 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                     } elseif ($comparator == 'notin') {
                         $locales = array_diff($this->locales, $data['value']);
                     }
+                } elseif ($filter->getType() instanceof StringFilterType && $filter->getColumnName() == 'text') {
+                    // Override default text filter handling ...
+                    $data =  $filter->getData();
+                    $textValue = $data['value'];
+                    $textComparator = $data['comparator'];
                 } else {
                     /* @var AbstractDBALFilterType $type */
                     $type = $filter->getType();
@@ -181,6 +188,44 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                 $this->queryBuilder->leftJoin('b', 'kuma_translation', 't_' . $locale,
                   'b.keyword = t_' . $locale . '.keyword and b.domain = t_' . $locale . '.domain and t_' . $locale . '.locale=:locale_' . $locale);
                 $this->queryBuilder->setParameter('locale_' . $locale, $locale);
+            }
+
+            // Apply text filter
+            if (!is_null($textValue) && !is_null($textComparator)) {
+                $orX = $this->queryBuilder->expr()->orX();
+
+                foreach ($this->locales as $key => $locale) {
+                    $uniqueId = 'txt_' . $key;
+                    switch ($textComparator) {
+                        case 'equals':
+                            $expr = $this->queryBuilder->expr()->eq('t_' . $locale . '.`text`', ':var_' . $uniqueId);
+                            $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue);
+                            break;
+                        case 'notequals':
+                            $expr = $this->queryBuilder->expr()->neq('t_' . $locale . '.`text`', ':var_' . $uniqueId);
+                            $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue);
+                            break;
+                        case 'contains':
+                            $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.`text`', ':var_' . $uniqueId);
+                            $this->queryBuilder->setParameter('var_' . $uniqueId, '%' . $textValue . '%');
+                            break;
+                        case 'doesnotcontain':
+                            $expr = 't_' . $locale . '.`text`' . ' NOT LIKE :var_' . $uniqueId;
+                            $this->queryBuilder->setParameter('var_' . $uniqueId, '%' . $textValue . '%');
+                            break;
+                        case 'startswith':
+                            $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.`text`', ':var_' . $uniqueId);
+                            $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue . '%');
+                            break;
+                        case 'endswith':
+                            $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.`text`', ':var_' . $uniqueId);
+                            $this->queryBuilder->setParameter('var_' . $uniqueId, '%' . $textValue);
+                            break;
+                    }
+                    $orX->add($expr);
+                }
+
+                $this->queryBuilder->andWhere($orX);
             }
 
             // Apply sorting
