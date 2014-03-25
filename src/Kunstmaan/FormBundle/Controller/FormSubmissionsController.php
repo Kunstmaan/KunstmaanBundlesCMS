@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
@@ -96,63 +97,22 @@ class FormSubmissionsController extends Controller
      *
      * @param int $nodeTranslationId
      *
-     * @Route("/export/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_export")
+     * @Route("/export/{nodeTranslationId}.{_format}", requirements={"nodeTranslationId" = "\d+","_format" = "csv|xlsx"}, name="KunstmaanFormBundle_formsubmissions_export")
      * @Method({"GET"})
      *
      * @return Response
      */
-    public function exportAction($nodeTranslationId)
+    public function exportAction($nodeTranslationId, $_format)
     {
         $em = $this->getDoctrine()->getManager();
         /* @var $nodeTranslation NodeTranslation */
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-
-        $tmpFilename = tempnam('/tmp', 'cb_csv_');
-        $file = new \SplFileObject($tmpFilename);
-        $writer = new CsvWriter($file);
-
-        /* @var $qb QueryBuilder */
-        $qb = $em->createQueryBuilder();
-        $qb->select('fs')
-           ->from('KunstmaanFormBundle:FormSubmission', 'fs')
-           ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
-           ->andWhere('n.id = :node')
-           ->setParameter('node', $nodeTranslation->getNode()->getId())
-           ->addOrderBy('fs.created', 'DESC');
-        $iterableResult = $qb->getQuery()->iterate();
-        $isHeaderWritten = false;
         $translator = $this->get('translator');
 
-        foreach ($iterableResult as $row) {
-            /* @var $submission FormSubmission */
-            $submission = $row[0];
+        /* @var ExportList $exportlist */
+        $configurator = new FormSubmissionExportListConfigurator($em, $nodeTranslation, $translator);
+        $exportlist = $this->get("kunstmaan_adminlist.factory")->createExportList($configurator);
 
-            // Write header info
-            if (!$isHeaderWritten) {
-                $header = array($translator->trans("Id"), $translator->trans("Date"), $translator->trans("Language"));
-                foreach ($submission->getFields() as $field) {
-                    $header[] = mb_convert_encoding($translator->trans($field->getLabel()), 'ISO-8859-1', 'UTF-8');
-                }
-                $writer->writeItem($header);
-                $isHeaderWritten = true;
-            }
-
-            // Write row data
-            $data = array($submission->getId(), $submission->getCreated()->format('d/m/Y H:i:s'), $submission->getLang());
-            foreach ($submission->getFields() as $field) {
-            $data[] = mb_convert_encoding($field->__toString(), 'ISO-8859-1', 'UTF-8');
-            }
-            $writer->writeItem($data);
-            $em->detach($submission);
-        }
-        $writer->finish();
-
-        $response = new Response(file_get_contents($tmpFilename));
-        $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="form-submissions.csv"');
-        unlink($tmpFilename);
-
-        return $response;
+        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($exportlist, $_format);
     }
-
 }

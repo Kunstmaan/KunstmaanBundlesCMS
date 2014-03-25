@@ -9,9 +9,13 @@
 					Export to
 					<i class="icon-caret-down"></i>
 				</a>
-				<ul class="dropdown-menu">
-					<li><a href="{{ path(adminlist.getExportUrl()["path"], adminlist.getExportUrl()[("params")]) }}">CSV</a></li>
-				</ul>
+                <ul class="dropdown-menu">
+                    {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
+                    {% for name, ext in supported_export_extensions() %}
+                        {% set exportparams = exportparams|merge({"_format": ext}) %}
+                        <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">{{ name }}</a></li>
+                    {% endfor %}
+                </ul>
 			</div>
 		</div>
 	{% endif %}
