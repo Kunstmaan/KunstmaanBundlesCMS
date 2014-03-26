@@ -106,17 +106,6 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
             ->method('getToken')
             ->will($this->returnValue($this->token));
 
-        $this->user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
-            ->getMock();
-
-        $this->user->expects($this->any())
-            ->method('getUsername')
-            ->will($this->returnValue('MyUser'));
-
-        $this->token->expects($this->any())
-            ->method('getUser')
-            ->will($this->returnValue($this->user));
-
         $this->rh = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
             ->getMock();
 
@@ -167,6 +156,17 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
             ->with($roles)
             ->will($this->returnValue($allRoles));
 
+        $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
+            ->getMock();
+
+        $user->expects($this->any())
+            ->method('getUsername')
+            ->will($this->returnValue('MyUser'));
+
+        $this->token->expects($this->any())
+            ->method('getUser')
+            ->will($this->returnValue($user));
+
         $permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node', 'n');
 
         /* @var $qb QueryBuilder */
@@ -175,7 +175,48 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertContains('"ROLE_SUBJECT"', $query);
         $this->assertContains('"ROLE_KING"', $query);
+        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
         $this->assertContains('MyUser', $query);
+    }
+
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::apply
+     */
+    public function testApplyAnonymous()
+    {
+        $queryBuilder = new QueryBuilder($this->conn);
+        $queryBuilder->add(
+            'from',
+            array(
+                array(
+                    'table' => 'myTable',
+                    'alias' => 'n'
+                )
+            )
+        );
+
+        $roles = array();
+
+        $this->token->expects($this->once())
+            ->method('getRoles')
+            ->will($this->returnValue($roles));
+
+        $this->rh->expects($this->once())
+            ->method('getReachableRoles')
+            ->with($roles)
+            ->will($this->returnValue($roles));
+
+        $this->token->expects($this->any())
+            ->method('getUser')
+            ->will($this->returnValue('anon.'));
+
+        $permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node', 'n');
+
+        /* @var $qb QueryBuilder */
+        $qb = $this->object->apply($queryBuilder, $permissionDef);
+        $query = $qb->getSQL();
+
+        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
     }
 
     /**
