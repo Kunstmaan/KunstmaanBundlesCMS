@@ -37,8 +37,9 @@ class NodeTranslationRepository extends EntityRepository
     public function getOnlineNodes()
     {
         return $this->createQueryBuilder('b')
-                   ->select('b')
+                   ->select('b', 'v')
                    ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+                   ->leftJoin('b.publicNodeVersion', 'v', 'WITH', 'b.publicNodeVersion = v.id')
                    ->where('n.deleted != 1 AND b.online = 1');
     }
 
@@ -99,8 +100,9 @@ class NodeTranslationRepository extends EntityRepository
     public function getNodeTranslationForUrl($urlSlug, $locale = '', $includeDeleted = false, NodeTranslation $toExclude = null)
     {
         $qb = $this->createQueryBuilder('b')
-            ->select('b')
+            ->select('b', 'v')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->leftJoin('b.publicNodeVersion', 'v', 'WITH', 'b.publicNodeVersion = v.id')
             ->addOrderBy('b.online', 'DESC')
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
@@ -138,8 +140,9 @@ class NodeTranslationRepository extends EntityRepository
     public function getTopNodeTranslations()
     {
         $qb = $this->createQueryBuilder('b')
-            ->select('b')
+            ->select('b', 'v')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->leftJoin('b.publicNodeVersion', 'v', 'WITH', 'b.publicNodeVersion = v.id')
             ->where('n.parent IS NULL')
             ->andWhere('n.deleted != 1');
 
@@ -157,8 +160,9 @@ class NodeTranslationRepository extends EntityRepository
     private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugPart = '')
     {
         $qb = $this->createQueryBuilder('t')
-            ->select('t')
+            ->select('t', 'v')
             ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
+            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
             ->where('n.deleted != 1')
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
@@ -290,8 +294,9 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getNodeTranslationByLanguageAndInternalName($language, $internalName) {
         $qb = $this->createQueryBuilder('nt')
-            ->select('nt')
+            ->select('nt', 'v')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
+            ->leftJoin('nt.publicNodeVersion', 'v', 'WITH', 'nt.publicNodeVersion = v.id')
             ->where('n.deleted != 1')
             ->andWhere('nt.online = 1')
             ->addOrderBy('n.sequenceNumber', 'DESC')
