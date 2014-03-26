@@ -19,7 +19,7 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $context;
     /** @var TranslatorInterface $translator */
     private $translator;
-
+    /** @var Container $container */
     private $container;
 
     /**
