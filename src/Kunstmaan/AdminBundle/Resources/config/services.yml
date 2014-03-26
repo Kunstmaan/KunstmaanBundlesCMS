@@ -26,7 +26,7 @@ services:
 
     kunstmaan_admin.adminLocale.listener:
         class: Kunstmaan\AdminBundle\EventListener\AdminLocaleListener
-        arguments: ["@security.context", "@translator"]
+        arguments: ["@security.context", "@translator", "@service_container"]
         tags:
             - { name: kernel.event_listener, event: 'kernel.view' }
 

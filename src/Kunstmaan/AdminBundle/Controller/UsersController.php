@@ -127,9 +127,17 @@ class UsersController extends BaseSettingsController
         $formType = new $formTypeClassName();
 
         // create an array with all languages to pass to the form
-        $langs = explode('|', $this->container->getParameter('requiredlocales'));
-        $langs = array_combine($langs, $langs);
-        array_unshift($langs, '');
+        if ($this->container->hasParameter('requiredadminlocales')) {
+            $langs = explode('|', $this->container->getParameter('requiredadminlocales'));
+            $langs = array_combine($langs, $langs);
+            array_unshift($langs, '');
+        } else if ($this->container->hasParameter('defaultadminlocale')) {
+            $langs = [$this->container->getParameter('defaultadminlocale') => $this->container->getParameter('defaultadminlocale')];
+        } else {
+            $langs = explode('|', $this->container->getParameter('requiredlocales'));
+            $langs = array_combine($langs, $langs);
+            array_unshift($langs, '');
+        }
         $formType->setLangs($langs);
 
         if ($formType instanceof RoleDependentUserFormInterface) {

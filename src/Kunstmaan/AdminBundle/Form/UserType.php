@@ -53,7 +53,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                     )
                 )
                 ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'))
-                ->add('localeAdmin', 'choice', array(
+                ->add('adminLocale', 'choice', array(
                     'choices'   => $this->langs,
                     'required'  => true,
                 ));
@@ -76,7 +76,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                             )
                         )
                     )
-                    ->add('localeAdmin', 'choice', array(
+                    ->add('adminLocale', 'choice', array(
                         'choices'   => $this->langs,
                         'required'  => true,
                     ));

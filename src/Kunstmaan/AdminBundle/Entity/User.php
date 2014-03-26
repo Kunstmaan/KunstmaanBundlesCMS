@@ -33,30 +33,30 @@ class User extends BaseUser
     }
 
     /**
-     * @ORM\Column(type="string", name="locale_admin", length=2)
+     * @ORM\Column(type="string", name="admin_locale", length=5, nullable=true)
      */
-    protected $localeAdmin;
+    protected $adminLocale;
 
     /**
-     * Get localeAdmin
+     * Get adminLocale
      *
      * @return string
      */
-    public function getlocaleAdmin()
+    public function getAdminLocale()
     {
-        return $this->localeAdmin;
+        return $this->adminLocale;
     }
 
     /**
-     * Set localeAdmin
+     * Set adminLocale
      *
-     * @param string $localeAdmin
+     * @param string $adminLocale
      *
      * @return User
      */
-    public function setlocaleAdmin($localeAdmin)
+    public function setAdminLocale($adminLocale)
     {
-        $this->localeAdmin = $localeAdmin;
+        $this->adminLocale = $adminLocale;
 
         return $this;
     }

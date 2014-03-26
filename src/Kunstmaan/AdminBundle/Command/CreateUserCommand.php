@@ -102,6 +102,11 @@ EOT
                 $user->getGroups()->add($group);
             }
         }
+
+        // set defaultadminlocale if exists; if not, use the defaultlocale
+        $locale = $this->getContainer()->hasParameter('defaultadminlocale') ? $this->getContainer()->getParameter('defaultadminlocale') : $this->getContainer()->getParameter('defaultlocale');
+        $user->setAdminLocale($locale);
+
         // Persist
         $em->persist($user);
         $em->flush();
