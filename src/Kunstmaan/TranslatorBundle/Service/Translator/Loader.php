@@ -12,6 +12,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 class Loader implements LoaderInterface
 {
     private $translationRepository;
+    private $translations;
 
     /**
      * @{@inheritdoc}
@@ -20,7 +21,24 @@ class Loader implements LoaderInterface
     {
         $catalogue = new MessageCatalogue($locale);
 
-        $translations = $this->translationRepository->findBy(array('locale' => $locale, 'domain' => $domain));
+        if (!$this->translations)
+        {
+            $this->translations = array();
+            $translations = $this->translationRepository->findBy(array('domain' => $domain));
+
+            if ($translations)
+            {
+                foreach ($translations as $trans)
+                {
+                    if (!key_exists($trans->getLocale(), $this->translations))
+                    {
+                        $this->translations[$trans->getLocale()] = array();
+                    }
+                    $this->translations[$trans->getLocale()][] = $trans;
+                }
+            }
+        }
+        $translations = $this->translations[$locale];
 
         foreach ($translations as $translation) {
             $catalogue->set($translation->getKeyword(), $translation->getText(), $domain);
