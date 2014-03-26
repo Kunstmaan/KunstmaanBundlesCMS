@@ -118,20 +118,6 @@ class SlugRouter implements RouterInterface
         $urlMatcher = new UrlMatcher($this->routeCollection, $this->getContext());
 
         $result = $urlMatcher->match($pathinfo);
-        if (!empty($result)) {
-            // The route matches, now check if it actually exists
-            $em = $this->container->get('doctrine.orm.entity_manager');
-
-            /* @var NodeTranslationRepository $nodeTranslationRepo */
-            $nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
-            /* @var NodeTranslation $nodeTranslation */
-            $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl($result['url'], $result['_locale']);
-
-            if (is_null($nodeTranslation)) {
-                throw new ResourceNotFoundException('No page found for slug ' . $pathinfo);
-            }
-        }
-
         return $result;
     }
 
