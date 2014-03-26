@@ -83,6 +83,9 @@ class AclNativeHelper
 
         $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
 
+        // Security context does not provide anonymous role automatically.
+        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
+
         /* @var $role RoleInterface */
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user

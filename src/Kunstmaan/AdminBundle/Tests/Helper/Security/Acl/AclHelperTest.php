@@ -138,17 +138,6 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->method('getToken')
             ->will($this->returnValue($this->token));
 
-        $this->user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
-            ->getMock();
-
-        $this->user->expects($this->any())
-            ->method('getUsername')
-            ->will($this->returnValue('MyUser'));
-
-        $this->token->expects($this->any())
-            ->method('getUser')
-            ->will($this->returnValue($this->user));
-
         $this->rh = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
             ->getMock();
 
@@ -196,6 +185,17 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->method('getRootAliases')
             ->will($this->returnValue(array('n')));
 
+        $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
+            ->getMock();
+
+        $user->expects($this->any())
+            ->method('getUsername')
+            ->will($this->returnValue('MyUser'));
+
+        $this->token->expects($this->any())
+            ->method('getUser')
+            ->will($this->returnValue($user));
+
         $roles = array(new Role('ROLE_KING'));
         $allRoles = array($roles[0], new Role('ROLE_SUBJECT'));
 
@@ -221,7 +221,62 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
         $aclQuery = $query->getHint('acl.extra.query');
         $this->assertContains('"ROLE_SUBJECT"', $aclQuery);
         $this->assertContains('"ROLE_KING"', $aclQuery);
+        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
         $this->assertContains('MyUser', $aclQuery);
+    }
+
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::apply
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::cloneQuery
+     */
+    public function testApplyAnonymous()
+    {
+        /* @var $queryBuilder QueryBuilder */
+        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $query = new Query($this->em);
+        $query->setParameter('paramName', 'paramValue', 'paramType');
+        $queryBuilder->expects($this->any())
+            ->method('getQuery')
+            ->will($this->returnValue($query));
+
+        $queryBuilder->expects($this->once())
+            ->method('getRootEntities')
+            ->will($this->returnValue(array('Kunstmaan\NodeBundle\Entity\Node')));
+
+        $queryBuilder->expects($this->once())
+            ->method('getRootAliases')
+            ->will($this->returnValue(array('n')));
+
+        $roles = array();
+
+        $this->token->expects($this->once())
+            ->method('getRoles')
+            ->will($this->returnValue($roles));
+
+        $this->rh->expects($this->once())
+            ->method('getReachableRoles')
+            ->with($roles)
+            ->will($this->returnValue($roles));
+
+        $this->token->expects($this->any())
+            ->method('getUser')
+            ->will($this->returnValue('anon.'));
+
+        $permissionDef = new PermissionDefinition(array('view'), 'Kunstmaan\NodeBundle\Entity\Node');
+
+        /* @var $query Query */
+        $query = $this->object->apply($queryBuilder, $permissionDef);
+
+        $this->assertEquals(MaskBuilder::MASK_VIEW, $query->getHint('acl.mask'));
+        $this->assertEquals($permissionDef->getEntity(), $query->getHint('acl.root.entity'));
+        $this->assertEquals('rootTable', $query->getHint('acl.entityRootTableName'));
+        $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
+
+        $aclQuery = $query->getHint('acl.extra.query');
+        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
     }
 
     /**
@@ -241,6 +296,17 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->method('getReachableRoles')
             ->with($roles)
             ->will($this->returnValue($allRoles));
+
+        $user = $this->getMockBuilder('FOS\UserBundle\Model\UserInterface')
+            ->getMock();
+
+        $user->expects($this->any())
+            ->method('getUsername')
+            ->will($this->returnValue('MyUser'));
+
+        $this->token->expects($this->any())
+            ->method('getUser')
+            ->will($this->returnValue($user));
 
         $hydrator = $this->getMockBuilder('Doctrine\ORM\Internal\Hydration\ScalarHydrator')
             ->disableOriginalConstructor()
