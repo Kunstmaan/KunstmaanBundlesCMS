@@ -145,8 +145,9 @@ class NodeRepository extends NestedTreeRepository
     public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
     {
         $qb = $this->createQueryBuilder('b')
-                   ->select('b')
+                   ->select('b','t','v')
                    ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
+                   ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
                    ->where('b.deleted = 0');
 
         if (!$includeHiddenFromNav) {
@@ -227,8 +228,9 @@ class NodeRepository extends NestedTreeRepository
 
         if ($lang) {
             // Directly fetch the nodeTranslation in one query
-            $qb->select('node, t')
+            $qb->select('node, t', 'v')
                 ->innerJoin('node.nodeTranslations', 't')
+                ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
                 ->where('node.deleted = 0')
                 ->andWhere('t.lang = :lang')
                 ->setParameter('lang', $lang);
@@ -252,7 +254,9 @@ class NodeRepository extends NestedTreeRepository
     public function getAllTopNodes()
     {
         $qb = $this->createQueryBuilder('b')
-                   ->select('b')
+                   ->select('b', 't', 'v')
+                   ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
+                   ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
                    ->where('b.deleted = 0')
                    ->andWhere('b.parent IS NULL');
 
@@ -274,8 +278,9 @@ class NodeRepository extends NestedTreeRepository
     public function getNodesByInternalName($internalName, $lang, $parentId = false, $includeOffline = false)
     {
         $qb = $this->createQueryBuilder('n')
-            ->select('n, t')
+            ->select('n, t', 'v')
             ->innerJoin('n.nodeTranslations', 't')
+            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
             ->where('n.deleted = 0')
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName)
