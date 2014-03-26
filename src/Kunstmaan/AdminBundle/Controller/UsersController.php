@@ -132,7 +132,7 @@ class UsersController extends BaseSettingsController
             $langs = array_combine($langs, $langs);
             array_unshift($langs, '');
         } else if ($this->container->hasParameter('defaultadminlocale')) {
-            $langs = [$this->container->getParameter('defaultadminlocale') => $this->container->getParameter('defaultadminlocale')];
+            $langs = array($this->container->getParameter('defaultadminlocale') => $this->container->getParameter('defaultadminlocale'));
         } else {
             $langs = explode('|', $this->container->getParameter('requiredlocales'));
             $langs = array_combine($langs, $langs);

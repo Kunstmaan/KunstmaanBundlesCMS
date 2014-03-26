@@ -19,8 +19,10 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $context;
     /** @var TranslatorInterface $translator */
     private $translator;
-    /** @var Container $container */
-    private $container;
+    /** @var string $defaultadminlocale */
+    private $defaultadminlocale;
+    /** @var string $defaultlocale */
+    private $defaultlocale;
 
     /**
      * constructor
@@ -28,11 +30,12 @@ class AdminLocaleListener implements EventSubscriberInterface
      * @param SecurityContext $context
      * @param TranslatorInterface $translator
      */
-    public function __construct(SecurityContext $context, TranslatorInterface $translator, Container $container)
+    public function __construct(SecurityContext $context, TranslatorInterface $translator, $defaultadminlocale, $defaultlocale)
     {
         $this->translator = $translator;
         $this->context = $context;
-        $this->container = $container;
+        $this->defaultadminlocale = $defaultadminlocale;
+        $this->defaultlocale = $defaultlocale;
     }
 
     /**
@@ -51,12 +54,12 @@ class AdminLocaleListener implements EventSubscriberInterface
 
             if (count($match)) {
                 if (!$locale) { // if adminlocale is not specified for this user
-                    if ($this->container->hasParameter('defaultadminlocale')) { // if default adminlocale exists
+                    if ($this->defaultadminlocale) { // if default adminlocale exists
                         // use default adminlocale
-                        $locale = $this->container->getParameter('defaultadminlocale');
+                        $locale = $this->defaultadminlocale;
                     } else {
                         // use defaultlocale
-                        $locale = $this->container->getParameter('defaultlocale');
+                        $locale = $this->defaultlocale;
                     }
                 }
                 $this->translator->setLocale($locale);
