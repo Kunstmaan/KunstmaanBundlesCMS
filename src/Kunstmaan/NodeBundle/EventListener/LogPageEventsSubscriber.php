@@ -103,7 +103,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
      */
     public function onAddEmptyPageTranslation(NodeEvent $event)
     {
-        $this->logger->addInfo(sprintf('%s just added an empty page translation (%d) for node with id %d in language %s', $this->getUser()->getUsername(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
+        $this->logger->addInfo(sprintf('%s just added an empty page translation (%d) for node with id %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
     /**
