@@ -181,10 +181,17 @@ class NodeRepository extends NestedTreeRepository
     public function getAllMenuNodes($lang, $permission, AclNativeHelper $aclNativeHelper, $includeHiddenFromNav = false)
     {
         $qb = $this->_em->getConnection()->createQueryBuilder();
-        $qb->select('n.id, n.parent_id AS parent, t.url
-                        IF(t.weight IS NULL, v.weight, t.weight) AS weight,
-                        IF(t.title IS NULL, v.title, t.title) AS title,
-                        IF(t.online IS NULL, 0, t.online) AS online')
+        $sql = <<<SQL
+n.id, n.parent_id AS parent, t.url,
+IF(t.weight IS NULL, v.weight, t.weight) AS weight,
+IF(t.title IS NULL, v.title, t.title) AS title,
+IF(t.online IS NULL, 0, t.online) AS online
+SQL;
+        if ($includeHiddenFromNav) {
+            $sql .= ", n.hidden_from_nav AS hidden";
+        }
+
+        $qb->select($sql)
             ->from('kuma_nodes', 'n')
             ->leftJoin('n', 'kuma_node_translations', 't', "(t.node_id = n.id AND t.lang = ?)")
             ->leftJoin('n', '(SELECT lang, title, weight, node_id, url FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)', 'v', "(v.node_id = n.id AND v.lang <> ?)")
@@ -195,7 +202,7 @@ class NodeRepository extends NestedTreeRepository
             ->addOrderBy('title', 'ASC');
 
         if (!$includeHiddenFromNav) {
-            $qb->andWhere('n.hiddenFromNav <> 0');
+            $qb->andWhere('n.hidden_from_nav <> 0');
         }
 
         $permissionDef = new PermissionDefinition(array($permission));
