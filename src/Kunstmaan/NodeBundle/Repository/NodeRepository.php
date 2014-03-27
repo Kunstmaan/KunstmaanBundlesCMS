@@ -181,13 +181,13 @@ class NodeRepository extends NestedTreeRepository
     public function getAllMenuNodes($lang, $permission, AclNativeHelper $aclNativeHelper, $includeHiddenFromNav = false)
     {
         $qb = $this->_em->getConnection()->createQueryBuilder();
-        $qb->select('n.id, n.parent_id AS parent,
+        $qb->select('n.id, n.parent_id AS parent, t.url
                         IF(t.weight IS NULL, v.weight, t.weight) AS weight,
                         IF(t.title IS NULL, v.title, t.title) AS title,
                         IF(t.online IS NULL, 0, t.online) AS online')
             ->from('kuma_nodes', 'n')
             ->leftJoin('n', 'kuma_node_translations', 't', "(t.node_id = n.id AND t.lang = ?)")
-            ->leftJoin('n', '(SELECT lang, title, weight, node_id FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)', 'v', "(v.node_id = n.id AND v.lang <> ?)")
+            ->leftJoin('n', '(SELECT lang, title, weight, node_id, url FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)', 'v', "(v.node_id = n.id AND v.lang <> ?)")
             ->where('n.deleted = 0')
             ->addGroupBy('n.id')
             ->addOrderBy('parent', 'ASC')
