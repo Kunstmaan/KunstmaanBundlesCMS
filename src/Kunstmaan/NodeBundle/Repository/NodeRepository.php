@@ -185,11 +185,9 @@ class NodeRepository extends NestedTreeRepository
 n.id, n.parent_id AS parent, t.url,
 IF(t.weight IS NULL, v.weight, t.weight) AS weight,
 IF(t.title IS NULL, v.title, t.title) AS title,
-IF(t.online IS NULL, 0, t.online) AS online
+IF(t.online IS NULL, 0, t.online) AS online,
+n.hidden_from_nav AS hidden
 SQL;
-        if ($includeHiddenFromNav) {
-            $sql .= ", n.hidden_from_nav AS hidden";
-        }
 
         $qb->select($sql)
             ->from('kuma_nodes', 'n')
