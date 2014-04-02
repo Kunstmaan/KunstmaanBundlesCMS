@@ -14,16 +14,20 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.3.0,<2.4.0",
-        "white-october/pagerfanta-bundle": "dev-master",
-        "pagerfanta/pagerfanta": "dev-master",
-        "kunstmaan/admin-bundle": "self.version",
-        "kunstmaan/adminlist-bundle": "self.version",
-        "kunstmaan/node-bundle": "self.version"
+        "symfony/symfony": "2.3.*",
+        "white-october/pagerfanta-bundle": "1.0.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/node-bundle": "2.3.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\ArticleBundle": "" }
     },
     "target-dir": "Kunstmaan/ArticleBundle",
-    "minimum-stability": "dev"
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
