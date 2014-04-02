@@ -80,4 +80,23 @@ class ImageHandler extends FileHandler
         return $basepath . $media->getUrl();
     }
 
+    /**
+     * @param Media $media
+     */
+    public function prepareMedia(Media $media)
+    {
+        parent::prepareMedia($media);
+
+        if ($media->getContent()) {
+            $width = getimagesize($media->getContent())[0];
+            $height = getimagesize($media->getContent())[1];
+
+            $media->setMetaData(array(
+                            'original_width' => $width,
+                            'original_height' => $height,
+                            ));
+
+        }
+    }
+
 }
