@@ -648,7 +648,7 @@ header{
         }
     }
     &.error{
-        input, textarea, .input_media{
+        input, textarea, .input_media, .cke_chrome{
             color: #dd4b39;
             border-color: #dd4b39;
             @include single_transition(all, .3s, ease-in-out);
