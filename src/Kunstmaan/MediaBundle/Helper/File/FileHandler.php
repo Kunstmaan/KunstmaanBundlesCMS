@@ -200,6 +200,9 @@ class FileHandler extends AbstractMediaHandler
             }
             $media->setContent($data);
 
+            $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
+            $media->setContentType($contentType);
+
             return $media;
         }
 
