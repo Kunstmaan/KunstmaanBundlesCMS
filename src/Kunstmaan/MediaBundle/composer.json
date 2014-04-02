@@ -14,20 +14,24 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.3.0,<2.4.0",
-        "doctrine/doctrine-fixtures-bundle": ">=2.1,<2.3",
-        "stof/doctrine-extensions-bundle": "dev-master",
-        "liip/imagine-bundle": "*",
-        "knplabs/knp-gaufrette-bundle": "*",
-        "gedmo/doctrine-extensions": "*",
-        "sensio/framework-extra-bundle": "*",
-        "kunstmaan/admin-bundle": "self.version",
-        "kunstmaan/adminlist-bundle": "self.version",
-        "kunstmaan/utilities-bundle": "self.version"
+        "symfony/symfony": "2.3.*",
+        "doctrine/doctrine-fixtures-bundle": "~2.2.0",
+        "stof/doctrine-extensions-bundle": "1.1.*@dev",
+        "liip/imagine-bundle": "v0.20.2",
+        "knplabs/knp-gaufrette-bundle": "0.1.*",
+        "sensio/framework-extra-bundle": "2.3.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/utilities-bundle": "2.3.*"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaBundle": "" }
     },
-    "target-dir": "Kunstmaan/MediaBundle"
+    "target-dir": "Kunstmaan/MediaBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
