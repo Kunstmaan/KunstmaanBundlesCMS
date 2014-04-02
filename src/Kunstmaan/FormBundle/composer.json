@@ -18,7 +18,7 @@
         "symfony/symfony": "2.3.*",
         "ddeboer/data-import-bundle": "dev-master",
         "gedmo/doctrine-extensions": "2.3.*",
-        "gregwar/form-bundle": "dev-master",
+        "gregwar/form-bundle": "~2.4",
         "symfony/swiftmailer-bundle": "2.3.*",
         "sensio/framework-extra-bundle": "2.3.*",
         "kunstmaan/adminlist-bundle": "2.3.*",
