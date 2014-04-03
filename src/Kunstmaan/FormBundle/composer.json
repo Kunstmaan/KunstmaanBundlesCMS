@@ -12,22 +12,27 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.3.0,<2.4.0",
-        "ddeboer/data-import-bundle": "*",
-        "gedmo/doctrine-extensions": "*",
-        "gregwar/form-bundle": "dev-master",
-        "swiftmailer/swiftmailer": ">=4.2.0",
-        "sensio/framework-extra-bundle": "*",
-        "kunstmaan/adminlist-bundle": "self.version",
-        "kunstmaan/node-bundle": "self.version",
-        "kunstmaan/admin-bundle": "self.version",
-        "kunstmaan/pagepart-bundle": "self.version"
+        "symfony/symfony": "2.3.*",
+        "ddeboer/data-import-bundle": "dev-master",
+        "gedmo/doctrine-extensions": "2.3.*",
+        "gregwar/form-bundle": "~2.4",
+        "symfony/swiftmailer-bundle": "2.3.*",
+        "sensio/framework-extra-bundle": "2.3.*",
+        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/node-bundle": "2.3.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/pagepart-bundle": "2.3.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\FormBundle": "" }
     },
-    "target-dir": "Kunstmaan/FormBundle"
+    "target-dir": "Kunstmaan/FormBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
