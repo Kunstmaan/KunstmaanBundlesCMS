@@ -247,5 +247,4 @@ How to create your own file exporter
 * Tag your exporter with `translation.exporter
 * implement \Kunstmaan\TranslatorBundle\Service\Exporter\FileExporterInterface
 
-
 __NOTE__ : exporting isn't stable (yet)
