@@ -12,10 +12,10 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
+        "symfony/symfony": ">=2.3.0,<2.4.0",
         "sherlock/sherlock": "0.1.*"
     },
     "autoload": {
