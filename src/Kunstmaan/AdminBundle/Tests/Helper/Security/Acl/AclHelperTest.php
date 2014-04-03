@@ -322,8 +322,8 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($rows));
 
         $this->em->expects($this->any())
-            ->method('getHydrator')
-            ->will($this->returnValue($hydrator));
+          ->method('newHydrator') // was ->method('getHydrator')
+          ->will($this->returnValue($hydrator));
 
         /* @var $query NativeQuery */
         $query = new NativeQuery($this->em);
