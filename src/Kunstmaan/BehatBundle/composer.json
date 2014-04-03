@@ -14,19 +14,25 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.1.0",
+        "symfony/symfony": "2.3.*",
         "behat/behat":  "2.4.*",
         "behat/mink":   "1.4.*",
         "behat/symfony2-extension": "1.0.*",
         "behat/mink-extension": "1.0.*",
-        "behat/mink-browserkit-driver":  "1.0.*",
-        "behat/mink-selenium2-driver":   "1.0.*",
+        "behat/mink-browserkit-driver": "1.0.*",
+        "behat/mink-selenium2-driver": "1.0.*",
         "behat/mink-goutte-driver": "1.0.*",
         "behat/mink-sahi-driver": "1.0.*",
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "~3.7"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\BehatBundle": "" }
     },
-    "target-dir": "Kunstmaan/BehatBundle"
+    "target-dir": "Kunstmaan/BehatBundle",
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
