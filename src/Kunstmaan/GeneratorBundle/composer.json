@@ -12,26 +12,31 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.3.0,<2.4.0",
-        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "symfony/symfony": "2.3.*",
+        "doctrine/orm": "~2.2,>=2.2.3",
         "sensio/generator-bundle": ">=2.3.0",
-        "fzaninotto/faker": "dev-master",
-        "kunstmaan/utilities-bundle": "dev-master"
+        "fzaninotto/faker": "1.4.*@dev",
+        "kunstmaan/utilities-bundle": "2.3.*"
     },
     "suggest": {
-        "kunstmaan/admin-bundle": "dev-master",
-        "kunstmaan/adminlist-bundle": "dev-master",
-        "kunstmaan/form-bundle": "dev-master",
-        "kunstmaan/media-bundle": "dev-master",
-        "kunstmaan/media-pagepart-bundle": "dev-master",
-        "kunstmaan/node-bundle": "dev-master",
-        "kunstmaan/pagepart-bundle": "dev-master"
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/form-bundle": "2.3.*",
+        "kunstmaan/media-bundle": "2.3.*",
+        "kunstmaan/media-pagepart-bundle": "2.3.*",
+        "kunstmaan/node-bundle": "2.3.*",
+        "kunstmaan/pagepart-bundle": "2.3.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
     },
-    "target-dir": "Kunstmaan/GeneratorBundle"
+    "target-dir": "Kunstmaan/GeneratorBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
