@@ -20,7 +20,7 @@
         "kunstmaan/adminlist-bundle": "2.3.*",
         "kunstmaan/node-bundle": "2.3.*",
         "knplabs/knp-menu": "2.0.*@dev",
-        "knplabs/knp-menu-bundle": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.0.*@dev"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\ArticleBundle": "" }
