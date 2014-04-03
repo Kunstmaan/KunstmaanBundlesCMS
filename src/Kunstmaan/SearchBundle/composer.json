@@ -21,5 +21,10 @@
     "autoload": {
         "psr-0": { "Kunstmaan\\SearchBundle": "" }
     },
-    "target-dir": "Kunstmaan/SearchBundle"
+    "target-dir": "Kunstmaan/SearchBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
