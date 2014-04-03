@@ -19,7 +19,9 @@
         "white-october/pagerfanta-bundle": "1.0.*",
         "kunstmaan/admin-bundle": "2.3.*",
         "kunstmaan/utilities-bundle": "2.3.*",
-        "phpoffice/phpexcel": "1.8.*"
+        "phpoffice/phpexcel": "1.8.*",
+        "knplabs/knp-menu": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.0.*@dev",
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "~2.2.0",
