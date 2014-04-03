@@ -11,7 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(name="keyword_per_locale", columns={"keyword", "locale", "domain"}),
  *          @ORM\UniqueConstraint(name="translation_id_per_locale", columns={"translation_id", "locale"}),
- *      }
+ *      },
+ *      indexes={@ORM\Index(name="domain_idx",columns={"domain"}),@ORM\Index(name="locale_idx",columns={"locale"})}
  * )
  * @ORM\HasLifecycleCallbacks
  */
