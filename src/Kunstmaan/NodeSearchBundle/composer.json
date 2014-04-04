@@ -12,19 +12,28 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": ">=2.3.0,<2.4.0",
         "pagerfanta/pagerfanta": "dev-master",
         "sherlock/sherlock": "0.1.*",
-        "kunstmaan/node-bundle": "self.version",
-        "kunstmaan/pagepart-bundle": "self.version",
-        "kunstmaan/search-bundle": "self.version",
-        "kunstmaan/utilities-bundle": "self.version"
+        "kunstmaan/node-bundle": "2.3.*",
+        "kunstmaan/pagepart-bundle": "2.3.*",
+        "kunstmaan/search-bundle": "2.3.*",
+        "kunstmaan/utilities-bundle": "2.3.*"
+    },
+    "require-dev": {
+        "knplabs/knp-menu": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.0.*@dev"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\NodeSearchBundle": "" }
     },
-    "target-dir": "Kunstmaan/NodeSearchBundle"
+    "target-dir": "Kunstmaan/NodeSearchBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
