@@ -1,4 +1,8 @@
 {% for box in pageparts %}
     {% set resource = box %}
-    {% include box.defaultview %}
+    {% if template is defined %}
+        {% include attribute(box, template) %}
+    {% else %}
+        {% include box.defaultview %}
+    {% endif %}
 {% endfor %}
