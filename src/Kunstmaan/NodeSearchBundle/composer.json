@@ -15,17 +15,13 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.3.0,<2.4.0",
-        "pagerfanta/pagerfanta": "dev-master",
+        "symfony/symfony": "2.3.*",
+        "white-october/pagerfanta-bundle": "1.0.*",
         "sherlock/sherlock": "0.1.*",
         "kunstmaan/node-bundle": "2.3.*",
         "kunstmaan/pagepart-bundle": "2.3.*",
         "kunstmaan/search-bundle": "2.3.*",
         "kunstmaan/utilities-bundle": "2.3.*"
-    },
-    "require-dev": {
-        "knplabs/knp-menu": "2.0.*@dev",
-        "knplabs/knp-menu-bundle": "2.0.*@dev"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\NodeSearchBundle": "" }
