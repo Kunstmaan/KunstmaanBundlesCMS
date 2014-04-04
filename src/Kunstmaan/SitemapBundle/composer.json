@@ -16,10 +16,7 @@
         "php": ">=5.3.3",
         "symfony/symfony": "2.3.*",
         "kunstmaan/admin-bundle": "2.3.*",
-        "kunstmaan/node-bundle": "2.3.*"
-
-    },
-    "require-dev": {
+        "kunstmaan/node-bundle": "2.3.*",
         "knplabs/knp-menu": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "2.0.*@dev"
     },
