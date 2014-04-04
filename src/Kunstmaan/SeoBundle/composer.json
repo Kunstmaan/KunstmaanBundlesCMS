@@ -19,9 +19,7 @@
         "gedmo/doctrine-extensions": "*",
         "kunstmaan/admin-bundle": "2.3.*",
         "kunstmaan/media-bundle": "2.3.*",
-        "kunstmaan/utilities-bundle": "2.3.*"
-    },
-    "require-dev": {
+        "kunstmaan/utilities-bundle": "2.3.*",
         "knplabs/knp-menu": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "2.0.*@dev"
     },
