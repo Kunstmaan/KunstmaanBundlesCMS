@@ -14,13 +14,23 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.3.0,<2.4.0",
-        "kunstmaan/admin-bundle": "self.version",
-        "kunstmaan/node-bundle": "self.version"
+        "symfony/symfony": "2.3.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/node-bundle": "2.3.*"
 
     },
+    "require-dev": {
+        "knplabs/knp-menu": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.0.*@dev"
+    },
+    "minimum-stability": "stable",
     "autoload": {
         "psr-0": { "Kunstmaan\\SitemapBundle": "" }
     },
-    "target-dir": "Kunstmaan/SitemapBundle"
+    "target-dir": "Kunstmaan/SitemapBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
