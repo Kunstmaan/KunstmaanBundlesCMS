@@ -21,5 +21,10 @@
     "autoload": {
         "psr-0": { "Kunstmaan\\UtilitiesBundle": "" }
     },
-    "target-dir": "Kunstmaan/UtilitiesBundle"
+    "target-dir": "Kunstmaan/UtilitiesBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
