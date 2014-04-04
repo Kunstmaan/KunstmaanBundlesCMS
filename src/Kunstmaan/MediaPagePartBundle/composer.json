@@ -12,15 +12,20 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.3.0,<2.4.0",
-        "kunstmaan/pagepart-bundle": "self.version",
-        "kunstmaan/media-bundle": "self.version"
+        "symfony/symfony": "2.3.*",
+        "kunstmaan/pagepart-bundle": "2.3.*",
+        "kunstmaan/media-bundle": "2.3.*"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\MediaPagePartBundle": "" }
     },
-    "target-dir": "Kunstmaan/MediaPagePartBundle"
+    "target-dir": "Kunstmaan/MediaPagePartBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
