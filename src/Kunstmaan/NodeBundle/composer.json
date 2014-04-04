@@ -21,9 +21,7 @@
         "symfony-cmf/routing-bundle": "~1.1.1",
         "kunstmaan/adminlist-bundle": "2.3.*",
         "kunstmaan/admin-bundle": "2.3.*",
-        "kunstmaan/utilities-bundle": "2.3.*",
-        "knplabs/knp-menu": "2.0.*@dev",
-        "knplabs/knp-menu-bundle": "2.0.*@dev"
+        "kunstmaan/utilities-bundle": "2.3.*"
     },
     "minimum-stability": "stable",
     "autoload": {

@@ -4,7 +4,8 @@ namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
 
-use Knp\Menu\Silex\RouterAwareFactory;
+use Knp\Menu\MenuFactory;
+use Knp\Menu\Silex\RoutingExtension;
 
 use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
@@ -12,6 +13,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\Node;
 
+use Symfony\Cmf\Bundle\RoutingBundle\Admin\Extension\RouteReferrersExtension;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,7 +39,9 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     {
         /* @var UrlGeneratorInterface $urlGenerator */
         $urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
-        $factory = new RouterAwareFactory($urlGenerator);
+        $routingExtension = new RoutingExtension($urlGenerator);
+        $factory = new MenuFactory();
+        $factory->addExtension($routingExtension);
         $em = $this->getMockedEntityManager();
         /* @var EventDispatcherInterface $dispatcher */
         $dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
