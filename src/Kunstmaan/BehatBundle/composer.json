@@ -15,14 +15,14 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.3.*",
-        "behat/behat":  "2.4.*",
-        "behat/mink":   "1.4.*",
-        "behat/symfony2-extension": "1.0.*",
-        "behat/mink-extension": "1.0.*",
-        "behat/mink-browserkit-driver": "1.0.*",
-        "behat/mink-selenium2-driver": "1.0.*",
-        "behat/mink-goutte-driver": "1.0.*",
-        "behat/mink-sahi-driver": "1.0.*",
+        "behat/behat": "~2.5.0",
+        "behat/mink": "*",
+        "behat/symfony2-extension": "*",
+        "behat/mink-extension": "*",
+        "behat/mink-browserkit-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-sahi-driver": "*",
         "phpunit/phpunit": "~3.7"
     },
     "autoload": {
