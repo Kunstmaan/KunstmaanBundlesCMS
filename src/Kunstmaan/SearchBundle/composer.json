@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
+        "symfony/symfony": "~2.3",
         "sherlock/sherlock": "0.1.*"
     },
     "autoload": {
