@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
+        "symfony/symfony": "~2.3",
         "doctrine/orm": "~2.2,>=2.2.3",
         "sensio/generator-bundle": ">=2.3.0",
         "fzaninotto/faker": "1.4.*@dev",
