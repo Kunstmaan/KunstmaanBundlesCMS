@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
+        "symfony/symfony": "~2.3",
         "behat/behat": "~2.5.0",
         "behat/mink": "*",
         "behat/symfony2-extension": "*",
