@@ -25,7 +25,7 @@
         "sensio/distribution-bundle": "~2.3",
         "sensio/framework-extra-bundle": ">=2.3,<4.0.0",
         "sensio/generator-bundle": "~2.3",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
         
         "kunstmaan/admin-bundle": "2.3.*",
         "kunstmaan/adminlist-bundle": "2.3.*",
