@@ -14,8 +14,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
-        "sensio/framework-extra-bundle": "2.3.*",
+        "symfony/symfony": "~2.3",
+        "sensio/framework-extra-bundle": ">=2.3.4,<4.0.0",
         "white-october/pagerfanta-bundle": "1.0.*",
         "kunstmaan/admin-bundle": "2.3.*",
         "kunstmaan/utilities-bundle": "2.3.*",
