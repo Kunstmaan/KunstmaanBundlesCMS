@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
-use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * BulkUploadType
@@ -19,6 +18,7 @@ class BulkUploadType extends AbstractType
 
     /**
      * contructor
+     *
      * @param string $accept
      */
     public function __construct($accept = null)
@@ -31,6 +31,7 @@ class BulkUploadType extends AbstractType
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -39,14 +40,16 @@ class BulkUploadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-                'files', 'file', array(
-                "required" => false,
-                "attr" => array(
-                    "accept" => $this->accept,
-                    "multiple" => "multiple",
-                ),
-                'data_class' => null
-             )
+          'files',
+          'file',
+          array(
+            'required'   => false,
+            'attr'       => array(
+              'accept'   => $this->accept,
+              'multiple' => 'multiple',
+            ),
+            'data_class' => null
+          )
         );
     }
 
@@ -57,6 +60,6 @@ class BulkUploadType extends AbstractType
      */
     public function getName()
     {
-        return "kunstmaan_mediabundle_bulkupload";
+        return 'kunstmaan_mediabundle_bulkupload';
     }
 }

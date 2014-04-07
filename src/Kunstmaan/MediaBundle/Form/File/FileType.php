@@ -2,11 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Form\File;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * FileType
@@ -19,6 +17,7 @@ class FileType extends AbstractType
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -47,8 +46,10 @@ class FileType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-                'data_class' => 'Kunstmaan\MediaBundle\Helper\File\FileHelper',
-        ));
+        $resolver->setDefaults(
+          array(
+            'data_class' => 'Kunstmaan\MediaBundle\Helper\File\FileHelper',
+          )
+        );
     }
 }

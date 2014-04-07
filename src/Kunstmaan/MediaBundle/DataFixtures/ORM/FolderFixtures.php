@@ -24,20 +24,20 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $gal = new Folder($manager);
         $gal->setName('Media');
         $gal->setTranslatableLocale('en');
-        $gal->setRel("media");
+        $gal->setRel('media');
         $manager->persist($gal);
         $manager->flush();
         $this->addReference('media-folder-en', $gal);
 
         $gal->setTranslatableLocale('nl');
         $manager->refresh($gal);
-        $gal->setName("Media");
+        $gal->setName('Media');
         $manager->persist($gal);
         $manager->flush();
 
         $gal->setTranslatableLocale('fr');
         $manager->refresh($gal);
-        $gal->setName("Media");
+        $gal->setName('Media');
         $manager->persist($gal);
         $manager->flush();
 
@@ -45,7 +45,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setParent($gal);
         $subgal->setName('Images');
         $subgal->setTranslatableLocale('en');
-        $subgal->setRel("image");
+        $subgal->setRel('image');
         $manager->persist($subgal);
         $manager->flush();
         $this->addReference('images-folder-en', $subgal);
@@ -66,7 +66,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setParent($gal);
         $subgal->setName('Videos');
         $subgal->setTranslatableLocale('en');
-        $subgal->setRel("video");
+        $subgal->setRel('video');
         $manager->persist($subgal);
         $manager->flush();
         $this->addReference('videos-folder-en', $subgal);
@@ -87,7 +87,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setParent($gal);
         $subgal->setName('Slides');
         $subgal->setTranslatableLocale('en');
-        $subgal->setRel("slideshow");
+        $subgal->setRel('slideshow');
         $manager->persist($subgal);
         $manager->flush();
         $this->addReference('slides-folder-en', $subgal);
@@ -108,7 +108,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
         $subgal->setParent($gal);
         $subgal->setName('Files');
         $subgal->setTranslatableLocale('en');
-        $subgal->setRel("files");
+        $subgal->setRel('files');
         $manager->persist($subgal);
         $manager->flush();
         $this->addReference('files-folder-en', $subgal);

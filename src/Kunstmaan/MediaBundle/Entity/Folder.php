@@ -2,11 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -108,26 +107,6 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * @param string $name
-     *
-     * @return Folder
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @param string $locale
      *
      * @return Folder
@@ -137,6 +116,14 @@ class Folder extends AbstractEntity
         $this->locale = $locale;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRel()
+    {
+        return $this->rel;
     }
 
     /**
@@ -152,11 +139,13 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * @return string
+     * Get createdAd
+     *
+     * @return \DateTime
      */
-    public function getRel()
+    public function getCreatedAt()
     {
-        return $this->rel;
+        return $this->createdAt;
     }
 
     /**
@@ -174,13 +163,13 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * Get createdAd
+     * Get updatedAt
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
+    public function getUpdatedAt()
     {
-        return $this->createdAt;
+        return $this->updatedAt;
     }
 
     /**
@@ -195,40 +184,6 @@ class Folder extends AbstractEntity
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param Folder $parent
-     *
-     * @return Folder
-     */
-    public function setParent(Folder $parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return Folder
-     */
-    public function getParent()
-    {
-        return $this->parent;
     }
 
     /**
@@ -247,6 +202,30 @@ class Folder extends AbstractEntity
     }
 
     /**
+     * Get parent
+     *
+     * @return Folder
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param Folder $parent
+     *
+     * @return Folder
+     */
+    public function setParent(Folder $parent)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
      * Add a child
      *
      * @param Folder $child
@@ -259,46 +238,6 @@ class Folder extends AbstractEntity
         $child->setParent($this);
 
         return $this;
-    }
-
-    /**
-     * @param bool $includeDeleted
-     *
-     * @return Folder[]
-     */
-    public function getChildren($includeDeleted = false)
-    {
-        if ($includeDeleted) {
-            return $this->children;
-        }
-
-        return $this->children->filter( function (Folder $entry) {
-            if ($entry->isDeleted()) {
-                return false;
-            }
-
-            return true;
-        });
-    }
-
-    /**
-     * @param array $children
-     *
-     * @return Folder
-     */
-    public function setChildren($children)
-    {
-        $this->children = $children;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDeleted()
-    {
-        return $this->deleted;
     }
 
     /**
@@ -340,13 +279,15 @@ class Folder extends AbstractEntity
             return $this->media;
         }
 
-        return $this->media->filter( function (Media $entry) {
-            if ($entry->isDeleted()) {
-                return false;
-            }
+        return $this->media->filter(
+          function (Media $entry) {
+              if ($entry->isDeleted()) {
+                  return false;
+              }
 
-            return true;
-        });
+              return true;
+          }
+        );
     }
 
     /**
@@ -366,6 +307,56 @@ class Folder extends AbstractEntity
     }
 
     /**
+     * @param bool $includeDeleted
+     *
+     * @return Folder[]
+     */
+    public function getChildren($includeDeleted = false)
+    {
+        if ($includeDeleted) {
+            return $this->children;
+        }
+
+        return $this->children->filter(
+          function (Folder $entry) {
+              if ($entry->isDeleted()) {
+                  return false;
+              }
+
+              return true;
+          }
+        );
+    }
+
+    /**
+     * @param array $children
+     *
+     * @return Folder
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInternalName()
+    {
+        return $this->internalName;
+    }
+
+    /**
      * @param string $internalName
      *
      * @return Folder
@@ -380,17 +371,29 @@ class Folder extends AbstractEntity
     /**
      * @return string
      */
-    public function getInternalName()
+    public function __toString()
     {
-        return $this->internalName;
+        return $this->getName();
     }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function getName()
     {
-        return $this->getName();
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Folder
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**

@@ -42,9 +42,7 @@ class MediaRepository extends EntityRepository
      */
     public function getMedia($mediaId)
     {
-        $em = $this->getEntityManager();
-
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->find($mediaId);
+        $media = $this->find($mediaId);
         if (!$media) {
             throw new EntityNotFoundException('The id given for the media is not valid.');
         }

@@ -5,13 +5,14 @@ namespace Kunstmaan\MediaBundle\Controller;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * MediaController
@@ -20,74 +21,83 @@ class MediaController extends Controller
 {
 
     /**
-     * @param int $mediaId
+     * @param Request $request
+     * @param int     $mediaId
      *
      * @Route("/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_show")
      *
      * @return Response
      */
-    public function showAction($mediaId)
+    public function showAction(Request $request, $mediaId)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
 
         /* @var Media $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media  = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         $folder = $media->getFolder();
 
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
-        $handler = $mediaManager->getHandler($media);
-        $helper = $handler->getFormHelper($media);
+        $handler      = $mediaManager->getHandler($media);
+        $helper       = $handler->getFormHelper($media);
 
         $form = $this->createForm($handler->getFormType(), $helper);
 
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
             if ($form->isValid()) {
                 $media = $helper->getMedia();
                 $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
-                return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array('mediaId'  => $media->getId())));
+                return new RedirectResponse($this->generateUrl(
+                  'KunstmaanMediaBundle_media_show',
+                  array('mediaId' => $media->getId())
+                ));
             }
         }
         $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
 
-        return $this->render($showTemplate, array(
-            'handler' => $handler,
+        return $this->render(
+          $showTemplate,
+          array(
+            'handler'      => $handler,
             'mediamanager' => $this->get('kunstmaan_media.media_manager'),
-            'editform'      => $form->createView(),
-            'media' => $media,
-            'helper' => $helper,
-            'folder' => $folder
-        ));
+            'editform'     => $form->createView(),
+            'media'        => $media,
+            'helper'       => $helper,
+            'folder'       => $folder
+          )
+        );
     }
 
     /**
-     * @param int $mediaId
+     * @param Request $request
+     * @param int     $mediaId
      *
      * @Route("/delete/{mediaId}", requirements={"mediaId" = "\d+"}, name="KunstmaanMediaBundle_media_delete")
      *
      * @return RedirectResponse
      */
-    public function deleteAction($mediaId)
+    public function deleteAction(Request $request, $mediaId)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
 
         /* @var Media $media */
-        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media     = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         $medianame = $media->getName();
-        $folder = $media->getFolder();
+        $folder    = $media->getFolder();
 
         $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
 
-        $this->get('session')->getFlashBag()->add('success', 'Entry \''.$medianame.'\' has been deleted!');
+        $this->get('session')->getFlashBag()->add('success', 'Entry \'' . $medianame . '\' has been deleted!');
 
         // If the redirect url is passed via the url we use it
         $redirectUrl = $request->query->get('redirectUrl');
         if (empty($redirectUrl)) {
-            $redirectUrl = $this->generateUrl('KunstmaanMediaBundle_folder_show', array('folderId'  => $folder->getId()));
+            $redirectUrl = $this->generateUrl(
+              'KunstmaanMediaBundle_folder_show',
+              array('folderId' => $folder->getId())
+            );
         }
 
         return new RedirectResponse($redirectUrl);
@@ -108,7 +118,7 @@ class MediaController extends Controller
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
-        return array('folder'   => $folder);
+        return array('folder' => $folder);
     }
 
     /**
@@ -123,6 +133,7 @@ class MediaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        // TODO : Rewrite the following with clean (and testable) code
         // Make sure file is not cached (as it happens for example on iOS devices)
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -131,10 +142,10 @@ class MediaController extends Controller
         header("Pragma: no-cache");
 
         // Settings
-        $tempDir = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
-        $targetDir = rtrim($tempDir, '/') . DIRECTORY_SEPARATOR . "plupload";
+        $tempDir          = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
+        $targetDir        = rtrim($tempDir, '/') . DIRECTORY_SEPARATOR . "plupload";
         $cleanupTargetDir = true; // Remove old files
-        $maxFileAge = 5 * 60 * 60; // Temp file age in seconds
+        $maxFileAge       = 5 * 60 * 60; // Temp file age in seconds
 
         // Create target dir
         if (!file_exists($targetDir)) {
@@ -152,7 +163,7 @@ class MediaController extends Controller
         $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
         // Chunking might be enabled
-        $chunk = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
+        $chunk  = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
         $chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 0;
 
         // Remove old temp files
@@ -212,7 +223,7 @@ class MediaController extends Controller
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $file = new File($filePath);
+        $file   = new File($filePath);
 
         /* @var Media $media */
         $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
@@ -224,14 +235,15 @@ class MediaController extends Controller
     }
 
     /**
-     * @param int $folderId
+     * @param Request $request
+     * @param int     $folderId
      *
      * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload")
      * @Method({"GET", "POST"})
      *
      * @return array|RedirectResponse
      */
-    public function dropAction($folderId)
+    public function dropAction(Request $request, $folderId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -239,27 +251,28 @@ class MediaController extends Controller
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
         $drop = null;
-        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0 ) {
-            $drop = $this->getRequest()->files->get('files');
+        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0) {
+            $drop = $request->files->get('files');
         } else {
-            $drop = $this->getRequest()->get('text');
+            $drop = $request->get('text');
         }
         $media = $this->get('kunstmaan_media.media_manager')->createNew($drop);
         if ($media) {
             $media->setFolder($folder);
             $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
-            return new Response(json_encode(array('status'=>'File was uploaded successfuly!')));
+            return new Response(json_encode(array('status' => 'File was uploaded successfuly!')));
         }
 
-        $this->getRequest()->getSession()->getFlashBag()->add('notice', 'Could not recognize what you dropped!');
+        $request->getSession()->getFlashBag()->add('notice', 'Could not recognize what you dropped!');
 
-        return new Response(json_encode(array('status'=>'Could not recognize anything!')));
+        return new Response(json_encode(array('status' => 'Could not recognize anything!')));
     }
 
     /**
-     * @param int    $folderId The folder id
-     * @param string $type     The type
+     * @param Request $request
+     * @param int     $folderId The folder id
+     * @param string  $type     The type
      *
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create")
      * @Method({"GET", "POST"})
@@ -267,14 +280,65 @@ class MediaController extends Controller
      *
      * @return array|RedirectResponse
      */
-    public function createAction($folderId, $type)
+    public function createAction(Request $request, $folderId, $type)
     {
-        return $this->createAndRedirect($folderId, $type, "KunstmaanMediaBundle_folder_show");
+        return $this->createAndRedirect($request, $folderId, $type, 'KunstmaanMediaBundle_folder_show');
     }
 
     /**
-     * @param int    $folderId The folder id
-     * @param string $type     The type
+     * @param Request $request
+     * @param int     $folderId    The folder Id
+     * @param string  $type        The type
+     * @param string  $redirectUrl The url where we want to redirect to on success
+     * @param array   $extraParams The extra parameters that will be passed wen redirecting
+     *
+     * @return array
+     */
+    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = array())
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var Folder $folder */
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+
+        /* @var MediaManager $mediaManager */
+        $mediaManager = $this->get('kunstmaan_media.media_manager');
+        $handler      = $mediaManager->getHandlerForType($type);
+        $media        = new Media();
+        $helper       = $handler->getFormHelper($media);
+
+        $form = $this->createForm($handler->getFormType(), $helper);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if ($form->isValid()) {
+                $media = $helper->getMedia();
+                $media->setFolder($folder);
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+
+                $this->get('session')->getFlashBag()->add(
+                  'success',
+                  'Media \'' . $media->getName() . '\' has been created!'
+                );
+
+                $params = array('folderId' => $folder->getId());
+                $params = array_merge($params, $extraParams);
+
+                return new RedirectResponse($this->generateUrl($redirectUrl, $params));
+            }
+        }
+
+        return array(
+          'type'   => $type,
+          'form'   => $form->createView(),
+          'folder' => $folder
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $folderId The folder id
+     * @param string  $type     The type
      *
      * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create")
      * @Method({"GET", "POST"})
@@ -282,10 +346,10 @@ class MediaController extends Controller
      *
      * @return array|RedirectResponse
      */
-    public function createModalAction($folderId, $type)
+    public function createModalAction(Request $request, $folderId, $type)
     {
-        $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
-        $linkChooser = $this->getRequest()->get('linkChooser');
+        $cKEditorFuncNum = $request->get('CKEditorFuncNum');
+        $linkChooser     = $request->get('linkChooser');
 
         $extraParams = array();
         if (!empty($cKEditorFuncNum)) {
@@ -295,52 +359,12 @@ class MediaController extends Controller
             $extraParams['linkChooser'] = $linkChooser;
         }
 
-        return $this->createAndRedirect($folderId, $type, "KunstmaanMediaBundle_chooser_show_folder", $extraParams);
-    }
-
-    /**
-     * @param int    $folderId    The folder Id
-     * @param string $type        The type
-     * @param string $redirectUrl The url where we want to redirect to on success
-     * @param array  $extraParams The extra parameters that will be passed wen redirecting
-     *
-     * @return array
-     */
-    private function createAndRedirect($folderId, $type, $redirectUrl, $extraParams = array())
-    {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-
-        /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
-        $handler = $mediaManager->getHandlerForType($type);
-        $media = new Media();
-        $helper = $handler->getFormHelper($media);
-
-        $form = $this->createForm($handler->getFormType(), $helper);
-
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $media = $helper->getMedia();
-                $media->setFolder($folder);
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
-
-                $this->get('session')->getFlashBag()->add('success', 'Media \''.$media->getName().'\' has been created!');
-
-                $params = array('folderId' => $folder->getId());
-                $params = array_merge($params, $extraParams);
-                return new RedirectResponse($this->generateUrl($redirectUrl, $params));
-            }
-        }
-
-        return array(
-            'type' => $type,
-            'form' => $form->createView(),
-            'folder' => $folder
+        return $this->createAndRedirect(
+          $request,
+          $folderId,
+          $type,
+          'KunstmaanMediaBundle_chooser_show_folder',
+          $extraParams
         );
     }
 
