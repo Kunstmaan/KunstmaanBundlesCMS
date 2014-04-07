@@ -36,7 +36,7 @@ class ImageHandler extends FileHandler
      */
     public function getName()
     {
-        return "Image Handler";
+        return 'Image Handler';
     }
 
     /**
@@ -88,8 +88,9 @@ class ImageHandler extends FileHandler
         parent::prepareMedia($media);
 
         if ($media->getContent()) {
-            $width = getimagesize($media->getContent())[0];
-            $height = getimagesize($media->getContent())[1];
+            $imageInfo = getimagesize($media->getContent());
+            $width = $imageInfo[0];
+            $height = $imageInfo[1];
 
             $media->setMetaData(array(
                             'original_width' => $width,
