@@ -2,11 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Form\RemoteSlide;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * RemoteSlideType
@@ -19,6 +17,7 @@ class RemoteSlideType extends AbstractType
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -27,10 +26,15 @@ class RemoteSlideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text')
-            ->add('code', 'text')
-            ->add('type', 'choice', array(
-                'choices'   => array('slideshare' => 'slideshare')));
+          ->add('name', 'text')
+          ->add('code', 'text')
+          ->add(
+            'type',
+            'choice',
+            array(
+              'choices' => array('slideshare' => 'slideshare')
+            )
+          );
     }
 
     /**
@@ -50,8 +54,10 @@ class RemoteSlideType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-                'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
-        ));
+        $resolver->setDefaults(
+          array(
+            'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
+          )
+        );
     }
 }

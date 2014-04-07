@@ -4,9 +4,9 @@ namespace Kunstmaan\MediaBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaDeleteItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaEditItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaSelectItemAction;
@@ -40,12 +40,17 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      * @param Folder        $folder       The current folder
      * @param Request       $request      The request object
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null, MediaManager $mediaManager, Folder $folder, Request $request)
-    {
+    public function __construct(
+      EntityManager $em,
+      AclHelper $aclHelper = null,
+      MediaManager $mediaManager,
+      Folder $folder,
+      Request $request
+    ) {
         parent::__construct($em, $aclHelper);
 
         $this->setAdminType(new MediaType($mediaManager, $em));
-        $this->folder = $folder;
+        $this->folder  = $folder;
         $this->request = $request;
     }
 
@@ -68,7 +73,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
         $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'Type');
         $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'Date');
-        $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'Filsize (in bytes)');
+        $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'Filesize (in bytes)');
     }
 
     /**
@@ -79,8 +84,8 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     public function getIndexUrl()
     {
         return array(
-            'path' => 'KunstmaanMediaBundle_folder_show',
-            'params' => array('folderId' => $this->folder->getId())
+          'path'   => 'KunstmaanMediaBundle_folder_show',
+          'params' => array('folderId' => $this->folder->getId())
         );
     }
 
@@ -153,9 +158,9 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->andWhere('b.folder = :folder')
-            ->setParameter('folder',  $this->folder->getId())
-            ->andWhere('b.deleted = 0')
-            ->orderBy('b.updatedAt', 'DESC');
+          ->setParameter('folder', $this->folder->getId())
+          ->andWhere('b.deleted = 0')
+          ->orderBy('b.updatedAt', 'DESC');
 
         if ($this->request->get('_route') == 'KunstmaanMediaBundle_chooser_show_folder') {
             $type = $this->request->query->get('type');
@@ -163,23 +168,23 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
                 switch ($type) {
                     case 'file':
                         $queryBuilder->andWhere('b.location = :location')
-                            ->setParameter('location', 'local');
+                          ->setParameter('location', 'local');
                         break;
                     case 'image':
                         $queryBuilder->andWhere('b.contentType LIKE :ctype')
-                            ->setParameter('ctype', '%image%');
+                          ->setParameter('ctype', '%image%');
                         break;
                     case RemoteAudioHandler::TYPE:
                         $queryBuilder->andWhere('b.contentType = :ctype')
-                            ->setParameter('ctype', RemoteAudioHandler::CONTENT_TYPE);
+                          ->setParameter('ctype', RemoteAudioHandler::CONTENT_TYPE);
                         break;
                     case RemoteSlideHandler::TYPE:
                         $queryBuilder->andWhere('b.contentType = :ctype')
-                            ->setParameter('ctype', RemoteSlideHandler::CONTENT_TYPE);
+                          ->setParameter('ctype', RemoteSlideHandler::CONTENT_TYPE);
                         break;
                     case RemoteVideoHandler::TYPE:
                         $queryBuilder->andWhere('b.contentType = :ctype')
-                            ->setParameter('ctype', RemoteVideoHandler::CONTENT_TYPE);
+                          ->setParameter('ctype', RemoteVideoHandler::CONTENT_TYPE);
                         break;
                 }
             }

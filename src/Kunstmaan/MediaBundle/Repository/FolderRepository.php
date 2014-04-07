@@ -72,7 +72,11 @@ class FolderRepository extends EntityRepository
      */
     public function getAllFolders($limit = null)
     {
-        $qb = $this->createQueryBuilder('folder')->select('folder')->where('folder.parent is null AND folder.deleted != true')->orderby('folder.name');
+        $qb = $this->createQueryBuilder('folder')
+          ->select('folder')
+          ->where('folder.parent is null AND folder.deleted != true')
+          ->orderBy('folder.name');
+
         if (false === is_null($limit)) {
             $qb->setMaxResults($limit);
         }
@@ -88,9 +92,7 @@ class FolderRepository extends EntityRepository
      */
     public function getFolder($folderId)
     {
-        $em = $this->getEntityManager();
-
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->find($folderId);
+        $folder = $this->find($folderId);
         if (!$folder) {
             throw new EntityNotFoundException('The id given for the folder is not valid.');
         }
@@ -100,9 +102,7 @@ class FolderRepository extends EntityRepository
 
     public function getFirstTopFolder()
     {
-        $em = $this->getEntityManager();
-
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('parent' => NULL));
+        $folder = $this->findOneBy(array('parent' => null));
         if (!$folder) {
             throw new EntityNotFoundException('No first top folder found (where parent is NULL)');
         }

@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\MediaBundle\Form\Type;
 
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * MediaType
@@ -32,7 +32,7 @@ class MediaType extends AbstractType
      */
     public function __construct($mediaManager, $objectManager)
     {
-        $this->mediaManager = $mediaManager;
+        $this->mediaManager  = $mediaManager;
         $this->objectManager = $objectManager;
     }
 
@@ -41,6 +41,7 @@ class MediaType extends AbstractType
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -48,7 +49,10 @@ class MediaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addViewTransformer(new IdToMediaTransformer($this->objectManager, $options['current_value_container']), true);
+        $builder->addViewTransformer(
+          new IdToMediaTransformer($this->objectManager, $options['current_value_container']),
+          true
+        );
         $builder->setAttribute('chooser', $options['chooser']);
         $builder->setAttribute('mediatype', $options['mediatype']);
     }
@@ -69,12 +73,14 @@ class MediaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
-        $resolver->setDefaults(array(
-            'compound' => false,
-            'chooser'		=> 'KunstmaanMediaBundle_chooser',
-            'mediatype'		=> null,
+        $resolver->setDefaults(
+          array(
+            'compound'                => false,
+            'chooser'                 => 'KunstmaanMediaBundle_chooser',
+            'mediatype'               => null,
             'current_value_container' => new CurrentValueContainer(),
-        ));
+          )
+        );
     }
 
     /**
@@ -92,8 +98,8 @@ class MediaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['chooser'] = $form->getConfig()->getAttribute('chooser');
-        $view->vars['mediatype'] = $form->getConfig()->getAttribute('mediatype');
+        $view->vars['chooser']      = $form->getConfig()->getAttribute('chooser');
+        $view->vars['mediatype']    = $form->getConfig()->getAttribute('mediatype');
         $view->vars['mediamanager'] = $this->mediaManager;
     }
 }
