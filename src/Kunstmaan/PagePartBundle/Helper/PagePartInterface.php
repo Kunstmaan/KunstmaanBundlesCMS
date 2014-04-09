@@ -23,7 +23,7 @@ interface PagePartInterface
      * @abstract
      * @return string
      */
-    public function getAdminView(PageInterface $page = null);
+    public function getAdminView();
 
     /**
      * This method can be used to override the default view for a specific page type
