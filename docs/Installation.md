@@ -73,7 +73,7 @@ Then, use the `create-project` command to generate a new Kunstmaan Bundles CMS a
 
 By using `-s dev` you can get the version based on Symfony 2.4:
 
-    php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install -s dev
+    php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install
 
 Composer will install the Kunstmaan Bundles CMS and all its dependencies under the `path/to/install` directory, and
 ask for some basic configuration settings (ie. database settings), you can leave the other settings at their default
@@ -166,7 +166,7 @@ You should first check that your system setup matches the minimum requirements, 
 
 ```
 curl -s http://getcomposer.org/installer | php
-php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install -s dev
+php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install
 app/console kuma:generate:bundle
 app/console kuma:generate:default-site --demosite
 app/console doctrine:schema:create
