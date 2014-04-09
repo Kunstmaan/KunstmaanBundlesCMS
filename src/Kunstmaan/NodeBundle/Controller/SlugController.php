@@ -45,10 +45,10 @@ class SlugController extends Controller
         $em         = $this->getDoctrine()->getManager();
         $request    = $this->getRequest();
         $locale     = $request->getLocale();
-
+        
         /* @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationForUrl($url, $locale);
-
+        $nodeTranslation = $request->get('_nodeTranslation');
+        
         // If no node translation -> 404
         if (!$nodeTranslation) {
             throw new ResourceNotFoundException('No page found for slug ' . $url);

@@ -33,7 +33,7 @@ class SlugRouter implements RouterInterface
     /** @var ContainerInterface */
     private $container;
 
-    /**
+      /**
      * The constructor for this service
      *
      * @param ContainerInterface $container
@@ -43,21 +43,21 @@ class SlugRouter implements RouterInterface
         $this->container = $container;
         $this->routeCollection = new RouteCollection();
 
-        $multilanguage      = $this->container->getParameter('multilanguage');
-        $defaultlocale      = $this->container->getParameter('defaultlocale');
+        $multilanguage = $this->container->getParameter('multilanguage');
+        $defaultlocale = $this->container->getParameter('defaultlocale');
 
         if ($multilanguage) {
             // the website is multilingual so the language is the first parameter
-            $requiredLocales    = $this->container->getParameter('requiredlocales');
+            $requiredLocales = $this->container->getParameter('requiredlocales');
 
             $this->routeCollection->add(
                 '_slug_preview',
                 new Route(
                     '/{_locale}/admin/preview/{url}',
                     array(
-                            '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
-                            'preview'       => true,
-                            'url'           => ''
+                '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+                'preview' => true,
+                'url' => ''
                 ),
                 array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*") // override default validation of url to accept /, - and _
             ));
@@ -66,12 +66,12 @@ class SlugRouter implements RouterInterface
                 new Route(
                     '/{_locale}/{url}',
                     array(
-                        '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'       => false,
-                        'url'           => ''
+                '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+                'preview' => false,
+                'url' => ''
                     ),
                     array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*")
-                )
+                    )
             );
         } else {
             // the website is not multiligual, _locale must do a fallback to the default locale
@@ -80,26 +80,26 @@ class SlugRouter implements RouterInterface
                 new Route(
                     '/admin/preview/{url}',
                     array(
-                            '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
-                            'preview'       => true,
-                            'url'           => '',
-                            '_locale'       => $defaultlocale
+                '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+                'preview' => true,
+                'url' => '',
+                '_locale' => $defaultlocale
                         ),
                     array('url' => "[a-zA-Z0-9\-_\/]*")
-                )
+                    )
             );
             $this->routeCollection->add(
                 '_slug',
                 new Route(
                     '/{url}',
                     array(
-                        '_controller'   => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'       => false,
-                        'url'           => '',
-                        '_locale'       => $defaultlocale
+                '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+                'preview' => false,
+                'url' => '',
+                '_locale' => $defaultlocale
                     ),
                     array('url' => "[a-zA-Z0-9\-_\/]*")
-                )
+                    )
             );
         }
     }
@@ -118,9 +118,26 @@ class SlugRouter implements RouterInterface
         $urlMatcher = new UrlMatcher($this->routeCollection, $this->getContext());
 
         $result = $urlMatcher->match($pathinfo);
+
+        if (!empty($result))
+        {
+            // The route matches, now check if it actually exists
+            $em = $this->container->get('doctrine.orm.entity_manager');
+
+            /* @var NodeTranslationRepository $nodeTranslationRepo */
+            $nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
+            /* @var NodeTranslation $nodeTranslation */
+            $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl($result['url'], $result['_locale']);
+
+            if (is_null($nodeTranslation))
+            {
+                throw new ResourceNotFoundException('No page found for slug ' . $pathinfo);
+            }
+            $result['_nodeTranslation'] = $nodeTranslation;
+        }
+
         return $result;
     }
-
 
     /**
      * Generate an url for a supplied route
