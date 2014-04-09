@@ -2,14 +2,15 @@
 
 namespace Kunstmaan\MediaBundle\Helper\File;
 
-use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Kunstmaan\MediaBundle\Form\File\FileType;
-use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
-use Gaufrette\Filesystem;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Gaufrette\Adapter\Local;
-use Symfony\Component\HttpFoundation\File\File;
+use Gaufrette\Filesystem;
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Form\File\FileType;
+use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -39,8 +40,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function __construct()
     {
-        //we use a specific symfony mimetypeguesser because de default (FileinfoMimeTypeGuesser) is unable to recognize MS documents
-        $this->mimeTypeGuesser = new FileBinaryMimeTypeGuesser();
+        $this->mimeTypeGuesser = MimeTypeGuesser::getInstance();
     }
 
     /**
@@ -50,7 +50,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function setMediaPath($kernelRootDir)
     {
-        $this->fileSystem = new Filesystem(new Local($kernelRootDir. '/../web/uploads/media/', true));
+        $this->fileSystem = new Filesystem(new Local($kernelRootDir . '/../web/uploads/media/', true));
     }
 
     /**
@@ -84,7 +84,10 @@ class FileHandler extends AbstractMediaHandler
      */
     public function canHandle($object)
     {
-        if ($object instanceof File || ($object instanceof Media && (is_file($object->getContent()) || $object->getLocation() == 'local'))) {
+        if ($object instanceof File ||
+            ($object instanceof Media &&
+                (is_file($object->getContent()) || $object->getLocation() == 'local'))
+        ) {
             return true;
         }
 
@@ -137,9 +140,28 @@ class FileHandler extends AbstractMediaHandler
 
         $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
         $media->setContentType($contentType);
-        $relativePath = sprintf('/%s.%s', $media->getUuid(), ExtensionGuesser::getInstance()->guess($media->getContentType()));
-        $media->setUrl('/uploads/media'.$relativePath);
+        $relativePath = sprintf(
+            '/%s.%s',
+            $media->getUuid(),
+            ExtensionGuesser::getInstance()->guess($media->getContentType())
+        );
+        $media->setUrl('/uploads/media' . $relativePath);
         $media->setLocation('local');
+    }
+
+    /**
+     * @param Media $media
+     */
+    public function removeMedia(Media $media)
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateMedia(Media $media)
+    {
+        $this->saveMedia($media);
     }
 
     /**
@@ -162,24 +184,13 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getOriginalFile(Media $media)
     {
-        $relativePath = sprintf('/%s.%s', $media->getUuid(), ExtensionGuesser::getInstance()->guess($media->getContentType()));
+        $relativePath = sprintf(
+            '/%s.%s',
+            $media->getUuid(),
+            ExtensionGuesser::getInstance()->guess($media->getContentType())
+        );
 
         return $this->fileSystem->get($relativePath, true);
-    }
-
-    /**
-     * @param Media $media
-     */
-    public function removeMedia(Media $media)
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function updateMedia(Media $media)
-    {
-        $this->saveMedia($media);
     }
 
     /**
@@ -223,9 +234,10 @@ class FileHandler extends AbstractMediaHandler
     public function getAddFolderActions()
     {
         return array(
-                FileHandler::TYPE => array(
-                        'type' => FileHandler::TYPE,
-                        'name' => 'media.file.add')
+            FileHandler::TYPE => array(
+                'type' => FileHandler::TYPE,
+                'name' => 'media.file.add'
+            )
         );
     }
 
