@@ -3,24 +3,22 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-
-use Kunstmaan\NodeBundle\Helper\NodeMenu;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * This controller is for showing frontend pages based on slugs
@@ -31,27 +29,27 @@ class SlugController extends Controller
     /**
      * Handle the page requests
      *
-     * @param string $url     The url
-     * @param bool   $preview Show in preview mode
+     * @param Request $request The request
+     * @param string  $url     The url
+     * @param bool    $preview Show in preview mode
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
      *
      * @return Response|array
      */
-    public function slugAction($url = null, $preview = false)
+    public function slugAction(Request $request, $url = null, $preview = false)
     {
         /* @var EntityManager $em */
-        $em         = $this->getDoctrine()->getManager();
-        $request    = $this->getRequest();
-        $locale     = $request->getLocale();
-        
+        $em     = $this->getDoctrine()->getManager();
+        $locale = $request->getLocale();
+
         /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $request->get('_nodeTranslation');
-        
+
         // If no node translation -> 404
         if (!$nodeTranslation) {
-            throw new ResourceNotFoundException('No page found for slug ' . $url);
+            throw $this->createNotFoundException('No page found for slug ' . $url);
         }
 
         // check if the requested node is online, else throw a 404 exception (only when not previewing!)
@@ -60,8 +58,8 @@ class SlugController extends Controller
         }
 
         /* @var HasNodeInterface $entity */
-        $entity     = null;
-        $node       = $nodeTranslation->getNode();
+        $entity = null;
+        $node   = $nodeTranslation->getNode();
         if ($preview) {
             $version = $request->get('version');
             if (!empty($version) && is_numeric($version)) {
@@ -82,9 +80,9 @@ class SlugController extends Controller
         }
 
         /* @var AclHelper $aclHelper */
-        $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+        $aclHelper      = $this->container->get('kunstmaan_admin.acl.helper');
         $includeOffline = $preview;
-        $nodeMenu = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, PermissionMap::PERMISSION_VIEW, $includeOffline);
+        $nodeMenu       = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, PermissionMap::PERMISSION_VIEW, $includeOffline);
 
         unset($securityContext);
         unset($aclHelper);
@@ -92,11 +90,11 @@ class SlugController extends Controller
         //render page
         $renderContext = new RenderContext(
             array(
-                'nodetranslation'   => $nodeTranslation,
-                'slug'              => $url,
-                'page'              => $entity,
-                'resource'          => $entity,
-                'nodemenu'          => $nodeMenu,
+                'nodetranslation' => $nodeTranslation,
+                'slug'            => $url,
+                'page'            => $entity,
+                'resource'        => $entity,
+                'nodemenu'        => $nodeMenu,
             )
         );
         if (method_exists($entity, 'getDefaultView')) {

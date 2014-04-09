@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Repository;
 
-use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
@@ -11,8 +11,8 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
@@ -36,6 +36,41 @@ class NodeRepository extends NestedTreeRepository
     }
 
     /**
+     * @param int|null  $parentId             The parent id
+     * @param string    $lang                 The locale
+     * @param string    $permission           The permission (read, write, ...)
+     * @param AclHelper $aclHelper            The acl helper
+     * @param bool      $includeHiddenFromNav Include nodes hidden from navigation or not
+     *
+     * @return Node[]
+     */
+    public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b', 't', 'v')
+            ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
+            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->where('b.deleted = 0');
+
+        if (!$includeHiddenFromNav) {
+            $qb->andWhere('b.hiddenFromNav != true');
+        }
+
+        if (is_null($parentId)) {
+            $qb->andWhere('b.parent is NULL');
+        } else {
+            $qb->andWhere('b.parent = :parent')
+                ->setParameter('parent', $parentId);
+        }
+        $qb->addOrderBy('b.lft', 'ASC')
+            ->addOrderBy('b.rgt', 'DESC');
+        $qb->setParameter('lang', $lang);
+        $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
+
+        return $query->getResult();
+    }
+
+    /**
      * @param HasNodeInterface $hasNode
      *
      * @return Node|null
@@ -43,7 +78,9 @@ class NodeRepository extends NestedTreeRepository
     public function getNodeFor(HasNodeInterface $hasNode)
     {
         /* @var NodeVersion $nodeVersion */
-        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->getNodeVersionFor($hasNode);
+        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->getNodeVersionFor(
+            $hasNode
+        );
         if (!is_null($nodeVersion)) {
             /* @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $nodeVersion->getNodeTranslation();
@@ -64,7 +101,9 @@ class NodeRepository extends NestedTreeRepository
     public function getNodeForIdAndEntityname($id, $entityName)
     {
         /* @var NodeVersion $nodeVersion */
-        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(array('refId' => $id, 'refEntityName' => $entityName));
+        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(
+            array('refId' => $id, 'refEntityName' => $entityName)
+        );
         if ($nodeVersion) {
             return $nodeVersion->getNodeTranslation()->getNode();
         }
@@ -81,7 +120,7 @@ class NodeRepository extends NestedTreeRepository
     public function getNodeForSlug(Node $parentNode, $slug)
     {
         $slugParts = explode("/", $slug);
-        $result = null;
+        $result    = null;
         foreach ($slugParts as $slugPart) {
             if ($parentNode) {
                 if ($r = $this->findOneBy(array('slug' => $slugPart, 'parent.parent' => $parentNode->getId()))) {
@@ -109,18 +148,21 @@ class NodeRepository extends NestedTreeRepository
      */
     public function createNodeFor(HasNodeInterface $hasNode, $lang, BaseUser $owner, $internalName = null)
     {
-        $em = $this->getEntityManager();
+        $em   = $this->getEntityManager();
         $node = new Node();
         $node->setRef($hasNode);
         if (!$hasNode->getId() > 0) {
-            throw new \InvalidArgumentException("the entity of class " . $node->getRefEntityName() . " has no id, maybe you forgot to flush first");
+            throw new \InvalidArgumentException("the entity of class " .
+                $node->getRefEntityName() . " has no id, maybe you forgot to flush first");
         }
         $node->setDeleted(false);
         $node->setInternalName($internalName);
         $parent = $hasNode->getParent();
         if ($parent) {
             /* @var NodeVersion $parentNodeVersion */
-            $parentNodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(array('refId' => $parent->getId(), 'refEntityName' => ClassLookup::getClass($parent)));
+            $parentNodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(
+                array('refId' => $parent->getId(), 'refEntityName' => ClassLookup::getClass($parent))
+            );
             if ($parentNodeVersion) {
                 $node->setParent($parentNodeVersion->getNodeTranslation()->getNode());
             }
@@ -128,44 +170,14 @@ class NodeRepository extends NestedTreeRepository
         $em->persist($node);
         $em->flush();
         $em->refresh($node);
-        $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($hasNode, $lang, $node, $owner);
+        $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor(
+            $hasNode,
+            $lang,
+            $node,
+            $owner
+        );
 
         return $node;
-    }
-
-    /**
-     * @param int|null  $parentId             The parent id
-     * @param string    $lang                 The locale
-     * @param string    $permission           The permission (read, write, ...)
-     * @param AclHelper $aclHelper            The acl helper
-     * @param bool      $includeHiddenFromNav Include nodes hidden from navigation or not
-     *
-     * @return Node[]
-     */
-    public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
-    {
-        $qb = $this->createQueryBuilder('b')
-                   ->select('b','t','v')
-                   ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
-                   ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
-                   ->where('b.deleted = 0');
-
-        if (!$includeHiddenFromNav) {
-            $qb->andWhere('b.hiddenFromNav != true');
-        }
-
-        if (is_null($parentId)) {
-            $qb->andWhere('b.parent is NULL');
-        } else {
-            $qb->andWhere('b.parent = :parent')
-               ->setParameter('parent', $parentId);
-        }
-        $qb->addOrderBy('b.lft', 'ASC')
-           ->addOrderBy('b.rgt', 'DESC');
-        $qb->setParameter('lang', $lang);
-        $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
-
-        return $query->getResult();
     }
 
     /**
@@ -182,13 +194,19 @@ class NodeRepository extends NestedTreeRepository
     public function getAllMenuNodes($lang, $permission, AclNativeHelper $aclNativeHelper, $includeHiddenFromNav = false)
     {
         $qb = $this->_em->getConnection()->createQueryBuilder();
-        $qb->select('n.id, n.parent_id AS parent,
-                        IF(t.weight IS NULL, v.weight, t.weight) AS weight,
-                        IF(t.title IS NULL, v.title, t.title) AS title,
-                        IF(t.online IS NULL, 0, t.online) AS online')
+        $qb->select(
+            'n.id, n.parent_id AS parent,
+             IF(t.weight IS NULL, v.weight, t.weight) AS weight,
+             IF(t.title IS NULL, v.title, t.title) AS title,
+             IF(t.online IS NULL, 0, t.online) AS online')
             ->from('kuma_nodes', 'n')
-            ->leftJoin('n', 'kuma_node_translations', 't', "(t.node_id = n.id AND t.lang = ?)")
-            ->leftJoin('n', '(SELECT lang, title, weight, node_id FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)', 'v', "(v.node_id = n.id AND v.lang <> ?)")
+            ->leftJoin('n', 'kuma_node_translations', 't', '(t.node_id = n.id AND t.lang = ?)')
+            ->leftJoin(
+                'n',
+                '(SELECT lang, title, weight, node_id FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)',
+                'v',
+                '(v.node_id = n.id AND v.lang <> ?)'
+            )
             ->where('n.deleted = 0')
             ->addGroupBy('n.id')
             ->addOrderBy('lft', 'ASC')
@@ -214,8 +232,9 @@ class NodeRepository extends NestedTreeRepository
     /**
      * Get all parents of a given node. We can go multiple levels up.
      *
-     * @param Node $node
+     * @param Node   $node
      * @param string $lang
+     *
      * @return Node[]
      */
     public function getAllParents(Node $node = null, $lang = null)
@@ -239,10 +258,12 @@ class NodeRepository extends NestedTreeRepository
                 ->where('node.deleted = 0');
         }
 
-        $qb->andWhere($qb->expr()->andX(
-            $qb->expr()->lte('node.lft', $node->getLeft()),
-            $qb->expr()->gte('node.rgt', $node->getRight())
-        ));
+        $qb->andWhere(
+            $qb->expr()->andX(
+                $qb->expr()->lte('node.lft', $node->getLeft()),
+                $qb->expr()->gte('node.rgt', $node->getRight())
+            )
+        );
         $qb->addOrderBy('node.lft', 'ASC');
 
         return $qb->getQuery()->getResult();
@@ -254,11 +275,11 @@ class NodeRepository extends NestedTreeRepository
     public function getAllTopNodes()
     {
         $qb = $this->createQueryBuilder('b')
-                   ->select('b', 't', 'v')
-                   ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
-                   ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
-                   ->where('b.deleted = 0')
-                   ->andWhere('b.parent IS NULL');
+            ->select('b', 't', 'v')
+            ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
+            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->where('b.deleted = 0')
+            ->andWhere('b.parent IS NULL');
 
         $result = $qb->getQuery()->getResult();
 

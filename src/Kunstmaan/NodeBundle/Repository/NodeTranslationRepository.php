@@ -9,8 +9,8 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 /**
  * NodeRepository
@@ -26,7 +26,7 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getChildren(Node $node)
     {
-        return $this->findBy(array("parent" => $node->getId()));
+        return $this->findBy(array('parent' => $node->getId()));
     }
 
     /**
@@ -37,10 +37,10 @@ class NodeTranslationRepository extends EntityRepository
     public function getOnlineNodes()
     {
         return $this->createQueryBuilder('b')
-                   ->select('b', 'v')
-                   ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-                   ->leftJoin('b.publicNodeVersion', 'v', 'WITH', 'b.publicNodeVersion = v.id')
-                   ->where('n.deleted != 1 AND b.online = 1');
+            ->select('b', 'v')
+            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
+            ->leftJoin('b.publicNodeVersion', 'v', 'WITH', 'b.publicNodeVersion = v.id')
+            ->where('n.deleted != 1 AND b.online = 1');
     }
 
     /**
@@ -88,6 +88,44 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
+     * Returns the node translation for a given slug
+     *
+     * @param NodeTranslation|null $parentNode The parentNode
+     * @param string               $slugPart   The slug part
+     *
+     * @return NodeTranslation|null
+     */
+    private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugPart = '')
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('t', 'v')
+            ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
+            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->where('n.deleted != 1')
+            ->addOrderBy('n.sequenceNumber', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        if ($parentNode != null) {
+            $qb->andWhere('t.slug = :slug')
+                ->andWhere('n.parent = :parent')
+                ->setParameter('slug', $slugPart)
+                ->setParameter('parent', $parentNode->getNode()->getId());
+        } else {
+            /* if parent is null we should look for slugs that have no parent */
+            $qb->andWhere('n.parent IS NULL');
+            if (empty($slugPart)) {
+                $qb->andWhere('t.slug is NULL');
+            } else {
+                $qb->andWhere('t.slug = :slug');
+                $qb->setParameter('slug', $slugPart);
+            }
+        }
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * Get the node translation for a given url
      *
      * @param string          $urlSlug        The full url
@@ -97,8 +135,12 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return NodeTranslation|null
      */
-    public function getNodeTranslationForUrl($urlSlug, $locale = '', $includeDeleted = false, NodeTranslation $toExclude = null)
-    {
+    public function getNodeTranslationForUrl(
+        $urlSlug,
+        $locale = '',
+        $includeDeleted = false,
+        NodeTranslation $toExclude = null
+    ) {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 'v')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
@@ -114,7 +156,7 @@ class NodeTranslationRepository extends EntityRepository
 
         if (!empty($locale)) {
             $qb->andWhere('b.lang = :lang')
-               ->setParameter('lang', $locale);
+                ->setParameter('lang', $locale);
         }
 
         if (empty($urlSlug)) {
@@ -126,7 +168,7 @@ class NodeTranslationRepository extends EntityRepository
 
         if (!is_null($toExclude)) {
             $qb->andWhere('NOT b.id = :exclude_id')
-               ->setParameter('exclude_id', $toExclude->getId());
+                ->setParameter('exclude_id', $toExclude->getId());
         }
 
         return $qb->getQuery()->getOneOrNullResult();
@@ -150,44 +192,6 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * Returns the node translation for a given slug
-     *
-     * @param NodeTranslation|null $parentNode The parentNode
-     * @param string               $slugPart   The slug part
-     *
-     * @return NodeTranslation|null
-     */
-    private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugPart = '')
-    {
-        $qb = $this->createQueryBuilder('t')
-            ->select('t', 'v')
-            ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
-            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
-            ->where('n.deleted != 1')
-            ->addOrderBy('n.sequenceNumber', 'DESC')
-            ->setFirstResult(0)
-            ->setMaxResults(1);
-
-        if ($parentNode != null) {
-            $qb->andWhere('t.slug = :slug')
-               ->andWhere('n.parent = :parent')
-               ->setParameter('slug', $slugPart)
-               ->setParameter('parent', $parentNode->getNode()->getId());
-        } else {
-            /* if parent is null we should look for slugs that have no parent */
-            $qb->andWhere('n.parent IS NULL');
-            if (empty($slugPart)) {
-                $qb->andWhere('t.slug is NULL');
-            } else {
-                $qb->andWhere('t.slug = :slug');
-                $qb->setParameter('slug', $slugPart);
-            }
-        }
-
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
-    /**
      * Create a node translation for a given node
      *
      * @param HasNodeInterface $hasNode The hasNode
@@ -204,7 +208,8 @@ class NodeTranslationRepository extends EntityRepository
         $em        = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);
         if (!$hasNode->getId() > 0) {
-            throw new \InvalidArgumentException("The entity of class " . $className . " has no id, maybe you forgot to flush first");
+            throw new \InvalidArgumentException("The entity of class " . $className .
+                " has no id, maybe you forgot to flush first");
         }
 
         $nodeTranslation = new NodeTranslation();
@@ -218,7 +223,12 @@ class NodeTranslationRepository extends EntityRepository
 
         $em->persist($nodeTranslation);
 
-        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor($hasNode, $nodeTranslation, $owner, null);
+        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor(
+            $hasNode,
+            $nodeTranslation,
+            $owner,
+            null
+        );
 
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
         $em->persist($nodeTranslation);
@@ -263,6 +273,7 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * Test if all parents of the specified NodeTranslation have a node translation for the specified language
+     *
      * @param NodeTranslation $nodeTranslation The node translation
      * @param string          $language        The locale
      *
@@ -292,7 +303,8 @@ class NodeTranslationRepository extends EntityRepository
      * @param $language
      * @param $internalName
      */
-    public function getNodeTranslationByLanguageAndInternalName($language, $internalName) {
+    public function getNodeTranslationByLanguageAndInternalName($language, $internalName)
+    {
         $qb = $this->createQueryBuilder('nt')
             ->select('nt', 'v')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
