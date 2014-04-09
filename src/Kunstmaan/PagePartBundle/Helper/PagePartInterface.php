@@ -30,7 +30,7 @@ interface PagePartInterface
      * @abstract
      * @return string
      */
-    public function getOverrideView(PageInterface $page = null);
+    public function getView(PageInterface $page = null);
 
     /**
      * @return AbstractType

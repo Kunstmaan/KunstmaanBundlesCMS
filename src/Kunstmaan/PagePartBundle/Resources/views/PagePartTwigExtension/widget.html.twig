@@ -1,4 +1,4 @@
 {% for box in pageparts %}
     {% set resource = box %}
-    {% include box.getOverrideView(page) %}
+    {% include box.getView(page) %}
 {% endfor %}
