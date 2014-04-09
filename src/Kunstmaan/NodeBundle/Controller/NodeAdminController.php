@@ -51,32 +51,32 @@ class NodeAdminController extends Controller
     /**
      * @var EntityManager $em
      */
-    private $em;
+    protected $em;
 
     /**
      * @var string $locale
      */
-    private $locale;
+    protected $locale;
 
     /**
      * @var SecurityContextInterface $securityContext
      */
-    private $securityContext;
+    protected $securityContext;
 
     /**
      * @var BaseUser $user
      */
-    private $user;
+    protected $user;
 
     /**
      * @var AclHelper $aclHelper
      */
-    private $aclHelper;
+    protected $aclHelper;
 
     /**
      * init
      */
-    private function init()
+    protected function init()
     {
         $this->em = $this->getDoctrine()->getManager();
         $this->locale = $this->getRequest()->getLocale();
