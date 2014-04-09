@@ -1,8 +1,4 @@
 {% for box in pageparts %}
     {% set resource = box %}
-    {% if template is defined %}
-        {% include attribute(box, template) %}
-    {% else %}
-        {% include box.defaultview %}
-    {% endif %}
+    {% include box.getOverrideView(page) %}
 {% endfor %}

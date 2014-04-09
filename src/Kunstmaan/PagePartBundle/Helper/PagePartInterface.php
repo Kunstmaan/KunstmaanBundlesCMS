@@ -2,6 +2,7 @@
 
 namespace  Kunstmaan\PagePartBundle\Helper;
 
+use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -22,7 +23,14 @@ interface PagePartInterface
      * @abstract
      * @return string
      */
-    public function getAdminView();
+    public function getAdminView(PageInterface $page = null);
+
+    /**
+     * This method can be used to override the default view for a specific page type
+     * @abstract
+     * @return string
+     */
+    public function getOverrideView(PageInterface $page = null);
 
     /**
      * @return AbstractType
