@@ -18,6 +18,7 @@ class NodeMenuTabAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('hiddenFromNav', 'checkbox', array('label' => 'Hidden from menu', 'required' => false));
+        $builder->add('internalName', 'text', array('label' => 'Internal name', 'required' => false));
     }
 
     /**
