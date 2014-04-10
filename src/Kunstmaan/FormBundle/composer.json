@@ -14,7 +14,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.3.9",
         "symfony/symfony": "~2.3",
         "ddeboer/data-import-bundle": "0.1.*",
         "gedmo/doctrine-extensions": "2.3.*",
