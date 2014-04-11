@@ -281,7 +281,7 @@ SQL;
     {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 't', 'v')
-            ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
+            ->leftJoin('b.nodeTranslations', 't')
             ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
             ->where('b.deleted = 0')
             ->andWhere('b.parent IS NULL');
