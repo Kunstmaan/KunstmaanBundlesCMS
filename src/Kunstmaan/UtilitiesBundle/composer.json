@@ -18,6 +18,9 @@
         "symfony/symfony": "~2.3",
         "doctrine/orm": "~2.2,>=2.2.3"
     },
+    "suggest": {
+        "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
+    },
     "autoload": {
         "psr-0": { "Kunstmaan\\UtilitiesBundle": "" }
     },
