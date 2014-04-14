@@ -12,36 +12,22 @@ use Symfony\Component\Translation\MessageCatalogue;
 class Loader implements LoaderInterface
 {
     private $translationRepository;
-    private $translations;
+    private $catalogues = array();
 
     /**
      * @{@inheritdoc}
      */
     public function load($resource, $locale, $domain = 'messages')
     {
-        $catalogue = new MessageCatalogue($locale);
-
-        if (!$this->translations)
-        {
-            $this->translations = array();
-            $translations = $this->translationRepository->findBy(array('domain' => $domain));
-
-            if ($translations)
-            {
-                foreach ($translations as $trans)
-                {
-                    if (!key_exists($trans->getLocale(), $this->translations))
-                    {
-                        $this->translations[$trans->getLocale()] = array();
-                    }
-                    $this->translations[$trans->getLocale()][] = $trans;
-                }
+        if (!isset($this->catalogues[$locale])) {
+            $catalogue = new MessageCatalogue($locale);
+            $translations = $this->translationRepository->findBy(array('locale' => $locale));
+            foreach ($translations as $translation) {
+                $catalogue->set($translation->getKeyword(), $translation->getText(), $translation->getDomain());
             }
-        }
-        $translations = $this->translations[$locale];
-
-        foreach ($translations as $translation) {
-            $catalogue->set($translation->getKeyword(), $translation->getText(), $domain);
+            $this->catalogues[$locale] = $catalogue;
+        } else {
+            $catalogue = $this->catalogues[$locale];
         }
 
         return $catalogue;
