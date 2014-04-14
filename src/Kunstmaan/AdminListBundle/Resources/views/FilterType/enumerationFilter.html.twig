@@ -5,6 +5,6 @@
 
 <select name="{{nameprefix}}value{{namesuffix}}[]" size="4" multiple>
 {% for key,option in options %}
-    <option value="{{ key }}"{% if data.value is defined and key in data.value %} selected{% endif %}>{{ option }}</option>
+    <option value="{{ key }}"{% if data.value is defined and key in data.value %} selected{% endif %}>{{ option|trans }}</option>
 {% endfor %}
 </select>
