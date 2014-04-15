@@ -1,0 +1,14 @@
+parameters:
+    kunstmaan_dashboard.widget.googleanalytics.command: Kunstmaan\DashboardBundle\Command\GoogleAnalyticsCommand
+    kunstmaan_dashboard.widget.googleanalytics.controller: Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
+
+services:
+
+   kunstmaan_dashboard.manager.widgets:
+        class: Kunstmaan\DashboardBundle\Manager\WidgetManager
+
+   kunstmaan_dashboard.widget.googleanalytics:
+        class: Kunstmaan\DashboardBundle\Widget\DashboardWidget
+        arguments: [%kunstmaan_dashboard.widget.googleanalytics.command%, %kunstmaan_dashboard.widget.googleanalytics.controller%]
+        tags:
+            - { name: kunstmaan_dashboard.widget, priority: 1 }

@@ -1,0 +1,9 @@
+kunstmaan_dashboard:
+    resource: "@KunstmaanDashboardBundle/Controller/DashboardController.php"
+    type:     annotation
+    prefix:   /admin/dashboard
+
+kunstmaan_dashboard_googleanalytics:
+    resource: "@KunstmaanDashboardBundle/Controller/GoogleAnalyticsController.php"
+    type:     annotation
+    prefix:   /admin/dashboard/widget/googleanalytics
