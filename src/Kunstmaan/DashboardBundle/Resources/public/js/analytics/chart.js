@@ -13,9 +13,15 @@
         chartData = [];
         chartLabels = [];
         var increment = Math.ceil(data.overview.chartData.length / 26);
-        for (var i = 0; i < data.overview.chartData.length; i+=increment) {
-            chartData.push(parseInt(data.overview.chartData[i].visits));
-            chartLabels.push(data.overview.chartData[i].timestamp);
+        var value = 0;
+        for (var i = 0; i < data.overview.chartData.length; i+=1) {
+            value += parseInt(data.overview.chartData[i].visits);
+            if (i%increment == 0) {
+                chartData.push(value);
+                chartLabels.push(data.overview.chartData[i].timestamp);
+                value = 0;
+            }
+
         }
     }
 

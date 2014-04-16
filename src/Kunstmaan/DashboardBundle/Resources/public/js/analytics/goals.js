@@ -63,9 +63,14 @@
         }
 
         var increment = Math.ceil(data.chartData.length / 23);
-        for (var i = 0; i < data.chartData.length; i+=increment) {
-            goalChartData.push(parseInt(data.chartData[i].visits));
-            goalChartLabels.push(data.chartData[i].timestamp);
+        var value = 0;
+        for (var i = 0; i < data.chartData.length; i+=1) {
+            value += parseInt(data.chartData[i].visits);
+            if (i%increment == 0) {
+                goalChartData.push(value);
+                goalChartLabels.push(data.chartData[i].timestamp);
+                value = 0;
+            }
         }
 
         initGoalChart();
