@@ -1,0 +1,14 @@
+parameters:
+    kunstmaan_redirect.menu.adaptor.class: 'Kunstmaan\RedirectBundle\Helper\Menu\RedirectMenuAdaptor'
+
+services:
+    kunstmaan_redirect.menu.adaptor:
+        class: "%kunstmaan_redirect.menu.adaptor.class%"
+        tags:
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
+
+    kunstmaan_redirect.redirectrouter:
+        class: Kunstmaan\RedirectBundle\Router\RedirectRouter
+        arguments: ["@service_container"]
+        tags:
+            - { name: router, priority: 1 }
