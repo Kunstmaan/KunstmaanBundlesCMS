@@ -1,1 +1,77 @@
-GA! {{ name }}
+{% if token %}
+    <!-- TABS -->
+    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews, 'lastUpdate' : lastUpdate} %}
+    <!-- end TABS -->
+
+    <!-- TAB CONTENT -->
+    <section class="db-content">
+        <!-- COL -->
+        <div class="db-col db-col--6">
+            <div class="db-block">
+                <!-- HEADER -->
+                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:header.html.twig' %}
+                <!-- end HEADER -->
+
+                <!-- CHART -->
+                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
+                <!-- end CHART -->
+            </div>
+        </div>
+        <!-- end COL -->
+
+        <!-- COL -->
+        <div class="db-col db-col--2">
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:traffic.html.twig' with {'overview' : overview} %}
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:visits.html.twig' with {'overview' : overview} %}
+        </div>
+        <!-- end COL -->
+
+        <!-- COL -->
+        <div class="db-col db-col--4">
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:referrals.html.twig' with {'overview' : overview} %}
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:searches.html.twig' with {'overview' : overview} %}
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:campaigns.html.twig' with {'campaigns' : overview.getCampaigns} %}
+        </div>
+        <!-- end COL -->
+
+
+        <div>
+            {% if overview.getGoals | length > 0 %}
+                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview' : overview} %}
+            {% endif %}
+        </div>
+    </section>
+    <!-- end TAB CONTENT -->
+
+{% else %}
+    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig' with {'authUrl' : authUrl} %}
+{% endif %}
+
+{% block extrajavascript %}
+    {% javascripts
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/chart.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/header.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/referrals.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/searches.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/campaigns.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/traffic.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/visits.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/libs/chart.min.js'
+        output='generated-js/scripts_bottom.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+
+
+{% block extracss %}
+    {% stylesheets
+        filter="scss"
+        "@KunstmaanDashboardBundle/Resources/public/scss/_dashboard.scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+{% endblock %}

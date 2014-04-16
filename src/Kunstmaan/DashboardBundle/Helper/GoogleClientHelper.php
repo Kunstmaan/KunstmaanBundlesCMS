@@ -3,7 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Helper;
 
 use \Google_Client;
-use Kunstmaan\AdminBundle\Entity\AnalyticsToken;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsToken;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
 /**
@@ -85,7 +85,7 @@ class GoogleClientHelper
     private function getToken()
     {
         if (!$this->token) {
-            $this->token = $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->getConfig()->getToken();
+            $this->token = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getToken();
         }
 
         return $this->token;
@@ -99,7 +99,7 @@ class GoogleClientHelper
     public function getAccountId()
     {
         if (!$this->accountId) {
-            $this->accountId = $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->getConfig()->getAccountId();
+            $this->accountId = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getAccountId();
         }
 
         return $this->accountId;
@@ -113,7 +113,7 @@ class GoogleClientHelper
     public function getPropertyId()
     {
         if (!$this->propertyId) {
-            $this->propertyId = $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->getConfig()->getPropertyId();
+            $this->propertyId = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getPropertyId();
         }
 
         return $this->propertyId;
@@ -127,7 +127,7 @@ class GoogleClientHelper
     public function getProfileId()
     {
         if (!$this->profileId) {
-            $this->profileId = $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->getConfig()->getProfileId();
+            $this->profileId = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getProfileId();
         }
 
         return $this->profileId;
@@ -139,7 +139,7 @@ class GoogleClientHelper
     public function saveToken($token)
     {
         $this->token = $token;
-        $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->saveToken($token);
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveToken($token);
     }
 
     /**
@@ -148,7 +148,7 @@ class GoogleClientHelper
     public function saveAccountId($accountId)
     {
         $this->accountId = $accountId;
-        $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->saveAccountId($accountId);
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveAccountId($accountId);
     }
 
     /**
@@ -157,7 +157,7 @@ class GoogleClientHelper
     public function savePropertyId($propertyId)
     {
         $this->propertyId = $propertyId;
-        $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->savePropertyId($propertyId);
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->savePropertyId($propertyId);
     }
 
     /**
@@ -166,7 +166,7 @@ class GoogleClientHelper
     public function saveProfileId($profileId)
     {
         $this->profileId = $profileId;
-        $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->saveProfileId($profileId);
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveProfileId($profileId);
     }
 
     /**

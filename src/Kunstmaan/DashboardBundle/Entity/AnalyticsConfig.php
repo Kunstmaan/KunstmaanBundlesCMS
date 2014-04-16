@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * AnalyticsToken
  *
  * @ORM\Table(name="kuma_analytics_config")
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\AnalyticsConfigRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository")
  */
 class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {

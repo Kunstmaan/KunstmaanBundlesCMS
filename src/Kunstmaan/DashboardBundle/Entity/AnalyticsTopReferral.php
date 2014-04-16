@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * AnalyticsTopReferrals
  *
  * @ORM\Table(name="kuma_analytics_top_referral")
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\AnalyticsTopReferralsRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsTopReferralsRepository")
  */
 class AnalyticsTopReferral extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {

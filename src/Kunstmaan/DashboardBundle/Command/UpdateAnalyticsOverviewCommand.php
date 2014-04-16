@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\DashboardBundle\Command;
 
-use Kunstmaan\AdminBundle\Entity\AnalyticsTopReferral;
-use Kunstmaan\AdminBundle\Entity\AnalyticsTopSearch;
-use Kunstmaan\AdminBundle\Entity\AnalyticsGoal;
-use Kunstmaan\AdminBundle\Entity\AnalyticsCampaign;
-use Kunstmaan\AdminBundle\Helper\GoogleAnalyticsHelper;
-use Kunstmaan\AdminBundle\Helper\GoogleClientHelper;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsTopReferral;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsTopSearch;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsCampaign;
+use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
+use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -58,14 +58,14 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                 }
 
                 // create API Analytics helper to execute queries
-                $this->analyticsHelper = $this->getContainer()->get('kunstmaan_admin.googleanalyticshelper');
+                $this->analyticsHelper = $this->getContainer()->get('kunstmaan_dashboard.googleanalyticshelper');
                 $this->analyticsHelper->init($this->googleClientHelper);
 
                 // set new update timestamp
-                $this->em->getRepository('KunstmaanAdminBundle:AnalyticsConfig')->setUpdated();
+                $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated();
 
                 // get data for each overview
-                $overviews = $this->em->getRepository('KunstmaanAdminBundle:AnalyticsOverview')->getAll();
+                $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
                 foreach ($overviews as $overview) {
                     $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
 
@@ -120,7 +120,7 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                 $this->output = $output;
 
                 // get API client
-                $this->googleClientHelper = $this->getContainer()->get('kunstmaan_admin.googleclienthelper');
+                $this->googleClientHelper = $this->getContainer()->get('kunstmaan_dashboard.googleclienthelper');
 
                 // setup entity manager
                 $this->em = $this->getContainer()->get('doctrine')->getEntityManager();

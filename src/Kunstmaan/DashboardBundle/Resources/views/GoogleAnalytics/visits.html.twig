@@ -1,0 +1,35 @@
+<div class="db-block db-col__inner">
+    <h2 class="db-block__title">{{ 'analytics.visits' | trans }}</h2>
+    <ul class="db-block__list" id="data_visits">
+        <li class="db-block__list__item">
+            {# returning visitors #}
+            <p class="db-block__text db-block__text--left" id="">
+                {{ 'analytics.visits.returning' | trans }}
+            </p>
+            <p class="db-block__stats db-block__stats--right" id="returningVisits">
+               (<span class="data_percentage">{{ overview.getReturningVisitsPercentage }}</span>%) <span class="data_visits">{{ overview.returningVisits }}</span>
+            </p>
+        </li>
+
+        <li class="db-block__list__item">
+            {# new visitors #}
+            <p class="db-block__text db-block__text--left" id="">
+                {{ 'analytics.visits.new' | trans }}
+            </p>
+            <p class="db-block__stats db-block__stats--right" id="newVisits">
+               (<span class="data_percentage">{{ overview.getNewVisitsPercentage }}</span>%) <span class="data_visits">{{ overview.newVisits }}</span>
+            </p>
+
+        </li>
+
+        <li class="db-block__list__item">
+            {# bouncerate #}
+            <p class="db-block__text db-block__text--left" id="">
+                {{ 'analytics.visits.bounce' | trans }}
+            </p>
+            <p class="db-block__stats db-block__stats--right" id="bounceVisits">
+               {{ overview.bounceRate }}&#37;
+            </p>
+        </li>
+    </ul>
+</div>

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * AnalyticsTopSearches
  *
  * @ORM\Table(name="kuma_analytics_top_search")
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\AnalyticsTopSearchesRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsTopSearchesRepository")
  */
 class AnalyticsTopSearch extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {

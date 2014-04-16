@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * AnalyticsGoal
  *
  * @ORM\Table(name="kuma_analytics_goal")
- * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\AnalyticsGoalRepository")
+ * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsGoalRepository")
  */
 class AnalyticsGoal extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {

@@ -1,0 +1,30 @@
+<div class="db-block">
+    <h2 class="db-block__title">{{ 'analytics.traffic.sources' | trans }}</h2>
+    <ul class="db-block__list">
+        <li class="db-block__list__item db-block__list__item--icon db-block__list__item--icon-direct">
+            <p class="db-block__text">{{ 'analytics.traffic.direct' | trans }}</p>
+            <p class="db-block__stats">
+                <span class="db-block__stats--enlarged" id="data_overview_traffic_direct">
+                    {{ overview.trafficDirect }} ({{ overview.getTrafficDirectPercentage }}%)
+                </span>
+            </p>
+        </li>
+        <li class="db-block__list__item db-block__list__item--icon db-block__list__item--icon-referral">
+            <p class="db-block__text">{{ 'analytics.traffic.referrals' | trans }}</p>
+            <p class="db-block__stats">
+                <span class="db-block__stats--enlarged" id="data_overview_traffic_referral">
+                    {{ overview.trafficReferral }} ({{ overview.getTrafficReferralPercentage }}%)
+                </span>
+            </p>
+        </li>
+        <li class="db-block__list__item db-block__list__item--icon db-block__list__item--icon-search">
+            <p class="db-block__text">{{ 'analytics.traffic.search_engines' | trans }}</p>
+            <p class="db-block__stats">
+                <span class="db-block__stats--enlarged" id="data_overview_traffic_searchEngine">
+                    {{ overview.trafficSearchEngine }} ({{ overview.getTrafficSearchEnginePercentage }}%)
+                </span>
+            </p>
+        </li>
+    </ul>
+</div>
+

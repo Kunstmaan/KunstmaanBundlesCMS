@@ -1,0 +1,20 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<form method="post" action="">
+    <h2>{{ 'analytics.dashboard.setup.title' | trans }}</h2>
+    <h3>{{ 'analytics.dashboard.step5.title' | trans }}</h3>
+    <p>{{ 'analytics.dashboard.step5.content' | trans }}</p>
+
+    <select name="profiles" class="chzn-select">
+        {% for profile in profiles %}
+            <option value="{{ profile.id }}">{{ profile.name }}</option>
+        {% endfor %}
+    </select>
+<br/>
+    <button class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+# Analytics
+analytics:
+  traffic:
+    sources: Traffic Sources
+    direct: Direct
+    referrals: Referrals
+    search_engines: Search Engines
+  referrals:
+    title: Top Referrals
+    unavailable: No data available for Top Referrals
+  searches:
+    title: Top Search Terms
+    unavailable: No data available for Top Search Terms
+  campaigns:
+    title: Top Campaigns
+    unavailable: No data available for Top Campaigns
+  visitors: Visitors
+  pageviews: pageviews
+  visits: 'Visits'
+  visits.returning: 'Returning visitors'
+  visits.new: 'New visitors'
+  visits.bounce: 'Bounce rate'
+  dashboard:
+    setup:
+      title: Dashboard Setup
+      content: "To setup the dashboard, visit"
+      redirect: "This is your redirect URI:"
+      docs: the documentation
+      refresh: "Once everything is set up, refresh this page."
+      connect: Connect your Google Account.
+    step4:
+      title: Select a website to track
+      content: Select a domain registered in your Google Analytics account.
+    step5:
+      title: Select a profile
+      content: Select a profile for the selected website
+    confirm: Here
+    refresh: You can now refresh this page
+    reset:
+      profile: Choose a new Analytics Profile (view)
+      property: Track a new Analytics Website (property)
+    lastUpdate: Last time updated:
+    update: Update now
+    updating: Updating.. please wait

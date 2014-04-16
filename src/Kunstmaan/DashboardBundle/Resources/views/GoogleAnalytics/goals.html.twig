@@ -1,0 +1,27 @@
+{#
+    TODO: style this
+    public/scss/_dashboard-block.scss (line 60 - ...)
+    public/js/analytics/goals.js (html)
+ #}
+
+
+<div class="db-col db-col--6">
+    <ul id="goalOverview">
+        {% for goal in overview.goals %}
+            <li id="goal{{goal.id}}" data-goal-id="{{goal.id}}" onClick="getGoalData($(this))">
+                <div>{{goal.name}}</div>
+                <span>{{goal.visits}}</span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="db-col db-col--5">
+    <div class="db-block">
+        <h2 class="db-block__title">
+            Goals
+            <span class="db-block__title__stats" id="goal_title">
+            </span>
+        </h2>
+        <canvas id="js-goal-dashboard-chart" height="290"></canvas>
+    </div>
+</div>
