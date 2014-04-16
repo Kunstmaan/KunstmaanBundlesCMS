@@ -244,7 +244,7 @@ class GoogleAnalyticsController extends Controller
                 $extra['campaigns'][$key]['name']    = $search->getName();
             }
             $extra['goals'] = array();
-            foreach ($overview->getGoals()->toArray() as $key => $goal) {
+            foreach ($overview->getActiveGoals() as $key => $goal) {
                 $extra['goals'][$key]['name']       = $goal->getName();
                 $extra['goals'][$key]['visits']     = $goal->getVisits();
                 $extra['goals'][$key]['id']         = $goal->getId();

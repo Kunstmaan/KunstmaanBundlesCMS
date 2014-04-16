@@ -229,6 +229,14 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
         return $this->goals;
     }
 
+    public function getActiveGoals() {
+        $goals = array();
+        foreach ($this->goals->toArray() as $goal) {
+            if ($goal->getVisits()) $goals[] = $goal;
+        }
+        return $goals;
+    }
+
     /**
      * Set searches
      *
