@@ -1,48 +1,37 @@
 <?php
 namespace Kunstmaan\RedirectBundle\Router;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Routing\RequestContext;
 
-class RedirectRouter implements RouterInterface {
-
+class RedirectRouter implements RouterInterface
+{
     /** @var RequestContext */
     private $context;
 
     /** @var RouteCollection */
-    private $routeCollection;
+    private $routeCollection = null;
+
+    /** @var ObjectRepository */
+    private $redirectRepository;
 
     /**
      * The constructor for this service
      *
      * @param ContainerInterface $container
      */
-    public function __construct($container)
+    public function __construct(ObjectRepository $redirectRepository, RequestContext $context = null)
     {
-        $this->container       = $container;
-        $this->routeCollection = new RouteCollection();
-
-        $redirects = $this->container->get('doctrine')->getRepository('KunstmaanRedirectBundle:Redirect')->findAll();
-
-        foreach($redirects as $redirect){
-            /** @var Redirect $redirect */
-
-            $this->routeCollection->add(
-                '_redirect_route_'.$redirect->getId(),
-                new Route($redirect->getOrigin(), array(
-                    '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                    'path'       => $redirect->getTarget(),
-                    'permanent'   => $redirect->isPermanent(),
-                )));
-        }
+        $this->redirectRepository = $redirectRepository;
+        $this->context            = $context ? : new RequestContext();
     }
-
 
     /**
      * Sets the request context.
@@ -65,14 +54,6 @@ class RedirectRouter implements RouterInterface {
      */
     public function getContext()
     {
-        if (!isset($this->context)) {
-            /* @var Request $request */
-            $request = $this->container->get('request');
-
-            $this->context = new RequestContext();
-            $this->context->fromRequest($request);
-        }
-
         return $this->context;
     }
 
@@ -83,6 +64,11 @@ class RedirectRouter implements RouterInterface {
      */
     public function getRouteCollection()
     {
+        if (is_null($this->routeCollection)) {
+            $this->routeCollection = new RouteCollection();
+            $this->initRoutes();
+        }
+
         return $this->routeCollection;
     }
 
@@ -101,8 +87,8 @@ class RedirectRouter implements RouterInterface {
      *
      * If there is no route with the given name, the generator must throw the RouteNotFoundException.
      *
-     * @param string $name The name of the route
-     * @param mixed $parameters An array of parameters
+     * @param string         $name          The name of the route
+     * @param mixed          $parameters    An array of parameters
      * @param Boolean|string $referenceType The type of reference to be generated (one of the constants)
      *
      * @return string The generated URL
@@ -136,9 +122,27 @@ class RedirectRouter implements RouterInterface {
      */
     public function match($pathinfo)
     {
-        $urlMatcher = new RedirectableUrlMatcher($this->routeCollection, $this->getContext());
-        $result = $urlMatcher->match($pathinfo);
+        $urlMatcher = new RedirectableUrlMatcher($this->getRouteCollection(), $this->getContext());
+        $result     = $urlMatcher->match($pathinfo);
+
         return $result;
     }
 
+    private function initRoutes()
+    {
+        $redirects = $this->redirectRepository->findAll();
+
+        foreach ($redirects as $redirect) {
+            /** @var Redirect $redirect */
+
+            $this->routeCollection->add(
+                '_redirect_route_' . $redirect->getId(),
+                new Route($redirect->getOrigin(), array(
+                    '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                    'path'        => $redirect->getTarget(),
+                    'permanent'   => $redirect->isPermanent(),
+                ))
+            );
+        }
+    }
 }

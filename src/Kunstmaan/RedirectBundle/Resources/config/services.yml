@@ -1,5 +1,7 @@
 parameters:
     kunstmaan_redirect.menu.adaptor.class: 'Kunstmaan\RedirectBundle\Helper\Menu\RedirectMenuAdaptor'
+    kunstmaan_redirect.redirect_repository.class: 'Kunstmaan\RedirectBundle\Repository\RedirectRepository'
+    kunstmaan_redirect.redirect.class: 'Kunstmaan\RedirectBundle\Entity\Redirect'
 
 services:
     kunstmaan_redirect.menu.adaptor:
@@ -7,8 +9,14 @@ services:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
+    kunstmaan_redirect.repositories.redirect:
+        class:            "%kunstmaan_redirect.redirect_repository.class%"
+        factory_service:  "doctrine.orm.entity_manager"
+        factory_method:   getRepository
+        arguments:        ["%kunstmaan_redirect.redirect.class%"]
+
     kunstmaan_redirect.redirectrouter:
         class: Kunstmaan\RedirectBundle\Router\RedirectRouter
-        arguments: ["@service_container"]
+        arguments: ["@kunstmaan_redirect.repositories.redirect"]
         tags:
             - { name: router, priority: 1 }

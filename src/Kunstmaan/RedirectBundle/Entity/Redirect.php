@@ -9,7 +9,7 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 /**
  * Redirect
  *
- * @ORM\Table(name="kunstmaan_redirectbundle_redirect")
+ * @ORM\Table(name="kuma_redirects")
  * @ORM\Entity(repositoryClass="Kunstmaan\RedirectBundle\Repository\RedirectRepository")
  */
 class Redirect extends AbstractEntity
