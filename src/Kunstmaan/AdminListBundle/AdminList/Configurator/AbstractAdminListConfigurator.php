@@ -613,6 +613,18 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
+     * @param FilterBuilder $filterBuilder
+     *
+     * @return AbstractAdminListConfigurator
+     */
+    public function setFilterBuilder(FilterBuilder $filterBuilder)
+    {
+        $this->filterBuilder = $filterBuilder;
+
+        return $this;
+    }
+
+    /**
      * Bind current request.
      *
      * @param Request $request
