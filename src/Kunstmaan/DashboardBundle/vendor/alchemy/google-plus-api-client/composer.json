@@ -1,0 +1,21 @@
+{
+    "name": "alchemy/google-plus-api-client",
+    "type": "library",
+    "description": "PHP Client for Google APIs",
+    "homepage": "https://code.google.com/p/google-api-php-client/",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Google",
+            "email": "noreply@google.com",
+            "homepage": "http://www.google.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
+
