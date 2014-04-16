@@ -67,7 +67,8 @@ following command :
 
     curl -s http://getcomposer.org/installer | php
 
-Then, use the `create-project` command to generate a new Kunstmaan Bundles CMS application. This command will install the CMS based on Symfony 2.3 LTS:
+Then, use the `create-project` command to generate a new Kunstmaan Bundles CMS application. This command will install
+the CMS based on Symfony 2.3 LTS:
 
     php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install
 
@@ -110,25 +111,28 @@ First, you should generate a Symfony bundle for your website.
 This will ask for a name space, so simply enter something like `Sandbox\WebsiteBundle`. For all other
 questions, the defaults should suffice.
 
+Next, generate the default demo website setup.
+
+    app/console kuma:generate:default-site --demosite
+
+This will ask for a bundle namespace (just leave that to the default) and for the prefix enter `sb_` (or enter one as
+you see fit).
+
+*NOTE:* When you are creating your own Kunstmaan Bundles based site and don't need the demo site fixtures, just leave
+out the --demosite switch in the previous step.
+
 When this is done, create the database (if you haven't done so already) and the schema.
 
     app/console doctrine:database:create
     app/console doctrine:schema:create
 
-Also load the fixtures from the installed bundles:
+And finally, load the fixtures from the installed bundles:
 
     app/console doctrine:fixtures:load
 
 Just answer `Y` at the prompt.
 
-Next, generate the default website setup.
-
-    app/console kuma:generate:default-site --demosite
-
-This will ask for a bundle namespace (just leave that to the default) and for the prefix enter `sb_` (or enter one as
-you see fit). When the task is finished, just update your database schema and run the fixtures, like hinted in the console output.
-
-To get started with Behat tests, you can generate basic tests for your admin interface by running the following :
+To get started with Behat tests, you can generate basic tests for the admin interface by running the following :
 
     app/console kuma:generate:admin-tests
 
@@ -138,11 +142,13 @@ Now that all your code is generated, let's make sure all front-end assets are av
 
 ```
 bower install
-npm install # you might need sudo here depending on your setup...
+npm install
 grunt build
 app/console assets:install web
 app/console assetic:dump
 ```
+
+*NOTE:* You may have to run some of the commands above using sudo depending on your system setup...
 
 
 5) Browsing the CMS administration pages
@@ -152,9 +158,10 @@ Congratulations! You're now ready to use the Kunstmaan Bundles CMS. Browse to:
 
     http://localhost/path/to/app/en/admin
 
-Log in using admin/admin.
+And log in with user ```admin``` and password ```admin```.
 
-*NOTE:* Make sure you change at least the password before putting your site online! You can do this by navigating to Settings > Users in the back-end, and changing it there or by running the following :
+*NOTE:* Make sure you change at least the password before putting your site online! You can do this by navigating to
+Settings > Users in the back-end, and changing it there or by running the following :
 
     app/console fos:user:change-password admin
 
@@ -162,7 +169,8 @@ Log in using admin/admin.
 6) Summary
 ----------
 
-You should first check that your system setup matches the minimum requirements, but other than that here's the gist of it :
+You should first check that your system setup matches the minimum requirements, but other than that here's the gist
+of it :
 
 ```
 curl -s http://getcomposer.org/installer | php
@@ -173,7 +181,7 @@ app/console doctrine:schema:create
 app/console doctrine:fixtures:load
 app/console kuma:generate:admin-tests
 bower install
-npm install # you might need sudo here depending on your setup...
+npm install
 grunt build
 app/console assets:install web
 app/console assetic:dump
