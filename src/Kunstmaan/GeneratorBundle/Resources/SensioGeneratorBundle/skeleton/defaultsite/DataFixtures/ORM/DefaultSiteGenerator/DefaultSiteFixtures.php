@@ -793,18 +793,21 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['search.looking_for']['nl'] = 'U zocht naar';
 {% endif %}
 
+        $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
         foreach ($trans as $key => $array) {
             foreach ($array as $lang => $value) {
-                $t = new Translation;
+                $t = new Translation();
                 $t->setKeyword($key);
                 $t->setLocale($lang);
                 $t->setText($value);
                 $t->setDomain('messages');
                 $t->setCreatedAt(new \DateTime());
                 $t->setFlag(Translation::FLAG_NEW);
+                $t->setTranslationId($translationId);
 
                 $this->manager->persist($t);
             }
+            $translationId++;
         }
 
         $this->manager->flush();
