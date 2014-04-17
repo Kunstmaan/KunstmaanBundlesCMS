@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -7,12 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\TranslatorBundle\Repository\TranslationRepository")
  * @ORM\Table(
- *      name="kuma_translation",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="keyword_per_locale", columns={"keyword", "locale", "domain"}),
- *          @ORM\UniqueConstraint(name="translation_id_per_locale", columns={"translation_id", "locale"}),
- *      },
- *      indexes={@ORM\Index(name="domain_idx",columns={"domain"}),@ORM\Index(name="locale_idx",columns={"locale"})}
+ *     name="kuma_translation",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="keyword_per_locale", columns={"keyword", "locale", "domain"}),
+ *         @ORM\UniqueConstraint(name="translation_id_per_locale", columns={"translation_id", "locale"}),
+ *     },
+ *     indexes={@ORM\Index(name="idx_locale_domain", columns={"locale", "domain"})}
  * )
  * @ORM\HasLifecycleCallbacks
  */
@@ -45,7 +46,7 @@ class Translation
     /**
      * The translations keyword to use in your template or call from the translator
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=5)
      * @Assert\NotBlank()
      */
     protected $locale;
@@ -53,7 +54,7 @@ class Translation
     /**
      * Location where the translation comes from
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $file;
 
@@ -67,7 +68,7 @@ class Translation
     protected $text;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=30)
      * @Assert\NotBlank()
      */
     protected $domain;
@@ -87,12 +88,11 @@ class Translation
     protected $updatedAt;
 
     /**
-     *
      * A flag which defines the status of a specific translations ('updated', 'new', ..)
      *
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $flag = null;
 
