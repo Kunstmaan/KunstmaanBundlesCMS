@@ -161,6 +161,7 @@ class AclHelper
                 $uR[] = '"' . $role->getRole() . '"';
             }
         }
+        $uR = array_unique($uR);
         $inString = implode(' OR s.identifier = ', $uR);
 
         if (is_object($user)) {
@@ -179,10 +180,9 @@ LEFT JOIN {$database}.acl_entries e ON (
     OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
 )
 LEFT JOIN {$database}.acl_security_identities s ON (
-s.id = e.security_identity_id
+s.id = e.security_identity_id AND (s.identifier = {$inString})
 )
 WHERE c.class_type = {$rootEntity}
-AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
 
