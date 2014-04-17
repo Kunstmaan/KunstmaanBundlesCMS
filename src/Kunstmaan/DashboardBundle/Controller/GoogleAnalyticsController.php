@@ -381,14 +381,27 @@ class GoogleAnalyticsController extends Controller
 // metrics=ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits
 // sort=-ga:pageviews
 
+
+                $extra = array(
+                    'dimensions' => 'ga:yearWeek',
+                    'sort' => 'ga:yearWeek'
+                    );
+
+
         $results = $analyticsHelper->getResults(
           365,
-          1,
-          'ga:goal1Completions',
-          array('dimensions' => 'ga:day', 'sort' => 'ga:day')
+          0,
+          'ga:goal11Completions',
+          $extra
         );
 
 
+
+
+        $timestamp = strtotime(substr($results->getRows()[0][0], 0, 4) . 'W' . substr($results->getRows()[0][0], 4, 2));
+        $timestamp = date('d/m/Y', $timestamp);
+
+        echo $timestamp;
 
         var_dump($results->getRows());
         exit;

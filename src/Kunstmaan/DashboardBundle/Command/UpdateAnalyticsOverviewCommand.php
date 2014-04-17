@@ -74,14 +74,14 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                     $this->getMetrics($overview);
 
                     if ($overview->getVisits()) { // if there are any visits
-                        // day-specific data
-                        $this->getChartData($overview);
+                        // // day-specific data
+                        // $this->getChartData($overview);
 
-                        // visitor types
-                        $this->getVisitorTypes($overview);
+                        // // visitor types
+                        // $this->getVisitorTypes($overview);
 
-                        // top pages
-                        $this->getTopPages($overview);
+                        // // top pages
+                        // $this->getTopPages($overview);
 
                         // // traffic sources
                         // $this->getTrafficSources($overview);
@@ -98,8 +98,8 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                         // // top campaigns
                         // $this->getTopCampaigns($overview);
 
-                        // // get goals
-                        // $this->getGoals($overview);
+                        // get goals
+                        $this->getGoals($overview);
                     } else { // if no visits
                         // reset overview
                         $this->reset($overview);
@@ -206,30 +206,51 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
         {
             $this->output->writeln("\t" . 'Fetching chart data..');
 
-            // isDaily checks
-            $isDaily = $overview->getTimespan() - $overview->getStartOffset() <= 1;
-            $dimension =  !$isDaily ? 'ga:date' : 'ga:hour';
-            $sort = !$isDaily ? 'ga:date' : 'ga:hour';
+            $timespan = $overview->getTimespan() - $overview->getStartOffset();
+            if ($timespan <= 1) {
+                $extra = array(
+                    'dimensions' => 'ga:hour',
+                    'sort' => 'ga:hour'
+                    );
+            } else if ($timespan <= 7) {
+                $extra = array(
+                    'dimensions' => 'ga:dayOfWeekName'
+                    );
+            } else if ($timespan <= 93) {
+                $extra = array(
+                    'dimensions' => 'ga:yearWeek',
+                    'sort' => 'ga:yearWeek'
+                    );
+            } else {
+                $extra = array(
+                    'dimensions' => 'ga:yearMonth',
+                    'sort' => 'ga:yearMonth'
+                    );
+            }
 
             // get visits
             $results = $this->analyticsHelper->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
                 'ga:visits',
-                array('dimensions' => $dimension, 'sort' => $sort)
+                $extra
             );
             $rows    = $results->getRows();
 
             $chartData = array();
             foreach ($rows as $row) {
-                // timestamp for chart data
-                if (!$isDaily) {
-                    // if date
-                    $timestamp = substr($row[0], 6, 2) . '-' . substr($row[0], 4, 2) . '-' . substr($row[0], 0, 4);
-                } else {
-                    // if hour
+
+                if ($timespan <= 1) {
+                    $timestamp = $row[0] . 'h';
+                } else if ($timespan <= 7) {
                     $timestamp = $row[0];
+                } else if ($timespan <= 93) {
+                    $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
+                    $timestamp = date('d/m/Y', $timestamp);
+                } else {
+                    $timestamp = substr($row[0], 4, 2) . '/' . substr($row[0], 0, 4);
                 }
+
                 $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
             }
 
@@ -238,19 +259,23 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
                 'ga:visitors',
-                array('dimensions' => $dimension, 'sort' => $sort)
+                $extra
             );
             $rows    = $results->getRows();
 
             foreach ($rows as $row) {
-                // timestamp for chart data
-                if (!$isDaily) {
-                    // if date
+
+                if ($timespan <= 1) {
+                    $timestamp = $row[0] . 'h';
+                } else if ($timespan <= 7) {
                     $timestamp = substr($row[0], 6, 2) . '-' . substr($row[0], 4, 2) . '-' . substr($row[0], 0, 4);
+                } else if ($timespan <= 93) {
+                    $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
+                    $timestamp = date('d/m/Y', $timestamp);
                 } else {
-                    // if hour
-                    $timestamp = $row[0];
+                    $timestamp = substr($row[0], 4, 2) . '/' . substr($row[0], 0, 4);
                 }
+
                 $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
             }
 
@@ -542,10 +567,27 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             // goals
             $this->output->writeln("\t" . 'Fetching goals..');
 
-            // isDaily checks
-            $isDaily = $overview->getTimespan() - $overview->getStartOffset() <= 1;
-            $dimension =  !$isDaily ? 'ga:date' : 'ga:hour';
-            $sort = !$isDaily ? 'ga:date' : 'ga:hour';
+            $timespan = $overview->getTimespan() - $overview->getStartOffset();
+            if ($timespan <= 1) {
+                $extra = array(
+                    'dimensions' => 'ga:hour',
+                    'sort' => 'ga:hour'
+                    );
+            } else if ($timespan <= 7) {
+                $extra = array(
+                    'dimensions' => 'ga:dayOfWeekName'
+                    );
+            } else if ($timespan <= 93) {
+                $extra = array(
+                    'dimensions' => 'ga:yearWeek',
+                    'sort' => 'ga:yearWeek'
+                    );
+            } else {
+                $extra = array(
+                    'dimensions' => 'ga:yearMonth',
+                    'sort' => 'ga:yearMonth'
+                    );
+            }
 
             // delete existing entries
             if (is_array($overview->getGoals()->toArray())) {
@@ -572,25 +614,29 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                         $overview->getTimespan(),
                         $overview->getStartOffset(),
                         'ga:goal'.$key.'Completions',
-                        array('dimensions' => $dimension, 'sort' => $sort)
+                        $extra
                     );
                     $rows    = $results->getRows();
 
                     // parse the results
                     $chartData = array();
                     $visits = 0;
+
                     foreach($rows as $row) {
                         // total visit count
                         $visits += $row[1];
 
-                        // timestamp for chart data
-                        if (!$isDaily) {
-                            // if date
+                        if ($timespan <= 1) {
+                            $timestamp = $row[0] . 'h';
+                        } else if ($timespan <= 7) {
                             $timestamp = substr($row[0], 6, 2) . '-' . substr($row[0], 4, 2) . '-' . substr($row[0], 0, 4);
+                        } else if ($timespan <= 93) {
+                            $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
+                            $timestamp = date('d/m/Y', $timestamp);
                         } else {
-                            // if hour
-                            $timestamp = $row[0];
+                            $timestamp = substr($row[0], 4, 2) . '/' . substr($row[0], 0, 4);
                         }
+
                         $chartData[] = array('timestamp' => $timestamp, 'visits' => $row[1]);
                     }
 
