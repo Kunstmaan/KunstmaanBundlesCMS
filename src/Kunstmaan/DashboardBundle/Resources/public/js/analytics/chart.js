@@ -1,26 +1,25 @@
    $(document).ready(function() {
-        $(window).resize(function (){
+        $(window).resize(function () {
+            // fix for the main chart to show correctly on window resize
             initChart();
         });
     });
 
-
-    function setHeader(data) {
-    }
-
-    // load dashboard data
+    // chart data arrays
     var chartVisitsData = [];
     var chartVisitorsData = [];
     var chartLabels = [];
 
     // sets the chart data
     function setChart(data) {
+        // set the values
         $('#data_visits').html(data.overview.visits);
         $('#data_visitors').html(data.overview.visitors);
         $('#data_pageviews').html(data.overview.pageViews);
         $('#data_pages_per_visit').html(data.overview.pagesPerVisit);
         $('#data_avg_visit_duration').html(data.overview.avgVisitDuration + ' seconds');
 
+        // set the chart data
         chartVisitsData = [];
         chartVisitorsData = [];
         chartLabels = [];
@@ -84,6 +83,7 @@
         var steps = max < 10 ? max : 10;
 
         resizeChart();
+        // render the chart
         var myLine = new Chart(document.getElementById("js-dashboard-chart").getContext("2d")).Line(barChartData,
             {scaleOverride: true, scaleStepWidth: Math.ceil(max/steps), scaleSteps: steps, animation:true});
     };

@@ -147,7 +147,6 @@ class GoogleAnalyticsController extends Controller
             $currentRoute  = $request->attributes->get('_route');
             $currentUrl    = $this->get('router')->generate($currentRoute, array(), true);
             $params['url'] = $currentUrl . 'analytics/setToken/';
-
             return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
         }
 
@@ -155,7 +154,6 @@ class GoogleAnalyticsController extends Controller
             $parts = explode("::", $request->request->get('properties'));
             $googleClientHelper->saveAccountId($parts[1]);
             $googleClientHelper->savePropertyId($parts[0]);
-
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
         }
 
@@ -188,13 +186,11 @@ class GoogleAnalyticsController extends Controller
             $currentRoute  = $request->attributes->get('_route');
             $currentUrl    = $this->get('router')->generate($currentRoute, array(), true);
             $params['url'] = $currentUrl . 'analytics/setToken/';
-
             return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
         }
 
         if (null !== $request->request->get('profiles')) {
             $googleClientHelper->saveProfileId($request->request->get('profiles'));
-
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
         }
 
@@ -211,114 +207,100 @@ class GoogleAnalyticsController extends Controller
     }
 
     /**
-     * Return an ajax response
+     * Return an ajax response with all data for an overview
      *
      * @Route("/getOverview/{id}", requirements={"id" = "\d+"}, name="KunstmaanDashboardBundle_analytics_overview_ajax")
      *
      */
     public function getOverviewAction($id)
     {
-        if ($id) {
-            $em       = $this->getDoctrine()->getManager();
-            $overview = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($id);
-
-            $referrals = array();
-            foreach ($overview->getReferrals()->toArray() as $key => $referral) {
-                $referrals[$key]['visits'] = $referral->getVisits();
-                $referrals[$key]['name']   = $referral->getName();
-            }
-
-            $searches = array();
-            foreach ($overview->getSearches()->toArray() as $key => $search) {
-                $searches[$key]['visits']  = $search->getVisits();
-                $searches[$key]['name']    = $search->getName();
-            }
-
-            $campaigns = array();
-            foreach ($overview->getCampaigns()->toArray() as $key => $search) {
-                $campaigns[$key]['visits']  = $search->getVisits();
-                $campaigns[$key]['name']    = $search->getName();
-            }
-
-            $pages = array();
-            foreach ($overview->getPages() as $key => $page) {
-                $pages[$key]['visits']     = number_format($page->getVisits());
-                $pages[$key]['name']       = $page->getName();
-            }
-
-            $goals = array();
-            foreach ($overview->getActiveGoals() as $key => $goal) {
-                $goals[$key]['name']       = $goal->getName();
-                $goals[$key]['visits']     = $goal->getVisits();
-                $goals[$key]['id']         = $goal->getId();
-                $goals[$key]['chartData'] = json_decode($goal->getChartData());
-            }
-
-            $overviewData = array(
-              'chartData'                           => json_decode($overview->getChartData()),
-              'title'                               => $overview->getTitle(),
-              'timespan'                            => $overview->getTimespan(),
-              'startOffset'                         => $overview->getStartOffset(),
-              'visits'                              => number_format($overview->getVisits()),
-              'visitors'                            => number_format($overview->getVisitors()),
-              'pagesPerVisit'                       => number_format($overview->getPagesPerVisit()),
-              'avgVisitDuration'                    => number_format($overview->getAvgVisitDuration()),
-              'returningVisits'                     => number_format($overview->getReturningVisits()),
-              'newVisits'                           => number_format($overview->getNewVisits()),
-              'bounceRate'                          => number_format($overview->getBounceRate()),
-              'pageViews'                           => number_format($overview->getPageViews()),
-              'trafficDirect'                       => number_format($overview->getTrafficDirect()),
-              'trafficReferral'                     => number_format($overview->getTrafficReferral()),
-              'trafficSearchEngine'                 => number_format($overview->getTrafficSearchEngine()),
-              'desktopTraffic'                      => number_format($overview->getDesktopTraffic()),
-              'mobileTraffic'                       => number_format($overview->getMobileTraffic()),
-              'tabletTraffic'                       => number_format($overview->getTabletTraffic()),
-              'desktopTrafficPercentage'            => $overview->getDesktopTrafficPercentage(),
-              'mobileTrafficPercentage'             => $overview->getMobileTrafficPercentage(),
-              'tabletTrafficPercentage'             => $overview->getTabletTrafficPercentage(),
-              'trafficDirectPercentage'             => $overview->getTrafficDirectPercentage(),
-              'trafficReferralPercentage'           => $overview->getTrafficReferralPercentage(),
-              'trafficSearchEnginePercentage'       => $overview->getTrafficSearchEnginePercentage(),
-              'returningVisitsPercentage'           => $overview->getReturningVisitsPercentage(),
-              'newVisitsPercentage'                 => $overview->getNewVisitsPercentage(),
-            );
-
-            $return = array(
-              'responseCode'                        => 200,
-              'overview'                            => $overviewData,
-              'referrals'                           => $referrals,
-              'campaigns'                           => $campaigns,
-              'pages'                               => $pages,
-              'goals'                               => $goals,
-            );
-        } else {
+        if (!$id) {
             $return = array(
               'responseCode'                        => 400
             );
         }
 
-        return new JsonResponse($return, 200, array('Content-Type' => 'application/json'));
-    }
+        $em       = $this->getDoctrine()->getManager();
+        $overview = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($id);
 
+        // referrals data
+        $referrals = array();
+        foreach ($overview->getReferrals()->toArray() as $key => $referral) {
+            $referrals[$key]['visits'] = $referral->getVisits();
+            $referrals[$key]['name']   = $referral->getName();
+        }
 
-    /**
-     * Return an ajax response
-     *
-     * @Route("/getGoalChartData/{id}", requirements={"id" = "\d+"}, name="KunstmaanDashboardBundle_analytics_goalChartData_ajax")
-     *
-     */
-    public function getGoalChartData($id) {
+        // searches data
+        $searches = array();
+        foreach ($overview->getSearches()->toArray() as $key => $search) {
+            $searches[$key]['visits']  = $search->getVisits();
+            $searches[$key]['name']    = $search->getName();
+        }
 
-        $em            = $this->getDoctrine()->getManager();
-        $chartData     = $em->getRepository('KunstmaanDashboardBundle:AnalyticsGoal')->getGoal($id)->getChartData();
-        $name          = $em->getRepository('KunstmaanDashboardBundle:AnalyticsGoal')->getGoal($id)->getName();
+        // campaigns data
+        $campaigns = array();
+        foreach ($overview->getCampaigns()->toArray() as $key => $search) {
+            $campaigns[$key]['visits']  = $search->getVisits();
+            $campaigns[$key]['name']    = $search->getName();
+        }
 
-        $return = array(
-          'responseCode'  => 200,
-          'chartData' => json_decode($chartData),
-          'name' => $name,
+        // pages data
+        $pages = array();
+        foreach ($overview->getPages() as $key => $page) {
+            $pages[$key]['visits']     = number_format($page->getVisits());
+            $pages[$key]['name']       = $page->getName();
+        }
+
+        // goals data
+        $goals = array();
+        foreach ($overview->getActiveGoals() as $key => $goal) {
+            $goals[$key]['name']       = $goal->getName();
+            $goals[$key]['visits']     = $goal->getVisits();
+            $goals[$key]['id']         = $goal->getId();
+            $goals[$key]['chartData'] = json_decode($goal->getChartData());
+        }
+
+        // overview data
+        $overviewData = array(
+          'chartData'                           => json_decode($overview->getChartData()),
+          'title'                               => $overview->getTitle(),
+          'timespan'                            => $overview->getTimespan(),
+          'startOffset'                         => $overview->getStartOffset(),
+          'visits'                              => number_format($overview->getVisits()),
+          'visitors'                            => number_format($overview->getVisitors()),
+          'pagesPerVisit'                       => number_format($overview->getPagesPerVisit()),
+          'avgVisitDuration'                    => number_format($overview->getAvgVisitDuration()),
+          'returningVisits'                     => number_format($overview->getReturningVisits()),
+          'newVisits'                           => number_format($overview->getNewVisits()),
+          'bounceRate'                          => number_format($overview->getBounceRate()),
+          'pageViews'                           => number_format($overview->getPageViews()),
+          'trafficDirect'                       => number_format($overview->getTrafficDirect()),
+          'trafficReferral'                     => number_format($overview->getTrafficReferral()),
+          'trafficSearchEngine'                 => number_format($overview->getTrafficSearchEngine()),
+          'desktopTraffic'                      => number_format($overview->getDesktopTraffic()),
+          'mobileTraffic'                       => number_format($overview->getMobileTraffic()),
+          'tabletTraffic'                       => number_format($overview->getTabletTraffic()),
+          'desktopTrafficPercentage'            => $overview->getDesktopTrafficPercentage(),
+          'mobileTrafficPercentage'             => $overview->getMobileTrafficPercentage(),
+          'tabletTrafficPercentage'             => $overview->getTabletTrafficPercentage(),
+          'trafficDirectPercentage'             => $overview->getTrafficDirectPercentage(),
+          'trafficReferralPercentage'           => $overview->getTrafficReferralPercentage(),
+          'trafficSearchEnginePercentage'       => $overview->getTrafficSearchEnginePercentage(),
+          'returningVisitsPercentage'           => $overview->getReturningVisitsPercentage(),
+          'newVisitsPercentage'                 => $overview->getNewVisitsPercentage(),
         );
 
+        // put all data in the return array
+        $return = array(
+          'responseCode'                        => 200,
+          'overview'                            => $overviewData,
+          'referrals'                           => $referrals,
+          'campaigns'                           => $campaigns,
+          'pages'                               => $pages,
+          'goals'                               => $goals,
+        );
+
+        // return json response
         return new JsonResponse($return, 200, array('Content-Type' => 'application/json'));
     }
 
@@ -354,58 +336,6 @@ class GoogleAnalyticsController extends Controller
       $resultCode = $command->run($input, $output);
 
       return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
-    }
-
-
-
-    /**
-     * @Route("/test", name="KunstmaanDashboardBundle_homepage_test")
-     * @Template()
-     *
-     * @return array
-     */
-    public function testAction()
-    {
-        $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
-        $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
-        $analyticsHelper->init($googleClientHelper);
-
-
-        // $results = $analyticsHelper->getResultsByDate(
-        //   '2014-04-15',
-        //   '2014-04-15',
-        //   'ga:visitors',
-        //   array('dimensions' => 'ga:hour, ga:date')
-        // );
-
-
-// dimensions=ga:pagePath
-// metrics=ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits
-// sort=-ga:pageviews
-
-
-                $extra = array(
-                    'dimensions' => 'ga:yearWeek',
-                    'sort' => 'ga:yearWeek'
-                    );
-
-
-        $results = $analyticsHelper->getResults(
-          365,
-          0,
-          'ga:goal11ConversionRate'
-        );
-
-
-
-
-        $timestamp = strtotime(substr($results->getRows()[0][0], 0, 4) . 'W' . substr($results->getRows()[0][0], 4, 2));
-        $timestamp = date('d/m/Y', $timestamp);
-
-        echo $timestamp;
-
-        var_dump($results->getRows());
-        exit;
     }
 
 }

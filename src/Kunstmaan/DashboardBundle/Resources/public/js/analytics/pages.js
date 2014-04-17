@@ -1,6 +1,7 @@
 
     function setPages(data) {
         if (data.pages.length != 0) {
+            // render a list for the top pages
             $('#data_top_pages_no_data').html('');
             var html = '';
             for(var i = 0; i < data.pages.length; i++) {
@@ -17,6 +18,7 @@
             $('#data_top_pages').html('');
             $('#data_top_pages').html(html);
         } else {
+            // no available data
             $('#data_top_pages_no_data').html('No data available for Top Pages');
             $('#data_top_pages').html('');
         }

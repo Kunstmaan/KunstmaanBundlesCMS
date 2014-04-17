@@ -93,7 +93,7 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                         $this->getTrafficSources($overview);
 
 
-                        // unused
+                        // unused, please keep here just in case if some of this data is still needed in the future
 
                         // // bounce rate
                         // $this->getBounceRate($overview);
@@ -179,7 +179,8 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
          *
          * @param AnalyticsOverview $overview The overview
          */
-        private function getTrafficTypes(&$overview) {
+        private function getTrafficTypes(&$overview)
+        {
             $this->output->writeln("\t" . 'Fetching traffic types..');
 
             // mobile
@@ -220,6 +221,7 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
         {
             $this->output->writeln("\t" . 'Fetching chart data..');
 
+            // create the right timespan
             $timespan = $overview->getTimespan() - $overview->getStartOffset();
             if ($timespan <= 1) {
                 $extra = array(
@@ -253,7 +255,6 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
 
             $chartData = array();
             foreach ($rows as $row) {
-
                 if ($timespan <= 1) {
                     $timestamp = $row[0] . 'h';
                 } else if ($timespan <= 7) {
@@ -278,7 +279,6 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             $rows    = $results->getRows();
 
             foreach ($rows as $row) {
-
                 if ($timespan <= 1) {
                     $timestamp = $row[0] . 'h';
                 } else if ($timespan <= 7) {

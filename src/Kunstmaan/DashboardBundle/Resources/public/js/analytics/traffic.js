@@ -1,5 +1,6 @@
 
     function setTraffic(data) {
+        // set the values
         $('#data_desktop_traffic .data_visits').html(data.overview.desktopTraffic);
         $('#data_desktop_traffic .data_percentage').html('(' + data.overview.desktopTrafficPercentage + '%)');
 
@@ -9,6 +10,7 @@
         $('#data_tablet_traffic .data_visits').html(data.overview.tabletTraffic);
         $('#data_tablet_traffic .data_percentage').html('(' + data.overview.tabletTrafficPercentage + '%)');
 
+        // set the chart data
         var chartData = [
             {
                 value: removeNumberFormat(data.overview.desktopTraffic),
@@ -24,5 +26,6 @@
             }
         ]
 
+        // render the chart
         var myLine = new Chart(document.getElementById("js-traffic-dashboard-chart").getContext("2d")).Pie(chartData);
     }

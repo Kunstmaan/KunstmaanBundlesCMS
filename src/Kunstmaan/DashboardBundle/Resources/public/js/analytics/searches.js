@@ -1,6 +1,7 @@
 
     function setSearches(data) {
         if (data.searches.length != 0) {
+            // render a list for the top searches
             $('#data_top_search_no_data').html('');
             var html = '';
             for(var i = 0; i < data.searches.length; i++) {

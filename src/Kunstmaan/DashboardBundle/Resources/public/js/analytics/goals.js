@@ -2,12 +2,10 @@
     function setGoals(data) {
         // reset the overview list
         $('#goalOverview').html('');
-        var html = '';
-            $('#goalOverview').html('');
 
-        // create HTML for each goal
+        // create box for each goal
         for(var i = 0; i < data.goals.length; i++) {
-
+            // using DOM here because chart.js doesn't find these added elements if just rendered with HTML
             var overview = document.createElement('li');
             overview.setAttribute('id', 'goal'+data.goals[i]['id']);
             overview.setAttribute('data-goal-id', data.goals[i]['id']);
@@ -28,22 +26,26 @@
             visitsSpan.appendChild(visitsText);
             overview.appendChild(visitsSpan);
 
+            // add elements to DOM
             $('#goalOverview').append(overview);
+
+            // init the chart for a goal box
             initLineChart(chartCanvas, data.goals[i]['chartData']);
-
         }
-
-        // add the HTML to the list
-        //$('#goalOverview').html(html);
     }
 
     function initLineChart(canvas, json) {
+        // data arrays for the chart
         var chartData = [];
         var chartLabels = [];
+
+        // fill the data arrays
         for (var i = 0; i < json.length; i++) {
             chartData.push(parseInt(json[i].visits));
             chartLabels.push('');
         }
+
+        // create linechart data
         var lineChartData = {
             labels : chartLabels,
             datasets : [
@@ -65,6 +67,7 @@
         var max = Math.max.apply(null, chartData);
         var steps = max < 5 ? max : 5;
 
+        // render line chart
         var ctx = canvas.getContext("2d");
         var chart = new Chart(ctx).Line(lineChartData, {scaleOverride: true, scaleStepWidth: Math.ceil(max/steps), scaleSteps: steps, animation:false});
     }

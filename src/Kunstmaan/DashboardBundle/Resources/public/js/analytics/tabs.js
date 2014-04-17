@@ -1,4 +1,5 @@
 
+    // function to remove the number format on data so charts can work with it
     function removeNumberFormat(number) {
         var parts = number.split(",");
         var number = '';
@@ -8,8 +9,9 @@
         return parseInt(number);
     }
 
-
     $(document).ready(function() {
+        // fade the dashboard in once everything is loaded
+        // might need a progress thingy while loading?
         $('#dashboard').animate({opacity: '1'}, 500);
 
         // show first tab
@@ -29,8 +31,6 @@
                     $('.db-tabs__item').removeClass('db-tabs__item--active');
                     $('#tab'+id).addClass('db-tabs__item--active');
 
-
-
                     // add functions here to add component behaviour
                     // these functions are declared in a per-template js file (public/js/analytics/)
                     setChart(data);
@@ -39,36 +39,36 @@
                     setPages(data);
                     setGoals(data);
                     initChart();
-
                 }
             });
         }
 
-        var updateButtonText = $('#updateButton').html();
-        var updating = false;
-
-        $('#updateButton').mouseenter(function() {
-            if (!updating) {
-                $('#updateButton').html($('#updateButton').attr('data-update-text'));
-                $('#updateButton').attr('style', 'font-weight:bold;');
-            }
-        }).mouseleave(function() {
-            if (!updating) {
-                $('#updateButton').html(updateButtonText);
-                $('#updateButton').attr('style', 'font-weight:normal;');
-            }
-        }).click(function() {
-            if (!updating) {
-                updating = true;
-                $('#updateButton').html($('#updateButton').attr('data-updating-text'));
-                $.get(
-                    "analytics/updateData",
-                    function(data) {
-                        updating = false;
-                        location.reload(true);
-                    }
-                );
-            }
-        });
+        // unused, but please keep for a while, might need it again
+        // var updateButtonText = $('#updateButton').html();
+        // var updating = false;
+        //
+        // $('#updateButton').mouseenter(function() {
+        //     if (!updating) {
+        //         $('#updateButton').html($('#updateButton').attr('data-update-text'));
+        //         $('#updateButton').attr('style', 'font-weight:bold;');
+        //     }
+        // }).mouseleave(function() {
+        //     if (!updating) {
+        //         $('#updateButton').html(updateButtonText);
+        //         $('#updateButton').attr('style', 'font-weight:normal;');
+        //     }
+        // }).click(function() {
+        //     if (!updating) {
+        //         updating = true;
+        //         $('#updateButton').html($('#updateButton').attr('data-updating-text'));
+        //         $.get(
+        //             "analytics/updateData",
+        //             function(data) {
+        //                 updating = false;
+        //                 location.reload(true);
+        //             }
+        //         );
+        //     }
+        // });
     });
 

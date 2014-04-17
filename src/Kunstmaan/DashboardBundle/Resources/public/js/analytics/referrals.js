@@ -1,6 +1,7 @@
 
     function setReferrals(data) {
         if (data.referrals.length != 0) {
+            // render a list for the top referrals
             $('#data_top_referral_no_data').html('');
             var html = '';
             for(var i = 0; i < data.referrals.length; i++) {
