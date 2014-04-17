@@ -2,21 +2,19 @@
 
 namespace Kunstmaan\SeoBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\SeoBundle\Form\SeoType;
-use Kunstmaan\MediaBundle\Entity\Media;
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\SeoBundle\Form\SeoType;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Seo metadata for entities
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\SeoBundle\Repository\SeoRepository")
- * @ORM\Table(name="kuma_seo")
+ * @ORM\Table(name="kuma_seo", indexes={@ORM\Index(name="idx_lookup", columns={"ref_id", "ref_entity_name"})})
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class Seo extends AbstractEntity
@@ -127,8 +125,6 @@ class Seo extends AbstractEntity
      * @ORM\Column(type="string", nullable=true, name="og_url")
      */
     protected $ogUrl;
-
-
 
     /**
      * @param string $url
