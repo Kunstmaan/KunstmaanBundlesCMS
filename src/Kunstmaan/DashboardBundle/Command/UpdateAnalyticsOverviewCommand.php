@@ -75,6 +75,9 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
 
                     if ($overview->getVisits()) { // if there are any visits
                         // day-specific data
+                        $this->getTrafficTypes($overview);
+
+                        // day-specific data
                         $this->getChartData($overview);
 
                         // get goals
@@ -169,35 +172,43 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             $avgVisitDuration = is_numeric($rows[0][4]) ? $rows[0][4] : 0;
             $overview->setAvgVisitDuration($avgVisitDuration);
 
-            // traffic types
+        }
 
-                // mobile
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    'ga:visitors',
-                    array('segment' => 'gaid::-14')
-                );
-                $rows    = $results->getRows();
+        /**
+         * Fetch traffic type data and set it for the overview
+         *
+         * @param AnalyticsOverview $overview The overview
+         */
+        private function getTrafficTypes(&$overview) {
+            $this->output->writeln("\t" . 'Fetching traffic types..');
 
-                $mobileTraffic = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+            // mobile
+            $results = $this->analyticsHelper->getResults(
+                $overview->getTimespan(),
+                $overview->getStartOffset(),
+                'ga:visitors',
+                array('segment' => 'gaid::-14')
+            );
+            $rows    = $results->getRows();
 
-                // tablet
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    'ga:visitors',
-                    array('segment' => 'gaid::-13')
-                );
-                $rows    = $results->getRows();
+            $mobileTraffic = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
 
-                $tabletTraffic = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+            // tablet
+            $results = $this->analyticsHelper->getResults(
+                $overview->getTimespan(),
+                $overview->getStartOffset(),
+                'ga:visitors',
+                array('segment' => 'gaid::-13')
+            );
+            $rows    = $results->getRows();
 
-                // desktop
-                $dekstopTraffic = $overview->getVisitors() - ($mobileTraffic + $tabletTraffic);
-                $overview->setMobileTraffic($mobileTraffic);
-                $overview->setTabletTraffic($tabletTraffic);
-                $overview->setDesktopTraffic($dekstopTraffic);
+            $tabletTraffic = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+
+            // desktop
+            $dekstopTraffic = $overview->getVisitors() - ($mobileTraffic + $tabletTraffic);
+            $overview->setMobileTraffic($mobileTraffic);
+            $overview->setTabletTraffic($tabletTraffic);
+            $overview->setDesktopTraffic($dekstopTraffic);
         }
 
         /**
