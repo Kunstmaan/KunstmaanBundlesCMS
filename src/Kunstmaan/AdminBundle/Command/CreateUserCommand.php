@@ -102,6 +102,10 @@ EOT
                 $user->getGroups()->add($group);
             }
         }
+
+        // Set admin interface locale
+        $user->setAdminLocale($this->getContainer()->getParameter('kuma_admin.default_admin_locale'));
+
         // Persist
         $em->persist($user);
         $em->flush();

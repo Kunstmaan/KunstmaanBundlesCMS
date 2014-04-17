@@ -12,8 +12,15 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class UserType extends AbstractType implements RoleDependentUserFormInterface
 {
-
+    /**
+     * @var bool
+     */
     private $canEditAllFields = false;
+
+    /**
+     * @var array
+     */
+    private $langs = array();
 
     /**
      * Setter to check if we can display all form fields
@@ -27,10 +34,23 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     }
 
     /**
+     * @param array $langs
+     */
+    public function setLangs(array $langs)
+    {
+        $this->langs = $langs;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $languages = array();
+        foreach ($this->langs as $lang) {
+            $languages[$lang] = $lang;
+        }
+
         $builder->add('username', 'text', array ('required' => true, 'label' => 'settings.user.username'))
                 ->add('plainPassword', 'repeated', array(
                     'type' => 'password',
@@ -44,7 +64,13 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                     )
                     )
                 )
-                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'));
+                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'))
+                ->add('adminLocale', 'choice', array(
+                    'choices'     => $languages,
+                    'label'       => 'settings.user.adminlang',
+                    'required'    => true,
+                    'empty_value' => false
+                ));
 
         if ($this->canEditAllFields) {
             $builder->add('enabled', 'checkbox', array('required' => false, 'label' => 'settings.user.enabled'))

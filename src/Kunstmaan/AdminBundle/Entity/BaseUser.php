@@ -26,6 +26,11 @@ abstract class BaseUser extends AbstractUser
     protected $groups;
 
     /**
+     * @ORM\Column(type="string", name="admin_locale", length=5, nullable=true)
+     */
+    protected $adminLocale;
+
+    /**
      * Construct a new user
      */
     public function __construct()
@@ -86,6 +91,30 @@ abstract class BaseUser extends AbstractUser
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Get adminLocale
+     *
+     * @return string
+     */
+    public function getAdminLocale()
+    {
+        return $this->adminLocale;
+    }
+
+    /**
+     * Set adminLocale
+     *
+     * @param string $adminLocale
+     *
+     * @return User
+     */
+    public function setAdminLocale($adminLocale)
+    {
+        $this->adminLocale = $adminLocale;
+
+        return $this;
     }
 
     /**

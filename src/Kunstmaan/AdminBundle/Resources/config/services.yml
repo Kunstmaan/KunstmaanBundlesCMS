@@ -24,6 +24,12 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
+    kunstmaan_admin.adminLocale.listener:
+        class: Kunstmaan\AdminBundle\EventListener\AdminLocaleListener
+        arguments: ["@security.context", "@translator", "%kuma_admin.default_admin_locale%"]
+        tags:
+            - { name: kernel.event_listener, event: 'kernel.view' }
+
     kunstmaan_admin.menu.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\MenuTwigExtension
         arguments: ["@kunstmaan_admin.menubuilder"]

@@ -67,12 +67,13 @@ class UsersController extends BaseSettingsController
         $user = $this->getUserClassInstance();
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
+        $formType->setLangs($this->container->getParameter('kuma_admin.admin_locales'));
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
             $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
         }
-        
+
         $form = $this->createForm($formType, $user, array('password_required' => true, 'validation_groups' => array('Registration')));
 
         if ('POST' == $request->getMethod()) {
@@ -125,6 +126,7 @@ class UsersController extends BaseSettingsController
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
+        $formType->setLangs($this->container->getParameter('kuma_admin.admin_locales'));
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
