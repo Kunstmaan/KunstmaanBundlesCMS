@@ -30,6 +30,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        if($this->container->hasParameter("kuma_admin.dashboard_route")){
+            return $this->redirect($this->generateUrl($this->container->getParameter("kuma_admin.dashboard_route")));
+        }
+
         /* @var DashboardConfiguration $dashboardConfiguration */
         $dashboardConfiguration = $this->getDoctrine()->getManager()->getRepository('KunstmaanAdminBundle:DashboardConfiguration')->findOneBy(array());
 

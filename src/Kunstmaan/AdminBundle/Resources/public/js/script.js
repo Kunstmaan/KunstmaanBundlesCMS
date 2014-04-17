@@ -497,9 +497,11 @@ function updateOptions(el, options){
     });
     $(el).parent(".filterline").find(".filteroptions").find("input:not(.uniquefilterid), select").each(function(){
         var name = $(this).attr("name");
-        if (name.indexOf("[]", name.length - 2) !== -1) {
-            name = name.substr(0, name.length - 2);
-            $(this).attr("name", name + "_" + uniqueid + "[]");
+        var bracketPos = name.indexOf("[");
+        if (bracketPos !== -1) {
+            var arrayName = name.substr(0, bracketPos);
+            var arrayIndex = name.substr(bracketPos);
+            $(this).attr("name", arrayName + "_" + uniqueid + arrayIndex);
         } else {
             $(this).attr("name", $(this).attr("name") + "_" + uniqueid);
         }

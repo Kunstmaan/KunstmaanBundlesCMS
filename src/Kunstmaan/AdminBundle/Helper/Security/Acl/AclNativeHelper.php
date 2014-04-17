@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 /**
  * AclHelper is a helper class to help setting the permissions when querying using native queries
@@ -30,15 +31,22 @@ class AclNativeHelper
     private $securityContext = null;
 
     /**
+     * @var RoleHierarchyInterface
+     */
+    private $roleHierarchy = null;
+
+    /**
      * Constructor.
      *
-     * @param EntityManager            $em              The entity manager
-     * @param SecurityContextInterface $securityContext The security context
+     * @param EntityManager            $em The entity manager
+     * @param SecurityContextInterface $sc The security context
+     * @param RoleHierarchyInterface   $rh The role hierarchies
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $securityContext)
+    public function __construct(EntityManager $em, SecurityContextInterface $sc, RoleHierarchyInterface $rh)
     {
         $this->em              = $em;
-        $this->securityContext = $securityContext;
+        $this->securityContext = $sc;
+        $this->roleHierarchy   = $rh;
     }
 
     /**
@@ -73,31 +81,27 @@ class AclNativeHelper
         $token = $this->securityContext->getToken(); // for now lets imagine we will have token i.e user is logged in
         $user  = $token->getUser();
 
+        $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
+
+        // Security context does not provide anonymous role automatically.
         $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
-        if (is_object($user)) {
-            $userRoles = $user->getRoles();
-            foreach ($userRoles as $role) {
-                // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
-                if ($role !== 'ROLE_USER') {
-                    $uR[] = '"' . $role . '"';
-                }
+
+        /* @var $role RoleInterface */
+        foreach ($userRoles as $role) {
+            // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
+            if ($role->getRole() !== 'ROLE_USER') {
+                $uR[] = '"' . $role->getRole() . '"';
             }
-            $inString = implode(' OR s.identifier = ', (array) $uR);
+        }
+        $uR = array_unique($uR);
+        $inString = implode(' OR s.identifier = ', (array) $uR);
+
+        if (is_object($user)) {
             $inString .= ' OR s.identifier = "' . str_replace(
                 '\\',
                 '\\\\',
                 get_class($user)
             ) . '-' . $user->getUserName() . '"';
-        } else {
-            $userRoles = $token->getRoles();
-            /* @var $role RoleInterface */
-            foreach ($userRoles as $role) {
-                $role = $role->getRole();
-                if ($role !== 'ROLE_USER') {
-                    $uR[] = '"' . $role . '"';
-                }
-            }
-            $inString = implode(' OR s.identifier = ', (array) $uR);
         }
 
         $joinTableQuery = <<<SELECTQUERY
@@ -108,10 +112,9 @@ LEFT JOIN {$database}.acl_entries e ON (
     OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
 )
 LEFT JOIN {$database}.acl_security_identities s ON (
-s.id = e.security_identity_id
+s.id = e.security_identity_id AND (s.identifier = {$inString})
 )
 WHERE c.class_type = {$rootEntity}
-AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
 

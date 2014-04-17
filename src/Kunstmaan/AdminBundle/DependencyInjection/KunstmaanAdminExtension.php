@@ -34,7 +34,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('version_checker.enabled', true);
 
         $configuration = new Configuration();
-        $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('kuma_admin.dashboard_route', $config['dashboard_route']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

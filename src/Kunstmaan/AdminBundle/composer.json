@@ -14,24 +14,28 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": ">=2.3.0,<2.4.0",
-        "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "friendsofsymfony/user-bundle": "dev-master",
-        "knplabs/knp-menu-bundle": "*",
+        "symfony/symfony": "~2.3",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "friendsofsymfony/user-bundle": "2.0.*@dev",
+        "knplabs/knp-menu": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.0.*@dev",
         "sensio/framework-extra-bundle": "*",
-        "kunstmaan/adminlist-bundle": "self.version",
-        "kunstmaan/utilities-bundle": "self.version",
-        "guzzle/guzzle": "3.7.*@dev"
+        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/utilities-bundle": "2.3.*",
+        "guzzle/guzzle": "3.8.*"
     },
     "require-dev": {
-        "doctrine/data-fixtures": "1.0.*@dev",
-        "doctrine/doctrine-fixtures-bundle": ">=2.1, <2.3",
-        "pagerfanta/pagerfanta": "1.0.*@dev",
-        "white-october/pagerfanta-bundle": "1.0.*@dev"
+        "doctrine/doctrine-fixtures-bundle": "~2.2.0",
+        "white-october/pagerfanta-bundle": "1.0.*"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
     },
-    "target-dir": "Kunstmaan/AdminBundle"
+    "target-dir": "Kunstmaan/AdminBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
 }
