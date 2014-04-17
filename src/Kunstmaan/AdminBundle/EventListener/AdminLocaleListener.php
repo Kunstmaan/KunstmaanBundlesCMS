@@ -7,35 +7,37 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\DependencyInjection\Container;
-
 
 /**
  * AdminLocaleListener to override default locale if user-specific locale is set in database
  */
 class AdminLocaleListener implements EventSubscriberInterface
 {
-    /** @var SecurityContext $context */
+    /**
+     * @var SecurityContext $context
+     */
     private $context;
-    /** @var TranslatorInterface $translator */
-    private $translator;
-    /** @var string $defaultadminlocale */
-    private $defaultadminlocale;
-    /** @var string $defaultlocale */
-    private $defaultlocale;
 
     /**
-     * constructor
-     *
+     * @var TranslatorInterface $translator
+     */
+    private $translator;
+
+    /**
+     * @var string $defaultadminlocale
+     */
+    private $defaultAdminlocale;
+
+    /**
      * @param SecurityContext $context
      * @param TranslatorInterface $translator
+     * @param string $defaultAdminLocale
      */
-    public function __construct(SecurityContext $context, TranslatorInterface $translator, $defaultadminlocale, $defaultlocale)
+    public function __construct(SecurityContext $context, TranslatorInterface $translator, $defaultAdminLocale)
     {
         $this->translator = $translator;
         $this->context = $context;
-        $this->defaultadminlocale = $defaultadminlocale;
-        $this->defaultlocale = $defaultlocale;
+        $this->defaultAdminlocale = $defaultAdminLocale;
     }
 
     /**
@@ -48,24 +50,18 @@ class AdminLocaleListener implements EventSubscriberInterface
         $url = $event->getRequest()->getRequestUri();
 
         if ($this->context->getToken()) {
-            $locale = $this->context->getToken()->getUser()->getAdminLocale();
-
-            preg_match("/^\/(app_(.*)\.php\/)?([a-z][a-z]\/)?admin\/(.*)/", $url, $match);
+            preg_match('/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/', $url, $match);
 
             if (count($match)) {
-                if (!$locale) { // if adminlocale is not specified for this user
-                    if ($this->defaultadminlocale) { // if default adminlocale exists
-                        // use default adminlocale
-                        $locale = $this->defaultadminlocale;
-                    } else {
-                        // use defaultlocale
-                        $locale = $this->defaultlocale;
-                    }
+                $locale = $this->context->getToken()->getUser()->getAdminLocale();
+
+                if (!$locale) {
+                    $locale = $this->defaultAdminlocale;
                 }
+
                 $this->translator->setLocale($locale);
             }
         }
-
     }
 
     /**
@@ -74,7 +70,7 @@ class AdminLocaleListener implements EventSubscriberInterface
     static public function getSubscribedEvents()
     {
         return array(
-            // must be registered before the default Locale listener
+            // Must be registered before the default Locale listener
             KernelEvents::REQUEST => array(array('onKernelRequest', 17)),
         );
     }

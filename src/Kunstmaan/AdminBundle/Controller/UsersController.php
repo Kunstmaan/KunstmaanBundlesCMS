@@ -67,6 +67,7 @@ class UsersController extends BaseSettingsController
         $user = $this->getUserClassInstance();
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
+        $formType->setLangs($this->container->getParameter('kuma_admin.admin_locales'));
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
@@ -125,20 +126,7 @@ class UsersController extends BaseSettingsController
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
-
-        // create an array with all languages to pass to the form
-        if ($this->container->hasParameter('requiredadminlocales')) {
-            $langs = explode('|', $this->container->getParameter('requiredadminlocales'));
-            $langs = array_combine($langs, $langs);
-            array_unshift($langs, '');
-        } else if ($this->container->hasParameter('defaultadminlocale')) {
-            $langs = array($this->container->getParameter('defaultadminlocale') => $this->container->getParameter('defaultadminlocale'));
-        } else {
-            $langs = explode('|', $this->container->getParameter('requiredlocales'));
-            $langs = array_combine($langs, $langs);
-            array_unshift($langs, '');
-        }
-        $formType->setLangs($langs);
+        $formType->setLangs($this->container->getParameter('kuma_admin.admin_locales'));
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN

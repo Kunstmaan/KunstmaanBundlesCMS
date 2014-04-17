@@ -103,9 +103,8 @@ EOT
             }
         }
 
-        // set defaultadminlocale if exists; if not, use the defaultlocale
-        $locale = $this->getContainer()->hasParameter('defaultadminlocale') ? $this->getContainer()->getParameter('defaultadminlocale') : $this->getContainer()->getParameter('defaultlocale');
-        $user->setAdminLocale($locale);
+        // Set admin interface locale
+        $user->setAdminLocale($this->getContainer()->getParameter('kuma_admin.default_admin_locale'));
 
         // Persist
         $em->persist($user);

@@ -31,33 +31,4 @@ class User extends BaseUser
     {
         return 'Kunstmaan\AdminBundle\AdminList\UserAdminListConfigurator';
     }
-
-    /**
-     * @ORM\Column(type="string", name="admin_locale", length=5, nullable=true)
-     */
-    protected $adminLocale;
-
-    /**
-     * Get adminLocale
-     *
-     * @return string
-     */
-    public function getAdminLocale()
-    {
-        return $this->adminLocale;
-    }
-
-    /**
-     * Set adminLocale
-     *
-     * @param string $adminLocale
-     *
-     * @return User
-     */
-    public function setAdminLocale($adminLocale)
-    {
-        $this->adminLocale = $adminLocale;
-
-        return $this;
-    }
 }

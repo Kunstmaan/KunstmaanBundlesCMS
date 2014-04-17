@@ -12,13 +12,15 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class UserType extends AbstractType implements RoleDependentUserFormInterface
 {
-
+    /**
+     * @var bool
+     */
     private $canEditAllFields = false;
-    private $langs = [];
 
-    public function setLangs(array $langs) {
-        $this->langs = $langs;
-    }
+    /**
+     * @var array
+     */
+    private $langs = array();
 
     /**
      * Setter to check if we can display all form fields
@@ -31,13 +33,23 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
         $this->canEditAllFields = (bool)$canEditAllFields;
     }
 
-
+    /**
+     * @param array $langs
+     */
+    public function setLangs(array $langs)
+    {
+        $this->langs = $langs;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $languages = array();
+        foreach ($this->langs as $lang) {
+            $languages[$lang] = $lang;
+        }
 
         $builder->add('username', 'text', array ('required' => true, 'label' => 'settings.user.username'))
                 ->add('plainPassword', 'repeated', array(
@@ -54,8 +66,10 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                 )
                 ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'))
                 ->add('adminLocale', 'choice', array(
-                    'choices'   => $this->langs,
-                    'required'  => true,
+                    'choices'     => $languages,
+                    'label'       => 'settings.user.adminlang',
+                    'required'    => true,
+                    'empty_value' => false
                 ));
 
         if ($this->canEditAllFields) {
@@ -75,11 +89,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                                 'data-placeholder' => 'Choose the permission groups...'
                             )
                         )
-                    )
-                    ->add('adminLocale', 'choice', array(
-                        'choices'   => $this->langs,
-                        'required'  => true,
-                    ));
+                    );
         }
     }
 
