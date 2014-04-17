@@ -1,0 +1,14 @@
+{% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
+
+{% block content %}
+    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+    <form class="form-horizontal" action="{{ path('KunstmaanUserManagementBundle_settings_groups_add') }}" method="post" {{ form_enctype(form) }} novalidate >
+	    <fieldset>
+	        {{ form_rest(form) }}
+	        <div class="form-actions">
+	            <button class="btn btn-primary" type="submit">{{ 'settings.group.add' | trans }}</button>
+	            <button onclick="window.location = '{{ path('KunstmaanUserManagementBundle_settings_groups') }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>
+	        </div>
+	    </fieldset>
+	</form>
+{% endblock %}

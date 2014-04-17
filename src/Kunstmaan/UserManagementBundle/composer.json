@@ -1,0 +1,35 @@
+{
+    "name": "kunstmaan/user-management-bundle",
+    "type": "symfony-bundle",
+    "description": "This bundle adds user, group & role settings in the backend.",
+    "keywords": ["kunstmaan", "cms", "user", "group", "role", "admin"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanRedirectBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.3",
+        "symfony-cmf/routing-bundle": "~1.1.1",
+        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "knplabs/knp-menu": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.0.*@dev",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-0": { "Kunstmaan\\RedirectBundle": "" }
+    },
+    "target-dir": "Kunstmaan/RedirectBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
+}

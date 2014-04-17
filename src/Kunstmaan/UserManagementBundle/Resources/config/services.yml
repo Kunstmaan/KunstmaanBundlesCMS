@@ -1,0 +1,10 @@
+parameters:
+  kunstmaan_user_management.user_admin_list_configurator.class: Kunstmaan\UserManagementBundle\AdminList\UserAdminListConfigurator
+  kunstmaan_user_management.menu.adaptor.class: Kunstmaan\UserManagementBundle\Helper\Menu\UserManagementMenuAdaptor
+
+services:
+    kunstmaan_user_management.menu.adaptor:
+        class: "%kunstmaan_user_management.menu.adaptor.class%"
+        arguments: ["@security.context"]
+        tags:
+            -  { name: 'kunstmaan_admin.menu.adaptor' }

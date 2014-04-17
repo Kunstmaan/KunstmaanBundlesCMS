@@ -1,0 +1,21 @@
+KunstmaanUserManagementBundle_user_settings:
+    resource: "@KunstmaanUserManagementBundle/Controller/UsersController.php"
+    type:     annotation
+    prefix:   /admin/settings/users
+
+KunstmaanUserManagementBundle_group_settings:
+    resource: "@KunstmaanUserManagementBundle/Controller/GroupsController.php"
+    type:     annotation
+    prefix:   /admin/settings/groups
+
+KunstmaanUserManagementBundle_role_settings:
+    resource: "@KunstmaanUserManagementBundle/Controller/RolesController.php"
+    type:     annotation
+    prefix:   /admin/settings/roles
+
+# Override default FOS user change password route...
+fos_user_change_password:
+    pattern: /profile/password/change
+    defaults: { _controller: KunstmaanUserManagementBundle:Users:changePassword }
+    requirements:
+        _method: GET
