@@ -134,7 +134,6 @@ module.exports = function (grunt) {
                         'web/vendor/sass-bootstrap/js/modal.js',
                         'web/vendor/flexslider/jquery.flexslider.js',
                         'web/vendor/fitvids/jquery.fitvids.js',
-                        'web/vendor/socialite-js/socialite.js',
                         'web/vendor/fancybox/source/jquery.fancybox.js',
                         'web/vendor/cupcake/js/navigation/jquery.navigation.js',
                     ]

@@ -12,7 +12,6 @@ var myApplication = (function($, window, undefined) {
     init = function() {
         cupcake.navigation.init();
         initSliders();
-        initSocial();
     };
 
     initSliders = function() {
@@ -32,10 +31,6 @@ var myApplication = (function($, window, undefined) {
                 $(animateSlide).addClass('flex-animateIn');
             }
         });
-    };
-
-    initSocial = function () {
-        Socialite.load();
     };
 
     /*
