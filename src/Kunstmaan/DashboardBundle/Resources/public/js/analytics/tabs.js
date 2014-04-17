@@ -16,9 +16,9 @@
         switchTab(tab.attr('data-id'), tab.attr('data-path'))
 
         // Tab switcher
-        $(".db-tabs__controller").click(function(){
-            var id = $(this).attr('data-id');
-            var url = $(this).attr('data-path');
+        $(".db-tabs__item").click(function(){
+            var id = $(this).find('.db-tabs__controller').attr('data-id');
+            var url = $(this).find('.db-tabs__controller').attr('data-path');
             switchTab(id, url);
         });
 

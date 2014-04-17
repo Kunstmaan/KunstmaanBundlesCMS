@@ -20,6 +20,7 @@
     border: 1px solid transparent;
     padding: 10px 20px 8px;
     margin-right: 3px;
+    cursor:pointer;
     &:hover, &:focus {
         background-color: #fff;
         border-color: $hr-color;
