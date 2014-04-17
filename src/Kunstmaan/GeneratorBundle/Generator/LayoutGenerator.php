@@ -52,6 +52,7 @@ class LayoutGenerator extends KunstmaanGenerator
     private function generateBowerFiles()
     {
         $this->renderFiles($this->skeletonDir.'/bower/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->renderSingleFile($this->skeletonDir.'/bower/', $this->rootDir, '.bowerrc', array('bundle' => $this->bundle), true);
         $this->assistant->writeLine('Generating bower configuration : <info>OK</info>');
     }
 
