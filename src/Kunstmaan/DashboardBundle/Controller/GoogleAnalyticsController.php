@@ -222,42 +222,36 @@ class GoogleAnalyticsController extends Controller
             $em       = $this->getDoctrine()->getManager();
             $overview = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($id);
 
-            $extra['trafficDirectPercentage']       = $overview->getTrafficDirectPercentage();
-            $extra['trafficReferralPercentage']     = $overview->getTrafficReferralPercentage();
-            $extra['trafficSearchEnginePercentage'] = $overview->getTrafficSearchEnginePercentage();
-            $extra['returningVisitsPercentage']     = $overview->getReturningVisitsPercentage();
-            $extra['newVisitsPercentage']           = $overview->getNewVisitsPercentage();
-
-            $extra['referrals'] = array();
+            $referrals = array();
             foreach ($overview->getReferrals()->toArray() as $key => $referral) {
-                $extra['referrals'][$key]['visits'] = $referral->getVisits();
-                $extra['referrals'][$key]['name']   = $referral->getName();
+                $referrals[$key]['visits'] = $referral->getVisits();
+                $referrals[$key]['name']   = $referral->getName();
             }
 
-            $extra['searches'] = array();
+            $searches = array();
             foreach ($overview->getSearches()->toArray() as $key => $search) {
-                $extra['searches'][$key]['visits']  = $search->getVisits();
-                $extra['searches'][$key]['name']    = $search->getName();
+                $searches[$key]['visits']  = $search->getVisits();
+                $searches[$key]['name']    = $search->getName();
             }
 
-            $extra['campaigns'] = array();
+            $campaigns = array();
             foreach ($overview->getCampaigns()->toArray() as $key => $search) {
-                $extra['campaigns'][$key]['visits']  = $search->getVisits();
-                $extra['campaigns'][$key]['name']    = $search->getName();
+                $campaigns[$key]['visits']  = $search->getVisits();
+                $campaigns[$key]['name']    = $search->getName();
             }
 
-            $extra['pages'] = array();
+            $pages = array();
             foreach ($overview->getPages() as $key => $page) {
-                $extra['pages'][$key]['visits']     = number_format($page->getVisits());
-                $extra['pages'][$key]['name']       = $page->getName();
+                $pages[$key]['visits']     = number_format($page->getVisits());
+                $pages[$key]['name']       = $page->getName();
             }
 
-            $extra['goals'] = array();
+            $goals = array();
             foreach ($overview->getActiveGoals() as $key => $goal) {
-                $extra['goals'][$key]['name']       = $goal->getName();
-                $extra['goals'][$key]['visits']     = $goal->getVisits();
-                $extra['goals'][$key]['id']         = $goal->getId();
-                $extra['goals'][$key]['chart_data'] = json_decode($goal->getChartData());
+                $goals[$key]['name']       = $goal->getName();
+                $goals[$key]['visits']     = $goal->getVisits();
+                $goals[$key]['id']         = $goal->getId();
+                $goals[$key]['chartData'] = json_decode($goal->getChartData());
             }
 
             $overviewData = array(
@@ -282,12 +276,20 @@ class GoogleAnalyticsController extends Controller
               'desktopTrafficPercentage'            => $overview->getDesktopTrafficPercentage(),
               'mobileTrafficPercentage'             => $overview->getMobileTrafficPercentage(),
               'tabletTrafficPercentage'             => $overview->getTabletTrafficPercentage(),
+              'trafficDirectPercentage'             => $overview->getTrafficDirectPercentage(),
+              'trafficReferralPercentage'           => $overview->getTrafficReferralPercentage(),
+              'trafficSearchEnginePercentage'       => $overview->getTrafficSearchEnginePercentage(),
+              'returningVisitsPercentage'           => $overview->getReturningVisitsPercentage(),
+              'newVisitsPercentage'                 => $overview->getNewVisitsPercentage(),
             );
 
             $return = array(
               'responseCode'                        => 200,
               'overview'                            => $overviewData,
-              'extra'                               => $extra
+              'referrals'                           => $referrals,
+              'campaigns'                           => $campaigns,
+              'pages'                               => $pages,
+              'goals'                               => $goals,
             );
         } else {
             $return = array(

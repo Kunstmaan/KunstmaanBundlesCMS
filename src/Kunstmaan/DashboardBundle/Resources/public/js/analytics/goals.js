@@ -6,30 +6,30 @@
             $('#goalOverview').html('');
 
         // create HTML for each goal
-        for(var i = 0; i < data.extra.goals.length; i++) {
+        for(var i = 0; i < data.goals.length; i++) {
 
             var overview = document.createElement('li');
-            overview.setAttribute('id', 'goal'+data.extra.goals[i]['id']);
-            overview.setAttribute('data-goal-id', data.extra.goals[i]['id']);
+            overview.setAttribute('id', 'goal'+data.goals[i]['id']);
+            overview.setAttribute('data-goal-id', data.goals[i]['id']);
 
             var chartCanvas = document.createElement('canvas');
-            chartCanvas.setAttribute('id', 'js-goal-dashboard-chart-'+data.extra.goals[i]['id']);
+            chartCanvas.setAttribute('id', 'js-goal-dashboard-chart-'+data.goals[i]['id']);
             chartCanvas.setAttribute('class','dashboard-chart');
             chartCanvas.setAttribute('height','100');
             overview.appendChild(chartCanvas);
 
             var nameDiv = document.createElement('div');
-            var nameText = document.createTextNode(data.extra.goals[i]['name'])
+            var nameText = document.createTextNode(data.goals[i]['name'])
             nameDiv.appendChild(nameText);
             overview.appendChild(nameDiv);
 
             var visitsSpan = document.createElement('span');
-            var visitsText = document.createTextNode(data.extra.goals[i]['visits'])
+            var visitsText = document.createTextNode(data.goals[i]['visits'])
             visitsSpan.appendChild(visitsText);
             overview.appendChild(visitsSpan);
 
             $('#goalOverview').append(overview);
-            initLineChart(chartCanvas, data.extra.goals[i]['chart_data']);
+            initLineChart(chartCanvas, data.goals[i]['chartData']);
 
         }
 
