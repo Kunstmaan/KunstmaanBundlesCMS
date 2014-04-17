@@ -1,4 +1,16 @@
+
+    function removeNumberFormat(number) {
+        var parts = number.split(",");
+        var number = '';
+        for (var i = 0; i < parts.length; i++) {
+            number += parts[i];
+        }
+        return parseInt(number);
+    }
+
+
     $(document).ready(function() {
+
         // show first tab
         var tab = $('#tab3');
         switchTab(tab.attr('data-id'), tab.attr('data-path'))
@@ -21,13 +33,9 @@
 
                     // add functions here to add component behaviour
                     // these functions are declared in a per-template js file (public/js/analytics/)
-                    setHeader(data);
-                    setTraffic(data);
-                    setReferrals(data);
-                    setSearches(data);
-                    setCampaigns(data);
-                    setVisits(data);
                     setChart(data);
+                    setVisits(data);
+                    setTraffic(data);
                     setGoals(data);
                     resetGoalChart();
                     initChart();

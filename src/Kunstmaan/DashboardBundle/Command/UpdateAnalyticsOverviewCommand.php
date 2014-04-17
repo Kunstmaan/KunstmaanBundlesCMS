@@ -72,9 +72,6 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                     // metric data
                     $this->getMetrics($overview);
 
-                    // get goals
-                    $this->getGoals($overview);
-
                     if ($overview->getVisits()) { // if there are any visits
                         // day-specific data
                         $this->getChartData($overview);
@@ -82,20 +79,23 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                         // visitor types
                         $this->getVisitorTypes($overview);
 
-                        // traffic sources
-                        $this->getTrafficSources($overview);
+                        // // traffic sources
+                        // $this->getTrafficSources($overview);
 
-                        // bounce rate
-                        $this->getBounceRate($overview);
+                        // // bounce rate
+                        // $this->getBounceRate($overview);
 
-                        // top referrals
-                        $this->getTopReferrals($overview);
+                        // // top referrals
+                        // $this->getTopReferrals($overview);
 
-                        // top searches
-                        $this->getTopSearches($overview);
+                        // // top searches
+                        // $this->getTopSearches($overview);
 
-                        // top campaigns
-                        $this->getTopCampaigns($overview);
+                        // // top campaigns
+                        // $this->getTopCampaigns($overview);
+
+                        // // get goals
+                        // $this->getGoals($overview);
                     } else { // if no visits
                         // reset overview
                         $this->reset($overview);
@@ -135,25 +135,62 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
         {
             $this->output->writeln("\t" . 'Fetching metrics..');
 
-            // visits metric
             $results = $this->analyticsHelper->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
-                'ga:visits'
+                'ga:visits, ga:visitors, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration'
             );
             $rows    = $results->getRows();
+
+            // visits metric
             $visits  = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
             $overview->setVisits($visits);
 
+            // visits metric
+            $visitors  = is_numeric($rows[0][1]) ? $rows[0][1] : 0;
+            $overview->setVisitors($visitors);
+
             // pageviews metric
-            $results   = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:pageviews'
-            );
-            $rows      = $results->getRows();
-            $pageviews = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+            $pageviews = is_numeric($rows[0][2]) ? $rows[0][2] : 0;
             $overview->setPageViews($pageviews);
+
+            // pages per visit metric
+            $pagesPerVisit = is_numeric($rows[0][3]) ? $rows[0][3] : 0;
+            $overview->setPagesPerVisit($pagesPerVisit);
+
+            // avg visit duration metric
+            $avgVisitDuration = is_numeric($rows[0][4]) ? $rows[0][4] : 0;
+            $overview->setAvgVisitDuration($avgVisitDuration);
+
+            // traffic types
+
+                // mobile
+                $results = $this->analyticsHelper->getResults(
+                    $overview->getTimespan(),
+                    $overview->getStartOffset(),
+                    'ga:visitors',
+                    array('segment' => 'gaid::-14')
+                );
+                $rows    = $results->getRows();
+
+                $mobileTraffic = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+
+                // tablet
+                $results = $this->analyticsHelper->getResults(
+                    $overview->getTimespan(),
+                    $overview->getStartOffset(),
+                    'ga:visitors',
+                    array('segment' => 'gaid::-13')
+                );
+                $rows    = $results->getRows();
+
+                $tabletTraffic = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+
+                // desktop
+                $dekstopTraffic = $overview->getVisitors() - ($mobileTraffic + $tabletTraffic);
+                $overview->setMobileTraffic($mobileTraffic);
+                $overview->setTabletTraffic($tabletTraffic);
+                $overview->setDesktopTraffic($dekstopTraffic);
         }
 
         /**
@@ -170,7 +207,7 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             $dimension =  !$isDaily ? 'ga:date' : 'ga:hour';
             $sort = !$isDaily ? 'ga:date' : 'ga:hour';
 
-            // create the query
+            // get visits
             $results = $this->analyticsHelper->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
@@ -189,7 +226,28 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                     // if hour
                     $timestamp = $row[0];
                 }
-                $chartData[] = array('timestamp' => $timestamp, 'visits' => $row[1]);
+                $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
+            }
+
+            // get visitors
+            $results = $this->analyticsHelper->getResults(
+                $overview->getTimespan(),
+                $overview->getStartOffset(),
+                'ga:visitors',
+                array('dimensions' => $dimension, 'sort' => $sort)
+            );
+            $rows    = $results->getRows();
+
+            foreach ($rows as $row) {
+                // timestamp for chart data
+                if (!$isDaily) {
+                    // if date
+                    $timestamp = substr($row[0], 6, 2) . '-' . substr($row[0], 4, 2) . '-' . substr($row[0], 0, 4);
+                } else {
+                    // if hour
+                    $timestamp = $row[0];
+                }
+                $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
             }
 
             // adding data to the overview

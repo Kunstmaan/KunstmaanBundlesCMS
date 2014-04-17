@@ -255,14 +255,23 @@ class GoogleAnalyticsController extends Controller
               'title'                               => $overview->getTitle(),
               'timespan'                            => $overview->getTimespan(),
               'startOffset'                         => $overview->getStartOffset(),
-              'visits'                              => $overview->getVisits(),
-              'returningVisits'                     => $overview->getReturningVisits(),
-              'newVisits'                           => $overview->getNewVisits(),
-              'bounceRate'                          => $overview->getBounceRate(),
-              'pageViews'                           => $overview->getPageViews(),
-              'trafficDirect'                       => $overview->getTrafficDirect(),
-              'trafficReferral'                     => $overview->getTrafficReferral(),
-              'trafficSearchEngine'                 => $overview->getTrafficSearchEngine(),
+              'visits'                              => number_format($overview->getVisits()),
+              'visitors'                            => number_format($overview->getVisitors()),
+              'pagesPerVisit'                       => number_format($overview->getPagesPerVisit()),
+              'avgVisitDuration'                    => number_format($overview->getAvgVisitDuration()),
+              'returningVisits'                     => number_format($overview->getReturningVisits()),
+              'newVisits'                           => number_format($overview->getNewVisits()),
+              'bounceRate'                          => number_format($overview->getBounceRate()),
+              'pageViews'                           => number_format($overview->getPageViews()),
+              'trafficDirect'                       => number_format($overview->getTrafficDirect()),
+              'trafficReferral'                     => number_format($overview->getTrafficReferral()),
+              'trafficSearchEngine'                 => number_format($overview->getTrafficSearchEngine()),
+              'desktopTraffic'                      => number_format($overview->getDesktopTraffic()),
+              'mobileTraffic'                       => number_format($overview->getMobileTraffic()),
+              'tabletTraffic'                       => number_format($overview->getTabletTraffic()),
+              'desktopTrafficPercentage'            => $overview->getDesktopTrafficPercentage(),
+              'mobileTrafficPercentage'             => $overview->getMobileTrafficPercentage(),
+              'tabletTrafficPercentage'             => $overview->getTabletTrafficPercentage(),
             );
 
             $return = array(
@@ -333,6 +342,41 @@ class GoogleAnalyticsController extends Controller
       $resultCode = $command->run($input, $output);
 
       return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
+    }
+
+
+
+    /**
+     * @Route("/test", name="KunstmaanDashboardBundle_homepage_test")
+     * @Template()
+     *
+     * @return array
+     */
+    public function testAction()
+    {
+        $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
+        $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
+        $analyticsHelper->init($googleClientHelper);
+
+
+        // $results = $analyticsHelper->getResultsByDate(
+        //   '2014-04-15',
+        //   '2014-04-15',
+        //   'ga:visitors',
+        //   array('dimensions' => 'ga:hour, ga:date')
+        // );
+
+        $results = $analyticsHelper->getResults(
+                1,
+                1,
+                'ga:visitors',
+                array('segment' => 'gaid::-14')
+        );
+
+
+
+        var_dump($results->getRows());
+        exit;
     }
 
 }

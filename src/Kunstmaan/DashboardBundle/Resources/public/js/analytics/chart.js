@@ -4,24 +4,40 @@
         });
     });
 
+
+    function setHeader(data) {
+    }
+
     // load dashboard data
-    var chartData = [];
+    var chartVisitsData = [];
+    var chartVisitorsData = [];
     var chartLabels = [];
 
     // sets the chart data
     function setChart(data) {
-        chartData = [];
-        chartLabels = [];
-        var increment = Math.ceil(data.overview.chartData.length / 26);
-        var value = 0;
-        for (var i = 0; i < data.overview.chartData.length; i+=1) {
-            value += parseInt(data.overview.chartData[i].visits);
-            if (i%increment == 0) {
-                chartData.push(value);
-                chartLabels.push(data.overview.chartData[i].timestamp);
-                value = 0;
-            }
+        $('#data_visits').html(data.overview.visits);
+        $('#data_visitors').html(data.overview.visitors);
+        $('#data_pageviews').html(data.overview.pageViews);
+        $('#data_pages_per_visit').html(data.overview.pagesPerVisit);
+        $('#data_avg_visit_duration').html(data.overview.avgVisitDuration);
 
+        chartVisitsData = [];
+        chartVisitorsData = [];
+        chartLabels = [];
+        var increment = Math.ceil(data.overview.chartData.visits.length / 26);
+        var valueVisits = 0;
+        var valueVisitors = 0;
+
+        for (var i = 0; i < data.overview.chartData.visits.length; i+=1) {
+            valueVisits += removeNumberFormat(data.overview.chartData.visits[i].visits);
+            valueVisitors += removeNumberFormat(data.overview.chartData.visitors[i].visits);
+            if (i%increment == 0) {
+                chartVisitsData.push(valueVisits);
+                chartVisitorsData.push(valueVisitors);
+                chartLabels.push(data.overview.chartData.visits[i].timestamp);
+                valueVisits = 0;
+                valueVisitors = 0;
+            }
         }
     }
 
@@ -43,7 +59,15 @@
                     strokeColor : "rgb(41, 151, 206)",
                     pointColor : "rgb(41, 151, 206)",
                     pointStrokeColor : "#fff",
-                    data : chartData,
+                    data : chartVisitsData,
+                    scaleShowLabels : true
+                },
+                {
+                    fillColor : "rgba(41, 200, 150, 0.3)",
+                    strokeColor : "rgb(41, 200, 150)",
+                    pointColor : "rgb(41, 200, 150)",
+                    pointStrokeColor : "#fff",
+                    data : chartVisitorsData,
                     scaleShowLabels : true
                 }
             ]
@@ -53,7 +77,10 @@
         Array.prototype.max = function() {
           return Math.max.apply(null, this);
         };
-        var max = Math.max.apply(null, chartData);
+        var maxData = [];
+        maxData[0] = Math.max.apply(null, chartVisitsData);
+        maxData[1] = Math.max.apply(null, chartVisitorsData);
+        var max = Math.max.apply(null, maxData);
         var steps = max < 10 ? max : 10;
 
         resizeChart();

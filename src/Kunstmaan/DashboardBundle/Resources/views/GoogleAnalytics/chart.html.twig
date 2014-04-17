@@ -1,2 +1,16 @@
+<br/>
 <canvas id="js-dashboard-chart" class="dashboard-chart" height="290"></canvas>
 
+<div>
+
+Visits: <span style="color:rgba(41, 151, 206, 1)" id="data_visits">{{ overview.visits }}</span>
+<br/>
+Unique visitors: <span style="color:rgba(41, 200, 150, 1)" id="data_visitors">{{ overview.visitors }}</span>
+<br/>
+Pageviews: <span id="data_pageviews">{{ overview.pageviews }}</span>
+<br/>
+Avarage pages per visit: <span id="data_pages_per_visit">{{ overview.pagesPerVisit }}</span>
+<br/>
+Avarage visit duration: <span id="data_avg_visit_duration">{{ overview.avgVisitDuration }}</span> seconds
+
+</div>

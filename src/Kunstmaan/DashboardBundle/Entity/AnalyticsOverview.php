@@ -58,6 +58,35 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
         return $this->newVisits ? round(($this->newVisits / $this->visits) * 100) : 0;
     }
 
+    /**
+     * Get percentage of desktop traffic
+     *
+     * @return int
+     */
+    public function getDesktopTrafficPercentage() {
+        return $this->visitors ? round(($this->desktopTraffic / $this->visitors) * 100) : 0;
+    }
+
+    /**
+     * Get percentage of mobile traffic
+     *
+     * @return int
+     */
+    public function getMobileTrafficPercentage() {
+        return $this->visitors ? round(($this->mobileTraffic / $this->visitors) * 100) : 0;
+    }
+
+    /**
+     * Get percentage of tablet traffic
+     *
+     * @return int
+     */
+    public function getTabletTrafficPercentage() {
+        return $this->visitors ? round(($this->tabletTraffic / $this->visitors) * 100) : 0;
+    }
+
+
+
 
 
     /**
@@ -111,6 +140,13 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * @var integer
      *
+     * @ORM\Column(name="visitors", type="integer")
+     */
+    private $visitors = 0;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="returning_visits", type="integer")
      */
     private $returningVisits = 0;
@@ -156,6 +192,44 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * @ORM\Column(name="bounce_rate", type="integer")
      */
     private $bounceRate = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pages_per_visit", type="integer")
+     */
+    private $pagesPerVisit = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="avg_visit_duration", type="integer")
+     */
+    private $avgVisitDuration = 0;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="desktop_traffic", type="integer")
+     */
+    private $desktopTraffic = 0;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tablet_traffic", type="integer")
+     */
+    private $tabletTraffic = 0;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="mobile_traffic", type="integer")
+     */
+    private $mobileTraffic = 0;
 
 
 
@@ -381,7 +455,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function getNewVisits()
     {
-        return number_format($this->newVisits);
+        return $this->newVisits;
     }
 
 
@@ -405,7 +479,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function getReturningVisits()
     {
-        return number_format($this->returningVisits);
+        return $this->returningVisits;
     }
 
 
@@ -496,9 +570,32 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @return integer
      */
+    public function getVisitors()
+    {
+        return $this->visitors;
+    }
+
+    /**
+     * Set visitors
+     *
+     * @param integer $visitors
+     * @return AnalyticsOverview
+     */
+    public function setVisitors($visitors)
+    {
+        $this->visitors = $visitors;
+
+        return $this;
+    }
+
+    /**
+     * Get visitors
+     *
+     * @return integer
+     */
     public function getVisits()
     {
-        return number_format($this->visits);
+        return $this->visits;
     }
 
     /**
@@ -521,7 +618,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function getPageviews()
     {
-        return number_format($this->pageviews);
+        return $this->pageviews;
     }
 
     /**
@@ -544,7 +641,122 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function getBounceRate()
     {
-        return number_format($this->bounceRate);
+        return $this->bounceRate;
+    }
+
+    /**
+     * Set pagesPerVisit
+     *
+     * @param integer $pagesPerVisit
+     * @return AnalyticsOverview
+     */
+    public function setPagesPerVisit($pagesPerVisit)
+    {
+        $this->pagesPerVisit = $pagesPerVisit;
+
+        return $this;
+    }
+
+    /**
+     * Get pagesPerVisit
+     *
+     * @return integer
+     */
+    public function getPagesPerVisit()
+    {
+        return $this->pagesPerVisit;
+    }
+
+    /**
+     * Set avgVisitDuration
+     *
+     * @param integer $avgVisitDuration
+     * @return AnalyticsOverview
+     */
+    public function setAvgVisitDuration($avgVisitDuration)
+    {
+        $this->avgVisitDuration = $avgVisitDuration;
+
+        return $this;
+    }
+
+    /**
+     * Get avgVisitDuration
+     *
+     * @return integer
+     */
+    public function getAvgVisitDuration()
+    {
+        return $this->avgVisitDuration;
+    }
+
+    /**
+     * Set mobileTraffic
+     *
+     * @param integer $mobileTraffic
+     * @return AnalyticsOverview
+     */
+    public function setMobileTraffic($mobileTraffic)
+    {
+        $this->mobileTraffic = $mobileTraffic;
+
+        return $this;
+    }
+
+    /**
+     * Get mobileTraffic
+     *
+     * @return integer
+     */
+    public function getMobileTraffic()
+    {
+        return $this->mobileTraffic;
+    }
+
+    /**
+     * Set tabletTraffic
+     *
+     * @param integer $tabletTraffic
+     * @return AnalyticsOverview
+     */
+    public function setTabletTraffic($tabletTraffic)
+    {
+        $this->tabletTraffic = $tabletTraffic;
+
+        return $this;
+    }
+
+    /**
+     * Get tabletTraffic
+     *
+     * @return integer
+     */
+    public function getTabletTraffic()
+    {
+        return $this->tabletTraffic;
+    }
+
+    /**
+     * Set desktopTraffic
+     *
+     * @param integer $desktopTraffic
+     * @return AnalyticsOverview
+     */
+    public function setDesktopTraffic($desktopTraffic)
+    {
+        $this->desktopTraffic = $desktopTraffic;
+
+        return $this;
+    }
+
+    /**
+     * Get desktopTraffic
+     *
+     * @return integer
+     */
+    public function getDesktopTraffic()
+    {
+        return $this->desktopTraffic;
     }
 
 }

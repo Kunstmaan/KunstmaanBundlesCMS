@@ -8,10 +8,6 @@
         <!-- COL -->
         <div class="db-col db-col--6">
             <div class="db-block">
-                <!-- HEADER -->
-                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:header.html.twig' %}
-                <!-- end HEADER -->
-
                 <!-- CHART -->
                 {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
                 <!-- end CHART -->
@@ -21,16 +17,16 @@
 
         <!-- COL -->
         <div class="db-col db-col--2">
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:traffic.html.twig' with {'overview' : overview} %}
             {% include 'KunstmaanDashboardBundle:GoogleAnalytics:visits.html.twig' with {'overview' : overview} %}
         </div>
         <!-- end COL -->
 
         <!-- COL -->
         <div class="db-col db-col--4">
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:referrals.html.twig' with {'overview' : overview} %}
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:traffic.html.twig' with {'overview' : overview} %}
+            {#
             {% include 'KunstmaanDashboardBundle:GoogleAnalytics:searches.html.twig' with {'overview' : overview} %}
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:campaigns.html.twig' with {'campaigns' : overview.getCampaigns} %}
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:campaigns.html.twig' with {'campaigns' : overview.getCampaigns} %} #}
         </div>
         <!-- end COL -->
 
@@ -50,10 +46,6 @@
 {% block extrajavascript %}
     {% javascripts
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/chart.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/header.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/referrals.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/searches.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/campaigns.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/traffic.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
