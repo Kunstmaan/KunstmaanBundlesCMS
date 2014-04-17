@@ -1,10 +1,10 @@
-<section class="slider-pp slider-pp--bottom">
-    <div class="slider-pp__flexslider js-flexslider flexslider">
+<section class="slider-pp">
+    <div class="slider-pp__flexslider js-flexslider flexslider" data-animation="slide" data-control-nav="true" data-slideshow="slideshow" data-start-at="0">
         <ul class="slides">
             {{ render_pageparts(page, 'slider') }}
         </ul>
     </div>
-    <nav class="slider-pp__thumbs js-thumbs">
+    <nav class="slider--pp__thumbs js-thumbs">
         <div class="slider-pp__thumbs-wrapper">
             {% set pps = getpageparts(page, 'slider') %}
             {% for pp in pps %}
