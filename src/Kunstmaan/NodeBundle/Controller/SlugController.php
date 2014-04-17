@@ -46,6 +46,10 @@ class SlugController extends Controller
 
         /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $request->get('_nodeTranslation');
+        if (!$nodeTranslation) {
+            // When the SlugController is used from a different Routing or RouteLoader class, the _nodeTranslation is not set, so we need this fallback
+            $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationForUrl($url, $locale);
+        }
 
         // If no node translation -> 404
         if (!$nodeTranslation) {
