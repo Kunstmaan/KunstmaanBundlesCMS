@@ -14,7 +14,7 @@ use Gedmo\Tree\Node as GedmoNode;
  * Node
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeRepository")
- * @ORM\Table(name="kuma_nodes")
+ * @ORM\Table(name="kuma_nodes", indexes={@ORM\Index(name="idx_internal_name", columns={"internal_name"}), @ORM\Index(name="idx_ref_entity_name", columns={"ref_entity_name"})})
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  * @Gedmo\Tree(type="nested")

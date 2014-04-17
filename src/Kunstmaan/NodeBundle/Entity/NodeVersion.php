@@ -3,19 +3,16 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use DateTime;
-
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * NodeVersion
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeVersionRepository")
- * @ORM\Table(name="kuma_node_versions")
+ * @ORM\Table(name="kuma_node_versions", indexes={@ORM\Index(name="idx_kuma_lookup", columns={"ref_id", "ref_entity_name"})})
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
