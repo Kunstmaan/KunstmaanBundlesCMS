@@ -11,6 +11,9 @@ analytics:
   searches:
     title: Top Search Terms
     unavailable: No data available for Top Search Terms
+  pages:
+    title: Top Pages
+    unavailable: No data available for Top Pages
   campaigns:
     title: Top Campaigns
     unavailable: No data available for Top Campaigns

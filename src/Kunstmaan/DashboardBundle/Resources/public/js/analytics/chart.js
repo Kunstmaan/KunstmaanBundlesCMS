@@ -19,12 +19,12 @@
         $('#data_visitors').html(data.overview.visitors);
         $('#data_pageviews').html(data.overview.pageViews);
         $('#data_pages_per_visit').html(data.overview.pagesPerVisit);
-        $('#data_avg_visit_duration').html(data.overview.avgVisitDuration);
+        $('#data_avg_visit_duration').html(data.overview.avgVisitDuration + ' seconds');
 
         chartVisitsData = [];
         chartVisitorsData = [];
         chartLabels = [];
-        var increment = Math.ceil(data.overview.chartData.visits.length / 26);
+        var increment = Math.ceil(data.overview.chartData.visits.length / 33);
         var valueVisits = 0;
         var valueVisitors = 0;
 

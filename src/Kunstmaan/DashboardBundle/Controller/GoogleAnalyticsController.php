@@ -233,21 +233,31 @@ class GoogleAnalyticsController extends Controller
                 $extra['referrals'][$key]['visits'] = $referral->getVisits();
                 $extra['referrals'][$key]['name']   = $referral->getName();
             }
+
             $extra['searches'] = array();
             foreach ($overview->getSearches()->toArray() as $key => $search) {
                 $extra['searches'][$key]['visits']  = $search->getVisits();
                 $extra['searches'][$key]['name']    = $search->getName();
             }
+
             $extra['campaigns'] = array();
             foreach ($overview->getCampaigns()->toArray() as $key => $search) {
                 $extra['campaigns'][$key]['visits']  = $search->getVisits();
                 $extra['campaigns'][$key]['name']    = $search->getName();
             }
+
+            $extra['pages'] = array();
+            foreach ($overview->getPages() as $key => $page) {
+                $extra['pages'][$key]['visits']     = number_format($page->getVisits());
+                $extra['pages'][$key]['name']       = $page->getName();
+            }
+
             $extra['goals'] = array();
             foreach ($overview->getActiveGoals() as $key => $goal) {
                 $extra['goals'][$key]['name']       = $goal->getName();
                 $extra['goals'][$key]['visits']     = $goal->getVisits();
                 $extra['goals'][$key]['id']         = $goal->getId();
+                $extra['goals'][$key]['chart_data'] = json_decode($goal->getChartData());
             }
 
             $overviewData = array(
@@ -366,11 +376,16 @@ class GoogleAnalyticsController extends Controller
         //   array('dimensions' => 'ga:hour, ga:date')
         // );
 
+
+// dimensions=ga:pagePath
+// metrics=ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits
+// sort=-ga:pageviews
+
         $results = $analyticsHelper->getResults(
-                1,
-                1,
-                'ga:visitors',
-                array('segment' => 'gaid::-14')
+          365,
+          1,
+          'ga:goal1Completions',
+          array('dimensions' => 'ga:day', 'sort' => 'ga:day')
         );
 
 

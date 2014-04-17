@@ -110,6 +110,11 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $searches;
 
     /**
+     * @ORM\OneToMany(targetEntity="AnalyticsTopPage", mappedBy="overview", cascade={"persist"})
+     */
+    private $pages;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -332,6 +337,29 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     public function getSearches()
     {
         return $this->searches;
+    }
+
+    /**
+     * Set pages
+     *
+     * @param array $pages
+     * @return AnalyticsDailyOverview
+     */
+    public function setPages($pages)
+    {
+        $this->pages = $pages;
+
+        return $this;
+    }
+
+    /**
+     * Get pages
+     *
+     * @return array
+     */
+    public function getPages()
+    {
+        return $this->pages;
     }
 
 

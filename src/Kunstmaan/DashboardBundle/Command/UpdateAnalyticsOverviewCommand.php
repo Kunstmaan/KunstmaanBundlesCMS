@@ -4,6 +4,7 @@ namespace Kunstmaan\DashboardBundle\Command;
 
 use Kunstmaan\DashboardBundle\Entity\AnalyticsTopReferral;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsTopSearch;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsTopPage;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsCampaign;
 use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
@@ -78,6 +79,9 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
 
                         // visitor types
                         $this->getVisitorTypes($overview);
+
+                        // top pages
+                        $this->getTopPages($overview);
 
                         // // traffic sources
                         // $this->getTrafficSources($overview);
@@ -380,7 +384,7 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
 
                 // load new referrals
                 if (is_array($rows)) {
-                        foreach ($rows as $key => $row) {
+                        foreach ($rows as $row) {
                                 $referral = new AnalyticsTopReferral();
                                 $referral->setName($row[0]);
                                 $referral->setVisits($row[1]);
@@ -430,6 +434,47 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                         }
                 }
 
+        }
+
+        /**
+         * Fetch page data and set it for the overview
+         *
+         * @param AnalyticsOverview $overview The overview
+         */
+        private function getTopPages(&$overview)
+        {
+                // top pages
+                $this->output->writeln("\t" . 'Fetching top pages..');
+                $results = $this->analyticsHelper->getResults(
+                    $overview->getTimespan(),
+                    $overview->getStartOffset(),
+                    'ga:pageviews',
+                    array(
+                        'dimensions'=>'ga:pagePath',
+                        'sort'=>'-ga:pageviews',
+                        'max-results' => '10'
+                    )
+                );
+                $rows    = $results->getRows();
+
+                // delete existing entries
+                if (is_array($overview->getPages()->toArray())) {
+                    foreach ($overview->getPages()->toArray() as $page) {
+                        $this->em->remove($page);
+                    }
+                    $this->em->flush();
+                }
+
+                // load new referrals
+                if (is_array($rows)) {
+                    foreach ($rows as $row) {
+                        $referral = new AnalyticsTopPage();
+                        $referral->setName($row[0]);
+                        $referral->setVisits($row[1]);
+                        $referral->setOverview($overview);
+                        $overview->getPages()->add($referral);
+                    }
+                }
         }
 
         /**

@@ -1,101 +1,59 @@
-
-    $(document).ready(function(){
-        resetGoalChart();
-    });
-
-    // get goal data for a specific goal
-    function getGoalData(goalOverview) {
-        // get goal id
-        var id = goalOverview.attr('data-goal-id');
-
-        // set active button
-        $('.active').attr('class', '');
-        $('#goal'+id).attr('class', 'active');
-
-        // get data
-        $.get('widget/googleanalytics/getGoalChartData/'+id, function(data) {
-            // render chart
-            setGoalChartData(data, data.chartData.length <= 31);
-
-            // set title in chart overview
-            $('#goal_title').html(data.name);
-        });
-    }
-
     // create a list of all goals
     function setGoals(data) {
         // reset the overview list
         $('#goalOverview').html('');
         var html = '';
+            $('#goalOverview').html('');
 
         // create HTML for each goal
         for(var i = 0; i < data.extra.goals.length; i++) {
-            html    +=
-                     '<li id="goal'+data.extra.goals[i]['id']+'" data-goal-id="'+data.extra.goals[i]['id']+'" onClick="getGoalData($(this))">'
-                    +    '<div>'
-                    +        data.extra.goals[i]['name']
-                    +    '</div>'
-                    +    '<span>'
-                    +        data.extra.goals[i]['visits']
-                    +    '</span>'
-                    +'</li>';
+
+            var overview = document.createElement('li');
+            overview.setAttribute('id', 'goal'+data.extra.goals[i]['id']);
+            overview.setAttribute('data-goal-id', data.extra.goals[i]['id']);
+
+            var chartCanvas = document.createElement('canvas');
+            chartCanvas.setAttribute('id', 'js-goal-dashboard-chart-'+data.extra.goals[i]['id']);
+            chartCanvas.setAttribute('class','dashboard-chart');
+            chartCanvas.setAttribute('height','100');
+            overview.appendChild(chartCanvas);
+
+            var nameDiv = document.createElement('div');
+            var nameText = document.createTextNode(data.extra.goals[i]['name'])
+            nameDiv.appendChild(nameText);
+            overview.appendChild(nameDiv);
+
+            var visitsSpan = document.createElement('span');
+            var visitsText = document.createTextNode(data.extra.goals[i]['visits'])
+            visitsSpan.appendChild(visitsText);
+            overview.appendChild(visitsSpan);
+
+            $('#goalOverview').append(overview);
+            initLineChart(chartCanvas, data.extra.goals[i]['chart_data']);
+
         }
 
         // add the HTML to the list
-        $('#goalOverview').html(html);
+        //$('#goalOverview').html(html);
     }
 
-    var goalChartData = [];
-    var goalChartLabels = [];
-
-    // reset the chart
-    function resetGoalChart() {
-        $('#goalOverview li:first-child').trigger("click");
-    }
-
-    // sets the chart data
-    function setGoalChartData(data, showLabels, isDayData) {
-        goalChartData = [];
-        goalChartLabels = [];
-
-        if (data == null) {
-            return;
+    function initLineChart(canvas, json) {
+        var chartData = [];
+        var chartLabels = [];
+        for (var i = 0; i < json.length; i++) {
+            chartData.push(parseInt(json[i].visits));
+            chartLabels.push('');
         }
-
-        var increment = Math.ceil(data.chartData.length / 23);
-        var value = 0;
-        for (var i = 0; i < data.chartData.length; i+=1) {
-            value += parseInt(data.chartData[i].visits);
-            if (i%increment == 0) {
-                goalChartData.push(value);
-                goalChartLabels.push(data.chartData[i].timestamp);
-                value = 0;
-            }
-        }
-
-        initGoalChart();
-    }
-
-    // sets chart width and height
-    function resizeGoalChart() {
-        var chartWidth = $('#js-goal-dashboard-chart').parent().width();
-        var chartHeight = $('#js-goal-dashboard-chart').height();
-        $('#js-goal-dashboard-chart').attr('width', chartWidth );
-        $('#js-goal-dashboard-chart').attr('height', chartHeight );
-    }
-
-    // inits the chart
-    initGoalChart = function() {
-        var barGoalChartData = {
-            labels : goalChartLabels,
+        var lineChartData = {
+            labels : chartLabels,
             datasets : [
                 {
                     fillColor : "rgba(41, 151, 206, 0.3)",
                     strokeColor : "rgb(41, 151, 206)",
                     pointColor : "rgb(41, 151, 206)",
                     pointStrokeColor : "#fff",
-                    data : goalChartData,
-                    scaleShowLabels : true
+                    data : chartData,
+                    scaleShowLabels : false
                 }
             ]
         };
@@ -104,10 +62,12 @@
         Array.prototype.max = function() {
           return Math.max.apply(null, this);
         };
-        var max = Math.max.apply(null, goalChartData);
-        var steps = max < 10 ? max : 10;
+        var max = Math.max.apply(null, chartData);
+        var steps = max < 5 ? max : 5;
 
-        resizeGoalChart();
-        var chart = new Chart(document.getElementById("js-goal-dashboard-chart").getContext("2d")).Line(barGoalChartData,
-            {scaleOverride: true, scaleStepWidth: Math.ceil(max/steps), scaleSteps: steps, animation:true});
-    };
+        var ctx = canvas.getContext("2d");
+        var chart = new Chart(ctx).Line(lineChartData, {scaleOverride: true, scaleStepWidth: Math.ceil(max/steps), scaleSteps: steps, animation:false});
+    }
+
+
+

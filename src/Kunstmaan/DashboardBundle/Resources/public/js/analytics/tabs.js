@@ -36,8 +36,8 @@
                     setChart(data);
                     setVisits(data);
                     setTraffic(data);
+                    setPages(data);
                     setGoals(data);
-                    resetGoalChart();
                     initChart();
 
                     $('.db-content').removeClass('db-content--hidden');

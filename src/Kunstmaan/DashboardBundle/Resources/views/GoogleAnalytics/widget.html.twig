@@ -16,17 +16,15 @@
         <!-- end COL -->
 
         <!-- COL -->
-        <div class="db-col db-col--2">
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:visits.html.twig' with {'overview' : overview} %}
+        <div class="db-col db-col--3">
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:traffic.html.twig' with {'overview' : overview} %}
         </div>
         <!-- end COL -->
 
         <!-- COL -->
-        <div class="db-col db-col--4">
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:traffic.html.twig' with {'overview' : overview} %}
-            {#
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:searches.html.twig' with {'overview' : overview} %}
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:campaigns.html.twig' with {'campaigns' : overview.getCampaigns} %} #}
+        <div class="db-col db-col--3">
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:visits.html.twig' with {'overview' : overview} %}
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:pages.html.twig' with {'pages' : overview.getPages} %}
         </div>
         <!-- end COL -->
 
@@ -48,6 +46,7 @@
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/chart.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/traffic.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/pages.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/visits.js'
         '@KunstmaanDashboardBundle/Resources/public/js/libs/chart.min.js'
