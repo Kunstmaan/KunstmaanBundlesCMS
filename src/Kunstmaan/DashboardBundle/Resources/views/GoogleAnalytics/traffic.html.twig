@@ -1,3 +1,5 @@
+{# Twig vars are commented: they are loaded with AJAX, they are still here as a placeholder #}
+
 <div class="db-block">
     <canvas id="js-traffic-dashboard-chart" class="dashboard-chart" height="290"></canvas>
 
@@ -11,8 +13,8 @@
             <p class="db-block__stats db-block__stats--right" id="data_desktop_traffic">
 
                 <span style="color:rgba(41, 151, 206, 1)">
-                    (<span class="data_percentage">{{ overview.getDesktopTrafficPercentage }}</span>%)
-                    <span class="data_visits">{{ overview.desktopTraffic }}</span>
+                    <span class="data_percentage">{# {{ overview.getDesktopTrafficPercentage }} #}</span>
+                    <span class="data_visits">{# {{ overview.desktopTraffic }} #}</span>
                 </span>
 
             </p>
@@ -25,8 +27,8 @@
             <p class="db-block__stats db-block__stats--right" id="data_mobile_traffic">
 
                 <span style="color:rgba(41, 200, 150, 1)">
-                    (<span class="data_percentage">{{ overview.getMobileTrafficPercentage }}</span>%)
-                    <span class="data_visits">{{ overview.mobileTraffic }}</span>
+                    <span class="data_percentage">{# {{ overview.getMobileTrafficPercentage }} #}</span>
+                    <span class="data_visits">{# {{ overview.mobileTraffic }} #}</span>
                 </span>
 
             </p>
@@ -39,8 +41,8 @@
             <p class="db-block__stats db-block__stats--right" id="data_tablet_traffic">
 
                 <span style="color:rgba(41, 50, 200, 1)">
-                    (<span class="data_percentage">{{ overview.getTabletTrafficPercentage }}</span>%)
-                    <span class="data_visits">{{ overview.returningVisits }}</span>
+                    <span class="data_percentage">{# {{ overview.getTabletTrafficPercentage }} #}</span>
+                    <span class="data_visits">{# {{ overview.returningVisits }} #}</span>
                 </span>
 
             </p>

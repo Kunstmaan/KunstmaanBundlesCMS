@@ -1,10 +1,10 @@
 
     function setVisits(data) {
         $('#data_returning_visits .data_visits').html(data.overview.returningVisits);
-        $('#data_returning_visits .data_percentage').html(data.extra.returningVisitsPercentage);
+        $('#data_returning_visits .data_percentage').html('(' + data.extra.returningVisitsPercentage + '%)');
 
         $('#data_new_visits .data_visits').html(data.overview.newVisits);
-        $('#data_new_visits .data_percentage').html(data.extra.newVisitsPercentage);
+        $('#data_new_visits .data_percentage').html('(' + data.extra.newVisitsPercentage + '%)');
 
         var chartData = [
             {

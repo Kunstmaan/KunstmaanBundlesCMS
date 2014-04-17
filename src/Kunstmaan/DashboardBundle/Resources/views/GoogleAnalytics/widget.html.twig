@@ -1,4 +1,6 @@
 {% if token %}
+<div id="dashboard" style="opacity:0">
+
     <!-- TABS -->
     {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews, 'lastUpdate' : lastUpdate} %}
     <!-- end TABS -->
@@ -36,6 +38,8 @@
         </div>
     </section>
     <!-- end TAB CONTENT -->
+
+</div>
 
 {% else %}
     {% include 'KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig' with {'authUrl' : authUrl} %}

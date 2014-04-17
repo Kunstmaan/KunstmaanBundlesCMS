@@ -83,7 +83,7 @@
     background: #eeeeee;
 }
 
-#goalOverview > li > div {
+#goalOverview > li > div:first-child {
     float:left;
     font-weight: bold;
 }

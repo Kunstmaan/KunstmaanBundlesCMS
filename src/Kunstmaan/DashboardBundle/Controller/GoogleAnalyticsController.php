@@ -391,8 +391,7 @@ class GoogleAnalyticsController extends Controller
         $results = $analyticsHelper->getResults(
           365,
           0,
-          'ga:goal11Completions',
-          $extra
+          'ga:goal11ConversionRate'
         );
 
 

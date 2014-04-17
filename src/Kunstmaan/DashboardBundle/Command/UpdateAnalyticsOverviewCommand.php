@@ -74,17 +74,23 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                     $this->getMetrics($overview);
 
                     if ($overview->getVisits()) { // if there are any visits
-                        // // day-specific data
-                        // $this->getChartData($overview);
+                        // day-specific data
+                        $this->getChartData($overview);
 
-                        // // visitor types
-                        // $this->getVisitorTypes($overview);
+                        // get goals
+                        $this->getGoals($overview);
 
-                        // // top pages
-                        // $this->getTopPages($overview);
+                        // visitor types
+                        $this->getVisitorTypes($overview);
 
-                        // // traffic sources
-                        // $this->getTrafficSources($overview);
+                        // top pages
+                        $this->getTopPages($overview);
+
+                        // traffic sources
+                        $this->getTrafficSources($overview);
+
+
+                        // unused
 
                         // // bounce rate
                         // $this->getBounceRate($overview);
@@ -97,9 +103,6 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
 
                         // // top campaigns
                         // $this->getTopCampaigns($overview);
-
-                        // get goals
-                        $this->getGoals($overview);
                     } else { // if no visits
                         // reset overview
                         $this->reset($overview);
@@ -332,27 +335,26 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                 $overview->setTrafficReferral(0);
 
                 if (is_array($rows)) {
-                        foreach ($rows as $row) {
-                                switch ($row[0]) {
+                    foreach ($rows as $row) {
+                        switch ($row[0]) {
+                            case '(none)': // direct traffic
+                                $overview->setTrafficDirect($row[1]);
+                                break;
 
-                                        case '(none)': // direct traffic
-                                                $overview->setTrafficDirect($row[1]);
-                                                break;
+                            case 'organic': // search engine traffic
+                                $overview->setTrafficSearchEngine($row[1]);
+                                break;
 
-                                        case 'organic': // search engine traffic
-                                                $overview->setTrafficSearchEngine($row[1]);
-                                                break;
+                            case 'referral': // referral traffic
+                                $overview->setTrafficReferral($row[1]);
+                                break;
 
-                                        case 'referral': // referral traffic
-                                                $overview->setTrafficReferral($row[1]);
-                                                break;
-
-                                        default:
-                                                // TODO other referral types?
-                                                // cfr. https://developers.google.com/analytics/devguides/reporting/core/dimsmets#view=detail&group=traffic_sources&jump=ga_medium
-                                                break;
-                                }
+                            default:
+                                // TODO other referral types?
+                                // cfr. https://developers.google.com/analytics/devguides/reporting/core/dimsmets#view=detail&group=traffic_sources&jump=ga_medium
+                                break;
                         }
+                    }
                 }
         }
 
@@ -547,26 +549,16 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
         }
 
         /**
-         * Reset the data for the overview
+         * Fetch all goals
          *
          * @param AnalyticsOverview $overview The overview
          */
-        private function reset(&$overview)
-        {
-                // reset overview
-                $overview->setNewVisits(0);
-                $overview->setReturningVisits(0);
-                $overview->setTrafficDirect(0);
-                $overview->setTrafficSearchEngine(0);
-                $overview->setTrafficReferral(0);
-        }
-
-
         private function getGoals(&$overview)
         {
             // goals
             $this->output->writeln("\t" . 'Fetching goals..');
 
+            // calculate timespan
             $timespan = $overview->getTimespan() - $overview->getStartOffset();
             if ($timespan <= 1) {
                 $extra = array(
@@ -606,52 +598,76 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             // add new goals
             if (is_array($goals)) {
                 foreach ($goals as $key=>$value) {
-                    $goal = new AnalyticsGoal();
-                    $key += 1;
-
-                    // create the query
-                    $results = $this->analyticsHelper->getResults(
-                        $overview->getTimespan(),
-                        $overview->getStartOffset(),
-                        'ga:goal'.$key.'Completions',
-                        $extra
-                    );
-                    $rows    = $results->getRows();
-
-                    // parse the results
-                    $chartData = array();
-                    $visits = 0;
-
-                    foreach($rows as $row) {
-                        // total visit count
-                        $visits += $row[1];
-
-                        if ($timespan <= 1) {
-                            $timestamp = $row[0] . 'h';
-                        } else if ($timespan <= 7) {
-                            $timestamp = substr($row[0], 6, 2) . '-' . substr($row[0], 4, 2) . '-' . substr($row[0], 0, 4);
-                        } else if ($timespan <= 93) {
-                            $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
-                            $timestamp = date('d/m/Y', $timestamp);
-                        } else {
-                            $timestamp = substr($row[0], 4, 2) . '/' . substr($row[0], 0, 4);
-                        }
-
-                        $chartData[] = array('timestamp' => $timestamp, 'visits' => $row[1]);
-                    }
-
-                    // set the data
-                    $goal->setVisits($visits);
-                    $goal->setChartData(json_encode($chartData));
-                    $goal->setOverview($overview);
-                    $goal->setName($value->name);
-                    $goal->setPosition($key);
-                    $overview->getGoals()->add($goal);
-
-                    // persist
-                    $this->output->writeln("\t\t" . 'Fetching goal '.$key.': "'.$value->name.'"');
+                    $this->getGoal($overview, $key+1);
                 }
             }
+        }
+
+        /**
+         * Fetch a specific goals
+         *
+         * @param AnalyticsOverview $overview The overview
+         */
+        private function getGoal(&$overview, $key) {
+            // fetch a goal
+            $this->output->writeln("\t\t" . 'Fetching goal '.$key.': "'.$value->name.'"');
+
+            $goal = new AnalyticsGoal();
+            $timespan = $overview->getTimespan() - $overview->getStartOffset();
+
+            // create the query
+            $results = $this->analyticsHelper->getResults(
+                $overview->getTimespan(),
+                $overview->getStartOffset(),
+                'ga:goal'.$key.'Completions',
+                $extra
+            );
+            $rows    = $results->getRows();
+
+            // parse the results
+            $chartData = array();
+            $visits = 0;
+
+            foreach($rows as $row) {
+                // total visit count
+                $visits += $row[1];
+
+                if ($timespan <= 1) {
+                    $timestamp = $row[0] . 'h';
+                } else if ($timespan <= 7) {
+                    $timestamp = substr($row[0], 6, 2) . '-' . substr($row[0], 4, 2) . '-' . substr($row[0], 0, 4);
+                } else if ($timespan <= 93) {
+                    $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
+                    $timestamp = date('d/m/Y', $timestamp);
+                } else {
+                    $timestamp = substr($row[0], 4, 2) . '/' . substr($row[0], 0, 4);
+                }
+
+                $chartData[] = array('timestamp' => $timestamp, 'visits' => $row[1]);
+            }
+
+            // set the data
+            $goal->setVisits($visits);
+            $goal->setChartData(json_encode($chartData));
+            $goal->setOverview($overview);
+            $goal->setName($value->name);
+            $goal->setPosition($key);
+            $overview->getGoals()->add($goal);
+        }
+
+        /**
+         * Reset the data for the overview
+         *
+         * @param AnalyticsOverview $overview The overview
+         */
+        private function reset(&$overview)
+        {
+                // reset overview
+                $overview->setNewVisits(0);
+                $overview->setReturningVisits(0);
+                $overview->setTrafficDirect(0);
+                $overview->setTrafficSearchEngine(0);
+                $overview->setTrafficReferral(0);
         }
 
 }

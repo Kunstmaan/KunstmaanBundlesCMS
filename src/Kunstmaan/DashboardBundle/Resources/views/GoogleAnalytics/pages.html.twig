@@ -1,3 +1,5 @@
+{# Twig vars are commented: they are loaded with AJAX, they are still here as a placeholder #}
+
 <div class="db-block db-col__inner">
     <h2 class="db-block__title">{{ 'analytics.pages.title' | trans }}</h2>
     <ul class="db-block__list">
@@ -5,12 +7,12 @@
 
         {# error if no pages #}
         <p class="db-block__text" id="data_top_pages_no_data">
-            {% if pages|length == 0 %}{{ 'analytics.pages.unavailable' | trans }}{% endif %}
+{#             {% if pages|length == 0 %}{{ 'analytics.pages.unavailable' | trans }}{% endif %} #}
         </p>
 
 
         <div id="data_top_pages">
-            {% for page in pages %}
+{#             {% for page in pages %}
                 <li class="db-block__list__item">
                     <p class="db-block__text db-block__text--left">
                         {% if page.visits != 0 %}<a href="{{ page.name }}" target="_blank">{{ page.name }}</a>{% endif %}
@@ -19,7 +21,7 @@
                        {% if page.visits != 0 %}{{ page.visits }}{% endif %}
                     </p>
                 </li>
-            {% endfor %}
+            {% endfor %} #}
         </div>
 
     </ul>

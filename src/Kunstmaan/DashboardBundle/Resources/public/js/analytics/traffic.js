@@ -1,13 +1,13 @@
 
     function setTraffic(data) {
         $('#data_desktop_traffic .data_visits').html(data.overview.desktopTraffic);
-        $('#data_desktop_traffic .data_percentage').html(data.overview.desktopTrafficPercentage);
+        $('#data_desktop_traffic .data_percentage').html('(' + data.overview.desktopTrafficPercentage + '%)');
 
         $('#data_mobile_traffic .data_visits').html(data.overview.mobileTraffic);
-        $('#data_mobile_traffic .data_percentage').html(data.overview.mobileTrafficPercentage);
+        $('#data_mobile_traffic .data_percentage').html('(' + data.overview.mobileTrafficPercentage + '%)');
 
         $('#data_tablet_traffic .data_visits').html(data.overview.tabletTraffic);
-        $('#data_tablet_traffic .data_percentage').html(data.overview.tabletTrafficPercentage);
+        $('#data_tablet_traffic .data_percentage').html('(' + data.overview.tabletTrafficPercentage + '%)');
 
         var chartData = [
             {

@@ -10,6 +10,7 @@
 
 
     $(document).ready(function() {
+        $('#dashboard').animate({opacity: '1'}, 500);
 
         // show first tab
         var tab = $('#tab3');
@@ -29,7 +30,6 @@
                     $('#tab'+id).addClass('db-tabs__item--active');
 
 
-                    $('.db-content').addClass('db-content--hidden');
 
                     // add functions here to add component behaviour
                     // these functions are declared in a per-template js file (public/js/analytics/)
@@ -40,7 +40,6 @@
                     setGoals(data);
                     initChart();
 
-                    $('.db-content').removeClass('db-content--hidden');
                 }
             });
         }
