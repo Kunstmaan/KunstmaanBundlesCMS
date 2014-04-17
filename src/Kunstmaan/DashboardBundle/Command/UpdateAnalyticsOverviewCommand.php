@@ -598,7 +598,7 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             // add new goals
             if (is_array($goals)) {
                 foreach ($goals as $key=>$value) {
-                    $this->getGoal($overview, $key+1);
+                    $this->getGoal($overview, $key+1, $value, $extra);
                 }
             }
         }
@@ -608,7 +608,7 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
          *
          * @param AnalyticsOverview $overview The overview
          */
-        private function getGoal(&$overview, $key) {
+        private function getGoal(&$overview, $key, $value, $extra) {
             // fetch a goal
             $this->output->writeln("\t\t" . 'Fetching goal '.$key.': "'.$value->name.'"');
 
