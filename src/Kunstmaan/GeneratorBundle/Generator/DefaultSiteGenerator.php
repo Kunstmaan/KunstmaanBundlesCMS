@@ -385,6 +385,15 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 
+        // Error templates
+
+        $relPath = '/Resources/views/Error/';
+        $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+
+        $sourcePath = '/app/TwigBundle/';
+        $targetPath = $this->rootDir.'/app/Resources/TwigBundle/';
+        $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
+
         // Bundle overwrites
 
         if ($this->demosite) {
@@ -400,12 +409,8 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $sourcePath = '/app/KunstmaanFormBundle/';
             $targetPath = $this->rootDir.'/app/Resources/KunstmaanFormBundle/';
             $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
+
         }
-
-        // Error templates
-
-        $relPath = '/Resources/views/Error/';
-        $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');
     }
