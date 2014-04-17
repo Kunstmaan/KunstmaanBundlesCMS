@@ -31,6 +31,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->rootDir = $rootDir;
 
         $this->generateGruntFiles();
+        $this->generateBowerFiles();
         $this->generateAssets();
         $this->generateTemplate();
     }
@@ -43,6 +44,15 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles($this->skeletonDir.'/grunt/', $this->rootDir, array('bundle' => $this->bundle), true);
 
         $this->assistant->writeLine('Generating grunt configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate the bower configuration files.
+     */
+    private function generateBowerFiles()
+    {
+        $this->renderFiles($this->skeletonDir.'/bower/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating bower configuration : <info>OK</info>');
     }
 
     /**

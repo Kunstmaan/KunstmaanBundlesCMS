@@ -1,0 +1,17 @@
+{
+  "name": "{{ bundle.getName() }}",
+  "version": "1.0.0",
+  "dependencies": {
+    "sass-bootstrap": "~3.0",
+    "bourbon": "~3.1",
+    "jquery": "~1.11",
+    "cupcake": "~1.6",
+    "html5shiv": "~3.7",
+    "socialite-js": "v2.0",
+    "flexslider": "latest",
+    "fitvids": "~1.1",
+    "svgeezy": "~1.0",
+    "jquery-placeholder": "~2.0",
+    "fancybox": "~2.1"
+  }
+}
