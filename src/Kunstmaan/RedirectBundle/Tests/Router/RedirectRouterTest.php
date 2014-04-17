@@ -37,13 +37,35 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
         $this->object     = new RedirectRouter($this->repository);
     }
 
+    /**
+     * @param int     $id
+     * @param string  $origin
+     * @param string  $target
+     * @param boolean $permanent
+     *
+     * @return Redirect
+     */
+    private function getRedirect($id, $origin, $target, $permanent)
+    {
+        $redirect = new Redirect();
+        $redirect
+            ->setOrigin($origin)
+            ->setTarget($target)
+            ->setPermanent($permanent)
+            ->setId($id);
+
+        return $redirect;
+    }
+
+    /**
+     * @return \Kunstmaan\RedirectBundle\Entity\Redirect[]
+     */
     private function getRedirects()
     {
         if (!isset($this->redirects)) {
-            $this->redirects = array(
-                (new Redirect())->setOrigin('test')->setTarget('/target1')->setPermanent(false)->setId(1),
-                (new Redirect())->setOrigin('test2')->setTarget('/target2')->setPermanent(true)->setId(2)
-            );
+            $this->redirects   = array();
+            $this->redirects[] = $this->getRedirect(1, 'test', '/target1', false);
+            $this->redirects[] = $this->getRedirect(2, 'test2', '/target2', true);
         }
 
         return $this->redirects;
@@ -99,13 +121,13 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatch()
     {
-        $redirect = $this->object->match('/test');
+        $redirect = $this->object->match('/test2');
         $this->assertEquals(
             array(
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                'path'        => '/target1',
-                'permanent'   => false,
-                '_route'      => '_redirect_route_1'
+                'path'        => '/target2',
+                'permanent'   => true,
+                '_route'      => '_redirect_route_2'
             ),
             $redirect
         );
