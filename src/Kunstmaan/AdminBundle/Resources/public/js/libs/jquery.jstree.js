@@ -508,7 +508,6 @@
 					});
 				}
 				if(done) { 
-					// TODO: find a more elegant approach to syncronizing returning requests
 					if(this.data.core.reopen) { clearTimeout(this.data.core.reopen); }
 					this.data.core.reopen = setTimeout(function () { _this.__callback({}, _this); }, 50);
 					this.data.core.refreshing = false;
@@ -855,7 +854,7 @@
 				p.ot = $.jstree._reference(o) || this;
 				p.o = p.ot._get_node(o);
 				p.r = r === - 1 ? -1 : this._get_node(r);
-				p.p = (typeof pos === "undefined" || pos === false) ? "last" : pos; // TODO: move to a setting
+				p.p = (typeof pos === "undefined" || pos === false) ? "last" : pos;
 				if(!is_cb && prepared_move.o && prepared_move.o[0] === p.o[0] && prepared_move.r[0] === p.r[0] && prepared_move.p === p.p) {
 					this.__callback(prepared_move);
 					if(cb) { cb.call(this, prepared_move); }
@@ -2990,7 +2989,6 @@
 (function ($) {
 	$.vakata.xslt = function (xml, xsl, callback) {
 		var rs = "", xm, xs, processor, support;
-		// TODO: IE9 no XSLTProcessor, no document.recalc
 		if(document.recalc) {
 			xm = document.createElement('xml');
 			xs = document.createElement('xml');
@@ -3698,7 +3696,6 @@
 						}
 					}, this))
 				.bind("destroy.jstree", $.proxy(function () {
-						// TODO: move this to descruct method
 						if(this.data.contextmenu) {
 							$.vakata.context.hide();
 						}
@@ -3952,7 +3949,6 @@
 					d = 0;
 					if(md === 0) { return false; }
 					if(typeof m.o.d === "undefined") {
-						// TODO: deal with progressive rendering and async when checking max_depth (how to know the depth of the moved node)
 						t = m.o;
 						while(t.length > 0) {
 							t = t.find("> ul > li");

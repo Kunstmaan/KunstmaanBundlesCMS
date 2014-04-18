@@ -4,8 +4,6 @@ namespace Kunstmaan\AdminBundle\Twig;
 
 use IntlDateFormatter as DateFormatter;
 
-use Symfony\Component\Locale\Locale;
-
 /**
  * DateByLocaleExtension
  */
