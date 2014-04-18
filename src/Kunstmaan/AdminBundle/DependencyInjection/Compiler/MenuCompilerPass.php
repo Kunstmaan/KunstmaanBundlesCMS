@@ -23,7 +23,9 @@ class MenuCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition('kunstmaan_admin.menubuilder');
 
         foreach ($container->findTaggedServiceIds('kunstmaan_admin.menu.adaptor') as $id => $attributes) {
-            $definition->addMethodCall('addAdaptMenu', array(new Reference($id)));
+            $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+
+            $definition->addMethodCall('addAdaptMenu', array(new Reference($id), $priority));
         }
     }
 }

@@ -107,8 +107,8 @@
                                     {% set route = app.request.attributes.get('_route') %}
                                     {% set attribs = app.request.attributes.all %}
                                     {{ localeswitcher_widget(requiredlocales, route) }}
-                                    <li {% if route == 'KunstmaanAdminBundle_settings_users_edit' %}class="active"{% endif %}>
-                                        <a href="{{ path('KunstmaanAdminBundle_settings_users_edit', { 'id' : app.user.id }) }}">{{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}</a>
+                                    <li>
+                                        <a href="{{ path('fos_user_change_password') }}">{{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}</a>
                                     </li>
                                     <li>
                                         <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>

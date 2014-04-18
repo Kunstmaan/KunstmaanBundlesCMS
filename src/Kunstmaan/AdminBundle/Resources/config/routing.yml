@@ -13,21 +13,6 @@ KunstmaanAdminBundle_settings:
     type:     annotation
     prefix:   /admin/settings      
 
-KunstmaanAdminBundle_user_settings:
-    resource: "@KunstmaanAdminBundle/Controller/UsersController.php"
-    type:     annotation
-    prefix:   /admin/settings/users
-
-KunstmaanAdminBundle_group_settings:
-    resource: "@KunstmaanAdminBundle/Controller/GroupsController.php"
-    type:     annotation
-    prefix:   /admin/settings/groups
-
-KunstmaanAdminBundle_role_settings:
-    resource: "@KunstmaanAdminBundle/Controller/RolesController.php"
-    type:     annotation
-    prefix:   /admin/settings/roles
-
 ###########################
 ## fos_userbundle routes ##
 ###########################
@@ -52,3 +37,8 @@ fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
     prefix: /resetting  
          
+fos_user_change_password:
+    pattern: /profile/password/change
+    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
+    requirements:
+        _method: GET|POST
