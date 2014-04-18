@@ -1,5 +1,8 @@
 
     function setTraffic(data) {
+        // clear the existing chart
+        $('#js-traffic-dashboard-chart').html('');
+
         // set the values
         $('#data_desktop_traffic .data_visits').html(data.overview.desktopTraffic);
         $('#data_desktop_traffic .data_percentage').html('(' + data.overview.desktopTrafficPercentage + '%)');
