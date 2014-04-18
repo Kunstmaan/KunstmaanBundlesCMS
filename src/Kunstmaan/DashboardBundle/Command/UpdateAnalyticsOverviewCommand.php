@@ -590,12 +590,12 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             // add new goals
             if (is_array($goals)) {
                 foreach ($goals as $key=>$value) {
-                    $metric .= 'ga:goal'.$key.'Completions,'
-                    //$this->getGoal($overview, $key+1, $value, $extra);
+                    //$metric .= 'ga:goal'.$key.'Completions,'
+                    $this->getGoal($overview, $key+1, $value, $extra);
                 }
-                trim($metric, ',');
+                //trim($metric, ',');
             }
-            $this->output->writeln("\t\t" . 'Fetching goal '.$key.': "'.$value->name.'"');
+            //$this->output->writeln("\t\t" . 'Fetching goal '.$key.': "'.$value->name.'"');
 
         }
 
