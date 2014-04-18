@@ -5,8 +5,11 @@
     {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews, 'lastUpdate' : lastUpdate} %}
     <!-- end TABS -->
 
+    <div id="data_no_overview" style="display:{% if overview.visits == 0 %}block{% else %}none{% endif %}">{{ 'analytics.overview.unavailable' | trans}}</div>
+
+
     <!-- TAB CONTENT -->
-    <section class="db-content">
+    <section class="db-content" id="data_overview" {% if overview.visits == 0 %}style="display:none"{% endif %}>
         <!-- COL -->
         <div class="db-col db-col--6">
             <div class="db-block">
@@ -38,6 +41,8 @@
         </div>
     </section>
     <!-- end TAB CONTENT -->
+
+
 
 </div>
 

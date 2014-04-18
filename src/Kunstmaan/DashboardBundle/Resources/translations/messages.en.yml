@@ -17,12 +17,17 @@ analytics:
   campaigns:
     title: Top Campaigns
     unavailable: No data available for Top Campaigns
+  overview:
+    unavailable: No data available for this overview
   visitors: Users
   pageviews: pageviews
   visits: 'Sessions'
-  visits.returning: 'Returning users'
-  visits.new: 'New users'
   visits.bounce: 'Bounce rate'
+  visitors.returning: 'Returning users'
+  visitors.new: 'New users'
+  visitors.desktop: 'Desktop users'
+  visitors.tablet: 'Tablet users'
+  visitors.mobile: 'Mobile users'
   dashboard:
     setup:
       title: Dashboard Setup

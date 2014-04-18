@@ -31,13 +31,24 @@
                     $('.db-tabs__item').removeClass('db-tabs__item--active');
                     $('#tab'+id).addClass('db-tabs__item--active');
 
-                    // add functions here to add component behaviour
-                    // these functions are declared in a per-template js file (public/js/analytics/)
-                    setChart(data);
-                    setVisits(data);
-                    setTraffic(data);
-                    setPages(data);
-                    setGoals(data);
+                    console.log(data.overview.visits);
+
+                    if (data.overview.visits == 0) {
+                        $('#data_no_overview').css('display', 'block');
+                        $('#data_overview').css('display', 'none');
+                    } else {
+                        $('#data_no_overview').css('display', 'none');
+                        $('#data_overview').css('display', 'block');
+
+                        // add functions here to add component behaviour
+                        // these functions are declared in a per-template js file (public/js/analytics/)
+                        setChart(data);
+                        setVisits(data);
+                        setTraffic(data);
+                        setPages(data);
+                        setGoals(data);
+                    }
+
                 }
             });
         }
