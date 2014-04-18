@@ -27,5 +27,12 @@
         ]
 
         // render the chart
-        var myLine = new Chart(document.getElementById("js-traffic-dashboard-chart").getContext("2d")).Pie(chartData);
+        new Morris.Donut({
+          element: 'js-traffic-dashboard-chart',
+          data: [
+            {label: "Desktop visitors", value: removeNumberFormat(data.overview.desktopTraffic)},
+            {label: "Mobile visitors", value: removeNumberFormat(data.overview.mobileTraffic)},
+            {label: "Tablet visitors", value: removeNumberFormat(data.overview.tabletTraffic)}
+          ]
+        });
     }

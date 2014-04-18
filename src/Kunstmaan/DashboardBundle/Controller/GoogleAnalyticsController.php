@@ -262,7 +262,7 @@ class GoogleAnalyticsController extends Controller
 
         // overview data
         $overviewData = array(
-          'chartData'                           => json_decode($overview->getChartData()),
+          'chartData'                           => json_decode($overview->getChartData(), true),
           'title'                               => $overview->getTitle(),
           'timespan'                            => $overview->getTimespan(),
           'startOffset'                         => $overview->getStartOffset(),
@@ -336,6 +336,59 @@ class GoogleAnalyticsController extends Controller
       $resultCode = $command->run($input, $output);
 
       return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
+    }
+
+
+    /**
+     * @Route("/test", name="KunstmaanDashboardBundle_homepage_test")
+     * @Template()
+     *
+     * @return array
+     */
+    public function testAction()
+    {
+        $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
+        $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
+        $analyticsHelper->init($googleClientHelper);
+
+                $extra = array(
+                    'dimensions' => 'ga:week,ga:day,ga:date'
+                    );
+
+        $results = $analyticsHelper->getResults(
+                31,
+                0,
+                'ga:goal11Completions,ga:goal12Completions,ga:goal13Completions',
+                $extra
+        );
+
+        $row = $results->getRows()[0];
+
+
+// int mktime (
+// [ int $hour = date("H")
+// [, int $minute = date("i")
+// [, int $second = date("s")
+// [, int $month = date("n")
+// [, int $day = date("j")
+// [, int $year = date("Y")
+// [, int $is_dst = -1 ]]]]]]] )
+
+
+        $timestamp = mktime(
+            0,
+            0,
+            0,
+            substr($row[0], 4, 2),
+            substr($row[2], 6, 2),
+            substr($row[2], 0, 4));
+
+        $timestamp = date('Y-m-d H:00', $timestamp);
+        echo $timestamp;
+
+
+        var_dump($results->getRows());
+        exit;
     }
 
 }

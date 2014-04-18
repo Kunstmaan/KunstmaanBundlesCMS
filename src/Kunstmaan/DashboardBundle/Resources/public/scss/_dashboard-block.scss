@@ -72,18 +72,14 @@
     border: 1px solid $hr-color;
     border-radius: 3px;
     padding:5px;
-    cursor: pointer;
 }
 
-#goalOverview > li:hover {
-    background: #eeeeee;
-}
 
 #goalOverview > li.active {
     background: #eeeeee;
 }
 
-#goalOverview > li > div:first-child {
+#goalOverview > li > div{
     float:left;
     font-weight: bold;
 }

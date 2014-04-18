@@ -5,32 +5,39 @@
 
         // create box for each goal
         for(var i = 0; i < data.goals.length; i++) {
-            // using DOM here because chart.js doesn't find these added elements if just rendered with HTML
-            var overview = document.createElement('li');
-            overview.setAttribute('id', 'goal'+data.goals[i]['id']);
-            overview.setAttribute('data-goal-id', data.goals[i]['id']);
+        // for(var i = 0; i < 1; i++) {
+            // create a goal overview box
+            var chart = $('<div>', {'class': 'dashboard-chart', 'style': 'height:150px;width:100%'});
+            $('#goalOverview')
+            .append(
+                $('<li>', {'id': 'goal'+data.goals[i]['id'], 'data-goal-id': data.goals[i]['id']}
+                ).append(
+                    chart
+                ).append(
+                    $('<div>').html(data.goals[i]['name'])
+                ).append(
+                    $('<span>').html(data.goals[i]['visits'])
+                )
+            );
 
-            var chartCanvas = document.createElement('canvas');
-            chartCanvas.setAttribute('id', 'js-goal-dashboard-chart-'+data.goals[i]['id']);
-            chartCanvas.setAttribute('class','dashboard-chart');
-            chartCanvas.setAttribute('height','100');
-            overview.appendChild(chartCanvas);
+            // create a data array
+            var chartData = [];
+            for (var j = 0; j < data.goals[i].chartData.length; j+=1) {
+                chartData.push({
+                    x : data.goals[i].chartData[j].timestamp,
+                    visits : parseInt(data.goals[i].chartData[j].visits)
+                });
+            }
 
-            var nameDiv = document.createElement('div');
-            var nameText = document.createTextNode(data.goals[i]['name'])
-            nameDiv.appendChild(nameText);
-            overview.appendChild(nameDiv);
-
-            var visitsSpan = document.createElement('span');
-            var visitsText = document.createTextNode(data.goals[i]['visits'])
-            visitsSpan.appendChild(visitsText);
-            overview.appendChild(visitsSpan);
-
-            // add elements to DOM
-            $('#goalOverview').append(overview);
-
-            // init the chart for a goal box
-            initLineChart(chartCanvas, data.goals[i]['chartData']);
+            // render the chart
+            new Morris.Line({
+                element: chart,
+                data: chartData,
+                xkey: 'x',
+                ykeys: ['visits'],
+                labels: ['Users'],
+                hideHover: true
+            });
         }
     }
 

@@ -67,6 +67,7 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
 
                 // get data for each overview
                 $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+
                 foreach ($overviews as $overview) {
                     $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
 
@@ -74,23 +75,23 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                     $this->getMetrics($overview);
 
                     if ($overview->getVisits()) { // if there are any visits
-                        // day-specific data
-                        $this->getTrafficTypes($overview);
+                        // // traffic data
+                        // $this->getTrafficTypes($overview);
 
-                        // day-specific data
-                        $this->getChartData($overview);
+                        // // day-specific data
+                        // $this->getChartData($overview);
 
-                        // get goals
+                        // // get goals
                         $this->getGoals($overview);
 
-                        // visitor types
-                        $this->getVisitorTypes($overview);
+                        // // visitor types
+                        // $this->getVisitorTypes($overview);
 
-                        // top pages
-                        $this->getTopPages($overview);
+                        // // top pages
+                        // $this->getTopPages($overview);
 
-                        // traffic sources
-                        $this->getTrafficSources($overview);
+                        // // traffic sources
+                        // $this->getTrafficSources($overview);
 
 
                         // unused, please keep here just in case if some of this data is still needed in the future
@@ -225,72 +226,54 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             $timespan = $overview->getTimespan() - $overview->getStartOffset();
             if ($timespan <= 1) {
                 $extra = array(
-                    'dimensions' => 'ga:hour',
-                    'sort' => 'ga:hour'
+                    'dimensions' => 'ga:date,ga:hour'
                     );
             } else if ($timespan <= 7) {
                 $extra = array(
-                    'dimensions' => 'ga:dayOfWeekName'
+                    'dimensions' => 'ga:date,ga:hour'
                     );
-            } else if ($timespan <= 93) {
+            } else if ($timespan <= 31) {
                 $extra = array(
-                    'dimensions' => 'ga:yearWeek',
-                    'sort' => 'ga:yearWeek'
+                    'dimensions' => 'ga:week,ga:day,ga:date'
                     );
             } else {
                 $extra = array(
-                    'dimensions' => 'ga:yearMonth',
-                    'sort' => 'ga:yearMonth'
+                    'dimensions' => 'ga:isoYearIsoWeek'
                     );
             }
 
-            // get visits
+            // get visits & visitors
             $results = $this->analyticsHelper->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
-                'ga:visits',
+                'ga:visits, ga:visitors',
                 $extra
             );
             $rows    = $results->getRows();
-
             $chartData = array();
             foreach ($rows as $row) {
+                // chart data
                 if ($timespan <= 1) {
-                    $timestamp = $row[0] . 'h';
+                    $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
+                    $timestamp = date('Y-m-d H:00', $timestamp);
+                    $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
+                    $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
                 } else if ($timespan <= 7) {
-                    $timestamp = $row[0];
-                } else if ($timespan <= 93) {
-                    $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
-                    $timestamp = date('d/m/Y', $timestamp);
+                    $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
+                    $timestamp = date('Y-m-d H:00', $timestamp);
+                    $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
+                    $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
+                } else if ($timespan <= 31) {
+                    $timestamp = mktime($row[2], 0, 0, substr($row[0], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
+                    $timestamp = date('Y-m-d H:00', $timestamp);
+                    $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
+                    $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
                 } else {
-                    $timestamp = substr($row[0], 4, 2) . '/' . substr($row[0], 0, 4);
+                    $timestamp = strtotime(substr($row[0], 0, 4).'W'.substr($row[0], 4, 2));
+                    $timestamp = date('Y-m-d H:00', $timestamp);
+                    $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
+                    $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
                 }
-
-                $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
-            }
-
-            // get visitors
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:visitors',
-                $extra
-            );
-            $rows    = $results->getRows();
-
-            foreach ($rows as $row) {
-                if ($timespan <= 1) {
-                    $timestamp = $row[0] . 'h';
-                } else if ($timespan <= 7) {
-                    $timestamp = substr($row[0], 6, 2) . '-' . substr($row[0], 4, 2) . '-' . substr($row[0], 0, 4);
-                } else if ($timespan <= 93) {
-                    $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
-                    $timestamp = date('d/m/Y', $timestamp);
-                } else {
-                    $timestamp = substr($row[0], 4, 2) . '/' . substr($row[0], 0, 4);
-                }
-
-                $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
             }
 
             // adding data to the overview
@@ -573,22 +556,19 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             $timespan = $overview->getTimespan() - $overview->getStartOffset();
             if ($timespan <= 1) {
                 $extra = array(
-                    'dimensions' => 'ga:hour',
-                    'sort' => 'ga:hour'
+                    'dimensions' => 'ga:date,ga:hour'
                     );
             } else if ($timespan <= 7) {
                 $extra = array(
-                    'dimensions' => 'ga:dayOfWeekName'
+                    'dimensions' => 'ga:date,ga:hour'
                     );
-            } else if ($timespan <= 93) {
+            } else if ($timespan <= 31) {
                 $extra = array(
-                    'dimensions' => 'ga:yearWeek',
-                    'sort' => 'ga:yearWeek'
+                    'dimensions' => 'ga:week,ga:day,ga:date'
                     );
             } else {
                 $extra = array(
-                    'dimensions' => 'ga:yearMonth',
-                    'sort' => 'ga:yearMonth'
+                    'dimensions' => 'ga:isoYearIsoWeek'
                     );
             }
 
@@ -606,12 +586,17 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
                             ->listManagementGoals($this->googleClientHelper->getAccountId(), $this->googleClientHelper->getPropertyId(), $this->googleClientHelper->getProfileId())
                             ->items;
 
+            $metric = '';
             // add new goals
             if (is_array($goals)) {
                 foreach ($goals as $key=>$value) {
-                    $this->getGoal($overview, $key+1, $value, $extra);
+                    $metric .= 'ga:goal'.$key.'Completions,'
+                    //$this->getGoal($overview, $key+1, $value, $extra);
                 }
+                trim($metric, ',');
             }
+            $this->output->writeln("\t\t" . 'Fetching goal '.$key.': "'.$value->name.'"');
+
         }
 
         /**
@@ -638,23 +623,48 @@ class UpdateAnalyticsOverviewCommand extends ContainerAwareCommand
             // parse the results
             $chartData = array();
             $visits = 0;
+            $count = 0;
+            $steps = ceil(sizeof($rows)/10);
+            $visitsPart = 0;
 
             foreach($rows as $row) {
+                $count++;
                 // total visit count
-                $visits += $row[1];
+                $visits += end($row);
+                $visitsPart += end($row);
 
-                if ($timespan <= 1) {
-                    $timestamp = $row[0] . 'h';
-                } else if ($timespan <= 7) {
-                    $timestamp = substr($row[0], 6, 2) . '-' . substr($row[0], 4, 2) . '-' . substr($row[0], 0, 4);
-                } else if ($timespan <= 93) {
-                    $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
-                    $timestamp = date('d/m/Y', $timestamp);
-                } else {
-                    $timestamp = substr($row[0], 4, 2) . '/' . substr($row[0], 0, 4);
+                // only add every 10th element: smaller graphs don't need this much accuracy
+                // except when using a day overview
+                if ($count%$steps == 0) {
+                    // chart data
+                    if ($timespan <= 1) {
+                        $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
+                        $timestamp = date('Y-m-d H:00', $timestamp);
+                        $chartData[] = array('timestamp' => $timestamp, 'visits' => $visitsPart);
+                    } else if ($timespan <= 7) {
+                        $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
+                        $timestamp = date('Y-m-d H:00', $timestamp);
+                        $chartData[] = array('timestamp' => $timestamp, 'visits' => $visitsPart);
+                    } else if ($timespan <= 31) {
+                        $timestamp = mktime(
+                            0,
+                            0,
+                            0,
+                            substr($row[0], 4, 2),
+                            substr($row[2], 6, 2),
+                            substr($row[2], 0, 4)
+                        );
+                        $timestamp = date('Y-m-d H:00', $timestamp);
+                        $chartData[] = array('timestamp' => $timestamp, 'visits' => $visitsPart);
+                    } else {
+                        $timestamp = strtotime(substr($row[0], 0, 4).'W'.substr($row[0], 4, 2));
+                        $timestamp = date('Y-m-d H:00', $timestamp);
+                        $chartData[] = array('timestamp' => $timestamp, 'visits' => $visitsPart);
+                    }
+
+                    $count = 0;
+                    $visitsPart = 0;
                 }
-
-                $chartData[] = array('timestamp' => $timestamp, 'visits' => $row[1]);
             }
 
             // set the data

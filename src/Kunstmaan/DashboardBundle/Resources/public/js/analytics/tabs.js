@@ -38,7 +38,6 @@
                     setTraffic(data);
                     setPages(data);
                     setGoals(data);
-                    initChart();
                 }
             });
         }
