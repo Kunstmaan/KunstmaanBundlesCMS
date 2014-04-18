@@ -1,0 +1,49 @@
+{# Twig vars are commented: they are loaded with AJAX, they are still here as a placeholder #}
+
+<br/>
+<div id="js-dashboard-chart" class="dashboard-chart" style="height:290;width:100%"></div>
+
+<ul class="db-block__list">
+
+    <li class="db-block__list__item">
+        <p class="db-block__text db-block__text--left">
+            Visits:
+        </p>
+        <p class="db-block__stats db-block__stats--right" style="color:rgba(41, 151, 206, 1)" id="data_visits">
+            {# {{ overview.visits }} #}
+        </p>
+    </li>
+    <li class="db-block__list__item">
+        <p class="db-block__text db-block__text--left">
+            Unique visitors:
+        </p>
+        <p class="db-block__stats db-block__stats--right" style="color:rgba(41, 200, 150, 1)" id="data_visitors">
+            {# {{ overview.visitors }} #}
+        </p>
+    </li>
+    <li class="db-block__list__item">
+        <p class="db-block__text db-block__text--left">
+            Pageviews:
+        </p>
+        <p class="db-block__stats db-block__stats--right" id="data_pageviews">
+            {# {{ overview.pageviews }} #}
+        </p>
+    </li>
+    <li class="db-block__list__item">
+        <p class="db-block__text db-block__text--left">
+            Avarage pages per visit:
+        </p>
+        <p class="db-block__stats db-block__stats--right" id="data_pages_per_visit">
+            {# {{ overview.pagesPerVisit }} #}
+        </p>
+    </li>
+    <li class="db-block__list__item">
+        <p class="db-block__text db-block__text--left">
+            Avarage visit duration:
+        </p>
+        <p class="db-block__stats db-block__stats--right" id="data_avg_visit_duration">
+            {# {{ overview.avgVisitDuration }} seconds #}
+        </p>
+    </li>
+
+</ul>

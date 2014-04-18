@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Legacy browsers
+   ========================================================================== */
+
+// IE8
+.ie8 {
+
+  // tabs: no calc, no last-child
+  .db-tabs__item {
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  // icons: no svg
+  .db-block__list__item--icon-direct {
+    &:after {
+      background-image: url(#{$icons}/dashboard/direct.png);
+    }
+  }
+  .db-block__list__item--icon-referral {
+    &:after {
+      background-image: url(#{$icons}/dashboard/link.png);
+    }
+  }
+  .db-block__list__item--icon-search {
+    &:after {
+      background-image: url(#{$icons}/dashboard/search.png);
+    }
+  }
+
+  // chart: polyfill sets a fixed height with overflow hidden which cuts off the chart
+  .dashboard-chart {
+    > div {
+      height: auto !important;
+      overflow: visible !important;
+    }
+  }
+
+  // Newrelic iframes: not supported in IE8
+  .newrelic-iframes {
+    display: none;
+  }
+
+}

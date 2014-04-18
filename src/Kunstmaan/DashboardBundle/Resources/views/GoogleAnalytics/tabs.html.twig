@@ -1,0 +1,25 @@
+<ul class="db-tabs">
+    {% set i = 1 %}
+    {% for overviewItem in overviews %}
+        <li class="db-tabs__item {% if overviewItem.id == overview.id %}db-tabs__item--active{% endif %}" id="tab{{ overviewItem.id }}">
+            <div class="db-tabs__controller" id="tab{{i}}" data-id="{{ overviewItem.id }}"
+                data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overviewItem.id}) }}">
+                <h6 class="db-tabs__item__title">{{ overviewItem.title }}</h6>
+                <p class="db-tabs__item__subtitle">visitors</p>
+            </dvi>
+        </li>
+        {% set i = i + 1 %}
+    {% endfor %}
+    {#
+    <div id="lastUpdate">
+        <a href="#" id="updateButton" class="btn btn-primary"
+            data-update-text=" {{ 'analytics.dashboard.update' | trans }}"
+            data-updating-text=" {{ 'analytics.dashboard.updating' | trans }}">
+            {{ 'analytics.dashboard.lastUpdate' | trans }} {{ lastUpdate }}
+        </a>
+
+        {{ 'analytics.dashboard.lastUpdate' | trans }} {{ lastUpdate }}
+    </div>
+    #}
+</ul>
+

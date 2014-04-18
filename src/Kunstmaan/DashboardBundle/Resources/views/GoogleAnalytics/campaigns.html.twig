@@ -1,0 +1,26 @@
+<div class="db-block db-col__inner">
+    <h2 class="db-block__title">{{ 'analytics.campaigns.title' | trans }}</h2>
+    <ul class="db-block__list">
+
+
+        {# error if no searches #}
+        <p class="db-block__text" id="data_top_campaigns_no_data">
+            {% if campaigns|length == 0 %}{{ 'analytics.campaigns.unavailable' | trans }}{% endif %}
+        </p>
+
+
+        <div id="campaigns">
+            {% for campaign in campaigns %}
+                <li class="db-block__list__item">
+                    <p class="db-block__text db-block__text--left">
+                        {% if campaign.visits != 0 %}{{ campaign.name }}{% endif %}
+                    </p>
+                    <p class="db-block__stats db-block__stats--right">
+                       {% if campaign.visits != 0 %}{{ campaign.visits }}{% endif %}
+                    </p>
+                </li>
+            {% endfor %}
+        </div>
+
+    </ul>
+</div>

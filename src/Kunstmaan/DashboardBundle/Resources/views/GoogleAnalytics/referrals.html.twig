@@ -1,0 +1,24 @@
+<div class="db-block db-col__inner">
+    <h2 class="db-block__title">{{ 'analytics.referrals.title' | trans }}</h2>
+    <ul class="db-block__list" id="data_top_referral_list">
+
+        {# error if no referrals #}
+        <p class="db-block__text" id="data_top_referral_no_data">
+            {% if referrals|length == 0 %}{{ 'analytics.referrals.unavailable' | trans }}{% endif %}
+        </p>
+
+        <div id="referrals">
+            {% for referral in referrals %}
+                <li class="db-block__list__item">
+                    <p class="db-block__text db-block__text--left" id="data_overview_top_referral_first">
+                        {% if referral.visits != 0 %}{{ referral.name }}{% endif %}
+                    </p>
+                    <p class="db-block__stats db-block__stats--right" id="data_overview_top_referral_first_value">
+                       {% if referral.visits != 0 %}{{ referral.visits }}{% endif %}
+                    </p>
+                </li>
+            {% endfor %}
+        </div>
+
+    </ul>
+</div>

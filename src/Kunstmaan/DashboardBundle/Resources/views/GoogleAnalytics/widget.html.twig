@@ -1,1 +1,65 @@
-GA! {{ name }}
+{% if token %}
+<div id="dashboard" style="opacity:0">
+
+    <!-- TABS -->
+    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews, 'lastUpdate' : lastUpdate} %}
+    <!-- end TABS -->
+
+    <!-- TAB CONTENT -->
+    <section class="db-content">
+        <!-- COL -->
+        <div class="db-col db-col--6">
+            <div class="db-block">
+                <!-- CHART -->
+                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
+                <!-- end CHART -->
+            </div>
+        </div>
+        <!-- end COL -->
+
+        <!-- COL -->
+        <div class="db-col db-col--3">
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:traffic.html.twig' with {'overview' : overview} %}
+        </div>
+        <!-- end COL -->
+
+        <!-- COL -->
+        <div class="db-col db-col--3">
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:visits.html.twig' with {'overview' : overview} %}
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:pages.html.twig' with {'pages' : overview.getPages} %}
+        </div>
+        <!-- end COL -->
+
+
+        <div>
+            {% if overview.getGoals | length > 0 %}
+                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview' : overview} %}
+            {% endif %}
+        </div>
+    </section>
+    <!-- end TAB CONTENT -->
+
+</div>
+
+{% else %}
+    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig' with {'authUrl' : authUrl} %}
+{% endif %}
+
+{% block extrajavascript %}
+    {% javascripts
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/chart.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/traffic.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/pages.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/visits.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/libs/chart.min.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris.js-0.4.3/morris.min.js'
+        '//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js'
+        output='generated-js/scripts_bottom.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+

@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Dashboard General
+   ========================================================================== */
+
+.db-content {
+    padding: 20px 0;
+    border: 1px solid $hr-color;
+    border-radius: 0 0 3px 3px;
+    margin-bottom: 40px;
+    margin-top: -1px;
+    @include clearfix;
+    width: 100%;
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+}
+
+.db-content--hidden {
+    opacity: 0;
+}
+
+.db-col {
+    float: left;
+    padding: 0 20px;
+}
+.db-col--6 {
+    width: 60%;
+}
+.db-col--10 {
+    width: 100%;
+}
+.db-col--5 {
+    width: 45%;
+}
+.db-col--2 {
+    width: 20%;
+}
+.db-col--3 {
+    width: 20%;
+}
+.db-col--4 {
+    width: 25%;
+}
+
+.dashboard-chart {
+    margin-bottom: 10px;
+    padding: 0 15px 0 0;
+}
+
+.db__update-head {
+    margin: 17px 0 0 0;
+    font-size: 13px;
+    line-height: 100%;
+    color: #999999;
+}
+
+#updateButton {
+    width:260px;
+}
+
+@media(max-width: 1300px) {
+    .db-col--6 {
+        width: 75%;
+    }
+    .db-col--2 {
+        width: 25%;
+    }
+    .db-col--4 {
+        width: 100%;
+        @include clearfix;
+        .db-col__inner {
+            width: calc(50% - 20px);
+            float: left;
+            margin-left: 40px;
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+@media(max-width: 1100px) {
+    .db-col {
+        float: none;
+        width: 100%;
+        .db-col__inner {
+            width: 100%;
+            margin: 0;
+        }
+    }
+}
