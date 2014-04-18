@@ -39,10 +39,6 @@ class SecurityController extends BaseController
             $error = '';
         }
 
-        if ($error) {
-            // @todo log $session->get(SecurityContext::LAST_USERNAME) . " tried to login to the cms but got error: " . $error
-        }
-
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
 

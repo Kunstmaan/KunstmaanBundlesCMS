@@ -3266,7 +3266,7 @@ define('moxie/file/FileInput', [
 		*/
 		'change',
 
-		'cancel', // TODO: might be useful
+		'cancel',
 
 		/**
 		Dispatched when mouse cursor enters file-picker area. Can be used to style element
@@ -5140,7 +5140,6 @@ define("moxie/xhr/XMLHttpRequest", [
 		
 		/*
 		function _toASCII(str, AllowUnassigned, UseSTD3ASCIIRules) {
-			// TODO: http://tools.ietf.org/html/rfc3490#section-4.1
 			return str.toLowerCase();
 		}
 		*/
