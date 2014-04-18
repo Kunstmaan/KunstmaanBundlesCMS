@@ -670,4 +670,166 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
                 $overview->setTrafficReferral(0);
         }
 
+// DO NOT REMOVE, NEEDS TO BE TESTED (waiting for an account with actual data to test)
+
+        // /**
+        //  * Fetch all goals
+        //  *
+        //  * @param AnalyticsOverview $overview The overview
+        //  */
+        // private function getGoals(&$overview)
+        // {
+        //     // goals
+        //     $this->output->writeln("\t" . 'Fetching goals..');
+
+        //     // calculate timespan
+        //     $timespan = $overview->getTimespan() - $overview->getStartOffset();
+        //     if ($timespan <= 1) {
+        //         $extra = array(
+        //             'dimensions' => 'ga:date,ga:hour'
+        //             );
+        //     } else if ($timespan <= 7) {
+        //         $extra = array(
+        //             'dimensions' => 'ga:date,ga:hour'
+        //             );
+        //     } else if ($timespan <= 31) {
+        //         $extra = array(
+        //             'dimensions' => 'ga:week,ga:day,ga:date'
+        //             );
+        //     } else {
+        //         $extra = array(
+        //             'dimensions' => 'ga:isoYearIsoWeek'
+        //             );
+        //     }
+
+        //     // delete existing entries
+        //     if (is_array($overview->getGoals()->toArray())) {
+        //         foreach ($overview->getGoals()->toArray() as $goal) {
+        //                 $this->em->remove($goal);
+        //         }
+        //         $this->em->flush();
+        //     }
+
+        //     // get goals
+        //     $goals = $this->analyticsHelper->getAnalytics()
+        //                     ->management_goals
+        //                     ->listManagementGoals($this->googleClientHelper->getAccountId(), $this->googleClientHelper->getPropertyId(), $this->googleClientHelper->getProfileId())
+        //                     ->items;
+
+        //     $metrics = array();
+        //     // add new goals
+        //     if (is_array($goals)) {
+        //         foreach ($goals as $key=>$value) {
+        //             $key++;
+        //             $metrics[] = 'ga:goal'.$key.'Completions';
+        //         }
+
+        //         if (count($metrics)<=10) {
+        //             $part1 = implode(',', $metrics);
+        //             $part2 = false;
+        //         } else {
+        //             $part1 = implode(',', array_slice($metrics, 0, 10));
+        //             $part2 = implode(',', array_slice($metrics, 10, 10));
+        //         }
+
+        //         $goal = new AnalyticsGoal();
+        //         $timespan = $overview->getTimespan() - $overview->getStartOffset();
+
+        //          // create the query
+        //         $results = $this->analyticsHelper->getResults(
+        //             $overview->getTimespan(),
+        //             $overview->getStartOffset(),
+        //             $part1,
+        //             $extra
+        //         );
+        //         $rows    = $results->getRows();
+        //         if ($timespan <= 1) {
+        //             array_unshift($rows, '');
+        //         } else if ($timespan <= 7) {
+        //             array_unshift($rows, '');
+        //         } else if ($timespan > 31) {
+        //             array_unshift($rows, '', '');
+        //         }
+        //         addGoals($overview, $rows);
+
+        //         if ($part2) {
+        //             $results = $this->analyticsHelper->getResults(
+        //                 $overview->getTimespan(),
+        //                 $overview->getStartOffset(),
+        //                 $part2,
+        //                 $extra
+        //             );
+        //             $rows    = $results->getRows();
+        //             if ($timespan <= 1) {
+        //                 array_unshift($rows, '');
+        //             } else if ($timespan <= 7) {
+        //                 array_unshift($rows, '');
+        //             } else if ($timespan > 31) {
+        //                 array_unshift($rows, '', '');
+        //             }
+        //             addGoals($overview, $rows);
+        //         }
+        //     }
+        // }
+
+        // /**
+        //  * Fetch a specific goals
+        //  *
+        //  * @param AnalyticsOverview $overview The overview
+        //  */
+        // private function addGoals(&$overview, $rows) {
+        //     $timespan = $overview->getTimespan() - $overview->getStartOffset();
+
+        //     // parse the results
+        //     $chartData = array();
+        //     $visits = 0;
+        //     $count = 0;
+        //     $steps = ceil(sizeof($rows)/10);
+        //     $visitsPart = 0;
+
+        //     foreach($rows as $row) {
+        //         for($i = 3; $i<sizeof($row); $i++) {
+        //             $goal = new AnalyticsGoal();
+
+        //             $count++;
+        //             // total visit count
+        //             $visits += $row[$i];
+        //             $visitsPart += $row[$i];
+
+        //             if ($count%$steps == 0) {
+        //                 // chart data
+        //                 if ($timespan <= 1) {
+        //                     $timestamp = mktime($row[2], 0, 0, substr($row[1], 4, 2), substr($row[1], 6, 2), substr($row[1], 0, 4));
+        //                     $timestamp = date('Y-m-d H:00', $timestamp);
+        //                     $chartData[] = array('timestamp' => $timestamp, 'visits' => $visitsPart);
+        //                 } else if ($timespan <= 7) {
+        //                     $timestamp = mktime($row[2], 0, 0, substr($row[1], 4, 2), substr($row[1], 6, 2), substr($row[1], 0, 4));
+        //                     $timestamp = date('Y-m-d H:00', $timestamp);
+        //                     $chartData[] = array('timestamp' => $timestamp, 'visits' => $visitsPart);
+        //                 } else if ($timespan <= 31) {
+        //                     $timestamp = mktime(0, 0, 0, substr($row[0], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
+        //                     $timestamp = date('Y-m-d H:00', $timestamp);
+        //                     $chartData[] = array('timestamp' => $timestamp, 'visits' => $visitsPart);
+        //                 } else {
+        //                     $timestamp = strtotime(substr($row[2], 0, 4).'W'.substr($row[2], 4, 2));
+        //                     $timestamp = date('Y-m-d H:00', $timestamp);
+        //                     $chartData[] = array('timestamp' => $timestamp, 'visits' => $visitsPart);
+        //                 }
+
+        //                 $count = 0;
+        //                 $visitsPart = 0;
+        //             }
+
+        //             // set the data
+        //             $goal->setVisits($visits);
+        //             $goal->setChartData(json_encode($chartData));
+        //             $goal->setOverview($overview);
+        //             $goal->setName($value->name);
+        //             $goal->setPosition($key);
+        //             $overview->getGoals()->add($goal);
+        //         }
+        //     }
+
+        // }
+
 }
