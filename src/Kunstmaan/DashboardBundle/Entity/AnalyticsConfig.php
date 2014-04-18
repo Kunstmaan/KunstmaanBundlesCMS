@@ -22,16 +22,16 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="property_id", type="string", nullable=true)
+     * @ORM\Column(name="account_id", type="string", nullable=true)
      */
-    private $propertyId = null;
+    private $accountId = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="account_id", type="string", nullable=true)
+     * @ORM\Column(name="property_id", type="string", nullable=true)
      */
-    private $accountId = null;
+    private $propertyId = null;
 
     /**
      * @var string
