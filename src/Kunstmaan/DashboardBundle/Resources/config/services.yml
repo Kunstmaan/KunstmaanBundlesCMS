@@ -29,7 +29,7 @@ services:
         class: "%kunstmaan_dashboard.googleclienthelper.class%"
         arguments: ["@kunstmaan_dashboard.googleclient", "@doctrine.orm.entity_manager"]
         calls:
-          - [ "setRedirectUri", [ "@router", "KunstmaanAdminBundle_setToken" ] ]
+          - [ "setRedirectUri", [ "@router", "KunstmaanDashboardBundle_setToken" ] ]
 
     kunstmaan_dashboard.googleanalyticshelper:
         class: "Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper"
