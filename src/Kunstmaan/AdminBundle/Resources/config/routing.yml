@@ -43,3 +43,9 @@ fos_user_profile:
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
     prefix: /resetting
+
+fos_user_change_password:
+    pattern: /profile/change-password
+    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
+    requirements:
+        _method: GET|POST
