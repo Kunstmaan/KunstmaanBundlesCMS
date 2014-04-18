@@ -47,6 +47,7 @@ class GoogleAnalyticsController extends Controller
             $params['url'] = $currentUrl . 'setToken/';
 
             $googleClient      = $googleClientHelper->getClient();
+            $googleClient->setRedirectUri($params['redirect_uri']);
             $params['authUrl'] = $googleClient->createAuthUrl();
             return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
         }
