@@ -29,7 +29,7 @@ class UsersController extends BaseSettingsController
      *
      * @return array
      */
-    public function usersAction(Request $request)
+    public function listAction(Request $request)
     {
         $this->checkPermission();
         $em                    = $this->getDoctrine()->getManager();
@@ -79,7 +79,7 @@ class UsersController extends BaseSettingsController
      *
      * @return array
      */
-    public function addUserAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->checkPermission();
         /* @var $em EntityManager */
@@ -103,7 +103,7 @@ class UsersController extends BaseSettingsController
         );
 
         if ($request->isMethod('POST')) {
-            $form->submit($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($user);
                 $em->flush();
@@ -138,7 +138,7 @@ class UsersController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array
      */
-    public function editUserAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         // The logged in user should be able to change his own password/username/email and not for other users
         if ($id == $this->get('security.context')->getToken()->getUser()->getId()) {
@@ -162,9 +162,8 @@ class UsersController extends BaseSettingsController
 
         $form = $this->createForm($formType, $user, array('password_required' => false));
 
-        if ('POST' == $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-
             if ($form->isValid()) {
                 if ($user->getPlainpassword() != "") {
                     $manipulator = $this->get('fos_user.util.user_manipulator');
@@ -202,7 +201,7 @@ class UsersController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array
      */
-    public function deleteUserAction($id)
+    public function deleteAction($id)
     {
         $this->checkPermission();
 

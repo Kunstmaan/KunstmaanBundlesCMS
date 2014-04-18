@@ -11,6 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,13 +32,12 @@ class GroupsController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array
      */
-    public function groupsAction()
+    public function listAction(Request $request)
     {
         $this->checkPermission();
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
         /* @var AdminList $adminlist */
         $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new GroupAdminListConfigurator($em));
         $adminlist->bindRequest($request);
@@ -57,18 +57,17 @@ class GroupsController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array
      */
-    public function addGroupAction()
+    public function addAction(Request $request)
     {
         $this->checkPermission();
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
         $group = new Group();
         $form = $this->createForm(new GroupType(), $group);
 
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($group);
                 $em->flush();
@@ -95,19 +94,18 @@ class GroupsController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array
      */
-    public function editGroupAction($id)
+    public function editAction(Request $request, $id)
     {
         $this->checkPermission();
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
         /* @var Group $group */
         $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($id);
         $form = $this->createForm(new GroupType(), $group);
 
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($group);
                 $em->flush();
@@ -135,7 +133,7 @@ class GroupsController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return RedirectResponse
      */
-    public function deleteGroupAction($id)
+    public function deleteAction($id)
     {
         $this->checkPermission();
 

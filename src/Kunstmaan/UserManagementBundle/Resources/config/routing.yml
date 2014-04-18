@@ -13,9 +13,9 @@ KunstmaanUserManagementBundle_role_settings:
     type:     annotation
     prefix:   /admin/settings/roles
 
-# Override default FOS user change password route...
-fos_user_change_password:
-    pattern: /profile/password/change
-    defaults: { _controller: KunstmaanUserManagementBundle:Users:changePassword }
+# Override default user change password route...
+KunstmaanAdminBundle_user_change_password:
+    pattern: /admin/settings/users/{id}/edit
+    defaults: { _controller: KunstmaanUserManagementBundle:Users:edit, id: '' }
     requirements:
         _method: GET

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing roles in an admin list
@@ -28,12 +29,11 @@ class RolesController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array
      */
-    public function rolesAction()
+    public function listAction(Request $request)
     {
         $this->checkPermission();
 
         $em        = $this->getDoctrine()->getManager();
-        $request   = $this->getRequest();
         /* @var AdminList $adminlist */
         $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator($em));
         $adminlist->bindRequest($request);
@@ -53,18 +53,17 @@ class RolesController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array|RedirectResponse
      */
-    public function addRoleAction()
+    public function addAction(Request $request)
     {
         $this->checkPermission();
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
         $role = new Role('');
         $form = $this->createForm(new RoleType(), $role);
 
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($role);
                 $em->flush();
@@ -92,19 +91,18 @@ class RolesController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array|RedirectResponse
      */
-    public function editRoleAction($id)
+    public function editAction(Request $request, $id)
     {
         $this->checkPermission();
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
         $form = $this->createForm(new RoleType(), $role);
 
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($role);
                 $em->flush();
@@ -132,7 +130,7 @@ class RolesController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return RedirectResponse
      */
-    public function deleteRoleAction($id)
+    public function deleteAction($id)
     {
         $this->checkPermission();
 
