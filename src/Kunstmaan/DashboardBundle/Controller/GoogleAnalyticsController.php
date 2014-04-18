@@ -12,13 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-
-use \Google_Client;
-use \Google_AnalyticsService;
-use Symfony\Component\HttpFoundation\Session\Session;
-
-
-
 class GoogleAnalyticsController extends Controller
 {
 

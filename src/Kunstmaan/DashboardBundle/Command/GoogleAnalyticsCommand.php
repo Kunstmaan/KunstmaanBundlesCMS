@@ -5,6 +5,15 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use Kunstmaan\DashboardBundle\Entity\AnalyticsTopReferral;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsTopSearch;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsTopPage;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsCampaign;
+
+use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
+use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
+
 class GoogleAnalyticsCommand extends ContainerAwareCommand {
     /** @var GoogleClientHelper $googleClientHelper */
     private $googleClientHelper;
