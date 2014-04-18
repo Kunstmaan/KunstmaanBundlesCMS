@@ -4,7 +4,7 @@ namespace Kunstmaan\DashboardBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Kunstmaan\AdminBundle\Entity\AnalyticsOverview;
+use Kunstmaan\DataFixtures\Entity\AnalyticsOverview;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -24,14 +24,12 @@ class AnalyticsOverviewFixtures extends AbstractFixture implements OrderedFixtur
         $today->setTitle('Today');
         $today->setTimespan(0);
         $today->setStartOffset(0);
-        $today->setUseDayData(true);
         $em->persist($today);
 
         $yesterday = new AnalyticsOverview();
         $yesterday->setTitle('Yesterday');
         $yesterday->setTimespan(2);
         $yesterday->setStartOffset(1);
-        $yesterday->setUseDayData(true);
         $em->persist($yesterday);
 
         $week = new AnalyticsOverview();
