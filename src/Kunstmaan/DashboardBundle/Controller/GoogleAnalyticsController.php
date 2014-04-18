@@ -133,7 +133,7 @@ class GoogleAnalyticsController extends Controller
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
         }
 
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
     }
 
     /**
@@ -160,7 +160,7 @@ class GoogleAnalyticsController extends Controller
             $parts = explode("::", $request->request->get('properties'));
             $googleClientHelper->saveAccountId($parts[1]);
             $googleClientHelper->savePropertyId($parts[0]);
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
         }
 
         /** @var GoogleClientHelper $googleClient */
@@ -197,7 +197,7 @@ class GoogleAnalyticsController extends Controller
 
         if (null !== $request->request->get('profiles')) {
             $googleClientHelper->saveProfileId($request->request->get('profiles'));
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+            return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
         }
 
         /** @var GoogleClientHelper $googleClient */
@@ -317,7 +317,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetProfileId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
     }
 
     /**
@@ -327,7 +327,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetPropertyId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
     }
 
     /**
