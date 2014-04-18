@@ -3,15 +3,10 @@
 namespace Kunstmaan\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
-
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**

@@ -2,13 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
-
 use FOS\UserBundle\Controller\SecurityController as BaseController;
-
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session;
 
 /**
  * The security controller will handle the login procedure
@@ -25,8 +21,6 @@ class SecurityController extends BaseController
      */
     public function loginAction(Request $request)
     {
-        /* @var EntityManager $em */
-        $em = $this->container->get('doctrine')->getManager();
         $session = $request->getSession();
 
         // get the error if any (works with forward and redirect -- see below)
