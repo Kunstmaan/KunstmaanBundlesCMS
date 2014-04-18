@@ -50,7 +50,10 @@ class NodeRepository extends NestedTreeRepository
             ->select('b', 't', 'v')
             ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
             ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
-            ->where('b.deleted = 0');
+            ->where('b.deleted = 0')
+            ->setParameter('lang', $lang)
+            ->addOrderBy('t.weight', 'ASC')
+            ->addOrderBy('t.title', 'ASC');
 
         if (!$includeHiddenFromNav) {
             $qb->andWhere('b.hiddenFromNav != true');
@@ -58,13 +61,11 @@ class NodeRepository extends NestedTreeRepository
 
         if (is_null($parentId)) {
             $qb->andWhere('b.parent is NULL');
-        } else {
+        } elseif ($parentId !== false) {
             $qb->andWhere('b.parent = :parent')
                 ->setParameter('parent', $parentId);
         }
-        $qb->addOrderBy('b.lft', 'ASC')
-            ->addOrderBy('b.rgt', 'DESC');
-        $qb->setParameter('lang', $lang);
+
         $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
 
         return $query->getResult();
@@ -214,8 +215,8 @@ SQL;
             )
             ->where('n.deleted = 0')
             ->addGroupBy('n.id')
-            ->addOrderBy('lft', 'ASC')
-            ->addOrderBy('rgt', 'DESC');
+            ->addOrderBy('t.weight', 'ASC')
+            ->addOrderBy('t.title', 'ASC');
 
         if (!$includeHiddenFromNav) {
             $qb->andWhere('n.hidden_from_nav <> 0');
@@ -312,8 +313,8 @@ SQL;
             ->setParameter('internalName', $internalName)
             ->andWhere('t.lang = :lang')
             ->setParameter('lang', $lang)
-            ->addOrderBy('n.lft', 'ASC')
-            ->addOrderBy('n.rgt', 'DESC');
+            ->addOrderBy('t.weight', 'ASC')
+            ->addOrderBy('t.title', 'ASC');
 
         if (!$includeOffline) {
             $qb->andWhere('t.online = true');
