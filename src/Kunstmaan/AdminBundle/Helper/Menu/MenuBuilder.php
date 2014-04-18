@@ -47,8 +47,6 @@ class MenuBuilder
      *
      * @param TranslatorInterface $translator The translator
      * @param ContainerInterface  $container  The container
-     *
-     * @TODO: this should only have a Request parameter
      */
     public function __construct(TranslatorInterface $translator, ContainerInterface $container)
     {

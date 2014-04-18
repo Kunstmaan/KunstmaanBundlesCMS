@@ -6,10 +6,7 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Entity\Role;
-use Kunstmaan\AdminBundle\Event\ApplyAclChangesetEvent;
-
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

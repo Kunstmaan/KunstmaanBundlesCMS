@@ -3,15 +3,10 @@
 namespace Kunstmaan\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
-
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,14 +26,15 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->container->hasParameter('kuma_admin.dashboard_route')) {
-            return $this->redirect($this->generateUrl($this->container->getParameter('kuma_admin.dashboard_route')));
+        if ($this->container->hasParameter("kuma_admin.dashboard_route")) {
+            return $this->redirect($this->generateUrl($this->container->getParameter("kuma_admin.dashboard_route")));
         }
 
         /* @var DashboardConfiguration $dashboardConfiguration */
-        $dashboardConfiguration = $this->getDoctrine()->getManager()->getRepository(
-            'KunstmaanAdminBundle:DashboardConfiguration'
-        )->findOneBy(array());
+        $dashboardConfiguration = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('KunstmaanAdminBundle:DashboardConfiguration')
+            ->findOneBy(array());
 
         return array('dashboardConfiguration' => $dashboardConfiguration);
     }
@@ -56,26 +52,23 @@ class DefaultController extends Controller
     public function editIndexAction(Request $request)
     {
         /* @var $em EntityManager */
-        $em = $this->getDoctrine()->getManager();
+        $em      = $this->getDoctrine()->getManager();
 
         /* @var DashboardConfiguration $dashboardConfiguration */
-        $dashboardConfiguration = $this->getDoctrine()
-            ->getManager()
-            ->getRepository(
-                'KunstmaanAdminBundle:DashboardConfiguration'
-            )->findOneBy(array());
+        $dashboardConfiguration = $em
+            ->getRepository('KunstmaanAdminBundle:DashboardConfiguration')
+            ->findOneBy(array());
 
         if (is_null($dashboardConfiguration)) {
             $dashboardConfiguration = new DashboardConfiguration();
         }
-
         $form = $this->createForm(new DashboardConfigurationType(), $dashboardConfiguration);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->persist($dashboardConfiguration);
-                $em->flush();
+                $em->flush($dashboardConfiguration);
                 $this->get('session')->getFlashBag()->add('success', 'The welcome page has been edited!');
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_homepage'));
