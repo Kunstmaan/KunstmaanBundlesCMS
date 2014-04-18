@@ -69,8 +69,12 @@ class GoogleClientHelper
      */
     public function setRedirectUri(ChainRouter $router, $routeName)
     {
-        $uri = $router->generate($routeName, array(), true);
-        $this->client->setRedirectUri($uri);
+        try {
+            $uri = $router->generate($routeName, array(), true);
+            $this->client->setRedirectUri($uri);
+        } catch (\Exception $e) {
+            $this->client->setRedirectUri('');
+        }
     }
 
     /**
