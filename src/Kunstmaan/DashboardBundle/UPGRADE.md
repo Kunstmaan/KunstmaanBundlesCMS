@@ -11,4 +11,4 @@ To upgrade, first pull in the new version of all bundles, then add these paramet
     google.api.client_secret: ''
     google.api.client_secret: ''
 
-Now you can run the app without any errors, follow the documentation (AdminBundle/resources/doc/SetupAnalyticsDashboard.md) to configure the dashboard.
+Now you can run the app without any errors, follow the documentation (DashboardBundle/resources/doc/SetupAnalyticsDashboard.md) to configure the dashboard.
