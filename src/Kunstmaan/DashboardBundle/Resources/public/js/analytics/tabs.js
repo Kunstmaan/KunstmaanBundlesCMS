@@ -15,7 +15,8 @@
         $('#dashboard').animate({opacity: '1'}, 500);
 
         // show first tab
-        var tab = $('#tab3');
+        var tab = $('.db-tabs__item:nth-child(3) > div');
+        console.log(tab);
         switchTab(tab.attr('data-id'), tab.attr('data-path'))
 
         // Tab switcher
@@ -30,8 +31,6 @@
                 if(data.responseCode==200) {
                     $('.db-tabs__item').removeClass('db-tabs__item--active');
                     $('#tab'+id).addClass('db-tabs__item--active');
-
-                    console.log(data.overview.visits);
 
                     if (data.overview.visits == 0) {
                         $('#data_no_overview').css('display', 'block');
