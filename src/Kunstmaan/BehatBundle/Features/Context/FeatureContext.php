@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\BehatBundle\Features\Context;
 
+use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Kunstmaan\BehatBundle\Features\Context\SubContext\RadioButtonSubContext;
-use Kunstmaan\BehatBundle\Features\Context\SubContext\FailedScreenshotSubContext;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ExpectationException;
@@ -12,10 +12,12 @@ use Behat\MinkExtension\Context\MinkContext;
 class FeatureContext extends MinkContext
 {
 
+    protected $browserName;
+
     public function __construct(array $parameters)
     {
-        $this->useContext('FailedScreenshotSubContext', new FailedScreenshotSubContext($parameters, $this->getMinkParameter('browser_name')));
         $this->useContext('RadioButtonSubContext', new RadioButtonSubContext($parameters));
+        $this->browserName = $this->getMinkParameter('browser_name');
     }
 
     /**
@@ -87,4 +89,25 @@ class FeatureContext extends MinkContext
         return $node;
     }
 
+    /**
+     * Take screenshot when step fails.
+     * Works only with Selenium2Driver.
+     *
+     * @AfterStep
+     */
+    public function takeScreenshotAfterFailedStep($event)
+    {
+        if (4 === $event->getResult()) {
+            $driver = $this->getSession()->getDriver();
+            if (!($driver instanceof Selenium2Driver)) {
+                throw new UnsupportedDriverActionException('Taking screenshots is not supported by %s, use Selenium2Driver instead.', $driver);
+            }
+            $directory = 'build/behat/' . $event->getLogicalParent()->getFeature()->getTitle();
+            if (!is_dir($directory)) {
+                mkdir($directory, 0777, true);
+            }
+            $filename = sprintf('%s_%s_%s_%s.%s', $event->getLogicalParent()->getTitle(), $this->browserName, date('c'), uniqid('', true), 'png');
+            file_put_contents($directory . '/' . $filename, $driver->getScreenshot());
+        }
+    }
 }
