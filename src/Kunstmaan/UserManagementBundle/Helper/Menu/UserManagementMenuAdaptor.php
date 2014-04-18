@@ -41,6 +41,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                     ->setParent($parent);
                 if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                     $menuItem->setActive(true);
+                    $parent->setActive(true);
                 }
                 $children[] = $menuItem;
 
@@ -51,6 +52,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
 
                 if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                     $menuItem->setActive(true);
+                    $parent->setActive(true);
                 }
                 $children[] = $menuItem;
 
@@ -60,6 +62,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                     ->setParent($parent);
                 if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                     $menuItem->setActive(true);
+                    $parent->setActive(true);
                 }
                 $children[] = $menuItem;
             }
