@@ -96,7 +96,6 @@ class VersionChecker
             ));
             $request = $client->post('', null, $jsonData);
             $call = $request->send();
-            //echo $request->getResponse();
             $data = $call->json();
 
             // Save the result in the cache to make sure we don't do the check too often
