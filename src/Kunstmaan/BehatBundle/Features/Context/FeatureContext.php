@@ -106,7 +106,7 @@ class FeatureContext extends MinkContext
             if (!is_dir($directory)) {
                 mkdir($directory, 0777, true);
             }
-            $filename = sprintf('%s_%s_%s_%s.%s', $event->getLogicalParent()->getTitle(), $this->browserName, date('c'), uniqid('', true), 'png');
+            $filename = sprintf('%s_%s_%s_%s.%s', $event->getLogicalParent()->getTitle(), $this->browserName, date('YmdHis'), uniqid('', true), 'png');
             file_put_contents($directory . '/' . $filename, $driver->getScreenshot());
         }
     }
