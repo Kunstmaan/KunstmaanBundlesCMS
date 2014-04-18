@@ -20,7 +20,7 @@ class ApplyAclCommand extends ContainerAwareCommand
 {
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     private $em = null;
 

@@ -20,12 +20,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kunstmaan_k_admin');
+        $rootNode = $treeBuilder->root('kuma_admin');
 
         $rootNode
             ->children()
                 ->scalarNode('dashboard_route')->end()
-
                 ->arrayNode('admin_locales')
                     ->defaultValue(array('en'))
                     ->prototype('scalar')->end()

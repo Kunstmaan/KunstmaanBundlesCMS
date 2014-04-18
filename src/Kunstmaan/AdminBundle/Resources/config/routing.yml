@@ -13,6 +13,13 @@ KunstmaanAdminBundle_settings:
     type:     annotation
     prefix:   /admin/settings      
 
+# Change user password route
+KunstmaanAdminBundle_user_change_password:
+    pattern: /admin/settings/users/{id}/edit
+    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
+    requirements:
+        _method: GET|POST
+
 ###########################
 ## fos_userbundle routes ##
 ###########################
@@ -35,10 +42,4 @@ fos_user_profile:
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /resetting  
-         
-fos_user_change_password:
-    pattern: /profile/password/change
-    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
-    requirements:
-        _method: GET|POST
+    prefix: /resetting
