@@ -28,6 +28,7 @@ class CreateUserCommand extends ContainerAwareCommand
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
+                new InputArgument('locale', InputArgument::OPTIONAL, 'The locale (language)'),
                 new InputOption('group', null, InputOption::VALUE_REQUIRED, 'The group(s) the user should belong to'),
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
@@ -39,9 +40,9 @@ The <info>kuma:user:create</info> command creates a user:
 
 This interactive shell will ask you for an email and then a password.
 
-You can alternatively specify the email and password as the second and third arguments:
+You can alternatively specify the email, password and locale and group as extra arguments:
 
-  <info>php app/console kuma:user:create matthieu matthieu@example.com mypassword --group=Users</info>
+  <info>php app/console kuma:user:create matthieu matthieu@example.com mypassword en --group=Users</info>
 
 You can create a super admin via the super-admin flag:
 
@@ -73,10 +74,14 @@ EOT
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
+        $locale = $input->getArgument('locale');
         $superAdmin = $input->getOption('super-admin');
         $inactive = $input->getOption('inactive');
         $groupOption = $input->getOption('group');
 
+        if (empty($locale)) {
+            $locale = $this->getContainer()->getParameter('kuma_admin.default_admin_locale');
+        }
         $command = $this->getApplication()->find('fos:user:create');
         $arguments = array(
             'command'       => 'fos:user:create',
@@ -104,7 +109,7 @@ EOT
         }
 
         // Set admin interface locale
-        $user->setAdminLocale($this->getContainer()->getParameter('kuma_admin.default_admin_locale'));
+        $user->setAdminLocale($locale);
 
         // Persist
         $em->persist($user);
@@ -168,6 +173,14 @@ EOT
                 }
             );
             $input->setArgument('password', $password);
+        }
+
+        if (!$input->getArgument('locale')) {
+            $locale = $this->getHelper('dialog')->ask(
+                $output,
+                'Please enter the locale (or leave empty for default admin locale):'
+            );
+            $input->setArgument('locale', $locale);
         }
 
         if (!$input->getOption('group')) {

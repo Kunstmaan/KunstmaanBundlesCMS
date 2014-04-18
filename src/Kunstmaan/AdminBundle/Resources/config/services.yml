@@ -20,7 +20,7 @@ services:
 
     kunstmaan_admin.login.listener:
         class: Kunstmaan\AdminBundle\EventListener\LoginListener
-        arguments: ["@security.context", "@doctrine.orm.entity_manager", "@kunstmaan_admin.logger", "@kunstmaan_admin.versionchecker"]
+        arguments: ["@kunstmaan_admin.logger", "@kunstmaan_admin.versionchecker"]
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
