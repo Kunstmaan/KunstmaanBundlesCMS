@@ -16,6 +16,11 @@
         // render the chart
         new Morris.Area({
             element: 'js-dashboard-chart',
+            lineWidth: 1,
+            lineColors: ['#59ace2', '#8175c7'],
+            fillOpacity: '.4',
+            hideHover: 'auto',
+            pointSize: 0,
             data: chartData,
             xkey: 'x',
             ykeys: ['sessions', 'users'],
