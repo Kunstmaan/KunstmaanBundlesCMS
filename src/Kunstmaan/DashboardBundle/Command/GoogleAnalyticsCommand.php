@@ -63,23 +63,23 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
             $this->getMetrics($overview);
 
             if ($overview->getVisits()) { // if there are any visits
-                // // traffic data
-                // $this->getTrafficTypes($overview);
+                // traffic data
+                $this->getTrafficTypes($overview);
 
-                // // day-specific data
-                // $this->getChartData($overview);
+                // day-specific data
+                $this->getChartData($overview);
 
                 // // get goals
                 $this->getGoals($overview);
 
-                // // visitor types
-                // $this->getVisitorTypes($overview);
+                // visitor types
+                $this->getVisitorTypes($overview);
 
-                // // top pages
-                // $this->getTopPages($overview);
+                // top pages
+                $this->getTopPages($overview);
 
-                // // traffic sources
-                // $this->getTrafficSources($overview);
+                // traffic sources
+                $this->getTrafficSources($overview);
 
 
                 // unused, please keep here just in case if some of this data is still needed in the future
