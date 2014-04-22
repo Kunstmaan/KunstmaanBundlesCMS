@@ -33,7 +33,7 @@
             new Morris.Line({
                 element: chart,
                 lineWidth: 1,
-                lineColors: ['#2997ce', '#BDBBC3'],
+                lineColors: ['#59ace2'],
                 fillOpacity: '.4',
                 hideHover: 'auto',
                 pointSize: 0,
@@ -41,8 +41,8 @@
                 xkey: 'x',
                 ykeys: ['visits'],
                 labels: ['Users'],
-                axes: true,
-                grid: true
+                axes: false,
+                grid: false
             });
         }
     }

@@ -1,7 +1,7 @@
 
     function setTraffic(data) {
         // clear the existing chart
-        $('#js-traffic-dashboard-chart').html('');
+        $('#dashboard-chart--traffic').html('');
 
         // set the values
         $('#data_desktop_traffic .data_visits').html(data.overview.desktopTraffic);
@@ -31,12 +31,12 @@
 
         // render the chart
         new Morris.Donut({
-          element: 'js-traffic-dashboard-chart',
+          element: 'dashboard-chart--traffic',
           data: [
             {label: 'Desktop visitors', value: removeNumberFormat(data.overview.desktopTraffic)},
             {label: 'Mobile visitors', value: removeNumberFormat(data.overview.mobileTraffic)},
             {label: 'Tablet visitors', value: removeNumberFormat(data.overview.tabletTraffic)}
           ],
-          colors: ['#2997ce', '#74B58E', '#F39A2E']
+          colors: ['#c6c0e9', '#c6f5ca', '#a2d3f3']
         });
     }
