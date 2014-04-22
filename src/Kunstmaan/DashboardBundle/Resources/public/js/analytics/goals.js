@@ -41,7 +41,8 @@
                 xkey: 'x',
                 ykeys: ['visits'],
                 labels: ['Users'],
-                gridTextSize: 10
+                gridTextSize: 10,
+                gridTextColor: '#ccc'
             });
         }
     }
