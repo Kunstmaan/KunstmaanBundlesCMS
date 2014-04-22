@@ -1,7 +1,7 @@
     // sets the chart data
     function setChart(data) {
         // clear the existing chart
-        $('#js-dashboard-chart').html('');
+        $('#dashboard-chart--audience').html('');
 
 
         var top = 0;
@@ -26,7 +26,7 @@
 
         // render the chart
         new Morris.Area({
-            element: 'js-dashboard-chart',
+            element: 'dashboard-chart--audience',
             lineWidth: 1,
             lineColors: [ '#72bea8','#59ace2', '#8175c7', '#6aae9b'],
             fillOpacity: '.4',
@@ -41,11 +41,11 @@
         });
 
         // set the values
-        $('#data_visits').html(data.overview.visits);
-        $('#data_visitors').html(data.overview.visitors);
-        $('#data_pageviews').html(data.overview.pageViews);
-        $('#data_pages_per_visit').html(data.overview.pagesPerVisit);
-        $('#data_avg_visit_duration').html(data.overview.avgVisitDuration + ' <small>sec</small>');
+        $('#audience-data_visits').html(data.overview.visits);
+        $('#audience-data_visitors').html(data.overview.visitors);
+        $('#audience-data_pageviews').html(data.overview.pageViews);
+        $('#audience-data_pages_per_visit').html(data.overview.pagesPerVisit);
+        $('#audience-data_avg_visit_duration').html(data.overview.avgVisitDuration + ' <small>sec</small>');
     }
 
 

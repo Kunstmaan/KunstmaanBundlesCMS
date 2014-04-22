@@ -41,9 +41,6 @@
                         // add functions here to add component behaviour
                         // these functions are declared in a per-template js file (public/js/analytics/)
                         setChart(data);
-                        setVisits(data);
-                        setTraffic(data);
-                        setPages(data);
                         setGoals(data);
                     }
 
