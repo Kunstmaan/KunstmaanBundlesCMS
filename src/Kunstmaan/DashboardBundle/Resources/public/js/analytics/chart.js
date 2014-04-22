@@ -19,7 +19,8 @@
             data: chartData,
             xkey: 'x',
             ykeys: ['sessions', 'users'],
-            labels: ['Sessions', 'Users']
+            labels: ['Sessions', 'Users'],
+            behaveLikeLine: true
         });
 
         // set the values
