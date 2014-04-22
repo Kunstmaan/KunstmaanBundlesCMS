@@ -3,6 +3,7 @@ namespace Kunstmaan\DashboardBundle\Command;
 
 
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
+use Kunstmaan\DashboardBundle\Manager\WidgetManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,7 +20,9 @@ class DashboardCommand extends ContainerAwareCommand {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var WidgetManager $widgetManager */
-        $widgetManager = $this->get('kunstmaan_dashboard.manager.widgets');
+        // this gives an error?
+        // $widgetManager = $this->getContainer()->get('kunstmaan_dashboard.manager.widgets');
+        $widgetManager = new WidgetManager();
         /** @var DashboardWidget[] $widgets */
         $widgets = $widgetManager->getWidgets();
         foreach($widgets as $widget){

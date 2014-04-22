@@ -5,14 +5,16 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Kunstmaan\DashboardBundle\Entity\AnalyticsTopReferral;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsTopSearch;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsTopPage;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsCampaign;
-
 use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
 use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
+
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\TrafficCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\VisitorsCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\TopPagesCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\TrafficSourcesCommandHelper;
 
 class GoogleAnalyticsCommand extends ContainerAwareCommand {
     /** @var GoogleClientHelper $googleClientHelper */
@@ -36,6 +38,18 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
             ->setDescription('Collect the Google Analytics dashboard widget data');
     }
 
+    /**
+     * Inits instance variables for global usage.
+     *
+     * @param OutputInterface $output The output
+     */
+    private function init($output)
+    {
+        $this->output = $output;
+        $this->googleClientHelper = $this->getContainer()->get('kunstmaan_dashboard.googleclienthelper');
+        $this->em = $this->getContainer()->get('doctrine')->getEntityManager();
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
        $this->init($output);
@@ -55,47 +69,38 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
 
         // get data for each overview
         $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
-
         foreach ($overviews as $overview) {
             $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
 
             // metric data
-            $this->getMetrics($overview);
+            $metrics = new MetricsCommandHelper($this->analyticsHelper, $this->output, $this->em);
+            $metrics->getData($overview);
 
             if ($overview->getVisits()) { // if there are any visits
                 // traffic data
-                $this->getTrafficTypes($overview);
+                $traffic = new TrafficCommandHelper($this->analyticsHelper, $this->output, $this->em);
+                $traffic->getData($overview);
 
                 // day-specific data
-                $this->getChartData($overview);
+                $chartData = new ChartDataCommandHelper($this->analyticsHelper, $this->output, $this->em);
+                $chartData->getData($overview);
 
-                // // get goals
-                $this->getGoals($overview);
+                // get goals
+                $goals = new GoalCommandHelper($this->googleClientHelper, $this->analyticsHelper, $this->output, $this->em);
+                $goals->getData($overview);
 
                 // visitor types
-                $this->getVisitorTypes($overview);
+                $visitors = new VisitorsCommandHelper($this->analyticsHelper, $this->output, $this->em);
+                $visitors->getData($overview);
 
                 // top pages
-                $this->getTopPages($overview);
+                $topPages = new TopPagesCommandHelper($this->analyticsHelper, $this->output, $this->em);
+                $topPages->getData($overview);
 
                 // traffic sources
-                $this->getTrafficSources($overview);
-
-
-                // unused, please keep here just in case if some of this data is still needed in the future
-
-                // // bounce rate
-                // $this->getBounceRate($overview);
-
-                // // top referrals
-                // $this->getTopReferrals($overview);
-
-                // // top searches
-                // $this->getTopSearches($overview);
-
-                // // top campaigns
-                // $this->getTopCampaigns($overview);
-            } else { // if no visits
+                $trafficSources = new TrafficSourcesCommandHelper($this->analyticsHelper, $this->output, $this->em);
+                $trafficSources->getData($overview);
+            } else {
                 // reset overview
                 $this->reset($overview);
                 $this->output->writeln("\t" . 'No visitors');
@@ -109,591 +114,18 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
         $this->output->writeln('Google Analytics data succesfully updated'); // done
     }
 
-        /**
-         * Inits instance variables for global usage.
-         *
-         * @param OutputInterface $output The output
-         */
-        private function init($output)
-        {
-                $this->output = $output;
-
-                // get API client
-                $this->googleClientHelper = $this->getContainer()->get('kunstmaan_dashboard.googleclienthelper');
-
-                // setup entity manager
-                $this->em = $this->getContainer()->get('doctrine')->getEntityManager();
-        }
-
-        /**
-         * Fetch normal metric data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getMetrics(&$overview)
-        {
-            $this->output->writeln("\t" . 'Fetching metrics..');
-
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:visits, ga:visitors, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration'
-            );
-            $rows    = $results->getRows();
-
-            // visits metric
-            $visits  = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
-            $overview->setVisits($visits);
-
-            // visits metric
-            $visitors  = is_numeric($rows[0][1]) ? $rows[0][1] : 0;
-            $overview->setVisitors($visitors);
-
-            // pageviews metric
-            $pageviews = is_numeric($rows[0][2]) ? $rows[0][2] : 0;
-            $overview->setPageViews($pageviews);
-
-            // pages per visit metric
-            $pagesPerVisit = is_numeric($rows[0][3]) ? $rows[0][3] : 0;
-            $overview->setPagesPerVisit($pagesPerVisit);
-
-            // avg visit duration metric
-            $avgVisitDuration = is_numeric($rows[0][4]) ? $rows[0][4] : 0;
-            $overview->setAvgVisitDuration($avgVisitDuration);
-
-        }
-
-        /**
-         * Fetch traffic type data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getTrafficTypes(&$overview)
-        {
-            $this->output->writeln("\t" . 'Fetching traffic types..');
-
-            // mobile
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:visitors',
-                array('segment' => 'gaid::-14')
-            );
-            $rows    = $results->getRows();
-
-            $mobileTraffic = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
-
-            // tablet
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:visitors',
-                array('segment' => 'gaid::-13')
-            );
-            $rows    = $results->getRows();
-
-            $tabletTraffic = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
-
-            // desktop
-            $dekstopTraffic = $overview->getVisitors() - ($mobileTraffic + $tabletTraffic);
-            $overview->setMobileTraffic($mobileTraffic);
-            $overview->setTabletTraffic($tabletTraffic);
-            $overview->setDesktopTraffic($dekstopTraffic);
-        }
-
-        /**
-         * Fetch chart data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getChartData(&$overview)
-        {
-            $this->output->writeln("\t" . 'Fetching chart data..');
-
-            // create the right timespan
-            $timespan = $overview->getTimespan() - $overview->getStartOffset();
-            if ($timespan <= 1) {
-                $extra = array(
-                    'dimensions' => 'ga:date,ga:hour'
-                    );
-            } else if ($timespan <= 7) {
-                $extra = array(
-                    'dimensions' => 'ga:date,ga:hour'
-                    );
-            } else if ($timespan <= 31) {
-                $extra = array(
-                    'dimensions' => 'ga:week,ga:day,ga:date'
-                    );
-            } else {
-                $extra = array(
-                    'dimensions' => 'ga:isoYearIsoWeek'
-                    );
-            }
-
-            // get visits & visitors
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:visits, ga:visitors',
-                $extra
-            );
-            $rows    = $results->getRows();
-            $chartData = array();
-            foreach ($rows as $row) {
-                // chart data
-                if ($timespan <= 1) {
-                    $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
-                    $timestamp = date('Y-m-d H:00', $timestamp);
-                    $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
-                    $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
-                } else if ($timespan <= 7) {
-                    $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
-                    $timestamp = date('Y-m-d H:00', $timestamp);
-                    $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
-                    $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
-                } else if ($timespan <= 31) {
-                    $timestamp = mktime($row[2], 0, 0, substr($row[0], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
-                    $timestamp = date('Y-m-d H:00', $timestamp);
-                    $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
-                    $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
-                } else {
-                    $timestamp = strtotime(substr($row[0], 0, 4).'W'.substr($row[0], 4, 2));
-                    $timestamp = date('Y-m-d H:00', $timestamp);
-                    $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
-                    $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
-                }
-            }
-
-            // adding data to the overview
-            $overview->setChartData(json_encode($chartData, JSON_UNESCAPED_SLASHES));
-        }
-
-        /**
-         * Fetch visitor type data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getVisitorTypes(&$overview)
-        {
-                // visitor types
-                $this->output->writeln("\t" . 'Fetching visitor types..');
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    'ga:visits',
-                    array('dimensions' => 'ga:visitorType')
-                );
-                $rows    = $results->getRows();
-
-                // new visitors
-                $data = is_array($rows) && isset($rows[0][1]) ? $rows[0][1] : 0;
-                $overview->setNewVisits($data);
-
-                // returning visitors
-                $data = is_array($rows) && isset($rows[1][1]) ? $rows[1][1] : 0;
-                $overview->setReturningVisits($data);
-        }
-
-        /**
-         * Fetch traffic source data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getTrafficSources(&$overview)
-        {
-                // traffic sources
-                $this->output->writeln("\t" . 'Fetching traffic sources..');
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    'ga:visits',
-                    array('dimensions' => 'ga:medium', 'sort' => 'ga:medium')
-                );
-                $rows    = $results->getRows();
-
-                // resetting default values
-                $overview->setTrafficDirect(0);
-                $overview->setTrafficSearchEngine(0);
-                $overview->setTrafficReferral(0);
-
-                if (is_array($rows)) {
-                    foreach ($rows as $row) {
-                        switch ($row[0]) {
-                            case '(none)': // direct traffic
-                                $overview->setTrafficDirect($row[1]);
-                                break;
-
-                            case 'organic': // search engine traffic
-                                $overview->setTrafficSearchEngine($row[1]);
-                                break;
-
-                            case 'referral': // referral traffic
-                                $overview->setTrafficReferral($row[1]);
-                                break;
-
-                            default:
-                                // TODO other referral types?
-                                // cfr. https://developers.google.com/analytics/devguides/reporting/core/dimsmets#view=detail&group=traffic_sources&jump=ga_medium
-                                break;
-                        }
-                    }
-                }
-        }
-
-
-        /**
-         * Fetch bounce rate data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getBounceRate(&$overview)
-        {
-            $this->output->writeln("\t" . 'Fetching bounce rate..');
-
-            // bounce rate
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:visitBounceRate'
-            );
-            $rows    = $results->getRows();
-            $visits  = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
-            $overview->setBounceRate($visits);
-        }
-
-        /**
-         * Fetch referral data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getTopReferrals(&$overview)
-        {
-                // top referral sites
-                $this->output->writeln("\t" . 'Fetching referral sites..');
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    'ga:visits',
-                    array(
-                        'dimensions'  => 'ga:source',
-                        'sort'        => '-ga:visits',
-                        'filters'     => 'ga:medium==referral',
-                        'max-results' => '3'
-                    )
-                );
-                $rows    = $results->getRows();
-
-                // delete existing entries
-                if (is_array($overview->getReferrals()->toArray())) {
-                        foreach ($overview->getReferrals()->toArray() as $referral) {
-                                $this->em->remove($referral);
-                        }
-                        $this->em->flush();
-                }
-
-                // load new referrals
-                if (is_array($rows)) {
-                        foreach ($rows as $row) {
-                                $referral = new AnalyticsTopReferral();
-                                $referral->setName($row[0]);
-                                $referral->setVisits($row[1]);
-                                $referral->setOverview($overview);
-                                $overview->getReferrals()->add($referral);
-                        }
-                }
-        }
-
-        /**
-         * Fetch search terms data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getTopSearches(&$overview)
-        {
-                // top searches
-                $this->output->writeln("\t" . 'Fetching searches..');
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    'ga:searchVisits',
-                    array(
-                        'dimensions' => 'ga:searchKeyword',
-                        'sort' => '-ga:searchVisits',
-                        'max-results' => '3'
-                    )
-                );
-                $rows    = $results->getRows();
-
-                // delete existing entries
-                if (is_array($overview->getSearches()->toArray())) {
-                        foreach ($overview->getSearches()->toArray() as $search) {
-                                $this->em->remove($search);
-                        }
-                        $this->em->flush();
-                }
-
-                // load new searches
-                if (is_array($rows)) {
-                        foreach ($rows as $key => $row) {
-                                $search = new AnalyticsTopSearch();
-                                $search->setName($row[0]);
-                                $search->setVisits($row[1]);
-                                $search->setOverview($overview);
-                                $overview->getSearches()->add($search);
-                        }
-                }
-
-        }
-
-        /**
-         * Fetch page data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getTopPages(&$overview)
-        {
-                // top pages
-                $this->output->writeln("\t" . 'Fetching top pages..');
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    'ga:pageviews',
-                    array(
-                        'dimensions'=>'ga:pagePath',
-                        'sort'=>'-ga:pageviews',
-                        'max-results' => '10'
-                    )
-                );
-                $rows    = $results->getRows();
-
-                // delete existing entries
-                if (is_array($overview->getPages()->toArray())) {
-                    foreach ($overview->getPages()->toArray() as $page) {
-                        $this->em->remove($page);
-                    }
-                    $this->em->flush();
-                }
-
-                // load new referrals
-                if (is_array($rows)) {
-                    foreach ($rows as $row) {
-                        $referral = new AnalyticsTopPage();
-                        $referral->setName($row[0]);
-                        $referral->setVisits($row[1]);
-                        $referral->setOverview($overview);
-                        $overview->getPages()->add($referral);
-                    }
-                }
-        }
-
-        /**
-         * Fetch campaign data and set it for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getTopCampaigns(&$overview)
-        {
-            // top campaigns
-            $this->output->writeln("\t" . 'Fetching campaigns..');
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:visits',
-                array(
-                    'dimensions' => 'ga:campaign',
-                    'sort' => '-ga:visits',
-                    'max-results' => '4'
-                )
-            );
-            $rows    = $results->getRows();
-            // first entry is '(not set)' and not needed
-            unset($rows[0]);
-
-            // delete existing entries
-            if (is_array($overview->getCampaigns()->toArray())) {
-                foreach ($overview->getCampaigns()->toArray() as $campaign) {
-                    $this->em->remove($campaign);
-                }
-                $this->em->flush();
-            }
-
-            // load new campaigns
-            if (is_array($rows)) {
-                foreach ($rows as $key => $row) {
-                    $campaign = new AnalyticsCampaign();
-                    $campaign->setName($row[0]);
-                    $campaign->setVisits($row[1]);
-                    $campaign->setOverview($overview);
-                    $overview->getCampaigns()->add($campaign);
-                }
-            }
-
-        }
-
-        /**
-         * Reset the data for the overview
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function reset(&$overview)
-        {
-                // reset overview
-                $overview->setNewVisits(0);
-                $overview->setReturningVisits(0);
-                $overview->setTrafficDirect(0);
-                $overview->setTrafficSearchEngine(0);
-                $overview->setTrafficReferral(0);
-        }
-
-        /**
-         * Fetch all goals
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function getGoals(&$overview)
-        {
-            // goals
-            $this->output->writeln("\t" . 'Fetching goals..');
-
-            // calculate timespan
-            $timespan = $overview->getTimespan() - $overview->getStartOffset();
-            $start = 0;
-            if ($timespan <= 1) {
-                $extra = array( 'dimensions' => 'ga:date,ga:hour' );
-                $start = 2;
-            } else if ($timespan <= 7) {
-                $extra = array( 'dimensions' => 'ga:date,ga:hour' );
-                $start = 2;
-            } else if ($timespan <= 31) {
-                $extra = array( 'dimensions' => 'ga:week,ga:day,ga:date' );
-                $start = 3;
-            } else {
-                $extra = array( 'dimensions' => 'ga:isoYearIsoWeek' );
-                $start = 1;
-            }
-
-            // get goals
-            $goals = $this->analyticsHelper->getAnalytics()
-                            ->management_goals
-                            ->listManagementGoals($this->googleClientHelper->getAccountId(), $this->googleClientHelper->getPropertyId(), $this->googleClientHelper->getProfileId())
-                            ->items;
-
-            // add new goals
-            if (is_array($goals)) {
-                $metrics = array();
-                $goal = array();
-
-                foreach ($goals as $key=>$value) {
-                    $key++;
-                    $metrics[] = 'ga:goal'.$key.'Completions';
-                    $goaldata[] = array('position'=>$key, 'name'=>$value->name);
-                }
-
-                if (count($metrics)<=10) {
-                    $part1 = implode(',', $metrics);
-                    $part2 = false;
-                } else {
-                    $part1 = implode(',', array_slice($metrics, 0, 10));
-                    $part2 = implode(',', array_slice($metrics, 10, 10));
-                }
-
-                 // create the query
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    $part1,
-                    $extra
-                );
-                $rows = $results->getRows();
-
-                if ($part2) {
-                    $results = $this->analyticsHelper->getResults(
-                        $overview->getTimespan(),
-                        $overview->getStartOffset(),
-                        $part2,
-                        $extra
-                    );
-                    $rows2 = $results->getRows();
-                    for ($i = 0; $i < sizeof($rows2); $i++) {
-                        $rows[$i] = array_merge($rows[$i], array_slice($rows2[$i], $start, sizeof($rows2)-$start));
-                    }
-                }
-
-                $goalCollection = array();
-                for ($i = $start; $i < sizeof($rows[0]); $i++) {
-                    $goalEntry = array();
-                    foreach($rows as $row) {
-                        if ($timespan <= 1) {
-                            $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
-                            $timestamp = date('Y-m-d H:00', $timestamp);
-                        } else if ($timespan <= 7) {
-                            $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
-                            $timestamp = date('Y-m-d H:00', $timestamp);
-                        } else if ($timespan <= 31) {
-                            $timestamp = mktime(0, 0, 0, substr($row[0], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
-                            $timestamp = date('Y-m-d H:00', $timestamp);
-                        } else {
-                            $timestamp = strtotime(substr($row[0], 0, 4).'W'.substr($row[0], 4, 2));
-                            $timestamp = date('Y-m-d H:00', $timestamp);
-                        }
-                        $goalEntry[$timestamp] = $row[$i];
-                    }
-                    $goalCollection['goal'.$goaldata[$i-$start]['position']]['name'] = $goaldata[$i-$start]['name'];
-                    $goalCollection['goal'.$goaldata[$i-$start]['position']]['position'] = $goaldata[$i-$start]['position'];
-                    $goalCollection['goal'.$goaldata[$i-$start]['position']]['visits'] = $goalEntry;
-                }
-
-                $this->addGoals($overview, $goalCollection);
-
-            }
-        }
-
-
-        /**
-         * Fetch a specific goals
-         *
-         * @param AnalyticsOverview $overview The overview
-         */
-        private function addGoals(&$overview, $goalCollection) {
-
-            // delete existing entries
-            if (is_array($overview->getGoals()->toArray())) {
-                foreach ($overview->getGoals()->toArray() as $goal) {
-                        $this->em->remove($goal);
-                }
-                $this->em->flush();
-            }
-
-            foreach($goalCollection as $goalEntry) {
-                // create a new goal
-                $goal = new AnalyticsGoal();
-                $goal->setOverview($overview);
-                $goal->setName($goalEntry['name']);
-                $goal->setPosition($goalEntry['position']);
-                $this->output->writeln("\t\t" . 'Fetching goal '.$goal->getPosition().': "'.$goal->getName().'"');
-
-                $count = 0;
-                $chartData = array();
-                $totalVisits = 0;
-                $steps = ceil(sizeof($goalEntry['visits'])/10);
-                $chartEntryVisits = 0;
-                foreach ($goalEntry['visits'] as $timestamp => $visits) {
-                    $count++;
-                    $totalVisits += $visits;
-                    $chartEntryVisits += $visits;
-
-                    if ($count%$steps == 0) {
-                        $chartData[] = array('timestamp' => $timestamp, 'visits' => $chartEntryVisits);
-                        $count = 0;
-                        $chartEntryVisits = 0;
-                    }
-                }
-
-                // set the data
-                $goal->setVisits($totalVisits);
-                $goal->setChartData(json_encode($chartData));
-                $overview->getGoals()->add($goal);
-            }
-        }
-
+    /**
+     * Reset the data for the overview
+     *
+     * @param AnalyticsOverview $overview The overview
+     */
+    private function reset(&$overview)
+    {
+        // reset overview
+        $overview->setNewVisits(0);
+        $overview->setReturningVisits(0);
+        $overview->setTrafficDirect(0);
+        $overview->setTrafficSearchEngine(0);
+        $overview->setTrafficReferral(0);
+    }
 }
