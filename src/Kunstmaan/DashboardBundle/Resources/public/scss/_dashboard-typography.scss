@@ -5,3 +5,12 @@
 .text--big {
     font-size: 2em;
 }
+
+.db-content__block-title {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+    font-size: 1.2em;
+    font-weight: normal;
+    color: $text-color-lighter;
+    text-transform: uppercase;
+}

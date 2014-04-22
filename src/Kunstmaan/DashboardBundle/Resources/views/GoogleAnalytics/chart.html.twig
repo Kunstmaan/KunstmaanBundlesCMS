@@ -1,16 +1,23 @@
 {# Twig vars are commented: they are loaded with AJAX, they are still here as a placeholder #}
-<h2>Audience</h2>
+<h2 class="db-content__block-title">Audience</h2>
 <div id="dashboard-chart--audience" class="dashboard-chart dashboard-chart--full-width"></div>
 <ul class="dashboard-chart-list">
     <li class="dashboard-chart-list__item">
-        <i class="dash-icon--user dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
+        <i class="dash-icon--users dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
         <p class="dashboard-chart-list__data">
             <span id="audience-data_visitors" class="text--big dashboard-chart-list__data__number">{# {{ overview.visitors }} #}</span>
             Users
         </p>
     </li>
     <li class="dashboard-chart-list__item">
-        <i class="dash-icon--users dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
+        <i class="dash-icon--star dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
+        <p class="dashboard-chart-list__data">
+            <span id="audience-data_new_users" class="text--big dashboard-chart-list__data__number">{# {{ overview.newUsers }} #}</span>
+            New users
+        </p>
+    </li>
+    <li class="dashboard-chart-list__item">
+        <i class="dash-icon--pointer dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
         <p class="dashboard-chart-list__data">
             <span id="audience-data_visits" class="text--big dashboard-chart-list__data__number">{# {{ overview.visits }} #}</span>
             Sessions
@@ -24,14 +31,7 @@
         </p>
     </li>
     <li class="dashboard-chart-list__item">
-        <i class="dash-icon--stopwatch dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
-        <p class="dashboard-chart-list__data">
-            <span id="audience-data_new_users" class="text--big dashboard-chart-list__data__number">{# {{ overview.newUsers }} #}</span>
-            New users
-        </p>
-    </li>
-    <li class="dashboard-chart-list__item">
-        <i class="dash-icon--bars dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
+        <i class="dash-icon--copy dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
         <p class="dashboard-chart-list__data">
             <span id="audience-data_pages_per_visit" class="text--big dashboard-chart-list__data__number">{# {{ overview.pagesPerVisit }} #}</span>
             Avarage pages per visit
