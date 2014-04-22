@@ -318,14 +318,21 @@ class GoogleAnalyticsController extends Controller
         $analyticsHelper->init($googleClientHelper);
 
         $results = $analyticsHelper->getResults(
-            7,
             1,
-            'ga:goal11Completions,ga:goal13Completions,ga:goal12Completions',
-            array('dimensions' => 'ga:date,ga:hour')
+            1,
+            'ga:sessions, ga:users',
+            array('dimensions' => 'ga:date,ga:day,ga:hour')
         );
         $rows    = $results->getRows();
 
-        var_dump($rows);
+        $totSes = 0;
+        $totUsr = 0;
+        foreach ($rows as $row) {
+          $totSes += $row[3];
+          $totUsr += $row[4];
+        }
+
+        var_dump('total sessions '.$totSes, 'total users '.$totUsr, $rows);
 
         exit;
     }

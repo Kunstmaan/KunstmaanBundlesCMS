@@ -49,7 +49,7 @@ class GoogleAnalyticsHelper
             foreach ($webproperties->getItems() as $property) {
                 $data[] = array(
                   'propertyId'   => $property->getId(),
-                  'propertyName' => $property->getName(),
+                  'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
                   'accountId'    => $account->getId()
                 );
             }

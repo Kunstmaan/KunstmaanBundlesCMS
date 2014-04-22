@@ -37,7 +37,7 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
         $results = $this->analyticsHelper->getResults(
             $overview->getTimespan(),
             $overview->getStartOffset(),
-            'ga:visits, ga:visitors',
+            'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
             $extra
         );
         $rows    = $results->getRows();
@@ -49,23 +49,32 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
                 $timestamp = date('Y-m-d H:00', $timestamp);
                 $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
                 $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
+                $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
+                $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
             } else if ($timespan <= 7) {
                 $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
                 $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
                 $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
+                $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
+                $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
             } else if ($timespan <= 31) {
                 $timestamp = mktime(0, 0, 0, substr($row[2], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
                 $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
                 $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
+                $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
+                $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[6]);
             } else {
                 $timestamp = strtotime(substr($row[0], 0, 4).'W'.substr($row[0], 4, 2));
                 $timestamp = date('Y-m-d H:00', $timestamp);
                 $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
                 $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
+                $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
+                $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
             }
         }
+
 
         // adding data to the overview
         $overview->setChartData(json_encode($chartData, JSON_UNESCAPED_SLASHES));

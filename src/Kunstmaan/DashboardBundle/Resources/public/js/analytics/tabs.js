@@ -16,7 +16,6 @@
 
         // show first tab
         var tab = $('.db-tabs__item:nth-child(3) > div');
-        console.log(tab);
         switchTab(tab.attr('data-id'), tab.attr('data-path'))
 
         // Tab switcher

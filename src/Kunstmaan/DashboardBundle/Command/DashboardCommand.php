@@ -20,9 +20,8 @@ class DashboardCommand extends ContainerAwareCommand {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var WidgetManager $widgetManager */
-        // this gives an error?
-        // $widgetManager = $this->getContainer()->get('kunstmaan_dashboard.manager.widgets');
-        $widgetManager = new WidgetManager();
+        $widgetManager = $this->getContainer()->get('kunstmaan_dashboard.manager.widgets');
+
         /** @var DashboardWidget[] $widgets */
         $widgets = $widgetManager->getWidgets();
         foreach($widgets as $widget){

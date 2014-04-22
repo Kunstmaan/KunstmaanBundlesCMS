@@ -16,7 +16,7 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper {
         $results = $this->analyticsHelper->getResults(
             $overview->getTimespan(),
             $overview->getStartOffset(),
-            'ga:visits, ga:visitors, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration'
+            'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration'
         );
         $rows    = $results->getRows();
 
