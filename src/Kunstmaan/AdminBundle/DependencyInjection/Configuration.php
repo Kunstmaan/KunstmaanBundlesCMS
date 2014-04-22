@@ -25,7 +25,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('dashboard_route')->end()
-
                 ->arrayNode('admin_locales')
                     ->defaultValue(array('en'))
                     ->prototype('scalar')->end()

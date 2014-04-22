@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The default controller is used to render the main screen the users see when they log in to the admin
@@ -44,7 +45,7 @@ class DefaultController extends Controller
      * @Route("/adminindex", name="KunstmaanAdminBundle_homepage_admin")
      * @Template()
      *
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -62,6 +63,7 @@ class DefaultController extends Controller
             $dashboardConfiguration = new DashboardConfiguration();
         }
         $form = $this->createForm(new DashboardConfigurationType(), $dashboardConfiguration);
+
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
