@@ -22,11 +22,11 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper {
 
         // visits metric
         $visits  = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
-        $overview->setVisits($visits);
+        $overview->setSessions($visits);
 
         // visits metric
         $visitors  = is_numeric($rows[0][1]) ? $rows[0][1] : 0;
-        $overview->setVisitors($visitors);
+        $overview->setUsers($visitors);
 
         // pageviews metric
         $pageviews = is_numeric($rows[0][2]) ? $rows[0][2] : 0;
@@ -34,11 +34,11 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper {
 
         // pages per visit metric
         $pagesPerVisit = is_numeric($rows[0][3]) ? $rows[0][3] : 0;
-        $overview->setPagesPerVisit($pagesPerVisit);
+        $overview->setPagesPerSession($pagesPerVisit);
 
         // avg visit duration metric
         $avgVisitDuration = is_numeric($rows[0][4]) ? $rows[0][4] : 0;
-        $overview->setAvgVisitDuration($avgVisitDuration);
+        $overview->setAvgSessionDuration($avgVisitDuration);
     }
 
 }

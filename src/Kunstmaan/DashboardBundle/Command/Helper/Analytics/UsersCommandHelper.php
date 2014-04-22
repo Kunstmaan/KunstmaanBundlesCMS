@@ -3,7 +3,7 @@ namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\AbstractAnalyticsCommandHelper;
 
-class VisitorsCommandHelper extends AbstractAnalyticsCommandHelper {
+class UsersCommandHelper extends AbstractAnalyticsCommandHelper {
 
     /**
      * get data and save it for the overview
@@ -16,18 +16,18 @@ class VisitorsCommandHelper extends AbstractAnalyticsCommandHelper {
         $results = $this->analyticsHelper->getResults(
             $overview->getTimespan(),
             $overview->getStartOffset(),
-            'ga:visits',
+            'ga:users',
             array('dimensions' => 'ga:visitorType')
         );
         $rows    = $results->getRows();
 
         // new visitors
         $data = is_array($rows) && isset($rows[0][1]) ? $rows[0][1] : 0;
-        $overview->setNewVisits($data);
+        $overview->setNewUsers($data);
 
         // returning visitors
         $data = is_array($rows) && isset($rows[1][1]) ? $rows[1][1] : 0;
-        $overview->setReturningVisits($data);
+        $overview->setReturningUsers($data);
     }
 
 

@@ -31,7 +31,7 @@
                     $('.db-tabs__item').removeClass('db-tabs__item--active');
                     $('#tab'+id).addClass('db-tabs__item--active');
 
-                    if (data.overview.visits == 0) {
+                    if (data.overview.sessions == 0) {
                         $('#data_no_overview').css('display', 'block');
                         $('#data_overview').css('display', 'none');
                     } else {

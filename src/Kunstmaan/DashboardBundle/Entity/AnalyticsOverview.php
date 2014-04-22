@@ -14,105 +14,27 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {
 
     /**
-     * Get percentage of direct traffic
+     * Get percentage of returning users
      *
      * @return int
      */
-    public function getTrafficDirectPercentage() {
-        return $this->visits ? round(($this->trafficDirect / $this->visits) * 100) : 0;
+    public function getReturningUsersPercentage() {
+        return $this->returningUsers ? round(($this->returningUsers / $this->sessions) * 100) : 0;
     }
 
     /**
-     * Get percentage of referral traffic
+     * Get percentage of new users
      *
      * @return int
      */
-    public function getTrafficReferralPercentage() {
-        return $this->visits ? round(($this->trafficReferral / $this->visits) * 100) : 0;
+    public function getNewUsersPercentage() {
+        return $this->newUsers ? round(($this->newUsers / $this->sessions) * 100) : 0;
     }
-
-    /**
-     * Get percentage of search engine traffic
-     *
-     * @return int
-     */
-    public function getTrafficSearchEnginePercentage() {
-        return $this->visits ? round(($this->trafficSearchEngine / $this->visits) * 100) : 0;
-    }
-
-    /**
-     * Get percentage of returning visits
-     *
-     * @return int
-     */
-    public function getReturningVisitsPercentage() {
-        return $this->returningVisits ? round(($this->returningVisits / $this->visits) * 100) : 0;
-    }
-
-    /**
-     * Get percentage of new visits
-     *
-     * @return int
-     */
-    public function getNewVisitsPercentage() {
-        return $this->newVisits ? round(($this->newVisits / $this->visits) * 100) : 0;
-    }
-
-    /**
-     * Get percentage of desktop traffic
-     *
-     * @return int
-     */
-    public function getDesktopTrafficPercentage() {
-        return $this->visitors ? round(($this->desktopTraffic / $this->visitors) * 100) : 0;
-    }
-
-    /**
-     * Get percentage of mobile traffic
-     *
-     * @return int
-     */
-    public function getMobileTrafficPercentage() {
-        return $this->visitors ? round(($this->mobileTraffic / $this->visitors) * 100) : 0;
-    }
-
-    /**
-     * Get percentage of tablet traffic
-     *
-     * @return int
-     */
-    public function getTabletTrafficPercentage() {
-        return $this->visitors ? round(($this->tabletTraffic / $this->visitors) * 100) : 0;
-    }
-
-
-
-
-
-    /**
-     * @ORM\OneToMany(targetEntity="AnalyticsCampaign", mappedBy="overview", cascade={"persist"})
-     */
-    private $campaigns;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AnalyticsTopReferral", mappedBy="overview", cascade={"persist"})
-     */
-    private $referrals;
 
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist"})
      */
     private $goals;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AnalyticsTopSearch", mappedBy="overview", cascade={"persist"})
-     */
-    private $searches;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AnalyticsTopPage", mappedBy="overview", cascade={"persist"})
-     */
-    private $pages;
 
     /**
      * @var string
@@ -138,30 +60,30 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="visits", type="integer")
+     * @ORM\Column(name="sessions", type="integer")
      */
-    private $visits = 0;
+    private $sessions = 0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="visitors", type="integer")
+     * @ORM\Column(name="users", type="integer")
      */
-    private $visitors = 0;
+    private $users = 0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="returning_visits", type="integer")
+     * @ORM\Column(name="returning_users", type="integer")
      */
-    private $returningVisits = 0;
+    private $returningUsers = 0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="new_visits", type="integer")
+     * @ORM\Column(name="new_users", type="integer")
      */
-    private $newVisits = 0;
+    private $newUsers = 0;
 
     /**
      * @var integer
@@ -173,117 +95,20 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="traffic_direct", type="integer")
+     * @ORM\Column(name="pages_per_session", type="integer")
      */
-    private $trafficDirect = 0;
+    private $pagesPerSession = 0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="traffic_referral", type="integer")
+     * @ORM\Column(name="avg_session_duration", type="integer")
      */
-    private $trafficReferral = 0;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="traffic_search_engine", type="integer")
-     */
-    private $trafficSearchEngine = 0;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="bounce_rate", type="integer")
-     */
-    private $bounceRate = 0;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="pages_per_visit", type="integer")
-     */
-    private $pagesPerVisit = 0;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="avg_visit_duration", type="integer")
-     */
-    private $avgVisitDuration = 0;
-
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="desktop_traffic", type="integer")
-     */
-    private $desktopTraffic = 0;
-
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="tablet_traffic", type="integer")
-     */
-    private $tabletTraffic = 0;
-
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="mobile_traffic", type="integer")
-     */
-    private $mobileTraffic = 0;
+    private $avgSessionDuration = 0;
 
 
 
 
-    /**
-     * Set campaigns
-     *
-     * @param array $campaigns
-     * @return AnalyticsDailyOverview
-     */
-    public function setCampaigns($campaigns)
-    {
-        $this->campaigns = $campaigns;
-
-        return $this;
-    }
-
-    /**
-     * Get campaigns
-     *
-     * @return array
-     */
-    public function getCampaigns()
-    {
-        return $this->campaigns;
-    }
-
-    /**
-     * Set referrals
-     *
-     * @param array $referrals
-     * @return AnalyticsDailyOverview
-     */
-    public function setReferrals($referrals)
-    {
-        $this->referrals = $referrals;
-
-        return $this;
-    }
-
-    /**
-     * Get referrals
-     *
-     * @return array
-     */
-    public function getReferrals()
-    {
-        return $this->referrals;
-    }
 
     /**
      * Set goals
@@ -317,53 +142,6 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Set searches
-     *
-     * @param array $searches
-     * @return AnalyticsDailyOverview
-     */
-    public function setSearches($searches)
-    {
-        $this->searches = $searches;
-
-        return $this;
-    }
-
-    /**
-     * Get searches
-     *
-     * @return array
-     */
-    public function getSearches()
-    {
-        return $this->searches;
-    }
-
-    /**
-     * Set pages
-     *
-     * @param array $pages
-     * @return AnalyticsDailyOverview
-     */
-    public function setPages($pages)
-    {
-        $this->pages = $pages;
-
-        return $this;
-    }
-
-    /**
-     * Get pages
-     *
-     * @return array
-     */
-    public function getPages()
-    {
-        return $this->pages;
-    }
-
-
-    /**
      * @var array
      *
      * @ORM\Column(name="chart_data", type="text")
@@ -395,119 +173,50 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Set trafficSearchEngine
+     * Set newUsers
      *
-     * @param string $trafficSearchEngine
+     * @param string $newUsers
      * @return AnalyticsOverview
      */
-    public function setTrafficSearchEngine($trafficSearchEngine)
+    public function setNewUsers($newUsers)
     {
-        $this->trafficSearchEngine = $trafficSearchEngine;
+        $this->newUsers = $newUsers;
 
         return $this;
     }
 
     /**
-     * Get trafficSearchEngine
+     * Get newUsers
      *
      * @return string
      */
-    public function getTrafficSearchEngine()
+    public function getNewUsers()
     {
-        return $this->trafficSearchEngine;
+        return $this->newUsers;
     }
 
+
     /**
-     * Set trafficReferral
+     * Set returningUsers
      *
-     * @param string $trafficReferral
+     * @param string $returningUsers
      * @return AnalyticsOverview
      */
-    public function setTrafficReferral($trafficReferral)
+    public function setReturningUsers($returningUsers)
     {
-        $this->trafficReferral = $trafficReferral;
+        $this->returningUsers = $returningUsers;
 
         return $this;
     }
 
     /**
-     * Get trafficReferral
+     * Get returningUsers
      *
      * @return string
      */
-    public function getTrafficReferral()
+    public function getReturningUsers()
     {
-        return $this->trafficReferral;
-    }
-
-    /**
-     * Set trafficDirect
-     *
-     * @param string $trafficDirect
-     * @return AnalyticsOverview
-     */
-    public function setTrafficDirect($trafficDirect)
-    {
-        $this->trafficDirect = $trafficDirect;
-
-        return $this;
-    }
-
-    /**
-     * Get trafficDirect
-     *
-     * @return string
-     */
-    public function getTrafficDirect()
-    {
-        return $this->trafficDirect;
-    }
-
-    /**
-     * Set newVisits
-     *
-     * @param string $newVisits
-     * @return AnalyticsOverview
-     */
-    public function setNewVisits($newVisits)
-    {
-        $this->newVisits = $newVisits;
-
-        return $this;
-    }
-
-    /**
-     * Get newVisits
-     *
-     * @return string
-     */
-    public function getNewVisits()
-    {
-        return $this->newVisits;
-    }
-
-
-    /**
-     * Set returningVisits
-     *
-     * @param string $returningVisits
-     * @return AnalyticsOverview
-     */
-    public function setReturningVisits($returningVisits)
-    {
-        $this->returningVisits = $returningVisits;
-
-        return $this;
-    }
-
-    /**
-     * Get returningVisits
-     *
-     * @return string
-     */
-    public function getReturningVisits()
-    {
-        return $this->returningVisits;
+        return $this->returningUsers;
     }
 
 
@@ -581,49 +290,49 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Set visits
+     * Set sessions
      *
-     * @param integer $visits
+     * @param integer $sessions
      * @return AnalyticsOverview
      */
-    public function setVisits($visits)
+    public function setSessions($sessions)
     {
-        $this->visits = $visits;
+        $this->sessions = $sessions;
 
         return $this;
     }
 
     /**
-     * Get visits
+     * Get sessions
      *
      * @return integer
      */
-    public function getVisitors()
+    public function getSessions()
     {
-        return $this->visitors;
+        return $this->sessions;
     }
 
     /**
-     * Set visitors
+     * Get Users
      *
-     * @param integer $visitors
+     * @return integer
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Set users
+     *
+     * @param integer $users
      * @return AnalyticsOverview
      */
-    public function setVisitors($visitors)
+    public function setUsers($users)
     {
-        $this->visitors = $visitors;
+        $this->users = $users;
 
         return $this;
-    }
-
-    /**
-     * Get visitors
-     *
-     * @return integer
-     */
-    public function getVisits()
-    {
-        return $this->visits;
     }
 
     /**
@@ -650,141 +359,48 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Set bounceRate
+     * Set pagesPerSession
      *
-     * @param integer $bounceRate
+     * @param integer $pagesPerSession
      * @return AnalyticsOverview
      */
-    public function setBounceRate($bounceRate)
+    public function setPagesPerSession($pagesPerSession)
     {
-        $this->bounceRate = $bounceRate;
+        $this->pagesPerSession = $pagesPerSession;
 
         return $this;
     }
 
     /**
-     * Get bounceRate
+     * Get pagesPerSession
      *
      * @return integer
      */
-    public function getBounceRate()
+    public function getPagesPerSession()
     {
-        return $this->bounceRate;
+        return $this->pagesPerSession;
     }
 
     /**
-     * Set pagesPerVisit
+     * Set avgSessionDuration
      *
-     * @param integer $pagesPerVisit
+     * @param integer $avgSessionDuration
      * @return AnalyticsOverview
      */
-    public function setPagesPerVisit($pagesPerVisit)
+    public function setAvgSessionDuration($avgSessionDuration)
     {
-        $this->pagesPerVisit = $pagesPerVisit;
+        $this->avgSessionDuration = $avgSessionDuration;
 
         return $this;
     }
 
     /**
-     * Get pagesPerVisit
+     * Get avgSessionDuration
      *
      * @return integer
      */
-    public function getPagesPerVisit()
+    public function getAvgSessionDuration()
     {
-        return $this->pagesPerVisit;
+        return $this->avgSessionDuration;
     }
-
-    /**
-     * Set avgVisitDuration
-     *
-     * @param integer $avgVisitDuration
-     * @return AnalyticsOverview
-     */
-    public function setAvgVisitDuration($avgVisitDuration)
-    {
-        $this->avgVisitDuration = $avgVisitDuration;
-
-        return $this;
-    }
-
-    /**
-     * Get avgVisitDuration
-     *
-     * @return integer
-     */
-    public function getAvgVisitDuration()
-    {
-        return $this->avgVisitDuration;
-    }
-
-    /**
-     * Set mobileTraffic
-     *
-     * @param integer $mobileTraffic
-     * @return AnalyticsOverview
-     */
-    public function setMobileTraffic($mobileTraffic)
-    {
-        $this->mobileTraffic = $mobileTraffic;
-
-        return $this;
-    }
-
-    /**
-     * Get mobileTraffic
-     *
-     * @return integer
-     */
-    public function getMobileTraffic()
-    {
-        return $this->mobileTraffic;
-    }
-
-    /**
-     * Set tabletTraffic
-     *
-     * @param integer $tabletTraffic
-     * @return AnalyticsOverview
-     */
-    public function setTabletTraffic($tabletTraffic)
-    {
-        $this->tabletTraffic = $tabletTraffic;
-
-        return $this;
-    }
-
-    /**
-     * Get tabletTraffic
-     *
-     * @return integer
-     */
-    public function getTabletTraffic()
-    {
-        return $this->tabletTraffic;
-    }
-
-    /**
-     * Set desktopTraffic
-     *
-     * @param integer $desktopTraffic
-     * @return AnalyticsOverview
-     */
-    public function setDesktopTraffic($desktopTraffic)
-    {
-        $this->desktopTraffic = $desktopTraffic;
-
-        return $this;
-    }
-
-    /**
-     * Get desktopTraffic
-     *
-     * @return integer
-     */
-    public function getDesktopTraffic()
-    {
-        return $this->desktopTraffic;
-    }
-
 }
