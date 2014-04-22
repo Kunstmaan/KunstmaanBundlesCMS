@@ -29,7 +29,7 @@
             element: 'dashboard-chart--audience',
             lineWidth: 1,
             lineColors: [ '#8AC9E1','#CE77B6', '#EE9C27', '#D13F37'],
-            fillOpacity: '.4',
+            fillOpacity: '1',
             hideHover: 'auto',
             pointSize: 0,
             data: chartData,
@@ -38,7 +38,7 @@
             ymax:top,
             labels: ['Pageviews', 'Sessions', 'Users', 'New Users'],
             behaveLikeLine: true,
-            gridTextColor: '#ccc'
+            gridTextColor: '#a7a7a7'
         });
 
         // set the values
@@ -49,9 +49,3 @@
         $('#audience-data_avg_visit_duration').html(data.overview.avgSessionDuration + ' <small>sec</small>');
         $('#audience-data_new_users').html(data.overview.newUsers);
     }
-
-
-
-
-
-

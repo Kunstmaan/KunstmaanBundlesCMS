@@ -9,9 +9,15 @@
 
 .dashboard-chart-list__item {
     display: inline-block;
-    padding: 1em 2em;
+    padding: 1em;
     &:first-child {
         padding-left: 0;
+    }
+    @media (min-width: $screen-desk) {
+        padding: 1em 1.5em;
+    }
+    @media (min-width: $screen-desk-wide) {
+        padding: 1em 2em;
     }
 }
 

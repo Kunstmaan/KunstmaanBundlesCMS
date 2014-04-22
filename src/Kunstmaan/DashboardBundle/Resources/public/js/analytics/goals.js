@@ -7,15 +7,15 @@
         for(var i = 0; i < data.goals.length; i++) {
         // for(var i = 0; i < 1; i++) {
             // create a goal overview box
-            var chart = $('<div class="dashboard-goals-list__chart"></div>');
+            var chart = $('<div class="dashboard-goals-list__chart">');
             $('#goalOverview').append(
                 $('<li class="dashboard-goals-list__item">', {'id': 'goal'+data.goals[i]['id'], 'data-goal-id': data.goals[i]['id']}
                 ).append(
+                    $('<span class="dashboard-goals-list__item__title">').html(data.goals[i]['name'])
+                ).append(
+                    $('<span class="dashboard-goals-list__item__number">').html('<strong>' + data.goals[i]['visits'] + '</strong> users')
+                ).append(
                     chart
-                ).append(
-                    $('<div>').html(data.goals[i]['name'])
-                ).append(
-                    $('<span>').html(data.goals[i]['visits'])
                 )
             );
 
@@ -31,7 +31,7 @@
             // render the chart
             new Morris.Line({
                 element: chart,
-                lineWidth: 1,
+                lineWidth: 2,
                 lineColors: ['#59ace2'],
                 fillOpacity: '.4',
                 hideHover: 'auto',
@@ -41,7 +41,7 @@
                 ykeys: ['visits'],
                 labels: ['Users'],
                 gridTextSize: 10,
-                gridTextColor: '#ccc'
+                gridTextColor: '#a7a7a7'
             });
         }
     }
