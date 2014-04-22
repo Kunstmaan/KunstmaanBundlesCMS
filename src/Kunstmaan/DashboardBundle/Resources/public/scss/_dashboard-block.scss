@@ -68,58 +68,11 @@
     margin:5px 0%;
     margin-right:2%;
     float:left;
-    background: #fcfcfc;
-    border: 1px solid $hr-color;
     border-radius: 3px;
     padding:5px;
-}
-
-
-#goalOverview > li.active {
-    background: #eeeeee;
-}
-
-#goalOverview > li > div{
-    float:left;
-    font-weight: bold;
-}
-
-#goalOverview > li > span {
-    display: block;
-    float:right;
 }
 
 // icons (icomoon icons used as base, made custom)
 .db-block__list__item--icon {
     margin-bottom: 10px;
-    // Decided we won't use icons after all
-//    &:after {
-//        content: " ";
-//        background-color: $blue;
-//        background-position: 50% 50%;
-//        background-repeat: no-repeat;
-//        width: 32px;
-//        height: 32px;
-//        position: absolute;
-//        top: 50%;
-//        right: 0;
-//        margin-top: -16px;
-//        border-radius: 100%;
-//    }
 }
-//.db-block__list__item--icon-direct {
-//    &:after {
-//        background-image: url(#{$icons}/dashboard/direct.svg);
-//        background-position: 55% 45%;
-//    }
-//}
-//.db-block__list__item--icon-referral {
-//    &:after {
-//        background-image: url(#{$icons}/dashboard/link.svg);
-//    }
-//}
-//.db-block__list__item--icon-search {
-//    &:after {
-//        background-image: url(#{$icons}/dashboard/search.svg);
-//    }
-//}

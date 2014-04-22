@@ -1,38 +1,39 @@
 {# Twig vars are commented: they are loaded with AJAX, they are still here as a placeholder #}
-<div id="js-dashboard-chart" class="dashboard-chart" style="height:290;width:100%"></div>
+<h2>Audience</h2>
+<div id="dashboard-chart--audience" class="dashboard-chart dashboard-chart--full-width"></div>
 <ul class="dashboard-chart-list">
-    <li class="dashboard-chart-list__item">
-        <i class="dash-icon--users dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
-        <p class="dashboard-chart-list__data">
-            <span id="data_visits" class="text--big dashboard-chart-list__data__number">{# {{ overview.visits }} #}</span>
-            Visits
-        </p>
-    </li>
     <li class="dashboard-chart-list__item">
         <i class="dash-icon--user dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
         <p class="dashboard-chart-list__data">
-            <span id="data_visitors" class="text--big dashboard-chart-list__data__number">{# {{ overview.visitors }} #}</span>
-            Unique visitors
+            <span id="audience-data_visitors" class="text--big dashboard-chart-list__data__number">{# {{ overview.visitors }} #}</span>
+            Users
+        </p>
+    </li>
+    <li class="dashboard-chart-list__item">
+        <i class="dash-icon--users dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
+        <p class="dashboard-chart-list__data">
+            <span id="audience-data_visits" class="text--big dashboard-chart-list__data__number">{# {{ overview.visits }} #}</span>
+            Sessions
         </p>
     </li>
     <li class="dashboard-chart-list__item">
         <i class="dash-icon--eye dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
         <p class="dashboard-chart-list__data">
-            <span id="data_pageviews" class="text--big dashboard-chart-list__data__number">{# {{ overview.pageviews }} #}</span>
+            <span id="audience-data_pageviews" class="text--big dashboard-chart-list__data__number">{# {{ overview.pageviews }} #}</span>
             Pageviews
         </p>
     </li>
     <li class="dashboard-chart-list__item">
         <i class="dash-icon--bars dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
         <p class="dashboard-chart-list__data">
-            <span id="data_pages_per_visit" class="text--big dashboard-chart-list__data__number">{# {{ overview.pagesPerVisit }} #}</span>
+            <span id="audience-data_pages_per_visit" class="text--big dashboard-chart-list__data__number">{# {{ overview.pagesPerVisit }} #}</span>
             Avarage pages per visit
         </p>
     </li>
     <li class="dashboard-chart-list__item">
         <i class="dash-icon--stopwatch dash-icon--big dash-icon--circle dash-icon--circle--blue dashboard-chart-list__icon"></i>
         <p class="dashboard-chart-list__data">
-            <span id="data_avg_visit_duration" class="text--big dashboard-chart-list__data__number">{# {{ overview.avgVisitDuration }} seconds #}</span>
+            <span id="audience-data_avg_visit_duration" class="text--big dashboard-chart-list__data__number">{# {{ overview.avgVisitDuration }} seconds #}</span>
             Avarage visit duration
         </p>
     </li>

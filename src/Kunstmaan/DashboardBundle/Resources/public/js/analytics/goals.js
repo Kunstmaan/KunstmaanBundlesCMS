@@ -41,8 +41,7 @@
                 xkey: 'x',
                 ykeys: ['visits'],
                 labels: ['Users'],
-                axes: false,
-                grid: false
+                gridTextSize: 10
             });
         }
     }
