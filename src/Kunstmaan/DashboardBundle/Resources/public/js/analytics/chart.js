@@ -29,7 +29,7 @@
             element: 'dashboard-chart--audience',
             lineWidth: 1,
             lineColors: [ '#8AC9E1','#CE77B6', '#EE9C27', '#D13F37'],
-            fillOpacity: '1',
+            fillOpacity: '.9',
             hideHover: 'auto',
             pointSize: 0,
             data: chartData,

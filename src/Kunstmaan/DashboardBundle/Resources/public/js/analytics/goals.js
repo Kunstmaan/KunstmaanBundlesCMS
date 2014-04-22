@@ -13,7 +13,7 @@
                 ).append(
                     $('<span class="dashboard-goals-list__item__title">').html(data.goals[i]['name'])
                 ).append(
-                    $('<span class="dashboard-goals-list__item__number">').html('<strong>' + data.goals[i]['visits'] + '</strong> users')
+                    $('<span class="dashboard-goals-list__item__number">').html('<strong>' + data.goals[i]['visits'] + '</strong> conversions')
                 ).append(
                     chart
                 )
