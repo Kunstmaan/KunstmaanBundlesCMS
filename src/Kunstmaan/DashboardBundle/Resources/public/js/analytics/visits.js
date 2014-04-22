@@ -16,7 +16,8 @@
           data: [
             {label: "Returning visits", value: removeNumberFormat(data.overview.returningVisits)},
             {label: "New Visits", value: removeNumberFormat(data.overview.newVisits)}
-          ]
+          ],
+          colors: ['#2997ce', '#74B58E', '#F39A2E']
         });
 
     }

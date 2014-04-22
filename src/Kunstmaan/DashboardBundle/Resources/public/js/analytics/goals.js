@@ -32,52 +32,58 @@
             // render the chart
             new Morris.Line({
                 element: chart,
+                lineWidth: 1,
+                lineColors: ['#2997ce', '#BDBBC3'],
+                fillOpacity: '.4',
+                hideHover: 'auto',
+                pointSize: 0,
                 data: chartData,
                 xkey: 'x',
                 ykeys: ['visits'],
                 labels: ['Users'],
-                hideHover: true
+                axes: true,
+                grid: true
             });
         }
     }
 
-    function initLineChart(canvas, json) {
-        // data arrays for the chart
-        var chartData = [];
-        var chartLabels = [];
+    // function initLineChart(canvas, json) {
+    //     // data arrays for the chart
+    //     var chartData = [];
+    //     var chartLabels = [];
 
-        // fill the data arrays
-        for (var i = 0; i < json.length; i++) {
-            chartData.push(parseInt(json[i].visits));
-            chartLabels.push('');
-        }
+    //     // fill the data arrays
+    //     for (var i = 0; i < json.length; i++) {
+    //         chartData.push(parseInt(json[i].visits));
+    //         chartLabels.push('');
+    //     }
 
-        // create linechart data
-        var lineChartData = {
-            labels : chartLabels,
-            datasets : [
-                {
-                    fillColor : "rgba(41, 151, 206, 0.3)",
-                    strokeColor : "rgb(41, 151, 206)",
-                    pointColor : "rgb(41, 151, 206)",
-                    pointStrokeColor : "#fff",
-                    data : chartData,
-                    scaleShowLabels : false
-                }
-            ]
-        };
+    //     // create linechart data
+    //     var lineChartData = {
+    //         labels : chartLabels,
+    //         datasets : [
+    //             {
+    //                 fillColor : "rgba(41, 151, 206, 0.3)",
+    //                 strokeColor : "rgb(41, 151, 206)",
+    //                 pointColor : "rgb(41, 151, 206)",
+    //                 pointStrokeColor : "#fff",
+    //                 data : chartData,
+    //                 scaleShowLabels : false
+    //             }
+    //         ]
+    //     };
 
-        // chart scale values
-        Array.prototype.max = function() {
-          return Math.max.apply(null, this);
-        };
-        var max = Math.max.apply(null, chartData);
-        var steps = max < 5 ? max : 5;
+    //     // chart scale values
+    //     Array.prototype.max = function() {
+    //       return Math.max.apply(null, this);
+    //     };
+    //     var max = Math.max.apply(null, chartData);
+    //     var steps = max < 5 ? max : 5;
 
-        // render line chart
-        var ctx = canvas.getContext("2d");
-        var chart = new Chart(ctx).Line(lineChartData, {scaleOverride: true, scaleStepWidth: Math.ceil(max/steps), scaleSteps: steps, animation:false});
-    }
+    //     // render line chart
+    //     var ctx = canvas.getContext("2d");
+    //     var chart = new Chart(ctx).Line(lineChartData, {scaleOverride: true, scaleStepWidth: Math.ceil(max/steps), scaleSteps: steps, animation:false});
+    // }
 
 
 
