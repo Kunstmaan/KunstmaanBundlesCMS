@@ -77,10 +77,6 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
             $metrics->getData($overview);
 
             if ($overview->getVisits()) { // if there are any visits
-                // traffic data
-                $traffic = new TrafficCommandHelper($this->analyticsHelper, $this->output, $this->em);
-                // $traffic->getData($overview);
-
                 // day-specific data
                 $chartData = new ChartDataCommandHelper($this->analyticsHelper, $this->output, $this->em);
                 $chartData->getData($overview);
@@ -92,14 +88,6 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
                 // visitor types
                 $visitors = new VisitorsCommandHelper($this->analyticsHelper, $this->output, $this->em);
                 $visitors->getData($overview);
-
-                // top pages
-                $topPages = new TopPagesCommandHelper($this->analyticsHelper, $this->output, $this->em);
-                $topPages->getData($overview);
-
-                // traffic sources
-                $trafficSources = new TrafficSourcesCommandHelper($this->analyticsHelper, $this->output, $this->em);
-                $trafficSources->getData($overview);
             } else {
                 // reset overview
                 $this->reset($overview);

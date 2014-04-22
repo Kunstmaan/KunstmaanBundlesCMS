@@ -46,6 +46,7 @@
         $('#audience-data_pageviews').html(data.overview.pageViews);
         $('#audience-data_pages_per_visit').html(data.overview.pagesPerVisit);
         $('#audience-data_avg_visit_duration').html(data.overview.avgVisitDuration + ' <small>sec</small>');
+        $('#audience-data_new_users').html(data.overview.newUsers);
     }
 
 

@@ -237,7 +237,7 @@ class GoogleAnalyticsController extends Controller
           'pagesPerVisit'                       => number_format($overview->getPagesPerVisit()),
           'avgVisitDuration'                    => number_format($overview->getAvgVisitDuration()),
           'returningVisits'                     => number_format($overview->getReturningVisits()),
-          'newVisits'                           => number_format($overview->getNewVisits()),
+          'newUsers'                            => number_format($overview->getNewVisits()),
           'bounceRate'                          => number_format($overview->getBounceRate()),
           'pageViews'                           => number_format($overview->getPageViews()),
           'trafficDirect'                       => number_format($overview->getTrafficDirect()),
