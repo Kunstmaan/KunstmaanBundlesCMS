@@ -9,12 +9,9 @@ use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
 use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
 
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\TrafficCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\VisitorsCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\TopPagesCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\TrafficSourcesCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
 
 class GoogleAnalyticsCommand extends ContainerAwareCommand {
     /** @var GoogleClientHelper $googleClientHelper */
@@ -76,7 +73,7 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
             $metrics = new MetricsCommandHelper($this->analyticsHelper, $this->output, $this->em);
             $metrics->getData($overview);
 
-            if ($overview->getVisits()) { // if there are any visits
+            if ($overview->getSessions()) { // if there are any visits
                 // day-specific data
                 $chartData = new ChartDataCommandHelper($this->analyticsHelper, $this->output, $this->em);
                 $chartData->getData($overview);
@@ -86,7 +83,7 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
                 $goals->getData($overview);
 
                 // visitor types
-                $visitors = new VisitorsCommandHelper($this->analyticsHelper, $this->output, $this->em);
+                $visitors = new UsersCommandHelper($this->analyticsHelper, $this->output, $this->em);
                 $visitors->getData($overview);
             } else {
                 // reset overview

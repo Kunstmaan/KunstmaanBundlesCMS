@@ -49,8 +49,6 @@ class GoogleAnalyticsController extends Controller
             $params['overview'] = $overviews[2];
         }
 
-        $params['referrals'] = $params['overview']->getReferrals()->toArray();
-        $params['searches']  = $params['overview']->getSearches()->toArray();
         $params['token']     = true;
 
         if (null !== $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getLastUpdate()) {
@@ -189,34 +187,6 @@ class GoogleAnalyticsController extends Controller
         $em       = $this->getDoctrine()->getManager();
         $overview = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($id);
 
-        // referrals data
-        $referrals = array();
-        foreach ($overview->getReferrals()->toArray() as $key => $referral) {
-            $referrals[$key]['visits'] = $referral->getVisits();
-            $referrals[$key]['name']   = $referral->getName();
-        }
-
-        // searches data
-        $searches = array();
-        foreach ($overview->getSearches()->toArray() as $key => $search) {
-            $searches[$key]['visits']  = $search->getVisits();
-            $searches[$key]['name']    = $search->getName();
-        }
-
-        // campaigns data
-        $campaigns = array();
-        foreach ($overview->getCampaigns()->toArray() as $key => $search) {
-            $campaigns[$key]['visits']  = $search->getVisits();
-            $campaigns[$key]['name']    = $search->getName();
-        }
-
-        // pages data
-        $pages = array();
-        foreach ($overview->getPages() as $key => $page) {
-            $pages[$key]['visits']     = number_format($page->getVisits());
-            $pages[$key]['name']       = $page->getName();
-        }
-
         // goals data
         $goals = array();
         foreach ($overview->getActiveGoals() as $key => $goal) {
@@ -232,37 +202,21 @@ class GoogleAnalyticsController extends Controller
           'title'                               => $overview->getTitle(),
           'timespan'                            => $overview->getTimespan(),
           'startOffset'                         => $overview->getStartOffset(),
-          'visits'                              => number_format($overview->getVisits()),
-          'visitors'                            => number_format($overview->getVisitors()),
-          'pagesPerVisit'                       => number_format($overview->getPagesPerVisit()),
-          'avgVisitDuration'                    => number_format($overview->getAvgVisitDuration()),
-          'returningVisits'                     => number_format($overview->getReturningVisits()),
-          'newUsers'                            => number_format($overview->getNewVisits()),
-          'bounceRate'                          => number_format($overview->getBounceRate()),
+          'sessions'                            => number_format($overview->getSessions()),
+          'users'                               => number_format($overview->getUsers()),
+          'pagesPerSession'                     => number_format($overview->getPagesPerSession()),
+          'avgSessionDuration'                  => number_format($overview->getAvgSessionDuration()),
+          'returningUsers'                      => number_format($overview->getReturningUsers()),
+          'newUsers'                            => number_format($overview->getNewUsers()),
           'pageViews'                           => number_format($overview->getPageViews()),
-          'trafficDirect'                       => number_format($overview->getTrafficDirect()),
-          'trafficReferral'                     => number_format($overview->getTrafficReferral()),
-          'trafficSearchEngine'                 => number_format($overview->getTrafficSearchEngine()),
-          'desktopTraffic'                      => number_format($overview->getDesktopTraffic()),
-          'mobileTraffic'                       => number_format($overview->getMobileTraffic()),
-          'tabletTraffic'                       => number_format($overview->getTabletTraffic()),
-          'desktopTrafficPercentage'            => $overview->getDesktopTrafficPercentage(),
-          'mobileTrafficPercentage'             => $overview->getMobileTrafficPercentage(),
-          'tabletTrafficPercentage'             => $overview->getTabletTrafficPercentage(),
-          'trafficDirectPercentage'             => $overview->getTrafficDirectPercentage(),
-          'trafficReferralPercentage'           => $overview->getTrafficReferralPercentage(),
-          'trafficSearchEnginePercentage'       => $overview->getTrafficSearchEnginePercentage(),
-          'returningVisitsPercentage'           => $overview->getReturningVisitsPercentage(),
-          'newVisitsPercentage'                 => $overview->getNewVisitsPercentage(),
+          'returningUsersPercentage'            => $overview->getReturningUsersPercentage(),
+          'newUsersPercentage'                  => $overview->getNewUsersPercentage(),
         );
 
         // put all data in the return array
         $return = array(
           'responseCode'                        => 200,
           'overview'                            => $overviewData,
-          'referrals'                           => $referrals,
-          'campaigns'                           => $campaigns,
-          'pages'                               => $pages,
           'goals'                               => $goals,
         );
 

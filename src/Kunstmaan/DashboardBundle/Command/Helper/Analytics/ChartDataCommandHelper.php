@@ -47,29 +47,29 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
             if ($timespan <= 1) {
                 $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
-                $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
-                $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
+                $chartData['sessions'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
+                $chartData['users'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
                 $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
                 $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
             } else if ($timespan <= 7) {
                 $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
-                $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
-                $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
+                $chartData['sessions'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
+                $chartData['users'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
                 $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
                 $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
             } else if ($timespan <= 31) {
                 $timestamp = mktime(0, 0, 0, substr($row[2], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
-                $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
-                $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
+                $chartData['sessions'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
+                $chartData['users'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
                 $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
                 $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[6]);
             } else {
                 $timestamp = strtotime(substr($row[0], 0, 4).'W'.substr($row[0], 4, 2));
                 $timestamp = date('Y-m-d H:00', $timestamp);
-                $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
-                $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
+                $chartData['sessions'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
+                $chartData['users'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
                 $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
                 $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
             }
