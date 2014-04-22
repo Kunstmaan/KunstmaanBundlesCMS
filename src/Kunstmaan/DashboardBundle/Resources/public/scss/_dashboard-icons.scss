@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Dashboard Icons
+   ========================================================================== */
+
+
+/* Icon-font
+   ========================================================================== */
+@font-face {
+    font-family: 'dashboard';
+    src:url('/bundles/kunstmaandashboard/iconfont/fonts/dashboard.eot?jjdvgj');
+    src:url('/bundles/kunstmaandashboard/iconfont/fonts/dashboard.eot?#iefixjjdvgj') format('embedded-opentype'),
+        url('/bundles/kunstmaandashboard/iconfont/fonts/dashboard.woff?jjdvgj') format('woff'),
+        url('/bundles/kunstmaandashboard/iconfont/fonts/dashboard.ttf?jjdvgj') format('truetype'),
+        url('/bundles/kunstmaandashboard/iconfont/fonts/dashboard.svg?jjdvgj#dashboard') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="dash-icon--"], [class*=" dash-icon--"] {
+    font-family: 'dashboard';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dash-icon--stopwatch:before {
+    content: "\e600";
+}
+.dash-icon--screen:before {
+    content: "\e605";
+}
+.dash-icon--mobile:before {
+    content: "\e606";
+}
+.dash-icon--tablet:before {
+    content: "\e607";
+}
+.dash-icon--user:before {
+    content: "\e601";
+}
+.dash-icon--users:before {
+    content: "\e602";
+}
+.dash-icon--bars:before {
+    content: "\e603";
+}
+.dash-icon--eye:before {
+    content: "\e604";
+}
+
+
+/* States
+   ========================================================================== */
+.dash-icon--big {
+    font-size: 1.5em;
+}
+
+.dash-icon--circle {
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    border-radius: 100%;
+}
+
+.dash-icon--circle--green {
+    color: #fff;
+    background: #c6f5ca;
+}
+
+.dash-icon--circle--blue {
+    color: #fff;
+    background: #a2d3f3;
+}
+
+.dash-icon--circle--purple {
+    color: #fff;
+    background: #c6c0e9;
+}

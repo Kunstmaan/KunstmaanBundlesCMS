@@ -33,7 +33,7 @@
         $('#data_visitors').html(data.overview.visitors);
         $('#data_pageviews').html(data.overview.pageViews);
         $('#data_pages_per_visit').html(data.overview.pagesPerVisit);
-        $('#data_avg_visit_duration').html(data.overview.avgVisitDuration + ' seconds');
+        $('#data_avg_visit_duration').html(data.overview.avgVisitDuration + ' <small>sec</small>');
     }
 
 
