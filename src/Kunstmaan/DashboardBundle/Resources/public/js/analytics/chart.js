@@ -28,7 +28,7 @@
         new Morris.Area({
             element: 'dashboard-chart--audience',
             lineWidth: 1,
-            lineColors: [ '#8AC9E1','#CE77B6', '#8175c7', '#6aae9b'],
+            lineColors: [ '#8AC9E1','#CE77B6', '#EE9C27', '#D13F37'],
             fillOpacity: '.4',
             hideHover: 'auto',
             pointSize: 0,
@@ -37,7 +37,8 @@
             ykeys: ['pageviews', 'sessions', 'users','newusers'],
             ymax:top,
             labels: ['Pageviews', 'Sessions', 'Users', 'New Users'],
-            behaveLikeLine: true
+            behaveLikeLine: true,
+            gridTextColor: '#ccc'
         });
 
         // set the values

@@ -3,14 +3,14 @@
    ========================================================================== */
 
 .db-content {
-    padding: 20px 0;
+    padding: 1em 2em;
     border: 1px solid $hr-color;
     border-radius: 0 0 3px 3px;
     margin-bottom: 40px;
     margin-top: -1px;
     @include clearfix;
     width: 100%;
-    * {
+    &, * {
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;

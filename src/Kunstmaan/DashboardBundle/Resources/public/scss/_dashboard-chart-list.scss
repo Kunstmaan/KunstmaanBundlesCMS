@@ -4,12 +4,15 @@
 
 .dashboard-chart-list {
     list-style: none;
-    margin: 0;
+    margin: 0 0 4em 0;
 }
 
 .dashboard-chart-list__item {
     display: inline-block;
-    padding: 1em 1.5em;
+    padding: 1em 2em;
+    &:first-child {
+        padding-left: 0;
+    }
 }
 
 .dashboard-chart-list__icon {
