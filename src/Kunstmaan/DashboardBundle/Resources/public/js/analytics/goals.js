@@ -47,43 +47,4 @@
         }
     }
 
-    // function initLineChart(canvas, json) {
-    //     // data arrays for the chart
-    //     var chartData = [];
-    //     var chartLabels = [];
-
-    //     // fill the data arrays
-    //     for (var i = 0; i < json.length; i++) {
-    //         chartData.push(parseInt(json[i].visits));
-    //         chartLabels.push('');
-    //     }
-
-    //     // create linechart data
-    //     var lineChartData = {
-    //         labels : chartLabels,
-    //         datasets : [
-    //             {
-    //                 fillColor : "rgba(41, 151, 206, 0.3)",
-    //                 strokeColor : "rgb(41, 151, 206)",
-    //                 pointColor : "rgb(41, 151, 206)",
-    //                 pointStrokeColor : "#fff",
-    //                 data : chartData,
-    //                 scaleShowLabels : false
-    //             }
-    //         ]
-    //     };
-
-    //     // chart scale values
-    //     Array.prototype.max = function() {
-    //       return Math.max.apply(null, this);
-    //     };
-    //     var max = Math.max.apply(null, chartData);
-    //     var steps = max < 5 ? max : 5;
-
-    //     // render line chart
-    //     var ctx = canvas.getContext("2d");
-    //     var chart = new Chart(ctx).Line(lineChartData, {scaleOverride: true, scaleStepWidth: Math.ceil(max/steps), scaleSteps: steps, animation:false});
-    // }
-
-
 
