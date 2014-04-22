@@ -313,128 +313,21 @@ class GoogleAnalyticsController extends Controller
      */
     public function testAction()
     {
-      $session = new Session();
+        $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
+        $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
+        $analyticsHelper->init($googleClientHelper);
 
-      $client = new Google_Client();
-      $client->setApplicationName('Hello Analytics API Sample');
+        $results = $analyticsHelper->getResults(
+            7,
+            1,
+            'ga:goal11Completions,ga:goal13Completions,ga:goal12Completions',
+            array('dimensions' => 'ga:date,ga:hour')
+        );
+        $rows    = $results->getRows();
 
-      // Visit https://console.developers.google.com/ to generate your
-      // client id, client secret, and to register your redirect uri.
-      $client->setClientId('753914656453-j4lm9g2ht38227ip94n2jjtsb355dopf.apps.googleusercontent.com');
-      $client->setClientSecret('U5GbogFoDEBKk4AFaNDqI2QK');
-      $client->setRedirectUri('http://kumaga.kale.kunstmaan.be/app_dev.php/en/admin/dashboard/widget/googleanalytics/test');
-      $client->setDeveloperKey('AIzaSyBTjcLdyPz4gEFFCFJDO4h4KuRCKG_ymuU');
-      $client->setScopes(array('https://www.googleapis.com/auth/analytics.readonly'));
-
-      // Magic. Returns objects from the Analytics Service instead of associative arrays.
-      $client->setUseObjects(true);
-
-      if (isset($_GET['code'])) {
-        $client->authenticate();
-        $session->set('token', $client->getAccessToken());
-        $redirect = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-        header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
-      }
-
-      if (null !== $session->get('token')) {
-        $client->setAccessToken($session->get('token'));
-      }
-
-      if (!$client->getAccessToken()) {
-        $authUrl = $client->createAuthUrl();
-        print "<a class='login' href='$authUrl'>Connect Me!</a>";
-
-      } else {
-        $analytics = new Google_AnalyticsService($client);
-        $this->runMainDemo($analytics);
-      }
-
-      // function runMainDemo continued in next section.
+        var_dump($rows);
 
         exit;
     }
-
-
-
-
-
-
-
-
-
-// Continued from first part of tutorial.
-
-        function runMainDemo(&$analytics) {
-          try {
-            $profileId = $this->getFirstprofileId($analytics);
-
-            if (isset($profileId)) {
-              $results = $this->getResults($analytics, $profileId);
-              $this->printResults($results);
-            }
-
-          } catch (apiServiceException $e) {
-            // Error from the API.
-            print 'There was an API error : ' . $e->getCode() . ' : ' . $e->getMessage();
-
-          } catch (Exception $e) {
-            print 'There wan a general error : ' . $e->getMessage();
-          }
-        }
-
-        function getFirstprofileId(&$analytics) {
-          $accounts = $analytics->management_accounts->listManagementAccounts();
-
-          if (count($accounts->getItems()) > 0) {
-            $items = $accounts->getItems();
-            $firstAccountId = $items[0]->getId();
-
-            $webproperties = $analytics->management_webproperties
-                ->listManagementWebproperties($firstAccountId);
-
-            if (count($webproperties->getItems()) > 0) {
-              $items = $webproperties->getItems();
-              $firstWebpropertyId = $items[0]->getId();
-
-              $profiles = $analytics->management_profiles
-                  ->listManagementProfiles($firstAccountId, $firstWebpropertyId);
-
-              if (count($profiles->getItems()) > 0) {
-                $items = $profiles->getItems();
-                return $items[0]->getId();
-
-              } else {
-                throw new Exception('No views (profiles) found for this user.');
-              }
-            } else {
-              throw new Exception('No webproperties found for this user.');
-            }
-          } else {
-            throw new Exception('No accounts found for this user.');
-          }
-        }
-
-        function getResults(&$analytics, $profileId) {
-           return $analytics->data_ga->get(
-               'ga:' . $profileId,
-               '2012-03-03',
-               '2012-03-03',
-               'ga:sessions');
-        }
-
-        function printResults(&$results) {
-          if (count($results->getRows()) > 0) {
-            $profileName = $results->getProfileInfo()->getProfileName();
-            $rows = $results->getRows();
-            $sessions = $rows[0][0];
-
-            print "<p>First view (profile) found: $profileName</p>";
-            print "<p>Total sessions: $sessions</p>";
-
-          } else {
-            print '<p>No results found.</p>';
-          }
-        }
-
 
 }
