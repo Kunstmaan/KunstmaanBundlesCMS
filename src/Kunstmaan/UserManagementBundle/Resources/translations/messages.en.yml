@@ -11,6 +11,7 @@ settings:
       username: Username
       password: Password
       repeatedpassword: Repeat password
+      adminlang: Admin interface language
       email: E-mail
       enabled: Enabled
       roles: Groups
