@@ -45,10 +45,17 @@ class AnalyticsOverviewFixtures extends AbstractFixture implements OrderedFixtur
         $em->persist($month);
 
         $year = new AnalyticsOverview();
-        $year->setTitle('Last Year');
+        $year->setTitle('Last year');
         $year->setTimespan(365);
         $year->setStartOffset(0);
         $em->persist($year);
+
+        $yearToDate = new AnalyticsOverview();
+        $yearToDate->setTitle('Year to date');
+        $yearToDate->setTimespan(365);
+        $yearToDate->setStartOffset(0);
+        $yearToDate->setUseYear(true);
+        $em->persist($yearToDate);
 
         $em->flush();
 
@@ -57,6 +64,7 @@ class AnalyticsOverviewFixtures extends AbstractFixture implements OrderedFixtur
         $this->addReference('week', $week);
         $this->addReference('month', $month);
         $this->addReference('year', $year);
+        $this->addReference('yearToDate', $yearToDate);
     }
 
 

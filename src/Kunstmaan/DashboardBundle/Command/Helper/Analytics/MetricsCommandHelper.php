@@ -13,11 +13,24 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper {
     public function getData(&$overview) {
         $this->output->writeln("\t" . 'Fetching metrics..');
 
-        $results = $this->analyticsHelper->getResults(
-            $overview->getTimespan(),
-            $overview->getStartOffset(),
-            'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration'
-        );
+
+
+        if ($overview->getUseYear()) {
+            $begin = date('Y-m-d', mktime(0,0,0,1,1,date('Y')));
+            $end = date('Y-m-d', mktime(0,0,0,1,1,date('Y', strtotime('+1 year'))));
+            $results = $this->analyticsHelper->getResultsByDate(
+                $begin,
+                $end,
+                'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration'
+            );
+        } else {
+            $results = $this->analyticsHelper->getResults(
+                $overview->getTimespan(),
+                $overview->getStartOffset(),
+                'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration'
+            );
+        }
+
         $rows    = $results->getRows();
 
         // visits metric
