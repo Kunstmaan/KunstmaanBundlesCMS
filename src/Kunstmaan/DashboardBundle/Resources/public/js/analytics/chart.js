@@ -28,7 +28,7 @@
         new Morris.Area({
             element: 'dashboard-chart--audience',
             lineWidth: 1,
-            lineColors: [ '#72bea8','#59ace2', '#8175c7', '#6aae9b'],
+            lineColors: [ '#8AC9E1','#CE77B6', '#8175c7', '#6aae9b'],
             fillOpacity: '.4',
             hideHover: 'auto',
             pointSize: 0,

@@ -7,10 +7,9 @@
         for(var i = 0; i < data.goals.length; i++) {
         // for(var i = 0; i < 1; i++) {
             // create a goal overview box
-            var chart = $('<div>', {'class': 'dashboard-chart', 'style': 'height:150px;width:100%'});
-            $('#goalOverview')
-            .append(
-                $('<li>', {'id': 'goal'+data.goals[i]['id'], 'data-goal-id': data.goals[i]['id']}
+            var chart = $('<div class="dashboard-goals-list__chart"></div>');
+            $('#goalOverview').append(
+                $('<li class="dashboard-goals-list__item">', {'id': 'goal'+data.goals[i]['id'], 'data-goal-id': data.goals[i]['id']}
                 ).append(
                     chart
                 ).append(

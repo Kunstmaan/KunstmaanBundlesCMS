@@ -1,7 +1,6 @@
 /* ==========================================================================
    Dashboard Tabs
    ========================================================================== */
-
 .db-tabs {
     @include clearfix;
     margin: 40px 0 0;
@@ -13,6 +12,7 @@
         box-sizing: border-box;
     }
 }
+
 .db-tabs__item {
     float: left;
     @include single_transition(all, .2s, ease-out);
@@ -41,6 +41,7 @@
         border-bottom-color: transparent;
     }
 }
+
 .db-tabs__controller {
     display: block;
 }
@@ -53,6 +54,7 @@
     margin: 0;
     padding: 0;
 }
+
 .db-tabs__item__number {
     color: $text-color;
     font-size: 18px;
@@ -60,6 +62,7 @@
     margin: 0 0 0 2px;
     padding: 0;
 }
+
 .db-tabs__item__subtitle {
     color: $text-color;
     font-size: 12px;
