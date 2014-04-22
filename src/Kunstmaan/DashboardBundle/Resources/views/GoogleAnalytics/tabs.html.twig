@@ -1,9 +1,9 @@
-<ul class="db-tabs">
+<ul class="dashboard-tabs">
     {% set i = 1 %}
     {% for overviewItem in overviews %}
-        <li class="db-tabs__item {% if overviewItem.id == overview.id %}db-tabs__item--active{% endif %}" id="tab{{ overviewItem.id }}">
-            <div class="db-tabs__controller" data-id="{{ overviewItem.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overviewItem.id}) }}">
-                <h6 class="db-tabs__item__title">
+        <li class="dashboard-tabs__item {% if overviewItem.id == overview.id %}dashboard-tabs__item--active{% endif %}" id="tab{{ overviewItem.id }}">
+            <div class="dashboard-tabs__controller" data-id="{{ overviewItem.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overviewItem.id}) }}">
+                <h6 class="dashboard-tabs__item__title">
                     {{ overviewItem.title }}
                 </h6>
             </div>

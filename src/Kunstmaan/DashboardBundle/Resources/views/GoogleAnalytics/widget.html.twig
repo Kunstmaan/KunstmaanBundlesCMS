@@ -1,5 +1,5 @@
 {% if token %}
-<div id="dashboard" style="opacity:0">
+<div id="dashboard" class="dashboard">
 
     <!-- TABS -->
     {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews, 'lastUpdate' : lastUpdate} %}
@@ -8,7 +8,7 @@
     <div id="data_no_overview" style="display:{% if overview.sessions == 0 %}block{% else %}none{% endif %}">{{ 'analytics.overview.unavailable' | trans}}</div>
 
     <!-- TAB CONTENT -->
-    <section class="db-content" id="data_overview" {% if overview.sessions == 0 %}style="display:none"{% endif %}>
+    <section class="dashboard__content" id="data_overview" {% if overview.sessions == 0 %}style="display:none"{% endif %}>
 
         <!-- CHART -->
         {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
@@ -19,6 +19,10 @@
         {% endif %}
     </section>
     <!-- end TAB CONTENT -->
+
+    <section>
+        <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProfile') }}">Reset Profile</a> | <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">Reset Property</a>
+    </section>
 </div>
 
 {% else %}

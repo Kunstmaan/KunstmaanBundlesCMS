@@ -24,7 +24,7 @@
             for (var j = 0; j < data.goals[i].chartData.length; j+=1) {
                 chartData.push({
                     x : data.goals[i].chartData[j].timestamp,
-                    visits : parseInt(data.goals[i].chartData[j].visits)
+                    visits : parseInt(data.goals[i].chartData[j].visits, 10)
                 });
             }
 
@@ -32,7 +32,7 @@
             new Morris.Line({
                 element: chart,
                 lineWidth: 2,
-                lineColors: ['#59ace2'],
+                lineColors: ['#8ac9e1'],
                 fillOpacity: '.4',
                 hideHover: 'auto',
                 pointSize: 0,

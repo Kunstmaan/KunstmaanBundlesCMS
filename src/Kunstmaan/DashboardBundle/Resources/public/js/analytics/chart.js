@@ -3,7 +3,6 @@
         // clear the existing chart
         $('#dashboard-chart--audience').html('');
 
-
         var top = 0;
 
         // create a data array
@@ -16,11 +15,11 @@
             }
 
             chartData.push({
-                x : data.overview.chartData.sessions[i].timestamp,
-                sessions : removeNumberFormat(data.overview.chartData.sessions[i].visits),
-                users : removeNumberFormat(data.overview.chartData.users[i].visits),
-                pageviews : pageviewVisits,
-                newusers : removeNumberFormat(data.overview.chartData.newusers[i].visits)
+                x: data.overview.chartData.sessions[i].timestamp,
+                sessions: removeNumberFormat(data.overview.chartData.sessions[i].visits),
+                users: removeNumberFormat(data.overview.chartData.users[i].visits),
+                pageviews: pageviewVisits,
+                newusers: removeNumberFormat(data.overview.chartData.newusers[i].visits)
             });
         }
 
@@ -28,7 +27,7 @@
         new Morris.Area({
             element: 'dashboard-chart--audience',
             lineWidth: 1,
-            lineColors: [ '#8AC9E1','#CE77B6', '#EE9C27', '#D13F37'],
+            lineColors: [ '#8ac9e1','#ce77b6', '#ee9c27', '#d13f37'],
             fillOpacity: '.9',
             hideHover: 'auto',
             pointSize: 0,

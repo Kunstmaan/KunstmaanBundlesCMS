@@ -6,32 +6,20 @@
         for (var i = 0; i < parts.length; i++) {
             number += parts[i];
         }
-        return parseInt(number);
+        return parseInt(number, 10);
     }
 
     $(document).ready(function() {
-        // fade the dashboard in once everything is loaded
-        // might need a progress thingy while loading?
-        $('#dashboard').animate({opacity: '1'}, 500);
-
         // show first tab
-        var tab = $('.db-tabs__item:nth-child(3) > div');
-        switchTab(tab.attr('data-id'), tab.attr('data-path'))
-
-        // Tab switcher
-        $(".db-tabs__item").click(function(){
-            var id = $(this).find('.db-tabs__controller').attr('data-id');
-            var url = $(this).find('.db-tabs__controller').attr('data-path');
-            switchTab(id, url);
-        });
+        var tab = $('.dashboard-tabs__item:nth-child(3) > div');
 
         function switchTab(id, url) {
             $.get(url, function(data) {
-                if(data.responseCode==200) {
-                    $('.db-tabs__item').removeClass('db-tabs__item--active');
-                    $('#tab'+id).addClass('db-tabs__item--active');
+                if(data.responseCode === 200) {
+                    $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
+                    $('#tab'+id).addClass('dashboard-tabs__item--active');
 
-                    if (data.overview.sessions == 0) {
+                    if (data.overview.sessions === 0) {
                         $('#data_no_overview').css('display', 'block');
                         $('#data_overview').css('display', 'none');
                     } else {
@@ -43,9 +31,17 @@
                         setChart(data);
                         setGoals(data);
                     }
-
                 }
             });
         }
+
+        switchTab(tab.attr('data-id'), tab.attr('data-path'));
+
+        // Tab switcher
+        $('.dashboard-tabs__item').on('click', function(){
+            var id = $(this).find('.dashboard-tabs__controller').attr('data-id');
+            var url = $(this).find('.dashboard-tabs__controller').attr('data-path');
+            switchTab(id, url);
+        });
     });
 
