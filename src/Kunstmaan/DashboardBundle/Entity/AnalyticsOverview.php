@@ -58,6 +58,13 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $startOffset = 0;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="use_year", type="boolean")
+     */
+    private $useYear = false;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="sessions", type="integer")
@@ -105,6 +112,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * @ORM\Column(name="avg_session_duration", type="integer")
      */
     private $avgSessionDuration = 0;
+
 
 
 
@@ -402,5 +410,28 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     public function getAvgSessionDuration()
     {
         return $this->avgSessionDuration;
+    }
+
+    /**
+     * Set useYear
+     *
+     * @param integer $useYear
+     * @return AnalyticsOverview
+     */
+    public function setUseYear($useYear)
+    {
+        $this->useYear = $useYear;
+
+        return $this;
+    }
+
+    /**
+     * Get useYear
+     *
+     * @return integer
+     */
+    public function getUseYear()
+    {
+        return $this->useYear;
     }
 }

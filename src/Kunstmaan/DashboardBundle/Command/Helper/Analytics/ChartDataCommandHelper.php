@@ -34,12 +34,24 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
         }
 
         // get visits & visitors
-        $results = $this->analyticsHelper->getResults(
-            $overview->getTimespan(),
-            $overview->getStartOffset(),
-            'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
-            $extra
-        );
+        if ($overview->getUseYear()) {
+            $begin = date('Y-m-d', mktime(0,0,0,1,1,date('Y')));
+            $end = date('Y-m-d', mktime(0,0,0,1,1,date('Y', strtotime('+1 year'))));
+            $results = $this->analyticsHelper->getResultsByDate(
+                $begin,
+                $end,
+                'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
+                $extra
+            );
+        } else {
+            $results = $this->analyticsHelper->getResults(
+                $overview->getTimespan(),
+                $overview->getStartOffset(),
+                'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
+                $extra
+            );
+        }
+
         $rows    = $results->getRows();
         $chartData = array();
         foreach ($rows as $row) {

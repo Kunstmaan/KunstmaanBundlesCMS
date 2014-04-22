@@ -76,22 +76,46 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             }
 
             // Execute query
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                $part1,
-                $extra
-            );
+            if ($overview->getUseYear()) {
+                $begin = date('Y-m-d', mktime(0,0,0,1,1,date('Y')));
+                $end = date('Y-m-d', mktime(0,0,0,1,1,date('Y', strtotime('+1 year'))));
+
+                $results = $this->analyticsHelper->getResultsByDate(
+                    $begin,
+                    $end,
+                    $part1,
+                    $extra
+                );
+            } else {
+                $results = $this->analyticsHelper->getResults(
+                    $overview->getTimespan(),
+                    $overview->getStartOffset(),
+                    $part1,
+                    $extra
+                );
+            }
             $rows = $results->getRows();
 
             // Execute an extra query if there are more than 10 goals to query
             if ($part2) {
-                $results = $this->analyticsHelper->getResults(
-                    $overview->getTimespan(),
-                    $overview->getStartOffset(),
-                    $part2,
-                    $extra
-                );
+                if ($overview->getUseYear()) {
+                    $begin = date('Y-m-d', mktime(0,0,0,1,1,date('Y')));
+                    $end = date('Y-m-d', mktime(0,0,0,1,1,date('Y', strtotime('+1 year'))));
+                    $results = $this->analyticsHelper->getResultsByDate(
+                        $begin,
+                        $end,
+                        $part1,
+                        $extra
+                    );
+                } else {
+                    $results = $this->analyticsHelper->getResults(
+                        $overview->getTimespan(),
+                        $overview->getStartOffset(),
+                        $part1,
+                        $extra
+                    );
+                }
+
                 $rows2 = $results->getRows();
                 for ($i = 0; $i < sizeof($rows2); $i++) {
                     // Merge the results of the extra query data with the previous query data.
