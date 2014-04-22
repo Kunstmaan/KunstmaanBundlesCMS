@@ -50,7 +50,7 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
                 $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
                 $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
             } else if ($timespan <= 31) {
-                $timestamp = mktime($row[2], 0, 0, substr($row[0], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
+                $timestamp = mktime(0, 0, 0, substr($row[2], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
                 $chartData['visits'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
                 $chartData['visitors'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
