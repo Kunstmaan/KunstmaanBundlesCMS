@@ -10,7 +10,11 @@ abstract class AbstractAnalyticsCommandHelper {
     /** @var OutputInterface $output */
     protected $output;
 
-    // todo inject ?
+    /**
+     * Constructor
+     *
+     * @param AnalyticsOverview $overview The overview
+     */
     public function __construct($analyticsHelper, $output, $em) {
         $this->analyticsHelper = $analyticsHelper;
         $this->output = $output;

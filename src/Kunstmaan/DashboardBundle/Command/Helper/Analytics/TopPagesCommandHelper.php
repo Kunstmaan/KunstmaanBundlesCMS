@@ -6,8 +6,12 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsTopPage;
 
 class TopPagesCommandHelper extends AbstractAnalyticsCommandHelper {
 
+    /**
+     * get data and save it for the overview
+     *
+     * @param AnalyticsOverview $overview The overview
+     */
     public function getData(&$overview) {
-        // top pages
         $this->output->writeln("\t" . 'Fetching top pages..');
         $results = $this->analyticsHelper->getResults(
             $overview->getTimespan(),

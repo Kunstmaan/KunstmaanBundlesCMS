@@ -6,6 +6,11 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsCampaign;
 
 class TopRefferalsCommandHelper extends AbstractAnalyticsCommandHelper {
 
+    /**
+     * get data and save it for the overview
+     *
+     * @param AnalyticsOverview $overview The overview
+     */
     public function getData(&$overview) {
         // top campaigns
         $this->output->writeln("\t" . 'Fetching campaigns..');

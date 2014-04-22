@@ -6,6 +6,11 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsTopReferral;
 
 class TopRefferalsCommandHelper extends AbstractAnalyticsCommandHelper {
 
+    /**
+     * get data and save it for the overview
+     *
+     * @param AnalyticsOverview $overview The overview
+     */
     public function getData(&$overview) {
         // top referral sites
         $this->output->writeln("\t" . 'Fetching referral sites..');

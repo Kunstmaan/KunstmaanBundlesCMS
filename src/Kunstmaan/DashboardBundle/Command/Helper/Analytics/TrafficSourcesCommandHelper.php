@@ -5,6 +5,11 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\AbstractAnalyticsCommandH
 
 class TrafficSourcesCommandHelper extends AbstractAnalyticsCommandHelper {
 
+    /**
+     * get data and save it for the overview
+     *
+     * @param AnalyticsOverview $overview The overview
+     */
     public function getData(&$overview) {
         // traffic sources
         $this->output->writeln("\t" . 'Fetching traffic sources..');

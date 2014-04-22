@@ -5,6 +5,11 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\AbstractAnalyticsCommandH
 
 class VisitorsCommandHelper extends AbstractAnalyticsCommandHelper {
 
+    /**
+     * get data and save it for the overview
+     *
+     * @param AnalyticsOverview $overview The overview
+     */
     public function getData(&$overview) {
         // visitor types
         $this->output->writeln("\t" . 'Fetching visitor types..');

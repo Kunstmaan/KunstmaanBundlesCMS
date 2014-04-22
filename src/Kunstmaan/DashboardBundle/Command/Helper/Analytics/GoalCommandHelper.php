@@ -4,18 +4,32 @@ namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\AbstractAnalyticsCommandHelper;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 
-class GoalCommandHelper extends AbstractAnalyticsCommandHelper {
-
+class GoalCommandHelper extends AbstractAnalyticsCommandHelper
+{
+    /** @var GoogleClientHelper $googleClientHelper */
     private $googleClientHelper;
 
-    public function __construct($googleClientHelper, $analyticsHelper, $output, $em) {
+    /**
+     * Constructor
+     *
+     * @param GoogleClientHelper    $googleClientHelper
+     * @param GooglaAnalytisHelper  $analyticsHelper
+     * @param OutputInterface       $output
+     * @param EntityManager         $em
+     */
+    public function __construct($googleClientHelper, $analyticsHelper, $output, $em)
+    {
         parent::__construct($analyticsHelper, $output, $em);
         $this->googleClientHelper = $googleClientHelper;
     }
 
-    // TODO: clean code
-    public function getData(&$overview) {
-        // goals
+    /**
+     * get data and save it for the overview
+     *
+     * @param AnalyticsOverview $overview The overview
+     */
+    public function getData(&$overview)
+    {
         $this->output->writeln("\t" . 'Fetching goals..');
 
         // calculate timespan
@@ -35,23 +49,24 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper {
             $start = 1;
         }
 
-        // get goals
+        // Get the goals from the saved profile. These are a maximum of 20 goals.
         $goals = $this->analyticsHelper->getAnalytics()
                         ->management_goals
                         ->listManagementGoals($this->googleClientHelper->getAccountId(), $this->googleClientHelper->getPropertyId(), $this->googleClientHelper->getProfileId())
                         ->items;
 
-        // add new goals
         if (is_array($goals)) {
             $metrics = array();
             $goal = array();
 
+            // Create an array with for each goal an entry to create the metric parameter.
             foreach ($goals as $key=>$value) {
                 $key++;
                 $metrics[] = 'ga:goal'.$key.'Completions';
                 $goaldata[] = array('position'=>$key, 'name'=>$value->name);
             }
 
+            // Create the metric parameter string, there is a limit of 10 metrics per query, and a max of 20 goals available.
             if (count($metrics)<=10) {
                 $part1 = implode(',', $metrics);
                 $part2 = false;
@@ -60,7 +75,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper {
                 $part2 = implode(',', array_slice($metrics, 10, 10));
             }
 
-             // create the query
+            // Execute query
             $results = $this->analyticsHelper->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
@@ -69,6 +84,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper {
             );
             $rows = $results->getRows();
 
+            // Execute an extra query if there are more than 10 goals to query
             if ($part2) {
                 $results = $this->analyticsHelper->getResults(
                     $overview->getTimespan(),
@@ -78,14 +94,17 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper {
                 );
                 $rows2 = $results->getRows();
                 for ($i = 0; $i < sizeof($rows2); $i++) {
+                    // Merge the results of the extra query data with the previous query data.
                     $rows[$i] = array_merge($rows[$i], array_slice($rows2[$i], $start, sizeof($rows2)-$start));
                 }
             }
 
+            // Create a good result array to be parsed and create Goal objects from
             $goalCollection = array();
             for ($i = $start; $i < sizeof($rows[0]); $i++) {
                 $goalEntry = array();
                 foreach($rows as $row) {
+                    // Create a timestamp for each goal visit (this depends on the timespan of the overview: split per hour, day, week, month)
                     if ($timespan <= 1) {
                         $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
                         $timestamp = date('Y-m-d H:00', $timestamp);
@@ -106,8 +125,8 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper {
                 $goalCollection['goal'.$goaldata[$i-$start]['position']]['visits'] = $goalEntry;
             }
 
-            $this->addGoals($overview, $goalCollection);
-
+            // Parse the goals and append them to the overview.
+            $this->parseGoals($overview, $goalCollection);
         }
     }
 
@@ -117,7 +136,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper {
      *
      * @param AnalyticsOverview $overview The overview
      */
-    private function addGoals(&$overview, $goalCollection) {
+    private function parseGoals(&$overview, $goalCollection) {
 
         // delete existing entries
         if (is_array($overview->getGoals()->toArray())) {
@@ -140,6 +159,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper {
             $totalVisits = 0;
             $steps = ceil(sizeof($goalEntry['visits'])/10);
             $chartEntryVisits = 0;
+            // Fill the chartdata array
             foreach ($goalEntry['visits'] as $timestamp => $visits) {
                 $count++;
                 $totalVisits += $visits;
