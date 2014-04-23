@@ -100,9 +100,9 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $pageviews = 0;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="pages_per_session", type="integer")
+     * @ORM\Column(name="pages_per_session", type="float")
      */
     private $pagesPerSession = 0;
 
@@ -372,7 +372,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Set pagesPerSession
      *
-     * @param integer $pagesPerSession
+     * @param float $pagesPerSession
      * @return AnalyticsOverview
      */
     public function setPagesPerSession($pagesPerSession)
@@ -385,7 +385,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Get pagesPerSession
      *
-     * @return integer
+     * @return float
      */
     public function getPagesPerSession()
     {

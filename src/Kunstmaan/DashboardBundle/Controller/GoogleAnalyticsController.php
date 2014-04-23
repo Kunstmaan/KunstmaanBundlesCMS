@@ -190,7 +190,7 @@ class GoogleAnalyticsController extends Controller
           'startOffset'                         => $overview->getStartOffset(),
           'sessions'                            => number_format($overview->getSessions()),
           'users'                               => number_format($overview->getUsers()),
-          'pagesPerSession'                     => number_format($overview->getPagesPerSession()),
+          'pagesPerSession'                     => round($overview->getPagesPerSession(), 3),
           'avgSessionDuration'                  => $overview->getAvgSessionDuration(),
           'returningUsers'                      => number_format($overview->getReturningUsers()),
           'newUsers'                            => number_format($overview->getNewUsers()),
@@ -257,11 +257,14 @@ class GoogleAnalyticsController extends Controller
         $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
         $analyticsHelper->init($googleClientHelper);
 
+        $results = $analyticsHelper->getResults(
+            1,
+            1,
+            'ga:pageviewsPerSession'
+        );
 
 
-        $em       = $this->getDoctrine()->getManager();
-        $sessions = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverviewSessions();
-        var_dump($sessions);
+        var_dump($results->getRows());
 
         exit;
     }
