@@ -28,7 +28,7 @@ class AnalyticsOverviewFixtures extends AbstractFixture implements OrderedFixtur
 
         $yesterday = new AnalyticsOverview();
         $yesterday->setTitle('Yesterday');
-        $yesterday->setTimespan(2);
+        $yesterday->setTimespan(1);
         $yesterday->setStartOffset(1);
         $em->persist($yesterday);
 
