@@ -4,7 +4,7 @@
         <li class="dashboard-tabs__item" id="tab{{ overview.id }}">
             <div class="dashboard-tabs__controller" data-id="{{ overview.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overview.id}) }}">
                 <h6 class="dashboard-tabs__item__title">
-                    {{ overview.title }}
+                    {{ overview.title | trans }}
                 </h6>
             </div>
         </li>

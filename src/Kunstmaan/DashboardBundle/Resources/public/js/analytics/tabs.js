@@ -1,16 +1,33 @@
     $(function() {
+
+        // render the chart
+        var mainChart = new Morris.Area({
+            element: 'dashboard-chart--audience',
+            lineWidth: 1,
+            lineColors: [ '#8ac9e1','#ce77b6', '#ee9c27', '#d13f37'],
+            fillOpacity: '.9',
+            hideHover: 'auto',
+            pointSize: 0,
+            data: [],
+            xkey: 'timestamp',
+            ykeys: ['pageviews', 'sessions', 'users','newusers'],
+            labels: ['Pageviews', 'Sessions', 'Users', 'New Sessions'],
+            behaveLikeLine: true,
+            gridTextColor: '#a7a7a7',
+            smooth: true
+        });
+
         // show first tab
         var tab = $('.dashboard-tabs__item:nth-child(2) > div');
 
         function switchTab(id, url) {
             $('#data_overview').addClass('dashboard__content--loading');
-
-
             $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
             $('#tab'+id).addClass('dashboard-tabs__item--active');
+
             $.ajax({
                 type: 'get',
-                url: 'widget/googleanalytics/getOverview/' + id,
+                url: url,
                 cache: false,
                 success: function(data) {
                     if (data.overview.sessions === 0) {
@@ -20,9 +37,10 @@
                         $('#data_no_overview').css('display', 'none');
                         $('#data_overview').css('display', 'block');
                         $('#data_overview').removeClass('dashboard__content--loading');
-                        // add functions here to add component behaviour
-                        // these functions are declared in a per-template js file (public/js/analytics/)
-                        setChart(data);
+
+                        mainChart.setData(data.overview.chartData);
+                        mainChart.ymax = data.overview.chartDataMaxValue;
+                        setMetrics(data);
                         setGoals(data);
                     }
                 }

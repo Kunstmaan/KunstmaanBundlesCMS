@@ -39,7 +39,7 @@ class GoogleAnalyticsController extends Controller
         }
 
         // set the overviews param
-        $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverviewSessions();
+        $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverviewData();
         $params['overviews'] = $overviews;
         $params['token']     = true;
 
@@ -183,6 +183,7 @@ class GoogleAnalyticsController extends Controller
 
         // overview data
         $overviewData = array(
+          'id'                                  => $overview->getId(),
           'chartData'                           => json_decode($overview->getChartData(), true),
           'chartDataMaxValue'                   => $overview->getChartDataMaxValue(),
           'title'                               => $overview->getTitle(),

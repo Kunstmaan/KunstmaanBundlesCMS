@@ -34,16 +34,16 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper {
         $rows    = $results->getRows();
 
         // // visits metric
-        // $visits  = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
-        // $overview->setSessions($visits);
+        $visits  = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+        $overview->setSessions($visits);
 
         // // visits metric
-        // $visitors  = is_numeric($rows[0][1]) ? $rows[0][1] : 0;
-        // $overview->setUsers($visitors);
+        $visitors  = is_numeric($rows[0][1]) ? $rows[0][1] : 0;
+        $overview->setUsers($visitors);
 
         // // pageviews metric
-        // $pageviews = is_numeric($rows[0][2]) ? $rows[0][2] : 0;
-        // $overview->setPageViews($pageviews);
+        $pageviews = is_numeric($rows[0][2]) ? $rows[0][2] : 0;
+        $overview->setPageViews($pageviews);
 
         // pages per visit metric
         $pagesPerVisit = is_numeric($rows[0][3]) ? $rows[0][3] : 0;

@@ -123,9 +123,9 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
                 }
             }
 
-            // Create a good result array to be parsed and create Goal objects from
+            // Create a result array to be parsed and create Goal objects from
             $goalCollection = array();
-            for ($i = $start; $i < sizeof($rows[0]); $i++) {
+            for ($i = 0; $i < sizeof($goaldata); $i++) {
                 $goalEntry = array();
                 foreach($rows as $row) {
                     // Create a timestamp for each goal visit (this depends on the timespan of the overview: split per hour, day, week, month)
@@ -142,11 +142,11 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
                         $timestamp = strtotime(substr($row[0], 0, 4).'W'.substr($row[0], 4, 2));
                         $timestamp = date('Y-m-d H:00', $timestamp);
                     }
-                    $goalEntry[$timestamp] = $row[$i];
+                    $goalEntry[$timestamp] = $row[$i+$start];
                 }
-                $goalCollection['goal'.$goaldata[$i-$start]['position']]['name'] = $goaldata[$i-$start]['name'];
-                $goalCollection['goal'.$goaldata[$i-$start]['position']]['position'] = $goaldata[$i-$start]['position'];
-                $goalCollection['goal'.$goaldata[$i-$start]['position']]['visits'] = $goalEntry;
+                $goalCollection['goal'.$goaldata[$i]['position']]['name'] = $goaldata[$i]['name'];
+                $goalCollection['goal'.$goaldata[$i]['position']]['position'] = $goaldata[$i]['position'];
+                $goalCollection['goal'.$goaldata[$i]['position']]['visits'] = $goalEntry;
             }
 
             // Parse the goals and append them to the overview.

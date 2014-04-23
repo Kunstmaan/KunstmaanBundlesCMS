@@ -51,7 +51,7 @@ class AnalyticsOverviewRepository extends EntityRepository
         return false;
     }
 
-    public function getOverviewSessions() {
+    public function getOverviewData() {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o.id, o.title')
           ->from('KunstmaanDashboardBundle:AnalyticsOverview', 'o');
