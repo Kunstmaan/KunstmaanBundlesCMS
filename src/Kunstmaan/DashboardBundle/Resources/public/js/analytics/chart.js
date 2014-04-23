@@ -37,7 +37,8 @@
             ymax:top,
             labels: ['Pageviews', 'Sessions', 'Users', 'New Users'],
             behaveLikeLine: true,
-            gridTextColor: '#a7a7a7'
+            gridTextColor: '#a7a7a7',
+            smooth: true
         });
 
         // set the values

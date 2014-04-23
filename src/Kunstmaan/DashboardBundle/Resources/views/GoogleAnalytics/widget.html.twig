@@ -20,9 +20,11 @@
     </section>
     <!-- end TAB CONTENT -->
 
-    <section>
-        <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProfile') }}">Reset Profile</a> | <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">Reset Property</a>
-    </section>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <section>
+            <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProfile') }}">{{ 'dashboard.ga.reset.profile' | trans }}</a> | <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a>
+        </section>
+    {% endif %}
 </div>
 
 {% else %}
@@ -34,9 +36,9 @@
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/chart.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris.js-0.4.3/morris.min.js'
-        '//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js'
-        output='generated-js/scripts_bottom.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris.js-0.4.3/morris.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/libs/raphael-2.1.2.js'
+        output='generated-js/ga_widget.js' filter='uglifyjs2'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

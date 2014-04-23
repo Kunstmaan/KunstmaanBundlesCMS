@@ -3,19 +3,19 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-<h2>{{ 'analytics.dashboard.setup.title' | trans }}</h2>
+<h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
 <p>
-    {{ 'analytics.dashboard.setup.content' | trans }} <a href="https://github.com/Kunstmaan/KunstmaanAdminBundle/blob/issue14713-newdashboard/Resources/doc/SetupAnalyticsDashboard.md">{{ 'analytics.dashboard.setup.docs' | trans }}</a>.
+    {{ 'dashboard.ga.setup.content' | trans }} <a href="{{ 'analytics.dashboard.setup.docs_url' | trans }}">{{ 'analytics.dashboard.setup.docs' | trans }}</a>.
 </p>
 <p>
-{{ 'analytics.dashboard.setup.redirect' | trans }} {{ redirect_uri }}
+{{ 'dashboard.ga.setup.redirect' | trans }} {{ redirect_uri }}
 </p>
 {% if authUrl is defined %}
-    <h3>{{ 'analytics.dashboard.setup.connect' | trans }}</h3>
-    <a class='btn btn-primary' href='{{ authUrl }}'>{{ 'analytics.dashboard.confirm' | trans }}</a>
+    <h3>{{ 'dashboard.ga.setup.connect' | trans }}</h3>
+    <a class='btn btn-primary' href='{{ authUrl }}'>{{ 'dashboard.ga.setup.confirm' | trans }}</a>
 {% else %}
     <p>
-        {{ 'analytics.dashboard.setup.refresh' | trans }}
+        {{ 'dashboard.ga.setup.refresh' | trans }}
     </p>
 {% endif %}
 
