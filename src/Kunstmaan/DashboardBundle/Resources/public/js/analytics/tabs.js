@@ -1,38 +1,42 @@
-
-    // function to remove the number format on data so charts can work with it
-    function removeNumberFormat(number) {
-        var parts = number.split(",");
-        var number = '';
-        for (var i = 0; i < parts.length; i++) {
-            number += parts[i];
-        }
-        return parseInt(number, 10);
-    }
-
     $(document).ready(function() {
         // show first tab
-        var tab = $('.dashboard-tabs__item:nth-child(3) > div');
+        var tab = $('.dashboard-tabs__item:nth-child(2) > div');
 
         function switchTab(id, url) {
-            $.get(url, function(data) {
-                if(data.responseCode === 200) {
-                    $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
-                    $('#tab'+id).addClass('dashboard-tabs__item--active');
+            resetGoals();
+            data = getData(id);
 
-                    if (data.overview.sessions === 0) {
-                        $('#data_no_overview').css('display', 'block');
-                        $('#data_overview').css('display', 'none');
-                    } else {
-                        $('#data_no_overview').css('display', 'none');
-                        $('#data_overview').css('display', 'block');
+            if(data.responseCode === 200) {
+                $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
+                $('#tab'+id).addClass('dashboard-tabs__item--active');
 
-                        // add functions here to add component behaviour
-                        // these functions are declared in a per-template js file (public/js/analytics/)
-                        setChart(data);
+                if (data.overview.sessions === 0) {
+                    $('#data_no_overview').css('display', 'block');
+                    $('#data_overview').css('display', 'none');
+                } else {
+                    $('#data_no_overview').css('display', 'none');
+                    $('#data_overview').css('display', 'block');
+
+                    setChart(data);
+                    setTimeout(function() {
                         setGoals(data);
-                    }
+                    }, 500);
                 }
-            });
+            }
+        }
+
+        var cache = {};
+        function getData(id) {
+            if (cache.id) {
+                console.log('from cache');
+                return cache.id;
+            } else {
+                $.get('widget/googleanalytics/getOverview/' + id, function(data) {
+                    console.log(cached);
+                    cache.id = data;
+                    return data;
+                });
+            }
         }
 
         switchTab(tab.attr('data-id'), tab.attr('data-path'));

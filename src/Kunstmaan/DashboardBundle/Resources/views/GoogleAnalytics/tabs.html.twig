@@ -1,10 +1,10 @@
 <ul class="dashboard-tabs">
     {% set i = 1 %}
-    {% for overviewItem in overviews %}
-        <li class="dashboard-tabs__item {% if overviewItem.id == overview.id %}dashboard-tabs__item--active{% endif %}" id="tab{{ overviewItem.id }}">
-            <div class="dashboard-tabs__controller" data-id="{{ overviewItem.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overviewItem.id}) }}">
+    {% for overview in overviews %}
+        <li class="dashboard-tabs__item {% if overview.id == overview.id %}dashboard-tabs__item--active{% endif %}" id="tab{{ overview.id }}">
+            <div class="dashboard-tabs__controller" data-id="{{ overview.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overview.id}) }}">
                 <h6 class="dashboard-tabs__item__title">
-                    {{ overviewItem.title }}
+                    {{ overview.title }}
                 </h6>
             </div>
         </li>

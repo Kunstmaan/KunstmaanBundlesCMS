@@ -39,24 +39,9 @@ class GoogleAnalyticsController extends Controller
         }
 
         // set the overviews param
-        $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+        $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverviewSessions();
         $params['overviews'] = $overviews;
-
-        // set the default overview
-        $params['overview'] = $overviews[0];
-        if (sizeof($overviews) >= 3) { // if all overviews are present
-            // set the default overview to the middle one
-            $params['overview'] = $overviews[2];
-        }
-
         $params['token']     = true;
-
-        if (null !== $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getLastUpdate()) {
-            $timestamp = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getLastUpdate()->getTimestamp ();
-            $params['lastUpdate'] = date('H:i (d/m/Y)', $timestamp);
-        } else {
-            $params['lastUpdate'] = '/';
-        }
 
         return $params;
     }
@@ -272,24 +257,11 @@ class GoogleAnalyticsController extends Controller
         $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
         $analyticsHelper->init($googleClientHelper);
 
-        $results = $analyticsHelper->getResults(
-          31,
-          0,
-          'ga:users'
-        );
-        $rows    = $results->getRows();
-        var_dump('TOTAL '.$rows[0][0]);
 
-        $results = $analyticsHelper->getResults(
-          31,
-          0,
-          'ga:users',
-          array('dimensions' => 'ga:userType')
-        );
-        $rows    = $results->getRows();
-        $total = $rows[0][1]+$rows[1][1];
-        var_dump($rows, 'TOTAL '.$total);
 
+        $em       = $this->getDoctrine()->getManager();
+        $sessions = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverviewSessions();
+        var_dump($sessions);
 
         exit;
     }

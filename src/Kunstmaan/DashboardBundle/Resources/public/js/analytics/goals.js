@@ -1,39 +1,57 @@
     // create a list of all goals
     function setGoals(data) {
-        // reset the overview list
-        $('#goalOverview').html('');
+        addGoalBox(data, 0);
 
         // create box for each goal
-        for(var i = 0; i < data.goals.length; i++) {
-            // create a goal overview box
-            var chart = $('<div class="dashboard-goals-list__chart">');
-            $('#goalOverview').append(
-                $('<li class="dashboard-goals-list__item">', {'id': 'goal'+data.goals[i]['id'], 'data-goal-id': data.goals[i]['id']}
-                ).append(
-                    $('<span class="dashboard-goals-list__item__title">').html(data.goals[i]['name'])
-                ).append(
-                    $('<span class="dashboard-goals-list__item__number">').html('<strong>' + data.goals[i]['visits'] + '</strong> conversions')
-                ).append(
-                    chart
-                )
-            );
+        // for(var i = 0; i < data.goals.length; i++) {
 
-            // render the chart
-            new Morris.Line({
-                element: chart,
-                lineWidth: 2,
-                lineColors: ['#8ac9e1'],
-                fillOpacity: '.4',
-                hideHover: 'auto',
-                pointSize: 0,
-                data: data.goals[i].chartData,
-                xkey: 'timestamp',
-                ykeys: ['conversions'],
-                labels: ['Conversions'],
-                gridTextSize: 10,
-                gridTextColor: '#a7a7a7'
-            });
+        // }
+    }
+
+    function resetGoals() {
+        // reset the overview list
+        $('#goalOverview').slideUp(500, function() {
+            $('#goalOverview').html('');
+            $('#goalOverview').slideDown(0);
+        });
+    }
+
+
+    function addGoalBox(data, i) {
+        if (!data.goals[i]) {
+            return;
         }
+
+        // create a goal overview box
+        var chart = $('<div class="dashboard-goals-list__chart">');
+        $('#goalOverview').append(
+            $('<li class="dashboard-goals-list__item">', {'id': 'goal'+data.goals[i]['id'], 'data-goal-id': data.goals[i]['id']}
+            ).append(
+                $('<span class="dashboard-goals-list__item__title">').html(data.goals[i]['name'])
+            ).append(
+                $('<span class="dashboard-goals-list__item__number">').html('<strong>' + data.goals[i]['visits'] + '</strong> conversions')
+            ).append(
+                chart
+            )
+        );
+
+        // render the chart
+        new Morris.Line({
+            element: chart,
+            lineWidth: 2,
+            lineColors: ['#8ac9e1'],
+            fillOpacity: '.4',
+            hideHover: 'auto',
+            pointSize: 0,
+            data: data.goals[i].chartData,
+            xkey: 'timestamp',
+            ykeys: ['conversions'],
+            labels: ['Conversions'],
+            gridTextSize: 10,
+            gridTextColor: '#a7a7a7'
+        });
+
+        addGoalBox(data, i+1);
     }
 
 
