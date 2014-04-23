@@ -44,7 +44,7 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
     {
         $this->output = $output;
         $this->googleClientHelper = $this->getContainer()->get('kunstmaan_dashboard.googleclienthelper');
-        $this->em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $this->em = $this->getContainer()->get('doctrine')->getManager();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
