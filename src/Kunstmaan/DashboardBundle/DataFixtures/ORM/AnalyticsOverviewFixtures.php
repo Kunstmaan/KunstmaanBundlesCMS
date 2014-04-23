@@ -4,7 +4,7 @@ namespace Kunstmaan\DashboardBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Kunstmaan\DataFixtures\Entity\AnalyticsOverview;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
