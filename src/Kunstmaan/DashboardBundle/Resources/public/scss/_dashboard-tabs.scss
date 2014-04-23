@@ -2,6 +2,8 @@
    Dashboard Tabs
    ========================================================================== */
 .dashboard-tabs {
+    z-index: 2;
+    position: relative;
     @include clearfix;
     margin: 40px 0 0;
     list-style: none;

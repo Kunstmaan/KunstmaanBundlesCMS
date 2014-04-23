@@ -8,7 +8,7 @@
     <div id="data_no_overview" style="display:{% if overview.sessions == 0 %}block{% else %}none{% endif %}">{{ 'analytics.overview.unavailable' | trans}}</div>
 
     <!-- TAB CONTENT -->
-    <section class="dashboard__content" id="data_overview" {% if overview.sessions == 0 %}style="display:none"{% endif %}>
+    <section class="dashboard__content dashboard__content--loading" id="data_overview" {% if overview.sessions == 0 %}style="display:none"{% endif %}>
 
         <!-- CHART -->
         {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}

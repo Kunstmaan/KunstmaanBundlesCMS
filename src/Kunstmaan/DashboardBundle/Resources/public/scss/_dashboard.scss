@@ -4,11 +4,11 @@ Dashboard
 @import "vars";
 @import "mixins";
 
-@import "dashboard-general";
 @import "dashboard-typography";
 @import "dashboard-icons";
 
 @import "dashboard-tabs";
+@import "dashboard-content";
 
 @import "dashboard-charts";
 @import "dashboard-chart-list";

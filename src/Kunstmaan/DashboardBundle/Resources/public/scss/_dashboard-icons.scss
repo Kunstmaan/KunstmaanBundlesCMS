@@ -65,6 +65,9 @@
     text-align: center;
     border-radius: 100%;
     color: #fff;
+    &.dash-icon--stopwatch {
+        padding-left: 2px;
+    }
 }
 
 .dash-icon--circle--green {
