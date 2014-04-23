@@ -1,6 +1,7 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -104,13 +105,10 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
      *
      * @param AnalyticsOverview $overview The overview
      */
-    private function reset(&$overview)
+    private function reset(AnalyticsOverview $overview)
     {
         // reset overview
-        $overview->setNewVisits(0);
-        $overview->setReturningVisits(0);
-        $overview->setTrafficDirect(0);
-        $overview->setTrafficSearchEngine(0);
-        $overview->setTrafficReferral(0);
+        $overview->setNewUsers(0);
+        $overview->setReturningUsers(0);
     }
 }
