@@ -14,16 +14,12 @@
 
     <title>{% block title %}{{ websitetitle | trans }}{% endblock %}</title>
 
-    <meta name="description" content="">
-    <meta name="author" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
-
-
 
     <!--=========== CSS ===========-->
     <!--Combine-->
@@ -60,7 +56,7 @@
     {% javascripts
         '@KunstmaanAdminBundle/Resources/public/js/libs/modernizr.custom.2.6.2.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-1.9.0.min.js'
-        output='generated-js/scripts.js'
+        output='generated-js/scripts.js' filter='uglifyjs2'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -213,7 +209,7 @@
         '@KunstmaanAdminBundle/Resources/public/js/libs/iphone-style-checkboxes.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-colorpicker.js'
         '@KunstmaanAdminBundle/Resources/public/js/script.js'
-        output='generated-js/scripts_bottom.js'
+        output='generated-js/scripts_bottom.js' filter='uglifyjs2'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
