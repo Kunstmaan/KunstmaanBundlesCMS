@@ -7,6 +7,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DashboardWidget {
 
@@ -23,10 +24,12 @@ class DashboardWidget {
     /**
      * @param string $command
      * @param string $controller
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    function __construct($command, $controller)
+    function __construct($command, $controller, ContainerInterface $container)
     {
         $this->command = new $command();
+        $this->command->setContainer($container);
         $this->controller = $controller;
     }
 
