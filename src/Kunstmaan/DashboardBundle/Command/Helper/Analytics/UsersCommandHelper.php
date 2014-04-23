@@ -17,17 +17,17 @@ class UsersCommandHelper extends AbstractAnalyticsCommandHelper {
             $overview->getTimespan(),
             $overview->getStartOffset(),
             'ga:users',
-            array('dimensions' => 'ga:visitorType')
+            array('dimensions' => 'ga:userType')
         );
         $rows    = $results->getRows();
 
-        // new visitors
-        $data = is_array($rows) && isset($rows[0][1]) ? $rows[0][1] : 0;
-        $overview->setNewUsers($data);
+        // // new visitors
+        // $newUsers = is_array($rows) && isset($rows[0][1]) ? $rows[0][1] : 0;
+        // $overview->setNewUsers($newUsers);
 
         // returning visitors
-        $data = is_array($rows) && isset($rows[1][1]) ? $rows[1][1] : 0;
-        $overview->setReturningUsers($data);
+        $returningUsers = is_array($rows) && isset($rows[1][1]) ? $rows[1][1] : 0;
+        $overview->setReturningUsers($returningUsers);
     }
 
 

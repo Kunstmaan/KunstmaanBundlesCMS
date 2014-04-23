@@ -39,24 +39,9 @@ class GoogleAnalyticsController extends Controller
         }
 
         // set the overviews param
-        $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+        $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverviewSessions();
         $params['overviews'] = $overviews;
-
-        // set the default overview
-        $params['overview'] = $overviews[0];
-        if (sizeof($overviews) >= 3) { // if all overviews are present
-            // set the default overview to the middle one
-            $params['overview'] = $overviews[2];
-        }
-
         $params['token']     = true;
-
-        if (null !== $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getLastUpdate()) {
-            $timestamp = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getLastUpdate()->getTimestamp ();
-            $params['lastUpdate'] = date('H:i (d/m/Y)', $timestamp);
-        } else {
-            $params['lastUpdate'] = '/';
-        }
 
         return $params;
     }
@@ -199,13 +184,14 @@ class GoogleAnalyticsController extends Controller
         // overview data
         $overviewData = array(
           'chartData'                           => json_decode($overview->getChartData(), true),
+          'chartDataMaxValue'                   => $overview->getChartDataMaxValue(),
           'title'                               => $overview->getTitle(),
           'timespan'                            => $overview->getTimespan(),
           'startOffset'                         => $overview->getStartOffset(),
           'sessions'                            => number_format($overview->getSessions()),
           'users'                               => number_format($overview->getUsers()),
-          'pagesPerSession'                     => number_format($overview->getPagesPerSession()),
-          'avgSessionDuration'                  => number_format($overview->getAvgSessionDuration()),
+          'pagesPerSession'                     => round($overview->getPagesPerSession(), 3),
+          'avgSessionDuration'                  => $overview->getAvgSessionDuration(),
           'returningUsers'                      => number_format($overview->getReturningUsers()),
           'newUsers'                            => number_format($overview->getNewUsers()),
           'pageViews'                           => number_format($overview->getPageViews()),
@@ -231,7 +217,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetProfileId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
     }
 
     /**
@@ -241,7 +227,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetPropertyId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
     }
 
     /**
@@ -274,19 +260,11 @@ class GoogleAnalyticsController extends Controller
         $results = $analyticsHelper->getResults(
             1,
             1,
-            'ga:sessions, ga:users',
-            array('dimensions' => 'ga:date,ga:day,ga:hour')
+            'ga:pageviewsPerSession'
         );
-        $rows    = $results->getRows();
 
-        $totSes = 0;
-        $totUsr = 0;
-        foreach ($rows as $row) {
-          $totSes += $row[3];
-          $totUsr += $row[4];
-        }
 
-        var_dump('total sessions '.$totSes, 'total users '.$totUsr, $rows);
+        var_dump($results->getRows());
 
         exit;
     }

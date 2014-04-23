@@ -100,22 +100,32 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $pageviews = 0;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="pages_per_session", type="integer")
+     * @ORM\Column(name="pages_per_session", type="float")
      */
     private $pagesPerSession = 0;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="avg_session_duration", type="integer")
+     * @ORM\Column(name="chart_data_max_value", type="integer")
+     */
+    private $chartDataMaxValue = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="avg_session_duration", type="string")
      */
     private $avgSessionDuration = 0;
 
-
-
-
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="chart_data", type="text")
+     */
+    private $chartData = '';
 
 
     /**
@@ -148,13 +158,6 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
         }
         return $goals;
     }
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="chart_data", type="text")
-     */
-    private $chartData = '';
 
 
     /**
@@ -369,7 +372,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Set pagesPerSession
      *
-     * @param integer $pagesPerSession
+     * @param float $pagesPerSession
      * @return AnalyticsOverview
      */
     public function setPagesPerSession($pagesPerSession)
@@ -382,7 +385,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Get pagesPerSession
      *
-     * @return integer
+     * @return float
      */
     public function getPagesPerSession()
     {
@@ -405,7 +408,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Get avgSessionDuration
      *
-     * @return integer
+     * @return string
      */
     public function getAvgSessionDuration()
     {
@@ -433,5 +436,28 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     public function getUseYear()
     {
         return $this->useYear;
+    }
+
+    /**
+     * Set chartDataMaxValue
+     *
+     * @param integer $chartDataMaxValue
+     * @return AnalyticsOverview
+     */
+    public function setChartDataMaxValue($chartDataMaxValue)
+    {
+        $this->chartDataMaxValue = $chartDataMaxValue;
+
+        return $this;
+    }
+
+    /**
+     * Get chartDataMaxValue
+     *
+     * @return integer
+     */
+    public function getChartDataMaxValue()
+    {
+        return $this->chartDataMaxValue;
     }
 }

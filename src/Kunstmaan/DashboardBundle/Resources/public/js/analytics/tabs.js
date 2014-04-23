@@ -1,29 +1,18 @@
-
-    // function to remove the number format on data so charts can work with it
-    function removeNumberFormat(number) {
-        var parts = number.split(",");
-        var number = '';
-        for (var i = 0; i < parts.length; i++) {
-            number += parts[i];
-        }
-        return parseInt(number, 10);
-    }
-
     $(function() {
         // show first tab
-        var tab = $('.dashboard-tabs__item:nth-child(3) > div');
+        var tab = $('.dashboard-tabs__item:nth-child(2) > div');
 
         function switchTab(id, url) {
             $('#data_overview').addClass('dashboard__content--loading');
+
+
+            $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
+            $('#tab'+id).addClass('dashboard-tabs__item--active');
             $.ajax({
                 type: 'get',
-                url: url,
+                url: 'widget/googleanalytics/getOverview/' + id,
                 cache: false,
                 success: function(data) {
-                    $
-                    $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
-                    $('#tab'+id).addClass('dashboard-tabs__item--active');
-
                     if (data.overview.sessions === 0) {
                         $('#data_no_overview').css('display', 'block');
                         $('#data_overview').css('display', 'none');

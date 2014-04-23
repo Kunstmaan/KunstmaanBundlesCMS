@@ -2,21 +2,22 @@
 <div id="dashboard" class="dashboard">
 
     <!-- TABS -->
-    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews, 'lastUpdate' : lastUpdate} %}
+    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews} %}
     <!-- end TABS -->
 
-    <div id="data_no_overview" style="display:{% if overview.sessions == 0 %}block{% else %}none{% endif %}">{{ 'analytics.overview.unavailable' | trans}}</div>
+    <div id="data_no_overview" style="display:none">{{ 'analytics.overview.unavailable' | trans}}</div>
 
     <!-- TAB CONTENT -->
-    <section class="dashboard__content dashboard__content--loading" id="data_overview" {% if overview.sessions == 0 %}style="display:none"{% endif %}>
+    <section class="dashboard__content dashboard__content--loading" id="data_overview">
 
         <!-- CHART -->
         {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
         <!-- end CHART -->
 
-        {% if overview.getGoals | length > 0 %}
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview' : overview} %}
-        {% endif %}
+        <!-- GOALS -->
+        {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig'%}
+        <!-- end GOALS -->
+
     </section>
     <!-- end TAB CONTENT -->
 
