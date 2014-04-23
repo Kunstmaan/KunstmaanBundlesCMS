@@ -9,11 +9,11 @@ dashboard:
             year_to_date: Year to date
         chart:
             users: Users
-            new_users: New users
+            pct_new_sessions: % New Sessions
             sessions: Sessions
             pageviews: Pageviews
-            avg_pages_p_session: Avg. pages/session
-            avg_session_duration: Avg. session duration
+            avg_pages_p_session: Pages / Session
+            avg_session_duration: Avg. Session Duration
         setup:
             title: Setup your Google Analytics dashboard widget
             content: "To learn how to setup the Google Analytics widget, please refer to"

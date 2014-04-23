@@ -10,13 +10,6 @@
             </p>
         </li>
         <li class="dashboard-chart-list__item">
-            <i class="dash-icon--star dash-icon--big dash-icon--circle dash-icon--circle--red dashboard-chart-list__icon"></i>
-            <p class="dashboard-chart-list__data">
-                <span id="audience-data_new_users" class="text--big dashboard-chart-list__data__number">{# {{ overview.newUsers }} #}</span>
-                {{ 'dashboard.ga.chart.new_users' | trans }}
-            </p>
-        </li>
-        <li class="dashboard-chart-list__item">
             <i class="dash-icon--pointer dash-icon--big dash-icon--circle dash-icon--circle--purple dashboard-chart-list__icon"></i>
             <p class="dashboard-chart-list__data">
                 <span id="audience-data_visits" class="text--big dashboard-chart-list__data__number">{# {{ overview.visits }} #}</span>
@@ -28,6 +21,13 @@
             <p class="dashboard-chart-list__data">
                 <span id="audience-data_pageviews" class="text--big dashboard-chart-list__data__number">{# {{ overview.pageviews }} #}</span>
                 {{ 'dashboard.ga.chart.pageviews' | trans }}
+            </p>
+        </li>
+        <li class="dashboard-chart-list__item">
+            <i class="dash-icon--star dash-icon--big dash-icon--circle dash-icon--circle--red dashboard-chart-list__icon"></i>
+            <p class="dashboard-chart-list__data">
+                <span id="audience-data_new_users" class="text--big dashboard-chart-list__data__number">{# {{ overview.newSessions }} #}</span>
+                {{ 'dashboard.ga.chart.pct_new_sessions' | trans }}
             </p>
         </li>
         <li class="dashboard-chart-list__item">

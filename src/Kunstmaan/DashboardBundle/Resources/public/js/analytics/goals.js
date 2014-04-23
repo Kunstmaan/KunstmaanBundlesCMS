@@ -29,11 +29,11 @@
         );
 
         // render the chart
-        new Morris.Line({
+        new Morris.Area({
             element: chart,
             lineWidth: 2,
             lineColors: ['#8ac9e1'],
-            fillOpacity: '.4',
+            fillOpacity: '.9',
             hideHover: 'auto',
             pointSize: 0,
             data: data.goals[i].chartData,

@@ -15,7 +15,7 @@
             ymax: data.overview.chartDataMaxValue,
             xkey: 'timestamp',
             ykeys: ['pageviews', 'sessions', 'users','newusers'],
-            labels: ['Pageviews', 'Sessions', 'Users', 'New Users'],
+            labels: ['Pageviews', 'Sessions', 'Users', 'New Sessions'],
             behaveLikeLine: true,
             gridTextColor: '#a7a7a7',
             smooth: true
