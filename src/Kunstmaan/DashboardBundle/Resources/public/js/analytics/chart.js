@@ -26,5 +26,5 @@
         $('#audience-data_pageviews').html(data.overview.pageViews);
         $('#audience-data_pages_per_visit').html(data.overview.pagesPerSession);
         $('#audience-data_avg_visit_duration').html(data.overview.avgSessionDuration);
-        $('#audience-data_new_users').html(data.overview.newUsers);
+        $('#audience-data_new_users').html(data.overview.newUsers+'%');
     }

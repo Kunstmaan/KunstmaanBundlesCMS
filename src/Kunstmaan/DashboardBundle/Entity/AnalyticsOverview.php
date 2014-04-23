@@ -86,9 +86,9 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $returningUsers = 0;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="new_users", type="integer")
+     * @ORM\Column(name="new_users", type="float")
      */
     private $newUsers = 0;
 
@@ -186,7 +186,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Set newUsers
      *
-     * @param string $newUsers
+     * @param float $newUsers
      * @return AnalyticsOverview
      */
     public function setNewUsers($newUsers)
@@ -199,7 +199,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Get newUsers
      *
-     * @return string
+     * @return float
      */
     public function getNewUsers()
     {

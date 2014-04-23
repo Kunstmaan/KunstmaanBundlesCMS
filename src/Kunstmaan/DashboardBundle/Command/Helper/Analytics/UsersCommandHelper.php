@@ -13,21 +13,29 @@ class UsersCommandHelper extends AbstractAnalyticsCommandHelper {
     public function getData(&$overview) {
         // visitor types
         $this->output->writeln("\t" . 'Fetching visitor types..');
-        $results = $this->analyticsHelper->getResults(
-            $overview->getTimespan(),
-            $overview->getStartOffset(),
-            'ga:users',
-            array('dimensions' => 'ga:userType')
-        );
+
+        if ($overview->getUseYear()) {
+            $begin = date('Y-m-d', mktime(0,0,0,1,1,date('Y')));
+            $end = date('Y-m-d', mktime(0,0,0,1,1,date('Y', strtotime('+1 year'))));
+            $results = $this->analyticsHelper->getResultsByDate(
+                $begin,
+                $end,
+                'ga:percentNewSessions'
+            );
+        } else {
+            $results = $this->analyticsHelper->getResults(
+                $overview->getTimespan(),
+                $overview->getStartOffset(),
+                'ga:percentNewSessions'
+            );
+        }
+
+
         $rows    = $results->getRows();
 
-        // // new visitors
-        // $newUsers = is_array($rows) && isset($rows[0][1]) ? $rows[0][1] : 0;
-        // $overview->setNewUsers($newUsers);
-
-        // returning visitors
-        $returningUsers = is_array($rows) && isset($rows[1][1]) ? $rows[1][1] : 0;
-        $overview->setReturningUsers($returningUsers);
+        // new sessions
+        $newUsers = is_array($rows) && isset($rows[0][0]) ? $rows[0][0] : 0;
+        $overview->setNewUsers($newUsers);
     }
 
 

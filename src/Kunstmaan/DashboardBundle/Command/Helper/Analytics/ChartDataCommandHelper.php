@@ -61,7 +61,6 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
         $pageviews = 0;
         $totalUsers = 0;
         $totalSessions = 0;
-        $totalNewusers = 0;
         $totalPageviews = 0;
         $chartDataMaxValue = 0;
 
@@ -73,7 +72,6 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
             $pageviews = $row[sizeof($row)-1];
             $totalSessions += $sessions;
             $totalUsers += $users;
-            $totalNewusers += $newusers;
             $totalPageviews += $pageviews;
 
             // set max chartdata value
@@ -112,7 +110,6 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
         $overview->setChartDataMaxValue($chartDataMaxValue);
         $overview->setSessions($totalSessions);
         $overview->setUsers($totalUsers);
-        $overview->setNewUsers($totalNewusers);
         $overview->setPageviews($totalPageviews);
         $overview->setChartData(json_encode($chartData, JSON_NUMERIC_CHECK));
     }
