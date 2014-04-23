@@ -39,7 +39,7 @@
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
         '@KunstmaanDashboardBundle/Resources/public/js/libs/morris.js-0.4.3/morris.js'
         '@KunstmaanDashboardBundle/Resources/public/js/libs/raphael-2.1.2.js'
-        output='generated-js/ga_widget.js'
+        output='generated-js/ga_widget.js' filter='uglifyjs2'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
