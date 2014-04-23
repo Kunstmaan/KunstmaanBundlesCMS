@@ -63,5 +63,4 @@ class AnalyticsOverviewRepository extends EntityRepository
         return false;
     }
 
-
 }

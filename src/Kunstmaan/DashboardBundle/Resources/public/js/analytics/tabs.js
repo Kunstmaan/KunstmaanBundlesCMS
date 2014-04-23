@@ -1,5 +1,4 @@
     $(function() {
-
         // render the chart
         var mainChart = new Morris.Area({
             element: 'dashboard-chart--audience',

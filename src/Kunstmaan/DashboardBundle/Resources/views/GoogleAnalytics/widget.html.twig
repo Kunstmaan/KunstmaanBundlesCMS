@@ -14,9 +14,11 @@
         {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
         <!-- end CHART -->
 
-        <!-- GOALS -->
-        {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig'%}
-        <!-- end GOALS -->
+        {% for overview in overviews %}
+            <!-- GOALS -->
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview':overview} %}
+            <!-- end GOALS -->
+        {% endfor %}
 
     </section>
     <!-- end TAB CONTENT -->
@@ -39,7 +41,7 @@
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
         '@KunstmaanDashboardBundle/Resources/public/js/libs/morris.js-0.4.3/morris.js'
         '@KunstmaanDashboardBundle/Resources/public/js/libs/raphael-2.1.2.js'
-        output='generated-js/ga_widget.js' filter='uglifyjs2'
+        output='generated-js/ga_widget.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
