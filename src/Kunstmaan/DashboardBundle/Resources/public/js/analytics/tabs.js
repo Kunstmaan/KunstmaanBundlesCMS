@@ -4,15 +4,15 @@
 
         function switchTab(id, url) {
             $('#data_overview').addClass('dashboard__content--loading');
+
+
+            $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
+            $('#tab'+id).addClass('dashboard-tabs__item--active');
             $.ajax({
                 type: 'get',
-                url: url,
+                url: 'widget/googleanalytics/getOverview/' + id,
                 cache: false,
                 success: function(data) {
-                    $
-                    $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
-                    $('#tab'+id).addClass('dashboard-tabs__item--active');
-
                     if (data.overview.sessions === 0) {
                         $('#data_no_overview').css('display', 'block');
                         $('#data_overview').css('display', 'none');
@@ -24,23 +24,9 @@
                         // these functions are declared in a per-template js file (public/js/analytics/)
                         setChart(data);
                         setGoals(data);
-                    }, 500);
+                    }
                 }
-            }
-        }
-
-        var cache = {};
-        function getData(id) {
-            if (cache.id) {
-                console.log('from cache');
-                return cache.id;
-            } else {
-                $.get('widget/googleanalytics/getOverview/' + id, function(data) {
-                    console.log(cached);
-                    cache.id = data;
-                    return data;
-                });
-            }
+            });
         }
 
         switchTab(tab.attr('data-id'), tab.attr('data-path'));

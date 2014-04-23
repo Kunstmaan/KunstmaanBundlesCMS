@@ -1,27 +1,20 @@
     // create a list of all goals
     function setGoals(data) {
-        addGoalBox(data, 0);
+        resetGoals();
 
         // create box for each goal
-        // for(var i = 0; i < data.goals.length; i++) {
-
-        // }
+        for(var i = 0; i < data.goals.length; i++) {
+            addGoalBox(data, i);
+        }
     }
 
     function resetGoals() {
         // reset the overview list
-        $('#goalOverview').slideUp(500, function() {
-            $('#goalOverview').html('');
-            $('#goalOverview').slideDown(0);
-        });
+        $('#goalOverview').html('');
     }
 
 
     function addGoalBox(data, i) {
-        if (!data.goals[i]) {
-            return;
-        }
-
         // create a goal overview box
         var chart = $('<div class="dashboard-goals-list__chart">');
         $('#goalOverview').append(
@@ -50,8 +43,6 @@
             gridTextSize: 10,
             gridTextColor: '#a7a7a7'
         });
-
-        addGoalBox(data, i+1);
     }
 
 

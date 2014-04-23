@@ -1,7 +1,7 @@
 <ul class="dashboard-tabs">
     {% set i = 1 %}
     {% for overview in overviews %}
-        <li class="dashboard-tabs__item {% if overview.id == overview.id %}dashboard-tabs__item--active{% endif %}" id="tab{{ overview.id }}">
+        <li class="dashboard-tabs__item" id="tab{{ overview.id }}">
             <div class="dashboard-tabs__controller" data-id="{{ overview.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overview.id}) }}">
                 <h6 class="dashboard-tabs__item__title">
                     {{ overview.title }}
