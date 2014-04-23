@@ -14,7 +14,7 @@ We assume you have read the official Symfony documentation and know the basics o
 
 Since we use the Symfony framework, the [minimal requirements of Symfony][2] apply, so :
 
-- PHP needs to be a minimum version of PHP 5.3.3
+- PHP needs to be a minimum version of PHP 5.3.9
 - JSON needs to be enabled
 - ctype needs to be enabled
 - Your PHP.ini needs to have the date.timezone setting
@@ -25,6 +25,8 @@ Apart from these you will also need the following :
 - [Sass][4]
 - [Bower][5]
 - [Grunt][6]
+- UglifyJS
+- UglifyCss
 - a database server, preferrably [MySQL][7] 5.x (we haven't tried any other DB yet...)
 - a web server...
 
@@ -37,6 +39,8 @@ brew install node
 gem install sass # maybe you need sudo...
 npm install -g bower
 npm install -g grunt
+npm install -g uglify-js
+npm install -g uglifycss
 ```
 
 - On Linux ([Debian][9] / [Ubuntu][10]):
@@ -46,6 +50,8 @@ sudo apt-get install node
 gem install sass # maybe you need sudo...
 npm install -g bower
 npm install -g grunt
+npm install -g uglify-js
+npm install -g uglifycss
 ```
 
 - On Windows:
