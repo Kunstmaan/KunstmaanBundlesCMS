@@ -53,43 +53,68 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
         }
 
         $rows    = $results->getRows();
+
         $chartData = array();
+        $users = 0;
+        $sessions = 0;
+        $newusers = 0;
+        $pageviews = 0;
+        $totalUsers = 0;
+        $totalSessions = 0;
+        $totalNewusers = 0;
+        $totalPageviews = 0;
+        $chartDataMaxValue = 0;
+
         foreach ($rows as $row) {
-            // chart data
+            // metrics
+            $sessions = $row[sizeof($row)-4];
+            $users = $row[sizeof($row)-3];
+            $newusers = $row[sizeof($row)-2];
+            $pageviews = $row[sizeof($row)-1];
+            $totalSessions += $sessions;
+            $totalUsers += $users;
+            $totalNewusers += $newusers;
+            $totalPageviews += $pageviews;
+
+            // set max chartdata value
+            if ($chartDataMaxValue < $pageviews) {
+                $chartDataMaxValue = $pageviews;
+            }
+
+            // timestamp
             if ($timespan <= 1) {
                 $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
-                $chartData['sessions'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
-                $chartData['users'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
-                $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
-                $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
             } else if ($timespan <= 7) {
                 $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
-                $chartData['sessions'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
-                $chartData['users'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
-                $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
-                $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
             } else if ($timespan <= 31) {
                 $timestamp = mktime(0, 0, 0, substr($row[2], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
                 $timestamp = date('Y-m-d H:00', $timestamp);
-                $chartData['sessions'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
-                $chartData['users'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
-                $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[5]);
-                $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[6]);
             } else {
                 $timestamp = strtotime(substr($row[0], 0, 4).'W'.substr($row[0], 4, 2));
                 $timestamp = date('Y-m-d H:00', $timestamp);
-                $chartData['sessions'][] = array('timestamp' => $timestamp, 'visits' => $row[1]);
-                $chartData['users'][] = array('timestamp' => $timestamp, 'visits' => $row[2]);
-                $chartData['newusers'][] = array('timestamp' => $timestamp, 'visits' => $row[3]);
-                $chartData['pageviews'][] = array('timestamp' => $timestamp, 'visits' => $row[4]);
             }
+
+            // add to chart array
+            $chartEntry = array(
+                    'timestamp'     => $timestamp,
+                    'sessions'     => $sessions,
+                    'users'         => $users,
+                    'newusers'      => $newusers,
+                    'pageviews'     => $pageviews
+
+                );
+            $chartData[] = $chartEntry;
         }
 
-
         // adding data to the overview
-        $overview->setChartData(json_encode($chartData, JSON_UNESCAPED_SLASHES));
+        $overview->setChartDataMaxValue($chartDataMaxValue);
+        $overview->setSessions($totalSessions);
+        $overview->setUsers($totalUsers);
+        $overview->setNewUsers($totalNewusers);
+        $overview->setPageviews($totalPageviews);
+        $overview->setChartData(json_encode($chartData, JSON_NUMERIC_CHECK));
     }
 
 }

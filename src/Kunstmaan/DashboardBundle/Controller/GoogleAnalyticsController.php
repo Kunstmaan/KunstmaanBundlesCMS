@@ -199,13 +199,14 @@ class GoogleAnalyticsController extends Controller
         // overview data
         $overviewData = array(
           'chartData'                           => json_decode($overview->getChartData(), true),
+          'chartDataMaxValue'                   => $overview->getChartDataMaxValue(),
           'title'                               => $overview->getTitle(),
           'timespan'                            => $overview->getTimespan(),
           'startOffset'                         => $overview->getStartOffset(),
           'sessions'                            => number_format($overview->getSessions()),
           'users'                               => number_format($overview->getUsers()),
           'pagesPerSession'                     => number_format($overview->getPagesPerSession()),
-          'avgSessionDuration'                  => number_format($overview->getAvgSessionDuration()),
+          'avgSessionDuration'                  => $overview->getAvgSessionDuration(),
           'returningUsers'                      => number_format($overview->getReturningUsers()),
           'newUsers'                            => number_format($overview->getNewUsers()),
           'pageViews'                           => number_format($overview->getPageViews()),
@@ -231,7 +232,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetProfileId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
     }
 
     /**
@@ -241,7 +242,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetPropertyId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
     }
 
     /**
@@ -272,21 +273,23 @@ class GoogleAnalyticsController extends Controller
         $analyticsHelper->init($googleClientHelper);
 
         $results = $analyticsHelper->getResults(
-            1,
-            1,
-            'ga:sessions, ga:users',
-            array('dimensions' => 'ga:date,ga:day,ga:hour')
+          31,
+          0,
+          'ga:users'
         );
         $rows    = $results->getRows();
+        var_dump('TOTAL '.$rows[0][0]);
 
-        $totSes = 0;
-        $totUsr = 0;
-        foreach ($rows as $row) {
-          $totSes += $row[3];
-          $totUsr += $row[4];
-        }
+        $results = $analyticsHelper->getResults(
+          31,
+          0,
+          'ga:users',
+          array('dimensions' => 'ga:userType')
+        );
+        $rows    = $results->getRows();
+        $total = $rows[0][1]+$rows[1][1];
+        var_dump($rows, 'TOTAL '.$total);
 
-        var_dump('total sessions '.$totSes, 'total users '.$totUsr, $rows);
 
         exit;
     }

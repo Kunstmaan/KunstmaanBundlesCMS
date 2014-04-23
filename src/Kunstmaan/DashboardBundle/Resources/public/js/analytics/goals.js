@@ -5,7 +5,6 @@
 
         // create box for each goal
         for(var i = 0; i < data.goals.length; i++) {
-        // for(var i = 0; i < 1; i++) {
             // create a goal overview box
             var chart = $('<div class="dashboard-goals-list__chart">');
             $('#goalOverview').append(
@@ -19,15 +18,6 @@
                 )
             );
 
-            // create a data array
-            var chartData = [];
-            for (var j = 0; j < data.goals[i].chartData.length; j+=1) {
-                chartData.push({
-                    x : data.goals[i].chartData[j].timestamp,
-                    visits : parseInt(data.goals[i].chartData[j].visits, 10)
-                });
-            }
-
             // render the chart
             new Morris.Line({
                 element: chart,
@@ -36,10 +26,10 @@
                 fillOpacity: '.4',
                 hideHover: 'auto',
                 pointSize: 0,
-                data: chartData,
-                xkey: 'x',
-                ykeys: ['visits'],
-                labels: ['Users'],
+                data: data.goals[i].chartData,
+                xkey: 'timestamp',
+                ykeys: ['conversions'],
+                labels: ['Conversions'],
                 gridTextSize: 10,
                 gridTextColor: '#a7a7a7'
             });
