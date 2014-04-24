@@ -388,7 +388,9 @@ function init_twipsy() {
 
 //Custom Select
 function initCustomSelect() {
-    $('select.chzn-select').chosen();
+    $('select.chzn-select').chosen({
+        search_contains: true
+    });
 }
 
 
