@@ -9,6 +9,7 @@
     }
 
     function addGoalBox(data, i) {
+        $('#goal'+data.goals[i]['id']+' .dashboard-goals-list__chart').html('');
         var chart = $('#goal'+data.goals[i]['id']+' .dashboard-goals-list__chart');
 
          $('#goal'+data.goals[i]['id']+' .dashboard-goals-list__item__title').html(data.goals[i]['name']);
