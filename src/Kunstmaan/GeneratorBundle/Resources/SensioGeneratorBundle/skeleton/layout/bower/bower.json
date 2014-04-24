@@ -8,6 +8,7 @@
     "cupcake": "~1.6",
     "html5shiv": "~3.7",
     "flexslider": "latest",
+    "jquery.equalheights": "~1.5.2",
     "fitvids": "~1.1",
     "svgeezy": "~1.0",
     "jquery-placeholder": "~2.0",

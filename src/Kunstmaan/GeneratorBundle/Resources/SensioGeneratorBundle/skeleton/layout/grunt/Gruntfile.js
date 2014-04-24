@@ -133,9 +133,11 @@ module.exports = function (grunt) {
                         'web/vendor/jquery/dist/jquery.js',
                         'web/vendor/sass-bootstrap/js/modal.js',
                         'web/vendor/flexslider/jquery.flexslider.js',
+                        'web/vendor/jquery.equalheights/jquery.equalheights.js',
                         'web/vendor/fitvids/jquery.fitvids.js',
                         'web/vendor/fancybox/source/jquery.fancybox.js',
                         'web/vendor/cupcake/js/navigation/jquery.navigation.js',
+                        'web/vendor/cupcake/js/slider/jquery.slider.js'
                     ]
                 }
             },
