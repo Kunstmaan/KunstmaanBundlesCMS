@@ -73,6 +73,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->prependExtensionConfig('monolog', $monologConfig);
 
         $configs = $container->getExtensionConfig($this->getAlias());
-        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->processConfiguration(new Configuration(), $configs);
     }
 }

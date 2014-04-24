@@ -22,6 +22,11 @@ class MenuBuilder
     private $adaptors = array();
 
     /**
+     * @var MenuAdaptorInterface[] $adaptors
+     */
+    private $sorted = array();
+
+    /**
      * @var TopMenuItem[] $topMenuItems
      */
     private $topMenuItems = null;
@@ -36,13 +41,12 @@ class MenuBuilder
      */
     private $currentCache = null;
 
+
     /**
      * Constructor
      *
      * @param TranslatorInterface $translator The translator
      * @param ContainerInterface  $container  The container
-     *
-     * @TODO: this should only have a Request parameter
      */
     public function __construct(TranslatorInterface $translator, ContainerInterface $container)
     {
@@ -55,9 +59,10 @@ class MenuBuilder
      *
      * @param MenuAdaptorInterface $adaptor
      */
-    public function addAdaptMenu(MenuAdaptorInterface $adaptor)
+    public function addAdaptMenu(MenuAdaptorInterface $adaptor, $priority = 0)
     {
-        $this->adaptors[] = $adaptor;
+        $this->adaptors[$priority][] = $adaptor;
+        unset($this->sorted);
     }
 
     /**
@@ -135,7 +140,7 @@ class MenuBuilder
             /* @var $request Request */
             $request = $this->container->get('request');
             $this->topMenuItems = array();
-            foreach ($this->adaptors as $menuAdaptor) {
+            foreach ($this->getAdaptors() as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
             }
         }
@@ -158,11 +163,33 @@ class MenuBuilder
         /* @var $request Request */
         $request = $this->container->get('request');
         $result = array();
-        foreach ($this->adaptors as $menuAdaptor) {
+        foreach ($this->getAdaptors() as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);
         }
 
         return $result;
+    }
+
+    private function getAdaptors()
+    {
+        if (!isset($this->sorted)) {
+            $this->sortAdaptors();
+        }
+
+        return $this->sorted;
+    }
+
+    /**
+     * Sorts the internal list of adaptors by priority.
+     */
+    private function sortAdaptors()
+    {
+        $this->sorted = array();
+
+        if (isset($this->adaptors)) {
+            krsort($this->adaptors);
+            $this->sorted = call_user_func_array('array_merge', $this->adaptors);
+        }
     }
 
 }

@@ -1,9 +1,7 @@
 <?php
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs;
 
-use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidgetInterface;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
-
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;

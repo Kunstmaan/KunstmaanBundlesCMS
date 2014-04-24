@@ -20,7 +20,7 @@ class ApplyAclCommand extends ContainerAwareCommand
 {
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     private $em = null;
 
@@ -71,14 +71,14 @@ class ApplyAclCommand extends ContainerAwareCommand
             $changeset->setPid(getmypid());
             $changeset->setStatus(AclChangeset::STATUS_RUNNING);
             $this->em->persist($changeset);
-            $this->em->flush();
+            $this->em->flush($changeset);
 
             $entity = $this->em->getRepository($changeset->getRefEntityName())->find($changeset->getRefId());
             $permissionAdmin->applyAclChangeset($entity, $changeset->getChangeset());
 
             $changeset->setStatus(AclChangeset::STATUS_FINISHED);
             $this->em->persist($changeset);
-            $this->em->flush();
+            $this->em->flush($changeset);
 
             $hasPending = $aclRepo->hasPendingChangesets();
         } while ($hasPending);
@@ -98,7 +98,7 @@ class ApplyAclCommand extends ContainerAwareCommand
                 // PID not running, process probably failed...
                 $runningAclChangeset->setStatus(AclChangeset::STATUS_FAILED);
                 $this->em->persist($runningAclChangeset);
-                $this->em->flush();
+                $this->em->flush($runningAclChangeset);
             }
         }
 

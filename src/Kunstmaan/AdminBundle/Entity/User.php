@@ -26,6 +26,8 @@ class User extends BaseUser
      * Get the classname of the admin list configurator.
      *
      * @return string
+     *
+     * @deprecated Use the kunstmaan_user_management.user_admin_list_configurator.class parameter instead!
      */
     public function getAdminListConfiguratorClass()
     {

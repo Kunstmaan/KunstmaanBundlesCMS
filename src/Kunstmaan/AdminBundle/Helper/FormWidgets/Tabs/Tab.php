@@ -3,10 +3,8 @@ namespace Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs;
 
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
-
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
