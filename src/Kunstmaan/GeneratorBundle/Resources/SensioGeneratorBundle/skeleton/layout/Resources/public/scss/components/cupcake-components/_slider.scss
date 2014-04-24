@@ -2,7 +2,7 @@
    Cupcake Slider adjustments
    ========================================================================== */
 
-.slider-pp__caption--title {
+.slider-pp__caption__title {
     text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
     color: $green;
     text-transform: uppercase;
@@ -13,7 +13,7 @@
     }
 }
 
-.slider-pp__caption--text {
+.slider-pp__caption__text {
     display: block;
     margin: 0 auto;
     padding: 0 0 1em;
@@ -26,7 +26,10 @@
     }
 }
 .slider-pp__caption {
-    padding: 8% 4% 0 0;
+    padding: 8% 4% 0 4%;
+    width: 100%;
+    height: 100%;
+    color: $white;
     p {
         margin: 0 auto;
         padding: 0 0 1em;
@@ -39,6 +42,7 @@
 
 .slider-pp__thumbs--item {
     padding: 1em 2em;
+    border-right: 1px solid $white;
     &:hover {
         .slider-pp__thumbs__title {
             color: $gray-dark;
@@ -46,6 +50,9 @@
     }
     @media (max-width: 48em) {
         text-indent: -9999px;
+    }
+    &:last-child {
+        border: none;
     }
 }
 .slider-pp__thumbs__title {
@@ -68,6 +75,8 @@
 .flex-direction-nav a {
     z-index: 2;
     color: $green;
+    height: 40px;
+    margin: 0;
     &.flex-next, &.flex-prev {
         text-indent: 0;
         &:before {
@@ -79,6 +88,16 @@
     }
     &.flex-prev {
         @extend .icon-chevron-left;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    //destroy function
+    .flexslider .slides > li {
+        margin-bottom: 1em;
+    }
+    .slider-pp .slider-pp__flexslider {
+        box-shadow: none;
     }
 }
 

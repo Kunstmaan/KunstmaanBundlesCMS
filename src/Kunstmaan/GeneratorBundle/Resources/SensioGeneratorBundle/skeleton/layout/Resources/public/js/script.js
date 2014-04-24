@@ -7,30 +7,11 @@ var myApplication = (function($, window, undefined) {
     /*
         declare all your methods here
     */
-    var init, initSliders, initSocial;
+    var init, initSocial;
 
     init = function() {
         cupcake.navigation.init();
-        initSliders();
-    };
-
-    initSliders = function() {
-        $('.js-flexslider').flexslider({
-            animation: "slide",
-            controlNav: true,
-            slideshow: false,
-            startAt: 0,
-            manualControls: ".js-thumbs .js-thumbs--item",
-            start: function(slider){
-                $(slider.slides.eq(0)).addClass('flex-animateIn');
-            },
-            before: function(slider){
-                var thisSlide = slider.slides.eq(slider.currentSlide),
-                    animateSlide = slider.slides.eq(slider.animatingTo);
-                $(thisSlide).removeClass('flex-animateIn');
-                $(animateSlide).addClass('flex-animateIn');
-            }
-        });
+        cupcake.slider.init();
     };
 
     /*
