@@ -1,47 +1,34 @@
-# Analytics
-analytics:
-  traffic:
-    sources: Traffic Sources
-    direct: Direct
-    referrals: Referrals
-    search_engines: Search Engines
-  referrals:
-    title: Top Referrals
-    unavailable: No data available for Top Referrals
-  searches:
-    title: Top Search Terms
-    unavailable: No data available for Top Search Terms
-  pages:
-    title: Top Pages
-    unavailable: No data available for Top Pages
-  campaigns:
-    title: Top Campaigns
-    unavailable: No data available for Top Campaigns
-  visitors: Visitors
-  pageviews: pageviews
-  visits: 'Visits'
-  visits.returning: 'Returning visitors'
-  visits.new: 'New visitors'
-  visits.bounce: 'Bounce rate'
-  dashboard:
-    setup:
-      title: Dashboard Setup
-      content: "To setup the dashboard, visit"
-      redirect: "This is your redirect URI:"
-      docs: the documentation
-      refresh: "Once everything is set up, refresh this page."
-      connect: Connect your Google Account.
-    step4:
-      title: Select a website to track
-      content: Select a domain registered in your Google Analytics account.
-    step5:
-      title: Select a profile
-      content: Select a profile for the selected website
-    confirm: Here
-    refresh: You can now refresh this page
-    reset:
-      profile: Choose a new Analytics Profile (view)
-      property: Track a new Analytics Website (property)
-    lastUpdate: Last time updated:
-    update: Update now
-    updating: Updating.. please wait
+dashboard:
+    ga:
+        tab:
+            today: Today
+            yesterday: Yesterday
+            last_7_days: Last 7 days
+            last_30_days: Last 30 days
+            last_12_months: Last 12 months
+            year_to_date: Year to date
+        chart:
+            users: Users
+            pct_new_sessions: % New Sessions
+            sessions: Sessions
+            pageviews: Pageviews
+            avg_pages_p_session: Pages / Session
+            avg_session_duration: Avg. Session Duration
+        setup:
+            title: Setup your Google Analytics dashboard widget
+            content: "To learn how to setup the Google Analytics widget, please refer to"
+            docs_url: "https://github.com/Kunstmaan/KunstmaanAdminBundle/blob/issue14713-newdashboard/Resources/doc/SetupAnalyticsDashboard.md"
+            docs: the documentation
+            redirect: "This is your redirect URI:"
+            refresh: "Once everything is set up, refresh this page."
+            connect: Connect your Google Account.
+            confirm: Here
+            profile:
+                title: Select a profile
+                content: Select a profile for the selected website
+            property:
+              title: Select a website to track
+              content: Select a domain registered in your Google Analytics account.
+        reset:
+            profile: Choose a new Analytics Profile (view)
+            property: Track a new Analytics Website (property)

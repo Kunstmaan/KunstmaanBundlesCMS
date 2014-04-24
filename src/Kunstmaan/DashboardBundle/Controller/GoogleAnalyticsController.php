@@ -25,7 +25,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function widgetAction(Request $request)
     {
-        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), true);
+        $em = $this->getDoctrine()->getManager();
 
         // get API client
         try {
@@ -35,64 +35,12 @@ class GoogleAnalyticsController extends Controller
             $currentRoute  = $request->attributes->get('_route');
             $currentUrl    = $this->get('router')->generate($currentRoute, array(), true);
             $params['url'] = $currentUrl . 'setToken/';
-
             return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
-        }
-
-
-        // if token not set
-        if (!$googleClientHelper->tokenIsSet()) {
-            $currentRoute  = $request->attributes->get('_route');
-            $currentUrl    = $this->get('router')->generate($currentRoute, array(), true);
-            $params['url'] = $currentUrl . 'setToken/';
-
-            $googleClient      = $googleClientHelper->getClient();
-            $googleClient->setRedirectUri($params['redirect_uri']);
-            $params['authUrl'] = $googleClient->createAuthUrl();
-            return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
-        }
-
-        // if propertyId not set
-        if (!$googleClientHelper->propertyIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
-        }
-
-        // if profileId not set
-        if (!$googleClientHelper->profileIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
-        }
-
-        // if setup is complete
-        $em        = $this->getDoctrine()->getManager();
-        $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
-
-        $params['token']     = true;
-        $params['overviews'] = array();
-
-        // if no overviews are yet configured
-        if (!$overviews) {
-            return $this->render(
-                'KunstmaanDashboardBundle:GoogleAnalytics:errorOverviews.html.twig',
-                array()
-            );
         }
 
         // set the overviews param
-        $params['overviews'] = $overviews;
-        // set the default overview
-        $params['overview'] = $overviews[0];
-        if (sizeof($overviews) >= 3) { // if all overviews are present
-            // set the default overview to the middle one
-            $params['overview'] = $overviews[2];
-        }
-        $params['referrals'] = $params['overview']->getReferrals()->toArray();
-        $params['searches']  = $params['overview']->getSearches()->toArray();
-        if (null !== $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getLastUpdate()) {
-            $timestamp = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getLastUpdate()->getTimestamp ();
-            $params['lastUpdate'] = date('H:i (d/m/Y)', $timestamp);
-        } else {
-            $params['lastUpdate'] = '/';
-        }
+        $params['token'] = true;
+        $params['overviews'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
 
         return $params;
     }
@@ -121,14 +69,13 @@ class GoogleAnalyticsController extends Controller
 
                 return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
             }
-
-            $googleClientHelper->getClient()->authenticate();
+            $googleClientHelper->getClient()->authenticate($code);
             $googleClientHelper->saveToken($googleClientHelper->getClient()->getAccessToken());
 
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
         }
 
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
     }
 
     /**
@@ -155,7 +102,7 @@ class GoogleAnalyticsController extends Controller
             $parts = explode("::", $request->request->get('properties'));
             $googleClientHelper->saveAccountId($parts[1]);
             $googleClientHelper->savePropertyId($parts[0]);
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
         }
 
         /** @var GoogleClientHelper $googleClient */
@@ -192,7 +139,7 @@ class GoogleAnalyticsController extends Controller
 
         if (null !== $request->request->get('profiles')) {
             $googleClientHelper->saveProfileId($request->request->get('profiles'));
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+            return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
         }
 
         /** @var GoogleClientHelper $googleClient */
@@ -224,34 +171,6 @@ class GoogleAnalyticsController extends Controller
         $em       = $this->getDoctrine()->getManager();
         $overview = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($id);
 
-        // referrals data
-        $referrals = array();
-        foreach ($overview->getReferrals()->toArray() as $key => $referral) {
-            $referrals[$key]['visits'] = $referral->getVisits();
-            $referrals[$key]['name']   = $referral->getName();
-        }
-
-        // searches data
-        $searches = array();
-        foreach ($overview->getSearches()->toArray() as $key => $search) {
-            $searches[$key]['visits']  = $search->getVisits();
-            $searches[$key]['name']    = $search->getName();
-        }
-
-        // campaigns data
-        $campaigns = array();
-        foreach ($overview->getCampaigns()->toArray() as $key => $search) {
-            $campaigns[$key]['visits']  = $search->getVisits();
-            $campaigns[$key]['name']    = $search->getName();
-        }
-
-        // pages data
-        $pages = array();
-        foreach ($overview->getPages() as $key => $page) {
-            $pages[$key]['visits']     = number_format($page->getVisits());
-            $pages[$key]['name']       = $page->getName();
-        }
-
         // goals data
         $goals = array();
         foreach ($overview->getActiveGoals() as $key => $goal) {
@@ -263,41 +182,27 @@ class GoogleAnalyticsController extends Controller
 
         // overview data
         $overviewData = array(
+          'id'                                  => $overview->getId(),
           'chartData'                           => json_decode($overview->getChartData(), true),
+          'chartDataMaxValue'                   => $overview->getChartDataMaxValue(),
           'title'                               => $overview->getTitle(),
           'timespan'                            => $overview->getTimespan(),
           'startOffset'                         => $overview->getStartOffset(),
-          'visits'                              => number_format($overview->getVisits()),
-          'visitors'                            => number_format($overview->getVisitors()),
-          'pagesPerVisit'                       => number_format($overview->getPagesPerVisit()),
-          'avgVisitDuration'                    => number_format($overview->getAvgVisitDuration()),
-          'returningVisits'                     => number_format($overview->getReturningVisits()),
-          'newVisits'                           => number_format($overview->getNewVisits()),
-          'bounceRate'                          => number_format($overview->getBounceRate()),
+          'sessions'                            => number_format($overview->getSessions()),
+          'users'                               => number_format($overview->getUsers()),
+          'pagesPerSession'                     => round($overview->getPagesPerSession(), 2),
+          'avgSessionDuration'                  => $overview->getAvgSessionDuration(),
+          'returningUsers'                      => number_format($overview->getReturningUsers()),
+          'newUsers'                            => round($overview->getNewUsers(),2),
           'pageViews'                           => number_format($overview->getPageViews()),
-          'trafficDirect'                       => number_format($overview->getTrafficDirect()),
-          'trafficReferral'                     => number_format($overview->getTrafficReferral()),
-          'trafficSearchEngine'                 => number_format($overview->getTrafficSearchEngine()),
-          'desktopTraffic'                      => number_format($overview->getDesktopTraffic()),
-          'mobileTraffic'                       => number_format($overview->getMobileTraffic()),
-          'tabletTraffic'                       => number_format($overview->getTabletTraffic()),
-          'desktopTrafficPercentage'            => $overview->getDesktopTrafficPercentage(),
-          'mobileTrafficPercentage'             => $overview->getMobileTrafficPercentage(),
-          'tabletTrafficPercentage'             => $overview->getTabletTrafficPercentage(),
-          'trafficDirectPercentage'             => $overview->getTrafficDirectPercentage(),
-          'trafficReferralPercentage'           => $overview->getTrafficReferralPercentage(),
-          'trafficSearchEnginePercentage'       => $overview->getTrafficSearchEnginePercentage(),
-          'returningVisitsPercentage'           => $overview->getReturningVisitsPercentage(),
-          'newVisitsPercentage'                 => $overview->getNewVisitsPercentage(),
+          'returningUsersPercentage'            => $overview->getReturningUsersPercentage(),
+          'newUsersPercentage'                  => $overview->getNewUsersPercentage(),
         );
 
         // put all data in the return array
         $return = array(
           'responseCode'                        => 200,
           'overview'                            => $overviewData,
-          'referrals'                           => $referrals,
-          'campaigns'                           => $campaigns,
-          'pages'                               => $pages,
           'goals'                               => $goals,
         );
 
@@ -312,7 +217,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetProfileId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
     }
 
     /**
@@ -322,7 +227,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetPropertyId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_homepage'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
     }
 
     /**
@@ -352,43 +257,15 @@ class GoogleAnalyticsController extends Controller
         $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
         $analyticsHelper->init($googleClientHelper);
 
-                $extra = array(
-                    'dimensions' => 'ga:week,ga:day,ga:date'
-                    );
-
         $results = $analyticsHelper->getResults(
-                31,
-                0,
-                'ga:goal11Completions,ga:goal12Completions,ga:goal13Completions',
-                $extra
+            1,
+            1,
+            'ga:pageviewsPerSession'
         );
-
-        $row = $results->getRows()[0];
-
-
-// int mktime (
-// [ int $hour = date("H")
-// [, int $minute = date("i")
-// [, int $second = date("s")
-// [, int $month = date("n")
-// [, int $day = date("j")
-// [, int $year = date("Y")
-// [, int $is_dst = -1 ]]]]]]] )
-
-
-        $timestamp = mktime(
-            0,
-            0,
-            0,
-            substr($row[0], 4, 2),
-            substr($row[2], 6, 2),
-            substr($row[2], 0, 4));
-
-        $timestamp = date('Y-m-d H:00', $timestamp);
-        echo $timestamp;
 
 
         var_dump($results->getRows());
+
         exit;
     }
 

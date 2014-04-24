@@ -29,7 +29,7 @@ class AnalyticsOverviewRepository extends EntityRepository
     }
 
     /**
-     * Get all overviews
+     * Get an overview
      *
      * @param int $id
      *
@@ -46,6 +46,18 @@ class AnalyticsOverviewRepository extends EntityRepository
         $results = $qb->getQuery()->getResult();
         if ($results) {
             return $results[0];
+        }
+
+        return false;
+    }
+
+    public function getOverviewData() {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('o.id, o.title')
+          ->from('KunstmaanDashboardBundle:AnalyticsOverview', 'o');
+        $results = $qb->getQuery()->getResult();
+        if ($results) {
+            return $results;
         }
 
         return false;

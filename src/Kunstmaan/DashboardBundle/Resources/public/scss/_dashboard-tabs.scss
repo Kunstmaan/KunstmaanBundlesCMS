@@ -1,8 +1,9 @@
 /* ==========================================================================
    Dashboard Tabs
    ========================================================================== */
-
-.db-tabs {
+.dashboard-tabs {
+    z-index: 2;
+    position: relative;
     @include clearfix;
     margin: 40px 0 0;
     list-style: none;
@@ -13,7 +14,8 @@
         box-sizing: border-box;
     }
 }
-.db-tabs__item {
+
+.dashboard-tabs__item {
     float: left;
     @include single_transition(all, .2s, ease-out);
     text-align: center;
@@ -30,7 +32,7 @@
     }
 }
 
-.db-tabs__item--active {
+.dashboard-tabs__item--active {
     background-color: #fff;
     border-color: $hr-color;
     border-bottom-color: transparent;
@@ -41,28 +43,16 @@
         border-bottom-color: transparent;
     }
 }
-.db-tabs__controller {
+
+.dashboard-tabs__controller {
     display: block;
 }
 
-.db-tabs__item__title {
+.dashboard-tabs__item__title {
     color: $text-color-lighter;
     font-size: 13px;
     font-weight: normal;
     display: inline-block;
     margin: 0;
     padding: 0;
-}
-.db-tabs__item__number {
-    color: $text-color;
-    font-size: 18px;
-    font-family: $custom-font;
-    display: inline-block;
-    margin: 0 0 0 2px;
-    padding: 0;
-}
-.db-tabs__item__subtitle {
-    color: $text-color;
-    font-size: 12px;
-    display: none;
 }

@@ -1,44 +1,33 @@
 {% if token %}
-<div id="dashboard" style="opacity:0">
+<div id="dashboard" class="dashboard">
 
     <!-- TABS -->
-    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews, 'lastUpdate' : lastUpdate} %}
+    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews} %}
     <!-- end TABS -->
 
+    <div id="data_no_overview" style="display:none">{{ 'analytics.overview.unavailable' | trans}}</div>
+
     <!-- TAB CONTENT -->
-    <section class="db-content">
-        <!-- COL -->
-        <div class="db-col db-col--6">
-            <div class="db-block">
-                <!-- CHART -->
-                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
-                <!-- end CHART -->
-            </div>
-        </div>
-        <!-- end COL -->
+    <section class="dashboard__content dashboard__content--loading" id="data_overview">
 
-        <!-- COL -->
-        <div class="db-col db-col--3">
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:traffic.html.twig' with {'overview' : overview} %}
-        </div>
-        <!-- end COL -->
+        <!-- CHART -->
+        {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
+        <!-- end CHART -->
 
-        <!-- COL -->
-        <div class="db-col db-col--3">
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:visits.html.twig' with {'overview' : overview} %}
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:pages.html.twig' with {'pages' : overview.getPages} %}
-        </div>
-        <!-- end COL -->
+        {% for overview in overviews %}
+            <!-- GOALS -->
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview':overview} %}
+            <!-- end GOALS -->
+        {% endfor %}
 
-
-        <div>
-            {% if overview.getGoals | length > 0 %}
-                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview' : overview} %}
-            {% endif %}
-        </div>
     </section>
     <!-- end TAB CONTENT -->
 
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <section>
+            <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProfile') }}">{{ 'dashboard.ga.reset.profile' | trans }}</a> | <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a>
+        </section>
+    {% endif %}
 </div>
 
 {% else %}
@@ -47,16 +36,12 @@
 
 {% block extrajavascript %}
     {% javascripts
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/chart.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/analytics/metrics.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/traffic.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/pages.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/visits.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/libs/chart.min.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris.js-0.4.3/morris.min.js'
-        '//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js'
-        output='generated-js/scripts_bottom.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris.js-0.4.3/morris.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/libs/raphael-2.1.2.js'
+        output='generated-js/ga_widget.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

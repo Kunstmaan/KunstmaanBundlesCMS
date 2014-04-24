@@ -4,9 +4,9 @@
 
 {% block content %}
 <form method="post" action="">
-    <h2>{{ 'analytics.dashboard.setup.title' | trans }}</h2>
-    <h3>{{ 'analytics.dashboard.step4.title' | trans }}</h3>
-    <p>{{ 'analytics.dashboard.step4.content' | trans }}</p>
+    <h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
+    <h3>{{ 'dashboard.ga.setup.property.title' | trans }}</h3>
+    <p>{{ 'dashboard.ga.setup.property.content' | trans }}</p>
 
     <select name="properties" class="chzn-select">
         {% for property in properties %}

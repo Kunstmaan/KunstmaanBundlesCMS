@@ -26,4 +26,5 @@ class AnalyticsGoalRepository extends EntityRepository
 
         return false;
     }
+
 }

@@ -1,15 +1,13 @@
 {# Twig vars are commented: they are loaded with AJAX, they are still here as a placeholder #}
 
-
-<div class="db-col db-col--10">
-    <ul id="goalOverview">
-{#         {% for goal in overview.goals %}
-            <li id="goal{{goal.id}}" data-goal-id="{{goal.id}}" >
-                <canvas id="js-goal-dashboard-chart-{{goal.id}}" class="dashboard-chart" height="100"></canvas>
-                <div>{{goal.name}}</div>
-                <span>{{goal.visits}}</span>
-                <span>{{goal.conversionRate}}</span>
+<ul id="goalOverview{{overview.id}}" class="dashboard__content__item dashboard-goals-list" style="display:none;">
+    {% for goal in overview.goals %}
+        {% if goal.visits > 0 %}
+            <li class="dashboard-goals-list__item" id="goal{{goal.id}}">
+                <span class="dashboard-goals-list__item__title"></span>
+                <span class="dashboard-goals-list__item__number"></span>
+                <div class="dashboard-goals-list__chart" ></div>
             </li>
-        {% endfor %} #}
-    </ul>
-</div>
+        {% endif %}
+    {% endfor %}
+</ul>

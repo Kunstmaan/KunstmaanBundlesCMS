@@ -2,25 +2,27 @@
   VARS
   ========================================================================== */
 
-//Custom Font
-$custom-font: 'Open Sans', sans-serif;
-
 //Colors
-$text-color:            #333333;
-$text-color-light:      #666666;
-$text-color-lighter:    #999999;
+$text-color:            #333;
+$text-color-light:      #666;
+$text-color-lighter:    #999;
 
 $bg-light:  #f5f5f5;
 $hr-color:  #dddddd;
 
-$blue:      #2997ce;
-$blue-dark: #005580;
+$grey: #ccc;
 
-// Folders
-$btns: "/bundles/kunstmaanadmin/img/btns/";
-$css-bg: "/bundles/kunstmaanadmin/img/css-bg/";
-$dummy: "/bundles/kunstmaanadmin/img/dummy/";
-$general: "/bundles/kunstmaanadmin/img/general/";
-$icons: "/bundles/kunstmaanadmin/img/icons/";
+$blue: #8ac9e1;
+$blue-ultra-light: #f1f3f9;
 
-$fontAwesomePath:   "/bundles/kunstmaanadmin/font" !default;
+$purple: #ce77b6;
+$green: #c6f5ca;
+$orange: #ee9c27;
+$yellow: #f7cc58;
+$red: #d13f37;
+
+
+//Screens
+$screen-lap: 700px;
+$screen-desk: 1400px;
+$screen-desk-wide: 1600px;

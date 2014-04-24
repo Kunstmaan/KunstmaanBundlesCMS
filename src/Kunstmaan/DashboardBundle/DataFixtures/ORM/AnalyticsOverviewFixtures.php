@@ -21,34 +21,41 @@ class AnalyticsOverviewFixtures extends AbstractFixture implements OrderedFixtur
     public function load(ObjectManager $em)
     {
         $today = new AnalyticsOverview();
-        $today->setTitle('Today');
+        $today->setTitle('dashboard.ga.tab.today');
         $today->setTimespan(0);
         $today->setStartOffset(0);
         $em->persist($today);
 
         $yesterday = new AnalyticsOverview();
-        $yesterday->setTitle('Yesterday');
-        $yesterday->setTimespan(2);
+        $yesterday->setTitle('dashboard.ga.tab.yesterday');
+        $yesterday->setTimespan(1);
         $yesterday->setStartOffset(1);
         $em->persist($yesterday);
 
         $week = new AnalyticsOverview();
-        $week->setTitle('Last week');
+        $week->setTitle('dashboard.ga.tab.last_7_days');
         $week->setTimespan(7);
         $week->setStartOffset(0);
         $em->persist($week);
 
         $month = new AnalyticsOverview();
-        $month->setTitle('Last month');
-        $month->setTimespan(31);
+        $month->setTitle('dashboard.ga.tab.last_30_days');
+        $month->setTimespan(30);
         $month->setStartOffset(0);
         $em->persist($month);
 
         $year = new AnalyticsOverview();
-        $year->setTitle('Last Year');
+        $year->setTitle('dashboard.ga.tab.last_12_months');
         $year->setTimespan(365);
         $year->setStartOffset(0);
         $em->persist($year);
+
+        $yearToDate = new AnalyticsOverview();
+        $yearToDate->setTitle('dashboard.ga.tab.year_to_date');
+        $yearToDate->setTimespan(365);
+        $yearToDate->setStartOffset(0);
+        $yearToDate->setUseYear(true);
+        $em->persist($yearToDate);
 
         $em->flush();
 
@@ -57,6 +64,7 @@ class AnalyticsOverviewFixtures extends AbstractFixture implements OrderedFixtur
         $this->addReference('week', $week);
         $this->addReference('month', $month);
         $this->addReference('year', $year);
+        $this->addReference('yearToDate', $yearToDate);
     }
 
 

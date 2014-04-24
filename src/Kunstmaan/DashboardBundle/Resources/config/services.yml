@@ -11,7 +11,7 @@ services:
 
     kunstmaan_dashboard.widget.googleanalytics:
         class: Kunstmaan\DashboardBundle\Widget\DashboardWidget
-        arguments: [%kunstmaan_dashboard.widget.googleanalytics.command%, %kunstmaan_dashboard.widget.googleanalytics.controller%]
+        arguments: [%kunstmaan_dashboard.widget.googleanalytics.command%, %kunstmaan_dashboard.widget.googleanalytics.controller%, '@service_container']
         tags:
             - { name: kunstmaan_dashboard.widget, priority: 1 }
 
