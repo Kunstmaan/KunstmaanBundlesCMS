@@ -1,21 +1,4 @@
     $(function() {
-        // render the chart
-        var mainChart = new Morris.Area({
-            element: 'dashboard-chart--audience',
-            lineWidth: 1,
-            lineColors: [ '#8ac9e1','#ce77b6', '#ee9c27', '#d13f37'],
-            fillOpacity: '.9',
-            hideHover: 'auto',
-            pointSize: 0,
-            data: [],
-            xkey: 'timestamp',
-            ykeys: ['pageviews', 'sessions', 'users','newusers'],
-            labels: ['Pageviews', 'Sessions', 'Users', 'New Sessions'],
-            behaveLikeLine: true,
-            gridTextColor: '#a7a7a7',
-            smooth: true
-        });
-
         // show first tab
         var tab = $('.dashboard-tabs__item:nth-child(2) > div');
 
@@ -37,8 +20,24 @@
                         $('#data_overview').css('display', 'block');
                         $('#data_overview').removeClass('dashboard__content--loading');
 
-                        mainChart.setData(data.overview.chartData);
-                        mainChart.ymax = data.overview.chartDataMaxValue;
+                        $("#dashboard-chart--audience").html('');
+                        // render the chart
+                        var mainChart = new Morris.Area({
+                            element: 'dashboard-chart--audience',
+                            lineWidth: 1,
+                            lineColors: [ '#8ac9e1','#ce77b6', '#ee9c27', '#d13f37'],
+                            fillOpacity: '.9',
+                            hideHover: 'auto',
+                            pointSize: 0,
+                            data: data.overview.chartData,
+                            xkey: 'timestamp',
+                            ykeys: ['pageviews', 'sessions', 'users','newusers'],
+                            labels: ['Pageviews', 'Sessions', 'Users', 'New Sessions'],
+                            behaveLikeLine: true,
+                            gridTextColor: '#a7a7a7',
+                            smooth: true,
+                            ymax: Math.ceil(data.overview.chartDataMaxValue/100)*100
+                        });
                         setMetrics(data);
                         setGoals(data);
                     }
