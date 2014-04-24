@@ -12,6 +12,35 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist"})
+     */
+    private $overviews;
+
+    /**
+     * Set overviews
+     *
+     * @param array $overviews
+     * @return AnalyticsDailyOverviews
+     */
+    public function setOverviews($overviews)
+    {
+        $this->overviews = $overviews;
+
+        return $this;
+    }
+
+    /**
+     * Get overviews
+     *
+     * @return array
+     */
+    public function getOverviews()
+    {
+        return $this->overviews;
+    }
+
     /**
      * @var string
      *
