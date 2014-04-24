@@ -17,7 +17,7 @@ dashboard:
         setup:
             title: Setup your Google Analytics dashboard widget
             content: "To learn how to setup the Google Analytics widget, please refer to"
-            docs_url: "https://github.com/Kunstmaan/KunstmaanAdminBundle/blob/issue14713-newdashboard/Resources/doc/SetupAnalyticsDashboard.md"
+            docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
             docs: the documentation
             redirect: "This is your redirect URI:"
             refresh: "Once everything is set up, refresh this page."
