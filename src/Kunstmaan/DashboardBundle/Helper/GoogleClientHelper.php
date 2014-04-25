@@ -136,37 +136,45 @@ class GoogleClientHelper
     /**
      * Save the token to the database
      */
-    public function saveToken($token)
+    public function saveToken($token, $configId=false)
     {
         $this->token = $token;
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveToken($token);
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveToken($token, $configId);
     }
 
     /**
      * Save the accountId to the database
      */
-    public function saveAccountId($accountId)
+    public function saveAccountId($accountId, $configId=false)
     {
         $this->accountId = $accountId;
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveAccountId($accountId);
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveAccountId($accountId, $configId);
     }
 
     /**
      * Save the propertyId to the database
      */
-    public function savePropertyId($propertyId)
+    public function savePropertyId($propertyId, $configId=false)
     {
         $this->propertyId = $propertyId;
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->savePropertyId($propertyId);
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->savePropertyId($propertyId, $configId);
     }
 
     /**
      * Save the profileId to the database
      */
-    public function saveProfileId($profileId)
+    public function saveProfileId($profileId, $configId=false)
     {
         $this->profileId = $profileId;
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveProfileId($profileId);
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveProfileId($profileId, $configId);
+    }
+
+    /**
+     * Save the profileId to the database
+     */
+    public function saveConfigName($configName, $configId=false)
+    {
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveConfigName($configName, $configId);
     }
 
     /**

@@ -10,7 +10,7 @@
 
     <select name="profiles" class="chzn-select">
         {% for profile in profiles %}
-            <option value="{{ profile.id }}">{{ profile.name }}</option>
+            <option value="{{ profile.id }}::{{ profile.name }}">{{ profile.name }}</option>
         {% endfor %}
     </select>
 <br/>

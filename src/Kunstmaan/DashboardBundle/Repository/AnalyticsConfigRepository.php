@@ -176,6 +176,19 @@ class AnalyticsConfigRepository extends EntityRepository
         $em->flush();
     }
 
+    /**
+     * saves the config name
+     *
+     * @param string $profileId
+     */
+    public function saveConfigName($name, $id=false) {
+        $em    = $this->getEntityManager();
+        $config = $this->getConfig($id);
+        $config->setName($name);
+        $em->persist($config);
+        $em->flush();
+    }
+
     /** resets the profile id */
     public function resetProfileId($id=false) {
         $em    = $this->getEntityManager();

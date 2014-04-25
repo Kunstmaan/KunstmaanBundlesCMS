@@ -44,6 +44,13 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * @var string
      *
+     * @ORM\Column(name="name", type="text", nullable=true)
+     */
+    private $name = null;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="token", type="text", nullable=true)
      */
     private $token = null;
@@ -77,6 +84,30 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $lastUpdate = null;
 
 
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Analyticsname
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 
     /**
      * Get token
