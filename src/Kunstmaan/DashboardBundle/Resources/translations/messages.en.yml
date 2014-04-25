@@ -1,3 +1,5 @@
+
+form.back: 'Back'
 dashboard:
     ga:
         tab:
