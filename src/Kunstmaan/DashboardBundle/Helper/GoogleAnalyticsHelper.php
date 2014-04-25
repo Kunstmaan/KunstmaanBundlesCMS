@@ -35,31 +35,48 @@ class GoogleAnalyticsHelper
     }
 
     /**
-     * Get a list of all available properties for a Google Account
+     * Get a list of all available accounts for a Google Analytics Account
+     *
+     * @return array $data A list of all properties
+     */
+    public function getAccounts() {
+        $accounts = $this->analytics->management_accounts->listManagementAccounts()->getItems();
+        $data     = array();
+
+        foreach ($accounts as $account) {
+            $data[] = array(
+                'accountId' => $account->getId(),
+                'accountName' => $account->getName()
+            );
+        }
+        return $data;
+    }
+
+    /**
+     * Get a list of all available properties for an account
      *
      * @return array $data A list of all properties
      */
     public function getProperties()
     {
+        if (!$this->clientHelper->getAccountId()) {return false;}
+
+        $webproperties = $this->analytics->management_webproperties->listManagementWebproperties($this->clientHelper->getAccountId());
         $data     = array();
-        $accounts = $this->analytics->management_accounts->listManagementAccounts()->getItems();
 
-        foreach ($accounts as $account) {
-            $webproperties = $this->analytics->management_webproperties->listManagementWebproperties($account->getId());
-            foreach ($webproperties->getItems() as $property) {
-                $data[] = array(
-                  'propertyId'   => $property->getId(),
-                  'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
-                  'accountId'    => $account->getId()
-                );
-            }
+        foreach ($webproperties->getItems() as $property) {
+            $data[] = array(
+              'propertyId'   => $property->getId(),
+              'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
+            );
         }
-
         return $data;
     }
 
     public function getProfiles()
     {
+        if (!$this->clientHelper->getAccountId() || !$this->clientHelper->getPropertyId()) {return false;}
+
         // get views
         $profiles = $this->analytics->management_profiles->listManagementProfiles(
             $this->clientHelper->getAccountId(),

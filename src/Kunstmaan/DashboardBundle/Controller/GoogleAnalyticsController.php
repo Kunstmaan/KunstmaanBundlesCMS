@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
+use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsCommand;
+
 class GoogleAnalyticsController extends Controller
 {
 
@@ -41,7 +43,8 @@ class GoogleAnalyticsController extends Controller
         // set the overviews param
         $params['token'] = true;
         $params['overviews'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
-
+        $date = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getconfig()->getLastUpdate();
+        $params['last_update'] = $date->format('d-m-Y H:i');
         return $params;
     }
 
@@ -72,10 +75,49 @@ class GoogleAnalyticsController extends Controller
             $googleClientHelper->getClient()->authenticate($code);
             $googleClientHelper->saveToken($googleClientHelper->getClient()->getAccessToken());
 
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
+            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_AccountSelection'));
         }
 
         return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
+    }
+
+
+
+    /**
+     * @Route("/selectAccount", name="KunstmaanDashboardBundle_AccountSelection")
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function accountSelectionAction(Request $request)
+    {
+        // get API client
+        try {
+            $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
+        } catch (\Exception $e) {
+            // catch exception thrown by the googleClientHelper if one or more parameters in parameters.yml is not set
+            $currentRoute  = $request->attributes->get('_route');
+            $currentUrl    = $this->get('router')->generate($currentRoute, array(), true);
+            $params['url'] = $currentUrl . 'analytics/setToken/';
+            return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
+        }
+
+        if (null !== $request->request->get('accounts')) {
+            $googleClientHelper->saveAccountId($request->request->get('accounts'));
+            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
+        }
+
+        /** @var GoogleClientHelper $googleClient */
+        $googleClient    = $googleClientHelper->getClient();
+        $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
+        $analyticsHelper->init($googleClientHelper);
+        $accounts = $analyticsHelper->getAccounts();
+
+        return $this->render(
+          'KunstmaanDashboardBundle:GoogleAnalytics:accountSelection.html.twig',
+          array('accounts' => $accounts)
+        );
     }
 
     /**
@@ -99,9 +141,7 @@ class GoogleAnalyticsController extends Controller
         }
 
         if (null !== $request->request->get('properties')) {
-            $parts = explode("::", $request->request->get('properties'));
-            $googleClientHelper->saveAccountId($parts[1]);
-            $googleClientHelper->savePropertyId($parts[0]);
+            $googleClientHelper->savePropertyId($request->request->get('properties'));
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
         }
 
@@ -227,7 +267,7 @@ class GoogleAnalyticsController extends Controller
     {
         $em            = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetPropertyId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_AccountSelection'));
     }
 
     /**
@@ -235,7 +275,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function runUpdate()
     {
-      $command = new UpdateAnalyticsOverviewCommand();
+      $command = new GoogleAnalyticsCommand();
       $command->setContainer($this->container);
       $input = new ArrayInput(array());
       $output = new NullOutput();

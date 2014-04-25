@@ -10,10 +10,11 @@
 
     <select name="properties" class="chzn-select">
         {% for property in properties %}
-            <option value="{{ property.propertyId }}::{{ property.accountId }}">{{ property.propertyName }}</option>
+            <option value="{{ property.propertyId }}">{{ property.propertyName }}</option>
         {% endfor %}
     </select>
 <br/>
+    <a class="btn" href="{{ path('KunstmaanDashboardBundle_AccountSelection') }}">{{ 'form.back' | trans }}</a>
     <button class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
 </form>
 
