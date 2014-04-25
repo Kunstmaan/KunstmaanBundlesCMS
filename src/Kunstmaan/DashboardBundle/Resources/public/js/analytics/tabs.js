@@ -1,4 +1,4 @@
-    $(function() {
+    $(document).ready(function(){
         // show first tab
         var tab = $('.dashboard-tabs__item:nth-child(2) > div');
 
