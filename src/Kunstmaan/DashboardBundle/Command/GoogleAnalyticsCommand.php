@@ -62,9 +62,6 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
         $this->analyticsHelper = $this->getContainer()->get('kunstmaan_dashboard.googleanalyticshelper');
         $this->analyticsHelper->init($this->googleClientHelper);
 
-        // set new update timestamp
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated();
-
         // get data for each overview
         $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
         foreach ($overviews as $overview) {
@@ -96,6 +93,9 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
             $this->em->persist($overview);
             $this->em->flush();
         }
+
+        // set new update timestamp
+        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated();
 
         $this->output->writeln('Google Analytics data succesfully updated'); // done
     }

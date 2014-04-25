@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
+use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsCommand;
+
 class GoogleAnalyticsController extends Controller
 {
 
@@ -41,7 +43,8 @@ class GoogleAnalyticsController extends Controller
         // set the overviews param
         $params['token'] = true;
         $params['overviews'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
-
+        $date = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getconfig()->getLastUpdate();
+        $params['last_update'] = $date->format('d-m-Y H:i');
         return $params;
     }
 
@@ -272,7 +275,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function runUpdate()
     {
-      $command = new UpdateAnalyticsOverviewCommand();
+      $command = new GoogleAnalyticsCommand();
       $command->setContainer($this->container);
       $input = new ArrayInput(array());
       $output = new NullOutput();

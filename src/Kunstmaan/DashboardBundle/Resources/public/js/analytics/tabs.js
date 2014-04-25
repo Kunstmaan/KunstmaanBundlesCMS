@@ -59,5 +59,20 @@
             var url = $(this).find('.dashboard-tabs__controller').attr('data-path');
             switchTab(id, url);
         });
+
+
+        $('#dashboard_update').click(function(){
+            $('#dashboard_update').html('Updating..');
+            $.ajax({
+                type: 'get',
+                url: 'widget/googleanalytics/updateData',
+                success: function(data) {
+                    location.reload();
+                },
+                error: function() {
+                    location.reload();
+                }
+            });
+        });
     });
 

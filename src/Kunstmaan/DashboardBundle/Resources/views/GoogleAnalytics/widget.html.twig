@@ -25,9 +25,11 @@
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <section>
-            <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProfile') }}">{{ 'dashboard.ga.reset.profile' | trans }}</a> | <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a>
+            <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProfile') }}">{{ 'dashboard.ga.reset.profile' | trans }}</a> | <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a> | <a href="#" id="dashboard_update">{{ 'dashboard.ga.last_update' | trans }} {{last_update}}</a>
         </section>
     {% endif %}
+        <section>
+        </section>
 </div>
 
 {% else %}
