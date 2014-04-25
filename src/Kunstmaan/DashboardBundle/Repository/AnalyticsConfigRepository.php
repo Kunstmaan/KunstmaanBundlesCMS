@@ -48,6 +48,13 @@ class AnalyticsConfigRepository extends EntityRepository
         return $config;
     }
 
+    public function listConfigs() {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('c.id')
+          ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c');
+        return $qb->getQuery()->getResult();
+    }
+
     public function createConfig() {
         $em = $this->getEntityManager();
 
