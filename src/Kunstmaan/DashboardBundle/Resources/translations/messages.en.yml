@@ -1,3 +1,5 @@
+
+form.back: 'Back'
 dashboard:
     ga:
         tab:
@@ -34,3 +36,4 @@ dashboard:
         reset:
             profile: Choose a new Analytics Profile (view)
             property: Track a new Analytics Website (property)
+        last_update: Last update:

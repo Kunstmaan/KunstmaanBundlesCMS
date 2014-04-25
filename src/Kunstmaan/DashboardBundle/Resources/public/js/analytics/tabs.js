@@ -22,6 +22,12 @@
 
                         $("#dashboard-chart--audience").html('');
                         // render the chart
+
+                        var step = 100;
+                        if (data.overview.chartDataMaxValue < 100) {
+                            var step = 10;
+                        }
+
                         var mainChart = new Morris.Area({
                             element: 'dashboard-chart--audience',
                             lineWidth: 1,
@@ -36,7 +42,7 @@
                             behaveLikeLine: true,
                             gridTextColor: '#a7a7a7',
                             smooth: true,
-                            ymax: Math.ceil(data.overview.chartDataMaxValue/100)*100
+                            ymax: Math.ceil(data.overview.chartDataMaxValue/step)*step
                         });
                         setMetrics(data);
                         setGoals(data);
@@ -52,6 +58,21 @@
             var id = $(this).find('.dashboard-tabs__controller').attr('data-id');
             var url = $(this).find('.dashboard-tabs__controller').attr('data-path');
             switchTab(id, url);
+        });
+
+
+        $('#dashboard_update').click(function(){
+            $('#dashboard_update').html('Updating..');
+            $.ajax({
+                type: 'get',
+                url: 'widget/googleanalytics/updateData',
+                success: function(data) {
+                    location.reload();
+                },
+                error: function() {
+                    location.reload();
+                }
+            });
         });
     });
 
