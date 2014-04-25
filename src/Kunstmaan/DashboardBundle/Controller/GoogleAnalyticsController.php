@@ -178,7 +178,7 @@ class GoogleAnalyticsController extends Controller
         }
 
         if (null !== $request->request->get('profiles')) {
-            $parts = explode('::', $request->request->get('profiles'))
+            $parts = explode('::', $request->request->get('profiles'));
             $googleClientHelper->saveProfileId($parts[0]);
             $googleClientHelper->saveConfigName($parts[1]);
             return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
