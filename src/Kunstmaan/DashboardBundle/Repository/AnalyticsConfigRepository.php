@@ -22,13 +22,14 @@ class AnalyticsConfigRepository extends EntityRepository
     public function getConfig($id=false)
     {
         $em = $this->getEntityManager();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         if ($id) {
             $qb->select('c')
               ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c')
               ->where('c.id = :id')
               ->setParameter('id', $id);
 
-            $results = $qb->getQuery()->getResult();
+            $result = $qb->getQuery()->getResult();
             $config = $result[0];
         } else {
             $query = $em->createQuery(
