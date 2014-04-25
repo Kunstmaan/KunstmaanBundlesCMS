@@ -29,6 +29,8 @@ dashboard:
             property:
               title: Select a website to track
               content: Select a domain registered in your Google Analytics account.
+            account:
+                title: Select an account
         reset:
             profile: Choose a new Analytics Profile (view)
             property: Track a new Analytics Website (property)

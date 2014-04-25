@@ -49,6 +49,11 @@ class DashboardController extends Controller
         }
 
         // if propertyId not set
+        if (!$googleClientHelper->accountIsSet()) {
+            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_AccountSelection'));
+        }
+
+        // if propertyId not set
         if (!$googleClientHelper->propertyIsSet()) {
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
         }
