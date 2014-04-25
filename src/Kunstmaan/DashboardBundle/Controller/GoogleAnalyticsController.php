@@ -44,7 +44,11 @@ class GoogleAnalyticsController extends Controller
         $params['token'] = true;
         $params['overviews'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
         $date = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getconfig()->getLastUpdate();
-        $params['last_update'] = $date->format('d-m-Y H:i');
+        if ($date) {
+          $params['last_update'] = $date->format('d-m-Y H:i');
+        } else {
+          $params['last_update'] = '/';
+        }
         return $params;
     }
 
