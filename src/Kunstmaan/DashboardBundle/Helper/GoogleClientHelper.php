@@ -189,6 +189,17 @@ class GoogleClientHelper
         return $this->getToken() && '' !== $this->getToken();
     }
 
+
+    /**
+     * Check if token is set
+     *
+     * @return boolean $result
+     */
+    public function accountIsSet()
+    {
+        return $this->getAccountId() && '' !== $this->getAccountId();
+    }
+
     /**
      * Check if propertyId is set
      *

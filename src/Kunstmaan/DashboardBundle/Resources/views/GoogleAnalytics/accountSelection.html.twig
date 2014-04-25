@@ -5,12 +5,11 @@
 {% block content %}
 <form method="post" action="">
     <h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
-    <h3>{{ 'dashboard.ga.setup.property.title' | trans }}</h3>
-    <p>{{ 'dashboard.ga.setup.property.content' | trans }}</p>
+    <h3>{{ 'dashboard.ga.setup.account.title' | trans }}</h3>
 
-    <select name="properties" class="chzn-select">
-        {% for property in properties %}
-            <option value="{{ property.propertyId }}">{{ property.propertyName }}</option>
+    <select name="accounts" class="chzn-select">
+        {% for account in accounts %}
+            <option value="{{ account.accountId }}">{{ account.accountName }}</option>
         {% endfor %}
     </select>
 <br/>
