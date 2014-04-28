@@ -20,9 +20,9 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function getConfig()
     {
-        $em    = $this->getEntityManager();
+        $em = $this->getEntityManager();
         $query = $em->createQuery(
-          'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c'
+            'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c'
         );
 
         $result = $query->getResult();
@@ -38,8 +38,9 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /** Update the timestamp when data is collected */
-    public function setUpdated() {
-        $em    = $this->getEntityManager();
+    public function setUpdated()
+    {
+        $em = $this->getEntityManager();
         $config = $this->getConfig();
         $config->setLastUpdate(new \DateTime());
         $em->persist($config);
@@ -51,8 +52,9 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $token
      */
-    public function saveToken($token) {
-        $em    = $this->getEntityManager();
+    public function saveToken($token)
+    {
+        $em = $this->getEntityManager();
         $config = $this->getConfig();
         $config->setToken($token);
         $em->persist($config);
@@ -64,8 +66,9 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $propertyId
      */
-    public function savePropertyId($propertyId) {
-        $em    = $this->getEntityManager();
+    public function savePropertyId($propertyId)
+    {
+        $em = $this->getEntityManager();
         $config = $this->getConfig();
         $config->setPropertyId($propertyId);
         $em->persist($config);
@@ -77,8 +80,9 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $accountId
      */
-    public function saveAccountId($accountId) {
-        $em    = $this->getEntityManager();
+    public function saveAccountId($accountId)
+    {
+        $em = $this->getEntityManager();
         $config = $this->getConfig();
         $config->setAccountId($accountId);
         $em->persist($config);
@@ -90,8 +94,9 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $profileId
      */
-    public function saveProfileId($profileId) {
-        $em    = $this->getEntityManager();
+    public function saveProfileId($profileId)
+    {
+        $em = $this->getEntityManager();
         $config = $this->getConfig();
         $config->setProfileId($profileId);
         $em->persist($config);
@@ -99,8 +104,9 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /** resets the profile id */
-    public function resetProfileId() {
-        $em    = $this->getEntityManager();
+    public function resetProfileId()
+    {
+        $em = $this->getEntityManager();
         $config = $this->getConfig();
         $config->setProfileId('');
         $em->persist($config);
@@ -108,8 +114,9 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /** resets the  account id, property id and profile id */
-    public function resetPropertyId() {
-        $em    = $this->getEntityManager();
+    public function resetPropertyId()
+    {
+        $em = $this->getEntityManager();
         $config = $this->getConfig();
         $config->setAccountId('');
         $config->setProfileId('');

@@ -5,7 +5,8 @@ namespace Kunstmaan\DashboardBundle\Manager;
 
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 
-class WidgetManager {
+class WidgetManager
+{
 
     /**
      * @var DashboardWidget[]
@@ -15,14 +16,16 @@ class WidgetManager {
     /**
      * @param DashboardWidget $widget
      */
-    public function addWidget(DashboardWidget $widget){
+    public function addWidget(DashboardWidget $widget)
+    {
         $this->widgets[] = $widget;
     }
 
     /**
      * @return DashboardWidget[]
      */
-    public function getWidgets(){
+    public function getWidgets()
+    {
         return $this->widgets;
     }
 

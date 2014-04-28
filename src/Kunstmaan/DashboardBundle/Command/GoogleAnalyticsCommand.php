@@ -2,22 +2,21 @@
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
+use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
+use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
-
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
-
-class GoogleAnalyticsCommand extends ContainerAwareCommand {
+class GoogleAnalyticsCommand extends ContainerAwareCommand
+{
     /** @var GoogleClientHelper $googleClientHelper */
     private $googleClientHelper;
     /** @var GoogleAnalyticsHelper $analyticsHelper */
@@ -51,12 +50,12 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-       $this->init($output);
+        $this->init($output);
 
         // if no token set yet
         if (!$this->googleClientHelper->tokenIsSet()) {
-                $this->output->writeln('You haven\'t configured a Google account yet');
-                return;
+            $this->output->writeln('You haven\'t configured a Google account yet');
+            return;
         }
 
         // create API Analytics helper to execute queries

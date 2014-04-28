@@ -3,7 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
-use \Google_Client;
+use Google_Client;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
@@ -39,8 +39,8 @@ class GoogleClientHelper
      */
     public function __construct($googleClient, $em)
     {
-        $this->client       = $googleClient;
-        $this->em           = $em;
+        $this->client = $googleClient;
+        $this->em = $em;
 
         $this->init();
     }
@@ -53,8 +53,7 @@ class GoogleClientHelper
     public function init()
     {
         // if token is already saved in the database
-        if ($this->getToken() && '' !== $this->getToken())
-        {
+        if ($this->getToken() && '' !== $this->getToken()) {
             $this->client->setAccessToken($this->token);
         }
     }

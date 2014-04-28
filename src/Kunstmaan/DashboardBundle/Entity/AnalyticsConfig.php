@@ -49,7 +49,6 @@ class AnalyticsConfig extends AbstractEntity
     private $lastUpdate = null;
 
 
-
     /**
      * Get token
      *

@@ -5,7 +5,8 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class AbstractAnalyticsCommandHelper {
+abstract class AbstractAnalyticsCommandHelper
+{
 
     /** @var GoogleAnalyticsHelper $analyticsHelper */
     protected $analyticsHelper;
@@ -21,7 +22,8 @@ abstract class AbstractAnalyticsCommandHelper {
      * @param $output
      * @param $em
      */
-    public function __construct($analyticsHelper, $output, $em) {
+    public function __construct($analyticsHelper, $output, $em)
+    {
         $this->analyticsHelper = $analyticsHelper;
         $this->output = $output;
         $this->em = $em;

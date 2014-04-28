@@ -4,21 +4,23 @@ namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
-class MetricsCommandHelper extends AbstractAnalyticsCommandHelper {
+class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
+{
 
     /**
      * get data and save it for the overview
      *
      * @param AnalyticsOverview $overview The overview
      */
-    public function getData(&$overview) {
+    public function getData(&$overview)
+    {
         $this->output->writeln("\t" . 'Fetching metrics..');
 
         $gaMetrics = 'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration';
         if ($overview->getUseYear()) {
             $results = $this->analyticsHelper->getResultsByDate(
-                date('Y-m-d', mktime(0,0,0,1,1,date('Y'))),
-                date('Y-m-d', mktime(0,0,0,1,1,date('Y', strtotime('+1 year')))),
+                date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y'))),
+                date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y', strtotime('+1 year')))),
                 $gaMetrics
             );
         } else {
@@ -29,14 +31,14 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper {
             );
         }
 
-        $rows    = $results->getRows();
+        $rows = $results->getRows();
 
         // sessions metric
-        $visits  = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
+        $visits = is_numeric($rows[0][0]) ? $rows[0][0] : 0;
         $overview->setSessions($visits);
 
         // users metric
-        $visitors  = is_numeric($rows[0][1]) ? $rows[0][1] : 0;
+        $visitors = is_numeric($rows[0][1]) ? $rows[0][1] : 0;
         $overview->setUsers($visitors);
 
         // pageviews metric

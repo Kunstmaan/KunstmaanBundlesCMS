@@ -19,7 +19,8 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @return int
      */
-    public function getReturningUsersPercentage() {
+    public function getReturningUsersPercentage()
+    {
         return $this->returningUsers ? round(($this->returningUsers / $this->sessions) * 100) : 0;
     }
 
@@ -28,7 +29,8 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @return int
      */
-    public function getNewUsersPercentage() {
+    public function getNewUsersPercentage()
+    {
         return $this->newUsers ? round(($this->newUsers / $this->sessions) * 100) : 0;
     }
 
@@ -155,7 +157,8 @@ class AnalyticsOverview extends AbstractEntity
     /**
      * @return array
      */
-    public function getActiveGoals() {
+    public function getActiveGoals()
+    {
         $goals = array();
         foreach ($this->getGoals() as $goal) {
             if ($goal->getVisits()) $goals[] = $goal;
