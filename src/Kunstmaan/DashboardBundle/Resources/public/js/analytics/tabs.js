@@ -41,6 +41,8 @@
                             behaveLikeLine: true,
                             gridTextColor: '#a7a7a7',
                             smooth: true,
+                            resize: true,
+                            redraw: true,
                             ymax: Math.ceil(data.overview.chartDataMaxValue/step)*step
                         });
                         setMetrics(data);

@@ -28,7 +28,9 @@
             ykeys: ['conversions'],
             labels: ['Conversions'],
             gridTextSize: 10,
-            gridTextColor: '#a7a7a7'
+            gridTextColor: '#a7a7a7',
+            resize: true,
+            redraw: true
         });
     }
 
