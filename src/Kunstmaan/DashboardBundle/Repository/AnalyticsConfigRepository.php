@@ -16,7 +16,7 @@ class AnalyticsConfigRepository extends EntityRepository
     /**
      * Get the config from the database, creates a new entry if the config doesn't exist yet
      *
-     * @return Config $config
+     * @return AnalyticsConfig $config
      */
     public function getConfig()
     {

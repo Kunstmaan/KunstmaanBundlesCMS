@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\DashboardBundle\Helper;
 
-use \Google_Client;
 use \Google_AnalyticsService;
 
 /**
@@ -89,12 +88,12 @@ class GoogleAnalyticsHelper
     /**
      * Constructs a Google API query and returns the result
      *
-     * @param int    timespan      Timespan for the data to query in days
-     * @param int    startOffset   An offset in days
-     * @param string metrics    The needed metrics
-     * @param array  extra       Extra options suchs as dimentions, sort data, filter data,..
+     * @param int    $timespan      Timespan for the data to query in days
+     * @param int    $startOffset   An offset in days
+     * @param string $metrics    The needed metrics
+     * @param array  $extra       Extra options suchs as dimentions, sort data, filter data,..
      *
-     * @return GaData result    A data object containing the queried data
+     * @return \Google_GaData result    A data object containing the queried data
      */
     public function getResults($timespan, $startOffset, $metrics, $extra = array())
     {
@@ -112,7 +111,7 @@ class GoogleAnalyticsHelper
     /**
      * Get the profile ID
      *
-     * @throws Exception if no accounts, webproperties or views are found
+     * @throws \Exception if no accounts, webproperties or views are found
      */
     public function getProfileId()
     {
@@ -149,12 +148,12 @@ class GoogleAnalyticsHelper
     /**
      * Constructs a Google API query and returns the result
      *
-     * @param Date   from         Start date for the data to query
-     * @param Date   to           End date in the past
-     * @param string metrics    The needed metrics
-     * @param array  extra       Extra options suchs as dimentions, sort data, filter data,..
+     * @param string   $from         Start date for the data to query
+     * @param string   $to           End date in the past
+     * @param string $metrics    The needed metrics
+     * @param array  $extra       Extra options suchs as dimentions, sort data, filter data,..
      *
-     * @return GaData result    A data object containing the queried data
+     * @return \Google_GaData result    A data object containing the queried data
      */
     public function getResultsByDate($from, $to, $metrics, $extra = array())
     {

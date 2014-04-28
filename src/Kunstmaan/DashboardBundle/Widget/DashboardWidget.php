@@ -4,6 +4,7 @@ namespace Kunstmaan\DashboardBundle\Widget;
 
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -46,7 +47,7 @@ class DashboardWidget {
         $reflectionMethod = new \ReflectionMethod($this->controller, 'widgetAction');
         $methodAnnotations = $annotationReader->getMethodAnnotations($reflectionMethod);
         foreach($methodAnnotations as $annotation){
-            if($annotation instanceof \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route){
+            if($annotation instanceof Route){
                 if (empty($annotation)){
                     throw new \Exception("The name is not configured in the annotation");
                 }

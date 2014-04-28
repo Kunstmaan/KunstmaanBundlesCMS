@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
  * AnalyticsOverview
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kuma_analytics_overview")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository")
  */
-class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
+class AnalyticsOverview extends AbstractEntity
 {
 
     /**
@@ -132,7 +133,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * Set goals
      *
      * @param array $goals
-     * @return AnalyticsDailyOverview
+     * @return $this
      */
     public function setGoals($goals)
     {
@@ -144,16 +145,19 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Get goals
      *
-     * @return array
+     * @return AnalyticsGoal[]
      */
     public function getGoals()
     {
         return $this->goals;
     }
 
+    /**
+     * @return array
+     */
     public function getActiveGoals() {
         $goals = array();
-        foreach ($this->goals->toArray() as $goal) {
+        foreach ($this->getGoals() as $goal) {
             if ($goal->getVisits()) $goals[] = $goal;
         }
         return $goals;
@@ -164,7 +168,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * Set chartData
      *
      * @param array $chartData
-     * @return AnalyticsDailyOverview
+     * @return $this
      */
     public function setChartData($chartData)
     {

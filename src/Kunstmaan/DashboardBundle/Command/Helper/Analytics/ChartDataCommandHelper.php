@@ -1,7 +1,8 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\AbstractAnalyticsCommandHelper;
+
+use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
 
@@ -55,10 +56,6 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper {
         $rows    = $results->getRows();
 
         $chartData = array();
-        $users = 0;
-        $sessions = 0;
-        $newusers = 0;
-        $pageviews = 0;
         $totalUsers = 0;
         $totalSessions = 0;
         $totalPageviews = 0;

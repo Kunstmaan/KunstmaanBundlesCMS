@@ -1,7 +1,8 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\AbstractAnalyticsCommandHelper;
+
+use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 class UsersCommandHelper extends AbstractAnalyticsCommandHelper {
 

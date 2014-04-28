@@ -33,7 +33,7 @@ class AnalyticsOverviewRepository extends EntityRepository
      *
      * @param int $id
      *
-     * @return AnalyticOverview $result
+     * @return AnalyticsOverview|bool
      */
     public function getOverview($id)
     {

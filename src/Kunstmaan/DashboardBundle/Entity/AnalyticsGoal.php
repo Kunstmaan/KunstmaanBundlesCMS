@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
  * AnalyticsGoal
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kuma_analytics_goal")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsGoalRepository")
  */
-class AnalyticsGoal extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
+class AnalyticsGoal extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="AnalyticsOverview", inversedBy="goals")
@@ -61,7 +62,7 @@ class AnalyticsGoal extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @param integer $overview
      *
-     * @return AnalyticsTopReferrals
+     * @return $this
      */
     public function setOverview($overview)
     {

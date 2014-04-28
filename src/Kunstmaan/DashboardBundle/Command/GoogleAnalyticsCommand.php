@@ -1,7 +1,10 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,8 +20,6 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
 class GoogleAnalyticsCommand extends ContainerAwareCommand {
     /** @var GoogleClientHelper $googleClientHelper */
     private $googleClientHelper;
-    /** @var Client $googleClient */
-    private $googleClient;
     /** @var GoogleAnalyticsHelper $analyticsHelper */
     private $analyticsHelper;
     /** @var EntityManager $em */
@@ -63,8 +64,11 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
         $this->analyticsHelper->init($this->googleClientHelper);
 
         // get data for each overview
-        $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+        /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
+        $analyticsOverviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+        $overviews = $analyticsOverviewRepository->getAll();
         foreach ($overviews as $overview) {
+            /** @var AnalyticsOverview $overview */
             $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
 
             // metric data
@@ -95,7 +99,9 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
         }
 
         // set new update timestamp
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated();
+        /** @var AnalyticsConfigRepository $analyticsConfigRepository */
+        $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $analyticsConfigRepository->setUpdated();
 
         $this->output->writeln('Google Analytics data succesfully updated'); // done
     }

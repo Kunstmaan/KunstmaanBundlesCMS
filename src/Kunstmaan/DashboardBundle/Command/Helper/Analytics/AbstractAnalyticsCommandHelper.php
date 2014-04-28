@@ -1,6 +1,10 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
+use Symfony\Component\Console\Output\OutputInterface;
+
 abstract class AbstractAnalyticsCommandHelper {
 
     /** @var GoogleAnalyticsHelper $analyticsHelper */
@@ -13,7 +17,9 @@ abstract class AbstractAnalyticsCommandHelper {
     /**
      * Constructor
      *
-     * @param AnalyticsOverview $overview The overview
+     * @param $analyticsHelper
+     * @param $output
+     * @param $em
      */
     public function __construct($analyticsHelper, $output, $em) {
         $this->analyticsHelper = $analyticsHelper;

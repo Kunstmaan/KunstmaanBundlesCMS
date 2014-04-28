@@ -1,13 +1,14 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Controller;
 
+use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -23,6 +24,7 @@ class GoogleAnalyticsController extends Controller
      * @Route("/", name="KunstmaanDashboardBundle_widget_googleanalytics")
      * @Template()
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
     public function widgetAction(Request $request)
@@ -43,7 +45,9 @@ class GoogleAnalyticsController extends Controller
         // set the overviews param
         $params['token'] = true;
         $params['overviews'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
-        $date = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getconfig()->getLastUpdate();
+        /** @var AnalyticsConfigRepository $analyticsConfigRepository */
+        $analyticsConfigRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $date = $analyticsConfigRepository->getConfig()->getLastUpdate();
         if ($date){
             $params['last_update'] = $date->format('d-m-Y H:i');
         } else {
@@ -112,8 +116,6 @@ class GoogleAnalyticsController extends Controller
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
         }
 
-        /** @var GoogleClientHelper $googleClient */
-        $googleClient    = $googleClientHelper->getClient();
         $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
         $analyticsHelper->init($googleClientHelper);
         $accounts = $analyticsHelper->getAccounts();
@@ -149,8 +151,6 @@ class GoogleAnalyticsController extends Controller
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
         }
 
-        /** @var GoogleClientHelper $googleClient */
-        $googleClient    = $googleClientHelper->getClient();
         $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
         $analyticsHelper->init($googleClientHelper);
         $properties = $analyticsHelper->getProperties();
@@ -186,8 +186,6 @@ class GoogleAnalyticsController extends Controller
             return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
         }
 
-        /** @var GoogleClientHelper $googleClient */
-        $googleClient    = $googleClientHelper->getClient();
         $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
         $analyticsHelper->init($googleClientHelper);
         $profiles = $analyticsHelper->getProfiles();
@@ -206,18 +204,15 @@ class GoogleAnalyticsController extends Controller
      */
     public function getOverviewAction($id)
     {
-        if (!$id) {
-            $return = array(
-              'responseCode'                        => 400
-            );
-        }
-
         $em       = $this->getDoctrine()->getManager();
-        $overview = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($id);
+        /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
+        $analyticsOverviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+        $overview = $analyticsOverviewRepository->getOverview($id);
 
         // goals data
         $goals = array();
         foreach ($overview->getActiveGoals() as $key => $goal) {
+            /** @var AnalyticsGoal $goal */
             $goals[$key]['name']       = $goal->getName();
             $goals[$key]['visits']     = $goal->getVisits();
             $goals[$key]['id']         = $goal->getId();
@@ -283,34 +278,8 @@ class GoogleAnalyticsController extends Controller
       $command->setContainer($this->container);
       $input = new ArrayInput(array());
       $output = new NullOutput();
-      $resultCode = $command->run($input, $output);
+      $command->run($input, $output);
 
       return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
     }
-
-
-    /**
-     * @Route("/test", name="KunstmaanDashboardBundle_homepage_test")
-     * @Template()
-     *
-     * @return array
-     */
-    public function testAction()
-    {
-        $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
-        $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
-        $analyticsHelper->init($googleClientHelper);
-
-        $results = $analyticsHelper->getResults(
-            1,
-            1,
-            'ga:pageviewsPerSession'
-        );
-
-
-        var_dump($results->getRows());
-
-        exit;
-    }
-
 }
