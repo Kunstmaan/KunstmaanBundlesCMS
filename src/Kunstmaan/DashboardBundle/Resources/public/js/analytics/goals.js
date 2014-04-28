@@ -13,7 +13,7 @@
         var chart = $('#goal'+data.goals[i]['id']+' .dashboard-goals-list__chart');
 
          $('#goal'+data.goals[i]['id']+' .dashboard-goals-list__item__title').html(data.goals[i]['name']);
-         $('#goal'+data.goals[i]['id']+' .dashboard-goals-list__item__number').html('<strong>' + data.goals[i]['visits'] + '</strong> conversions');
+         $('#goal'+data.goals[i]['id']+' .dashboard-goals-list__item__number').html('<strong>' + data.goals[i]['visits'] + '</strong>');
 
         // render the chart
         new Morris.Area({
