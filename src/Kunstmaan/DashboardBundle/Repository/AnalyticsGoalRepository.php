@@ -18,6 +18,7 @@ class AnalyticsGoalRepository extends EntityRepository
         $qb->select('g')
             ->from('KunstmaanDashboardBundle:AnalyticsGoal', 'g')
             ->where('g.id = :id')
+            ->orderBy('g.name', 'asc')
             ->setParameter('id', $id);
 
         $results = $qb->getQuery()->getResult();
