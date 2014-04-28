@@ -154,7 +154,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
                     $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
                     $timestamp = date('Y-m-d H:00', $timestamp);
                 } else if ($timespan <= 31) {
-                    $timestamp = mktime(0, 0, 0, substr($row[0], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
+                    $timestamp = mktime(0, 0, 0, substr($row[2], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
                     $timestamp = date('Y-m-d H:00', $timestamp);
                 } else {
                     $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
@@ -195,22 +195,12 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             $goal->setName($goalEntry['name']);
             $goal->setPosition($goalEntry['position']);
 
-            $count = 0;
             $chartData = array();
             $totalVisits = 0;
-            $steps = ceil(sizeof($goalEntry['visits']) / 10);
-            $conversions = 0;
             // Fill the chartdata array
             foreach ($goalEntry['visits'] as $timestamp => $visits) {
-                $count++;
                 $totalVisits += $visits;
-                $conversions += $visits;
-
-                if ($count % $steps == 0) {
-                    $chartData[] = array('timestamp' => $timestamp, 'conversions' => $conversions);
-                    $count = 0;
-                    $conversions = 0;
-                }
+                $chartData[] = array('timestamp' => $timestamp, 'conversions' => $visits);
             }
 
             // set the data
