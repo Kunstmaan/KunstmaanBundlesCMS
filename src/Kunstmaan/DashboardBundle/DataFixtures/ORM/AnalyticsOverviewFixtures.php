@@ -35,25 +35,25 @@ class AnalyticsOverviewFixtures extends AbstractFixture implements OrderedFixtur
         $week = new AnalyticsOverview();
         $week->setTitle('dashboard.ga.tab.last_7_days');
         $week->setTimespan(7);
-        $week->setStartOffset(0);
+        $week->setStartOffset(1);
         $em->persist($week);
 
         $month = new AnalyticsOverview();
         $month->setTitle('dashboard.ga.tab.last_30_days');
         $month->setTimespan(30);
-        $month->setStartOffset(0);
+        $month->setStartOffset(1);
         $em->persist($month);
 
         $year = new AnalyticsOverview();
         $year->setTitle('dashboard.ga.tab.last_12_months');
         $year->setTimespan(365);
-        $year->setStartOffset(0);
+        $year->setStartOffset(1);
         $em->persist($year);
 
         $yearToDate = new AnalyticsOverview();
         $yearToDate->setTitle('dashboard.ga.tab.year_to_date');
         $yearToDate->setTimespan(365);
-        $yearToDate->setStartOffset(0);
+        $yearToDate->setStartOffset(1);
         $yearToDate->setUseYear(true);
         $em->persist($yearToDate);
 
