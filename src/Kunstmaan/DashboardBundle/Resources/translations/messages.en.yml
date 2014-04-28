@@ -34,6 +34,6 @@ dashboard:
             account:
                 title: Select an account
         reset:
-            profile: Choose a new Analytics Profile (view)
-            property: Track a new Analytics Website (property)
+            property: Change Google Analytics link
         last_update: Last update:
+        unavailable: No data available, please click this update button.

@@ -31,7 +31,7 @@ class GoogleAnalyticsController extends Controller
 
         // get API client
         try {
-            $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
+            $this->container->get('kunstmaan_dashboard.googleclienthelper');
         } catch (\Exception $e) {
             // catch exception thrown by the googleClientHelper if one or more parameters in parameters.yml is not set
             $currentRoute  = $request->attributes->get('_route');
@@ -44,10 +44,10 @@ class GoogleAnalyticsController extends Controller
         $params['token'] = true;
         $params['overviews'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
         $date = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getconfig()->getLastUpdate();
-        if ($date) {
-          $params['last_update'] = $date->format('d-m-Y H:i');
+        if ($date){
+            $params['last_update'] = $date->format('d-m-Y H:i');
         } else {
-          $params['last_update'] = '/';
+            $params['last_update'] = "never";
         }
         return $params;
     }

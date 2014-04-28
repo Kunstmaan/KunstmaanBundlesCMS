@@ -12,20 +12,19 @@
                 url: url,
                 cache: false,
                 success: function(data) {
-                    if (data.overview.sessions === 0) {
+                    if (!data.overview || data.overview.sessions == 0) {
                         $('#data_no_overview').css('display', 'block');
-                        $('#data_overview').css('display', 'none');
+                        $('#data_overview').css('display', 'none').removeClass('dashboard__content--loading');
                     } else {
                         $('#data_no_overview').css('display', 'none');
-                        $('#data_overview').css('display', 'block');
-                        $('#data_overview').removeClass('dashboard__content--loading');
+                        $('#data_overview').css('display', 'block').removeClass('dashboard__content--loading');
 
                         $("#dashboard-chart--audience").html('');
                         // render the chart
 
                         var step = 100;
                         if (data.overview.chartDataMaxValue < 100) {
-                            var step = 10;
+                            step = 10;
                         }
 
                         var mainChart = new Morris.Area({
@@ -61,8 +60,8 @@
         });
 
 
-        $('#dashboard_update').click(function(){
-            $('#dashboard_update').html('Updating..');
+        $('.dashboard_update').click(function(){
+            $('.dashboard_update').html('Updating...');
             $.ajax({
                 type: 'get',
                 url: 'widget/googleanalytics/updateData',
