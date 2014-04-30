@@ -124,6 +124,10 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 
         $goals = $this->getAllGoals();
         if (!$goals) {
+            foreach ($overview->getGoals() as $goal) {
+                $this->em->remove($goal);
+            }
+            $this->em->flush();
             return;
         }
         $goaldata = array();
