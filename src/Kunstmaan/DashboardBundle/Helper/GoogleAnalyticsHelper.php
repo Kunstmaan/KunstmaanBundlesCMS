@@ -2,8 +2,7 @@
 
 namespace Kunstmaan\DashboardBundle\Helper;
 
-use \Google_Client;
-use \Google_AnalyticsService;
+use Google_AnalyticsService;
 
 /**
  * This helper will setup a google analytics object
@@ -24,13 +23,14 @@ class GoogleAnalyticsHelper
     public function init(GoogleClientHelper $clientHelper)
     {
         $this->clientHelper = $clientHelper;
-        $this->analytics    = new Google_AnalyticsService($this->clientHelper->getClient());
+        $this->analytics = new Google_AnalyticsService($this->clientHelper->getClient());
     }
 
     /**
      * @return Google_AnalyticsService $analytics
      */
-    public function getAnalytics() {
+    public function getAnalytics()
+    {
         return $this->analytics;
     }
 
@@ -39,9 +39,10 @@ class GoogleAnalyticsHelper
      *
      * @return array $data A list of all properties
      */
-    public function getAccounts() {
+    public function getAccounts()
+    {
         $accounts = $this->analytics->management_accounts->listManagementAccounts()->getItems();
-        $data     = array();
+        $data = array();
 
         foreach ($accounts as $account) {
             $data[] = array(
@@ -59,15 +60,17 @@ class GoogleAnalyticsHelper
      */
     public function getProperties()
     {
-        if (!$this->clientHelper->getAccountId()) {return false;}
+        if (!$this->clientHelper->getAccountId()) {
+            return false;
+        }
 
         $webproperties = $this->analytics->management_webproperties->listManagementWebproperties($this->clientHelper->getAccountId());
-        $data     = array();
+        $data = array();
 
         foreach ($webproperties->getItems() as $property) {
             $data[] = array(
-              'propertyId'   => $property->getId(),
-              'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
+                'propertyId' => $property->getId(),
+                'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
             );
         }
         return $data;
@@ -75,7 +78,9 @@ class GoogleAnalyticsHelper
 
     public function getProfiles()
     {
-        if (!$this->clientHelper->getAccountId() || !$this->clientHelper->getPropertyId()) {return false;}
+        if (!$this->clientHelper->getAccountId() || !$this->clientHelper->getPropertyId()) {
+            return false;
+        }
 
         // get views
         $profiles = $this->analytics->management_profiles->listManagementProfiles(
@@ -89,30 +94,30 @@ class GoogleAnalyticsHelper
     /**
      * Constructs a Google API query and returns the result
      *
-     * @param int    timespan      Timespan for the data to query in days
-     * @param int    startOffset   An offset in days
-     * @param string metrics    The needed metrics
-     * @param array  extra       Extra options suchs as dimentions, sort data, filter data,..
+     * @param int $timespan Timespan for the data to query in days
+     * @param int $startOffset An offset in days
+     * @param string $metrics The needed metrics
+     * @param array $extra Extra options suchs as dimentions, sort data, filter data,..
      *
-     * @return GaData result    A data object containing the queried data
+     * @return \Google_GaData result    A data object containing the queried data
      */
     public function getResults($timespan, $startOffset, $metrics, $extra = array())
     {
         $profileId = $this->getProfileId();
 
         return $this->analytics->data_ga->get(
-          'ga:' . $profileId,
-          $timespan . 'daysAgo',
-          $startOffset . 'daysAgo',
-          $metrics,
-          $extra
+            'ga:' . $profileId,
+            $timespan . 'daysAgo',
+            $startOffset . 'daysAgo',
+            $metrics,
+            $extra
         );
     }
 
     /**
      * Get the profile ID
      *
-     * @throws Exception if no accounts, webproperties or views are found
+     * @throws \Exception if no accounts, webproperties or views are found
      */
     public function getProfileId()
     {
@@ -124,7 +129,7 @@ class GoogleAnalyticsHelper
         }
 
         // get properties
-        $items          = $accounts->getItems();
+        $items = $accounts->getItems();
         $firstAccountId = $items[0]->getId();
         $webproperties = $this->analytics->management_webproperties->listManagementWebproperties($firstAccountId);
         // no properties
@@ -134,8 +139,8 @@ class GoogleAnalyticsHelper
 
         // get views
         $profiles = $this->analytics->management_profiles->listManagementProfiles(
-          $this->clientHelper->getAccountId(),
-          $this->clientHelper->getPropertyId()
+            $this->clientHelper->getAccountId(),
+            $this->clientHelper->getPropertyId()
         );
         // no views
         if (count($profiles->getItems()) == 0) {
@@ -149,23 +154,23 @@ class GoogleAnalyticsHelper
     /**
      * Constructs a Google API query and returns the result
      *
-     * @param Date   from         Start date for the data to query
-     * @param Date   to           End date in the past
-     * @param string metrics    The needed metrics
-     * @param array  extra       Extra options suchs as dimentions, sort data, filter data,..
+     * @param string $from Start date for the data to query
+     * @param string $to End date in the past
+     * @param string $metrics The needed metrics
+     * @param array $extra Extra options suchs as dimentions, sort data, filter data,..
      *
-     * @return GaData result    A data object containing the queried data
+     * @return \Google_GaData result    A data object containing the queried data
      */
     public function getResultsByDate($from, $to, $metrics, $extra = array())
     {
         $profileId = $this->getProfileId();
 
         return $this->analytics->data_ga->get(
-          'ga:' . $profileId,
-          $from,
-          $to,
-          $metrics,
-          $extra
+            'ga:' . $profileId,
+            $from,
+            $to,
+            $metrics,
+            $extra
         );
     }
 

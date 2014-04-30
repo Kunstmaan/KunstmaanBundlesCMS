@@ -2,8 +2,9 @@
 
 namespace Kunstmaan\DashboardBundle\Helper;
 
-use \Google_Client;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsToken;
+use Doctrine\ORM\EntityManager;
+use Google_Client;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
 /**
@@ -33,16 +34,13 @@ class GoogleClientHelper
     /**
      * Constructor
      *
-     * @param string        $clientId
-     * @param string        $clientSecret
-     * @param string        $redirectUrl
-     * @param string        $devKey
+     * @param $googleClient
      * @param EntityManager $em
      */
     public function __construct($googleClient, $em)
     {
-        $this->client       = $googleClient;
-        $this->em           = $em;
+        $this->client = $googleClient;
+        $this->em = $em;
 
         $this->init();
     }
@@ -50,14 +48,19 @@ class GoogleClientHelper
     /**
      * Tries to initialise the Client object
      *
-     * @throws Exception when API parameters are not set or incomplete
+     * @throws \Exception when API parameters are not set or incomplete
      */
-    public function init()
+    public function init($configId=false)
     {
         // if token is already saved in the database
-        if ($this->getToken() && '' !== $this->getToken())
-        {
+        if ($this->getToken($configId) && '' !== $this->getToken($configId)) {
             $this->client->setAccessToken($this->token);
+        }
+
+        if ($configId) {
+            $this->getAccountId($configId);
+            $this->getPropertyId($configId);
+            $this->getProfileId($configId);
         }
     }
 
@@ -82,10 +85,12 @@ class GoogleClientHelper
      *
      * @return string $token
      */
-    private function getToken()
+    private function getToken($configId=false)
     {
-        if (!$this->token) {
-            $this->token = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getToken();
+        if (!$this->token || $configId) {
+            /** @var AnalyticsConfigRepository $analyticsConfigRepository */
+            $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $this->token = $analyticsConfigRepository->getConfig($configId)->getToken();
         }
 
         return $this->token;
@@ -96,10 +101,12 @@ class GoogleClientHelper
      *
      * @return string $accountId
      */
-    public function getAccountId()
+    public function getAccountId($configId=false)
     {
-        if (!$this->accountId) {
-            $this->accountId = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getAccountId();
+        if (!$this->accountId || $configId) {
+            /** @var AnalyticsConfigRepository $analyticsConfigRepository */
+            $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $this->accountId = $analyticsConfigRepository->getConfig($configId)->getAccountId();
         }
 
         return $this->accountId;
@@ -110,10 +117,12 @@ class GoogleClientHelper
      *
      * @return string $propertyId
      */
-    public function getPropertyId()
+    public function getPropertyId($configId=false)
     {
-        if (!$this->propertyId) {
-            $this->propertyId = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getPropertyId();
+        if (!$this->propertyId || $configId) {
+            /** @var AnalyticsConfigRepository $analyticsConfigRepository */
+            $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $this->propertyId = $analyticsConfigRepository->getConfig($configId)->getPropertyId();
         }
 
         return $this->propertyId;
@@ -124,10 +133,12 @@ class GoogleClientHelper
      *
      * @return string $propertyId
      */
-    public function getProfileId()
+    public function getProfileId($configId=false)
     {
-        if (!$this->profileId) {
-            $this->profileId = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getProfileId();
+        if (!$this->profileId || $configId) {
+            /** @var AnalyticsConfigRepository $analyticsConfigRepository */
+            $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $this->profileId = $analyticsConfigRepository->getConfig($configId)->getProfileId();
         }
 
         return $this->profileId;
@@ -170,7 +181,7 @@ class GoogleClientHelper
     }
 
     /**
-     * Save the profileId to the database
+     * Save the config to the database
      */
     public function saveConfigName($configName, $configId=false)
     {

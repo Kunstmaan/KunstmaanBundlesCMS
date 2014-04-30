@@ -12,7 +12,7 @@ If you’re starting a new project with the Kunstmaan bundles, everything is alr
 Updating an existing website
 
     composer update
-    app/console doctrine:migrations:diff & app/console doctrine:migrations:migrate
+    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
     app/console doctrine:fixtures:load --fixtures=vendor/kunstmaan/dashboard-bundle/Kunstmaan/DashboardBundle/DataFixtures/ORM/ --append
 
 
@@ -25,6 +25,8 @@ We’ll start creating a developers console account. This account is used to com
 Go to http://cloud.google.com/console and log in with a Google account. You can use an existing account or create a new one especially for your app. Start by creating a new project. Once the project is created, you’ll have to enable access for the Analytics API. Go to the APIs & Auth section, and select the APIs tab. Search the list for the Analytics API, and enable it by pressing the button on the right.
 
 Now go to the Credentials tab in the APIs & Auth section. You’ll have to create both a client ID and an API key. Start with the client ID, select “web application” and press create. We’ll add an authorized redirect URI later. Now create a new key and choose “browser key”. Leave the whitelist blank and press “create”. Be sure to keep the console open for a while.
+
+Google is often working on it's cloud admin section, recently we have been getting 401 errors complaining the application name was empty. for some reason under "Consent Screen" the application name was indeed empty. Fill it in and you are good to go!
 
 ### Google analytics
 

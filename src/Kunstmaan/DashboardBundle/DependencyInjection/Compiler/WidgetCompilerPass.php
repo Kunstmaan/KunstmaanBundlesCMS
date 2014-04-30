@@ -5,7 +5,8 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class WidgetCompilerPass implements CompilerPassInterface {
+class WidgetCompilerPass implements CompilerPassInterface
+{
 
     /**
      * You can modify the container here before it is dumped to PHP code.
@@ -31,5 +32,6 @@ class WidgetCompilerPass implements CompilerPassInterface {
                 }
                 $definition->addMethodCall('addWidget', array($widget));
             }
-        }    }
+        }
+    }
 }

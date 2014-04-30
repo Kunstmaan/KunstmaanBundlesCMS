@@ -2,19 +2,26 @@
 namespace Kunstmaan\DashboardBundle\Command;
 
 
-use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 use Kunstmaan\DashboardBundle\Manager\WidgetManager;
+use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 
-class DashboardCommand extends ContainerAwareCommand {
+class DashboardCommand extends ContainerAwareCommand
+{
 
     protected function configure()
     {
         $this
             ->setName('kuma:dashboard:collect')
-            ->setDescription('Collect all the widget dashboard data');
+            ->setDescription('Collect all the widget dashboard data')
+            ->addArgument(
+                'configId',
+                InputArgument::OPTIONAL,
+                'Specify to only update one config'
+            );;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -24,7 +31,7 @@ class DashboardCommand extends ContainerAwareCommand {
 
         /** @var DashboardWidget[] $widgets */
         $widgets = $widgetManager->getWidgets();
-        foreach($widgets as $widget){
+        foreach ($widgets as $widget) {
             /** @var DashboardWidget $widget */
             $widget->getCommand()->execute($input, $output);
         }

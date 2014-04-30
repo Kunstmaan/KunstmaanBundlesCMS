@@ -1,24 +1,25 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
+use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
+use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
+use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
+use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 
-use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
-
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
-use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
-
-class GoogleAnalyticsCommand extends ContainerAwareCommand {
+class GoogleAnalyticsCommand extends ContainerAwareCommand
+{
     /** @var GoogleClientHelper $googleClientHelper */
     private $googleClientHelper;
-    /** @var Client $googleClient */
-    private $googleClient;
     /** @var GoogleAnalyticsHelper $analyticsHelper */
     private $analyticsHelper;
     /** @var EntityManager $em */
@@ -33,7 +34,12 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
     {
         $this
             ->setName('kuma:dashboard:widget:googleanalytics')
-            ->setDescription('Collect the Google Analytics dashboard widget data');
+            ->setDescription('Collect the Google Analytics dashboard widget data')
+            ->addArgument(
+                'configId',
+                InputArgument::OPTIONAL,
+                'Specify to only update one config'
+            );
     }
 
     /**
@@ -50,21 +56,34 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-       $this->init($output);
+        $this->init($output);
+        $configId = $input->getArgument('configId') ? $input->getArgument('configId') : false;
 
         // if no token set yet
         if (!$this->googleClientHelper->tokenIsSet()) {
-                $this->output->writeln('You haven\'t configured a Google account yet');
-                return;
+            $this->output->writeln('You haven\'t configured a Google account yet');
+            return;
+        }
+
+        // get data for each overview
+        if ($configId) {
+            $this->googleClientHelper->init($configId);
+            try {
+                $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId)->getOverviews();
+            } catch (\Exception $e) {
+                $this->output->writeln('Unknown config ID.');
+                exit;
+            }
+        } else {
+            $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
         }
 
         // create API Analytics helper to execute queries
         $this->analyticsHelper = $this->getContainer()->get('kunstmaan_dashboard.googleanalyticshelper');
         $this->analyticsHelper->init($this->googleClientHelper);
 
-        // get data for each overview
-        $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
         foreach ($overviews as $overview) {
+            /** @var AnalyticsOverview $overview */
             $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
 
             // metric data
@@ -95,7 +114,9 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand {
         }
 
         // set new update timestamp
-        $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated();
+        /** @var AnalyticsConfigRepository $analyticsConfigRepository */
+        $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $analyticsConfigRepository->setUpdated($configId);
 
         $this->output->writeln('Google Analytics data succesfully updated'); // done
     }

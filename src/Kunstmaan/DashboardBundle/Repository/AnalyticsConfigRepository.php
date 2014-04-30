@@ -17,7 +17,7 @@ class AnalyticsConfigRepository extends EntityRepository
     /**
      * Get the config from the database, creates a new entry if the config doesn't exist yet
      *
-     * @return Config $config
+     * @return AnalyticsConfig $config
      */
     public function getConfig($id=false)
     {
@@ -50,7 +50,7 @@ class AnalyticsConfigRepository extends EntityRepository
 
     public function listConfigs() {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('c.id')
+        $qb->select('c')
           ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c');
         return $qb->getQuery()->getResult();
     }
@@ -116,6 +116,7 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /** Update the timestamp when data is collected */
+
     public function setUpdated($id=false) {
         $em = $this->getEntityManager();
         $config = $this->getConfig($id);
@@ -129,6 +130,7 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $token
      */
+
     public function saveToken($token, $id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);

@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
  * AnalyticsOverview
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kuma_analytics_overview")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository")
  */
-class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
+class AnalyticsOverview extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="overviews")
@@ -47,7 +48,8 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @return int
      */
-    public function getReturningUsersPercentage() {
+    public function getReturningUsersPercentage()
+    {
         return $this->returningUsers ? round(($this->returningUsers / $this->sessions) * 100) : 0;
     }
 
@@ -56,12 +58,14 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @return int
      */
-    public function getNewUsersPercentage() {
+    public function getNewUsersPercentage()
+    {
         return $this->newUsers ? round(($this->newUsers / $this->sessions) * 100) : 0;
     }
 
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist"})
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     private $goals;
 
@@ -161,7 +165,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * Set goals
      *
      * @param array $goals
-     * @return AnalyticsDailyOverview
+     * @return $this
      */
     public function setGoals($goals)
     {
@@ -173,16 +177,20 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Get goals
      *
-     * @return array
+     * @return AnalyticsGoal[]
      */
     public function getGoals()
     {
         return $this->goals;
     }
 
-    public function getActiveGoals() {
+    /**
+     * @return array
+     */
+    public function getActiveGoals()
+    {
         $goals = array();
-        foreach ($this->goals->toArray() as $goal) {
+        foreach ($this->getGoals() as $goal) {
             if ($goal->getVisits()) $goals[] = $goal;
         }
         return $goals;
@@ -193,7 +201,7 @@ class AnalyticsOverview extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * Set chartData
      *
      * @param array $chartData
-     * @return AnalyticsDailyOverview
+     * @return $this
      */
     public function setChartData($chartData)
     {

@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
  * AnalyticsToken
@@ -10,11 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kuma_analytics_config")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository")
  */
-class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
+class AnalyticsConfig extends AbstractEntity
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist", "remove"})
      */
     private $overviews;
 
@@ -77,12 +78,11 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $profileId = null;
 
     /**
-     * @var DateTime
+     * @var \DateTime
      *
      * @ORM\Column(name="last_update", type="datetime", nullable=true)
      */
     private $lastUpdate = null;
-
 
 
     /**
@@ -124,7 +124,7 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @param string $token
      *
-     * @return AnalyticsToken
+     * @return $this
      */
     public function setToken($token)
     {
@@ -148,7 +148,7 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @param string $propertyId
      *
-     * @return AnalyticsProperty
+     * @return $this
      */
     public function setPropertyId($propertyId)
     {
@@ -172,7 +172,7 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @param string $accountId
      *
-     * @return AnalyticsProperty
+     * @return $this
      */
     public function setAccountId($accountId)
     {
@@ -196,7 +196,7 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @param string $profileId
      *
-     * @return AnalyticsProperty
+     * @return $this
      */
     public function setProfileId($profileId)
     {
@@ -208,7 +208,7 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Get lastUpdate
      *
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastUpdate()
     {
@@ -218,9 +218,9 @@ class AnalyticsConfig extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Set lastUpdate
      *
-     * @param DateTime $lastUpdate
+     * @param \DateTime $lastUpdate
      *
-     * @return AnalyticsProperty
+     * @return $this
      */
     public function setLastUpdate($lastUpdate)
     {

@@ -1,35 +1,42 @@
 {% if token %}
-<div id="dashboard" class="dashboard">
+<div class="dashboard">
 
-    <!-- TABS -->
-    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews} %}
-    <!-- end TABS -->
+    <div id="data_overview" class="dashboard__content--loading">
+        <!-- TABS -->
+        {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews} %}
+        <!-- end TABS -->
 
-    <div id="data_no_overview" style="display:none">{{ 'analytics.overview.unavailable' | trans}}</div>
+        <!-- TAB CONTENT -->
+        <section class="dashboard__content">
+            <!-- CHART -->
+            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
+            <!-- end CHART -->
 
-    <!-- TAB CONTENT -->
-    <section class="dashboard__content dashboard__content--loading" id="data_overview">
+            {% for overview in overviews %}
+                <!-- GOALS -->
+                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview':overview} %}
+                <!-- end GOALS -->
+            {% endfor %}
 
-        <!-- CHART -->
-        {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
-        <!-- end CHART -->
-
-        {% for overview in overviews %}
-            <!-- GOALS -->
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview':overview} %}
-            <!-- end GOALS -->
-        {% endfor %}
-
-    </section>
-    <!-- end TAB CONTENT -->
+        </section>
+        <!-- end TAB CONTENT -->
+        <div id="data_no_overview" style="display:none">
+            <section class="dashboard__content">
+                <p>{{ 'dashboard.ga.unavailable' | trans}}</p>
+                {% if configId is not defined %}
+                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update') }}" class="dashboard_update btn btn-primary">Update</button>
+                {% else %}
+                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'configId':configId}) }}" class="dashboard_update btn btn-primary">Update</button>
+                {% endif %}
+            </section>
+        </div>
+    </div>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <section>
-            <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProfile') }}">{{ 'dashboard.ga.reset.profile' | trans }}</a> | <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a> | <a href="#" id="dashboard_update">{{ 'dashboard.ga.last_update' | trans }} {{last_update}}</a>
+        <section id="dashboard_footer">
+            {% if configId is not defined %}<a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a> | {% endif %}<span class="dashboard_update">{{ 'dashboard.ga.last_update' | trans }} {{last_update}}</span>
         </section>
     {% endif %}
-        <section>
-        </section>
 </div>
 
 {% else %}
@@ -41,7 +48,7 @@
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/metrics.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
         '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris.js-0.4.3/morris.js'
+        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris-0.5.0.js'
         '@KunstmaanDashboardBundle/Resources/public/js/libs/raphael-2.1.2.js'
         output='generated-js/ga_widget.js'
     %}

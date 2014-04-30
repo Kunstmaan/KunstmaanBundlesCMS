@@ -3,7 +3,6 @@
 namespace Kunstmaan\DashboardBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 /**
@@ -22,7 +21,7 @@ class AnalyticsOverviewRepository extends EntityRepository
     public function getAll()
     {
         $query = $this->getEntityManager()->createQuery(
-          'SELECT c FROM KunstmaanDashboardBundle:AnalyticsOverview c'
+            'SELECT c FROM KunstmaanDashboardBundle:AnalyticsOverview c'
         );
 
         return $query->getResult();
@@ -33,15 +32,15 @@ class AnalyticsOverviewRepository extends EntityRepository
      *
      * @param int $id
      *
-     * @return AnalyticOverview $result
+     * @return AnalyticsOverview|bool
      */
     public function getOverview($id)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
-          ->from('KunstmaanDashboardBundle:AnalyticsOverview', 'o')
-          ->where('o.id = :id')
-          ->setParameter('id', $id);
+            ->from('KunstmaanDashboardBundle:AnalyticsOverview', 'o')
+            ->where('o.id = :id')
+            ->setParameter('id', $id);
 
         $results = $qb->getQuery()->getResult();
         if ($results) {
@@ -51,10 +50,11 @@ class AnalyticsOverviewRepository extends EntityRepository
         return false;
     }
 
-    public function getOverviewData() {
+    public function getOverviewData()
+    {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o.id, o.title')
-          ->from('KunstmaanDashboardBundle:AnalyticsOverview', 'o');
+            ->from('KunstmaanDashboardBundle:AnalyticsOverview', 'o');
         $results = $qb->getQuery()->getResult();
         if ($results) {
             return $results;
