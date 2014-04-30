@@ -50,10 +50,10 @@ class GoogleClientHelper
      *
      * @throws \Exception when API parameters are not set or incomplete
      */
-    public function init()
+    public function init($configId=false)
     {
         // if token is already saved in the database
-        if ($this->getToken() && '' !== $this->getToken()) {
+        if ($this->getToken($configId) && '' !== $this->getToken($configId)) {
             $this->client->setAccessToken($this->token);
         }
     }
@@ -81,7 +81,7 @@ class GoogleClientHelper
      */
     private function getToken($configId=false)
     {
-        if (!$this->token) {
+        if (!$this->token || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */
             $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
             $this->token = $analyticsConfigRepository->getConfig($configId)->getToken();
@@ -97,7 +97,7 @@ class GoogleClientHelper
      */
     public function getAccountId($configId=false)
     {
-        if (!$this->accountId) {
+        if (!$this->accountId || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */
             $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
             $this->accountId = $analyticsConfigRepository->getConfig($configId)->getAccountId();
@@ -113,7 +113,7 @@ class GoogleClientHelper
      */
     public function getPropertyId($configId=false)
     {
-        if (!$this->propertyId) {
+        if (!$this->propertyId || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */
             $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
             $this->propertyId = $analyticsConfigRepository->getConfig($configId)->getPropertyId();
@@ -129,7 +129,7 @@ class GoogleClientHelper
      */
     public function getProfileId($configId=false)
     {
-        if (!$this->profileId) {
+        if (!$this->profileId || $configId) {
             /** @var AnalyticsConfigRepository $analyticsConfigRepository */
             $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
             $this->profileId = $analyticsConfigRepository->getConfig($configId)->getProfileId();
