@@ -20,12 +20,12 @@
 
         </section>
         <!-- end TAB CONTENT -->
-    </div>
-    <div id="data_no_overview" style="display:none">
-        <section class="dashboard__content">
-            <p>{{ 'dashboard.ga.unavailable' | trans}}</p>
-            <button class="dashboard_update btn btn-primary">Update</button>
-        </section>
+        <div id="data_no_overview" style="display:none">
+            <section class="dashboard__content">
+                <p>{{ 'dashboard.ga.unavailable' | trans}}</p>
+                <button class="dashboard_update btn btn-primary">Update</button>
+            </section>
+        </div>
     </div>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}

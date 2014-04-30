@@ -14,10 +14,12 @@ $(function () {
             success: function (data) {
                 if (!data.overview || data.overview.sessions == 0) {
                     $('#data_no_overview').css('display', 'block');
-                    $('#data_overview').css('display', 'none').removeClass('dashboard__content--loading');
+                    $('#data_overview > .dashboard__content').css('display', 'none');
+                    $('#data_overview').removeClass('dashboard__content--loading');
                 } else {
                     $('#data_no_overview').css('display', 'none');
-                    $('#data_overview').css('display', 'block').removeClass('dashboard__content--loading');
+                    $('#data_overview > .dashboard__content').css('display', 'block')
+                    $('#data_overview').removeClass('dashboard__content--loading');
 
                     $("#dashboard-chart--audience").html('');
                     // render the chart
