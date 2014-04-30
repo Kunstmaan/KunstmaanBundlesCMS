@@ -17,7 +17,7 @@ class AnalyticsConfigRepository extends EntityRepository
     /**
      * Get the config from the database, creates a new entry if the config doesn't exist yet
      *
-     * @return Config $config
+     * @return AnalyticsConfig $config
      */
     public function getConfig($id=false)
     {
@@ -116,9 +116,16 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /** Update the timestamp when data is collected */
+<<<<<<< HEAD
     public function setUpdated($id=false) {
         $em = $this->getEntityManager();
         $config = $this->getConfig($id);
+=======
+    public function setUpdated()
+    {
+        $em = $this->getEntityManager();
+        $config = $this->getConfig();
+>>>>>>> origin/master
         $config->setLastUpdate(new \DateTime());
         $em->persist($config);
         $em->flush();
@@ -129,9 +136,16 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $token
      */
+<<<<<<< HEAD
     public function saveToken($token, $id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);
+=======
+    public function saveToken($token)
+    {
+        $em = $this->getEntityManager();
+        $config = $this->getConfig();
+>>>>>>> origin/master
         $config->setToken($token);
         $em->persist($config);
         $em->flush();
@@ -142,9 +156,16 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $propertyId
      */
+<<<<<<< HEAD
     public function savePropertyId($propertyId, $id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);
+=======
+    public function savePropertyId($propertyId)
+    {
+        $em = $this->getEntityManager();
+        $config = $this->getConfig();
+>>>>>>> origin/master
         $config->setPropertyId($propertyId);
         $em->persist($config);
         $em->flush();
@@ -155,9 +176,16 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $accountId
      */
+<<<<<<< HEAD
     public function saveAccountId($accountId, $id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);
+=======
+    public function saveAccountId($accountId)
+    {
+        $em = $this->getEntityManager();
+        $config = $this->getConfig();
+>>>>>>> origin/master
         $config->setAccountId($accountId);
         $em->persist($config);
         $em->flush();
@@ -168,9 +196,16 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $profileId
      */
+<<<<<<< HEAD
     public function saveProfileId($profileId, $id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);
+=======
+    public function saveProfileId($profileId)
+    {
+        $em = $this->getEntityManager();
+        $config = $this->getConfig();
+>>>>>>> origin/master
         $config->setProfileId($profileId);
         $em->persist($config);
         $em->flush();
@@ -190,18 +225,32 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /** resets the profile id */
+<<<<<<< HEAD
     public function resetProfileId($id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);
+=======
+    public function resetProfileId()
+    {
+        $em = $this->getEntityManager();
+        $config = $this->getConfig();
+>>>>>>> origin/master
         $config->setProfileId('');
         $em->persist($config);
         $em->flush();
     }
 
     /** resets the  account id, property id and profile id */
+<<<<<<< HEAD
     public function resetPropertyId($id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);
+=======
+    public function resetPropertyId()
+    {
+        $em = $this->getEntityManager();
+        $config = $this->getConfig();
+>>>>>>> origin/master
         $config->setAccountId('');
         $config->setProfileId('');
         $config->setPropertyId('');

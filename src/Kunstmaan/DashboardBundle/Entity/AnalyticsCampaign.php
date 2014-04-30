@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
  * AnalyticsCampaign
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kuma_analytics_top_campaign")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsCampaignRepository")
  */
-class AnalyticsCampaign extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
+class AnalyticsCampaign extends AbstractEntity
 {
     /**
      * @var string
@@ -60,7 +61,7 @@ class AnalyticsCampaign extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * Set visits
      *
      * @param integer $visits
-     * @return AnalyticsCampaign
+     * @return $this
      */
     public function setVisits($visits)
     {
@@ -94,7 +95,7 @@ class AnalyticsCampaign extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @param integer $overview
      *
-     * @return AnalyticsTopReferrals
+     * @return $this
      */
     public function setOverview($overview)
     {

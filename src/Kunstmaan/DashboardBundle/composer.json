@@ -20,7 +20,9 @@
     },
     "minimum-stability": "stable",
     "autoload": {
-        "psr-0": { "Kunstmaan\\DashboardBundle": "" }
+        "psr-0": {
+            "Kunstmaan\\DashboardBundle": ""
+        }
     },
     "target-dir": "Kunstmaan/DashboardBundle",
     "extra": {
