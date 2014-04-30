@@ -315,11 +315,13 @@ class GoogleAnalyticsController extends Controller
     /**
      * @Route("/updateData", name="KunstmaanDashboardBundle_analytics_update")
      */
-    public function runUpdate()
+    public function runUpdate(Request $request)
     {
+        $configId = $request->query->get('configId');
+
         $command = new GoogleAnalyticsCommand();
         $command->setContainer($this->container);
-        $input = new ArrayInput(array());
+        $input = new ArrayInput(array('configId' => $configId));
         $output = new NullOutput();
         $command->run($input, $output);
 

@@ -23,7 +23,11 @@
         <div id="data_no_overview" style="display:none">
             <section class="dashboard__content">
                 <p>{{ 'dashboard.ga.unavailable' | trans}}</p>
-                <button class="dashboard_update btn btn-primary">Update</button>
+                {% if configId is not defined %}
+                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update') }}" class="dashboard_update btn btn-primary">Update</button>
+                {% else %}
+                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'configId':configId}) }}" class="dashboard_update btn btn-primary">Update</button>
+                {% endif %}
             </section>
         </div>
     </div>
@@ -33,8 +37,6 @@
             <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a> | <a class="dashboard_update">{{ 'dashboard.ga.last_update' | trans }} {{last_update}}</a>
         </section>
     {% endif %}
-        <section>
-        </section>
 </div>
 
 {% else %}

@@ -65,10 +65,11 @@ $(function () {
 
 
     $('.dashboard_update').click(function () {
+        var url = $(this).attr('data-path');
         $('.dashboard_update').html('Updating...');
         $.ajax({
             type: 'get',
-            url: 'widget/googleanalytics/updateData',
+            url: url,
             success: function (data) {
                 location.reload();
             },
