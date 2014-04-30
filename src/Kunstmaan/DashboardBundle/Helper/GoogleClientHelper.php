@@ -56,6 +56,12 @@ class GoogleClientHelper
         if ($this->getToken($configId) && '' !== $this->getToken($configId)) {
             $this->client->setAccessToken($this->token);
         }
+
+        if ($configId) {
+            $this->getAccountId($configId);
+            $this->getPropertyId($configId);
+            $this->getProfileId($configId);
+        }
     }
 
     /**

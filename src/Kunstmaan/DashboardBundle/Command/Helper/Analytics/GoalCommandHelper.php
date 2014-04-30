@@ -41,7 +41,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         if (is_array($goals)){
             return $goals;
         }
-        return array();
+        return false;
     }
 
     /**
@@ -49,6 +49,10 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
      */
     private function prepareMetrics(){
         $goals = $this->getAllGoals();
+        if (!$goals) {
+            return false;
+        }
+
         $metrics = array();
         foreach ($goals as $key => $value) {
             $metrics[] = 'ga:goal' . ($key+1) . 'Completions';
@@ -119,7 +123,9 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         }
 
         $goals = $this->getAllGoals();
-
+        if (!$goals) {
+            return;
+        }
         $goaldata = array();
 
         // Create an array with for each goal an entry to create the metric parameter.
@@ -169,7 +175,6 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 
         // Parse the goals and append them to the overview.
         $this->parseGoals($overview, $goalCollection);
-
     }
 
 
