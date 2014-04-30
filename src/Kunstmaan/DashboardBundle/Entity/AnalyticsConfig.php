@@ -15,7 +15,7 @@ class AnalyticsConfig extends AbstractEntity
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist", "remove"})
      */
     private $overviews;
 
