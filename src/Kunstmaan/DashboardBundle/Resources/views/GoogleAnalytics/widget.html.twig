@@ -33,8 +33,8 @@
     </div>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <section>
-            <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a> | <a class="dashboard_update">{{ 'dashboard.ga.last_update' | trans }} {{last_update}}</a>
+        <section id="dashboard_footer">
+            {% if configId is not defined %}<a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a> | {% endif %}<span class="dashboard_update">{{ 'dashboard.ga.last_update' | trans }} {{last_update}}</span>
         </section>
     {% endif %}
 </div>
