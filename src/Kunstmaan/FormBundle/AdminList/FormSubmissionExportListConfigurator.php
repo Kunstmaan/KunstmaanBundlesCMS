@@ -4,7 +4,6 @@ namespace Kunstmaan\FormBundle\AdminList;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -27,6 +26,7 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
     /**
      * @param EntityManager   $em              The entity manager
      * @param NodeTranslation $nodeTranslation The node translation
+     * @param Translatior     $translator      The translator service
      */
     public function __construct(EntityManager $em, $nodeTranslation, $translator)
     {
@@ -79,11 +79,11 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
             // Write row data
             $data = array('id' => $submission->getId(), 'date' => $submission->getCreated()->format('d/m/Y H:i:s'), 'language' => $submission->getLang());
             foreach ($submission->getFields() as $field) {
-                $header = mb_convert_encoding($this->translator->trans($field->getLabel()), 'ISO-8859-1', 'UTF-8');
+                $header = $this->translator->trans($field->getLabel());
                 if (!$isHeaderWritten) {
                     $this->addExportField($header, $header);
                 }
-                $data[$header] = mb_convert_encoding($field->__toString(), 'ISO-8859-1', 'UTF-8');
+                $data[$header] = $field->__toString();
             }
             $isHeaderWritten = true;
             $iterator->add(array($data));
@@ -100,6 +100,10 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
      */
     public function getStringValue($item, $columnName)
     {
-        return $item[$columnName];
+        if (array_key_exists($columnName, $item)) {
+            return $item[$columnName];
+        }
+
+        return '';
     }
 }
