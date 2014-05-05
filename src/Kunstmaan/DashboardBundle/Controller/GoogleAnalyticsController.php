@@ -188,7 +188,9 @@ class GoogleAnalyticsController extends Controller
         }
 
         if (null !== $request->request->get('properties')) {
-            $googleClientHelper->savePropertyId($request->request->get('properties'));
+            $parts = explode('::', $request->request->get('properties'));
+            $googleClientHelper->savePropertyId($parts[0]);
+            $googleClientHelper->saveConfigName($parts[1]);
             return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
         }
 
@@ -223,9 +225,7 @@ class GoogleAnalyticsController extends Controller
         }
 
         if (null !== $request->request->get('profiles')) {
-            $parts = explode('::', $request->request->get('profiles'));
-            $googleClientHelper->saveProfileId($parts[0]);
-            $googleClientHelper->saveConfigName($parts[1]);
+            $googleClientHelper->saveProfileId($request->request->get('profiles'));
             return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
         }
 
