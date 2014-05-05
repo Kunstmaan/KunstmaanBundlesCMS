@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Doctrine\ORM\EntityNotFoundException;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -36,8 +37,15 @@ class ChooserController extends Controller
 
         // Go to the last visited folder
         if ($session->get('last-media-folder')) {
-            $folderId = $session->get('last-media-folder');
-        } else {
+            try {
+                $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($session->get('last-media-folder'));
+                $folderId = $session->get('last-media-folder');
+            } catch (EntityNotFoundException $e) {
+                $folderId = false;
+            }
+        }
+
+        if (!$folderId) {
             // Redirect to the first top folder
             /* @var Folder $firstFolder */
             $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFirstTopFolder();
