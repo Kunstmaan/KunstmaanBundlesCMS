@@ -1,5 +1,4 @@
 {% if filter.filterdefinitions|length > 0 %}
-
     <form action="{{ path(basepath, extraparams) }}">
         <div class="filter_lists">
             <label for="filter_on_off" class="status all">Show all</label>
@@ -47,6 +46,11 @@
                         <button class="btn apply_filter" type="submit">Filter</button>
                     </li>
                 </ul>
+                {% for key, value in filter.currentparameters %}
+                    {% if key|slice(0, 7) != 'filter_' and key != 'page' %}
+                        <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </form>
