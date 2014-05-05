@@ -84,8 +84,8 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     public function getIndexUrl()
     {
         return array(
-          'path'   => 'KunstmaanMediaBundle_folder_show',
-          'params' => array('folderId' => $this->folder->getId())
+            'path'   => $this->request->get('_route'),
+            'params' => array('folderId' => $this->folder->getId())
         );
     }
 
