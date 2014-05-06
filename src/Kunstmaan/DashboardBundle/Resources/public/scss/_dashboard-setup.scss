@@ -1,0 +1,25 @@
+@import "vars";
+@import "mixins";
+
+#dashboard-setup-form {
+
+    select {
+        float:left;
+        clear:both;
+        margin:10px 0;
+        display:none;
+    }
+
+    button {
+        display: block;
+        float:left;
+        clear:both;
+        width:75px;
+        margin-top:10px;
+    }
+
+
+    .setup-item__shown {
+        display: block;
+    }
+}

@@ -3,10 +3,10 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    <form method="post" action="">
+    <form method="post" action="" id="dashboard-setup-form">
         <h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
 
-        <select id="accounts" name="accounts">
+        <select id="accounts" name="accounts" class="setup-item__shown">
             <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
             {% for account in accounts %}
                 <option data-id="{{account.accountId}}">
@@ -42,3 +42,14 @@
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
+
+
+{% block extracss %}
+    {% stylesheets
+        filter="scss"
+        "@KunstmaanDashboardBundle/Resources/public/scss/_dashboard-setup.scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+{% endblock %}
+
