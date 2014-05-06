@@ -7,3 +7,8 @@ kunstmaan_dashboard_googleanalytics:
     resource: "@KunstmaanDashboardBundle/Controller/GoogleAnalyticsController.php"
     type:     annotation
     prefix:   /admin/dashboard/widget/googleanalytics
+
+kunstmaan_dashboard_googleanalytics_AJAX:
+    resource: "@KunstmaanDashboardBundle/Controller/GoogleAnalyticsAJAXController.php"
+    type:     annotation
+    prefix:   /admin/dashboard/ajax/
