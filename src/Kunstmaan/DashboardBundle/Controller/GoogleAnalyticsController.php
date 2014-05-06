@@ -106,65 +106,14 @@ class GoogleAnalyticsController extends Controller
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
         if (null !== $request->request->get('accounts')) {
-            $configHelper->saveAccountId($request->request->get('accounts'));
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
+            return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
         }
 
         $accounts = $configHelper->getAccounts();
 
         return $this->render(
-            'KunstmaanDashboardBundle:Setup:accountSelection.html.twig',
+            'KunstmaanDashboardBundle:Setup:setup.html.twig',
             array('accounts' => $accounts)
-        );
-    }
-
-    /**
-     * @Route("/selectWebsite", name="KunstmaanDashboardBundle_PropertySelection")
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function propertySelectionAction(Request $request)
-    {
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-
-        if (null !== $request->request->get('properties')) {
-            $parts = explode('::', $request->request->get('properties'));
-            $configHelper->savePropertyId($parts[0]);
-            $configHelper->saveConfigName($parts[1]);
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
-        }
-
-        $properties = $configHelper->getProperties();
-
-        return $this->render(
-            'KunstmaanDashboardBundle:Setup:propertySelection.html.twig',
-            array('properties' => $properties)
-        );
-    }
-
-    /**
-     * @Route("/selectProfile", name="KunstmaanDashboardBundle_ProfileSelection")
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function profileSelectionAction(Request $request)
-    {
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-
-        if (null !== $request->request->get('profiles')) {
-            $configHelper->saveProfileId($request->request->get('profiles'));
-            return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
-        }
-
-        $profiles = $configHelper->getProfiles();
-
-        return $this->render(
-            'KunstmaanDashboardBundle:Setup:profileSelection.html.twig',
-            array('profiles' => $profiles)
         );
     }
 

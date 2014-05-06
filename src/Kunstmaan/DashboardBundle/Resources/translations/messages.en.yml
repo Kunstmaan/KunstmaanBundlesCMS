@@ -27,12 +27,15 @@ dashboard:
             confirm: Here
             profile:
                 title: Select a profile
+                select: Select a profile..
                 content: Select a profile for the selected website
             property:
               title: Select a website to track
+              select: Select a website..
               content: Select a domain registered in your Google Analytics account.
             account:
                 title: Select an account
+                select: Select an account..
         reset:
             property: Change Google Analytics link
         last_update: Last update:
