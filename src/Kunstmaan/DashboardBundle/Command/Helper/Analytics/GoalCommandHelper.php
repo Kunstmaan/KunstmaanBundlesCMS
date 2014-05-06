@@ -4,27 +4,27 @@ namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
-use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
+use Kunstmaan\DashboardBundle\Helper\Googlequery;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 {
-    /** @var GoogleClientHelper $googleClientHelper */
-    private $googleClientHelper;
+    /** @var ConfigHelper $configHelper */
+    private $configHelper;
 
     /**
      * Constructor
      *
-     * @param GoogleClientHelper $googleClientHelper
-     * @param GoogleAnalyticsHelper $analyticsHelper
+     * @param ConfigHelper $configHelper
+     * @param QueryHelper $query
      * @param OutputInterface $output
      * @param EntityManager $em
      */
-    public function __construct($googleClientHelper, $analyticsHelper, $output, $em)
+    public function __construct($configHelper, $query, $output, $em)
     {
-        parent::__construct($analyticsHelper, $output, $em);
-        $this->googleClientHelper = $googleClientHelper;
+        parent::__construct($query, $output, $em);
+        $this->configHelper = $configHelper;
     }
 
 
@@ -33,9 +33,12 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
      */
     private function getAllGoals(){
         // Get the goals from the saved profile. These are a maximum of 20 goals.
-        $goals = $this->analyticsHelper->getAnalytics()
+        $goals = $this
+            ->query
+            ->getServiceHelper()
+            ->getService()
             ->management_goals
-            ->listManagementGoals($this->googleClientHelper->getAccountId(), $this->googleClientHelper->getPropertyId(), $this->googleClientHelper->getProfileId())
+            ->listManagementGoals($this->configHelper->getAccountId(), $this->configHelper->getPropertyId(), $this->configHelper->getProfileId())
             ->items;
 
         if (is_array($goals)){
@@ -80,14 +83,14 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
             $end = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y', strtotime('+1 year'))));
 
-            $results = $this->analyticsHelper->getResultsByDate(
+            $results = $this->query->getResultsByDate(
                 $begin,
                 $end,
                 $metrics,
                 $dimensions
             );
         } else {
-            $results = $this->analyticsHelper->getResults(
+            $results = $this->query->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
                 $metrics,

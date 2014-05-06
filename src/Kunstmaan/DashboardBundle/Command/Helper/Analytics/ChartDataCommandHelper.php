@@ -40,14 +40,14 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
         if ($overview->getUseYear()) {
             $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
             $end = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y', strtotime('+1 year'))));
-            $results = $this->analyticsHelper->getResultsByDate(
+            $results = $this->query->getResultsByDate(
                 $begin,
                 $end,
                 'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
                 $extra
             );
         } else {
-            $results = $this->analyticsHelper->getResults(
+            $results = $this->query->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
                 'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
