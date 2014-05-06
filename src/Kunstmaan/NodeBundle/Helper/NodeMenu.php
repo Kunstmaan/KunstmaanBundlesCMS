@@ -137,14 +137,14 @@ class NodeMenu
             $this->topNodeMenuItems = array();
 
             // To be backwards compatible we need to create the top node MenuItems
-            if (array_key_exists(0, $this->childNodes[0])) {
+            if (array_key_exists(0, $this->childNodes)) {
                 $topNodeMenuItems = array();
                 $topNodes = $this->childNodes[0];
                 /* @var Node $topNode */
                 foreach ($topNodes as $topNode) {
                     $nodeTranslation = $topNode->getNodeTranslation($this->lang, $this->includeOffline);
                     if (!is_null($nodeTranslation)) {
-                        $topNodeMenuItems[] = new NodeMenuItem($topNode, $nodeTranslation, null, $this);
+                        $topNodeMenuItems[] = new NodeMenuItem($topNode, $nodeTranslation, false, $this);
                     }
                 }
 
@@ -232,6 +232,38 @@ class NodeMenu
         }
 
         return null;
+    }
+
+    /**
+     * @param Node $node
+     * @param bool $includeHiddenFromNav
+     *
+     * @return NodeMenuItem[]
+     */
+    public function getChildren(Node $node, $includeHiddenFromNav = true)
+    {
+        $children = array();
+
+        if (array_key_exists($node->getId(), $this->childNodes)) {
+            $nodes = $this->childNodes[$node->getId()];
+            /* @var Node $node */
+            foreach ($nodes as $node) {
+                $nodeTranslation = $node->getNodeTranslation($this->lang, $this->includeOffline);
+                if (!is_null($nodeTranslation)) {
+                    $children[] = new NodeMenuItem($node, $nodeTranslation, null, $this);
+                }
+            }
+
+            $children = array_filter($children, function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
+                if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
+                    return false;
+                }
+
+                return true;
+            });
+        }
+
+        return $children;
     }
 
     /**

@@ -49,15 +49,16 @@ class NodeMenuItem
     private $menu;
 
     /**
-     * @param Node              $node            The node
-     * @param NodeTranslation   $nodeTranslation The nodetranslation
-     * @param NodeMenuItem|null $parent          The parent nodemenuitem
-     * @param NodeMenu          $menu            The menu
+     * @param Node                    $node            The node
+     * @param NodeTranslation         $nodeTranslation The nodetranslation
+     * @param NodeMenuItem|null|false $parent          The parent nodemenuitem
+     * @param NodeMenu                $menu            The menu
      */
     public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeMenuItem $parent = null, NodeMenu $menu)
     {
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
+        // null = look up parent later if required; false = top menu item; NodeMenuItem = parent item already fetched
         $this->parent = $parent;
         $this->menu = $menu;
         $this->em = $menu->getEntityManager();
@@ -159,9 +160,19 @@ class NodeMenuItem
     /**
      * @return NodeMenuItem|NULL
      */
+    /*
     public function getParent()
     {
         return $this->parent;
+    }
+*/
+
+    /**
+     * @param NodeMenuItem|null|false $parent
+     */
+    public function setParent(NodeMenuItem $parent = null)
+    {
+        $this->parent = $parent;
     }
 
     /**
@@ -169,6 +180,7 @@ class NodeMenuItem
      *
      * @return NodeMenuItem|NULL
      */
+    /*
     public function getParentOfClass($class)
     {
         // Check for namespace alias
@@ -184,11 +196,12 @@ class NodeMenuItem
         }
 
         return $this->parent->getParentOfClass($class);
-    }
+    }*/
 
     /**
      * @return NodeMenuItem[]
      */
+    /*
     public function getParents()
     {
         $parent = $this->getParent();
@@ -199,7 +212,7 @@ class NodeMenuItem
         }
 
         return array_reverse($parents);
-    }
+    }*/
 
     /**
      * @param bool $includeHiddenFromNav Include hiddenFromNav nodes
@@ -209,25 +222,15 @@ class NodeMenuItem
     public function getChildren($includeHiddenFromNav = true)
     {
         if (is_null($this->lazyChildren)) {
-            $this->lazyChildren = array();
-            /* @var NodeRepository $nodeRepo */
-            $nodeRepo = $this->em->getRepository('KunstmaanNodeBundle:Node');
-            $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getPermission(), $this->menu->getAclHelper(), true);
+            $children = $this->menu->getChildren($this->node, $includeHiddenFromNav);
+            /* @var NodeMenuItem $child */
             foreach ($children as $child) {
-                $nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
-                if (!is_null($nodeTranslation)) {
-                    $this->lazyChildren[] = new NodeMenuItem($child, $nodeTranslation, $this, $this->menu);
-                }
+                $child->setParent($this);
             }
+            $this->lazyChildren = $children;
         }
 
-        return array_filter($this->lazyChildren, function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
-            if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
-                return false;
-            }
-
-            return true;
-        });
+        return $this->lazyChildren;
     }
 
     /**
