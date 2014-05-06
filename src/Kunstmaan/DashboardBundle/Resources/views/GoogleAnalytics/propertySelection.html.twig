@@ -10,7 +10,7 @@
 
     <select name="properties" class="chzn-select">
         {% for property in properties %}
-            <option value="{{ property.propertyId }}">{{ property.propertyName }}</option>
+            <option value="{{ property.propertyId }}::{{ property.propertyName }}">{{ property.propertyName }}</option>
         {% endfor %}
     </select>
 <br/>
