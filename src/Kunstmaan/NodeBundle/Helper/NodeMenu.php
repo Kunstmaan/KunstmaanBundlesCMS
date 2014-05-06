@@ -267,6 +267,20 @@ class NodeMenu
     }
 
     /**
+     * @param Node $node
+     *
+     * @return NodeMenuItem
+     */
+    public function getParent(Node $node)
+    {
+        if ($node->getParent() && array_key_exists($node->getParent()->getId(), $this->allNodes)) {
+            return $this->allNodes[$node->getParent()->getId()];
+        }
+
+        return false;
+    }
+
+    /**
      * @param NodeTranslation $parentNode The parent node
      * @param string          $slug       The slug
      *

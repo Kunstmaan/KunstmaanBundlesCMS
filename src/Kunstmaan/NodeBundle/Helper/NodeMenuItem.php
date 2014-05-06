@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Repository\NodeRepository;
 
 /**
  * NodeMenuItem
@@ -29,14 +28,9 @@ class NodeMenuItem
     private $nodeTranslation;
 
     /**
-     * @var string
-     */
-    private $lang;
-
-    /**
      * @var NodeMenuItem[]
      */
-    private $lazyChildren = null;
+    private $children = null;
 
     /**
      * @var NodeMenuItem
@@ -62,7 +56,6 @@ class NodeMenuItem
         $this->parent = $parent;
         $this->menu = $menu;
         $this->em = $menu->getEntityManager();
-        $this->lang = $menu->getLang();
     }
 
     /**
@@ -94,7 +87,7 @@ class NodeMenuItem
      */
     public function getLang()
     {
-        return $this->lang;
+        return $this->menu->getLang();
     }
 
     /**
@@ -160,12 +153,20 @@ class NodeMenuItem
     /**
      * @return NodeMenuItem|NULL
      */
-    /*
     public function getParent()
     {
+        if ($this->parent === false) {
+            // Top menu item
+            return null;
+        } elseif ($this->parent instanceof NodeMenuItem) {
+            // We already have the parent
+        } else {
+            // We need to calculate the parent
+            $this->parent = $this->menu->getParent($this->node);
+        }
+
         return $this->parent;
     }
-*/
 
     /**
      * @param NodeMenuItem|null|false $parent
@@ -180,7 +181,6 @@ class NodeMenuItem
      *
      * @return NodeMenuItem|NULL
      */
-    /*
     public function getParentOfClass($class)
     {
         // Check for namespace alias
@@ -188,7 +188,7 @@ class NodeMenuItem
             list($namespaceAlias, $simpleClassName) = explode(':', $class);
             $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
         }
-        if ($this->parent == null) {
+        if ($this->getParent() == null) {
             return null;
         }
         if ($this->parent->getPage() instanceof $class) {
@@ -196,12 +196,11 @@ class NodeMenuItem
         }
 
         return $this->parent->getParentOfClass($class);
-    }*/
+    }
 
     /**
      * @return NodeMenuItem[]
      */
-    /*
     public function getParents()
     {
         $parent = $this->getParent();
@@ -212,7 +211,7 @@ class NodeMenuItem
         }
 
         return array_reverse($parents);
-    }*/
+    }
 
     /**
      * @param bool $includeHiddenFromNav Include hiddenFromNav nodes
@@ -221,16 +220,16 @@ class NodeMenuItem
      */
     public function getChildren($includeHiddenFromNav = true)
     {
-        if (is_null($this->lazyChildren)) {
+        if (is_null($this->children)) {
             $children = $this->menu->getChildren($this->node, $includeHiddenFromNav);
             /* @var NodeMenuItem $child */
             foreach ($children as $child) {
                 $child->setParent($this);
             }
-            $this->lazyChildren = $children;
+            $this->children = $children;
         }
 
-        return $this->lazyChildren;
+        return $this->children;
     }
 
     /**
