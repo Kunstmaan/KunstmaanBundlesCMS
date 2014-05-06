@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -55,7 +54,7 @@ class NodeMenuItem
      * @param NodeMenuItem|null $parent          The parent nodemenuitem
      * @param NodeMenu          $menu            The menu
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent, NodeMenu $menu)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeMenuItem $parent = null, NodeMenu $menu)
     {
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
@@ -149,9 +148,12 @@ class NodeMenuItem
      */
     public function getUrl()
     {
-        $result = $this->getSlugPart();
+        $nodeTranslation = $this->getNodeTranslation();
+        if ($nodeTranslation) {
+            return $nodeTranslation->getUrl();
+        }
 
-        return $result;
+        return null;
     }
 
     /**
@@ -190,8 +192,8 @@ class NodeMenuItem
     public function getParents()
     {
         $parent = $this->getParent();
-        $parents=array();
-        while ($parent!=null) {
+        $parents = array();
+        while ($parent != null) {
             $parents[] = $parent;
             $parent = $parent->getParent();
         }
@@ -286,7 +288,6 @@ class NodeMenuItem
      */
     public function getActive()
     {
-        //TODO: change to something like in_array() but that didn't work
         $bc = $this->menu->getBreadCrumb();
         foreach ($bc as $bcItem) {
             if ($bcItem->getSlug() == $this->getSlug()) {

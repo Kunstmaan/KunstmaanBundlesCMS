@@ -98,7 +98,7 @@ class NodeTranslationRepository extends EntityRepository
     private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugPart = '')
     {
         $qb = $this->createQueryBuilder('t')
-            ->select('t', 'v')
+            ->select('t', 'v', 'n')
             ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
             ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
             ->where('n.deleted != 1')

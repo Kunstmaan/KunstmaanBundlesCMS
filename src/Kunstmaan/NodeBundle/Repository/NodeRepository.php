@@ -251,17 +251,15 @@ SQL;
 
         $qb = $this->createQueryBuilder('node');
 
+        // Directly hydrate the nodeTranslation and nodeVersion
+        $qb->select('node', 't', 'v')
+            ->innerJoin('node.nodeTranslations', 't')
+            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->where('node.deleted = 0');
+
         if ($lang) {
-            // Directly fetch the nodeTranslation in one query
-            $qb->select('node, t', 'v')
-                ->innerJoin('node.nodeTranslations', 't')
-                ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
-                ->where('node.deleted = 0')
-                ->andWhere('t.lang = :lang')
+            $qb->andWhere('t.lang = :lang')
                 ->setParameter('lang', $lang);
-        } else {
-            $qb->select('node')
-                ->where('node.deleted = 0');
         }
 
         $qb->andWhere(
@@ -270,6 +268,7 @@ SQL;
                 $qb->expr()->gte('node.rgt', $node->getRight())
             )
         );
+
         $qb->addOrderBy('node.lft', 'ASC');
 
         return $qb->getQuery()->getResult();
@@ -305,7 +304,7 @@ SQL;
     public function getNodesByInternalName($internalName, $lang, $parentId = false, $includeOffline = false)
     {
         $qb = $this->createQueryBuilder('n')
-            ->select('n, t', 'v')
+            ->select('n', 't', 'v')
             ->innerJoin('n.nodeTranslations', 't')
             ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
             ->where('n.deleted = 0')
