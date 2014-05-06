@@ -113,7 +113,7 @@ class GoogleAnalyticsController extends Controller
         $accounts = $configHelper->getAccounts();
 
         return $this->render(
-            'KunstmaanDashboardBundle:GoogleAnalytics:accountSelection.html.twig',
+            'KunstmaanDashboardBundle:Setup:accountSelection.html.twig',
             array('accounts' => $accounts)
         );
     }
@@ -139,7 +139,7 @@ class GoogleAnalyticsController extends Controller
         $properties = $configHelper->getProperties();
 
         return $this->render(
-            'KunstmaanDashboardBundle:GoogleAnalytics:propertySelection.html.twig',
+            'KunstmaanDashboardBundle:Setup:propertySelection.html.twig',
             array('properties' => $properties)
         );
     }
@@ -163,7 +163,7 @@ class GoogleAnalyticsController extends Controller
         $profiles = $configHelper->getProfiles();
 
         return $this->render(
-            'KunstmaanDashboardBundle:GoogleAnalytics:profileSelection.html.twig',
+            'KunstmaanDashboardBundle:Setup:profileSelection.html.twig',
             array('profiles' => $profiles)
         );
     }
@@ -195,7 +195,12 @@ class GoogleAnalyticsController extends Controller
 
 
 
-        $query = $this->container->get('kunstmaan_dashboard.helper.google.analytics.query');
+        $config = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
+
+        $profiles = $config->getProfiles();
+        var_dump($profiles);
+        exit;
+
 
         $extra = array(
 
@@ -211,28 +216,6 @@ class GoogleAnalyticsController extends Controller
                 $rows
             );
 
-
-        exit;
-
-        $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
-        $analyticsHelper = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
-        $analyticsHelper->init($googleClientHelper);
-
-
-        $extra = array(
-
-            );
-
-        $results = $analyticsHelper->getResults(
-                14,1,
-                'ga:sessions, ga:users, ga:pageviews, ga:percentNewSessions',
-                $extra
-            );
-        $rows = $results->getRows();
-
-        var_dump(
-                $rows
-            );
 
         exit;
     }

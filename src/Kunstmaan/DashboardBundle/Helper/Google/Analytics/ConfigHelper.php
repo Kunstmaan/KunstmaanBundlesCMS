@@ -234,7 +234,15 @@ class ConfigHelper
                 $this->getPropertyId()
             );
 
-            return $profiles->getItems();
+            $result = array();
+            foreach ($profiles->getItems() as $profile) {
+                $result[] = array(
+                        'profileId' => $profile->id,
+                        'profileName' => $profile->name,
+                    );
+            }
+
+            return $result;
         }
 
         /**
