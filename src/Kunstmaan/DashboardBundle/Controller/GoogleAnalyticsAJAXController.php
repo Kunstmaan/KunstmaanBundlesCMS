@@ -119,11 +119,12 @@ class GoogleAnalyticsAJAXController extends Controller
          * @Route("/properties/", name="DashBoardBundle_AJAX_properties")
          */
         public function getProperties(Request $request) {
+            $accountId = $request->query->get('accountId');
             $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
             $configId = $request->query->get('configId');
             if ($configId) $configHelper->init($configId);
 
-            $properties = $configHelper->getProperties();
+            $properties = $configHelper->getProperties($accountId);
             return new JsonResponse($properties, 200, array('Content-Type' => 'application/json'));
         }
 
@@ -143,11 +144,13 @@ class GoogleAnalyticsAJAXController extends Controller
          * @Route("/profiles/", name="DashBoardBundle_AJAX_profiles")
          */
         public function getProfiles(Request $request) {
+            $accountId = $request->query->get('accountId');
+            $propertyId = $request->query->get('propertyId');
             $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
             $configId = $request->query->get('configId');
             if ($configId) $configHelper->init($configId);
 
-            $profiles = $configHelper->getProfiles();
+            $profiles = $configHelper->getProfiles($accountId, $propertyId);
 
             return new JsonResponse($profiles, 200, array('Content-Type' => 'application/json'));
         }
@@ -162,28 +165,53 @@ class GoogleAnalyticsAJAXController extends Controller
             return new JsonResponse();
         }
 
-    /* =============================== PROFILE =============================== */
+    /* =============================== CONFIG =============================== */
+
+        /**
+         * @Route("/saveconfig/", name="DashBoardBundle_AJAX_config_save")
+         */
+        public function saveConfig(Request $request) {
+            // get params
+            $accountId = $request->query->get('accountId');
+            $propertyId = $request->query->get('propertyId');
+            $profileId = $request->query->get('profileId');
+
+            // edit the config
+            $em = $this->getDoctrine()->getManager();
+            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig();
+            $config->setAccountId($accountId);
+            $config->setPropertyId($propertyId);
+            $config->setProfileId($profileId);
+
+            $em->persist($config);
+            $em->flush();
+            return new JsonResponse();
+        }
+
+    /* =============================== SEGMENT =============================== */
 
         /**
          * @Route("/addSegment/", name="DashBoardBundle_AJAX_segement_add")
          */
         public function addSegment(Request $request) {
             $em = $this->getDoctrine()->getManager();
-            $analyticsConfig = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+
+            // create a new segment
+            $segment = new AnalyticsSegment();
             $query = $request->query->get('query');
             $name = $request->query->get('name');
-
-            $config = $analyticsConfig->getconfig();
-            $segment = new AnalyticsSegment();
             $segment->setQuery($query);
             $segment->setName($name);
+
+            // add the segment to the config
+            $analyticsConfig = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $config = $analyticsConfig->getconfig();
             $segment->setConfig($config);
             $segments = $config->getSegments();
             $segments[] = $segment;
 
             $em->persist($config);
             $em->flush();
-
             return new JsonResponse();
         }
 
@@ -192,6 +220,8 @@ class GoogleAnalyticsAJAXController extends Controller
          */
         public function deleteSegment(Request $request) {
             $em = $this->getDoctrine()->getManager();
+
+            // remove the segment
             $id = $request->query->get('id');
             $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->deleteSegment($id);
             return new JsonResponse();

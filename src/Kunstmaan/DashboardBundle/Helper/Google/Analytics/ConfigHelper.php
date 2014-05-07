@@ -162,13 +162,17 @@ class ConfigHelper
          *
          * @return array $data A list of all properties
          */
-        public function getProperties()
+        public function getProperties($accountId=false)
         {
-            if (!$this->getAccountId()) {
+            if (!$this->getAccountId() && !$accountId) {
                 return false;
             }
 
-            $webproperties = $this->serviceHelper->getService()->management_webproperties->listManagementWebproperties($this->getAccountId());
+            if ($accountId) {
+                $webproperties = $this->serviceHelper->getService()->management_webproperties->listManagementWebproperties($accountId);
+            } else {
+                $webproperties = $this->serviceHelper->getService()->management_webproperties->listManagementWebproperties($this->getAccountId());
+            }
             $data = array();
 
             foreach ($webproperties->getItems() as $property) {
@@ -222,17 +226,24 @@ class ConfigHelper
          *
          * @return array $data A list of all properties
          */
-        public function getProfiles()
+        public function getProfiles($accountId=false, $propertyId=false)
         {
-            if (!$this->getAccountId() || !$this->getPropertyId()) {
+            if (!$this->getAccountId() && !$accountId || !$this->getPropertyId() && !$propertyId) {
                 return false;
             }
 
             // get views
-            $profiles = $this->serviceHelper->getService()->management_profiles->listManagementProfiles(
-                $this->getAccountId(),
-                $this->getPropertyId()
-            );
+            if ($accountId && $propertyId) {
+                $profiles = $this->serviceHelper->getService()->management_profiles->listManagementProfiles(
+                    $accountId,
+                    $propertyId
+                );
+            } else {
+                $profiles = $this->serviceHelper->getService()->management_profiles->listManagementProfiles(
+                    $this->getAccountId(),
+                    $this->getPropertyId()
+                );
+            }
 
             $result = array();
             foreach ($profiles->getItems() as $profile) {

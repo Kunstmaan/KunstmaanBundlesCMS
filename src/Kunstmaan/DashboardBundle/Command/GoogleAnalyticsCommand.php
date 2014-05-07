@@ -17,7 +17,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class GoogleAnalyticsCommand extends ContainerAwareCommand
 {
-
     /** @var EntityManager $em */
     private $em;
 
@@ -77,30 +76,30 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
         $configId = $input->getArgument('configId') ? $input->getArgument('configId') : false;
         $config = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId);
 
-
-
         // get the segments from the config and init them (if new segments are added, this will create new overviews)
         $segmentId = $input->getOption('segment') ? $input->getOption('segment') : false;
 
+        // load all segments if no segment is specified
         if (!$segmentId) {
             $segments = $config->getSegments();
         } else {
+            // only add the specified segment
             $segments = array();
             $segments[] = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId);
         }
 
-        $overviews = array();
-
+        // init each segment: if any new segments are available, new overviews will be created automatically
         foreach ($segments as $segment) {
             $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->initSegment($segment);
         }
 
+        // get all overviews (inc. default without a segment) if no segment is specified
         if (!$segmentId) {
             $overviews = $config->getOverviews();
         } else {
+            // only load the overviews of the specified segment
             $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId)->getOverviews();
         }
-
 
         // get data per overview
         foreach ($overviews as $overview) {

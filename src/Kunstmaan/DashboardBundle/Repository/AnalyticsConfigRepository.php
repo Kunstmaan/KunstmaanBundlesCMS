@@ -48,6 +48,11 @@ class AnalyticsConfigRepository extends EntityRepository
         return $config;
     }
 
+    /**
+     * Get a list of all configs
+     *
+     * @return array
+     */
     public function listConfigs() {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('c')
@@ -55,6 +60,11 @@ class AnalyticsConfigRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Create a new config
+     *
+     * @return AnalyticsConfig
+     */
     public function createConfig() {
         $em = $this->getEntityManager();
 
@@ -66,6 +76,12 @@ class AnalyticsConfigRepository extends EntityRepository
         return $config;
     }
 
+    /**
+     * Initialise a segment by adding new overviews if they don't exist yet
+     *
+     * @param AnalyticsSegment $segment
+     * @param int $configId
+     */
     public function initSegment($segment, $configId = false) {
         if (count($segment->getOverviews()->toArray()) == 0) {
             $config = $this->getConfig($configId);
@@ -73,6 +89,11 @@ class AnalyticsConfigRepository extends EntityRepository
         }
     }
 
+    /**
+     * Get then default overviews (without a segment)
+     *
+     * @return array
+     */
     public function getDefaultOverviews() {
         $query = $this->getEntityManager()->createQuery(
             'SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL'
@@ -81,6 +102,12 @@ class AnalyticsConfigRepository extends EntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Add overviews for a config and optionally a segment
+     *
+     * @param AnlyticsConfig $config
+     * @param AnalyticsSegment $segment
+     */
     private function addOverviews($config, $segment=null) {
         $em = $this->getEntityManager();
 
@@ -136,8 +163,11 @@ class AnalyticsConfigRepository extends EntityRepository
         $em->flush();
     }
 
-    /** Update the timestamp when data is collected */
-
+    /**
+     * Update the timestamp when data is collected
+     *
+     * @param int id
+     */
     public function setUpdated($id=false) {
         $em = $this->getEntityManager();
         $config = $this->getConfig($id);
@@ -151,7 +181,6 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $token
      */
-
     public function saveToken($token, $id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);
@@ -212,7 +241,11 @@ class AnalyticsConfigRepository extends EntityRepository
         $em->flush();
     }
 
-    /** resets the profile id */
+    /**
+     * Resets the profile id
+     *
+     * @param int id
+     */
     public function resetProfileId($id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);
@@ -221,7 +254,11 @@ class AnalyticsConfigRepository extends EntityRepository
         $em->flush();
     }
 
-    /** resets the  account id, property id and profile id */
+    /**
+     * Resets the  account id, property id and profile id
+     *
+     * @param int id
+     */
     public function resetPropertyId($id=false) {
         $em    = $this->getEntityManager();
         $config = $this->getConfig($id);

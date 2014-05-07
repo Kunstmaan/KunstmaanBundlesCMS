@@ -36,6 +36,13 @@ class AnalyticsSegmentRepository extends EntityRepository
         }
     }
 
+    /**
+     * Get a segment
+     *
+     * @param int id
+     *
+     * @return AnalyticsSegment
+     */
     public function getSegment($id) {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('s')
