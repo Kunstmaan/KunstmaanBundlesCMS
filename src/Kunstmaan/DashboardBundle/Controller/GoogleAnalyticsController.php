@@ -28,9 +28,6 @@ class GoogleAnalyticsController extends Controller
      */
     public function widgetAction(Request $request)
     {
-        // check if segment is set
-        $segmentId = $request->query->get('id');
-
         $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), true);
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
@@ -56,6 +53,11 @@ class GoogleAnalyticsController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
+
+        // get the segment id
+        $segmentId = $request->query->get('id');
+        $params['segments'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getSegments();
+        $params['segmentId'] = $segmentId;
 
         // set the overviews param
         $params['token'] = true;
@@ -104,7 +106,7 @@ class GoogleAnalyticsController extends Controller
 
 
     /**
-     * @Route("/selectAccount", name="KunstmaanDashboardBundle_AccountSelection")
+     * @Route("/config", name="KunstmaanDashboardBundle_AccountSelection")
      *
      * @param Request $request
      *

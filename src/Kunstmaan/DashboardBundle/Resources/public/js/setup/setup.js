@@ -131,7 +131,8 @@ $(function () {
             var segmentDiv = $('<div>', {'id' : 'segmentDiv'+id});
             var segmentLabel = $('<label>', {'for' : 'segement'+id, 'text' : 'Add a segment query'});
             var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segement'+id, 'class' : 'segment-query'});
-            var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'segment-button__delete btn__delete btn', 'value' : 'X'})
+            var segmentName = $('<input>', { 'type': 'text', 'id' : 'segement_name'+id, 'class' : 'segment-name', 'placeholder' : 'name'});
+            var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'segment-button__delete btn__delete btn', 'value' : 'X', 'placeholder' : 'query'})
 
             segmentButton.click(function() {
                 var segementId = $(this).attr('data-segment-id');
@@ -140,6 +141,7 @@ $(function () {
             });
 
             segmentDiv.append(segmentLabel);
+            segmentDiv.append(segmentName);
             segmentDiv.append(segmentInput);
             segmentDiv.append(segmentButton);
 
@@ -150,12 +152,13 @@ $(function () {
             var segments = $('#segements').children();
             for (var i = 0; i < segments.length; i++) {
                 var query = $(segments[i]).find('input.segment-query').val();
+                var name = $(segments[i]).find('input.segment-name').val();
                 if (query && query != '') {
                     var url = $('#path_segment_add').attr('data-url');
                     $.ajax({
                         type: 'get',
                         url: url,
-                        data: {'query' : query},
+                        data: {'query' : query, 'name' : name},
                         success: function (data) {
                             location.reload();
                         }

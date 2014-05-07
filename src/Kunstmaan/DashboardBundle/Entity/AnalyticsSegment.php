@@ -15,7 +15,39 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="query", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return AnalyticsSegment
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="query", type="string", length=1000)
      */
     private $query;
 
@@ -74,7 +106,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="segment", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="segment", cascade={"persist", "remove"})
      */
     private $overviews;
 

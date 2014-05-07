@@ -171,10 +171,12 @@ class GoogleAnalyticsAJAXController extends Controller
             $em = $this->getDoctrine()->getManager();
             $analyticsConfig = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
             $query = $request->query->get('query');
+            $name = $request->query->get('name');
 
             $config = $analyticsConfig->getconfig();
             $segment = new AnalyticsSegment();
             $segment->setQuery($query);
+            $segment->setName($name);
             $segment->setConfig($config);
             $segments = $config->getSegments();
             $segments[] = $segment;
