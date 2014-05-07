@@ -101,4 +101,81 @@ $(function () {
             });
         });
 
+    /* =============================== SEGMENTS =============================== */
+
+        $("#use-segments").change(function() {
+            if(!$(this).is(':checked')) {
+                $('#segements').fadeOut();
+                $('#segement-button__add').fadeOut();
+                $('#submit_segement_save').fadeOut();
+                return;
+            }
+
+            $('#segements').fadeIn();
+            $('#segement-button__add').fadeIn();
+            $('#submit_segement_save').fadeIn();
+
+            if($('#segements').children().length == 0) {
+                addSegmentInput();
+            }
+        });
+
+        $('#segement-button__add').click(function() {
+            addSegmentInput();
+            return false;
+        });
+
+        function addSegmentInput() {
+            var id = $.now();
+
+            var segmentDiv = $('<div>', {'id' : 'segmentDiv'+id});
+            var segmentLabel = $('<label>', {'for' : 'segement'+id, 'text' : 'Add a segment query'});
+            var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segement'+id, 'class' : 'segment-query'});
+            var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'segment-button__delete btn__delete btn', 'value' : 'X'})
+
+            segmentButton.click(function() {
+                var segementId = $(this).attr('data-segment-id');
+                $('#'+segementId).remove();
+                return false;
+            });
+
+            segmentDiv.append(segmentLabel);
+            segmentDiv.append(segmentInput);
+            segmentDiv.append(segmentButton);
+
+            $('#segements').append(segmentDiv);
+        }
+
+        $('#submit_segement_save').click(function(){
+            var segments = $('#segements').children();
+            for (var i = 0; i < segments.length; i++) {
+                var query = $(segments[i]).find('input.segment-query').val();
+                if (query && query != '') {
+                    var url = $('#path_segment_add').attr('data-url');
+                    $.ajax({
+                        type: 'get',
+                        url: url,
+                        data: {'query' : query},
+                        success: function (data) {
+                            location.reload();
+                        }
+                    });
+                }
+            }
+
+            return false;
+        });
+
+        $('.segment-list-button__delete').click(function() {
+            var id = $(this).attr('data-segment-id');
+            var url = $('#path_segment_delete').attr('data-url');
+            $.ajax({
+                type: 'get',
+                url: url,
+                data: {'id' : id},
+                success: function (data) {
+                    $('#segment-list__'+id).fadeOut();
+                }
+            });
+        })
 });

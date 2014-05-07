@@ -43,6 +43,34 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
+     * @ORM\OneToMany(targetEntity="AnalyticsSegment", mappedBy="config", cascade={"persist", "remove"})
+     */
+    private $segments;
+
+    /**
+     * Set segments
+     *
+     * @param array $segments
+     * @return AnalyticsDailysegments
+     */
+    public function setSegments($segments)
+    {
+        $this->segments = $segments;
+
+        return $this;
+    }
+
+    /**
+     * Get segments
+     *
+     * @return array
+     */
+    public function getSegments()
+    {
+        return $this->segments;
+    }
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="text", nullable=true)

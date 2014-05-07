@@ -109,11 +109,14 @@ class GoogleAnalyticsController extends Controller
             return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig();
         $accounts = $configHelper->getAccounts();
+        $segments = $config->getSegments();
 
         return $this->render(
             'KunstmaanDashboardBundle:Setup:setup.html.twig',
-            array('accounts' => $accounts)
+            array('accounts' => $accounts, 'segments' => $segments)
         );
     }
 

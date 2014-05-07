@@ -6,24 +6,48 @@
     <form method="post" action="" id="dashboard-setup-form">
         <h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
 
-        <select id="accounts" name="accounts" class="setup-item__shown">
-            <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
-            {% for account in accounts %}
-                <option data-id="{{account.accountId}}">
-                    {{ account.accountName }}
-                </option>
-            {% endfor %}
-        </select>
+        <div class="setup-group" id="account-group">
+            <select id="accounts" name="accounts" class="setup-item__shown">
+                <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
+                {% for account in accounts %}
+                    <option data-id="{{account.accountId}}">
+                        {{ account.accountName }}
+                    </option>
+                {% endfor %}
+            </select>
 
-        <select id="properties">
-            <option data-id="">{{ 'dashboard.ga.setup.property.select' | trans }}</option>
-        </select>
+            <select id="properties">
+                <option data-id="">{{ 'dashboard.ga.setup.property.select' | trans }}</option>
+            </select>
 
-        <select id="profiles">
-            <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
-        </select>
-        <br/>
-        <button disabled id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
+            <select id="profiles">
+                <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
+            </select>
+
+            <div class="setup-group">
+                <button disabled id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
+            </div>
+        </div>
+
+        <div class="setup-group" id="segment-group">
+            <input type="checkbox" id="use-segments" value="true" /><label for="use-segments"> Add segements</label>
+            <div id="segements"></div>
+            <input type="button" class="btn" id="segement-button__add" value="Add" style="display:none"/>
+
+            <div class="setup-group">
+                <button id="submit_segement_save" class="btn btn-primary" type="submit" style="display:none">{{ 'form.save' | trans }}</button>
+            </div>
+        </div>
+
+        <div class="setup-group" id="segment-group__list">
+            <ul>
+                {% for segment in segments %}
+                    <li id="segment-list__{{ segment.id }}">
+                        {{ segment.query }}<input type="button" class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}" id="segement-button__add" value="X"/>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </form>
 
     <input type="hidden" id="path_accounts" data-url="{{ path('DashBoardBundle_AJAX_accounts') }}" />
@@ -32,6 +56,8 @@
     <input type="hidden" id="path_account_save" data-url="{{ path('DashBoardBundle_AJAX_account_save') }}" />
     <input type="hidden" id="path_property_save" data-url="{{ path('DashBoardBundle_AJAX_property_save') }}" />
     <input type="hidden" id="path_profile_save" data-url="{{ path('DashBoardBundle_AJAX_profile_save') }}" />
+    <input type="hidden" id="path_segment_add" data-url="{{ path('DashBoardBundle_AJAX_segement_add') }}" />
+    <input type="hidden" id="path_segment_delete" data-url="{{ path('DashBoardBundle_AJAX_segement_delete') }}" />
 {% endblock %}
 
 {% block extrajavascript %}

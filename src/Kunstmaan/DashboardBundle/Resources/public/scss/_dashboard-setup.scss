@@ -4,7 +4,6 @@
 #dashboard-setup-form {
 
     select {
-        float:left;
         clear:both;
         margin:10px 0;
         display:none;
@@ -21,4 +20,106 @@
     .setup-item__shown {
         display: block;
     }
+
+    .setup-container {
+        position:relative;
+
+        &:after {
+            display:block;
+            content:' ';
+            clear:both;
+        }
+    }
+
+    .setup-group {
+        margin:10px 0;
+
+        &:after {
+            display:block;
+            content:' ';
+            clear:both;
+        }
+    }
+
+
+    #account-group {
+        height:100%;
+        float:left;
+        padding-right:40px;
+        border-right:1px solid #ccc;
+        margin-right:-1px;
+    }
+
+    #segment-group {
+        border-left:1px solid #ccc;
+        border-right:1px solid #ccc;
+
+        float:left;
+        width:25%;
+        min-height:120px;
+        padding-left:40px;
+        padding-bottom:5px;
+        padding-right:40px;
+        margin-right:-1px;
+
+        input[type='checkbox'] {
+            float:left;
+            margin-top:16px;
+
+            &+label {
+                float:left;
+                margin-left:5px;
+                padding:13px 0;
+            }
+        }
+
+        #segements {
+            &>div {
+                width:100%;
+                float:left;
+                clear:both;
+            }
+
+            .segment-button__delete {
+                margin-top: -10px;
+                margin-left:5px;
+                padding-left:7px;
+                padding-right:7px;
+                background:#b03e43;
+                color:#fff;
+            }
+
+            &:after {
+                display:block;
+                content:' ';
+                clear:both;
+            }
+        }
+    }
+
+    #segment-group__list {
+        border-left:1px solid #ccc;
+        padding-left:40px;
+        float:left;
+        width:20%;
+
+        li {
+            display:block;
+            float:left;
+            width:95%;
+            margin:5px 0;
+            padding-top:3px;
+        }
+
+        .segment-list-button__delete {
+            background:#b03e43;
+            float:right;
+            color:#fff;
+            padding-left:7px;
+            padding-right:7px;
+        }
+
+    }
+
+
 }
