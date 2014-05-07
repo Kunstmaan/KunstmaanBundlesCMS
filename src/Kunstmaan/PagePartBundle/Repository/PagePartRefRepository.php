@@ -4,7 +4,6 @@ namespace Kunstmaan\PagePartBundle\Repository;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-
 use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
@@ -73,12 +72,37 @@ class PagePartRefRepository extends EntityRepository
     public function getPageParts(HasPagePartsInterface $page, $context = "main")
     {
         $pagepartrefs = $this->getPagePartRefs($page, $context);
-        $result = array();
+
+        // Group pagepartrefs per type and remember the sorting order
+        $types = $order = array();
+        $counter = 1;
         foreach ($pagepartrefs as $pagepartref) {
-            $result[] = $pagepartref->getPagePart($this->getEntityManager());
+            $types[$pagepartref->getPagePartEntityname()][] = $pagepartref->getPagePartId();
+            $order[$pagepartref->getPagePartEntityname() . $pagepartref->getPagePartId()] = $counter;
+            $counter++;
         }
 
-        return $result;
+        // Fetch all the pageparts (only one query per pagepart type)
+        $pageparts = array();
+        foreach ($types as $classname => $ids) {
+            $result = $this->getEntityManager()->getRepository($classname)->findBy(array('id' => $ids));
+            $pageparts = array_merge($pageparts, $result);
+        }
+
+        // Order the pageparts
+        usort($pageparts, function($a, $b) use ($order) {
+            $aPosition = $order[get_class($a) . $a->getId()];
+            $bPosition = $order[get_class($b) . $b->getId()];
+
+            if ($aPosition < $bPosition) {
+                return -1;
+            } elseif ($aPosition > $bPosition) {
+                return 1;
+            }
+            return 0;
+        });
+
+        return $pageparts;
     }
 
     /**
