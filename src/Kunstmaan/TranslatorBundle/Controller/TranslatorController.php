@@ -46,7 +46,7 @@ class TranslatorController extends AdminListController
         $adminList->bindRequest($request);
 
         $cacheFresh = $this->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
-        $debugMode = $this->container->getParameter('kernel.debug') === true;
+        $debugMode = $this->container->getParameter('kuma_translator.debug') === true;
 
         if (!$cacheFresh && !$debugMode) {
             $noticeText = $this->get('translator')->trans('settings.translator.not_live_warning');
