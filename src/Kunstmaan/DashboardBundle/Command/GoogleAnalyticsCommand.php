@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class GoogleAnalyticsCommand extends ContainerAwareCommand
 {
@@ -35,6 +36,13 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
                 'configId',
                 InputArgument::OPTIONAL,
                 'Specify to only update one config'
+            )
+            ->addOption(
+                'segment',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Specify to only update one segment',
+                1
             );
     }
 
@@ -72,12 +80,27 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
 
 
         // get the segments from the config and init them (if new segments are added, this will create new overviews)
-        $segments = $config->getSegments();
+        $segmentId = $input->getOption('segment') ? $input->getOption('segment') : false;
+
+        if (!$segmentId) {
+            $segments = $config->getSegments();
+        } else {
+            $segments = array();
+            $segments[] = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId);
+        }
+
+        $overviews = array();
 
         foreach ($segments as $segment) {
             $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->initSegment($segment);
         }
-        $overviews = $config->getOverviews();
+
+        if (!$segmentId) {
+            $overviews = $config->getOverviews();
+        } else {
+            $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId)->getOverviews();
+        }
+
 
         // get data per overview
         foreach ($overviews as $overview) {

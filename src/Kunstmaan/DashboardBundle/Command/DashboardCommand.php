@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class DashboardCommand extends ContainerAwareCommand
 {
@@ -21,6 +22,13 @@ class DashboardCommand extends ContainerAwareCommand
                 'configId',
                 InputArgument::OPTIONAL,
                 'Specify to only update one config'
+            )
+            ->addOption(
+                'segment',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Specify to only update one segment',
+                1
             );;
     }
 
