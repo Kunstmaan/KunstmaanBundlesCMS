@@ -72,4 +72,33 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 
         return $this;
     }
+
+    /**
+     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="segment", cascade={"persist"})
+     */
+    private $overviews;
+
+    /**
+     * Set overviews
+     *
+     * @param array $overviews
+     * @return $this
+     */
+    public function setoverviews($overviews)
+    {
+        $this->overviews = $overviews;
+
+        return $this;
+    }
+
+    /**
+     * Get overviews
+     *
+     * @return AnalyticsGoal[]
+     */
+    public function getoverviews()
+    {
+        return $this->overviews;
+    }
+
 }

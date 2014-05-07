@@ -52,29 +52,32 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->init($output);
-        $configId = $input->getArgument('configId') ? $input->getArgument('configId') : false;
+        // check if token is set
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
-
-        // if no token set yet
         if (!$configHelper->tokenIsSet()) {
             $this->output->writeln('You haven\'t configured a Google account yet');
             return;
         }
 
-        // get overviews
-        if ($configId) {
-            $configHelper->init($configId);
-            try {
-                $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId)->getOverviews();
-            } catch (\Exception $e) {
-                $this->output->writeln('Unknown config ID.');
-                exit;
-            }
-        } else {
-            $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+        // init
+        $this->init($output);
+
+        // get the query helper
+        $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
+
+        // get config
+        $configId = $input->getArgument('configId') ? $input->getArgument('configId') : false;
+        $config = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId);
+
+
+
+        // get the segments from the config and init them (if new segments are added, this will create new overviews)
+        $segments = $config->getSegments();
+
+        foreach ($segments as $segment) {
+            $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->initSegment($segment);
         }
+        $overviews = $config->getOverviews();
 
         // get data per overview
         foreach ($overviews as $overview) {

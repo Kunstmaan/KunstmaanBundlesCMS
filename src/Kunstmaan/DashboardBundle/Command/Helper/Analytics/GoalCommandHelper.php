@@ -125,6 +125,11 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             $start = 1;
         }
 
+        // add segment
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
+
         $goals = $this->getAllGoals();
         if (!$goals) {
             foreach ($overview->getGoals() as $goal) {
@@ -194,11 +199,14 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
     private function parseGoals(&$overview, $goalCollection)
     {
 
-        // delete existing entries
-        foreach ($overview->getGoals() as $goal) {
-            $this->em->remove($goal);
+
+        if ($overview->getGoals()) {
+            // delete existing entries
+            foreach ($overview->getGoals() as $goal) {
+                $this->em->remove($goal);
+            }
+            $this->em->flush();
         }
-        $this->em->flush();
 
         foreach ($goalCollection as $goalEntry) {
             // create a new goal

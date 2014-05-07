@@ -44,6 +44,36 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
+     * @ORM\ManyToOne(targetEntity="AnalyticsSegment", inversedBy="segment")
+     * @ORM\JoinColumn(name="segment_id", referencedColumnName="id", nullable=true)
+     */
+    private $segment = null;
+
+    /**
+     * Get segment
+     *
+     * @return integer
+     */
+    public function getSegment()
+    {
+        return $this->segment;
+    }
+
+    /**
+     * Set segment
+     *
+     * @param integer $segment
+     *
+     * @return AnalyticsTopReferrals
+     */
+    public function setSegment($segment)
+    {
+        $this->segment = $segment;
+
+        return $this;
+    }
+
+    /**
      * Get percentage of returning users
      *
      * @return int

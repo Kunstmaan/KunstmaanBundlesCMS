@@ -28,6 +28,9 @@ class GoogleAnalyticsController extends Controller
      */
     public function widgetAction(Request $request)
     {
+        // check if segment is set
+        $segmentId = $request->query->get('id');
+
         $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), true);
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
@@ -56,7 +59,13 @@ class GoogleAnalyticsController extends Controller
 
         // set the overviews param
         $params['token'] = true;
-        $params['overviews'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+        if ($segmentId) {
+            $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId)->getOverviews();
+        } else {
+            $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getDefaultOverviews();
+        }
+
+        $params['overviews'] = $overviews;
         /** @var AnalyticsConfigRepository $analyticsConfigRepository */
         $analyticsConfigRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
         $date = $analyticsConfigRepository->getConfig()->getLastUpdate();
@@ -145,30 +154,21 @@ class GoogleAnalyticsController extends Controller
      */
     public function testAction(Request $request) {
 
-
-
-        $config = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-
-        $profiles = $config->getProfiles();
-        var_dump($profiles);
-        exit;
-
-
-        $extra = array(
-
-            );
+        $query = $this->container->get('kunstmaan_dashboard.helper.google.analytics.query');
         $results = $query->getResults(
-                14,1,
-                'ga:sessions, ga:users, ga:pageviews, ga:percentNewSessions',
-                $extra
+                1,1,
+                'ga:visits',
+                array(
+                    'segment' => 'gaid::-7',
+                    'dimensions' => 'ga:hour'
+                )
             );
+
         $rows = $results->getRows();
 
-        var_dump(
-                $rows
-            );
-
+        var_dump($rows);
 
         exit;
+
     }
 }

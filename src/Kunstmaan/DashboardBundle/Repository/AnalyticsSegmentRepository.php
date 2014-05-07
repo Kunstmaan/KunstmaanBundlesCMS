@@ -35,4 +35,19 @@ class AnalyticsSegmentRepository extends EntityRepository
             $em->flush();
         }
     }
+
+    public function getSegment($id) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')
+            ->from('KunstmaanDashboardBundle:AnalyticsSegment', 's')
+            ->where('s.id = :id')
+            ->setParameter('id', $id);
+
+        $results = $qb->getQuery()->getResult();
+        if ($results) {
+            return $results[0];
+        }
+
+        return false;
+    }
 }

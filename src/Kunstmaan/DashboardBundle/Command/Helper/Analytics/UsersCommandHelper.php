@@ -17,19 +17,27 @@ class UsersCommandHelper extends AbstractAnalyticsCommandHelper
         // visitor types
         $this->output->writeln("\t" . 'Fetching visitor types..');
 
+        // add segment
+        $extra = array();
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
+
         if ($overview->getUseYear()) {
             $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
             $end = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y', strtotime('+1 year'))));
             $results = $this->query->getResultsByDate(
                 $begin,
                 $end,
-                'ga:percentNewSessions'
+                'ga:percentNewSessions',
+                $extra
             );
         } else {
             $results = $this->query->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
-                'ga:percentNewSessions'
+                'ga:percentNewSessions',
+                $extra
             );
         }
 

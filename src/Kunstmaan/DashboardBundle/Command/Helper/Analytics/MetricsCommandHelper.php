@@ -16,18 +16,26 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
     {
         $this->output->writeln("\t" . 'Fetching metrics..');
 
+        // add segment
+        $extra = array();
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
+
         $gaMetrics = 'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration';
         if ($overview->getUseYear()) {
             $results = $this->query->getResultsByDate(
                 date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y'))),
                 date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y', strtotime('+1 year')))),
-                $gaMetrics
+                $gaMetrics,
+                $extra
             );
         } else {
             $results = $this->query->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
-                $gaMetrics
+                $gaMetrics,
+                $extra
             );
         }
 

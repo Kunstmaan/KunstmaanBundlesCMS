@@ -66,7 +66,22 @@ class AnalyticsConfigRepository extends EntityRepository
         return $config;
     }
 
-    private function addOverviews($config) {
+    public function initSegment($segment, $configId = false) {
+        if (count($segment->getOverviews()->toArray()) == 0) {
+            $config = $this->getConfig($configId);
+            $this->addOverviews($config, $segment);
+        }
+    }
+
+    public function getDefaultOverviews() {
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL'
+        );
+
+        return $query->getResult();
+    }
+
+    private function addOverviews($config, $segment=null) {
         $em = $this->getEntityManager();
 
         $today = new AnalyticsOverview();
@@ -74,6 +89,7 @@ class AnalyticsConfigRepository extends EntityRepository
         $today->setTimespan(0);
         $today->setStartOffset(0);
         $today->setConfig($config);
+        $today->setSegment($segment);
         $em->persist($today);
 
         $yesterday = new AnalyticsOverview();
@@ -81,6 +97,7 @@ class AnalyticsConfigRepository extends EntityRepository
         $yesterday->setTimespan(1);
         $yesterday->setStartOffset(1);
         $yesterday->setConfig($config);
+        $yesterday->setSegment($segment);
         $em->persist($yesterday);
 
         $week = new AnalyticsOverview();
@@ -88,6 +105,7 @@ class AnalyticsConfigRepository extends EntityRepository
         $week->setTimespan(7);
         $week->setStartOffset(0);
         $week->setConfig($config);
+        $week->setSegment($segment);
         $em->persist($week);
 
         $month = new AnalyticsOverview();
@@ -95,6 +113,7 @@ class AnalyticsConfigRepository extends EntityRepository
         $month->setTimespan(30);
         $month->setStartOffset(0);
         $month->setConfig($config);
+        $month->setSegment($segment);
         $em->persist($month);
 
         $year = new AnalyticsOverview();
@@ -102,6 +121,7 @@ class AnalyticsConfigRepository extends EntityRepository
         $year->setTimespan(365);
         $year->setStartOffset(0);
         $year->setConfig($config);
+        $year->setSegment($segment);
         $em->persist($year);
 
         $yearToDate = new AnalyticsOverview();
@@ -109,6 +129,7 @@ class AnalyticsConfigRepository extends EntityRepository
         $yearToDate->setTimespan(365);
         $yearToDate->setStartOffset(0);
         $yearToDate->setConfig($config);
+        $yearToDate->setSegment($segment);
         $yearToDate->setUseYear(true);
         $em->persist($yearToDate);
 

@@ -36,6 +36,11 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
             );
         }
 
+        // add segment
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
+
         // get visits & visitors
         if ($overview->getUseYear()) {
             $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
