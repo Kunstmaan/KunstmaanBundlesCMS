@@ -7,7 +7,7 @@
 
 The KunstmaanPagePartBundle forms the basis of our content management framework. A page built using a composition of blocks names pageparts. These pageparts allow you to fully separate the data from the presentation so non-technical webmasters can manage the website. Every page can have it's own list of possible pageparts, and pageparts are easy to create for your specific project to allow for rapid development.
 
-[![KunstmaanPagePartBundle](http://bundles.kunstmaan.be/bundles/kunstmaankunstmaanbundles/img/general/screens/content.png)](http://bundles.kunstmaan.be)
+[![KunstmaanPagePartBundle](http://bundles.kunstmaan.be/uploads/media/51ee9e45d2e2e.png?68e189d)](http://bundles.kunstmaan.be)
 View more screenshots and information [http://bundles.kunstmaan.be](http://bundles.kunstmaan.be).
 
 ## Installation
