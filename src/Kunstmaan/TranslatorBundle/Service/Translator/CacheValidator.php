@@ -10,7 +10,6 @@ use Symfony\Component\Finder\Finder;
 class CacheValidator
 {
     /**
-     * AppKernel running in debug or not
      * @var boolean
      */
     private $debug;

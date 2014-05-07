@@ -4,13 +4,13 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Process\Exception\RuntimeException;
+
 /**
  * ResourceCacher is used to cache all the resource into a file
  */
 class ResourceCacher
 {
     /**
-     * AppKernel running in debug or not
      * @var boolean
      */
     private $debug;

@@ -35,11 +35,11 @@ class KunstmaanTranslatorExtension extends Extension
         $container->setParameter('kuma_translator.file_formats', $config['file_formats']);
         $container->setParameter('kuma_translator.storage_engine.type', $config['storage_engine']['type']);
         $container->setParameter('kuma_translator.profiler', $container->getParameter('kernel.debug'));
+        $container->setParameter('kuma_translator.debug', is_null($config['debug']) ? $container->getParameter('kernel.debug') : $config['debug']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('repositories.yml');
-        //$loader->load('validators.yml');
 
         $this->setTranslationConfiguration($config, $container);
     }

@@ -75,14 +75,14 @@ services:
     kunstmaan_translator.service.translator.resource_cacher:
         class: Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
         calls:
-            - [setDebug, [%kernel.debug%]]
+            - [setDebug, [%kuma_translator.debug%]]
             - [setCacheDir, [%kuma_translator.cache_dir%]]
             - [setLogger, [@logger]]
 
     kunstmaan_translator.service.translator.cache_validator:
         class: Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator
         calls:
-            - [setDebug, [%kernel.debug%]]
+            - [setDebug, [%kuma_translator.debug%]]
             - [setCacheDir, [%kuma_translator.cache_dir%]]
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
 
@@ -92,7 +92,7 @@ services:
             - @service_container
             - @translator.selector
             - {}
-            - { cache_dir : %kuma_translator.cache_dir%, debug: %kernel.debug% }
+            - { cache_dir : %kuma_translator.cache_dir%, debug: %kuma_translator.debug% }
             - [@session]
         calls:
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
