@@ -48,11 +48,11 @@ class NodeMenuItem
      * @param NodeMenuItem|null|false $parent          The parent nodemenuitem
      * @param NodeMenu                $menu            The menu
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeMenuItem $parent = null, NodeMenu $menu)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent = false, NodeMenu $menu)
     {
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
-        // null = look up parent later if required; false = top menu item; NodeMenuItem = parent item already fetched
+        // false = look up parent later if required (default); null = top menu item; NodeMenuItem = parent item already fetched
         $this->parent = $parent;
         $this->menu = $menu;
         $this->em = $menu->getEntityManager();
@@ -156,11 +156,6 @@ class NodeMenuItem
     public function getParent()
     {
         if ($this->parent === false) {
-            // Top menu item
-            return null;
-        } elseif ($this->parent instanceof NodeMenuItem) {
-            // We already have the parent
-        } else {
             // We need to calculate the parent
             $this->parent = $this->menu->getParent($this->node);
         }
@@ -171,7 +166,7 @@ class NodeMenuItem
     /**
      * @param NodeMenuItem|null|false $parent
      */
-    public function setParent(NodeMenuItem $parent = null)
+    public function setParent($parent = false)
     {
         $this->parent = $parent;
     }

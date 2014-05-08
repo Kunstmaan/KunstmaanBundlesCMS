@@ -144,7 +144,7 @@ class NodeMenu
                 foreach ($topNodes as $topNode) {
                     $nodeTranslation = $topNode->getNodeTranslation($this->lang, $this->includeOffline);
                     if (!is_null($nodeTranslation)) {
-                        $topNodeMenuItems[] = new NodeMenuItem($topNode, $nodeTranslation, false, $this);
+                        $topNodeMenuItems[] = new NodeMenuItem($topNode, $nodeTranslation, null, $this);
                     }
                 }
 
@@ -230,11 +230,11 @@ class NodeMenu
 
         if (array_key_exists($node->getId(), $this->childNodes)) {
             $nodes = $this->childNodes[$node->getId()];
-            /* @var Node $node */
-            foreach ($nodes as $node) {
-                $nodeTranslation = $node->getNodeTranslation($this->lang, $this->includeOffline);
+            /* @var Node $childNode */
+            foreach ($nodes as $childNode) {
+                $nodeTranslation = $childNode->getNodeTranslation($this->lang, $this->includeOffline);
                 if (!is_null($nodeTranslation)) {
-                    $children[] = new NodeMenuItem($node, $nodeTranslation, null, $this);
+                    $children[] = new NodeMenuItem($childNode, $nodeTranslation, false, $this);
                 }
             }
 
@@ -286,7 +286,7 @@ class NodeMenu
     {
         $resultNode = null;
 
-        if ($includeOffline == null) {
+        if (is_null($includeOffline)) {
             $includeOffline = $this->includeOffline;
         }
 
@@ -342,7 +342,7 @@ class NodeMenu
         if ($resultNode) {
             $nodeTranslation = $resultNode->getNodeTranslation($this->lang, $includeOffline);
             if (!is_null($nodeTranslation)) {
-                return new NodeMenuItem($resultNode, $nodeTranslation, null, $this);
+                return new NodeMenuItem($resultNode, $nodeTranslation, false, $this);
             }
         }
 
