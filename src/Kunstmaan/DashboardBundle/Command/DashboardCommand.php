@@ -30,7 +30,7 @@ class DashboardCommand extends ContainerAwareCommand
                 InputOption::VALUE_REQUIRED,
                 'Specify to only update one segment',
                 1
-            );;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
