@@ -250,6 +250,7 @@ class ConfigHelper
                 $result[] = array(
                         'profileId' => $profile->id,
                         'profileName' => $profile->name,
+                        'created' => $profile->created
                     );
             }
 
@@ -301,7 +302,7 @@ class ConfigHelper
             $profileId = $this->getProfileId();
 
             foreach ($profiles as $profile) {
-                if ($profile->id == $profileId) {
+                if ($profile['profileId'] == $profileId) {
                     return $profile;
                 }
             }

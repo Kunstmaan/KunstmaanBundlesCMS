@@ -61,6 +61,9 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // init
+        $this->init($output);
+
         // check if token is set
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
         if (!$configHelper->tokenIsSet()) {
@@ -68,21 +71,21 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
             return;
         }
 
-        // init
-        $this->init($output);
-
-        // get the query helper
-        $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
-
         // get config
         $configId = false;
         try {
             $configId = $input->getOption('config');
         } catch (\Exception $e) {}
 
-        $config = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId);
+        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $config = $configRepository->getConfig($configId);
 
-        // get the segments from the config and init them (if new segments are added, this will create new overviews)
+        // add overviews if none exist for this config
+        if (!count($config->getOverviews()->toArray())) {
+            $configRepository->addOverviews($config);
+        }
+
+        // get segment id
         $segmentId = false;
         try {
             $segmentId = $input->getOption('segment');
@@ -90,25 +93,29 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
 
         // load all segments if no segment is specified
         if (!$segmentId) {
-            $segments = $config->getSegments();
         } else {
             // only add the specified segment
-            $segments = array();
-            $segments[] = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId);
-        }
-
-        // init each segment: if any new segments are available, new overviews will be created automatically
-        foreach ($segments as $segment) {
-            $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->initSegment($segment);
         }
 
         // get all overviews (inc. default without a segment) if no segment is specified
         if (!$segmentId) {
+            $segments = $config->getSegments();
+
+            foreach ($segments as $segment) {
+                $configRepository->initSegment($segment);
+            }
+
             $overviews = $config->getOverviews();
         } else {
             // only load the overviews of the specified segment
-            $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId)->getOverviews();
+            $segmentRepositry = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+            $segment = $segmentRepositry->getSegment($segmentId);
+            $configRepository->initSegment($segment);
+            $overviews = $segmentRepositry->getSegment($segmentId)->getOverviews();
         }
+
+        // get the query helper
+        $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
 
         // get data per overview
         foreach ($overviews as $overview) {

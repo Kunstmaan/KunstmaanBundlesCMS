@@ -108,7 +108,7 @@ class AnalyticsConfigRepository extends EntityRepository
      * @param AnlyticsConfig $config
      * @param AnalyticsSegment $segment
      */
-    private function addOverviews($config, $segment=null) {
+    public function addOverviews($config, $segment=null) {
         $em = $this->getEntityManager();
 
         $today = new AnalyticsOverview();

@@ -46,7 +46,7 @@ abstract class AbstractAnalyticsCommandHelper
             $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
         } else {
             // check if timespan is't more than existence of the profile; if so, use the creation time in stead of the timespan time
-            $profileStartDate = explode('T', $this->configHelper->getActiveProfile()->created)[0];
+            $profileStartDate = explode('T', $this->configHelper->getActiveProfile()['created'])[0];
             $begin = strtotime($profileStartDate) > strtotime('-' . $overview->getTimespan() . ' days') ? date('Y-m-d', strtotime($profileStartDate)) : date('Y-m-d', strtotime('-' . $overview->getTimespan() . ' days'));
         }
         // set the end time
