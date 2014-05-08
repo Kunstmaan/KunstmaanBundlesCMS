@@ -10,24 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 {
-    /** @var ConfigHelper $configHelper */
-    private $configHelper;
-
-    /**
-     * Constructor
-     *
-     * @param ConfigHelper $configHelper
-     * @param QueryHelper $query
-     * @param OutputInterface $output
-     * @param EntityManager $em
-     */
-    public function __construct($configHelper, $query, $output, $em)
-    {
-        parent::__construct($query, $output, $em);
-        $this->configHelper = $configHelper;
-    }
-
-
     /**
      * @return array
      */
@@ -78,25 +60,15 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
      * @return mixed
      */
     private function requestGoalResults(AnalyticsOverview $overview, $metrics, $dimensions){
-        // Execute query
-        if ($overview->getUseYear()) {
-            $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
-            $end = date('Y-m-d', strtotime("-1 days"));
+        $timestamps = $this->getTimestamps($overview);
 
-            $results = $this->query->getResultsByDate(
-                $begin,
-                $end,
-                $metrics,
-                $dimensions
-            );
-        } else {
-            $results = $this->query->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                $metrics,
-                $dimensions
-            );
-        }
+        $results = $this->query->getResultsByDate(
+            $timestamps['begin'],
+            $timestamps['end'],
+            $metrics,
+            $dimensions
+        );
+
         return $results->getRows();
     }
 

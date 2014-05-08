@@ -77,12 +77,12 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
             $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
 
             // metric data
-            $metrics = new MetricsCommandHelper($queryHelper, $this->output, $this->em);
+            $metrics = new MetricsCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
             $metrics->getData($overview);
 
             if ($overview->getSessions()) { // if there are any visits
                 // day-specific data
-                $chartData = new ChartDataCommandHelper($queryHelper, $this->output, $this->em);
+                $chartData = new ChartDataCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
                 $chartData->getData($overview);
 
                 // get goals
@@ -90,7 +90,7 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
                 $goals->getData($overview);
 
                 // visitor types
-                $visitors = new UsersCommandHelper($queryHelper, $this->output, $this->em);
+                $visitors = new UsersCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
                 $visitors->getData($overview);
             } else {
                 // reset overview

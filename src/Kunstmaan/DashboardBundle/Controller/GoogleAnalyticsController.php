@@ -257,4 +257,13 @@ class GoogleAnalyticsController extends Controller
         return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
     }
 
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test() {
+        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
+        var_dump($configHelper->getActiveProfile());
+
+        exit;
+    }
 }

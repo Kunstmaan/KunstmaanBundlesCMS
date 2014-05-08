@@ -18,6 +18,7 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
 
         // create the right timespan
         $timespan = $overview->getTimespan() - $overview->getStartOffset();
+        $timestamps = $this->getTimestamps($overview);
         if ($timespan <= 1) {
             $extra = array(
                 'dimensions' => 'ga:date,ga:hour'
@@ -36,24 +37,12 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
             );
         }
 
-        // get visits & visitors
-        if ($overview->getUseYear()) {
-            $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
-            $end = date('Y-m-d', strtotime("-1 days"));
-            $results = $this->query->getResultsByDate(
-                $begin,
-                $end,
-                'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
-                $extra
-            );
-        } else {
-            $results = $this->query->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
-                $extra
-            );
-        }
+        $results = $this->query->getResultsByDate(
+            $timestamps['begin'],
+            $timestamps['end'],
+            'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
+            $extra
+        );
 
         $rows = $results->getRows();
 
