@@ -13,6 +13,35 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  */
 class AnalyticsOverview extends AbstractEntity
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="overviews")
+     * @ORM\JoinColumn(name="config_id", referencedColumnName="id")
+     */
+    private $config;
+
+    /**
+     * Get config
+     *
+     * @return integer
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Set config
+     *
+     * @param integer $config
+     *
+     * @return AnalyticsTopReferrals
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
 
     /**
      * Get percentage of returning users

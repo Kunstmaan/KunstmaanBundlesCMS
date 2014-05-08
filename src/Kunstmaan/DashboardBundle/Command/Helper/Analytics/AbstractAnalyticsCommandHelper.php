@@ -2,14 +2,14 @@
 namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\QueryHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractAnalyticsCommandHelper
 {
 
-    /** @var GoogleAnalyticsHelper $analyticsHelper */
-    protected $analyticsHelper;
+    /** @var GooglequeryHelper $queryHelper */
+    protected $query;
     /** @var EntityManager $em */
     protected $em;
     /** @var OutputInterface $output */
@@ -18,13 +18,13 @@ abstract class AbstractAnalyticsCommandHelper
     /**
      * Constructor
      *
-     * @param $analyticsHelper
+     * @param $queryHelper
      * @param $output
      * @param $em
      */
-    public function __construct($analyticsHelper, $output, $em)
+    public function __construct($queryHelper, $output, $em)
     {
-        $this->analyticsHelper = $analyticsHelper;
+        $this->query = $queryHelper;
         $this->output = $output;
         $this->em = $em;
     }

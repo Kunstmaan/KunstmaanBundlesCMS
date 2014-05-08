@@ -47,7 +47,7 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
                 $extra
             );
         } else {
-            $results = $this->analyticsHelper->getResults(
+            $results = $this->query->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
                 'ga:sessions, ga:users, ga:newUsers, ga:pageviews',

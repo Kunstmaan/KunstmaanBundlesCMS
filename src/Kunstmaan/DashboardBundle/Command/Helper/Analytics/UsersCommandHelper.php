@@ -26,7 +26,7 @@ class UsersCommandHelper extends AbstractAnalyticsCommandHelper
                 'ga:percentNewSessions'
             );
         } else {
-            $results = $this->analyticsHelper->getResults(
+            $results = $this->query->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
                 'ga:percentNewSessions'

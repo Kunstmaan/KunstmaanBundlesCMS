@@ -18,13 +18,13 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
 
         $gaMetrics = 'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration';
         if ($overview->getUseYear()) {
-            $results = $this->analyticsHelper->getResultsByDate(
+            $results = $this->query->getResultsByDate(
                 date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y'))),
                 date('Y-m-d', strtotime("-1 days")),
                 $gaMetrics
             );
         } else {
-            $results = $this->analyticsHelper->getResults(
+            $results = $this->query->getResults(
                 $overview->getTimespan(),
                 $overview->getStartOffset(),
                 $gaMetrics

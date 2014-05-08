@@ -7,6 +7,7 @@ use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 
 class DashboardCommand extends ContainerAwareCommand
 {
