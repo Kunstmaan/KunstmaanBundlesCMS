@@ -127,12 +127,9 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 
         $goals = $this->getAllGoals();
         if (!$goals) {
-            foreach ($overview->getGoals() as $goal) {
-                $this->em->remove($goal);
-            }
-            $this->em->flush();
             return;
         }
+
         $goaldata = array();
 
         // Create an array with for each goal an entry to create the metric parameter.
