@@ -83,7 +83,7 @@ class AnalyticsConfigRepository extends EntityRepository
      * @param int $configId
      */
     public function initSegment($segment, $configId = false) {
-        if (count($segment->getOverviews()->toArray()) == 0) {
+        if (!count($segment->getOverviews()->toArray())) {
             $config = $this->getConfig($configId);
             $this->addOverviews($config, $segment);
         }
@@ -108,7 +108,7 @@ class AnalyticsConfigRepository extends EntityRepository
      * @param AnlyticsConfig $config
      * @param AnalyticsSegment $segment
      */
-    public function addOverviews($config, $segment=null) {
+    public function addOverviews(&$config, &$segment=null) {
         $em = $this->getEntityManager();
 
         $today = new AnalyticsOverview();
@@ -117,6 +117,8 @@ class AnalyticsConfigRepository extends EntityRepository
         $today->setStartOffset(0);
         $today->setConfig($config);
         $today->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $today;
+        $config->getOverviews()[] = $today;
         $em->persist($today);
 
         $yesterday = new AnalyticsOverview();
@@ -125,6 +127,8 @@ class AnalyticsConfigRepository extends EntityRepository
         $yesterday->setStartOffset(1);
         $yesterday->setConfig($config);
         $yesterday->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $yesterday;
+        $config->getOverviews()[] = $yesterday;
         $em->persist($yesterday);
 
         $week = new AnalyticsOverview();
@@ -133,6 +137,8 @@ class AnalyticsConfigRepository extends EntityRepository
         $week->setStartOffset(1);
         $week->setConfig($config);
         $week->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $week;
+        $config->getOverviews()[] = $week;
         $em->persist($week);
 
         $month = new AnalyticsOverview();
@@ -141,6 +147,8 @@ class AnalyticsConfigRepository extends EntityRepository
         $month->setStartOffset(1);
         $month->setConfig($config);
         $month->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $month;
+        $config->getOverviews()[] = $month;
         $em->persist($month);
 
         $year = new AnalyticsOverview();
@@ -149,6 +157,8 @@ class AnalyticsConfigRepository extends EntityRepository
         $year->setStartOffset(1);
         $year->setConfig($config);
         $year->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $year;
+        $config->getOverviews()[] = $year;
         $em->persist($year);
 
         $yearToDate = new AnalyticsOverview();
@@ -157,6 +167,8 @@ class AnalyticsConfigRepository extends EntityRepository
         $yearToDate->setStartOffset(1);
         $yearToDate->setConfig($config);
         $yearToDate->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $yearToDate;
+        $config->getOverviews()[] = $yearToDate;
         $yearToDate->setUseYear(true);
         $em->persist($yearToDate);
 

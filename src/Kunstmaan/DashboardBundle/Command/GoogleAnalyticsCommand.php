@@ -91,12 +91,6 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
             $segmentId = $input->getOption('segment');
         } catch (\Exception $e) {}
 
-        // load all segments if no segment is specified
-        if (!$segmentId) {
-        } else {
-            // only add the specified segment
-        }
-
         // get all overviews (inc. default without a segment) if no segment is specified
         if (!$segmentId) {
             $segments = $config->getSegments();
@@ -105,6 +99,7 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
                 $configRepository->initSegment($segment);
             }
 
+            $config = $configRepository->getConfig($configId);
             $overviews = $config->getOverviews();
         } else {
             // only load the overviews of the specified segment
