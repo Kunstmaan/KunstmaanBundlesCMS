@@ -13,7 +13,6 @@ Updating an existing website
 
     composer update
     app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
-    app/console doctrine:fixtures:load --fixtures=vendor/kunstmaan/dashboard-bundle/Kunstmaan/DashboardBundle/DataFixtures/ORM/ --append
 
 
 ## Accounts setup
