@@ -25,10 +25,11 @@ class GoogleAnalyticsAJAXController extends Controller
     public function runUpdate(Request $request)
     {
         $configId = $request->query->get('configId');
+        $segmentId = $request->query->get('segmentId');
 
         $command = new GoogleAnalyticsCommand();
         $command->setContainer($this->container);
-        $input = new ArrayInput(array('configId' => $configId));
+        $input = new ArrayInput(array('--config' => $configId, '--segment' => $segmentId));
         $output = new NullOutput();
         $command->run($input, $output);
 

@@ -33,9 +33,9 @@
             <section class="dashboard__content">
                 <p>{{ 'dashboard.ga.unavailable' | trans}}</p>
                 {% if configId is not defined %}
-                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update') }}" class="dashboard_update btn btn-primary">Update</button>
+                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'segmentId':segmentId}) }}" class="dashboard_update btn btn-primary">Update</button>
                 {% else %}
-                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'configId':configId}) }}" class="dashboard_update btn btn-primary">Update</button>
+                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'configId':configId, 'segmentId':segmentId}) }}" class="dashboard_update btn btn-primary">Update</button>
                 {% endif %}
             </section>
         </div>
