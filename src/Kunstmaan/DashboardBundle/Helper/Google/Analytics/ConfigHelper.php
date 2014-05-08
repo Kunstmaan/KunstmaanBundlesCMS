@@ -272,6 +272,22 @@ class ConfigHelper
             return null !== $this->getProfileId() && '' !== $this->getProfileId();
         }
 
+        /**
+         * Get the active profile
+         *
+         * @return the profile
+         */
+        public function getActiveProfile() {
+            $profiles = $this->getProfiles();
+            $profileId = $this->getProfileId();
+
+            foreach ($profiles as $profile) {
+                if ($profile->id == $profileId) {
+                    return $profile;
+                }
+            }
+        }
+
     /* =============================== CONFIG =============================== */
 
         /**
