@@ -62,6 +62,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
     private function requestGoalResults(AnalyticsOverview $overview, $metrics, $dimensions){
         $timestamps = $this->getTimestamps($overview);
 
+        // execute query
         $results = $this->query->getResultsByDate(
             $timestamps['begin'],
             $timestamps['end'],
@@ -97,11 +98,15 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             $start = 1;
         }
 
+        // add segment
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
+
         $goals = $this->getAllGoals();
         if (!$goals) {
             return;
         }
-
         $goaldata = array();
 
         // Create an array with for each goal an entry to create the metric parameter.
@@ -163,11 +168,14 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
     private function parseGoals(&$overview, $goalCollection)
     {
 
-        // delete existing entries
-        foreach ($overview->getGoals() as $goal) {
-            $this->em->remove($goal);
+
+        if ($overview->getGoals()) {
+            // delete existing entries
+            foreach ($overview->getGoals() as $goal) {
+                $this->em->remove($goal);
+            }
+            $this->em->flush();
         }
-        $this->em->flush();
 
         foreach ($goalCollection as $goalEntry) {
             // create a new goal

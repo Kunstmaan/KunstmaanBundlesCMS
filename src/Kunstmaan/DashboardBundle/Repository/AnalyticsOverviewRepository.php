@@ -50,6 +50,11 @@ class AnalyticsOverviewRepository extends EntityRepository
         return false;
     }
 
+    /**
+     * Get basic data for an overview
+     *
+     * @return array
+     */
     public function getOverviewData()
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

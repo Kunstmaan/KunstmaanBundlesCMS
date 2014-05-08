@@ -15,13 +15,20 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
     {
         $this->output->writeln("\t" . 'Fetching metrics..');
 
+        // add segment
+        $extra = array();
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
         $gaMetrics = 'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration';
         $timestamps = $this->getTimestamps($overview);
 
+        // execute query
         $results = $this->query->getResultsByDate (
             $timestamps['begin'],
             $timestamps['end'],
-            $gaMetrics
+            $gaMetrics,
+            $extra
         );
 
         $rows = $results->getRows();

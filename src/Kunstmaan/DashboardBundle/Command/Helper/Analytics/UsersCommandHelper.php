@@ -18,10 +18,18 @@ class UsersCommandHelper extends AbstractAnalyticsCommandHelper
         $this->output->writeln("\t" . 'Fetching visitor types..');
         $timestamps = $this->getTimestamps($overview);
 
+        // add segment
+        $extra = array();
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
+
+        // execute query
         $results = $this->query->getResultsByDate(
             $timestamps['begin'],
             $timestamps['end'],
-            'ga:percentNewSessions'
+            'ga:percentNewSessions',
+            $extra
         );
 
         $rows = $results->getRows();

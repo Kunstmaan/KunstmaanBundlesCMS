@@ -37,6 +37,12 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
             );
         }
 
+        // add segment
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
+
+        // execute query
         $results = $this->query->getResultsByDate(
             $timestamps['begin'],
             $timestamps['end'],

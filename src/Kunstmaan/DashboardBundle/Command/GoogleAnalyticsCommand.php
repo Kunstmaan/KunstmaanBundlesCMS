@@ -13,10 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class GoogleAnalyticsCommand extends ContainerAwareCommand
 {
-
     /** @var EntityManager $em */
     private $em;
 
@@ -30,7 +30,21 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
     {
         $this
             ->setName('kuma:dashboard:widget:googleanalytics')
-            ->setDescription('Collect the Google Analytics dashboard widget data');
+            ->setDescription('Collect the Google Analytics dashboard widget data')
+            ->addOption(
+                'config',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Specify to only update one config',
+                false
+            )
+            ->addOption(
+                'segment',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Specify to only update one segment',
+                false
+            );
     }
 
     /**
@@ -47,28 +61,53 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->init($output);
-        $configId = false;
+        // check if token is set
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
-
-        // if no token set yet
         if (!$configHelper->tokenIsSet()) {
             $this->output->writeln('You haven\'t configured a Google account yet');
             return;
         }
 
-        // get overviews
-        if ($configId) {
-            $configHelper->init($configId);
-            try {
-                $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId)->getOverviews();
-            } catch (\Exception $e) {
-                $this->output->writeln('Unknown config ID.');
-                exit;
-            }
+        // init
+        $this->init($output);
+
+        // get the query helper
+        $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
+
+        // get config
+        $configId = false;
+        try {
+            $configId = $input->getOption('config');
+        } catch (\Exception $e) {}
+
+        $config = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId);
+
+        // get the segments from the config and init them (if new segments are added, this will create new overviews)
+        $segmentId = false;
+        try {
+            $segmentId = $input->getOption('segment');
+        } catch (\Exception $e) {}
+
+        // load all segments if no segment is specified
+        if (!$segmentId) {
+            $segments = $config->getSegments();
         } else {
-            $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+            // only add the specified segment
+            $segments = array();
+            $segments[] = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId);
+        }
+
+        // init each segment: if any new segments are available, new overviews will be created automatically
+        foreach ($segments as $segment) {
+            $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->initSegment($segment);
+        }
+
+        // get all overviews (inc. default without a segment) if no segment is specified
+        if (!$segmentId) {
+            $overviews = $config->getOverviews();
+        } else {
+            // only load the overviews of the specified segment
+            $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId)->getOverviews();
         }
 
         // get data per overview
