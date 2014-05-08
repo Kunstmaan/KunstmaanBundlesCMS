@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('kuma_admin');
 
         $rootNode
+            ->fixXmlConfig('admin_locale')
             ->children()
                 ->scalarNode('dashboard_route')->end()
                 ->arrayNode('admin_locales')

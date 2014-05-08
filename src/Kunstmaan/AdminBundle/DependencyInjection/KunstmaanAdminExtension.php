@@ -75,4 +75,20 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNamespace()
+    {
+        return 'http://bundles.kunstmaan.be/schema/dic/admin';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXsdValidationBasePath()
+    {
+        return __DIR__.'/../Resources/config/schema';
+    }
 }
