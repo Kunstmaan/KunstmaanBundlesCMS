@@ -34,16 +34,16 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
             ->addOption(
                 'config',
                 null,
-                InputOption::VALUE_REQUIRED,
+                InputOption::VALUE_OPTIONAL,
                 'Specify to only update one config',
-                1
+                false
             )
             ->addOption(
                 'segment',
                 null,
-                InputOption::VALUE_REQUIRED,
+                InputOption::VALUE_OPTIONAL,
                 'Specify to only update one segment',
-                1
+                false
             );
     }
 
@@ -75,11 +75,18 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
         $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
 
         // get config
-        $configId = is_string($input->getOption('config')) ? $input->getOption('config') : false;
+        $configId = false;
+        try {
+            $configId = $input->getOption('config');
+        } catch (\Exception $e) {}
+
         $config = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId);
 
         // get the segments from the config and init them (if new segments are added, this will create new overviews)
-        $segmentId = is_string($input->getOption('segment')) ? $input->getOption('segment') : false;
+        $segmentId = false;
+        try {
+            $segmentId = $input->getOption('segment');
+        } catch (\Exception $e) {}
 
         // load all segments if no segment is specified
         if (!$segmentId) {

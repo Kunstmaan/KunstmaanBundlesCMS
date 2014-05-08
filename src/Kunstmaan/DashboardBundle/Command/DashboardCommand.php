@@ -16,21 +16,7 @@ class DashboardCommand extends ContainerAwareCommand
     {
         $this
             ->setName('kuma:dashboard:collect')
-            ->setDescription('Collect all the widget dashboard data')
-            ->addOption(
-                'config',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Specify to only update one config',
-                1
-            )
-            ->addOption(
-                'segment',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'Specify to only update one segment',
-                1
-            );
+            ->setDescription('Collect all the widget dashboard data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
