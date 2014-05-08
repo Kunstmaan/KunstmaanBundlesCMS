@@ -41,7 +41,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         if (is_array($goals)){
             return $goals;
         }
-        return array();
+        return false;
     }
 
     /**
@@ -119,6 +119,9 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         }
 
         $goals = $this->getAllGoals();
+        if (!$goals) {
+            return;
+        }
 
         $goaldata = array();
 
