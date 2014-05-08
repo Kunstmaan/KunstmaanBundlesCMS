@@ -39,15 +39,23 @@ class UrlLocaleGuesser extends AbstractLocaleGuesser
     public function guessLocale(Request $request)
     {
         $localeValidator = $this->metaValidator;
-        if ($path = $request->attributes->get('path')) {
-            $parts = array_filter(explode("/", $path));
-            $locale = array_shift($parts);
 
-            if ($localeValidator->isAllowed($locale)) {
-                $this->identifiedLocale = $locale;
+        $path = $request->getPathInfo();
+        if ($request->attributes->has('path')) {
+            $path = $request->attributes->get('path');
+        }
 
-                return true;
-            }
+        if (!$path) {
+            return false;
+        }
+
+        $parts = array_filter(explode("/", $path));
+        $locale = array_shift($parts);
+
+        if ($localeValidator->isAllowed($locale)) {
+            $this->identifiedLocale = $locale;
+
+            return true;
         }
 
         return false;
