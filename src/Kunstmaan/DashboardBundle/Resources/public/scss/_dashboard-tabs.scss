@@ -7,7 +7,7 @@
     @include clearfix;
     margin: 40px 0 0;
     list-style: none;
-    width: 100%;
+    width: 50%;
     * {
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
@@ -60,7 +60,7 @@
 
 
 #segment-menu {
-    margin-top:-40px;
+    float:right;
 
     &:after {
         clear:both;
@@ -70,8 +70,7 @@
 
     a {
         border:1px solid $hr-color;
-        border-top:none;
-        border-radius:0 0 3px 3px;
+        border-radius:3px;
 
         display:block;
         float:left;
@@ -81,13 +80,16 @@
         margin:0 2px;
         font-size: 1em;
 
+        &:last-child {
+            margin-right:0;
+        }
+
         &.segment-active {
             font-weight:bold;
         }
 
         &:hover {
-            padding-top:10px;
-            margin-bottom:0px;
+            border:1px solid #2997ce;
             @include single_transition(all, .2s, ease-out);
         }
     }

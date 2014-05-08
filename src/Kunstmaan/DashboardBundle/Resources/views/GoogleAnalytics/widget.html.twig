@@ -1,14 +1,14 @@
 {% if token %}
 <div class="dashboard">
 
-<nav id="segment-menu">
     {% if segments | length > 0 %}
-        <a href="?" {% if (segmentId is null) %}class="segment-active"{% endif %}>Default</a>
-        {% for segment in segments %}
-            <a href="?segment={{segment.id}}" {% if (segment.id == segmentId) %}class="segment-active"{% endif %}>{{segment.name}}</a>
-        {% endfor %}
+        <nav id="segment-menu">
+                <a href="?" {% if (segmentId is null) %}class="segment-active"{% endif %}>Default</a>
+                {% for segment in segments %}
+                    <a href="?segment={{segment.id}}" {% if (segment.id == segmentId) %}class="segment-active"{% endif %}>{{segment.name}}</a>
+                {% endfor %}
+        </nav>
     {% endif %}
-</nav>
 
     <div id="data_overview" class="dashboard__content--loading">
         <!-- TABS -->
