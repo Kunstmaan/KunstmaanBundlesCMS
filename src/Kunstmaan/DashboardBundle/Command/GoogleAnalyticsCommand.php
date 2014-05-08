@@ -67,6 +67,7 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
         $analyticsOverviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
         $overviews = $analyticsOverviewRepository->getAll();
         foreach ($overviews as $overview) {
+            $overview = end($overviews);
             /** @var AnalyticsOverview $overview */
             $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
 

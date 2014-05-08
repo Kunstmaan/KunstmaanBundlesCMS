@@ -19,7 +19,7 @@ class UsersCommandHelper extends AbstractAnalyticsCommandHelper
 
         if ($overview->getUseYear()) {
             $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
-            $end = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y', strtotime('+1 year'))));
+            $end = date('Y-m-d', strtotime("-1 days"));
             $results = $this->analyticsHelper->getResultsByDate(
                 $begin,
                 $end,

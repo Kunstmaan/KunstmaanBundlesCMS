@@ -20,7 +20,7 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
         if ($overview->getUseYear()) {
             $results = $this->analyticsHelper->getResultsByDate(
                 date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y'))),
-                date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y', strtotime('+1 year')))),
+                date('Y-m-d', strtotime("-1 days")),
                 $gaMetrics
             );
         } else {

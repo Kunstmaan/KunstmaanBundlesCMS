@@ -323,4 +323,44 @@ class GoogleAnalyticsController extends Controller
 
         return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
     }
+
+    /**
+     * @Route("/test", name="KunstmaanDashboardBundle_analytics_test")
+     */
+    public function test() {
+        $googleClientHelper = $this->container->get('kunstmaan_dashboard.googleclienthelper');
+        $query = $this->container->get('kunstmaan_dashboard.googleanalyticshelper');
+        $query->init($googleClientHelper);
+
+
+        $extra = array();
+
+        $rows = $query
+            ->getResultsByDate(
+                '2013-07-10',
+                '2014-05-05',
+                'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration',
+                $extra
+            )->getRows();
+
+//297 361
+
+        var_dump($rows);
+
+        echo "sessions: " .             $rows[0][0];
+        echo "<br/>";
+        echo "users: " .                $rows[0][1];
+        echo "<br/>";
+        echo "pageviews: " .            $rows[0][2];
+        echo "<br/>";
+        echo "pageviewsPerSession: " .  $rows[0][3];
+        echo "<br/>";
+        echo "avgSessionDuration: " .   $rows[0][4];
+        echo "<br/>";
+
+
+        exit;
+
+    }
+
 }
