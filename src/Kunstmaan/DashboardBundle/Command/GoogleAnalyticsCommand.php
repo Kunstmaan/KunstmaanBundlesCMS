@@ -30,12 +30,7 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
     {
         $this
             ->setName('kuma:dashboard:widget:googleanalytics')
-            ->setDescription('Collect the Google Analytics dashboard widget data')
-            ->addArgument(
-                'configId',
-                InputArgument::OPTIONAL,
-                'Specify to only update one config'
-            );
+            ->setDescription('Collect the Google Analytics dashboard widget data');
     }
 
     /**
@@ -53,7 +48,7 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->init($output);
-        $configId = $input->getArgument('configId') ? $input->getArgument('configId') : false;
+        $configId = false;
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
         $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
 
