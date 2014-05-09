@@ -1,6 +1,8 @@
 $(function () {
     // show first tab
     var tab = $('.dashboard-tabs__item:nth-child(2) > div');
+    switchTab(tab.attr('data-id'), tab.attr('data-path'));
+
 
     function switchTab(id, url) {
         $('#data_overview').addClass('dashboard__content--loading');
@@ -53,8 +55,6 @@ $(function () {
             }
         });
     }
-
-    switchTab(tab.attr('data-id'), tab.attr('data-path'));
 
     // Tab switcher
     $('.dashboard-tabs__item').on('click', function () {
