@@ -36,6 +36,7 @@ dashboard:
             account:
                 title: Select an account
                 select: Select an account..
+            link: Setup dashboard
         reset:
             property: Change Google Analytics link
         last_update: Last update:

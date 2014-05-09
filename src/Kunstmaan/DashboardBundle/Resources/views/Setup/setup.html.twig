@@ -40,22 +40,20 @@
         </div>
 
         <div class="setup-group" id="segment-group">
-            <input type="button" class="btn" id="use-segments" value="Add segements" />
-            <div id="segements"></div>
-            <input type="button" class="btn" id="segement-button__add" value="Add" style="display:none"/>
-        </div>
-
-        <div class="setup-group" id="segment-group__list">
+            <h4>Segments</h4>
             <ul>
                 {% for segment in segments %}
                     <li id="segment-list__{{ segment.id }}">
-                        {{ segment.query }}<input type="button" class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}" id="segement-button__add" value="X"/>
+                        {{ segment.name }}<input type="button" class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}" value="X"/>
                     </li>
                 {% endfor %}
             </ul>
+            <div id="segments-new"></div>
+            <a href="#" class="btn" id="segment-button__add">Add segment</a>
         </div>
 
-        <div class="setup-group">
+        <div class="setup-group" id="control-group">
+            <a href="{{ path('kunstmaan_dashboard') }}" class="btn" type="submit">{{ 'form.back' | trans }}</a>
             <button id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
         </div>
     </form>
@@ -66,8 +64,8 @@
     <input type="hidden" id="path_account_save" data-url="{{ path('DashBoardBundle_AJAX_account_save') }}" />
     <input type="hidden" id="path_property_save" data-url="{{ path('DashBoardBundle_AJAX_property_save') }}" />
     <input type="hidden" id="path_profile_save" data-url="{{ path('DashBoardBundle_AJAX_profile_save') }}" />
-    <input type="hidden" id="path_segment_add" data-url="{{ path('DashBoardBundle_AJAX_segement_add') }}" />
-    <input type="hidden" id="path_segment_delete" data-url="{{ path('DashBoardBundle_AJAX_segement_delete') }}" />
+    <input type="hidden" id="path_segment_add" data-url="{{ path('DashBoardBundle_AJAX_segment_add') }}" />
+    <input type="hidden" id="path_segment_delete" data-url="{{ path('DashBoardBundle_AJAX_segment_delete') }}" />
     <input type="hidden" id="path_config_save" data-url="{{ path('DashBoardBundle_AJAX_config_save') }}" />
 {% endblock %}
 

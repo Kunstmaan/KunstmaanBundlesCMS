@@ -216,7 +216,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== SEGMENT =============================== */
 
         /**
-         * @Route("/segment/add/", name="DashBoardBundle_AJAX_segement_add")
+         * @Route("/segment/add/", name="DashBoardBundle_AJAX_segment_add")
          */
         public function addSegment(Request $request) {
             $em = $this->getDoctrine()->getManager();
@@ -241,7 +241,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/segment/delete", name="DashBoardBundle_AJAX_segement_delete")
+         * @Route("/segment/delete", name="DashBoardBundle_AJAX_segment_delete")
          */
         public function deleteSegment(Request $request) {
             $em = $this->getDoctrine()->getManager();

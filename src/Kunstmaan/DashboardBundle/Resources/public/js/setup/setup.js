@@ -12,7 +12,7 @@ $(function () {
             data: {'profileId' : profileId, 'propertyId' : propertyId, 'accountId' : accountId},
             success: function (data) {
                 // get all new segments
-                var segments = $('#segements').children();
+                var segments = $('#segments-new').children();
 
                 if (!segments.length) {
                     location.reload();
@@ -46,14 +46,6 @@ $(function () {
 
         return false;
     });
-
-    function AJAXSegments() {
-
-    }
-
-    function AJAXProfile() {
-
-    }
 
     /* =============================== ACCOUNTS =============================== */
 
@@ -149,20 +141,8 @@ $(function () {
 
     /* =============================== SEGMENTS =============================== */
 
-        // on button use-segments checked
-        $("#use-segments").click(function() {
-            // if first segment: automatically add a first input field
-            if($('#segements').children().length == 0) {
-                addSegmentInput();
-            }
-
-            $(this).remove();
-            $('#segements').fadeIn();
-            $('#segement-button__add').fadeIn();
-        });
-
         // on segment add button click
-        $('#segement-button__add').click(function() {
+        $('#segment-button__add').click(function() {
             addSegmentInput();
             return false;
         });
@@ -173,14 +153,14 @@ $(function () {
 
             // create elements
             var segmentDiv = $('<div>', {'id' : 'segmentDiv'+id});
-            var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segement'+id, 'class' : 'segment-query', 'placeholder' : 'query'});
-            var segmentName = $('<input>', { 'type': 'text', 'id' : 'segement_name'+id, 'class' : 'segment-name', 'placeholder' : 'name'});
+            var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segment'+id, 'class' : 'segment-query', 'placeholder' : 'query'});
+            var segmentName = $('<input>', { 'type': 'text', 'id' : 'segment_name'+id, 'class' : 'segment-name', 'placeholder' : 'name'});
             var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'segment-button__delete btn__delete btn', 'value' : 'X', 'placeholder' : 'query'})
 
             // add event trigger for the delete button
             segmentButton.click(function() {
-                var segementId = $(this).attr('data-segment-id');
-                $('#'+segementId).remove();
+                var segmentId = $(this).attr('data-segment-id');
+                $('#'+segmentId).remove();
                 return false;
             });
 
@@ -188,7 +168,8 @@ $(function () {
             segmentDiv.append(segmentName);
             segmentDiv.append(segmentInput);
             segmentDiv.append(segmentButton);
-            $('#segements').append(segmentDiv);
+
+            $('#segments-new').append(segmentDiv);
         }
 
         // on existing segment delete button click

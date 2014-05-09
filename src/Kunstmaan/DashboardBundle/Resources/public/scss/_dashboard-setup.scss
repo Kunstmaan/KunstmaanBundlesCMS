@@ -12,11 +12,9 @@
     }
 
     button {
-        display: block;
-        float:left;
-        clear:both;
+        display: inline-block;
         width:75px;
-        margin-top:10px;
+        margin-left:5px;
     }
 
     .setup-container {
@@ -53,32 +51,60 @@
         }
     }
 
+    #control-group {
+        clear:both;
+        width:100%;
+    }
+
     #segment-group {
         border-left:1px solid #ccc;
-        border-right:1px solid #ccc;
 
         float:left;
         width:25%;
         min-height:120px;
         padding-left:40px;
         padding-bottom:5px;
-        padding-right:40px;
-        margin-right:-1px;
 
-        #segements {
+        h4 {
+            margin-top:0;
+            padding-top:0;
+        }
+
+        ul {
+            margin-left:0;
+
+            &:after {
+                display:block;
+                content:' ';
+                clear:both;
+            }
+        }
+        li {
+            display:block;
+            float:left;
+            width:100%;
+            margin:5px 0;
+            padding-top:3px;
+        }
+
+        .segment-button__delete,
+        .segment-list-button__delete {
+            background:#b03e43;
+            float:right;
+            color:#fff;
+            padding-left:8px;
+            padding-right:7px;
+        }
+
+        .segment-button__delete {
+            margin-top:1px;
+        }
+
+        #segments-new {
             &>div {
                 width:100%;
                 float:left;
                 clear:both;
-            }
-
-            .segment-button__delete {
-                margin-top: -10px;
-                margin-left:5px;
-                padding-left:7px;
-                padding-right:7px;
-                background:#b03e43;
-                color:#fff;
             }
 
             &:after {
@@ -101,30 +127,4 @@
             }
         }
     }
-
-    #segment-group__list {
-        border-left:1px solid #ccc;
-        padding-left:40px;
-        float:left;
-        width:20%;
-
-        li {
-            display:block;
-            float:left;
-            width:95%;
-            margin:5px 0;
-            padding-top:3px;
-        }
-
-        .segment-list-button__delete {
-            background:#b03e43;
-            float:right;
-            color:#fff;
-            padding-left:7px;
-            padding-right:7px;
-        }
-
-    }
-
-
 }
