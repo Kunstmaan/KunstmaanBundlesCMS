@@ -40,10 +40,6 @@ $(function () {
                 }
             }
         });
-
-
-
-
         return false;
     });
 
@@ -132,6 +128,8 @@ $(function () {
 
         // on profile selected
         $("#profiles").change(function() {
+            $('#submit_save').removeAttr('disabled');
+
             $("#profiles option:selected").each(function() {
                 // get the profile id of the selected profile
                 profileId = $(this).attr('data-id');
@@ -143,6 +141,7 @@ $(function () {
 
         // on segment add button click
         $('#segment-button__add').click(function() {
+            $('#submit_save').removeAttr('disabled');
             addSegmentInput();
             return false;
         });
