@@ -6,6 +6,26 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
 {
+    /**
+     * get extra data
+     *
+     * @return array
+     */
+    protected function getExtra($overview) {
+        $timespan = $overview->getTimespan() - $overview->getStartOffset();
+        $extra = parent::getExtra($overview);
+
+        if ($timespan <= 1) {
+            $extra['dimensions'] = 'ga:date,ga:hour';
+        } else if ($timespan <= 7) {
+            $extra['dimensions'] = 'ga:date,ga:hour';
+        } else if ($timespan <= 31) {
+            $extra['dimensions'] = 'ga:week,ga:day,ga:date';
+        } else {
+            $extra['dimensions'] = 'ga:isoYearIsoWeek';
+        }
+        return $extra;
+    }
 
     /**
      * get data and save it for the overview
@@ -16,48 +36,13 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
     {
         $this->output->writeln("\t" . 'Fetching chart data..');
 
-        // create the right timespan
-        $timespan = $overview->getTimespan() - $overview->getStartOffset();
-        $timestamps = $this->getTimestamps($overview);
-        if ($timespan <= 1) {
-            $extra = array(
-                'dimensions' => 'ga:date,ga:hour'
-            );
-        } else if ($timespan <= 7) {
-            $extra = array(
-                'dimensions' => 'ga:date,ga:hour'
-            );
-        } else if ($timespan <= 31) {
-            $extra = array(
-                'dimensions' => 'ga:week,ga:day,ga:date'
-            );
-        } else {
-            $extra = array(
-                'dimensions' => 'ga:isoYearIsoWeek'
-            );
-        }
-
-        // add segment
-        if ($overview->getSegment()) {
-            $extra['segment'] = $overview->getSegment()->getQuery();
-        }
-
-        // execute query
-        $results = $this->query->getResultsByDate(
-            $timestamps['begin'],
-            $timestamps['end'],
-            'ga:sessions, ga:users, ga:newUsers, ga:pageviews',
-            $extra
-        );
-
-        $rows = $results->getRows();
+        // execute the query
+        $metrics = 'ga:sessions, ga:users, ga:newUsers, ga:pageviews';
+        $rows = $this->executeQuery($overview, $metrics);
 
         $chartData = array();
-        $totalUsers = 0;
-        $totalSessions = 0;
-        $totalPageviews = 0;
         $chartDataMaxValue = 0;
-
+        $timespan = $overview->getTimespan() - $overview->getStartOffset();
         foreach ($rows as $row) {
             // metrics
             $sessions = $row[sizeof($row) - 4];

@@ -167,8 +167,6 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
      */
     private function parseGoals(&$overview, $goalCollection)
     {
-
-
         if ($overview->getGoals()) {
             // delete existing entries
             foreach ($overview->getGoals() as $goal) {
