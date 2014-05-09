@@ -60,8 +60,13 @@ class AnalyticsConfigRepository extends EntityRepository
         foreach ($config->getOverviews() as $overview) {
             $em->remove($overview);
         }
-        foreach ($config->getSegments() as $segment) {
-            $em->remove($segment);
+
+        try {
+            foreach ($config->getSegments() as $segment) {
+                $em->remove($segment);
+            }
+        } catch (\Exception $e) {
+            // Backwards compatibility
         }
 
         $em->flush();
