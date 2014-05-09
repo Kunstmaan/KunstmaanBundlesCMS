@@ -49,6 +49,25 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /**
+     * Flush a config
+     *
+     * @param int $id the config id
+     */
+    public function flushConfig($id=false) {
+        $config = $this->getConfig($id);
+        $em = $this->getEntityManager();
+
+        foreach ($config->getOverviews() as $overview) {
+            $em->remove($overview);
+        }
+        foreach ($config->getSegments() as $segment) {
+            $em->remove($segment);
+        }
+
+        $em->flush();
+    }
+
+    /**
      * Get a list of all configs
      *
      * @return array
