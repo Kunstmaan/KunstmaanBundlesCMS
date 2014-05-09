@@ -14,7 +14,7 @@ To upgrade, first pull in the new version of all bundles, then add these paramet
 Now you can run the app without any errors, follow the documentation (DashboardBundle/resources/doc/SetupAnalyticsDashboard.md) to configure the dashboard.
 
 
-## Upgrading from v2.3.6-
+## Upgrading from v2.3.6 or lower
 
 Because of the changes with the multi-config setup, you'll need to flush your database and refill it.
 
