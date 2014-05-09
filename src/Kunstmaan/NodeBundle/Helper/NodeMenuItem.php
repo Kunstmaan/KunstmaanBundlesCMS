@@ -3,11 +3,9 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Repository\NodeRepository;
 
 /**
  * NodeMenuItem
@@ -30,14 +28,9 @@ class NodeMenuItem
     private $nodeTranslation;
 
     /**
-     * @var string
-     */
-    private $lang;
-
-    /**
      * @var NodeMenuItem[]
      */
-    private $lazyChildren = null;
+    private $children = null;
 
     /**
      * @var NodeMenuItem
@@ -50,19 +43,19 @@ class NodeMenuItem
     private $menu;
 
     /**
-     * @param Node              $node            The node
-     * @param NodeTranslation   $nodeTranslation The nodetranslation
-     * @param NodeMenuItem|null $parent          The parent nodemenuitem
-     * @param NodeMenu          $menu            The menu
+     * @param Node                    $node            The node
+     * @param NodeTranslation         $nodeTranslation The nodetranslation
+     * @param NodeMenuItem|null|false $parent          The parent nodemenuitem
+     * @param NodeMenu                $menu            The menu
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent, NodeMenu $menu)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent = false, NodeMenu $menu)
     {
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
+        // false = look up parent later if required (default); null = top menu item; NodeMenuItem = parent item already fetched
         $this->parent = $parent;
         $this->menu = $menu;
         $this->em = $menu->getEntityManager();
-        $this->lang = $menu->getLang();
     }
 
     /**
@@ -94,7 +87,7 @@ class NodeMenuItem
      */
     public function getLang()
     {
-        return $this->lang;
+        return $this->menu->getLang();
     }
 
     /**
@@ -149,9 +142,12 @@ class NodeMenuItem
      */
     public function getUrl()
     {
-        $result = $this->getSlugPart();
+        $nodeTranslation = $this->getNodeTranslation();
+        if ($nodeTranslation) {
+            return $nodeTranslation->getUrl();
+        }
 
-        return $result;
+        return null;
     }
 
     /**
@@ -159,7 +155,20 @@ class NodeMenuItem
      */
     public function getParent()
     {
+        if ($this->parent === false) {
+            // We need to calculate the parent
+            $this->parent = $this->menu->getParent($this->node);
+        }
+
         return $this->parent;
+    }
+
+    /**
+     * @param NodeMenuItem|null|false $parent
+     */
+    public function setParent($parent = false)
+    {
+        $this->parent = $parent;
     }
 
     /**
@@ -174,7 +183,7 @@ class NodeMenuItem
             list($namespaceAlias, $simpleClassName) = explode(':', $class);
             $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
         }
-        if ($this->parent == null) {
+        if ($this->getParent() == null) {
             return null;
         }
         if ($this->parent->getPage() instanceof $class) {
@@ -190,8 +199,8 @@ class NodeMenuItem
     public function getParents()
     {
         $parent = $this->getParent();
-        $parents=array();
-        while ($parent!=null) {
+        $parents = array();
+        while ($parent != null) {
             $parents[] = $parent;
             $parent = $parent->getParent();
         }
@@ -206,26 +215,16 @@ class NodeMenuItem
      */
     public function getChildren($includeHiddenFromNav = true)
     {
-        if (is_null($this->lazyChildren)) {
-            $this->lazyChildren = array();
-            /* @var NodeRepository $nodeRepo */
-            $nodeRepo = $this->em->getRepository('KunstmaanNodeBundle:Node');
-            $children = $nodeRepo->getChildNodes($this->node->getId(), $this->lang, $this->menu->getPermission(), $this->menu->getAclHelper(), true);
+        if (is_null($this->children)) {
+            $children = $this->menu->getChildren($this->node, $includeHiddenFromNav);
+            /* @var NodeMenuItem $child */
             foreach ($children as $child) {
-                $nodeTranslation = $child->getNodeTranslation($this->lang, $this->menu->isIncludeOffline());
-                if (!is_null($nodeTranslation)) {
-                    $this->lazyChildren[] = new NodeMenuItem($child, $nodeTranslation, $this, $this->menu);
-                }
+                $child->setParent($this);
             }
+            $this->children = $children;
         }
 
-        return array_filter($this->lazyChildren, function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
-            if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
-                return false;
-            }
-
-            return true;
-        });
+        return $this->children;
     }
 
     /**
@@ -286,7 +285,6 @@ class NodeMenuItem
      */
     public function getActive()
     {
-        //TODO: change to something like in_array() but that didn't work
         $bc = $this->menu->getBreadCrumb();
         foreach ($bc as $bcItem) {
             if ($bcItem->getSlug() == $this->getSlug()) {
