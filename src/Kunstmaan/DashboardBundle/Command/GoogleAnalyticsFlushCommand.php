@@ -16,7 +16,7 @@ class GoogleAnalyticsFlushCommand extends ContainerAwareCommand
             ->setDescription('Flush the data of a config')
             ->addArgument(
                 'config',
-                InputArgument::REQUIRED,
+                InputArgument::OPTIONAL,
                 'The config id'
             );
     }

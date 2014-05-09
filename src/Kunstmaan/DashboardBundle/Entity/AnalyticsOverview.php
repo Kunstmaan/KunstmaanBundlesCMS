@@ -94,7 +94,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist", "remove"})
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $goals;

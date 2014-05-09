@@ -54,20 +54,28 @@ class AnalyticsConfigRepository extends EntityRepository
      * @param int $id the config id
      */
     public function flushConfig($id=false) {
-        $config = $this->getConfig($id);
         $em = $this->getEntityManager();
 
+        // Backward compatibilty to flush overviews without a config set
+        if (!$id) {
+            $overviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+            foreach ($overviewRepository->getAll() as $overview) {
+                $em->remove($overview);
+            }
+
+            $em->flush();
+            return;
+        }
+
+        $config = $this->getConfig($id);
         foreach ($config->getOverviews() as $overview) {
             $em->remove($overview);
         }
 
-        try {
-            foreach ($config->getSegments() as $segment) {
-                $em->remove($segment);
-            }
-        } catch (\Exception $e) {
-            // Backwards compatibility
+        foreach ($config->getSegments() as $segment) {
+            $em->remove($segment);
         }
+
 
         $em->flush();
     }
