@@ -5,8 +5,10 @@
 
     select {
         clear:both;
-        margin:10px 0;
-        display:none;
+
+        &.setup-item__not_shown {
+            display:none;
+        }
     }
 
     button {
@@ -15,10 +17,6 @@
         clear:both;
         width:75px;
         margin-top:10px;
-    }
-
-    .setup-item__shown {
-        display: block;
     }
 
     .setup-container {
@@ -41,13 +39,18 @@
         }
     }
 
-
     #account-group {
+        border-right:1px solid #ccc;
+
         height:100%;
+        width:15%;
         float:left;
         padding-right:40px;
-        border-right:1px solid #ccc;
         margin-right:-1px;
+
+        select {
+            width:100%;
+        }
     }
 
     #segment-group {
@@ -61,17 +64,6 @@
         padding-bottom:5px;
         padding-right:40px;
         margin-right:-1px;
-
-        input[type='checkbox'] {
-            float:left;
-            margin-top:16px;
-
-            &+label {
-                float:left;
-                margin-left:5px;
-                padding:13px 0;
-            }
-        }
 
         #segements {
             &>div {

@@ -112,8 +112,9 @@ class GoogleAnalyticsController extends Controller
      *
      * @return array
      */
-    public function accountSelectionAction(Request $request)
+    public function configAction(Request $request)
     {
+        $params = array();
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
         if (null !== $request->request->get('accounts')) {
@@ -122,12 +123,23 @@ class GoogleAnalyticsController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig();
-        $accounts = $configHelper->getAccounts();
-        $segments = $config->getSegments();
+
+        $params['accountId'] = $config->getAccountId();
+
+        if ($params['accountId']) {
+            $params['propertyId'] = $config->getPropertyId();
+            $params['properties'] = $configHelper->getProperties();
+
+            $params['profileId'] = $config->getProfileId();
+            $params['profiles'] = $configHelper->getProfiles();
+        }
+
+        $params['accounts'] = $configHelper->getAccounts();
+        $params['segments'] = $config->getSegments();
 
         return $this->render(
             'KunstmaanDashboardBundle:Setup:setup.html.twig',
-            array('accounts' => $accounts, 'segments' => $segments)
+            $params
         );
     }
 

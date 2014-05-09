@@ -37,7 +37,6 @@ class ConfigHelper
         $this->init();
     }
 
-
     /**
      * Tries to initialise the Client object
      *
@@ -60,7 +59,6 @@ class ConfigHelper
             $this->getProfileId($configId);
         }
     }
-
 
     /* =============================== TOKEN =============================== */
 

@@ -7,36 +7,42 @@
         <h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
 
         <div class="setup-group" id="account-group">
-            <select id="accounts" name="accounts" class="setup-item__shown">
+            <select id="accounts" name="accounts">
                 <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
                 {% for account in accounts %}
-                    <option data-id="{{account.accountId}}">
+                    <option {% if account.accountId == accountId %}selected{% endif %} data-id="{{account.accountId}}">
                         {{ account.accountName }}
                     </option>
                 {% endfor %}
             </select>
 
-            <select id="properties">
+            <select id="properties" {% if properties is not defined %} class="setup-item__not_shown" {% endif %}>
                 <option data-id="">{{ 'dashboard.ga.setup.property.select' | trans }}</option>
+                {% if properties is defined %}
+                    {% for property in properties %}
+                        <option {% if property.propertyId == propertyId %}selected{% endif %} data-id="{{property.propertyId}}">
+                            {{ property.propertyName }}
+                        </option>
+                    {% endfor %}
+                {% endif %}
             </select>
 
-            <select id="profiles">
+            <select id="profiles" {% if profiles is not defined %} class="setup-item__not_shown" {% endif %}>
                 <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
+                {% if profiles is defined %}
+                    {% for profile in profiles %}
+                        <option {% if profile.profileId == profileId %}selected{% endif %} data-id="{{profile.profileId}}">
+                            {{ profile.profileName }}
+                        </option>
+                    {% endfor %}
+                {% endif %}
             </select>
-
-            <div class="setup-group">
-                <button disabled id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
-            </div>
         </div>
 
         <div class="setup-group" id="segment-group">
-            <input type="checkbox" id="use-segments" value="true" /><label for="use-segments"> Add segements</label>
+            <input type="button" class="btn" id="use-segments" value="Add segements" />
             <div id="segements"></div>
             <input type="button" class="btn" id="segement-button__add" value="Add" style="display:none"/>
-
-            <div class="setup-group">
-                <button id="submit_segement_save" class="btn btn-primary" type="submit" style="display:none">{{ 'form.save' | trans }}</button>
-            </div>
         </div>
 
         <div class="setup-group" id="segment-group__list">
@@ -47,6 +53,10 @@
                     </li>
                 {% endfor %}
             </ul>
+        </div>
+
+        <div class="setup-group">
+            <button id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
         </div>
     </form>
 
