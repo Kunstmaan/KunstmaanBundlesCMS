@@ -55,7 +55,9 @@ class CloneListener
         }
         if ($originalEntity instanceof HasPageTemplateInterface) {
             $clonedEntity = $event->getClonedEntity();
-            $newPageTemplateConfiguration = clone $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration')->findOrCreateFor($originalEntity);
+            $PageTemplateConfigurationRepo = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
+            $PageTemplateConfigurationRepo->setContainer($this->kernel->getContainer());
+            $newPageTemplateConfiguration = clone $PageTemplateConfigurationRepo->findOrCreateFor($originalEntity);
             $newPageTemplateConfiguration->setId(null);
             $newPageTemplateConfiguration->setPageId($clonedEntity->getId());
             $this->em->persist($newPageTemplateConfiguration);
