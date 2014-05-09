@@ -37,6 +37,8 @@ dashboard:
                 title: Select an account
                 select: Select an account..
             link: Setup dashboard
+            segment:
+                add: Add segment
         reset:
             property: Change Google Analytics link
         last_update: Last update:
