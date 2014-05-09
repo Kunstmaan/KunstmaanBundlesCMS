@@ -34,6 +34,7 @@ class ChooserController extends Controller
         $type            = $request->get('type');
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
         $linkChooser     = $request->get('linkChooser');
+        $folderId        = false;
 
         // Go to the last visited folder
         if ($session->get('last-media-folder')) {
