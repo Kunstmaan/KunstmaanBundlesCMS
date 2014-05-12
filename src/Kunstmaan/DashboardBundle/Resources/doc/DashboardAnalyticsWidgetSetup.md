@@ -16,6 +16,12 @@ Be sure to read the UPGRADE.md file if you're upgrading an existing website, bec
     composer update
     app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
 
+Make sure
+
+    kunstmaan_admin:
+        dashboard_route: 'kunstmaan_dashboard'
+
+is added in `app/config/config.yml`.
 
 ## Accounts setup
 
