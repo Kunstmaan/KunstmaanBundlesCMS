@@ -188,6 +188,12 @@ class GoogleAnalyticsAJAXController extends Controller
 
             $em->persist($config);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'Succes',
+                'Succesfully saved!'
+            );
+
             return new JsonResponse();
         }
 
