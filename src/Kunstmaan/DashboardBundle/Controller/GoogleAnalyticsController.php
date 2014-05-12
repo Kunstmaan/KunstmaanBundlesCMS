@@ -39,7 +39,7 @@ class GoogleAnalyticsController extends Controller
 
         // if propertyId not set
         if (!$configHelper->accountIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_AccountSelection'));
+            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));
         }
 
         // if propertyId not set
@@ -98,7 +98,7 @@ class GoogleAnalyticsController extends Controller
             $clientHelper->getClient()->authenticate($code);
             $configHelper->saveToken($clientHelper->getClient()->getAccessToken());
 
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_AccountSelection'));
+            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));
         }
 
         return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_widget_googleanalytics'));
@@ -106,7 +106,7 @@ class GoogleAnalyticsController extends Controller
 
 
     /**
-     * @Route("/config", name="KunstmaanDashboardBundle_AccountSelection")
+     * @Route("/config", name="KunstmaanDashboardBundle_Config")
      *
      * @param Request $request
      *
@@ -160,23 +160,6 @@ class GoogleAnalyticsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetPropertyId();
-        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_AccountSelection'));
+        return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));
     }
-
-    /**
-     * @Route("/updateData", name="KunstmaanDashboardBundle_analytics_update")
-     */
-    public function runUpdate(Request $request)
-    {
-        $configId = $request->query->get('configId');
-
-        $command = new GoogleAnalyticsCommand();
-        $command->setContainer($this->container);
-        $input = new ArrayInput(array('configId' => $configId));
-        $output = new NullOutput();
-        $command->run($input, $output);
-
-        return new JsonResponse(array(), 200, array('Content-Type' => 'application/json'));
-    }
-
 }

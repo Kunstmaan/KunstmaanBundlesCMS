@@ -23,24 +23,29 @@ class AnalyticsConfigRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         if ($id) {
+            // create a query to get the config from DB
             $qb->select('c')
               ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c')
               ->where('c.id = :id')
               ->setParameter('id', $id);
 
             $result = $qb->getQuery()->getResult();
+            // if config exists
             if (count($result) > 0) {
                 $config = $result[0];
 
                 // if empty config, add overviews
                 if (sizeof($config) == 0) $this->addOverviews($config);
             } else {
+                // throw exception is config ID is unknown
                 throw new \Exception('Unknown config ID');
             }
         } else {
+            // Backwards compatibility: select the first config, still used in the dashboard, specified config ids are set in the dashboard collection bundle
             $em = $this->getEntityManager();
             $query = $em->createQuery( 'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c' );
             $result = $query->getResult();
+            // if no configs exist, create a new one
             if (!$result) {
                 return $this->createConfig();
             } else {
@@ -49,6 +54,37 @@ class AnalyticsConfigRepository extends EntityRepository
         }
 
         return $config;
+    }
+
+    /**
+     * Create a new config
+     *
+     * @return AnalyticsConfig
+     */
+    public function createConfig() {
+        $em = $this->getEntityManager();
+
+        $config = new AnalyticsConfig();
+        $em->persist($config);
+        $em->flush();
+
+        $this->addOverviews($config);
+        return $config;
+    }
+
+    /**
+     * Get a list of all configs
+     *
+     * @return array
+     */
+    public function listConfigs() {
+        return $this
+                ->getEntityManager()
+                ->createQueryBuilder()
+                ->select('c')
+                ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c')
+                ->getQuery()
+                ->getResult();
     }
 
     /**
@@ -73,41 +109,10 @@ class AnalyticsConfigRepository extends EntityRepository
         foreach ($config->getOverviews() as $overview) {
             $em->remove($overview);
         }
-
         foreach ($config->getSegments() as $segment) {
             $em->remove($segment);
         }
-
-
         $em->flush();
-    }
-
-    /**
-     * Get a list of all configs
-     *
-     * @return array
-     */
-    public function listConfigs() {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('c')
-          ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c');
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Create a new config
-     *
-     * @return AnalyticsConfig
-     */
-    public function createConfig() {
-        $em = $this->getEntityManager();
-
-        $config = new AnalyticsConfig();
-        $em->persist($config);
-        $em->flush();
-
-        $this->addOverviews($config);
-        return $config;
     }
 
     /**

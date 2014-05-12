@@ -44,7 +44,7 @@
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <section id="dashboard_footer">
             {% if configId is not defined %}
-                <a href="{{ path('KunstmaanDashboardBundle_AccountSelection') }}">
+                <a href="{{ path('KunstmaanDashboardBundle_Config') }}">
                     {{ 'dashboard.ga.setup.link' | trans }}</a> |&nbsp;
             {% endif %}
             <a href="#"
