@@ -96,7 +96,7 @@ After pressing “accept’, you’ll be redirected again to the admin backend.
 
 ### First time collecting the data
 
-On the next page, you’ll be asked to select the website you want to track and which profile on the next one. Note that loading all the available websites can take a while, so just be patient when "stuck" on the previous screen, it will load after a while. After you’ve saved these settings, the dashboard will be loaded. However, it still has no data in it. Just press the button in the top right corner to update you data.
+On the next page, you’ll be asked to select the website you want to track and which profile on the next one. Note that loading all the available websites can take a while, so just be patient when "stuck" on the previous screen, it will load after a while. After you’ve saved these settings, the dashboard will be loaded. However, it still has no data in it. Just press the update button to update your data.
 
 You can also load the data from the console with the command
 
