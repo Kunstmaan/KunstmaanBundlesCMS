@@ -1,5 +1,5 @@
 parameters:
-    kunstmaan_dashboard.widget.googleanalytics.command: Kunstmaan\DashboardBundle\Command\GoogleAnalyticsCommand
+    kunstmaan_dashboard.widget.googleanalytics.command: Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand
     kunstmaan_dashboard.widget.googleanalytics.controller: Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
     kunstmaan_dashboard.googleclient.class: 'Google_Client'
     kunstmaan_dashboard.googleclienthelper.class: 'Kunstmaan\DashboardBundle\Helper\GoogleClientHelper'
