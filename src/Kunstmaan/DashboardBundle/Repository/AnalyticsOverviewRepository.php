@@ -43,13 +43,20 @@ class AnalyticsOverviewRepository extends EntityRepository
             ->setParameter('id', $id);
 
         $results = $qb->getQuery()->getResult();
-        if ($results) {
+        if (sizeof($results)>0) {
             return $results[0];
+        } else {
+            throw new \Exception('Uknown overview ID');
         }
 
         return false;
     }
 
+    /**
+     * Get basic data for an overview
+     *
+     * @return array
+     */
     public function getOverviewData()
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -63,4 +70,89 @@ class AnalyticsOverviewRepository extends EntityRepository
         return false;
     }
 
+    /**
+     * Get then default overviews (without a segment)
+     *
+     * @return array
+     */
+    public function getDefaultOverviews() {
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL'
+        );
+
+        return $query->getResult();
+    }
+
+    /**
+     * Add overviews for a config and optionally a segment
+     *
+     * @param AnlyticsConfig $config
+     * @param AnalyticsSegment $segment
+     */
+    public function addOverviews(&$config, &$segment=null) {
+        $em = $this->getEntityManager();
+
+        $today = new AnalyticsOverview();
+        $today->setTitle('dashboard.ga.tab.today');
+        $today->setTimespan(0);
+        $today->setStartOffset(0);
+        $today->setConfig($config);
+        $today->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $today;
+        $config->getOverviews()[] = $today;
+        $em->persist($today);
+
+        $yesterday = new AnalyticsOverview();
+        $yesterday->setTitle('dashboard.ga.tab.yesterday');
+        $yesterday->setTimespan(1);
+        $yesterday->setStartOffset(1);
+        $yesterday->setConfig($config);
+        $yesterday->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $yesterday;
+        $config->getOverviews()[] = $yesterday;
+        $em->persist($yesterday);
+
+        $week = new AnalyticsOverview();
+        $week->setTitle('dashboard.ga.tab.last_7_days');
+        $week->setTimespan(7);
+        $week->setStartOffset(1);
+        $week->setConfig($config);
+        $week->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $week;
+        $config->getOverviews()[] = $week;
+        $em->persist($week);
+
+        $month = new AnalyticsOverview();
+        $month->setTitle('dashboard.ga.tab.last_30_days');
+        $month->setTimespan(30);
+        $month->setStartOffset(1);
+        $month->setConfig($config);
+        $month->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $month;
+        $config->getOverviews()[] = $month;
+        $em->persist($month);
+
+        $year = new AnalyticsOverview();
+        $year->setTitle('dashboard.ga.tab.last_12_months');
+        $year->setTimespan(365);
+        $year->setStartOffset(1);
+        $year->setConfig($config);
+        $year->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $year;
+        $config->getOverviews()[] = $year;
+        $em->persist($year);
+
+        $yearToDate = new AnalyticsOverview();
+        $yearToDate->setTitle('dashboard.ga.tab.year_to_date');
+        $yearToDate->setTimespan(365);
+        $yearToDate->setStartOffset(1);
+        $yearToDate->setConfig($config);
+        $yearToDate->setSegment($segment);
+        if ($segment) $segment->getOverviews()[] = $yearToDate;
+        $config->getOverviews()[] = $yearToDate;
+        $yearToDate->setUseYear(true);
+        $em->persist($yearToDate);
+
+        $em->flush();
+    }
 }

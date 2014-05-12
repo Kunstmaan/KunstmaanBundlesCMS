@@ -13,6 +13,65 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  */
 class AnalyticsOverview extends AbstractEntity
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="overviews")
+     * @ORM\JoinColumn(name="config_id", referencedColumnName="id")
+     */
+    private $config;
+
+    /**
+     * Get config
+     *
+     * @return integer
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Set config
+     *
+     * @param integer $config
+     *
+     * @return AnalyticsTopReferrals
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AnalyticsSegment", inversedBy="overviews")
+     * @ORM\JoinColumn(name="segment_id", referencedColumnName="id", nullable=true)
+     */
+    private $segment = null;
+
+    /**
+     * Get segment
+     *
+     * @return integer
+     */
+    public function getSegment()
+    {
+        return $this->segment;
+    }
+
+    /**
+     * Set segment
+     *
+     * @param integer $segment
+     *
+     * @return AnalyticsTopReferrals
+     */
+    public function setSegment($segment)
+    {
+        $this->segment = $segment;
+
+        return $this;
+    }
 
     /**
      * Get percentage of returning users
@@ -35,7 +94,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist", "remove"})
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $goals;

@@ -12,6 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class AnalyticsGoalRepository extends EntityRepository
 {
+    /**
+     * Get a goal
+     *
+     * @param int id
+     */
     public function getGoal($id)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

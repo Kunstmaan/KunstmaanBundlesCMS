@@ -1,6 +1,15 @@
 {% if token %}
 <div class="dashboard">
 
+    {% if segments | length > 0 %}
+        <nav id="segment-menu">
+                <a href="?" {% if (segmentId is null) %}class="segment-active"{% endif %}>Default</a>
+                {% for segment in segments %}
+                    <a href="?segment={{segment.id}}" {% if (segment.id == segmentId) %}class="segment-active"{% endif %}>{{segment.name}}</a>
+                {% endfor %}
+        </nav>
+    {% endif %}
+
     <div id="data_overview" class="dashboard__content--loading">
         <!-- TABS -->
         {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews} %}
@@ -20,21 +29,31 @@
 
         </section>
         <!-- end TAB CONTENT -->
-    </div>
-    <div id="data_no_overview" style="display:none">
-        <section class="dashboard__content">
-            <p>{{ 'dashboard.ga.unavailable' | trans}}</p>
-            <button class="dashboard_update btn btn-primary">Update</button>
-        </section>
+        <div id="data_no_overview" style="display:none">
+            <section class="dashboard__content">
+                <p>{{ 'dashboard.ga.unavailable' | trans}}</p>
+                {% if configId is not defined %}
+                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'segmentId':segmentId}) }}" class="dashboard_update btn btn-primary">Update</button>
+                {% else %}
+                    <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'configId':configId, 'segmentId':segmentId}) }}" class="dashboard_update btn btn-primary">Update</button>
+                {% endif %}
+            </section>
+        </div>
     </div>
 
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <section>
-            <a href="{{ path('KunstmaanDashboardBundle_analytics_resetProperty') }}">{{ 'dashboard.ga.reset.property' | trans }}</a> | <a class="dashboard_update">{{ 'dashboard.ga.last_update' | trans }} {{last_update}}</a>
+        <section id="dashboard_footer">
+            {% if configId is not defined %}
+                <a href="{{ path('KunstmaanDashboardBundle_Config') }}">
+                    {{ 'dashboard.ga.setup.link' | trans }}</a> |
+            {% endif %}
+            <a href="#"
+                class="dashboard_update"
+                data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'segmentId':segmentId}) }}">
+                {{ 'dashboard.ga.last_update' | trans }} {{last_update}}
+            </a>
         </section>
     {% endif %}
-        <section>
-        </section>
 </div>
 
 {% else %}

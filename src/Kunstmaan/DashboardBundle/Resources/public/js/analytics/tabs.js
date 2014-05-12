@@ -1,6 +1,8 @@
 $(function () {
     // show first tab
     var tab = $('.dashboard-tabs__item:nth-child(2) > div');
+    switchTab(tab.attr('data-id'), tab.attr('data-path'));
+
 
     function switchTab(id, url) {
         $('#data_overview').addClass('dashboard__content--loading');
@@ -14,10 +16,12 @@ $(function () {
             success: function (data) {
                 if (!data.overview || data.overview.sessions == 0) {
                     $('#data_no_overview').css('display', 'block');
-                    $('#data_overview').css('display', 'none').removeClass('dashboard__content--loading');
+                    $('#data_overview > .dashboard__content').css('display', 'none');
+                    $('#data_overview').removeClass('dashboard__content--loading');
                 } else {
                     $('#data_no_overview').css('display', 'none');
-                    $('#data_overview').css('display', 'block').removeClass('dashboard__content--loading');
+                    $('#data_overview > .dashboard__content').css('display', 'block')
+                    $('#data_overview').removeClass('dashboard__content--loading');
 
                     $("#dashboard-chart--audience").html('');
                     // render the chart
@@ -52,8 +56,6 @@ $(function () {
         });
     }
 
-    switchTab(tab.attr('data-id'), tab.attr('data-path'));
-
     // Tab switcher
     $('.dashboard-tabs__item').on('click', function () {
         var id = $(this).find('.dashboard-tabs__controller').attr('data-id');
@@ -63,10 +65,12 @@ $(function () {
 
 
     $('.dashboard_update').click(function () {
+        var url = $(this).attr('data-path');
         $('.dashboard_update').html('Updating...');
+        $('.dashboard_update').attr('disabled', 'disabled');
         $.ajax({
             type: 'get',
-            url: 'widget/googleanalytics/updateData',
+            url: url,
             success: function (data) {
                 location.reload();
             },

@@ -4,6 +4,7 @@ namespace Kunstmaan\DashboardBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 /**
  * AnalyticsConfigRepository
@@ -18,30 +19,110 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @return AnalyticsConfig $config
      */
-    public function getConfig()
+    public function getConfig($id=false)
     {
-        $em = $this->getEntityManager();
-        $query = $em->createQuery(
-            'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c'
-        );
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        if ($id) {
+            // create a query to get the config from DB
+            $qb->select('c')
+              ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c')
+              ->where('c.id = :id')
+              ->setParameter('id', $id);
 
-        $result = $query->getResult();
-        if (!$result) {
-            $config = new AnalyticsConfig();
-            $em->persist($config);
-            $em->flush();
+            $result = $qb->getQuery()->getResult();
+            // if config exists
+            if (count($result) > 0) {
+                $config = $result[0];
+
+                // if empty config, add overviews
+                if (sizeof($config) == 0) $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config);
+            } else {
+                // throw exception is config ID is unknown
+                throw new \Exception('Unknown config ID');
+            }
         } else {
-            $config = $result[0];
+            // Backwards compatibility: select the first config, still used in the dashboard, specified config ids are set in the dashboard collection bundle
+            $em = $this->getEntityManager();
+            $query = $em->createQuery( 'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c' );
+            $result = $query->getResult();
+            // if no configs exist, create a new one
+            if (!$result) {
+                return $this->createConfig();
+            } else {
+                $config = $result[0];
+            }
         }
 
         return $config;
     }
 
-    /** Update the timestamp when data is collected */
-    public function setUpdated()
-    {
+    /**
+     * Create a new config
+     *
+     * @return AnalyticsConfig
+     */
+    public function createConfig() {
         $em = $this->getEntityManager();
-        $config = $this->getConfig();
+
+        $config = new AnalyticsConfig();
+        $em->persist($config);
+        $em->flush();
+
+        $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config);
+        return $config;
+    }
+
+    /**
+     * Get a list of all configs
+     *
+     * @return array
+     */
+    public function listConfigs() {
+        return $this
+                ->getEntityManager()
+                ->createQueryBuilder()
+                ->select('c')
+                ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c')
+                ->getQuery()
+                ->getResult();
+    }
+
+    /**
+     * Flush a config
+     *
+     * @param int $id the config id
+     */
+    public function flushConfig($id=false) {
+        $em = $this->getEntityManager();
+
+        // Backward compatibilty to flush overviews without a config set
+        if (!$id) {
+            $overviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+            foreach ($overviewRepository->getAll() as $overview) {
+                $em->remove($overview);
+            }
+            $em->flush();
+            return;
+        }
+
+        $config = $this->getConfig($id);
+        foreach ($config->getOverviews() as $overview) {
+            $em->remove($overview);
+        }
+        foreach ($config->getSegments() as $segment) {
+            $em->remove($segment);
+        }
+        $em->flush();
+    }
+
+    /**
+     * Update the timestamp when data is collected
+     *
+     * @param int id
+     */
+    public function setUpdated($id=false) {
+        $em = $this->getEntityManager();
+        $config = $this->getConfig($id);
         $config->setLastUpdate(new \DateTime());
         $em->persist($config);
         $em->flush();
@@ -52,10 +133,9 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $token
      */
-    public function saveToken($token)
-    {
-        $em = $this->getEntityManager();
-        $config = $this->getConfig();
+    public function saveToken($token, $id=false) {
+        $em    = $this->getEntityManager();
+        $config = $this->getConfig($id);
         $config->setToken($token);
         $em->persist($config);
         $em->flush();
@@ -66,10 +146,9 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $propertyId
      */
-    public function savePropertyId($propertyId)
-    {
-        $em = $this->getEntityManager();
-        $config = $this->getConfig();
+    public function savePropertyId($propertyId, $id=false) {
+        $em    = $this->getEntityManager();
+        $config = $this->getConfig($id);
         $config->setPropertyId($propertyId);
         $em->persist($config);
         $em->flush();
@@ -80,10 +159,9 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $accountId
      */
-    public function saveAccountId($accountId)
-    {
-        $em = $this->getEntityManager();
-        $config = $this->getConfig();
+    public function saveAccountId($accountId, $id=false) {
+        $em    = $this->getEntityManager();
+        $config = $this->getConfig($id);
         $config->setAccountId($accountId);
         $em->persist($config);
         $em->flush();
@@ -94,30 +172,48 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @param string $profileId
      */
-    public function saveProfileId($profileId)
-    {
-        $em = $this->getEntityManager();
-        $config = $this->getConfig();
+    public function saveProfileId($profileId, $id=false) {
+        $em    = $this->getEntityManager();
+        $config = $this->getConfig($id);
         $config->setProfileId($profileId);
         $em->persist($config);
         $em->flush();
     }
 
-    /** resets the profile id */
-    public function resetProfileId()
-    {
-        $em = $this->getEntityManager();
-        $config = $this->getConfig();
+    /**
+     * saves the config name
+     *
+     * @param string $profileId
+     */
+    public function saveConfigName($name, $id=false) {
+        $em    = $this->getEntityManager();
+        $config = $this->getConfig($id);
+        $config->setName($name);
+        $em->persist($config);
+        $em->flush();
+    }
+
+    /**
+     * Resets the profile id
+     *
+     * @param int id
+     */
+    public function resetProfileId($id=false) {
+        $em    = $this->getEntityManager();
+        $config = $this->getConfig($id);
         $config->setProfileId('');
         $em->persist($config);
         $em->flush();
     }
 
-    /** resets the  account id, property id and profile id */
-    public function resetPropertyId()
-    {
-        $em = $this->getEntityManager();
-        $config = $this->getConfig();
+    /**
+     * Resets the  account id, property id and profile id
+     *
+     * @param int id
+     */
+    public function resetPropertyId($id=false) {
+        $em    = $this->getEntityManager();
+        $config = $this->getConfig($id);
         $config->setAccountId('');
         $config->setProfileId('');
         $config->setPropertyId('');

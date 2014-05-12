@@ -7,7 +7,7 @@
     @include clearfix;
     margin: 40px 0 0;
     list-style: none;
-    width: 100%;
+    width: 50%;
     * {
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
@@ -55,4 +55,49 @@
     display: inline-block;
     margin: 0;
     padding: 0;
+}
+
+
+
+#segment-menu {
+    float:right;
+
+    &:after {
+        clear:both;
+        display: block;
+        content: ' ';
+    }
+
+    a {
+        border:1px solid $hr-color;
+        border-radius:3px;
+
+        display:block;
+        float:left;
+        padding-left:10px;
+        padding-right:10px;
+        padding-bottom:5px;
+        margin:0 2px;
+        font-size: 1em;
+
+        &:last-child {
+            margin-right:0;
+        }
+
+        &.segment-active {
+            font-weight:bold;
+        }
+
+        &:hover {
+            border:1px solid #2997ce;
+            @include single_transition(all, .2s, ease-out);
+        }
+    }
+
+    a {
+        padding-top:5px;
+        margin-bottom:5px;
+        @include single_transition(all, .2s, ease-out);
+    }
+
 }

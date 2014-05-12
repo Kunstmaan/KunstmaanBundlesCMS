@@ -8,7 +8,7 @@
 
 {% block content %}
     {% for widget in widgets %}
-        {{ render_esi(url(widget.resolvedController)) }}
+        {{ render_esi(url(widget.resolvedController, {'id' : id})) }}
     {% endfor %}
 {% endblock %}
 

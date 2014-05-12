@@ -4,38 +4,23 @@ namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
-use Kunstmaan\DashboardBundle\Helper\GoogleAnalyticsHelper;
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
+use Kunstmaan\DashboardBundle\Helper\Googlequery;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 {
-    /** @var GoogleClientHelper $googleClientHelper */
-    private $googleClientHelper;
-
-    /**
-     * Constructor
-     *
-     * @param GoogleClientHelper $googleClientHelper
-     * @param GoogleAnalyticsHelper $analyticsHelper
-     * @param OutputInterface $output
-     * @param EntityManager $em
-     */
-    public function __construct($googleClientHelper, $analyticsHelper, $output, $em)
-    {
-        parent::__construct($analyticsHelper, $output, $em);
-        $this->googleClientHelper = $googleClientHelper;
-    }
-
-
     /**
      * @return array
      */
     private function getAllGoals(){
         // Get the goals from the saved profile. These are a maximum of 20 goals.
-        $goals = $this->analyticsHelper->getAnalytics()
+        $goals = $this
+            ->query
+            ->getServiceHelper()
+            ->getService()
             ->management_goals
-            ->listManagementGoals($this->googleClientHelper->getAccountId(), $this->googleClientHelper->getPropertyId(), $this->googleClientHelper->getProfileId())
+            ->listManagementGoals($this->configHelper->getAccountId(), $this->configHelper->getPropertyId(), $this->configHelper->getProfileId())
             ->items;
 
         if (is_array($goals)){
@@ -49,6 +34,10 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
      */
     private function prepareMetrics(){
         $goals = $this->getAllGoals();
+        if (!$goals) {
+            return false;
+        }
+
         $metrics = array();
         foreach ($goals as $key => $value) {
             $metrics[] = 'ga:goal' . ($key+1) . 'Completions';
@@ -71,25 +60,16 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
      * @return mixed
      */
     private function requestGoalResults(AnalyticsOverview $overview, $metrics, $dimensions){
-        // Execute query
-        if ($overview->getUseYear()) {
-            $begin = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y')));
-            $end = date('Y-m-d', mktime(0, 0, 0, 1, 1, date('Y', strtotime('+1 year'))));
+        $timestamps = $this->getTimestamps($overview);
 
-            $results = $this->analyticsHelper->getResultsByDate(
-                $begin,
-                $end,
-                $metrics,
-                $dimensions
-            );
-        } else {
-            $results = $this->analyticsHelper->getResults(
-                $overview->getTimespan(),
-                $overview->getStartOffset(),
-                $metrics,
-                $dimensions
-            );
-        }
+        // execute query
+        $results = $this->query->getResultsByDate(
+            $timestamps['begin'],
+            $timestamps['end'],
+            $metrics,
+            $dimensions
+        );
+
         return $results->getRows();
     }
 
@@ -118,11 +98,15 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             $start = 1;
         }
 
+        // add segment
+        if ($overview->getSegment()) {
+            $extra['segment'] = $overview->getSegment()->getQuery();
+        }
+
         $goals = $this->getAllGoals();
         if (!$goals) {
             return;
         }
-
         $goaldata = array();
 
         // Create an array with for each goal an entry to create the metric parameter.
@@ -172,7 +156,6 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 
         // Parse the goals and append them to the overview.
         $this->parseGoals($overview, $goalCollection);
-
     }
 
 
@@ -184,12 +167,13 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
      */
     private function parseGoals(&$overview, $goalCollection)
     {
-
-        // delete existing entries
-        foreach ($overview->getGoals() as $goal) {
-            $this->em->remove($goal);
+        if ($overview->getGoals()) {
+            // delete existing entries
+            foreach ($overview->getGoals() as $goal) {
+                $this->em->remove($goal);
+            }
+            $this->em->flush();
         }
-        $this->em->flush();
 
         foreach ($goalCollection as $goalEntry) {
             // create a new goal

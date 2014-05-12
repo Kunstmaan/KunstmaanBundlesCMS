@@ -13,6 +13,70 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  */
 class AnalyticsConfig extends AbstractEntity
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist", "remove"})
+     */
+    private $overviews;
+
+    /**
+     * Set overviews
+     *
+     * @param array $overviews
+     * @return AnalyticsDailyOverviews
+     */
+    public function setOverviews($overviews)
+    {
+        $this->overviews = $overviews;
+
+        return $this;
+    }
+
+    /**
+     * Get overviews
+     *
+     * @return array
+     */
+    public function getOverviews()
+    {
+        return $this->overviews;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="AnalyticsSegment", mappedBy="config", cascade={"persist", "remove"})
+     */
+    private $segments;
+
+    /**
+     * Set segments
+     *
+     * @param array $segments
+     * @return AnalyticsDailysegments
+     */
+    public function setSegments($segments)
+    {
+        $this->segments = $segments;
+
+        return $this;
+    }
+
+    /**
+     * Get segments
+     *
+     * @return array
+     */
+    public function getSegments()
+    {
+        return $this->segments;
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="text", nullable=true)
+     */
+    private $name = null;
+
     /**
      * @var string
      *
@@ -48,6 +112,30 @@ class AnalyticsConfig extends AbstractEntity
      */
     private $lastUpdate = null;
 
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Analyticsname
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 
     /**
      * Get token

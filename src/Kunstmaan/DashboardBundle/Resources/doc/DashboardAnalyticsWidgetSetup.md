@@ -5,18 +5,7 @@ Requirements:
 * Registered website (property) on GA
 * Google developers console account
 
-## Website setup
-
-If you’re starting a new project with the Kunstmaan bundles, everything is already in place if you’ve followed the “getting started’ guide, and you can skip this step.
-
-Updating an existing website
-
-    composer update
-    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
-    app/console doctrine:fixtures:load --fixtures=vendor/kunstmaan/dashboard-bundle/Kunstmaan/DashboardBundle/DataFixtures/ORM/ --append
-
-
-## Accounts setup
+## Account setup
 
 ### Google developers console
 
@@ -34,11 +23,63 @@ Next up is a Google Analytics (GA) account. You can use the same account as used
 
 In GA, set up a new property: go to the admin section, open the dropdown in the “property” column and create a new one. After filling in all the required fields, press the “get tracking ID” button. You’ll see a code snippet with some javascript, this has to be copied into the section of your app.
 
-### App setup
+## Website setup
 
-Navigate to the backend of your app. ( /app_dev.php/en/admin/ or something familiar). Log in (admin-admin or another account). You’ll see a short summary on how to set up the console credentials, search for the redirect URI between brackets in step 1. You’ll have to insert it into the developers console, so go back there, and edit the settings of the client ID you created in the first step. In the section “Authorized redirect URI”, you can paste this link. (...../admin/analytics/setToken/). Note that you can add multiple redirect URIs if you’re using the same account for multiple apps, by just entering a new line for each.
+### Starting from a clean install
 
-Now it’s time to configure the parameters.yml file in app/config/parameters.yml. You’ll see four parameters with empty values:
+If you’re starting a new project with the Kunstmaan bundles, everything is already in place if you’ve followed the “getting started" guide, and you can skip this step.
+
+### Update an existing website
+
+Add following parameters to `app/config/parameters.yml.dist`
+
+    google.api.client_id: ''
+    google.api.client_secret: ''
+    google.api.dev_key: ''
+
+Add the dashboard bundle to `composer.json`
+
+    "require": {
+        ...
+        "kunstmaan/dashboard-bundle": "2.3.*@dev",
+        ...
+    }
+
+Add the bundle in `app/AppKernel.php`
+
+        $bundles = array(
+            ...
+            new Kunstmaan\DashboardBundle\KunstmaanDashboardBundle(),
+            ...
+        );
+
+Add bundle routing in `app/config/routing.yml`
+
+    kunstmaan_dashboard:
+        resource: "@KunstmaanDashboardBundle/Resources/config/routing.yml"
+        prefix:   /{_locale}/
+        requirements:
+            _locale: %requiredlocales%
+
+Change dashboard route in `app/config/config.yml`
+
+    kunstmaan_admin:
+        dashboard_route: 'kunstmaan_dashboard'
+
+Update composer
+
+    composer update
+
+Update the database, use either a migration or force a schema update
+
+    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
+    app/console doctrine:schema:update --force
+
+## App setup
+
+Navigate to the backend of your app. ( /app_dev.php/en/admin/ or something familiar). Log in (admin-admin or another account). You’ll see a short summary on how to set up the console credentials, search for the redirect URI between brackets in step 1. You’ll have to insert it into the developers console, so go back there, and edit the settings of the client ID you created in the first step. In the section “Authorized redirect URI”, you can paste this link. (...../admin/dashboard/widget/googleanalytics/setToken/). Note that you can add multiple redirect URIs if you’re using the same account for multiple apps, by just entering a new line for each.
+
+Now it’s time to configure the parameters.yml file in app/config/parameters.yml. You’ll see three parameters with empty values:
 
 * **google.api.client_id: ''** The client ID from the OAuth 2.0 Credentials in the Google Developers console.
 * **google.api.client_secret: ''** The client secret from the OAuth 2.0 Credentials in the Google Developers console.
@@ -55,10 +96,10 @@ After pressing “accept’, you’ll be redirected again to the admin backend.
 
 ### First time collecting the data
 
-On the next page, you’ll be asked to select the website you want to track and which profile on the next one. Note that loading all the available websites can take a while, so just be patient when "stuck" on the previous screen, it will load after a while. After you’ve saved these settings, the dashboard will be loaded. However, it still has no data in it. Just press the button in the top right corner to update you data.
+On the next page, you’ll be asked to select the website you want to track and which profile on the next one. Note that loading all the available websites can take a while, so just be patient when "stuck" on the previous screen, it will load after a while. After you’ve saved these settings, the dashboard will be loaded. However, it still has no data in it. Just press the update button to update your data.
 
 You can also load the data from the console with the command
 
-    `app/console kuma:dashboard:collect`
+    app/console kuma:dashboard:collect
 
 You can always update the data yourself this way, but it’s easier to configure a cronjob to do this every 30 minutes, or another interval.

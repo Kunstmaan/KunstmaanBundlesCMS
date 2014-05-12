@@ -1,0 +1,130 @@
+@import "vars";
+@import "mixins";
+
+#dashboard-setup-form {
+
+    select {
+        clear:both;
+
+        &.setup-item__not_shown {
+            display:none;
+        }
+    }
+
+    button {
+        display: inline-block;
+        width:75px;
+        margin-left:5px;
+    }
+
+    .setup-container {
+        position:relative;
+
+        &:after {
+            display:block;
+            content:' ';
+            clear:both;
+        }
+    }
+
+    .setup-group {
+        margin:10px 0;
+
+        &:after {
+            display:block;
+            content:' ';
+            clear:both;
+        }
+    }
+
+    #account-group {
+        border-right:1px solid #ccc;
+
+        height:100%;
+        width:15%;
+        float:left;
+        padding-right:40px;
+        margin-right:-1px;
+
+        select {
+            width:100%;
+        }
+    }
+
+    #control-group {
+        clear:both;
+        width:100%;
+    }
+
+    #segment-group {
+        border-left:1px solid #ccc;
+
+        float:left;
+        width:25%;
+        min-height:120px;
+        padding-left:40px;
+        padding-bottom:5px;
+
+        h4 {
+            margin-top:0;
+            padding-top:0;
+        }
+
+        ul {
+            margin-left:0;
+
+            &:after {
+                display:block;
+                content:' ';
+                clear:both;
+            }
+        }
+        li {
+            display:block;
+            float:left;
+            width:100%;
+            margin:5px 0;
+            padding-top:3px;
+        }
+
+        .segment-button__delete,
+        .segment-list-button__delete {
+            background:#b03e43;
+            float:right;
+            color:#fff;
+            padding-left:8px;
+            padding-right:7px;
+        }
+
+        .segment-button__delete {
+            margin-top:1px;
+        }
+
+        #segments-new {
+            &>div {
+                width:100%;
+                float:left;
+                clear:both;
+            }
+
+            &:after {
+                display:block;
+                content:' ';
+                clear:both;
+            }
+
+            .segment-name {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-right:-1px;
+                width:30%;
+            }
+
+            .segment-query {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                width:55%;
+            }
+        }
+    }
+}
