@@ -27,7 +27,7 @@ In GA, set up a new property: go to the admin section, open the dropdown in the 
 
 ### Starting from a clean install
 
-If you’re starting a new project with the Kunstmaan bundles, everything is already in place if you’ve followed the “getting started’ guide, and you can skip this step.
+If you’re starting a new project with the Kunstmaan bundles, everything is already in place if you’ve followed the “getting started" guide, and you can skip this step.
 
 ### Update an existing website
 
