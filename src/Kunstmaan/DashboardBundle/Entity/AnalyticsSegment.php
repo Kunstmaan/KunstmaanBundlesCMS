@@ -76,8 +76,8 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="segements")
-     * @ORM\JoinColumn(name="config_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="segments")
+     * @ORM\JoinColumn(name="config", referencedColumnName="id")
      */
     private $config;
 
