@@ -49,9 +49,6 @@ Update composer
 Update the database, use either a migration or force a schema update
 
     app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
-
-
-
     app/console doctrine:schema:update --force
 
 
