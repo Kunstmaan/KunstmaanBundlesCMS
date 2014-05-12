@@ -48,7 +48,7 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
-            ->setMethods(array('findOrCreateFor', 'copyPageParts'))
+            ->setMethods(array('findOrCreateFor', 'copyPageParts', 'setContainer'))
             ->disableOriginalConstructor()
             ->getMock();
 
