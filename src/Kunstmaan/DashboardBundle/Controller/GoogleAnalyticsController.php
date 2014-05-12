@@ -33,7 +33,10 @@ class GoogleAnalyticsController extends Controller
 
         // if token not set
         if (!$configHelper->tokenIsSet()) {
-            $params['authUrl'] = $configHelper->getAuthUrl($params['redirect_uri']);
+            if ($this->container->getParameter('google.api.client_id') != '' && $this->container->getParameter('google.api.client_secret') != '' && $this->container->getParameter('google.api.dev_key') != '' ) {
+                $params['authUrl'] = $configHelper->getAuthUrl($params['redirect_uri']);
+            }
+
             return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
         }
 

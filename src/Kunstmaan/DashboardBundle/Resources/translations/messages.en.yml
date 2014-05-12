@@ -23,8 +23,8 @@ dashboard:
             docs: the documentation
             redirect: "This is your redirect URI:"
             refresh: "Once everything is set up, refresh this page."
-            connect: Connect your Google Account.
-            confirm: Here
+            connect: Connect your Google Account
+            confirm: Connect now
             profile:
                 title: Select a profile
                 select: Select a profile..
