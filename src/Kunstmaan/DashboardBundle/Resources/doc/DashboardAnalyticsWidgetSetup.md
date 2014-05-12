@@ -13,7 +13,7 @@ If you’re starting a new project with the Kunstmaan bundles, everything is alr
 
 ### Update an existing website
 
-Add the dashboard bundle to `composer.json
+Add the dashboard bundle to `composer.json`
 
     "require": {
         ...
