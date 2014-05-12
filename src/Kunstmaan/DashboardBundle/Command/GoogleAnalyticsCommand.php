@@ -79,9 +79,15 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
         }
 
         // get params
-        $configId = $input->getOption('config');
-        $segmentId = $input->getOption('segment');
-        $overviewId = $input->getOption('overview');
+        $configId = false;
+        $segmentId = false;
+        $overviewId = false;
+
+        try {
+            $configId  = $input->getOption('config');
+            $segmentId = $input->getOption('segment');
+            $overviewId = $input->getOption('overview');
+        } catch (\Exception $e) {}
 
         // get the overviews
         $overviews = array();
@@ -113,6 +119,20 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
                 // get the overviews
                 $overviews = $config->getOverviews();
             } else {
+                $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+                $config = $configRepository->getConfig();
+
+                // add overviews if none exist yet
+                if (sizeof($config->getOverviews()) == 0) {
+                    $configRepository->addOverviews($config);
+                }
+
+                // init all the segments for this config
+                $segments = $config->getSegments();
+                foreach ($segments as $segment) {
+                    $configRepository->initSegment($segment);
+                }
+
                 // get all overviews
                 $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
             }
