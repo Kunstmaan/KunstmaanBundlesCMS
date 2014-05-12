@@ -190,7 +190,7 @@ class GoogleAnalyticsAJAXController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
-                'Succes',
+                'success',
                 'Succesfully saved!'
             );
 
