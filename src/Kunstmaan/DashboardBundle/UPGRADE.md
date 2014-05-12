@@ -17,5 +17,5 @@ Use either a migration or force a schema update to update the database
 
 Flush the data and reload it
 
-    app/console kuma:dashboard:widget:googleanalytics:config:flush
+    app/console kuma:dashboard:widget:googleanalytics:data:flush
     app/console kuma:dashboard:collect
