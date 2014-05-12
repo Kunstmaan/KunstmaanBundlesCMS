@@ -9,7 +9,8 @@ Requirements:
 
 If you’re starting a new project with the Kunstmaan bundles, everything is already in place if you’ve followed the “getting started’ guide, and you can skip this step.
 
-Updating an existing website
+**To update an existing website:**
+Be sure to read the UPGRADE.md file if you're upgrading an existing website, because of some backwards compatibility changes.
 
     composer update
     app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
