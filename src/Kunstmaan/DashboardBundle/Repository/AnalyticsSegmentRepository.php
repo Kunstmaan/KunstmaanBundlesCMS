@@ -59,4 +59,19 @@ class AnalyticsSegmentRepository extends EntityRepository
 
         return false;
     }
+
+
+    /**
+     * Initialise a segment by adding new overviews if they don't exist yet
+     *
+     * @param AnalyticsSegment $segment
+     * @param int $configId
+     */
+    public function initSegment($segment, $configId = false) {
+        if (!count($segment->getOverviews()->toArray())) {
+            $config =$this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig($configId);
+            $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config, $segment);
+        }
+    }
+
 }

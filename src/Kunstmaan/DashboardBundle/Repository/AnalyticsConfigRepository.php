@@ -35,7 +35,7 @@ class AnalyticsConfigRepository extends EntityRepository
                 $config = $result[0];
 
                 // if empty config, add overviews
-                if (sizeof($config) == 0) $this->addOverviews($config);
+                if (sizeof($config) == 0) $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config);
             } else {
                 // throw exception is config ID is unknown
                 throw new \Exception('Unknown config ID');
@@ -68,7 +68,7 @@ class AnalyticsConfigRepository extends EntityRepository
         $em->persist($config);
         $em->flush();
 
-        $this->addOverviews($config);
+        $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config);
         return $config;
     }
 
@@ -112,105 +112,6 @@ class AnalyticsConfigRepository extends EntityRepository
         foreach ($config->getSegments() as $segment) {
             $em->remove($segment);
         }
-        $em->flush();
-    }
-
-    /**
-     * Initialise a segment by adding new overviews if they don't exist yet
-     *
-     * @param AnalyticsSegment $segment
-     * @param int $configId
-     */
-    public function initSegment($segment, $configId = false) {
-        if (!count($segment->getOverviews()->toArray())) {
-            $config = $this->getConfig($configId);
-            $this->addOverviews($config, $segment);
-        }
-    }
-
-    /**
-     * Get then default overviews (without a segment)
-     *
-     * @return array
-     */
-    public function getDefaultOverviews() {
-        $query = $this->getEntityManager()->createQuery(
-            'SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL'
-        );
-
-        return $query->getResult();
-    }
-
-    /**
-     * Add overviews for a config and optionally a segment
-     *
-     * @param AnlyticsConfig $config
-     * @param AnalyticsSegment $segment
-     */
-    public function addOverviews(&$config, &$segment=null) {
-        $em = $this->getEntityManager();
-
-        $today = new AnalyticsOverview();
-        $today->setTitle('dashboard.ga.tab.today');
-        $today->setTimespan(0);
-        $today->setStartOffset(0);
-        $today->setConfig($config);
-        $today->setSegment($segment);
-        if ($segment) $segment->getOverviews()[] = $today;
-        $config->getOverviews()[] = $today;
-        $em->persist($today);
-
-        $yesterday = new AnalyticsOverview();
-        $yesterday->setTitle('dashboard.ga.tab.yesterday');
-        $yesterday->setTimespan(1);
-        $yesterday->setStartOffset(1);
-        $yesterday->setConfig($config);
-        $yesterday->setSegment($segment);
-        if ($segment) $segment->getOverviews()[] = $yesterday;
-        $config->getOverviews()[] = $yesterday;
-        $em->persist($yesterday);
-
-        $week = new AnalyticsOverview();
-        $week->setTitle('dashboard.ga.tab.last_7_days');
-        $week->setTimespan(7);
-        $week->setStartOffset(1);
-        $week->setConfig($config);
-        $week->setSegment($segment);
-        if ($segment) $segment->getOverviews()[] = $week;
-        $config->getOverviews()[] = $week;
-        $em->persist($week);
-
-        $month = new AnalyticsOverview();
-        $month->setTitle('dashboard.ga.tab.last_30_days');
-        $month->setTimespan(30);
-        $month->setStartOffset(1);
-        $month->setConfig($config);
-        $month->setSegment($segment);
-        if ($segment) $segment->getOverviews()[] = $month;
-        $config->getOverviews()[] = $month;
-        $em->persist($month);
-
-        $year = new AnalyticsOverview();
-        $year->setTitle('dashboard.ga.tab.last_12_months');
-        $year->setTimespan(365);
-        $year->setStartOffset(1);
-        $year->setConfig($config);
-        $year->setSegment($segment);
-        if ($segment) $segment->getOverviews()[] = $year;
-        $config->getOverviews()[] = $year;
-        $em->persist($year);
-
-        $yearToDate = new AnalyticsOverview();
-        $yearToDate->setTitle('dashboard.ga.tab.year_to_date');
-        $yearToDate->setTimespan(365);
-        $yearToDate->setStartOffset(1);
-        $yearToDate->setConfig($config);
-        $yearToDate->setSegment($segment);
-        if ($segment) $segment->getOverviews()[] = $yearToDate;
-        $config->getOverviews()[] = $yearToDate;
-        $yearToDate->setUseYear(true);
-        $em->persist($yearToDate);
-
         $em->flush();
     }
 

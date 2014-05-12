@@ -64,7 +64,7 @@ class GoogleAnalyticsController extends Controller
         if ($segmentId) {
             $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId)->getOverviews();
         } else {
-            $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getDefaultOverviews();
+            $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getDefaultOverviews();
         }
 
         $params['overviews'] = $overviews;
