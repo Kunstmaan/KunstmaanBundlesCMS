@@ -67,6 +67,7 @@ $(function () {
     $('.dashboard_update').click(function () {
         var url = $(this).attr('data-path');
         $('.dashboard_update').html('Updating...');
+        $('.dashboard_update').attr('disabled', 'disabled');
         $.ajax({
             type: 'get',
             url: url,
