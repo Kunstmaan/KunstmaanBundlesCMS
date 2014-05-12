@@ -5,6 +5,24 @@ Requirements:
 * Registered website (property) on GA
 * Google developers console account
 
+## Account setup
+
+### Google developers console
+
+We’ll start creating a developers console account. This account is used to communicate with the Google APIs, and stores all credentials. We’ll need these credentials in our app. You can skip this step if you already have an existing account set up.
+
+Go to http://cloud.google.com/console and log in with a Google account. You can use an existing account or create a new one especially for your app. Start by creating a new project. Once the project is created, you’ll have to enable access for the Analytics API. Go to the APIs & Auth section, and select the APIs tab. Search the list for the Analytics API, and enable it by pressing the button on the right.
+
+Now go to the Credentials tab in the APIs & Auth section. You’ll have to create both a client ID and an API key. Start with the client ID, select “web application” and press create. We’ll add an authorized redirect URI later. Now create a new key and choose “browser key”. Leave the whitelist blank and press “create”. Be sure to keep the console open for a while.
+
+Google is often working on it's cloud admin section, recently we have been getting 401 errors complaining the application name was empty. for some reason under "Consent Screen" the application name was indeed empty. Fill it in and you are good to go!
+
+### Google analytics
+
+Next up is a Google Analytics (GA) account. You can use the same account as used in the developers console, create a new one, or use an existing one. If you’ve already got a GA account and a web property set up, you can skip this step.
+
+In GA, set up a new property: go to the admin section, open the dropdown in the “property” column and create a new one. After filling in all the required fields, press the “get tracking ID” button. You’ll see a code snippet with some javascript, this has to be copied into the section of your app.
+
 ## Website setup
 
 ### Starting from a clean install
@@ -57,26 +75,7 @@ Update the database, use either a migration or force a schema update
     app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
     app/console doctrine:schema:update --force
 
-
-## Accounts setup
-
-### Google developers console
-
-We’ll start creating a developers console account. This account is used to communicate with the Google APIs, and stores all credentials. We’ll need these credentials in our app. You can skip this step if you already have an existing account set up.
-
-Go to http://cloud.google.com/console and log in with a Google account. You can use an existing account or create a new one especially for your app. Start by creating a new project. Once the project is created, you’ll have to enable access for the Analytics API. Go to the APIs & Auth section, and select the APIs tab. Search the list for the Analytics API, and enable it by pressing the button on the right.
-
-Now go to the Credentials tab in the APIs & Auth section. You’ll have to create both a client ID and an API key. Start with the client ID, select “web application” and press create. We’ll add an authorized redirect URI later. Now create a new key and choose “browser key”. Leave the whitelist blank and press “create”. Be sure to keep the console open for a while.
-
-Google is often working on it's cloud admin section, recently we have been getting 401 errors complaining the application name was empty. for some reason under "Consent Screen" the application name was indeed empty. Fill it in and you are good to go!
-
-### Google analytics
-
-Next up is a Google Analytics (GA) account. You can use the same account as used in the developers console, create a new one, or use an existing one. If you’ve already got a GA account and a web property set up, you can skip this step.
-
-In GA, set up a new property: go to the admin section, open the dropdown in the “property” column and create a new one. After filling in all the required fields, press the “get tracking ID” button. You’ll see a code snippet with some javascript, this has to be copied into the section of your app.
-
-### App setup
+## App setup
 
 Navigate to the backend of your app. ( /app_dev.php/en/admin/ or something familiar). Log in (admin-admin or another account). You’ll see a short summary on how to set up the console credentials, search for the redirect URI between brackets in step 1. You’ll have to insert it into the developers console, so go back there, and edit the settings of the client ID you created in the first step. In the section “Authorized redirect URI”, you can paste this link. (...../admin/analytics/setToken/). Note that you can add multiple redirect URIs if you’re using the same account for multiple apps, by just entering a new line for each.
 
