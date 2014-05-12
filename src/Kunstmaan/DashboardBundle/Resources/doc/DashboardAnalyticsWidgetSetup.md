@@ -13,6 +13,12 @@ If you’re starting a new project with the Kunstmaan bundles, everything is alr
 
 ### Update an existing website
 
+Add following parameters to `app/config/parameters.yml.dist`
+
+    google.api.client_id: ''
+    google.api.client_secret: ''
+    google.api.dev_key: ''
+
 Add the dashboard bundle to `composer.json`
 
     "require": {
@@ -74,7 +80,7 @@ In GA, set up a new property: go to the admin section, open the dropdown in the 
 
 Navigate to the backend of your app. ( /app_dev.php/en/admin/ or something familiar). Log in (admin-admin or another account). You’ll see a short summary on how to set up the console credentials, search for the redirect URI between brackets in step 1. You’ll have to insert it into the developers console, so go back there, and edit the settings of the client ID you created in the first step. In the section “Authorized redirect URI”, you can paste this link. (...../admin/analytics/setToken/). Note that you can add multiple redirect URIs if you’re using the same account for multiple apps, by just entering a new line for each.
 
-Now it’s time to configure the parameters.yml file in app/config/parameters.yml. You’ll see four parameters with empty values:
+Now it’s time to configure the parameters.yml file in app/config/parameters.yml. You’ll see three parameters with empty values:
 
 * **google.api.client_id: ''** The client ID from the OAuth 2.0 Credentials in the Google Developers console.
 * **google.api.client_secret: ''** The client secret from the OAuth 2.0 Credentials in the Google Developers console.
