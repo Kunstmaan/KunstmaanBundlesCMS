@@ -37,6 +37,7 @@ dashboard:
                 title: Select an account
                 select: Select an account..
             link: Setup dashboard
+            back: Go to dashboard
             segment:
                 add: Add segment
         reset:
