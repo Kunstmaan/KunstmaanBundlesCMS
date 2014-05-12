@@ -27,9 +27,11 @@ class GoogleAnalyticsFlushCommand extends ContainerAwareCommand
         $configRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
 
         $configId = $input->getArgument('config') ? $input->getArgument('config') : false;
-        $configRepository->flushConfig($configId);
-
-        $output->writeln('Config flushed.');
+        try {
+            $configRepository->flushConfig($configId);
+            $output->writeln('Config flushed.');
+        } catch (\Exception $e) {
+            $output->writeln($e->getMessage());
+        }
     }
-
 }

@@ -43,8 +43,10 @@ class AnalyticsOverviewRepository extends EntityRepository
             ->setParameter('id', $id);
 
         $results = $qb->getQuery()->getResult();
-        if ($results) {
+        if (sizeof($results)>0) {
             return $results[0];
+        } else {
+            throw new \Exception('Uknown overview ID');
         }
 
         return false;

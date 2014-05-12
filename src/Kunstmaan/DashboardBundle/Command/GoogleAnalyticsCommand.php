@@ -44,6 +44,13 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
                 InputOption::VALUE_OPTIONAL,
                 'Specify to only update one segment',
                 false
+            )
+            ->addOption(
+                'overview',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Specify to only update one overview',
+                false
             );
     }
 
@@ -71,44 +78,66 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
             return;
         }
 
-        // get config
-        $configId = false;
+        // get params
+        $configId = $input->getOption('config');
+        $segmentId = $input->getOption('segment');
+        $overviewId = $input->getOption('overview');
+
+        // get the overviews
+        $overviews = array();
         try {
-            $configId = $input->getOption('config');
-        } catch (\Exception $e) {}
+            if ($overviewId) {
+                // get specified overview
+                $overviews[] = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($overviewId);
+            } else if ($segmentId) {
+                // get specified segment
+                $segment = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->getSegment($segmentId);
 
-        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $config = $configRepository->getConfig($configId);
+                // init the segment
+                $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->initSegment($segment);
 
-        // add overviews if none exist for this config
-        if (!count($config->getOverviews()->toArray())) {
-            $configRepository->addOverviews($config);
-        }
+                // get the overviews
+                $overviews = $segment->getOverviews();
+            } else if ($configId) {
+                $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
 
-        // get segment id
-        $segmentId = false;
-        try {
-            $segmentId = $input->getOption('segment');
-        } catch (\Exception $e) {}
+                // get specified config
+                $config = $configRepository->getConfig($configId);
 
-        // get all overviews (inc. default without a segment) if no segment is specified
-        if (!$segmentId) {
-            $segments = $config->getSegments();
+                // init all the segments for this config
+                $segments = $config->getSegments();
+                foreach ($segments as $segment) {
+                    $configRepository->initSegment($segment);
+                }
 
-            foreach ($segments as $segment) {
-                $configRepository->initSegment($segment);
+                // get the overviews
+                $overviews = $config->getOverviews();
+            } else {
+                // get all overviews
+                $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
             }
 
-            $config = $configRepository->getConfig($configId);
-            $overviews = $config->getOverviews();
-        } else {
-            // only load the overviews of the specified segment
-            $segmentRepositry = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-            $segment = $segmentRepositry->getSegment($segmentId);
-            $configRepository->initSegment($segment);
-            $overviews = $segmentRepositry->getSegment($segmentId)->getOverviews();
+
+            echo count($overviews);
+            exit;
+
+            $this->updateData($overviews);
+
+            $this->output->writeln('Google Analytics data succesfully updated'); // done
+        } catch (\Exception $e) {
+            $output->writeln($e->getMessage());
+            exit;
         }
 
+    }
+
+    /**
+     * update the overviews
+     *
+     * @param array $overviews collection of all overviews which need to be updated
+     */
+    public function updateData($overviews)
+    {
         // get the query helper
         $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
 
@@ -142,15 +171,11 @@ class GoogleAnalyticsCommand extends ContainerAwareCommand
             $this->output->writeln("\t" . 'Persisting..');
             $this->em->persist($overview);
             $this->em->flush();
+
+            $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
         }
-
-        // set new update timestamp
-        /** @var AnalyticsConfigRepository $analyticsConfigRepository */
-        $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $analyticsConfigRepository->setUpdated($configId);
-
-        $this->output->writeln('Google Analytics data succesfully updated'); // done
     }
+
 
     /**
      * Reset the data for the overview

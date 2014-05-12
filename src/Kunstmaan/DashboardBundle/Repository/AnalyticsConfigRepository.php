@@ -21,7 +21,6 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function getConfig($id=false)
     {
-        $em = $this->getEntityManager();
         $qb = $this->getEntityManager()->createQueryBuilder();
         if ($id) {
             $qb->select('c')
@@ -30,14 +29,18 @@ class AnalyticsConfigRepository extends EntityRepository
               ->setParameter('id', $id);
 
             $result = $qb->getQuery()->getResult();
-            $config = $result[0];
+            if (count($result) > 0) {
+                $config = $result[0];
+
+                // if empty config, add overviews
+                if (sizeof($config) == 0) $this->addOverviews($config);
+            } else {
+                throw new \Exception('Unknown config ID');
+            }
         } else {
-            $query = $em->createQuery(
-              'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c'
-            );
-
+            $em = $this->getEntityManager();
+            $query = $em->createQuery( 'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c' );
             $result = $query->getResult();
-
             if (!$result) {
                 return $this->createConfig();
             } else {
@@ -62,7 +65,6 @@ class AnalyticsConfigRepository extends EntityRepository
             foreach ($overviewRepository->getAll() as $overview) {
                 $em->remove($overview);
             }
-
             $em->flush();
             return;
         }
