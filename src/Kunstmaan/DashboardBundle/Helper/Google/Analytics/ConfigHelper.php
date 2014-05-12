@@ -174,10 +174,13 @@ class ConfigHelper
             $data = array();
 
             foreach ($webproperties->getItems() as $property) {
-                $data[] = array(
-                    'propertyId' => $property->getId(),
-                    'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
-                );
+                $profiles = $this->getProfiles($accountId, $property->getId());
+                if (sizeof($profiles) > 0) {
+                    $data[] = array(
+                        'propertyId' => $property->getId(),
+                        'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
+                    );
+                }
             }
             return $data;
         }
@@ -244,12 +247,14 @@ class ConfigHelper
             }
 
             $result = array();
-            foreach ($profiles->getItems() as $profile) {
-                $result[] = array(
-                        'profileId' => $profile->id,
-                        'profileName' => $profile->name,
-                        'created' => $profile->created
-                    );
+            if (is_array($profiles->getItems())) {
+                foreach ($profiles->getItems() as $profile) {
+                    $result[] = array(
+                            'profileId' => $profile->id,
+                            'profileName' => $profile->name,
+                            'created' => $profile->created
+                        );
+                }
             }
 
             return $result;
