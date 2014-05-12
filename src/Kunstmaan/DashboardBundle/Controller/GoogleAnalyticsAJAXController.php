@@ -1,7 +1,7 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Controller;
 
-use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsCommand;
+use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
@@ -27,7 +27,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $configId = $request->query->get('configId');
         $segmentId = $request->query->get('segmentId');
 
-        $command = new GoogleAnalyticsCommand();
+        $command = new GoogleAnalyticsDataCollectCommand();
         $command->setContainer($this->container);
         $input = new ArrayInput(array('--config' => $configId, '--segment' => $segmentId));
         $output = new NullOutput();
