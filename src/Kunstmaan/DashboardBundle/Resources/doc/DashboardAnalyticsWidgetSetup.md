@@ -13,15 +13,45 @@ If you’re starting a new project with the Kunstmaan bundles, everything is alr
 
 Be sure to read the UPGRADE.md file if you're upgrading an existing website, because of some backwards compatibility changes.
 
-    composer update
-    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
+Add the dashboard bundle to `composer.json
 
-Make sure
+    "require": {
+        ...
+        "kunstmaan/dashboard-bundle": "2.3.*@dev",
+        ...
+    }
+
+Add the bundle in `app/AppKernel.php`
+
+        $bundles = array(
+            ...
+            new Kunstmaan\DashboardBundle\KunstmaanDashboardBundle(),
+            ...
+        );
+
+Add bundle routing in `app/config/routing.yml`
+
+    kunstmaan_dashboard:
+        resource: "@KunstmaanDashboardBundle/Resources/config/routing.yml"
+        prefix:   /{_locale}/
+        requirements:
+            _locale: %requiredlocales%
+
+Change dashboard route in `app/config/config.yml`
 
     kunstmaan_admin:
         dashboard_route: 'kunstmaan_dashboard'
 
-is added in `app/config/config.yml`.
+Update composer
+
+    composer update
+
+Update the database, use either a migration or force a schema update
+
+    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
+
+    app/console doctrine:schema:update --force
+
 
 ## Accounts setup
 
@@ -66,6 +96,6 @@ On the next page, you’ll be asked to select the website you want to track and 
 
 You can also load the data from the console with the command
 
-    `app/console kuma:dashboard:collect`
+    app/console kuma:dashboard:collect
 
 You can always update the data yourself this way, but it’s easier to configure a cronjob to do this every 30 minutes, or another interval.
