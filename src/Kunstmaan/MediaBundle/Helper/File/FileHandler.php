@@ -41,6 +41,7 @@ class FileHandler extends AbstractMediaHandler
     public function __construct()
     {
         $this->mimeTypeGuesser = MimeTypeGuesser::getInstance();
+        $this->mimeTypeGuesser->register(new FileBinaryMimeTypeGuesser());
     }
 
     /**
