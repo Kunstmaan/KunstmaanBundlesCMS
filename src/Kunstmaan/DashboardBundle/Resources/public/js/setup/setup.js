@@ -44,9 +44,15 @@ $(function () {
     });
 
     /* =============================== ACCOUNTS =============================== */
-        // $("#accounts").chosen(
-        //     {'search_contains' : true}
-        // );
+        $("#accounts").chosen(
+            {'search_contains' : true}
+        );
+        $("#properties").chosen(
+            {'search_contains' : true}
+        );
+        $("#profiles").chosen(
+            {'search_contains' : true}
+        );
 
         // on account selected
         $("#accounts").change(function() {
@@ -73,6 +79,11 @@ $(function () {
                     $(this).remove();
                 }
             })
+            $('#profiles').children().each(function (i) {
+                if (i != 0) {
+                    $(this).remove();
+                }
+            })
 
             // get the option data
             $.ajax({
@@ -84,6 +95,8 @@ $(function () {
                         var option = $('<option>', { 'data-id': data[key].propertyId, text: data[key].propertyName});
                         $('#properties').append(option);
                         $('#properties').removeClass('setup-item__not_shown');
+                        $('#properties').trigger('liszt:updated');
+                        $('#profiles').trigger('liszt:updated');
                         $("#accounts").removeAttr('disabled');
                     });
                 },
@@ -130,6 +143,7 @@ $(function () {
                         var option = $('<option>', { 'data-id': data[key].profileId, text: data[key].profileName});
                         $('#profiles').append(option);
                         $('#profiles').removeClass('setup-item__not_shown');
+                        $('#profiles').trigger('liszt:updated');
                         $("#properties").removeAttr('disabled');
                         $("#accounts").removeAttr('disabled');
                     });
@@ -220,18 +234,24 @@ $(function () {
 
             var query = $('#segment-list__'+id).find('input.segment-query').val();
             var name = $('#segment-list__'+id).find('input.segment-name').val();
-            var url = $('#path_segment_edit').attr('data-url');
-            $.ajax({
-                type: 'get',
-                url: url,
-                data: {'id' : id, 'name' : name, 'query' : query},
-                success: function (data) {
+            if (query && name) {
+                var url = $('#path_segment_edit').attr('data-url');
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    data: {'id' : id, 'name' : name, 'query' : query},
+                    success: function (data) {
 
-                    $('#segment-list__'+id+' .edit-view').css('display', 'none');
-                    $('#segment-list__'+id+' .display-view').css('display', 'block');
-                    $('#segment-list__'+id+' .display-segment-query').html(query)
-                    $('#segment-list__'+id+' .display-segment-name').html(name);
-                }
-            });
+                        $('#segment-list__'+id+' .edit-view').css('display', 'none');
+                        $('#segment-list__'+id+' .display-view').css('display', 'block');
+                        $('#segment-list__'+id+' .display-segment-query').html(query)
+                        $('#segment-list__'+id+' .display-segment-name').html(name);
+                    }
+                });
+            } else {
+                $('#segment-list__'+id+' .edit-view').css('display', 'none');
+                $('#segment-list__'+id+' .display-view').css('display', 'block');
+            }
+
         });
 });
