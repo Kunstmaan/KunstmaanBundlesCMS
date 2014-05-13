@@ -13,44 +13,6 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
  */
 class AnalyticsOverviewRepository extends EntityRepository
 {
-    /**
-     * Get all overviews
-     *
-     * @return array $results A collection of AnalyticOverview objects
-     */
-    public function findAll()
-    {
-        $query = $this->getEntityManager()->createQuery(
-            'SELECT c FROM KunstmaanDashboardBundle:AnalyticsOverview c'
-        );
-
-        return $query->getResult();
-    }
-
-    /**
-     * Get an overview
-     *
-     * @param int $id
-     *
-     * @return AnalyticsOverview|bool
-     */
-    public function find($id)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('o')
-            ->from('KunstmaanDashboardBundle:AnalyticsOverview', 'o')
-            ->where('o.id = :id')
-            ->setParameter('id', $id);
-
-        $results = $qb->getQuery()->getResult();
-        if (sizeof($results)>0) {
-            return $results[0];
-        } else {
-            throw new \Exception('Uknown overview ID');
-        }
-
-        return false;
-    }
 
     /**
      * Get then default overviews (without a segment)

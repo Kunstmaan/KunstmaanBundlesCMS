@@ -179,7 +179,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
             // edit the config
             $em = $this->getDoctrine()->getManager();
-            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find();
+            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
             if ($accountId && $propertyId && $profileId) {
                 $config->setAccountId($accountId);
                 $config->setPropertyId($propertyId);
@@ -202,7 +202,7 @@ class GoogleAnalyticsAJAXController extends Controller
          */
         public function getConfigAction(Request $request) {
             $em = $this->getDoctrine()->getManager();
-            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find();
+            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
             $accountId = $config->getAccountId();
 
             if (!$accountId) {
@@ -236,7 +236,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
             // add the segment to the config
             $analyticsConfigRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-            $config = $analyticsConfigRepository->find();
+            $config = $analyticsConfigRepository->findFirst();
             $segment->setConfig($config);
             $segments = $config->getSegments();
             $segments[] = $segment;

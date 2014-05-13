@@ -37,31 +37,6 @@ class AnalyticsSegmentRepository extends EntityRepository
     }
 
     /**
-     * Get a segment
-     *
-     * @param int id
-     *
-     * @return AnalyticsSegment
-     */
-    public function getSegment($id) {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('s')
-            ->from('KunstmaanDashboardBundle:AnalyticsSegment', 's')
-            ->where('s.id = :id')
-            ->setParameter('id', $id);
-
-        $results = $qb->getQuery()->getResult();
-        if (sizeof($results) > 0) {
-            return $results[0];
-        } else {
-            throw new \Exception('Unkown segment ID');
-        }
-
-        return false;
-    }
-
-
-    /**
      * Initialise a segment by adding new overviews if they don't exist yet
      *
      * @param AnalyticsSegment $segment
@@ -69,7 +44,11 @@ class AnalyticsSegmentRepository extends EntityRepository
      */
     public function initSegment($segment, $configId = false) {
         if (!count($segment->getOverviews()->toArray())) {
-            $config =$this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
+            if ($configId) {
+                $config =$this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
+            } else {
+                $config =$this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
+            }
             $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config, $segment);
         }
     }

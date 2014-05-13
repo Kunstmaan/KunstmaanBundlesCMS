@@ -72,7 +72,7 @@ class ConfigHelper
             if (!$this->token || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->token = $analyticsConfigRepository->find($configId)->getToken();
+                $this->token = $analyticsConfigRepository->findFirst()->getToken();
             }
 
             return $this->token;
@@ -128,7 +128,11 @@ class ConfigHelper
             if (!$this->accountId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->accountId = $analyticsConfigRepository->find($configId)->getAccountId();
+                if ($configId) {
+                    $this->accountId = $analyticsConfigRepository->find($configId)->getAccountId();
+                } else {
+                    $this->accountId = $analyticsConfigRepository->findFirst()->getAccountId();
+                }
             }
 
             return $this->accountId;
@@ -195,7 +199,11 @@ class ConfigHelper
             if (!$this->propertyId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->propertyId = $analyticsConfigRepository->find($configId)->getPropertyId();
+                if ($configId) {
+                    $this->propertyId = $analyticsConfigRepository->find($configId)->getPropertyId();
+                } else {
+                    $this->propertyId = $analyticsConfigRepository->findFirst()->getPropertyId();
+                }
             }
 
             return $this->propertyId;
@@ -270,7 +278,11 @@ class ConfigHelper
             if (!$this->profileId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->profileId = $analyticsConfigRepository->find($configId)->getProfileId();
+                if ($configId) {
+                    $this->profileId = $analyticsConfigRepository->find($configId)->getProfileId();
+                } else {
+                    $this->profileId = $analyticsConfigRepository->findFirst()->getProfileId();
+                }
             }
 
             return $this->profileId;
