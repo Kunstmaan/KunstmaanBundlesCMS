@@ -185,13 +185,16 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 
             $chartData = array();
             $totalVisits = 0;
+            $goalVisits = 0;
             $i = 0;
             // Fill the chartdata array
             foreach ($goalEntry['visits'] as $timestamp => $visits) {
                 $totalVisits += $visits;
+                $goalVisits += $visits;
                 if ($timespan <= 7 && $timespan > 1) {
                     if ($i%5 == 0) {
-                        $chartData[] = array('timestamp' => $timestamp, 'conversions' => $visits);
+                        $chartData[] = array('timestamp' => $timestamp, 'conversions' => $goalVisits);
+                        $goalVisits = 0;
                     }
                 } else {
                     $chartData[] = array('timestamp' => $timestamp, 'conversions' => $visits);
