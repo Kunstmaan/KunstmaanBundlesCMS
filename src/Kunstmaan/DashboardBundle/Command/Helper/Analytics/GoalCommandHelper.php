@@ -167,6 +167,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
      */
     private function parseGoals(&$overview, $goalCollection)
     {
+        $timespan = $overview->getTimespan() - $overview->getStartOffset();
         if ($overview->getGoals()) {
             // delete existing entries
             foreach ($overview->getGoals() as $goal) {
@@ -184,10 +185,18 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 
             $chartData = array();
             $totalVisits = 0;
+            $i = 0;
             // Fill the chartdata array
             foreach ($goalEntry['visits'] as $timestamp => $visits) {
                 $totalVisits += $visits;
-                $chartData[] = array('timestamp' => $timestamp, 'conversions' => $visits);
+                if ($timespan <= 7 && $timespan > 1) {
+                    if ($i%5 == 0) {
+                        $chartData[] = array('timestamp' => $timestamp, 'conversions' => $visits);
+                    }
+                } else {
+                    $chartData[] = array('timestamp' => $timestamp, 'conversions' => $visits);
+                }
+                $i += 1;
             }
 
             // set the data
