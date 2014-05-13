@@ -44,9 +44,13 @@ $(function () {
     });
 
     /* =============================== ACCOUNTS =============================== */
+        // $("#accounts").chosen(
+        //     {'search_contains' : true}
+        // );
 
         // on account selected
         $("#accounts").change(function() {
+            $("#accounts").attr('disabled', 'disabled');
             // hide the properties and profiles selects
             $('#properties').addClass('setup-item__not_shown');
             $('#profiles').addClass('setup-item__not_shown');
@@ -81,13 +85,19 @@ $(function () {
                         var option = $('<option>', { 'data-id': data[i].propertyId, text: data[i].propertyName});
                         $('#properties').append(option);
                         $('#properties').removeClass('setup-item__not_shown');
+                        $("#accounts").removeAttr('disabled');
                     }
+                },
+                error: function (data) {
+                    $("#accounts").removeAttr('disabled');
                 }
             });
         }
 
         // on property selected
         $("#properties").change(function() {
+            $("#properties").attr('disabled', 'disabled');
+            $("#accounts").attr('disabled', 'disabled');
             // hide the profiles select
             $('#profiles').addClass('setup-item__not_shown');
             $("#properties option:selected").each(function() {
@@ -121,7 +131,13 @@ $(function () {
                         var option = $('<option>', { 'data-id': data[i].profileId, text: data[i].profileName});
                         $('#profiles').append(option);
                         $('#profiles').removeClass('setup-item__not_shown');
+                        $("#properties").removeAttr('disabled');
+                        $("#accounts").removeAttr('disabled');
                     }
+                },
+                error: function (data) {
+                    $("#properties").removeAttr('disabled');
+                    $("#accounts").removeAttr('disabled');
                 }
             });
         }
