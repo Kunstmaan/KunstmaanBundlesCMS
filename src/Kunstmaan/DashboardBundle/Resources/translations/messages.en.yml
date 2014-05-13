@@ -40,6 +40,8 @@ dashboard:
             back: Go to dashboard
             segment:
                 add: Add segment
+                info: 'For documentation on how to create segment queries, click'
+                here: here
         reset:
             property: Change Google Analytics link
         last_update: Last update:

@@ -80,11 +80,20 @@
             }
         }
         li {
+            border: 1px solid #CCCCCC;
+            border-radius:3px;
+
             display:block;
+            box-sizing:border-box;
+            padding:3px 6px;
             float:left;
             width:100%;
             margin:5px 0;
-            padding-top:3px;
+            line-height:1.9em;
+
+            span {
+                font-style: italic;
+            }
         }
 
         .segment-button__delete,
@@ -105,6 +114,9 @@
                 width:100%;
                 float:left;
                 clear:both;
+
+                box-sizing:border-box;
+                padding:3px 7px 0 0;
             }
 
             &:after {

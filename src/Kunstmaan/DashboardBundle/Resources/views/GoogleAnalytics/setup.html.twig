@@ -46,10 +46,13 @@
 
         <div class="setup-group" id="segment-group">
             <h4>Segments</h4>
+            <p>
+                {{ 'dashboard.ga.setup.segment.info' | trans }} <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/segments" target="_blank">{{ 'dashboard.ga.setup.segment.here' | trans }}</a>.
+            </p>
             <ul>
                 {% for segment in segments %}
                     <li id="segment-list__{{ segment.id }}">
-                        {{ segment.name }}<input type="button" class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}" value="X"/>
+                        {{ segment.name }} (<span> {{segment.query}} </span>)<input type="button" class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}" value="X"/>
                     </li>
                 {% endfor %}
             </ul>
