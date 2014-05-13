@@ -148,7 +148,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
             $this->updateData($overviews);
 
-            $result = '<fg=green>Google Analytics data succesfully updated with <fg=red>'.$this->errors.'</fg=red> error';
+            $result = '<fg=green>Google Analytics data updated with <fg=red>'.$this->errors.'</fg=red> error';
             $result .= $this->errors > 1 ? 's</fg=green>' : '</fg=green>';
             $this->output->writeln($result); // done
         } catch (\Exception $e) {
