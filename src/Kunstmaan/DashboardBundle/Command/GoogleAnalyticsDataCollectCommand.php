@@ -94,7 +94,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         try {
             if ($overviewId) {
                 // get specified overview
-                $overviews[] = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($overviewId);
+                $overviews[] = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->find($overviewId);
             } else if ($segmentId) {
                 $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
 
@@ -140,7 +140,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
                 }
 
                 // get all overviews
-                $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+                $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->findAll();
             }
 
             $this->updateData($overviews);

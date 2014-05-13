@@ -18,7 +18,7 @@ class AnalyticsOverviewRepository extends EntityRepository
      *
      * @return array $results A collection of AnalyticOverview objects
      */
-    public function getAll()
+    public function findAll()
     {
         $query = $this->getEntityManager()->createQuery(
             'SELECT c FROM KunstmaanDashboardBundle:AnalyticsOverview c'
@@ -34,7 +34,7 @@ class AnalyticsOverviewRepository extends EntityRepository
      *
      * @return AnalyticsOverview|bool
      */
-    public function getOverview($id)
+    public function find($id)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('o')
@@ -47,24 +47,6 @@ class AnalyticsOverviewRepository extends EntityRepository
             return $results[0];
         } else {
             throw new \Exception('Uknown overview ID');
-        }
-
-        return false;
-    }
-
-    /**
-     * Get basic data for an overview
-     *
-     * @return array
-     */
-    public function getOverviewData()
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('o.id, o.title')
-            ->from('KunstmaanDashboardBundle:AnalyticsOverview', 'o');
-        $results = $qb->getQuery()->getResult();
-        if ($results) {
-            return $results;
         }
 
         return false;

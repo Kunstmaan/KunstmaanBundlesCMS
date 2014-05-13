@@ -98,7 +98,7 @@ class AnalyticsConfigRepository extends EntityRepository
         // Backward compatibilty to flush overviews without a config set
         if (!$id) {
             $overviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-            foreach ($overviewRepository->getAll() as $overview) {
+            foreach ($overviewRepository->findAll() as $overview) {
                 $em->remove($overview);
             }
             $em->flush();

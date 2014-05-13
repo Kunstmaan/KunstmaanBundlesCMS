@@ -48,7 +48,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
         $analyticsOverviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-        $overview = $analyticsOverviewRepository->getOverview($id);
+        $overview = $analyticsOverviewRepository->find($id);
 
         // goals data
         $goals = array();
