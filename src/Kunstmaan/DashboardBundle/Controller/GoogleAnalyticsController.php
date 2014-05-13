@@ -141,7 +141,7 @@ class GoogleAnalyticsController extends Controller
         $params['segments'] = $config->getSegments();
 
         return $this->render(
-            'KunstmaanDashboardBundle:Setup:setup.html.twig',
+            'KunstmaanDashboardBundle:GoogleAnalytics:setup.html.twig',
             $params
         );
     }
