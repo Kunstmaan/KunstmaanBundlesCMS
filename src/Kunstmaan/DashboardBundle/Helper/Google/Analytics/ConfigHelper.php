@@ -72,7 +72,7 @@ class ConfigHelper
             if (!$this->token || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->token = $analyticsConfigRepository->getConfig($configId)->getToken();
+                $this->token = $analyticsConfigRepository->find($configId)->getToken();
             }
 
             return $this->token;
@@ -128,7 +128,7 @@ class ConfigHelper
             if (!$this->accountId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->accountId = $analyticsConfigRepository->getConfig($configId)->getAccountId();
+                $this->accountId = $analyticsConfigRepository->find($configId)->getAccountId();
             }
 
             return $this->accountId;
@@ -195,7 +195,7 @@ class ConfigHelper
             if (!$this->propertyId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->propertyId = $analyticsConfigRepository->getConfig($configId)->getPropertyId();
+                $this->propertyId = $analyticsConfigRepository->find($configId)->getPropertyId();
             }
 
             return $this->propertyId;
@@ -270,7 +270,7 @@ class ConfigHelper
             if (!$this->profileId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->profileId = $analyticsConfigRepository->getConfig($configId)->getProfileId();
+                $this->profileId = $analyticsConfigRepository->find($configId)->getProfileId();
             }
 
             return $this->profileId;

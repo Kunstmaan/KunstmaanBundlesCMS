@@ -19,7 +19,7 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @return AnalyticsConfig $config
      */
-    public function getConfig($id=false)
+    public function find($id=false)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         if ($id) {
@@ -73,21 +73,6 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /**
-     * Get a list of all configs
-     *
-     * @return array
-     */
-    public function listConfigs() {
-        return $this
-                ->getEntityManager()
-                ->createQueryBuilder()
-                ->select('c')
-                ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c')
-                ->getQuery()
-                ->getResult();
-    }
-
-    /**
      * Flush a config
      *
      * @param int $id the config id
@@ -105,7 +90,7 @@ class AnalyticsConfigRepository extends EntityRepository
             return;
         }
 
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         foreach ($config->getOverviews() as $overview) {
             $em->remove($overview);
         }
@@ -122,7 +107,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function setUpdated($id=false) {
         $em = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         $config->setLastUpdate(new \DateTime());
         $em->persist($config);
         $em->flush();
@@ -135,7 +120,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function saveToken($token, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         $config->setToken($token);
         $em->persist($config);
         $em->flush();
@@ -148,7 +133,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function savePropertyId($propertyId, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         $config->setPropertyId($propertyId);
         $em->persist($config);
         $em->flush();
@@ -161,7 +146,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function saveAccountId($accountId, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         $config->setAccountId($accountId);
         $em->persist($config);
         $em->flush();
@@ -174,7 +159,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function saveProfileId($profileId, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         $config->setProfileId($profileId);
         $em->persist($config);
         $em->flush();
@@ -187,7 +172,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function saveConfigName($name, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         $config->setName($name);
         $em->persist($config);
         $em->flush();
@@ -200,7 +185,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function resetProfileId($id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         $config->setProfileId('');
         $em->persist($config);
         $em->flush();
@@ -213,7 +198,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function resetPropertyId($id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $this->find($id);
         $config->setAccountId('');
         $config->setProfileId('');
         $config->setPropertyId('');

@@ -59,7 +59,7 @@ class GoogleAnalyticsController extends Controller
 
         // get the segment id
         $segmentId = $request->query->get('id');
-        $params['segments'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig()->getSegments();
+        $params['segments'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find()->getSegments();
         $params['segmentId'] = $segmentId;
 
         // set the overviews param
@@ -73,7 +73,7 @@ class GoogleAnalyticsController extends Controller
         $params['overviews'] = $overviews;
         /** @var AnalyticsConfigRepository $analyticsConfigRepository */
         $analyticsConfigRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $date = $analyticsConfigRepository->getConfig()->getLastUpdate();
+        $date = $analyticsConfigRepository->find()->getLastUpdate();
         if ($date) {
             $params['last_update'] = $date->format('d-m-Y H:i');
         } else {
@@ -125,7 +125,7 @@ class GoogleAnalyticsController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig();
+        $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find();
 
         $params['accountId'] = $config->getAccountId();
 

@@ -111,7 +111,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
                 $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
 
                 // get specified config
-                $config = $configRepository->getConfig($configId);
+                $config = $configRepository->find($configId);
 
                 // init all the segments for this config
                 $segments = $config->getSegments();
@@ -126,7 +126,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
                 $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
                 $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
 
-                $config = $configRepository->getConfig();
+                $config = $configRepository->find();
 
                 // add overviews if none exist yet
                 if (sizeof($config->getOverviews()) == 0) {
