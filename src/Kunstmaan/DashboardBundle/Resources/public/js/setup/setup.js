@@ -80,13 +80,12 @@ $(function () {
                 url: url,
                 data: {'accountId' : accountId},
                 success: function (data) {
-                    for(var i = 0; i < data.length; i++) {
-                        // add the options
-                        var option = $('<option>', { 'data-id': data[i].propertyId, text: data[i].propertyName});
+                    $.each(data, function(key, value) {
+                        var option = $('<option>', { 'data-id': data[key].propertyId, text: data[key].propertyName});
                         $('#properties').append(option);
                         $('#properties').removeClass('setup-item__not_shown');
                         $("#accounts").removeAttr('disabled');
-                    }
+                    });
                 },
                 error: function (data) {
                     $("#accounts").removeAttr('disabled');
@@ -126,14 +125,14 @@ $(function () {
                 url: url,
                 data: {'propertyId' : propertyId, 'accountId' : accountId},
                 success: function (data) {
-                    for(var i = 0; i < data.length; i++) {
+                    $.each(data, function(key, value) {
                         // add the options
-                        var option = $('<option>', { 'data-id': data[i].profileId, text: data[i].profileName});
+                        var option = $('<option>', { 'data-id': data[key].profileId, text: data[key].profileName});
                         $('#profiles').append(option);
                         $('#profiles').removeClass('setup-item__not_shown');
                         $("#properties").removeAttr('disabled');
                         $("#accounts").removeAttr('disabled');
-                    }
+                    });
                 },
                 error: function (data) {
                     $("#properties").removeAttr('disabled');
