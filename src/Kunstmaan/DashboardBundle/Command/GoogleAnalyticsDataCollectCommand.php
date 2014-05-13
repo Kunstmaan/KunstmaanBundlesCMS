@@ -23,6 +23,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     /** @var OutputInterface $output */
     private $output;
 
+    /** @var int $errors */
+    private $errors = 0;
+
     /**
      * Configures the current command.
      */
@@ -145,7 +148,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
             $this->updateData($overviews);
 
-            $this->output->writeln('Google Analytics data succesfully updated'); // done
+            $result = '<fg=green>Google Analytics data succesfully updated with <fg=red>'.$this->errors.'</fg=red> error';
+            $result .= $this->errors > 1 ? 's</fg=green>' : '</fg=green>';
+            $this->output->writeln($result); // done
         } catch (\Exception $e) {
             $output->writeln($e->getMessage());
             exit;
@@ -160,42 +165,46 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
      */
     public function updateData($overviews)
     {
-        // get helpers
+        // helpers
         $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
+        $metrics = new MetricsCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
+        $chartData = new ChartDataCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
+        $goals = new GoalCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
+        $visitors = new UsersCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
 
         // get data per overview
         foreach ($overviews as $overview) {
             /** @var AnalyticsOverview $overview */
-            $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
+            $this->output->writeln('Fetching data for overview "<fg=green>' . $overview->getTitle() . '</fg=green>"');
 
-            // metric data
-            $metrics = new MetricsCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-            $metrics->getData($overview);
+            try {
+                // metric data
+                $metrics->getData($overview);
+                if ($overview->getSessions()) { // if there are any visits
+                    // day-specific data
+                    $chartData->getData($overview);
 
-            if ($overview->getSessions()) { // if there are any visits
-                // day-specific data
-                $chartData = new ChartDataCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-                $chartData->getData($overview);
+                    // get goals
+                    $goals->getData($overview);
 
-                // get goals
-                $goals = new GoalCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-                $goals->getData($overview);
-
-                // visitor types
-                $visitors = new UsersCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-                $visitors->getData($overview);
-            } else {
-                // reset overview
-                $this->reset($overview);
-                $this->output->writeln("\t" . 'No visitors');
-            }
+                    // visitor types
+                    $visitors->getData($overview);
+                } else {
+                    // reset overview
+                    $this->reset($overview);
+                    $this->output->writeln("\t" . 'No visitors');
+                }
             // persist entity back to DB
-            $this->output->writeln("\t" . 'Persisting..');
-            $this->em->persist($overview);
-            $this->em->flush();
+                $this->output->writeln("\t" . 'Persisting..');
+                $this->em->persist($overview);
+                $this->em->flush();
 
-            $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
+                $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
+            } catch (\Google_ServiceException $e) {
+                $this->output->writeln("\t" . '<fg=red>Invalid segment</fg=red>');
+                $this->errors += 1;
+            }
         }
     }
 
