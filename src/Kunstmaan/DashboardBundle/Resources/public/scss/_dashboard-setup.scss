@@ -11,7 +11,7 @@
         }
     }
 
-    button {
+    .setup-group > button {
         display: inline-block;
         width:75px;
         margin-left:5px;
@@ -159,6 +159,11 @@
 
         .edit-view {
             display:none;
+        }
+
+        .display-view span {
+            display: inline-block;
+            line-height:2.3em;
         }
 
         #segments-new {

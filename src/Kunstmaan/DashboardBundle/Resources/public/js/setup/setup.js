@@ -216,9 +216,8 @@ $(function () {
                     $('#segment-list__'+id).fadeOut();
                 }
             });
+            return false;
         })
-
-
 
         $('.segment-list-button__edit').click(function() {
             // get segment id
@@ -226,6 +225,7 @@ $(function () {
 
             $('#segment-list__'+id+' .edit-view').css('display', 'block');
             $('#segment-list__'+id+' .display-view').css('display', 'none');
+            return false;
         });
 
         $('.segment-list-button__confirm').click(function() {
@@ -252,6 +252,6 @@ $(function () {
                 $('#segment-list__'+id+' .edit-view').css('display', 'none');
                 $('#segment-list__'+id+' .display-view').css('display', 'block');
             }
-
+            return false;
         });
 });

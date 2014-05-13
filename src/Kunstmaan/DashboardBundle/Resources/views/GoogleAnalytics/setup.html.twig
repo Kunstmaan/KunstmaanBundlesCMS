@@ -54,13 +54,13 @@
                     <li id="segment-list__{{ segment.id }}">
                         <div class="display-view">
                             <span class="display-segment-name">{{ segment.name }}</span> (<span class="display-segment-query"> {{segment.query}} </span>)
-                            <input type="button" class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}" value="X"/>
-                            <input type="button" class="segment-list-button__edit btn" data-segment-id="{{ segment.id }}" value=".."/>
+                            <button class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}"><i class="icon-remove"></i></button>
+                            <button class="segment-list-button__edit btn" data-segment-id="{{ segment.id }}"><i class="icon-edit"></i></button>
                         </div>
                         <div class="edit-view">
                             <input type="text" id="segment-edit-name-{{segment.id}}" class="segment-name" value="{{segment.name}}"/>
                             <input type="text" id="segment-edit-query-{{segment.id}}" class="segment-query" value="{{segment.query}}"/>
-                            <input type="button" class="segment-list-button__confirm btn" data-segment-id="{{ segment.id }}" value="V"/>
+                            <button class="segment-list-button__confirm btn" data-segment-id="{{ segment.id }}"><i class="icon-ok"></i></button>
                         </div>
                     </li>
                 {% endfor %}
