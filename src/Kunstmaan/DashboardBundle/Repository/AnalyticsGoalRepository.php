@@ -17,7 +17,7 @@ class AnalyticsGoalRepository extends EntityRepository
      *
      * @param int id
      */
-    public function getGoal($id)
+    public function find($id)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('g')
