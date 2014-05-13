@@ -3,10 +3,16 @@
 
     {% if segments | length > 0 %}
         <nav id="segment-menu">
-                <a href="?" {% if (segmentId is null) %}class="segment-active"{% endif %}>Default</a>
-                {% for segment in segments %}
-                    <a href="?segment={{segment.id}}" {% if (segment.id == segmentId) %}class="segment-active"{% endif %}>{{segment.name}}</a>
-                {% endfor %}
+            <select>
+                <option>
+                    <a href="?" {% if (segmentId is null) %}class="segment-active"{% endif %}>Default</a>
+                </option>
+                    {% for segment in segments %}
+                        <option>
+                            <a href="?segment={{segment.id}}" {% if (segment.id == segmentId) %}class="segment-active"{% endif %}>{{segment.name}}</a>
+                        </option>
+                    {% endfor %}
+            </select>
         </nav>
     {% endif %}
 
