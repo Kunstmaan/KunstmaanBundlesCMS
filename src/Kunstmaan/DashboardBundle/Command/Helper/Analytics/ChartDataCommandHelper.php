@@ -50,9 +50,10 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
             $newusers = $row[sizeof($row) - 2];
             $pageviews = $row[sizeof($row) - 1];
 
+            $maxvalue = max($sessions, $users, $newusers, $pageviews);
             // set max chartdata value
-            if ($chartDataMaxValue < $pageviews) {
-                $chartDataMaxValue = $pageviews;
+            if ($chartDataMaxValue < $maxvalue) {
+                $chartDataMaxValue = $maxvalue;
             }
 
             // timestamp
