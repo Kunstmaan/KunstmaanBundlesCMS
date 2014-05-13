@@ -93,7 +93,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== ACCOUNT =============================== */
 
         /**
-         * @Route("/accounts/", name="DashBoardBundle_AJAX_accounts")
+         * @Route("/accounts/", name="kunstmaan_dashboard_ajax_accounts")
          */
         public function getAccountsAction(Request $request) {
             $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
@@ -105,7 +105,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/account/save", name="DashBoardBundle_AJAX_account_save")
+         * @Route("/account/save", name="kunstmaan_dashboard_ajax_account_save")
          */
         public function saveAccountAction(Request $request) {
             $accountId = $request->query->get('id');
@@ -117,7 +117,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== PROPERTY =============================== */
 
         /**
-         * @Route("/properties/", name="DashBoardBundle_AJAX_properties")
+         * @Route("/properties/", name="kunstmaan_dashboard_ajax_properties")
          */
         public function getPropertiesAction(Request $request) {
             $accountId = $request->query->get('accountId');
@@ -130,7 +130,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/property/save", name="DashBoardBundle_AJAX_property_save")
+         * @Route("/property/save", name="kunstmaan_dashboard_ajax_property_save")
          */
         public function savePropertyAction(Request $request) {
             $propertyId = $request->query->get('id');
@@ -142,7 +142,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== PROFILE =============================== */
 
         /**
-         * @Route("/profiles/", name="DashBoardBundle_AJAX_profiles")
+         * @Route("/profiles/", name="kunstmaan_dashboard_ajax_profiles")
          */
         public function getProfilesAction(Request $request) {
             $accountId = $request->query->get('accountId');
@@ -157,7 +157,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/profile/save", name="DashBoardBundle_AJAX_profile_save")
+         * @Route("/profile/save", name="kunstmaan_dashboard_ajax_profile_save")
          */
         public function saveProfileAction(Request $request) {
             $propertyId = $request->query->get('id');
@@ -169,7 +169,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== CONFIG =============================== */
 
         /**
-         * @Route("/config/save", name="DashBoardBundle_AJAX_config_save")
+         * @Route("/config/save", name="kunstmaan_dashboard_ajax_config_save")
          */
         public function saveConfigAction(Request $request) {
             // get params
@@ -198,7 +198,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/config/get", name="DashBoardBundle_AJAX_config_get")
+         * @Route("/config/get", name="kunstmaan_dashboard_ajax_config_get")
          */
         public function getConfigAction(Request $request) {
             $em = $this->getDoctrine()->getManager();
@@ -222,7 +222,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== SEGMENT =============================== */
 
         /**
-         * @Route("/segment/add/", name="DashBoardBundle_AJAX_segment_add")
+         * @Route("/segment/add/", name="kunstmaan_dashboard_ajax_segment_add")
          */
         public function addSegmentAction(Request $request) {
             $em = $this->getDoctrine()->getManager();
@@ -247,7 +247,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/segment/delete", name="DashBoardBundle_AJAX_segment_delete")
+         * @Route("/segment/delete", name="kunstmaan_dashboard_ajax_segment_delete")
          */
         public function deleteSegmentAction(Request $request) {
             $em = $this->getDoctrine()->getManager();
