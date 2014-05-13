@@ -20,78 +20,10 @@ class AnalyticsOverview extends AbstractEntity
     private $config;
 
     /**
-     * Get config
-     *
-     * @return integer
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * Set config
-     *
-     * @param integer $config
-     *
-     * @return AnalyticsTopReferrals
-     */
-    public function setConfig($config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
-
-    /**
      * @ORM\ManyToOne(targetEntity="AnalyticsSegment", inversedBy="overviews")
      * @ORM\JoinColumn(name="segment_id", referencedColumnName="id", nullable=true)
      */
     private $segment = null;
-
-    /**
-     * Get segment
-     *
-     * @return integer
-     */
-    public function getSegment()
-    {
-        return $this->segment;
-    }
-
-    /**
-     * Set segment
-     *
-     * @param integer $segment
-     *
-     * @return AnalyticsTopReferrals
-     */
-    public function setSegment($segment)
-    {
-        $this->segment = $segment;
-
-        return $this;
-    }
-
-    /**
-     * Get percentage of returning users
-     *
-     * @return int
-     */
-    public function getReturningUsersPercentage()
-    {
-        return $this->returningUsers ? round(($this->returningUsers / $this->sessions) * 100) : 0;
-    }
-
-    /**
-     * Get percentage of new users
-     *
-     * @return int
-     */
-    public function getNewUsersPercentage()
-    {
-        return $this->newUsers ? round(($this->newUsers / $this->sessions) * 100) : 0;
-    }
 
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist", "remove"})
@@ -189,6 +121,74 @@ class AnalyticsOverview extends AbstractEntity
      * @ORM\Column(name="chart_data", type="text")
      */
     private $chartData = '';
+
+    /**
+     * Get percentage of returning users
+     *
+     * @return int
+     */
+    public function getReturningUsersPercentage()
+    {
+        return $this->returningUsers ? round(($this->returningUsers / $this->sessions) * 100) : 0;
+    }
+
+    /**
+     * Get percentage of new users
+     *
+     * @return int
+     */
+    public function getNewUsersPercentage()
+    {
+        return $this->newUsers ? round(($this->newUsers / $this->sessions) * 100) : 0;
+    }
+
+    /**
+     * Get config
+     *
+     * @return integer
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Set config
+     *
+     * @param integer $config
+     *
+     * @return AnalyticsTopReferrals
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    /**
+     * Get segment
+     *
+     * @return integer
+     */
+    public function getSegment()
+    {
+        return $this->segment;
+    }
+
+    /**
+     * Set segment
+     *
+     * @param integer $segment
+     *
+     * @return AnalyticsTopReferrals
+     */
+    public function setSegment($segment)
+    {
+        $this->segment = $segment;
+
+        return $this;
+    }
 
 
     /**

@@ -20,55 +20,9 @@ class AnalyticsConfig extends AbstractEntity
     private $overviews;
 
     /**
-     * Set overviews
-     *
-     * @param array $overviews
-     * @return AnalyticsDailyOverviews
-     */
-    public function setOverviews($overviews)
-    {
-        $this->overviews = $overviews;
-
-        return $this;
-    }
-
-    /**
-     * Get overviews
-     *
-     * @return array
-     */
-    public function getOverviews()
-    {
-        return $this->overviews;
-    }
-
-    /**
      * @ORM\OneToMany(targetEntity="AnalyticsSegment", mappedBy="config", cascade={"persist", "remove"})
      */
     private $segments;
-
-    /**
-     * Set segments
-     *
-     * @param array $segments
-     * @return AnalyticsDailysegments
-     */
-    public function setSegments($segments)
-    {
-        $this->segments = $segments;
-
-        return $this;
-    }
-
-    /**
-     * Get segments
-     *
-     * @return array
-     */
-    public function getSegments()
-    {
-        return $this->segments;
-    }
 
     /**
      * @var string
@@ -112,6 +66,51 @@ class AnalyticsConfig extends AbstractEntity
      */
     private $lastUpdate = null;
 
+    /**
+     * Set overviews
+     *
+     * @param array $overviews
+     * @return AnalyticsDailyOverviews
+     */
+    public function setOverviews($overviews)
+    {
+        $this->overviews = $overviews;
+
+        return $this;
+    }
+
+    /**
+     * Get overviews
+     *
+     * @return array
+     */
+    public function getOverviews()
+    {
+        return $this->overviews;
+    }
+
+    /**
+     * Set segments
+     *
+     * @param array $segments
+     * @return AnalyticsDailysegments
+     */
+    public function setSegments($segments)
+    {
+        $this->segments = $segments;
+
+        return $this;
+    }
+
+    /**
+     * Get segments
+     *
+     * @return array
+     */
+    public function getSegments()
+    {
+        return $this->segments;
+    }
 
     /**
      * Get name
