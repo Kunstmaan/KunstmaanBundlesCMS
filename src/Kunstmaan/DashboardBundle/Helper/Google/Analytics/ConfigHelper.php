@@ -110,11 +110,12 @@ class ConfigHelper
             $data = array();
 
             foreach ($accounts as $account) {
-                $data[] = array(
+                $data[$account->getName()] = array(
                     'accountId' => $account->getId(),
                     'accountName' => $account->getName()
                 );
             }
+            ksort($data);
             return $data;
         }
 
@@ -180,12 +181,13 @@ class ConfigHelper
             foreach ($webproperties->getItems() as $property) {
                 $profiles = $this->getProfiles($accountId, $property->getId());
                 if (sizeof($profiles) > 0) {
-                    $data[] = array(
+                    $data[$property->getName()] = array(
                         'propertyId' => $property->getId(),
                         'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
                     );
                 }
             }
+            ksort($data);
             return $data;
         }
 
@@ -254,18 +256,18 @@ class ConfigHelper
                 );
             }
 
-            $result = array();
+            $data = array();
             if (is_array($profiles->getItems())) {
                 foreach ($profiles->getItems() as $profile) {
-                    $result[] = array(
+                    $data[$profile->name] = array(
                             'profileId' => $profile->id,
                             'profileName' => $profile->name,
                             'created' => $profile->created
                         );
                 }
             }
-
-            return $result;
+            ksort($data);
+            return $data;
         }
 
         /**
