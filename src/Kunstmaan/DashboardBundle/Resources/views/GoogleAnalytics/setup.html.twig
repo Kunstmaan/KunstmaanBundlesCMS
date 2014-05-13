@@ -52,7 +52,16 @@
             <ul>
                 {% for segment in segments %}
                     <li id="segment-list__{{ segment.id }}">
-                        {{ segment.name }} (<span> {{segment.query}} </span>)<input type="button" class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}" value="X"/>
+                        <div class="display-view">
+                            <span class="display-segment-name">{{ segment.name }}</span> (<span class="display-segment-query"> {{segment.query}} </span>)
+                            <input type="button" class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}" value="X"/>
+                            <input type="button" class="segment-list-button__edit btn" data-segment-id="{{ segment.id }}" value=".."/>
+                        </div>
+                        <div class="edit-view">
+                            <input type="text" id="segment-edit-name-{{segment.id}}" class="segment-name" value="{{segment.name}}"/>
+                            <input type="text" id="segment-edit-query-{{segment.id}}" class="segment-query" value="{{segment.query}}"/>
+                            <input type="button" class="segment-list-button__confirm btn" data-segment-id="{{ segment.id }}" value="V"/>
+                        </div>
                     </li>
                 {% endfor %}
             </ul>
@@ -71,6 +80,7 @@
     <input type="hidden" id="path_profiles" data-url="{{ path('kunstmaan_dashboard_ajax_profiles') }}" />
     <input type="hidden" id="path_segment_add" data-url="{{ path('kunstmaan_dashboard_ajax_segment_add') }}" />
     <input type="hidden" id="path_segment_delete" data-url="{{ path('kunstmaan_dashboard_ajax_segment_delete') }}" />
+    <input type="hidden" id="path_segment_edit" data-url="{{ path('kunstmaan_dashboard_ajax_segment_edit') }}" />
     <input type="hidden" id="path_config_save" data-url="{{ path('kunstmaan_dashboard_ajax_config_save') }}" />
 {% endblock %}
 

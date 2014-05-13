@@ -258,5 +258,23 @@ class GoogleAnalyticsAJAXController extends Controller
             return new JsonResponse();
         }
 
+        /**
+         * @Route("/segment/edit", name="kunstmaan_dashboard_ajax_segment_edit")
+         */
+        public function editSegmentAction(Request $request) {
+            $em = $this->getDoctrine()->getManager();
+
+            // remove the segment
+            $id = $request->query->get('id');
+            $query = $request->query->get('query');
+            $name = $request->query->get('name');
+            $segment = $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->find($id);
+            $segment->setName($name);
+            $segment->setQuery($query);
+            $em->persist($segment);
+            $em->flush();
+            return new JsonResponse();
+        }
+
 
 }

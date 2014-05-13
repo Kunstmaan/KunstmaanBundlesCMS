@@ -203,4 +203,35 @@ $(function () {
                 }
             });
         })
+
+
+
+        $('.segment-list-button__edit').click(function() {
+            // get segment id
+            var id = $(this).attr('data-segment-id');
+
+            $('#segment-list__'+id+' .edit-view').css('display', 'block');
+            $('#segment-list__'+id+' .display-view').css('display', 'none');
+        });
+
+        $('.segment-list-button__confirm').click(function() {
+            // get segment id
+            var id = $(this).attr('data-segment-id');
+
+            var query = $('#segment-list__'+id).find('input.segment-query').val();
+            var name = $('#segment-list__'+id).find('input.segment-name').val();
+            var url = $('#path_segment_edit').attr('data-url');
+            $.ajax({
+                type: 'get',
+                url: url,
+                data: {'id' : id, 'name' : name, 'query' : query},
+                success: function (data) {
+
+                    $('#segment-list__'+id+' .edit-view').css('display', 'none');
+                    $('#segment-list__'+id+' .display-view').css('display', 'block');
+                    $('#segment-list__'+id+' .display-segment-query').html(query)
+                    $('#segment-list__'+id+' .display-segment-name').html(name);
+                }
+            });
+        });
 });

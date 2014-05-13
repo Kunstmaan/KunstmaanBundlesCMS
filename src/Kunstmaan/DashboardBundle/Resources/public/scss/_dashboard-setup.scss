@@ -91,11 +91,13 @@
             margin:5px 0;
             line-height:1.9em;
 
-            span {
+            span.display-segment-query {
                 font-style: italic;
             }
         }
 
+        .segment-list-button__edit,
+        .segment-list-button__confirm,
         .segment-button__delete,
         .segment-list-button__delete {
             background:#b03e43;
@@ -105,8 +107,58 @@
             padding-right:7px;
         }
 
+        .segment-list-button__edit {
+            background:#3166a0;
+            margin-right:8px;
+        }
+        .segment-list-button__confirm {
+            background:#2a9239;
+        }
+
         .segment-button__delete {
             margin-top:1px;
+        }
+
+        .segment-name {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-right:-1px;
+            width:30%;
+        }
+
+        .segment-query {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            width:50%;
+        }
+
+        .display-view,
+        .edit-view {
+            clear:both;
+            width:100%;
+
+            .segment-name {
+                margin-right:-5px;
+                margin-bottom:0;
+                padding-top:3px;
+                padding-bottom:3px;
+            }
+
+            .segment-query {
+                margin-bottom:0;
+                padding-top:3px;
+                padding-bottom:3px;
+            }
+
+            &:after {
+                display:block;
+                content:' ';
+                clear:both;
+            }
+        }
+
+        .edit-view {
+            display:none;
         }
 
         #segments-new {
@@ -125,18 +177,6 @@
                 clear:both;
             }
 
-            .segment-name {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-                margin-right:-1px;
-                width:30%;
-            }
-
-            .segment-query {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-                width:50%;
-            }
         }
     }
 }
