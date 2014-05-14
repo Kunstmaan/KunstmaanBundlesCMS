@@ -44,7 +44,7 @@ $(function () {
     });
 
     function triggerUpdate() {
-        $('#account select').trigger('liszt:updated');
+        $('#accounts select').trigger('liszt:updated');
         $('#properties select').trigger('liszt:updated');
         $('#profiles select').trigger('liszt:updated');
 
@@ -65,6 +65,7 @@ $(function () {
         $("#accounts select").change(function() {
             $("#accounts select").attr('disabled', 'disabled');
             triggerUpdate();
+
             // hide the properties and profiles selects
             $('#properties').fadeOut();
             $('#profiles').fadeOut();
@@ -119,7 +120,7 @@ $(function () {
             $('#profiles').fadeOut();
             $("#properties select").attr('disabled', 'disabled');
             $("#accounts select").attr('disabled', 'disabled');
-            triggerUpdate()
+            triggerUpdate();
             // hide the profiles select
             $('#profiles select').addClass('setup-item__not_shown');
             $("#properties select option:selected").each(function() {
