@@ -129,17 +129,19 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
         $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
         $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
         $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-        $config = $configRepository->findFirst();
+        $configs = $configRepository->findAll();
 
-        // add overviews if none exist yet
-        if (!count($configRepository->findDefaultOverviews($config))) {
-            $overviewRepository->addOverviews($config);
-        }
+        foreach ($configs as $config) {
+            // add overviews if none exist yet
+            if (!count($configRepository->findDefaultOverviews($config))) {
+                $overviewRepository->addOverviews($config);
+            }
 
-        // init all the segments for this config
-        $segments = $config->getSegments();
-        foreach ($segments as $segment) {
-            $segmentRepository->initSegment($segment);
+            // init all the segments for this config
+            $segments = $config->getSegments();
+            foreach ($segments as $segment) {
+                $segmentRepository->initSegment($segment);
+            }
         }
     }
 }
