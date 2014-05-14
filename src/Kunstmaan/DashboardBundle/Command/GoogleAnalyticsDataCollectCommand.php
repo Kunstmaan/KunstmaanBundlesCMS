@@ -32,7 +32,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('kuma:dashboard:widget:googleanalytics:data:collect')
+            ->setName('ga:data:collect')
             ->setDescription('Collect the Google Analytics dashboard widget data')
             ->addOption(
                 'config',

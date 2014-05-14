@@ -12,7 +12,7 @@ class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('kuma:dashboard:widget:googleanalytics:data:flush')
+            ->setName('ga:data:flush')
             ->setDescription('Flush the data of a config')
             ->addArgument(
                 'config',
@@ -29,9 +29,9 @@ class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
         $configId = $input->getArgument('config') ? $input->getArgument('config') : false;
         try {
             $configRepository->flushConfig($configId);
-            $output->writeln('Data flushed.');
+            $output->writeln('<fg=green>Data flushed</fg=green>');
         } catch (\Exception $e) {
-            $output->writeln($e->getMessage());
+            $output->writeln('<fg=red>'.$e->getMessage().'</fg=red>');
         }
     }
 }
