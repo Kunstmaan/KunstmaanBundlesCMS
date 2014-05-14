@@ -64,6 +64,17 @@ $(function () {
     });
 
 
+    $("#segment-menu > select").change(function() {
+        if ($('#segment-menu > select option:selected').attr('data-segment-id')) {
+            var segmentId = $('#segment-menu > select option:selected').attr('data-segment-id');
+            if (segmentId != '#') {
+                location.href="?segment=" + segmentId;
+            } else {
+                location.href="?";
+            }
+        }
+    });
+
     $('.dashboard_update').click(function () {
         var url = $(this).attr('data-path');
         $('.dashboard_update').html('Updating...');

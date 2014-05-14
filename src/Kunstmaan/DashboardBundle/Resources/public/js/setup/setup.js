@@ -58,8 +58,8 @@ $(function () {
         $("#accounts").change(function() {
             $("#accounts").attr('disabled', 'disabled');
             // hide the properties and profiles selects
-            $('#properties').addClass('setup-item__not_shown');
-            $('#profiles').addClass('setup-item__not_shown');
+            $('#properties + .properties_chzn').fadeOut();
+            $('#profiles + .properties_chzn').fadeOut();
             $("#accounts option:selected").each(function() {
                 // get the account id of the selected account
                 accountId = $(this).attr('data-id');
@@ -94,7 +94,7 @@ $(function () {
                     $.each(data, function(key, value) {
                         var option = $('<option>', { 'data-id': data[key].propertyId, text: data[key].propertyName});
                         $('#properties').append(option);
-                        $('#properties').removeClass('setup-item__not_shown');
+                        $('#properties + .properties_chzn').fadeIn();
                         $('#properties').trigger('liszt:updated');
                         $('#profiles').trigger('liszt:updated');
                         $("#accounts").removeAttr('disabled');
@@ -142,7 +142,7 @@ $(function () {
                         // add the options
                         var option = $('<option>', { 'data-id': data[key].profileId, text: data[key].profileName});
                         $('#profiles').append(option);
-                        $('#profiles').removeClass('setup-item__not_shown');
+                        $('#profiles + .properties_chzn').fadeIn();
                         $('#profiles').trigger('liszt:updated');
                         $("#properties").removeAttr('disabled');
                         $("#accounts").removeAttr('disabled');
