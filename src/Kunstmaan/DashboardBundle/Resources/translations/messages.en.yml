@@ -42,6 +42,8 @@ dashboard:
                 add: Add segment
                 info: 'For documentation on how to create segment queries, click'
                 here: here
+            segments: Segment setup
+            accounts: Account setup
         reset:
             property: Change Google Analytics link
         last_update: Last update:

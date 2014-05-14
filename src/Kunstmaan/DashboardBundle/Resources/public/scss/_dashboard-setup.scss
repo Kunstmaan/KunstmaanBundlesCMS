@@ -56,6 +56,11 @@
         width:100%;
     }
 
+    h4 {
+        margin-top:0;
+        padding-top:0;
+    }
+
     #segment-group {
         border-left:1px solid #ccc;
 
@@ -64,11 +69,6 @@
         min-height:120px;
         padding-left:40px;
         padding-bottom:5px;
-
-        h4 {
-            margin-top:0;
-            padding-top:0;
-        }
 
         ul {
             margin-left:0;

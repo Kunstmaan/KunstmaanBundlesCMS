@@ -12,6 +12,7 @@
         {% endfor %}
 
         <div class="setup-group" id="account-group">
+            <h4>{{ 'dashboard.ga.setup.accounts' | trans }}</h4>
             <div id="accounts">
                 <select>
                     <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
@@ -35,6 +36,7 @@
                     {% endif %}
                 </select>
             </div>
+
             <div id="profiles" {% if profiles is not defined %}class="not-shown"{% endif %}>
                 <select>
                     <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
@@ -50,7 +52,7 @@
         </div>
 
         <div class="setup-group" id="segment-group">
-            <h4>Segments</h4>
+            <h4>{{ 'dashboard.ga.setup.segments' | trans }}</h4>
             <p>
                 {{ 'dashboard.ga.setup.segment.info' | trans }} <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/segments" target="_blank">{{ 'dashboard.ga.setup.segment.here' | trans }}</a>.
             </p>
