@@ -43,24 +43,32 @@ $(function () {
         return false;
     });
 
+    function triggerUpdate() {
+        $('#account select').trigger('liszt:updated');
+        $('#properties select').trigger('liszt:updated');
+        $('#profiles select').trigger('liszt:updated');
+
+    }
+
     /* =============================== ACCOUNTS =============================== */
-        $("#accounts").chosen(
+        $("#accounts select").chosen(
             {'search_contains' : true}
         );
-        $("#properties").chosen(
+        $("#properties select").chosen(
             {'search_contains' : true}
         );
-        $("#profiles").chosen(
+        $("#profiles select").chosen(
             {'search_contains' : true}
         );
 
         // on account selected
-        $("#accounts").change(function() {
-            $("#accounts").attr('disabled', 'disabled');
+        $("#accounts select").change(function() {
+            $("#accounts select").attr('disabled', 'disabled');
+            triggerUpdate();
             // hide the properties and profiles selects
-            $('#properties + .properties_chzn').fadeOut();
-            $('#profiles + .properties_chzn').fadeOut();
-            $("#accounts option:selected").each(function() {
+            $('#properties').fadeOut();
+            $('#profiles').fadeOut();
+            $("#accounts select option:selected").each(function() {
                 // get the account id of the selected account
                 accountId = $(this).attr('data-id');
                 setPropertyData(accountId);
@@ -74,12 +82,12 @@ $(function () {
             var url = $('#path_properties').attr('data-url');
 
             // clear all the options
-            $('#properties').children().each(function (i) {
+            $('#properties select').children().each(function (i) {
                 if (i != 0) {
                     $(this).remove();
                 }
             })
-            $('#profiles').children().each(function (i) {
+            $('#profiles select').children().each(function (i) {
                 if (i != 0) {
                     $(this).remove();
                 }
@@ -93,26 +101,28 @@ $(function () {
                 success: function (data) {
                     $.each(data, function(key, value) {
                         var option = $('<option>', { 'data-id': data[key].propertyId, text: data[key].propertyName});
-                        $('#properties').append(option);
-                        $('#properties + .properties_chzn').fadeIn();
-                        $('#properties').trigger('liszt:updated');
-                        $('#profiles').trigger('liszt:updated');
-                        $("#accounts").removeAttr('disabled');
+                        $('#properties select').append(option);
+                        $('#properties').fadeIn();
+                        $("#accounts select").removeAttr('disabled');
+                        triggerUpdate();
                     });
                 },
                 error: function (data) {
-                    $("#accounts").removeAttr('disabled');
+                    $("#accounts select").removeAttr('disabled');
+                    triggerUpdate();
                 }
             });
         }
 
         // on property selected
-        $("#properties").change(function() {
-            $("#properties").attr('disabled', 'disabled');
-            $("#accounts").attr('disabled', 'disabled');
+        $("#properties select").change(function() {
+            $('#profiles').fadeOut();
+            $("#properties select").attr('disabled', 'disabled');
+            $("#accounts select").attr('disabled', 'disabled');
+            triggerUpdate()
             // hide the profiles select
-            $('#profiles').addClass('setup-item__not_shown');
-            $("#properties option:selected").each(function() {
+            $('#profiles select').addClass('setup-item__not_shown');
+            $("#properties select option:selected").each(function() {
                 // get the property id of the selected property
                 propertyId = $(this).attr('data-id');
                 setProfileData(propertyId);
@@ -126,7 +136,7 @@ $(function () {
             var url = $('#path_profiles').attr('data-url');
 
             // clear all the options
-            $('#profiles').children().each(function (i) {
+            $('#profiles select').children().each(function (i) {
                 if (i != 0) {
                     $(this).remove();
                 }
@@ -141,25 +151,26 @@ $(function () {
                     $.each(data, function(key, value) {
                         // add the options
                         var option = $('<option>', { 'data-id': data[key].profileId, text: data[key].profileName});
-                        $('#profiles').append(option);
-                        $('#profiles + .properties_chzn').fadeIn();
-                        $('#profiles').trigger('liszt:updated');
-                        $("#properties").removeAttr('disabled');
-                        $("#accounts").removeAttr('disabled');
+                        $('#profiles select').append(option);
+                        $('#profiles').fadeIn();
+                        $("#properties select").removeAttr('disabled');
+                        $("#accounts select").removeAttr('disabled');
+                        triggerUpdate();
                     });
                 },
                 error: function (data) {
-                    $("#properties").removeAttr('disabled');
-                    $("#accounts").removeAttr('disabled');
+                    $("#properties select").removeAttr('disabled');
+                    $("#accounts select").removeAttr('disabled');
+                    triggerUpdate();
                 }
             });
         }
 
         // on profile selected
-        $("#profiles").change(function() {
+        $("#profiles select").change(function() {
             $('#submit_save').removeAttr('disabled');
 
-            $("#profiles option:selected").each(function() {
+            $("#profiles select option:selected").each(function() {
                 // get the profile id of the selected profile
                 profileId = $(this).attr('data-id');
                 $('#submit_save').removeAttr('disabled');

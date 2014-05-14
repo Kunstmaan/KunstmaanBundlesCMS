@@ -12,36 +12,41 @@
         {% endfor %}
 
         <div class="setup-group" id="account-group">
-            <select id="accounts" name="accounts">
-                <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
-                {% for account in accounts %}
-                    <option {% if account.accountId == accountId %}selected{% endif %} data-id="{{account.accountId}}">
-                        {{ account.accountName }}
-                    </option>
-                {% endfor %}
-            </select>
-
-            <select id="properties" {% if properties is not defined %} class="setup-item__not_shown" {% endif %}>
-                <option data-id="">{{ 'dashboard.ga.setup.property.select' | trans }}</option>
-                {% if properties is defined %}
-                    {% for property in properties %}
-                        <option {% if property.propertyId == propertyId %}selected{% endif %} data-id="{{property.propertyId}}">
-                            {{ property.propertyName }}
+            <div id="accounts">
+                <select>
+                    <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
+                    {% for account in accounts %}
+                        <option {% if account.accountId == accountId %}selected{% endif %} data-id="{{account.accountId}}">
+                            {{ account.accountName }}
                         </option>
                     {% endfor %}
-                {% endif %}
-            </select>
+                </select>
+            </div>
 
-            <select id="profiles" {% if profiles is not defined %} class="setup-item__not_shown" {% endif %}>
-                <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
-                {% if profiles is defined %}
-                    {% for profile in profiles %}
-                        <option {% if profile.profileId == profileId %}selected{% endif %} data-id="{{profile.profileId}}">
-                            {{ profile.profileName }}
-                        </option>
-                    {% endfor %}
-                {% endif %}
-            </select>
+            <div id="properties" {% if properties is not defined %}class="not-shown"{% endif %}>
+                <select>
+                    <option data-id="">{{ 'dashboard.ga.setup.property.select' | trans }}</option>
+                    {% if properties is defined %}
+                        {% for property in properties %}
+                            <option {% if property.propertyId == propertyId %}selected{% endif %} data-id="{{property.propertyId}}">
+                                {{ property.propertyName }}
+                            </option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            <div id="profiles" {% if profiles is not defined %}class="not-shown"{% endif %}>
+                <select>
+                    <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
+                    {% if profiles is defined %}
+                        {% for profile in profiles %}
+                            <option {% if profile.profileId == profileId %}selected{% endif %} data-id="{{profile.profileId}}">
+                                {{ profile.profileName }}
+                            </option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
         </div>
 
         <div class="setup-group" id="segment-group">
