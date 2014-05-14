@@ -48,19 +48,23 @@
         </div>
     </div>
 
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <section id="dashboard_footer">
-            {% if configId is not defined %}
-                <a href="{{ path('KunstmaanDashboardBundle_Config') }}">
-                    {{ 'dashboard.ga.setup.link' | trans }}</a> |
-            {% endif %}
-            <a href="#"
-                class="dashboard_update"
-                data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'segmentId':segmentId}) }}">
+    <section id="dashboard_footer">
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                {% if configId is not defined %}
+                    <a href="{{ path('KunstmaanDashboardBundle_Config') }}">
+                        {{ 'dashboard.ga.setup.link' | trans }}</a> |
+                {% endif %}
+                <a href="#"
+                    class="dashboard_update"
+                    data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'segmentId':segmentId}) }}">
+                    {{ 'dashboard.ga.last_update' | trans }} {{last_update}}
+                </a>
+        {% else %}
+            <span>
                 {{ 'dashboard.ga.last_update' | trans }} {{last_update}}
-            </a>
-        </section>
-    {% endif %}
+            </span>
+        {% endif %}
+    </section>
 </div>
 
 {% else %}
