@@ -61,19 +61,19 @@
                     <li id="segment-list__{{ segment.id }}">
                         <div class="display-view">
                             <span class="display-segment-name">{{ segment.name }}</span> (<span class="display-segment-query"> {{segment.query}} </span>)
-                            <button class="segment-list-button__delete btn" data-segment-id="{{ segment.id }}"><i class="icon-remove"></i></button>
-                            <button class="segment-list-button__edit btn" data-segment-id="{{ segment.id }}"><i class="icon-edit"></i></button>
+                            <button class="segment-list-button__delete btn btn-mini" data-segment-id="{{ segment.id }}"><i class="icon-remove"></i> remove</button>
+                            <button class="segment-list-button__edit btn btn-mini" data-segment-id="{{ segment.id }}"><i class="icon-edit"></i> edit</button>
                         </div>
                         <div class="edit-view">
                             <input type="text" id="segment-edit-name-{{segment.id}}" class="segment-name" value="{{segment.name}}"/>
                             <input type="text" id="segment-edit-query-{{segment.id}}" class="segment-query" value="{{segment.query}}"/>
-                            <button class="segment-list-button__confirm btn" data-segment-id="{{ segment.id }}"><i class="icon-ok"></i></button>
+                            <button class="segment-list-button__confirm btn btn-small" data-segment-id="{{ segment.id }}"><i class="icon-ok"></i> save</button>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
             <div id="segments-new"></div>
-            <button class="btn" type="button" id="segment-button__add"><i class="icon-plus"></i></button>
+            <button class="btn btn-small" type="button" id="segment-button__add"><i class="icon-plus"></i> add segment</button>
         </div>
 
         <div class="setup-group" id="control-group">
