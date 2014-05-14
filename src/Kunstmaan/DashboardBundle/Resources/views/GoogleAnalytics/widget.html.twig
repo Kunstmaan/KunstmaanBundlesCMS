@@ -5,11 +5,11 @@
         <nav id="segment-menu">
             <select>
                 <option>Choose a segment..</option>
-                <option data-segment-id="#">
+                <option data-segment-id="#" data-config-id="{% if configId is defined %}{{configId}}{% endif %}">
                     Default
                 </option>
                 {% for segment in segments %}
-                    <option data-segment-id="{{segment.id}}">
+                    <option data-segment-id="{{segment.id}}" data-config-id="{{segment.config.id}}">
                         {{segment.name}}
                     </option>
                 {% endfor %}

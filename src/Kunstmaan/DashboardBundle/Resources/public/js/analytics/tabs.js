@@ -63,14 +63,17 @@ $(function () {
         switchTab(id, url);
     });
 
-
-    $("#segment-menu > select").change(function() {
-        if ($('#segment-menu > select option:selected').attr('data-segment-id')) {
-            var segmentId = $('#segment-menu > select option:selected').attr('data-segment-id');
+    $("#segment-menu select").chosen(
+        {'search_contains' : true}
+    );
+    $("#segment-menu select").change(function() {
+        var segmentId = $(this).find('option:selected').attr('data-segment-id');
+        var configId = $(this).find('option:selected').attr('data-config-id');
+        if (segmentId) {
             if (segmentId != '#') {
-                location.href="?segment=" + segmentId;
+                location.href="?segment=" + segmentId + '&config=' + configId;
             } else {
-                location.href="?";
+                location.href="?config=" + configId;
             }
         }
     });
