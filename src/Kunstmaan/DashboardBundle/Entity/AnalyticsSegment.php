@@ -19,6 +19,24 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="query", type="string", length=1000)
+     */
+    private $query;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="segments")
+     * @ORM\JoinColumn(name="config", referencedColumnName="id")
+     */
+    private $config;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="segment", cascade={"persist", "remove"})
+     */
+    private $overviews;
+
 
     /**
      * Set name
@@ -42,15 +60,6 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     {
         return $this->name;
     }
-
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="query", type="string", length=1000)
-     */
-    private $query;
-
 
     /**
      * Set query
@@ -76,12 +85,6 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="segments")
-     * @ORM\JoinColumn(name="config", referencedColumnName="id")
-     */
-    private $config;
-
-    /**
      * Get config
      *
      * @return integer
@@ -104,11 +107,6 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 
         return $this;
     }
-
-    /**
-     * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="segment", cascade={"persist", "remove"})
-     */
-    private $overviews;
 
     /**
      * Set overviews

@@ -15,45 +15,21 @@ use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 class AnalyticsConfigRepository extends EntityRepository
 {
     /**
-     * Get the config from the database, creates a new entry if the config doesn't exist yet
+     * Get the first config from the database, creates a new entry if the config doesn't exist yet
      *
      * @return AnalyticsConfig $config
      */
-    public function getConfig($id=false)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        if ($id) {
-            // create a query to get the config from DB
-            $qb->select('c')
-              ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c')
-              ->where('c.id = :id')
-              ->setParameter('id', $id);
-
-            $result = $qb->getQuery()->getResult();
-            // if config exists
-            if (count($result) > 0) {
-                $config = $result[0];
-
-                // if empty config, add overviews
-                if (sizeof($config) == 0) $this->getEntityManager()->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->addOverviews($config);
-            } else {
-                // throw exception is config ID is unknown
-                throw new \Exception('Unknown config ID');
-            }
+    public function findFirst() {
+        // Backwards compatibility: select the first config, still used in the dashboard, specified config ids are set in the dashboard collection bundle
+        $em = $this->getEntityManager();
+        $query = $em->createQuery( 'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c' );
+        $result = $query->getResult();
+        // if no configs exist, create a new one
+        if (!$result) {
+            return $this->createConfig();
         } else {
-            // Backwards compatibility: select the first config, still used in the dashboard, specified config ids are set in the dashboard collection bundle
-            $em = $this->getEntityManager();
-            $query = $em->createQuery( 'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c' );
-            $result = $query->getResult();
-            // if no configs exist, create a new one
-            if (!$result) {
-                return $this->createConfig();
-            } else {
-                $config = $result[0];
-            }
+           return $result[0];
         }
-
-        return $config;
     }
 
     /**
@@ -73,21 +49,6 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /**
-     * Get a list of all configs
-     *
-     * @return array
-     */
-    public function listConfigs() {
-        return $this
-                ->getEntityManager()
-                ->createQueryBuilder()
-                ->select('c')
-                ->from('KunstmaanDashboardBundle:AnalyticsConfig', 'c')
-                ->getQuery()
-                ->getResult();
-    }
-
-    /**
      * Flush a config
      *
      * @param int $id the config id
@@ -98,14 +59,14 @@ class AnalyticsConfigRepository extends EntityRepository
         // Backward compatibilty to flush overviews without a config set
         if (!$id) {
             $overviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-            foreach ($overviewRepository->getAll() as $overview) {
+            foreach ($overviewRepository->findAll() as $overview) {
                 $em->remove($overview);
             }
             $em->flush();
             return;
         }
 
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         foreach ($config->getOverviews() as $overview) {
             $em->remove($overview);
         }
@@ -122,7 +83,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function setUpdated($id=false) {
         $em = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         $config->setLastUpdate(new \DateTime());
         $em->persist($config);
         $em->flush();
@@ -135,7 +96,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function saveToken($token, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         $config->setToken($token);
         $em->persist($config);
         $em->flush();
@@ -148,7 +109,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function savePropertyId($propertyId, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         $config->setPropertyId($propertyId);
         $em->persist($config);
         $em->flush();
@@ -161,7 +122,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function saveAccountId($accountId, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         $config->setAccountId($accountId);
         $em->persist($config);
         $em->flush();
@@ -174,7 +135,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function saveProfileId($profileId, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         $config->setProfileId($profileId);
         $em->persist($config);
         $em->flush();
@@ -187,7 +148,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function saveConfigName($name, $id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         $config->setName($name);
         $em->persist($config);
         $em->flush();
@@ -200,7 +161,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function resetProfileId($id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         $config->setProfileId('');
         $em->persist($config);
         $em->flush();
@@ -213,7 +174,7 @@ class AnalyticsConfigRepository extends EntityRepository
      */
     public function resetPropertyId($id=false) {
         $em    = $this->getEntityManager();
-        $config = $this->getConfig($id);
+        $config = $id ? $this->find($id) : $this->findFirst();
         $config->setAccountId('');
         $config->setProfileId('');
         $config->setPropertyId('');

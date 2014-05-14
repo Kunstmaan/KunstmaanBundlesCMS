@@ -48,7 +48,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var AnalyticsOverviewRepository $analyticsOverviewRepository */
         $analyticsOverviewRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-        $overview = $analyticsOverviewRepository->getOverview($id);
+        $overview = $analyticsOverviewRepository->find($id);
 
         // goals data
         $goals = array();
@@ -93,7 +93,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== ACCOUNT =============================== */
 
         /**
-         * @Route("/accounts/", name="DashBoardBundle_AJAX_accounts")
+         * @Route("/accounts/", name="kunstmaan_dashboard_ajax_accounts")
          */
         public function getAccountsAction(Request $request) {
             $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
@@ -105,7 +105,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/account/save", name="DashBoardBundle_AJAX_account_save")
+         * @Route("/account/save", name="kunstmaan_dashboard_ajax_account_save")
          */
         public function saveAccountAction(Request $request) {
             $accountId = $request->query->get('id');
@@ -117,7 +117,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== PROPERTY =============================== */
 
         /**
-         * @Route("/properties/", name="DashBoardBundle_AJAX_properties")
+         * @Route("/properties/", name="kunstmaan_dashboard_ajax_properties")
          */
         public function getPropertiesAction(Request $request) {
             $accountId = $request->query->get('accountId');
@@ -130,7 +130,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/property/save", name="DashBoardBundle_AJAX_property_save")
+         * @Route("/property/save", name="kunstmaan_dashboard_ajax_property_save")
          */
         public function savePropertyAction(Request $request) {
             $propertyId = $request->query->get('id');
@@ -142,7 +142,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== PROFILE =============================== */
 
         /**
-         * @Route("/profiles/", name="DashBoardBundle_AJAX_profiles")
+         * @Route("/profiles/", name="kunstmaan_dashboard_ajax_profiles")
          */
         public function getProfilesAction(Request $request) {
             $accountId = $request->query->get('accountId');
@@ -157,7 +157,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/profile/save", name="DashBoardBundle_AJAX_profile_save")
+         * @Route("/profile/save", name="kunstmaan_dashboard_ajax_profile_save")
          */
         public function saveProfileAction(Request $request) {
             $propertyId = $request->query->get('id');
@@ -169,7 +169,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== CONFIG =============================== */
 
         /**
-         * @Route("/config/save", name="DashBoardBundle_AJAX_config_save")
+         * @Route("/config/save", name="kunstmaan_dashboard_ajax_config_save")
          */
         public function saveConfigAction(Request $request) {
             // get params
@@ -179,7 +179,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
             // edit the config
             $em = $this->getDoctrine()->getManager();
-            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig();
+            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
             if ($accountId && $propertyId && $profileId) {
                 $config->setAccountId($accountId);
                 $config->setPropertyId($propertyId);
@@ -198,11 +198,11 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/config/get", name="DashBoardBundle_AJAX_config_get")
+         * @Route("/config/get", name="kunstmaan_dashboard_ajax_config_get")
          */
         public function getConfigAction(Request $request) {
             $em = $this->getDoctrine()->getManager();
-            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->getConfig();
+            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
             $accountId = $config->getAccountId();
 
             if (!$accountId) {
@@ -222,7 +222,7 @@ class GoogleAnalyticsAJAXController extends Controller
     /* =============================== SEGMENT =============================== */
 
         /**
-         * @Route("/segment/add/", name="DashBoardBundle_AJAX_segment_add")
+         * @Route("/segment/add/", name="kunstmaan_dashboard_ajax_segment_add")
          */
         public function addSegmentAction(Request $request) {
             $em = $this->getDoctrine()->getManager();
@@ -235,8 +235,8 @@ class GoogleAnalyticsAJAXController extends Controller
             $segment->setName($name);
 
             // add the segment to the config
-            $analyticsConfig = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-            $config = $analyticsConfig->getconfig();
+            $analyticsConfigRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+            $config = $analyticsConfigRepository->findFirst();
             $segment->setConfig($config);
             $segments = $config->getSegments();
             $segments[] = $segment;
@@ -247,7 +247,7 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
-         * @Route("/segment/delete", name="DashBoardBundle_AJAX_segment_delete")
+         * @Route("/segment/delete", name="kunstmaan_dashboard_ajax_segment_delete")
          */
         public function deleteSegmentAction(Request $request) {
             $em = $this->getDoctrine()->getManager();
@@ -255,6 +255,24 @@ class GoogleAnalyticsAJAXController extends Controller
             // remove the segment
             $id = $request->query->get('id');
             $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->deleteSegment($id);
+            return new JsonResponse();
+        }
+
+        /**
+         * @Route("/segment/edit", name="kunstmaan_dashboard_ajax_segment_edit")
+         */
+        public function editSegmentAction(Request $request) {
+            $em = $this->getDoctrine()->getManager();
+
+            // remove the segment
+            $id = $request->query->get('id');
+            $query = $request->query->get('query');
+            $name = $request->query->get('name');
+            $segment = $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->find($id);
+            $segment->setName($name);
+            $segment->setQuery($query);
+            $em->persist($segment);
+            $em->flush();
             return new JsonResponse();
         }
 

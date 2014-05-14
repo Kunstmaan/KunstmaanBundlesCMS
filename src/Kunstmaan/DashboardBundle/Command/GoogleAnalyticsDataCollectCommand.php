@@ -23,6 +23,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     /** @var OutputInterface $output */
     private $output;
 
+    /** @var int $errors */
+    private $errors = 0;
+
     /**
      * Configures the current command.
      */
@@ -82,7 +85,6 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $configId = false;
         $segmentId = false;
         $overviewId = false;
-
         try {
             $configId  = $input->getOption('config');
             $segmentId = $input->getOption('segment');
@@ -90,67 +92,127 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         } catch (\Exception $e) {}
 
         // get the overviews
-        $overviews = array();
         try {
+            $overviews = array();
+
             if ($overviewId) {
-                // get specified overview
-                $overviews[] = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getOverview($overviewId);
+                $overviews[] = $this->getSingleOverview($overviewId);
             } else if ($segmentId) {
-                $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-
-                // get specified segment
-                $segment = $segmentRepository->getSegment($segmentId);
-
-                // init the segment
-                $segmentRepository->initSegment($segment);
-
-                // get the overviews
-                $overviews = $segment->getOverviews();
+                $overviews = $this->getOverviewsOfSegment($segmentId);
             } else if ($configId) {
-                $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-
-                // get specified config
-                $config = $configRepository->getConfig($configId);
-
-                // init all the segments for this config
-                $segments = $config->getSegments();
-                foreach ($segments as $segment) {
-                    $segmentRepository->initSegment($segment);
-                }
-
-                // get the overviews
-                $overviews = $config->getOverviews();
+                $overviews = $this->getOverviewsOfConfig($configId);
             } else {
-                $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
-                $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-
-                $config = $configRepository->getConfig();
-
-                // add overviews if none exist yet
-                if (sizeof($config->getOverviews()) == 0) {
-                    $overviewRepository->addOverviews($config);
-                }
-
-                // init all the segments for this config
-                $segments = $config->getSegments();
-                foreach ($segments as $segment) {
-                    $segmentRepository->initSegment($segment);
-                }
-
-                // get all overviews
-                $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getAll();
+                $overviews = $this->getAllOverviews();
             }
 
+            // update the overviews
             $this->updateData($overviews);
-
-            $this->output->writeln('Google Analytics data succesfully updated'); // done
+            $result = '<fg=green>Google Analytics data updated with <fg=red>'.$this->errors.'</fg=red> error';
+            $result .= $this->errors != 1 ? 's</fg=green>' : '</fg=green>';
+            $this->output->writeln($result); // done
         } catch (\Exception $e) {
-            $output->writeln($e->getMessage());
-            exit;
+            $this->output->writeln($e->getMessage());
         }
 
+    }
+
+    /**
+     * get a single overview
+     * @param int $overviewId
+     * @return AnalyticsOverview
+     */
+    private function getSingleOverview($overviewId)
+    {
+        // get specified overview
+        $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+        $overview = $overviewRepository->find($overviewId);
+
+        if (!$overview) {
+            throw new \Exception('Unkown overview ID');
+        }
+
+        return $overview;
+    }
+
+    /**
+     * get all overviews of a segment
+     * @param int $segmentId
+     * @return array
+     */
+    private function getOverviewsOfSegment($segmentId)
+    {
+        // get specified segment
+        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $segment = $segmentRepository->find($segmentId);
+
+        if (!$segment) {
+            throw new \Exception('Unkown segment ID');
+        }
+
+        // init the segment
+        $segmentRepository->initSegment($segment);
+
+        // get the overviews
+        return $segment->getOverviews();
+    }
+
+    /**
+     * get all overviews of a config
+     * @param int $configId
+     * @return array
+     */
+    private function getOverviewsOfConfig($configId)
+    {
+        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+        // get specified config
+        $config = $configRepository->find($configId);
+
+        if (!$config) {
+            throw new \Exception('Unkown config ID');
+        }
+
+        // create default overviews for this config if none exist yet
+        if (!count($config->getOverviews())) {
+            $overviewRepository->addOverviews($config);
+        }
+
+        // init all the segments for this config
+        $segments = $config->getSegments();
+        foreach ($segments as $segment) {
+            $segmentRepository->initSegment($segment);
+        }
+
+        // get the overviews
+        return $config->getOverviews();
+    }
+
+    /**
+     * get all overviews
+     *
+     * @return array
+     */
+    private function getAllOverviews()
+    {
+        $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+        $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
+        $config = $configRepository->findFirst();
+
+        // add overviews if none exist yet
+        if (sizeof($config->getOverviews()) == 0) {
+            $overviewRepository->addOverviews($config);
+        }
+
+        // init all the segments for this config
+        $segments = $config->getSegments();
+        foreach ($segments as $segment) {
+            $segmentRepository->initSegment($segment);
+        }
+
+        // get all overviews
+        return $overviewRepository->findAll();
     }
 
     /**
@@ -160,42 +222,46 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
      */
     public function updateData($overviews)
     {
-        // get helpers
+        // helpers
         $queryHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.query');
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
+        $metrics = new MetricsCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
+        $chartData = new ChartDataCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
+        $goals = new GoalCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
+        $visitors = new UsersCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
 
         // get data per overview
         foreach ($overviews as $overview) {
             /** @var AnalyticsOverview $overview */
-            $this->output->writeln('Getting data for overview "' . $overview->getTitle() . '"');
+            $this->output->writeln('Fetching data for overview "<fg=green>' . $overview->getTitle() . '</fg=green>"');
 
-            // metric data
-            $metrics = new MetricsCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-            $metrics->getData($overview);
+            try {
+                // metric data
+                $metrics->getData($overview);
+                if ($overview->getSessions()) { // if there are any visits
+                    // day-specific data
+                    $chartData->getData($overview);
 
-            if ($overview->getSessions()) { // if there are any visits
-                // day-specific data
-                $chartData = new ChartDataCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-                $chartData->getData($overview);
+                    // get goals
+                    $goals->getData($overview);
 
-                // get goals
-                $goals = new GoalCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-                $goals->getData($overview);
-
-                // visitor types
-                $visitors = new UsersCommandHelper($configHelper, $queryHelper, $this->output, $this->em);
-                $visitors->getData($overview);
-            } else {
-                // reset overview
-                $this->reset($overview);
-                $this->output->writeln("\t" . 'No visitors');
-            }
+                    // visitor types
+                    $visitors->getData($overview);
+                } else {
+                    // reset overview
+                    $this->reset($overview);
+                    $this->output->writeln("\t" . 'No visitors');
+                }
             // persist entity back to DB
-            $this->output->writeln("\t" . 'Persisting..');
-            $this->em->persist($overview);
-            $this->em->flush();
+                $this->output->writeln("\t" . 'Persisting..');
+                $this->em->persist($overview);
+                $this->em->flush();
 
-            $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
+                $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
+            } catch (\Google_ServiceException $e) {
+                $this->output->writeln("\t" . '<fg=red>Invalid segment</fg=red>');
+                $this->errors += 1;
+            }
         }
     }
 

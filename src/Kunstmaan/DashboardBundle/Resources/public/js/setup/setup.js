@@ -43,14 +43,33 @@ $(function () {
         return false;
     });
 
+    function triggerUpdate() {
+        $('#accounts select').trigger('liszt:updated');
+        $('#properties select').trigger('liszt:updated');
+        $('#profiles select').trigger('liszt:updated');
+
+    }
+
     /* =============================== ACCOUNTS =============================== */
+        $("#accounts select").chosen(
+            {'search_contains' : true}
+        );
+        $("#properties select").chosen(
+            {'search_contains' : true}
+        );
+        $("#profiles select").chosen(
+            {'search_contains' : true}
+        );
 
         // on account selected
-        $("#accounts").change(function() {
+        $("#accounts select").change(function() {
+            $("#accounts select").attr('disabled', 'disabled');
+            triggerUpdate();
+
             // hide the properties and profiles selects
-            $('#properties').addClass('setup-item__not_shown');
-            $('#profiles').addClass('setup-item__not_shown');
-            $("#accounts option:selected").each(function() {
+            $('#properties').fadeOut();
+            $('#profiles').fadeOut();
+            $("#accounts select option:selected").each(function() {
                 // get the account id of the selected account
                 accountId = $(this).attr('data-id');
                 setPropertyData(accountId);
@@ -64,7 +83,12 @@ $(function () {
             var url = $('#path_properties').attr('data-url');
 
             // clear all the options
-            $('#properties').children().each(function (i) {
+            $('#properties select').children().each(function (i) {
+                if (i != 0) {
+                    $(this).remove();
+                }
+            })
+            $('#profiles select').children().each(function (i) {
                 if (i != 0) {
                     $(this).remove();
                 }
@@ -76,21 +100,30 @@ $(function () {
                 url: url,
                 data: {'accountId' : accountId},
                 success: function (data) {
-                    for(var i = 0; i < data.length; i++) {
-                        // add the options
-                        var option = $('<option>', { 'data-id': data[i].propertyId, text: data[i].propertyName});
-                        $('#properties').append(option);
-                        $('#properties').removeClass('setup-item__not_shown');
-                    }
+                    $.each(data, function(key, value) {
+                        var option = $('<option>', { 'data-id': data[key].propertyId, text: data[key].propertyName});
+                        $('#properties select').append(option);
+                        $('#properties').fadeIn();
+                        $("#accounts select").removeAttr('disabled');
+                        triggerUpdate();
+                    });
+                },
+                error: function (data) {
+                    $("#accounts select").removeAttr('disabled');
+                    triggerUpdate();
                 }
             });
         }
 
         // on property selected
-        $("#properties").change(function() {
+        $("#properties select").change(function() {
+            $('#profiles').fadeOut();
+            $("#properties select").attr('disabled', 'disabled');
+            $("#accounts select").attr('disabled', 'disabled');
+            triggerUpdate();
             // hide the profiles select
-            $('#profiles').addClass('setup-item__not_shown');
-            $("#properties option:selected").each(function() {
+            $('#profiles select').addClass('setup-item__not_shown');
+            $("#properties select option:selected").each(function() {
                 // get the property id of the selected property
                 propertyId = $(this).attr('data-id');
                 setProfileData(propertyId);
@@ -104,7 +137,7 @@ $(function () {
             var url = $('#path_profiles').attr('data-url');
 
             // clear all the options
-            $('#profiles').children().each(function (i) {
+            $('#profiles select').children().each(function (i) {
                 if (i != 0) {
                     $(this).remove();
                 }
@@ -116,21 +149,29 @@ $(function () {
                 url: url,
                 data: {'propertyId' : propertyId, 'accountId' : accountId},
                 success: function (data) {
-                    for(var i = 0; i < data.length; i++) {
+                    $.each(data, function(key, value) {
                         // add the options
-                        var option = $('<option>', { 'data-id': data[i].profileId, text: data[i].profileName});
-                        $('#profiles').append(option);
-                        $('#profiles').removeClass('setup-item__not_shown');
-                    }
+                        var option = $('<option>', { 'data-id': data[key].profileId, text: data[key].profileName});
+                        $('#profiles select').append(option);
+                        $('#profiles').fadeIn();
+                        $("#properties select").removeAttr('disabled');
+                        $("#accounts select").removeAttr('disabled');
+                        triggerUpdate();
+                    });
+                },
+                error: function (data) {
+                    $("#properties select").removeAttr('disabled');
+                    $("#accounts select").removeAttr('disabled');
+                    triggerUpdate();
                 }
             });
         }
 
         // on profile selected
-        $("#profiles").change(function() {
+        $("#profiles select").change(function() {
             $('#submit_save').removeAttr('disabled');
 
-            $("#profiles option:selected").each(function() {
+            $("#profiles select option:selected").each(function() {
                 // get the profile id of the selected profile
                 profileId = $(this).attr('data-id');
                 $('#submit_save').removeAttr('disabled');
@@ -154,7 +195,7 @@ $(function () {
             var segmentDiv = $('<div>', {'id' : 'segmentDiv'+id});
             var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segment'+id, 'class' : 'segment-query', 'placeholder' : 'query'});
             var segmentName = $('<input>', { 'type': 'text', 'id' : 'segment_name'+id, 'class' : 'segment-name', 'placeholder' : 'name'});
-            var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'segment-button__delete btn__delete btn', 'value' : 'X', 'placeholder' : 'query'})
+            var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'segment-button__delete btn', 'value' : 'cancel'})
 
             // add event trigger for the delete button
             segmentButton.click(function() {
@@ -187,5 +228,42 @@ $(function () {
                     $('#segment-list__'+id).fadeOut();
                 }
             });
+            return false;
         })
+
+        $('.segment-list-button__edit').click(function() {
+            // get segment id
+            var id = $(this).attr('data-segment-id');
+
+            $('#segment-list__'+id+' .edit-view').css('display', 'block');
+            $('#segment-list__'+id+' .display-view').css('display', 'none');
+            return false;
+        });
+
+        $('.segment-list-button__confirm').click(function() {
+            // get segment id
+            var id = $(this).attr('data-segment-id');
+
+            var query = $('#segment-list__'+id).find('input.segment-query').val();
+            var name = $('#segment-list__'+id).find('input.segment-name').val();
+            if (query && name) {
+                var url = $('#path_segment_edit').attr('data-url');
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    data: {'id' : id, 'name' : name, 'query' : query},
+                    success: function (data) {
+
+                        $('#segment-list__'+id+' .edit-view').css('display', 'none');
+                        $('#segment-list__'+id+' .display-view').css('display', 'block');
+                        $('#segment-list__'+id+' .display-segment-query').html(query)
+                        $('#segment-list__'+id+' .display-segment-name').html(name);
+                    }
+                });
+            } else {
+                $('#segment-list__'+id+' .edit-view').css('display', 'none');
+                $('#segment-list__'+id+' .display-view').css('display', 'block');
+            }
+            return false;
+        });
 });
