@@ -1,7 +1,7 @@
 $(function () {
-    var accountId = 0;
-    var propertyId = 0;
-    var profileId = 0;
+    var accountId = $('#account_id').attr('data-id');
+    var propertyId = $('#property_id').attr('data-id');
+    var profileId = $('#profile_id').attr('data-id');
 
     $('#submit_save').click(function() {
         // get the option data

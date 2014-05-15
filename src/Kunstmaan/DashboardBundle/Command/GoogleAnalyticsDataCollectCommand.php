@@ -259,7 +259,8 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
                 $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
             } catch (\Google_ServiceException $e) {
-                $this->output->writeln("\t" . '<fg=red>Invalid segment</fg=red>');
+                $error = explode(')', $e->getMessage())[1];
+                $this->output->writeln("\t" . '<fg=red>Invalid segment: </fg=red>' .$error);
                 $this->errors += 1;
             }
         }

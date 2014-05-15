@@ -209,6 +209,8 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             $goals = $overview->getGoals();
             $goals[] = $goal;
 
+            $this->em->persist($goal);
+
             $this->output->writeln("\t\t" . 'Fetched goal ' . $goal->getPosition() . ': "' . $goal->getName() . '" @ ' . $totalVisits);
         }
     }

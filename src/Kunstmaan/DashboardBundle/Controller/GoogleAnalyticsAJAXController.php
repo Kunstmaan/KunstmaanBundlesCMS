@@ -189,6 +189,15 @@ class GoogleAnalyticsAJAXController extends Controller
             $em->persist($config);
             $em->flush();
 
+            // set the config name
+            $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
+            $configHelper->init($config->getId());
+            $profile = $configHelper->getActiveProfile();
+            $config->setName($profile['profileName']);
+
+            $em->persist($config);
+            $em->flush();
+
             $this->get('session')->getFlashBag()->add(
                 'success',
                 'Succesfully saved!'

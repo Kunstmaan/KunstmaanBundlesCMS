@@ -89,6 +89,9 @@
     <input type="hidden" id="path_segment_delete" data-url="{{ path('kunstmaan_dashboard_ajax_segment_delete') }}" />
     <input type="hidden" id="path_segment_edit" data-url="{{ path('kunstmaan_dashboard_ajax_segment_edit') }}" />
     <input type="hidden" id="path_config_save" data-url="{{ path('kunstmaan_dashboard_ajax_config_save') }}" />
+    <input type="hidden" id="account_id" data-id="{{accountId}}" />
+    <input type="hidden" id="property_id" data-id="{{propertyId}}" />
+    <input type="hidden" id="profile_id" data-id="{{profileId}}" />
 {% endblock %}
 
 {% block extrajavascript %}
