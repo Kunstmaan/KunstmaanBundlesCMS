@@ -1,15 +1,13 @@
 {% if token %}
 <div class="dashboard">
-
     {% if segments | length > 0 %}
         <nav id="segment-menu">
             <select>
-                <option>Choose a segment..</option>
-                <option data-segment-id="#" data-config-id="{% if configId is defined %}{{configId}}{% endif %}">
+                <option data-segment-id="#" data-config-id="{% if configId is defined %}{{configId}}{% endif %}" {% if segmentId is null %}selected{% endif %} >
                     Default
                 </option>
                 {% for segment in segments %}
-                    <option data-segment-id="{{segment.id}}" data-config-id="{{segment.config.id}}">
+                    <option data-segment-id="{{segment.id}}" data-config-id="{{segment.config.id}}" {% if segment.id == segmentId %}selected{% endif %} >
                         {{segment.name}}
                     </option>
                 {% endfor %}
