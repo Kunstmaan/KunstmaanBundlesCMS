@@ -12,7 +12,7 @@ class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('ga:data:flush')
+            ->setName('kuma:dashboard:widget:googleanalytics:data:flush')
             ->setDescription('Flush the data of a config')
             ->addArgument(
                 'config',

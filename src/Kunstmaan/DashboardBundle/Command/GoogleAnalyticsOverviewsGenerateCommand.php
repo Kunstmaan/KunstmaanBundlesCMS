@@ -14,7 +14,7 @@ class GoogleAnalyticsOverviewsGenerateCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('ga:overviews:generate')
+            ->setName('kuma:dashboard:widget:googleanalytics:overviews:generate')
             ->setDescription('Generate overviews')
             ->addOption(
                 'config',

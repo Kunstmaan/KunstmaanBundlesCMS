@@ -14,7 +14,7 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('ga:overviews:list')
+            ->setName('kuma:dashboard:widget:googleanalytics:overviews:list')
             ->setDescription('List available overviews')
             ->addOption(
                 'config',

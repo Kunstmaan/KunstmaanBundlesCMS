@@ -14,7 +14,7 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('ga:configs:list')
+            ->setName('kuma:dashboard:widget:googleanalytics:configs:list')
             ->setDescription('List available configs');
     }
 

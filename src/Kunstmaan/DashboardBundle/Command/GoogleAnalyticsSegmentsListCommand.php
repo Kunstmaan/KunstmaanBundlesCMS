@@ -14,7 +14,7 @@ class GoogleAnalyticsSegmentsListCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('ga:segments:list')
+            ->setName('kuma:dashboard:widget:googleanalytics:segments:list')
             ->setDescription('List available segments')
             ->addOption(
                 'config',
