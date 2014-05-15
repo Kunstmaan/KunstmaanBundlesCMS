@@ -128,6 +128,8 @@ class GoogleAnalyticsController extends Controller
         $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
 
         $params['accountId'] = $config->getAccountId();
+        $params['propertyId'] = 0;
+        $params['profileId'] = 0;
 
         if ($params['accountId']) {
             $params['propertyId'] = $config->getPropertyId();
