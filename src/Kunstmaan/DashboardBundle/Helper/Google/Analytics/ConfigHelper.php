@@ -318,6 +318,10 @@ class ConfigHelper
             $profiles = $this->getProfiles();
             $profileId = $this->getProfileId();
 
+            if (!is_array($profiles)) {
+                throw new \Exception('<fg=red>The config is invalid</fg=red>');
+            }
+
             foreach ($profiles as $profile) {
                 if ($profile['profileId'] == $profileId) {
                     return $profile;
