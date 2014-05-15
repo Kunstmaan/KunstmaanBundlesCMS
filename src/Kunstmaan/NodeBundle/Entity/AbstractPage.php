@@ -2,25 +2,26 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\AbstractType;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * The Abstract ORM Page
  */
-abstract class AbstractPage extends AbstractEntity implements PageInterface
+abstract class AbstractPage implements PageInterface
 {
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="bigint")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
     /**
      * @var string
@@ -41,6 +42,30 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
      * @var HasNodeInterface
      */
     protected $parent;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id The unique identifier
+     *
+     * @return AbstractPage
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Set title
@@ -143,7 +168,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     {
     }
 
-
     /**
      * By default this will return false. Pages will always be pages until some class says otherwise.
      *
@@ -153,5 +177,4 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     {
         return false;
     }
-
 }
