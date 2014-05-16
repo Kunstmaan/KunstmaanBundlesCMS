@@ -8,7 +8,7 @@
 
 /* General
    ========================================================================== */
-$root:                  "/bundles/kumatest";
+$root:                  "/bundles/{{ bundle.name|lower|replace({"bundle": ""}) }}";
 $vendor:                "../../vendor";
 
 
