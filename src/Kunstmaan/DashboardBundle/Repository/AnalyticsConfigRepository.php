@@ -33,6 +33,20 @@ class AnalyticsConfigRepository extends EntityRepository
     }
 
     /**
+     * Get the default overviews for a config
+     *
+     * @return AnalyticsConfig $config
+     */
+    public function findDefaultOverviews($config) {
+        $em = $this->getEntityManager();
+        return $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')
+            ->findBy(array(
+                    'config' => $config,
+                    'segment' => null
+                ));
+    }
+
+    /**
      * Create a new config
      *
      * @return AnalyticsConfig
