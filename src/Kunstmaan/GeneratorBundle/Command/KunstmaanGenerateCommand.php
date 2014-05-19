@@ -365,13 +365,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $self = $this;
         $typeStrings = $this->getTypes();
         $mediaTypeSelect = $this->getMediaTypes();
+        $generator = $this->getGenerator();
 
         while (true) {
             $this->assistant->writeLine('');
 
             $fieldName = $this->assistant->askAndValidate(
                 'New field name (press <return> to stop adding fields)',
-                function ($name) use ($fields, $self, $reservedFields) {
+                function ($name) use ($fields, $self, $reservedFields, $generator) {
                     // The fields cannot exist in the reserved field list
                     if (in_array($name, $reservedFields)) {
                         throw new \InvalidArgumentException(sprintf('Field "%s" is already defined in the parent class', $name));
@@ -383,7 +384,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     }
 
                     // Check reserved words
-                    if ($self->getGenerator()->isReservedKeyword($name)) {
+                    if ($generator->isReservedKeyword($name)) {
                         throw new \InvalidArgumentException(sprintf('Name "%s" is a reserved word', $name));
                     }
 
