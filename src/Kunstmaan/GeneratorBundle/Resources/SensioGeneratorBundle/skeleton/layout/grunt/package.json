@@ -1,7 +1,7 @@
 {
     "name": "{{ bundle.getName() }}",
     "version": "1.0.0",
-    "devDependencies": {
+    "dependencies": {
         "grunt": "~0.4.1",
         "grunt-contrib-jshint": "~0.6.0",
         "grunt-contrib-uglify": "latest",
