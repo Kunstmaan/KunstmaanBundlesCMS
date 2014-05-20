@@ -17,10 +17,6 @@ class Slugifier
      */
     public static function slugify($text, $default = 'n-a')
     {
-
-        $text = preg_replace('#[^\\pL\d\/]+#u', '-', $text); // replace non letter or digits by -
-        $text = trim($text, '-'); //trim
-
         // transliterate
         if (function_exists('iconv')) {
             $previouslocale = setlocale(LC_CTYPE, 0);
@@ -28,6 +24,9 @@ class Slugifier
             $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
             setlocale(LC_CTYPE, $previouslocale);
         }
+
+        $text = preg_replace('#[^\\pL\d\/]+#u', '-', $text); // replace non letter or digits by -
+        $text = trim($text, '-'); //trim
 
         $text = strtolower($text); // lowercase
         $text = preg_replace('#[^-\w\/]+#', '', $text); // remove unwanted characters
