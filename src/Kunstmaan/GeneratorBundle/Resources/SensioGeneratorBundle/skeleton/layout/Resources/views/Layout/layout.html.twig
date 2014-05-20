@@ -137,22 +137,27 @@
                             {% endif %}
                         {% endblock %}
                     </h1>
-                    {% if languagechooser_languages is defined %}
-                        <nav class="col-md-2 language-nav">
-                            <span class="language-nav__active-lang">
-                                {{ app.request.locale }}
-                                <i class="icon-chevron-down"></i>
-                            </span>
-                            <ul class="list-reset language-nav__list">
-                                {% for lang in languagechooser_languages %}
-                                    <li class="language-nav__list-item">
-                                        <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
-                                            {{ lang }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </nav>
+                    {% if requiredlocales is defined %}
+                        {% set langs = requiredlocales|split('|') %}
+                        {% if langs|length > 0 %}
+                            <nav class="col-md-2 language-nav">
+                                <span class="language-nav__active-lang">
+                                    {{ app.request.locale }}
+                                    <i class="icon-chevron-down"></i>
+                                </span>
+                                <ul class="list-reset language-nav__list">
+                                    {% for lang in langs %}
+                                        {% if lang != app.request.locale %}
+                                            <li class="language-nav__list-item">
+                                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
+                                                    {{ lang }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </nav>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

@@ -15,6 +15,9 @@
             @include transform(translateX(0));
         }
     }
+    @media (min-width: $screen-md) {
+        width: auto;
+    }
 }
 
 .language-nav__active-lang {
