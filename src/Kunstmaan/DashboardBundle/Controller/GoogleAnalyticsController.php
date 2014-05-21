@@ -70,6 +70,7 @@ class GoogleAnalyticsController extends Controller
             $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getDefaultOverviews();
         }
 
+        $params['disableGoals'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst()->getDisableGoals();
         $params['overviews'] = $overviews;
         /** @var AnalyticsConfigRepository $analyticsConfigRepository */
         $analyticsConfigRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
@@ -141,6 +142,7 @@ class GoogleAnalyticsController extends Controller
 
         $params['accounts'] = $configHelper->getAccounts();
         $params['segments'] = $config->getSegments();
+        $params['disableGoals'] = $config->getDisableGoals();
 
         return $this->render(
             'KunstmaanDashboardBundle:GoogleAnalytics:setup.html.twig',

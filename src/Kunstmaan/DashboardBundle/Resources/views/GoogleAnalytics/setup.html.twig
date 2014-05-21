@@ -49,6 +49,11 @@
                     {% endif %}
                 </select>
             </div>
+
+            <input type="checkbox" name="disableGoals" id="disableGoals" name="disableGoals" {% if disableGoals %}checked{% endif %} />
+            <label for="disableGoals">
+                {{'dashboard.ga.setup.goals.disable' | trans}}
+            </label>
         </div>
 
         <div class="setup-group" id="segment-group">

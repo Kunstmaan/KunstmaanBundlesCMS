@@ -67,6 +67,13 @@ class AnalyticsConfig extends AbstractEntity
     private $lastUpdate = null;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="disable_goals", type="boolean")
+     */
+    private $disableGoals = false;
+
+    /**
      * Set overviews
      *
      * @param array $overviews
@@ -252,6 +259,30 @@ class AnalyticsConfig extends AbstractEntity
     public function setLastUpdate($lastUpdate)
     {
         $this->lastUpdate = $lastUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get disableGoals
+     *
+     * @return boolean
+     */
+    public function getDisableGoals()
+    {
+        return $this->disableGoals;
+    }
+
+    /**
+     * Set disableGoals
+     *
+     * @param boolean $disableGoals
+     *
+     * @return $this
+     */
+    public function setDisableGoals($disableGoals)
+    {
+        $this->disableGoals = $disableGoals;
 
         return $this;
     }

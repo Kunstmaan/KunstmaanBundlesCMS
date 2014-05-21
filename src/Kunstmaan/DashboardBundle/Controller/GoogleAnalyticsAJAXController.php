@@ -176,6 +176,7 @@ class GoogleAnalyticsAJAXController extends Controller
             $accountId = $request->query->get('accountId');
             $propertyId = $request->query->get('propertyId');
             $profileId = $request->query->get('profileId');
+            $disableGoals = $request->query->get('disableGoals');
 
             // edit the config
             $em = $this->getDoctrine()->getManager();
@@ -194,6 +195,7 @@ class GoogleAnalyticsAJAXController extends Controller
             $configHelper->init($config->getId());
             $profile = $configHelper->getActiveProfile();
             $config->setName($profile['profileName']);
+            $config->setDisableGoals($disableGoals);
 
             $em->persist($config);
             $em->flush();

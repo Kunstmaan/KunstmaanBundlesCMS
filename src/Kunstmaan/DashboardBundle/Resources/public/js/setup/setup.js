@@ -1,15 +1,20 @@
 $(function () {
+
     var accountId = $('#account_id').attr('data-id');
     var propertyId = $('#property_id').attr('data-id');
     var profileId = $('#profile_id').attr('data-id');
 
+
     $('#submit_save').click(function() {
+        var disableGoals = 0;
+        if ($('#disableGoals').is(":checked")) {disableGoals = 1}
+
         // get the option data
         var url = $('#path_config_save').attr('data-url');
         $.ajax({
             type: 'get',
             url: url,
-            data: {'profileId' : profileId, 'propertyId' : propertyId, 'accountId' : accountId},
+            data: {'profileId' : profileId, 'propertyId' : propertyId, 'accountId' : accountId, 'disableGoals' : disableGoals},
             success: function (data) {
                 // get all new segments
                 var segments = $('#segments-new').children();
@@ -41,6 +46,10 @@ $(function () {
             }
         });
         return false;
+    });
+
+    $('#disableGoals').change(function() {
+        $('#submit_save').removeAttr('disabled');
     });
 
     function triggerUpdate() {
