@@ -73,7 +73,21 @@
                 {% endfor %}
             </ul>
             <div id="segments-new"></div>
-            <button class="btn btn-small" type="button" id="segment-button__add"><i class="icon-plus"></i> add segment</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-small" data-toggle="dropdown" id="segment-button__add">
+                    <i class="icon-plus"></i> add segment
+                </button>
+                <button type="button" class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {% for segment in predifinedSegments %}
+                        <li>
+                            <a class="predefined_segment_item" href="#" data-segment-name="{{segment.name}}" data-segment-query="{{segment.segmentId}}">{{segment.name}} ({{segment.segmentId}})</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
 
         <div class="setup-group" id="control-group">

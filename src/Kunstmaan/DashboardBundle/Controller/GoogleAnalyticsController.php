@@ -119,6 +119,8 @@ class GoogleAnalyticsController extends Controller
     {
         $params = array();
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
+        $serviceHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.service');
+
 
         if (null !== $request->request->get('accounts')) {
             return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
@@ -141,6 +143,13 @@ class GoogleAnalyticsController extends Controller
 
         $params['accounts'] = $configHelper->getAccounts();
         $params['segments'] = $config->getSegments();
+
+        $predifinedSegments = $serviceHelper
+                    ->getService()
+                    ->management_segments
+                    ->listManagementSegments()
+                    ->items;
+        $params['predifinedSegments'] = $predifinedSegments;
 
         return $this->render(
             'KunstmaanDashboardBundle:GoogleAnalytics:setup.html.twig',

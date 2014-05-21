@@ -71,7 +71,7 @@
         padding-left:40px;
         padding-bottom:5px;
 
-        ul {
+        & > ul {
             margin-left:0;
 
             &:after {
@@ -80,7 +80,7 @@
                 clear:both;
             }
         }
-        li {
+        & > ul > li {
             border: 1px solid #CCCCCC;
             border-radius:3px;
 
@@ -95,6 +95,11 @@
             span.display-segment-query {
                 font-style: italic;
             }
+        }
+
+        .dropdown-menu {
+            height:200px;
+            overflow:auto;
         }
 
         .segment-list-button__edit,
