@@ -99,13 +99,6 @@ EOT
         $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
 
         $this->assistant->writeSection('Site successfully created', 'bg=green;fg=black');
-        $this->assistant->writeLine(array(
-            'Make sure you update your database first before using the created entities:',
-            '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
-            '    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --fixtures=src/'.str_replace('\\', '/', $this->bundle->getNamespace()).'/DataFixtures/ORM/DefaultSiteGenerator/ --append</comment>',
-            ''
-        ));
     }
 
     /**
