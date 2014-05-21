@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -29,24 +30,29 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $defaultAdminlocale;
 
     /**
-     * @param SecurityContext $context
+     * @param SecurityContext     $context
      * @param TranslatorInterface $translator
-     * @param string $defaultAdminLocale
+     * @param string              $defaultAdminLocale
      */
     public function __construct(SecurityContext $context, TranslatorInterface $translator, $defaultAdminLocale)
     {
-        $this->translator = $translator;
-        $this->context = $context;
+        $this->translator         = $translator;
+        $this->context            = $context;
         $this->defaultAdminlocale = $defaultAdminLocale;
     }
 
     /**
-     * onKernelView event
+     * onKernelRequest
      *
      * @param GetResponseEvent $event
      */
-    public function onKernelView(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event)
     {
+        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+            // return immediately
+            return;
+        }
+
         $url = $event->getRequest()->getRequestUri();
 
         if ($this->context->getToken()) {

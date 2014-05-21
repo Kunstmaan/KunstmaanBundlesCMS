@@ -28,7 +28,7 @@ services:
         class: Kunstmaan\AdminBundle\EventListener\AdminLocaleListener
         arguments: ["@security.context", "@translator", "%kuma_admin.default_admin_locale%"]
         tags:
-            - { name: kernel.event_listener, event: 'kernel.view' }
+            - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest' }
 
     kunstmaan_admin.menu.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\MenuTwigExtension
