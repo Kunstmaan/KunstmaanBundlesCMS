@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -41,12 +42,17 @@ class AdminLocaleListener implements EventSubscriberInterface
     }
 
     /**
-     * onKernelView event
+     * onKernelRequest
      *
      * @param GetResponseEvent $event
      */
-    public function onKernelView(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event)
     {
+        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+            // return immediately
+            return;
+        }
+
         $url = $event->getRequest()->getRequestUri();
 
         if ($this->context->getToken()) {
@@ -60,6 +66,7 @@ class AdminLocaleListener implements EventSubscriberInterface
                 }
 
                 $this->translator->setLocale($locale);
+
             }
         }
     }
