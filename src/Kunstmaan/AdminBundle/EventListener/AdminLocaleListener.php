@@ -30,14 +30,14 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $defaultAdminlocale;
 
     /**
-     * @param SecurityContext $context
+     * @param SecurityContext     $context
      * @param TranslatorInterface $translator
-     * @param string $defaultAdminLocale
+     * @param string              $defaultAdminLocale
      */
     public function __construct(SecurityContext $context, TranslatorInterface $translator, $defaultAdminLocale)
     {
-        $this->translator = $translator;
-        $this->context = $context;
+        $this->translator         = $translator;
+        $this->context            = $context;
         $this->defaultAdminlocale = $defaultAdminLocale;
     }
 
@@ -66,7 +66,6 @@ class AdminLocaleListener implements EventSubscriberInterface
                 }
 
                 $this->translator->setLocale($locale);
-
             }
         }
     }
