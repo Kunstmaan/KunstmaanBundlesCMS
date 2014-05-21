@@ -65,6 +65,8 @@
     </section>
 </div>
 
+<input type="hidden" id="disable-goals" data-disable-goals="{{disableGoals}}" />
+
 {% else %}
     {% include 'KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig' with {'authUrl' : authUrl} %}
 {% endif %}

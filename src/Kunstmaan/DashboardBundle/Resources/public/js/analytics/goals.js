@@ -1,5 +1,10 @@
 // create a list of all goals
 function setGoals(data) {
+    var disableGoals = $('#disable-goals').attr('data-disable-goals');
+    if (disableGoals) {
+        return;
+    }
+
     $('.dashboard-goals-list').attr('style', 'display:none;');
     $('#goalOverview' + data.overview.id).attr('style', 'display:block;');
     // create box for each goal

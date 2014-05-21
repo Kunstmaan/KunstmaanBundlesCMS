@@ -11,6 +11,16 @@
         }
     }
 
+    #disableGoals {
+        float:left;
+
+        &+label {
+            float:left;
+            margin-left:5px;
+            line-height: 1.7em;
+        }
+    }
+
     #submit_save {
         display: inline-block;
         width:75px;
