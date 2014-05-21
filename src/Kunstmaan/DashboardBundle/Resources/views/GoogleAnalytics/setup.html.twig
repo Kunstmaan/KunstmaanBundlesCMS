@@ -72,18 +72,29 @@
                     </li>
                 {% endfor %}
             </ul>
+
             <div id="segments-new"></div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-small" data-toggle="dropdown" id="segment-button__add">
-                    <i class="icon-plus"></i> add segment
-                </button>
-                <button type="button" class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    {% for segment in predifinedSegments %}
+
+            <button type="button" class="btn btn-small" id="segment-button__add">
+                <i class="icon-plus"></i> add segment
+            </button>
+
+            <div>
+                {% if profileSegments.own | length > 0 %}
+                    <h4>{{ 'dashboard.ga.setup.segment.own' | trans }}</h4>
+                    <ul>
+                        {% for segment in profileSegments.own %}
+                            <li>
+                                {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                    <h4>{{ 'dashboard.ga.setup.segment.builtin' | trans }}</h4>
+                <ul>
+                    {% for segment in profileSegments.builtin %}
                         <li>
-                            <a class="predefined_segment_item" href="#" data-segment-name="{{segment.name}}" data-segment-query="{{segment.segmentId}}">{{segment.name}} ({{segment.segmentId}})</a>
+                            {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
                         </li>
                     {% endfor %}
                 </ul>

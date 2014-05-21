@@ -40,8 +40,10 @@ dashboard:
             back: Go to dashboard
             segment:
                 add: Add segment
-                info: 'For documentation on how to create segment queries, click'
+                info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
                 here: here
+                own: Own segments
+                builtin: Built-in segments
             segments: Segment setup
             accounts: Account setup
         reset:

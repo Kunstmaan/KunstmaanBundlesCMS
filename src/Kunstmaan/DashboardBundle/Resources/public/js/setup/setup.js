@@ -187,12 +187,6 @@ $(function () {
             return false;
         });
 
-        $('.predefined_segment_item').click(function(){
-            $('#submit_save').removeAttr('disabled');
-            addSegmentInput($(this).attr('data-segment-name'), $(this).attr('data-segment-query'));
-            return false;
-        });
-
         function addSegmentInput(name, query) {
             if (!name) { name = ''; }
             if (!query) { query = ''; }
