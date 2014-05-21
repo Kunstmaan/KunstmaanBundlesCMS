@@ -130,12 +130,14 @@ EOT
             '',
         ));
         $self = $this;
+        $generator = $this->getGenerator();
+        $bundlePath = $self->bundle->getPath();
 
         $name = $this->assistant->askAndValidate(
             'Page name',
-            function ($name) use ($self) {
+            function ($name) use ($self, $generator, $bundlePath) {
                 // Check reserved words
-                if ($self->getGenerator()->isReservedKeyword($name)){
+                if ($generator->isReservedKeyword($name)){
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
                 }
 
@@ -150,7 +152,7 @@ EOT
                 }
 
                 // Check that entity does not already exist
-                if (file_exists($self->bundle->getPath().'/Entity/Pages/'.$name.'.php')) {
+                if (file_exists($bundlePath.'/Entity/Pages/'.$name.'.php')) {
                     throw new \InvalidArgumentException(sprintf('Page or entity "%s" already exists', $name));
                 }
 
