@@ -224,7 +224,15 @@ class NodeMenuItem
             $this->children = $children;
         }
 
-        return $this->children;
+        $children = array_filter($this->children, function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
+            if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return $children;
     }
 
     /**
