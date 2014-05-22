@@ -21,17 +21,12 @@ class AnalyticsOverviewRepository extends EntityRepository
      */
     public function getDefaultOverviews($config=false) {
         $em = $this->getEntityManager();
+        $dql = "SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL";
         if ($config) {
-            $query = $em->createQuery(
-                "SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL AND o.config = $config"
-            );
-        } else {
-            $query = $em->createQuery(
-                'SELECT o FROM KunstmaanDashboardBundle:AnalyticsOverview o WHERE o.segment IS NULL'
-            );
+            $dql .= " AND o.config = $config";
         }
 
-
+        $query = $em->createQuery($dql);
         return $query->getResult();
     }
 
