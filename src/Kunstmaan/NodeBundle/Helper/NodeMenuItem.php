@@ -216,7 +216,7 @@ class NodeMenuItem
     public function getChildren($includeHiddenFromNav = true)
     {
         if (is_null($this->children)) {
-            $children = $this->menu->getChildren($this->node, $includeHiddenFromNav);
+            $children = $this->menu->getChildren($this->node, true);
             /* @var NodeMenuItem $child */
             foreach ($children as $child) {
                 $child->setParent($this);
@@ -224,7 +224,15 @@ class NodeMenuItem
             $this->children = $children;
         }
 
-        return $this->children;
+        $children = array_filter($this->children, function (NodeMenuItem $entry) use ($includeHiddenFromNav) {
+            if ($entry->getNode()->isHiddenFromNav() && !$includeHiddenFromNav) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return $children;
     }
 
     /**
