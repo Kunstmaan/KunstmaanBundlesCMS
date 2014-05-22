@@ -211,7 +211,7 @@ class GoogleAnalyticsAJAXController extends Controller
         /**
          * @Route("/config/remove", name="kunstmaan_dashboard_ajax_config_remove")
          */
-        public function saveConfigAction(Request $request) {
+        public function removeConfigAction(Request $request) {
             // get params
             $configId = $request->query->get('configId');
 
