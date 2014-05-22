@@ -1,0 +1,14 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% include 'KunstmaanDashboardBundle:GoogleAnalytics:setup.html.twig'
+    with {
+        'accountId' : accountId,
+        'propertyId' : propertyId,
+        'properties' : properties,
+        'profileId' : profileId,
+        'profiles' : profiles,
+        'accounts' : accounts,
+        'segments' : segments,
+        'disableGoals' : disableGoals
+    }
+%}

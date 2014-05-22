@@ -145,7 +145,7 @@ class GoogleAnalyticsController extends Controller
         $params['disableGoals'] = $config->getDisableGoals();
 
         return $this->render(
-            'KunstmaanDashboardBundle:GoogleAnalytics:setup.html.twig',
+            'KunstmaanDashboardBundle:GoogleAnalytics:setupcontainer.html.twig',
             $params
         );
     }
