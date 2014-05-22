@@ -209,6 +209,22 @@ class GoogleAnalyticsAJAXController extends Controller
         }
 
         /**
+         * @Route("/config/remove", name="kunstmaan_dashboard_ajax_config_remove")
+         */
+        public function saveConfigAction(Request $request) {
+            // get params
+            $configId = $request->query->get('configId');
+
+            // edit the config
+            $em = $this->getDoctrine()->getManager();
+            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
+            $em->remove($config);
+            $em->flush();
+
+            return new JsonResponse();
+        }
+
+        /**
          * @Route("/config/get", name="kunstmaan_dashboard_ajax_config_get")
          */
         public function getConfigAction(Request $request) {
