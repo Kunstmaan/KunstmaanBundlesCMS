@@ -120,8 +120,6 @@ class ConfigHelper
                 );
             }
             ksort($data);
-            var_dump($data);
-            exit;
             return $data;
         }
 
