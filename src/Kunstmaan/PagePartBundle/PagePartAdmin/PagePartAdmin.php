@@ -88,7 +88,9 @@ class PagePartAdmin
             }
         }
 
-        foreach ($this->getPagePartRefs() as $pagePartRef) {
+        $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+        $ppRefs = $ppRefRepo->getPagePartRefs($this->page, $this->context);
+        foreach ($ppRefs as $pagePartRef) {
             $this->pageParts[$pagePartRef->getId()] = $this->getPagePart($pagePartRef);
             $this->pagePartRefs[$pagePartRef->getId()] = $pagePartRef;
         }
@@ -197,31 +199,33 @@ class PagePartAdmin
      */
     public function persist(Request $request)
     {
-        $newpprefs = array();
-        foreach ($this->newPageParts as $newPagePartRefId => $newPagePart) {
-            $this->em->persist($newPagePart);
-            $this->em->flush();
-            /** @var PagePartRefRepository $entityRepository  */
-            $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-            $newppref = $entityRepository->addPagePart($this->page, $newPagePart, 1 /*TODO addposition*/, $this->context);
-            $newpprefs[$newPagePartRefId] = $newppref;
-        }
+        /** @var PagePartRefRepository $ppRefRepo  */
+        $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
 
-        //re-order and save pageparts
+        // Add new pageparts on the correct position
         $sequences = $request->get($this->context . '_sequence');
         for ($i = 0; $i < count($sequences); $i++) {
-            $sequence = $sequences[$i];
-            $pagepartref = null;
-            if (array_key_exists($sequence, $newpprefs)) {
-                $pagepartref = $newpprefs[$sequence];
-            } else {
-                $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->find($sequence);
-            }
+            $pagePartRefId = $sequences[$i];
 
-            if (is_object($pagepartref)) {
-                $pagepartref->setSequencenumber($i + 1);
-                $pagepartref->setContext($this->context);
-                $this->em->persist($pagepartref);
+            if (array_key_exists($pagePartRefId, $this->newPageParts)) {
+                $newPagePart = $this->newPageParts[$pagePartRefId];
+                $this->em->persist($newPagePart);
+                $this->em->flush();
+
+                $ppRefRepo->addPagePart($this->page, $newPagePart, ($i + 1), $this->context, false);
+            }
+        }
+
+        // Re-order and save pageparts if needed
+        for ($i = 0; $i < count($sequences); $i++) {
+            $pagePartRefId = $sequences[$i];
+            if (array_key_exists($pagePartRefId, $this->pagePartRefs)) {
+                $pagePartRef = $this->pagePartRefs[$pagePartRefId];
+                if ($pagePartRef instanceof PagePartRef && $pagePartRef->getSequencenumber() != ($i + 1)) {
+                    $pagePartRef->setSequencenumber($i + 1);
+                    $pagePartRef->setContext($this->context);
+                    $this->em->persist($pagePartRef);
+                }
             }
         }
     }
@@ -283,27 +287,11 @@ class PagePartAdmin
     }
 
     /**
-     * @return PagePartRef[]
-     */
-    public function getPagePartRefs()
-    {
-        $queryBuilder = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->createQueryBuilder('b');
-        //set page and pageentityname
-        $query = $queryBuilder->where('b.pageId = :pageId and b.pageEntityname = :pageEntityname and b.context = :context')
-            ->setParameter('pageId', $this->page->getId())
-            ->setParameter('pageEntityname', ClassLookup::getClass($this->page))
-            ->setParameter('context', $this->context)->orderBy("b.sequencenumber")
-            ->getQuery();
-
-        return $query->getResult();
-    }
-
-    /**
      * @param PagePartRef $pagepartref
      *
      * @return AbstractPagePart
      */
-    public function getPagePart(PagePartRef $pagepartref)
+    private function getPagePart(PagePartRef $pagepartref)
     {
         return $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
     }

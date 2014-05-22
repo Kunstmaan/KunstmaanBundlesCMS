@@ -17,22 +17,26 @@ class PagePartRefRepository extends EntityRepository
 {
 
     /**
-     * @param HasPagePartsInterface $page           The page
-     * @param PagePartInterface     $pagepart       The pagepart
-     * @param integer               $sequencenumber The sequence numer
-     * @param string                $context        The context
+     * @param HasPagePartsInterface $page               The page
+     * @param PagePartInterface     $pagepart           The pagepart
+     * @param integer               $sequencenumber     The sequence numer
+     * @param string                $context            The context
+     * @param bool                  $pushOtherPageParts Push other pageparts (sequence + 1)
      *
      * @return \Kunstmaan\PagePartBundle\Entity\PagePartRef
      */
-    public function addPagePart(HasPagePartsInterface $page, PagePartInterface $pagepart, $sequencenumber, $context = "main")
+    public function addPagePart(HasPagePartsInterface $page, PagePartInterface $pagepart, $sequencenumber, $context = "main", $pushOtherPageParts = true)
     {
-        $pagepartrefs = $this->getPagePartRefs($page);
-        foreach ($pagepartrefs as $pagepartref) {
-            if ($pagepartref->getSequencenumber() >= $sequencenumber) {
-                $pagepartref->setSequencenumber($pagepartref->getSequencenumber() + 1);
-                $this->getEntityManager()->persist($pagepartref);
+        if ($pushOtherPageParts) {
+            $pagepartrefs = $this->getPagePartRefs($page);
+            foreach ($pagepartrefs as $pagepartref) {
+                if ($pagepartref->getSequencenumber() >= $sequencenumber) {
+                    $pagepartref->setSequencenumber($pagepartref->getSequencenumber() + 1);
+                    $this->getEntityManager()->persist($pagepartref);
+                }
             }
         }
+
         $pagepartref = new \Kunstmaan\PagePartBundle\Entity\PagePartRef();
         $pagepartref->setContext($context);
         $pageClassname = ClassLookup::getClass($page);
@@ -123,7 +127,7 @@ class PagePartRefRepository extends EntityRepository
             }
             $em->persist($toPagePart);
             $em->flush();
-            $this->addPagePart($toPage, $toPagePart, $sequenceNumber, $context);
+            $this->addPagePart($toPage, $toPagePart, $sequenceNumber, $context, false);
             $sequenceNumber++;
         }
     }
