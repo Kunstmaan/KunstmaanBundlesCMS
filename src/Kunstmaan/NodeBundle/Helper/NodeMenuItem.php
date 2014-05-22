@@ -216,7 +216,7 @@ class NodeMenuItem
     public function getChildren($includeHiddenFromNav = true)
     {
         if (is_null($this->children)) {
-            $children = $this->menu->getChildren($this->node, $includeHiddenFromNav);
+            $children = $this->menu->getChildren($this->node, true);
             /* @var NodeMenuItem $child */
             foreach ($children as $child) {
                 $child->setParent($this);
