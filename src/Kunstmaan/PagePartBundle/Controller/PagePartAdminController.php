@@ -1,24 +1,18 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\PagePartBundle\Entity\PagePartRef;
-use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
+use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Kunstmaan\NodeBundle\Helper\NodeMenu;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Controller for the pagepart administration
  */
 class PagePartAdminController extends Controller
 {
-
     /**
      * @Route("/newPagePart", name="KunstmaanPagePartBundle_admin_newpagepart")
      * @Template("KunstmaanPagePartBundle:PagePartAdminTwigExtension:pagepart.html.twig")
@@ -27,16 +21,15 @@ class PagePartAdminController extends Controller
      */
     public function newPagePartAction()
     {
-        $this->em = $this->getDoctrine()->getManager();
-        $this->locale = $this->getRequest()->getLocale();
-
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+
         $pageId = $request->get('pageid');
         $pageClassName = $request->get('pageclassname');
         $context = $request->get('context');
         $pagePartClass = $request->get('type');
 
-        $page = $this->em->getRepository($pageClassName)->findOneById($pageId);
+        $page = $em->getRepository($pageClassName)->findOneById($pageId);
 
         $pagePartConfigurationReader = new PagePartConfigurationReader($this->container->get('kernel'));
         $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
@@ -48,13 +41,12 @@ class PagePartAdminController extends Controller
             }
         }
 
-        $pagePartAdmin = new PagePartAdmin($pagePartAdminConfigurator, $this->em, $page, $context, $this->container);
+        $pagePartAdmin = new PagePartAdmin($pagePartAdminConfigurator, $em, $page, $context, $this->container);
         $pagePart = new $pagePartClass();
 
         $formFactory = $this->container->get('form.factory');
         $formBuilder = $formFactory->createBuilder('form');
         $pagePartAdmin->adaptForm($formBuilder);
-        $form = $formBuilder->getForm();
         $id = 'newpp_' . time();
 
         $data = $formBuilder->getData();
@@ -69,10 +61,11 @@ class PagePartAdminController extends Controller
         $formview = $form->createView();
 
         return array(
-                'id'=> $id,
-                'form' => $formview,
-                'pagepart' => $pagePart,
-                'pagepartadmin' => $pagePartAdmin,
-                'editmode'=> true);
+            'id'=> $id,
+            'form' => $formview,
+            'pagepart' => $pagePart,
+            'pagepartadmin' => $pagePartAdmin,
+            'editmode'=> true
+        );
     }
 }

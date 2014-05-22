@@ -2,20 +2,16 @@
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\HttpFoundation\Request;
-
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-
-use Doctrine\ORM\EntityManager;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * PagePartAdmin
@@ -50,12 +46,17 @@ class PagePartAdmin
     /**
      * @var array
      */
-    protected $pagepartmap = array();
+    protected $pageParts = array();
 
     /**
      * @var array
      */
-    protected $newpps = array();
+    protected $pagePartRefs = array();
+
+    /**
+     * @var array
+     */
+    protected $newPageParts = array();
 
     /**
      * @param AbstractPagePartAdminConfigurator $configurator The configurator
@@ -71,10 +72,12 @@ class PagePartAdmin
         if (!($page instanceof AbstractEntity)) {
             throw new \InvalidArgumentException("Page must be an instance of AbstractEntity.");
         }
+
         $this->configurator = $configurator;
         $this->em = $em;
         $this->page = $page;
         $this->container = $container;
+
         if ($context) {
             $this->context = $context;
         } else {
@@ -84,14 +87,15 @@ class PagePartAdmin
                 $this->context = "main";
             }
         }
-        $this->pagepartmap = array();
-        foreach ($this->getPagePartRefs() as $pagepartref) {
-            $this->pagepartmap[$pagepartref->getId()] = $this->getPagePart($pagepartref);
+
+        foreach ($this->getPagePartRefs() as $pagePartRef) {
+            $this->pageParts[$pagePartRef->getId()] = $this->getPagePart($pagePartRef);
+            $this->pagePartRefs[$pagePartRef->getId()] = $pagePartRef;
         }
     }
 
     /**
-     * @return \Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface
+     * @return AbstractEntity
      */
     public function getPage()
     {
@@ -103,65 +107,54 @@ class PagePartAdmin
      */
     public function preBindRequest(Request $request)
     {
-        /** @var PagePartRef[] $pagepartrefs */
-        $pagepartrefs = $this->getPagePartRefs();
-
-        $allPostFields = $request->request->all();
-        $ppToDelete = array();
-        foreach (array_keys($allPostFields) as $key) {
+        // Fetch all sub-entities that should be removed
+        $subPagePartsToDelete = array();
+        foreach (array_keys($request->request->all()) as $key) {
             // Example value: delete_pagepartadmin_74_tags_3
             if (preg_match("/^delete_pagepartadmin_(\\d+)_(\\w+)_(\\d+)$/i", $key, $matches)) {
-                $ppToDelete[$matches[1]][] = array('name' => $matches[2], 'id' => $matches[3]);
+                $subPagePartsToDelete[$matches[1]][] = array('name' => $matches[2], 'id' => $matches[3]);
             }
         }
 
-        {
-            foreach ($pagepartrefs as &$pagepartref) {
-                // Remove pageparts
-                if ("true" == $request->get($pagepartref->getId() . "_deleted")) {
-                    $pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
-                    $this->em->remove($pagepart);
-                    $this->em->remove($pagepartref);
-                }
+        $doFlush = false;
+        foreach ($this->pagePartRefs as $pagePartRef) {
+            // Remove pageparts
+            if ('true' == $request->get($pagePartRef->getId() . '_deleted')) {
+                $pagePart = $this->pageParts[$pagePartRef->getId()];
+                $this->em->remove($pagePart);
+                $this->em->remove($pagePartRef);
 
-                // Remove sub-entities from pageparts
-                if (array_key_exists($pagepartref->getId(), $ppToDelete)) {
-                    $pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
-                    foreach ($ppToDelete[$pagepartref->getId()] as $deleteInfo) {
-                        $objects = call_user_func(array($pagepart, 'get'.ucfirst($deleteInfo['name'])));
+                unset($this->pageParts[$pagePartRef->getId()]);
+                unset($this->pagePartRefs[$pagePartRef->getId()]);
+                $doFlush = true;
+            }
 
-                        foreach ($objects as $object) {
-                            if ($object->getId() == $deleteInfo['id']) {
-                                $this->em->remove($object);
-                            }
+            // Remove sub-entities from pageparts
+            if (array_key_exists($pagePartRef->getId(), $subPagePartsToDelete)) {
+                $pagePart = $this->pageParts[$pagePartRef->getId()];
+                foreach ($subPagePartsToDelete[$pagePartRef->getId()] as $deleteInfo) {
+                    $objects = call_user_func(array($pagePart, 'get' . ucfirst($deleteInfo['name'])));
+
+                    foreach ($objects as $object) {
+                        if ($object->getId() == $deleteInfo['id']) {
+                            $this->em->remove($object);
+                            $doFlush = true;
                         }
                     }
                 }
             }
+        }
+        if ($doFlush) {
             $this->em->flush();
         }
 
-        $this->newpps = array();
-        $newids = $request->get($this->context . "_new");
-        for ($i = 0; $i < sizeof($newids); $i++) {
-            $newid = $newids[$i];
-            $type = $request->get($this->context . "_type_".$newid);
-            $this->newpps[$newid] = new $type();
-        }
-        { //re-order pagepartmap
-            $sequences = $request->get($this->context . "_sequence");
-            if (!is_null($sequences)) {
-                $this->pagepartmap = array();
-                for ($i = 0; $i < sizeof($sequences); $i++) {
-                    $sequence = $sequences[$i];
-                    $pagepart = null;
-                    if (array_key_exists($sequence, $this->newpps)) {
-                        $this->pagepartmap[$sequence] = $this->newpps[$sequence];
-                    } else {
-                        $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->find($sequence);
-                        $this->pagepartmap[$sequence] = $this->getPagePart($pagepartref);
-                    }
-                }
+        // Create the objects for the new pageparts
+        $this->newPageParts = array();
+        $newRefIds = $request->get($this->context . '_new');
+        if (is_array($newRefIds)) {
+            foreach ($newRefIds as $newId) {
+                $type = $request->get($this->context . '_type_' . $newId);
+                $this->newPageParts[$newId] = new $type();
             }
         }
     }
@@ -169,9 +162,34 @@ class PagePartAdmin
     /**
      * @param Request $request
      */
-    public function bindRequest(Request $request)
-    {
+    public function bindRequest(Request $request) {}
 
+    /**
+     * @param FormBuilderInterface $formbuilder
+     */
+    public function adaptForm(FormBuilderInterface $formbuilder)
+    {
+        $data = $formbuilder->getData();
+
+        foreach ($this->pageParts as $pagePartRefId => $pagePart) {
+            $data['pagepartadmin_' . $pagePartRefId] = $pagePart;
+            $adminType = $pagePart->getDefaultAdminType();
+            if (!is_object($adminType) && is_string($adminType)) {
+                $adminType = $this->container->get($adminType);
+            }
+            $formbuilder->add('pagepartadmin_' . $pagePartRefId, $adminType);
+        }
+
+        foreach ($this->newPageParts as $newPagePartRefId => $newPagePart) {
+            $data['pagepartadmin_' . $newPagePartRefId] = $newPagePart;
+            $adminType = $newPagePart->getDefaultAdminType();
+            if (!is_object($adminType) && is_string($adminType)) {
+                $adminType = $this->container->get($adminType);
+            }
+            $formbuilder->add('pagepartadmin_' . $newPagePartRefId, $adminType);
+        }
+
+        $formbuilder->setData($data);
     }
 
     /**
@@ -180,31 +198,30 @@ class PagePartAdmin
     public function persist(Request $request)
     {
         $newpprefs = array();
-        foreach ($this->newpps as $key => $newpagepart) {
-            $this->em->persist($newpagepart);
+        foreach ($this->newPageParts as $newPagePartRefId => $newPagePart) {
+            $this->em->persist($newPagePart);
             $this->em->flush();
             /** @var PagePartRefRepository $entityRepository  */
             $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-            $newppref = $entityRepository->addPagePart($this->page, $newpagepart, 1 /*TODO addposition*/, $this->context);
-            $newpprefs[$key] = $newppref;
+            $newppref = $entityRepository->addPagePart($this->page, $newPagePart, 1 /*TODO addposition*/, $this->context);
+            $newpprefs[$newPagePartRefId] = $newppref;
         }
 
-        { //re-order and save pageparts
-            $sequences = $request->get($this->context . "_sequence");
-            for ($i = 0; $i < sizeof($sequences); $i++) {
-                $sequence = $sequences[$i];
-                $pagepartref = null;
-                if (array_key_exists($sequence, $newpprefs)) {
-                    $pagepartref = $newpprefs[$sequence];
-                } else {
-                    $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->find($sequence);
-                }
+        //re-order and save pageparts
+        $sequences = $request->get($this->context . '_sequence');
+        for ($i = 0; $i < count($sequences); $i++) {
+            $sequence = $sequences[$i];
+            $pagepartref = null;
+            if (array_key_exists($sequence, $newpprefs)) {
+                $pagepartref = $newpprefs[$sequence];
+            } else {
+                $pagepartref = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->find($sequence);
+            }
 
-                if (is_object($pagepartref)) {
-                    $pagepartref->setSequencenumber($i + 1);
-                    $pagepartref->setContext($this->context);
-                    $this->em->persist($pagepartref);
-                }
+            if (is_object($pagepartref)) {
+                $pagepartref->setSequencenumber($i + 1);
+                $pagepartref->setContext($this->context);
+                $this->em->persist($pagepartref);
             }
         }
     }
@@ -228,16 +245,14 @@ class PagePartAdmin
         $possiblePPTypes = $this->configurator->getPossiblePagePartTypes();
         $result = array();
 
-        /** @var EntityManager $em  */
-        $em = $this->em;
-        // filter page part types that can only be added x times to the page.
+        // filter page part types that can only be added x times to the page context.
         // to achieve this, provide a 'pagelimit' parameter when adding the pp type in your PagePartAdminConfiguration
         if (!empty($possiblePPTypes)) {
             foreach ($possiblePPTypes as $possibleTypeData) {
                 if (array_key_exists('pagelimit', $possibleTypeData)) {
                     $pageLimit = $possibleTypeData['pagelimit'];
                     /** @var PagePartRefRepository $entityRepository  */
-                    $entityRepository = $em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+                    $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
                     $formPPCount = $entityRepository->countPagePartsOfType($this->page, $possibleTypeData['class'], $this->configurator->getContext());
                     if ($formPPCount < $pageLimit) {
                         $result[] = $possibleTypeData;
@@ -264,7 +279,7 @@ class PagePartAdmin
      */
     public function getPagePartMap()
     {
-        return $this->pagepartmap;
+        return $this->pageParts;
     }
 
     /**
@@ -320,34 +335,4 @@ class PagePartAdmin
         return get_class($pagepart);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $formbuilder
-     */
-    public function adaptForm(FormBuilderInterface $formbuilder)
-    {
-        $pagepartrefs = $this->getPagePartRefs();
-
-        // if (sizeof($pagepartrefs) > 0) {
-        $data = $formbuilder->getData();
-        for ($i = 0; $i < sizeof($pagepartrefs); $i++) {
-            $pagepartref = $pagepartrefs[$i];
-            $pagepart = $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
-            $data['pagepartadmin_' . $pagepartref->getId()] = $pagepart;
-            $adminType = $pagepart->getDefaultAdminType();
-            if (!is_object($adminType) && is_string($adminType)) {
-                $adminType = $this->container->get($adminType);
-            }
-            $formbuilder->add('pagepartadmin_' . $pagepartref->getId(), $adminType);
-        }
-        foreach ($this->newpps as $id => $newpagepart) {
-            $data['pagepartadmin_' . $id] = $newpagepart;
-            $adminType = $newpagepart->getDefaultAdminType();
-            if (!is_object($adminType) && is_string($adminType)) {
-                $adminType = $this->container->get($adminType);
-            }
-            $formbuilder->add('pagepartadmin_' . $id, $adminType);
-        }
-        $formbuilder->setData($data);
-        //}
-    }
 }
