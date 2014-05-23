@@ -84,15 +84,46 @@ class PagePartAdmin
             if ($this->configurator->getContext()) {
                 $this->context = $this->configurator->getContext();
             } else {
-                $this->context = "main";
+                $this->context = 'main';
             }
         }
 
+        $this->initializePageParts();
+    }
+
+    /**
+     * Get all pageparts from the database, and store them.
+     */
+    private function initializePageParts()
+    {
+        // Get all the pagepartrefs
         $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $ppRefs = $ppRefRepo->getPagePartRefs($this->page, $this->context);
+
+        // Group pagepartrefs per type
+        $types = $tempPageParts = array();
         foreach ($ppRefs as $pagePartRef) {
-            $this->pageParts[$pagePartRef->getId()] = $this->getPagePart($pagePartRef);
+            $types[$pagePartRef->getPagePartEntityname()][] = $pagePartRef->getPagePartId();
+
             $this->pagePartRefs[$pagePartRef->getId()] = $pagePartRef;
+        }
+
+        // Fetch all the pageparts (only one query per pagepart type)
+        $pageParts = array();
+        foreach ($types as $classname => $ids) {
+            $result = $this->em->getRepository($classname)->findBy(array('id' => $ids));
+            $pageParts = array_merge($pageParts, $result);
+        }
+
+        // Link the pagepartref to the pagepart
+        foreach ($this->pagePartRefs as $pagePartRef) {
+            foreach ($pageParts as $key => $pagePart) {
+                if (ClassLookup::getClass($pagePart) == $pagePartRef->getPagePartEntityname() && $pagePart->getId() == $pagePartRef->getPagePartId()) {
+                    $this->pageParts[$pagePartRef->getId()] = $pagePart;
+                    unset($pageParts[$key]);
+                    break;
+                }
+            }
         }
     }
 
@@ -202,7 +233,7 @@ class PagePartAdmin
         /** @var PagePartRefRepository $ppRefRepo  */
         $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
 
-        // Add new pageparts on the correct position
+        // Add new pageparts on the correct position + Re-order and save pageparts if needed
         $sequences = $request->get($this->context . '_sequence');
         for ($i = 0; $i < count($sequences); $i++) {
             $pagePartRefId = $sequences[$i];
@@ -213,13 +244,7 @@ class PagePartAdmin
                 $this->em->flush();
 
                 $ppRefRepo->addPagePart($this->page, $newPagePart, ($i + 1), $this->context, false);
-            }
-        }
-
-        // Re-order and save pageparts if needed
-        for ($i = 0; $i < count($sequences); $i++) {
-            $pagePartRefId = $sequences[$i];
-            if (array_key_exists($pagePartRefId, $this->pagePartRefs)) {
+            } elseif (array_key_exists($pagePartRefId, $this->pagePartRefs)) {
                 $pagePartRef = $this->pagePartRefs[$pagePartRefId];
                 if ($pagePartRef instanceof PagePartRef && $pagePartRef->getSequencenumber() != ($i + 1)) {
                     $pagePartRef->setSequencenumber($i + 1);
@@ -284,16 +309,6 @@ class PagePartAdmin
     public function getPagePartMap()
     {
         return $this->pageParts;
-    }
-
-    /**
-     * @param PagePartRef $pagepartref
-     *
-     * @return AbstractPagePart
-     */
-    private function getPagePart(PagePartRef $pagepartref)
-    {
-        return $this->em->getRepository($pagepartref->getPagePartEntityname())->find($pagepartref->getPagePartId());
     }
 
     /**
