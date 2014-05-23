@@ -72,7 +72,11 @@ class ConfigHelper
             if (!$this->token || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
                 $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-                $this->token = $analyticsConfigRepository->findFirst()->getToken();
+                if ($configId) {
+                    $this->token = $analyticsConfigRepository->find($configId)->getToken();
+                } else {
+                    $this->token = $analyticsConfigRepository->findFirst()->getToken();
+                }
             }
 
             return $this->token;

@@ -19,16 +19,18 @@ class AnalyticsConfigRepository extends EntityRepository
      *
      * @return AnalyticsConfig $config
      */
-    public function findFirst() {
+    public function findFirst($createNew = true) {
         // Backwards compatibility: select the first config, still used in the dashboard, specified config ids are set in the dashboard collection bundle
         $em = $this->getEntityManager();
         $query = $em->createQuery( 'SELECT c FROM KunstmaanDashboardBundle:AnalyticsConfig c' );
         $result = $query->getResult();
         // if no configs exist, create a new one
-        if (!$result) {
+        if (!$result && $createNew) {
             return $this->createConfig();
-        } else {
+        } else if ($result) {
            return $result[0];
+        } else {
+            return false;
         }
     }
 

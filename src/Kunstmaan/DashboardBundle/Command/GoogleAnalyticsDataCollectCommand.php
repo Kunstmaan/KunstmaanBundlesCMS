@@ -198,17 +198,19 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
         $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
         $segmentRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment');
-        $config = $configRepository->findFirst();
+        $configs = $configRepository->findAll();
 
-        // add overviews if none exist yet
-        if (sizeof($config->getOverviews()) == 0) {
-            $overviewRepository->addOverviews($config);
-        }
+        foreach ($configs as $config) {
+            // add overviews if none exist yet
+            if (sizeof($config->getOverviews()) == 0) {
+                $overviewRepository->addOverviews($config);
+            }
 
-        // init all the segments for this config
-        $segments = $config->getSegments();
-        foreach ($segments as $segment) {
-            $segmentRepository->initSegment($segment);
+            // init all the segments for this config
+            $segments = $config->getSegments();
+            foreach ($segments as $segment) {
+                $segmentRepository->initSegment($segment);
+            }
         }
 
         // get all overviews
@@ -232,6 +234,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
         // get data per overview
         foreach ($overviews as $overview) {
+            $configHelper->init($overview->getConfig()->getId());
             /** @var AnalyticsOverview $overview */
             $this->output->writeln('Fetching data for overview "<fg=green>' . $overview->getTitle() . '</fg=green>"');
 
