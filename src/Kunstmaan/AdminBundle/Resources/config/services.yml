@@ -1,6 +1,11 @@
 parameters:
     kunstmaan_admin.menubuilder.class: 'Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder'
     kunstmaan_admin.apply_acl_changeset.listener.class: 'Kunstmaan\AdminBundle\EventListener\ApplyAclChangesetListener'
+    kunstmaan_admin.login.listener.class: 'Kunstmaan\AdminBundle\EventListener\LoginListener'
+    kunstmaan_admin.admin_locale.listener.class: 'Kunstmaan\AdminBundle\EventListener\AdminLocaleListener'
+    kunstmaan_admin.acl.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper'
+    kunstmaan_admin.acl.native.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper'
+    kunstmaan_admin.clone.listener.class: 'Kunstmaan\AdminBundle\EventListener\CloneListener'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -19,13 +24,13 @@ services:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_admin.login.listener:
-        class: Kunstmaan\AdminBundle\EventListener\LoginListener
+        class: "%kunstmaan_admin.login.listener.class%"
         arguments: ["@kunstmaan_admin.logger", "@kunstmaan_admin.versionchecker"]
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
-    kunstmaan_admin.adminLocale.listener:
-        class: Kunstmaan\AdminBundle\EventListener\AdminLocaleListener
+    kunstmaan_admin.admin_locale.listener:
+        class: "%kunstmaan_admin.admin_locale.listener.class%"
         arguments: ["@security.context", "@translator", "%kuma_admin.default_admin_locale%"]
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest' }
@@ -58,11 +63,11 @@ services:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.acl.helper:
-        class: Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper
+        class: "%kunstmaan_admin.acl.helper.class%"
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.role_hierarchy"]
 
     kunstmaan_admin.acl.native.helper:
-        class: Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper
+        class: "%kunstmaan_admin.acl.native.helper.class%"
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.role_hierarchy"]
 
     kunstmaan_admin.permissionadmin:
@@ -74,7 +79,7 @@ services:
         arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
 
     kunstmaan_admin.clone.listener:
-        class: Kunstmaan\AdminBundle\EventListener\CloneListener
+        class: "%kunstmaan_admin.clone.listener.class%"
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.onDeepCloneAndSave, method: onDeepCloneAndSave }
 
