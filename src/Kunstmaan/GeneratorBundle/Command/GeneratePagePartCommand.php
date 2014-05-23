@@ -162,7 +162,7 @@ EOT
          * Ask that you want to create behat tests for the new pagepart, if possible
          */
         if (count($this->sections) > 0) {
-            $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir')) . '/behat.yml';
+            $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir').'/') . '/behat.yml';
             $pagePartContext = $this->bundle->getPath() . '/Features/Context/PagePartContext.php';
             $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
             // Make sure behat is configured and the PagePartContext and BehatTestPage exits

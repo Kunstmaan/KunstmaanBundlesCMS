@@ -97,7 +97,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $bundles = array();
         $counter = 1;
 
-        $dir = dirname($this->getContainer()->getParameter('kernel.root_dir')).'/src/';
+        $dir = dirname($this->getContainer()->getParameter('kernel.root_dir').'/').'/src/';
         $finder = new Finder();
         $finder->directories()->in($dir)->depth('== 1');
         foreach ($finder as $file) {

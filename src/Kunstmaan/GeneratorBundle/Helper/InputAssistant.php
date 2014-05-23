@@ -206,7 +206,7 @@ class InputAssistant
         $bundles = array();
         $counter = 1;
 
-        $dir = dirname($this->container->getParameter('kernel.root_dir')).'/src/';
+        $dir = dirname($this->container->getParameter('kernel.root_dir').'/').'/src/';
         $files = scandir($dir);
         foreach ($files as $file) {
             if (is_dir($dir.$file) && !in_array($file, array('.', '..'))) {
