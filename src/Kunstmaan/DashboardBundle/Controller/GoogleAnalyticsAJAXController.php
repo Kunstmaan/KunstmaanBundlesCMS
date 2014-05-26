@@ -173,6 +173,7 @@ class GoogleAnalyticsAJAXController extends Controller
          */
         public function saveConfigAction(Request $request) {
             // get params
+            $configId = $request->query->get('configId');
             $accountId = $request->query->get('accountId');
             $propertyId = $request->query->get('propertyId');
             $profileId = $request->query->get('profileId');
@@ -180,7 +181,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
             // edit the config
             $em = $this->getDoctrine()->getManager();
-            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
+            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
             if ($accountId && $propertyId && $profileId) {
                 $config->setAccountId($accountId);
                 $config->setPropertyId($propertyId);
@@ -192,7 +193,7 @@ class GoogleAnalyticsAJAXController extends Controller
 
             // set the config name
             $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-            $configHelper->init($config->getId());
+            $configHelper->init($configId);
             $profile = $configHelper->getActiveProfile();
             $config->setName($profile['profileName']);
             $config->setDisableGoals($disableGoals);
@@ -252,6 +253,7 @@ class GoogleAnalyticsAJAXController extends Controller
          * @Route("/segment/add/", name="kunstmaan_dashboard_ajax_segment_add")
          */
         public function addSegmentAction(Request $request) {
+            $configId = $request->query->get('configId');
             $em = $this->getDoctrine()->getManager();
 
             // create a new segment
@@ -262,8 +264,7 @@ class GoogleAnalyticsAJAXController extends Controller
             $segment->setName($name);
 
             // add the segment to the config
-            $analyticsConfigRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-            $config = $analyticsConfigRepository->findFirst();
+            $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
             $segment->setConfig($config);
             $segments = $config->getSegments();
             $segments[] = $segment;
