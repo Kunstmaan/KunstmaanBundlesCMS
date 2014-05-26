@@ -3,6 +3,7 @@ $(function () {
     var accountId = $('#account_id').attr('data-id');
     var propertyId = $('#property_id').attr('data-id');
     var profileId = $('#profile_id').attr('data-id');
+    var configId = $('#config_id').attr('data-id');
 
 
     $('#submit_save').click(function() {
@@ -14,7 +15,7 @@ $(function () {
         $.ajax({
             type: 'get',
             url: url,
-            data: {'profileId' : profileId, 'propertyId' : propertyId, 'accountId' : accountId, 'disableGoals' : disableGoals},
+            data: {'profileId' : profileId, 'propertyId' : propertyId, 'accountId' : accountId, 'disableGoals' : disableGoals, 'configId' : configId},
             success: function (data) {
                 // get all new segments
                 var segments = $('#segments-new').children();
@@ -36,7 +37,7 @@ $(function () {
                         $.ajax({
                             type: 'get',
                             url: url,
-                            data: {'query' : query, 'name' : name},
+                            data: {'query' : query, 'name' : name, 'configId' : configId},
                             success: function (data) {
                                 location.reload();
                             }

@@ -59,6 +59,7 @@
             <p>
                 {{ 'dashboard.ga.setup.segment.info' | trans }} <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/segments" target="_blank">{{ 'dashboard.ga.setup.segment.here' | trans }}</a>.
             </p>
+
             <ul>
                 {% for segment in segments %}
                     <li id="segment-list__{{ segment.id }}">
@@ -80,7 +81,11 @@
         </div>
 
         <div class="setup-group" id="control-group">
-            <a href="{{ path('kunstmaan_dashboard') }}" class="btn" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
+            {% if multiconfig is defined %}
+                <a href="{{ path('GaCollectionsBundle_Index', {'configId':configId}) }}" class="btn" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
+            {% else %}
+                <a href="{{ path('kunstmaan_dashboard') }}" class="btn" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
+            {% endif %}
             <button disabled id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
         </div>
     </form>
@@ -95,6 +100,7 @@
     <input type="hidden" id="account_id" data-id="{{accountId}}" />
     <input type="hidden" id="property_id" data-id="{{propertyId}}" />
     <input type="hidden" id="profile_id" data-id="{{profileId}}" />
+    <input type="hidden" id="config_id" data-id="{{configId}}" />
 {% endblock %}
 
 {% block extrajavascript %}
