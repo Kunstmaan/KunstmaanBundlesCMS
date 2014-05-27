@@ -118,7 +118,9 @@ class VersionChecker
     {
         $bundles = array();
 
-        $composerPath = dirname($this->container->getParameter('kernel.root_dir')).'/composer.lock';
+        $rootPath = dirname($this->container->get('kernel')->getRootDir());
+        $composerPath = "{$rootPath}/composer.lock";
+
         if (file_exists($composerPath)) {
             $result = json_decode(file_get_contents($composerPath), true);
             switch (json_last_error()) {
