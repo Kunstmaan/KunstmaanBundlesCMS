@@ -42,12 +42,21 @@ class SettingsController extends BaseSettingsController
 
         $versionChecker = $this->container->get('kunstmaan_admin.versionchecker');
         if (!$versionChecker->isEnabled()) {
-            return;
+            return array('data' => null);
+        }
+
+        $data = null;
+        try {
+            $data = $versionChecker->check();
+        } catch (\Exception $e) {
+            $this->container->get('logger')->error(
+                $e->getMessage(),
+                array('exception' => $e)
+            );
         }
 
         return array(
-            'data' => $versionChecker->check()
+            'data' => $data
         );
     }
-
 }
