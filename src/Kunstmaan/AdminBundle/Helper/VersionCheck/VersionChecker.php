@@ -7,6 +7,9 @@ use Guzzle\Http\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Version checker
+ */
 class VersionChecker
 {
     /**
@@ -62,10 +65,14 @@ class VersionChecker
 
     /**
      * Check if we recently did a version check, if not do one now.
+     *
+     * @return void
      */
     public function periodicallyCheck()
     {
-        if (!$this->enabled) return;
+        if (!$this->isEnabled()) {
+            return;
+        }
 
         $data = $this->cache->fetch('version_check');
         if (!is_array($data)) {
@@ -75,10 +82,14 @@ class VersionChecker
 
     /**
      * Get the version details via webservice.
+     *
+     * @return mixed A list of bundles if available.
      */
     public function check()
     {
-        if (!$this->enabled) return;
+        if (!$this->isEnabled()) {
+            return;
+        }
 
         $jsonData = json_encode(array(
             'host' => $this->container->get('request')->getHttpHost(),
@@ -109,45 +120,67 @@ class VersionChecker
     }
 
     /**
-     * Parse the composer.lock file to get the current used versions of the kunstmaan bundles.
+     * Returns the absolute path to the composer.lock file.
+     *
+     * @return string
+     */
+    protected function getLockPath()
+    {
+        $rootPath = dirname($this->container->get('kernel')->getRootDir());
+
+        return $rootPath.'/composer.lock';
+    }
+
+    /**
+     * Returns a list of composer packages.
      *
      * @return array
      * @throws Exception\ParseException
      */
-    private function parseComposer()
+    protected function getPackages()
+    {
+        $translator = $this->container->get('translator');
+        $errorMessage = $translator->trans('settings.version.error_parsing_composer');
+
+        $composerPath = $this->getLockPath();
+        if (!file_exists($composerPath)) {
+            throw new ParseException(
+                $translator->trans('settings.version.composer_lock_not_found')
+            );
+        }
+
+        $json = file_get_contents($composerPath);
+        $result = json_decode($json, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new ParseException($errorMessage.' (#'.json_last_error().')');
+        }
+
+        if (array_key_exists('packages', $result) && is_array($result['packages'])) {
+            return $result['packages'];
+        }
+
+        // No package list in JSON structure
+        throw new ParseException($errorMessage);
+    }
+
+    /**
+     * Parse the composer.lock file to get the currently used versions of the kunstmaan bundles.
+     *
+     * @return array
+     * @throws Exception\ParseException
+     */
+    protected function parseComposer()
     {
         $bundles = array();
-
-        $composerPath = dirname($this->container->getParameter('kernel.root_dir')).'/composer.lock';
-        if (file_exists($composerPath)) {
-            $result = json_decode(file_get_contents($composerPath), true);
-            switch (json_last_error()) {
-                case JSON_ERROR_NONE:
-                    // No parse errors, we get a list of installed packages
-                    if (array_key_exists('packages', $result) && is_array($result['packages'])) {
-                        $packages = $result['packages'];
-                    } else {
-                        $this->get('translator')->trans('settings.version.error_parsing_composer');
-                    }
-                    break;
-                default:
-                    throw new ParseException($this->container->get('translator')->trans('settings.version.error_parsing_composer').' (#'.json_last_error().')');
-                    break;
+        foreach ($this->getPackages() as $package) {
+            if (!strncmp($package['name'], 'kunstmaan/', strlen('kunstmaan/'))) {
+                $bundles[] = array(
+                    'name' => $package['name'],
+                    'version' => $package['version'],
+                    'reference' => $package['source']['reference']
+                );
             }
-
-            if (is_array($packages)) {
-                foreach ($packages as $package) {
-                    if (!strncmp($package['name'], 'kunstmaan/', strlen('kunstmaan/'))) {
-                        $bundles[] = array(
-                            'name' => $package['name'],
-                            'version' => $package['version'],
-                            'reference' => $package['source']['reference']
-                        );
-                    }
-                }
-            }
-        } else {
-            throw new ParseException($this->container->get('translator')->trans('settings.version.composer_lock_not_found'));
         }
 
         return $bundles;
