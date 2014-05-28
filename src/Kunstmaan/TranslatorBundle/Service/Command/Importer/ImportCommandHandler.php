@@ -3,13 +3,14 @@
 namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
-use Symfony\Component\Finder\Finder;
+use Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler;
 use Kunstmaan\TranslatorBundle\Service\Exception\TranslationsNotFoundException;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Parses an ImportCommand
  */
-class ImportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler
+class ImportCommandHandler extends AbstractCommandHandler
 {
 
     /**
@@ -58,8 +59,12 @@ class ImportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\A
      */
     public function importBundleTranslationFiles(ImportCommand $importCommand)
     {
-        if (strtolower($importCommand->getBundle()) == 'all') {
+        $importBundle = strtolower($importCommand->getBundle());
+
+        if ($importBundle == 'all') {
             return $this->importAllBundlesTranslationFiles($importCommand);
+        } elseif ($importBundle == 'own') {
+            return $this->importOwnBundlesTranslationFiles($importCommand);
         }
 
         return $this->importSingleBundleTranslationFiles($importCommand);
@@ -82,6 +87,31 @@ class ImportCommandHandler extends \Kunstmaan\TranslatorBundle\Service\Command\A
                 $imported += $this->importSingleBundleTranslationFiles($importCommand);
             } catch (TranslationsNotFoundException $e) {
                 continue;
+            }
+        }
+
+        return $imported;
+    }
+
+    /**
+     * Import all translation files from your own registered bundles (in src/ directory)
+     * @param  ImportCommand $importCommand
+     * @return int           The total number of imported files
+     */
+    public function importOwnBundlesTranslationFiles(ImportCommand $importCommand)
+    {
+        $imported = 0;
+        $srcDir = dirname($this->kernel->getRootDir()) . '/src';
+
+        foreach($this->kernel->getBundles() as $name => $bundle) {
+            if (strpos($bundle->getPath(), $srcDir) !== false) {
+                $importCommand->setBundle(strtolower($name));
+
+                try {
+                    $imported += $this->importSingleBundleTranslationFiles($importCommand);
+                } catch (TranslationsNotFoundException $e) {
+                    continue;
+                }
             }
         }
 
