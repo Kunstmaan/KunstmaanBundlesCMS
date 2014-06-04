@@ -16,4 +16,9 @@ KunstmaanMediaBundle_media_chooser:
 KunstmaanMediaBundle_media_folder:
     resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
     type:     annotation
-    prefix:   /admin/media/folder  
+    prefix:   /admin/media/folder
+
+KunstmaanMediaBundle_icon_font:
+    resource: "@KunstmaanMediaBundle/Controller/IconFontController.php"
+    type:     annotation
+    prefix:   /admin/media/icon-font

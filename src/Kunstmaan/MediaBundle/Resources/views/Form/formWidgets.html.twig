@@ -1,3 +1,69 @@
+{% block iconfont_widget %}
+    {% spaceless %}
+        <div id="{{ id }}_widget" class="clearfix {{ attr.class|default('') }}" style="{{ attr.style|default('') }}">
+            <input type="hidden" name="{{ full_name }}" value="{{ value|default('') }}"/>
+
+            <div class="input_media hasnomedia">
+                <div class="preview"></div>
+                <button class="choose">{{ 'media.widget.choose' | trans }}</button>
+            </div>
+
+            <div class="input_media hasmedia">
+                <div class="iconpreview" style="float:left;">
+                    <div class="{{ value|default('') }}" style="font-size:60px;"></div>
+                </div>
+                <button class="del">{{ 'media.widget.delete' | trans }}</button>
+                <p class="title" style="clear:both">{{ value|default('') }}</p>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var $ = document;
+            var cssId = 'iconfont';
+            if (!$.getElementById(cssId)) {
+                var head  = $.getElementsByTagName('head')[0];
+                var link  = $.createElement('link');
+                link.id   = cssId;
+                link.rel  = 'stylesheet';
+                link.type = 'text/css';
+                link.href = '{{ loader_object.cssLink }}';
+                link.media = 'all';
+                head.appendChild(link);
+            }
+ 
+            var widget = jQuery('#{{ id }}_widget');
+            if ( widget.find('input').val() == '') {
+                widget.find('.hasnomedia').show();
+                widget.find('.hasmedia').hide();
+            } else {
+                widget.find('.hasnomedia').hide();
+                widget.find('.hasmedia').show();
+            }
+            widget.find('.choose').on('click', function(ev) {
+                ev.preventDefault();
+                openDGDialog('{{ path('KunstmaanMediaBundle_icon_font_chooser', {'loader': loader, 'loader_data': loader_data }) }}', 800, 600, function(param){
+                    var widget = jQuery('#{{ id }}_widget');
+                    widget.find('input').val(dialogWin.returnedValue.iconClass);
+                    widget.find('.hasmedia').find('.title').html(dialogWin.returnedValue.iconClass);
+                    var element =  widget.find('.hasmedia').find('.iconpreview').find('div');
+                    element.removeClass();
+                    element.addClass(dialogWin.returnedValue.iconClass);
+
+                    widget.find('.hasnomedia').hide();
+                    widget.find('.hasmedia').show();
+                });
+            });
+            widget.find('.del').on('click', function(ev) {
+                ev.preventDefault();
+                var widget = jQuery('#{{ id }}_widget');
+                widget.find('input').val('');
+                widget.find('.hasnomedia').show();
+                widget.find('.hasmedia').hide();
+            });
+        </script>
+    {% endspaceless %}
+{% endblock iconfont_widget %}
+
 {% block media_widget %}
 {% spaceless %}
 	<div id="{{ id }}_widget" class="clearfix {{ attr.class|default('') }}" style="{{ attr.style|default('') }}">
