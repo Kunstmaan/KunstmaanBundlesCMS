@@ -18,11 +18,10 @@
         </div>
 
         <script type="text/javascript">
-            var $ = document;
             var cssId = 'iconfont';
-            if (!$.getElementById(cssId)) {
-                var head  = $.getElementsByTagName('head')[0];
-                var link  = $.createElement('link');
+            if (!document.getElementById(cssId)) {
+                var head  = document.getElementsByTagName('head')[0];
+                var link  = document.createElement('link');
                 link.id   = cssId;
                 link.rel  = 'stylesheet';
                 link.type = 'text/css';
@@ -30,9 +29,9 @@
                 link.media = 'all';
                 head.appendChild(link);
             }
- 
+
             var widget = jQuery('#{{ id }}_widget');
-            if ( widget.find('input').val() == '') {
+            if (widget.find('input').val() == '') {
                 widget.find('.hasnomedia').show();
                 widget.find('.hasmedia').hide();
             } else {
