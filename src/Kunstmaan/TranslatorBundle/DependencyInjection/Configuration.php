@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
 
                 ->scalarNode('default_bundle')
                     ->cannotBeEmpty()
-                    ->defaultValue('kunstmaantranslatorbundle')
+                    ->defaultValue('own')
                 ->end()
 
                 ->scalarNode('cache_dir')
