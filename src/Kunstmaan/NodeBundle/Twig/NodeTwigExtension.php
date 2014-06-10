@@ -97,14 +97,12 @@ class NodeTwigExtension extends Twig_Extension
      */
     public function getSlugByInternalName($internalName, $locale, $parameters = array(), $absolutePath = false)
     {
-        $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodesByInternalName($internalName, $locale);
-
         $slug = '';
-        if (!empty($nodes)) {
-            $translation = $nodes[0]->getNodeTranslation($locale);
-            if (!is_null($translation)) {
-                $slug = $translation->getSlug();
-            }
+        $translation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->
+            getNodeTranslationByLanguageAndInternalName($locale, $internalName);
+
+        if (!is_null($translation)) {
+            $slug = $translation->getSlug();
         }
 
         $params = array_merge(
