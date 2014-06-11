@@ -135,15 +135,13 @@ class NodeTwigExtension extends Twig_Extension
             $slug = $translation->getSlug();
         }
 
-        $params = array_merge(
+        return array_merge(
             array(
                 'url'     => $slug,
                 '_locale' => $locale
             ),
             $parameters
         );
-
-        return $params;
     }
 
     /**
