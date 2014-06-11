@@ -2,13 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Twig;
 
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Extension;
 
 use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 
 /**
  * Extension to fetch node / translation by page in Twig templates
@@ -22,18 +21,18 @@ class NodeTwigExtension extends Twig_Extension
     private $em;
 
     /**
-     * @var RouterInterface
+     * @var UrlGeneratorInterface
      */
-    private $router;
+    private $generator;
 
     /**
-     * @param EntityManager   $em
-     * @param RouterInterface $router
+     * @param EntityManager         $em
+     * @param UrlGeneratorInterface $generator
      */
-    public function __construct(EntityManager $em, RouterInterface $router)
+    public function __construct(EntityManager $em, UrlGeneratorInterface $generator)
     {
-        $this->em     = $em;
-        $this->router = $router;
+        $this->em        = $em;
+        $this->generator = $generator;
     }
 
     /**
@@ -44,10 +43,11 @@ class NodeTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'get_node_for'              => new \Twig_Function_Method($this, 'getNodeFor'),
-            'get_node_translation_for'  => new \Twig_Function_Method($this, 'getNodeTranslationFor'),
-            'get_node_by_internal_name' => new \Twig_Function_Method($this, 'getNodeByInternalName'),
-            'get_slug_by_internal_name' => new \Twig_Function_Method($this, 'getSlugByInternalName'),
+            new \Twig_SimpleFunction('get_node_for', array($this, 'getNodeFor')),
+            new \Twig_SimpleFunction('get_node_translation_for', array($this, 'getNodeTranslationFor')),
+            new \Twig_SimpleFunction('get_node_by_internal_name', array($this, 'getNodeByInternalName')),
+            new \Twig_SimpleFunction('get_url_by_internal_name', array($this, 'getUrlByInternalName')),
+            new \Twig_SimpleFunction('get_path_by_internal_name', array($this, 'getPathByInternalName')),
         );
     }
 
@@ -88,18 +88,48 @@ class NodeTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param string $internalName Internal name of the node
-     * @param string $locale       Locale
-     * @param array  $parameters   (optional) extra parameters
-     * @param bool   $absolutePath Return absolute path?
+     * @param string  $internalName Internal name of the node
+     * @param string  $locale       Locale
+     * @param array   $parameters   (optional) extra parameters
+     * @param boolean $relative     (optional) return relative path?
      *
      * @return string
      */
-    public function getSlugByInternalName($internalName, $locale, $parameters = array(), $absolutePath = false)
+    public function getPathByInternalName($internalName, $locale, $parameters = array(), $relative = false)
     {
-        $slug = '';
-        $translation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->
-            getNodeTranslationByLanguageAndInternalName($locale, $internalName);
+        $routeParameters = $this->getRouteParametersByInternalName($internalName, $locale, $parameters);
+
+        return $this->generator->generate(
+            '_slug',
+            $routeParameters,
+            $relative ? UrlGeneratorInterface::RELATIVE_PATH : UrlGeneratorInterface::ABSOLUTE_PATH
+        );
+    }
+
+    /**
+     * @param string  $internalName   Internal name of the node
+     * @param string  $locale         Locale
+     * @param array   $parameters     (optional) extra parameters
+     * @param boolean $schemeRelative (optional) return relative scheme?
+     *
+     * @return string
+     */
+    public function getUrlByInternalName($internalName, $locale, $parameters = array(), $schemeRelative = false)
+    {
+        $routeParameters = $this->getRouteParametersByInternalName($internalName, $locale, $parameters);
+
+        return $this->generator->generate(
+            '_slug',
+            $routeParameters,
+            $schemeRelative ? UrlGeneratorInterface::NETWORK_PATH : UrlGeneratorInterface::ABSOLUTE_URL
+        );
+    }
+
+    private function getRouteParametersByInternalName($internalName, $locale, $parameters = array())
+    {
+        $slug        = '';
+        $translation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+            ->getNodeTranslationByLanguageAndInternalName($locale, $internalName);
 
         if (!is_null($translation)) {
             $slug = $translation->getSlug();
@@ -113,7 +143,7 @@ class NodeTwigExtension extends Twig_Extension
             $parameters
         );
 
-        return $this->router->generate('_slug', $params, $absolutePath);
+        return $params;
     }
 
     /**
