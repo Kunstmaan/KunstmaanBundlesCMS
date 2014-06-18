@@ -293,13 +293,6 @@ class NodeMenuItem
      */
     public function getActive()
     {
-        $bc = $this->menu->getBreadCrumb();
-        foreach ($bc as $bcItem) {
-            if ($bcItem->getSlug() == $this->getSlug()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->menu->getActive($this->getSlug());
     }
 }

@@ -413,4 +413,23 @@ class NodeMenu
         return $this->includeHiddenFromNav;
     }
 
+    /**
+     * Check if provided slug is active
+     *
+     * @param string $slug
+     *
+     * @return bool
+     */
+    public function getActive($slug)
+    {
+        $bc = $this->getBreadCrumb();
+        foreach ($bc as $bcItem) {
+            if ($bcItem->getSlug() == $slug) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
