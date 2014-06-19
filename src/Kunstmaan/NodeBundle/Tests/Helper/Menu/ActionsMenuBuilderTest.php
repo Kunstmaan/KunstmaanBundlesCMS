@@ -5,7 +5,7 @@ namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 use Doctrine\ORM\EntityManager;
 
 use Knp\Menu\MenuFactory;
-use Knp\Menu\Silex\RoutingExtension;
+use Knp\Menu\Integration\Symfony\RoutingExtension;
 
 use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
