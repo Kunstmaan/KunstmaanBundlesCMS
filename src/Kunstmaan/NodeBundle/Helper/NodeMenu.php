@@ -414,7 +414,7 @@ class NodeMenu
     }
 
     /**
-     * Check if provided slug is active
+     * Check if provided slug is in active path
      *
      * @param string $slug
      *
