@@ -130,3 +130,8 @@ services:
         arguments: ["%fos_user.model.user.class%"]
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
+
+    kunstmaan_admin.form.type.range:
+        class: Kunstmaan\AdminBundle\Form\RangeType
+        tags:
+            - { name: form.type, alias: range }

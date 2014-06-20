@@ -177,3 +177,12 @@
         {% endif %}
     {% endspaceless %}
 {% endblock form_errors %}
+
+{% block range_widget %}
+    {% spaceless %}
+        <div class="range">
+            {{ dump(attr) }}
+            {{ form_widget(form, {'type' : 'range', 'attr' : attr }) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
