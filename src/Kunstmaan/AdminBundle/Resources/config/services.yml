@@ -109,7 +109,7 @@ services:
             - { name: twig.extension }
 
     kunstmaan_admin.permission_creator:
-        class: Kunstmaan\AdminBundle\Helper\Creators\AclPermissionCreator
+        class: Kunstmaan\AdminBundle\Helper\Creators\ACLPermissionCreator
         arguments: ["@security.acl.provider", "@security.acl.object_identity_retrieval_strategy"]
 
     kunstmaan_admin.versionchecker:
