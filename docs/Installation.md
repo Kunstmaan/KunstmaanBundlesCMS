@@ -39,6 +39,7 @@ brew install node
 gem install sass # maybe you need sudo...
 npm install -g bower
 npm install -g grunt
+npm install -g grunt-cli
 npm install -g uglify-js
 npm install -g uglifycss
 ```
@@ -50,6 +51,7 @@ sudo apt-get install node
 gem install sass # maybe you need sudo...
 npm install -g bower
 npm install -g grunt
+npm install -g grunt-cli
 npm install -g uglify-js
 npm install -g uglifycss
 ```
