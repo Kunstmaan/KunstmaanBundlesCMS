@@ -197,14 +197,16 @@ $(function () {
             return false;
         });
 
-        function addSegmentInput() {
+        function addSegmentInput(name, query) {
+            if (!name) { name = ''; }
+            if (!query) { query = ''; }
             // create an id
             var id = $.now();
 
             // create elements
             var segmentDiv = $('<div>', {'id' : 'segmentDiv'+id});
-            var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segment'+id, 'class' : 'segment-query', 'placeholder' : 'query'});
-            var segmentName = $('<input>', { 'type': 'text', 'id' : 'segment_name'+id, 'class' : 'segment-name', 'placeholder' : 'name'});
+            var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segment'+id, 'class' : 'segment-query', 'placeholder' : 'query', 'value' : query});
+            var segmentName = $('<input>', { 'type': 'text', 'id' : 'segment_name'+id, 'class' : 'segment-name', 'placeholder' : 'name', 'value' : name});
             var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'segment-button__delete btn', 'value' : 'cancel'})
 
             // add event trigger for the delete button

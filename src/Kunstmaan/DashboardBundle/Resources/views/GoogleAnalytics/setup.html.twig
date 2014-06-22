@@ -76,8 +76,33 @@
                     </li>
                 {% endfor %}
             </ul>
+
             <div id="segments-new"></div>
-            <button class="btn btn-small" type="button" id="segment-button__add"><i class="icon-plus"></i> add segment</button>
+
+            <button type="button" class="btn btn-small" id="segment-button__add">
+                <i class="icon-plus"></i> add segment
+            </button>
+
+            <div>
+                {% if profileSegments.own | length > 0 %}
+                    <h4>{{ 'dashboard.ga.setup.segment.own' | trans }}</h4>
+                    <ul>
+                        {% for segment in profileSegments.own %}
+                            <li>
+                                {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                    <h4>{{ 'dashboard.ga.setup.segment.builtin' | trans }}</h4>
+                <ul>
+                    {% for segment in profileSegments.builtin %}
+                        <li>
+                            {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
 
         <div class="setup-group" id="control-group">

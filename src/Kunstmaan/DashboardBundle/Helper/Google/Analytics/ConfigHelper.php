@@ -333,6 +333,40 @@ class ConfigHelper
             }
         }
 
+    /* =============================== PROFILE SEGMENTS =============================== */
+        /**
+         * get all segments for the saved profile
+         *
+         * @return array
+         */
+        public function getProfileSegments()
+        {
+            $profileSegments = $this
+                    ->serviceHelper
+                    ->getService()
+                    ->management_segments
+                    ->listManagementSegments()
+                    ->items;
+
+            $builtin = array();
+            $own = array();
+            foreach ($profileSegments as $segment) {
+                if ($segment->type == 'BUILT_IN') {
+                    $builtin[] = array(
+                        'name' => $segment->name,
+                        'query' => $segment->segmentId
+                    );
+                } else {
+                    $own[] = array(
+                        'name' => $segment->name,
+                        'query' => $segment->segmentId
+                    );
+                }
+            }
+
+            return array('builtin' => $builtin, 'own' => $own);
+        }
+
     /* =============================== CONFIG =============================== */
 
         /**

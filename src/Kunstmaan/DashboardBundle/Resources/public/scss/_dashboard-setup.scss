@@ -81,7 +81,7 @@
         padding-left:40px;
         padding-bottom:5px;
 
-        ul {
+        & > ul {
             margin-left:0;
 
             &:after {
@@ -90,7 +90,7 @@
                 clear:both;
             }
         }
-        li {
+        & > ul > li {
             border: 1px solid #CCCCCC;
             border-radius:3px;
 
@@ -105,6 +105,11 @@
             span.display-segment-query {
                 font-style: italic;
             }
+        }
+
+        .dropdown-menu {
+            height:200px;
+            overflow:auto;
         }
 
         .segment-list-button__edit,
@@ -132,6 +137,15 @@
 
             float:left;
             width:50%;
+        }
+
+        .segment-query__selection {
+            color:#30af25;
+            font-weight: bold;
+        }
+
+        #segment-button__add {
+            margin-bottom:20px;
         }
 
         .display-view,
