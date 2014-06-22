@@ -366,13 +366,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $typeStrings = $this->getTypes();
         $mediaTypeSelect = $this->getMediaTypes();
         $generator = $this->getGenerator();
+        $container = $this->getContainer();
 
         while (true) {
             $this->assistant->writeLine('');
 
             $fieldName = $this->assistant->askAndValidate(
                 'New field name (press <return> to stop adding fields)',
-                function ($name) use ($fields, $self, $reservedFields, $generator) {
+                function ($name) use ($fields, $self, $reservedFields, $generator, $container) {
                     // The fields cannot exist in the reserved field list
                     if (in_array($name, $reservedFields)) {
                         throw new \InvalidArgumentException(sprintf('Field "%s" is already defined in the parent class', $name));
@@ -410,7 +411,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $question = "Reference entity name (eg. $bundleName:FaqItem, $bundleName:Blog/Comment)";
                 $name = $this->assistant->askAndValidate(
                     $question,
-                    function ($name) use ($fields, $self, $bundle) {
+                    function ($name) use ($fields, $self, $bundle, $generator, $container) {
                         $parts = explode(':', $name);
 
                         // Should contain colon
@@ -419,11 +420,11 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         }
 
                         // Check reserved words
-                        if ($self->getGenerator()->isReservedKeyword($parts[1])){
+                        if ($generator->isReservedKeyword($parts[1])){
                             throw new \InvalidArgumentException(sprintf('"%s" contains a reserved word', $name));
                         }
 
-                        $em = $self->getContainer()->get('doctrine')->getEntityManager();
+                        $em = $container->get('doctrine')->getEntityManager();
                         try {
                             $em->getClassMetadata($name);
                         } catch (\Exception $e) {
