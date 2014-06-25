@@ -42,6 +42,7 @@ class FileHandler extends AbstractMediaHandler
     {
         $this->mimeTypeGuesser = MimeTypeGuesser::getInstance();
         $this->mimeTypeGuesser->register(new FileBinaryMimeTypeGuesser());
+        $this->mimeTypeGuesser->register(new SVGMimeTypeGuesser());
     }
 
     /**
