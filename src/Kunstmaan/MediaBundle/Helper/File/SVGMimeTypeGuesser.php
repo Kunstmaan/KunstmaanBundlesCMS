@@ -34,7 +34,7 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
      */
     public static function isSupported()
     {
-        return function_exists('DOMDocument') && class_exists('DOMXPath');
+        return class_exists('DOMDocument') && class_exists('DOMXPath');
     }
 
     /**
