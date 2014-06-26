@@ -3,8 +3,10 @@ parameters:
     kunstmaan_media.menu.adaptor.class: 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor'
     kunstmaan_media.listener.doctrine.class: 'Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener'
     kunstmaan_media.form.type.media.class: 'Kunstmaan\MediaBundle\Form\Type\MediaType'
+    kunstmaan_media.form.type.iconfont.class: 'Kunstmaan\MediaBundle\Form\Type\IconFontType'
+    kunstmaan_media.icon_font_manager.class: 'Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager'
+    kunstmaan_media.icon_font.default_loader.class: 'Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
     kunstmaan_media.media_creator_service.class: 'Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService'
-
 
 services:
     liip_imagine.data.loader.stream.profile_photos:
@@ -43,6 +45,23 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - { name: form.type, alias: media }
+
+    form.type.iconfont:
+        class: "%kunstmaan_media.form.type.iconfont.class%"
+        arguments: ["@kunstmaan_media.icon_font_manager"]
+        tags:
+            - { name: form.type, alias: iconfont }
+
+    kunstmaan_media.icon_font_manager:
+        class: "%kunstmaan_media.icon_font_manager.class%"
+        calls:
+            - [ setDefaultLoader, [ "@kunstmaan_media.icon_font.default_loader" ] ]
+
+    kunstmaan_media.icon_font.default_loader:
+        class: "%kunstmaan_media.icon_font.default_loader.class%"
+        arguments: ["@kernel"]
+        tags:
+            -  { name: 'kunstmaan_media.icon_font.loader' }
 
     kunstmaan_media.media_creator_service:
         class: "%kunstmaan_media.media_creator_service.class%"

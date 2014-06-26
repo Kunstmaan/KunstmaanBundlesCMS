@@ -18,14 +18,20 @@ class MediaHandlerCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (false === $container->hasDefinition('kunstmaan_media.media_manager')) {
-            return;
+        if ($container->hasDefinition('kunstmaan_media.media_manager')) {
+            $definition = $container->getDefinition('kunstmaan_media.media_manager');
+
+            foreach ($container->findTaggedServiceIds('kunstmaan_media.media_handler') as $id => $attributes) {
+                $definition->addMethodCall('addHandler', array(new Reference($id)));
+            }
         }
 
-        $definition = $container->getDefinition('kunstmaan_media.media_manager');
+        if ($container->hasDefinition('kunstmaan_media.icon_font_manager')) {
+            $definition = $container->getDefinition('kunstmaan_media.icon_font_manager');
 
-        foreach ($container->findTaggedServiceIds('kunstmaan_media.media_handler') as $id => $attributes) {
-            $definition->addMethodCall('addHandler', array(new Reference($id)));
+            foreach ($container->findTaggedServiceIds('kunstmaan_media.icon_font.loader') as $id => $attributes) {
+                $definition->addMethodCall('addLoader', array(new Reference($id), $id));
+            }
         }
     }
 }
