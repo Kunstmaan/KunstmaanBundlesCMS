@@ -54,6 +54,7 @@ nested_sortable and - optionally - the nested_sortable_field attributes.
                 )
             )
         );
+        $builder->add('displayOrder', 'hidden');
 ```
 
 If you don't set the nested_sortable_field attribute, a default of "weight" will be used (so you must make sure your
