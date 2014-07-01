@@ -27,6 +27,8 @@ class MyAdminType extends AbstractType
             )
         );
         ...
+    }
+}
 ```
 
 You can also specify a minimum and/or maximum number of items for the collection, by passing nested_form_min and/or
@@ -38,11 +40,16 @@ There also is support for drag & drop sorting of the collection elements, this c
 nested_sortable and - optionally - the nested_sortable_field attributes.
 
 ```php
+class MyAdminType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        ...
         $builder->add(
             'prices',
             'collection',
             array(
-                'type'               => new SeriesPriceAdminType(),
+                'type'               => new MySubAdminType(),
                 'allow_add'          => true,
                 'allow_delete'       => true,
                 'by_reference'       => false,
@@ -54,7 +61,19 @@ nested_sortable and - optionally - the nested_sortable_field attributes.
                 )
             )
         );
+        ...
+    }
+}
+
+class MySubAdminType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        ...
         $builder->add('displayOrder', 'hidden');
+        ...
+    }
+}
 ```
 
 If you don't set the nested_sortable_field attribute, a default of "weight" will be used (so you must make sure your

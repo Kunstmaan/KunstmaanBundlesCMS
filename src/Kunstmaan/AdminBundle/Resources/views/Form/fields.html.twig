@@ -65,7 +65,9 @@
                     <ul class="nested_form ul_{{ form.vars.id }}{% if sortable %} nested_sortable{% endif %}"{% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
                         {% for obj in form %}
                             <li class="nested_form_item" delkey="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}"{% if sortable %} data-sortkey="{{ obj.children[sortableField].vars.id }}"{% endif %}>
-                                <div class="prop_bar"><i class="icon-move"></i></div>
+                                {% if sortable %}
+                                    <div class="prop_bar"><i class="icon-move"></i></div>
+                                {% endif %}
                                 {% for child in obj.children %}
                                     {{ form_row(child) }}
                                 {% endfor %}
