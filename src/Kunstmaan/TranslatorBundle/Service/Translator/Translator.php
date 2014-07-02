@@ -50,6 +50,7 @@ class Translator extends SymfonyTranslator
 
     /**
      * Add resources from the stash and cache them
+     *
      * @param boolean $cacheResources cache resources after retrieving them from the stasher
      */
     public function addResourcesFromDatabaseAndCacheThem($cacheResources = true)
@@ -67,13 +68,14 @@ class Translator extends SymfonyTranslator
      * Add resources to the Translator
      * Resources is an array[0] => array('name' => 'messages', 'locale' => 'en')
      * Where name is the domain of the domain
+     *
      * @param array $resources
      */
     public function addResources($resources)
     {
         foreach ($resources as $resource) {
             $this->addResource('database', 'DB', $resource['locale'], $resource['name']);
-         }
+        }
     }
 
     /**
@@ -91,13 +93,15 @@ class Translator extends SymfonyTranslator
 
     public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
     {
+        if (!$this->container->isScopeActive('request')) {
+            return parent::trans($id, $parameters, $domain, $locale);
+        }
 
         $showTranslationsSource = $this->container->get('request')->get('transSource');
-        if($showTranslationsSource !== null) {
-            $trans =  sprintf('%s (%s)', $id, $domain);
+        if ($showTranslationsSource !== null) {
+            $trans = sprintf('%s (%s)', $id, $domain);
         } else {
             $trans = parent::trans($id, $parameters, $domain, $locale);
-
         }
 
         $this->profileTranslation($id, $parameters, $domain, $locale, $trans);
@@ -128,7 +132,7 @@ class Translator extends SymfonyTranslator
             $translationCollection = new ArrayCollection;
         }
 
-        $translationCollection->set($domain.$id.$locale, $translation);
+        $translationCollection->set($domain . $id . $locale, $translation);
 
         $this->container->get('request')->request->set('usedTranslations', $translationCollection);
 
