@@ -323,4 +323,16 @@ class NodeTranslationRepository extends EntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    public function getAllNodeTranslationsByRefEntityName($refEntityName)
+    {
+        $qb = $this->createQueryBuilder('nt')
+            ->select('nt,n')
+            ->innerJoin('nt.publicNodeVersion', 'nv')
+            ->innerJoin('nt.node', 'n')
+            ->where('nv.refEntityName = :refEntityName')
+            ->setParameter('refEntityName', $refEntityName);
+
+        return $qb->getQuery()->getResult();
+    }
 }
