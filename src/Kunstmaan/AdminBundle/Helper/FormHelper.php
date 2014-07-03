@@ -20,9 +20,16 @@ class FormHelper
      */
     public function hasRecursiveErrorMessages(FormView $formView)
     {
-        if (!empty($formView->vars['errors'])) {
+        $errors = $formView->vars['errors'];
+
+        if (is_object($errors) && $errors instanceof \Traversable) {
+            $errors = iterator_to_array($errors);
+        }
+
+        if (!empty($errors)) {
             return true;
         }
+
         if ($formView->count()) {
             foreach ($formView->children as $child) {
                 if ($this->hasRecursiveErrorMessages($child)) {
@@ -49,11 +56,17 @@ class FormHelper
                 $this->getRecursiveErrorMessages($formView, $errors);
             }
         } else {
+            $errors = $formViews->vars['errors'];
+
+            if (is_object($errors) && $errors instanceof \Traversable) {
+                $errors = iterator_to_array($errors);
+            }
+
             /**
              * @var $formViews FormView
              * @var $error     FormError
              */
-            foreach ($formViews->vars['errors'] as $error) {
+            foreach ($errors as $error) {
 
                 $template   = $error->getMessageTemplate();
                 $parameters = $error->getMessageParameters();
