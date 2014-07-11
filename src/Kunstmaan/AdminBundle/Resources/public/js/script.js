@@ -388,8 +388,11 @@ function init_twipsy() {
 
 //Custom Select
 function initCustomSelect() {
-    $('select.chzn-select').chosen({
-        search_contains: true
+    $('select.chzn-select').each(function() {
+        $(this).chosen({
+            search_contains: true,
+            allow_single_deselect: $(this).attr('data-allowempty')
+        });
     });
 }
 

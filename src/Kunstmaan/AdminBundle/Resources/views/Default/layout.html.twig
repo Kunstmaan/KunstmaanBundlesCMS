@@ -23,7 +23,11 @@
 
     <!--=========== CSS ===========-->
     <!--Combine-->
-    {% stylesheets filter="scss" "@KunstmaanAdminBundle/Resources/public/scss/style.scss" %}
+    {% stylesheets
+        "@KunstmaanAdminBundle/Resources/public/scss/style.scss"
+        "@KunstmaanAdminBundle/Resources/public/js/chosen/chosen.css"
+        filter="scss"
+    %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
     <!--[if lte IE 8]>
@@ -194,7 +198,7 @@
     {% javascripts
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-ui-1.10.0.custom.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap.min.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/chosen.jquery.min.js'
+        '@KunstmaanAdminBundle/Resources/public/js/chosen/chosen.jquery.min.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.filedrop.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.fileupload.js'
         '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.iframe-transport.js'
