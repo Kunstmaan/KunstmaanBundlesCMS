@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManager,
 use Kunstmaan\NodeBundle\Entity\Node,
     Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -62,15 +64,29 @@ class NodeTranslationListener
     {
         $em = $args->getEntityManager();
 
-        foreach ($this->nodeTranslations as $entity) {
-            if ($entity instanceof NodeTranslation) {
-                $entity = $this->updateUrl($entity, $em);
+        if(count($this->nodeTranslations)) {
 
-                if ($entity != false) {
-                    $em->persist($entity);
-                    $em->flush();
+            foreach ($this->nodeTranslations as $entity) {
+                /** @var $entity NodeTranslation */
+                if ($entity instanceof NodeTranslation) {
+                    $publicNodeVersion = $entity->getPublicNodeVersion();
 
-                    $this->updateNodeChildren($entity, $em);
+                    /** @var $publicNodeVersion NodeVersion */
+                    $publicNode = $publicNodeVersion->getRef($em);
+
+                    /** Do nothing for StructureNode objects, return */
+                    if ($publicNode instanceof StructureNode) {
+                        return;
+                    }
+
+                    $entity = $this->updateUrl($entity, $em);
+
+                    if ($entity != false) {
+                        $em->persist($entity);
+                        $em->flush();
+
+                        $this->updateNodeChildren($entity, $em);
+                    }
                 }
             }
         }
