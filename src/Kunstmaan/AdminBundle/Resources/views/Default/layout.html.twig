@@ -64,6 +64,9 @@
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    {% include "KunstmaanAdminBundle:Default:_js_header.html.twig" %}
+    {% include "KunstmaanAdminBundle:Default:_css_header.html.twig" %}
 </head>
 
 
@@ -248,6 +251,8 @@
                 }, 150);
             });
         });
+
+        {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
      </script>
 </body>
 </html>
