@@ -82,7 +82,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
                 return implode(", ", $result);
             } else {
                 if (isset($choices[$values])) {
-                    return $choices[$values];
+                    return trim($choices[$values]);
                 }
             }
         }
