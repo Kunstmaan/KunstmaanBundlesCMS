@@ -43,7 +43,7 @@
                         <button class="btn add_filter" type="button" onclick="return createFilter(this, false, {startDate: '{{ datePicker_startDate }}'})"><i class="icon-plus-sign"></i>{{ "form.addfilter"|trans }}</button>
                     </li>
                     <li>
-                        <button class="btn apply_filter" type="submit">Filter</button>
+                        <button class="btn apply_filter" name="filter" value="filter" type="submit">Filter</button>
                     </li>
                 </ul>
                 {% for key, value in filter.currentparameters %}
