@@ -391,11 +391,11 @@ function initCustomSelect() {
     $('select.chzn-select').each(function() {
         $(this).chosen({
             search_contains: true,
-            allow_single_deselect: $(this).attr('data-allowempty')
+            allow_single_deselect: $(this).attr('data-allowempty'),
+            width: ($(this).attr('data-chznwidth') ? $(this).data('chznwidth') : '365px')
         });
     });
 }
-
 
 
 ////FILTERS
