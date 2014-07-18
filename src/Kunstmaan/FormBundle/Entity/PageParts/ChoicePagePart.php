@@ -89,6 +89,7 @@ class ChoicePagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
     {
         $choices = explode("\n", $this->getChoices());
+        $choices = array_map('trim', $choices);
 
         $cfsf = new ChoiceFormSubmissionField();
         $cfsf->setFieldName("field_" . $this->getUniqueId());
