@@ -39,15 +39,16 @@ And override its template by copying the view.html.twig of the SitemapPage to th
         {% endif %}
     <ul>
 {% endblock %}
+```
 
 ## Twig extension
 
 This bundle also supplies two new twig extensions, both methods accept a [NodeMenuItem](https://github.com/Kunstmaan/KunstmaanNodeBundle/blob/master/Helper/NodeMenuItem.php) as parameter and will return a boolean.
 
 ```
-    hide_from_sitemap(nodemenuitem)
+hide_from_sitemap(nodemenuitem)
 ```
 
 ```
-    hide_children_from_sitemap(nodemenuitem)
+hide_children_from_sitemap(nodemenuitem)
 ```
