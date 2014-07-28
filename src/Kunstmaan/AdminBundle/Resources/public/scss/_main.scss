@@ -2274,6 +2274,11 @@ ul.nested_form li.nested_form_item .del-btn {
 ul.nested_form li .add-btn {
     display:none;
 }
+ul.nested_form li.nested_form_item--sortable {
+    @extend .pagepart;
+
+    padding: 0;
+}
 
 // Nested entity in form
 div.input_nested {

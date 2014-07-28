@@ -761,7 +761,12 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
     this.addEntityFormDeleteButton = function($entityFormLi) {
         var self = this;
         var $removeLink = $(this.removeButtonHtml);
-        $entityFormLi.prepend($removeLink);
+
+        if(sortable) {
+            $entityFormLi.find('.prop_bar .actions').append($removeLink);
+        } else {
+            $entityFormLi.prepend($removeLink);
+        }
 
         $removeLink.on('click', function(e) {
             // prevent the link from creating a "#" on the URL
