@@ -631,16 +631,39 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function bindRequest(Request $request)
     {
-        $this->page = $request->query->get('page');
-        if (is_null($this->page)) {
-            $this->page = 1;
+        $query      = $request->query;
+        $session    = $request->getSession();
+
+        $adminListName = 'listconfig_' . $request->get('_route');
+
+        $this->page             = $request->query->getInt('page', 1);
+        $this->orderBy          = $request->query->getAlpha('orderBy', '');
+        $this->orderDirection   = $request->query->getAlpha('orderDirection', '');
+
+        // there is a session and the filter param is not set
+        if ($session->has($adminListName) && !$query->has('filter')) {
+            $adminListSessionData = $request->getSession()->get($adminListName);
+            if (!$query->has('page')) {
+                $this->page = $adminListSessionData['page'];
+            }
+
+            if (!$query->has('orderBy')) {
+                $this->orderBy = $adminListSessionData['orderBy'];
+            }
+
+            if ($query->has('orderDirection')) {
+                $this->orderDirection = $adminListSessionData['orderDirection'];
+            }
         }
-        if (!is_null($request->query->get('orderBy'))) {
-            $this->orderBy = $request->query->get('orderBy');
-        }
-        if (!is_null($request->query->get('orderDirection'))) {
-            $this->orderDirection = $request->query->get('orderDirection');
-        }
+
+        // save current parameters
+        $session->set($adminListName, array(
+            'page'              => $this->page,
+            'orderBy'           => $this->orderBy,
+            'orderDirection'    => $this->orderDirection,
+        ));
+
+
         $this->getFilterBuilder()->bindRequest($request);
     }
 
