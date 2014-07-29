@@ -131,6 +131,8 @@ class GoogleAnalyticsController extends Controller
         $params['accountId'] = $config->getAccountId();
         $params['propertyId'] = 0;
         $params['profileId'] = 0;
+        $params['properties'] = array();
+        $params['profiles'] = array();
 
         if ($params['accountId']) {
             $params['propertyId'] = $config->getPropertyId();
