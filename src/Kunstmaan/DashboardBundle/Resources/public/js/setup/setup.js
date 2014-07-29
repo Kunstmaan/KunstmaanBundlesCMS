@@ -54,10 +54,12 @@ $(function () {
     });
 
     function triggerUpdate() {
+        $('#accounts select').trigger('chosen:updated');
+        $('#properties select').trigger('chosen:updated');
+        $('#profiles select').trigger('chosen:updated');
         $('#accounts select').trigger('liszt:updated');
         $('#properties select').trigger('liszt:updated');
         $('#profiles select').trigger('liszt:updated');
-
     }
 
     /* =============================== ACCOUNTS =============================== */
