@@ -99,9 +99,12 @@
     }
 
     function disableCKEditors(){
-    	for ( instance in CKEDITOR.instances ){
-            CKEDITOR.instances[instance].destroy();
-		}
+        for ( instance in CKEDITOR.instances ){
+            if ($('#' + CKEDITOR.instances[instance].name).hasClass('rich_editor')) {
+                CKEDITOR.instances[instance].destroy();
+
+            }
+        }
     }
 
     function enableCKEditors(){
