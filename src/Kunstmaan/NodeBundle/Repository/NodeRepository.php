@@ -201,7 +201,8 @@ n.id, n.parent_id AS parent, t.url,
 IF(t.weight IS NULL, v.weight, t.weight) AS weight,
 IF(t.title IS NULL, v.title, t.title) AS title,
 IF(t.online IS NULL, 0, t.online) AS online,
-n.hidden_from_nav AS hidden
+n.hidden_from_nav AS hidden,
+n.ref_entity_name AS ref_entity_name
 SQL;
 
         $qb->select($sql)
