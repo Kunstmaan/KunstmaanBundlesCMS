@@ -35,25 +35,22 @@
 {% endblock %}
 
 {% block header %}
-    {% if adminmenu.current %}
-        <!-- PageClassName: {{ node.refEntityName }} -->
-        <input type="hidden" name="PageClassName" value="{{ node.refEntityName }}">
-        <h1>
-            {{ adminmenu.current.internalname | trans }}
-            {% if draft %}
-                <small>
-                    Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
-                </small>
-            {% else %}
-                <small>
-                    Public version
-                    {% if draftNodeVersion is not null %}
-                        (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
-                    {% endif %}
-                </small>
-            {% endif %}
-        </h1>
-    {% endif %}
+    <!-- PageClassName: {{ node.refEntityName }} -->
+    <h1>
+        {{ page.title }}
+        {% if draft %}
+            <small>
+                Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
+            </small>
+        {% else %}
+            <small>
+                Public version
+                {% if draftNodeVersion is not null %}
+                    (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
+                {% endif %}
+            </small>
+        {% endif %}
+    </h1>
 {% endblock %}
 
 
