@@ -56,10 +56,21 @@
         <div class="input_prop{% if errors|length > 0 %} error{% endif %}">
             {{ form_label(form) }}
             <div class="input">
-                {% if attr['nested_form'] is defined %}
-                    <ul class="nested_form ul_{{ form.vars.id }}" {% if form.vars.allow_add %}data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
+                {% if attr['nested_form'] is defined and attr['nested_form'] == true %}
+                    {% set sortable = false %}
+                    {% if attr['nested_sortable'] is defined and attr['nested_sortable'] == true %}
+                        {% set sortable = true %}
+                        {% set sortableField = attr['nested_sortable_field']|default('weight') %}
+                    {% endif %}
+                    <ul class="nested_form ul_{{ form.vars.id }}{% if sortable %} nested_sortable{% endif %}"{% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
                         {% for obj in form %}
-                            <li class="nested_form_item" delkey='{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}'>
+                            <li class="nested_form_item {% if sortable %}nested_form_item--sortable{% endif %}" delkey="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}"{% if sortable %} data-sortkey="{{ obj.children[sortableField].vars.id }}"{% endif %}>
+                                {% if sortable %}
+                                    <div class="prop_bar">
+                                        <i class="icon-move"></i>
+                                        <div class="actions"></div>
+                                    </div>
+                                {% endif %}
                                 {% for child in obj.children %}
                                     {{ form_row(child) }}
                                 {% endfor %}
@@ -71,14 +82,40 @@
                         $(document).ready(function () {
                             var collectionHolder = $('ul.ul_{{ form.vars.id }}');
                             var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
-                            var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
+                            {% if sortable %}
+                                var removeButtonHtml = '<a href="#" class="del red"><i class="icon-trash"></i></a>';
+                            {% else %}
+                                var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
+                            {% endif %}
 
-                            var allow_add = {{ form.vars.allow_delete|default('0') }};
+                            var allow_add = {{ form.vars.allow_add|default('0') }};
                             var allow_delete = {{ form.vars.allow_delete|default('0') }};
                             var min = {{ attr['nested_form_min']|default('0') }};
                             var max = {{ attr['nested_form_max']|default('false') }};
+                            var sortable = {{ attr['nested_sortable']|default('false') }};
 
-                            new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max).init();
+                            new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max, sortable).init();
+
+                            if (sortable) {
+                                collectionHolder.sortable({
+                                    handle: '.prop_bar',
+                                    cursor: 'move',
+                                    placeholder: "placeholder",
+                                    forcePlaceholderSize: true,
+                                    tolerance:"pointer",
+                                    revert: 100
+                                }).bind('sortupdate', function() {
+                                    // Adapt weight field
+                                    var weight = 0;
+                                    $('.ul_{{ form.vars.id }} li').each(function() {
+                                        var fieldId = $(this).data('sortkey');
+                                        if (fieldId === undefined) {
+                                            return;
+                                        }
+                                        $('#' + fieldId).val(weight++);
+                                    });
+                                });
+                            }
                         });
                     </script>
                 {% else %}

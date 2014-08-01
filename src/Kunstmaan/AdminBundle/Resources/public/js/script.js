@@ -645,7 +645,7 @@ function initSaveKeyListener() {
 /**
  * Logic for showing nested forms in pageparts.
  */
-function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowAdd, allowDelete, min, max) {
+function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowAdd, allowDelete, min, max, sortable) {
 
     this.collectionHolder = collectionHolder;
     this.addButtonLi = addButtonLi;
@@ -654,6 +654,7 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
     this.allowDelete = allowDelete;
     this.min = min;
     this.max = max;
+    this.sortable = sortable;
 
     this.init = function() {
         var self = this;
@@ -727,7 +728,19 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
         this.collectionHolder.data('index', index + 1);
 
         // Display the form in the page in an li, before the "Add new" link li
-        var $newFormLi = $('<li class="nested_form_item"></li>').append(newForm);
+        var newLiMarkup = '<li class="nested_form_item"';
+        // If sortable add extra attribute
+        if (this.sortable) {
+            newLiMarkup = newLiMarkup + ' data-sortkey="' +
+                this.collectionHolder.data('sortkey').replace(/__name__/g, index) + '"';
+        }
+        newLiMarkup = newLiMarkup + '>';
+        if (this.sortable) {
+            newLiMarkup = newLiMarkup + '<div class="prop_bar"><i class="icon-move"></i></div>';
+        }
+        newLiMarkup = newLiMarkup + '</li>';
+        var $newFormLi = $(newLiMarkup).append(newForm);
+
         this.addButtonLi.before($newFormLi);
 
         // Add a delete button
@@ -735,6 +748,11 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
 
         // Check that we need to show/hide the add/delete buttons
         this.recalculateShowAddDeleteButtons();
+
+        // Reorder if sortable
+        if (this.sortable) {
+            this.collectionHolder.trigger('sortupdate');
+        }
 
         // Quickfix to trigger CK editors on sub-entities - there should be a better way to do this...
         if (typeof enableCKEditors !== "undefined") {
@@ -746,7 +764,12 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
     this.addEntityFormDeleteButton = function($entityFormLi) {
         var self = this;
         var $removeLink = $(this.removeButtonHtml);
-        $entityFormLi.prepend($removeLink);
+
+        if(sortable) {
+            $entityFormLi.find('.prop_bar .actions').append($removeLink);
+        } else {
+            $entityFormLi.prepend($removeLink);
+        }
 
         $removeLink.on('click', function(e) {
             // prevent the link from creating a "#" on the URL
@@ -765,6 +788,11 @@ function PagepartSubForm(collectionHolder, addButtonLi, removeButtonHtml, allowA
 
             // Check that we need to show/hide the add/delete buttons
             self.recalculateShowAddDeleteButtons();
+
+            // Reorder if sortable
+            if (self.sortable) {
+                self.collectionHolder.trigger('sortupdate');
+            }
         });
     }
 }
