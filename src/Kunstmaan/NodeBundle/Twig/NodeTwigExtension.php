@@ -127,17 +127,17 @@ class NodeTwigExtension extends Twig_Extension
 
     private function getRouteParametersByInternalName($internalName, $locale, $parameters = array())
     {
-        $slug        = '';
+        $url         = '';
         $translation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
             ->getNodeTranslationByLanguageAndInternalName($locale, $internalName);
 
         if (!is_null($translation)) {
-            $slug = $translation->getSlug();
+            $url = $translation->getUrl();
         }
 
         return array_merge(
             array(
-                'url'     => $slug,
+                'url'     => $url,
                 '_locale' => $locale
             ),
             $parameters
