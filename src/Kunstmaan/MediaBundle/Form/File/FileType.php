@@ -25,8 +25,28 @@ class FileType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array('required' => false));
+        $builder->add(
+            'name',
+            'text',
+            array(
+                'required' => false
+            )
+        );
         $builder->add('file', 'file');
+        $builder->add(
+            'copyright',
+            'text',
+            array(
+                'required' => false
+            )
+        );
+        $builder->add(
+            'description',
+            'textarea',
+            array(
+                'required' => false
+            )
+        );
     }
 
     /**
@@ -47,9 +67,9 @@ class FileType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-          array(
-            'data_class' => 'Kunstmaan\MediaBundle\Helper\File\FileHelper',
-          )
+            array(
+                'data_class' => 'Kunstmaan\MediaBundle\Helper\File\FileHelper',
+            )
         );
     }
 }
