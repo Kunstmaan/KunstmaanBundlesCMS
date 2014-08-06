@@ -10,6 +10,16 @@ use Kunstmaan\MediaBundle\Entity\Media;
  */
 abstract class AbstractRemoteHelper
 {
+    /** @var Media $media */
+    protected $media;
+
+    /**
+     * @param Media $media
+     */
+    public function __construct(Media $media)
+    {
+        $this->media = $media;
+    }
 
     /**
      * @return string
@@ -25,6 +35,38 @@ abstract class AbstractRemoteHelper
     public function setName($name)
     {
         $this->media->setName($name);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCopyright()
+    {
+        return $this->media->getCopyright();
+    }
+
+    /**
+     * @param string $copyright
+     */
+    public function setCopyright($copyright)
+    {
+        $this->media->setCopyright($copyright);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->media->getDescription();
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->media->setDescription($description);
     }
 
     /**

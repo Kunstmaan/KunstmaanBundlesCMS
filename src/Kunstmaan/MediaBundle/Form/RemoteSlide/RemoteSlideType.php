@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Form\RemoteSlide;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * RemoteSlideType
@@ -26,15 +27,45 @@ class RemoteSlideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          ->add('name', 'text')
-          ->add('code', 'text')
-          ->add(
-            'type',
-            'choice',
-            array(
-              'choices' => array('slideshare' => 'slideshare')
+            ->add(
+                'name',
+                'text',
+                array(
+                    'constraints' => array(new NotBlank()),
+                    'required'    => true
+                )
             )
-          );
+            ->add(
+                'code',
+                'text',
+                array(
+                    'constraints' => array(new NotBlank()),
+                    'required'    => true
+                )
+            )
+            ->add(
+                'type',
+                'choice',
+                array(
+                    'choices'     => array('slideshare' => 'slideshare'),
+                    'constraints' => array(new NotBlank()),
+                    'required'    => true
+                )
+            )
+            ->add(
+                'copyright',
+                'text',
+                array(
+                    'required' => false
+                )
+            )
+            ->add(
+                'description',
+                'textarea',
+                array(
+                    'required' => false
+                )
+            );
     }
 
     /**
@@ -55,9 +86,9 @@ class RemoteSlideType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-          array(
-            'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
-          )
+            array(
+                'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper',
+            )
         );
     }
 }

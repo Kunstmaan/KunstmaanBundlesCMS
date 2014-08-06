@@ -4,7 +4,10 @@ namespace Kunstmaan\MediaBundle\Form\File;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * FileType
@@ -32,7 +35,13 @@ class FileType extends AbstractType
                 'required' => false
             )
         );
-        $builder->add('file', 'file');
+        $builder->add(
+            'file',
+            'file',
+            array(
+                'required' => false
+            )
+        );
         $builder->add(
             'copyright',
             'text',
@@ -46,6 +55,25 @@ class FileType extends AbstractType
             array(
                 'required' => false
             )
+        );
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $helper = $event->getData();
+                $form   = $event->getForm();
+
+                // Only add file field as required field when creating new objects
+                if (!$helper || null === $helper->getMedia()->getId()) {
+                    $form->add(
+                        'file',
+                        'file',
+                        array(
+                            'constraints' => array(new NotBlank()),
+                            'required'    => true
+                        )
+                    );
+                }
+            }
         );
     }
 

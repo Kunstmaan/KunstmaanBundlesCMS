@@ -12,18 +12,12 @@ use Kunstmaan\MediaBundle\Entity\Media;
  */
 class RemoteAudioHelper extends AbstractRemoteHelper implements RemoteInterface
 {
-
-    /**
-     * @var Media
-     */
-    protected $media;
-
     /**
      * @param Media $media
      */
     public function __construct(Media $media)
     {
-        $this->media = $media;
+        parent::__construct($media);
         $this->media->setContentType(RemoteAudioHandler::CONTENT_TYPE);
     }
 }
