@@ -14,7 +14,7 @@
 {%- set columnName = column.name -%}
 {%- set template = column.template -%}
 {% if template is not null and template != 1 and template != "" %}
-{% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getValue(item, columnName)} %}
+{{- quote|raw -}}{% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getValue(item, columnName)} %}{{- quote|raw -}}
 {% else %}
 {{- quote|raw -}}{{- adminlist.getStringValue(item, columnName) -}}{{- quote|raw -}}
 {% endif %}
