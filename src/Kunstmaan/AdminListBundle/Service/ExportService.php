@@ -82,7 +82,7 @@ class ExportService
             $row = array();
             foreach ($adminlist->getExportColumns() as $column) {
                 $data = $adminlist->getStringValue($item[0], $column->getName());
-                if ($data instanceof \Doctrine\Common\Persistence\Proxy) {
+                if (is_object($data)) {
                     if (!$this->renderer->exists($column->getTemplate())) {
                         throw new \Exception('No export template defined for ' . get_class($data));
                     }
