@@ -6,6 +6,10 @@ interface RemoteInterface
 {
     public function getName();
     public function setName($name);
+    public function getCopyright();
+    public function setCopyright($copyright);
+    public function getDescription();
+    public function setDescription($description);
     public function getCode();
     public function setCode($code);
     public function getThumbnailUrl();

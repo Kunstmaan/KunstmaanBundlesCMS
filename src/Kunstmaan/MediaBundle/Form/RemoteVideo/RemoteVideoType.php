@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Form\RemoteVideo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * RemoteVideoType
@@ -26,15 +27,45 @@ class RemoteVideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          ->add('name', 'text')
-          ->add('code', 'text')
-          ->add(
-            'type',
-            'choice',
-            array(
-              'choices' => array('youtube' => 'youtube', 'vimeo' => 'vimeo', 'dailymotion' => 'dailymotion')
+            ->add(
+                'name',
+                'text',
+                array(
+                    'constraints' => array(new NotBlank()),
+                    'required'    => true
+                )
             )
-          );
+            ->add(
+                'code',
+                'text',
+                array(
+                    'constraints' => array(new NotBlank()),
+                    'required'    => true
+                )
+            )
+            ->add(
+                'type',
+                'choice',
+                array(
+                    'choices'     => array('youtube' => 'youtube', 'vimeo' => 'vimeo', 'dailymotion' => 'dailymotion'),
+                    'constraints' => array(new NotBlank()),
+                    'required'    => true
+                )
+            )
+            ->add(
+                'copyright',
+                'text',
+                array(
+                    'required' => false
+                )
+            )
+            ->add(
+                'description',
+                'textarea',
+                array(
+                    'required' => false
+                )
+            );
     }
 
     /**
@@ -55,9 +86,9 @@ class RemoteVideoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-          array(
-            'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
-          )
+            array(
+                'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
+            )
         );
     }
 }

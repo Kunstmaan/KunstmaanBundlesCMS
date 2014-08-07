@@ -55,6 +55,38 @@ class FileHelper
     }
 
     /**
+     * @return string
+     */
+    public function getCopyright()
+    {
+        return $this->media->getCopyright();
+    }
+
+    /**
+     * @param string $copyright
+     */
+    public function setCopyright($copyright)
+    {
+        $this->media->setCopyright($copyright);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->media->getDescription();
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->media->setDescription($description);
+    }
+
+    /**
      * @return UploadedFile
      */
     public function getFile()
