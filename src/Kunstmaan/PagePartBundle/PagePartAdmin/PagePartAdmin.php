@@ -67,16 +67,21 @@ class PagePartAdmin
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, HasPagePartsInterface $page, $context = null, ContainerInterface $container = null)
-    {
+    public function __construct(
+        AbstractPagePartAdminConfigurator $configurator,
+        EntityManager $em,
+        HasPagePartsInterface $page,
+        $context = null,
+        ContainerInterface $container = null
+    ) {
         if (!($page instanceof AbstractEntity)) {
             throw new \InvalidArgumentException("Page must be an instance of AbstractEntity.");
         }
 
         $this->configurator = $configurator;
-        $this->em = $em;
-        $this->page = $page;
-        $this->container = $container;
+        $this->em           = $em;
+        $this->page         = $page;
+        $this->container    = $container;
 
         if ($context) {
             $this->context = $context;
@@ -97,28 +102,30 @@ class PagePartAdmin
     private function initializePageParts()
     {
         // Get all the pagepartrefs
+        /** @var PagePartRefRepository $ppRefRepo */
         $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-        $ppRefs = $ppRefRepo->getPagePartRefs($this->page, $this->context);
+        $ppRefs    = $ppRefRepo->getPagePartRefs($this->page, $this->context);
 
         // Group pagepartrefs per type
-        $types = $tempPageParts = array();
+        $types = array();
         foreach ($ppRefs as $pagePartRef) {
             $types[$pagePartRef->getPagePartEntityname()][] = $pagePartRef->getPagePartId();
-
-            $this->pagePartRefs[$pagePartRef->getId()] = $pagePartRef;
+            $this->pagePartRefs[$pagePartRef->getId()]      = $pagePartRef;
         }
 
         // Fetch all the pageparts (only one query per pagepart type)
         $pageParts = array();
         foreach ($types as $classname => $ids) {
-            $result = $this->em->getRepository($classname)->findBy(array('id' => $ids));
+            $result    = $this->em->getRepository($classname)->findBy(array('id' => $ids));
             $pageParts = array_merge($pageParts, $result);
         }
 
         // Link the pagepartref to the pagepart
         foreach ($this->pagePartRefs as $pagePartRef) {
             foreach ($pageParts as $key => $pagePart) {
-                if (ClassLookup::getClass($pagePart) == $pagePartRef->getPagePartEntityname() && $pagePart->getId() == $pagePartRef->getPagePartId()) {
+                if (ClassLookup::getClass($pagePart) == $pagePartRef->getPagePartEntityname() && $pagePart->getId(
+                    ) == $pagePartRef->getPagePartId()
+                ) {
                     $this->pageParts[$pagePartRef->getId()] = $pagePart;
                     unset($pageParts[$key]);
                     break;
@@ -183,10 +190,10 @@ class PagePartAdmin
 
         // Create the objects for the new pageparts
         $this->newPageParts = array();
-        $newRefIds = $request->get($this->context . '_new');
+        $newRefIds          = $request->get($this->context . '_new');
         if (is_array($newRefIds)) {
             foreach ($newRefIds as $newId) {
-                $type = $request->get($this->context . '_type_' . $newId);
+                $type                       = $request->get($this->context . '_type_' . $newId);
                 $this->newPageParts[$newId] = new $type();
             }
         }
@@ -195,7 +202,9 @@ class PagePartAdmin
     /**
      * @param Request $request
      */
-    public function bindRequest(Request $request) {}
+    public function bindRequest(Request $request)
+    {
+    }
 
     /**
      * @param FormBuilderInterface $formbuilder
@@ -206,7 +215,7 @@ class PagePartAdmin
 
         foreach ($this->pageParts as $pagePartRefId => $pagePart) {
             $data['pagepartadmin_' . $pagePartRefId] = $pagePart;
-            $adminType = $pagePart->getDefaultAdminType();
+            $adminType                               = $pagePart->getDefaultAdminType();
             if (!is_object($adminType) && is_string($adminType)) {
                 $adminType = $this->container->get($adminType);
             }
@@ -215,7 +224,7 @@ class PagePartAdmin
 
         foreach ($this->newPageParts as $newPagePartRefId => $newPagePart) {
             $data['pagepartadmin_' . $newPagePartRefId] = $newPagePart;
-            $adminType = $newPagePart->getDefaultAdminType();
+            $adminType                                  = $newPagePart->getDefaultAdminType();
             if (!is_object($adminType) && is_string($adminType)) {
                 $adminType = $this->container->get($adminType);
             }
@@ -230,7 +239,7 @@ class PagePartAdmin
      */
     public function persist(Request $request)
     {
-        /** @var PagePartRefRepository $ppRefRepo  */
+        /** @var PagePartRefRepository $ppRefRepo */
         $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
 
         // Add new pageparts on the correct position + Re-order and save pageparts if needed
@@ -272,7 +281,7 @@ class PagePartAdmin
     public function getPossiblePagePartTypes()
     {
         $possiblePPTypes = $this->configurator->getPossiblePagePartTypes();
-        $result = array();
+        $result          = array();
 
         // filter page part types that can only be added x times to the page context.
         // to achieve this, provide a 'pagelimit' parameter when adding the pp type in your PagePartAdminConfiguration
@@ -280,9 +289,13 @@ class PagePartAdmin
             foreach ($possiblePPTypes as $possibleTypeData) {
                 if (array_key_exists('pagelimit', $possibleTypeData)) {
                     $pageLimit = $possibleTypeData['pagelimit'];
-                    /** @var PagePartRefRepository $entityRepository  */
+                    /** @var PagePartRefRepository $entityRepository */
                     $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-                    $formPPCount = $entityRepository->countPagePartsOfType($this->page, $possibleTypeData['class'], $this->configurator->getContext());
+                    $formPPCount      = $entityRepository->countPagePartsOfType(
+                        $this->page,
+                        $possibleTypeData['class'],
+                        $this->configurator->getContext()
+                    );
                     if ($formPPCount < $pageLimit) {
                         $result[] = $possibleTypeData;
                     }
