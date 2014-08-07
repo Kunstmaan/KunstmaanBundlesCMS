@@ -20,6 +20,7 @@
         {% endfor %}
     </div>
 {% endfor %}
+	{% if resource.pagetemplates|length > 1 %}
     <button class="btn" data-keyboard="true" data-toggle="modal" data-target="#change-template-modal{{id}}" name="change-template-button"><i class="icon-align-justify"></i> Change template</button>
     <!--Change template modal-->
 	<div id="change-template-modal{{id}}" class="modal hide fade change-template-modal">
@@ -56,6 +57,7 @@
 			</div>
 		</div>
 	</div>
+	{% endif %}
 </section>
 <script>
     PageTemplateEditor = {
