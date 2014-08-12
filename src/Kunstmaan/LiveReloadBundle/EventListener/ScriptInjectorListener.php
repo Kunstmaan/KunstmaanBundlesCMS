@@ -77,7 +77,10 @@ class ScriptInjectorListener implements EventSubscriberInterface {
                 }
             }
 
-            $content = $substrFunction($content, 0, $pos)."\n<script src=\"$script\"></script>\n".$substrFunction($content, $pos);
+            $content = $substrFunction($content, 0, $pos)."\n"
+                .'<script src="'.$script.'"></script>'."\n"
+                .$substrFunction($content, $pos);
+
             $response->setContent($content);
         }
     }
