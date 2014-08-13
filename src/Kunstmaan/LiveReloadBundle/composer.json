@@ -18,9 +18,8 @@
     },
     "minimum-stability": "stable",
     "autoload": {
-        "psr-0": { "Kunstmaan\\LiveReloadBundle": "" }
+        "psr-4": { "Kunstmaan\\LiveReloadBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/LiveReloadBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "2.3.x-dev"
