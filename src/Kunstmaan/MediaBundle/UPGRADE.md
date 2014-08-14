@@ -1,14 +1,14 @@
 Upgrade Instructions
 ====================
 
-## To v2.3.X with extra fields, indexes and folder tree
+## To v2.3.18 with extra fields, indexes and folder tree
 
 When upgrading from a previous version, make sure you update the table structure (
 ```app/console doctrine:schema:update --force```
 or ```app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate```).
 
 A new field to store the original filename was added to the Media table, so you will have to update the table structure
-when upgrading from a version prior to 2.3.X.
+when upgrading from a version prior to 2.3.18.
 
 You can use ```app/console kuma:media:migrate-name``` to initialize the original filename field for already
 uploaded media (it will just copy the contents of name field into the original_filename field, so you could also just
