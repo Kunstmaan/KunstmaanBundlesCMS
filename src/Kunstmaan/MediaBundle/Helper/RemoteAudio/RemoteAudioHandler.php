@@ -20,7 +20,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const CONTENT_TYPE = "remote/audio";
+    const CONTENT_TYPE = 'remote/audio';
 
     /**
      * @var string
@@ -37,7 +37,7 @@ class RemoteAudioHandler extends AbstractMediaHandler
      */
     public function getName()
     {
-        return "Remote Audio Handler";
+        return 'Remote Audio Handler';
     }
 
     /**
@@ -71,7 +71,10 @@ class RemoteAudioHandler extends AbstractMediaHandler
      */
     public function canHandle($object)
     {
-        if ((is_string($object)) || ($object instanceof Media && $object->getContentType() == RemoteAudioHandler::CONTENT_TYPE)) {
+        if (
+            (is_string($object)) ||
+            ($object instanceof Media && $object->getContentType() == RemoteAudioHandler::CONTENT_TYPE)
+        ) {
             return true;
         }
 
@@ -100,16 +103,20 @@ class RemoteAudioHandler extends AbstractMediaHandler
             $media->setUuid($uuid);
         }
         $audio = new RemoteAudioHelper($media);
-        $code = $audio->getCode();
+        $code  = $audio->getCode();
         //update thumbnail
-        switch($audio->getType()) {
+        switch ($audio->getType()) {
             case 'soundcloud':
 
                 /**
                  * todo: use resolve url so you can use the track url instead of the track code
                  */
 
-                $scData = json_decode(file_get_contents("http://api.soundcloud.com/tracks/" . $code . ".json?client_id=" . $this->getSoundcloudApiKey()));
+                $scData     = json_decode(
+                    file_get_contents(
+                        'http://api.soundcloud.com/tracks/' . $code . '.json?client_id=' . $this->getSoundcloudApiKey()
+                    )
+                );
                 $artworkUrl = $scData->artwork_url;
                 $artworkUrl = str_replace('large.jpg', 't500x500.jpg', $artworkUrl);
                 $audio->setThumbnailUrl($artworkUrl);
@@ -173,10 +180,10 @@ class RemoteAudioHandler extends AbstractMediaHandler
     public function getAddFolderActions()
     {
         return array(
-                RemoteAudioHandler::TYPE => array(
-                    'type' => RemoteAudioHandler::TYPE,
-                    'name' => 'media.audio.add')
-                );
+            RemoteAudioHandler::TYPE => array(
+                'type' => RemoteAudioHandler::TYPE,
+                'name' => 'media.audio.add'
+            )
+        );
     }
-
 }

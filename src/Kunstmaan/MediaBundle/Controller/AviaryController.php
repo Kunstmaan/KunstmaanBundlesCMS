@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
-
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
@@ -12,7 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * controllerclass which Aviary can use to upload the edited image and add it to the database
+ * Controller class which Aviary can use to upload the edited image and add it to the database
  */
 class AviaryController extends Controller
 {
@@ -35,18 +34,18 @@ class AviaryController extends Controller
         $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
-
         $handler    = $mediaManager->getHandler($media);
         $fileHelper = $handler->getFormHelper($media);
         $fileHelper->getMediaFromUrl($request->get('url'));
         $media = $fileHelper->getMedia();
-
         $em->persist($media);
         $em->flush();
 
-        return new RedirectResponse($this->generateUrl(
-          'KunstmaanMediaBundle_folder_show',
-          array('folderId' => $folder->getId())
-        ));
+        return new RedirectResponse(
+            $this->generateUrl(
+                'KunstmaanMediaBundle_folder_show',
+                array('folderId' => $folder->getId())
+            )
+        );
     }
 }

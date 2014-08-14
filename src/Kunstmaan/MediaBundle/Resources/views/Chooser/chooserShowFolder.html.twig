@@ -49,13 +49,14 @@
     <aside class="sidebar" {% if linkChooserLink %}style="margin-top:40px;"{% endif %}>
         <h2>Media Chooser</h2>
         <div id="tree" class="tree">
-            {% for topfolder in folders %}
-                <ul>
-                    {% for child in topfolder.children %}
-                        {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
-                    {% endfor %}
-                </ul>
+        <ul>
+            {% set parentIds = foldermanager.getParentIds(folder) %}
+            {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
+            {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
+            {% for mediaFolder in folders %}
+                {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
             {% endfor %}
+        </ul>
         </div>
     </aside>
 {% endblock %}

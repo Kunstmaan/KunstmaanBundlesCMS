@@ -2,8 +2,12 @@
 
 namespace Kunstmaan\MediaBundle\Form\RemoteSlide;
 
+use Doctrine\ORM\EntityRepository;
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -66,6 +70,32 @@ class RemoteSlideType extends AbstractType
                     'required' => false
                 )
             );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $helper = $event->getData();
+                $form   = $event->getForm();
+
+                // Make sure file field is when creating new (not persisted) objects
+                if (null !== $helper->getMedia()->getId()) {
+                    // Allow changing folder on edit
+                    $form->add(
+                        'folder',
+                        'entity',
+                        array(
+                            'class'         => 'KunstmaanMediaBundle:Folder',
+                            'property'      => 'optionLabel',
+                            'query_builder' => function (FolderRepository $er) {
+                                    return $er->selectFolderQueryBuilder()
+                                        ->andWhere('f.parent IS NOT NULL');
+                            },
+                            'required'      => true,
+                        )
+                    );
+                }
+            }
+        );
     }
 
     /**

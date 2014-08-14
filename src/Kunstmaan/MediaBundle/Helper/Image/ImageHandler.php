@@ -99,5 +99,4 @@ class ImageHandler extends FileHandler
 
         }
     }
-
 }

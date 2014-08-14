@@ -43,3 +43,25 @@ $builder
       )
     );
 ```
+
+## Generating PDF thumbnails
+
+For this functionality to work, you need to install the ImageMagick extension with PDF support (using
+Ghostscript). You will also have to make sure that the Ghostscript executable (gs) can be found
+in the path of the user that is executing the code (apache/www or a custom user depending on your setup).
+
+You can determine that path by running ```which gs``` on the command line in Linux/OS X.
+
+To install Ghostscript on Mac OS X you can use ```brew install gs```.
+
+On OS X with apache you will probably have to add that path to the apache environment settings in
+```/System/Library/LaunchDaemons/org.apache.httpd.plist```. Make sure it contains the following :
+```
+<key>EnvironmentVariables</key>
+<dict>
+    <key>PATH</key>
+    <string>/usr/bin:/bin:/usr/sbin:/sbin:/path/to/gs</string>
+</dict>
+```
+
+Where ```/path/to/gs``` is just the actual path where the gs binary is stored.

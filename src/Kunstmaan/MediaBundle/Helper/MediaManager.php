@@ -23,21 +23,25 @@ class MediaManager
     /**
      * @param AbstractMediaHandler $handler Media handler
      *
-     * @return void
+     * @return MediaManager
      */
     public function addHandler(AbstractMediaHandler $handler)
     {
         $this->handlers[$handler->getName()] = $handler;
+
+        return $this;
     }
 
     /**
      * @param AbstractMediaHandler $handler Media handler
      *
-     * @return void
+     * @return MediaManager
      */
     public function setDefaultHandler(AbstractMediaHandler $handler)
     {
         $this->defaultHandler = $handler;
+
+        return $this;
     }
 
     /**
@@ -54,6 +58,7 @@ class MediaManager
                 return $handler;
             }
         }
+
         return $this->defaultHandler;
     }
 
@@ -85,11 +90,15 @@ class MediaManager
 
     /**
      * @param \Kunstmaan\MediaBundle\Entity\Media $media
+     *
+     * @return MediaManager
      */
     public function prepareMedia(Media $media)
     {
         $handler = $this->getHandler($media);
         $handler->prepareMedia($media);
+
+        return $this;
     }
 
     /**

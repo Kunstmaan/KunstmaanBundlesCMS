@@ -3,6 +3,7 @@ namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteVideo;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 
+use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
 
 /**
@@ -24,9 +25,12 @@ class RemoteVideoHelperTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::__construct
      */
     protected function setUp()
-    {$this->media = new Media();$this->object = new RemoteVideoHelper($this->media);
+    {
+        $this->media  = new Media();
+        $this->object = new RemoteVideoHelper($this->media);
     }
 
     /**
@@ -38,83 +42,10 @@ class RemoteVideoHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::getName
-     * @todo   Implement testGetName().
-     */
-    public function testGetName()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::setName
-     * @todo   Implement testSetName().
-     */
-    public function testSetName()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
      * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::getMedia
-     * @todo   Implement testGetMedia().
      */
     public function testGetMedia()
     {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::getCode
-     * @todo   Implement testGetCode().
-     */
-    public function testGetCode()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::setCode
-     * @todo   Implement testSetCode().
-     */
-    public function testSetCode()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::getThumbnailUrl
-     * @todo   Implement testGetThumbnailUrl().
-     */
-    public function testGetThumbnailUrl()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::setThumbnailUrl
-     * @todo   Implement testSetThumbnailUrl().
-     */
-    public function testSetThumbnailUrl()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::getType
-     * @todo   Implement testGetType().
-     */
-    public function testGetType()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::setType
-     * @todo   Implement testSetType().
-     */
-    public function testSetType()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $this->assertEquals(RemoteVideoHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());
     }
 }

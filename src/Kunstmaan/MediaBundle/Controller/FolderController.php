@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\FolderType;
@@ -29,6 +30,7 @@ class FolderController extends Controller
      */
     public function showAction(Request $request, $folderId)
     {
+        /** @var EntityManager $em */
         $em      = $this->getDoctrine()->getManager();
         $session = $request->getSession();
 
@@ -44,10 +46,9 @@ class FolderController extends Controller
         $mediaManager = $this->get('kunstmaan_media.media_manager');
 
         /* @var Folder $folder */
-        $folder  = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $folders = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
+        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
-        $adminListConfigurator = new MediaAdminListConfigurator($em, null, $mediaManager, $folder, $request);
+        $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
         $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
         $adminList->bindRequest($request);
 
@@ -57,24 +58,31 @@ class FolderController extends Controller
         $editForm = $this->createForm(new FolderType($folder), $folder);
 
         if ($request->isMethod('POST')) {
-            $editForm->submit($request);
+            $editForm->handleRequest($request);
             if ($editForm->isValid()) {
                 $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
 
                 $this->get('session')->getFlashBag()->add(
-                  'success',
-                  'Folder \'' . $folder->getName() . '\' has been updated!'
+                    'success',
+                    'Folder \'' . $folder->getName() . '\' has been updated!'
+                );
+
+                return new RedirectResponse(
+                    $this->generateUrl(
+                        'KunstmaanMediaBundle_folder_show',
+                        array('folderId' => $folderId)
+                    )
                 );
             }
         }
 
         return array(
-          'mediamanager' => $this->get('kunstmaan_media.media_manager'),
-          'subform'      => $subForm->createView(),
-          'editform'     => $editForm->createView(),
-          'folder'       => $folder,
-          'folders'      => $folders,
-          'adminlist'    => $adminList
+            'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
+            'mediamanager'  => $this->get('kunstmaan_media.media_manager'),
+            'subform'       => $subForm->createView(),
+            'editform'      => $editForm->createView(),
+            'folder'        => $folder,
+            'adminlist'     => $adminList
         );
     }
 
@@ -87,6 +95,7 @@ class FolderController extends Controller
      */
     public function deleteAction($folderId)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $folder */
@@ -94,23 +103,25 @@ class FolderController extends Controller
         $folderName   = $folder->getName();
         $parentFolder = $folder->getParent();
 
-        if (empty($parentFolder)) {
+        if (is_null($parentFolder)) {
             $this->get('session')->getFlashBag()->add(
-              'failure',
-              'You can\'t delete the \'' . $folderName . '\' folder!'
+                'failure',
+                'You can\'t delete the \'' . $folderName . '\' folder!'
             );
         } else {
-            $folder->setDeleted(true);
-            $em->persist($folder);
-            $em->flush();
+            $em->getRepository('KunstmaanMediaBundle:Folder')->delete($folder);
             $this->get('session')->getFlashBag()->add('success', 'Folder \'' . $folderName . '\' has been deleted!');
             $folderId = $parentFolder->getId();
         }
 
-        return new RedirectResponse($this->generateUrl(
-          'KunstmaanMediaBundle_folder_show',
-          array('folderId' => $folderId)
-        ));
+        return new RedirectResponse(
+            $this->generateUrl(
+                'KunstmaanMediaBundle_folder_show',
+                array(
+                    'folderId' => $folderId
+                )
+            )
+        );
     }
 
     /**
@@ -125,6 +136,7 @@ class FolderController extends Controller
      */
     public function subCreateAction(Request $request, $folderId)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         /* @var Folder $parent */
@@ -133,33 +145,38 @@ class FolderController extends Controller
         $folder->setParent($parent);
         $form = $this->createForm(new FolderType(), $folder);
         if ($request->isMethod('POST')) {
-            $form->submit($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
 
                 $this->get('session')->getFlashBag()->add(
-                  'success',
-                  'Folder \'' . $folder->getName() . '\' has been created!'
+                    'success',
+                    'Folder \'' . $folder->getName() . '\' has been created!'
                 );
 
-                return new Response('<script>window.location="' . $this->generateUrl(
-                    'KunstmaanMediaBundle_folder_show',
-                    array('folderId' => $folder->getId())
-                  ) . '"</script>');
+                return new Response(
+                    '<script>window.location="' .
+                    $this->generateUrl(
+                        'KunstmaanMediaBundle_folder_show',
+                        array(
+                            'folderId' => $folder->getId()
+                        )
+                    ) .
+                    '"</script>'
+                );
             }
         }
 
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
 
         return $this->render(
-          'KunstmaanMediaBundle:Folder:addsub-modal.html.twig',
-          array(
-            'subform'   => $form->createView(),
-            'galleries' => $galleries,
-            'folder'    => $folder,
-            'parent'    => $parent
-          )
+            'KunstmaanMediaBundle:Folder:addsub-modal.html.twig',
+            array(
+                'subform'   => $form->createView(),
+                'galleries' => $galleries,
+                'folder'    => $folder,
+                'parent'    => $parent
+            )
         );
     }
-
 }

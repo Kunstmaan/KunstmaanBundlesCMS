@@ -15,7 +15,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const CONTENT_TYPE = "remote/slide";
+    const CONTENT_TYPE = 'remote/slide';
 
     const TYPE = 'slide';
 
@@ -24,7 +24,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function getName()
     {
-        return "Remote Slide Handler";
+        return 'Remote Slide Handler';
     }
 
     /**
@@ -50,7 +50,10 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function canHandle($object)
     {
-        if ((is_string($object)) || ($object instanceof Media && $object->getContentType() == RemoteSlideHandler::CONTENT_TYPE)) {
+        if (
+            (is_string($object)) ||
+            ($object instanceof Media && $object->getContentType() == RemoteSlideHandler::CONTENT_TYPE)
+        ) {
             return true;
         }
 
@@ -79,14 +82,19 @@ class RemoteSlideHandler extends AbstractMediaHandler
             $media->setUuid($uuid);
         }
         $slide = new RemoteSlideHelper($media);
-        $code = $slide->getCode();
-        //update thumbnail
+        $code  = $slide->getCode();
+        // update thumbnail
         switch ($slide->getType()) {
             case 'slideshare':
                 try {
-                    $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url=http://www.slideshare.net/slideshow/embed_code/'.$code.'&format=json'));
-                    $slide->setThumbnailUrl('http:'.$json->thumbnail);
+                    $json = json_decode(
+                        file_get_contents(
+                            'http://www.slideshare.net/api/oembed/2?url=http://www.slideshare.net/slideshow/embed_code/' . $code . '&format=json'
+                        )
+                    );
+                    $slide->setThumbnailUrl($json->thumbnail);
                 } catch (\ErrorException $e) {
+                    // Silent exception - should not bubble up since failure to create a thumbnail is not a fatal error
                 }
                 break;
         }
@@ -122,12 +130,12 @@ class RemoteSlideHandler extends AbstractMediaHandler
     public function getAddUrlFor(array $params = array())
     {
         return array(
-                'slide' => array(
-                        'path'   => 'KunstmaanMediaBundle_folder_slidecreate',
-                        'params' => array(
-                                'folderId' => $params['folderId']
-                        )
+            'slide' => array(
+                'path'   => 'KunstmaanMediaBundle_folder_slidecreate',
+                'params' => array(
+                    'folderId' => $params['folderId']
                 )
+            )
         );
     }
 
@@ -138,19 +146,21 @@ class RemoteSlideHandler extends AbstractMediaHandler
      */
     public function createNew($data)
     {
-       $result = null;
+        $result = null;
         if (is_string($data)) {
             if (strpos($data, 'http') !== 0) {
-                $data = "http://" . $data;
+                $data = 'http://' . $data;
             }
             $parsedUrl = parse_url($data);
-            switch($parsedUrl['host']) {
+            switch ($parsedUrl['host']) {
                 case 'www.slideshare.net':
                 case 'slideshare.net':
                     $result = new Media();
-                    $slide = new RemoteSlideHelper($result);
+                    $slide  = new RemoteSlideHelper($result);
                     $slide->setType('slideshare');
-                    $json = json_decode(file_get_contents('http://www.slideshare.net/api/oembed/2?url='.$data.'&format=json'));
+                    $json = json_decode(
+                        file_get_contents('http://www.slideshare.net/api/oembed/2?url=' . $data . '&format=json')
+                    );
                     $slide->setCode($json->{"slideshow_id"});
                     $result = $slide->getMedia();
                     $result->setName('SlideShare ' . $data);
@@ -188,9 +198,10 @@ class RemoteSlideHandler extends AbstractMediaHandler
     public function getAddFolderActions()
     {
         return array(
-                RemoteSlideHandler::TYPE => array(
-                    'type' => RemoteSlideHandler::TYPE,
-                    'name' => 'media.slide.add')
-                );
+            RemoteSlideHandler::TYPE => array(
+                'type' => RemoteSlideHandler::TYPE,
+                'name' => 'media.slide.add'
+            )
+        );
     }
 }

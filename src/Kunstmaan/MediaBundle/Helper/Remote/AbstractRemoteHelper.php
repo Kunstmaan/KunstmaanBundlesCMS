@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Remote;
 
+use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
@@ -142,4 +143,19 @@ abstract class AbstractRemoteHelper
         return $this;
     }
 
+    /**
+     * @return Folder
+     */
+    public function getFolder()
+    {
+        return $this->media->getFolder();
+    }
+
+    /**
+     * @param Folder $folder
+     */
+    public function setFolder(Folder $folder)
+    {
+        $this->media->setFolder($folder);
+    }
 }

@@ -1,8 +1,8 @@
-<li {% if (folder.id is defined and (folder.id == child.id)) %}class="active jstree-open"{% endif %} {% if folder.id is defined and child.hasActive(folder.id) %}class="jstree-open blub"{% endif %} {%  if child.rel %}rel="{{ child.rel }}"{% else %}rel="folder"{% endif %}>
-    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}">{{ child.name | trans }}</a>
-    {% if child.children is defined %}
+<li class="{% if mediaFolder.id in parentIds %}jstree-open blub{% endif %} {% if folder is not null and folder.id == mediaFolder.id %}active{% endif %}" rel="{{ mediaFolder.rel }}">
+    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({ 'folderId': mediaFolder.id })) }}">{{ mediaFolder.name }}</a>
+    {% if mediaFolder.__children is not empty %}
         <ul>
-            {% for child in child.children %}
+            {% for mediaFolder in mediaFolder.__children %}
                 {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
             {% endfor %}
         </ul>

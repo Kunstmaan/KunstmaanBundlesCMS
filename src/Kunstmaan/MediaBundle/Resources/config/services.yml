@@ -1,5 +1,6 @@
 parameters:
     kunstmaan_media.media_manager.class: 'Kunstmaan\MediaBundle\Helper\MediaManager'
+    kunstmaan_media.folder_manager.class: 'Kunstmaan\MediaBundle\Helper\FolderManager'
     kunstmaan_media.menu.adaptor.class: 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor'
     kunstmaan_media.listener.doctrine.class: 'Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener'
     kunstmaan_media.form.type.media.class: 'Kunstmaan\MediaBundle\Form\Type\MediaType'
@@ -7,6 +8,7 @@ parameters:
     kunstmaan_media.icon_font_manager.class: 'Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager'
     kunstmaan_media.icon_font.default_loader.class: 'Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
     kunstmaan_media.media_creator_service.class: 'Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService'
+    kunstmaan_media.pdf_transformer.class: 'Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer'
 
 services:
     liip_imagine.data.loader.stream.profile_photos:
@@ -21,12 +23,6 @@ services:
         class: "%kunstmaan_media.media_manager.class%"
         calls:
             - [ setDefaultHandler, [ "@kunstmaan_media.media_handlers.file" ] ]
-
-    kunstmaan_media.menu.adaptor:
-        class: "%kunstmaan_media.menu.adaptor.class%"
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_media.listener.doctrine:
         class: "%kunstmaan_media.listener.doctrine.class%"
@@ -66,3 +62,26 @@ services:
     kunstmaan_media.media_creator_service:
         class: "%kunstmaan_media.media_creator_service.class%"
         arguments: ["@service_container"]
+
+    kunstmaan_media.repository.folder:
+        class:            Kunstmaan\MediaBundle\Repository\FolderRepository
+        factory_service:  "doctrine.orm.entity_manager"
+        factory_method:   getRepository
+        arguments:        ["KunstmaanMediaBundle:Folder"]
+
+    kunstmaan_media.menu.adaptor:
+        class: "%kunstmaan_media.menu.adaptor.class%"
+        arguments: ["@kunstmaan_media.repository.folder"]
+        tags:
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
+
+    kunstmaan_media.folder_manager:
+        class: "%kunstmaan_media.folder_manager.class%"
+        arguments: ["@kunstmaan_media.repository.folder"]
+
+    kunstmaan_media.imagick:
+        class: "Imagick"
+
+    kunstmaan_media.pdf_transformer:
+        class: "%kunstmaan_media.pdf_transformer.class%"
+        arguments: ["@kunstmaan_media.imagick"]

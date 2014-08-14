@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Form\File;
 
+use Doctrine\ORM\EntityRepository;
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -56,13 +58,14 @@ class FileType extends AbstractType
                 'required' => false
             )
         );
+
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
                 $helper = $event->getData();
                 $form   = $event->getForm();
 
-                // Only add file field as required field when creating new objects
+                // Make sure file field is when creating new (not persisted) objects
                 if (!$helper || null === $helper->getMedia()->getId()) {
                     $form->add(
                         'file',
@@ -70,6 +73,32 @@ class FileType extends AbstractType
                         array(
                             'constraints' => array(new NotBlank()),
                             'required'    => true
+                        )
+                    );
+                } else {
+                    // Display original filename only for persisted objects
+                    $form->add(
+                        'originalFilename',
+                        'text',
+                        array(
+                            'required' => false,
+                            'attr'     => array(
+                                'readonly' => 'readonly'
+                            )
+                        )
+                    );
+                    // Allow changing folder on edit
+                    $form->add(
+                        'folder',
+                        'entity',
+                        array(
+                            'class'         => 'KunstmaanMediaBundle:Folder',
+                            'property'      => 'optionLabel',
+                            'query_builder' => function (FolderRepository $er) {
+                                    return $er->selectFolderQueryBuilder()
+                                        ->andWhere('f.parent IS NOT NULL');
+                            },
+                            'required'      => true,
                         )
                     );
                 }

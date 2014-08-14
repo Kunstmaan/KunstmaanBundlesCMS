@@ -15,7 +15,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     /**
      * @var string
      */
-    const CONTENT_TYPE = "remote/video";
+    const CONTENT_TYPE = 'remote/video';
 
     /**
      * @var string
@@ -27,7 +27,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function getName()
     {
-        return "Remote Video Handler";
+        return 'Remote Video Handler';
     }
 
     /**
@@ -53,7 +53,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function canHandle($object)
     {
-        if ((is_string($object)) || ($object instanceof Media && $object->getContentType() == RemoteVideoHandler::CONTENT_TYPE)) {
+        if (
+            (is_string($object)) ||
+            ($object instanceof Media && $object->getContentType() == RemoteVideoHandler::CONTENT_TYPE)
+        ) {
             return true;
         }
 
@@ -82,22 +85,24 @@ class RemoteVideoHandler extends AbstractMediaHandler
             $media->setUuid($uuid);
         }
         $video = new RemoteVideoHelper($media);
-        $code = $video->getCode();
+        $code  = $video->getCode();
         //update thumbnail
-        switch($video->getType()) {
+        switch ($video->getType()) {
             case 'youtube':
-                $video->setThumbnailUrl("http://img.youtube.com/vi/" . $code . "/0.jpg");
+                $video->setThumbnailUrl('http://img.youtube.com/vi/' . $code . '/0.jpg');
                 break;
             case 'vimeo':
-                $xml = simplexml_load_file("http://vimeo.com/api/v2/video/".$code.".xml");
+                $xml = simplexml_load_file('http://vimeo.com/api/v2/video/' . $code . '.xml');
                 $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
                 break;
             case 'dailymotion':
-                $json = json_decode(file_get_contents("https://api.dailymotion.com/video/".$code."?fields=thumbnail_large_url"));
-                $thumbnailUrl = $json->{"thumbnail_large_url"};
+                $json         = json_decode(
+                    file_get_contents('https://api.dailymotion.com/video/' . $code . '?fields=thumbnail_large_url')
+                );
+                $thumbnailUrl = $json->{'thumbnail_large_url'};
                 /* dirty hack to fix urls for imagine */
                 if (!$this->endsWith($thumbnailUrl, '.jpg') && !$this->endsWith($thumbnailUrl, '.png')) {
-                    $thumbnailUrl = $thumbnailUrl.'&ext=.jpg';
+                    $thumbnailUrl = $thumbnailUrl . '&ext=.jpg';
                 }
                 $video->setThumbnailUrl($thumbnailUrl);
                 break;
@@ -106,12 +111,13 @@ class RemoteVideoHandler extends AbstractMediaHandler
 
     /**
      * String helper
+     *
      * @param string $str string
      * @param string $sub substring
      *
      * @return boolean
      */
-    private function endsWith( $str, $sub )
+    private function endsWith($str, $sub)
     {
         return substr($str, strlen($str) - strlen($sub)) === $sub;
     }
@@ -147,12 +153,12 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function getAddUrlFor(array $params = array())
     {
         return array(
-                'video' => array(
-                        'path'   => 'KunstmaanMediaBundle_folder_videocreate',
-                        'params' => array(
-                                'folderId' => $params['folderId']
-                        )
+            'video' => array(
+                'path'   => 'KunstmaanMediaBundle_folder_videocreate',
+                'params' => array(
+                    'folderId' => $params['folderId']
                 )
+            )
         );
     }
 
@@ -166,16 +172,16 @@ class RemoteVideoHandler extends AbstractMediaHandler
         $result = null;
         if (is_string($data)) {
             if (strpos($data, 'http') !== 0) {
-                $data = "http://" . $data;
+                $data = 'http://' . $data;
             }
             $parsedUrl = parse_url($data);
-            switch($parsedUrl['host']) {
+            switch ($parsedUrl['host']) {
                 case 'www.youtube.com':
                 case 'youtube.com':
                     parse_str($parsedUrl['query'], $queryFields);
-                    $code = $queryFields['v'];
+                    $code   = $queryFields['v'];
                     $result = new Media();
-                    $video = new RemoteVideoHelper($result);
+                    $video  = new RemoteVideoHelper($result);
                     $video->setType('youtube');
                     $video->setCode($code);
                     $result = $video->getMedia();
@@ -183,9 +189,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     break;
                 case 'www.vimeo.com':
                 case 'vimeo.com':
-                    $code = substr($parsedUrl['path'], 1);
+                    $code   = substr($parsedUrl['path'], 1);
                     $result = new Media();
-                    $video = new RemoteVideoHelper($result);
+                    $video  = new RemoteVideoHelper($result);
                     $video->setType('vimeo');
                     $video->setCode($code);
                     $result = $video->getMedia();
@@ -193,9 +199,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     break;
                 case 'www.dailymotion.com':
                 case 'dailymotion.com':
-                    $code = substr($parsedUrl['path'], 7);
+                    $code   = substr($parsedUrl['path'], 7);
                     $result = new Media();
-                    $video = new RemoteVideoHelper($result);
+                    $video  = new RemoteVideoHelper($result);
                     $video->setType('dailymotion');
                     $video->setCode($code);
                     $result = $video->getMedia();
@@ -234,10 +240,10 @@ class RemoteVideoHandler extends AbstractMediaHandler
     public function getAddFolderActions()
     {
         return array(
-                RemoteVideoHandler::TYPE => array(
-                    'type' => RemoteVideoHandler::TYPE,
-                    'name' => 'media.video.add')
-                );
+            RemoteVideoHandler::TYPE => array(
+                'type' => RemoteVideoHandler::TYPE,
+                'name' => 'media.video.add'
+            )
+        );
     }
-
 }
