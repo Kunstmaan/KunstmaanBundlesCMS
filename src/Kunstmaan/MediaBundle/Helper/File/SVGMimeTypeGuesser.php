@@ -1,9 +1,4 @@
 <?php
-/**
- * Created by Kunstmaan.
- * Date: 25/06/14
- * Time: 09:28
- */
 
 namespace Kunstmaan\MediaBundle\Helper\File;
 

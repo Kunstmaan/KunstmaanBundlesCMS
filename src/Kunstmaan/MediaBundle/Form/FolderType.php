@@ -2,7 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -41,7 +44,6 @@ class FolderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $folder = $this->folder;
-        $type   = $this;
         $builder
             ->add('name')
             ->add(
@@ -60,38 +62,14 @@ class FolderType extends AbstractType
                 'parent',
                 'entity',
                 array(
-                    'class'         => 'Kunstmaan\MediaBundle\Entity\Folder',
+                    'class'         => 'KunstmaanMediaBundle:Folder',
+                    'property'      => 'optionLabel',
                     'required'      => true,
-                    'query_builder' => function (\Doctrine\ORM\EntityRepository $er) use ($folder, $type) {
-                            $qb = $er->createQueryBuilder('folder');
-
-                            if ($folder != null && $folder->getId() != null) {
-                                $ids = "folder.id != " . $folder->getId();
-                                $ids .= $type->addChildren($folder);
-                                $qb->andwhere($ids);
-                            }
-                            $qb->andWhere('folder.deleted != true');
-
-                            return $qb;
-                        }
+                    'query_builder' => function (FolderRepository $er) use ($folder) {
+                            return $er->selectFolderQueryBuilder($folder);
+                    }
                 )
             );
-    }
-
-    /**
-     * @param Folder $folder
-     *
-     * @return string
-     */
-    public function addChildren(Folder $folder)
-    {
-        $ids = "";
-        foreach ($folder->getChildren() as $child) {
-            $ids .= " and folder.id != " . $child->getId();
-            $ids .= $this->addChildren($child);
-        }
-
-        return $ids;
     }
 
     /**

@@ -4,6 +4,31 @@
      <h1>{{ 'media.media.title'|trans }} <small>{{ media.name }}</small></h1>
 {% endblock %}
 
+{% block breadcrumb %}
+    {% include 'KunstmaanMediaBundle:Folder:breadcrumbs.html.twig' %}
+{% endblock %}
+
+{% block sidebar %}
+    <aside id="sidebar" class="sidebar">
+        <div class="search_wrp">
+            <form id="treeform">
+                <input type="text" id="searchVal" value="" />
+                <button id="search" class="btn search"><i class="icon-search"></i></button>
+            </form>
+        </div>
+        <div class="tree clearfix">
+            <ul>
+                {% set parentIds = foldermanager.getParentIds(folder) %}
+                {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
+                {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
+                {% for mediaFolder in folders %}
+                    {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+{% endblock %}
+
 {% block content %}
 
 	<!--=========Actions=========-->

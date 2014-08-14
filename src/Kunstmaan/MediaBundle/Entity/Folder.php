@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Tree\Node as GedmoNode;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,12 +13,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class that defines a folder from the MediaBundle in the database
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
- * @ORM\Table(name="kuma_folders")
+ * @ORM\Table(name="kuma_folders", indexes={
+ *      @ORM\Index(name="idx_internal_name", columns={"internal_name"}),
+ *      @ORM\Index(name="idx_name", columns={"name"}),
+ *      @ORM\Index(name="idx_deleted", columns={"deleted"})
+ * })
+ * @Gedmo\Tree(type="nested")
  * @ORM\HasLifecycleCallbacks
  */
-class Folder extends AbstractEntity
+class Folder extends AbstractEntity implements GedmoNode
 {
-
     /**
      * @var string
      *
@@ -39,8 +44,9 @@ class Folder extends AbstractEntity
     /**
      * @var Folder
      *
-     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="children", fetch="LAZY")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     * @Gedmo\TreeParent
      */
     protected $parent;
 
@@ -48,14 +54,15 @@ class Folder extends AbstractEntity
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Folder", mappedBy="parent", fetch="LAZY")
-     * @ORM\OrderBy({"name" = "ASC"})
+     * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="folder")
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="folder", fetch="LAZY")
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     protected $media;
 
@@ -88,6 +95,30 @@ class Folder extends AbstractEntity
     protected $internalName;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="lft", type="integer", nullable=true)
+     * @Gedmo\TreeLeft
+     */
+    protected $lft;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="lvl", type="integer", nullable=true)
+     * @Gedmo\TreeLevel
+     */
+    protected $lvl;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="rgt", type="integer", nullable=true)
+     * @Gedmo\TreeRight
+     */
+    protected $rgt;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -103,7 +134,15 @@ class Folder extends AbstractEntity
         $this->media    = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
-        $this->deleted = false;
+        $this->deleted  = false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslatableLocale()
+    {
+        return $this->locale;
     }
 
     /**
@@ -212,20 +251,6 @@ class Folder extends AbstractEntity
     }
 
     /**
-     * Set parent
-     *
-     * @param Folder $parent
-     *
-     * @return Folder
-     */
-    public function setParent(Folder $parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
      * Add a child
      *
      * @param Folder $child
@@ -236,6 +261,20 @@ class Folder extends AbstractEntity
     {
         $this->children[] = $child;
         $child->setParent($this);
+
+        return $this;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param Folder $parent
+     *
+     * @return Folder
+     */
+    public function setParent(Folder $parent = null)
+    {
+        $this->parent = $parent;
 
         return $this;
     }
@@ -280,13 +319,13 @@ class Folder extends AbstractEntity
         }
 
         return $this->media->filter(
-          function (Media $entry) {
-              if ($entry->isDeleted()) {
-                  return false;
-              }
+            function (Media $entry) {
+                if ($entry->isDeleted()) {
+                    return false;
+                }
 
-              return true;
-          }
+                return true;
+            }
         );
     }
 
@@ -307,9 +346,11 @@ class Folder extends AbstractEntity
     }
 
     /**
+     * Get child folders
+     *
      * @param bool $includeDeleted
      *
-     * @return Folder[]
+     * @return ArrayCollection
      */
     public function getChildren($includeDeleted = false)
     {
@@ -318,18 +359,18 @@ class Folder extends AbstractEntity
         }
 
         return $this->children->filter(
-          function (Folder $entry) {
-              if ($entry->isDeleted()) {
-                  return false;
-              }
+            function (Folder $entry) {
+                if ($entry->isDeleted()) {
+                    return false;
+                }
 
-              return true;
-          }
+                return true;
+            }
         );
     }
 
     /**
-     * @param array $children
+     * @param ArrayCollection $children
      *
      * @return Folder
      */
@@ -397,11 +438,81 @@ class Folder extends AbstractEntity
     }
 
     /**
+     * @param int $lft
+     *
+     * @return Folder
+     */
+    public function setLeft($lft)
+    {
+        $this->lft = $lft;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLeft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * @param int $lvl
+     *
+     * @return Folder
+     */
+    public function setLevel($lvl)
+    {
+        $this->lvl = $lvl;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * @param int $rgt
+     *
+     * @return Folder
+     */
+    public function setRight($rgt)
+    {
+        $this->rgt = $rgt;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRight()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOptionLabel()
+    {
+        return str_repeat(
+            '-',
+            $this->getLevel()
+        ) . ' ' . $this->getName();
+    }
+
+    /**
      * @ORM\PreUpdate
      */
     public function preUpdate()
     {
         $this->setUpdatedAt(new \DateTime());
     }
-
 }

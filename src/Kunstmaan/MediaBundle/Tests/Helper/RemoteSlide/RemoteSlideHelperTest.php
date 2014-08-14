@@ -1,8 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteSlide;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
+use Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;
 use Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper;
 
 /**
@@ -24,6 +25,7 @@ class RemoteSlideHelperTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::__construct
      */
     protected function setUp()
     {
@@ -40,92 +42,10 @@ class RemoteSlideHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::getName
-     * @todo   Implement testGetName().
-     */
-    public function testGetName()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::setName
-     * @todo   Implement testSetName().
-     */
-    public function testSetName()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
      * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::getMedia
-     * @todo   Implement testGetMedia().
      */
     public function testGetMedia()
     {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::getCode
-     * @todo   Implement testGetCode().
-     */
-    public function testGetCode()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::setCode
-     * @todo   Implement testSetCode().
-     */
-    public function testSetCode()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::getThumbnailUrl
-     * @todo   Implement testGetThumbnailUrl().
-     */
-    public function testGetThumbnailUrl()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::setThumbnailUrl
-     * @todo   Implement testSetThumbnailUrl().
-     */
-    public function testSetThumbnailUrl()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::getType
-     * @todo   Implement testGetType().
-     */
-    public function testGetType()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::setType
-     * @todo   Implement testSetType().
-     */
-    public function testSetType()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::updateMedia
-     * @todo   Implement testUpdateMedia().
-     */
-    public function testUpdateMedia()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $this->assertEquals(RemoteSlideHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());
     }
 }

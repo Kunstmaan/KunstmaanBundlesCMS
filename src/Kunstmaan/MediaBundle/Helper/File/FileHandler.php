@@ -132,7 +132,7 @@ class FileHandler extends AbstractMediaHandler
             $media->setContent($file);
         }
         if ($content instanceof UploadedFile) {
-            $media->setName($content->getClientOriginalName());
+            $media->setOriginalFilename($content->getClientOriginalName());
         }
 
         $metadata = array();
@@ -206,10 +206,10 @@ class FileHandler extends AbstractMediaHandler
             /** @var $data File */
 
             $media = new Media();
-            if (method_exists($media, 'getClientOriginalName')) {
-                $media->setName($data->getClientOriginalName());
+            if (method_exists($data, 'getClientOriginalName')) {
+                $media->setOriginalFilename($data->getClientOriginalName());
             } else {
-                $media->setName($data->getFilename());
+                $media->setOriginalFilename($data->getFilename());
             }
             $media->setContent($data);
 

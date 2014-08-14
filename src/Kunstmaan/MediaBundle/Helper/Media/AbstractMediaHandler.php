@@ -11,68 +11,67 @@ use Symfony\Component\Form\AbstractType;
  */
 abstract class AbstractMediaHandler
 {
+    /**
+     * @return string
+     */
+    abstract public function getName();
 
     /**
      * @return string
      */
-    public abstract function getName();
-
-    /**
-     * @return string
-     */
-    public abstract function getType();
+    abstract public function getType();
 
     /**
      * @return AbstractType
      */
-    public abstract function getFormType();
+    abstract public function getFormType();
 
     /**
      * @param mixed $media
      */
-    public abstract function canHandle($media);
+    abstract public function canHandle($media);
 
     /**
      * @param Media $media
      *
      * @return mixed
      */
-    public abstract function getFormHelper(Media $media);
+    abstract public function getFormHelper(Media $media);
 
     /**
      * @param Media $media
      *
      * @return void
      */
-    public abstract function prepareMedia(Media $media);
+    abstract public function prepareMedia(Media $media);
 
     /**
      * @param Media $media
      *
      * @return void
      */
-    public abstract function saveMedia(Media $media);
+    abstract public function saveMedia(Media $media);
 
     /**
      * @param Media $media
      *
      * @return void
      */
-    public abstract function updateMedia(Media $media);
+    abstract public function updateMedia(Media $media);
 
     /**
      * @param Media $media
      *
      * @return void
      */
-    public abstract function removeMedia(Media $media);
+    abstract public function removeMedia(Media $media);
 
     /**
      * @param mixed $data
      *
      * @return Media
      */
-    public abstract function createNew($data);
+    abstract public function createNew($data);
 
     /**
      * {@inheritDoc}
@@ -96,6 +95,5 @@ abstract class AbstractMediaHandler
     /**
      * @return array
      */
-    public abstract function getAddFolderActions();
-
+    abstract public function getAddFolderActions();
 }

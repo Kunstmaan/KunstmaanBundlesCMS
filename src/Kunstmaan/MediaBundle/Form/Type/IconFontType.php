@@ -52,10 +52,12 @@ class IconFontType extends AbstractType
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setDefaults(array(
-            'loader' => null,
-            'loader_data' => null
-        ));
+        $resolver->setDefaults(
+            array(
+                'loader'      => null,
+                'loader_data' => null
+            )
+        );
     }
 
     /**
@@ -88,9 +90,8 @@ class IconFontType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['loader'] = $form->getConfig()->getAttribute('loader');
+        $view->vars['loader']        = $form->getConfig()->getAttribute('loader');
         $view->vars['loader_object'] = $form->getConfig()->getAttribute('loader_object');
-        $view->vars['loader_data'] = serialize($form->getConfig()->getAttribute('loader_data'));
+        $view->vars['loader_data']   = serialize($form->getConfig()->getAttribute('loader_data'));
     }
-
 }

@@ -1,6 +1,36 @@
 {% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
 
-{% block extra_actions_header %}{% endblock %}
+{% block header %}
+    <div class="page-header">
+        <h1>{{ folder.name }} {% block page_header_addition %}{% endblock %}</h1>
+        {% block extra_actions_header %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    {% include 'KunstmaanMediaBundle:Folder:breadcrumbs.html.twig' %}
+{% endblock %}
+
+{% block sidebar %}
+    <aside id="sidebar" class="sidebar">
+        <div class="search_wrp">
+            <form id="treeform">
+                <input type="text" id="searchVal" value="" />
+                <button id="search" class="btn search"><i class="icon-search"></i></button>
+            </form>
+        </div>
+        <div class="tree clearfix">
+            <ul>
+                {% set parentIds = foldermanager.getParentIds(folder) %}
+                {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
+                {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
+                {% for mediaFolder in folders %}
+                    {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+{% endblock %}
 
 {% block content %}
     <div class="btn-group" style="position:absolute;right:20px;margin-top:-90px;">
@@ -77,10 +107,12 @@
                             <li>
                                 <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
                                     {% set handler = mediamanager.getHandler(media) %}
-                                    {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
                                     {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                                    {% if imageurl is not empty and media.location == 'local' %}
+                                        {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                                    {% endif %}
                                     {% if imageurl %}
-                                        <img src="{{ imageurl}}" alt="{{ media.name }}" />
+                                        <img src="{{ imageurl }}" alt="{{ media.name }}" />
                                     {% else %}
                                         <div style="font-size: 135px;text-align:center">
                                             <i class="icon-file"></i>

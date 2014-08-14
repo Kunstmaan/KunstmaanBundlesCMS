@@ -3,12 +3,12 @@
 namespace Kunstmaan\MediaBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Entity\Folder;
 
 /**
@@ -17,16 +17,16 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 class MediaMenuAdaptor implements MenuAdaptorInterface
 {
     /**
-     * @var EntityManager
+     * @var FolderRepository $repo
      */
-    private $em;
+    private $repo;
 
     /**
-     * @param EntityManager $em
+     * @param FolderRepository $repo
      */
-    public function __construct($em)
+    public function __construct($repo)
     {
-        $this->em = $em;
+        $this->repo = $repo;
     }
 
     /**
@@ -39,137 +39,34 @@ class MediaMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-
-        $mediaRoutes = array(
-            'Show media'    => 'KunstmaanMediaBundle_media_show',
-            'Edit metadata' => 'KunstmaanMediaBundle_metadata_edit',
-            'Edit slide'    => 'KunstmaanMediaBundle_slide_edit',
-            'Edit video'    => 'KunstmaanMediaBundle_video_edit'
-        );
-
-        $createRoutes = array(
-            'Create' => 'KunstmaanMediaBundle_media_create',
-            'Bulk upload' => 'KunstmaanMediaBundle_media_bulk_upload'
-        );
-
-        $allRoutes = array_merge($createRoutes, $mediaRoutes);
-
         if (is_null($parent)) {
-            /* @var Folder[] $galleries */
-            $galleries = $this->em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
-            $currentId = $request->get('folderId');
-
+            // Add menu item for root gallery
+            $rootFolders   = $this->repo->getRootNodes();
+            $currentId     = $request->get('folderId');
+            $currentFolder = null;
             if (isset($currentId)) {
                 /* @var Folder $currentFolder */
-                $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
-            } else if (in_array($request->attributes->get('_route'), $mediaRoutes)) {
-                /* @var Media $media */
-                $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('mediaId'));
-                $currentFolder = $media->getFolder();
-            } else if (in_array($request->attributes->get('_route'), $createRoutes)) {
-                $currentId = $request->get('folderId');
-                if (isset($currentId)) {
-                    $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
-                }
+                $currentFolder = $this->repo->find($currentId);
             }
 
-            if (isset($currentFolder)) {
-                $parents = $currentFolder->getParents();
-            } else {
-                $parents = array();
-            }
+            /** @var Folder $rootFolder */
+            foreach ($rootFolders as $rootFolder) {
+                $menuItem = new TopMenuItem($menu);
+                $menuItem
+                    ->setRoute('KunstmaanMediaBundle_folder_show')
+                    ->setRouteparams(array('folderId' => $rootFolder->getId()))
+                    ->setInternalname($rootFolder->getName())
+                    ->setParent(null)
+                    ->setRole($rootFolder->getRel());
 
-            foreach ($galleries as $folder) {
-                $menuitem = new TopMenuItem($menu);
-                $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
-                $menuitem->setRouteparams(array('folderId' => $folder->getId()));
-                $menuitem->setInternalname($folder->getName());
-                $menuitem->setParent($parent);
-                $menuitem->setRole($folder->getRel());
-                if (isset($currentFolder) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
-                    if ($currentFolder->getId() == $folder->getId()) {
-                        $menuitem->setActive(true);
-                    } else {
-                        foreach ($parents as $parentFolder) {
-                            if ($parentFolder->getId() == $folder->getId()) {
-                                $menuitem->setActive(true);
-                                break;
-                            }
-                        }
+                if (!is_null($currentFolder)) {
+                    $parentIds = $this->repo->getParentIds($currentFolder);
+                    if (in_array($rootFolder->getId(), $parentIds)) {
+                        $menuItem->setActive(true);
                     }
                 }
-                $children[] = $menuitem;
+                $children[] = $menuItem;
             }
-        } else if ('KunstmaanMediaBundle_folder_show' == $parent->getRoute()) {
-            $parentRouteParams = $parent->getRouteparams();
-            /* @var Folder $parentFolder */
-            $parentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($parentRouteParams['folderId']);
-            /* @var Folder[] $galleries */
-            $galleries = $parentFolder->getChildren();
-            $currentId = $request->get('folderId');
-
-            if (isset($currentId)) {
-                /* @var Folder $currentFolder */
-                $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
-            } else if (in_array($request->attributes->get('_route'), $mediaRoutes)) {
-                $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('mediaId'));
-                $currentFolder = $media->getFolder();
-            } else if (in_array($request->attributes->get('_route'), $createRoutes)) {
-                $currentId = $request->get('folderId');
-                if (isset($currentId)) {
-                    $currentFolder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneById($currentId);
-                }
-            }
-
-            /* @var Folder[] $parentGalleries */
-            $parentGalleries = null;
-            if (isset($currentFolder)) {
-                $parentGalleries = $currentFolder->getParents();
-            } else {
-                $parentGalleries = array();
-            }
-
-            foreach ($galleries as $folder) {
-                $menuitem = new MenuItem($menu);
-                $menuitem->setRoute('KunstmaanMediaBundle_folder_show');
-                $menuitem->setRouteparams(array('folderId' => $folder->getId()));
-                $menuitem->setInternalname($folder->getName());
-                $menuitem->setParent($parent);
-                $menuitem->setRole($folder->getRel());
-                if (isset($currentFolder) && (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0 || in_array($request->attributes->get('_route'), $allRoutes))) {
-                    if ($currentFolder->getId() == $folder->getId()) {
-                        $menuitem->setActive(true);
-                    } else {
-                        foreach ($parentGalleries as $parentFolder) {
-                            if ($parentFolder->getId() == $folder->getId()) {
-                                $menuitem->setActive(true);
-                                break;
-                            }
-                        }
-                    }
-                }
-                $children[] = $menuitem;
-            }
-
-            foreach ($allRoutes as $name => $route) {
-                $menuitem = new MenuItem($menu);
-                $menuitem->setRoute($route);
-                $menuitem->setInternalname($name);
-                $menuitem->setParent($parent);
-                $menuitem->setAppearInNavigation(false);
-                if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                    if (stripos($menuitem->getRoute(), 'KunstmaanMediaBundle_media_show') === 0) {
-                        /* @var Media $media */
-                        $media     = $this->em->getRepository('KunstmaanMediaBundle:Media')->getMedia($request->get('mediaId'));
-                        $menuitem->setInternalname('Show ' . $media->getClassType() . ' ' . $media->getName());
-                    }
-                    $menuitem->setActive(true);
-                }
-
-                $children[] = $menuitem;
-            }
-
         }
-
     }
 }

@@ -27,7 +27,7 @@ class IdToMediaTransformer implements DataTransformerInterface
 
     /**
      * @param ObjectManager         $objectManager         The object manager
-     * @param CurrentValueContainer $currentValueContainer The currentvaluecontainer
+     * @param CurrentValueContainer $currentValueContainer The current value container
      */
     public function __construct(ObjectManager $objectManager, CurrentValueContainer $currentValueContainer)
     {
@@ -45,24 +45,20 @@ class IdToMediaTransformer implements DataTransformerInterface
      */
     public function transform($entity)
     {
-        if (null === $entity || '' === $entity) {
+        if (empty($entity)) {
             return '';
         }
-
         if (!is_object($entity)) {
             throw new UnexpectedTypeException($entity, 'object');
         }
-
         if ($entity instanceof Collection) {
             throw new \InvalidArgumentException('Expected an object, but got a collection. Did you forget to pass "multiple=true" to an entity field?');
         }
-
         $this->currentValueContainer->setCurrentValue($entity);
 
-
         return array(
-          "ent" => $entity,
-          "id"  => $entity->getId()
+            'ent' => $entity,
+            'id'  => $entity->getId()
         );
     }
 
@@ -76,18 +72,15 @@ class IdToMediaTransformer implements DataTransformerInterface
      */
     public function reverseTransform($key)
     {
-        if ('' === $key || null === $key) {
+        if (empty($key)) {
             return null;
         }
-
         if (!is_numeric($key)) {
             throw new UnexpectedTypeException($key, 'numeric');
         }
-
-        if (!($entity = $this->objectManager->getRepository('KunstmaanMediaBundle:Media')->findOneById($key))) {
+        if (!($entity = $this->objectManager->getRepository('KunstmaanMediaBundle:Media')->find($key))) {
             throw new TransformationFailedException(sprintf('The entity with key "%s" could not be found', $key));
         }
-
         $this->currentValueContainer->setCurrentValue($entity);
 
         return $entity;

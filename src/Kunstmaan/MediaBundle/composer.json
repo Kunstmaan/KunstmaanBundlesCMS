@@ -15,6 +15,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "~2.3",
+        "gedmo/doctrine-extensions": "2.3.*",
         "doctrine/doctrine-fixtures-bundle": "~2.2.0",
         "stof/doctrine-extensions-bundle": "1.1.*@dev",
         "liip/imagine-bundle": "v0.20.2",
@@ -27,11 +28,13 @@
         "knplabs/knp-menu-bundle": "2.0.*@dev",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
+    "suggest": {
+        "ext-imagick": "to support PDF preview images"
+    },
     "minimum-stability": "stable",
     "autoload": {
-        "psr-0": { "Kunstmaan\\MediaBundle": "" }
+        "psr-4": { "Kunstmaan\\MediaBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/MediaBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "2.3.x-dev"

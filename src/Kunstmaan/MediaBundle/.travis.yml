@@ -12,6 +12,7 @@ matrix:
 
 
 before_script:
+  - sudo apt-get install -qq imagemagick ghostscript
   - composer selfupdate
   - composer --prefer-source install
 

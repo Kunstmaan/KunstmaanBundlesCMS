@@ -10,7 +10,10 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  * Media
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\MediaRepository")
- * @ORM\Table(name="kuma_media")
+ * @ORM\Table(name="kuma_media", indexes={
+ *      @ORM\Index(name="idx_name", columns={"name"}),
+ *      @ORM\Index(name="idx_deleted", columns={"deleted"})
+ * })
  * @ORM\HasLifecycleCallbacks
  */
 class Media extends AbstractEntity
@@ -117,6 +120,12 @@ class Media extends AbstractEntity
      */
     protected $url;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true, name="original_filename")
+     */
+    protected $originalFilename;
 
     /**
      * @var bool
@@ -315,7 +324,7 @@ class Media extends AbstractEntity
      * Set the specified metadata value
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return Media
      */
@@ -496,6 +505,26 @@ class Media extends AbstractEntity
     }
 
     /**
+     * @param string $originalFilename
+     *
+     * @return Media
+     */
+    public function setOriginalFilename($originalFilename)
+    {
+        $this->originalFilename = $originalFilename;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOriginalFilename()
+    {
+        return $this->originalFilename;
+    }
+
+    /**
      * @param string $description
      *
      * @return Media
@@ -516,17 +545,6 @@ class Media extends AbstractEntity
     }
 
     /**
-     * @return string
-     */
-    public function getClassType()
-    {
-        $class = explode('\\', get_class($this));
-        $classname = end($class);
-
-        return $classname;
-    }
-
-    /**
      * @ORM\PreUpdate
      */
     public function preUpdate()
@@ -534,4 +552,13 @@ class Media extends AbstractEntity
         $this->setUpdatedAt(new \DateTime());
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if (empty($this->name)) {
+            $this->setName($this->getOriginalFilename());
+        }
+    }
 }

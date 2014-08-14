@@ -1,6 +1,7 @@
 <?php
 namespace Kunstmaan\MediaBundle\Tests\Helper;
 
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 
@@ -14,16 +15,30 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    private $defaultHandler;
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::setDefaultHandler
      */
     protected function setUp()
     {
-        $fileHandler = new FileHandler();
-        $fileHandler->setMediaPath(realpath(dirname(__DIR__).'/../../../../../../app/'));
+        $this->defaultHandler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler');
+        $this->defaultHandler
+            ->expects($this->any())
+            ->method('canHandle')
+            ->will($this->returnValue(true));
+        $this->defaultHandler
+            ->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('DefaultHandler'));
+        $this->defaultHandler
+            ->expects($this->any())
+            ->method('getType')
+            ->will($this->returnValue('any/type'));
         $this->object = new MediaManager();
-        $this->object->setDefaultHandler($fileHandler);
+        $this->object->setDefaultHandler($this->defaultHandler);
     }
 
     /**
@@ -36,91 +51,238 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\MediaBundle\Helper\MediaManager::addHandler
-     * @todo   Implement testAddHandler().
+     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandler
      */
     public function testAddHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandler
-     * @todo   Implement testGetHandler().
-     */
-    public function testGetHandler()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $media = new Media();
+        $handler = $this->getCustomHandler($media);
+        $this->object->addHandler($handler);
+        $this->assertEquals($handler, $this->object->getHandler($media));
     }
 
     /**
      * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandlerForType
-     * @todo   Implement testGetHandlerForType().
      */
     public function testGetHandlerForType()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $handler = $this->getCustomHandler();
+        $this->object->addHandler($handler);
+        $this->assertEquals($handler, $this->object->getHandlerForType('custom/type'));
+        $this->assertEquals($this->defaultHandler, $this->object->getHandlerForType('unknown/type'));
     }
 
     /**
      * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandlers
-     * @todo   Implement testGetHandlers().
      */
     public function testGetHandlers()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $handler = $this->getCustomHandler();
+        $this->object->addHandler($handler);
+        $handlers = $this->object->getHandlers();
+        $this->assertCount(1, $handlers);
+        $this->assertEquals($handler, current($handlers));
     }
 
     /**
      * @covers Kunstmaan\MediaBundle\Helper\MediaManager::prepareMedia
-     * @todo   Implement testPrepareMedia().
      */
-    public function testPrepareMedia()
+    public function testPrepareMediaWithDefaultHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $media = new Media();
+        $this->defaultHandler
+            ->expects($this->any())
+            ->method('prepareMedia')
+            ->with($this->equalTo($media));
+        $this->object->prepareMedia($media);
+    }
+
+    /**
+     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::prepareMedia
+     */
+    public function testPrepareMediaWithCustomHandler()
+    {
+        $media = new Media();
+        $handler = $this->getCustomHandler($media);
+        $handler
+            ->expects($this->once())
+            ->method('prepareMedia')
+            ->with($this->equalTo($media));
+        $this->object->addHandler($handler);
+        $this->object->prepareMedia($media);
     }
 
     /**
      * @covers Kunstmaan\MediaBundle\Helper\MediaManager::saveMedia
-     * @todo   Implement testSaveMedia().
      */
-    public function testSaveMedia()
+    public function testSaveMediaWithDefaultHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $media = new Media();
+        $this->defaultHandler
+            ->expects($this->once())
+            ->method('saveMedia')
+            ->with($this->equalTo($media));
+        $this->object->saveMedia($media, true);
+
+        $this->defaultHandler
+            ->expects($this->once())
+            ->method('updateMedia')
+            ->with($this->equalTo($media));
+        $this->object->saveMedia($media);
+    }
+
+    /**
+     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::saveMedia
+     */
+    public function testCreateMediaWithCustomHandler()
+    {
+        $media = new Media();
+        $handler = $this->getCustomHandler($media);
+        $handler
+            ->expects($this->once())
+            ->method('saveMedia')
+            ->with($this->equalTo($media));
+        $this->object->addHandler($handler);
+        $this->object->saveMedia($media, true);
+    }
+
+    /**
+     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::saveMedia
+     */
+    public function testUpdateMediaWithCustomHandler()
+    {
+        $media = new Media();
+        $handler = $this->getCustomHandler($media);
+        $handler
+            ->expects($this->once())
+            ->method('updateMedia')
+            ->with($this->equalTo($media));
+        $this->object->addHandler($handler);
+        $this->object->saveMedia($media);
     }
 
     /**
      * @covers Kunstmaan\MediaBundle\Helper\MediaManager::removeMedia
-     * @todo   Implement testRemoveMedia().
      */
-    public function testRemoveMedia()
+    public function testRemoveMediaWithDefaultHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $media = new Media();
+        $this->defaultHandler
+            ->expects($this->once())
+            ->method('removeMedia')
+            ->with($this->equalTo($media));
+        $this->object->removeMedia($media);
+    }
+
+    /**
+     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::removeMedia
+     */
+    public function testRemoveMediaWithCustomHandler()
+    {
+        $media = new Media();
+        $handler = $this->getCustomHandler($media);
+        $handler
+            ->expects($this->once())
+            ->method('removeMedia')
+            ->with($this->equalTo($media));
+        $this->object->addHandler($handler);
+        $this->object->removeMedia($media);
+    }
+
+    /**
+     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandler
+     */
+    public function testGetHandlerWithDefaultHandler()
+    {
+        $media = new Media();
+        $this->assertEquals($this->defaultHandler, $this->object->getHandler($media));
+    }
+
+    /**
+     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandler
+     */
+    public function testGetHandlerWithCustomHandler()
+    {
+        $media = new Media();
+        $handler = $this->getCustomHandler($media);
+        $this->object->addHandler($handler);
+        $this->assertEquals($handler, $this->object->getHandler($media));
     }
 
     /**
      * @covers Kunstmaan\MediaBundle\Helper\MediaManager::createNew
-     * @todo   Implement testCreateNew().
      */
     public function testCreateNew()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $media = new Media();
+        $data = new \StdClass();
+        $this->assertNull($this->object->createNew($data));
+
+        $handler1 = $this->getCustomHandler(null, 'CustomHandler1');
+        $handler1
+            ->expects($this->once())
+            ->method('createNew')
+            ->with($this->equalTo($data))
+            ->will($this->returnValue(false));
+        $this->object->addHandler($handler1);
+
+        $handler2 = $this->getCustomHandler(null, 'CustomHandler2');
+        $handler2
+            ->expects($this->once())
+            ->method('createNew')
+            ->with($this->equalTo($data))
+            ->will($this->returnValue($media));
+        $this->object->addHandler($handler2);
+
+        $this->assertEquals($media, $this->object->createNew($data));
     }
 
     /**
      * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getFolderAddActions
-     * @todo   Implement testGetFolderAddActions().
      */
     public function testGetFolderAddActions()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $actions = array();
+        $this->assertEquals($actions, $this->object->getFolderAddActions());
+
+        $actions = array('action1','action2');
+        $handler = $this->getCustomHandler();
+        $handler
+            ->expects($this->once())
+            ->method('getAddFolderActions')
+            ->will($this->returnValue($actions));
+        $this->object->addHandler($handler);
+        $this->assertEquals($actions, $this->object->getFolderAddActions());
+    }
+
+    /**
+     * @param object $media
+     * @param string $name
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getCustomHandler($media = null, $name = null)
+    {
+        $handler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler');
+        if (empty($name)) {
+            $name = 'CustomHandler';
+        }
+        $handler
+            ->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue($name));
+        $handler
+            ->expects($this->any())
+            ->method('getType')
+            ->will($this->returnValue('custom/type'));
+        if (!is_null($media)) {
+            $handler
+                ->expects($this->any())
+                ->method('canHandle')
+                ->with($this->equalTo($media))
+                ->will($this->returnValue(true));
+        }
+
+        return $handler;
     }
 }

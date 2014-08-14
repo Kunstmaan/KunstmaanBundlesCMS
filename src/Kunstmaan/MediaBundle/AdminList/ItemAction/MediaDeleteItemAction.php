@@ -14,7 +14,7 @@ class MediaDeleteItemAction implements ItemActionInterface
     /**
      * @param string $redirectUrl
      */
-    function __construct($redirectUrl)
+    public function __construct($redirectUrl)
     {
         $this->redirectUrl = $redirectUrl;
     }
