@@ -9,7 +9,7 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="true"
-         bootstrap="./vendor/autoload.php"
+         bootstrap="autoload.php.dist"
         >
 
     <php>
@@ -20,7 +20,7 @@
 
     <testsuites>
         <testsuite name="Kunstmaan Test Suite">
-            <directory suffix="Test.php">./Tests</directory>
+            <directory suffix="Test.php">./src/Kunstmaan/*/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -34,7 +34,17 @@
         </whitelist>
     </filter>
 
+    <groups>
+        <exclude>
+            <group>migrations</group>
+            <group>importer</group>
+        </exclude>
+    </groups>
+
     <logging>
+        <log charset="UTF-8" highLowerBound="70" highlight="true" lowUpperBound="35" target="build/coverage" title="LeadLasso" type="coverage-html" yui="true"/>
+        <log target="build/logs/clover.xml" type="coverage-clover"/>
+        <log logIncompleteSkipped="false" target="build/logs/junit.xml" type="junit"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>
 </phpunit>
