@@ -1,0 +1,76 @@
+{
+    "name": "kunstmaan/kunstmaan-bundles-cms",
+    "type": "library",
+    "description": "The Kunstmaan Bundles CMS is an advanced yet user-friendly content management system, based on the full stack Symfony2 framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much more.",
+    "keywords": ["cms"],
+    "homepage": "http://bundles.kunstmaan.be",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "email": "bundles@kunstmaan.be"
+        },
+        {
+            "name": "The Community",
+            "homepage": "https://github.com/Kunstmaan/KunstmaanBundlesCMS/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.4.0",
+        "doctrine/orm": "=v2.4.2",
+        "doctrine/doctrine-bundle": "~1.2",
+        "twig/extensions": "~1.0",
+        "symfony/assetic-bundle": "~2.3",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "symfony/monolog-bundle": "~2.4",
+        "sensio/distribution-bundle": "~3.0",
+        "sensio/framework-extra-bundle": "~3.0",
+        "incenteev/composer-parameter-handler": "~2.0",
+        "raven/raven": "~0.8",
+        "liip/cache-control-bundle": "~1.0.7",
+        "ekino/newrelic-bundle": "~1.2.2",
+        "jms/security-extra-bundle": "~1.5.1",
+        "doctrine/doctrine-migrations-bundle": "2.1.*@dev",
+        "doctrine/migrations": "~1.0@dev",
+        "knplabs/knp-menu": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.0.*@dev",
+        "stof/doctrine-extensions-bundle": "1.1.*@dev",
+        "fzaninotto/faker": "1.4.*@dev",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "replace": {
+        "kunstmaan/admin-bundle": "self.version",
+        "kunstmaan/adminlist-bundle": "self.version",
+        "kunstmaan/article-bundle": "self.version",
+        "kunstmaan/form-bundle": "self.version",
+        "kunstmaan/media-bundle": "self.version",
+        "kunstmaan/media-pagepart-bundle": "self.version",
+        "kunstmaan/node-bundle": "self.version",
+        "kunstmaan/node-search-bundle": "self.version",
+        "kunstmaan/pagepart-bundle": "self.version",
+        "kunstmaan/search-bundle": "self.version",
+        "kunstmaan/seo-bundle": "self.version",
+        "kunstmaan/sitemap-bundle": "self.version",
+        "kunstmaan/utilities-bundle": "self.version",
+        "kunstmaan/translator-bundle": "self.version",
+        "kunstmaan/redirect-bundle": "self.version",
+        "kunstmaan/user-management-bundle": "self.version",
+        "kunstmaan/dashboard-bundle": "self.version",
+        "kunstmaan/behat-bundle": "self.version",
+        "kunstmaan/generator-bundle": "self.version",
+        "kunstmaan/live-reload-bundle": "self.version",
+        "kunstmaan/voting-bundle": "self.version",
+        "kunstmaan/languagechooser-bundle": "self.version",
+        "kunstmaan/tagging-bundle": "self.version"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\": "src/" },
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    }
+}
