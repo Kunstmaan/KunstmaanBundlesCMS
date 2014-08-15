@@ -30,7 +30,6 @@
         "incenteev/composer-parameter-handler": "~2.0",
 
         "friendsofsymfony/user-bundle": "2.0.*@dev",
-        "knplabs/knp-menu": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "~2.0",
         "guzzle/guzzle": "3.8.*",
         "white-october/pagerfanta-bundle": "1.0.*",
