@@ -31,7 +31,7 @@
 
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "knplabs/knp-menu": "2.0.*@dev",
-        "knplabs/knp-menu-bundle": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "~2.0",
         "guzzle/guzzle": "3.8.*",
         "white-october/pagerfanta-bundle": "1.0.*",
         "phpoffice/phpexcel": "1.8.*",
@@ -58,7 +58,7 @@
         "behat/mink-sahi-driver": "*",
         "phpunit/phpunit": "~3.7",
         "sensio/generator-bundle": ">=2.3.0",
-        "fzaninotto/faker": "1.4.*@dev"
+        "fzaninotto/faker": "~1.4.0"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",
