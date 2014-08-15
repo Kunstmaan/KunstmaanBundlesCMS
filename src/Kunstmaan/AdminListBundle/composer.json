@@ -20,8 +20,6 @@
         "kunstmaan/admin-bundle": "2.3.*",
         "kunstmaan/utilities-bundle": "2.3.*",
         "phpoffice/phpexcel": "1.8.*",
-        "knplabs/knp-menu": "2.0.*@dev",
-        "knplabs/knp-menu-bundle": "2.0.*@dev",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "require-dev": {
