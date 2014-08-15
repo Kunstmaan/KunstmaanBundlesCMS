@@ -135,10 +135,7 @@ class FileHandler extends AbstractMediaHandler
             $media->setOriginalFilename($content->getClientOriginalName());
         }
 
-        $metadata = array();
-
         $media->setFileSize(filesize($media->getContent()));
-        $media->setMetadata($metadata);
 
         $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
         $media->setContentType($contentType);
