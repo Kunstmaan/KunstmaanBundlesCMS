@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "~2.3",
-        "fpn/doctrine-extensions-taggable": "dev-master#ee7245fc7c3012ea1b1ed932f62ca258b39d8bea",
+        "fpn/doctrine-extensions-taggable": "0.9.0",
         "kunstmaan/admin-bundle": "2.3.*",
         "kunstmaan/adminlist-bundle": "2.3.*",
         "kunstmaan/media-bundle": "2.3.*",
