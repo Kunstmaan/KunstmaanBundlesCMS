@@ -42,9 +42,6 @@
     </groups>
 
     <logging>
-        <log charset="UTF-8" highLowerBound="70" highlight="true" lowUpperBound="35" target="build/coverage" title="LeadLasso" type="coverage-html" yui="true"/>
-        <log target="build/logs/clover.xml" type="coverage-clover"/>
-        <log logIncompleteSkipped="false" target="build/logs/junit.xml" type="junit"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>
 </phpunit>

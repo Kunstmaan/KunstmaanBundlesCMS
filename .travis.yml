@@ -20,7 +20,10 @@ before_script:
     - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "5.3.3" ]; then phpunit --self-update; fi;'
 
-script: phpunit
+script:
+    - phpunit --coverage-clover=coverage.clover
+    - wget https://scrutinizer-ci.com/ocular.phar
+    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 notifications:
   email:
