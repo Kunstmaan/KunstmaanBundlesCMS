@@ -45,7 +45,7 @@
         "knplabs/knp-gaufrette-bundle": "0.1.*",
         "symfony-cmf/routing-bundle": "~1.1.1",
         "sherlock/sherlock": "0.1.*",
-        "fpn/doctrine-extensions-taggable": "dev-master#ee7245fc7c3012ea1b1ed932f62ca258b39d8bea"
+        "fpn/doctrine-extensions-taggable": "0.9.0"
     },
     "require-dev": {
         "behat/behat": "~2.5.0",
