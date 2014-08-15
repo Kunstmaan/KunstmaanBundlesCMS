@@ -85,7 +85,7 @@
         "kunstmaan/tagging-bundle": "self.version"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\": "src/" }
+        "psr-4": { "Kunstmaan\\": "src/Kunstmaan/" }
     },
     "minimum-stability": "stable",
     "extra": {
