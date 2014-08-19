@@ -34,10 +34,20 @@ class AviaryController extends Controller
         $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
+
+        $media      = clone $media;
         $handler    = $mediaManager->getHandler($media);
         $fileHelper = $handler->getFormHelper($media);
         $fileHelper->getMediaFromUrl($request->get('url'));
         $media = $fileHelper->getMedia();
+
+        $media->setUuid(null);
+        $handler->prepareMedia($media);
+
+        $em->persist($media);
+        $em->flush();
+
+        $media->setCreatedAt($media->getUpdatedAt());
         $em->persist($media);
         $em->flush();
 
