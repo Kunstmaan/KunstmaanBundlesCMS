@@ -80,7 +80,7 @@ class PagePartCreatorService
         // Find the correct page instance.
         $node = $this->getNode($nodeOrInternalName);
         /** @var $translation NodeTranslation */
-        $translation = $node->getNodeTranslation($language);
+        $translation = $node->getNodeTranslation($language, true);
         $page = $translation->getRef($this->em);
 
         // Find latest position.
