@@ -11,4 +11,4 @@ liip_imagine:
         media_detail_thumbnail:
             quality: 75
             filters:
-                thumbnail: { size: [500, 500], mode: outbound }
+                thumbnail: { size: [700, 500], mode: inset }
