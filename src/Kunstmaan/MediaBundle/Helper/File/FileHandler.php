@@ -133,6 +133,10 @@ class FileHandler extends AbstractMediaHandler
         }
         if ($content instanceof UploadedFile) {
             $media->setOriginalFilename($content->getClientOriginalName());
+            $name = $media->getName();
+            if (empty($name)) {
+                $media->setName($media->getOriginalFilename());
+            }
         }
 
         $media->setFileSize(filesize($media->getContent()));
