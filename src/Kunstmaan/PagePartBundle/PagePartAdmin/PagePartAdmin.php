@@ -191,11 +191,27 @@ class PagePartAdmin
         // Create the objects for the new pageparts
         $this->newPageParts = array();
         $newRefIds          = $request->get($this->context . '_new');
+
         if (is_array($newRefIds)) {
             foreach ($newRefIds as $newId) {
                 $type                       = $request->get($this->context . '_type_' . $newId);
                 $this->newPageParts[$newId] = new $type();
             }
+        }
+
+        // Sort pageparts again
+        $sequences = $request->get($this->context . '_sequence');
+        if (!is_null($sequences)) {
+            $tempPageparts = $this->pageParts;
+            $this->pageParts = array();
+            foreach ($sequences as $sequence) {
+                if (array_key_exists($sequence, $this->newPageParts)) {
+                    $this->pageParts[$sequence] = $this->newPageParts[$sequence];
+                } else {
+                    $this->pageParts[$sequence] = $tempPageparts[$sequence];
+                }
+            }
+            unset($tempPageparts);
         }
     }
 
