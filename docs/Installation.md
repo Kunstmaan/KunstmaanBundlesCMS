@@ -17,7 +17,8 @@ Since we use the Symfony framework, the [minimal requirements of Symfony][2] app
 - PHP needs to be a minimum version of PHP 5.3.9
 - JSON needs to be enabled
 - ctype needs to be enabled
-- curl needs to be enables
+- curl needs to be enabled
+- imagick needs to be enabled (if you wish to use the KunstmaanMediaBundle)
 - Your PHP.ini needs to have the date.timezone setting
 
 Apart from these you will also need the following :
