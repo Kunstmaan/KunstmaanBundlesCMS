@@ -55,7 +55,6 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     private function createGroup(ObjectManager $manager, $name, array $roles = array())
     {
         $group = new Group($name);
-        $group->setName($name);
         foreach ($roles as $role) {
             $group->addRole($role);
         }
