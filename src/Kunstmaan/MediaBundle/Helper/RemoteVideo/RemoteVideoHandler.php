@@ -13,6 +13,11 @@ class RemoteVideoHandler extends AbstractMediaHandler
 {
 
     /**
+     * @var array
+     */
+    protected $configuration = array();
+
+    /**
      * @var string
      */
     const CONTENT_TYPE = 'remote/video';
@@ -21,6 +26,16 @@ class RemoteVideoHandler extends AbstractMediaHandler
      * @var string
      */
     const TYPE = 'video';
+
+
+    /**
+     * Constructor. Takes the configuration of the RemoveVideoHandler
+     * @param array $configuration
+     */
+    public function __construct($configuration = array())
+    {
+        $this->configuration = $configuration;
+    }
 
     /**
      * @return string
@@ -43,7 +58,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
      */
     public function getFormType()
     {
-        return new RemoteVideoType();
+        return new RemoteVideoType($this->configuration);
     }
 
     /**
