@@ -1,0 +1,38 @@
+{
+    "name": "kunstmaan/adminlist-bundle",
+    "type": "symfony-bundle",
+    "description": "Every website contains several lists of content ranging from articles on a blog, to drop down values. The KunstlaanAdminListBundles takes CRUD a step further by supplying filtering, exports to csv and editing capabilities to these content entities.",
+    "keywords": ["kunstmaan", "cms", "crud"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanAdminListBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.3",
+        "sensio/framework-extra-bundle": ">=2.3.4,<4.0.0",
+        "white-october/pagerfanta-bundle": "1.0.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/utilities-bundle": "2.3.*",
+        "phpoffice/phpexcel": "1.8.*",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "~2.2.0"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-0": { "Kunstmaan\\AdminListBundle": "" }
+    },
+    "target-dir": "Kunstmaan/AdminListBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
+}
