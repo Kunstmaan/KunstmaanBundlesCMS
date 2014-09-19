@@ -126,7 +126,7 @@ class PagePartRefRepository extends EntityRepository
                 $toPagePart->deepClone();
             }
             $em->persist($toPagePart);
-            $em->flush();
+            $em->flush($toPagePart);
             $this->addPagePart($toPage, $toPagePart, $sequenceNumber, $context, false);
             $sequenceNumber++;
         }

@@ -140,7 +140,7 @@ class PageCreatorService
                 $first = false;
 
                 $em->persist($pageTypeInstance);
-                $em->flush();
+                $em->flush($pageTypeInstance);
 
                 // Fetch the translation instead of creating it.
                 // This returns the rootnode.
@@ -158,7 +158,7 @@ class PageCreatorService
                 }
 
                 $em->persist($rootNode);
-                $em->flush();
+                $em->flush($rootNode);
 
                 $translationNode = $rootNode->getNodeTranslation($language, true);
             } else {
@@ -166,7 +166,7 @@ class PageCreatorService
                 $pageTypeInstance = clone $pageTypeInstance;
 
                 $em->persist($pageTypeInstance);
-                $em->flush();
+                $em->flush($pageTypeInstance);
 
                 // Create the translationnode.
                 $translationNode = $nodeTranslationRepo->createNodeTranslationFor($pageTypeInstance, $language, $rootNode, $creator);
@@ -184,18 +184,19 @@ class PageCreatorService
             // Overwrite the page title with the translated title
             $pageTypeInstance->setTitle($translationNode->getTitle());
             $em->persist($pageTypeInstance);
-
             $em->persist($translationNode);
-            $em->flush();
+            $em->flush($pageTypeInstance);
+            $em->flush($translationNode);
 
             $translationNode->setOnline($setOnline);
 
             if (!is_null($seo)) {
                 $em->persist($seo);
+                $em->flush($seo);
             }
 
             $em->persist($translationNode);
-            $em->flush();
+            $em->flush($translationNode);
         }
 
         // ACL

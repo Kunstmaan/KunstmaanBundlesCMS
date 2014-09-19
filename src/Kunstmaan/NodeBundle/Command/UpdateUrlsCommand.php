@@ -39,7 +39,7 @@ class UpdateUrlsCommand extends ContainerAwareCommand
             foreach ($mainNodes as $mainNode) {
                 $mainNode->setUrl('');
                 $em->persist($mainNode);
-                $em->flush();
+                $em->flush($mainNode);
             }
         }
 
