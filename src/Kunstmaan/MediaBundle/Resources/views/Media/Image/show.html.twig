@@ -1,0 +1,48 @@
+{% extends 'KunstmaanMediaBundle:Media\\File:show.html.twig' %}
+
+{% block extraactions %}
+
+    {% if handler.aviaryApiKey %}
+        <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}');" >{{ 'media.media.edit.action' | trans }}</button>
+
+        <!-- Load Feather code -->
+        <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
+
+        <!-- Instantiate Feather -->
+        <script type="text/javascript">
+            var featherEditor = new Aviary.Feather({
+                apiKey: '{{ handler.aviaryApiKey }}',
+                apiVersion: 2,
+                //tools: 'all',
+                onSave: function(imageID, newURL) {
+                    var img = document.getElementById(imageID);
+                    img.src = newURL;
+                    window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'folderId' : folder.id, 'mediaId' : media.id }) }}?url='+newURL;
+                }
+            });
+
+            function launchEditor(id, src) {
+                featherEditor.launch({
+                    image: id,
+                    url: src
+                });
+                return false;
+            }
+        </script>
+    {% endif %}
+
+    <a href="{{ asset(media.url) }}" data-toggle="modal" class="btn">{{ 'media.media.download.action'|trans }}</a>
+
+{% endblock %}
+
+{% block preview %}
+    {% set imageurl = handler.getImageUrl(media, app.request.basePath) %}
+    {% if imageurl is not empty and media.location == 'local' %}
+        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+            {% set imageurl = imageurl %}
+        {% else %}
+            {% set imageurl = imageurl | imagine_filter('media_detail_thumbnail') %}
+        {% endif %}
+    {% endif %}
+    <p><img id="editimage" class="thumbnail" src="{{ imageurl }}" alt="{{ media.name }}" /></p>
+{% endblock %}

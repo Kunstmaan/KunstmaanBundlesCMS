@@ -1,0 +1,258 @@
+{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+
+{% block header %}
+    <div class="page-header">
+        <h1>{{ folder.name }} {% block page_header_addition %}{% endblock %}</h1>
+        {% block extra_actions_header %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    {% include 'KunstmaanMediaBundle:Folder:breadcrumbs.html.twig' %}
+{% endblock %}
+
+{% block sidebar %}
+    <aside id="sidebar" class="sidebar">
+        <div class="search_wrp">
+            <form id="treeform">
+                <input type="text" id="searchVal" value="" />
+                <button id="search" class="btn search"><i class="icon-search"></i></button>
+            </form>
+        </div>
+        <div class="tree clearfix">
+            <ul>
+                {% set parentIds = foldermanager.getParentIds(folder) %}
+                {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
+                {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
+                {% for mediaFolder in folders %}
+                    {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+{% endblock %}
+
+{% block content %}
+    <div class="btn-group" style="position:absolute;right:20px;margin-top:-90px;">
+        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': folder.id, viewMode: 'thumb-view'}) }}" class="btn {% if not app.session.get('media-list-view') %}active{% endif %}" style="font-size:14px;"><i class="icon-th-large"></i></a>
+        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': folder.id, viewMode: 'list-view'}) }}" class="btn {% if app.session.get('media-list-view') %}active{% endif %}" style="font-size:14px;"><i class="icon-list"></i></a>
+    </div>
+
+    <!--=========Actions=========-->
+    <!--Main-->
+    <div class="main_actions btn-group">
+        {% block actions %}
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Add media <i class="icon-caret-down"></i></a>
+            <ul class="dropdown-menu">
+                {% for addaction in mediamanager.getFolderAddActions() %}
+                    <li><a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}">{{ addaction.name |trans }}</a></li>
+                {% endfor %}
+                <li><a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}">{{ 'media.bulkupload.bulkupload' |trans }}</a></li>
+            </ul>
+            <button class="btn" data-target="#addsub-modal" data-toggle="modal" type="button">{{ 'media.folder.addsub.action' |trans }}</button>
+            <button class="btn" data-target="#delete-modal" data-toggle="modal" type="button">{{ 'media.folder.delete.action' |trans }}</button>
+        {% endblock %}
+    </div>
+
+    <!--Scroll-->
+    <div id="main_actions_top" class="main_actions top">
+        <div class="pull-right btn-group">
+            {{ block('actions') }}
+            <a class="btn up">&#9650;</a>
+        </div>
+    </div>
+
+    <!--=========Tabs=========-->
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.folder.contenttab.title' | trans }}</a></li>
+        <li><a href="#properties" data-toggle="tab">{{ 'media.folder.propertiestab.title' | trans }}</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="imagegallery">
+
+            <section class="map-list">
+                <table class="table">
+                    <tbody>
+                        {% for child in folder.children %}
+                            <tr>
+                                <td>
+                                	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id }) }}" class="item">{{ child.name }}</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td class="no_item">
+                                	{{ 'media.folder.sub.no' |trans }}
+                            	</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            <section id="dropprogressinfo"></section>
+            <section>
+                {% if app.session.get('media-list-view') %}
+                    {% if adminlist.count > 0 %}
+                        {{ parent() }}
+                    {% else %}
+                        <p class="no_item">
+                            {{ 'media.media.no' |trans }}
+                        </p>
+                    {% endif %}
+                {% else %}
+                    <ul class="thumbnails" id="file-list">
+                        {% for media in folder.media %}
+                            {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
+                            <li>
+                                <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
+                                    {% set handler = mediamanager.getHandler(media) %}
+                                    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                                    {% if imageurl is not empty and media.location == 'local' %}
+                                        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                                            {% set imageurl = imageurl %}
+                                        {% else %}
+                                            {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if imageurl %}
+                                        <img src="{{ imageurl }}" alt="{{ media.name }}" />
+                                    {% else %}
+                                        <div style="font-size: 135px;text-align:center">
+                                            <i class="icon-file"></i>
+                                        </div>
+                                   {% endif %}
+                                    <p class="img_name">{{ media.name }}</p>
+                                </a>
+                                <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
+                                <span class="helper">Click to edit</span>
+                             </li>
+                        {% else %}
+                            <li class="no_item">
+                                {{ 'media.media.no' |trans }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            initDel();
+                        });
+                    </script>
+                {% endif %}
+            </section>
+       </div>
+       <script>
+       $(function(){
+
+    		var dropbox = $('#imagegallery'),
+    			message = $('.message', dropbox);
+
+    		dropbox.filedrop({
+    			paramname:'files',
+    			maxfiles: 500,
+    	    	maxfilesize: 200,
+    			url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}',
+
+    			drop: function(e) {
+    				files = e.dataTransfer.files;
+    				if (files === null || files === undefined || files.length <= 0) {
+        			    if(e.dataTransfer.getData('Text')) {
+        			        jQuery.ajax({
+        			            url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' :folder.id }) }}',
+        			            data: {'text': e.dataTransfer.getData('Text')},
+        			            async: false,
+        			            success: function() {
+        			            	window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
+        			            }
+            			    });
+            			}
+    				}
+        	    },
+
+    	    	error: function(err, file) {
+    				switch(err) {
+    					case 'BrowserNotSupported':
+    						break;
+    					case 'TooManyFiles':
+    						break;
+    					case 'FileTooLarge':
+    						alert(file.name+' is too large! Please upload files up to 2mb (configurable).');
+    						break;
+    					default:
+    						break;
+    				}
+    			},
+
+    			uploadStarted:function(i, file, len){
+    				createProgressInfo(file);
+    			},
+
+    			progressUpdated: function(i, file, progress) {
+    				$.data(file).find('.progress .bar').css('width', progress + '%');
+    			},
+
+    			uploadFinished:function(i,file,response){
+    				$.data(file).find('.progress .bar').css('width', '100%');
+    				$.data(file).find('.uploadtitle').html('Done');
+    			},
+
+    			afterAll:function(i,file,response){
+    				window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
+    			}
+
+    		});
+
+    		var template = '<div><span style="font-weight:bold" class="uploadtitle">Uploading file...</span> <span class="uploadfilename"></span><div class="progress progress-striped"><div class="bar" style="width: 0%;"></div></div></div>';
+
+    		function createProgressInfo(file){
+    			var preview = $(template);
+    			preview.appendTo(jQuery('#dropprogressinfo'));
+    			preview.find('.uploadfilename').html(file.name);
+
+    			// Associating a preview container
+    			// with the file, using jQuery's $.data():
+    			$.data(file,preview);
+    		}
+
+    	});
+
+       </script>
+       <div class="tab-pane" id="properties">
+
+           {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
+           <form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}#properties" method="post" {{ form_enctype(editform) }}>
+                <div class="prop_wrp">
+                    {{ form_widget(editform) }}
+                    <div class="input_prop">
+                    	<div class="btn_group">
+                        	<button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
+                        	<button class="btn btn-primary" type="submit">{{ 'media.folder.save' |trans }}</button>
+                       	</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--=========Modals=========-->
+    <div id="addsub-modal" class="modal hide fade">
+        {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
+    </div>
+    {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+    {# include 'KunstmaanMediaBundle:Image:create-modal.html.twig' #}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Javascript to enable link to tab
+            var url = document.location.toString();
+            if (url.match('#')) {
+                $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
+            }
+
+            // Change hash for page-reload
+            $('.nav-tabs a').on('shown', function (e) {
+                window.location.hash = e.target.hash;
+            })
+        });
+    </script>
+{% endblock %}
