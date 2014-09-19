@@ -37,7 +37,7 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
     {
         // Retrieve the current page number from the URL, if not present of lower than 1, set it to 1
         $pagenumber = $request->get("page");
-        if (!$pagenumber or $pagenumber < 1) {
+        if (!$pagenumber || $pagenumber < 1) {
             $pagenumber = 1;
         }
         // Retrieve the search parameters
@@ -48,15 +48,15 @@ class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
         $lang = $request->getLocale();
         $tags = array();
         // Put the tags in an array
-        if ($querytag and $querytag != '') {
+        if ($querytag && $querytag != '') {
             $tags = explode(',', $querytag);
-            if ($queryrtag and $queryrtag != '') {
+            if ($queryrtag && $queryrtag != '') {
                 unset($tags[$queryrtag]);
                 $tags = array_merge(array_diff($tags, array($queryrtag)));
             }
         }
         // Perform a search if there is a querystring available
-        if ($querystring and $querystring != "") {
+        if ($querystring && $querystring != "") {
             $pagerfanta = $this->search($container, $querystring, $querytype, $tags, $lang, $pagenumber);
             $context['q_query'] = $querystring;
             $context['q_tags'] = implode(',', $tags);

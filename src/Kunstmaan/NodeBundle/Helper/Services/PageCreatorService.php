@@ -100,7 +100,7 @@ class PageCreatorService
             $options = array();
         }
 
-        if (is_null($translations) or (count($translations) == 0)) {
+        if (is_null($translations) || (count($translations) == 0)) {
             throw new \InvalidArgumentException('There has to be at least 1 translation in the translations array');
         }
 

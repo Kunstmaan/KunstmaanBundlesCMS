@@ -134,7 +134,7 @@ class PagePartCreatorService
                 if (is_callable($pagePartOrFunction)) {
                     $pagePartOrFunction = $pagePartOrFunction();
 
-                    if (!isset($pagePartOrFunction) or (is_null($pagePartOrFunction))) {
+                    if (!isset($pagePartOrFunction) || (is_null($pagePartOrFunction))) {
                         throw new \LogicException('A function returned nothing for a pagepart. Make sure you return your instantiated pageparts in your anonymous functions.');
                     }
                 }
