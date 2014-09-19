@@ -1,0 +1,34 @@
+{
+    "name": "kunstmaan/seo-bundle",
+    "type": "symfony-bundle",
+    "description": "Annotating content with metadata for social sharing and seo purposes cannot be overlooked nowadays. The KunstmaanSeoBundle contains default editing functionality for OpenGraph data, meta descriptions, keywords and titles and Metriweb tags. Because the metatagging and tracking options are always changing, a free field to add custom header information is provided as well.",
+    "keywords": [ "kunstmaan", "seo", "cms", "opengraph", "meta"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanSeoBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.3",
+        "gedmo/doctrine-extensions": "2.3.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/media-bundle": "2.3.*",
+        "kunstmaan/utilities-bundle": "2.3.*",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\SeoBundle": "" }
+    },
+    "target-dir": "Kunstmaan/SeoBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
+}

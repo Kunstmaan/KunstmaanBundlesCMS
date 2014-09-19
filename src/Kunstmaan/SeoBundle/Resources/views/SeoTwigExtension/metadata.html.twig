@@ -1,0 +1,39 @@
+<!-- SEO -->
+{% if seo.getMetaDescription() %}
+    <meta name="description" content="{{ seo.getMetaDescription() }}">
+{% endif %}
+{% if seo.getMetaKeywords() %}
+    <meta name="keywords" content="{{ seo.getMetaKeywords() }}">
+{% endif %}
+{% if seo.getMetaAuthor() %}
+    <meta name="author" content="{{ seo.getMetaAuthor() }}">
+{% endif %}
+{% if seo.getMetaRobots() %}
+    <meta name="robots" content="{{ seo.getMetaRobots() }}">
+{% endif %}
+{% if seo.getMetaRevised() %}
+    <meta name="revised" content="{{ seo.getMetaRevised() }}">
+{% endif %}
+{% if seo.getOgType() %}
+    <meta property="og:type" content="{{ seo.getOgType() }}">
+{% endif %}
+{% if seo.getOgTitle() %}
+    <meta property="og:title" content="{{ seo.getOgTitle() }}">
+{% endif %}
+{% if seo.getOgDescription() %}
+    <meta property="og:description" content="{{ seo.getOgDescription() }}">
+{% endif %}
+{% if seo.getOgUrl() %}
+   <meta property="og:url" content="{{ seo.getOgUrl() }}">
+{% else %}
+    {% if currentNode %}
+        <meta property="og:url" content="{{ url('_slug', { 'url': currentNode.slug, '_locale': app.request.locale }) }}"/>
+    {% endif %}
+{% endif %}
+{% if seo.getOgImage() is defined and seo.getOgImage() is not null %}
+    <meta property="og:image" content="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}">
+    <link rel="image_src" href="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}" / >
+{% endif %}
+{% if seo.getExtraMetadata() %}
+    {{ seo.getExtraMetadata() | raw }}
+{% endif %}
