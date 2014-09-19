@@ -1,5 +1,6 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Model\Translation;
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
  * Groups all translations for all languages specified by a key
