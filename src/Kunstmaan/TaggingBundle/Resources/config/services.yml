@@ -1,0 +1,38 @@
+parameters:
+
+services:
+    kuma_tagging.tag_manager:
+        class: Kunstmaan\TaggingBundle\Entity\TagManager
+        arguments: ["@doctrine.orm.entity_manager", "Kunstmaan\TaggingBundle\Entity\Tag", "Kunstmaan\TaggingBundle\Entity\Tagging"]
+
+    kuma_tagging.listener:
+        class: Kunstmaan\TaggingBundle\EventListener\TagsListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postLoad }
+            - { name: kernel.event_listener, event: kunstmaan_node.postPersist, method: postNodePersist }
+
+    kuma_tagging.clone.listener:
+        class: Kunstmaan\TaggingBundle\EventListener\CloneListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_admin.postDeepCloneAndSave, method: postDeepCloneAndSave }
+
+    kuma_tagging.index_node.listener:
+        class: Kunstmaan\TaggingBundle\EventListener\IndexNodeEventListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_node_search.onIndexNode, method: onIndexNode }
+
+    kuma_tagging.menu.adaptor:
+        class: Kunstmaan\TaggingBundle\Helper\Menu\TagMenuAdaptor
+        tags:
+          -  { name: kunstmaan_admin.menu.adaptor }
+
+    form.type.tags:
+        class: Kunstmaan\TaggingBundle\Form\TagsAdminType
+        arguments: ["@kuma_tagging.tag_manager"]
+        tags:
+            - { name: form.type, alias: kunstmaan_taggingbundle_tags }
