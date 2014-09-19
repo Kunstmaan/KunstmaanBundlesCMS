@@ -83,7 +83,7 @@ class NodeTranslationListener
 
                     if ($entity != false) {
                         $em->persist($entity);
-                        $em->flush();
+                        $em->flush($entity);
 
                         $this->updateNodeChildren($entity, $em);
                     }
@@ -109,7 +109,7 @@ class NodeTranslationListener
 
                     if ($translation != false) {
                         $em->persist($translation);
-                        $em->flush();
+                        $em->flush($translation);
 
                         $this->updateNodeChildren($translation, $em);
                     }

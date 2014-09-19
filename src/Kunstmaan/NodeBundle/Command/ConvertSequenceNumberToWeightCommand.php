@@ -32,8 +32,6 @@ class ConvertSequenceNumberToWeightCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        ini_set('xdebug.max_nesting_level', 150);
-
         /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 

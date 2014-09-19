@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 
@@ -103,28 +104,28 @@ class TranslationGroupManager
     {
         $domain = $this->translationRepository->findOneBy(array('name' => $domain));
 
-        if (! $domain instanceof TranslationDomain) {
+        //if (! $domain instanceof TranslationDomain) {
             return array();
-        }
-
-        $translationGroups = new ArrayCollection;
-
-        $translations =  $this->translationRepository->findBy(array('domain' => $domain));
-
-        foreach ($translations as $translation) {
-            $key = $translation->getKeyword();
-
-            if (!$translationGroups->containsKey($key)) {
-                $translationGroup = new TranslationGroup;
-                $translationGroup->setDomain($domain);
-                $translationGroup->setKeyword($translation->getKeyword());
-                $translationGroups->set($key, $translationGroup);
-            }
-
-            $translationGroups->get($key)->addTranslation($translation);
-        }
-
-        return $translationGroups;
+//        }
+//
+//        $translationGroups = new ArrayCollection();
+//
+//        $translations =  $this->translationRepository->findBy(array('domain' => $domain));
+//
+//        foreach ($translations as $translation) {
+//            $key = $translation->getKeyword();
+//
+//            if (!$translationGroups->containsKey($key)) {
+//                $translationGroup = new TranslationGroup;
+//                $translationGroup->setDomain($domain);
+//                $translationGroup->setKeyword($translation->getKeyword());
+//                $translationGroups->set($key, $translationGroup);
+//            }
+//
+//            $translationGroups->get($key)->addTranslation($translation);
+//        }
+//
+//        return $translationGroups;
     }
 
     public function setTranslationRepository($translationRepository)

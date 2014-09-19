@@ -258,7 +258,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
             // persist entity back to DB
                 $this->output->writeln("\t" . 'Persisting..');
                 $this->em->persist($overview);
-                $this->em->flush();
+                $this->em->flush($overview);
 
                 $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
             } catch (\Google_ServiceException $e) {
