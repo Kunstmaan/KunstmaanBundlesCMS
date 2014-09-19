@@ -1,0 +1,5 @@
+name: "Form page"
+rows:
+    - regions: 
+        - { name: "main", span: 12 }
+template: "{{ bundle.name }}::Pages\\FormPage\\pagetemplate.html.twig"

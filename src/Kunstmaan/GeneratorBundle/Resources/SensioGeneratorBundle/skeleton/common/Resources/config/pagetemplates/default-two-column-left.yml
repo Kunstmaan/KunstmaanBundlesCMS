@@ -1,0 +1,8 @@
+name: "Two column page (left sidebar)"
+rows:
+    - regions:
+        - { name: "left_sidebar", span: 3 }
+        - { name: "main", span: 9 }
+    - regions:
+        - { name: "footer", span: 12 }
+template: "~~~BUNDLE~~~::Pages\\Common\\two-column-left-pagetemplate.html.twig"

@@ -1,0 +1,6 @@
+services:
+    {{ bundle.name|lower }}.default_locale_listener:
+        class: {{ bundle.namespace }}\EventListener\DefaultLocaleListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+        arguments: [%defaultlocale%]

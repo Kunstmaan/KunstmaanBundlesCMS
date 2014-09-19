@@ -1,0 +1,3 @@
+name: "Satellite overview page"
+rows: []
+template: "{{ bundle.name }}::Pages\\SatelliteOverviewPage\\pagetemplate.html.twig"

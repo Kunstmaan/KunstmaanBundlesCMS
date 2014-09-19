@@ -1,0 +1,11 @@
+name: "Home page"
+rows:
+{% if demosite %}
+    - regions:
+        - { name: "slider", span: 12 }
+{% endif %}
+    - regions:
+        - { name: "left_column", span: 4 }
+        - { name: "middle_column", span: 4 }
+        - { name: "right_column", span: 4 }
+template: "{{ bundle.name }}::Pages\\HomePage\\pagetemplate.html.twig"
