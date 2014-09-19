@@ -1,0 +1,23 @@
+# Settings
+settings:
+  groups: Groupes
+  group:
+      name: Nom
+      edit: Modifier le groupe
+      add: Ajouter un groupe
+      roles: Rôles
+  users: Utilisateurs
+  user:
+      username: Utilisateur
+      password: Mot de passe
+      repeatedpassword: Répéter le mot de passe
+      email: E-mail
+      enabled: Activé
+      roles: Groupes
+      add: Ajouter un Utilisateur
+      edit: Modifier l'Utilisateur
+  roles: Rôles
+  role:
+      role: Rôle
+      add: Ajouter un Rôle
+      edit: Modifier un Rôle
