@@ -35,7 +35,6 @@ class MigrationsService
         return $sql;
     }
 
-    // FIXME: needs refactoring
     public function getUpdatedTranslationSqlArray()
     {
         $ignoreFields = array('id');
