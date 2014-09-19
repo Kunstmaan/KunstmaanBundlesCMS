@@ -24,7 +24,7 @@
     "target-dir": "Kunstmaan/SearchBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }

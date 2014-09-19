@@ -26,8 +26,8 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         
-        "kunstmaan/admin-bundle": "2.3.*",
-        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/admin-bundle": "~3.0.0",
+        "kunstmaan/adminlist-bundle": "~3.0.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "require-dev": {
@@ -41,7 +41,7 @@
     "target-dir": "Kunstmaan/TranslatorBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 

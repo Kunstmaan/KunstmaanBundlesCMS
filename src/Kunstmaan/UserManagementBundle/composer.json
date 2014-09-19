@@ -15,8 +15,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "~2.3",
-        "kunstmaan/adminlist-bundle": "2.3.*",
-        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/adminlist-bundle": "~3.0.0",
+        "kunstmaan/admin-bundle": "~3.0.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "minimum-stability": "stable",
@@ -26,7 +26,7 @@
     "target-dir": "Kunstmaan/UserManagementBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }
