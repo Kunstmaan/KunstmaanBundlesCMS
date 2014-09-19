@@ -1,0 +1,32 @@
+{
+    "name": "kunstmaan/media-pagepart-bundle",
+    "type": "symfony-bundle",
+    "description": "The KunstmaanMediaPagePartBundle is a pagepart that can be used on the KunstmaanPagePartBundle. It is a separate bundle to prevent a tight coupling between the KunstmaanPagePartBundle and the KunstmaanMediaBundle.",
+    "keywords": [],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanMediaPagePartBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.3",
+        "kunstmaan/pagepart-bundle": "2.3.*",
+        "kunstmaan/media-bundle": "2.3.*",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\MediaPagePartBundle": "" }
+    },
+    "target-dir": "Kunstmaan/MediaPagePartBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
+}
