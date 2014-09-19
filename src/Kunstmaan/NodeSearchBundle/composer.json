@@ -18,10 +18,10 @@
         "symfony/symfony": "~2.3",
         "white-october/pagerfanta-bundle": "1.0.*",
         "sherlock/sherlock": "0.1.*",
-        "kunstmaan/node-bundle": "2.3.*",
-        "kunstmaan/pagepart-bundle": "2.3.*",
-        "kunstmaan/search-bundle": "2.3.*",
-        "kunstmaan/utilities-bundle": "2.3.*",
+        "kunstmaan/node-bundle": "~3.0.0",
+        "kunstmaan/pagepart-bundle": "~3.0.0",
+        "kunstmaan/search-bundle": "~3.0.0",
+        "kunstmaan/utilities-bundle": "~3.0.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
@@ -30,7 +30,7 @@
     "target-dir": "Kunstmaan/NodeSearchBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }

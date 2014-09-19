@@ -16,10 +16,10 @@
         "php": ">=5.3.3",
         "symfony/symfony": "~2.3",
         "fpn/doctrine-extensions-taggable": "0.9.0",
-        "kunstmaan/admin-bundle": "2.3.*",
-        "kunstmaan/adminlist-bundle": "2.3.*",
-        "kunstmaan/media-bundle": "2.3.*",
-        "kunstmaan/node-bundle": "2.3.*"
+        "kunstmaan/admin-bundle": "~3.0.0",
+        "kunstmaan/adminlist-bundle": "~3.0.0",
+        "kunstmaan/media-bundle": "~3.0.0",
+        "kunstmaan/node-bundle": "~3.0.0"
     },
     "autoload": {
         "psr-0": { "Kunstmaan\\TaggingBundle": "" }
@@ -28,7 +28,7 @@
     "minimum-stability": "stable",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }

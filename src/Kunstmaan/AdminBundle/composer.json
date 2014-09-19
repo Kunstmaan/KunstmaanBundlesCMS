@@ -19,11 +19,11 @@
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "~2.0",
         "sensio/framework-extra-bundle": "*",
-        "kunstmaan/utilities-bundle": "2.3.*",
+        "kunstmaan/utilities-bundle": "~3.0.0",
         "guzzle/guzzle": "3.8.*"
     },
     "suggests": {
-        "kunstmaan/user-management-bundle": "2.3.*"
+        "kunstmaan/user-management-bundle": "~3.0.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "~2.2.0",
@@ -36,7 +36,7 @@
     "target-dir": "Kunstmaan/AdminBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }
