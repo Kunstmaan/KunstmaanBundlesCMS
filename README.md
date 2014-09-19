@@ -8,3 +8,11 @@ Please refer to the documentation at [http://bundles.kunstmaan.be/getting-starte
 ![Screenshot](http://bundles.kunstmaan.be/uploads/media/521f4ef030de9.png?7dd5040)
 
 Enjoy!
+
+
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanBundlesCMS.png?branch=master)](http://travis-ci.org/KunstmaanKunstmaanBundlesCMS)
+[![Total Downloads](https://poser.pugx.org//kunstmaan/bundles-cms/downloads.png)](https://packagist.org/packages//kunstmaan/bundles-cms)
+[![Latest Stable Version](https://poser.pugx.org/kunstmaan/bundles-cms/v/stable.png)](https://packagist.org/packages/kunstmaan/bundles-cms)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/313ff798-9e67-4c0c-9a04-ee4d5cdde1e6/mini.png)](https://insight.sensiolabs.com/projects/313ff798-9e67-4c0c-9a04-ee4d5cdde1e6)
