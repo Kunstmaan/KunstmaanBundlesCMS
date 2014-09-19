@@ -1,0 +1,50 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block list %}
+    {% import 'knp_menu.html.twig' as macros %}
+
+    {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+        <div {{ macros.attributes(listAttributes) }}>
+            {{ block('children') }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block item %}
+{% if item.displayed %}
+{# building the class of the item #}
+    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+    {%- if matcher.isCurrent(item) %}
+        {%- set classes = classes|merge([options.currentClass]) %}
+    {%- elseif matcher.isAncestor(item, options.depth) %}
+        {%- set classes = classes|merge([options.ancestorClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeFirst %}
+        {%- set classes = classes|merge([options.firstClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeLast %}
+        {%- set classes = classes|merge([options.lastClass]) %}
+    {%- endif %}
+    {%- set attributes = item.attributes %}
+    {%- if classes is not empty %}
+        {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+    {%- endif %}
+{# displaying the item #}
+    {{ block('linkElement') }}
+{% endif %}
+{% endblock %}
+
+{% block linkElement %}
+    {%- import 'knp_menu.html.twig' as macros -%}
+    {%- set renderType = item.getExtra('renderType', 'a') -%}
+    <{{ renderType }} {{ ('a' == renderType ? 'href="' ~ (item.uri | default('#')) ~ '"' : '') | raw }}{{ macros.attributes(item.linkAttributes) }}>{{ block('label') }}</{{ renderType }}>
+{% endblock %}
+
+{% block label %}
+    {%- set label = item.getExtra('translate', true) ? item.label|trans : item.label  %}
+    {%- if options.allow_safe_labels and item.getExtra('safe_label', false) %}
+        {{ label|raw }}
+    {%- else %}
+        {{ label }}
+    {%- endif %}
+{% endblock %}

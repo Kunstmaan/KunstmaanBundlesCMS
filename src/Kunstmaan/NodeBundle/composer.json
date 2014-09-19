@@ -1,0 +1,35 @@
+{
+    "name": "kunstmaan/node-bundle",
+    "type": "symfony-bundle",
+    "description": "All websites need pages(we call them nodes) but you probably don't want to spend too much time building them. Plus they should look pretty and contain the right content and that takes time. We make sure you have to spend less time managing your pages but still offer you flexibility so you can focus on more important tasks and don't have to worry about it.",
+    "keywords": ["kunstmaan", "cms", "admin", "tree"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanNodeBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.3",
+        "gedmo/doctrine-extensions": "2.3.*",
+        "symfony-cmf/routing-bundle": "~1.1.1",
+        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/utilities-bundle": "2.3.*",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-0": { "Kunstmaan\\NodeBundle": "" }
+    },
+    "target-dir": "Kunstmaan/NodeBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
+}

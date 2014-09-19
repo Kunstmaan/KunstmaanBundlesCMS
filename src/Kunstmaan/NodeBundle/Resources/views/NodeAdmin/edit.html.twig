@@ -1,0 +1,70 @@
+{% extends 'KunstmaanNodeBundle:Default:layout.html.twig' %}
+{% set form = tabPane.getFormView() %}
+
+
+{% block extrajavascript %}
+    {{ parent() }}
+     <script type="text/javascript">
+        var isEdited = false,
+            oldEdited = false;
+
+        window.onbeforeunload = doUnload;
+
+        function doUnload(){
+            if(isEdited){
+                return 'You haven\'t saved this page, are you sure you want to close it?';
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block messages %}
+    {% if queuedNodeTranslationAction %}
+        <div class="alert alert-block">
+            <strong>{{ "Warning" | trans }}: </strong>{{ "This page will be " ~ queuedNodeTranslationAction.action ~ "ed at %date%" | trans({"%date%":queuedNodeTranslationAction.date|date('Y-m-d H:i:s')}) }}
+            (<a href="{{ path('KunstmaanNodeBundle_nodes_unschedule_publish', { 'id': node.id}) }}">Cancel</a>)
+        </div>
+    {% endif %}
+    {% if form_has_errors_recursive(form) %}
+        <div class="alert alert-error">
+            <strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
+            {{ form_errors(form) }}
+            <button class="close" data-dismiss="alert">&times;</button>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block header %}
+    <!-- PageClassName: {{ node.refEntityName }} -->
+    <h1>
+        {{ page.title }}
+        {% if draft %}
+            <small>
+                Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
+            </small>
+        {% else %}
+            <small>
+                Public version
+                {% if draftNodeVersion is not null %}
+                    (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
+                {% endif %}
+            </small>
+        {% endif %}
+    </h1>
+{% endblock %}
+
+
+
+{% block content %}
+    <form id="pageadminform" class="form-horizontal" action="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+
+        {{ knp_menu_render('sub_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
+        {{ knp_menu_render('actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
+        {{ knp_menu_render('top_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_top_actions.html.twig'}) }}
+
+        {{ tabs_widget(tabPane) }}
+    </form>
+
+    {% include 'KunstmaanNodeBundle:NodeAdmin:_modals.html.twig' %}
+
+{% endblock %}

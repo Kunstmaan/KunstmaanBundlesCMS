@@ -1,0 +1,14 @@
+subaction:
+    versions: "Versioni"
+
+action:
+    saveasdraft: "Salva come bozza"
+    publish: "Pubblica"
+    unpublish: "Sospendi"
+    preview: "Anteprima"
+    save: "Salva"
+    delete: "Cancella"
+    addsubpage: "Aggiungi sotto pagina"
+
+pages:
+    copynotavailable: "Per favore traduci prima la pagina padre"
