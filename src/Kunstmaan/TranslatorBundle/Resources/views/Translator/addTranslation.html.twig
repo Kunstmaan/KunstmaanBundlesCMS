@@ -1,0 +1,14 @@
+{% extends 'KunstmaanTranslatorBundle::Default/layout.html.twig' %}
+
+{% block content %}
+    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+    <form class="form-horizontal" action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }} novalidate>
+        <fieldset>
+            {{ form_rest(form) }}
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">{{ 'settings.translator.add' | trans }}</button>
+                <button onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

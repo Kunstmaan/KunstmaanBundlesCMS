@@ -1,0 +1,24 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - hhvm
+
+matrix:
+  allow_failures:
+    - php: hhvm
+
+
+before_script:
+  - composer selfupdate
+  - composer --prefer-source install
+  - mkdir -p ~/build/Kunstmaan/KunstmaanTranslatorBundle/Tests/app/cache/phpunit/translations/
+  - chmod 755 ~/build/Kunstmaan/KunstmaanTranslatorBundle/Tests/app/cache/phpunit/translations/
+
+script: phpunit --debug
+
+notifications:
+  email:
+    - travis@kunstmaan.be

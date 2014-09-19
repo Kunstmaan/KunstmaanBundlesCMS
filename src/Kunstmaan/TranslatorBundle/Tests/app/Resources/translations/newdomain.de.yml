@@ -1,0 +1,3 @@
+newdomain:
+    name: "a new domain"
+    description: "this domain can be loaded into the database, of not yet exists"

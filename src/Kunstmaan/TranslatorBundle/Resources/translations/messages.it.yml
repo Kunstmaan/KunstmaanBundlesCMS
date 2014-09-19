@@ -1,0 +1,15 @@
+translator:
+    translator:
+        title: Traduzioni
+
+settings:
+    translator:
+        add: Aggiungi taduzione
+        edit: Modifica taduzione
+        refresh_live: Aggiorna
+        import_translations: Importa
+        import_translations_forced: Forza importazione
+        not_live_warning: "Le traduzioni sul sito non sono aggiornate, clicca 'Aggiorna' per avere l'ultima traduzione."
+        choose_language: "Seleziona una lingua"
+        succesful_added: "Traduzione creata con successo"
+        succesful_edited: "Traduzione modificata con successo"
