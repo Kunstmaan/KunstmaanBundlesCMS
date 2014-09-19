@@ -25,6 +25,14 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('soundcloud_api_key')->defaultValue('YOUR_CLIENT_ID')->end()
+                ->arrayNode('remote_video')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('vimeo')->defaultTrue()->end()
+                        ->booleanNode('youtube')->defaultTrue()->end()
+                        ->booleanNode('dailymotion')->defaultTrue()->end()
+                    ->end()
+                ->end()
             ->end();
 
 

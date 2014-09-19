@@ -18,6 +18,20 @@ class RemoteVideoType extends AbstractType
 {
 
     /**
+     * @var array
+     */
+    protected $configuration = array();
+
+    /**
+     * Constructor, gets the RemoteVideo configuration
+     * @param array $configuration
+     */
+    public function __construct($configuration = array())
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
      * Builds the form.
      *
      * This method is called for each type in the hierarchy starting form the
@@ -30,6 +44,16 @@ class RemoteVideoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $choices = array();
+        if (count($this->configuration)) {
+            foreach($this->configuration as $config => $enabled) {
+                if (!$enabled) {
+                    continue;
+                }
+                $choices[$config] = $config;
+            }
+        }
+        
         $builder
             ->add(
                 'name',
@@ -51,11 +75,7 @@ class RemoteVideoType extends AbstractType
                 'type',
                 'choice',
                 array(
-                    'choices'     => array(
-                        'youtube'     => 'youtube',
-                        'vimeo'       => 'vimeo',
-                        'dailymotion' => 'dailymotion'
-                    ),
+                    'choices'     => $choices,
                     'constraints' => array(new NotBlank()),
                     'required'    => true
                 )
