@@ -1,0 +1,23 @@
+{% block content %}
+    <h2>{{ page.title }}</h2>
+
+    {{ render_pageparts(page, 'main') }}
+
+    {% set count = 0 %}
+    {% if pagerfanta.nbResults > 0 %}
+        <ul class="article__overview--list">
+        {% for article in pagerfanta.currentPageResults %}
+            <li class="article__overview--list-item">
+                {% set articlenode = get_node_translation_for(article) %}
+                <h4><a href="{{ articlenode.url }}">{{ article.title }}</a></h4>
+                {{ article.summary }}
+                <time>{{ article.date | date("d/m/Y")}}</time>
+            </li>
+            {% set count = count + 1 %}
+        {% endfor %}
+        </ul>
+        {% if pagerfanta.haveToPaginate() %}
+            {{ pagerfanta(pagerfanta) }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

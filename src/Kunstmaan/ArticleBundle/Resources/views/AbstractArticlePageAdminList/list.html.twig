@@ -1,0 +1,33 @@
+{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+
+{% block extra_actions_header %}
+    {% if adminlistconfigurator.overviewPage %}
+        <div class="main_actions btn-group">
+            <a href="#" data-target="#add-subpage-modal" data-toggle="modal" class="btn">{{ 'form.add'|trans }}</a>
+        </div>
+        <div id="add-subpage-modal" class="modal hide fade">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h3>Add Abstract Article</h3>
+            </div>
+            <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : 'Kunstmaan\\ArticleBundle\\Entity\\AbstractArticlePage'}) }}" method="post" novalidate="novalidate">
+                <div class="modal-body">
+                    <div class="input_prop">
+                        <label for="addpage_title">Title</label>
+                        <input name="title" id="addpage_title" type="text">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn_group">
+                        <input type="submit" name="submit" value="Add" class="btn btn-primary" />
+                        <button class="btn" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <div class='alert alert-block'>
+            <strong>Warning: </strong> You need to create at least one overview page before you can create a Abstract Article
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% block teaser %}
+    {% set articlenode = get_node_translation_for(article) %}
+    <div class="article-teaser">
+        <h3><a href="{{ articlenode.url }}">{{ article.title }}</a></h3>
+        {{ article.summary }}
+    </div>
+{% endblock %}
