@@ -15,6 +15,7 @@ services:
 
     kunstmaan_media.media_handlers.remote_video:
         class: "%kunstmaan_media.media_handler.remote_video.class%"
+        arguments: ["%kunstmaan_media.remote_video%"]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
 
