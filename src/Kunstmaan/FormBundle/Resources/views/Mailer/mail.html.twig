@@ -1,0 +1,36 @@
+<table class="bordered-table zebra-striped">
+    <thead>
+        <tr>
+            <!--suppress HtmlUnknownAttribute -->
+            <th width="30%">Label</th>
+            <!--suppress HtmlUnknownAttribute -->
+            <th width="70%">Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Date</td>
+            <td>{{ submission.created|date }}</td>
+        </tr>
+        <tr>
+            <td>Lang</td>
+            <td>{{ submission.lang }}</td>
+        </tr>
+        <tr>
+            <td>ipAddress</td>
+            <td>{{ submission.ipAddress }}</td>
+        </tr>
+        {% for field in submission.fields %}
+            <tr>
+                <td><strong>{{ field.label }}</strong></td>
+                <td>
+                    {% if (field.submissionTemplate is defined) %}
+                        {% include field.submissionTemplate with {'resource' : field, 'host' : host} %}
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

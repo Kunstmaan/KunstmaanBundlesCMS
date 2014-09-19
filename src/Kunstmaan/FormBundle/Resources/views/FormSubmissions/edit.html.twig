@@ -1,0 +1,25 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block header %}
+    {% if adminmenu.current %}
+        <div class="page-header">
+            <h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>
+            <small><strong>date</strong>: {{ formsubmission.created|date }} / <strong>language</strong>: {{ formsubmission.lang }} / <strong>ip</strong>: {{ formsubmission.ipAddress }}</small>
+            {% block extra_actions_header %}{% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+            {% for field in formsubmission.fields %}
+                    <p><strong>{{ field.label }}</strong></p>
+                    <p>
+                        {% if (field.submissionTemplate is defined) %}
+                            {% include field.submissionTemplate with {'resource' : field, 'host' : ''} %}
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+                    </p>
+            {% endfor %}
+
+{% endblock %}

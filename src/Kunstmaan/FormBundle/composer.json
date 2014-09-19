@@ -1,0 +1,38 @@
+{
+    "name": "kunstmaan/form-bundle",
+    "type": "symfony-bundle",
+    "description": "Managing forms, fields and their submissions by the user is a key functionality missing in most platforms. By leveraging the KunstmaanPagePartBundle system in the KunstmaanFormBundle users gain an easy way to create and manage the form on their website, again without having to worry about the technical side of things.",
+    "keywords": ["kunstmaan", "cms", "forms"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanFormBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.9",
+        "symfony/symfony": "~2.3",
+        "ddeboer/data-import-bundle": "0.1.*",
+        "gedmo/doctrine-extensions": "2.3.*",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "sensio/framework-extra-bundle": ">=2.3.0,<4.0.0",
+        "kunstmaan/adminlist-bundle": "2.3.*",
+        "kunstmaan/node-bundle": "2.3.*",
+        "kunstmaan/admin-bundle": "2.3.*",
+        "kunstmaan/pagepart-bundle": "2.3.*",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\FormBundle": "" }
+    },
+    "target-dir": "Kunstmaan/FormBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.3.x-dev"
+        }
+    }
+}
