@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {% if nodemenu is defined %}
+        {% for topNode in nodemenu.getTopNodes() %}
+            {% for node in topNode.getChildren() %}
+                {% include 'KunstmaanSitemapBundle:Sitemap:entry.xml.twig' with {'entry' : node, 'priority' : 9 } %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+</urlset>
