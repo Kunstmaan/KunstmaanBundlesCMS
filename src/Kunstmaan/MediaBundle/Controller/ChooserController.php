@@ -124,21 +124,29 @@ class ChooserController extends Controller
             $linkChooserLink = $this->generateUrl($routeName, $params);
         }
 
-        return array(
+       $viewVariabels = array(
             'cKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser'     => $linkChooser,
             'linkChooserLink' => $linkChooserLink,
-            'mediamanager'    => $mediaHandler,
+            'mediamanager'    => $mediaManager,
             'foldermanager'   => $this->get('kunstmaan_media.folder_manager'),
             'handler'         => $handler,
             'type'            => $type,
             'folder'          => $folder,
             'adminlist'       => $adminList,
-            'fileform'        => $this->createTypeFormView($mediaHandler, 'file'),
-            'videoform'       => $this->createTypeFormView($mediaHandler, 'video'),
-            'slideform'       => $this->createTypeFormView($mediaHandler, 'slide'),
-            'audioform'       => $this->createTypeFormView($mediaHandler, 'audio')
+
         );
+
+        /* generate all forms */
+        $forms = array();
+
+        foreach($mediaManager->getFolderAddActions()  as $addAction ) {
+            $forms[$addAction['type']] = $this->createTypeFormView($mediaHandler,$addAction['type']);
+        }
+
+        $viewVariabels['forms'] = $forms;
+
+        return $viewVariabels;
     }
 
     /**

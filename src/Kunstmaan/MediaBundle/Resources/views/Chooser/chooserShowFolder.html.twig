@@ -168,8 +168,5 @@
 
     <!--=========Modals=========-->
     {% set urlParams = urlParams|merge({'folderId': folder.id}) %}
-    {% include 'KunstmaanMediaBundle:Media:addfile-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Media:addvideo-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Media:addslide-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Media:addaudio-modal.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %}
 {% endblock %}
