@@ -1,0 +1,15 @@
+pagepart:
+    header:
+        type: 'Tipo de encabezado'
+        title: 'Título'
+
+    link:
+        choose: 'Elija un link'
+        openinnewwindow: 'Abrir en ventana nueva'
+        text: 'Texto'
+
+    html:
+        content: 'Contenido'
+
+    text:
+        content: 'Contenido'

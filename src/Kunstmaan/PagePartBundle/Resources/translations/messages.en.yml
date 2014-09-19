@@ -1,0 +1,15 @@
+pagepart:
+    header:
+        type: 'Header type'
+        title: 'Title'
+
+    link:
+        choose: 'Choose link'
+        openinnewwindow: 'Open in new window'
+        text: 'Text'
+
+    html:
+        content: 'Contents'
+
+    text:
+        content: 'Contents'
