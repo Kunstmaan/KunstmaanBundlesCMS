@@ -25,7 +25,7 @@
         "psr-0": { "Kunstmaan\\ArticleBundle": "" }
     },
     "target-dir": "Kunstmaan/ArticleBundle",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"

@@ -25,7 +25,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "~2.2.0"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminListBundle": "" }
     },
