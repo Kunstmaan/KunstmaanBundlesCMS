@@ -174,7 +174,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $nodeVersion = new NodeVersion();
         $nodeVersion->setType("public");
         $nodeVersion->setNodeTranslation($nodeTranslation);
-        $this->builder->setIsEditableNode(false);
+        $this->builder->setEditableNode(false);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
         $nodeTranslation->setOnline(false);
