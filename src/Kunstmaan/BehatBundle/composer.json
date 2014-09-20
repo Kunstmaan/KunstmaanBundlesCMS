@@ -29,7 +29,7 @@
         "psr-0": { "Kunstmaan\\BehatBundle": "" }
     },
     "target-dir": "Kunstmaan/BehatBundle",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"

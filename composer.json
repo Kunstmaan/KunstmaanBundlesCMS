@@ -87,7 +87,7 @@
     "autoload": {
         "psr-4": { "Kunstmaan\\": "src/Kunstmaan/" }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "3.0-dev"

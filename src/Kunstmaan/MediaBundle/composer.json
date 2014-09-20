@@ -29,7 +29,7 @@
     "suggest": {
         "ext-imagick": "to support PDF preview images"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": { "Kunstmaan\\MediaBundle\\": "" }
     },

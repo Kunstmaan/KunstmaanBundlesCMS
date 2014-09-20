@@ -29,7 +29,7 @@
         "doctrine/doctrine-fixtures-bundle": "~2.2.0",
         "white-october/pagerfanta-bundle": "1.0.*"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Kunstmaan\\AdminBundle": "" }
     },

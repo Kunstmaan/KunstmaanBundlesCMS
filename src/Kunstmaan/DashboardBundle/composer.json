@@ -18,7 +18,7 @@
         "doctrine/orm": "~2.2,>=2.2.3",
         "alchemy/google-plus-api-client": "~0.6.5"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "Kunstmaan\\DashboardBundle": ""

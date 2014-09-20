@@ -12,7 +12,7 @@
             "email": "support@kunstmaan.be"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "~2.3",

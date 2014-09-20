@@ -19,7 +19,7 @@
         "kunstmaan/admin-bundle": "~3.0.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Kunstmaan\\UserManagementBundle": "" }
     },
