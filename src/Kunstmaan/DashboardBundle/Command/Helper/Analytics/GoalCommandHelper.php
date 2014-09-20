@@ -3,7 +3,6 @@ namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
-use Kunstmaan\DashboardBundle\Helper\Googlequery;
 
 class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 {

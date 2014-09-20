@@ -4,7 +4,6 @@ namespace Kunstmaan\DashboardBundle\Controller;
 use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Console\Input\ArrayInput;

@@ -1,8 +1,6 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Controller;
 
-use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsCommand;
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
