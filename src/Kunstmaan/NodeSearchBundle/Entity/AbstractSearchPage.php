@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SherlockRequestAdapter;
-use Kunstmaan\SearchBundle\Helper\ShouldBeIndexed;
+use Kunstmaan\SearchBundle\Helper\ShouldBeIndexedInterface;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
 use Sherlock\Sherlock;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * AbstractSearchPage, extend this class to create your own SearchPage and extends the standard functionality
  *
  */
-class AbstractSearchPage extends AbstractPage implements ShouldBeIndexed
+class AbstractSearchPage extends AbstractPage implements ShouldBeIndexedInterface
 {
     /**
      * Default number of search results to show per page (default: 10)

@@ -23,7 +23,7 @@ $doc = array(
 
 ### Type
 
-The type is by default the class name of the object. This can be overridden by implementing the HasCustomSearchType interface. This will allow you to bundle multiple classes together under the same type.
+The type is by default the class name of the object. This can be overridden by implementing the HasCustomSearchTypeInterface interface. This will allow you to bundle multiple classes together under the same type.
 
 ### Parent and Ancestors
 

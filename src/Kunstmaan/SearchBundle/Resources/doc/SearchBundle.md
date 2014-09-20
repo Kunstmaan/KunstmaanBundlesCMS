@@ -108,7 +108,7 @@ The index method will be called upon to populate your index with documents. With
         $this->search->addDocument($indexName, $indexType, $doc, $uid);
     }
 ```
-When processing the objects, please be aware there's an interface "ShouldBeIndexed" which provides a "shouldBeIndexed()" method. That method will return false when the object in question is not to be indexed.
+When processing the objects, please be aware there's an interface "ShouldBeIndexedInterface" which provides a "shouldBeIndexed()" method. That method will return false when the object in question is not to be indexed.
 
 #### deleteIndex
 

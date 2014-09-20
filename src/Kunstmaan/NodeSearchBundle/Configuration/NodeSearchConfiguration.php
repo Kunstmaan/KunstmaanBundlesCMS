@@ -6,10 +6,10 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeSearchBundle\Event\Events;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
-use Kunstmaan\NodeSearchBundle\Helper\HasCustomSearchType;
+use Kunstmaan\NodeSearchBundle\Helper\HasCustomSearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
-use Kunstmaan\SearchBundle\Helper\ShouldBeIndexed;
+use Kunstmaan\SearchBundle\Helper\ShouldBeIndexedInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -115,8 +115,8 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                 $node = $nodeTranslation->getNode();
                 // Retrieve the referenced entity from the public NodeVersion
                 $page = $publicNodeVersion->getRef($this->em);
-                // If the page doesn't implement ShouldBeIndexed interface or it return true on shouldBeIndexed, index the page
-                if (!($page instanceof ShouldBeIndexed) or $page->shouldBeIndexed()) {
+                // If the page doesn't implement ShouldBeIndexedInterface interface or it return true on shouldBeIndexed, index the page
+                if (!($page instanceof ShouldBeIndexedInterface) or $page->shouldBeIndexed()) {
                     $doc = array(
                         "node_id"               => $node->getId(),
                         "nodetranslation_id"    => $nodeTranslation->getId(),
@@ -129,7 +129,7 @@ class NodeSearchConfiguration implements SearchConfigurationInterface
                     // Type
 
                     $type = ClassLookup::getClassName($page);
-                    if($page instanceof HasCustomSearchType){
+                    if($page instanceof HasCustomSearchTypeInterface){
                         $type = $page->getSearchType();
                     }
                     $doc = array_merge($doc, array("type" => $type));
