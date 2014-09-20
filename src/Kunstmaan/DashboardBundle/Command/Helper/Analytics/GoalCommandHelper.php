@@ -121,8 +121,8 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
         // Execute an extra query if there are more than 10 goals to query
         if (sizeof($metrics) > 1) {
             $rows2 = $this->requestGoalResults($overview, $metrics[1], $extra);
-
-            for ($i = 0; $i < sizeof($rows2); $i++) {
+            $rows2size = sizeof($rows2);
+            for ($i = 0; $i < $rows2size; $i++) {
                 // Merge the results of the extra query data with the previous query data.
                 $rows[$i] = array_merge($rows[$i], array_slice($rows2[$i], $start, sizeof($rows2) - $start));
             }
@@ -130,7 +130,8 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 
         // Create a result array to be parsed and create Goal objects from
         $goalCollection = array();
-        for ($i = 0; $i < sizeof($goaldata); $i++) {
+        $goaldatasize = sizeof($goaldata);
+        for ($i = 0; $i < $goaldatasize; $i++) {
             $goalEntry = array();
             foreach ($rows as $row) {
                 // Create a timestamp for each goal visit (this depends on the timespan of the overview: split per hour, day, week, month)

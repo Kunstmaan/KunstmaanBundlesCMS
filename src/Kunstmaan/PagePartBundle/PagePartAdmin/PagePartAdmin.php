@@ -260,7 +260,8 @@ class PagePartAdmin
 
         // Add new pageparts on the correct position + Re-order and save pageparts if needed
         $sequences = $request->get($this->context . '_sequence');
-        for ($i = 0; $i < count($sequences); $i++) {
+        $sequencescount = count($sequences);
+        for ($i = 0; $i < $sequencescount; $i++) {
             $pagePartRefId = $sequences[$i];
 
             if (array_key_exists($pagePartRefId, $this->newPageParts)) {
