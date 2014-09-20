@@ -2,9 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**

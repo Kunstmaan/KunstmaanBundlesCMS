@@ -2,7 +2,6 @@
 
 namespace {{ namespace }}\Form\{{ entity_class }};
 
-use Kunstmaan\ArticleBundle\Form\AbstractArticleOverviewPageAdminType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**

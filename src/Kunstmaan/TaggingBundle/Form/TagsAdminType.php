@@ -2,11 +2,10 @@
 
 namespace Kunstmaan\TaggingBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 use Kunstmaan\TaggingBundle\Form\DataTransformer\TagsTransformer;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class TagsAdminType extends AbstractType
 {

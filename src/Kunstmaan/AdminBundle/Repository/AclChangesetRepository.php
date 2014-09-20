@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 
 /**

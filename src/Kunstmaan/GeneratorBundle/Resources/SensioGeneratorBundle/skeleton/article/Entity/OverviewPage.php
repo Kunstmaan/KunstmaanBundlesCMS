@@ -2,14 +2,9 @@
 
 namespace {{ namespace }}\Entity\{{ entity_class }};
 
-use Doctrine\ORM\Mapping as ORM;
-use {{ namespace }}\Form\{{ entity_class }}\{{ entity_class }}OverviewPageAdminType;
-use {{ namespace }}\PagePartAdmin\{{ entity_class }}\{{ entity_class }}OverviewPagePagePartAdminConfigurator;
-use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\Mapping as ORM;use Kunstmaan\NodeBundle\Helper\RenderContext;use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;use Symfony\Component\DependencyInjection\ContainerInterface;use Symfony\Component\HttpFoundation\Request;
+{{ namespace }}\Form\{{ entity_class }}\{{ entity_class }}OverviewPageAdminType;
+{{ namespace }}\PagePartAdmin\{{ entity_class }}\{{ entity_class }}OverviewPagePagePartAdminConfigurator;
 
 /**
  * The article overview page which shows its articles

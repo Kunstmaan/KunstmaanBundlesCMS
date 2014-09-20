@@ -4,8 +4,8 @@ namespace Kunstmaan\LanguageChooserBundle\Tests\LocaleGuesser;
 
 use Kunstmaan\LanguageChooserBundle\LocaleGuesser\UrlLocaleGuesser;
 use Lunetics\LocaleBundle\Validator\MetaValidator;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * UrlLocaleGuesserTest

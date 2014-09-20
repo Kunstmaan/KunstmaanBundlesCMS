@@ -2,22 +2,19 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use Kunstmaan\FormBundle\Helper\FormPageInterface;
-
 use Doctrine\ORM\Mapping as ORM;
-
+use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
+use Kunstmaan\FormBundle\Helper\FormPageInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
-
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * This is an abstract ORM form page. With this page it's possible to create forms using a mix of form page parts and

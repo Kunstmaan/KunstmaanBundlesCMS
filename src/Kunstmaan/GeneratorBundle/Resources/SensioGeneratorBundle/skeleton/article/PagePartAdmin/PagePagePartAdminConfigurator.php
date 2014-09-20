@@ -2,8 +2,6 @@
 
 namespace {{ namespace }}\PagePartAdmin\{{ entity_class }};
 
-use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticlePagePagePartAdminConfigurator;
-
 /**
  * The PagePartAdminConfigurator for the {{ entity_class }}Page
  */

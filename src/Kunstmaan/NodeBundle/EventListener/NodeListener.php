@@ -3,11 +3,10 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
-
+use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**

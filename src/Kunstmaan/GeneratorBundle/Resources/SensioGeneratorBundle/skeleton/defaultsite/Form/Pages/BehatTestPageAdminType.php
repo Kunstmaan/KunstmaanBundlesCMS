@@ -3,7 +3,6 @@
 namespace {{ namespace }}\Form\Pages;
 
 use Kunstmaan\NodeBundle\Form\PageAdminType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**

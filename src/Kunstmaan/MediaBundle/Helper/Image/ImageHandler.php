@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Image;
 
-use Symfony\Component\HttpFoundation\File\File;
-use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\File\FileHandler;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * FileHandler

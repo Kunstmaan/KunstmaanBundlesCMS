@@ -2,12 +2,11 @@
 
 namespace Kunstmaan\TranslatorBundle\DataFixtures\ORM;
 
-use Kunstmaan\TranslatorBundle\Model\Translation as Model;
-use Kunstmaan\TranslatorBundle\Entity\Translation as Entity;
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Kunstmaan\TranslatorBundle\Entity\Translation as Entity;
+use Kunstmaan\TranslatorBundle\Model\Translation as Model;
 
 /**
  * Fixture for creation the basic translations

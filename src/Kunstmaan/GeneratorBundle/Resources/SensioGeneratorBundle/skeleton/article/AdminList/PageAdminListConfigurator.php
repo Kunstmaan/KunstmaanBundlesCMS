@@ -3,8 +3,7 @@
 namespace {{ namespace }}\AdminList\{{ entity_class }};
 
 use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
-use {{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}OverviewPage;
+{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}OverviewPage;
 
 /**
  * The AdminList configurator for the {{ entity_class }}Page

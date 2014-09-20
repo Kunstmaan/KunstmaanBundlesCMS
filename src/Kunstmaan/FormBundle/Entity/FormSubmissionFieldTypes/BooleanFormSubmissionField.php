@@ -3,10 +3,9 @@
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
-use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
+use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 
 /**
  * The BooleanFormSubmissionField can be used to store one or more selected choices to a FormSubmission

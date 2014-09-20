@@ -4,6 +4,7 @@ namespace Kunstmaan\ArticleBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+
 /**
  * Repository class for the AbstractArticleOverviewPage
  */

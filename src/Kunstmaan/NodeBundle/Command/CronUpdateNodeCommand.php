@@ -2,11 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Command;
 
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
-use Kunstmaan\NodeBundle\Event\Events;
-use Kunstmaan\NodeBundle\Event\NodeEvent;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

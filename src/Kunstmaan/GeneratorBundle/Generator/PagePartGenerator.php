@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Faker\Provider\Lorem;
-use Faker\Provider\DateTime;
 use Faker\Provider\Base;
+use Faker\Provider\DateTime;
+use Faker\Provider\Lorem;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Yaml;

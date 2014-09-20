@@ -2,8 +2,7 @@
 
 namespace {{ namespace }}\Form\{{ entity_prefix }};
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilderInterface;use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * {{ className }}

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\TranslatorBundle\Command;
 
-use Behat\Mink\Exception\Exception;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;

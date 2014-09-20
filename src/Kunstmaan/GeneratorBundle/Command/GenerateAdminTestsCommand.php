@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
+use Kunstmaan\GeneratorBundle\Generator\AdminTestsGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
-use Kunstmaan\GeneratorBundle\Generator\AdminTestsGenerator;
-use Symfony\Component\Console\Input\InputOption;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * GenerateAdminTestsCommand

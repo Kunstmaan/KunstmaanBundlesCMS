@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\TranslatorBundle\Service;
 
-use Symfony\Component\Finder\Finder;
 use Kunstmaan\TranslatorBundle\Service\Exception\TranslationsNotFoundException;
+use Symfony\Component\Finder\Finder;
 
 class TranslationFileExplorer
 {

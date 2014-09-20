@@ -2,10 +2,9 @@
 
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
-
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * The TextFormSubmissionField can be used to store multi-line string values to a FormSubmission

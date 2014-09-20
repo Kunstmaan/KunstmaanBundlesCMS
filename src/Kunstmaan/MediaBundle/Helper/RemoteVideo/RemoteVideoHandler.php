@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Helper\RemoteVideo;
 
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\RemoteVideo\RemoteVideoType;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * RemoteVideoStrategy

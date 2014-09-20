@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\NodeBundle\Form\NodeAdminType;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Node as GedmoNode;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\NodeBundle\Form\NodeAdminType;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * Node

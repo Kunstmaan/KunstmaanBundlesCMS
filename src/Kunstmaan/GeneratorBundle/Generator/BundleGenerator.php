@@ -51,12 +51,9 @@ KunstmaanSearchBundle:
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Generates a bundle.

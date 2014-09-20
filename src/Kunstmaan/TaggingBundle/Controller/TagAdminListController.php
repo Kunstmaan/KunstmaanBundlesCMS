@@ -2,14 +2,9 @@
 
 namespace Kunstmaan\TaggingBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\TaggingBundle\AdminList\TagAdminListConfigurator;
+use Symfony\Component\HttpFoundation\Request;
 
 class TagAdminListController extends AdminListController
 {

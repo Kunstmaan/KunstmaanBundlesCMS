@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
-
 /**
  * PermissionMap which stores all the possible permissions, this is based on the BasicPermissionMap
  */

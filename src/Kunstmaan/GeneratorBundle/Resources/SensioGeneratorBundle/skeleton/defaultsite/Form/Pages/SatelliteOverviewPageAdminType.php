@@ -2,9 +2,10 @@
 
 namespace {{ namespace }}\Form\Pages;
 
-use {{ namespace }}\Entity\Satellite;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+{{ namespace }}\Entity\Satellite;
 
 /**
  * SatelliteOverviewPageAdminType

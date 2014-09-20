@@ -5,7 +5,6 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-
 use Symfony\Component\Form\AbstractType;
 
 /**

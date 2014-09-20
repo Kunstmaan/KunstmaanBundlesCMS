@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
 use Kunstmaan\AdminBundle\Entity\Group;
-
 use Kunstmaan\AdminBundle\Entity\Role;
 
 /**

@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Helper;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**

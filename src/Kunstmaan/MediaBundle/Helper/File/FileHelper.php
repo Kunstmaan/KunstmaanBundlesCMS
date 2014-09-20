@@ -3,12 +3,10 @@
 namespace Kunstmaan\MediaBundle\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
-use Kunstmaan\MediaBundle\Entity\Media;
-
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 /**
  * FileHelper

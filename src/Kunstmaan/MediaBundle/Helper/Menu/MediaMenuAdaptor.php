@@ -2,14 +2,13 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Menu;
 
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\MediaBundle\Repository\FolderRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Media Menu Adaptor

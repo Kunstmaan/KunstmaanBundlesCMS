@@ -3,19 +3,15 @@
 namespace Kunstmaan\FormBundle\Helper;
 
 use ArrayObject;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
 /**

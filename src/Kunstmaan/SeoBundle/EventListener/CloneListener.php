@@ -3,11 +3,10 @@
 namespace Kunstmaan\SeoBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\SeoBundle\Entity\Seo;
-use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
+use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\SeoBundle\Entity\Seo;
 
 /**
  * This event will make sure the seo metadata is copied when a page is cloned

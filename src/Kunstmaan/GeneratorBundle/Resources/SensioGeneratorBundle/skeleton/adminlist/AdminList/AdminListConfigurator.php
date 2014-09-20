@@ -3,13 +3,12 @@
 namespace {{ namespace }}\AdminList;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
 {% if generate_admin_type %}
-use {{ namespace }}\Form\{{ entity_class }}AdminType;
+{{ namespace }}\Form\{{ entity_class }}AdminType;
 {% endif %}
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 
 /**
  * The admin list configurator for {{ entity_class }}

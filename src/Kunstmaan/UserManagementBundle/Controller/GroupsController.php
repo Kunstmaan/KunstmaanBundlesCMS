@@ -3,20 +3,14 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Form\GroupType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing groups in an admin list

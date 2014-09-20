@@ -3,9 +3,7 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Fixes bug with date vs Date headers

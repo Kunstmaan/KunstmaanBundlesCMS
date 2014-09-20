@@ -2,11 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Helper\File;
 
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 
 /**
  * SVGMimeTypeGuesser

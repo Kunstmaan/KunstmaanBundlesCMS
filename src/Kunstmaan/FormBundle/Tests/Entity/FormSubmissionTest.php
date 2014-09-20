@@ -1,7 +1,7 @@
 <?php
 namespace Kunstmaan\FormBundle\Tests\Entity;
-use Kunstmaan\FormBundle\Entity\FormSubmission;
 use DateTime;
+use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\Node;
 
 /**

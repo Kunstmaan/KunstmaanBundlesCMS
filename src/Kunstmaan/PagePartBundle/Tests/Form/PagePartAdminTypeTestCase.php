@@ -2,14 +2,13 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
-use Symfony\Component\Form\Forms;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * PagePartAdminTypeTestCase

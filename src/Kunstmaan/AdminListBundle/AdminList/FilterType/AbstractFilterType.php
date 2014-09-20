@@ -2,10 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
-
 /**
  * AbstractFilterType
  *

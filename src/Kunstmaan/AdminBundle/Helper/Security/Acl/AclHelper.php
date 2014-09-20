@@ -2,22 +2,19 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
-use InvalidArgumentException;
-
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\Parameter;
-
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\QueryBuilder;
+use InvalidArgumentException;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * AclHelper is a helper class to help setting the permissions when querying using ORM

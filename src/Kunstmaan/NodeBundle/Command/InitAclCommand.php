@@ -3,17 +3,14 @@
 namespace Kunstmaan\NodeBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
-use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 /**
  * Basic initialization of ACL entries for all nodes.

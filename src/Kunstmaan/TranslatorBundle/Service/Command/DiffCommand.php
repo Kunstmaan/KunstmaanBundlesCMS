@@ -1,10 +1,10 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Service\Command;
 
-use Symfony\Component\Console\Input\InputInterface,
-    Symfony\Component\Console\Output\OutputInterface,
-    Doctrine\DBAL\Migrations\Configuration\Configuration,
-    Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
+use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class DiffCommand extends GenerateCommand
 {

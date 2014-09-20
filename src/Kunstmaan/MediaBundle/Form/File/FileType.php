@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Form\File;
 
-use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

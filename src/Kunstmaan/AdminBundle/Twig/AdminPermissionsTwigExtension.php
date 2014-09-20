@@ -2,11 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
-use Twig_Environment;
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
-
 use Symfony\Component\Form\FormView;
+use Twig_Environment;
 
 /**
  * AdminPermissionsTwigExtension

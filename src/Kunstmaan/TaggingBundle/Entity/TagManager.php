@@ -2,10 +2,9 @@
 
 namespace Kunstmaan\TaggingBundle\Entity;
 
-use DoctrineExtensions\Taggable\TagManager as BaseTagManager;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
-
+use DoctrineExtensions\Taggable\TagManager as BaseTagManager;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 class TagManager extends BaseTagManager

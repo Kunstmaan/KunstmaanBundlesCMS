@@ -2,9 +2,7 @@
 
 namespace {{ namespace }}\Form\{{ entity_class }};
 
-use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormBuilderInterface;use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * The admin type for {{ entity_class }} pages

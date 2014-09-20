@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Symfony\Component\Filesystem\Filesystem;
-use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Tools\EntityGenerator;
 use Doctrine\ORM\Tools\EntityRepositoryGenerator;
+use Sensio\Bundle\GeneratorBundle\Generator\Generator;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
  * DoctrineEntityGenerator

@@ -5,10 +5,10 @@ namespace Kunstmaan\PagePartBundle\Repository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * PagePartRefRepository

@@ -2,11 +2,9 @@
 
 namespace Kunstmaan\TaggingBundle\Entity;
 
-use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
 
 /**

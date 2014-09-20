@@ -3,12 +3,9 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormBuilder;
 
 /**
  * Tests for FileUploadPagePart

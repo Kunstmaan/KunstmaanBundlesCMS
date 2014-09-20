@@ -2,10 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
+use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
-
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;

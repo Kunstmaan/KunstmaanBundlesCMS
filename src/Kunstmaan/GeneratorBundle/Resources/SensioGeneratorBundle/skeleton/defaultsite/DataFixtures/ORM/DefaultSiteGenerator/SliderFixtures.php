@@ -2,14 +2,10 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-
+use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Provider\Lorem;
-
-use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
-
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

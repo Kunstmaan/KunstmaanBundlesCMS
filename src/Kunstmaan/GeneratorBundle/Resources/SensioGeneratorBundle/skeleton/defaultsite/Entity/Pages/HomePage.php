@@ -2,12 +2,12 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use {{ namespace }}\Form\Pages\HomePageAdminType;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
+
+{{ namespace }}\Form\Pages\HomePageAdminType;
 
 /**
  * HomePage

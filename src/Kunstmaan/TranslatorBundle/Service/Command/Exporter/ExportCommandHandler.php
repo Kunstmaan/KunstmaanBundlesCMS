@@ -2,9 +2,10 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Command\Exporter;
 
-use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Doctrine\Common\Collections\ArrayCollection;
+use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Kunstmaan\TranslatorBundle\Model\Export\ExportFile;
+
 /**
  * Parses an ExportCommand
  */

@@ -4,7 +4,6 @@ namespace Kunstmaan\MediaBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

@@ -3,7 +3,6 @@
 namespace Kunstmaan\UserManagementBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
-
 use Symfony\Component\Form\AbstractType;
 
 /**

@@ -3,12 +3,12 @@
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HideFromNodeTreeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;

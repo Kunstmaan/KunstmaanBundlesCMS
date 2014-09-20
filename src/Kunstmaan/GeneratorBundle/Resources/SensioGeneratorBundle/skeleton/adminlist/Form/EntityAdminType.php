@@ -3,7 +3,6 @@
 namespace {{ namespace }}\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * The type for {{ entity_class }}

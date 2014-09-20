@@ -2,17 +2,17 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
-use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Symfony\Component\Console\Input\ArrayInput;
+use Doctrine\DBAL\Types\Type;
 use Kunstmaan\GeneratorBundle\Generator\DoctrineEntityGenerator;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
-use Symfony\Component\Console\Input\InputOption;
+use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
-use Doctrine\DBAL\Types\Type;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**

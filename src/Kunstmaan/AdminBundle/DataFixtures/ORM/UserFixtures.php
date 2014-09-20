@@ -4,8 +4,8 @@ namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
+use Kunstmaan\AdminBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

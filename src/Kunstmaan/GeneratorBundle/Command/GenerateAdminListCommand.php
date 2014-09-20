@@ -2,19 +2,16 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
-use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
-
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
-use Sensio\Bundle\GeneratorBundle\Generator;
-
 use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Sensio\Bundle\GeneratorBundle\Generator;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Generates a KunstmaanAdminList

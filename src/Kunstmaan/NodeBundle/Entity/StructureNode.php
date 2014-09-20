@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
-
 /**
  * A StructureNode will always be offline and its nodes will never have a slug.
  */

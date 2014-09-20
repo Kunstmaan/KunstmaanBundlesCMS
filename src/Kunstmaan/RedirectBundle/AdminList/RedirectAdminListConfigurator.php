@@ -3,11 +3,10 @@
 namespace Kunstmaan\RedirectBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
 
 /**
  * The admin list configurator for Redirect

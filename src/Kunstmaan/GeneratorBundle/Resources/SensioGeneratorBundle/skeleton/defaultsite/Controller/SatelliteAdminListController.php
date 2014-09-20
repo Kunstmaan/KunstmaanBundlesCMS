@@ -2,13 +2,10 @@
 
 namespace {{ namespace }}\Controller;
 
-use {{ namespace }}\AdminList\SatelliteAdminListConfigurator;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
+use Kunstmaan\AdminListBundle\Controller\AdminListController;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+{{ namespace }}\AdminList\SatelliteAdminListConfigurator;
 
 /**
  * The admin list controller for Satellite

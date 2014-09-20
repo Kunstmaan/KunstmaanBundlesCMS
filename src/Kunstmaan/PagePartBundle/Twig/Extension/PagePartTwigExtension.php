@@ -3,9 +3,9 @@
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
-use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
+use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 
 /**
  * PagePartTwigExtension

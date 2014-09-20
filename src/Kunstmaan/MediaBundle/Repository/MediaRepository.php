@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Repository;
 
-use Kunstmaan\MediaBundle\Entity\Media;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\EntityRepository;
+use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * MediaRepository

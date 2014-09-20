@@ -2,11 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
 
-use Kunstmaan\AdminBundle\Entity\Role;
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Kunstmaan\AdminBundle\Entity\Role;
 
 /**
  * Fixture for creation the basic roles

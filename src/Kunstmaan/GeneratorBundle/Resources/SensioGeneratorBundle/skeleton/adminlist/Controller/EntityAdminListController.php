@@ -2,13 +2,9 @@
 
 namespace {{ namespace }}\Controller;
 
-use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+{{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
 
 /**
  * The admin list controller for {{ entity_class }}

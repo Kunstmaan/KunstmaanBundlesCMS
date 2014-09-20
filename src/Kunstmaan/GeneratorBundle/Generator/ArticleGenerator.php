@@ -4,9 +4,9 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Generates an Article section

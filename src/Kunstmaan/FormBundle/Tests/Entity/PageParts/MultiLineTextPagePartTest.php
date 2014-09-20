@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**

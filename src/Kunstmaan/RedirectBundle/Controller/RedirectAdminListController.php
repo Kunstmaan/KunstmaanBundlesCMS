@@ -2,13 +2,9 @@
 
 namespace Kunstmaan\RedirectBundle\Controller;
 
-use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
 
 /**
  * The admin list controller for Redirect

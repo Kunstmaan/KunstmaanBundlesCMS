@@ -2,12 +2,11 @@
 
 namespace Kunstmaan\SeoBundle\Twig;
 
-use Kunstmaan\SeoBundle\Helper\Order,
-    Kunstmaan\SeoBundle\Helper\OrderConverter,
-    Kunstmaan\SeoBundle\Helper\OrderPreparer;
-
-use Twig_Extension,
-    Twig_Environment;
+use Kunstmaan\SeoBundle\Helper\Order;
+use Kunstmaan\SeoBundle\Helper\OrderConverter;
+use Kunstmaan\SeoBundle\Helper\OrderPreparer;
+use Twig_Environment;
+use Twig_Extension;
 
 /**
  * Twig extensions for Google Analytics

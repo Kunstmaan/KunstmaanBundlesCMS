@@ -3,12 +3,10 @@
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
-use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\PagePartBundle\Helper\PageTemplateConfigurationReader;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
+use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**

@@ -2,7 +2,6 @@
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
-
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 
 /**

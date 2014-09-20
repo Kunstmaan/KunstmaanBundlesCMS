@@ -1,8 +1,8 @@
 <?php
 namespace Kunstmaan\PagePartBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 

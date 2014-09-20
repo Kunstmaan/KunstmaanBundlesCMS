@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\UserManagementBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**

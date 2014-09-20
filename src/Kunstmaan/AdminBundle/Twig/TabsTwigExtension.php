@@ -2,10 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Twig_Environment;
 use Twig_Extension;
-
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 
 /**
  * Extension to render tabs

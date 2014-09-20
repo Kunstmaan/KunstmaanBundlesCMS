@@ -3,18 +3,14 @@ namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
-
-use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
+use Kunstmaan\AdminListBundle\AdminList\Field;
+use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
-use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
-use Kunstmaan\AdminListBundle\AdminList\Field;
-
+use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
-
-use Pagerfanta\Pagerfanta;
 
 /**
  * Abstract admin list configurator, this implements the most common functionality from the AdminListConfiguratorInterface

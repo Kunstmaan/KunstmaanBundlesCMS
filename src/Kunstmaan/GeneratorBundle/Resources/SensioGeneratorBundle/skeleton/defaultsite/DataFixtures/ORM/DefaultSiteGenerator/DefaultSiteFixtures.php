@@ -2,14 +2,9 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Doctrine\Common\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
@@ -17,13 +12,15 @@ use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use {{ namespace }}\Entity\Pages\ContentPage;
-use {{ namespace }}\Entity\Pages\HomePage;
+{{ namespace }}\Entity\Pages\ContentPage;
+{{ namespace }}\Entity\Pages\HomePage;
 {% if demosite %}
-use {{ namespace }}\Entity\Pages\FormPage;
-use {{ namespace }}\Entity\Satellite;
-use {{ namespace }}\Entity\Pages\SatelliteOverviewPage;
+{{ namespace }}\Entity\Pages\FormPage;
+{{ namespace }}\Entity\Satellite;
+{{ namespace }}\Entity\Pages\SatelliteOverviewPage;
 {% endif %}
 
 /**

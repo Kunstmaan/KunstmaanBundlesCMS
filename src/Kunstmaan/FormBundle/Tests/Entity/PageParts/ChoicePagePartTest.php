@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**

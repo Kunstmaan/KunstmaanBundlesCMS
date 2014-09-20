@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * The MenuBuilder will build the top menu and the side menu of the admin interface

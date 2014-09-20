@@ -2,9 +2,10 @@
 
 namespace {{ namespace }}\Form;
 
-use {{ namespace }}\Entity\Satellite;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+{{ namespace }}\Entity\Satellite;
 
 /**
  * The type for Satellite

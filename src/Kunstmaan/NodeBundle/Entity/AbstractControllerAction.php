@@ -3,10 +3,8 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints as Assert;
 

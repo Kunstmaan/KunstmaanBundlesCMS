@@ -2,7 +2,6 @@
 
 namespace {{namespace}}\Form\{{ entity_class }};
 
-use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType

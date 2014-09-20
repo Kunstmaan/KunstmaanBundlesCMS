@@ -2,12 +2,10 @@
 
 namespace {{ namespace }}\Entity\{{ entity_class }};
 
-use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
-use {{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Author;
-use {{ namespace }}\Form\{{ entity_class }}\{{ entity_class }}PageAdminType;
-use {{ namespace }}\PagePartAdmin\{{ entity_class }}\{{ entity_class }}PagePagePartAdminConfigurator;
-use Symfony\Component\Form\AbstractType;
+use Doctrine\ORM\Mapping as ORM;use Symfony\Component\Form\AbstractType;
+{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Author;
+{{ namespace }}\Form\{{ entity_class }}\{{ entity_class }}PageAdminType;
+{{ namespace }}\PagePartAdmin\{{ entity_class }}\{{ entity_class }}PagePagePartAdminConfigurator;
 
 /**
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}\{{ entity_class }}PageRepository")

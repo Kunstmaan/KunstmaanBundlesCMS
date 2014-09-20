@@ -1,11 +1,10 @@
 <?php
 
 namespace Kunstmaan\MediaPagePartBundle\Entity;
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
  * SlidePagePart

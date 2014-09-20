@@ -3,15 +3,12 @@
 namespace Kunstmaan\SeoBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\SeoBundle\Entity\Seo,
-    Kunstmaan\SeoBundle\Form\SeoType,
-    Kunstmaan\SeoBundle\Form\SocialType;
-
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
-
+use Kunstmaan\SeoBundle\Entity\Seo;
+use Kunstmaan\SeoBundle\Form\SeoType;
+use Kunstmaan\SeoBundle\Form\SocialType;
 
 
 /**

@@ -3,8 +3,8 @@
 namespace {{ namespace }}\EventListener;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class DefaultLocaleListener
 {

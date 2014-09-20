@@ -2,19 +2,15 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Kunstmaan\NodeBundle\Form\PageAdminType;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\AbstractType;
-
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\NodeBundle\Form\PageAdminType;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The Abstract ORM Page

@@ -4,7 +4,6 @@ namespace Kunstmaan\TaggingBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use DoctrineExtensions\Taggable\Taggable;
-
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 
 class TagsListener

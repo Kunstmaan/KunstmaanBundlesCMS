@@ -2,13 +2,7 @@
 
 namespace {{ namespace }}\Controller\{{ entity_class }};
 
-use {{ namespace }}\AdminList\{{ entity_class }}\{{ entity_class }}AuthorAdminListConfigurator;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\ArticleBundle\Controller\AbstractArticleAuthorAdminListController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;{{ namespace }}\AdminList\{{ entity_class }}\{{ entity_class }}AuthorAdminListConfigurator;
 
 /**
  * The AdminList controller for the {{ entity_class }}Author

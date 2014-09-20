@@ -3,7 +3,6 @@ namespace Kunstmaan\MediaBundle\Tests\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

@@ -3,20 +3,17 @@
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
-
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\NodeBundle\Event\Events;
-
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-
-use Knp\Menu\ItemInterface;
-use Knp\Menu\FactoryInterface;
 
 /**
  * ActionsMenuBuilder

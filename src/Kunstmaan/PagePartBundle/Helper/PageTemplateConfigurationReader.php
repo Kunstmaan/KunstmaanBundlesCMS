@@ -3,10 +3,11 @@
 namespace Kunstmaan\PagePartBundle\Helper;
 
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
-use Symfony\Component\Yaml\Yaml;
-use Kunstmaan\PagePartBundle\PageTemplate\Row;
 use Kunstmaan\PagePartBundle\PageTemplate\Region;
+use Kunstmaan\PagePartBundle\PageTemplate\Row;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * PageTemplateConfigurationReader
  */

@@ -2,17 +2,13 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\DBAL\Query\QueryBuilder;
-
+use Doctrine\ORM\Mapping\ClassMetadata;
 use FOS\UserBundle\Model\UserInterface;
-
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;

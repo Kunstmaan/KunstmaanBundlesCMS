@@ -2,10 +2,9 @@
 
 namespace Kunstmaan\TaggingBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
 use DoctrineExtensions\Taggable\Entity\Tagging as BaseTagging;
-
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()

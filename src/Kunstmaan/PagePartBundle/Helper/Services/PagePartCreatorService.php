@@ -3,13 +3,11 @@
 namespace Kunstmaan\PagePartBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\NodeBundle\Repository\NodeRepository,
-    Kunstmaan\NodeBundle\Repository\NodeTranslationRepository,
-    Kunstmaan\NodeBundle\Entity\NodeTranslation;
-
-use Kunstmaan\PagePartBundle\Helper\PagePartInterface,
-    Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Repository\NodeRepository;
+use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
+use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
+use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 
 /**
  * A class to facilitate the adding of PageParts to existing pages.

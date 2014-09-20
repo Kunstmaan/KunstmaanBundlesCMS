@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\BehatBundle\Features\Context;
 
-use Behat\Mink\Exception\UnsupportedDriverActionException;
-use Kunstmaan\BehatBundle\Features\Context\SubContext\RadioButtonSubContext;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ExpectationException;
+use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\MinkExtension\Context\MinkContext;
+use Kunstmaan\BehatBundle\Features\Context\SubContext\RadioButtonSubContext;
 
 class FeatureContext extends MinkContext
 {

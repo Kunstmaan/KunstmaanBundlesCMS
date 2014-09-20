@@ -2,7 +2,6 @@
 namespace Kunstmaan\MediaBundle\Tests\Helper;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 
 /**

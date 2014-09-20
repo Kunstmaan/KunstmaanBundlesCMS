@@ -2,7 +2,6 @@
 namespace Kunstmaan\MediaBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
-
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**

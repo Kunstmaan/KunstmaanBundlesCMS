@@ -2,9 +2,6 @@
 
 namespace {{ namespace }}\AdminList\{{ entity_class }};
 
-use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
-
 /**
  * The AdminList configurator for the {{ entity_class }}Author
  */

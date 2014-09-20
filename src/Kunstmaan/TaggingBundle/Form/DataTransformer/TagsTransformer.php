@@ -3,9 +3,8 @@
 namespace Kunstmaan\TaggingBundle\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Form\DataTransformerInterface;
-
 use Kunstmaan\TaggingBundle\Entity\TagManager;
+use Symfony\Component\Form\DataTransformerInterface;
 
 class TagsTransformer implements DataTransformerInterface
 {

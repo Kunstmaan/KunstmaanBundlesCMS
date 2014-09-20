@@ -3,10 +3,9 @@
 namespace Kunstmaan\LiveReloadBundle\EventListener;
  
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent,
-    Symfony\Component\HttpKernel\HttpKernelInterface,
-    Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class DisableCacheListener implements EventSubscriberInterface {
 

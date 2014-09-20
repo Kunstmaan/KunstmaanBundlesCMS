@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\TranslatorBundle\Command;
 
+use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
 class ExportTranslationsCommand extends ContainerAwareCommand

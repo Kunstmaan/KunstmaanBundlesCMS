@@ -2,12 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Twig;
 
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Extension;
-
-use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 /**
  * Extension to fetch node / translation by page in Twig templates

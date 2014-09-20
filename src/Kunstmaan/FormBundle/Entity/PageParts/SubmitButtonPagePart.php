@@ -2,12 +2,9 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
-
-use Symfony\Component\Form\AbstractType;
-
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
  * This page part adds a submit button to the forms

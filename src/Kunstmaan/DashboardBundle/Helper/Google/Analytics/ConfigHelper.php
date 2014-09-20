@@ -1,7 +1,6 @@
 <?php
 
 namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
-use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 use Doctrine\ORM\EntityManager;
 
 class ConfigHelper

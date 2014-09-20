@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\LanguageChooserBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class LanguageChooserController extends Controller
 {

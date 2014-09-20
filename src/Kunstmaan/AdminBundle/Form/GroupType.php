@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 

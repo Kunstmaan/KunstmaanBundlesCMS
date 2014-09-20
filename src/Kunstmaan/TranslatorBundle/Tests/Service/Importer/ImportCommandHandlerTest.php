@@ -1,8 +1,8 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
-use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
+use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 
 class ImportCommandHandlerTest extends BaseTestCase
 {

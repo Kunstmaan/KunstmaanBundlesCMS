@@ -3,12 +3,10 @@
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Generates all classes for an admin list

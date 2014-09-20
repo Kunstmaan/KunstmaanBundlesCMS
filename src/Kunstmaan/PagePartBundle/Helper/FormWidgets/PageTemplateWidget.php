@@ -3,24 +3,21 @@
 namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
-
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
-
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
-use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Kunstmaan\PagePartBundle\Helper\PageTemplateConfigurationReader;
-use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
+use Kunstmaan\PagePartBundle\Helper\PageTemplateConfigurationReader;
+use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * PageTemplateWidget

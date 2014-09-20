@@ -10,7 +10,6 @@ use Kunstmaan\NodeSearchBundle\Helper\HasCustomSearchType;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Helper\ShouldBeIndexed;
-use Kunstmaan\SearchBundle\Search\Search;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sherlock\Sherlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;

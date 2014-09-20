@@ -2,15 +2,13 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission,
-    Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity,
-    Symfony\Component\Security\Acl\Exception\AclNotFoundException,
-    Symfony\Component\Security\Acl\Model\MutableAclProviderInterface,
-    Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 /**
  * Service to add the correct permissions to new HasNodeInterface objects.

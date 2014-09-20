@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Entity;
 
 use ArrayObject;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**

@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * AdminLocaleListener to override default locale if user-specific locale is set in database

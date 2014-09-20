@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
 use DateTime;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**

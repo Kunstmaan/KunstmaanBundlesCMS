@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\Container;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

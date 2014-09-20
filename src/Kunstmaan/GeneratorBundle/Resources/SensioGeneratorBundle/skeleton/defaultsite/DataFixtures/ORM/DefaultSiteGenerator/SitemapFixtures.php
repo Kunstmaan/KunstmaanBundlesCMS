@@ -2,13 +2,10 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-
-use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
+use Doctrine\Common\Persistence\ObjectManager;
 use Kunstmaan\SitemapBundle\Entity\SitemapPage;
-
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

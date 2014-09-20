@@ -2,16 +2,12 @@
 
 namespace Kunstmaan\SeoBundle\Twig;
 
-use Twig_Extension;
-use Twig_Environment;
-
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-
 use Kunstmaan\SeoBundle\Entity\Seo;
+use Twig_Environment;
+use Twig_Extension;
 
 /**
  * Twig extensions for Seo

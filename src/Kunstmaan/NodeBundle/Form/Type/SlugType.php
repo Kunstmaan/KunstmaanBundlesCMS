@@ -2,12 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Form\Type;
 
-use Symfony\Component\Form\FormInterface;
-
-use Symfony\Component\Form\FormView;
-
-use Symfony\Component\Form\AbstractType;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 
 /**
  * Sype
