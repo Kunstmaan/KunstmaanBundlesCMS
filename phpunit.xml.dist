@@ -44,4 +44,8 @@
     <logging>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>
+    
+    <listeners>
+        <listener class="TestListener" file="src/Kunstmaan/TranslatorBundle/Tests/TestListener.php"/>
+    </listeners>
 </phpunit>
