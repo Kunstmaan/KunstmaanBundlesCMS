@@ -46,6 +46,6 @@
     </logging>
     
     <listeners>
-        <listener class="TestListener" file="src/Kunstmaan/TranslatorBundle/Tests/TestListener.php"/>
+        <listener class="TestListener" file="TestListener.php"/>
     </listeners>
 </phpunit>
