@@ -3,7 +3,7 @@
 namespace Kunstmaan\SearchBundle\Configuration;
 
 /**
- * The chain of SearchConfigurations
+ * The chain of index configurations
  */
 class SearchConfigurationChain
 {
@@ -21,37 +21,36 @@ class SearchConfigurationChain
      * Add a SearchConfiguration to the chain
      *
      * @param SearchConfigurationInterface $searchConfiguration
-     * @param                              $alias
+     * @param string                       $alias
      */
-    public function addSearchConfiguration(SearchConfigurationInterface $searchConfiguration, $alias)
+    public function addConfiguration(SearchConfigurationInterface $searchConfiguration, $alias)
     {
         $this->searchConfigurations[$alias] = $searchConfiguration;
     }
 
     /**
-     * Get a SearchConfiguration based on its alias
+     * Get an index configuration based on its alias
      *
-     * @param $alias
+     * @param string $alias
      *
-     * @return mixed
+     * @return SearchConfigurationInterface|null
      */
-    public function getSearchConfiguration($alias)
+    public function getConfiguration($alias)
     {
         if (array_key_exists($alias, $this->searchConfiguration)) {
             return $this->searchConfigurations[$alias];
-        } else {
-            return;
         }
+
+        return null;
     }
 
     /**
-     * Get all SearchConfigurations
+     * Get all index configurations
      *
-     * @return array
+     * @return SearchConfigurationInterface[]
      */
-    public function getSearchConfigurations()
+    public function getConfigurations()
     {
         return $this->searchConfigurations;
     }
-
 }

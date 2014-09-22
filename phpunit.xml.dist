@@ -44,7 +44,7 @@
     <logging>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>
-    
+
     <listeners>
         <listener class="TestListener" file="TestListener.php"/>
     </listeners>

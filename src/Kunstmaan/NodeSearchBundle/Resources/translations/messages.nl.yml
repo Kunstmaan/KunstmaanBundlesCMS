@@ -1,0 +1,4 @@
+search:
+    search: Zoek
+    results: Resultaten
+    looking_for: U zocht naar "%query%"

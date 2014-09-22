@@ -7,47 +7,48 @@ namespace Kunstmaan\SearchBundle\Provider;
  */
 class SearchProviderChain
 {
-    private $searchProviders;
+    /** @var SearchProviderInterface[] */
+    private $providers;
 
     public function __construct()
     {
-        $this->searchProviders = array();
+        $this->providers = array();
     }
 
     /**
      * Add a SearchProvider to the chain
      *
-     * @param SearchProviderInterface $searchProvider
-     * @param                         $alias
+     * @param SearchProviderInterface $provider
+     * @param string                  $alias
      */
-    public function addSearchProvider(SearchProviderInterface $searchProvider, $alias)
+    public function addProvider(SearchProviderInterface $provider, $alias)
     {
-        $this->searchProviders[$alias] = $searchProvider;
+        $this->providers[$alias] = $provider;
     }
 
     /**
      * Get a SearchProvider based on its alias
      *
-     * @param $alias
+     * @param string $alias
      *
-     * @return mixed
+     * @return SearchProviderInterface|null
      */
-    public function getSearchProvider($alias)
+    public function getProvider($alias)
     {
-        if (array_key_exists($alias, $this->searchProviders)) {
-            return $this->searchProviders[$alias];
-        } else {
-            return;
+        if (array_key_exists($alias, $this->providers)) {
+            return $this->providers[$alias];
         }
+
+        return null;
     }
 
     /**
      * Get all SearchProviders
      *
-     * @return array
+     * @return SearchProviderInterface[]
      */
-    public function getSearchProviders()
+    public function getProviders()
     {
-        return $this->searchProviders;
+        return $this->providers;
     }
 }

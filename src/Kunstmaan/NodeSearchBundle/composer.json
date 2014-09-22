@@ -17,11 +17,10 @@
         "php": ">=5.3.3",
         "symfony/symfony": "~2.3",
         "white-october/pagerfanta-bundle": "1.0.*",
-        "sherlock/sherlock": "0.1.*",
+	"ruflin/elastica": "~1.0",
         "kunstmaan/node-bundle": "~3.0.0",
         "kunstmaan/pagepart-bundle": "~3.0.0",
         "kunstmaan/search-bundle": "~3.0.0",
-        "kunstmaan/utilities-bundle": "~3.0.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {

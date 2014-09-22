@@ -9,7 +9,8 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * CompilerPass class for SearchConfiguration
  *
- * Will find all services tagged "kunstmaan_search.searchconfiguration" and will add them to the chain with their alias.
+ * Will find all services tagged "kunstmaan_search.search_configuration" and will add them to the chain with their
+ * alias.
  */
 class SearchConfigurationCompilerPass implements CompilerPassInterface
 {
@@ -18,22 +19,18 @@ class SearchConfigurationCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_search.searchconfiguration_chain')) {
+        if (!$container->hasDefinition('kunstmaan_search.search_configuration_chain')) {
             return;
         }
 
-        $definition = $container->getDefinition(
-            'kunstmaan_search.searchconfiguration_chain'
-        );
+        $definition = $container->getDefinition('kunstmaan_search.search_configuration_chain');
+        $taggedServices = $container->findTaggedServiceIds('kunstmaan_search.search_configuration');
 
-        $taggedServices = $container->findTaggedServiceIds(
-            'kunstmaan_search.searchconfiguration'
-        );
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
-                    'addSearchConfiguration',
-                    array(new Reference($id), $attributes["alias"])
+                    'addConfiguration',
+                    array(new Reference($id), $attributes['alias'])
                 );
             }
         }

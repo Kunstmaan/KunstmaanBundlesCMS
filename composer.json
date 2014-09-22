@@ -43,7 +43,7 @@
         "liip/imagine-bundle": "v0.20.2",
         "knplabs/knp-gaufrette-bundle": "0.1.*",
         "symfony-cmf/routing-bundle": "~1.1.1",
-        "sherlock/sherlock": "0.1.*",
+        "ruflin/elastica": "~1.0",
         "fpn/doctrine-extensions-taggable": "0.9.0"
     },
     "require-dev": {
@@ -86,7 +86,7 @@
         "kunstmaan/tagging-bundle": "self.version"
     },
     "autoload": {
-        "psr-4": { "Kunstmaan\\": "src/Kunstmaan/" }
+        "psr-4": {"Kunstmaan\\": "src/Kunstmaan/"}
     },
     "minimum-stability": "stable",
     "extra": {

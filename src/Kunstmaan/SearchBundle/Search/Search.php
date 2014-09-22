@@ -33,8 +33,8 @@ class Search implements SearchProviderInterface
     public function __construct($searchProviderChain, $indexNamePrefix, $activeProvider)
     {
         $this->searchProviderChain = $searchProviderChain;
-        $this->indexNamePrefix = $indexNamePrefix;
-        $this->activeProvider = $activeProvider;
+        $this->indexNamePrefix     = $indexNamePrefix;
+        $this->activeProvider      = $activeProvider;
     }
 
     /**
@@ -44,7 +44,7 @@ class Search implements SearchProviderInterface
      */
     public function getActiveProvider()
     {
-        return $this->searchProviderChain->getSearchProvider($this->activeProvider);
+        return $this->searchProviderChain->getProvider($this->activeProvider);
     }
 
     /**
@@ -58,9 +58,51 @@ class Search implements SearchProviderInterface
     /**
      * @inheritdoc
      */
-    public function addDocument($indexName, $indexType, $doc, $uid)
+    public function getIndex($indexName)
     {
-        return $this->getActiveProvider()->addDocument($this->indexNamePrefix . $indexName, $indexType, $doc, $uid);
+        return $this->getActiveProvider()->getIndex($this->indexNamePrefix . $indexName);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getClient()
+    {
+        return $this->getActiveProvider()->getClient();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createDocument($uid, $document, $indexName = '', $indexType = '')
+    {
+        return $this->getActiveProvider()->createDocument(
+            $uid,
+            $document,
+            $this->indexNamePrefix . $indexName,
+            $indexType
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addDocument($uid, $document, $indexType, $indexName)
+    {
+        return $this->getActiveProvider()->addDocument(
+            $this->indexNamePrefix . $indexName,
+            $indexType,
+            $document,
+            $uid
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addDocuments($documents, $indexName = '', $indexType = '')
+    {
+        return $this->getActiveProvider()->addDocuments($documents, $indexName, $indexType);
     }
 
     /**
@@ -74,6 +116,14 @@ class Search implements SearchProviderInterface
     /**
      * @inheritdoc
      */
+    public function deleteDocuments($indexName, $indexType, array $ids)
+    {
+        return $this->getActiveProvider()->deleteDocuments($this->indexNamePrefix . $indexName, $indexType, $ids);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function deleteIndex($indexName)
     {
         return $this->getActiveProvider()->deleteIndex($this->indexNamePrefix . $indexName);
@@ -82,17 +132,9 @@ class Search implements SearchProviderInterface
     /**
      * @inheritdoc
      */
-    public function search($indexName, $indexType, $querystring, $json = false, $from = null, $size = null)
-    {
-        return $this->getActiveProvider()->search($this->indexNamePrefix . $indexName, $indexType, $querystring, $json, $from, $size);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getName()
     {
-        return "Search";
+        return 'Search';
     }
 
     /**
