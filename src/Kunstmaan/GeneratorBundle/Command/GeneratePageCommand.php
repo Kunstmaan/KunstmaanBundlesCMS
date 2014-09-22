@@ -5,6 +5,8 @@ namespace Kunstmaan\GeneratorBundle\Command;
 use Kunstmaan\GeneratorBundle\Generator\PageGenerator;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Generates a new page
@@ -86,7 +88,7 @@ EOT
                 "To use this page you must first add the definition below to the <comment>getPossibleChildTypes</comment> funtion of the parent page:",
                 "<comment>    array(</comment>",
                 "<comment>        'name' => '".$this->pageName."',</comment>",
-                "<comment>        'class'=> '".$this->bundle->getNamespace()."\Entity\Pages\\".$this->pageName."'</comment>",
+                "<comment>        'class'=> '".$this->bundle->getNamespace()."\\Entity\\Pages\\".$this->pageName."'</comment>",
                 "<comment>    ),</comment>",
                 ""
             ));
@@ -152,7 +154,7 @@ EOT
                 }
 
                 // Check that entity does not already exist
-                if (file_exists($bundlePath.'/Entity/Pages/'.$name.'.php')) {
+                if (file_exists($bundlePath . '/Entity/Pages/' . $name . '.php')) {
                     throw new \InvalidArgumentException(sprintf('Page or entity "%s" already exists', $name));
                 }
 
@@ -174,22 +176,21 @@ EOT
         /**
          * Ask which default page template we need to use
          */
-        $templateSelect = $this->getDefaultTemplateList();
+        $templateSelect = $this->getTemplateList();
         $this->assistant->writeLine('');
         $templateId = $this->assistant->askSelect('Which page template do you want to use', $templateSelect);
-        $templateConfigs = $this->getDefaultTemplateConfigurations();
+        $templateConfigs = $this->getAvailableTemplates($this->bundle);
         $templateConfig = $templateConfigs[$templateId];
         $this->template = $templateConfig['file'];
 
         /**
          * Ask for which sections pagepart configuration the end user wants to use for the different sections
          */
-        $this->assistant->writeLine(array("\nThe select page template consists of these contexts: ".implode(', ', $templateConfig['contexts'])));
+        $this->assistant->writeLine(array("\nThe select page template consists of these contexts: " . implode(', ', $templateConfig['contexts'])));
         $this->section = array();
-        $defaultSectionConfiguration = $this->getDefaultSectionConfigurations();
         foreach ($templateConfig['contexts'] as $context) {
             $question = "Which pagepart configuration would you like to use for the '$context' context";
-            $section = $this->askForSections($question, $this->bundle, false, $context, $defaultSectionConfiguration);
+            $section = $this->askForSections($question, $this->bundle, false, $context);
             if (is_null($section)) {
                 $this->assistant->writeError(sprintf('No section pagepart configuration found for context "%s"', $context), true);
             }
@@ -199,22 +200,8 @@ EOT
         /**
          * Ask the parent pages
          */
-        $counter = 1;
-        $pagesSelect = $parentPages = array();
-        $this->parentPages = array();
-        // Get the available pages from disc
-        $dir = $this->bundle->getPath().'/Entity/Pages/';
-        if (file_exists($dir) && is_dir($dir)) {
-            $finder = new Finder();
-            $finder->files()->in($dir)->depth('== 0');
-            foreach ($finder as $file) {
-                $temp = $counter++;
-                $pagesSelect[$temp] = substr($file->getFileName(), 0, strlen($file->getFileName())-4);
-                $parentPages[$temp] = array(
-                    'path' => $file->getPathName()
-                );
-            }
-        }
+        $parentPages = $this->getAvailablePages($this->bundle);
+        $pagesSelect = array_map(function ($item) { return $item['name']; }, $parentPages);
         if (count($pagesSelect) > 0) {
             $this->assistant->writeLine('');
             $parentPageIds = $this->assistant->askSelect('Which existing page(s) can have the new page as sub-page (multiple possible, separated by comma)', $pagesSelect, null, true);
@@ -242,9 +229,9 @@ EOT
      *
      * @return array
      */
-    private function getDefaultTemplateList()
+    private function getTemplateList()
     {
-        $templates = $this->getDefaultTemplateConfigurations();
+        $templates = $this->getAvailableTemplates($this->bundle);
 
         $types = array();
         foreach ($templates as $key => $template) {
@@ -252,69 +239,5 @@ EOT
         }
 
         return $types;
-    }
-
-    /**
-     * Get all the default template configurations.
-     *
-     * @return array
-     */
-    private function getDefaultTemplateConfigurations()
-    {
-        $counter = 1;
-
-        $templates = array();
-        $templates[$counter++] = array(
-            'name' => 'One column page',
-            'contexts' => array('main', 'footer'),
-            'file' => 'default-one-column.yml'
-        );
-        $templates[$counter++] = array(
-            'name' => 'Two column page (left sidebar)',
-            'contexts' => array('main', 'left_sidebar', 'footer'),
-            'file' => 'default-two-column-left.yml'
-        );
-        $templates[$counter++] = array(
-            'name' => 'Two column page (right sidebar)',
-            'contexts' => array('main', 'right_sidebar', 'footer'),
-            'file' => 'default-two-column-right.yml'
-        );
-        $templates[$counter++] = array(
-            'name' => 'Three column page',
-            'contexts' => array('main', 'left_sidebar', 'right_sidebar', 'footer'),
-            'file' => 'default-three-column.yml'
-        );
-
-        return $templates;
-    }
-
-    /**
-     * Get all the default section configurations.
-     */
-    private function getDefaultSectionConfigurations()
-    {
-        $configs = array();
-        $configs['main.yml'] = array(
-            'name' => 'Main',
-            'context' => 'main',
-            'file' => 'main.yml',
-        );
-        $configs['footer.yml'] = array(
-            'name' => 'Footer',
-            'context' => 'footer',
-            'file' => 'footer.yml',
-        );
-        $configs['left-sidebar.yml'] = array(
-            'name' => 'Left sidebar',
-            'context' => 'left_sidebar',
-            'file' => 'left-sidebar.yml',
-        );
-        $configs['right-sidebar.yml'] = array(
-            'name' => 'Right sidebar',
-            'context' => 'right_sidebar',
-            'file' => 'right-sidebar.yml',
-        );
-
-        return $configs;
     }
 }
