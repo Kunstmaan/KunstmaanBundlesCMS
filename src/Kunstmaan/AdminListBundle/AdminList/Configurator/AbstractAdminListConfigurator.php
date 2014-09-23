@@ -637,7 +637,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $adminListName = 'listconfig_' . $request->get('_route');
 
         $this->page             = $request->query->getInt('page', 1);
-        $this->orderBy          = $request->query->getAlpha('orderBy', '');
+        // Allow alphanumeric, _ & . in order by parameter!
+        $this->orderBy          = preg_replace('/[^[a-zA-Z0-9\_\.]]/', '', $request->query->get('orderBy', ''));
         $this->orderDirection   = $request->query->getAlpha('orderDirection', '');
 
         // there is a session and the filter param is not set
