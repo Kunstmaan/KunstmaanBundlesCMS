@@ -549,8 +549,11 @@ class NodeAdminController extends Controller
                 if ($isStructureNode) {
                     $nodeTranslation->setSlug('');
                 }
-                $this->em->persist($nodeTranslation);
                 $nodeVersion->setUpdated(new DateTime());
+                if ($nodeVersion->getType() == 'public') {
+                    $nodeTranslation->setUpdated($nodeVersion->getUpdated());
+                }
+                $this->em->persist($nodeTranslation);
                 $this->em->persist($nodeVersion);
                 $tabPane->persist($this->em);
                 $this->em->flush();
