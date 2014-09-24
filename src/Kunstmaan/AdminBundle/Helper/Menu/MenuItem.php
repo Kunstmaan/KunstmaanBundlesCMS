@@ -15,7 +15,12 @@ class MenuItem
     /**
      * @var string
      */
-    private $internalName;
+    private $uniqueId;
+
+    /**
+     * @var string
+     */
+    private $label;
 
     /**
      * @var string
@@ -88,17 +93,18 @@ class MenuItem
     }
 
     /**
-     * Get internal name
+     * @deprecated You should use getLabel or getUniqueId (depending on what you wish to retrieve)
      *
      * @return string
      */
     public function getInternalName()
     {
-        return $this->internalName;
+        return $this->uniqueId;
     }
 
     /**
-     * Set internal name
+     * @deprecated Modified for backwards compatibility. You should use setUniqueId and setLabel instead for proper
+     * highlighting in trees!
      *
      * @param string $internalName
      *
@@ -106,7 +112,52 @@ class MenuItem
      */
     public function setInternalName($internalName)
     {
-        $this->internalName = $internalName;
+        $this->label    = $internalName;
+        $this->uniqueId = $internalName;
+
+        return $this;
+    }
+
+    /**
+     * Get unique Id
+     *
+     * @return string
+     */
+    public function getUniqueId()
+    {
+        return $this->uniqueId;
+    }
+
+    /**
+     * Set unique id
+     *
+     * @param string $uniqueId
+     *
+     * @return MenuItem
+     */
+    public function setUniqueId($uniqueId)
+    {
+        $this->uniqueId = $uniqueId;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param string $label
+     *
+     * @return MenuItem
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
 
         return $this;
     }
@@ -148,7 +199,7 @@ class MenuItem
     /**
      * Set parent menu item
      *
-     * @param MenuItem|null  $parent
+     * @param MenuItem|null $parent
      *
      * @return MenuItem
      */
@@ -392,5 +443,4 @@ class MenuItem
 
         return $this;
     }
-
 }

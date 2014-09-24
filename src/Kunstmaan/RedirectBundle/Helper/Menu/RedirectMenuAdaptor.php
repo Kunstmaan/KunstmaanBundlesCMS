@@ -24,8 +24,10 @@ class RedirectMenuAdaptor implements MenuAdaptorInterface
 
         } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             $menuItem = new MenuItem($menu);
-            $menuItem->setRoute('kunstmaanredirectbundle_admin_redirect')
-                ->setInternalName('Redirects')
+            $menuItem
+                ->setRoute('kunstmaanredirectbundle_admin_redirect')
+                ->setLabel('Redirects')
+                ->setUniqueId('Redirects')
                 ->setParent($parent);
 
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {

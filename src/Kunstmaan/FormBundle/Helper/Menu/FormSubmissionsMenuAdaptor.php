@@ -27,9 +27,11 @@ class FormSubmissionsMenuAdaptor implements MenuAdaptorInterface
     {
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuitem = new TopMenuItem($menu);
-            $menuitem->setRoute('KunstmaanFormBundle_formsubmissions');
-            $menuitem->setInternalName('Form submissions');
-            $menuitem->setParent($parent);
+            $menuitem
+                ->setRoute('KunstmaanFormBundle_formsubmissions')
+                ->setLabel('Form submissions')
+                ->setUniqueId('Form submissions')
+                ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                 $menuitem->setActive(true);
                 $parent->setActive(true);
@@ -37,5 +39,4 @@ class FormSubmissionsMenuAdaptor implements MenuAdaptorInterface
             $children[] = $menuitem;
         }
     }
-
 }

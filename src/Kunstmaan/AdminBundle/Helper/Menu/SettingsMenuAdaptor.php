@@ -41,10 +41,12 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     {
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
-            $menuItem->setRoute('KunstmaanAdminBundle_settings')
-                ->setInternalName('Settings')
+            $menuItem
+                ->setRoute('KunstmaanAdminBundle_settings')
+                ->setLabel('Settings')
+                ->setUniqueId('settings')
                 ->setParent($parent)
-                ->setRole("settings");
+                ->setRole('settings');
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
             }
@@ -53,8 +55,10 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
             if ($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
                 if ($this->container->getParameter('version_checker.enabled')) {
                     $menuItem = new MenuItem($menu);
-                    $menuItem->setRoute('KunstmaanAdminBundle_settings_bundle_version')
-                        ->setInternalName('Bundle versions')
+                    $menuItem
+                        ->setRoute('KunstmaanAdminBundle_settings_bundle_version')
+                        ->setLabel('Bundle versions')
+                        ->setUniqueId('bundle_versions')
                         ->setParent($parent);
                     if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                         $menuItem->setActive(true);

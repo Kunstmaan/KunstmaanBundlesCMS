@@ -34,9 +34,11 @@ class AdminMenuAdaptor implements MenuAdaptorInterface
     {
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuitem = new TopMenuItem($menu);
-            $menuitem->setRoute('{{ bundle_name|lower }}_admin_satellite');
-            $menuitem->setInternalName('Manage satellites');
-            $menuitem->setParent($parent);
+            $menuitem
+                ->setRoute('{{ bundle_name|lower }}_admin_satellite')
+                ->setUniqueId('Manage satellites')
+                ->setLabel('Manage satellites')
+                ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                 $menuitem->setActive(true);
                 $parent->setActive(true);
