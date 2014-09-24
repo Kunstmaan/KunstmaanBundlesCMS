@@ -651,7 +651,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
                 $this->orderBy = $adminListSessionData['orderBy'];
             }
 
-            if ($query->has('orderDirection')) {
+            if (!$query->has('orderDirection')) {
                 $this->orderDirection = $adminListSessionData['orderDirection'];
             }
         }
