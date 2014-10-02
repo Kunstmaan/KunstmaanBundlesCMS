@@ -90,11 +90,27 @@ class NodeTranslation extends AbstractEntity
     protected $weight;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $created;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $updated;
+
+    /**
      * contructor
      */
     public function __construct()
     {
         $this->nodeVersions = new ArrayCollection();
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
     }
 
     /**
@@ -357,32 +373,6 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * Returns the date the first node version was created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        $versions     = $this->getNodeVersions();
-        $firstVersion = $versions->first();
-
-        return $firstVersion->getCreated();
-    }
-
-    /**
-     * Returns the date the last node version was updated
-     *
-     * @return mixed
-     */
-    public function getUpdated()
-    {
-        $versions    = $this->getNodeVersions();
-        $lastVersion = $versions->last();
-
-        return $lastVersion->getUpdated();
-    }
-
-    /**
      * @param string $url
      *
      * @return NodeTranslation
@@ -422,4 +412,43 @@ class NodeTranslation extends AbstractEntity
         return $this->weight;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param \DateTime $created
+     *
+     * @return NodeTranslation
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param \DateTime $updated
+     *
+     * @return NodeTranslation
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
 }
