@@ -54,12 +54,14 @@ class AdminLocaleListener implements EventSubscriberInterface
         }
 
         $url = $event->getRequest()->getRequestUri();
+        $token = $this->context->getToken();
 
-        if ($this->context->getToken()) {
+        // Quickfix to prevent preview routes from enforcing the admin locale!
+        if (!is_null($token) && strpos($url, '/admin/preview') === false) {
             preg_match('/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/', $url, $match);
 
             if (count($match)) {
-                $locale = $this->context->getToken()->getUser()->getAdminLocale();
+                $locale = $token->getUser()->getAdminLocale();
 
                 if (!$locale) {
                     $locale = $this->defaultAdminlocale;

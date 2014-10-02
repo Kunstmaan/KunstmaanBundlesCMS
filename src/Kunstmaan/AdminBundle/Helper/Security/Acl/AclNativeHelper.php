@@ -63,12 +63,12 @@ class AclNativeHelper
 
         $database   = $aclConnection->getDatabase();
         $rootEntity = $permissionDef->getEntity();
-        $linkAlias = $permissionDef->getAlias();
+        $linkAlias  = $permissionDef->getAlias();
         // Only tables with a single ID PK are currently supported
         $linkField = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
 
         $rootEntity = '"' . str_replace('\\', '\\\\', $rootEntity) . '"';
-        $query = $queryBuilder;
+        $query      = $queryBuilder;
 
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
@@ -78,10 +78,12 @@ class AclNativeHelper
         $mask = $builder->get();
 
         /* @var $token TokenInterface */
-        $token = $this->securityContext->getToken(); // for now lets imagine we will have token i.e user is logged in
-        $user  = $token->getUser();
-
-        $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
+        $token     = $this->securityContext->getToken();
+        $userRoles = array();
+        if (!is_null($token)) {
+            $user      = $token->getUser();
+            $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
+        }
 
         // Security context does not provide anonymous role automatically.
         $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
@@ -93,15 +95,15 @@ class AclNativeHelper
                 $uR[] = '"' . $role->getRole() . '"';
             }
         }
-        $uR = array_unique($uR);
+        $uR       = array_unique($uR);
         $inString = implode(' OR s.identifier = ', (array) $uR);
 
         if (is_object($user)) {
             $inString .= ' OR s.identifier = "' . str_replace(
-                '\\',
-                '\\\\',
-                get_class($user)
-            ) . '-' . $user->getUserName() . '"';
+                    '\\',
+                    '\\\\',
+                    get_class($user)
+                ) . '-' . $user->getUserName() . '"';
         }
 
         $joinTableQuery = <<<SELECTQUERY
