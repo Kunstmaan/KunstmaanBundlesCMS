@@ -149,7 +149,7 @@ EOT
         $fields = $this->askEntityFields($this->bundle);
         $this->fields = array();
         foreach ($fields as $fieldInfo) {
-            $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra']);
+            $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
         }
 
         /**

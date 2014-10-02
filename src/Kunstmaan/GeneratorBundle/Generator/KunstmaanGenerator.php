@@ -50,13 +50,18 @@ class KunstmaanGenerator extends Generator
      * @param CommandAssistant   $assistant   The command assistant
      * @param ContainerInterface $container   The container
      */
-    public function __construct(Filesystem $filesystem, RegistryInterface $registry, $skeletonDir, CommandAssistant $assistant, ContainerInterface $container = null)
-    {
-        $this->filesystem = $filesystem;
-        $this->registry = $registry;
+    public function __construct(
+        Filesystem $filesystem,
+        RegistryInterface $registry,
+        $skeletonDir,
+        CommandAssistant $assistant,
+        ContainerInterface $container = null
+    ) {
+        $this->filesystem  = $filesystem;
+        $this->registry    = $registry;
         $this->skeletonDir = GeneratorUtils::getFullSkeletonPath($skeletonDir);
-        $this->assistant = $assistant;
-        $this->container = $container;
+        $this->assistant   = $assistant;
+        $this->container   = $container;
 
         $this->setSkeletonDirs(array($this->skeletonDir, GeneratorUtils::getFullSkeletonPath('/common')));
     }
@@ -65,6 +70,7 @@ class KunstmaanGenerator extends Generator
      * Check that the keyword is a reserved word for the database system.
      *
      * @param string $keyword
+     *
      * @return boolean
      */
     public function isReservedKeyword($keyword)
@@ -76,25 +82,34 @@ class KunstmaanGenerator extends Generator
      * Generate the entity PHP code.
      *
      * @param BundleInterface $bundle
-     * @param string $name
-     * @param array $fields
-     * @param string $namePrefix
-     * @param string $dbPrefix
-     * @param string|null $extendClass
+     * @param string          $name
+     * @param array           $fields
+     * @param string          $namePrefix
+     * @param string          $dbPrefix
+     * @param string|null     $extendClass
+     *
      * @return array
      * @throws \RuntimeException
      */
-    protected function generateEntity(BundleInterface $bundle, $name, $fields, $namePrefix, $dbPrefix, $extendClass = null)
-    {
+    protected function generateEntity(
+        BundleInterface $bundle,
+        $name,
+        $fields,
+        $namePrefix,
+        $dbPrefix,
+        $extendClass = null
+    ) {
         // configure the bundle (needed if the bundle does not contain any Entities yet)
         $config = $this->registry->getManager(null)->getConfiguration();
-        $config->setEntityNamespaces(array_merge(
-            array($bundle->getName() => $bundle->getNamespace().'\\Entity\\'.$namePrefix),
-            $config->getEntityNamespaces()
-        ));
+        $config->setEntityNamespaces(
+            array_merge(
+                array($bundle->getName() => $bundle->getNamespace() . '\\Entity\\' . $namePrefix),
+                $config->getEntityNamespaces()
+            )
+        );
 
-        $entityClass = $this->registry->getAliasNamespace($bundle->getName()).'\\'.$namePrefix.'\\'.$name;
-        $entityPath = $bundle->getPath().'/Entity/'.$namePrefix.'/'.str_replace('\\', '/', $name).'.php';
+        $entityClass = $this->registry->getAliasNamespace($bundle->getName()) . '\\' . $namePrefix . '\\' . $name;
+        $entityPath  = $bundle->getPath() . '/Entity/' . $namePrefix . '/' . str_replace('\\', '/', $name) . '.php';
         if (file_exists($entityPath)) {
             throw new \RuntimeException(sprintf('Entity "%s" already exists.', $entityClass));
         }
@@ -113,7 +128,11 @@ class KunstmaanGenerator extends Generator
                 }
             }
         }
-        $class->setPrimaryTable(array('name' => strtolower($dbPrefix . strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name))) . 's'));
+        $class->setPrimaryTable(
+            array(
+                'name' => strtolower($dbPrefix . strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name))) . 's'
+            )
+        );
         $entityCode = $this->getEntityGenerator($extendClass)->generateEntityClass($class);
 
         return array($entityCode, $entityPath);
@@ -123,6 +142,7 @@ class KunstmaanGenerator extends Generator
      * Get a Doctrine EntityGenerator instance.
      *
      * @param string|null $classToExtend
+     *
      * @return EntityGenerator
      */
     protected function getEntityGenerator($classToExtend = null)
@@ -144,26 +164,35 @@ class KunstmaanGenerator extends Generator
     /**
      * Generate the entity admin type.
      *
-     * @param $bundle
-     * @param $entityName
-     * @param $entityPrefix
-     * @param array $fields
+     * @param        $bundle
+     * @param        $entityName
+     * @param        $entityPrefix
+     * @param array  $fields
      * @param string $extendClass
      */
-    protected function generateEntityAdminType($bundle, $entityName, $entityPrefix, array $fields, $extendClass = '\Symfony\Component\Form\AbstractType')
-    {
-        $className = $entityName.'AdminType';
-        $savePath = $bundle->getPath().'/Form/'.$entityPrefix.'/'.$className.'.php';
-        $name = str_replace("\\", '_', strtolower($bundle->getNamespace())).'_'.strtolower($entityName).'type';
+    protected function generateEntityAdminType(
+        $bundle,
+        $entityName,
+        $entityPrefix,
+        array $fields,
+        $extendClass = '\Symfony\Component\Form\AbstractType'
+    ) {
+        $className = $entityName . 'AdminType';
+        $savePath  = $bundle->getPath() . '/Form/' . $entityPrefix . '/' . $className . '.php';
+        $name      = str_replace(
+                "\\",
+                '_',
+                strtolower($bundle->getNamespace())
+            ) . '_' . strtolower($entityName) . 'type';
 
         $params = array(
-            'className' => $className,
-            'name' => $name,
-            'namespace' => $bundle->getNamespace(),
-            'entity' => '\\'.$bundle->getNamespace().'\Entity\\'.$entityPrefix.'\\'.$entityName,
-            'fields' => $fields,
+            'className'     => $className,
+            'name'          => $name,
+            'namespace'     => $bundle->getNamespace(),
+            'entity'        => '\\' . $bundle->getNamespace() . '\Entity\\' . $entityPrefix . '\\' . $entityName,
+            'fields'        => $fields,
             'entity_prefix' => $entityPrefix,
-            'extend_class' => $extendClass
+            'extend_class'  => $extendClass
         );
         $this->renderFile('/Form/EntityAdminType.php', $savePath, $params);
     }
@@ -176,28 +205,46 @@ class KunstmaanGenerator extends Generator
     protected function installDefaultPageTemplates($bundle)
     {
         // Configuration templates
-        $dirPath = sprintf("%s/Resources/config/pagetemplates/", $bundle->getPath());
-        $skeletonDir = sprintf("%s/Resources/config/pagetemplates/", GeneratorUtils::getFullSkeletonPath('/common'));
+        $dirPath     = sprintf('%s/Resources/config/pagetemplates/', $bundle->getPath());
+        $skeletonDir = sprintf('%s/Resources/config/pagetemplates/', GeneratorUtils::getFullSkeletonPath('/common'));
 
-        $files = array('default-one-column.yml', 'default-two-column-left.yml', 'default-two-column-right.yml', 'default-three-column.yml');
-        foreach ($files as $file) {
-            $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
-            GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath.$file);
+        // Only copy templates over when the folder does not exist yet...
+        if (!$this->filesystem->exists($dirPath)) {
+            $files = array(
+                'default-one-column.yml',
+                'default-two-column-left.yml',
+                'default-two-column-right.yml',
+                'default-three-column.yml'
+            );
+            foreach ($files as $file) {
+                $this->filesystem->copy($skeletonDir . $file, $dirPath . $file, false);
+                GeneratorUtils::replace("~~~BUNDLE~~~", $bundle->getName(), $dirPath . $file);
+            }
         }
 
         // Twig templates
-        $dirPath = sprintf("%s/Resources/views/Pages/Common/", $bundle->getPath());
-        $skeletonDir = sprintf("%s/Resources/views/Pages/Common/", GeneratorUtils::getFullSkeletonPath('/common'));
+        $dirPath     = sprintf('%s/Resources/views/Pages/Common/', $bundle->getPath());
+        $skeletonDir = sprintf('%s/Resources/views/Pages/Common/', GeneratorUtils::getFullSkeletonPath('/common'));
 
-        $files = array('one-column-pagetemplate.html.twig', 'two-column-left-pagetemplate.html.twig', 'two-column-right-pagetemplate.html.twig', 'three-column-pagetemplate.html.twig');
-        foreach ($files as $file) {
-            $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
+        if (!$this->filesystem->exists($dirPath)) {
+            $files = array(
+                'one-column-pagetemplate.html.twig',
+                'two-column-left-pagetemplate.html.twig',
+                'two-column-right-pagetemplate.html.twig',
+                'three-column-pagetemplate.html.twig'
+            );
+            foreach ($files as $file) {
+                $this->filesystem->copy($skeletonDir . $file, $dirPath . $file, false);
+            }
+            $this->filesystem->copy($skeletonDir . 'view.html.twig', $dirPath . 'view.html.twig', false);
         }
 
-        $this->filesystem->copy($skeletonDir.'view.html.twig', $dirPath.'view.html.twig', false);
-        $contents = file_get_contents($dirPath.'view.html.twig');
+        $contents = file_get_contents($dirPath . 'view.html.twig');
         if (strpos($contents, '{% extends ') === false) {
-            GeneratorUtils::prepend("{% extends '".$bundle->getName().":Page:layout.html.twig' %}\n", $dirPath.'view.html.twig');
+            GeneratorUtils::prepend(
+                "{% extends '" . $bundle->getName() . ":Layout:layout.html.twig' %}\n",
+                $dirPath . 'view.html.twig'
+            );
         }
     }
 
@@ -209,12 +256,15 @@ class KunstmaanGenerator extends Generator
     protected function installDefaultPagePartConfiguration($bundle)
     {
         // Pagepart configuration
-        $dirPath = sprintf("%s/Resources/config/pageparts/", $bundle->getPath());
-        $skeletonDir = sprintf("%s/Resources/config/pageparts/", GeneratorUtils::getFullSkeletonPath('/common'));
+        $dirPath     = sprintf('%s/Resources/config/pageparts/', $bundle->getPath());
+        $skeletonDir = sprintf('%s/Resources/config/pageparts/', GeneratorUtils::getFullSkeletonPath('/common'));
 
-        $files = array('footer.yml', 'main.yml', 'left-sidebar.yml', 'right-sidebar.yml');
-        foreach ($files as $file) {
-            $this->filesystem->copy($skeletonDir.$file, $dirPath.$file, false);
+        // Only copy when folder does not exist yet
+        if (!$this->filesystem->exists($dirPath)) {
+            $files = array('footer.yml', 'main.yml', 'left-sidebar.yml', 'right-sidebar.yml');
+            foreach ($files as $file) {
+                $this->filesystem->copy($skeletonDir . $file, $dirPath . $file, false);
+            }
         }
     }
 
@@ -230,8 +280,8 @@ class KunstmaanGenerator extends Generator
     public function renderFiles($sourceDir, $targetDir, array $parameters, $override = false, $recursive = true)
     {
         // Make sure the source -and target dir contain a trailing slash
-        $sourceDir = rtrim($sourceDir, "/")."/";
-        $targetDir = rtrim($targetDir, "/")."/";
+        $sourceDir = rtrim($sourceDir, '/') . '/';
+        $targetDir = rtrim($targetDir, '/') . '/';
 
         $this->setSkeletonDirs(array($sourceDir));
 
@@ -240,16 +290,16 @@ class KunstmaanGenerator extends Generator
             $name = basename($name);
 
             // When it is a directory, we recursively call this function if required
-            if (is_dir($sourceDir.$name) && $recursive) {
-                $this->renderFiles($sourceDir.$name, $targetDir.$name, $parameters, $override, $recursive);
+            if (is_dir($sourceDir . $name) && $recursive) {
+                $this->renderFiles($sourceDir . $name, $targetDir . $name, $parameters, $override, $recursive);
             } else {
                 // Check that we are allowed the overwrite the file if it already exists
-                if (!is_file($targetDir.$name) || $override == true) {
+                if (!is_file($targetDir . $name) || $override == true) {
                     $fileParts = explode('.', $name);
                     if (end($fileParts) == 'twig') {
-                        $this->renderTwigFile($name, $targetDir.$name, $parameters, $sourceDir);
+                        $this->renderTwigFile($name, $targetDir . $name, $parameters, $sourceDir);
                     } else {
-                        $this->renderFile($name, $targetDir.$name, $parameters);
+                        $this->renderFile($name, $targetDir . $name, $parameters);
                     }
                 }
             }
@@ -268,19 +318,19 @@ class KunstmaanGenerator extends Generator
     public function renderSingleFile($sourceDir, $targetDir, $filename, array $parameters, $override = false)
     {
         // Make sure the source -and target dir contain a trailing slash
-        $sourceDir = rtrim($sourceDir, "/")."/";
-        $targetDir = rtrim($targetDir, "/")."/";
+        $sourceDir = rtrim($sourceDir, '/') . '/';
+        $targetDir = rtrim($targetDir, '/') . '/';
 
         $this->setSkeletonDirs(array($sourceDir));
 
-        if (is_file($sourceDir.$filename)) {
+        if (is_file($sourceDir . $filename)) {
             // Check that we are allowed the overwrite the file if it already exists
-            if (!is_file($targetDir.$filename) || $override == true) {
+            if (!is_file($targetDir . $filename) || $override == true) {
                 $fileParts = explode('.', $filename);
                 if (end($fileParts) == 'twig') {
-                    $this->renderTwigFile($filename, $targetDir.$filename, $parameters, $sourceDir);
+                    $this->renderTwigFile($filename, $targetDir . $filename, $parameters, $sourceDir);
                 } else {
-                    $this->renderFile($filename, $targetDir.$filename, $parameters);
+                    $this->renderFile($filename, $targetDir . $filename, $parameters);
                 }
             }
         }
@@ -289,26 +339,26 @@ class KunstmaanGenerator extends Generator
     /**
      * Copy all files in the source directory to the target directory.
      *
-     * @param string $sourceDir  The source directory where we need to look in
-     * @param string $targetDir  The target directory where we need to copy the files too
-     * @param bool   $override   Whether to override an existing file or not
-     * @param bool   $recursive  Whether to render all files recursively or not
+     * @param string $sourceDir The source directory where we need to look in
+     * @param string $targetDir The target directory where we need to copy the files too
+     * @param bool   $override  Whether to override an existing file or not
+     * @param bool   $recursive Whether to render all files recursively or not
      */
     public function copyFiles($sourceDir, $targetDir, $override = false, $recursive = true)
     {
         // Make sure the source -and target dir contain a trailing slash
-        $sourceDir = rtrim($sourceDir, "/")."/";
-        $targetDir = rtrim($targetDir, "/")."/";
+        $sourceDir = rtrim($sourceDir, '/') . '/';
+        $targetDir = rtrim($targetDir, '/') . '/';
 
         // Get all files in the source directory
-        foreach (glob("$sourceDir*") as $name) {
+        foreach (glob('$sourceDir*') as $name) {
             $name = basename($name);
 
             // When it is a directory, we recursively call this function if required
-            if (is_dir($sourceDir.$name) && $recursive) {
-                $this->copyFiles($sourceDir.$name, $targetDir.$name, $override, $recursive);
+            if (is_dir($sourceDir . $name) && $recursive) {
+                $this->copyFiles($sourceDir . $name, $targetDir . $name, $override, $recursive);
             } else {
-                $this->filesystem->copy($sourceDir.$name, $targetDir.$name, $override);
+                $this->filesystem->copy($sourceDir . $name, $targetDir . $name, $override);
             }
         }
     }
@@ -317,8 +367,9 @@ class KunstmaanGenerator extends Generator
      * Render a twig file with custom twig tags.
      *
      * @param string $template
-     * @param array $parameters
+     * @param array  $parameters
      * @param string $sourceDir
+     *
      * @return string
      */
     public function renderTwig($template, array $parameters, $sourceDir)
@@ -347,8 +398,9 @@ class KunstmaanGenerator extends Generator
      *
      * @param string $template
      * @param string $target
-     * @param array $parameters
+     * @param array  $parameters
      * @param string $sourceDir
+     *
      * @return int
      */
     public function renderTwigFile($template, $target, array $parameters, $sourceDir)

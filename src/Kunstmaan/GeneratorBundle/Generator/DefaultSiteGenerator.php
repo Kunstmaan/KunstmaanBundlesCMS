@@ -287,8 +287,8 @@ class DefaultSiteGenerator extends KunstmaanGenerator
     public function generatePagetemplateConfigs(array $parameters)
     {
         $relPath = '/Resources/config/pagetemplates/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
+        $sourceDir = $this->skeletonDir . $relPath;
+        $targetDir = $this->bundle->getPath() . $relPath;
 
         $this->renderSingleFile($sourceDir, $targetDir, 'homepage.yml', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'contentpage.yml', $parameters);
