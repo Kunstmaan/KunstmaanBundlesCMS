@@ -11,6 +11,7 @@ use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
@@ -285,22 +286,23 @@ class KunstmaanGenerator extends Generator
 
         $this->setSkeletonDirs(array($sourceDir));
 
-        // Get all files in the source directory
-        foreach (glob("$sourceDir*") as $name) {
-            $name = basename($name);
+        $finder = new Finder();
+        $finder->files()->in($sourceDir);
+        if (!$recursive) {
+            $finder->depth('== 0');
+        }
 
-            // When it is a directory, we recursively call this function if required
-            if (is_dir($sourceDir . $name) && $recursive) {
-                $this->renderFiles($sourceDir . $name, $targetDir . $name, $parameters, $override, $recursive);
-            } else {
-                // Check that we are allowed the overwrite the file if it already exists
-                if (!is_file($targetDir . $name) || $override == true) {
-                    $fileParts = explode('.', $name);
-                    if (end($fileParts) == 'twig') {
-                        $this->renderTwigFile($name, $targetDir . $name, $parameters, $sourceDir);
-                    } else {
-                        $this->renderFile($name, $targetDir . $name, $parameters);
-                    }
+        // Get all files in the source directory
+        foreach ($finder as $file) {
+            $name = $file->getRelativePathname();
+
+            // Check that we are allowed to overwrite the file if it already exists
+            if (!is_file($targetDir . $name) || $override === true) {
+                $fileParts = explode('.', $name);
+                if (end($fileParts) === 'twig') {
+                    $this->renderTwigFile($name, $targetDir . $name, $parameters, $sourceDir);
+                } else {
+                    $this->renderFile($name, $targetDir . $name, $parameters);
                 }
             }
         }
@@ -325,9 +327,9 @@ class KunstmaanGenerator extends Generator
 
         if (is_file($sourceDir . $filename)) {
             // Check that we are allowed the overwrite the file if it already exists
-            if (!is_file($targetDir . $filename) || $override == true) {
+            if (!is_file($targetDir . $filename) || $override === true) {
                 $fileParts = explode('.', $filename);
-                if (end($fileParts) == 'twig') {
+                if (end($fileParts) === 'twig') {
                     $this->renderTwigFile($filename, $targetDir . $filename, $parameters, $sourceDir);
                 } else {
                     $this->renderFile($filename, $targetDir . $filename, $parameters);
@@ -363,19 +365,23 @@ class KunstmaanGenerator extends Generator
      */
     public function renderTwig($template, array $parameters, $sourceDir)
     {
-        $twig = new \Twig_Environment(new \Twig_Loader_Filesystem(array($sourceDir)), array(
-            'debug'            => true,
-            'cache'            => false,
-            'strict_variables' => true,
-            'autoescape'       => false
-        ));
+        $twig = new \Twig_Environment(
+            new \Twig_Loader_Filesystem(array($sourceDir)), array(
+                'debug'            => true,
+                'cache'            => false,
+                'strict_variables' => true,
+                'autoescape'       => false
+            )
+        );
 
         // Ruby erb template syntax
-        $lexer = new \Twig_Lexer($twig, array(
-            'tag_comment'  => array('<%#', '%>'),
-            'tag_block'    => array('<%', '%>'),
-            'tag_variable' => array('<%=', '%>'),
-        ));
+        $lexer = new \Twig_Lexer(
+            $twig, array(
+                'tag_comment'  => array('<%#', '%>'),
+                'tag_block'    => array('<%', '%>'),
+                'tag_variable' => array('<%=', '%>'),
+            )
+        );
 
         $twig->setLexer($lexer);
 
