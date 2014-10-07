@@ -342,25 +342,14 @@ class KunstmaanGenerator extends Generator
      * @param string $sourceDir The source directory where we need to look in
      * @param string $targetDir The target directory where we need to copy the files too
      * @param bool   $override  Whether to override an existing file or not
-     * @param bool   $recursive Whether to render all files recursively or not
      */
-    public function copyFiles($sourceDir, $targetDir, $override = false, $recursive = true)
+    public function copyFiles($sourceDir, $targetDir, $override = false)
     {
         // Make sure the source -and target dir contain a trailing slash
         $sourceDir = rtrim($sourceDir, '/') . '/';
         $targetDir = rtrim($targetDir, '/') . '/';
 
-        // Get all files in the source directory
-        foreach (glob('$sourceDir*') as $name) {
-            $name = basename($name);
-
-            // When it is a directory, we recursively call this function if required
-            if (is_dir($sourceDir . $name) && $recursive) {
-                $this->copyFiles($sourceDir . $name, $targetDir . $name, $override, $recursive);
-            } else {
-                $this->filesystem->copy($sourceDir . $name, $targetDir . $name, $override);
-            }
-        }
+        $this->filesystem->mirror($sourceDir, $targetDir, null, array('override' => $override));
     }
 
     /**
