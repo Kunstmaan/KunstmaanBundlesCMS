@@ -27,7 +27,7 @@ services:
 
     kunstmaan_media.media_handlers.image:
         class: "%kunstmaan_media.media_handler.image.class%"
-        arguments: ["%aviary_api_key%"]
+        arguments: ["@kunstmaan_media.mimetype_guesser.factory", "%aviary_api_key%"]
         calls:
             - [ setMediaPath, [ "%kernel.root_dir%" ] ]
         tags:
@@ -35,6 +35,7 @@ services:
 
     kunstmaan_media.media_handlers.file:
         class: "%kunstmaan_media.media_handler.file.class%"
+        arguments: ["@kunstmaan_media.mimetype_guesser.factory"]
         calls:
             - [ setMediaPath, [ "%kernel.root_dir%" ] ]
         tags:
@@ -42,6 +43,7 @@ services:
 
     kunstmaan_media.media_handlers.pdf:
         class: "%kunstmaan_media.media_handler.pdf.class%"
+        arguments: ["@kunstmaan_media.mimetype_guesser.factory"]
         calls:
             - [ setMediaPath, [ "%kernel.root_dir%" ] ]
             - [ setPdfTransformer, [ "@kunstmaan_media.pdf_transformer" ]]

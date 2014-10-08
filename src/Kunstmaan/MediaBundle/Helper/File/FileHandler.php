@@ -7,6 +7,7 @@ use Gaufrette\Filesystem;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\File\FileType;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\FileBinaryMimeTypeGuesser;
@@ -19,7 +20,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class FileHandler extends AbstractMediaHandler
 {
-
     /**
      * @var string
      */
@@ -38,11 +38,9 @@ class FileHandler extends AbstractMediaHandler
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
-        $this->mimeTypeGuesser = MimeTypeGuesser::getInstance();
-        $this->mimeTypeGuesser->register(new FileBinaryMimeTypeGuesser());
-        $this->mimeTypeGuesser->register(new SVGMimeTypeGuesser());
+        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
     }
 
     /**
