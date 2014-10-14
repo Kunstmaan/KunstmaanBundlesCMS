@@ -37,10 +37,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $config = $this->processConfiguration($configuration, $configs);
 
         if (array_key_exists('dashboard_route', $config)) {
-            $container->setParameter('kuma_admin.dashboard_route', $config['dashboard_route']);
+            $container->setParameter('kunstmaan_admin.dashboard_route', $config['dashboard_route']);
         }
-        $container->setParameter('kuma_admin.admin_locales', $config['admin_locales']);
-        $container->setParameter('kuma_admin.default_admin_locale', $config['default_admin_locale']);
+        $container->setParameter('kunstmaan_admin.admin_locales', $config['admin_locales']);
+        $container->setParameter('kunstmaan_admin.default_admin_locale', $config['default_admin_locale']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

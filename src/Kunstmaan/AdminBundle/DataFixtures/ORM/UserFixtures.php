@@ -41,7 +41,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
             'admin',
             'admin',
             'admin@domain.com',
-            $this->container->getParameter('kuma_admin.default_admin_locale'),
+            $this->container->getParameter('kunstmaan_admin.default_admin_locale'),
             array('ROLE_SUPER_ADMIN'),
             array($manager->merge($this->getReference('superadmins-group'))),
             true

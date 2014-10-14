@@ -39,7 +39,7 @@ class FixAdminLocaleCommand extends ContainerAwareCommand
         /* @var EntityRepository $repo */
         $repo = $em->getRepository('KunstmaanAdminBundle:User');
         $users = $repo->findAll();
-        $defaultAdminLocale = $this->getContainer()->getParameter('kuma_admin.default_admin_locale');
+        $defaultAdminLocale = $this->getContainer()->getParameter('kunstmaan_admin.default_admin_locale');
         foreach ($users as $user) {
             $user->setAdminLocale($defaultAdminLocale);
             $em->persist($user);

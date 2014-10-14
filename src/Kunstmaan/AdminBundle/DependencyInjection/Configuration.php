@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kuma_admin');
+        $rootNode = $treeBuilder->root('kunstmaan_admin');
 
         $rootNode
             ->fixXmlConfig('admin_locale')
@@ -32,8 +32,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
 
                 ->scalarNode('default_admin_locale')->cannotBeEmpty()->defaultValue('en')->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }
