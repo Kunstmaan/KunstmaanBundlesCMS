@@ -46,6 +46,6 @@
 </script>
 
 {% if ga_code is defined %}
-    <script src='/frontend/analytics.min.js?{{ assets_version() }}'></script>
+    <script src='/frontend/js/analytics.min.js?{{ assets_version() }}'></script>
     {{ google_analytics_initialize({'account_id': ga_code}) }}
 {% endif %}
