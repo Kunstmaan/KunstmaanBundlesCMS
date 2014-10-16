@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * SatelliteOverviewPage
  *
- * @ORM\Table(name="{{ prefix }}_satellite_overview_page")
+ * @ORM\Table(name="{{ prefix }}satellite_overview_page")
  * @ORM\Entity
  */
 class SatelliteOverviewPage extends \Kunstmaan\NodeBundle\Entity\AbstractPage implements \Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface

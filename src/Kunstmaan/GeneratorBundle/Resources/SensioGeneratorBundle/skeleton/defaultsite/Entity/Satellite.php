@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Satellite
  *
- * @ORM\Table(name="{{ prefix }}_satellite")
+ * @ORM\Table(name="{{ prefix }}satellite")
  * @ORM\Entity
  */
 class Satellite extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
