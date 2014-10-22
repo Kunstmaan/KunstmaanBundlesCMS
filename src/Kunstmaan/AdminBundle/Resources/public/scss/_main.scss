@@ -1121,6 +1121,9 @@ h1, h2, h3, h4, h5, h6{
         word-wrap: break-word;
         text-decoration: none;
     }
+    &#file-list.dragging-over {
+        background: #2997CE;
+    }
 }
 .list-block, .modal-body{
     ul{

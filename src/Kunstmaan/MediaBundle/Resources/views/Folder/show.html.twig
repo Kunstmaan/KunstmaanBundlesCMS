@@ -144,7 +144,7 @@
        <script>
        $(function(){
 
-    		var dropbox = $('#imagegallery'),
+    		var dropbox = $('#file-list'),
     			message = $('.message', dropbox);
 
     		dropbox.filedrop({
@@ -198,6 +198,14 @@
 
     			afterAll:function(i,file,response){
     				window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
+    			},
+
+                dragOver: function() {
+                    dropbox.addClass('dragging-over');
+                },
+
+                dragLeave: function() {
+                    dropbox.removeClass('dragging-over');
     			}
 
     		});
