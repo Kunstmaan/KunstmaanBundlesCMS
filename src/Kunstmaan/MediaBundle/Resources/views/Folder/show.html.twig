@@ -77,7 +77,7 @@
                         {% for child in folder.children %}
                             <tr>
                                 <td>
-                                	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id }) }}" class="item">{{ child.name }}</a>
+                                	<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id }) }}" class="item" data-folder-id="{{ child.id }}">{{ child.name }}</a>
                                 </td>
                             </tr>
                         {% else %}
@@ -105,7 +105,7 @@
                         {% for media in folder.media %}
                             {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
                             <li>
-                                <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}">
+                                <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                     {% set handler = mediamanager.getHandler(media) %}
                                     {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                                     {% if imageurl is not empty and media.location == 'local' %}
@@ -206,7 +206,7 @@
 
                 dragLeave: function() {
                     dropbox.removeClass('dragging-over');
-    			}
+                }
 
     		});
 
@@ -221,6 +221,78 @@
     			// with the file, using jQuery's $.data():
     			$.data(file,preview);
     		}
+
+            // media are draggable to folders
+            function initDragAndDrop() {
+                var draggables = dropbox.find('> li');
+                draggables.draggable({
+                    revert: true,
+                    containment: 'document',
+                    cursorAt: {left: -10, top: -10},
+                })
+                // init droppables only if a drag starts
+                .on('dragstart', function(e) {
+                    initDroppables();
+                    draggables.off('dragstart');
+                });
+
+                // make folder links droppable
+                function initDroppables() {
+                    // only run it once
+                    if ($(document).data('droppable-initialized') === true) {
+                        console.log('already init');
+                        return;
+                    }
+                    $(document).data('droppable-initialized', true);
+
+                    $('a[data-folder-id]').droppable({
+                        hoverClass: 'draggable-over',
+                        tolerance: 'pointer',
+                        drop: function(event, ui) {
+                            var target = $(event.target);
+                            var folderId = target.data('folder-id');
+                            var mediaDraggable = ui.draggable.first();
+                            var mediaId = mediaDraggable.find('a[data-media-id]').first().data('media-id');
+                            $.ajax({
+                                url: '{{ path('KunstmaanMediaBundle_media_move') }}',
+                                type: 'POST',
+                                data: {
+                                    folderId: folderId,
+                                    mediaId: mediaId
+                                }
+                            }).done(function() {
+                                displayConfirmation(target);
+                            }).fail(function(xhr) {
+                                mediaDraggable.fadeIn(300);
+                                displayFailure(target, JSON.parse(xhr.responseText));
+                            });
+                            mediaDraggable.fadeOut(300);
+                        }
+                    });
+                }
+
+                function displayConfirmation(elem) {
+                    elem.addClass('move-success');
+                    setTimeout(function() {
+                        elem.removeClass('move-success');
+                    }, 400);
+                }
+
+                function displayFailure(elem, data) {
+                    elem.addClass('move-failure');
+                    elem.popover({
+                        content: data.error.title,
+                        placement: 'top',
+                        title: 'error'
+                    });
+                    elem.popover('show');
+                    setTimeout(function() {
+                        elem.removeClass('move-failure');
+                        elem.popover('destroy');
+                    }, 2000);
+                }
+            }
+            initDragAndDrop();
 
     	});
 
