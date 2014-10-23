@@ -11,7 +11,9 @@ use InvalidArgumentException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
@@ -427,6 +429,51 @@ class NodeAdminController extends Controller
         $this->get('event_dispatcher')->dispatch(Events::ADD_NODE, new NodeEvent($nodeNewPage, $nodeTranslation, $nodeVersion, $newPage));
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeNewPage->getId())));
+    }
+
+    /**
+     * @param Request $request
+     * @throws AccessDeniedException
+     *
+     * @Route("/reorder", requirements={"_method" = "POST"}, name="KunstmaanNodeBundle_nodes_reorder")
+     *
+     * @return string
+     */
+    public function reorderAction(Request $request)
+    {
+        $this->init();
+        $nodes = array();
+        $nodeIds = $request->get('nodes');
+
+        foreach($nodeIds as $id){
+            /* @var Node $node */
+            $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+            $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+            $nodes[] = $node;
+        }
+
+        $weight = 0;
+        foreach($nodes as $node){
+
+            /* @var NodeTranslation $nodeTranslation */
+            $nodeTranslation = $node->getNodeTranslation($this->locale, true);
+            $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+            $page = $nodeVersion->getRef($this->em);
+
+            $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
+
+            $nodeTranslation->setWeight($weight);
+            $this->em->persist($nodeTranslation);
+            $this->em->flush();
+
+            $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
+
+            $weight++;
+        }
+
+        return new JsonResponse(array(
+            'Success' => 'The node-translations for ['.$this->locale.'] have got new weight values'
+        ));
     }
 
     /**
