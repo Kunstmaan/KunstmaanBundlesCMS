@@ -62,6 +62,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFields()
     {
         $this->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
+            ->addField('ref', 'Type', false)
             ->addField('created', 'Created At', true)
             ->addField('updated', 'Updated At', true)
             ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');

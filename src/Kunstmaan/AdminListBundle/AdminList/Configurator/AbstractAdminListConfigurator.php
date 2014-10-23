@@ -10,9 +10,12 @@ use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\AdminList\Field;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
+
+use Doctrine\ORM\EntityManager;
 
 use Pagerfanta\Pagerfanta;
 
@@ -75,6 +78,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      * @var FilterBuilder
      */
     private $filterBuilder = null;
+
+    /**
+     * @var EntityManager
+     */
+    private $em = null;
 
     /**
      * @var int
@@ -279,6 +287,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      * @param string $header   The header title
      * @param string $sort     Sortable column or not
      * @param string $template The template
+     * @param EntityManager $em The EntityManager
      *
      * @return AbstractAdminListConfigurator
      */
@@ -450,6 +459,15 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         return $this;
     }
 
+    protected function setEntityManager($em){
+        $this->em = $em;
+        return $this;
+    }
+
+    protected function getEntityManager(){
+        return $this->em;
+    }
+
     /**
      * @param array|object $item       The item
      * @param string       $columnName The column name
@@ -471,7 +489,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         } else {
             $methodName = 'get' . $columnName;
             if (method_exists($item, $methodName)) {
-                $result = $item->$methodName();
+                if($item instanceof NodeTranslation && $methodName == 'getref'){
+                    $entity = $item->$methodName($this->getEntityManager());
+                    $classReference = explode('\\',get_class($entity));
+                    $result = end($classReference);
+                }else{
+                    $result = $item->$methodName();
+                }
             } else {
                 $methodName = 'is' . $columnName;
                 if (method_exists($item, $methodName)) {
