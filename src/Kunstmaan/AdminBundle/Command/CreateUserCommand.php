@@ -80,7 +80,7 @@ EOT
         $groupOption = $input->getOption('group');
 
         if (empty($locale)) {
-            $locale = $this->getContainer()->getParameter('kuma_admin.default_admin_locale');
+            $locale = $this->getContainer()->getParameter('kunstmaan_admin.default_admin_locale');
         }
         $command = $this->getApplication()->find('fos:user:create');
         $arguments = array(

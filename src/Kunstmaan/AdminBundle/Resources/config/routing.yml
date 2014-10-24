@@ -25,27 +25,27 @@ KunstmaanAdminBundle_user_change_password:
 ###########################
 
 fos_user_security_login:
-    pattern: /login
+    pattern: /admin/login
     defaults: { _controller: FOSUserBundle:Security:login }
 
 fos_user_security_check:
-    pattern: /login_check
+    pattern: /admin/login_check
     defaults: { _controller: FOSUserBundle:Security:check }
         
 fos_user_security_logout:
-    pattern: /logout
+    pattern: /admin/logout
     defaults: { _controller: FOSUserBundle:Security:logout }
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /profile
+    prefix: /admin/profile
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /resetting
+    prefix: /admin/resetting
 
 fos_user_change_password:
-    pattern: /profile/change-password
+    pattern: /admin/profile/change-password
     defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
     requirements:
         _method: GET|POST

@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DefaultController extends Controller
 {
-
     /**
      * The index action will render the main screen the users see when they log in in to the admin
      *
@@ -26,8 +25,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->container->hasParameter("kuma_admin.dashboard_route")) {
-            return $this->redirect($this->generateUrl($this->container->getParameter("kuma_admin.dashboard_route")));
+        if ($this->container->hasParameter("kunstmaan_admin.dashboard_route")) {
+            return $this->redirect($this->generateUrl($this->container->getParameter("kunstmaan_admin.dashboard_route")));
         }
 
         /* @var DashboardConfiguration $dashboardConfiguration */

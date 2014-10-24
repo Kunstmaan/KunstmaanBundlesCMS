@@ -6,6 +6,8 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -15,30 +17,37 @@ use Symfony\Component\Security\Core\SecurityContext;
 class AdminLocaleListener implements EventSubscriberInterface
 {
     /**
-     * @var SecurityContext $context
+     * @var SecurityContext
      */
     private $context;
 
     /**
-     * @var TranslatorInterface $translator
+     * @var TranslatorInterface
      */
     private $translator;
 
     /**
-     * @var string $defaultadminlocale
+     * @var string
      */
-    private $defaultAdminlocale;
+    private $defaultAdminLocale;
+
+    /**
+     * @var string
+     */
+    private $providerKey;
 
     /**
      * @param SecurityContext     $context
      * @param TranslatorInterface $translator
      * @param string              $defaultAdminLocale
+     * @param string              $providerKey          Firewall name to check against
      */
-    public function __construct(SecurityContext $context, TranslatorInterface $translator, $defaultAdminLocale)
+    public function __construct(SecurityContext $context, TranslatorInterface $translator, $defaultAdminLocale, $providerKey = 'main')
     {
         $this->translator         = $translator;
         $this->context            = $context;
-        $this->defaultAdminlocale = $defaultAdminLocale;
+        $this->defaultAdminLocale = $defaultAdminLocale;
+        $this->providerKey        = $providerKey;
     }
 
     /**
@@ -54,22 +63,48 @@ class AdminLocaleListener implements EventSubscriberInterface
         }
 
         $url = $event->getRequest()->getRequestUri();
-        $token = $this->context->getToken();
+        if ($this->isAdminToken($this->context->getToken(), $this->providerKey) && $this->isAdminRoute($url)) {
+            $token = $this->context->getToken();
+            $locale = $token->getUser()->getAdminLocale();
 
-        // Quickfix to prevent preview routes from enforcing the admin locale!
-        if (!is_null($token) && strpos($url, '/admin/preview') === false) {
-            preg_match('/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/', $url, $match);
-
-            if (count($match)) {
-                $locale = $token->getUser()->getAdminLocale();
-
-                if (!$locale) {
-                    $locale = $this->defaultAdminlocale;
-                }
-
-                $this->translator->setLocale($locale);
+            if (!$locale) {
+                $locale = $this->defaultAdminLocale;
             }
+
+            $this->translator->setLocale($locale);
         }
+    }
+
+    /**
+     * @param TokenInterface $token
+     * @param                $providerKey
+     *
+     * @return bool
+     */
+    private function isAdminToken(TokenInterface $token, $providerKey)
+    {
+        return $token instanceof UsernamePasswordToken && $token->getProviderKey() === $providerKey;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    private function isAdminRoute($url)
+    {
+        preg_match('/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/', $url, $matches);
+
+        // Check if path is part of admin area
+        if (count($matches) === 0) {
+            return false;
+        }
+
+        if (strpos($url, '/admin/preview') !== false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
