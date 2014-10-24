@@ -15,7 +15,7 @@
                 <button id="search" class="btn search"><i class="icon-search"></i></button>
             </form>
         </div>
-        <div class="tree clearfix">
+        <div class="tree clearfix" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
             {% set currentMenuItem = adminmenu.current %}
    	        <ul>
                 {% if lowestTopChild.appearInSidebar %}

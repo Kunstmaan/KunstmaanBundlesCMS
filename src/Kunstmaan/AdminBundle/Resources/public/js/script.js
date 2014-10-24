@@ -22,17 +22,29 @@ function init_tree() {
         topLevelTreeElements = topLevelTreeElements + $(this).attr('id'); + ",";
     });
     $('.tree').jstree({
-        "plugins" : [ "themes", "html_data", "types", "search" ] ,
+        "plugins" : [ "themes", "html_data", "dnd", "crrm", "types", "search" ] ,
         "themes" : {
             "theme" : "OMNext",
             "dots" : true,
             "icons" : true
         },
         "core": {
-                    "animation": 0,
-                    "open_parents": true,
-                    "initially_open": [topLevelTreeElements]
-                },
+            "animation": 0,
+            "open_parents": true,
+            "initially_open": [topLevelTreeElements]
+        },
+        "crrm":{
+            "move": {
+                // Move only to current parent folder
+                "check_move": function(m){
+                    return m.op.is(m.np);
+                }
+            }
+        },
+        "dnd" : {
+            "drag_target": false,
+            "drop_target": false
+        },
         "types" : {
             "types" : {
                 //Page
@@ -96,7 +108,29 @@ function init_tree() {
         "search" : {
             "show_only_matches" : true
         }
-    });
+    }).bind("move_node.jstree", function(e, jstreeData){
+
+            var $parentNode = jstreeData.args[0].np,
+                url = $(this).data('reorder-url'),
+                params = {
+                    nodes : []
+                };
+
+            $parentNode.find(" > ul > li").each(function(){
+                var id = $(this).attr("id").replace(/node-/,'');
+                params.nodes.push(id);
+            });
+
+            $.post(
+                url,
+                params,
+                function(result){
+                    // Could display a success message from here.
+                }
+            );
+        }
+    );
+
     $("#treeform").submit(function() {
         $('.tree').jstree('search', $('#treeform #searchVal').val());
         return false;
