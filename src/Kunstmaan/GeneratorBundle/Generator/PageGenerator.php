@@ -116,7 +116,7 @@ class PageGenerator extends KunstmaanGenerator
                 $this->sections
             ),
             'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\Pages\\' . $this->entity . 'AdminType',
-            'namespace' => $this->registry->getEntityNamespace($this->bundle->getName()) . '\\Pages\\' . $this->entity
+            'namespace' => $this->registry->getAliasNamespace($this->bundle->getName()) . '\\Pages\\' . $this->entity
         );
         $extraCode = $this->render('/Entity/Pages/ExtraFunctions.php', $params);
 
