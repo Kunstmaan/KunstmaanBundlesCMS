@@ -2,16 +2,17 @@
 
 namespace Kunstmaan\SearchBundle\Search;
 
+use Kunstmaan\SearchBundle\Provider\SearchProviderChainInterface;
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
 
 /**
  * Search class which will delegate to the active SearchProvider
- * The active SearchProvider can be overridden by overriding the "kunstmaan_search.searchprovider" parameter
+ * The active SearchProvider can be overridden by overriding the "kunstmaan_search.search" parameter
  */
 class Search implements SearchProviderInterface
 {
     /**
-     * @var SearchProviderChain
+     * @var SearchProviderChainInterface
      */
     private $searchProviderChain;
 
@@ -26,11 +27,11 @@ class Search implements SearchProviderInterface
     private $activeProvider;
 
     /**
-     * @param SearchProviderChain $searchProviderChain
-     * @param string              $indexNamePrefix
-     * @param string              $activeProvider
+     * @param SearchProviderChainInterface $searchProviderChain
+     * @param string                       $indexNamePrefix
+     * @param string                       $activeProvider
      */
-    public function __construct($searchProviderChain, $indexNamePrefix, $activeProvider)
+    public function __construct(SearchProviderChainInterface $searchProviderChain, $indexNamePrefix, $activeProvider)
     {
         $this->searchProviderChain = $searchProviderChain;
         $this->indexNamePrefix     = $indexNamePrefix;

@@ -15,8 +15,6 @@ services:
 
     kunstmaan_search.search.factory.analysis:
         class: "%kunstmaan_search.search.factory.analysis.class%"
-        calls:
-            - [ setStopwords, ["nl", "%stopwords_nl%"] ]
 
     # Providers
     kunstmaan_search.search_provider_chain:

@@ -19,9 +19,8 @@
         "ruflin/elastica": "~1.0"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\SearchBundle": "" }
+        "psr-4": { "Kunstmaan\\SearchBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/SearchBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"

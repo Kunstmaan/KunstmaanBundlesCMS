@@ -22,17 +22,17 @@ class KunstmaanSearchExtensionTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->extension = $this->getExtension();
-        $this->root      = "kunstmaan_search";
+        $this->root      = 'kunstmaan_search';
     }
 
     public function testGetConfig()
     {
         $container = $this->getContainer();
         $this->extension->load(array(array()), $container);
-        $this->assertTrue($container->hasParameter("analyzer_languages"));
-        $this->assertTrue(is_array($container->getParameter("analyzer_languages")));
+        $this->assertTrue($container->hasParameter('analyzer_languages'));
+        $this->assertTrue(is_array($container->getParameter('analyzer_languages')));
 
-        $analyzers = $container->getParameter("analyzer_languages");
+        $analyzers = $container->getParameter('analyzer_languages');
         $this->assertTrue(array_key_exists('ar', $analyzers));
         $this->assertEquals('arabic', $analyzers['ar']['analyzer']);
     }

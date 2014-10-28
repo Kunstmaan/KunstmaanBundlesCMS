@@ -7,7 +7,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
-use Kunstmaan\NodeSearchBundle\Helper\SearchDataInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -19,7 +18,7 @@ use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
-use Kunstmaan\SearchBundle\Search\AnalysisFactory;
+use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -107,6 +106,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $this->logger = $logger;
     }
 
+    /**
+     * Create node index
+     */
     public function createIndex()
     {
         //build new index
@@ -129,6 +131,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
     }
 
+    /**
+     * Populate node index
+     */
     public function populateIndex()
     {
         $nodeRepository = $this->em->getRepository('KunstmaanNodeBundle:Node');
@@ -146,6 +151,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
     }
 
+    /**
+     * Index a node (including its children) - for the specified language only
+     *
+     * @param Node   $node
+     * @param string $lang
+     */
     public function indexNode(Node $node, $lang)
     {
         $this->createNodeDocuments($node, $lang);
@@ -156,6 +167,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
     }
 
+    /**
+     * Add documents for the node translation (and children) to the index
+     *
+     * @param Node   $node
+     * @param string $lang
+     */
     public function createNodeDocuments(Node $node, $lang)
     {
         $nodeTranslation = $node->getNodeTranslation($lang);
@@ -166,6 +183,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
     }
 
+    /**
+     * Index all children of the specified node (only for the specified language)
+     *
+     * @param Node   $node
+     * @param string $lang
+     */
     public function indexChildren(Node $node, $lang)
     {
         foreach ($node->getChildren() as $childNode) {
@@ -174,10 +197,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Index a node translation
+     *
      * @param NodeTranslation $nodeTranslation
      * @param bool            $add Add node immediately to index?
      *
-     * @return bool            Return true if the document has been indexed
+     * @return bool Return true if the document has been indexed
      */
     public function indexNodeTranslation(NodeTranslation $nodeTranslation, $add = false)
     {
@@ -208,6 +233,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Return if the page is indexable - by default all pages are indexable, you can override this by implementing
+     * the IndexableInterface on your page entity and returning false in the isIndexable method.
+     *
      * @param HasNodeInterface $page
      *
      * @return boolean
@@ -219,6 +247,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Remove the specified node translation from the index
+     *
      * @param NodeTranslation $nodeTranslation
      */
     public function deleteNodeTranslation(NodeTranslation $nodeTranslation)
@@ -227,16 +257,21 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $this->searchProvider->deleteDocument($this->indexName, $this->indexType, $uid);
     }
 
+    /**
+     * Delete the specified index
+     */
     public function deleteIndex()
     {
         $this->searchProvider->deleteIndex($this->indexName);
     }
 
     /**
-     * @param \Elastica\Index $index
-     * @param AnalysisFactory $analysis
+     * Apply the analysis factory to the index
+     *
+     * @param \Elastica\Index          $index
+     * @param AnalysisFactoryInterface $analysis
      */
-    public function setAnalysis(\Elastica\Index $index, AnalysisFactory $analysis)
+    public function setAnalysis(\Elastica\Index $index, AnalysisFactoryInterface $analysis)
     {
         $index->create(
             array(
@@ -248,6 +283,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Return default search fields mapping for node translations
+     *
      * @param \Elastica\Index $index
      * @param string          $lang
      *
@@ -337,10 +374,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Initialize the index with the default search fields mapping
+     *
      * @param \Elastica\Index $index
      * @param string          $lang
      */
-    private function setMapping(\Elastica\Index $index, $lang = 'en')
+    protected function setMapping(\Elastica\Index $index, $lang = 'en')
     {
         $mapping = $this->getMapping($index, $lang);
         $mapping->send();
@@ -348,6 +387,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Create a search document for a page
+     *
      * @param NodeTranslation  $nodeTranslation
      * @param Node             $node
      * @param NodeVersion      $publicNodeVersion
@@ -404,6 +445,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Add view permissions to the index document
+     *
      * @param Node  $node
      * @param array $doc
      *
@@ -422,6 +465,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Add type to the index document
+     *
      * @param object $page
      * @param array  $doc
      *
@@ -438,6 +483,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Add content analyzer to the index document
+     *
      * @param NodeTranslation $nodeTranslation
      * @param array           $doc
      *
@@ -450,6 +497,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Add parent nodes to the index document
+     *
      * @param Node  $node
      * @param array $doc
      *
@@ -472,6 +521,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Add page content to the index document
+     *
      * @param NodeTranslation  $nodeTranslation
      * @param HasNodeInterface $page
      * @param array            $doc
@@ -511,9 +562,11 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Enter request scope if it is not active yet...
+     *
      * @param string $lang
      */
-    private function enterRequestScope($lang)
+    protected function enterRequestScope($lang)
     {
         if (!$this->container->isScopeActive('request')) {
             $this->container->enterScope('request');
@@ -524,6 +577,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Render a custom search view
+     *
      * @param NodeTranslation $nodeTranslation
      * @param                 $page
      * @param                 $renderer
@@ -548,6 +603,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Render default search view (all indexable pageparts in the main context of the page)
+     *
      * @param NodeTranslation $nodeTranslation
      * @param                 $page
      * @param                 $renderer
@@ -574,6 +631,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Add boost to the index document
+     *
      * @param Node             $node
      * @param HasNodeInterface $page
      * @param array            $doc
@@ -595,20 +654,19 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
-     * Merge with custom data
+     * Add custom data to index document (you can override to add custom fields to the search index)
      *
      * @param HasNodeInterface $page
      * @param array            $doc
      */
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
-        if ($page instanceof SearchDataInterface) {
-            $extraData = $page->getSearchData();
-            $doc       = array_merge($doc, $extraData);
-        }
+        // You can add custom data to be added to the document index array ($doc) here if you inherit from this class...
     }
 
     /**
+     * Convert a DateTime to UTC equivalent...
+     *
      * @param \DateTime $dateTime
      *
      * @return \DateTime
@@ -636,6 +694,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Fetch ACL permissions for the specified entity
+     *
      * @param object $object
      *
      * @return array

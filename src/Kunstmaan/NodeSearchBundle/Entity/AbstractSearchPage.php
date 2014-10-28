@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SearcherRequestAdapter;
+use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
@@ -33,60 +34,59 @@ class AbstractSearchPage extends AbstractPage implements IndexableInterface
      */
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
-        // Retrieve the current page number from the URL, if not present of lower than 1, set it to 1
-        $pageNumber = $request->get('page');
-        if (!$pageNumber or $pageNumber < 1) {
-            $pageNumber = 1;
-        }
-
-        // Retrieve the search parameters
-        $queryString = trim($request->get('query'));
-        $queryType   = $request->get('queryType');
-        $lang        = $request->getLocale();
-
         // Perform a search if there is a queryString available
-        if (!empty($queryString)) {
-            $pagerfanta            = $this->search(
-                $container,
-                $this->sanitizeSearchQuery($queryString),
-                $queryType,
-                $lang,
-                $pageNumber
-            );
-            $context['q_query']    = $queryString;
-            $context['q_type']     = $queryType;
+        if ($request->query->has('query')) {
+            $pagerfanta            = $this->search($container, $request, $context);
             $context['pagerfanta'] = $pagerfanta;
         }
     }
 
     /**
      * @param ContainerInterface $container
-     * @param string             $queryString
-     * @param string             $queryType
-     * @param string             $lang
-     * @param int                $pageNumber
+     * @param Request            $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return Pagerfanta
      */
-    public function search(ContainerInterface $container, $queryString, $queryType, $lang, $pageNumber)
+    public function search(ContainerInterface $container, Request $request, RenderContext $context)
     {
-        $searcher = $container->get($this->getSearcher());
-        $searcher->setData($queryString);
-        $searcher->setContentType($queryType);
-        $searcher->setLanguage($lang);
+        // Retrieve the current page number from the URL, if not present of lower than 1, set it to 1
+        $pageNumber = $this->getRequestedPage($request);
+        $searcher   = $container->get($this->getSearcher());
+        $this->applySearchParams($searcher, $request, $context);
 
         $adapter    = new SearcherRequestAdapter($searcher);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta
-            ->setMaxPerPage($this->getDefaultPerPage());
         try {
-            $pagerfanta->setCurrentPage($pageNumber);
+            $pagerfanta
+                ->setMaxPerPage($this->getDefaultPerPage())
+                ->setCurrentPage($pageNumber);
         } catch (NotValidCurrentPageException $e) {
             throw new NotFoundHttpException();
         }
 
         return $pagerfanta;
+    }
+
+    /**
+     * @param AbstractElasticaSearcher $searcher
+     * @param Request                  $request
+     * @param RenderContext            $context
+     */
+    protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext $context)
+    {
+        // Retrieve the search parameters
+        $queryString = trim($request->query->get('query'));
+        $queryType   = $request->query->get('type');
+        $lang        = $request->getLocale();
+
+        $context['q_query'] = $queryString;
+        $context['q_type']  = $queryType;
+
+        $searcher
+            ->setData($this->sanitizeSearchQuery($queryString))
+            ->setContentType($queryType)
+            ->setLanguage($lang);
     }
 
     /**
@@ -151,5 +151,20 @@ class AbstractSearchPage extends AbstractPage implements IndexableInterface
     protected function sanitizeSearchQuery($query)
     {
         return '"' . $query . '"';
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return int
+     */
+    private function getRequestedPage(Request $request)
+    {
+        $pageNumber = $request->query->getInt('page', 1);
+        if (!$pageNumber or $pageNumber < 1) {
+            $pageNumber = 1;
+        }
+
+        return $pageNumber;
     }
 }

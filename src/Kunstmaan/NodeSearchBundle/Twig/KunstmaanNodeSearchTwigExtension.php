@@ -25,6 +25,10 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
      */
     protected $environment;
 
+    /**
+     * @param EntityManager             $em
+     * @param IndexablePagePartsService $indexablePagePartsService
+     */
     public function __construct(EntityManager $em, IndexablePagePartsService $indexablePagePartsService)
     {
         $this->em                        = $em;

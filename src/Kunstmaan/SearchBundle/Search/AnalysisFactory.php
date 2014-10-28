@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SearchBundle\Search;
 
-class AnalysisFactory
+class AnalysisFactory implements AnalysisFactoryInterface
 {
     /** @var array */
     private $analyzers;
@@ -25,6 +25,9 @@ class AnalysisFactory
         $this->stopwords  = array();
     }
 
+    /**
+     * @return array
+     */
     public function build()
     {
         $analysis = array(
@@ -39,7 +42,7 @@ class AnalysisFactory
     /**
      * @param string $lang
      *
-     * @return AnalysisFactory
+     * @return AnalysisFactoryInterface
      */
     public function addIndexAnalyzer($lang)
     {
@@ -68,7 +71,7 @@ class AnalysisFactory
     /**
      * @param string $lang
      *
-     * @return AnalysisFactory
+     * @return AnalysisFactoryInterface
      */
     public function addSuggestionAnalyzer($lang)
     {
@@ -87,7 +90,7 @@ class AnalysisFactory
     }
 
     /**
-     * @return AnalysisFactory
+     * @return AnalysisFactoryInterface
      */
     public function addNGramFilter()
     {
@@ -104,7 +107,7 @@ class AnalysisFactory
      * @param string $lang
      * @param array  $words
      *
-     * @return AnalysisFactory
+     * @return AnalysisFactoryInterface
      */
     public function addStopWordsFilter($lang, array $words = null)
     {
@@ -124,7 +127,7 @@ class AnalysisFactory
     }
 
     /**
-     * @return AnalysisFactory
+     * @return AnalysisFactoryInterface
      */
     public function addStripSpecialCharsFilter()
     {
@@ -140,10 +143,14 @@ class AnalysisFactory
     /**
      * @param string $lang
      * @param array  $stopwords
+     *
+     * @return AnalysisFactoryInterface
      */
     public function setStopwords($lang, $stopwords)
     {
         $this->stopwords[$lang] = $stopwords;
+
+        return $this;
     }
 
     /**
@@ -162,16 +169,22 @@ class AnalysisFactory
 
     /**
      * @param string $lang
+     *
+     * @return AnalysisFactoryInterface
      */
     public function setupLanguage($lang = 'en')
     {
         $this
             ->addIndexAnalyzer($lang)
             ->addSuggestionAnalyzer($lang);
+
+        return $this;
     }
 
     /**
      * @param array|string $languages
+     *
+     * @return AnalysisFactoryInterface
      */
     public function setupLanguages($languages)
     {
@@ -181,5 +194,7 @@ class AnalysisFactory
         foreach ($languages as $lang) {
             $this->setupLanguage($lang);
         }
+
+        return $this;
     }
 }

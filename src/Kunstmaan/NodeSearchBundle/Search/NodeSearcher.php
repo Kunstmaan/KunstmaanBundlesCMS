@@ -5,6 +5,13 @@ namespace Kunstmaan\NodeSearchBundle\Search;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+/**
+ * Class NodeSearcher
+ *
+ * Default node searcher implementation
+ *
+ * @package Kunstmaan\NodeSearchBundle\Search
+ */
 class NodeSearcher extends AbstractElasticaSearcher
 {
     /** @var SecurityContextInterface */
@@ -70,6 +77,8 @@ class NodeSearcher extends AbstractElasticaSearcher
     }
 
     /**
+     * Filter search results so only documents that are viewable by the current user will be returned...
+     *
      * @param $elasticaQueryBool
      */
     protected function applySecurityContext($elasticaQueryBool)

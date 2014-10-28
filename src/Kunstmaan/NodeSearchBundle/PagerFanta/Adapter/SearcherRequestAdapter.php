@@ -3,10 +3,16 @@
 namespace Kunstmaan\NodeSearchBundle\PagerFanta\Adapter;
 
 use Kunstmaan\NodeSearchBundle\Search\SearcherInterface;
-use Pagerfanta\Adapter\AdapterInterface;
 use Elastica\ResultSet;
 
-class SearcherRequestAdapter implements AdapterInterface
+/**
+ * Class SearcherRequestAdapter
+ *
+ * A Pagerfanta adapter to paginate Elastica search results.
+ *
+ * @package Kunstmaan\NodeSearchBundle\PagerFanta\Adapter
+ */
+class SearcherRequestAdapter implements SearcherRequestAdapterInterface
 {
     /**
      * @var SearcherInterface
@@ -21,36 +27,26 @@ class SearcherRequestAdapter implements AdapterInterface
     /**
      * @var ResultSet
      */
-    private $fullResponse;
+    private $suggests;
 
     /**
-     * @var ResultSet
+     * @var array
      */
-    private $suggests;
+    private $facets;
+
+    /**
+     * @var array
+     */
+    private $hits;
 
     /**
      * @param SearcherInterface $searcher
      */
     public function __construct(SearcherInterface $searcher)
     {
-        $this->searcher     = $searcher;
-        $this->fullResponse = $this->searcher->search();
-    }
-
-    /**
-     * @return array|ResultSet
-     */
-    public function getResponse()
-    {
-        return $this->createBCResponse($this->response);
-    }
-
-    /**
-     * @return array|ResultSet
-     */
-    public function getFullResponse()
-    {
-        return $this->createBCResponse($this->fullResponse);
+        $this->searcher = $searcher;
+        $this->facets   = array();
+        $this->hits     = array();
     }
 
     /**
@@ -67,13 +63,21 @@ class SearcherRequestAdapter implements AdapterInterface
     }
 
     /**
+     * @return array
+     */
+    public function getFacets()
+    {
+        return $this->facets;
+    }
+
+    /**
      * Returns the number of results.
      *
      * @return integer The number of results.
      */
     public function getNbResults()
     {
-        return $this->fullResponse->getTotalHits();
+        return $this->response->getTotalHits();
     }
 
     /**
@@ -87,9 +91,9 @@ class SearcherRequestAdapter implements AdapterInterface
     public function getSlice($offset, $length)
     {
         $this->response = $this->searcher->search($offset, $length);
-        $response       = $this->createBCResponse($this->response);
+        $this->processResponse($this->response);
 
-        return $response['hits'];
+        return $this->hits;
     }
 
     /**
@@ -97,15 +101,23 @@ class SearcherRequestAdapter implements AdapterInterface
      *
      * @return array|ResultSet
      */
-    public function createBCResponse(ResultSet $result = null)
+    protected function processResponse(ResultSet $result = null)
     {
-        if ($result == null) {
-            return $result;
+        $this->hits = array();
+        $this->facets = array();
+        if (is_null($result)) {
+            return null;
         }
+        $this->collectHits($result);
+        $this->collectFacets($result);
+    }
 
-        $data               = $result->getResults();
-        $bcResponse         = array();
-        $bcResponse['hits'] = array();
+    /**
+     * @param ResultSet $result
+     */
+    protected function collectHits(ResultSet $result)
+    {
+        $data       = $result->getResults();
         foreach ($data as $item) {
             $content            = array();
             $content['_source'] = $item->getData();
@@ -113,13 +125,24 @@ class SearcherRequestAdapter implements AdapterInterface
             if (!empty($highlights)) {
                 $content['highlight'] = $highlights;
             }
-            $bcResponse['hits'][] = $content;
+            $this->hits[] = $content;
+        }
+    }
+
+    /**
+     * @param ResultSet $result
+     *
+     * @return bool
+     */
+    protected function collectFacets(ResultSet $result)
+    {
+        if (!$result->hasFacets()) {
+            return false;
         }
 
-        if ($result->hasFacets()) {
-            $bcResponse['facets'] = $result->getFacets();
-        }
+        // Collect all facets
+        $this->facets = $result->getFacets();
 
-        return $bcResponse;
+        return true;
     }
 }

@@ -2,7 +2,12 @@
     "name": "kunstmaan/node-search-bundle",
     "type": "symfony-bundle",
     "description": "This bundle uses the KunstmaanSearchBundle to search through Nodes from the KunstmaanNodeBundle",
-    "keywords": ["kunstmaan", "node", "search", "elasticsearch"],
+    "keywords": [
+        "kunstmaan",
+        "node",
+        "search",
+        "elasticsearch"
+    ],
     "homepage": "https://github.com/Kunstmaan/KunstmaanNodeSearchBundle",
     "license": "MIT",
     "authors": [
@@ -17,16 +22,15 @@
         "php": ">=5.3.3",
         "symfony/symfony": "~2.3",
         "white-october/pagerfanta-bundle": "1.0.*",
-	"ruflin/elastica": "~1.0",
+        "ruflin/elastica": "~1.0",
         "kunstmaan/node-bundle": "~3.0.0",
         "kunstmaan/pagepart-bundle": "~3.0.0",
         "kunstmaan/search-bundle": "~3.0.0",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\NodeSearchBundle": "" }
+        "psr-4": { "Kunstmaan\\NodeSearchBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/NodeSearchBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"

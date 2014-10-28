@@ -27,12 +27,7 @@ class KunstmaanSearchExtension extends Extension
         if (count($config['analyzer_languages']) <= 0) {
             $config['analyzer_languages'] = $this->getDefaultAnalyzerLanguages();
         }
-
         $container->setParameter('analyzer_languages', $config['analyzer_languages']);
-        $container->setParameter(
-            'stopwords_nl',
-            Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/stopwords_nl.yml'))
-        );
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');

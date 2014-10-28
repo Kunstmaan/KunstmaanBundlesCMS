@@ -5,7 +5,7 @@ namespace Kunstmaan\SearchBundle\Provider;
 /**
  * The chain of SearchProviders
  */
-class SearchProviderChain
+class SearchProviderChain implements SearchProviderChainInterface
 {
     /** @var SearchProviderInterface[] */
     private $providers;

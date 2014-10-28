@@ -9,7 +9,14 @@ use Kunstmaan\SearchBundle\Search\Search as SearchLayer;
 
 abstract class AbstractElasticaSearcher implements SearcherInterface
 {
+    /**
+     * @var string
+     */
     protected $indexName;
+
+    /**
+     * @var string
+     */
     protected $indexType;
 
     /**
@@ -17,14 +24,29 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     protected $search;
 
+    /**
+     * @var Query
+     */
     protected $query;
+
+    /**
+     * @var mixed
+     */
     protected $data;
+
+    /**
+     * @var string
+     */
     protected $language;
+
+    /**
+     * @var string
+     */
     protected $contentType;
 
     public function __construct()
     {
-	$this->query = new Query();
+        $this->query = new Query();
     }
 
     /**
@@ -44,10 +66,10 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function search($offset = null, $size = null)
     {
-	$this->defineSearch($this->data, $this->language, $this->contentType);
-	$this->setPagination($offset, $size);
+        $this->defineSearch($this->data, $this->language, $this->contentType);
+        $this->setPagination($offset, $size);
 
-	return $this->getSearchResult();
+        return $this->getSearchResult();
     }
 
     /**
@@ -55,17 +77,17 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getSuggestions()
     {
-	$suggestPhrase = new Suggest\Phrase('content-suggester', 'content');
-	$suggestPhrase->setText($this->data);
-	$suggestPhrase->setAnalyzer('suggestion_analyzer_' . $this->language);
-	$suggestPhrase->setHighlight("<strong>", "</strong>");
-	$suggestPhrase->setConfidence(2);
-	$suggestPhrase->setSize(1);
+        $suggestPhrase = new Suggest\Phrase('content-suggester', 'content');
+        $suggestPhrase->setText($this->data);
+        $suggestPhrase->setAnalyzer('suggestion_analyzer_' . $this->language);
+        $suggestPhrase->setHighlight("<strong>", "</strong>");
+        $suggestPhrase->setConfidence(2);
+        $suggestPhrase->setSize(1);
 
-	$suggest = new Suggest($suggestPhrase);
-	$this->query->setSuggest($suggest);
+        $suggest = new Suggest($suggestPhrase);
+        $this->query->setSuggest($suggest);
 
-	return $this->getSearchResult();
+        return $this->getSearchResult();
     }
 
     /**
@@ -73,14 +95,14 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getSearchResult()
     {
-	$index = $this->search->getIndex($this->getIndexName());
+        $index = $this->search->getIndex($this->getIndexName());
 
-	$search = new Search($this->search->getClient());
-	$search->addIndex($index);
-	$search->addType($index->getType($this->indexType . '_' . $this->language));
-	$result = $search->search($this->query);
+        $search = new Search($this->search->getClient());
+        $search->addIndex($index);
+        $search->addType($index->getType($this->indexType . '_' . $this->language));
+        $result = $search->search($this->query);
 
-	return $result;
+        return $result;
     }
 
     /**
@@ -91,15 +113,15 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function setPagination($offset, $size)
     {
-	if (is_int($offset)) {
-	    $this->query->setFrom($offset);
-	}
+        if (is_int($offset)) {
+            $this->query->setFrom($offset);
+        }
 
-	if (is_int($size)) {
-	    $this->query->setSize($size);
-	}
+        if (is_int($size)) {
+            $this->query->setSize($size);
+        }
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -109,9 +131,9 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function setIndexName($indexName)
     {
-	$this->indexName = $indexName;
+        $this->indexName = $indexName;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -119,7 +141,7 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getIndexName()
     {
-	return $this->indexName;
+        return $this->indexName;
     }
 
     /**
@@ -129,9 +151,9 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function setIndexType($indexType)
     {
-	$this->indexType = $indexType;
+        $this->indexType = $indexType;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -139,7 +161,7 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getIndexType()
     {
-	return $this->indexType;
+        return $this->indexType;
     }
 
     /**
@@ -149,9 +171,9 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function setData($data)
     {
-	$this->data = $data;
+        $this->data = $data;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -161,7 +183,7 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getData()
     {
-	return $this->data;
+        return $this->data;
     }
 
     /**
@@ -171,9 +193,9 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function setLanguage($language)
     {
-	$this->language = $language;
+        $this->language = $language;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -181,7 +203,7 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getLanguage()
     {
-	return $this->language;
+        return $this->language;
     }
 
     /**
@@ -191,9 +213,9 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function setContentType($contentType)
     {
-	$this->contentType = $contentType;
+        $this->contentType = $contentType;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -201,24 +223,34 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getContentType()
     {
-	return $this->contentType;
+        return $this->contentType;
     }
 
     /**
-     * @param mixed $search
+     * @param SearchLayer $search
+     *
+     * @return SearcherInterface
      */
     public function setSearch($search)
     {
-	$this->search = $search;
+        $this->search = $search;
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return SearchLayer
      */
     public function getSearch()
     {
-	return $this->search;
+        return $this->search;
+    }
+
+    /**
+     * @return Query
+     */
+    public function getQuery()
+    {
+        return $this->query;
     }
 }
