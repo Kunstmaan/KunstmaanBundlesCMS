@@ -77,7 +77,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
      */
     public function getNbResults()
     {
-        return $this->response->getTotalHits();
+        return $this->getResponse()->getTotalHits();
     }
 
     /**
@@ -144,5 +144,17 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
         $this->facets = $result->getFacets();
 
         return true;
+    }
+
+    /**
+     * @return ResultSet
+     */
+    private function getResponse()
+    {
+        if (is_null($this->response)) {
+            $this->response = $this->searcher->search();
+        }
+
+        return $this->response;
     }
 }
