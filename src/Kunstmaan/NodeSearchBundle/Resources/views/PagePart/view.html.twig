@@ -1,7 +1,8 @@
-{% block content %}
-    {% if pageparts is not empty %}
-        {% for pagepart in pageparts %}
-            {% include pagepart.getDefaultView() with {'resource': pagepart} %}
-        {% endfor %}
+{% for box in pageparts %}
+    {% set resource = box %}
+    {% if box.searchView is defined %}
+        {% include box.getSearchView() %}
+    {% else %}
+        {% include box.getView(page) %}
     {% endif %}
-{% endblock %}
+{% endfor %}

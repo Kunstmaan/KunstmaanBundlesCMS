@@ -23,7 +23,7 @@ $doc = array(
 
 ### Type
 
-The type is by default the class name of the object. This can be overridden by implementing the HasCustomSearchType interface. This will allow you to bundle multiple classes together under the same type.
+By default the type will be the class name of the object. You can overridde this by implementing the SearchTypeInterface interface. This will allow you to bundle multiple classes together under the same type.
 
 ### Parent and Ancestors
 
@@ -49,18 +49,18 @@ When a page is being updated, an event will be triggered to update the index wit
 
 Extend the AbstractSearchPage and add your new class as a possible child to a page in your website :
 ```PHP
-    /**
-     * @return array
-     */
-    public function getPossibleChildTypes()
-    {
-        return array(
-            array(
-                'name' => 'Search page',
-                'class'=> "Acme\DemoBundle\Entity\SearchPage"
-            )
-        );
-    }
+/**
+ * @return array
+ */
+public function getPossibleChildTypes()
+{
+    return array(
+        array(
+            'name' => 'Search page',
+            'class'=> "Acme\DemoBundle\Entity\SearchPage"
+        )
+    );
+}
 ```
 
 To override the template, simply create a view.html.twig in the 'app/Resources/KunstmaanNodeSearchBundle/views/SearchPage/' folder.

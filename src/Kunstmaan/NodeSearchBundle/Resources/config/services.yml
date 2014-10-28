@@ -1,20 +1,39 @@
 parameters:
-    kunstmaan_node_search.searchconfiguration.node.class: Kunstmaan\NodeSearchBundle\Configuration\NodeSearchConfiguration
+    kunstmaan_node_search.search_configuration.node.class: Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration
     kunstmaan_node_search.indexname: "nodeindex"
     kunstmaan_node_search.indextype: "page"
+    kunstmaan_node_search.search.node.class: Kunstmaan\NodeSearchBundle\Search\NodeSearcher
+
 services:
+    kunstmaan_node_search.search.abstract_elastica_searcher:
+        class: Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher
+        abstract: true
+        calls:
+            - [ setSearch, ["@kunstmaan_search.search"]]
 
-    kunstmaan_node_search.searchconfiguration.node:
-        class: "%kunstmaan_node_search.searchconfiguration.node.class%"
+    kunstmaan_node_search.search.node:
+        class: %kunstmaan_node_search.search.node.class%
+        parent: kunstmaan_node_search.search.abstract_elastica_searcher
+        calls:
+            - [ setIndexName, ["%kunstmaan_node_search.indexname%"]]
+            - [ setIndexType, ["%kunstmaan_node_search.indextype%"]]
+            - [ setSecurityContext, ["@security.context"]]
+
+    kunstmaan_node_search.service.indexable_pageparts:
+        class: Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    kunstmaan_node_search.twig.extension:
+        class: Kunstmaan\NodeSearchBundle\Twig\KunstmaanNodeSearchTwigExtension
+        arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_node_search.service.indexable_pageparts"]
+        tags:
+            - { name: twig.extension }
+
+    kunstmaan_node_search.search_configuration.node:
+        class: %kunstmaan_node_search.search_configuration.node.class%
         arguments: ["@service_container", "@kunstmaan_search.search", "%kunstmaan_node_search.indexname%", "%kunstmaan_node_search.indextype%"]
+        calls:
+            - [ setAclProvider, ["@security.acl.provider"]]
+            - [ setIndexablePagePartsService, ["@kunstmaan_node_search.service.indexable_pageparts"]]
         tags:
-            - { name: kunstmaan_search.searchconfiguration, alias: Node }
-
-    kunstmaan_node_search.node_index_update.listener:
-        class: Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener
-        arguments: ["@service_container"]
-        tags:
-            - { name: kernel.event_listener, event: kunstmaan_node.postPublish, method: onPostPublish }
-            - { name: kernel.event_listener, event: kunstmaan_node.postPersist, method: onPostPersist }
-            - { name: kernel.event_listener, event: kunstmaan_node.postDelete, method: onPostDelete }
-            - { name: kernel.event_listener, event: kunstmaan_node.postUnPublish, method: onPostUnPublish }
+            - { name: kunstmaan_search.search_configuration, alias: Node }

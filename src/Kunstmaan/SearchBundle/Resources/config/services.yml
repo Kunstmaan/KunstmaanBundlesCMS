@@ -1,28 +1,32 @@
 parameters:
     kunstmaan_search.hostname: "localhost"
     kunstmaan_search.port: 9200
-    kunstmaan_search.searchprovider: "Sherlock"
-    kunstmaan_search.searchconfiguration_chain.class: Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain
-    kunstmaan_search.searchprovider_chain.class: Kunstmaan\SearchBundle\Provider\SearchProviderChain
+    kunstmaan_search.search_provider: "Elastica"
+    kunstmaan_search.search_configuration_chain.class: Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain
+    kunstmaan_search.search_provider_chain.class: Kunstmaan\SearchBundle\Provider\SearchProviderChain
+    kunstmaan_search.search.class: Kunstmaan\SearchBundle\Search\Search
+    kunstmaan_search.search.factory.analysis.class: Kunstmaan\SearchBundle\Search\AnalysisFactory
+    kunstmaan_search.search_provider.elastica.class: Kunstmaan\SearchBundle\Provider\ElasticaProvider
 
 services:
-
     kunstmaan_search.search:
-        arguments: ["@kunstmaan_search.searchprovider_chain", %searchindexprefix%, "%kunstmaan_search.searchprovider%"]
-        class: Kunstmaan\SearchBundle\Search\Search
+        class: "%kunstmaan_search.search.class%"
+        arguments: ["@kunstmaan_search.search_provider_chain", "%searchindexprefix%", "%kunstmaan_search.search_provider%"]
+
+    kunstmaan_search.search.factory.analysis:
+        class: "%kunstmaan_search.search.factory.analysis.class%"
 
     # Providers
+    kunstmaan_search.search_provider_chain:
+        class: "%kunstmaan_search.search_provider_chain.class%"
 
-    Kunstmaan_search.searchprovider_chain:
-        class: "%kunstmaan_search.searchprovider_chain.class%"
-
-    kunstmaan_search.searchprovider.sherlock:
-        class: Kunstmaan\SearchBundle\Sherlock\SherlockSearchProvider
-        arguments: [%kunstmaan_search.hostname%, %kunstmaan_search.port%]
+    kunstmaan_search.search_provider.elastica:
+        class: "%kunstmaan_search.search_provider.elastica.class%"
+        calls:
+            - [ addNode, [%kunstmaan_search.hostname%, %kunstmaan_search.port%] ]
         tags:
-            - { name: kunstmaan_search.searchprovider, alias: Sherlock}
+            - { name: kunstmaan_search.search_provider, alias: Elastica }
 
-    #Configurations
-
-    Kunstmaan_search.searchconfiguration_chain:
-        class: "%kunstmaan_search.searchconfiguration_chain.class%"
+    # Configurations
+    kunstmaan_search.search_configuration_chain:
+        class: "%kunstmaan_search.search_configuration_chain.class%"

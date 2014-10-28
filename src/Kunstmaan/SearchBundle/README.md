@@ -7,8 +7,8 @@
 
 The KunstmaanSearchBundle works with [ElasticSearch](http://www.elasticsearch.org/) and supports different search providers. The bundle currently supports [Sherlock](https://github.com/polyfractal/sherlock) as a provider.
 
-* Add your own objects to index using a tagged service which implements the [SearchConfigurationInterface](https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/sherlock/Configuration/SearchConfigurationInterface.php)
-* Want to add another search provider ? It's easy, just add a tagged service which implements the [SearchProviderInterface](https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/sherlock/Search/SearchProviderInterface.php)
+* Add your own objects to index using a tagged service which implements the [SearchConfigurationInterface]()
+* Want to add another search provider ? It's easy, just add a tagged service which implements the [SearchProviderInterface]()
 
 More about these features can be found in our bundle [documentation](https://github.com/Kunstmaan/KunstmaanSearchBundle/blob/master/Resources/doc/SearchBundle.md)
 

@@ -43,16 +43,16 @@ class TestListener implements \PHPUnit_Framework_TestListener
         $kernel->boot();
 
         // drop/create database schema
-        $em = $kernel->getContainer()->get('doctrine.orm.default_entity_manager');
+        $em   = $kernel->getContainer()->get('doctrine.orm.default_entity_manager');
         $meta = $em->getMetadataFactory()->getAllMetadata();
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
         $tool->dropSchema($meta);
         $tool->createSchema($meta);
 
         // insert fixtures
-        $fixtures = array('src/Kunstmaan/TranslatorBundle/Tests/files/fixtures.yml');
-        $em = $kernel->getContainer()->get('doctrine.orm.default_entity_manager');
-        $objects = \Nelmio\Alice\Fixtures::load($fixtures, $em);
+        $fixtures  = array('src/Kunstmaan/TranslatorBundle/Tests/files/fixtures.yml');
+        $em        = $kernel->getContainer()->get('doctrine.orm.default_entity_manager');
+        $objects   = \Nelmio\Alice\Fixtures::load($fixtures, $em);
         $persister = new \Nelmio\Alice\ORM\Doctrine($em);
         $persister->persist($objects);
     }
