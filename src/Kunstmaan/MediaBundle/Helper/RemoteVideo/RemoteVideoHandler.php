@@ -107,19 +107,27 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 $video->setThumbnailUrl('http://img.youtube.com/vi/' . $code . '/0.jpg');
                 break;
             case 'vimeo':
-                $xml = simplexml_load_file('http://vimeo.com/api/v2/video/' . $code . '.xml');
-                $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
+                try {
+                    $xml = simplexml_load_file('http://vimeo.com/api/v2/video/' . $code . '.xml');
+                    $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
+                } catch (\Exception $e) {
+
+                }
                 break;
             case 'dailymotion':
-                $json         = json_decode(
-                    file_get_contents('https://api.dailymotion.com/video/' . $code . '?fields=thumbnail_large_url')
-                );
-                $thumbnailUrl = $json->{'thumbnail_large_url'};
-                /* dirty hack to fix urls for imagine */
-                if (!$this->endsWith($thumbnailUrl, '.jpg') && !$this->endsWith($thumbnailUrl, '.png')) {
-                    $thumbnailUrl = $thumbnailUrl . '&ext=.jpg';
+                try {
+                    $json         = json_decode(
+                        file_get_contents('https://api.dailymotion.com/video/' . $code . '?fields=thumbnail_large_url')
+                    );
+                    $thumbnailUrl = $json->{'thumbnail_large_url'};
+                    /* dirty hack to fix urls for imagine */
+                    if (!$this->endsWith($thumbnailUrl, '.jpg') && !$this->endsWith($thumbnailUrl, '.png')) {
+                        $thumbnailUrl = $thumbnailUrl . '&ext=.jpg';
+                    }
+                    $video->setThumbnailUrl($thumbnailUrl);
+                } catch (\Exception $e) {
+
                 }
-                $video->setThumbnailUrl($thumbnailUrl);
                 break;
         }
     }

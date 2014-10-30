@@ -23,7 +23,7 @@ class PdfTransformer implements PreviewTransformerInterface
     {
         $info = pathinfo($absolutePath);
 
-        if (isset($info['extension']) && false !== strpos(strtolower($info['extension']), 'pdf')) {
+        if (isset($info['extension']) && false !== strpos(strtolower($info['extension']), 'pdf') && file_exists($absolutePath)) {
             // If it doesn't exist yet, extract the first page of the PDF
             $previewFilename = $this->getPreviewFilename($absolutePath);
             if (!file_exists($previewFilename)) {
