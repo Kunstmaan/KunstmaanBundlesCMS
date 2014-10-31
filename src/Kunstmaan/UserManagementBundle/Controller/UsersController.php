@@ -87,7 +87,7 @@ class UsersController extends BaseSettingsController
         $user              = $this->getUserClassInstance();
         $formTypeClassName = $user->getFormTypeClass();
         $formType          = new $formTypeClassName();
-        $formType->setLangs($this->container->getParameter('kuma_admin.admin_locales'));
+        $formType->setLangs($this->container->getParameter('kunstmaan_admin.admin_locales'));
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
@@ -155,7 +155,7 @@ class UsersController extends BaseSettingsController
         $user              = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         $formTypeClassName = $user->getFormTypeClass();
         $formType          = new $formTypeClassName();
-        $formType->setLangs($this->container->getParameter('kuma_admin.admin_locales'));
+        $formType->setLangs($this->container->getParameter('kunstmaan_admin.admin_locales'));
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
