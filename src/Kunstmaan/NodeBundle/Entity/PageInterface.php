@@ -23,6 +23,4 @@ interface PageInterface extends HasNodeInterface
      * @return void|RedirectResponse
      */
     public function service(ContainerInterface $container, Request $request, RenderContext $context);
-
-
 }
