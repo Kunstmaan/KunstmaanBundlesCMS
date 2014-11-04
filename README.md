@@ -14,7 +14,7 @@ we currently always try to support at least the 2 last versions of Chrome / Fire
 Enjoy!
 
 
-[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanBundlesCMS.png?branch=master)](http://travis-ci.org/KunstmaanKunstmaanBundlesCMS)
+[![Build Status](https://travis-ci.org/Kunstmaan/KunstmaanBundlesCMS.png?branch=master)](http://travis-ci.org/Kunstmaan/KunstmaanBundlesCMS)
 [![Total Downloads](https://poser.pugx.org/kunstmaan/bundles-cms/downloads.png)](https://packagist.org/packages/kunstmaan/bundles-cms)
 [![Latest Stable Version](https://poser.pugx.org/kunstmaan/bundles-cms/v/stable.png)](https://packagist.org/packages/kunstmaan/bundles-cms)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/?branch=master)
