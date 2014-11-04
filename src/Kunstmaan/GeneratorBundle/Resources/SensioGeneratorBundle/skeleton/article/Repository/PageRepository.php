@@ -2,6 +2,7 @@
 
 namespace {{ namespace }}\Repository\{{ entity_class }};
 
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository;
 
@@ -44,7 +45,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
         $query = "SELECT";
         $query .= " article.*";
         $query .= " FROM";
-        $query .= " {{ prefix }}{{ entity_class|lower }}pages as article";
+        $query .= " {{ prefix }}{{ entity_class|lower }}_pages as article";
         $query .= " INNER JOIN";
         $query .= " kuma_node_versions nv ON nv.ref_id = article.id";
         $query .= " INNER JOIN";

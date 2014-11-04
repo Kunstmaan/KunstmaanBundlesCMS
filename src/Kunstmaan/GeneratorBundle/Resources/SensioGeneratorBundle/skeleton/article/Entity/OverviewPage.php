@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  * The article overview page which shows its articles
  *
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}\{{ entity_class }}OverviewPageRepository")
- * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}overviewpages")
+ * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_overviewpages")
  */
 class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
 {
