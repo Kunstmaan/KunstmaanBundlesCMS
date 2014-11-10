@@ -114,3 +114,8 @@ services:
         arguments: ["%fos_user.model.user.class%"]
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
+
+    kunstmaan_node.command.fixtimestamps:
+        class: Kunstmaan\NodeBundle\Command\FixTimestampsCommand
+        calls:
+            - [setContainer, ["@service_container"] ]

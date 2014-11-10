@@ -33,9 +33,9 @@ class PopulateIndexCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getArgument('full')) {
-            $deleteCommand = $this->getApplication()->find('kuma:search:delete');
+            $deleteCommand = $this->getContainer()->get('kunstmaan_search.command.delete');
             $deleteCommand->execute(new ArrayInput(array()), $output);
-            $setupCommand = $this->getApplication()->find('kuma:search:setup');
+            $setupCommand = $this->getContainer()->get('kunstmaan_search.command.setup');
             $setupCommand->execute(new ArrayInput(array()), $output);
         }
 

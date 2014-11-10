@@ -23,6 +23,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
@@ -572,6 +573,14 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             $this->container->enterScope('request');
             $request = new Request();
             $request->setLocale($lang);
+
+            $major = Kernel::MAJOR_VERSION;
+            $minor = Kernel::MINOR_VERSION;
+            if ((int)$major > 2 || ((int)$major == 2 && (int)$minor >= 4)) {
+                $requestStack = $this->container->get('request_stack');
+                $requestStack->push($request);
+            }
+
             $this->container->set('request', $request, 'request');
         }
     }
