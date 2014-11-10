@@ -89,3 +89,18 @@ services:
 
     kunstmaan_media.mimetype_guesser.factory:
         class: "%kunstmaan_media.mimetype_guesser.factory.class%"
+
+    kunstmaan_media.command.migratename:
+        class: Kunstmaan\MediaBundle\Command\MigrateNameCommand
+        calls:
+            - [setContainer, ["@service_container"] ]
+
+    kunstmaan_media.command.rebuildfoldertree:
+        class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
+        calls:
+            - [setContainer, ["@service_container"] ]
+
+    kunstmaan_media.command.createpdfpreview:
+        class: Kunstmaan\MediaBundle\Command\CreatePdfPreviewCommand
+        calls:
+            - [setContainer, ["@service_container"] ]

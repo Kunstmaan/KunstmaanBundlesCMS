@@ -30,3 +30,18 @@ services:
     # Configurations
     kunstmaan_search.search_configuration_chain:
         class: "%kunstmaan_search.search_configuration_chain.class%"
+
+    kunstmaan_search.command.setup:
+        class: Kunstmaan\SearchBundle\Command\SetupIndexCommand
+        calls:
+            - [setContainer, ["@service_container"] ]
+
+    kunstmaan_search.command.delete:
+        class: Kunstmaan\SearchBundle\Command\DeleteIndexCommand
+        calls:
+            - [setContainer, ["@service_container"] ]
+
+    kunstmaan_search.command.populate:
+        class: Kunstmaan\SearchBundle\Command\PopulateIndexCommand
+        calls:
+            - [setContainer, ["@service_container"] ]
