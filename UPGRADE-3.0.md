@@ -4,7 +4,7 @@ UPGRADE FROM 2.3 to 3.0
 Composer.json
 -------------
 
-First start to update you `composer.json` file. All `kunstmaan/bundle-name` references must be replace by the new single repository `kunstmaan/bundles-cms`.
+First start to update you `composer.json` file. All `kunstmaan/bundle-name` references must be replaced by the new single repository `kunstmaan/bundles-cms`.
 At the moment we are at `3.0.*@dev`
 
 Then run composer update to install the new bundles.
