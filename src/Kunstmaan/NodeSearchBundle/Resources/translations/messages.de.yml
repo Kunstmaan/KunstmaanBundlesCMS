@@ -1,0 +1,4 @@
+search:
+    search: Suche
+    results: Ergebnisse
+    looking_for: Suche nach "%query%"

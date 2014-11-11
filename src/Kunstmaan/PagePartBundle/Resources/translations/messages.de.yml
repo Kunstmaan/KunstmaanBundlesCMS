@@ -1,0 +1,15 @@
+pagepart:
+    header:
+        type: 'Überschriftstil'
+        title: 'Titel'
+
+    link:
+        choose: 'Link Auswählen'
+        openinnewwindow: 'In neuem Fenster öffnen'
+        text: 'Text'
+
+    html:
+        content: 'Inhalt'
+
+    text:
+        content: 'Inhalt'

@@ -1,0 +1,24 @@
+# Settings
+settings:
+  groups: Gruppen
+  group:
+      name: Name
+      edit: Gruppe Bearbeiten
+      add: Gruppe Erstellen
+      roles: Rollen
+  users: Benutzer
+  user:
+      username: Benutzername
+      password: Passwort
+      repeatedpassword: Passwort Wiederholung
+      adminlang: Sprache der Admin-Oberfläche
+      email: E-Mail
+      enabled: Aktiv
+      roles: Gruppen
+      add: Benutzer Erstellen
+      edit: Benutzer Bearbeiten
+  roles: Rollen
+  role:
+      role: Rolle
+      add: Rolle Erstellen
+      edit: Rolle Bearbeiten
