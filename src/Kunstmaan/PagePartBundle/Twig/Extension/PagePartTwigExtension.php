@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * PagePartTwigExtension
@@ -21,11 +21,12 @@ class PagePartTwigExtension extends \Twig_Extension
     protected $environment;
 
     /**
-     * @param EntityManager $em
+     * @param ContainerInterface $container
      */
-    public function __construct(EntityManager $em)
+    public function __construct(ContainerInterface $container)
     {
-        $this->em = $em;
+        $this->container = $container;
+        $this->em = $container->get('doctrine.orm.entity_manager');
     }
 
     /**
@@ -60,7 +61,7 @@ class PagePartTwigExtension extends \Twig_Extension
         $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
         /* @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-        $pageparts = $entityRepository->getPageParts($page, $contextName);
+        $pageparts = $entityRepository->getPageParts($page, $contextName, $this->container);
         $newTwigContext = array_merge($parameters, array(
             'pageparts' => $pageparts
         ));

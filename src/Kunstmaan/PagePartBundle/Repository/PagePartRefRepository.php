@@ -9,6 +9,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * PagePartRefRepository
@@ -68,12 +69,13 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param HasPagePartsInterface $page    The page
-     * @param string                $context The pagepart context
+     * @param HasPagePartsInterface $page       The page
+     * @param string                $context    The pagepart context
+     * @param ContainerInterface    $container  The service container
      *
      * @return PagePartInterface[]
      */
-    public function getPageParts(HasPagePartsInterface $page, $context = "main")
+    public function getPageParts(HasPagePartsInterface $page, $context = "main", ContainerInterface $container)
     {
         $pagepartrefs = $this->getPagePartRefs($page, $context);
 
@@ -90,6 +92,7 @@ class PagePartRefRepository extends EntityRepository
         $pageparts = array();
         foreach ($types as $classname => $ids) {
             $result = $this->getEntityManager()->getRepository($classname)->findBy(array('id' => $ids));
+            $result[0]->init($page, $container);
             $pageparts = array_merge($pageparts, $result);
         }
 
