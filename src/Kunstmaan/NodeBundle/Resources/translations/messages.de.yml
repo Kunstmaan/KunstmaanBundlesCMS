@@ -1,0 +1,14 @@
+subaction:
+    versions: "Versionen"
+
+action:
+    saveasdraft: "Entwurf Speichern"
+    publish: "Publizieren"
+    unpublish: "Depublizieren"
+    preview: "Vorschau"
+    save: "Speichern"
+    delete: "Löschen"
+    addsubpage: "Unterseite Erstellen"
+
+pages:
+    copynotavailable: "Bitte zuerst die übergeordnete Seite übersetzen."

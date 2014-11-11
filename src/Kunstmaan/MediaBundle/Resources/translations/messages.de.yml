@@ -1,0 +1,82 @@
+# Media
+media: 
+  aviary:
+    title: Aviary
+    nothing: Hier gibt es nichts zu sehen.
+  
+  media:
+    no: Noch keine Dateien in diesem Verzeichnis.
+    bulkupload:
+      addto: Upload in das Verzeichnis "%folder%"
+    contenttab:
+      title: Inhalt
+    propertiestab:
+      title: Eigenschaften
+    title: Medien
+    edit:
+      action: Bearbeiten
+    download:
+      action: Download
+    mediainfo:
+      name: Name
+      contenttype: Medien-Typ
+      createdat: Hinzugefügt
+      updatedat: Aktualisiert
+      downloadlink: Download Link
+    addto: Datei-Upload in das Verzeichnis "%folder%"
+    deletesure: Soll diese Datei wirklich gelöscht werden?
+    new: Datei-Upload in das Verzeichnis "%folder%"
+
+  folder:
+    addsub:
+      action: Unterverzeichnis Erstellen
+      modal:
+        title: Unterverzeichnis Erstellen
+        save: Erstellen
+    sub:
+      no: Noch keine Unterverzeichnisse vorhanden.
+    delete:
+      action: Verzeichnis Löschen
+      modal:
+        title: Verzeichnis Löschen
+        text: Soll das Verzeichnis "%folder%" wirklich gelöscht werden? 
+    save: Speichern
+    contenttab:
+      title: Inhalt
+    propertiestab:
+      title: Eigenschaften
+
+  bulkupload:
+    upload: Upload
+    bulkupload: Massen-Upload
+    select_files: Dateien Auswählen
+    upload_more: Upload weiterer Dateien
+    back_to_folder: Zurück zum Verzeichnis
+    upload_finished: Upload abgeschlossen.
+    not_available: Der Massen-Upload ist nicht verfügbar. Ihr Browser unterstützt kein Flash, Silverlight oder HTML5.
+    
+  slide:
+    add: Folie Hinzufügen
+    modal:
+      title: Folie Hinzufügen
+      save: Hinzufügen
+  video:
+    add: Video Hinzufügen
+    modal:
+      title: Video Hinzufügen
+      save: Hinzufügen
+  audio:
+    add: Audio Hinzufügen
+    modal:
+      title: Audio Hinzufügen
+      save: Hinzufügen
+
+  file:
+    add: Datei Hinzufügen
+    modal:
+      title: Datei Hinzufügen
+      save: Hinzufügen
+    
+  widget:
+    choose: Auswählen
+    delete: Löschen

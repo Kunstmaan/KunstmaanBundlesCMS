@@ -1,0 +1,22 @@
+translator:
+    translator:
+        title: Übersetzungen
+        inline_edit_title: Übersetzung Einfügen
+        emptytext: Nicht übersetzt
+        invalid_translation: Ungültige Übersetzung!
+        fatal_error_occurred: Während des Speicherns ist ein Fehler aufgetreten. Bitte später erneut versuchen.
+    translations: Übersetzungen
+    translation_not_unique: Die Übersetzung sollte eindeutig sein.
+
+settings:
+    translator:
+        add: Übersetzung Erstellen
+        edit: Übersetzung Bearbeiten
+        refresh_live: Liveseite Aktualisieren
+        import_translations: Importieren
+        import_translations_forced: Importieren und Überschreiben
+        not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
+        not_live_warning: "Die Übersetzungen der Liveseite sind nicht aktuell. Bitte 'Liveseite Aktualisieren' klicken."
+        choose_language: "Sprache Auswählen"
+        succesful_added: "Übersetzung wurde erfolgreich angelegt"
+        succesful_edited: "Übersetzung wurde erfolgreich bearbeitet"
