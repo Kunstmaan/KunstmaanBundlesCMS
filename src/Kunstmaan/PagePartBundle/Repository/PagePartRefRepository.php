@@ -75,7 +75,7 @@ class PagePartRefRepository extends EntityRepository
      *
      * @return PagePartInterface[]
      */
-    public function getPageParts(HasPagePartsInterface $page, $context = "main")
+    public function getPageParts(HasPagePartsInterface $page, $context = "main", ContainerInterface $container = null)
     {
         $pagepartrefs = $this->getPagePartRefs($page, $context);
 
@@ -92,6 +92,9 @@ class PagePartRefRepository extends EntityRepository
         $pageparts = array();
         foreach ($types as $classname => $ids) {
             $result = $this->getEntityManager()->getRepository($classname)->findBy(array('id' => $ids));
+            if($container){
+                $result[0]->init($page, $container);
+            }
             $pageparts = array_merge($pageparts, $result);
         }
 
