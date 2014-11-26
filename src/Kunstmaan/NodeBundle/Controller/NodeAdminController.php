@@ -457,16 +457,10 @@ class NodeAdminController extends Controller
 
             /* @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-            $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-            $page = $nodeVersion->getRef($this->em);
-
-            $this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
             $nodeTranslation->setWeight($weight);
             $this->em->persist($nodeTranslation);
             $this->em->flush();
-
-            $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
             $weight++;
         }
