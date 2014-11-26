@@ -36,11 +36,7 @@ with this:
 access_control:
     - { path: ^/([^/]*)/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/([^/]*)/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/([^/]*)/admin/, role: ROLE_ADMIN }
     - { path: ^/([^/]*)/admin, role: ROLE_ADMIN }
-    - { path: ^/([^/]*)/admin/settings/, role: ROLE_ADMIN }
-    - { path: ^/([^/]*)/admin/settings, role: ROLE_ADMIN }
-    - { path: ^/([^/]*)/preview, role: ROLE_ADMIN }
 ```
 
 
