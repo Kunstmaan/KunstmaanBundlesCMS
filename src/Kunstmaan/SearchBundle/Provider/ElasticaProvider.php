@@ -21,7 +21,7 @@ class ElasticaProvider implements SearchProviderInterface
     {
         if (!$this->client instanceof Client) {
             $this->client = new Client(
-                array(
+                array( 'connections' =>
                     $this->nodes
                 )
             );
