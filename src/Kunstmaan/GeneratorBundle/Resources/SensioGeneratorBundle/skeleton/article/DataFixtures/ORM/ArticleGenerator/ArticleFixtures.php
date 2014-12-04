@@ -153,5 +153,4 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         $this->container = $container;
     }
-
 }

@@ -15,7 +15,6 @@ use Symfony\Component\Form\AbstractType;
  */
 class {{ entity_class }}Author extends AbstractAuthor
 {
-
     /**
      * Returns the default backend form type for this page
      *
@@ -25,5 +24,4 @@ class {{ entity_class }}Author extends AbstractAuthor
     {
         return new {{ entity_class }}AuthorAdminType();
     }
-
 }

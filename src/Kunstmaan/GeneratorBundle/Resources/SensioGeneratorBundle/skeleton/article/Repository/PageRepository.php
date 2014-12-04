@@ -11,7 +11,6 @@ use Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository;
  */
 class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
 {
-
     /**
      * Returns an array of all {{ entity_class }}Pages
      *
@@ -92,5 +91,4 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
 
         return $q;
     }
-
 }

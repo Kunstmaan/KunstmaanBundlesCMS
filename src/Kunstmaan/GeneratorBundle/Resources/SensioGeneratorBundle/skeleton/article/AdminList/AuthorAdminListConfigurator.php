@@ -10,7 +10,6 @@ use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator
  */
 class {{ entity_class }}AuthorAdminListConfigurator extends AbstractArticleAuthorAdminListConfigurator
 {
-
     /**
      * Return current bundle name.
      *
@@ -30,5 +29,4 @@ class {{ entity_class }}AuthorAdminListConfigurator extends AbstractArticleAutho
     {
         return '{{ entity_class }}\{{ entity_class }}Author';
     }
-
 }

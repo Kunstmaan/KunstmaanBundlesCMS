@@ -16,7 +16,6 @@ use Symfony\Component\Form\AbstractType;
  */
 class {{ entity_class }}Page extends AbstractArticlePage
 {
-
     /**
      * @var {{ entity_class }}Author
      *
