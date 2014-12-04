@@ -23,17 +23,20 @@ class NodeVersionRepository extends EntityRepository
     public function getNodeVersionFor(HasNodeInterface $hasNode)
     {
         return $this->findOneBy(
-            array('refId' => $hasNode->getId(), 'refEntityName' => ClassLookup::getClass($hasNode))
+            array(
+                'refId'         => $hasNode->getId(),
+                'refEntityName' => ClassLookup::getClass($hasNode)
+            )
         );
     }
 
     /**
-     * @param HasNodeInterface $hasNode The object
-     * @param NodeTranslation  $nodeTranslation The nodetranslation
-     * @param BaseUser         $owner The user
-     * @param NodeVersion      $origin The nodeVersion this nodeVersion originated from
-     * @param string           $type (public|draft)
-     * @param DateTime         $created The date this nodeversion is created
+     * @param HasNodeInterface $hasNode         The object
+     * @param NodeTranslation  $nodeTranslation The node translation
+     * @param BaseUser         $owner           The user
+     * @param NodeVersion      $origin          The nodeVersion this nodeVersion originated from
+     * @param string           $type            (public|draft)
+     * @param DateTime         $created         The date this node version is created
      *
      * @return NodeVersion
      */

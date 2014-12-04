@@ -26,11 +26,90 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getChildren(Node $node)
     {
-        return $this->findBy(array('parent' => $node->getId()));
+        return $this->findBy(array('parent' => $node->getId()), array('weight' => 'ASC'));
     }
 
     /**
-     * This returns the node translations that are visible for guest users
+     * QueryBuilder to fetch node translations (ignoring nodes that have been deleted)
+     *
+     * @param string $lang (optional) Only return NodeTranslations for the given language
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getNodeTranslationsQueryBuilder($lang = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('nt')
+            ->select('nt,n,v')
+            ->innerJoin('nt.node', 'n')
+            ->leftJoin('nt.publicNodeVersion', 'v', 'WITH', 'nt.publicNodeVersion = v.id')
+            ->where('n.deleted = false')
+            ->orderBy('nt.weight')
+            ->addOrderBy('nt.weight');
+
+        if (!empty($lang)) {
+            $queryBuilder
+                ->andWhere('nt.lang = :lang')
+                ->setParameter('lang', $lang);
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * QueryBuilder to fetch node translations that are currently published (ignoring nodes that have been deleted)
+     *
+     * @param string $lang (optional) Only return NodeTranslations for the given language
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getOnlineNodeTranslationsQueryBuilder($lang = null)
+    {
+        return $this->getNodeTranslationsQueryBuilder($lang)
+            ->andWhere('nt.online = true');
+    }
+
+    /**
+     * QueryBuilder to fetch immediate child NodeTranslations for a specific node and (optional) language
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getChildrenQueryBuilder(Node $parent, $lang = null)
+    {
+        return $this->getNodeTranslationsQueryBuilder($lang)
+            ->andWhere('n.parent = :parent')
+            ->setParameter('parent', $parent);
+    }
+
+    /**
+     * QueryBuilder to fetch immediate child NodeTranslations for a specific node and (optional) language
+     * that are currently published
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getOnlineChildrenQueryBuilder(Node $parent, $lang = null)
+    {
+        return $this->getChildrenQueryBuilder($parent, $lang)
+            ->andWhere('nt.online = true');
+    }
+
+    /**
+     * Get all online child node translations for a given node and (optional) language
+     *
+     * @param Node   $parent
+     * @param string $lang (optional, if not specified all languages will be returned)
+     *
+     * @return array
+     */
+    public function getOnlineChildren(Node $parent, $lang = null)
+    {
+        return $this->getOnlineChildrenQueryBuilder($parent, $lang)
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @deprecated Use getOnlineNodeTranslationsQueryBuilder instead
+     *
+     * This returns the node translations that are currently published
      *
      * @return array
      */
@@ -44,7 +123,7 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * Get the nodetranslation for a node
+     * Get the node translation for a node
      *
      * @param HasNodeInterface $hasNode
      *
