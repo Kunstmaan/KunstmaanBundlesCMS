@@ -117,6 +117,7 @@ class PagePartAdmin
         $pageParts = array();
         foreach ($types as $classname => $ids) {
             $result    = $this->em->getRepository($classname)->findBy(array('id' => $ids));
+            $result[0]->init($this->page, $this->container);
             $pageParts = array_merge($pageParts, $result);
         }
 
