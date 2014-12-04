@@ -2,21 +2,14 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
  * HasNodeInterface Interface
  */
-interface HasNodeInterface
+interface HasNodeInterface extends EntityInterface
 {
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId();
-
     /**
      * @return string
      */

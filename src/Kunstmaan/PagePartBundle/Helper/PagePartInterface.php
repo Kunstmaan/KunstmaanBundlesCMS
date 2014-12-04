@@ -2,15 +2,15 @@
 
 namespace  Kunstmaan\PagePartBundle\Helper;
 
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
  * PagePartInterface
  */
-interface PagePartInterface
+interface PagePartInterface extends EntityInterface
 {
-
     /**
      * Returns the view used in the frontend
      * @abstract
@@ -36,5 +36,4 @@ interface PagePartInterface
      * @return AbstractType
      */
     public function getDefaultAdminType();
-
 }

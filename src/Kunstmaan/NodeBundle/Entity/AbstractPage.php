@@ -21,7 +21,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class AbstractPage extends AbstractEntity implements PageInterface
 {
-
     /**
      * @var string
      *
@@ -153,5 +152,4 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     {
         return false;
     }
-
 }
