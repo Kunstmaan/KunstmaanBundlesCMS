@@ -11,7 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
 {
-
     /**
      * Builds the form.
      *

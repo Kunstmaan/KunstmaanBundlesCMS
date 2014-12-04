@@ -10,7 +10,6 @@ use Symfony\Component\Form\AbstractType;
  */
 class {{ entity_class }}AdminType extends AbstractType
 {
-
     /**
      * Builds the form.
      *
@@ -38,5 +37,4 @@ class {{ entity_class }}AdminType extends AbstractType
     {
         return '{{ entity_class|lower }}_form';
     }
-
 }

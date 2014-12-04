@@ -7,7 +7,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType
 {
-
     /**
      * Sets the default options for this type.
      *
@@ -27,5 +26,4 @@ class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType
     {
         return '{{ entity_class }}author_form';
     }
-
 }

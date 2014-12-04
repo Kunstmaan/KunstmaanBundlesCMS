@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
 {
-
     /**
      * @return AbstractPagePartAdminConfigurator[]
      */
@@ -60,5 +59,4 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
     {
         return new {{ entity_class }}OverviewPageAdminType();
     }
-
 }

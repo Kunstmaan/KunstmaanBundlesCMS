@@ -9,19 +9,19 @@ use Kunstmaan\ArticleBundle\Controller\AbstractArticleAuthorAdminListController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The AdminList controller for the {{ entity_class }}Author
  */
 class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorAdminListController
 {
-
     /**
      * @return AdminListConfiguratorInterface
      */
     public function createAdminListConfigurator()
     {
-        return new {{ entity_class }}AuthorAdminListConfigurator($this->em, $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
+        return new {{ entity_class }}AuthorAdminListConfigurator($this->getEntityManager(), $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
     }
 
     /**
@@ -29,9 +29,9 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @Route("/", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return parent::doIndexAction($this->getAdminListConfigurator());
+        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
@@ -41,9 +41,9 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      * @Method({"GET", "POST"})
      * @return array
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator());
+        return parent::doAddAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
@@ -56,9 +56,9 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @return array
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
-        return parent::doEditAction($this->getAdminListConfigurator(), $id);
+        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
@@ -71,9 +71,9 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @return array
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::doDeleteAction($this->getAdminListConfigurator(), $id);
+        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
@@ -86,9 +86,8 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @return array
      */
-    public function exportAction($_format)
+    public function exportAction(Request $request, $_format, $request)
     {
-        return parent::doExportAction($this->getAdminListConfigurator(), $_format);
+        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
-
 }

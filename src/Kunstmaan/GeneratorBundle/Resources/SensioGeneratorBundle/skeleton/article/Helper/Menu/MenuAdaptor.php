@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 {
-
     private $overviewPageIds = array();
 
     /**

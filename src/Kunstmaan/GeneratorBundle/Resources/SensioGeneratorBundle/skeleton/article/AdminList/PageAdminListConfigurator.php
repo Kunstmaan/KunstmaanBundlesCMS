@@ -11,7 +11,6 @@ use {{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}OverviewPage;
  */
 class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdminListConfigurator
 {
-
     /**
      * Return current bundle name.
      *
@@ -57,5 +56,4 @@ class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdm
     {
         return '{{ bundle.getName() }}:AdminList/{{ entity_class }}/{{ entity_class }}PageAdminList:list.html.twig';
     }
-
 }

@@ -10,7 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class {{ entity_class }}OverviewPageAdminType extends AbstractArticleOverviewPageAdminType
 {
-
     /**
      * Sets the default options for this type.
      *

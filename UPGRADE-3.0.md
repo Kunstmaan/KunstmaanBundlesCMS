@@ -145,3 +145,28 @@ class VersionYOUR_TIMESTAMP extends AbstractMigration implements ContainerAwareI
     }
 }
 ```
+
+ArticleBundle (and other AdminList) controllers - method signatures change
+--------------------------------------------------------------------------
+
+Since using $this->getRequest() is deprecated, we already modified the abstract controller classes to support
+passing the Request object as first parameter.
+
+So if you upgrade, you will have to add the Request parameter to all controller actions (and you can also already pass
+them on to the do...Action() as the last parameter.
+
+The method signatures will have to be changed as follows (line starting with - is the old signature, lines starting
+with + is the new signature):
+
+```php
+- public function indexAction()
++ public function indexAction(Request $request)
+- public function addAction()
++ public function addAction(Request $request)
+- public function editAction($id)
++ public function editAction(Request $request, $id)
+- public function deleteAction($id)
++ public function deleteAction(Request $request, $id)
+- public function exportAction($_format)
++ public function exportAction(Request $request, $_format)
+```

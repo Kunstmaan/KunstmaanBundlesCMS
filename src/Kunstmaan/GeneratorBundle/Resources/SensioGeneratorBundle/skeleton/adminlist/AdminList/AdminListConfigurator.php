@@ -16,7 +16,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
  */
 class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-
     /**
      * @param EntityManager $em        The entity manager
      * @param AclHelper     $aclHelper The acl helper
@@ -68,5 +67,4 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
     {
         return '{{ entity_class }}';
     }
-
 }
