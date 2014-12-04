@@ -2,14 +2,12 @@
 
 namespace Kunstmaan\ArticleBundle\Controller;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -67,7 +65,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
 
     protected function initAdminListConfigurator()
     {
-        $this->em = $this->getDoctrine()->getManager();
+        $this->em = $this->getEntityManager();
         $this->locale = $this->getRequest()->getLocale();
         $this->securityContext = $this->container->get('security.context');
         $this->user = $this->securityContext->getToken()->getUser();
@@ -77,41 +75,40 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     /**
      * The index action
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return parent::doIndexAction($this->getAdminListConfigurator());
+        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
      * The add action
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator());
+        return parent::doAddAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
      * The edit action
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
-        return parent::doEditAction($this->getAdminListConfigurator(), $id);
+        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
      * The delete action
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::doDeleteAction($this->getAdminListConfigurator(), $id);
+        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
      * Export action
      */
-    public function exportAction($_format)
+    public function exportAction(Request $request, $_format)
     {
-        return parent::doExportAction($this->getAdminListConfigurator(), $_format);
+        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
-
 }

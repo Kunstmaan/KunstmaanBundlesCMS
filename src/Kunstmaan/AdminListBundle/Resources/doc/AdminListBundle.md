@@ -115,7 +115,7 @@ class DocumentAdminController extends AdminListController
     public function getAdminListConfigurator()
     {
         if (!isset($this->configurator)) {
-            $this->configurator = new DocumentAdminListConfigurator($this->getDoctrine()->getManager());
+            $this->configurator = new DocumentAdminListConfigurator($this->getEntityManager());
         }
         return $this->configurator;
     }
@@ -128,9 +128,9 @@ The first method will simply list your Entities.
      * @Route("/", name="yourbundle_admin_document")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return parent::doIndexAction($this->getAdminListConfigurator());
+        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 ```
 
@@ -145,9 +145,9 @@ The add action method will build the form to add a new entity.
      * @Template("KunstmaanAdminListBundle:Default:add_or_edit.html.twig")
      * @return array
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator());
+        return parent::doAddAction($this->getAdminListConfigurator(), $request);
     }
 ```
 
@@ -165,9 +165,9 @@ The edit action method will build and process the edit form.
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add_or_edit.html.twig")
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
-        return parent::doEditAction($this->getAdminListConfigurator(), $id);
+        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 ```
 
@@ -182,9 +182,9 @@ The delete action will handle the deletion of your Entity.
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="yourbundle_admin_document_delete")
      * @Method({"GET", "POST"})
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::doDeleteAction($this->getAdminListConfigurator(), $id);
+        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 ```
 
@@ -199,9 +199,9 @@ To export your Entities, there's the export action method.
      *
      * @return array
      */
-    public function exportAction($_format) {
-        $em = $this->getDoctrine()->getManager();
-        return parent::doExportAction(new DocumentAdminListConfigurator($em), $_format);
+    public function exportAction(Request $request, $_format) {
+        $em = $this->getEntityManager();
+        return parent::doExportAction(new DocumentAdminListConfigurator($em), $_format, $request);
     }
 }
 ```

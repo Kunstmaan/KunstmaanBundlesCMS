@@ -5,17 +5,16 @@ namespace {{ namespace }}\Controller;
 use {{ namespace }}\AdminList\SatelliteAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The admin list controller for Satellite
  */
 class SatelliteAdminListController extends AdminListController
 {
-
     /**
      * @var AdminListConfiguratorInterface
      */
@@ -27,7 +26,7 @@ class SatelliteAdminListController extends AdminListController
     public function getAdminListConfigurator()
     {
         if (!isset($this->configurator)) {
-            $this->configurator = new SatelliteAdminListConfigurator($this->getDoctrine()->getManager());
+            $this->configurator = new SatelliteAdminListConfigurator($this->getEntityManager());
         }
 
         return $this->configurator;
@@ -38,9 +37,9 @@ class SatelliteAdminListController extends AdminListController
      *
      * @Route("/", name="{{ bundle_name|lower }}_admin_satellite")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return parent::doIndexAction($this->getAdminListConfigurator());
+        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
@@ -50,9 +49,9 @@ class SatelliteAdminListController extends AdminListController
      * @Method({"GET", "POST"})
      * @return array
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator());
+        return parent::doAddAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
@@ -65,9 +64,9 @@ class SatelliteAdminListController extends AdminListController
      *
      * @return array
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
-        return parent::doEditAction($this->getAdminListConfigurator(), $id);
+        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
@@ -80,9 +79,9 @@ class SatelliteAdminListController extends AdminListController
      *
      * @return array
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
-        return parent::doDeleteAction($this->getAdminListConfigurator(), $id);
+        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
@@ -90,9 +89,8 @@ class SatelliteAdminListController extends AdminListController
      * @Method({"GET", "POST"})
      * @return array
      */
-    public function exportAction($_format)
+    public function exportAction(Request $request, $_format)
     {
-        return parent::doExportAction($this->getAdminListConfigurator(), $_format);
+        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
-
 }
