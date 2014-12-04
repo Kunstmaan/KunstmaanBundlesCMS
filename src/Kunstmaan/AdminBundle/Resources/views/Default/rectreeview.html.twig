@@ -1,10 +1,6 @@
-{% if menuitem.routeparams.id is defined %}
-    {% set nodeId = 'node-' ~ menuitem.routeparams.id %}
-{% else %}
-    {% set nodeId = menuitem.internalname %}
-{% endif %}
-<li id="{{ nodeId }}" class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is not null and currentMenuItem.internalname == menuitem.internalname  %}active{% endif %} {% if menuitem.offline %}offline{% endif %}" {% if menuitem.role %} rel="{{menuitem.role}}" {% endif %}>
-    <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname | trans }}</a>
+{% set nodeId = menuitem.uniqueId %}
+<li id="{{ nodeId }}" class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is not null and currentMenuItem.uniqueId == menuitem.uniqueId %}active{% endif %} {% if menuitem.offline %}offline{% endif %}" {% if menuitem.role %} rel="{{menuitem.role}}" {% endif %}>
+    <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.label }}</a>
     <ul>
         {% for menuitem in menuitem.navigationChildren %}
             {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}

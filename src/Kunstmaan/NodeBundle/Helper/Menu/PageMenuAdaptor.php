@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
@@ -19,16 +20,31 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PageMenuAdaptor implements MenuAdaptorInterface
 {
+    /**
+     * @var EntityManagerInterface
+     */
     private $em;
+
+    /**
+     * @var AclNativeHelper
+     */
     private $aclNativeHelper;
+
+    /**
+     * @var array
+     */
     private $treeNodes = null;
+
+    /**
+     * @var array
+     */
     private $activeNodeIds = null;
 
     /**
-     * @param EntityManager   $em              The entity manager
-     * @param AclNativeHelper $aclNativeHelper The acl helper
+     * @param EntityManagerInterface $em              The entity manager
+     * @param AclNativeHelper        $aclNativeHelper The acl helper
      */
-    public function __construct(EntityManager $em, AclNativeHelper $aclNativeHelper)
+    public function __construct(EntityManagerInterface $em, AclNativeHelper $aclNativeHelper)
     {
         $this->em              = $em;
         $this->aclNativeHelper = $aclNativeHelper;
@@ -46,9 +62,11 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     {
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
-            $menuItem->setRoute('KunstmaanNodeBundle_nodes');
-            $menuItem->setInternalName("Pages");
-            $menuItem->setParent($parent);
+            $menuItem
+                ->setRoute('KunstmaanNodeBundle_nodes')
+                ->setUniqueId('pages')
+                ->setLabel('Pages')
+                ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
             }
@@ -118,7 +136,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     {
         $isHidden = false;
         if (class_exists($refEntityName)) {
-            $page = new $refEntityName();
+            $page     = new $refEntityName();
             $isHidden = ($page instanceof HideFromNodeTreeInterface);
             unset($page);
         }
@@ -167,20 +185,20 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     ) {
         foreach ($nodes as $child) {
             $menuItem = new MenuItem($menu);
-            $menuItem->setRoute('KunstmaanNodeBundle_nodes_edit');
-            $menuItem->setRouteparams(array('id' => $child['id']));
-            $menuItem->setInternalName($child['title']);
-            $menuItem->setParent($parent);
-            $menuItem->setOffline(!$child['online']);
-            $menuItem->setRole('page');
-            $menuItem->setWeight($child['weight']);
+            $menuItem
+                ->setRoute('KunstmaanNodeBundle_nodes_edit')
+                ->setRouteparams(array('id' => $child['id']))
+                ->setUniqueId('node-' . $child['id'])
+                ->setLabel($child['title'])
+                ->setParent($parent)
+                ->setOffline(!$child['online'])
+                ->setRole('page')
+                ->setWeight($child['weight']);
 
             if (in_array($child['id'], $activeNodeIds)) {
                 $menuItem->setActive(true);
             }
-
             $children[] = $menuItem;
         }
     }
-
 }

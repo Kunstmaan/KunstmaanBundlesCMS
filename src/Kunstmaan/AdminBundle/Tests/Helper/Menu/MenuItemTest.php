@@ -53,13 +53,23 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getInternalName
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setInternalName
+     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getLabel
+     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setLabel
      */
-    public function testGetSetInternalName()
+    public function testGetSetLabel()
     {
-        $this->object->setInternalName('Internal name');
-        $this->assertEquals('Internal name', $this->object->getInternalName());
+        $this->object->setLabel('label');
+        $this->assertEquals('label', $this->object->getLabel());
+    }
+
+    /**
+     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getUniqueId
+     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setUniqueId
+     */
+    public function testGetSetUniqueId()
+    {
+        $this->object->setUniqueId('uniqueId');
+        $this->assertEquals('uniqueId', $this->object->getUniqueId());
     }
 
     /**

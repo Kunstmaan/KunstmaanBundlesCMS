@@ -12,16 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 {
 
-    private $overviewpageIds = array();
+    private $overviewPageIds = array();
 
     /**
      * @param EntityManager $em The entity manager
      */
     public function __construct(EntityManager $em)
     {
-        $overviewpageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\{{ entity_class }}\\{{ entity_class }}OverviewPage');
-        foreach ($overviewpageNodes as $overviewpageNode) {
-            $this->overviewpageIds[] = $overviewpageNode->getId();
+        $overviewPageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\{{ entity_class }}\\{{ entity_class }}OverviewPage');
+        foreach ($overviewPageNodes as $overviewPageNode) {
+            $this->overviewpageIds[] = $overviewPageNode->getId();
         }
     }
 
@@ -29,25 +29,30 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
     {
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             // Page
-            $menuitem = new TopMenuItem($menu);
-            $menuitem->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page');
-            $menuitem->setInternalName('{{ entity_class }}');
-            $menuitem->setParent($parent);
-            if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                $menuitem->setActive(true);
+            $menuItem = new TopMenuItem($menu);
+            $menuItem
+                ->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page')
+                ->setLabel('{{ entity_class }}')
+                ->setUniqueId('{{ entity_class }}')
+                ->setParent($parent);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
                 $parent->setActive(true);
             }
-            $children[] = $menuitem;
+            $children[] = $menuItem;
+
             // Author
-            $menuitem = new TopMenuItem($menu);
-            $menuitem->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author');
-            $menuitem->setInternalName('{{ entity_class }} Authors');
-            $menuitem->setParent($parent);
-            if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
-                $menuitem->setActive(true);
+            $menuItem = new TopMenuItem($menu);
+            $menuItem
+                ->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author')
+                ->setLabel('{{ entity_class }} Authors')
+                ->setUniqueId('{{ entity_class }} Authors')
+                ->setParent($parent);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
                 $parent->setActive(true);
             }
-            $children[] = $menuitem;
+            $children[] = $menuItem;
         }
 
         //don't load children

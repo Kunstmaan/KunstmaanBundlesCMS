@@ -88,20 +88,20 @@
                                     {% if topchildren | length > 0 %}
                                     <li class="dropdown {% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
                                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                            {{ menuitem.internalname | trans }}
+                                            {{ menuitem.label | trans }}
                                             <b class="caret"></b>
                                         </a>
                                         <ul class="dropdown-menu">
                                             {% for topchild in topchildren %}
                                             <li class="{% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                                <a href="{{ path(topchild.route, topchild.routeparams) }}">{{ topchild.internalname | trans }}</a>
+                                                <a href="{{ path(topchild.route, topchild.routeparams) }}">{{ topchild.label | trans }}</a>
                                             </li>
                                             {% endfor %}
                                         </ul>
                                     </li>
                                     {% else %}
                                     <li class="{% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                        <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.internalname | trans }}</a>
+                                        <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.label | trans }}</a>
                                     </li>
                                     {% endif %}
                                     {% endfor %}
@@ -140,9 +140,9 @@
             <ul class="breadcrumb">
                 {% for breadcrumbitem in breadcrumbitems %}
                 {% if loop.last %}
-                <li class="active">{{ breadcrumbitem.internalname | trans }}</li>
+                <li class="active">{{ breadcrumbitem.label | trans }}</li>
                 {% else %}
-                <li><a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.internalname | trans }}</a></li>
+                <li><a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.label | trans }}</a></li>
                 {% endif %}
                 {% endfor %}
             </ul>
@@ -164,7 +164,7 @@
             <!--Content-header-->
             {% block header %}
             <div class="page-header">
-                {% if adminmenu.current %}<h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>{% endif %}
+                {% if adminmenu.current %}<h1>{{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}</h1>{% endif %}
                 {% block extra_actions_header %}{% endblock %}
             </div>
             {% endblock %}
