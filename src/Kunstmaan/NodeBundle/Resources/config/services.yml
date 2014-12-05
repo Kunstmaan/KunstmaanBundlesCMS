@@ -1,5 +1,6 @@
 parameters:
     kunstmaan_node.version_timeout: 3600
+    kunstmaan_node.slugrouter.class: 'Kunstmaan\NodeBundle\Router\SlugRouter'
 
 services:
     kunstmaan_node.nodetranslation.listener:
@@ -78,7 +79,7 @@ services:
             - { name: kernel.event_subscriber }
 
     kunstmaan_node.slugrouter:
-        class: Kunstmaan\NodeBundle\Router\SlugRouter
+        class: "%kunstmaan_node.slugrouter.class%"
         arguments: ["@service_container"]
         tags:
             - { name: router, priority: 0 }
