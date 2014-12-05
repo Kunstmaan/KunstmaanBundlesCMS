@@ -38,7 +38,7 @@ class Translation
     /**
      * The translations keyword to use in your template or call from the translator
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank()
      */
     protected $keyword;
@@ -46,7 +46,7 @@ class Translation
     /**
      * The translations keyword to use in your template or call from the translator
      *
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=5, nullable=true)
      * @Assert\NotBlank()
      */
     protected $locale;
@@ -62,13 +62,13 @@ class Translation
      * Translation
      *
      * @var string
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
     protected $text;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      * @Assert\NotBlank()
      */
     protected $domain;
@@ -76,14 +76,14 @@ class Translation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="created_at")
+     * @ORM\Column(type="datetime", name="created_at", nullable=true)
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="updated_at")
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      */
     protected $updatedAt;
 
