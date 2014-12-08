@@ -38,16 +38,18 @@ class NodeListener
      */
     public function adaptForm(AdaptFormEvent $event)
     {
-        /* @var Seo $seo */
-        $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($event->getPage());
-
-        $seoWidget = new FormWidget();
-        $seoWidget->addType('seo', new SeoType(), $seo);
-        $event->getTabPane()->addTab(new Tab('SEO', $seoWidget));
-
-        $socialWidget = new FormWidget();
-        $socialWidget->addType('social', new SocialType(), $seo);
-        $event->getTabPane()->addTab(new Tab('Social', $socialWidget));
+    	if($event->getPage() instanceof HasNodeInterface) {
+    		/* @var Seo $seo */
+    		$seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($event->getPage());
+    		
+    		$seoWidget = new FormWidget();
+    		$seoWidget->addType('seo', new SeoType(), $seo);
+    		$event->getTabPane()->addTab(new Tab('SEO', $seoWidget));
+    		
+    		$socialWidget = new FormWidget();
+    		$socialWidget->addType('social', new SocialType(), $seo);
+    		$event->getTabPane()->addTab(new Tab('Social', $socialWidget));
+    	}
     }
 
 }

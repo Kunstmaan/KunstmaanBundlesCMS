@@ -5,6 +5,7 @@ use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 /**
  * Abstract ORM Pagepart
@@ -29,7 +30,7 @@ abstract class AbstractPagePart extends AbstractEntity implements PagePartInterf
      *
      * @return string
      */
-    public function getView(PageInterface $page = null)
+    public function getView(HasPagePartsInterface $page = null)
     {
         return $this->getDefaultView();
     }
