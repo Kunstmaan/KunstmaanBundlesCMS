@@ -21,13 +21,13 @@ CKEDITOR.editorConfig = function( config )
     config.filebrowserImageUploadUrl = '';
     config.toolbar =
         [
-            { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike', '-', 'Subscript','Superscript' ] },
+            { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript', 'RemoveFormat' ] },
             { name: 'lists', items : [ 'NumberedList','BulletedList' ] },
             { name: 'dents', items : [ 'Outdent','Indent' ] },
             { name: 'links', items : [ 'Link','Unlink', 'Anchor' ] },
             { name: 'insert', items : [ 'Image', 'SpecialChar' ] },
-            { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-            { name: 'editing', items : [ 'Find','Replace','-','SelectAll', 'RemoveFormat' ] },
+            { name: 'clipboard', items : [ 'SelectAll', 'Cut','Copy','PasteText','PasteFromWord','-','Undo','Redo' ] },
+            { name: 'editing', items : [  ] },
             { name: 'document', items : [ 'Source' ] }
         ];
 };
