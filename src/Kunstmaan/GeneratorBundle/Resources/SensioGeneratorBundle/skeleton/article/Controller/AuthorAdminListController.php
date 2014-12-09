@@ -43,7 +43,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      */
     public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator(), $request);
+        return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
     }
 
     /**
@@ -86,7 +86,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
      *
      * @return array
      */
-    public function exportAction(Request $request, $_format, $request)
+    public function exportAction(Request $request, $_format)
     {
         return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
