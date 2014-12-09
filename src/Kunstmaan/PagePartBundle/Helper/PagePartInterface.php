@@ -30,7 +30,7 @@ interface PagePartInterface extends EntityInterface
      * @abstract
      * @return string
      */
-    public function getView(PageInterface $page = null);
+    public function getView(HasPagePartsInterface $page = null);
 
     /**
      * @return AbstractType

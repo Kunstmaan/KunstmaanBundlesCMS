@@ -10,6 +10,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Symfony\Component\HttpFoundation\Request;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 /**
  * The event to pass metadata if the adaptForm event is triggered
@@ -23,7 +24,7 @@ class AdaptFormEvent extends Event
     private $tabPane;
 
     /**
-     * @var HasNodeInterface
+     * @var HasPagePartsInterface
      */
     private $page;
 
@@ -55,7 +56,7 @@ class AdaptFormEvent extends Event
      * @param NodeTranslation  $nodeTranslation The node translation
      * @param NodeVersion      $nodeVersion     The node version
      */
-    public function __construct(Request $request, TabPane $tabPane, HasNodeInterface $page, Node $node, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion)
+    public function __construct(Request $request, TabPane $tabPane, HasPagePartsInterface $page = null, Node $node = null, NodeTranslation $nodeTranslation = null, NodeVersion $nodeVersion = null)
     {
         $this->request = $request;
         $this->tabPane = $tabPane;
@@ -90,7 +91,7 @@ class AdaptFormEvent extends Event
     }
 
     /**
-     * @return HasNodeInterface
+     * @return HasPagePartsInterface
      */
     public function getPage()
     {
