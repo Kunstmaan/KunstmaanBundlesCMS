@@ -142,7 +142,13 @@
                 {% if loop.last %}
                 <li class="active">{{ breadcrumbitem.label | trans }}</li>
                 {% else %}
-                <li><a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.label | trans }}</a></li>
+                <li>
+                   {% if  breadcrumbitem.route %}
+                      <a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.label | trans }}</a>
+                   {% else %}
+                      <span>{{ breadcrumbitem.label | trans }}</span>
+                   {% endif %}
+                </li>
                 {% endif %}
                 {% endfor %}
             </ul>
