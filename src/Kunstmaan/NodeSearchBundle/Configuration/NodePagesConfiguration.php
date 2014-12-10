@@ -244,7 +244,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function isIndexable(HasNodeInterface $page)
     {
         // If the page doesn't implement IndexableInterface interface or it returns true on isIndexable, index the page
-        return (!($page instanceof IndexableInterface) or $page->isIndexable());
+        return (!($page instanceof IndexableInterface) || $page->isIndexable());
     }
 
     /**
@@ -723,7 +723,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
                 if (
-                    $securityIdentity instanceof RoleSecurityIdentity and
+                    $securityIdentity instanceof RoleSecurityIdentity &&
                     ($ace->getMask() & MaskBuilder::MASK_VIEW != 0)
                 ) {
                     $roles[] = $securityIdentity->getRole();
