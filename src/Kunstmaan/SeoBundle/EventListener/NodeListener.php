@@ -11,6 +11,7 @@ use Kunstmaan\SeoBundle\Entity\Seo,
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 
 
