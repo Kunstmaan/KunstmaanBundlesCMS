@@ -464,7 +464,7 @@ class NodeAdminController extends Controller
 
             $nodeTranslation->setWeight($weight);
             $this->em->persist($nodeTranslation);
-            $this->em->flush();
+            $this->em->flush($nodeTranslation);
 
             $this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new NodeEvent($node, $nodeTranslation, $nodeVersion, $page));
 
