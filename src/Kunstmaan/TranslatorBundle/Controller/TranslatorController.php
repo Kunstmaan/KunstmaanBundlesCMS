@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
@@ -62,6 +63,7 @@ class TranslatorController extends AdminListController
     /**
      * The add action
      *
+     * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
      *

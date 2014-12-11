@@ -8,10 +8,10 @@ KunstmaanTranslatorBundle_translations_commands:
     type:     annotation
     prefix:   /admin/settings/translations
 
-KunstmaanTranslatorBundle_settings_translations_add:
-    pattern:   /add/{domain}/{locale}/{keyword}
-    defaults:  { _controller: KunstmaanTranslatorBundle:Translator:add, domain: '', locale:'%defaultlocale%', keyword: '' }
-
-KunstmaanTranslatorBundle_settings_translations_edit_search:
-    pattern:   /add/{domain}/{locale}/{keyword}
-    defaults:  { _controller: KunstmaanTranslatorBundle:Translator:editSearch, domain: '', locale:'%defaultlocale%', keyword: '' }
+#KunstmaanTranslatorBundle_settings_translations_add:
+#    pattern:   /add/{domain}/{locale}/{keyword}
+#    defaults:  { _controller: KunstmaanTranslatorBundle:Translator:add, domain: '', locale:'%defaultlocale%', keyword: '' }
+#
+#KunstmaanTranslatorBundle_settings_translations_edit_search:
+#    pattern:   /add/{domain}/{locale}/{keyword}
+#    defaults:  { _controller: KunstmaanTranslatorBundle:Translator:editSearch, domain: '', locale:'%defaultlocale%', keyword: '' }
