@@ -24,5 +24,7 @@ ro: { analyzer: 'romanian' }
 ru: { analyzer: 'russian' }
 es: { analyzer: 'spanish' }
 sv: { analyzer: 'swedish' }
+se: { analyzer: 'swedish' }
+ee: { analyzer: 'estonian' }
 tr: { analyzer: 'turkish' }
 th: { analyzer: 'thai' }
