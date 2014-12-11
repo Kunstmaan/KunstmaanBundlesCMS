@@ -1,13 +1,13 @@
 Kunstmaan\TranslatorBundle\Entity\Translation:
     errors_{1..50}:
-        keyword: errors.<word()>.<word()>_<randomDigitNotNull()>
+        keyword: errors.<word()>.<word()>_<current()>
         locale: nl
         domain: messages
         text: <text()>
         createdAt: <dateTime()>
         updatedAt: <dateTime()>
     exceptions_{1..5}:
-        keyword: exceptions.wrong_number.<word()>
+        keyword: exceptions.wrong_number.<word()>_<current()>
         locale : <languageCode()>
         text: <text()>
         createdAt: <dateTime()>
