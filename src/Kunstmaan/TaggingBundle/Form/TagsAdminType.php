@@ -23,6 +23,11 @@ class TagsAdminType extends AbstractType
         $transformer = new TagsTransformer($this->tagManager);
         $builder->addViewTransformer($transformer, true);
     }
+	
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+		$resolver->setDefaults($this->getDefaultOptions(array()));
+	}
 
     public function getDefaultOptions(array $options)
     {
