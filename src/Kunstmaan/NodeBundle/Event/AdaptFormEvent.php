@@ -24,7 +24,7 @@ class AdaptFormEvent extends Event
     private $tabPane;
 
     /**
-     * @var HasPagePartsInterface
+     * @var 
      */
     private $page;
 
@@ -56,7 +56,7 @@ class AdaptFormEvent extends Event
      * @param NodeTranslation  $nodeTranslation The node translation
      * @param NodeVersion      $nodeVersion     The node version
      */
-    public function __construct(Request $request, TabPane $tabPane, HasPagePartsInterface $page = null, Node $node = null, NodeTranslation $nodeTranslation = null, NodeVersion $nodeVersion = null)
+    public function __construct(Request $request, TabPane $tabPane, $page = null, Node $node = null, NodeTranslation $nodeTranslation = null, NodeVersion $nodeVersion = null)
     {
         $this->request = $request;
         $this->tabPane = $tabPane;
@@ -91,7 +91,7 @@ class AdaptFormEvent extends Event
     }
 
     /**
-     * @return HasPagePartsInterface
+     * @return 
      */
     public function getPage()
     {
