@@ -24,7 +24,7 @@ class TagMenuAdaptor implements MenuAdaptorInterface
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuItem = new TopMenuItem($menu);
             $menuItem
-                ->setRoute('KunstmaanTaggingBundle_admin_tag')
+                ->setRoute('kunstmaantaggingbundle_admin_tag')
                 ->setUniqueId('Tags')
                 ->setLabel('Tags')
                 ->setParent($parent);

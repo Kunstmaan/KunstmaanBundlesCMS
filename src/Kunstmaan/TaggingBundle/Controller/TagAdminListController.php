@@ -30,7 +30,7 @@ class TagAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/", name="KunstmaanTaggingBundle_admin_tag")
+     * @Route("/", name="kunstmaantaggingbundle_admin_tag")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      */
     public function indexAction(Request $request)
@@ -39,7 +39,7 @@ class TagAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/add", name="KunstmaanTaggingBundle_admin_tag_add")
+     * @Route("/add", name="kunstmaantaggingbundle_admin_tag_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
      * @return array
@@ -50,7 +50,7 @@ class TagAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanTaggingBundle_admin_tag_edit")
+     * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_edit")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:edit.html.twig")
      */
@@ -60,7 +60,7 @@ class TagAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTaggingBundle_admin_tag_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="kunstmaantaggingbundle_admin_tag_delete")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:delete.html.twig")
      */
@@ -70,7 +70,7 @@ class TagAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/autocomplete.{_format}", name="KunstmaanTaggingBundle_admin_tag_autocomplete", defaults={"_format" = "json"})
+     * @Route("/autocomplete.{_format}", name="kunstmaantaggingbundle_admin_tag_autocomplete", defaults={"_format" = "json"})
      * @Template()
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
