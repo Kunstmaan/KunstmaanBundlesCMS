@@ -74,8 +74,6 @@ class PageTemplateTwigExtension extends \Twig_Extension
         $pageTemplate = $pageTemplates[$this->getPageTemplate($page)];
 
         $template = $this->environment->loadTemplate($pageTemplate->getTemplate());
-        /* @var $entityRepository PagePartRefRepository */
-        $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
 
         return $template->render($twigContext);
     }
