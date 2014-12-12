@@ -12,7 +12,7 @@ class Slugifier
 	 * @param $string
 	 * @return string
 	 */
-	private function rus2translit($string) {
+	public function rus2translit($string) {
 		$converter = array(
 			'а' => 'a',   'б' => 'b',   'в' => 'v',
 			'г' => 'g',   'д' => 'd',   'е' => 'e',
