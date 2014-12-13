@@ -5,6 +5,8 @@ namespace Kunstmaan\AdminListBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\Event\AdminListEvent;
+use Kunstmaan\AdminListBundle\Event\Events;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -120,6 +122,7 @@ abstract class AdminListController extends Controller
                 $em->flush();
                 $indexUrl = $configurator->getIndexUrl();
 
+				$this->get('event_dispatcher')->dispatch(Events::ADD_ADMINLIST, new AdminListEvent($helper));
                 return new RedirectResponse(
                     $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
                 );
@@ -164,8 +167,10 @@ abstract class AdminListController extends Controller
         if ('POST' == $request->getMethod()) {
             $form->submit($request);
             if ($form->isValid()) {
+				$this->get('event_dispatcher')->dispatch(Events::PRE_PERSIST, new AdminListEvent($helper));
                 $em->persist($helper);
                 $em->flush();
+				$this->get('event_dispatcher')->dispatch(Events::POST_PERSIST, new AdminListEvent($helper));
                 $indexUrl = $configurator->getIndexUrl();
 
                 return new RedirectResponse(
@@ -210,6 +215,7 @@ abstract class AdminListController extends Controller
 
         $indexUrl = $configurator->getIndexUrl();
         if ('POST' == $request->getMethod()) {
+			$this->get('event_dispatcher')->dispatch(Events::PRE_DELETE, new AdminListEvent($helper));
             $em->remove($helper);
             $em->flush();
         }
