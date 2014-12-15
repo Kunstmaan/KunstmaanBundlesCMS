@@ -25,7 +25,7 @@ before_script:
     - sudo locale-gen nl_BE.UTF-8 && sudo update-locale
     - composer --prefer-source --dev install
     - composer require symfony/symfony:${SYMFONY_VERSION}
-    - wget https://phar.phpunit.de/phpunit.
+    - wget https://phar.phpunit.de/phpunit.phar
     - wget https://scrutinizer-ci.com/ocular.phar
 
 script:
