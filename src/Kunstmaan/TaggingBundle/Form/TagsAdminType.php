@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 use Kunstmaan\TaggingBundle\Form\DataTransformer\TagsTransformer;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TagsAdminType extends AbstractType
 {
