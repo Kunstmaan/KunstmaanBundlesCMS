@@ -44,7 +44,8 @@
         "knplabs/knp-gaufrette-bundle": "0.1.*",
         "symfony-cmf/routing-bundle": "~1.1.1",
         "ruflin/elastica": "~1.0",
-        "fpn/doctrine-extensions-taggable": "0.9.0"
+        "fpn/doctrine-extensions-taggable": "0.9.0",
+        "sensio/generator-bundle": ">=2.3.0, <2.5.0"
     },
     "require-dev": {
         "behat/behat": "~2.5.0",
@@ -56,7 +57,6 @@
         "behat/mink-goutte-driver": "*",
         "behat/mink-sahi-driver": "*",
         "phpunit/phpunit": "~3.7",
-        "sensio/generator-bundle": "~2.3.0 || ~2.4.0",
         "fzaninotto/faker": "~1.4.0",
         "nelmio/alice": "~1.6"
     },
