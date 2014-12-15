@@ -25,11 +25,11 @@ before_script:
     - sudo locale-gen nl_BE.UTF-8 && sudo update-locale
     - composer --prefer-source --dev install
     - composer require symfony/symfony:${SYMFONY_VERSION}
-    - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "5.3.3" ]; then phpunit --self-update; fi;'
+    - wget https://phar.phpunit.de/phpunit.phar
+    - wget https://scrutinizer-ci.com/ocular.phar
 
 script:
-    - phpunit --coverage-clover=coverage.clover
-    - wget https://scrutinizer-ci.com/ocular.phar
+    - php phpunit.phar --coverage-clover=coverage.clover
     - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 notifications:

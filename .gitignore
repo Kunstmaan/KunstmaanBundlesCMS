@@ -3,3 +3,5 @@ composer.lock
 composer.phar
 autoload.php
 /vendor/
+phpunit.phar
+.idea

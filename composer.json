@@ -55,7 +55,7 @@
         "behat/mink-selenium2-driver": "*",
         "behat/mink-goutte-driver": "*",
         "behat/mink-sahi-driver": "*",
-        "phpunit/phpunit": "~3.7",
+        "phpunit/phpunit": "~4.4.0",
         "sensio/generator-bundle": ">=2.3.0, <2.5.0",
         "fzaninotto/faker": "~1.4.0",
         "nelmio/alice": "~1.6"
