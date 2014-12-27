@@ -77,12 +77,11 @@ following command :
 
     curl -s http://getcomposer.org/installer | php
 
-Then, use the `create-project` command to generate a new Kunstmaan Bundles CMS application. This command will install
-the CMS based on Symfony 2.3 LTS:
+Then, use the `create-project` command to generate a new Kunstmaan Bundles CMS application:
 
     php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install
 
-By using `-s dev` you can get the version based on Symfony 2.4:
+By using `-s dev` you can get the latest master version:
 
     php composer.phar create-project kunstmaan/bundles-standard-edition path/to/install -s dev
 
