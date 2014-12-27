@@ -9,7 +9,7 @@ Please refer to the documentation at [http://bundles.kunstmaan.be/getting-starte
 
 ### Browser support
 
-we currently always try to support at least the 2 last versions of Chrome / Firefox / Safari and IE9 or up.
+We currently always try to support at least the 2 last versions of Chrome / Firefox / Safari and IE9 or up.
 
 Enjoy!
 
