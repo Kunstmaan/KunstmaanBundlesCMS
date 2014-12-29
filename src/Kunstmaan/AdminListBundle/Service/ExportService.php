@@ -62,6 +62,8 @@ class ExportService
     /**
      * @param $adminlist
      * @return \PHPExcel_Writer_Excel2007
+     * @throws \Exception
+     * @throws \PHPExcel_Exception
      */
     public function createExcelSheet($adminlist)
     {
@@ -75,13 +77,19 @@ class ExportService
         foreach ($adminlist->getExportColumns() as $column) {
             $row[] = $column->getHeader();
         }
-        $objWorksheet->fromArray($row,NULL,'A'.$number++);
+        $objWorksheet->fromArray($row, null, 'A' . $number++);
 
         $allIterator = $adminlist->getAllIterator();
-        foreach($allIterator as $item){
+        foreach($allIterator as $item) {
+            if (array_key_exists(0, $item)) {
+                $itemObject = $item[0];
+            } else {
+                $itemObject = $item;
+            }
+
             $row = array();
             foreach ($adminlist->getExportColumns() as $column) {
-                $data = $adminlist->getStringValue($item[0], $column->getName());
+                $data = $adminlist->getStringValue($itemObject, $column->getName());
                 if (is_object($data)) {
                     if (!$this->renderer->exists($column->getTemplate())) {
                         throw new \Exception('No export template defined for ' . get_class($data));
@@ -92,10 +100,11 @@ class ExportService
 
                 $row[] = $data;
             }
-            $objWorksheet->fromArray($row,NULL,'A'.$number++);
+            $objWorksheet->fromArray($row, null, 'A' . $number++);
         }
 
         $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
+
         return $objWriter;
     }
 
