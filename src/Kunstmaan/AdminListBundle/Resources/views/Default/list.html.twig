@@ -34,18 +34,35 @@
                     {% endif %}
                 {% endif %}
                 {% if adminlist.canExport() %}
-                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="icon-download-alt"></i>
-                        Export to
-                        <i class="icon-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
-                        {% for name, ext in supported_export_extensions() %}
-                            {% set exportparams = exportparams|merge({"_format": ext}) %}
-                            <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">{{ name }}</a></li>
-                        {% endfor %}
-                    </ul>
+                    <div class="btn-group dropdown">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="icon-download-alt"></i>
+                            Export to
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
+                            {% for name, ext in supported_export_extensions() %}
+                                {% set exportparams = exportparams|merge({"_format": ext}) %}
+                                <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">{{ name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {% if adminlist.hasListActions %}
+                    {% for action in adminlist.getListActions() %}
+                        {% if action.template is not null %}
+                            {% include action.template with {'action': action} %}
+                        {% else %}
+                            <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}" class="btn">
+                                {% if action.getIcon() is not null %}
+                                    <i class="icon-{{ action.getIcon() }} }}"></i> {{ action.getLabel() }}
+                                {% else %}
+                                    {{ action.getLabel() }}
+                                {% endif %}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>
@@ -57,21 +74,5 @@
         {{ adminlist_widget(adminlist, adminlist.getIndexUrl()["path"], adminlist.getIndexUrl()['params']) }}
     {% else %}
         {{ adminlist_widget(adminlist, adminlist.getIndexUrl()["path"], adminlist.getIndexUrl()) }}
-    {% endif %}
-
-    {% if adminlist.hasListActions %}
-        {% for action in adminlist.getListActions() %}
-            {% if action.template is not null %}
-                {% include action.template with {'action': action} %}
-            {% else %}
-                <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}">
-                    {% if action.getIcon() is not null %}
-                        <i class="icon-{{ action.getIcon() }} }}"></i>
-                    {% else %}
-                        {{ action.getLabel() }}
-                    {% endif %}
-                </a>
-            {% endif %}
-        {% endfor %}
     {% endif %}
 {% endblock %}
