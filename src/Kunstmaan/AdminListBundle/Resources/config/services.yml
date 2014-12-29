@@ -1,20 +1,16 @@
 parameters:
-#    kunstmaan_k_admin_list.example.class: Kunstmaan\AdminListBundle\Example
+    kunstmaan_adminlist.service.export.class: Kunstmaan\AdminListBundle\Service\ExportService
 
 services:
-#    kunstmaan_k_admin_list.example:
-#        class: %kunstmaan_k_admin_list.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
-
-  kunstmaan_adminlist.factory:
+    kunstmaan_adminlist.factory:
         class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
 
-  kunstmaan_adminlist.service.export:
-        class: Kunstmaan\AdminListBundle\Service\ExportService
+    kunstmaan_adminlist.service.export:
+        class:  %kunstmaan_adminlist.service.export.class%
         calls:
             -  [ setRenderer, [ "@templating" ] ]
 
-  kunstmaan_adminlist.twig.extension:
+    kunstmaan_adminlist.twig.extension:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
         tags:
             -  { name: twig.extension }
