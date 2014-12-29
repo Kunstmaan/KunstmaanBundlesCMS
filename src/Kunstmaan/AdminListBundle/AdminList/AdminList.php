@@ -268,6 +268,22 @@ class AdminList
     }
 
     /**
+     * @return array
+     */
+    public function getBulkActions()
+    {
+        return $this->configurator->getBulkActions();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasBulkActions()
+    {
+        return $this->configurator->hasBulkActions();
+    }
+
+    /**
      * @return Pagerfanta
      */
     public function getPagerfanta()

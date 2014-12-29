@@ -215,3 +215,38 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1 {
   @extend .span1;
 }
+
+
+// Custom edits for including btn-groups within btn-groups
+// (useful for including dropdown buttons within a btn-group)
+// https://github.com/twbs/bootstrap/issues/2140
+.btn-group > .btn-group > .btn.dropdown-toggle {
+  margin-left: 0;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.btn-group > .btn-group:last-child > .btn.dropdown-toggle {
+  margin-left: 0;
+  -webkit-border-top-right-radius: 4px;
+  -moz-border-radius-topright: 4px;
+  border-top-right-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  border-bottom-right-radius: 4px;
+  border-left: 1px;
+}
+.btn-group > .btn-group:first-child > .btn.dropdown-toggle {
+  margin-right: 0;
+  -webkit-border-top-left-radius: 4px;
+  -moz-border-radius-topleft: 4px;
+  border-top-left-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  border-bottom-left-radius: 4px;
+  border-right:1px;
+}
+// remove space between consecutive dropdown btn-groups.
+.btn-group.dropdown+.btn-group.dropdown {
+  margin-left: 0;
+}

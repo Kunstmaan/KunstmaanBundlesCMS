@@ -1,14 +1,23 @@
 {% set extraparams = extraparams|merge(filter.currentparameters) %}
 
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
+
 {% if adminlist.pagerfanta.haveToPaginate() %}
     {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
 {% endif %}
 
+{% if adminlist.hasBulkActions %}
+    <form action="#" method="POST" name="bulkform">
+{% endif %}
 <div class="table_overflow_fix">
     <table class="table table-striped table-bordered {% if adminlist.hasSort() %}table-sortable{% endif %} responsive">
         <thead>
             <tr>
+                {% if adminlist.hasBulkActions %}
+                    <th style="width: 15px;">
+                        <input type="checkbox" id="js-all-bulk-checkbox">
+                    </th>
+                {% endif %}
                 {% for column in adminlist.columns%}
                     {% set columnName = column.name %}
                     {% set columnkey = column.header %}
@@ -26,12 +35,18 @@
                         {{ columnkey | trans }}
                     </th>
                 {% endfor %}
-                <th>{{ 'form.actions'|trans }}</th>
+                <th class="actions-header">{{ 'form.actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
+        {% set itemActionsPossible = false %}
         {% for item in adminlist.items(extraparams) %}
             <tr>
+                {% if adminlist.hasBulkActions %}
+                    <td>
+                        <input type="checkbox" name="bulk_selection[]" value="{{ item.id }}" class="js-bulk-checkbox">
+                    </td>
+                {% endif %}
                 {% for column in adminlist.columns%}
                     {% set columnName = column.name %}
                     {% set template = column.template %}
@@ -43,13 +58,16 @@
                 {% endfor %}
                 <td class="actions">
                     {% if adminlist.canEdit(item) %}
+                        {% set itemActionsPossible = true %}
                         <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><i class="icon-edit"></i>Edit</a>
                     {% endif %}
                     {% if adminlist.canDelete(item) %}
+                        {% set itemActionsPossible = true %}
                         {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
                         <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="danger"><i class="icon-remove-sign"></i>Delete</a>
                     {% endif %}
                     {% if adminlist.hasItemActions() %}
+                        {% set itemActionsPossible = true %}
                         {% for itemAction in adminlist.getItemActions() %}
                         {% if itemAction.template is not null %}
                             {% include itemAction.template with {'row': item, 'item': item, 'action': itemAction} %}
@@ -63,9 +81,82 @@
                 </td>
             </tr>
         {% endfor %}
+        {% if not itemActionsPossible %}
+            <style>
+                .table .actions-header, .table .actions {
+                    display: none;
+                }
+            </style>
+        {% endif %}
         </tbody>
     </table>
 </div>
+
+{% if adminlist.hasBulkActions %}
+        <div class="btn-group">
+            {% for action in adminlist.getBulkActions() %}
+                {% if action.template is not null %}
+                    {% include action.template with {'action': action} %}
+                {% else %}
+                    <a href="#" onclick="return doBulkAction('{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}')" class="btn disabled js-bulk-button">
+                        {% if action.getIcon() is not null %}
+                            <i class="icon-{{ action.getIcon() }} }}"></i> {{ action.getLabel() }}
+                        {% else %}
+                            {{ action.getLabel() }}
+                        {% endif %}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <script>
+            function doBulkAction(url) {
+                document.bulkform.action = url;
+                document.bulkform.submit();
+
+                return false;
+            }
+
+            function validateBulkCheckboxes() {
+                var allChecked = true;
+                var oneChecked = false;
+
+                var checkboxes = document.querySelectorAll('.js-bulk-checkbox');
+                for (var i=0; i<checkboxes.length; i++) {
+                    var cb = checkboxes[i];
+                    if (cb.checked == true) {
+                        oneChecked = true;
+                    } else {
+                        allChecked = false;
+                    }
+                }
+
+                $('#js-all-bulk-checkbox').prop('checked', allChecked);
+
+                if (oneChecked) {
+                    $('.js-bulk-button').removeClass('disabled');
+                } else {
+                    $('.js-bulk-button').addClass('disabled');
+                }
+            }
+
+            var allCheckbox = document.getElementById('js-all-bulk-checkbox');
+            allCheckbox.onchange = function() {
+                if (allCheckbox.checked == true) {
+                    $('.js-bulk-checkbox').prop('checked', true);
+                    $('.js-bulk-button').removeClass('disabled');
+                } else {
+                    $('.js-bulk-checkbox').prop('checked', false);
+                    $('.js-bulk-button').addClass('disabled');
+                }
+            };
+            
+            var checkboxes = document.querySelectorAll('.js-bulk-checkbox');
+            for (var key in checkboxes) {
+                checkboxes[key].onchange = validateBulkCheckboxes;
+            }
+        </script>
+    </form>
+{% endif %}
 
 {% if adminlist.pagerfanta.haveToPaginate() %}
     {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}

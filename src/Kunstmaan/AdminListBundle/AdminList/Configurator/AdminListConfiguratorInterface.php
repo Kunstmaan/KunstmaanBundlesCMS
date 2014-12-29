@@ -3,15 +3,13 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use InvalidArgumentException;
-
+use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\AbstractType;
-
 use Pagerfanta\Pagerfanta;
 
 /**
@@ -119,7 +117,6 @@ interface AdminListConfiguratorInterface
      */
     public function canExport();
 
-
     /**
      * @return array
      */
@@ -154,6 +151,16 @@ interface AdminListConfiguratorInterface
      * @return ListActionInterface[]
      */
     public function getListActions();
+
+    /**
+     * @return bool
+     */
+    public function hasBulkActions();
+
+    /**
+     * @return BulkActionInterface[]
+     */
+    public function getBulkActions();
 
     /**
      * @param array|object $item       The item
