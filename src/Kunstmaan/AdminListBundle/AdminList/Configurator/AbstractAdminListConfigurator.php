@@ -164,10 +164,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
         $friendlyName = explode("\\", $this->getEntityName());
         $friendlyName = array_pop($friendlyName);
+        $re = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
+        $a = preg_split($re, $friendlyName);
+        $superFriendlyName = implode(' ', $a);
 
         return array(
-            strtolower($friendlyName) => array('path' => $this->getPathByConvention($this::SUFFIX_ADD),
-                                                        'params' => $params)
+            $superFriendlyName => array('path'   => $this->getPathByConvention($this::SUFFIX_ADD),
+                                        'params' => $params)
         );
     }
 
