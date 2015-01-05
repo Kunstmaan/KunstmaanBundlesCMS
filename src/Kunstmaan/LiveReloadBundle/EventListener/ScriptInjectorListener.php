@@ -1,7 +1,7 @@
 <?php
 
 namespace Kunstmaan\LiveReloadBundle\EventListener;
- 
+
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -71,7 +71,7 @@ class ScriptInjectorListener implements EventSubscriberInterface {
             $script = "http://$this->host:$this->port/livereload.js";
 
             if ($this->check_server_presence) {
-                $headers = @get_headers($script);
+                $headers = get_headers($script);
                 if (!is_array($headers) || strpos($headers[0], '200') === false) {
                     return;
                 }
