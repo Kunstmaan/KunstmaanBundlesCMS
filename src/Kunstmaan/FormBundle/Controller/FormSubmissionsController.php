@@ -12,6 +12,8 @@ use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * The controller which will handle everything related with form pages and form submissions
