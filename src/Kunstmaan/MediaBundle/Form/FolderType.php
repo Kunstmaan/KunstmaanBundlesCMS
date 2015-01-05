@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\Form\AbstractType;
@@ -35,7 +33,7 @@ class FolderType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
      *
@@ -51,10 +49,10 @@ class FolderType extends AbstractType
                 'choice',
                 array(
                     'choices' => array(
-                        'media'     => 'media',
-                        'image'     => 'image',
+                        'media' => 'media',
+                        'image' => 'image',
                         'slideshow' => 'slideshow',
-                        'video'     => 'video'
+                        'video' => 'video'
                     ),
                 )
             )
@@ -62,11 +60,11 @@ class FolderType extends AbstractType
                 'parent',
                 'entity',
                 array(
-                    'class'         => 'KunstmaanMediaBundle:Folder',
-                    'property'      => 'optionLabel',
-                    'required'      => true,
+                    'class' => 'KunstmaanMediaBundle:Folder',
+                    'property' => 'optionLabel',
+                    'required' => true,
                     'query_builder' => function (FolderRepository $er) use ($folder) {
-                            return $er->selectFolderQueryBuilder($folder);
+                        return $er->selectFolderQueryBuilder($folder);
                     }
                 )
             );

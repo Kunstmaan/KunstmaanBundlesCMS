@@ -2,11 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Helper\File;
 
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 
 /**
  * SVGMimeTypeGuesser
@@ -21,16 +19,6 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
     private $_MIMETYPE_NAMESPACES = array(
         'http://www.w3.org/2000/svg' => 'image/svg+xml'
     );
-
-    /**
-     * Returns whether this guesser is supported on the current OS
-     *
-     * @return bool
-     */
-    public static function isSupported()
-    {
-        return class_exists('DOMDocument') && class_exists('DOMXPath');
-    }
 
     /**
      * {@inheritdoc}
@@ -62,5 +50,15 @@ class SVGMimeTypeGuesser implements MimeTypeGuesserInterface
         }
 
         return;
+    }
+
+    /**
+     * Returns whether this guesser is supported on the current OS
+     *
+     * @return bool
+     */
+    public static function isSupported()
+    {
+        return class_exists('DOMDocument') && class_exists('DOMXPath');
     }
 }

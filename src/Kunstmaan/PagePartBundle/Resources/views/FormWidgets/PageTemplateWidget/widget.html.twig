@@ -1,70 +1,80 @@
 {% set id = resource.page.id %}
 <section class="pp-new">
-    <input type="hidden" class="deletefield" id="pagetemplate_template" name="pagetemplate_template" value="{{ resource.pagetemplate.name }}"/>
+    <input type="hidden" class="deletefield" id="pagetemplate_template" name="pagetemplate_template"
+           value="{{ resource.pagetemplate.name }}"/>
 
-{% for row in resource.pagetemplate.rows %}
-     <div class="row-fluid">
-        {% for region in row.regions %}
-        <div class="span{{ region.span }}">
-            <div class="template-block">
-                <h5>{{ region.name|replace({'_':' '})|title }}</h5>
-                {% set widget = resource.getFormWidget(region.name) %}
-                {% if widget is not null %}
-                    {% set pagepartadmin = widget.pagepartadmin %}
-                    {{ pagepartadmin_widget(pagepartadmin, formView) }}
-                {% else %}
-                    NO ADMIN FOUND for {{ region.name }}
-                {% endif %}
-            </div><!-- end template-block -->
+    {% for row in resource.pagetemplate.rows %}
+        <div class="row-fluid">
+            {% for region in row.regions %}
+                <div class="span{{ region.span }}">
+                    <div class="template-block">
+                        <h5>{{ region.name|replace({'_':' '})|title }}</h5>
+                        {% set widget = resource.getFormWidget(region.name) %}
+                        {% if widget is not null %}
+                            {% set pagepartadmin = widget.pagepartadmin %}
+                            {{ pagepartadmin_widget(pagepartadmin, formView) }}
+                        {% else %}
+                            NO ADMIN FOUND for {{ region.name }}
+                        {% endif %}
+                    </div>
+                    <!-- end template-block -->
+                </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-{% endfor %}
-	{% if resource.pagetemplates|length > 1 %}
-    <button class="btn" data-keyboard="true" data-toggle="modal" data-target="#change-template-modal{{id}}" name="change-template-button"><i class="icon-align-justify"></i> Change template</button>
-    <!--Change template modal-->
-	<div id="change-template-modal{{id}}" class="modal hide fade change-template-modal">
-		<div class="modal-header">
-			<button class="close" data-dismiss="modal">&times;</button>
-			<h3>Change template</h3>
-		</div>
-		<div class="modal-body">
-			<p>Change template into:</p>
-			{% for pagetemplate in resource.pagetemplates %}
-    			<div>
-        			<label for="pagetemplate_template_choice_{{ loop.index }}">
-        			<input type="radio" id="pagetemplate_template_choice_{{ loop.index }}" name="pagetemplate_template_choice" value="{{ pagetemplate.name }}" {% if resource.pagetemplate.name == pagetemplate.name %} checked="checked" {% endif %}/> {{ pagetemplate.name }}
-        			{% if resource.pagetemplate.name == pagetemplate.name %} (current) {% endif %}
-        			{% for row in pagetemplate.rows %}
-                        <div class="row-fluid">
-                            {% for region in row.regions %}
-                            <div class="span{{ region.span }}" style="margin-top: 10px;">
-                                <div style="background-color: #EEEEEE;border-radius: 3px 3px 3px 3px;line-height: 40px;min-height: 40px;text-align: center;">
-                                    {{ region.name|replace({'_':' '})|title }}
-                                </div><!-- end template-block -->
-                            </div>
+    {% endfor %}
+    {% if resource.pagetemplates|length > 1 %}
+        <button class="btn" data-keyboard="true" data-toggle="modal" data-target="#change-template-modal{{ id }}"
+                name="change-template-button"><i class="icon-align-justify"></i> Change template
+        </button>
+        <!--Change template modal-->
+        <div id="change-template-modal{{ id }}" class="modal hide fade change-template-modal">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h3>Change template</h3>
+            </div>
+            <div class="modal-body">
+                <p>Change template into:</p>
+                {% for pagetemplate in resource.pagetemplates %}
+                    <div>
+                        <label for="pagetemplate_template_choice_{{ loop.index }}">
+                            <input type="radio" id="pagetemplate_template_choice_{{ loop.index }}"
+                                   name="pagetemplate_template_choice"
+                                   value="{{ pagetemplate.name }}" {% if resource.pagetemplate.name == pagetemplate.name %} checked="checked" {% endif %}/> {{ pagetemplate.name }}
+                            {% if resource.pagetemplate.name == pagetemplate.name %} (current) {% endif %}
+                            {% for row in pagetemplate.rows %}
+                                <div class="row-fluid">
+                                    {% for region in row.regions %}
+                                        <div class="span{{ region.span }}" style="margin-top: 10px;">
+                                            <div style="background-color: #EEEEEE;border-radius: 3px 3px 3px 3px;line-height: 40px;min-height: 40px;text-align: center;">
+                                                {{ region.name|replace({'_':' '})|title }}
+                                            </div>
+                                            <!-- end template-block -->
+                                        </div>
+                                    {% endfor %}
+                                </div>
                             {% endfor %}
-                        </div>
-                    {% endfor %}
-                    </label>
-    			</div>
-			{% endfor %}
-		</div>
-		<div class="modal-footer">
-			<div class="btn_group">
-				<button type="button" onclick="PageTemplateEditor.changeTemplate(jQuery('input[name=pagetemplate_template_choice]:checked')); $('#change-template-modal{{id}}').modal('hide');" class="btn btn-primary" name="change-template">Change</button>
-				<button class="btn" data-dismiss="modal">Cancel</button>
-			</div>
-		</div>
-	</div>
-	{% endif %}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <div class="btn_group">
+                    <button type="button"
+                            onclick="PageTemplateEditor.changeTemplate(jQuery('input[name=pagetemplate_template_choice]:checked')); $('#change-template-modal{{ id }}').modal('hide');"
+                            class="btn btn-primary" name="change-template">Change
+                    </button>
+                    <button class="btn" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </section>
 <script>
     PageTemplateEditor = {
-	    changeTemplate: function (choice){
-		    jQuery('#pagetemplate_template').val(jQuery(choice).val());
-		    jQuery(choice).closest('form').submit();
-	        return true;
-	    }
+        changeTemplate: function (choice) {
+            jQuery('#pagetemplate_template').val(jQuery(choice).val());
+            jQuery(choice).closest('form').submit();
+            return true;
+        }
     }
 </script>

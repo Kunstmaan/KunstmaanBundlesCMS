@@ -2,25 +2,16 @@
 
 namespace Kunstmaan\FormBundle\Controller;
 
-use Ddeboer\DataImport\Writer\CsvWriter;
-
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\AdminListBundle\AdminList\ExportList;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
-use Kunstmaan\FormBundle\Entity\FormSubmission;
-
+use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * The controller which will handle everything related with form pages and form submissions
@@ -75,7 +66,7 @@ class FormSubmissionsController extends Controller
      * The edit action will be used to edit a given submission
      *
      * @param int $nodeTranslationId The node translation id
-     * @param int $submissionId      The submission id
+     * @param int $submissionId The submission id
      *
      * @Route("/list/{nodeTranslationId}/{submissionId}", requirements={"nodeTranslationId" = "\d+", "submissionId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit")
      * @Method({"GET", "POST"})

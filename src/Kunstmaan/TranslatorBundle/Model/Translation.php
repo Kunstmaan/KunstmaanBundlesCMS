@@ -37,6 +37,14 @@ class Translation
     }
 
     /**
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
+    /**
      * @param string $domain
      * @return Translation
      */
@@ -50,9 +58,9 @@ class Translation
     /**
      * @return string
      */
-    public function getDomain()
+    public function getKeyword()
     {
-        return $this->domain;
+        return $this->keyword;
     }
 
     /**
@@ -67,11 +75,11 @@ class Translation
     }
 
     /**
-     * @return string
+     * @return ArrayCollection
      */
-    public function getKeyword()
+    public function getTexts()
     {
-        return $this->keyword;
+        return $this->texts;
     }
 
     /**
@@ -86,14 +94,6 @@ class Translation
     }
 
     /**
-     * @return ArrayCollection
-     */
-    public function getTexts()
-    {
-        return $this->texts;
-    }
-
-    /**
      * @param string $locale
      * @param string $text
      * @param int|null $id
@@ -103,8 +103,8 @@ class Translation
     {
         $textWithLocale = new TextWithLocale();
         $textWithLocale
-          ->setLocale($locale)
-          ->setText($text);
+            ->setLocale($locale)
+            ->setText($text);
         if (!is_null($id)) {
             $textWithLocale->setId($id);
         }

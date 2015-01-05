@@ -23,6 +23,14 @@ class TextWithLocale
     protected $text;
 
     /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @param string $id
      * @return TextWithLocale
      */
@@ -36,9 +44,9 @@ class TextWithLocale
     /**
      * @return string
      */
-    public function getId()
+    public function getLocale()
     {
-        return $this->id;
+        return $this->locale;
     }
 
     /**
@@ -55,9 +63,9 @@ class TextWithLocale
     /**
      * @return string
      */
-    public function getLocale()
+    public function getText()
     {
-        return $this->locale;
+        return $this->text;
     }
 
     /**
@@ -69,13 +77,5 @@ class TextWithLocale
         $this->text = $text;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
     }
 }

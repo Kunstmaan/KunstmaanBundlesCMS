@@ -8,15 +8,18 @@
     </div>
 {% endif %}
 
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request form-stacked">
-	<div class="control-group">
-		<label for="username">{{ 'Username or email address' |trans }}:</label>
-		<i class="icon-user"></i>
-		<input class="username" id="username" type="text" name="username" value="" placeholder="{{ 'Username or email address' |trans }}" autofocus />
-	</div>
-	<div class="btn_group">
-		<button class="btn" type="submit">{{ 'Reset password' |trans }}</button>
-		<button class="btn" type="reset" onclick="window.location = '{{ path('fos_user_security_login' ) }}'">{{ 'form.cancel' | trans }}</button>
-	</div>
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST"
+      class="fos_user_resetting_request form-stacked">
+    <div class="control-group">
+        <label for="username">{{ 'Username or email address' |trans }}:</label>
+        <i class="icon-user"></i>
+        <input class="username" id="username" type="text" name="username" value=""
+               placeholder="{{ 'Username or email address' |trans }}" autofocus/>
+    </div>
+    <div class="btn_group">
+        <button class="btn" type="submit">{{ 'Reset password' |trans }}</button>
+        <button class="btn" type="reset"
+                onclick="window.location = '{{ path('fos_user_security_login' ) }}'">{{ 'form.cancel' | trans }}</button>
+    </div>
 </form>
- 
+

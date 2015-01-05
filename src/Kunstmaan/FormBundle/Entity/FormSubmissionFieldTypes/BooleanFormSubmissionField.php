@@ -3,10 +3,9 @@
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
-use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
+use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 
 /**
  * The BooleanFormSubmissionField can be used to store one or more selected choices to a FormSubmission
@@ -21,30 +20,6 @@ class BooleanFormSubmissionField extends FormSubmissionField
      * @ORM\Column(name="bfsf_value", type="boolean", nullable=true)
      */
     protected $value;
-
-    /**
-     * Get the value of this field
-     *
-     * @return boolean
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Set the value of this field
-     *
-     * @param boolean $value
-     *
-     * @return BooleanFormSubmissionField
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
-    }
 
     /**
      * Returns the default form type for this FormSubmissionField
@@ -71,4 +46,27 @@ class BooleanFormSubmissionField extends FormSubmissionField
         }
     }
 
+    /**
+     * Get the value of this field
+     *
+     * @return boolean
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set the value of this field
+     *
+     * @param boolean $value
+     *
+     * @return BooleanFormSubmissionField
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
 }

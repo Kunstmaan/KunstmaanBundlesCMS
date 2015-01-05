@@ -2,12 +2,11 @@
 
 namespace Kunstmaan\AdminBundle;
 
-use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\MenuCompilerPass;
-
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * KunstmaanAdminBundle

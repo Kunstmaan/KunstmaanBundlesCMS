@@ -1,14 +1,14 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
 {% block extra_actions_header %}
-	{% if adminlist.canExport() %}
-		<div class="extra_actions_header">
-		    <div class="btn-group">
-				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-					<i class="icon-download-alt"></i>
-					Export to
-					<i class="icon-caret-down"></i>
-				</a>
+    {% if adminlist.canExport() %}
+        <div class="extra_actions_header">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="icon-download-alt"></i>
+                    Export to
+                    <i class="icon-caret-down"></i>
+                </a>
                 <ul class="dropdown-menu">
                     {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
                     {% for name, ext in supported_export_extensions() %}
@@ -16,14 +16,14 @@
                         <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">{{ name }}</a></li>
                     {% endfor %}
                 </ul>
-			</div>
-		</div>
-	{% endif %}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
 
-	<h2>{{ nodetranslation.title }}</h2>
-	{{ adminlist_widget(adminlist, 'KunstmaanFormBundle_formsubmissions_list', {"nodeTranslationId" : nodetranslation.id}) }}
+    <h2>{{ nodetranslation.title }}</h2>
+    {{ adminlist_widget(adminlist, 'KunstmaanFormBundle_formsubmissions_list', {"nodeTranslationId" : nodetranslation.id}) }}
 
 {% endblock %}

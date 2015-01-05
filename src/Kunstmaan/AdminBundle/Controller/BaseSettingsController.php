@@ -20,4 +20,4 @@ class BaseSettingsController extends Controller
         }
     }
 
-} 
+}

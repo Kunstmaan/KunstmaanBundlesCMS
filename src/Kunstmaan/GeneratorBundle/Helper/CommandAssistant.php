@@ -38,14 +38,6 @@ class CommandAssistant
     }
 
     /**
-     * @param $output OutputInterface
-     */
-    public function setOutput(OutputInterface $output)
-    {
-        $this->output = $output;
-    }
-
-    /**
      * @return OutputInterface
      */
     public function getOutput()
@@ -54,11 +46,11 @@ class CommandAssistant
     }
 
     /**
-     * @return DialogHelper
+     * @param $output OutputInterface
      */
-    private function getDialog()
+    public function setOutput(OutputInterface $output)
     {
-        return $this->dialog;
+        $this->output = $output;
     }
 
     /**
@@ -88,6 +80,14 @@ class CommandAssistant
     public function writeSection($text, $style = 'bg=blue;fg=white')
     {
         $this->getDialog()->writeSection($this->output, $text, $style);
+    }
+
+    /**
+     * @return DialogHelper
+     */
+    private function getDialog()
+    {
+        return $this->dialog;
     }
 
     public function writeLine($text, $type = OutputInterface::OUTPUT_NORMAL)

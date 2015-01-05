@@ -1,9 +1,9 @@
 # Media
-media: 
+media:
   aviary:
     title: Aviary
     nothing: Hier gibt es nichts zu sehen.
-  
+
   media:
     no: Noch keine Dateien in diesem Verzeichnis.
     bulkupload:
@@ -39,7 +39,7 @@ media:
       action: Verzeichnis Löschen
       modal:
         title: Verzeichnis Löschen
-        text: Soll das Verzeichnis "%folder%" wirklich gelöscht werden? 
+        text: Soll das Verzeichnis "%folder%" wirklich gelöscht werden?
     save: Speichern
     contenttab:
       title: Inhalt
@@ -54,7 +54,7 @@ media:
     back_to_folder: Zurück zum Verzeichnis
     upload_finished: Upload abgeschlossen.
     not_available: Der Massen-Upload ist nicht verfügbar. Ihr Browser unterstützt kein Flash, Silverlight oder HTML5.
-    
+
   slide:
     add: Folie Hinzufügen
     modal:
@@ -76,7 +76,7 @@ media:
     modal:
       title: Datei Hinzufügen
       save: Hinzufügen
-    
+
   widget:
     choose: Auswählen
     delete: Löschen

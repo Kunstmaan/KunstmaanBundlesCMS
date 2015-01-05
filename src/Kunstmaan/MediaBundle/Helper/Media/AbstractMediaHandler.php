@@ -82,7 +82,7 @@ abstract class AbstractMediaHandler
     }
 
     /**
-     * @param Media  $media    The media entity
+     * @param Media $media The media entity
      * @param string $basepath The base path
      *
      * @return string

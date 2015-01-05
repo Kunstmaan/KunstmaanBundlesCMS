@@ -33,7 +33,7 @@ class BulkUploadType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
@@ -43,9 +43,9 @@ class BulkUploadType extends AbstractType
             'files',
             'file',
             array(
-                'required'   => false,
-                'attr'       => array(
-                    'accept'   => $this->accept,
+                'required' => false,
+                'attr' => array(
+                    'accept' => $this->accept,
                     'multiple' => 'multiple',
                 ),
                 'data_class' => null

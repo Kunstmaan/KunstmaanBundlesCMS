@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,34 +31,10 @@ class FixGuestCommand extends ContainerAwareCommand
             ->setHelp("The <info>kuma:fix:guest</info> command can be used to remove the ROLE_GUEST dependency.");
     }
 
-    public function setEntityManager(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * Check if the specified role is in use, both in the roles and the acl security identities tables
-     *
-     * @param $roleName
-     *
-     * @return bool
-     */
-    private function isRoleInUse($roleName)
-    {
-        /* @var EntityRepository $repo */
-        $repo        = $this->em->getRepository('KunstmaanAdminBundle:Role');
-        $role        = $repo->findOneByRole($roleName);
-        $sql         = 'SELECT id FROM acl_security_identities WHERE identifier=?';
-        $stmt        = $this->em->getConnection()->executeQuery($sql, array($roleName));
-        $aclIdentity = $stmt->fetch();
-
-        return !is_null($role) || ($aclIdentity !== false);
-    }
-
     /**
      * Modify ROLE_GUEST (if it exists)
      *
-     * @param InputInterface  $input  The input
+     * @param InputInterface $input The input
      * @param OutputInterface $output The output
      *
      * @return int
@@ -77,7 +52,7 @@ class FixGuestCommand extends ContainerAwareCommand
         }
 
         /* @var EntityRepository $repo */
-        $repo      = $this->em->getRepository('KunstmaanAdminBundle:Role');
+        $repo = $this->em->getRepository('KunstmaanAdminBundle:Role');
         $guestRole = $repo->findOneByRole('ROLE_GUEST');
         if (!is_null($guestRole)) {
             try {
@@ -99,5 +74,29 @@ class FixGuestCommand extends ContainerAwareCommand
         } else {
             $output->writeln('<error>ROLE_GUEST not found : you\'re on your own!</error>');
         }
+    }
+
+    public function setEntityManager(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * Check if the specified role is in use, both in the roles and the acl security identities tables
+     *
+     * @param $roleName
+     *
+     * @return bool
+     */
+    private function isRoleInUse($roleName)
+    {
+        /* @var EntityRepository $repo */
+        $repo = $this->em->getRepository('KunstmaanAdminBundle:Role');
+        $role = $repo->findOneByRole($roleName);
+        $sql = 'SELECT id FROM acl_security_identities WHERE identifier=?';
+        $stmt = $this->em->getConnection()->executeQuery($sql, array($roleName));
+        $aclIdentity = $stmt->fetch();
+
+        return !is_null($role) || ($aclIdentity !== false);
     }
 }

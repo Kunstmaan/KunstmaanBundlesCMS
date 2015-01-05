@@ -1,7 +1,9 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
 {% block header %}
-     <h1>{{ 'media.media.title'|trans }} <small>{{ media.name }}</small></h1>
+    <h1>{{ 'media.media.title'|trans }}
+        <small>{{ media.name }}</small>
+    </h1>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -12,7 +14,7 @@
     <aside id="sidebar" class="sidebar">
         <div class="search_wrp">
             <form id="treeform">
-                <input type="text" id="searchVal" value="" />
+                <input type="text" id="searchVal" value=""/>
                 <button id="search" class="btn search"><i class="icon-search"></i></button>
             </form>
         </div>
@@ -31,17 +33,18 @@
 
 {% block content %}
 
-	<!--=========Actions=========-->
+    <!--=========Actions=========-->
 
-	<!--Main-->
+    <!--Main-->
     <div class="main_actions btn-group">
         {% block extraactions %}{% endblock %}
         {% block actions %}
-            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
+            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}"
+               data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
         {% endblock %}
     </div>
 
-	<!--Scroll-->
+    <!--Scroll-->
     <div id="main_actions_top" class="main_actions top">
         <div class="pull-right btn-group">
             {{ block('extraactions') }}
@@ -50,31 +53,32 @@
         </div>
     </div>
 
-	<!--=========Tabs=========-->
+    <!--=========Tabs=========-->
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#imagegallery" data-toggle="tab">{{ 'media.media.contenttab.title'|trans|capitalize }}</a></li>
+        <li class="active"><a href="#imagegallery"
+                              data-toggle="tab">{{ 'media.media.contenttab.title'|trans|capitalize }}</a></li>
         <li><a href="#properties" data-toggle="tab">{{ 'media.media.propertiestab.title' | trans }}</a></li>
     </ul>
 
     <div class="tab-content">
         <div class="tab-pane active" id="imagegallery">
 
-			<div class="properties">
-				<dl>
-				    {% block mediainfo %}
-    				    <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
-    				    	<dd>{{ media.name }}</dd>
-    				    <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
-    				    	<dd>{{ media.contentType }}</dd>
-    				    <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
-    				    	<dd>{{ media.createdat|date|escape }}</dd>
-    				    <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
-    				    	<dd>{{ media.updatedat|date|escape }}</dd>
-				    {% endblock %}
-				</dl>
-			</div>
+            <div class="properties">
+                <dl>
+                    {% block mediainfo %}
+                        <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
+                        <dd>{{ media.name }}</dd>
+                        <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
+                        <dd>{{ media.contentType }}</dd>
+                        <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
+                        <dd>{{ media.createdat|date|escape }}</dd>
+                        <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
+                        <dd>{{ media.updatedat|date|escape }}</dd>
+                    {% endblock %}
+                </dl>
+            </div>
 
-			{% block preview %}
+            {% block preview %}
 
             {% endblock %}
 
@@ -85,14 +89,18 @@
 
             {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-            <form class="form-horizontal properties" action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(editform) }}>
+            <form class="form-horizontal properties"
+                  action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}"
+                  method="post" {{ form_enctype(editform) }}>
                 <div class="prop_wrp">
                     {{ form_widget(editform) }}
                     <div class="input_prop">
-                    	<div class="btn_group">
-                        	<button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}'" type="reset">{{ 'form.cancel' |trans }}</button>
-                        	<button class="btn btn-primary" type="submit">{{ 'form.save' |trans }}</button>
-                       	</div>
+                        <div class="btn_group">
+                            <button class="btn"
+                                    onclick="window.location = '{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}'"
+                                    type="reset">{{ 'form.cancel' |trans }}</button>
+                            <button class="btn btn-primary" type="submit">{{ 'form.save' |trans }}</button>
+                        </div>
                     </div>
                 </div>
             </form>

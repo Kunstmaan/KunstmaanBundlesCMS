@@ -7,7 +7,8 @@ class LanguageChooserExtension extends \Twig_Extension
 
     private $languageChooserLanguages;
 
-    public function getGlobals() {
+    public function getGlobals()
+    {
         return array(
             'languagechooser_languages' => $this->languageChooserLanguages
         );

@@ -1,6 +1,3 @@
 headerpagepart:
   niv.not_blank: Niv is required.
   title.not_blank: Title is required.
-  
-  
-

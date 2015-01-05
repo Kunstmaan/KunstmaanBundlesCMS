@@ -12,26 +12,26 @@ class TextWithLocaleAdminType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('locale', 'hidden');
         $builder->add('text', 'textarea', array(
-              'required' => false
-          ));
+            'required' => false
+        ));
 
         $builder->addEventListener(
-          FormEvents::PRE_SET_DATA,
-          function (FormEvent $event) {
-              // Reflect locale in label...
-              $data = $event->getData();
-              $form = $event->getForm();
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                // Reflect locale in label...
+                $data = $event->getData();
+                $form = $event->getForm();
 
-              $options = $form->get('text')->getConfig()->getOptions();
-              $options['label'] = strtoupper($data->getLocale());
-              $form->add('text', 'textarea', $options);
-          }
+                $options = $form->get('text')->getConfig()->getOptions();
+                $options['label'] = strtoupper($data->getLocale());
+                $form->add('text', 'textarea', $options);
+            }
         );
     }
 
@@ -49,6 +49,6 @@ class TextWithLocaleAdminType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\TextWithLocale',
-          ));
+        ));
     }
 }

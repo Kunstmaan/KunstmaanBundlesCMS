@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Creators;
 
-use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
@@ -24,7 +24,7 @@ class ACLPermissionCreator
     private $objectIdentityRetrievalStrategy;
 
     /**
-     * @param MutableAclProviderInterface              $aclProvider
+     * @param MutableAclProviderInterface $aclProvider
      * @param ObjectIdentityRetrievalStrategyInterface $objectIdentityRetrievalStrategy
      */
     public function __construct(MutableAclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $objectIdentityRetrievalStrategy)
@@ -35,8 +35,35 @@ class ACLPermissionCreator
 
     /**
      * @param mixed $object
+     * @param mixed $example
+     * @param bool $force
+     */
+    public function initByExample($object, $example, $force = false)
+    {
+        $aclProvider = $this->aclProvider;
+        $strategy = $this->objectIdentityRetrievalStrategy;
+
+        $exampleIdentity = $strategy->getObjectIdentity($example);
+        $exampleAcl = $aclProvider->findAcl($exampleIdentity);
+
+        $aces = array();
+        /* @var EntryInterface $ace */
+        foreach ($exampleAcl->getObjectAces() as $ace) {
+            $securityIdentity = $ace->getSecurityIdentity();
+            if ($securityIdentity instanceof RoleSecurityIdentity) {
+                $aces[] = array(
+                    'identity' => $securityIdentity,
+                    'mask' => $ace->getMask()
+                );
+            }
+        }
+        $this->init($object, $aces, $force);
+    }
+
+    /**
+     * @param mixed $object
      * @param array $aces
-     * @param bool  $force
+     * @param bool $force
      */
     private function init($object, $aces, $force = false)
     {
@@ -63,38 +90,11 @@ class ACLPermissionCreator
 
     /**
      * @param mixed $object
-     * @param mixed $example
-     * @param bool  $force
-     */
-    public function initByExample($object, $example, $force = false)
-    {
-        $aclProvider = $this->aclProvider;
-        $strategy = $this->objectIdentityRetrievalStrategy;
-
-        $exampleIdentity = $strategy->getObjectIdentity($example);
-        $exampleAcl = $aclProvider->findAcl($exampleIdentity);
-
-        $aces = array();
-        /* @var EntryInterface $ace */
-        foreach ($exampleAcl->getObjectAces() as $ace) {
-            $securityIdentity = $ace->getSecurityIdentity();
-            if ($securityIdentity instanceof RoleSecurityIdentity) {
-                $aces[] = array(
-                    'identity' => $securityIdentity,
-                    'mask' => $ace->getMask()
-                );
-            }
-        }
-        $this->init($object, $aces, $force);
-    }
-
-    /**
-     * @param mixed $object
      * @param array $map
      *        with as key the name of the role you want to set the permissions for
      *        and as value the mask you want to use
      *        for example array('ROLE_GUEST' => MaskBuilder::MASK_EDIT | MaskBuilder::MASK_PUBLISH)
-     * @param bool  $force
+     * @param bool $force
      */
     public function initByMap($object, $map, $force = false)
     {
@@ -108,5 +108,4 @@ class ACLPermissionCreator
 
         $this->init($object, $aces, $force);
     }
-
 }

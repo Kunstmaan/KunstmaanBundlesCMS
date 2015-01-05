@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Helper\RemoteVideo;
 
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\RemoteVideo\RemoteVideoType;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * RemoteVideoStrategy
@@ -13,20 +13,17 @@ class RemoteVideoHandler extends AbstractMediaHandler
 {
 
     /**
-     * @var array
-     */
-    protected $configuration = array();
-
-    /**
      * @var string
      */
     const CONTENT_TYPE = 'remote/video';
-
     /**
      * @var string
      */
     const TYPE = 'video';
-
+    /**
+     * @var array
+     */
+    protected $configuration = array();
 
     /**
      * Constructor. Takes the configuration of the RemoveVideoHandler
@@ -100,7 +97,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
             $media->setUuid($uuid);
         }
         $video = new RemoteVideoHelper($media);
-        $code  = $video->getCode();
+        $code = $video->getCode();
         //update thumbnail
         switch ($video->getType()) {
             case 'youtube':
@@ -109,14 +106,14 @@ class RemoteVideoHandler extends AbstractMediaHandler
             case 'vimeo':
                 try {
                     $xml = simplexml_load_file('http://vimeo.com/api/v2/video/' . $code . '.xml');
-                    $video->setThumbnailUrl((string) $xml->video->thumbnail_large);
+                    $video->setThumbnailUrl((string)$xml->video->thumbnail_large);
                 } catch (\Exception $e) {
 
                 }
                 break;
             case 'dailymotion':
                 try {
-                    $json         = json_decode(
+                    $json = json_decode(
                         file_get_contents('https://api.dailymotion.com/video/' . $code . '?fields=thumbnail_large_url')
                     );
                     $thumbnailUrl = $json->{'thumbnail_large_url'};
@@ -177,7 +174,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     {
         return array(
             'video' => array(
-                'path'   => 'KunstmaanMediaBundle_folder_videocreate',
+                'path' => 'KunstmaanMediaBundle_folder_videocreate',
                 'params' => array(
                     'folderId' => $params['folderId']
                 )
@@ -202,9 +199,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
                 case 'www.youtube.com':
                 case 'youtube.com':
                     parse_str($parsedUrl['query'], $queryFields);
-                    $code   = $queryFields['v'];
+                    $code = $queryFields['v'];
                     $result = new Media();
-                    $video  = new RemoteVideoHelper($result);
+                    $video = new RemoteVideoHelper($result);
                     $video->setType('youtube');
                     $video->setCode($code);
                     $result = $video->getMedia();
@@ -212,9 +209,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     break;
                 case 'www.vimeo.com':
                 case 'vimeo.com':
-                    $code   = substr($parsedUrl['path'], 1);
+                    $code = substr($parsedUrl['path'], 1);
                     $result = new Media();
-                    $video  = new RemoteVideoHelper($result);
+                    $video = new RemoteVideoHelper($result);
                     $video->setType('vimeo');
                     $video->setCode($code);
                     $result = $video->getMedia();
@@ -222,9 +219,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
                     break;
                 case 'www.dailymotion.com':
                 case 'dailymotion.com':
-                    $code   = substr($parsedUrl['path'], 7);
+                    $code = substr($parsedUrl['path'], 7);
                     $result = new Media();
-                    $video  = new RemoteVideoHelper($result);
+                    $video = new RemoteVideoHelper($result);
                     $video->setType('dailymotion');
                     $video->setCode($code);
                     $result = $video->getMedia();
@@ -245,7 +242,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media  $media    The media entity
+     * @param Media $media The media entity
      * @param string $basepath The base path
      *
      * @return string

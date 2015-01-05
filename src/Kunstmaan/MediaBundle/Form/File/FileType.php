@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Form\File;
 
-use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +23,7 @@ class FileType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
@@ -63,7 +62,7 @@ class FileType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
                 $helper = $event->getData();
-                $form   = $event->getForm();
+                $form = $event->getForm();
 
                 // Make sure file field is when creating new (not persisted) objects
                 if (!$helper || null === $helper->getMedia()->getId()) {
@@ -72,7 +71,7 @@ class FileType extends AbstractType
                         'file',
                         array(
                             'constraints' => array(new NotBlank()),
-                            'required'    => true
+                            'required' => true
                         )
                     );
                 } else {
@@ -82,7 +81,7 @@ class FileType extends AbstractType
                         'text',
                         array(
                             'required' => false,
-                            'attr'     => array(
+                            'attr' => array(
                                 'readonly' => 'readonly'
                             )
                         )
@@ -92,13 +91,13 @@ class FileType extends AbstractType
                         'folder',
                         'entity',
                         array(
-                            'class'         => 'KunstmaanMediaBundle:Folder',
-                            'property'      => 'optionLabel',
+                            'class' => 'KunstmaanMediaBundle:Folder',
+                            'property' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
-                                    return $er->selectFolderQueryBuilder()
-                                        ->andWhere('f.parent IS NOT NULL');
+                                return $er->selectFolderQueryBuilder()
+                                    ->andWhere('f.parent IS NOT NULL');
                             },
-                            'required'      => true,
+                            'required' => true,
                         )
                     );
                 }

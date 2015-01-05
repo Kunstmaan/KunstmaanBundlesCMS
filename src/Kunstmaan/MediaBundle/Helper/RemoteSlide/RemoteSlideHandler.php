@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Helper\RemoteSlide;
 
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\RemoteSlide\RemoteSlideType;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
-use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * RemoteSlideStrategy
@@ -82,7 +82,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
             $media->setUuid($uuid);
         }
         $slide = new RemoteSlideHelper($media);
-        $code  = $slide->getCode();
+        $code = $slide->getCode();
         // update thumbnail
         switch ($slide->getType()) {
             case 'slideshare':
@@ -131,7 +131,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     {
         return array(
             'slide' => array(
-                'path'   => 'KunstmaanMediaBundle_folder_slidecreate',
+                'path' => 'KunstmaanMediaBundle_folder_slidecreate',
                 'params' => array(
                     'folderId' => $params['folderId']
                 )
@@ -156,7 +156,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                 case 'www.slideshare.net':
                 case 'slideshare.net':
                     $result = new Media();
-                    $slide  = new RemoteSlideHelper($result);
+                    $slide = new RemoteSlideHelper($result);
                     $slide->setType('slideshare');
                     $json = json_decode(
                         file_get_contents('http://www.slideshare.net/api/oembed/2?url=' . $data . '&format=json')
@@ -180,7 +180,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Media  $media    The media entity
+     * @param Media $media The media entity
      * @param string $basepath The base path
      *
      * @return string

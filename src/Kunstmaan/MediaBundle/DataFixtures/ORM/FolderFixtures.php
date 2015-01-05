@@ -4,8 +4,8 @@ namespace Kunstmaan\MediaBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Kunstmaan\MediaBundle\Entity\Folder;
 use Doctrine\Common\Persistence\ObjectManager;
+use Kunstmaan\MediaBundle\Entity\Folder;
 
 /**
  * Fixtures that make a general media-folder for a project

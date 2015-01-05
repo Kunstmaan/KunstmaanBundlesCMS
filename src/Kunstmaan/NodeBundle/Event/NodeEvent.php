@@ -2,13 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Response;
-
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * NodeEvent
@@ -41,17 +40,25 @@ class NodeEvent extends Event
     private $response = null;
 
     /**
-     * @param Node             $node            The node
-     * @param NodeTranslation  $nodeTranslation The nodetranslation
-     * @param NodeVersion      $nodeVersion     The node version
-     * @param HasNodeInterface $page            The object
+     * @param Node $node The node
+     * @param NodeTranslation $nodeTranslation The nodetranslation
+     * @param NodeVersion $nodeVersion The node version
+     * @param HasNodeInterface $page The object
      */
     public function __construct(Node $node, NodeTranslation $nodeTranslation, NodeVersion $nodeVersion, HasNodeInterface $page)
     {
-        $this->node            = $node;
+        $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
-        $this->nodeVersion     = $nodeVersion;
-        $this->page            = $page;
+        $this->nodeVersion = $nodeVersion;
+        $this->page = $page;
+    }
+
+    /**
+     * @return NodeVersion
+     */
+    public function getNodeVersion()
+    {
+        return $this->nodeVersion;
     }
 
     /**
@@ -67,11 +74,11 @@ class NodeEvent extends Event
     }
 
     /**
-     * @return NodeVersion
+     * @return Node
      */
-    public function getNodeVersion()
+    public function getNode()
     {
-        return $this->nodeVersion;
+        return $this->node;
     }
 
     /**
@@ -87,11 +94,11 @@ class NodeEvent extends Event
     }
 
     /**
-     * @return Node
+     * @return NodeTranslation
      */
-    public function getNode()
+    public function getNodeTranslation()
     {
-        return $this->node;
+        return $this->nodeTranslation;
     }
 
     /**
@@ -107,11 +114,11 @@ class NodeEvent extends Event
     }
 
     /**
-     * @return NodeTranslation
+     * @return HasNodeInterface
      */
-    public function getNodeTranslation()
+    public function getPage()
     {
-        return $this->nodeTranslation;
+        return $this->page;
     }
 
     /**
@@ -127,11 +134,11 @@ class NodeEvent extends Event
     }
 
     /**
-     * @return HasNodeInterface
+     * @return Response|null
      */
-    public function getPage()
+    public function getResponse()
     {
-        return $this->page;
+        return $this->response;
     }
 
     /**
@@ -143,13 +150,5 @@ class NodeEvent extends Event
         $this->response = $response;
 
         return $this;
-    }
-
-    /**
-     * @return Response|null
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }

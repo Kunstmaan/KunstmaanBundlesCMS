@@ -4,7 +4,6 @@ namespace Kunstmaan\MediaBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaDeleteItemAction;
@@ -34,21 +33,22 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     private $request;
 
     /**
-     * @param EntityManager $em           The entity manager
-     * @param MediaManager  $mediaManager The media manager
-     * @param Folder        $folder       The current folder
-     * @param Request       $request      The request object
+     * @param EntityManager $em The entity manager
+     * @param MediaManager $mediaManager The media manager
+     * @param Folder $folder The current folder
+     * @param Request $request The request object
      */
     public function __construct(
         EntityManager $em,
         MediaManager $mediaManager,
         Folder $folder,
         Request $request
-    ) {
+    )
+    {
         parent::__construct($em);
 
         $this->setAdminType(new MediaType($mediaManager, $em));
-        $this->folder  = $folder;
+        $this->folder = $folder;
         $this->request = $request;
     }
 
@@ -82,7 +82,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     public function getIndexUrl()
     {
         return array(
-            'path'   => $this->request->get('_route'),
+            'path' => $this->request->get('_route'),
             'params' => array('folderId' => $this->folder->getId())
         );
     }
@@ -156,9 +156,9 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     public function adaptQueryBuilder(QueryBuilder $queryBuilder)
     {
         $queryBuilder->andWhere('b.folder = :folder')
-          ->setParameter('folder', $this->folder->getId())
-          ->andWhere('b.deleted = 0')
-          ->orderBy('b.updatedAt', 'DESC');
+            ->setParameter('folder', $this->folder->getId())
+            ->andWhere('b.deleted = 0')
+            ->orderBy('b.updatedAt', 'DESC');
 
         if ($this->request->get('_route') == 'KunstmaanMediaBundle_chooser_show_folder') {
             $type = $this->request->query->get('type');

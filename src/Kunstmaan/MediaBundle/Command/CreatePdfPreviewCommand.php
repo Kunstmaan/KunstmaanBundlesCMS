@@ -9,18 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreatePdfPreviewCommand extends ContainerAwareCommand
 {
 
-    protected function configure()
-    {
-        parent::configure();
-
-        $this
-            ->setName('kuma:media:create-pdf-previews')
-            ->setDescription('Create preview images for PDFs that have already been uploaded')
-            ->setHelp(
-                "The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded."
-            );
-    }
-
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Creating PDF preview images...');
@@ -31,8 +19,8 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         /**
          * @var EntityManager
          */
-        $em         = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $medias     = $em->getRepository('KunstmaanMediaBundle:Media')->findBy(
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $medias = $em->getRepository('KunstmaanMediaBundle:Media')->findBy(
             array('contentType' => 'application/pdf', 'deleted' => false)
         );
         /** @var Media $media */
@@ -40,5 +28,17 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
             $pdfTransformer->apply($webPath . $media->getUrl());
         }
         $output->writeln('<info>PDF preview images have been created.</info>');
+    }
+
+    protected function configure()
+    {
+        parent::configure();
+
+        $this
+            ->setName('kuma:media:create-pdf-previews')
+            ->setDescription('Create preview images for PDFs that have already been uploaded')
+            ->setHelp(
+                "The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded."
+            );
     }
 }

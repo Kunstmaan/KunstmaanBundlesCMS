@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,7 +25,7 @@ class FixAdminLocaleCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input  The input
+     * @param InputInterface $input The input
      * @param OutputInterface $output The output
      *
      * @return int

@@ -1,9 +1,9 @@
 # Media
-media: 
+media:
   aviary:
     title: Aviary
     nothing: Nothing to see here.
-  
+
   media:
     no: No files in this folder yet.
     bulkupload:
@@ -39,7 +39,7 @@ media:
       action: Delete this folder
       modal:
         title: Delete folder
-        text: Are you sure you want to delete "%folder%"? 
+        text: Are you sure you want to delete "%folder%"?
     save: Save
     contenttab:
       title: Content
@@ -54,7 +54,7 @@ media:
     back_to_folder: Back to folder
     upload_finished: The file upload has finished.
     not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
-    
+
   slide:
     add: Add Slide
     modal:
@@ -76,7 +76,7 @@ media:
     modal:
       title: Add File
       save: Add
-    
+
   widget:
     choose: Choose
     delete: Delete

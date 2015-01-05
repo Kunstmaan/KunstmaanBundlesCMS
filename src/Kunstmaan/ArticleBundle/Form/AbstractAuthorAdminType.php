@@ -5,7 +5,8 @@ namespace Kunstmaan\ArticleBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AbstractAuthorAdminType extends AbstractType {
+class AbstractAuthorAdminType extends AbstractType
+{
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -13,7 +14,8 @@ class AbstractAuthorAdminType extends AbstractType {
         $builder->add('link');
     }
 
-    function getName() {
+    function getName()
+    {
         return "abstactauthor_form";
     }
 

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\TranslatorBundle\Command;
 
-use Behat\Mink\Exception\Exception;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
@@ -22,24 +21,6 @@ class MigrateTranslationsCommand extends ContainerAwareCommand
      */
     private $db;
 
-    protected function configure()
-    {
-        parent::configure();
-
-        $this
-          ->setName('kuma:translator:migrate')
-          ->setDescription('Migrate old translations to the new table structure.')
-          ->setHelp(
-            "The <info>kuma:translator:migrate</info> command can be used to migrate translations to the new table structure."
-          );
-    }
-
-    public function setEntityManager(EntityManager $em)
-    {
-        $this->em = $em;
-        $this->db = $em->getConnection();
-    }
-
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Migrating translations...');
@@ -52,10 +33,10 @@ class MigrateTranslationsCommand extends ContainerAwareCommand
          */
         $qb = $repo->createQueryBuilder('t');
         $uniqueTranslations = $qb->select('t.domain,t.keyword')
-          ->distinct()
-          ->where('t.translationId IS NULL')
-          ->getQuery()
-          ->getArrayResult();
+            ->distinct()
+            ->where('t.translationId IS NULL')
+            ->getQuery()
+            ->getArrayResult();
 
         $this->em->beginTransaction();
         try {
@@ -79,5 +60,23 @@ class MigrateTranslationsCommand extends ContainerAwareCommand
             $this->em->rollback();
             $output->writeln('An error occured while migrating translations : <error>' . $e->getMessage() . '</error>');
         }
+    }
+
+    public function setEntityManager(EntityManager $em)
+    {
+        $this->em = $em;
+        $this->db = $em->getConnection();
+    }
+
+    protected function configure()
+    {
+        parent::configure();
+
+        $this
+            ->setName('kuma:translator:migrate')
+            ->setDescription('Migrate old translations to the new table structure.')
+            ->setHelp(
+                "The <info>kuma:translator:migrate</info> command can be used to migrate translations to the new table structure."
+            );
     }
 }

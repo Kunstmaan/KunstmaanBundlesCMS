@@ -1,18 +1,19 @@
 {% if pagepartref is defined %}
-	<script>
-		$(document).ready(function() {
-		    $('input#form_pagepartadmin_main_{{ pagepartref.id }}_url').on('click', function(ev) {
-		        ev.preventDefault();
-		        window.open("{{ path('KunstmaanNodeBundle_selecturl') }}", "_blank","toolbar=0,width=580,height=500");
-		    });
-		});
+    <script>
+        $(document).ready(function () {
+            $('input#form_pagepartadmin_main_{{ pagepartref.id }}_url').on('click', function (ev) {
+                ev.preventDefault();
+                window.open("{{ path('KunstmaanNodeBundle_selecturl') }}", "_blank", "toolbar=0,width=580,height=500");
+            });
+        });
 
-		window.LinkChosenCallback['{{ pagepartref.id }}'] = function(url) {
-		    $('input#form_pagepartadmin_main_{{ pagepartref.id }}_url').val(url);
-		}
-	</script>
+        window.LinkChosenCallback['{{ pagepartref.id }}'] = function (url) {
+            $('input#form_pagepartadmin_main_{{ pagepartref.id }}_url').val(url);
+        }
+    </script>
 {% endif %}
 
 <p class="link-pp">
-<a href="{{ resource.url }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}>{% if resource.text is defined and resource.text != ""%}{{ resource.text }}{%else%}{{ resource.url }}{%endif%}</a>
+    <a href="{{ resource.url }}"
+       {% if resource.openinnewwindow %}target="_blank"{% endif %}>{% if resource.text is defined and resource.text != "" %}{{ resource.text }}{% else %}{{ resource.url }}{% endif %}</a>
 </p>

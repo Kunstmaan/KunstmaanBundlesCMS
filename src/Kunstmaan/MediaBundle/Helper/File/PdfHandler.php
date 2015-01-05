@@ -62,7 +62,8 @@ class PdfHandler extends FileHandler
     public function canHandle($object)
     {
         if (parent::canHandle($object) &&
-            ($object instanceof Media && $object->getContentType() == 'application/pdf')) {
+            ($object instanceof Media && $object->getContentType() == 'application/pdf')
+        ) {
             return true;
         }
 
@@ -85,7 +86,7 @@ class PdfHandler extends FileHandler
     }
 
     /**
-     * @param Media  $media    The media entity
+     * @param Media $media The media entity
      * @param string $basepath The base path
      *
      * @return string

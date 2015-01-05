@@ -30,7 +30,7 @@ class FolderRepository extends NestedTreeRepository
      */
     public function save(Folder $folder)
     {
-        $em     = $this->getEntityManager();
+        $em = $this->getEntityManager();
         $parent = $folder->getParent();
 
         $em->beginTransaction();
@@ -159,21 +159,9 @@ class FolderRepository extends NestedTreeRepository
             ->select('node.id');
 
         $result = $qb->getQuery()->getScalarResult();
-        $ids    = array_map('current', $result);
+        $ids = array_map('current', $result);
 
         return $ids;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRootNodesQueryBuilder($sortByField = null, $direction = 'asc')
-    {
-        /** @var QueryBuilder $qb */
-        $qb = parent::getRootNodesQueryBuilder($sortByField, $direction);
-        $qb->andWhere('node.deleted != true');
-
-        return $qb;
     }
 
     /**
@@ -191,13 +179,26 @@ class FolderRepository extends NestedTreeRepository
     /**
      * {@inheritdoc}
      */
+    public function getRootNodesQueryBuilder($sortByField = null, $direction = 'asc')
+    {
+        /** @var QueryBuilder $qb */
+        $qb = parent::getRootNodesQueryBuilder($sortByField, $direction);
+        $qb->andWhere('node.deleted != true');
+
+        return $qb;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function childrenQueryBuilder(
         $node = null,
         $direct = false,
         $sortByField = null,
         $direction = 'ASC',
         $includeNode = false
-    ) {
+    )
+    {
         /** @var QueryBuilder $qb */
         $qb = parent::childrenQueryBuilder($node, $direct, $sortByField, $direction, $includeNode);
         $qb->andWhere('node.deleted != true');
@@ -249,7 +250,8 @@ class FolderRepository extends NestedTreeRepository
         $direct = false,
         array $options = array(),
         $includeNode = false
-    ) {
+    )
+    {
         /** @var QueryBuilder $qb */
         $qb = parent::getNodesHierarchyQueryBuilder($node, $direct, $options, $includeNode);
         $qb->andWhere('node.deleted != true');
@@ -279,14 +281,14 @@ class FolderRepository extends NestedTreeRepository
         $em = $this->getEntityManager();
 
         // Reset tree...
-        $sql  = 'UPDATE kuma_folders SET lvl=NULL,lft=NULL,rgt=NULL';
+        $sql = 'UPDATE kuma_folders SET lvl=NULL,lft=NULL,rgt=NULL';
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
 
         $folders = $this->findBy(array(), array('parent' => 'ASC', 'name' => 'asc'));
 
         $rootFolder = $folders[0];
-        $first      = true;
+        $first = true;
         foreach ($folders as $folder) {
             // Force parent load
             $parent = $folder->getParent();

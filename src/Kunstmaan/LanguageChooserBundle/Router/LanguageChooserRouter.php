@@ -4,13 +4,12 @@ namespace Kunstmaan\LanguageChooserBundle\Router;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouterInterface;
 
 
 /**
@@ -45,7 +44,7 @@ class LanguageChooserRouter implements RouterInterface
         $this->routeCollection->add('_languagechooser', new Route(
             '/',
             array(
-                '_controller'   => 'KunstmaanLanguageChooserBundle:LanguageChooser:index'
+                '_controller' => 'KunstmaanLanguageChooserBundle:LanguageChooser:index'
             )
         ));
     }
@@ -74,37 +73,6 @@ class LanguageChooserRouter implements RouterInterface
         return $urlMatcher->match($pathinfo);
     }
 
-
-    /**
-     * Generate an url for a supplied route
-     *
-     * @param string $name       The path
-     * @param array  $parameters The route parameters
-     * @param bool   $absolute   Absolute url or not
-     *
-     * @return null|string
-     */
-    public function generate($name, $parameters = array(), $absolute = false)
-    {
-        $this->urlGenerator = new UrlGenerator($this->routeCollection, $this->context);
-
-        return $this->urlGenerator->generate($name, $parameters, $absolute);
-    }
-
-
-    /**
-     * Sets the request context.
-     *
-     * @param RequestContext $context The context
-     *
-     * @api
-     */
-    public function setContext(RequestContext $context)
-    {
-        $this->context = $context;
-    }
-
-
     /**
      * Gets the request context.
      *
@@ -122,6 +90,33 @@ class LanguageChooserRouter implements RouterInterface
         return $this->context;
     }
 
+    /**
+     * Sets the request context.
+     *
+     * @param RequestContext $context The context
+     *
+     * @api
+     */
+    public function setContext(RequestContext $context)
+    {
+        $this->context = $context;
+    }
+
+    /**
+     * Generate an url for a supplied route
+     *
+     * @param string $name The path
+     * @param array $parameters The route parameters
+     * @param bool $absolute Absolute url or not
+     *
+     * @return null|string
+     */
+    public function generate($name, $parameters = array(), $absolute = false)
+    {
+        $this->urlGenerator = new UrlGenerator($this->routeCollection, $this->context);
+
+        return $this->urlGenerator->generate($name, $parameters, $absolute);
+    }
 
     /**
      * Getter for routeCollection

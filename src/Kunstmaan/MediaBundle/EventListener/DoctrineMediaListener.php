@@ -4,7 +4,6 @@ namespace Kunstmaan\MediaBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
@@ -36,6 +35,22 @@ class DoctrineMediaListener
     }
 
     /**
+     * @param object $entity
+     *
+     * @return bool
+     */
+    private function prepareMedia($entity)
+    {
+        if (!$entity instanceof Media) {
+            return false;
+        }
+
+        $this->mediaManager->prepareMedia($entity);
+
+        return true;
+    }
+
+    /**
      * @param PreUpdateEventArgs $eventArgs
      */
     public function preUpdate(PreUpdateEventArgs $eventArgs)
@@ -62,6 +77,19 @@ class DoctrineMediaListener
     }
 
     /**
+     * @param object $entity The entity
+     * @param bool $new Is new
+     */
+    private function saveMedia($entity, $new = false)
+    {
+        if (!$entity instanceof Media) {
+            return;
+        }
+
+        $this->mediaManager->saveMedia($entity, $new);
+    }
+
+    /**
      * @param LifecycleEventArgs $eventArgs
      */
     public function postUpdate(LifecycleEventArgs $eventArgs)
@@ -80,34 +108,5 @@ class DoctrineMediaListener
         }
 
         $this->mediaManager->removeMedia($entity);
-    }
-
-    /**
-     * @param object $entity
-     *
-     * @return bool
-     */
-    private function prepareMedia($entity)
-    {
-        if (!$entity instanceof Media) {
-            return false;
-        }
-
-        $this->mediaManager->prepareMedia($entity);
-
-        return true;
-    }
-
-    /**
-     * @param object $entity The entity
-     * @param bool   $new    Is new
-     */
-    private function saveMedia($entity, $new = false)
-    {
-        if (!$entity instanceof Media) {
-            return;
-        }
-
-        $this->mediaManager->saveMedia($entity, $new);
     }
 }

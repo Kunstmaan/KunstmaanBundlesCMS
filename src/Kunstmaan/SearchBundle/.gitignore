@@ -3,5 +3,4 @@
 composer.lock
 composer.phar
 vendor/*
-
 *.orig

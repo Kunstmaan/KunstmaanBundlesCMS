@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,6 +20,28 @@ class EmailFormSubmissionField extends FormSubmissionField
      * @ORM\Column(name="efsf_value", type="string")
      */
     protected $value;
+
+    /**
+     * Returns the default form type for this FormSubmissionField
+     *
+     * @return EmailFormSubmissionType
+     */
+    public function getDefaultAdminType()
+    {
+        return new EmailFormSubmissionType();
+    }
+
+    /**
+     * Return a string representation of this FormSubmissionField
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $value = $this->getValue();
+
+        return !empty($value) ? $value : "";
+    }
 
     /**
      * Returns the current value of this field
@@ -46,27 +66,4 @@ class EmailFormSubmissionField extends FormSubmissionField
 
         return $this;
     }
-
-    /**
-     * Returns the default form type for this FormSubmissionField
-     *
-     * @return EmailFormSubmissionType
-     */
-    public function getDefaultAdminType()
-    {
-        return new EmailFormSubmissionType();
-    }
-
-    /**
-     * Return a string representation of this FormSubmissionField
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        $value = $this->getValue();
-
-        return !empty($value) ? $value : "";
-    }
-
 }

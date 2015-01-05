@@ -131,10 +131,10 @@ class Folder extends AbstractEntity implements GedmoNode
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->media    = new ArrayCollection();
+        $this->media = new ArrayCollection();
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
-        $this->deleted  = false;
+        $this->deleted = false;
     }
 
     /**
@@ -230,11 +230,11 @@ class Folder extends AbstractEntity implements GedmoNode
      */
     public function getParents()
     {
-        $parent  = $this->getParent();
+        $parent = $this->getParent();
         $parents = array();
         while ($parent != null) {
             $parents[] = $parent;
-            $parent    = $parent->getParent();
+            $parent = $parent->getParent();
         }
 
         return array_reverse($parents);
@@ -248,21 +248,6 @@ class Folder extends AbstractEntity implements GedmoNode
     public function getParent()
     {
         return $this->parent;
-    }
-
-    /**
-     * Add a child
-     *
-     * @param Folder $child
-     *
-     * @return Folder
-     */
-    public function addChild(Folder $child)
-    {
-        $this->children[] = $child;
-        $child->setParent($this);
-
-        return $this;
     }
 
     /**
@@ -280,13 +265,16 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @param bool $deleted
+     * Add a child
+     *
+     * @param Folder $child
      *
      * @return Folder
      */
-    public function setDeleted($deleted)
+    public function addChild(Folder $child)
     {
-        $this->deleted = $deleted;
+        $this->children[] = $child;
+        $child->setParent($this);
 
         return $this;
     }
@@ -390,6 +378,18 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
+     * @param bool $deleted
+     *
+     * @return Folder
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getInternalName()
@@ -470,14 +470,6 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @return int
-     */
-    public function getLevel()
-    {
-        return $this->lvl;
-    }
-
-    /**
      * @param int $rgt
      *
      * @return Folder
@@ -506,6 +498,14 @@ class Folder extends AbstractEntity implements GedmoNode
             '-',
             $this->getLevel()
         ) . ' ' . $this->getName();
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->lvl;
     }
 
     /**

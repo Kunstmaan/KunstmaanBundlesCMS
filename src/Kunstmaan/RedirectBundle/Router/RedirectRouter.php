@@ -30,46 +30,7 @@ class RedirectRouter implements RouterInterface
     public function __construct(ObjectRepository $redirectRepository, RequestContext $context = null)
     {
         $this->redirectRepository = $redirectRepository;
-        $this->context            = $context ? : new RequestContext();
-    }
-
-    /**
-     * Sets the request context.
-     *
-     * @param RequestContext $context The context
-     *
-     * @api
-     */
-    public function setContext(RequestContext $context)
-    {
-        $this->context = $context;
-    }
-
-    /**
-     * Gets the request context.
-     *
-     * @return \Symfony\Component\Routing\RequestContext The context
-     *
-     * @api
-     */
-    public function getContext()
-    {
-        return $this->context;
-    }
-
-    /**
-     * Gets the RouteCollection instance associated with this Router.
-     *
-     * @return \Symfony\Component\Routing\RouteCollection A RouteCollection instance
-     */
-    public function getRouteCollection()
-    {
-        if (is_null($this->routeCollection)) {
-            $this->routeCollection = new RouteCollection();
-            $this->initRoutes();
-        }
-
-        return $this->routeCollection;
+        $this->context = $context ?: new RequestContext();
     }
 
     /**
@@ -87,8 +48,8 @@ class RedirectRouter implements RouterInterface
      *
      * If there is no route with the given name, the generator must throw the RouteNotFoundException.
      *
-     * @param string         $name          The name of the route
-     * @param mixed          $parameters    An array of parameters
+     * @param string $name The name of the route
+     * @param mixed $parameters An array of parameters
      * @param Boolean|string $referenceType The type of reference to be generated (one of the constants)
      *
      * @return string The generated URL
@@ -123,9 +84,24 @@ class RedirectRouter implements RouterInterface
     public function match($pathinfo)
     {
         $urlMatcher = new RedirectableUrlMatcher($this->getRouteCollection(), $this->getContext());
-        $result     = $urlMatcher->match($pathinfo);
+        $result = $urlMatcher->match($pathinfo);
 
         return $result;
+    }
+
+    /**
+     * Gets the RouteCollection instance associated with this Router.
+     *
+     * @return \Symfony\Component\Routing\RouteCollection A RouteCollection instance
+     */
+    public function getRouteCollection()
+    {
+        if (is_null($this->routeCollection)) {
+            $this->routeCollection = new RouteCollection();
+            $this->initRoutes();
+        }
+
+        return $this->routeCollection;
     }
 
     private function initRoutes()
@@ -139,10 +115,34 @@ class RedirectRouter implements RouterInterface
                 '_redirect_route_' . $redirect->getId(),
                 new Route($redirect->getOrigin(), array(
                     '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                    'path'        => $redirect->getTarget(),
-                    'permanent'   => $redirect->isPermanent(),
+                    'path' => $redirect->getTarget(),
+                    'permanent' => $redirect->isPermanent(),
                 ))
             );
         }
+    }
+
+    /**
+     * Gets the request context.
+     *
+     * @return \Symfony\Component\Routing\RequestContext The context
+     *
+     * @api
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Sets the request context.
+     *
+     * @param RequestContext $context The context
+     *
+     * @api
+     */
+    public function setContext(RequestContext $context)
+    {
+        $this->context = $context;
     }
 }

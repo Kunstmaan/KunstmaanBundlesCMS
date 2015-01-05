@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MediaBundle\Form\RemoteSlide;
 
-use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +23,7 @@ class RemoteSlideType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
@@ -36,7 +35,7 @@ class RemoteSlideType extends AbstractType
                 'text',
                 array(
                     'constraints' => array(new NotBlank()),
-                    'required'    => true
+                    'required' => true
                 )
             )
             ->add(
@@ -44,16 +43,16 @@ class RemoteSlideType extends AbstractType
                 'text',
                 array(
                     'constraints' => array(new NotBlank()),
-                    'required'    => true
+                    'required' => true
                 )
             )
             ->add(
                 'type',
                 'choice',
                 array(
-                    'choices'     => array('slideshare' => 'slideshare'),
+                    'choices' => array('slideshare' => 'slideshare'),
                     'constraints' => array(new NotBlank()),
-                    'required'    => true
+                    'required' => true
                 )
             )
             ->add(
@@ -75,7 +74,7 @@ class RemoteSlideType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
                 $helper = $event->getData();
-                $form   = $event->getForm();
+                $form = $event->getForm();
 
                 // Make sure file field is when creating new (not persisted) objects
                 if (null !== $helper->getMedia()->getId()) {
@@ -84,13 +83,13 @@ class RemoteSlideType extends AbstractType
                         'folder',
                         'entity',
                         array(
-                            'class'         => 'KunstmaanMediaBundle:Folder',
-                            'property'      => 'optionLabel',
+                            'class' => 'KunstmaanMediaBundle:Folder',
+                            'property' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
-                                    return $er->selectFolderQueryBuilder()
-                                        ->andWhere('f.parent IS NOT NULL');
+                                return $er->selectFolderQueryBuilder()
+                                    ->andWhere('f.parent IS NOT NULL');
                             },
-                            'required'      => true,
+                            'required' => true,
                         )
                     );
                 }

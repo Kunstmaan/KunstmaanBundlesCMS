@@ -57,4 +57,4 @@ class DashboardWidget
         }
         throw new \Exception("There is no route annotation");
     }
-} 
+}
