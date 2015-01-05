@@ -10,7 +10,7 @@ class AbstractTranslatorRepository extends EntityRepository
 {
     public function flush($entity = null)
     {
-        if ($entity != null) {
+        if ($entity !== null) {
             $this->getEntityManager()->persist($entity);
         }
 

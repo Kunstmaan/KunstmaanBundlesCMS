@@ -114,7 +114,7 @@ class PageTemplateWidget extends FormWidget
                         $pagePartAdminConfiguration = $ppac;
                     }
                 }
-                if ($pagePartAdminConfiguration != null) {
+                if ($pagePartAdminConfiguration !== null) {
                     $pagePartWidget = new PagePartWidget($page, $this->request, $this->em, $pagePartAdminConfiguration, $formFactory, $pagePartAdminFactory);
                     $this->widgets[$region->getName()] = $pagePartWidget;
                 }

@@ -115,7 +115,7 @@ class Translation
     {
         $this->updatedAt = new \DateTime();
 
-        if ($this->flag == null) {
+        if ($this->flag === null) {
             $this->flag = self::FLAG_UPDATED;
         }
     }

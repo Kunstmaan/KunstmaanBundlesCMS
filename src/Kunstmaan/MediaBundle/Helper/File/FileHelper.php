@@ -162,7 +162,7 @@ class FileHelper
         $upload = new UploadedFile($path, $filename);
         $this->getMedia()->setContent($upload);
 
-        if ($this->getMedia() == null) {
+        if ($this->getMedia() === null) {
             unlink($path);
             throw new AccessDeniedException("Can not link file");
         }
@@ -181,7 +181,7 @@ class FileHelper
      */
     public function __destruct()
     {
-        if ($this->path != null) {
+        if ($this->path !== null) {
             unlink($this->path);
         }
     }

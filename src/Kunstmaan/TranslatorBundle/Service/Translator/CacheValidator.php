@@ -31,7 +31,7 @@ class CacheValidator
         $fileDate = $this->getOldestCachefileDate();
         $stashDate = $this->getLastTranslationChangeDate();
 
-        if ($fileDate == null) {
+        if ($fileDate === null) {
             return true;
         }
 

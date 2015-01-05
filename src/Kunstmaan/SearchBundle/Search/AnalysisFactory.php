@@ -111,9 +111,9 @@ class AnalysisFactory implements AnalysisFactoryInterface
      */
     public function addStopWordsFilter($lang, array $words = null)
     {
-        if ($words == null && isset($this->stopwords[$lang])) {
+        if ($words === null && isset($this->stopwords[$lang])) {
             $words = $this->stopwords[$lang];
-        } elseif ($words == null) {
+        } elseif ($words === null) {
             $words = array();
         }
 

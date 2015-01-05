@@ -185,7 +185,7 @@ class NodeTranslationRepository extends EntityRepository
             ->setFirstResult(0)
             ->setMaxResults(1);
 
-        if ($parentNode != null) {
+        if ($parentNode !== null) {
             $qb->andWhere('t.slug = :slug')
                 ->andWhere('n.parent = :parent')
                 ->setParameter('slug', $slugPart)
@@ -361,9 +361,9 @@ class NodeTranslationRepository extends EntityRepository
     public function hasParentNodeTranslationsForLanguage(NodeTranslation $nodeTranslation, $language)
     {
         $parentNode = $nodeTranslation->getNode()->getParent();
-        if ($parentNode != null) {
+        if ($parentNode !== null) {
             $parentNodeTranslation = $parentNode->getNodeTranslation($language, true);
-            if ($parentNodeTranslation != null) {
+            if ($parentNodeTranslation !== null) {
                 return $this->hasParentNodeTranslationsForLanguage($parentNodeTranslation, $language);
             } else {
                 return false;

@@ -205,7 +205,7 @@ class TranslatorController extends AdminListController
           array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale)
         );
 
-        if ($translation == null) {
+        if ($translation === null) {
             $addUrl = $configurator->getAddUrlFor(
               array('domain' => $domain, 'keyword' => $keyword, 'locale' => $locale)
             );

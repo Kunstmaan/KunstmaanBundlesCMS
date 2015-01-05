@@ -33,7 +33,7 @@ class FacebookLikeEventListener
         if (!is_null($event->getRequest())) {
             $vote->setIp($event->getRequest()->getClientIp());
         }
-        if ($event->getValue() != null) {
+        if ($event->getValue() !== null) {
             $vote->setValue($event->getValue());
         } else {
             $actions = $this->container->getParameter('kuma_voting.actions');

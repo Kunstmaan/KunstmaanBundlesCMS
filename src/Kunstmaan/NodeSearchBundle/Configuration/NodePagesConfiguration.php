@@ -657,7 +657,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         // Check if page is boosted
         $nodeSearch = $this->em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')
             ->findOneByNode($node);
-        if ($nodeSearch != null) {
+        if ($nodeSearch !== null) {
             $doc['_boost'] += $nodeSearch->getBoost();
         }
     }

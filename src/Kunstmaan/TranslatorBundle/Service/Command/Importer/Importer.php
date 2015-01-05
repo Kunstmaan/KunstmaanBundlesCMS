@@ -55,11 +55,11 @@ class Importer
 
         $translation = $this->translationGroupManager->addTranslation($translationGroup, $locale, $text, $filename);
 
-        if (null == $translation && false === $force) {
+        if (null === $translation && false === $force) {
             return false;
         }
 
-        if (true === $force && null == $translation) {
+        if (true === $force && null === $translation) {
             $translation = $this->translationGroupManager->updateTranslation($translationGroup, $locale, $text, $filename);
 
             return true;

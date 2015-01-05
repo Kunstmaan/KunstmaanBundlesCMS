@@ -232,7 +232,7 @@ class Folder extends AbstractEntity implements GedmoNode
     {
         $parent = $this->getParent();
         $parents = array();
-        while ($parent != null) {
+        while ($parent !== null) {
             $parents[] = $parent;
             $parent = $parent->getParent();
         }

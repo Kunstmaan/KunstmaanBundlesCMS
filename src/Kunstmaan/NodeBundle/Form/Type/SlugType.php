@@ -39,7 +39,7 @@ class SlugType extends AbstractType
             $nodeTranslation = $form->getParent()->getData();
             $view->vars['reset'] = Slugifier::slugify($nodeTranslation->getTitle(), '');
             $parentNode = $nodeTranslation->getNode()->getParent();
-            if ($parentNode != null) {
+            if ($parentNode !== null) {
                 $nodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang(), true);
                 $slug = $nodeTranslation->getSlugPart();
                 if (!empty($slug)) {

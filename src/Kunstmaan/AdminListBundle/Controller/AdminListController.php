@@ -151,7 +151,7 @@ abstract class AdminListController extends Controller
             $request = $this->getRequest();
         }
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
-        if ($helper == null) {
+        if ($helper === null) {
             throw new NotFoundHttpException("Entity not found.");
         }
 
@@ -201,7 +201,7 @@ abstract class AdminListController extends Controller
             $request = $this->getRequest();
         }
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
-        if ($helper == null) {
+        if ($helper === null) {
             throw new NotFoundHttpException("Entity not found.");
         }
         if (!$configurator->canDelete($helper)) {

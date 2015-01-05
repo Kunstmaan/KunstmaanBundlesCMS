@@ -146,11 +146,11 @@ class AbstractVote
     public function _prePersist()
     {
         // Set timestamp to now when none is set
-        if ($this->timestamp == null) {
+        if ($this->timestamp === null) {
             $this->setTimestamp(new \DateTime('now'));
         }
         // Set $value to default value when value is null
-        if ($this->value == null) {
+        if ($this->value === null) {
             $this->value = $this::DEFAULT_VALUE;
         }
     }

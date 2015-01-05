@@ -81,7 +81,7 @@ class NodeTranslationListener
 
                     $entity = $this->updateUrl($entity, $em);
 
-                    if ($entity != false) {
+                    if ($entity !== false) {
                         $em->persist($entity);
                         $em->flush($entity);
 
@@ -107,7 +107,7 @@ class NodeTranslationListener
                 if ($translation) {
                     $translation = $this->updateUrl($translation, $em);
 
-                    if ($translation != false) {
+                    if ($translation !== false) {
                         $em->persist($translation);
                         $em->flush($translation);
 

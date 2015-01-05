@@ -246,10 +246,10 @@ class NodeTranslation extends AbstractEntity
     {
         $slug       = "";
         $parentNode = $this->getNode()->getParent();
-        if ($parentNode != null) {
+        if ($parentNode !== null) {
             $nodeTranslation = $parentNode->getNodeTranslation($this->lang, true);
 
-            if ($nodeTranslation != null) {
+            if ($nodeTranslation !== null) {
                 $parentSlug = $nodeTranslation->getSlugPart();
                 if (!empty($parentSlug)) {
                     $slug = rtrim($parentSlug, "/") . "/";

@@ -34,9 +34,9 @@ class ExportTranslationsCommand extends ContainerAwareCommand
 
         $exportCommand = new ExportCommand();
         $exportCommand
-            ->setDomains($domains == null ? false : $domains)
-            ->setFormat($format == null ? false : $format)
-            ->setLocales($locales == null ? false : $locales);
+            ->setDomains($domains === null ? false : $domains)
+            ->setFormat($format === null ? false : $format)
+            ->setLocales($locales === null ? false : $locales);
 
         $this->getContainer()->get('kunstmaan_translator.service.exporter.command_handler')->executeExportCommand($exportCommand);
 

@@ -54,8 +54,8 @@ class SearchFormWidget extends FormWidget
     {
         $nodeSearch = $em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findOneByNode($this->node);
 
-        if ($this->data['node_search'] != null) {
-            if ($nodeSearch == null) {
+        if ($this->data['node_search'] !== null) {
+            if ($nodeSearch === null) {
                 $nodeSearch = new NodeSearch();
                 $nodeSearch->setNode($this->node);
             }

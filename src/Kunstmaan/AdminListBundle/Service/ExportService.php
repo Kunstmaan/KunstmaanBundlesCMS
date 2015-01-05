@@ -47,7 +47,7 @@ class ExportService
     }
 
     public function createFromTemplate($adminlist, $_format, $template = null){
-        if($template == null) {
+        if($template === null) {
             $template = sprintf("KunstmaanAdminListBundle:Default:export.%s.twig", $_format);
         }
 

@@ -71,7 +71,7 @@ class ACLPermissionCreator
         $strategy = $this->objectIdentityRetrievalStrategy;
 
         $objectIdentity = $strategy->getObjectIdentity($object);
-        if ($force || $aclProvider->findAcl($objectIdentity) == null) {
+        if ($force || $aclProvider->findAcl($objectIdentity) === null) {
             try {
                 $aclProvider->deleteAcl($objectIdentity);
             } catch (AclNotFoundException $e) {

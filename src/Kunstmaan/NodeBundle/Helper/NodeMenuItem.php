@@ -183,7 +183,7 @@ class NodeMenuItem
             list($namespaceAlias, $simpleClassName) = explode(':', $class);
             $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
         }
-        if ($this->getParent() == null) {
+        if ($this->getParent() === null) {
             return null;
         }
         if ($this->parent->getPage() instanceof $class) {
@@ -200,7 +200,7 @@ class NodeMenuItem
     {
         $parent = $this->getParent();
         $parents = array();
-        while ($parent != null) {
+        while ($parent !== null) {
             $parents[] = $parent;
             $parent = $parent->getParent();
         }
