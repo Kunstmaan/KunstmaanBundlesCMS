@@ -223,10 +223,6 @@ class PageTemplateWidget extends FormWidget
     public function getExtraParams(Request $request)
     {
         $params = array();
-        /*$editPagePart = $request->get('edit');
-        if (isset($editPagePart)) {
-            $params['editpagepart'] = $editPagePart;
-        }*/
         return $params;
     }
 

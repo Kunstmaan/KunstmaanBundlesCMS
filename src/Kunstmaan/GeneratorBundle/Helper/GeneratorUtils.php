@@ -128,8 +128,6 @@ class GeneratorUtils
 
         // Can't have a / at the end.
         if (substr($pathInSkeleton, -1) == '/') {
-
-            //substr_replace($pathInSkeleton,"",-1);
             $pathInSkeleton = rtrim($pathInSkeleton, '/');
         }
 

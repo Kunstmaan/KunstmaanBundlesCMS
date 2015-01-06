@@ -40,9 +40,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
         if (strpos($suite->getName(), 'KunstmaanTranslationBundle') === false) {
             return true;
         }
-
-        // include __DIR__.'/app/AppKernel.php';
-
+        
         $kernel = new \AppKernel('phpunit', true);
         $kernel->boot();
 
