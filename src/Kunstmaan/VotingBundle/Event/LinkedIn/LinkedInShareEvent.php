@@ -2,13 +2,14 @@
 
 namespace Kunstmaan\VotingBundle\Event\LinkedIn;
 
+use Kunstmaan\VotingBundle\Event\EventInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Event triggered through a callback from the LinkedIn Javascript API when a Share has been executed
  */
-class LinkedInShareEvent extends Event
+class LinkedInShareEvent extends Event implements EventInterface
 {
 
     private $request;

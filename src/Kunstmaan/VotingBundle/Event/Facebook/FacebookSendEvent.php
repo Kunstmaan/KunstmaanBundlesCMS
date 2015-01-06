@@ -2,13 +2,14 @@
 
 namespace Kunstmaan\VotingBundle\Event\Facebook;
 
+use Kunstmaan\VotingBundle\Event\EventInterface;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Event triggered through a callback from the Facebook API when a Send has been executed
  */
-class FacebookSendEvent extends Event
+class FacebookSendEvent extends Event implements EventInterface
 {
 
     private $request;
