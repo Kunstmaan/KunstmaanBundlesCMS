@@ -43,9 +43,9 @@ class Slugifier
 			'ï' => 'i',   'ó' => 'o',   'ò' => 'o',
 			'ö' => 'o',   'ú' => 'u',   'ù' => 'u',
 			'ü' => 'u',   'ñ' => 'n',   'ß' => 'ss',
-			'æ' => 'ae', 
+			'æ' => 'ae',  'õ' => 'o',
 		);
-		return strtr($string, $converter);
+		return strtr(strtolower($string), $converter);
 	}
 
     /**
