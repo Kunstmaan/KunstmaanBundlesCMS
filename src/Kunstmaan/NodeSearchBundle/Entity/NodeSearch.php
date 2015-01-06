@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Node
  *
  * @ORM\Entity()
- * @ORM\Table(name="kh_nodes_search")
+ * @ORM\Table(name="kuma_nodes_search")
  */
 class NodeSearch extends AbstractEntity
 {
