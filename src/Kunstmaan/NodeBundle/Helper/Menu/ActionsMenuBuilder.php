@@ -100,7 +100,7 @@ class ActionsMenuBuilder
      *
      * @return ItemInterface
      */
-    public function createActionsMenu(/** @noinspection PhpUnusedParameterInspection */Request $request = null)
+    public function createActionsMenu(Request $request = null)
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
         $menu              = $this->factory->createItem('root');
@@ -198,7 +198,7 @@ class ActionsMenuBuilder
     /**
      * @param boolean $value
      */
-    public function setIsEditableNode($value)
+    public function setEditableNode($value)
     {
         $this->isEditableNode = $value;
     }
