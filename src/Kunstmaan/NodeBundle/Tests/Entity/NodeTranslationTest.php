@@ -180,36 +180,6 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getRef
-     * @todo   Implement testGetRef().
-     */
-    public function testGetRef()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getCreated
-     * @todo   Implement testGetCreated().
-     */
-    public function testGetCreated()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getUpdated
-     * @todo   Implement testGetUpdated().
-     */
-    public function testGetUpdated()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
      * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setUrl
      * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getUrl
      */

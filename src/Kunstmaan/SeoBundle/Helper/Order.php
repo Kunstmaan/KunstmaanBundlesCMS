@@ -77,7 +77,6 @@ class Order
     }
 
     /**
-     * @todo Make a setting to include taxes for shipping or not? ;o
      *
      * @return int|string
      */

@@ -115,22 +115,4 @@ class FileHelperTest extends \PHPUnit_Framework_TestCase
         $media = $this->object->getMedia();
         $this->assertEquals($this->media, $media);
     }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::getMediaFromUrl
-     * @todo   Implement testGetMediaFromUrl().
-     */
-    public function testGetMediaFromUrl()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::__destruct
-     * @todo   Implement testDestruct().
-     */
-    public function testDestruct()
-    {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
 }

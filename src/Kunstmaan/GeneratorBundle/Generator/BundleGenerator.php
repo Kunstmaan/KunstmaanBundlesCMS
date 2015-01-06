@@ -1,16 +1,4 @@
 <?php
-
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-# TODO: Add the correct routing.yml files for every bundle that's included. Depending on multi-language or not.
-
 /*
 KunstmaanMediaBundle:
     resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"

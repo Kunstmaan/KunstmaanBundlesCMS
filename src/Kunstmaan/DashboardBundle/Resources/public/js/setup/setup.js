@@ -29,7 +29,6 @@ $(function () {
                     var query = $(segments[i]).find('input.segment-query').val();
                     var name = $(segments[i]).find('input.segment-name').val();
 
-                    // TODO add more checks!
                     // if query isset
                     if (name && name != '' && query && query != '') {
                         // save the segment

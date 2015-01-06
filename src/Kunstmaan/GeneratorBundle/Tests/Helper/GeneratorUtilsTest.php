@@ -31,38 +31,6 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::getFieldsFromMetadata
-     * @todo   Implement testGetFieldsFromMetadata().
-     */
-    public function testGetFieldsFromMetadata()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::prepend
-     * @todo   Implement testPrepend().
-     */
-    public function testPrepend()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::replace
-     * @todo   Implement testReplace().
-     */
-    public function testReplace()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-
-
-    /**
      * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testCleanPrefixWhenPrefixEmpty()

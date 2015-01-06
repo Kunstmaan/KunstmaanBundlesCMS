@@ -1316,7 +1316,7 @@
   * added BehatTestPage for running pagepart behats tests
   * Merge pull request #132 from Kunstmaan/admin_list_format_improvements
   * fix DI breaking commit
-  * Removed var_dumps, 🐱
+  * Removed var_dumps,
   * Two more Insight fixes
   * Fix insight issues
   * add missing license file...
@@ -2151,14 +2151,14 @@
   * Attemt to fix travis
   * Exporting translations into files (not yet finished)
   * Merge branch 'master' of git://github.com/Kunstmaan/KunstmaanGeneratorBundle
-  * move grunt back to root, todo : make it multi-site
+  * move grunt back to root
   * fixed version twig template
   * filter improvement
   * first version kunstmaan bundle version check
   * Updated README.md
   * added additionally filter option
   * Add force import in backend
-  * Updated README with basic features and TODO, keyword validation
+  * Updated README with basic features
   * - Add translation from the backend interface - Reset all translation and translation domain flags from a console command - Reset translation cache form console command - Updated readme with latest commands and options - Added validator for new translations (added from the backend) (needs some work) - Updated backend controller
   * Attemt to fix travis
   * Attempt to fix travis
@@ -3728,7 +3728,6 @@
   * rename to nodelistener
   * fix for edit pagepart
   * Remove commands
-  * add todo
   * refactoring
   * more refactorings .. split delete and add in separate controller action
   * wip
@@ -4157,7 +4156,6 @@
   * php-cs-fixer
   * code refactored
   * Update README.md
-  * todo updated
   * Merge branch '1.3' into code_cleanup
   * Update README.md
   * Update Resources/doc/cipher.md

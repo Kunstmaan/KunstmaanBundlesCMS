@@ -104,28 +104,4 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
             'This test has not been implemented yet.'
         );
     }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::getCurrentParameters
-     * @todo   Implement testGetCurrentParameters().
-     */
-    public function testGetCurrentParameters()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::getCurrentFilters
-     * @todo   Implement testGetCurrentFilters().
-     */
-    public function testGetCurrentFilters()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
 }

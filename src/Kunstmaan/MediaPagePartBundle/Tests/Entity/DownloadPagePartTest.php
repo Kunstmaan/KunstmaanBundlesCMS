@@ -48,7 +48,6 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::getDefaultView
-     * @todo   Implement testGetDefaultView().
      */
     public function testGetDefaultView()
     {
@@ -58,7 +57,6 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::getDefaultAdminType
-     * @todo   Implement testGetDefaultAdminType().
      */
     public function testGetDefaultAdminType()
     {

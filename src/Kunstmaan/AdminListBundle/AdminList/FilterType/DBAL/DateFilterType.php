@@ -29,7 +29,6 @@ class DateFilterType extends AbstractDBALFilterType
     public function apply(array $data, $uniqueId)
     {
         if (isset($data['value']) && isset($data['comparator'])) {
-            /* @todo get rid of hardcoded date formats below! */
             $date = DateTime::createFromFormat('d/m/Y', $data['value'])->format('Y-m-d');
             switch ($data['comparator']) {
                 case 'before':

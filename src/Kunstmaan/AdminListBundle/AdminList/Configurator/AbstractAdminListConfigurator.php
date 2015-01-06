@@ -537,14 +537,12 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $result ? 'true' : 'false';
         }
         if ($result instanceof \DateTime) {
-            // @todo Get rid of hardcoded date format below?
             return $result->format('Y-m-d H:i:s');
         } else {
             if ($result instanceof PersistentCollection) {
                 $results = "";
                 /* @var Object $entry */
                 foreach ($result as $entry) {
-                    // @todo Check where this is used, a PersistentCollection doesn't always have entities with a name property!!
                     $results[] = $entry->getName();
                 }
                 if (empty($results)) {

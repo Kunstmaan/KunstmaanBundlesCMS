@@ -161,7 +161,7 @@ class NodeAdminController extends Controller
         $myLanguagePage->setTitle('New page');
 
         $this->em->persist($myLanguagePage);
-        $this->em->flush(); // @todo move flush createNodeTranslation also flushes
+        $this->em->flush();
         /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor($myLanguagePage, $this->locale, $node, $this->user);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -402,7 +402,7 @@ class NodeAdminController extends Controller
             $this->em->persist($nodeTranslation);
         }
 
-        $this->em->flush(); // @todo move flush?
+        $this->em->flush();
 
         /* @var MutableAclProviderInterface $aclProvider */
         $aclProvider = $this->container->get('security.acl.provider');
@@ -495,7 +495,7 @@ class NodeAdminController extends Controller
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
         $request = $this->getRequest();
-        $tabPane = new TabPane('todo', $request, $this->container->get('form.factory')); // @todo initialize separate from constructor?
+        $tabPane = new TabPane('todo', $request, $this->container->get('form.factory'));
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         if (!$nodeTranslation) {

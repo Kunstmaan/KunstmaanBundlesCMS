@@ -81,14 +81,6 @@ class AbstractFormPageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::service
-     */
-    public function testService()
-    {
-        // @todo: This needs testing
-    }
-
-    /**
      * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::getDefaultAdminType
      */
     public function testGetDefaultAdminType()

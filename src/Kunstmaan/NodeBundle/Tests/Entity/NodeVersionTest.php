@@ -85,15 +85,6 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($updated, $this->object->getUpdated());
     }
 
-    /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::preUpdate
-     * @todo   Implement testPreUpdate().
-     */
-    public function testPreUpdate()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
 
     /**
      * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setRef
@@ -118,13 +109,4 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->object->getDefaultAdminType());
     }
 
-    /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getRef
-     * @todo   Implement testGetRef().
-     */
-    public function testGetRef()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
 }

@@ -70,7 +70,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
             Events::POST_PUBLISH => 'postPublish',
             Events::POST_UNPUBLISH => 'postUnPublish',
             Events::POST_DELETE => 'postDelete',
-            Events::ADD_NODE => 'onAddNode', // @todo good name?
+            Events::ADD_NODE => 'onAddNode',
             Events::POST_PERSIST => 'postPersist',
             Events::CREATE_PUBLIC_VERSION => 'onCreatePublicVersion',
             Events::CREATE_DRAFT_VERSION => 'onCreateDraftVersion',

@@ -56,22 +56,6 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::upload
-     */
-    public function testUpload()
-    {
-        // @todo: This needs testing
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::onValidPost
-     */
-    public function testOnValidPost()
-    {
-        // @todo: This needs testing
-    }
-
-    /**
      * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getSafeFileName
      */
     public function testGetSafeFileName()

@@ -72,7 +72,6 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getDefaultView
-     * @todo   Implement testGetDefaultView().
      */
     public function testGetDefaultView()
     {
@@ -82,7 +81,6 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getDefaultAdminType
-     * @todo   Implement testGetDefaultAdminType().
      */
     public function testGetDefaultAdminType()
     {

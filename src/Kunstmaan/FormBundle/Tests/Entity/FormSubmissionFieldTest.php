@@ -90,12 +90,4 @@ class FormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($stringValue);
         $this->assertTrue(is_string($stringValue));
     }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::onValidPost
-     */
-    public function testOnValidPost()
-    {
-        // @todo: This needs testing
-    }
 }

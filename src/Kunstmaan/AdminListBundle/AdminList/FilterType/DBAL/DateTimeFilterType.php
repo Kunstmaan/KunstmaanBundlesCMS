@@ -29,7 +29,6 @@ class DateTimeFilterType extends AbstractDBALFilterType
     public function apply(array $data, $uniqueId)
     {
         if (isset($data['value']) && isset($data['comparator'])) {
-            /* @todo get rid of hardcoded date formats below! */
             /** @var DateTime $datetime */
             $date = empty($data['value']['date']) ? date('d/m/Y') : $data['value']['date'];
             $time = empty($data['value']['time']) ? date('H:i')   : $data['value']['time'];
