@@ -2,13 +2,11 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 

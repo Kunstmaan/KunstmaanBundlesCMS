@@ -2,7 +2,6 @@
 
 namespace  Kunstmaan\PagePartBundle\Helper;
 
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
 
 /**

@@ -2,8 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Repository;
 
-use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\Expr;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;

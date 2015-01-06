@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The EmailFormSubmissionField can be used to store email values to a FormSubmission

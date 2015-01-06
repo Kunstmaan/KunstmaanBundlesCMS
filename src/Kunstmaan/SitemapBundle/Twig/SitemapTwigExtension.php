@@ -3,7 +3,6 @@
 namespace Kunstmaan\SitemapBundle\Twig;
 
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
-use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemap;
 
 class SitemapTwigExtension extends \Twig_Extension
 {

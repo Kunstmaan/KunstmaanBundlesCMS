@@ -3,7 +3,6 @@
 namespace  Kunstmaan\PagePartBundle\Helper;
 
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**

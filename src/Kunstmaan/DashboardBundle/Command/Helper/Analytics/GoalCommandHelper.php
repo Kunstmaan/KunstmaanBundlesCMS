@@ -1,12 +1,8 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
-use Kunstmaan\DashboardBundle\Helper\Googlequery;
-use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 {

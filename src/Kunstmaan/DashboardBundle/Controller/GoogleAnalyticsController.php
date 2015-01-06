@@ -2,16 +2,11 @@
 namespace Kunstmaan\DashboardBundle\Controller;
 
 use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsCommand;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
-use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class GoogleAnalyticsController extends Controller

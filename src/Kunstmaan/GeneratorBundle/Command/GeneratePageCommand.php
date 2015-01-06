@@ -4,9 +4,7 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\PageGenerator;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Generates a new page

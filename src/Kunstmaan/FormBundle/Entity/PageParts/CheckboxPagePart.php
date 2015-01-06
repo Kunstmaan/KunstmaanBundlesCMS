@@ -5,15 +5,7 @@ namespace Kunstmaan\FormBundle\Entity\PageParts;
 use ArrayObject;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-
-use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;

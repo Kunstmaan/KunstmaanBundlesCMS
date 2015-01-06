@@ -2,13 +2,10 @@
 
 namespace Kunstmaan\AdminListBundle\Twig;
 
-use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
 use Kunstmaan\AdminListBundle\Service\ExportService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\CompiledRoute;
-
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
 /**

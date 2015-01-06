@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\DashboardBundle\Controller;
 
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
 use Kunstmaan\DashboardBundle\Manager\WidgetManager;
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

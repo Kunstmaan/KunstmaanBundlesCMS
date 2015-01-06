@@ -3,11 +3,8 @@
 namespace Kunstmaan\MediaPagePartBundle\Form;
 
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\Form\AbstractType;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * DownloadPagePartAdminType

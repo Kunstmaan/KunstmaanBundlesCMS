@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\TranslatorBundle\Service;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
 

@@ -3,10 +3,8 @@
 namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-
 use Kunstmaan\AdminBundle\Entity\Group;
 
 /**

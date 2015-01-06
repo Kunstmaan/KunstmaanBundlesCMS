@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeSearchBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SearcherRequestAdapter;

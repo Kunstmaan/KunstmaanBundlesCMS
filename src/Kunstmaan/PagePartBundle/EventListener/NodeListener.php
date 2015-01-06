@@ -3,9 +3,7 @@
 namespace Kunstmaan\PagePartBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Component\Form\FormFactoryInterface;
-
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\ListWidget;
@@ -16,7 +14,6 @@ use Kunstmaan\PagePartBundle\Helper\FormWidgets\PageTemplateWidget;
 use Kunstmaan\PagePartBundle\Helper\FormWidgets\PagePartWidget;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 
 /**
  * NodeListener

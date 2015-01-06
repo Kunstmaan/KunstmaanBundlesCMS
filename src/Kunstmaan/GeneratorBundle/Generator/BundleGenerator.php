@@ -1,48 +1,7 @@
 <?php
-/*
-KunstmaanMediaBundle:
-    resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/
-    requirements:
-        _locale: %requiredlocales%
-
-KunstmaanAdminBundle:
-    resource: "@KunstmaanAdminBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/
-    requirements:
-        _locale: %requiredlocales%
-
-KunstmaanPagePartBundle:
-    resource: "@KunstmaanPagePartBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/
-    requirements:
-        _locale: %requiredlocales%
-
-KunstmaanFormBundle:
-    resource: "@KunstmaanFormBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/
-    requirements:
-        _locale: %requiredlocales%
-
-KunstmaanNodeBundle:
-    resource: "@KunstmaanNodeBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/
-    requirements:
-        _locale: %requiredlocales%
-
-KunstmaanSearchBundle:
-    resource: "@KunstmaanSearchBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/
-    requirements:
-        _locale: %requiredlocales%
- */
-
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
 

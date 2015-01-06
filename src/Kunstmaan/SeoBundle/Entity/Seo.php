@@ -8,7 +8,6 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\SeoBundle\Form\SeoType;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Seo metadata for entities

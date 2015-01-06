@@ -7,12 +7,9 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
-use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
-use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand

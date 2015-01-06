@@ -1,10 +1,8 @@
 <?php
-
 namespace Kunstmaan\PagePartBundle\Entity;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
+
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 /**

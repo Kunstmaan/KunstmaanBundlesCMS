@@ -1,16 +1,12 @@
 <?php
-
 namespace Kunstmaan\GeneratorBundle\Command;
+
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 use Kunstmaan\GeneratorBundle\Generator\BundleGenerator;
-
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;

@@ -4,17 +4,13 @@ namespace Kunstmaan\DashboardBundle\Controller;
 use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
-use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class GoogleAnalyticsAJAXController extends Controller
 {

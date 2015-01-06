@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
-use Symfony\Component\Form\FormView;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 
 /**

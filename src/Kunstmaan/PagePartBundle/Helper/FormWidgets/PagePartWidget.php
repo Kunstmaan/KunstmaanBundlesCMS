@@ -8,9 +8,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
-
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;

@@ -2,13 +2,10 @@
 
 namespace Kunstmaan\PagePartBundle\Repository;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Kunstmaan\PagePartBundle\Helper\PageTemplateConfigurationReader;

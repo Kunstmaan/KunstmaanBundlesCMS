@@ -4,12 +4,6 @@ namespace Kunstmaan\VotingBundle\Tests\Services;
 
 use Kunstmaan\VotingBundle\Services\RepositoryResolver;
 
-use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
-use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
-use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
-use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
-use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
-
 /**
 * Unit test for repository resolver
 */

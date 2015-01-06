@@ -3,13 +3,11 @@
 namespace Kunstmaan\PagePartBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 
 /**
  * This event will make sure pageparts are being copied when deepClone is done on an entity implementing hasPagePartsInterface
