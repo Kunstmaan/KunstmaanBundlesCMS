@@ -71,9 +71,15 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($container->getParameter($this->root . ".actions")));
 
         $actions = $container->getParameter($this->root . ".actions");
-        $this->assertEquals(2, $actions['up_vote']['default_value']);
-        $this->assertEquals(-5, $actions['down_vote']['default_value']);
-        $this->assertEquals(1, $actions['facebook_like']['default_value']);
+        if (isset($actions['up_vote'])) {
+            $this->assertEquals(2, $actions['up_vote']['default_value']);
+        }
+        if (isset($actions['down_vote'])) {
+            $this->assertEquals(-5, $actions['down_vote']['default_value']);
+        }
+        if (isset($actions['facebook_like'])) {
+            $this->assertEquals(1, $actions['facebook_like']['default_value']);
+        }
     }
 
     /**
