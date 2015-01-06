@@ -2,6 +2,7 @@
 namespace Kunstmaan\TranslatorBundle\Model\Export;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
  * A representation of a translation export into a file
@@ -102,7 +103,7 @@ class ExportFile
         $this->content = $content;
     }
 
-    public function addTranslation($translation)
+    public function addTranslation(Translation $translation)
     {
         $this->translations->set($translation->getKeyword(), $translation->getText());
     }

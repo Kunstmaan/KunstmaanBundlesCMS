@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Component\HttpKernel\DataCollector;
 
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,7 @@ class TranslatorDataCollector extends DataCollector
 
         $iterator = $translationsCollection->getIterator();
 
-        $iterator->uasort(function ($first, $second) {
+        $iterator->uasort(function (Translation $first, Translation $second) {
             return $first->getDomain() . $first->getKeyword() > $second->getDomain() . $second->getKeyword() ? 1 : -1;
         });
 

@@ -5,6 +5,7 @@ namespace Kunstmaan\PagePartBundle\Repository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
@@ -94,7 +95,7 @@ class PagePartRefRepository extends EntityRepository
         }
 
         // Order the pageparts
-        usort($pageparts, function($a, $b) use ($order) {
+        usort($pageparts, function(EntityInterface $a, EntityInterface $b) use ($order) {
             $aPosition = $order[get_class($a) . $a->getId()];
             $bPosition = $order[get_class($b) . $b->getId()];
 

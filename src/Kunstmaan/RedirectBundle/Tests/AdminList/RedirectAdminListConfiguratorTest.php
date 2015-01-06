@@ -4,6 +4,7 @@ namespace Kunstmaan\RedirectBundle\Tests\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
 
 /**
@@ -57,7 +58,7 @@ class RedirectAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
         $fields = $this->object->getFields();
         $this->assertEquals(3, count($fields));
         $fieldNames = array_map(
-            function ($field) {
+            function (Field $field) {
                 return $field->getName();
             },
             $fields

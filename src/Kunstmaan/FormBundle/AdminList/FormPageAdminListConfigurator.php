@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
@@ -59,7 +60,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
  */
     public function buildItemActions()
     {
-        $create_route = function ($item) {
+        $create_route = function (EntityInterface $item) {
             return array(
                 'path'   => 'KunstmaanFormBundle_formsubmissions_list',
                 'params' => array('nodeTranslationId' => $item->getId())

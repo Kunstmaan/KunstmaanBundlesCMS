@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
@@ -57,7 +58,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     public function buildItemActions()
     {
         $nodeTranslation = $this->nodeTranslation;
-        $create_route = function ($item) use ($nodeTranslation)  {
+        $create_route = function (EntityInterface $item) use ($nodeTranslation)  {
             $arr = array("path" => "KunstmaanFormBundle_formsubmissions_list_edit", "params" => array("nodeTranslationId" => $nodeTranslation->getId(), "submissionId" => $item->getId()));
             return $arr;
         };

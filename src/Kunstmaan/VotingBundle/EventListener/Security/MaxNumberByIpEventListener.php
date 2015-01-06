@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\VotingBundle\EventListener\Security;
+use Kunstmaan\VotingBundle\Entity\AbstractVote;
 
 /**
 * Security listener for prevent ip to vote more than maxnumber for an event
@@ -31,9 +32,9 @@ class MaxNumberByIpEventListener
 
     /**
     * On vote
-    * @param Event $event event
+    * @param AbstractVote $event event
     */
-    public function onVote($event)
+    public function onVote(AbstractVote $event)
     {
 
         $repository = $this->repositoryResolver->getRepositoryForEvent($event);

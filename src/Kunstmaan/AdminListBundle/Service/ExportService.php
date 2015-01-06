@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Service;
 
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -28,7 +29,7 @@ class ExportService
         return $extensions;
     }
 
-    public function getDownloadableResponse($adminlist, $_format, $template = null)
+    public function getDownloadableResponse(AdminList $adminlist, $_format, $template = null)
     {
         switch ($_format) {
             case self::EXT_EXCEL:
@@ -65,7 +66,7 @@ class ExportService
      * @throws \Exception
      * @throws \PHPExcel_Exception
      */
-    public function createExcelSheet($adminlist)
+    public function createExcelSheet(AdminList $adminlist)
     {
         $objPHPExcel = new \PHPExcel();
 
