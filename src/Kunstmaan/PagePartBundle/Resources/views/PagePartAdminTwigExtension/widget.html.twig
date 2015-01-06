@@ -1,106 +1,106 @@
 <script>
-	if(typeof window.FileChosenCallback == 'undefined') {
-    	window.FileChosenCallback = [];
-	}
-	if(typeof window.LinkChosenCallback == 'undefined') {
-    	window.LinkChosenCallback = [];
-	}
-	if(typeof window.SlideChosenCallback == 'undefined') {
-    	window.SlideChosenCallback = [];
-	}
-	if(typeof window.VideoChosenCallback == 'undefined') {
-    	window.VideoChosenCallback = [];
-	}
-	if(typeof PagePartEditor == 'undefined') {
-		PagePartEditor = [];
-	}
+    if (typeof window.FileChosenCallback == 'undefined') {
+        window.FileChosenCallback = [];
+    }
+    if (typeof window.LinkChosenCallback == 'undefined') {
+        window.LinkChosenCallback = [];
+    }
+    if (typeof window.SlideChosenCallback == 'undefined') {
+        window.SlideChosenCallback = [];
+    }
+    if (typeof window.VideoChosenCallback == 'undefined') {
+        window.VideoChosenCallback = [];
+    }
+    if (typeof PagePartEditor == 'undefined') {
+        PagePartEditor = [];
+    }
 </script>
-<div class="pagepartscontainer" data-context="{{pagepartadmin.context}}" data-pageid="{{ pagepartadmin.page.id }}" data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
-	<div class="new_pagepart first">
-	  <select onchange="return PagePartEditor.addPagepart(this)" class="addselect">
-	    <option value="">Add a pagepart</option>
-	    {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-	      <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
-	    {% endfor %}
-	  </select>
-	</div>
+<div class="pagepartscontainer" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}"
+     data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
+    <div class="new_pagepart first">
+        <select onchange="return PagePartEditor.addPagepart(this)" class="addselect">
+            <option value="">Add a pagepart</option>
+            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+                <option value="{{ pagePartType.class }}">{{ pagePartType.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
-    <div id="parts_{{pagepartadmin.context}}" class="pageparts_sortable" data-scope="{% spaceless %}
+    <div id="parts_{{ pagepartadmin.context }}" class="pageparts_sortable" data-scope="{% spaceless %}
     {% for type in pagepartadmin.possiblePagePartTypes %}
     {{ type.class|replace({'\\':""})~' ' }}
     {% endfor %}
     {% endspaceless %}">
-    {% for id, pagepart in pagepartadmin.pagepartmap %}
-		{% include 'KunstmaanPagePartBundle:PagePartAdminTwigExtension:pagepart.html.twig' with { 'id': id, 'pagepartadmin': pagepartadmin, 'editmode': false} %}
-    {% endfor %}
+        {% for id, pagepart in pagepartadmin.pagepartmap %}
+            {% include 'KunstmaanPagePartBundle:PagePartAdminTwigExtension:pagepart.html.twig' with { 'id': id, 'pagepartadmin': pagepartadmin, 'editmode': false} %}
+        {% endfor %}
     </div>
 </div>
 <div id="pagepartsdeletedcontainer"></div>
 <script>
-    //TODO: singleton pagepareditor
     PagePartEditor = {
-    	propBarMouseDownHandler: function(){
-        		PagePartEditor.sortableClicked = true;
-                var scope = $(this).closest('section').data('scope');
-                $('.pageparts_sortable[data-scope~=' + scope + ']')
+        propBarMouseDownHandler: function () {
+            PagePartEditor.sortableClicked = true;
+            var scope = $(this).closest('section').data('scope');
+            $('.pageparts_sortable[data-scope~=' + scope + ']')
                     .addClass('connectedSortable')
                     .sortable('option', 'connectWith', '.connectedSortable');
-                $('.pageparts_sortable:not([data-scope~=' + scope + '])')
+            $('.pageparts_sortable:not([data-scope~=' + scope + '])')
                     .sortable('disable')
                     .sortable('option', 'connectWith', false)
                     .parent().addClass('region-disabled');
-                $('.template-block-content').not('.sortable')
+            $('.template-block-content').not('.sortable')
                     .parent().addClass('region-disabled');
-            },
-    	sortableClicked: false,
-	    addPagepart: function (select){
-		    pagepartscontainer = $(select).closest('.pagepartscontainer');
+        },
+        sortableClicked: false,
+        addPagepart: function (select) {
+            pagepartscontainer = $(select).closest('.pagepartscontainer');
 
-	        $.ajax({
-	            url: '{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}',
-	            data: {
-	            	'pageclassname': pagepartscontainer.data('pageclassname'),
-	            	'pageid': pagepartscontainer.data('pageid'),
-	            	'context': pagepartscontainer.data('context'),
-		            'type': $(select).val()
-		        },
-	            async: true,
-	            success: function(data) {
-		            var result = null;
-		            if($(select).parent().hasClass('first')) {
-		            	result = $('#parts_'+pagepartscontainer.data('context')).prepend(data);
-			        } else {
-			        	result = $(select).closest('section').after(data);
-				    }
-				    result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
-				    disableCKEditors();
-				    enableCKEditors();
+            $.ajax({
+                url: '{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}',
+                data: {
+                    'pageclassname': pagepartscontainer.data('pageclassname'),
+                    'pageid': pagepartscontainer.data('pageid'),
+                    'context': pagepartscontainer.data('context'),
+                    'type': $(select).val()
+                },
+                async: true,
+                success: function (data) {
+                    var result = null;
+                    if ($(select).parent().hasClass('first')) {
+                        result = $('#parts_' + pagepartscontainer.data('context')).prepend(data);
+                    } else {
+                        result = $(select).closest('section').after(data);
+                    }
+                    result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
+                    disableCKEditors();
+                    enableCKEditors();
                     initCustomSelect();
-	            }
-		    });
-	        $(select).val('');
-	        return false;
-	    },
-	    deletePagepart: function (id){
-	    	isEdited = true; // enabling the "leave page" popup
-	    	document.getElementById(id + '_deleted').checked = 'checked';
-	    	var container = $('#' + id + '_container');
-	    	container.slideUp(function(){
-	        	container.html('');
-	        });
-	        return true;
-	    },
-	    editPagepart: function (id){
-	    	isEdited = true; // enabling the "leave page" popup
-	        document.getElementById(id + '_edit').style.display = '';
-	        document.getElementById(id + '_view').style.display = 'none';
-	        window.activeEdit = id;
-	        return false;
-	    }
+                }
+            });
+            $(select).val('');
+            return false;
+        },
+        deletePagepart: function (id) {
+            isEdited = true; // enabling the "leave page" popup
+            document.getElementById(id + '_deleted').checked = 'checked';
+            var container = $('#' + id + '_container');
+            container.slideUp(function () {
+                container.html('');
+            });
+            return true;
+        },
+        editPagepart: function (id) {
+            isEdited = true; // enabling the "leave page" popup
+            document.getElementById(id + '_edit').style.display = '';
+            document.getElementById(id + '_view').style.display = 'none';
+            window.activeEdit = id;
+            return false;
+        }
     }
 
-    function disableCKEditors(){
-        for ( instance in CKEDITOR.instances ){
+    function disableCKEditors() {
+        for (instance in CKEDITOR.instances) {
             if ($('#' + CKEDITOR.instances[instance].name).hasClass('rich_editor')) {
                 CKEDITOR.instances[instance].destroy();
 
@@ -108,84 +108,84 @@
         }
     }
 
-    function enableCKEditors(){
-    	$('textarea.rich_editor').each(function(item){
-			var config = {};
-        	if($(this).attr('height')){
-        		config.height = $(this).attr('height');
+    function enableCKEditors() {
+        $('textarea.rich_editor').each(function (item) {
+            var config = {};
+            if ($(this).attr('height')) {
+                config.height = $(this).attr('height');
             }
-        	if($(this).attr('noparagraphs')){
-        		config.enterMode = CKEDITOR.ENTER_BR;
-	         		config.shiftEnterMode = CKEDITOR.ENTER_P;
+            if ($(this).attr('noparagraphs')) {
+                config.enterMode = CKEDITOR.ENTER_BR;
+                config.shiftEnterMode = CKEDITOR.ENTER_P;
             }
-    		CKEDITOR.replace( $(this).attr('id'), config);
+            CKEDITOR.replace($(this).attr('id'), config);
 
             // Add id on iframe so that behat tests can interact
             var id = $(this).attr('id');
-            var checkExist = setInterval(function() {
+            var checkExist = setInterval(function () {
                 if ($('.pagepart .cke_editor_' + id + ' iframe').length) {
                     var parts = id.split("_");
-                    var name = parts[parts.length-1];
+                    var name = parts[parts.length - 1];
                     $('.pagepart .cke_editor_' + id + ' iframe').attr('id', 'cke_iframe_' + name);
                     clearInterval(checkExist);
                 }
             }, 150);
-		});
+        });
     }
 
     $(document).ready(function () {
 
-        var heightenEmptyDropZones = function(elementHeight) {
+        var heightenEmptyDropZones = function (elementHeight) {
             var $empty = jQuery('.connectedSortable:not(:has(>section))');
             $empty.css({'height': elementHeight});
         }
 
-        var autoHeightDropZones = function() {
+        var autoHeightDropZones = function () {
             jQuery('.connectedSortable').css({'height': ''});
         }
 
         $('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
         $('body').mouseup(
-            function() {
-                if (PagePartEditor.sortableClicked) {
-                    // Enable all sortable regions again
-                    $('.pageparts_sortable')
-                        .sortable('enable')
-                        .sortable('option', 'connectWith', false)
-                        .parent().removeClass('region-disabled');
-                    $('.template-block-content').not('.sortable')
-                        .parent().removeClass('region-disabled');
-                    PagePartEditor.sortableClicked = false;
+                function () {
+                    if (PagePartEditor.sortableClicked) {
+                        // Enable all sortable regions again
+                        $('.pageparts_sortable')
+                                .sortable('enable')
+                                .sortable('option', 'connectWith', false)
+                                .parent().removeClass('region-disabled');
+                        $('.template-block-content').not('.sortable')
+                                .parent().removeClass('region-disabled');
+                        PagePartEditor.sortableClicked = false;
+                    }
                 }
-            }
         );
         $('#parts_{{pagepartadmin.context}}').sortable({
-        	iframeFix: true,
+            iframeFix: true,
             connectWith: ".connectedSortable",
             handle: '.prop_bar',
             cursor: 'move',
             placeholder: "placeholder",
             forcePlaceholderSize: true,
-            tolerance:"pointer",
+            tolerance: "pointer",
             revert: 100,
             opacity: 1,
-    		start: function(e, ui) {
-    			$(ui.item).find('.new_pagepart').html('');
-    			disableCKEditors();
-    	        $('.draggable').css('opacity', ".4");
-    			$('.ui-sortable-helper .new_pagepart').slideUp("fast");
+            start: function (e, ui) {
+                $(ui.item).find('.new_pagepart').html('');
+                disableCKEditors();
+                $('.draggable').css('opacity', ".4");
+                $('.ui-sortable-helper .new_pagepart').slideUp("fast");
 
                 // Temporarily change the height of empty pagepart containers.
                 heightenEmptyDropZones(ui.item.outerHeight(true));
-    		},
-            stop: function(e, ui) {
+            },
+            stop: function (e, ui) {
                 $(ui.item).find('.new_pagepart').html($(ui.item).parents('.pagepartscontainer').find('.new_pagepart.first').html());
                 //update context names
                 var context = $(ui.item).parents('.pagepartscontainer').data('context');
-                $(ui.item).find('.pagepartadmin_field_updatecontextname').each(function(){
+                $(ui.item).find('.pagepartadmin_field_updatecontextname').each(function () {
                     $(this).attr('name', context + $(this).data('suffix'));
                 });
-    			enableCKEditors();
+                enableCKEditors();
 
                 // Revert the height for the dropzones.
                 autoHeightDropZones();
@@ -193,8 +193,8 @@
                 // Remove connectedSortable when stopped dropping.
                 $('.connectedSortable').removeClass('connectedSortable');
 
-    			$('.draggable').css('opacity', "1");
-    		}
+                $('.draggable').css('opacity', "1");
+            }
         });
 
     });

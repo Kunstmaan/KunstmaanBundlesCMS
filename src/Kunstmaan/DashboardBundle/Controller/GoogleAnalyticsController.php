@@ -1,8 +1,6 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Controller;
 
-use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsCommand;
-use Kunstmaan\DashboardBundle\Helper\GoogleClientHelper;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

@@ -55,7 +55,6 @@ class ResourceCacher
     {
         $cache = new ConfigCache($this->getCacheFileLocation(), $this->debug);
         $content = sprintf('<?php return %s;', var_export($resources, true));
-        // TODO write metadate for this cache?
         $cache->write($content);
         $this->logger->debug('Writing translation resources to cache file.');
     }

@@ -104,7 +104,6 @@ class PageCreatorService
             throw new \InvalidArgumentException('There has to be at least 1 translation in the translations array');
         }
 
-        // TODO: Wrap it all in a transaction.
         $em = $this->entityManager;
 
         /** @var NodeRepository $nodeRepo */

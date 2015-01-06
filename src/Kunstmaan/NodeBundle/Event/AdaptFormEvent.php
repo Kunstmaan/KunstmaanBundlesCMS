@@ -10,7 +10,6 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 /**
  * The event to pass metadata if the adaptForm event is triggered
@@ -24,7 +23,7 @@ class AdaptFormEvent extends Event
     private $tabPane;
 
     /**
-     * @var 
+     * @var
      */
     private $page;
 
@@ -91,7 +90,7 @@ class AdaptFormEvent extends Event
     }
 
     /**
-     * @return 
+     * @return
      */
     public function getPage()
     {

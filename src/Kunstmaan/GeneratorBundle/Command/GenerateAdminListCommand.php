@@ -9,7 +9,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
-use Sensio\Bundle\GeneratorBundle\Generator;
 use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
@@ -19,10 +18,6 @@ use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 class GenerateAdminListCommand extends GenerateDoctrineCommand
 {
 
-    /**
-     * @var AdminListGenerator
-     */
-    private $generator;
 
     /**
      * @see Command
