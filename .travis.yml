@@ -17,15 +17,16 @@ before_script:
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 4 ]; then echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+    - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;'
     - sudo locale-gen nl_BE.UTF-8 && sudo update-locale
-    - php -d memory_limit=-1 composer --prefer-source --dev install
-    - php -d memory_limit=-1 composer require symfony/symfony:${SYMFONY_VERSION}
+    - composer --prefer-source --dev install
+    - composer require symfony/symfony:${SYMFONY_VERSION}
     - wget https://phar.phpunit.de/phpunit.phar
     - wget https://scrutinizer-ci.com/ocular.phar
 
 script:
-    - php -d memory_limit=-1 phpunit.phar --coverage-clover=coverage.clover
-    - php -d memory_limit=-1 ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    - php phpunit.phar --coverage-clover=coverage.clover
+    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 notifications:
   email:
