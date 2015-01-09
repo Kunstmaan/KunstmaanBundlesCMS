@@ -555,7 +555,7 @@ class NodeAdminController extends Controller
 
         $menubuilder = $this->get('kunstmaan_node.actions_menu_builder');
         $menubuilder->setActiveNodeVersion($nodeVersion);
-        $menubuilder->setIsEditableNode(!$isStructureNode);
+        $menubuilder->setEditableNode(!$isStructureNode);
 
         // Building the form
         $propertiesWidget = new FormWidget();
