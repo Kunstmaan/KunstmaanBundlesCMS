@@ -5,19 +5,6 @@ php:
   - 5.4
   - 5.5
   - 5.6
-  - hhvm-nightly
-
-matrix:
-    allow_failures:
-        - php: hhvm-nightly
-        - php: 5.3
-          env: SYMFONY_VERSION="2.6.*"
-        - php: 5.4
-          env: SYMFONY_VERSION="2.6.*"
-        - php: 5.5
-          env: SYMFONY_VERSION="2.6.*"
-        - php: 5.6
-          env: SYMFONY_VERSION="2.6.*"
 
 env:
   - SYMFONY_VERSION="2.3.*"
@@ -31,14 +18,14 @@ before_script:
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
     - sudo locale-gen nl_BE.UTF-8 && sudo update-locale
-    - composer --prefer-source --dev install
-    - composer require symfony/symfony:${SYMFONY_VERSION}
+    - php -d memory_limit=-1 composer --prefer-source --dev install
+    - php -d memory_limit=-1 composer require symfony/symfony:${SYMFONY_VERSION}
     - wget https://phar.phpunit.de/phpunit.phar
     - wget https://scrutinizer-ci.com/ocular.phar
 
 script:
-    - php phpunit.phar --coverage-clover=coverage.clover
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    - php -d memory_limit=-1 phpunit.phar --coverage-clover=coverage.clover
+    - php -d memory_limit=-1 ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 notifications:
   email:
