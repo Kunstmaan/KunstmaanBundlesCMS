@@ -2,24 +2,26 @@
 
 namespace Kunstmaan\LiveReloadBundle\EventListener;
 
+use Guzzle\Http\Client;
+use Guzzle\Http\Exception\ClientErrorResponseException;
+use Guzzle\Http\Exception\CurlException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ScriptInjectorListener implements EventSubscriberInterface {
+class ScriptInjectorListener implements EventSubscriberInterface
+{
+    /** @var Client */
+    protected $httpClient;
 
-    protected $enabled;
-    protected $host;
-    protected $port;
+    /** @var bool */
     protected $check_server_presence;
 
-    public function __construct($host = 'localhost', $port = 35729, $enabled = true, $check_server_presence = true)
+    public function __construct(Client $httpClient, $check_server_presence = true)
     {
-        $this->host = $host;
-        $this->port = $port;
-        $this->enabled = $enabled;
+        $this->httpClient            = $httpClient;
         $this->check_server_presence = $check_server_presence;
     }
 
@@ -30,17 +32,17 @@ class ScriptInjectorListener implements EventSubscriberInterface {
         }
 
         $response = $event->getResponse();
-        $request = $event->getRequest();
+        $request  = $event->getRequest();
 
         // do not capture redirects or modify XML HTTP Requests
         if ($request->isXmlHttpRequest()) {
             return;
         }
 
-        if (!$this->enabled
-            || !$response->headers->has('X-Debug-Token')
+        if (!$response->headers->has('X-Debug-Token')
             || $response->isRedirection()
-            || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'), 'html'))
+            || ($response->headers->has('Content-Type') &&
+                false === strpos($response->headers->get('Content-Type'), 'html'))
             || 'html' !== $request->getRequestFormat()
         ) {
             return;
@@ -65,21 +67,32 @@ class ScriptInjectorListener implements EventSubscriberInterface {
         }
 
         $content = $response->getContent();
-        $pos = $posrFunction($content, '</body>');
+        $pos     = $posrFunction($content, '</body>');
 
         if (false !== $pos) {
-            $script = "http://$this->host:$this->port/livereload.js";
+            $script = "livereload.js";
 
             if ($this->check_server_presence) {
-                $headers = get_headers($script);
-                if (!is_array($headers) || strpos($headers[0], '200') === false) {
-                    return;
+                // GET is required, as livereload apparently does not support HEAD requests ...
+                $request = $this->httpClient->get($script);
+                try {
+                    $checkResponse = $this->httpClient->send($request);
+
+                    if ($checkResponse->getStatusCode() !== 200) {
+                        return;
+                    }
+                } catch (CurlException $e) {
+                    // If error is connection failed, we assume the server is not running
+                    if ($e->getCurlHandle()->getErrorNo() === 7) {
+                        return;
+                    }
+                    throw $e;
                 }
             }
 
-            $content = $substrFunction($content, 0, $pos)."\n"
-                .'<script src="'.$script.'"></script>'."\n"
-                .$substrFunction($content, $pos);
+            $content = $substrFunction($content, 0, $pos) . "\n"
+                . '<script src="' . $this->httpClient->getBaseUrl() . $script . '"></script>' . "\n"
+                . $substrFunction($content, $pos);
 
             $response->setContent($content);
         }
@@ -91,5 +104,4 @@ class ScriptInjectorListener implements EventSubscriberInterface {
             KernelEvents::RESPONSE => array('onKernelResponse', -127),
         );
     }
-
 }

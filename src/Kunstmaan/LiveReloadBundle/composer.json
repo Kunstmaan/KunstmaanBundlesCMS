@@ -14,7 +14,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "~2.3"
+        "symfony/symfony": "~2.3",
+        "guzzle/guzzle": "3.8.*"
     },
     "minimum-stability": "dev",
     "autoload": {
