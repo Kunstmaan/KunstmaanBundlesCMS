@@ -1,16 +1,21 @@
 parameters:
     kunstmaan_live_reload.script_injector.class: 'Kunstmaan\LiveReloadBundle\EventListener\ScriptInjectorListener'
     kunstmaan_live_reload.disable_cache.class: 'Kunstmaan\LiveReloadBundle\EventListener\DisableCacheListener'
+    kunstmaan_live_reload.http_client.class: 'Guzzle\Http\Client'
 
 services:
+    kunstmaan_live_reload.http_client:
+        class: "%kunstmaan_live_reload.http_client.class%"
+        arguments: ["http://%kunstmaan_live_reload.host%:%kunstmaan_live_reload.port%/"]
+        public: false
+
     kunstmaan_live_reload.script_injector:
         class: "%kunstmaan_live_reload.script_injector.class%"
-        arguments: ["%kunstmaan_live_reload.host%", "%kunstmaan_live_reload.port%", "%kunstmaan_live_reload.enabled%", "%kunstmaan_live_reload.check_server_presence%"]
+        arguments: ["@kunstmaan_live_reload.http_client", "%kunstmaan_live_reload.check_server_presence%"]
         tags:
             - { name: kernel.event_subscriber }
 
     kunstmaan_live_reload.disable_cache:
         class: "%kunstmaan_live_reload.disable_cache.class%"
-        arguments: ["%kunstmaan_live_reload.enabled%"]
         tags:
             - { name: kernel.event_subscriber }
