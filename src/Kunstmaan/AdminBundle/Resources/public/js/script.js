@@ -7,6 +7,7 @@ $(document).ready(function () {
     initTop();
     initCancel();
     initCustomSelect();
+    initDisableButtonsOnSubmit();
     initDel();
     initFilter();
     initDropdownButton();
@@ -428,6 +429,13 @@ function initCustomSelect() {
             allow_single_deselect: $(this).attr('data-allowempty'),
             width: ($(this).attr('data-chznwidth') ? $(this).data('chznwidth') : '365px')
         });
+    });
+}
+
+//Custom Select
+function initDisableButtonsOnSubmit() {
+    $("#pageadminform").submit(function(){
+        $(".main_actions").find("button, a").attr('disabled','disabled').addClass("disabled");
     });
 }
 
