@@ -78,14 +78,21 @@
 			    <div class="preview">
     			    {% set media = value.ent %}
     			    {% set handler = mediamanager.getHandler(media) %}
-                    {% set thumbnailurl =  handler.getImageUrl(media, app.request.basePath, 210, 150) %}
-                    {% if thumbnailurl %}
-                        <img width="210" height="150" src="{{ handler.getImageUrl(media, app.request.basePath, 210, 150) }}" alt="{{ media.name }}" />
+                    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                    {% if imageurl is not empty and media.location == 'local' %}
+                        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                            {% set imageurl = imageurl %}
+                        {% else %}
+                            {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                        {% endif %}
+                    {% endif %}
+                    {% if imageurl %}
+                        <img src="{{ imageurl }}" alt="{{ media.name }}" />
                     {% else %}
                         <div style="font-size: 135px;text-align:center">
                             <i class="icon-file"></i>
                         </div>
-                   {% endif %}
+                    {% endif %}
                 </div>
                 <button class="del">{{ 'media.widget.delete' | trans }}</button>
                 <p class="title">{{ media.name }}</p>
