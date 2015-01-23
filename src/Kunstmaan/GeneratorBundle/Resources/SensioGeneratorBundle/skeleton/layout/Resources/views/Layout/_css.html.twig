@@ -1,11 +1,11 @@
 {% block css %}
     <!--[if IE 7]>
-        <link rel='stylesheet' href='/frontend/css/ie7.min.css?{{ assets_version() }}' type='text/css' />
+        <link rel="stylesheet" href="{{ asset('frontend/css/ie7.min.css') }}" type="text/css" />
     <![endif]-->
     <!--[if IE 8]>
-        <link rel='stylesheet' href='/frontend/css/ie8.min.css?{{ assets_version() }}' type='text/css' />
+        <link rel="stylesheet" href="{{ asset('frontend/css/ie8.min.css') }}" type="text/css" />
     <![endif]-->
     <!--[if gt IE 8]><!-->
-        <link rel='stylesheet' href='/frontend/css/style.min.css?{{ assets_version() }}' type='text/css' />
+        <link rel="stylesheet" href="{{ asset('frontend/css/style.min.css') }}" type="text/css" />
    <!--<![endif]-->
 {% endblock %}
