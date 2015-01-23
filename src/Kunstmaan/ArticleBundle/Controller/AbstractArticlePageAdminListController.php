@@ -86,7 +86,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      */
     public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator(), $request);
+        return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
     }
 
     /**
