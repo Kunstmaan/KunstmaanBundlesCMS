@@ -6,6 +6,7 @@ parameters:
     kunstmaan_admin.acl.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper'
     kunstmaan_admin.acl.native.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper'
     kunstmaan_admin.clone.listener.class: 'Kunstmaan\AdminBundle\EventListener\CloneListener'
+    kunstmaan_admin.session_security.class: 'Kunstmaan\AdminBundle\EventListener\SessionSecurityListener'
     kunstmaan_admin.firewall.provider_key: 'main'
 
 services:
@@ -136,3 +137,10 @@ services:
         class: Kunstmaan\AdminBundle\Form\RangeType
         tags:
             - { name: form.type, alias: range }
+
+    kunstmaan_admin.session_security:
+        class: "%kunstmaan_admin.session_security.class%"
+        arguments: ["%kunstmaan_admin.session_security.ip_check%", "%kunstmaan_admin.session_security.user_agent_check%", "@logger"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -1000 }

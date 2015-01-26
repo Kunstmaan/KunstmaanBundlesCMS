@@ -30,7 +30,13 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array('en'))
                     ->prototype('scalar')->end()
                 ->end()
-
+                ->arrayNode('session_security')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('ip_check')->defaultTrue()->end()
+                        ->booleanNode('user_agent_check')->defaultTrue()->end()
+                    ->end()
+                ->end()
                 ->scalarNode('default_admin_locale')->cannotBeEmpty()->defaultValue('en')->end()
             ->end();
 
