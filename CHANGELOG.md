@@ -1,4 +1,68 @@
 
+3.0.1 / 2015-01-26
+==================
+
+  * Merge pull request #130 from jockri/session_security
+  * add extra security measures to prevent session hijacking
+  * Merge pull request #126 from Maff-/fix-subdir-assets
+  * Merge pull request #127 from Maff-/fix-adminlist-add-action
+  * Fix redirect add admin action and possible others.
+  * Use relative asset paths in stylesheets and asset() twig function
+  * Merge pull request #111 from tentwofour/feature_chooserwidgetuseliipimagine
+  * Added imagine_filter call in Chooser folder view - was previously loading full image
+  * Added imagine_filter call in chooser widget thumnails - was previously loading full image (slow!)
+  * Merge pull request #108 from bobhuf/feature/prevent-double-clicks
+  * added DisableButtonsOnSubmit function
+  * Merge pull request #107 from bobhuf/feature/retina-toggle
+  * retina filter toggle
+  * Merge pull request #105 from wimvds/fix/live-reload-bundle
+  * fix live reload bundle script injector code cleanup fix composer
+  * Merge pull request #103 from tentwofour/bugfix_undefinedmethod_setIsEditableNode
+  * Update NodeAdminController.php
+  * Update .travis.yml
+  * Enable 2.6
+  * Fix Voting
+  * Even more Insight issues
+  * Boolean property should not be prefixed by "is"
+  * Commented code should not be commited
+  * Various Insight updates
+  * Fix logic error
+  * Unused use statement should be avoided
+  * Set the defaults correctly
+  * Don't test on master yet
+  * Merge pull request #102 from markmedia/addtagfix
+  * Merge pull request #101 from markmedia/slugifier
+  * add tag fix
+  * missing char and string to lower case
+  * More fixes for tests
+  * Remove to do comments
+  * Exclude some envs from the travis builds
+  * Remove completely unimplemented generated tests
+  * Fix test
+  * exit() and die() functions should be avoided
+  * Missing use
+  * Merge pull request #100 from kimausloos/master
+  * Rename nodes_search table
+  * Boolean should be compared strictly
+  * Error silenced by the at sign (@)
+  * Fix imports
+  * Text files should end with a newline character
+  * Project files should not mix end of lines (fixes #99)
+  * Merge pull request #97 from tentwofour/feature_generatecommandnamespacedepth
+  * Fix for issue when namespace depth > 1
+  * Merge pull request #96 from tentwofour/tentwofourfeature_adminlistconfigurator_superfriendlyname
+  * Update AbstractAdminListConfigurator.php
+  * Add missing parameter, fixes #95
+  * Merge pull request #93 from jockri/add_bulk_actions
+  * Merge pull request #92 from jockri/fix_dbal_adminlist_export
+  * removed unused class
+  * make it possible to add bulk actions on adminlists
+  * make it possible to override the ExportService
+  * fix dbal adminlist exports
+  * Update Installation.md
+  * Update README.md
+  * Update README.md
+
 3.0.0 / 2014-12-27
 ==================
 
