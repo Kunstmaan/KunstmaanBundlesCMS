@@ -106,12 +106,9 @@ class UsersController extends BaseSettingsController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $em->persist($user);
-                $em->flush();
-
-                /* @var UserManipulator $manipulator */
-                $manipulator = $this->get('fos_user.util.user_manipulator');
-                $manipulator->changePassword($user->getUsername(), $user->getPlainpassword());
+                /* @var UserManager $userManager */
+                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager->updateUser($user, true);
 
                 $this->get('session')->getFlashBag()->add(
                     'success',
@@ -167,13 +164,10 @@ class UsersController extends BaseSettingsController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                if ($user->getPlainpassword() != "") {
-                    $manipulator = $this->get('fos_user.util.user_manipulator');
-                    $manipulator->changePassword($user->getUsername(), $user->getPlainpassword());
-                }
-                $user->setPlainpassword("");
-                $em->persist($user);
-                $em->flush();
+                /* @var UserManager $userManager */
+                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager->updateUser($user, true);
+                
                 $this->get('session')->getFlashBag()->add(
                     'success',
                     'User \'' . $user->getUsername() . '\' has been edited!'
