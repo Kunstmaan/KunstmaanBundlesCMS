@@ -4,19 +4,32 @@ namespace Kunstmaan\TranslatorBundle\Model\Import;
 
 class ImportCommand
 {
-    private $bundle = false;
+    private $defaultBundle = false;
+    private $bundles = array();
     private $globals = true;
     private $force = false;
     private $locales = false;
 
-    public function getBundle()
+    public function getDefaultBundle()
     {
-        return $this->bundle;
+        return $this->defaultBundle;
     }
 
-    public function setBundle($bundle)
+    public function setDefaultBundle($defaultBundle)
     {
-        $this->bundle = $bundle;
+        $this->defaultBundle = $defaultBundle;
+
+        return $this;
+    }
+
+    public function getBundles()
+    {
+        return $this->bundles;
+    }
+
+    public function setBundles($bundles)
+    {
+        $this->bundles = $bundles;
 
         return $this;
     }
