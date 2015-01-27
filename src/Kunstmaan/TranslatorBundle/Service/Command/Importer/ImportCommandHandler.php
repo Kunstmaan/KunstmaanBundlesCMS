@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
  */
 class ImportCommandHandler extends AbstractCommandHandler
 {
-
     /**
      * TranslationFileExplorer
      * @var Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer
@@ -32,7 +31,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      */
     public function executeImportCommand(ImportCommand $importCommand)
     {
-        if ($importCommand->getBundle() === false || $importCommand->getBundle() === null) {
+        if ($importCommand->getDefaultBundle() === false || $importCommand->getDefaultBundle() === null) {
             return $this->importGlobalTranslationFiles($importCommand);
         }
 
@@ -44,7 +43,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      * @param  ImportCommand $importCommand
      * @return int           total number of files imported
      */
-    public function importGlobalTranslationFiles(ImportCommand $importCommand)
+    private function importGlobalTranslationFiles(ImportCommand $importCommand)
     {
         $locales = $this->determineLocalesToImport($importCommand);
         $finder = $this->translationFileExplorer->find($this->kernel->getRootDir(), $locales);
@@ -59,15 +58,15 @@ class ImportCommandHandler extends AbstractCommandHandler
      */
     public function importBundleTranslationFiles(ImportCommand $importCommand)
     {
-        $importBundle = strtolower($importCommand->getBundle());
+        $importBundle = strtolower($importCommand->getDefaultBundle());
 
         if ($importBundle == 'all') {
             return $this->importAllBundlesTranslationFiles($importCommand);
-        } elseif ($importBundle == 'own') {
+        } elseif ($importBundle == 'custom') {
+            return $this->importCustomBundlesTranslationFiles($importCommand);
+        } else {
             return $this->importOwnBundlesTranslationFiles($importCommand);
         }
-
-        return $this->importSingleBundleTranslationFiles($importCommand);
     }
 
     /**
@@ -75,13 +74,13 @@ class ImportCommandHandler extends AbstractCommandHandler
      * @param  ImportCommand $importCommand
      * @return int           total number of files imported
      */
-    public function importAllBundlesTranslationFiles(ImportCommand $importCommand)
+    private function importAllBundlesTranslationFiles(ImportCommand $importCommand)
     {
         $bundles = array_map('strtolower', array_keys($this->kernel->getBundles()));
         $imported = 0;
 
         foreach ($bundles as $bundle) {
-            $importCommand->setBundle($bundle);
+            $importCommand->setDefaultBundle($bundle);
 
             try {
                 $imported += $this->importSingleBundleTranslationFiles($importCommand);
@@ -98,14 +97,14 @@ class ImportCommandHandler extends AbstractCommandHandler
      * @param  ImportCommand $importCommand
      * @return int           The total number of imported files
      */
-    public function importOwnBundlesTranslationFiles(ImportCommand $importCommand)
+    private function importOwnBundlesTranslationFiles(ImportCommand $importCommand)
     {
         $imported = 0;
         $srcDir = dirname($this->kernel->getRootDir()) . '/src';
 
         foreach($this->kernel->getBundles() as $name => $bundle) {
             if (strpos($bundle->getPath(), $srcDir) !== false) {
-                $importCommand->setBundle(strtolower($name));
+                $importCommand->setDefaultBundle(strtolower($name));
 
                 try {
                     $imported += $this->importSingleBundleTranslationFiles($importCommand);
@@ -119,15 +118,37 @@ class ImportCommandHandler extends AbstractCommandHandler
     }
 
     /**
+     * Import the translation files from the defined bundles.
+     * @param  ImportCommand $importCommand
+     * @return int           The total number of imported files
+     */
+    private function importCustomBundlesTranslationFiles(ImportCommand $importCommand)
+    {
+        $imported = 0;
+
+        foreach($importCommand->getBundles() as $bundle) {
+            $importCommand->setDefaultBundle(strtolower($bundle));
+
+            try {
+                $imported += $this->importSingleBundleTranslationFiles($importCommand);
+            } catch (TranslationsNotFoundException $e) {
+                continue;
+            }
+        }
+
+        return $imported;
+    }
+
+    /**
      * Import all translation files from a single bundle
      * @param  ImportCommand $importCommand
      * @return int           total number of files imported
      */
-    public function importSingleBundleTranslationFiles(ImportCommand $importCommand)
+    private function importSingleBundleTranslationFiles(ImportCommand $importCommand)
     {
-        $this->validateBundleName($importCommand->getBundle());
+        $this->validateBundleName($importCommand->getDefaultBundle());
         $bundles = array_change_key_case($this->kernel->getBundles(), CASE_LOWER);
-        $finder = $this->translationFileExplorer->find($bundles[strtolower($importCommand->getBundle())]->getPath(), $this->determineLocalesToImport($importCommand));
+        $finder = $this->translationFileExplorer->find($bundles[strtolower($importCommand->getDefaultBundle())]->getPath(), $this->determineLocalesToImport($importCommand));
 
         if ($finder === null) {
             return 0;
@@ -144,7 +165,7 @@ class ImportCommandHandler extends AbstractCommandHandler
      * @param  boolean $force  override identical translations in the stasher (domain/locale and keyword combination)
      * @return int     total number of files imported
      */
-    public function importTranslationFiles(Finder $finder, $force = flase)
+    private function importTranslationFiles(Finder $finder, $force = flase)
     {
         if (!$finder instanceof Finder) {
             return false;

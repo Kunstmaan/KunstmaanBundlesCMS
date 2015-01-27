@@ -30,6 +30,7 @@ class KunstmaanTranslatorExtension extends Extension
 
         $container->setParameter('kuma_translator.enabled', $config['enabled']);
         $container->setParameter('kuma_translator.default_bundle', $config['default_bundle']);
+        $container->setParameter('kuma_translator.bundles', $config['bundles']);
         $container->setParameter('kuma_translator.cache_dir', $config['cache_dir']);
         $container->setParameter('kuma_translator.managed_locales', $config['managed_locales']);
         $container->setParameter('kuma_translator.file_formats', $config['file_formats']);
@@ -62,7 +63,6 @@ class KunstmaanTranslatorExtension extends Extension
 
         $collector = $container->getDefinition('kunstmaan.data_collector.translator');
         $collector->addArgument($translator);
-
     }
 
     /**
