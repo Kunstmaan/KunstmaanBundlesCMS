@@ -14,6 +14,9 @@ $(document).ready(function () {
     initModalFocus();
     initSaveKeyListener();
     initSidenavSize();
+
+    $(window).load(autocollapseTabs); // when document first loads
+    $(window).on('resize', autocollapseTabs); // when window is resized
 });
 
 //JS-tree
@@ -683,6 +686,59 @@ function initSaveKeyListener() {
         };
     }
 }
+
+var autocollapseTabs = function() {
+    var tabs = $('.js-autocollapseTabs');
+    var tabsHeight = tabs.innerHeight();
+    var children = tabs.children('li:not(:last-child):not(:first-child)'); // Don't count the 'more' tab and always show first tab
+
+    if (tabsHeight >= 50) {
+
+        while (tabsHeight > 50 && children.size() > 0) {
+            $('.tab__more').show(); // show immediately when first tab is added to dropdown
+            var count = children.size();
+
+            // move tab to dropdown
+            $(children[count-1]).prependTo('#collapsed');
+
+            // recalculate
+            tabsHeight = tabs.innerHeight();
+            children = tabs.children('li:not(:last-child):not(:first-child)');
+        }
+
+    } else {
+
+        var collapsed = $('#collapsed').children('li');
+        while (tabsHeight < 50 && collapsed.size() > 0) {
+            var count = collapsed.size();
+            $(collapsed[0]).insertBefore(tabs.children('li:last-child'));
+
+            // recalculate
+            tabsHeight = tabs.innerHeight();
+            collapsed = $('#collapsed').children('li');
+        }
+
+        if (tabsHeight>50) { // double chk height again
+            autocollapseTabs();
+        }
+    }
+
+    // hide the more button if dropdown is empty
+    var collapsed = $('#collapsed').children('li');
+    if (collapsed.size() <= 0) {
+        $('.tab__more').hide();
+    } else {
+        $('.tab__more').show();
+
+        // check if active element is in dropdown
+        if ($('#collapsed').children('li.active').size() > 0) {
+            $('.tab__more').addClass('active');
+        } else {
+            $('.tab__more').removeClass('active');
+        }
+    }
+
+};
 
 /**
  * Logic for showing nested forms in pageparts.

@@ -3,7 +3,7 @@
 
 {% form_theme formView 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs js-autocollapseTabs">
     {% for tab in tabPane.tabs %}
         {% set tabIdentifier = tab.identifier %}
         {% set formErrors = tab.getFormErrors(formView) %}
@@ -23,6 +23,14 @@
             </a>
         </li>
     {%  endfor %}
+        <li class="tab__more dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              More <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" id="collapsed">
+
+            </ul>
+        </li>
 </ul>
 
 <div class="tab-content">
