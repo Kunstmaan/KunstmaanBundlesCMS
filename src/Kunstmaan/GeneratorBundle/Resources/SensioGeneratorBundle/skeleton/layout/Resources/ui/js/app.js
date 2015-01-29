@@ -1,17 +1,11 @@
-var meetingKempen = meetingKempen || {};
+var projectname = projectname || {};
 
-meetingKempen = (function($, window, undefined) {
+projectname = (function($, window, undefined) {
 
-    var init, initFitText;
+    var init;
 
     init = function() {
         cargobay.scrollToTop.init();
-        cargobay.toggle.init();
-        initFitText();
-    };
-
-    initFitText = function() {
-        $('#responsive-headline').fitText(1.2, { minFontSize: '24px', maxFontSize: '74px' });
     };
 
     return {
@@ -21,5 +15,5 @@ meetingKempen = (function($, window, undefined) {
 }(jQuery, window));
 
 $(function() {
-    meetingKempen.init();
+    projectname.init();
 });
