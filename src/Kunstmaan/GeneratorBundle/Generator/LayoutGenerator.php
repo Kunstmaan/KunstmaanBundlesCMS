@@ -62,7 +62,7 @@ class LayoutGenerator extends KunstmaanGenerator
      */
     private function generateJshintrcFile()
     {
-        $this->copyFiles($this->skeletonDir.'/jshint/.jshintrc', $this->rootDir, true);
+        $this->renderSingleFile($this->skeletonDir.'/jshint/.jshintrc', $this->rootDir, '.jshintrc', array('bundle' => $this->bundle), true);
         $this->assistant->writeLine('Generating jshint configuration : <info>OK</info>');
     }
 
