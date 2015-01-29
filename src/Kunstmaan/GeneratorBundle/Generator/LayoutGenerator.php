@@ -30,20 +30,20 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->bundle = $bundle;
         $this->rootDir = $rootDir;
 
-        $this->generateGruntFiles();
+        $this->generateGulpFiles();
         $this->generateBowerFiles();
         $this->generateAssets();
         $this->generateTemplate();
     }
 
     /**
-     * Generate the grunt configuration files.
+     * Generate the gulp configuration files.
      */
-    private function generateGruntFiles()
+    private function generateGulpFiles()
     {
-        $this->renderFiles($this->skeletonDir.'/grunt/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->renderFiles($this->skeletonDir.'/gulp/', $this->rootDir, array('bundle' => $this->bundle), true);
 
-        $this->assistant->writeLine('Generating grunt configuration : <info>OK</info>');
+        $this->assistant->writeLine('Generating gulp configuration : <info>OK</info>');
     }
 
     /**
