@@ -32,6 +32,8 @@ class LayoutGenerator extends KunstmaanGenerator
 
         $this->generateGulpFiles();
         $this->generateBowerFiles();
+        $this->generateJshintrcFile();
+        $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
     }
@@ -42,7 +44,6 @@ class LayoutGenerator extends KunstmaanGenerator
     private function generateGulpFiles()
     {
         $this->renderFiles($this->skeletonDir.'/gulp/', $this->rootDir, array('bundle' => $this->bundle), true);
-
         $this->assistant->writeLine('Generating gulp configuration : <info>OK</info>');
     }
 
@@ -57,7 +58,25 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
-     * Generate the public asset files.
+     * Generate the jshint configuration file.
+     */
+    private function generateJshintrcFile()
+    {
+        $this->renderFiles($this->skeletonDir.'/jshint/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating jshint configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate the gems configuration file.
+     */
+    private function generateGemsFile()
+    {
+        $this->renderFiles($this->skeletonDir.'/gems/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating gems configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate the ui asset files.
      */
     private function generateAssets()
     {
@@ -67,13 +86,13 @@ class LayoutGenerator extends KunstmaanGenerator
         $relPath = '/Resources/public/';
         $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
 
-        $relPath = '/Resources/ui/';
-        $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
-
         $relPath = '/Resources/public/scss/config/';
         $this->renderSingleFile($sourceDir.$relPath, $targetDir.$relPath, '_paths.scss', array('bundle' => $this->bundle), true);
 
-        $this->assistant->writeLine('Generating public assets : <info>OK</info>');
+        $relPath = '/Resources/ui/';
+        $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
+
+        $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
 
     /**
