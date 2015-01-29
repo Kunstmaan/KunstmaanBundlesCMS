@@ -1,0 +1,111 @@
+<header role="header" class="main-header">
+    <section class="container">
+        <div class="row">
+            <div class="col-xs-1 col-sm-9 col-md-6 col-lg-7 js-navigation-space-hook"></div>
+        </div>
+        <div class="row">
+            {% if nodemenu is defined %}
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+                    {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="site-logo">
+                        <img src="{{ asset('bundles/<%= bundle.name|lower|replace({"bundle": ""}) %>/img/general/demo-logo.svg') }}" alt="Demosite" class="site-logo__img"/>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-9 col-md-6 col-lg-7">
+                    <nav role="navigation" class="js-navigation navigation navigation--big navigation--animated">
+                        <!-- Mobile navigation toggle -->
+                        <div class="js-navigation__toggle navigation__toggle navigation__toggle--top">
+                            MENU
+                            <i class="icon-reorder"></i>
+                            <i class="icon-remove"></i>
+                        </div>
+                        <!-- Navigation level -->
+                        <ul class="js-main-navigation-level navigation__level">
+                            <li class="navigation__item {% if nodemenu.getActiveForDepth(2) is null %}navigation__item--active{% endif %}">
+                                <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="navigation__link">Home</a>
+                            </li>
+                            {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                            {% for node in activeSubnode.children %}
+                                {% if not node.node.isHiddenFromNav() %}
+                                    <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">{{ node.title }}</a>
+                                        {% if node.children|length>0 %}
+                                            <!-- Mobile submenu toggle -->
+                                            <div class="js-navigation__toggle navigation__toggle navigation__toggle--sublevel">
+                                                <i class="icon-chevron-down"></i>
+                                                <i class="icon-chevron-up"></i>
+                                            </div>
+                                            <!-- Submenu -->
+                                            <ul class="navigation__level navigation__level--sublevel">
+                                                {% for node in node.children %}
+                                                    {% if not node.node.isHiddenFromNav() %}
+                                                        <li class="navigation__item navigation__item--sublevel {% if(node.active) %}navigation__item--active{% endif %}">
+                                                            <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link navigation__link--sublevel">
+                                                                {{ node.title }}
+                                                                {% if(node.active) %}
+                                                                    <i class="icon-chevron-right"></i>
+                                                                {% endif %}
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                </div>
+                {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                {% if searchPageNode %}
+                    <div class="visible-md visible-lg col-md-3 col-lg-3">
+                        <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox">
+                            <div class="searchbox-box">
+                                <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
+                                <button type="submit" id="search" class="searchbox__submit">
+                                    <i class="icon-search searchbox__submit__icon"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </section>
+    <section class="splash splash--{% block pagetitleColor %}green{% endblock %} splash--border-bottom">
+        <div class="container splash__container">
+            <div class="row row--padded-large">
+                <h1 class="col-md-9 splash__title">
+                    {% block pagetitleText %}
+                        {% if page is defined %}
+                            {{ get_title_for(page) }}
+                        {% endif %}
+                    {% endblock %}
+                </h1>
+                {% if requiredlocales is defined %}
+                    {% set langs = requiredlocales|split('|') %}
+                    {% if langs|length > 0 %}
+                        <nav class="col-md-2 language-nav">
+                            <span class="language-nav__active-lang">
+                                {{ app.request.locale }}
+                                <i class="icon-chevron-down"></i>
+                            </span>
+                            <ul class="list-reset language-nav__list">
+                                {% for lang in langs %}
+                                    {% if lang != app.request.locale %}
+                                        <li class="language-nav__list-item">
+                                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
+                                                {{ lang }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</header>
