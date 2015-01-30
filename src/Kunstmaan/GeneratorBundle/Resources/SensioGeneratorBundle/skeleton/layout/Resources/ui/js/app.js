@@ -6,6 +6,7 @@ projectname = (function($, window, undefined) {
 
     init = function() {
         cargobay.scrollToTop.init();
+        cargobay.toggle.init();
     };
 
     return {
