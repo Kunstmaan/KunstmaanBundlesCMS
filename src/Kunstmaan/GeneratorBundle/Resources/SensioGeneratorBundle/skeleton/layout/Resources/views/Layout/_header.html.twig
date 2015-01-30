@@ -26,7 +26,7 @@
                         <div id="main-menu" class="toggle-item">
                             <ul class="toggle-item__content main-nav__list">
                                 <li class="main-nav__list__item {% if nodemenu.getActiveForDepth(2) is null %}main-nav__list__item--active{% endif %}">
-                                    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="nmain-nav__list__link">Home</a>
+                                    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-nav__list__link">Home</a>
                                 </li>
                                 {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                                 {% for node in activeSubnode.children %}
@@ -73,7 +73,7 @@
                 {% if searchPageNode %}
                     <div class="visible-md visible-lg col-md-3">
                         <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form">
-                            <div class="searchbox">
+                            <div class="searchbox pull-right">
                                 <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
                                 <button type="submit" id="search" class="searchbox__submit">
                                     <i class="icon icon--search searchbox__submit__icon">➔</i>

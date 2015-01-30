@@ -1,13 +1,9 @@
 /* ==========================================================================
-   Helper classes
+   Mixins - List reset
    ========================================================================== */
 
-.horizontal-list {
-    @include horizontal-list;
-}
-.list-reset {
-    @include list-reset;
-}
-.introtext {
-    @include introtext;
+@mixin list-reset {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }

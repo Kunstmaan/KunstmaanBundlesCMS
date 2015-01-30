@@ -1,13 +1,12 @@
 /* ==========================================================================
-   Helper classes
+   Mixins - Horizontal list
    ========================================================================== */
 
-.horizontal-list {
-    @include horizontal-list;
-}
-.list-reset {
-    @include list-reset;
-}
-.introtext {
-    @include introtext;
+@mixin horizontal-list {
+    li {
+        display: inline-block;
+        a {
+            display: block;
+        }
+    }
 }

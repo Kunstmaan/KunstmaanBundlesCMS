@@ -1,9 +1,10 @@
 /* ==========================================================================
-   Placeholders - List reset
+   Cargobay toggle adjustments
    ========================================================================== */
 
-%list-reset {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.toggle-item {
+    @media (min-width: $screen-sm-min) {
+        height: auto;
+        overflow: visible;
+    }
 }
