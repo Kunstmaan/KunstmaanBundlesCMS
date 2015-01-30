@@ -20,7 +20,7 @@ If you want to use this bundle for a Symfony 2.2 release, use the 2.2 branch.
 
 ## Audio
 
-If you want to use your own api key for SoundCloud, you can define this in the config.yml of your application but it works fine without it aswell.
+If you want to use your own api key for SoundCloud, you can define this in the config.yml of your application but it works fine without it as well.
 
 ```yml
 kunstmaan_media:
@@ -44,7 +44,7 @@ $builder
     );
 ```
 
-## Generating PDF thumbnails
+## Generating PDF preview thumbnails
 
 For this functionality to work, you need to install the ImageMagick extension with PDF support (using
 Ghostscript). You will also have to make sure that the Ghostscript executable (gs) can be found
@@ -65,3 +65,10 @@ On OS X with apache you will probably have to add that path to the apache enviro
 ```
 
 Where ```/path/to/gs``` is just the actual path where the gs binary is stored.
+
+*NOTE:* This functionality has to be enabled by setting the ```enable_pdf_preview``` configuration option to true, ie. :
+
+```yml
+kunstmaan_media:
+    enable_pdf_preview: true
+```

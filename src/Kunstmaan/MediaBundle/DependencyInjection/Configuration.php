@@ -33,8 +33,8 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('dailymotion')->defaultTrue()->end()
                     ->end()
                 ->end()
+                ->booleanNode('enable_pdf_preview')->defaultFalse()->end()
             ->end();
-
 
         return $treeBuilder;
     }
