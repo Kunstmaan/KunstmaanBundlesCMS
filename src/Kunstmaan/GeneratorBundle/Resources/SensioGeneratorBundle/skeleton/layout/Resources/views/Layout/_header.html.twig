@@ -6,7 +6,7 @@
             {% if nodemenu is defined %}
 
                 {# Logo #}
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+                <div class="col-md-3">
                     {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
                     <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="site-logo">
                         <img src="{{ asset('bundles/<%= bundle.name|lower|replace({"bundle": ""}) %>/img/general/demo-logo.svg') }}" alt="Demosite"/>
@@ -14,7 +14,7 @@
                 </div>
 
                 {# Main navigation #}
-                <div class="col-xs-12 col-sm-9 col-md-6 col-lg-7">
+                <div class="col-md-6">
 
                     <nav role="navigation" class="js-toggle-container main-nav">
                         <button class="js-toggle-btn toggle-button" data-target="#main-menu">
@@ -43,14 +43,14 @@
                                                 </button>
 
                                                 <div id="main-menu-level2" class="toggle-item">
-                                                    <ul class="toggle-item__content">
+                                                    <ul class="toggle-item__content main-nav__list--sublevel">
                                                         {% for node in node.children %}
                                                             {% if not node.node.isHiddenFromNav() %}
-                                                                <li class="navigation__item navigation__item--sublevel {% if(node.active) %}navigation__item--active{% endif %}">
-                                                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link navigation__link--sublevel">
+                                                                <li class="main-nav__list__item--sublevel {% if(node.active) %}main-nav__list__item--sublevel--active{% endif %}">
+                                                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__list__link--sublevel">
                                                                         {{ node.title }}
                                                                         {% if(node.active) %}
-                                                                            <i class="icon-chevron-right">&#9654;</i>
+                                                                            <i class="icon icon--chevron-right">&#9654;</i>
                                                                         {% endif %}
                                                                     </a>
                                                                 </li>
@@ -71,12 +71,12 @@
                 {# Search #}
                 {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
                 {% if searchPageNode %}
-                    <div class="visible-md visible-lg col-md-3 col-lg-3">
-                        <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox">
-                            <div class="searchbox-box">
+                    <div class="visible-md visible-lg col-md-3">
+                        <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form">
+                            <div class="searchbox">
                                 <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
                                 <button type="submit" id="search" class="searchbox__submit">
-                                    <i class="icon-search searchbox__submit__icon"></i>
+                                    <i class="icon icon--search searchbox__submit__icon">➔</i>
                                 </button>
                             </div>
                         </form>
@@ -89,38 +89,47 @@
 </header>
 
 {# Splash #}
-<section class="splash splash--{% block pagetitleColor %}green{% endblock %} splash--border-bottom">
-    <div class="container splash__container">
-        <div class="row row--padded-large">
-            <h1 class="col-md-9 splash__title">
-                {% block pagetitleText %}
-                    {% if page is defined %}
-                        {{ get_title_for(page) }}
+<section class="splash">
+    <div class="container">
+        <div class="row">
+
+            {# Page title #}
+            <div class="col-md-9">
+                <h1>
+                    {% block pagetitleText %}
+                        {% if page is defined %}
+                            {{ get_title_for(page) }}
+                        {% endif %}
+                    {% endblock %}
+                </h1>
+            </div>
+
+            {# Language nav #}
+            <div class="col-md-2">
+                {% if requiredlocales is defined %}
+                    {% set langs = requiredlocales|split('|') %}
+                    {% if langs|length > 0 %}
+                        <nav class="language-nav">
+                            <span class="language-nav__active-lang">
+                                {{ app.request.locale }}
+                                <i class="icon icon--chevron-down">&#9660;</i>
+                            </span>
+                            <ul class="list-reset language-nav__list">
+                                {% for lang in langs %}
+                                    {% if lang != app.request.locale %}
+                                        <li class="language-nav__list__item">
+                                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__list__link">
+                                                {{ lang }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </nav>
                     {% endif %}
-                {% endblock %}
-            </h1>
-            {% if requiredlocales is defined %}
-                {% set langs = requiredlocales|split('|') %}
-                {% if langs|length > 0 %}
-                    <nav class="col-md-2 language-nav">
-                        <span class="language-nav__active-lang">
-                            {{ app.request.locale }}
-                            <i class="icon-chevron-down"></i>
-                        </span>
-                        <ul class="list-reset language-nav__list">
-                            {% for lang in langs %}
-                                {% if lang != app.request.locale %}
-                                    <li class="language-nav__list-item">
-                                        <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
-                                            {{ lang }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </nav>
                 {% endif %}
-            {% endif %}
+            </div>
+
         </div>
     </div>
 </section>
