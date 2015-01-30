@@ -38,9 +38,14 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         );
         $container->setParameter('kunstmaan_media.soundcloud_api_key', $config['soundcloud_api_key']);
         $container->setParameter('kunstmaan_media.remote_video', $config['remote_video']);
+        $container->setParameter('kunstmaan_media.enable_pdf_preview', $config['enable_pdf_preview']);
 
         $loader->load('services.yml');
         $loader->load('handlers.yml');
+
+        if ($config['enable_pdf_preview'] === true) {
+            $loader->load('pdf_preview.yml');
+        }
     }
 
     public function prepend(ContainerBuilder $container)
