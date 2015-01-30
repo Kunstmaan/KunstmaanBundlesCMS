@@ -7,10 +7,6 @@
 }
 .main-nav__list {
     @include list-reset;
-
-     @media (min-width: $screen-sm-min) {
-        @include horizontal-list;
-    }
 }
 
 
