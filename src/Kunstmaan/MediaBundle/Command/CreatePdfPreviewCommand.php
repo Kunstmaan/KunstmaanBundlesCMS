@@ -30,6 +30,19 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         $output->writeln('<info>PDF preview images have been created.</info>');
     }
 
+    /**
+     * Checks whether the command is enabled or not in the current environment.
+     *
+     * Override this to check for x or y and return false if the command can not
+     * run properly under the current conditions.
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->getContainer()->getParameter('kunstmaan_media.enable_pdf_preview');
+    }
+
     protected function configure()
     {
         parent::configure();
