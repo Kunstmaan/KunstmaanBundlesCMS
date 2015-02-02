@@ -15,8 +15,11 @@ $(document).ready(function () {
     initSaveKeyListener();
     initSidenavSize();
 
-    $(window).load(autocollapseTabs); // when document first loads
-    $(window).on('resize', autocollapseTabs); // when window is resized
+    var acTabs = new autocollapseTabs();
+    $(window).load( acTabs.init() );// when document first loads
+    $(window).on('resize', function() {
+        acTabs.resize();
+    }); // when window is resized
 });
 
 //JS-tree
@@ -687,58 +690,74 @@ function initSaveKeyListener() {
     }
 }
 
-var autocollapseTabs = function() {
-    var tabs = $('.js-autocollapseTabs');
-    var tabsHeight = tabs.innerHeight();
-    var children = tabs.children('li:not(:last-child):not(:first-child)'); // Don't count the 'more' tab and always show first tab
+function autocollapseTabs() {
 
-    if (tabsHeight >= 50) {
+    var $tabs, $btnMore, $dropdown,
+        dropdownItems, tabsHeight, children, singleTabHeight;
 
-        while (tabsHeight > 50 && children.size() > 0) {
-            $('.tab__more').show(); // show immediately when first tab is added to dropdown
-            var count = children.size();
+    this.init = function() {
+        $tabs = $('.js-autocollapseTabs');
+        $btnMore = $('.tab__more');
+        $dropdown = $('#collapsed');
+        singleTabHeight = $tabs.find('li:first-child').innerHeight(); // get single height
 
-            // move tab to dropdown
-            $(children[count-1]).prependTo('#collapsed');
+        this.doCheck();
+    };
 
-            // recalculate
-            tabsHeight = tabs.innerHeight();
-            children = tabs.children('li:not(:last-child):not(:first-child)');
-        }
+    this.resize = function() {
+        this.doCheck();
+    };
 
-    } else {
+    this.doCheck = function() {
+        tabsHeight = $tabs.innerHeight();
+        children = $tabs.children('li:not(:last-child):not(:first-child)'); // Don't count the 'more' tab and always show first tab
 
-        var collapsed = $('#collapsed').children('li');
-        while (tabsHeight < 50 && collapsed.size() > 0) {
-            var count = collapsed.size();
-            $(collapsed[0]).insertBefore(tabs.children('li:last-child'));
+        if (tabsHeight >= singleTabHeight) {
 
-            // recalculate
-            tabsHeight = tabs.innerHeight();
-            collapsed = $('#collapsed').children('li');
-        }
+            while (tabsHeight > singleTabHeight && children.size() > 0) {
+                $btnMore.show(); // show immediately when first tab is added to dropdown
 
-        if (tabsHeight>50) { // double chk height again
-            autocollapseTabs();
-        }
-    }
+                // move tab to dropdown
+                $(children[children.size()-1]).prependTo($dropdown);
 
-    // hide the more button if dropdown is empty
-    var collapsed = $('#collapsed').children('li');
-    if (collapsed.size() <= 0) {
-        $('.tab__more').hide();
-    } else {
-        $('.tab__more').show();
+                // recalculate
+                tabsHeight = $tabs.innerHeight();
+                children = $tabs.children('li:not(:last-child):not(:first-child)');
+            }
 
-        // check if active element is in dropdown
-        if ($('#collapsed').children('li.active').size() > 0) {
-            $('.tab__more').addClass('active');
         } else {
-            $('.tab__more').removeClass('active');
+
+            dropdownItems = $dropdown.children('li');
+            while (tabsHeight < singleTabHeight && dropdownItems.size() > 0) {
+                $(dropdownItems[0]).insertBefore($tabs.children('li:last-child'));
+
+                // recalculate
+                tabsHeight = $tabs.innerHeight();
+                dropdownItems = $dropdown.children('li');
+            }
+
+            if (tabsHeight > singleTabHeight) { // double chk height again
+                this.doCheck();
+            }
+        }
+
+        // hide the more button if dropdown is empty
+        dropdownItems = $dropdown.children('li');
+        if (dropdownItems.size() <= 0) {
+            $btnMore.hide();
+        } else {
+            $btnMore.show();
+
+            // check if active element is in dropdown
+            if ($dropdown.children('li.active').size() > 0) {
+                $btnMore.addClass('active');
+            } else {
+                $btnMore.removeClass('active');
+            }
         }
     }
 
-};
+}
 
 /**
  * Logic for showing nested forms in pageparts.
