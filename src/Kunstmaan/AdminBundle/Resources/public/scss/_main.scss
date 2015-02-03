@@ -543,6 +543,7 @@ header{
     }
 }
 .main_actions{
+    display: none;
     float: right;
     &.margin{
         margin-top: 10px;
@@ -603,6 +604,29 @@ header{
         > .btn {
             + .dropdown-toggle {
                 border-radius: 0 4px 4px 0;
+            }
+        }
+    }
+
+    .dropdown-menu {
+        right: 0;
+        left: auto;
+
+        > li {
+            button, a {
+                display: block;
+                padding: 3px 20px;
+                clear: both;
+                font-weight: normal;
+                line-height: 20px;
+                color: #333333;
+                white-space: nowrap;
+
+                &:hover {
+                    color: inherit;
+                    background: #eee;
+                    text-shadow: none;
+                }
             }
         }
     }
