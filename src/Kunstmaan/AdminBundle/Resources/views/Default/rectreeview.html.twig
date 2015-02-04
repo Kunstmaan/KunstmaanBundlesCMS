@@ -1,9 +1,13 @@
 {% set nodeId = menuitem.uniqueId %}
-<li id="{{ nodeId }}" class="{% if menuitem.active %}jstree-open{% endif %} {% if currentMenuItem is not null and currentMenuItem.uniqueId == menuitem.uniqueId %}active{% endif %} {% if menuitem.offline %}offline{% endif %}" {% if menuitem.role %} rel="{{menuitem.role}}" {% endif %}>
+<li id="{{ nodeId }}" class="{% if menuitem.active %}jstree-open{% endif %}{% if currentMenuItem is not null and currentMenuItem.uniqueId == menuitem.uniqueId %} active{% endif %}{% if menuitem.offline %} offline{% endif %}" {% if menuitem.role %}rel="{{menuitem.role}}"{% endif %}>
     {% if menuitem.route %}
-    	<a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.label }}</a>
+        <a href="{{ path(menuitem.route, menuitem.routeparams) }}">
+            {{ menuitem.label }}
+        </a>
     {% else %}
-    	<span>{{ menuitem.label }}</span>
+        <span>
+            {{ menuitem.label }}
+        </span>
     {% endif %}
     <ul>
         {% for menuitem in menuitem.navigationChildren %}

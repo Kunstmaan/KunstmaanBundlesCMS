@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="no-js" lang="nl">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cargo Bay Videolinks - jQuery</title>
+
+    <meta name="description" content="Cargo Bay Videolinks - Jquery">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type='text/css' />
+    <link rel="stylesheet" href="../styles/css/videolink.css" type='text/css' />
+</head>
+<body>
+    <div class="container">
+        <h1 style="margin-bottom: 30px;">
+            Cargo Bay Videolinks - jQuery
+        </h1>
+
+        <div class="videolink">
+            <a href="//www.youtube.com/embed/C9OfBcjyxKY" target="_blank" class="js-videolink-play-link videolink__video-link" data-video-provider="youtube" data-video-id="C9OfBcjyxKY" data-make-fluid="true">
+                <img src="http://placehold.it/850x475/69203b/ffffff&amp;text=Videolink+image" alt="videolink-image" class="videolink__video-link__image" />
+            </a>
+            <div class="js-videolink-container videolink__video-container"></div>
+        </div>
+    </div>
+
+
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.js"></script>
+    <!--
+        /* ============================================================================ */
+            This is a special minified version of the videolink component where the
+            http:// is included in the video url.
+            This is so the video will load when the .html file is loaded via file://
+            When using the videolink component you should use the javascript file
+            included in the videolink/js folder.
+    -->
+            <script src="js/jquery.videolink.min.js"></script>
+    <!--/* ============================================================================ */-->
+    <script>
+        $(function() {
+            cargobay.videolink.init();
+        });
+    </script>
+</body>
+</html>

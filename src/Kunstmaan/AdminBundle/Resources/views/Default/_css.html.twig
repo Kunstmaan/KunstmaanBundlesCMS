@@ -1,0 +1,24 @@
+{% stylesheets
+    "@KunstmaanAdminBundle/Resources/ui/scss/style.scss"
+    filter="scss"
+%}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+{% endstylesheets %}
+
+
+<!-- Customizable Brand Color -->
+<style type="text/css">
+    {% if titlecolor is not defined or titlecolor is empty %}
+        {% set titlecolor = "#FFFFFF" %}
+    {% endif %}
+        {% if titlebgcolor is not defined or titlebgcolor is empty %}
+    {% set titlebgcolor = "#2997CE" %}
+    {% endif %}
+
+    .brand-color {
+        color: {{ titlecolor }};
+    }
+</style>
+
+<!-- Extra CSS -->
+{% block extracss %}{% endblock %}

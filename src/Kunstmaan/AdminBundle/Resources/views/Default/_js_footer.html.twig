@@ -1,3 +1,13 @@
+{% javascripts
+    '@KunstmaanAdminBundle/Resources/ui/vendor_bower/jquery/dist/jquery.min.js'
+    '@KunstmaanAdminBundle/Resources/ui/vendor_bower/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
+    output='KunstmaanAdminBundleAssets/js/footer.min.js' filter='uglifyjs2'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+
+{#
 <!--Uncombined-->
 <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.jstree.js') }}"></script>
 <script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/ckeditor.js') }}"></script>
@@ -57,3 +67,4 @@
 
     {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
  </script>
+#}

@@ -1,0 +1,13 @@
+{
+    "name": "KunstmaanCMSAdminBundle",
+    "version": "1.0.0",
+    "dependencies": {
+        "bootstrap-sass-official": "~3.3",
+
+        "jquery": "~2.1",
+        "velocity": "~1.1",
+        "jstree": "~3.0",
+
+        "cargobay": "0.5.2"
+    }
+}
