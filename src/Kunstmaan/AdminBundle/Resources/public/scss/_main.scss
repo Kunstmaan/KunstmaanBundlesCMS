@@ -477,11 +477,14 @@ header{
                 background-color: #ECECEC;
             }
         }
-        &.active {
+        &.active:not(.tab__more) {
             a, a:visited, a:focus, a:hover, a:active {
                 color: gray;
                 border-color: #ECECEC #ECECEC transparent #ECECEC;
             }
+        }
+        &.tab__more{
+            display: none;
         }
     }
     .label{

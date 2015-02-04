@@ -5,8 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use InvalidArgumentException;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\ExecutionContext;
-use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -230,12 +229,15 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * @param ExecutionContext $context
+     * @param ExecutionContextInterface $context
      */
-    public function isGroupValid(ExecutionContext $context)
+    public function isGroupValid(ExecutionContextInterface $context)
     {
         if (!(count($this->getRoles()) > 0)) {
-            $context->addViolationAt('rolesCollection', 'errors.group.selectone', array(), null);
+            $context
+                ->buildViolation('errors.group.selectone', array())
+                ->atPath('rolesCollection')
+                ->addViolation();
         }
     }
 }

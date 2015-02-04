@@ -9,8 +9,6 @@ use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 
 class TranslatorCommandController extends Controller
 {
-
-
     /**
      * @Route("/clear-cache", name="KunstmaanTranslatorBundle_command_clear_cache")
      */
@@ -31,7 +29,8 @@ class TranslatorCommandController extends Controller
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(false)
-            ->setBundle($this->container->getParameter('kuma_translator.default_bundle'))
+            ->setDefaultBundle($this->container->getParameter('kuma_translator.default_bundle'))
+            ->setBundles($this->container->getParameter('kuma_translator.bundles'))
             ->setGlobals(true);
 
         $this->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
@@ -49,7 +48,8 @@ class TranslatorCommandController extends Controller
         $importCommand = new ImportCommand();
         $importCommand
             ->setForce(true)
-            ->setBundle($this->container->getParameter('kuma_translator.default_bundle'))
+            ->setDefaultBundle($this->container->getParameter('kuma_translator.default_bundle'))
+            ->setBundles($this->container->getParameter('kuma_translator.bundles'))
             ->setGlobals(false);
 
         $this->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
@@ -58,6 +58,4 @@ class TranslatorCommandController extends Controller
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
     }
-
-
 }

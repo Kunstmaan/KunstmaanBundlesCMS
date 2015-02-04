@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('kuma_translator');
 
         $availableStorageEngines = array('orm');
-        $defaultFileFormats = array('yml','xliff');
+        $defaultFileFormats = array('yml', 'xliff');
 
         $rootNode
             ->children()
@@ -32,6 +32,11 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('default_bundle')
                     ->cannotBeEmpty()
                     ->defaultValue('own')
+                ->end()
+
+                ->arrayNode('bundles')
+                    ->defaultValue(array())
+                    ->prototype('scalar')->end()
                 ->end()
 
                 ->scalarNode('cache_dir')

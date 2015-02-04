@@ -48,27 +48,46 @@ Overwrite the KunstmaanTranslatorBundle config to your needs in config.yml, thes
 
 ```PHP
 kunstmaan_translator:
-	enabled: 			true
-	default_bundle: 	kunstmaantranslatorbundle
-	cache_dir: 			%kernel.cache_dir%/translations
-	managed_locales:	[]
-	file_formats:		['yml', 'xliff']
-	
+    enabled:         true
+    default_bundle:  own
+    bundles:         []
+    cache_dir:       %kernel.cache_dir%/translations
+    managed_locales: []
+    file_formats:    ['yml', 'xliff']
+    debug:           defaults to the kernel.debug parameter (boolean)
 ```
 
 * ```enabled``` : Enabled or disable the KunstmaanTranslatorBundle
-* ```default_bundle``` : Default bundle used for the import from within the backend (not case-sensitive)
-* ```cache_dir```: Cached translations dir
-* ```managed_locales```: Which locale translation files should be imported
-* ```file_formats```: Which type of translation files should be imported
+* ```default_bundle``` : Which bundles are used for the import functionality in the backend. Possible values: 'own', 'all', 'custom'.
+    - own : All bundles in your src directory
+    - all : All bundles in your src directory + all bundles in your vendor directory 
+    - custom : Only the bundles you specify in `bundles`
+* ```bundles``` : A list of bundles that will be used for the import functionality in the backend. Only used when `default_bundle` is set to 'custom'.
+* ```cache_dir``` : Cached translations dir
+* ```managed_locales``` : Which locale translation files should be imported
+* ```file_formats``` : Which type of translation files should be imported
+* ```debug``` : When debug is enabled the translation caching is disabled 
 
-Example configuration:
+Example configurations:
 
 ```PHP
 kunstmaan_translator:
-	default_bundle: 	AwesomeSuperCoolWebsiteBundle
-	managed_locales:	['en', 'fr', 'es']
+    managed_locales: ['en', 'fr', 'es']
+```
 
+```PHP
+kunstmaan_translator:
+    default_bundle: own
+    managed_locales: ['en', 'fr', 'es']
+    debug: false
+```
+
+```PHP
+kunstmaan_translator:
+    enabled: true
+    default_bundle: custom
+    bundles: ['MyCompanyCoolBundle', 'MyCompanyAwesomeBundle']
+    managed_locales: ['en', 'fr', 'es']
 ```
 
 Database schema
@@ -194,7 +213,7 @@ Workflow example (new project)
 1. Add translations (with keywords) in your template files (dev)
 2. Add the translations of (1) into your backend via "Add Translation" (dev)
 3. Repeat 1 & 2
-4. Create migrations diff `app/console kuma:translator:migrations:diff`(dev)
+4. Create migrations diff `app/console kuma:translator:migrations:diff` (dev)
 5. Reset translation flags `app/console kuma:translator:flag --reset` (dev)
 5. Deploy your application
 6. Execute doctrine migrations `app/console doctrine:migrations:migrate` (prod)

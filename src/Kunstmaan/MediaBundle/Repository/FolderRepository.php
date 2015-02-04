@@ -30,30 +30,15 @@ class FolderRepository extends NestedTreeRepository
      */
     public function save(Folder $folder)
     {
-        $em = $this->getEntityManager();
+        $em     = $this->getEntityManager();
         $parent = $folder->getParent();
 
         $em->beginTransaction();
         try {
-            // Find where to insert the new item
-            $children = $parent->getChildren(true);
-            if ($children->isEmpty()) {
-                // No children yet - insert as first child
-                $this->persistAsFirstChildOf($folder, $parent);
+            if (!is_null($parent)) {
+                $this->persistInOrderedTree($folder, $parent);
             } else {
-                $previousChild = null;
-                foreach ($children as $child) {
-                    // Alphabetical sorting - could be nice if we implemented a sorting strategy
-                    if (strcasecmp($folder->getName(), $child->getName()) < 0) {
-                        break;
-                    }
-                    $previousChild = $child;
-                }
-                if (is_null($previousChild)) {
-                    $this->persistAsPrevSiblingOf($folder, $children[0]);
-                } else {
-                    $this->persistAsNextSiblingOf($folder, $previousChild);
-                }
+                $em->persist($folder);
             }
             $em->commit();
             $em->flush();
@@ -159,7 +144,7 @@ class FolderRepository extends NestedTreeRepository
             ->select('node.id');
 
         $result = $qb->getQuery()->getScalarResult();
-        $ids = array_map('current', $result);
+        $ids    = array_map('current', $result);
 
         return $ids;
     }
@@ -197,8 +182,7 @@ class FolderRepository extends NestedTreeRepository
         $sortByField = null,
         $direction = 'ASC',
         $includeNode = false
-    )
-    {
+    ) {
         /** @var QueryBuilder $qb */
         $qb = parent::childrenQueryBuilder($node, $direct, $sortByField, $direction, $includeNode);
         $qb->andWhere('node.deleted != true');
@@ -250,8 +234,7 @@ class FolderRepository extends NestedTreeRepository
         $direct = false,
         array $options = array(),
         $includeNode = false
-    )
-    {
+    ) {
         /** @var QueryBuilder $qb */
         $qb = parent::getNodesHierarchyQueryBuilder($node, $direct, $options, $includeNode);
         $qb->andWhere('node.deleted != true');
@@ -281,14 +264,14 @@ class FolderRepository extends NestedTreeRepository
         $em = $this->getEntityManager();
 
         // Reset tree...
-        $sql = 'UPDATE kuma_folders SET lvl=NULL,lft=NULL,rgt=NULL';
+        $sql  = 'UPDATE kuma_folders SET lvl=NULL,lft=NULL,rgt=NULL';
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
 
         $folders = $this->findBy(array(), array('parent' => 'ASC', 'name' => 'asc'));
 
         $rootFolder = $folders[0];
-        $first = true;
+        $first      = true;
         foreach ($folders as $folder) {
             // Force parent load
             $parent = $folder->getParent();
@@ -334,5 +317,33 @@ class FolderRepository extends NestedTreeRepository
         }
 
         return $qb;
+    }
+
+    /**
+     * @param Folder $folder
+     * @param        $parent
+     */
+    private function persistInOrderedTree(Folder $folder, $parent)
+    {
+        // Find where to insert the new item
+        $children = $parent->getChildren(true);
+        if ($children->isEmpty()) {
+            // No children yet - insert as first child
+            $this->persistAsFirstChildOf($folder, $parent);
+        } else {
+            $previousChild = null;
+            foreach ($children as $child) {
+                // Alphabetical sorting - could be nice if we implemented a sorting strategy
+                if (strcasecmp($folder->getName(), $child->getName()) < 0) {
+                    break;
+                }
+                $previousChild = $child;
+            }
+            if (is_null($previousChild)) {
+                $this->persistAsPrevSiblingOf($folder, $children[0]);
+            } else {
+                $this->persistAsNextSiblingOf($folder, $previousChild);
+            }
+        }
     }
 }

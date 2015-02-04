@@ -25,7 +25,7 @@ class ImportCommandHandlerTest extends BaseTestCase
             ->setForce(false)
             ->setLocales(false)
             ->setGlobals(true)
-            ->setBundle(false);
+            ->setDefaultBundle(false);
 
         $this->importCommandHandler->executeImportCommand($importCommand);
     }
@@ -37,7 +37,7 @@ class ImportCommandHandlerTest extends BaseTestCase
             ->setForce(false)
             ->setLocales(false)
             ->setGlobals(true)
-            ->setBundle(false);
+            ->setDefaultBundle(false);
 
         $locales = $this->importCommandHandler->determineLocalesToImport($importCommand);
         $this->assertEquals(array('nl','en','de'), $locales);
@@ -79,7 +79,7 @@ class ImportCommandHandlerTest extends BaseTestCase
             ->setForce(false)
             ->setLocales(false)
             ->setGlobals(true)
-            ->setBundle('kunstmaantranslatorbundle');
+            ->setDefaultBundle('own');
 
         $this->importCommandHandler->importBundleTranslationFiles($importCommand);
     }
