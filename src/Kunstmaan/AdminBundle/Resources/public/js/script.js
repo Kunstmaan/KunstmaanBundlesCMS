@@ -772,10 +772,10 @@ function initDropdownMainActions() {
     if($buttonsRedundant.size() > 1) {
 
         // create DOM elements
-        $moreButtonContainer = $('<div>').addClass('btn-group btn-group--more').appendTo($mainActions);
-        $moreButton = $('<button>').addClass('btn dropdown-toggle').attr('data-toggle', 'dropdown').text('More ').appendTo($moreButtonContainer);
-        $caret = $('<span>').addClass('icon icon-caret-down').appendTo($moreButton);
-        $dropdownList = $('<ul>').addClass('dropdown-menu dropdown-menu--more').appendTo($moreButtonContainer);
+        $moreButtonContainer = $('<div class="btn-group btn-group--more">').appendTo($mainActions);
+        $moreButton = $('<button class="btn dropdown-toggle" data-toggle="dropdown">').text('More ').appendTo($moreButtonContainer);
+        $caret = $('<span class="icon icon-caret-down">').appendTo($moreButton);
+        $dropdownList = $('<ul class="dropdown-menu dropdown-menu--more">').appendTo($moreButtonContainer);
 
         // move buttons to dropdown list & remove styling
         $buttonsRedundant.each( function() {
