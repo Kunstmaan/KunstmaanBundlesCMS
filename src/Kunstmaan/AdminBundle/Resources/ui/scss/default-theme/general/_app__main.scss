@@ -1,0 +1,57 @@
+/* ==========================================================================
+   App Main
+   ========================================================================== */
+
+.app__main {
+    position: relative;
+
+    width: 100%;
+    overflow: hidden;
+}
+
+.app__main--altered-state {
+
+    .app__content {
+        border-left-color: $gray-light;
+
+        @media (max-width: $screen-sm) {
+            -webkit-transform: translateX(-webkit-calc(100% - 3.5rem));
+                  -moz-transform: translateX(-moz-calc(100% - 3.5rem));
+                        transform: translateX(calc(100% - 3.5rem));
+        }
+
+        @media (min-width: $screen-sm) and (max-width: $screen-md){
+            -webkit-transform: translateX(-webkit-calc(28rem));
+                  -moz-transform: translateX(-moz-calc(28rem));
+                        transform: translateX(calc(28rem));
+        }
+
+        @media (min-width: $screen-md) {
+            @extend .col-md-12;
+
+            margin-left: 0;
+
+            @include transition-property (width, margin);
+            @include transition-duration(.3s);
+            @include transition-timing-function(ease);
+        }
+    }
+
+    .app__sidebar-toggle__hide-icon {
+        display: inline-block;
+    }
+
+    .app__sidebar-toggle__show-icon {
+        display: none;
+    }
+
+    @media (min-width: $screen-md) {
+        .app__sidebar-toggle__hide-icon {
+            display: none;
+        }
+
+        .app__sidebar-toggle__show-icon {
+            display: inline-block;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+/* ==========================================================================
+   App Header
+   ========================================================================== */
+
+.app__header {
+    background: $black;
+}
+
+.app__header__brand {
+    display: block;
+
+    background: $green;
+    font-size: 1.5rem;
+    line-height: $navigation-height;
+    color: $white;
+}
+
+.app__header__brand__link {
+    color: inherit;
+
+    &:hover {
+        color: inherit;
+        text-decoration: none;
+    }
+}

@@ -1,12 +1,8 @@
 /* ==========================================================================
-   General
+   Imports for Bourbon
 
    This file is exclusively intended for setting up imports
    Never add styles directly to this file
    ========================================================================== */
 
-@import "app__header",
-        "app__footer",
-        "app__main",
-        "app__sidebar",
-        "app__content";
+@import "../../../../../vendor_bower/bourbon/app/assets/stylesheets/bourbon";

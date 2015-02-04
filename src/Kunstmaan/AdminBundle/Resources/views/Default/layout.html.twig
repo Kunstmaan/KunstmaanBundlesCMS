@@ -21,14 +21,14 @@
     {% include "KunstmaanAdminBundle:Default:_js_header.html.twig" %}
 </head>
 
-<body {% block extraparamsinbody %}{% endblock %}>
+<body {% block extraparamsinbody %}{% endblock %} class="app">
 {% block body %}
     <!-- Header -->
     {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
 
 
     <!-- Main Content -->
-    <div class="container-fluid">
+    <main role="main" class="container-fluid app__main">
 
         <!-- Sidebar -->
         {% block sidebar %}
@@ -37,7 +37,7 @@
 
 
         <!-- Content Wrap -->
-        <div id="main_content" class="content">
+        <div id="main_content" class="app__content">
 
             <!-- Breadcrumb -->
             {% block breadcrumb %}
@@ -102,14 +102,10 @@
 
     <!-- Footer -->
     {% block footer %}
-        <footer>
-            <div class="container-fluid">
-                <p class="pull-right">
-                    <a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
-                        <img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_dark.svg') }}" alt="Kunstmaan">
-                    </a>
-                </p>
-            </div>
+        <footer role="contentinfo" class="app__footer container-fluid">
+            <a target="_blank" href="http://www.kunstmaan.be" class="app__footer__kunstmaan-link pull-right">
+                <img src="/admin/img/general/kunstmaan_dark.svg" alt="Kunstmaan" />
+            </a>
         </footer>
     {% endblock %}
 {% endblock %}

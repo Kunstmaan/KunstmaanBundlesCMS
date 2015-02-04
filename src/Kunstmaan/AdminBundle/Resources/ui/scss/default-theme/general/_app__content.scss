@@ -1,0 +1,25 @@
+/* ==========================================================================
+   App Content
+   ========================================================================== */
+
+.app__content {
+    z-index: 1;
+    position: relative;
+    background: $white;
+
+    border: 1px solid $gray-light;
+    border-top-color: $white;
+    border-right-color: $white;
+    border-left-color: $white;
+
+    @media (max-width: $screen-md) {
+        @include transform-style(preserve-3d);
+        @include transition-property (transform);
+        @include transition-duration(.3s);
+        @include transition-timing-function(ease);
+    }
+
+    @media (min-width: $screen-md) {
+        border-left-color: $gray-light;
+    }
+}
