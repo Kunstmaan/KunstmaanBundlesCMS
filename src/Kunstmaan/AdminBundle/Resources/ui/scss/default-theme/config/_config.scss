@@ -17,5 +17,8 @@
 
 /* Vendors
    ========================================================================== */
-@import "vendors/bootstrap/bootstrap-vars",
+@import "vendors/bourbon/bourbon-imports",
+        "vendors/font-awesome/font-awesome-vars",
+        "vendors/font-awesome/font-awesome-imports",
+        "vendors/bootstrap/bootstrap-vars",
         "vendors/bootstrap/bootstrap-imports";

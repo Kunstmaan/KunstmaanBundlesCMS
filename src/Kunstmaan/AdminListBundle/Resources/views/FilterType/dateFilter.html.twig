@@ -3,7 +3,7 @@
     <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
 </select>
 <input type="text" class="form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %} />
-{% if nameprefix != "" and namesuffix != "" %}
+{# {% if nameprefix != "" and namesuffix != "" %}
 	<script>
     	$(document).ready(function() {
             $('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker({'format' : 'dd/mm/yyyy'});
@@ -19,4 +19,4 @@
         	$('.form_datepicker').inputmask("date");
         });
 	</script>
-{% endif %}
+{% endif %} #}

@@ -6,6 +6,7 @@
     position: relative;
 
     width: 100%;
+    padding-top: 50px;
     overflow: hidden;
 }
 
@@ -27,8 +28,7 @@
         }
 
         @media (min-width: $screen-md) {
-            @extend .col-md-12;
-
+            width: 100%;
             margin-left: 0;
 
             @include transition-property (width, margin);

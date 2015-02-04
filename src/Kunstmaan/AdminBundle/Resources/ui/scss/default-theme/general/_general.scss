@@ -5,8 +5,16 @@
    Never add styles directly to this file
    ========================================================================== */
 
-@import "app__header",
+@import "app",
+        "app__header",
         "app__footer",
         "app__main",
         "app__sidebar",
         "app__content";
+
+
+@import "typography/text",
+        "typography/headers",
+        "typography/buttons",
+        "typography/links",
+        "typography/lists";

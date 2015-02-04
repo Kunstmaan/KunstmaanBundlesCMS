@@ -23,13 +23,93 @@
 
 <body {% block extraparamsinbody %}{% endblock %} class="app">
 {% block body %}
+
     <!-- Header -->
     {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
 
 
     <!-- Main Content -->
-    <main role="main" class="container-fluid app__main">
+    <main role="main" id="app__main" class="container-fluid app__main">
+        {% set lowestTopChild = adminmenu.lowestTopChild %}
+        {% if lowestTopChild %}
+            {% set navigationChildren = lowestTopChild.navigationChildren %}
+        {% endif %}
 
+        <div class="row">
+            {% if lowestTopChild and navigationChildren | length > 0 %}
+
+                <!-- App Sidebar -->
+                <aside id="app__sidebar" class="col-md-3 col--padded-large app__sidebar">
+                    {% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
+                </aside>
+
+
+                <!-- App Content - with sidebar -->
+                <div id="app__content" class="col-md-9 col-md-offset-3 col--padded-large app__content">
+
+                    <!-- App Sidebar Toggle -->
+                    <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle">
+                        <span class="app__sidebar-toggle__show-icon">
+                            <i class="fa fa-caret-right"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                        <span class="app__sidebar-toggle__hide-icon">
+                            <i class="fa fa-caret-left"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                    </button>
+            {% else %}
+
+
+                <!-- App Content - full width -->
+                <div id="app__content" class="col-md-12 col--padded-large app__content">
+            {% endif %}
+
+
+                    <!-- App Content - Breadcrumbs -->
+                    {% block breadcrumb %}
+                        {% include "KunstmaanAdminBundle:Default:breadcrumbs.html.twig" %}
+                    {% endblock %}
+
+
+                    <!-- App Content - Flash Messages -->
+                    {% block flashmessages %}
+                        {% include "KunstmaanAdminBundle:Default:flashmessages.html.twig" %}
+                    {% endblock %}
+
+
+                    <!-- App Content - General Messages -->
+                    {% block messages %}{% endblock %}
+
+
+                    <!-- App Content - Header -->
+                    {% block contentheader %}
+                        <header role="banner" class="page-header">
+                            {% if adminmenu.current %}
+                            <h1>
+                                {{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}
+                            </h1>
+                            {% endif %}
+                            {% block extra_actions_header %}{% endblock %}
+                        </header>
+                    {% endblock %}
+
+
+                    <!-- App Content - Content -->
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+
+
+
+        <!-- OLD -->
+
+        {#
         <!-- Sidebar -->
         {% block sidebar %}
             {% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
@@ -97,7 +177,8 @@
             <!-- Content -->
             {% block content %}{% endblock %}
         </div>
-    </div>
+        #}
+    </main>
 
 
     <!-- Footer -->
@@ -108,6 +189,8 @@
             </a>
         </footer>
     {% endblock %}
+
+
 {% endblock %}
 
 

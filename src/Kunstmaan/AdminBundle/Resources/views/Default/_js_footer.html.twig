@@ -1,11 +1,14 @@
 {% javascripts
-    '@KunstmaanAdminBundle/Resources/ui/vendor_bower/jquery/dist/jquery.min.js'
-    '@KunstmaanAdminBundle/Resources/ui/vendor_bower/bootstrap-sass-official/assets/javascripts/bootstrap.min.js'
-    output='KunstmaanAdminBundleAssets/js/footer.min.js' filter='uglifyjs2'
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/bootstrap-sass-official/assets/javascripts/bootstrap.min.js"
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/jstree/dist/jstree.min.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_sidebartree.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_sidebartoggle.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/app.js"
+    output="KunstmaanAdminBundleAssets/js/footer.min.js"
 %}
-<script src="{{ asset_url }}"></script>
+    <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
-
+{# add filter="uglifyjs2" #}
 
 {#
 <!--Uncombined-->

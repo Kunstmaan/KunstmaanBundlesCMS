@@ -4,7 +4,7 @@
 </select>
 <input type="text" class="input-small form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}[date]" {% if data.value['date'] is defined %}value="{{data.value['date']}}"{% endif %} />
 <input type="text" class="input-small form_timepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}[time]" {% if data.value['time'] is defined %}value="{{data.value['time']}}"{% endif %} />
-{% if nameprefix != "" and namesuffix != "" %}
+{# {% if nameprefix != "" and namesuffix != "" %}
 	<script>
     	$(document).ready(function() {
             $('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker({'format' : 'dd/mm/yyyy'});
@@ -38,3 +38,4 @@
         });
 	</script>
 {% endif %}
+ #}
