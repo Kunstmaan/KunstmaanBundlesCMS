@@ -14,51 +14,55 @@ $(document).ready(function () {
     initModalFocus();
     initSaveKeyListener();
     initSidenavSize();
-    initAutoCollapseMainActions();
+    initDropdownMainActions();
 });
 
-function initAutoCollapseMainActions() {
-    var $mainActions, $moreButton, $moreButtonContainer, $caret, $buttonsRedundant, $dropdownList;
+function initDropdownMainActions() {
+    var buttonsVisible = 2,
+    $mainActions, $moreButton, $moreButtonContainer, $caret, $buttonsRedundant, $dropdownList;
 
     // find DOM elements
     $mainActions = $('.main_actions');
-    $buttonsRedundant = $mainActions.children(':not(:nth-child(-n+2))');
+    $buttonsRedundant = $mainActions.children('button:nth-of-type(n+'+ buttonsVisible +'), a:nth-of-type(n+'+ buttonsVisible +')'); // select only anchors and buttons
 
-    // create DOM elements
-    $moreButtonContainer = $('<div>');
-    $moreButton = $('<button>');
-    $caret = $('<span>');
-    $dropdownList = $('<ul>');
+    // add more-dropdown when there are at least 2 buttons for dropdown
+    if($buttonsRedundant.size() > 1) {
 
-    // format new DOM elements
-    $moreButtonContainer.addClass('btn-group');
+        // create DOM elements
+        $moreButtonContainer = $('<div>');
+        $moreButton = $('<button>');
+        $caret = $('<span>');
+        $dropdownList = $('<ul>');
 
-    $moreButton.addClass('btn dropdown-toggle');
-    $moreButton.attr('data-toggle', 'dropdown');
-    $moreButton.text('More ');
+        // format new DOM elements
+        $moreButtonContainer.addClass('btn-group btn-group--more');
 
-    $caret.addClass('icon icon-caret-down');
-    $caret.appendTo($moreButton);
+        $moreButton.addClass('btn dropdown-toggle');
+        $moreButton.attr('data-toggle', 'dropdown');
+        $moreButton.text('More ');
 
-    $dropdownList.addClass('dropdown-menu');
+        $caret.addClass('icon icon-caret-down');
+        $caret.appendTo($moreButton);
 
-    // move buttons to dropdown list & remove styling
-    $buttonsRedundant.each( function() {
-        var $li = $('<li>');
+        $dropdownList.addClass('dropdown-menu dropdown-menu--more');
 
-        $(this).removeClass();
+        // move buttons to dropdown list & remove styling
+        $buttonsRedundant.each( function() {
+            var $li = $('<li>');
 
-        $(this).appendTo($li);
-        $li.appendTo($dropdownList);
-    });
+            $(this).removeClass();
+            $(this).appendTo($li);
+            $li.appendTo($dropdownList);
+        });
 
-    // put it all together
-    $moreButton.appendTo($moreButtonContainer);
-    $dropdownList.appendTo($moreButtonContainer);
-    $moreButtonContainer.appendTo($mainActions);
+        // put it all together
+        $moreButton.appendTo($moreButtonContainer);
+        $dropdownList.appendTo($moreButtonContainer);
+        $moreButtonContainer.appendTo($mainActions);
+    }
 
     // show main actions when ready
-    $mainActions.slideDown();
+    $mainActions.slideDown("fast");
 }
 
 //JS-tree
