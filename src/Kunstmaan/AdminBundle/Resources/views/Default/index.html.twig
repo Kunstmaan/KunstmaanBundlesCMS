@@ -1,6 +1,5 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
-
 {% block content %}
 {% if is_granted('ROLE_SUPER_ADMIN') %}
     <a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-medium" style="float:right">{{ 'Edit dashboard' | trans }}</a>

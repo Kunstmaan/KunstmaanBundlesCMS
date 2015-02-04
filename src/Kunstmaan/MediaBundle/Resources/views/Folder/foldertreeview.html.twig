@@ -1,5 +1,7 @@
-<li id="folder-{{ mediaFolder.id }}" class="{% if mediaFolder.id in parentIds %}jstree-open{% endif %} {% if folder is not null and folder.id == mediaFolder.id %}active{% endif %}" rel="{{ mediaFolder.rel }}">
-    <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': mediaFolder.id }) }}" data-folder-id="{{ mediaFolder.id }}">{{ mediaFolder.name }}</a>
+<li id="folder-{{ mediaFolder.id }}" class="{% if mediaFolder.id in parentIds %}jstree-open{% endif %}" rel="{{ mediaFolder.rel }}">
+    <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': mediaFolder.id }) }}" data-folder-id="{{ mediaFolder.id }}" class="{% if folder is not null and folder.id == mediaFolder.id %}active{% endif %}">
+        {{ mediaFolder.name }}
+    </a>
     {% if mediaFolder.__children is not empty %}
     <ul>
         {% for mediaFolder in mediaFolder.__children %}

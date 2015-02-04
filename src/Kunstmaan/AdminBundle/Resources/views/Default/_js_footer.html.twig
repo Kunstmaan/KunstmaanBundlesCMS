@@ -1,0 +1,107 @@
+<script>
+    CKEDITOR_BASEPATH = '/bundles/kunstmaanadmin/default-theme/ckeditor/';
+</script>
+
+{% javascripts
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/bootstrap-sass-official/assets/javascripts/bootstrap.min.js"
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/jstree/dist/jstree.min.js"
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/velocity/velocity.min.js"
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/cargobay/src/toggle/js/jquery.toggle.min.js"
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/moment/min/moment.min.js"
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
+    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/Sortable/Sortable.js"
+    "@KunstmaanAdminBundle/Resources/public/default-theme/ckeditor/ckeditor.js"
+    "@KunstmaanAdminBundle/Resources/public/default-theme/ckeditor/adapters/jquery.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-tree.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-tree.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-toggle.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_app-main-actions.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_app-filter.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_app-sortable-table.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_app-check-if-edited.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_prevent-double-click.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_datepicker.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_auto-collapse-buttons.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_auto-collapse-tabs.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_rich-editor.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_ajax-modal.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_page-editor.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_pagepart-editor.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_slug-chooser.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_url-chooser.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/app.js"
+    output="KunstmaanAdminBundleAssets/js/footer.min.js"
+%}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{# add filter="uglifyjs2" #}
+
+
+
+
+
+
+
+
+
+{#
+<!--Uncombined-->
+<script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.jstree.js') }}"></script>
+<script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/adapters/jquery.js') }}"></script>
+
+<!--Combined-->
+{% javascripts
+    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-ui-1.10.0.custom.min.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap.min.js'
+    '@KunstmaanAdminBundle/Resources/public/js/chosen/chosen.jquery.min.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.filedrop.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.fileupload.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.iframe-transport.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.inputmask.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.form.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.inputmask.date.extensions.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/modaldialog.min.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/responsive-tables.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/charCount.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-datepicker.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-timepicker.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/iphone-style-checkboxes.js'
+    '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-colorpicker.js'
+    '@KunstmaanAdminBundle/Resources/public/js/script.js'
+    output='generated-js/scripts_bottom.js' filter='uglifyjs2'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<!--CKEDITOR-->
+<script>
+{% include "KunstmaanAdminBundle:Default:ckeditor.js.twig" %}
+    jQuery(document).ready(function(){
+        jQuery('textarea.rich_editor').each(function(item){
+            var config = {};
+            if($(this).attr('height')){
+                config.height = $(this).attr('height');
+            }
+            if($(this).attr('noparagraphs')){
+                config.enterMode = CKEDITOR.ENTER_BR;
+                config.shiftEnterMode = CKEDITOR.ENTER_P;
+            }
+            CKEDITOR.replace( $(this).attr('id'), config);
+
+            // Add id on iframe so that behat tests can interact
+            var id = $(this).attr('id');
+            var checkExist = setInterval(function() {
+                if ($('.pagepart .cke_editor_' + id + ' iframe').length) {
+                    var parts = id.split("_");
+                    var name = parts[parts.length-1];
+                    $('.pagepart .cke_editor_' + id + ' iframe').attr('id', 'cke_iframe_' + name);
+                    clearInterval(checkExist);
+                }
+            }, 150);
+        });
+    });
+
+    {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+ </script>
+#}

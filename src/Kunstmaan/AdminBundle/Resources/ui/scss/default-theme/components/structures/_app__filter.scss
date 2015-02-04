@@ -1,0 +1,30 @@
+/* ==========================================================================
+   App Filter
+   ========================================================================== */
+
+.app__filter {
+    margin-bottom: 2rem;
+
+    .toggle-item--active {
+        overflow: visible;
+    }
+
+    @media (min-width: $screen-sm) {
+        & + .pagination {
+            margin-top: -3rem;
+        }
+    }
+}
+
+.app__filter__content {
+    border: 1px solid $gray-lighter;
+    border-top: 0;
+}
+
+.app__filter__toggle {
+
+}
+
+.app__filter__line {
+    padding: .5em 0;
+}
