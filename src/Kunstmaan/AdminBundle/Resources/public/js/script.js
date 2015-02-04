@@ -772,36 +772,18 @@ function initDropdownMainActions() {
     if($buttonsRedundant.size() > 1) {
 
         // create DOM elements
-        $moreButtonContainer = $('<div>');
-        $moreButton = $('<button>');
-        $caret = $('<span>');
-        $dropdownList = $('<ul>');
-
-        // format new DOM elements
-        $moreButtonContainer.addClass('btn-group btn-group--more');
-
-        $moreButton.addClass('btn dropdown-toggle');
-        $moreButton.attr('data-toggle', 'dropdown');
-        $moreButton.text('More ');
-
-        $caret.addClass('icon icon-caret-down');
-        $caret.appendTo($moreButton);
-
-        $dropdownList.addClass('dropdown-menu dropdown-menu--more');
+        $moreButtonContainer = $('<div>').addClass('btn-group btn-group--more').appendTo($mainActions);
+        $moreButton = $('<button>').addClass('btn dropdown-toggle').attr('data-toggle', 'dropdown').text('More ').appendTo($moreButtonContainer);
+        $caret = $('<span>').addClass('icon icon-caret-down').appendTo($moreButton);
+        $dropdownList = $('<ul>').addClass('dropdown-menu dropdown-menu--more').appendTo($moreButtonContainer);
 
         // move buttons to dropdown list & remove styling
         $buttonsRedundant.each( function() {
             var $li = $('<li>');
-
-            $(this).removeClass();
-            $(this).appendTo($li);
+            $(this).removeClass().appendTo($li);
             $li.appendTo($dropdownList);
         });
 
-        // put it all together
-        $moreButton.appendTo($moreButtonContainer);
-        $dropdownList.appendTo($moreButtonContainer);
-        $moreButtonContainer.appendTo($mainActions);
     }
 
     // show main actions when ready
