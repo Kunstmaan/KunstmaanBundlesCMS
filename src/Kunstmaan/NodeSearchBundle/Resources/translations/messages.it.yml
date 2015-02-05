@@ -1,0 +1,4 @@
+search:
+    search: Cerca
+    results: Risultati
+    looking_for: Stavi cercando "%query%"

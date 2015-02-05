@@ -1,0 +1,15 @@
+pagepart:
+    header:
+        type: 'Tipo di intestazione'
+        title: 'Titolo'
+
+    link:
+        choose: 'Scegli link'
+        openinnewwindow: 'Apri in una nuova finestra'
+        text: 'Testo'
+
+    html:
+        content: 'Contenuti'
+
+    text:
+        content: 'Contenuti'
