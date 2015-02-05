@@ -1,0 +1,13 @@
+# Form Submissions
+formsubmissions:
+  index:
+    title: Pagine con Modulo d'invio
+  menu:
+    title: Invii
+  list:
+    title: Moduli d'invio per pagina
+  edit:
+    title: Modulo d'invio per pagina
+
+subaction:
+    formsubmissions: "Invii"

@@ -50,5 +50,5 @@ dashboard:
             accounts: Account setup
         reset:
             property: Change Google Analytics link
-        last_update: Last update:
+        last_update: "Last update:"
         unavailable: No data available, please click this update button.

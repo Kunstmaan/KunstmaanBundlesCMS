@@ -1,0 +1,82 @@
+# Media
+media:
+  aviary:
+    title: Aviary
+    nothing: Niente da vedere qui.
+
+  media:
+    no: Non sono presenti file in questa cartella.
+    bulkupload:
+      addto: Carica i files in "%folder%"
+    contenttab:
+      title: Contenuto
+    propertiestab:
+      title: Proprietà
+    title: Media
+    edit:
+      action: Modifica
+    download:
+      action: Download
+    mediainfo:
+      name: Nome
+      contenttype: Content-type
+      createdat: Aggiunto
+      updatedat: Aggiornato
+      downloadlink: Link per download
+    addto: Aggiungi il media a "%folder%"
+    deletesure: Sei sicuro di voler cancellare l'elemento?
+    new: Aggiungi il media a "%folder%"
+
+  folder:
+    addsub:
+      action: Aggiungi sottocartella
+      modal:
+        title: Aggiungi sottocartella
+        save: Aggiungi
+    sub:
+      no: Sottocartelle non presenti.
+    delete:
+      action: Cancella questa cartella
+      modal:
+        title: Cancella cartella
+        text: Sei sicuro di voler cancellare "%folder%"?
+    save: Salva
+    contenttab:
+      title: Contenuto
+    propertiestab:
+      title: Proprietà
+
+  bulkupload:
+    upload: Caricamento
+    bulkupload: Caricamento multiplo
+    select_files: Seleleziona i file
+    upload_more: Carica più file
+    back_to_folder: Torna alla cartella
+    upload_finished: Il caricamento del file è terminato.
+    not_available: La funzionalità di caricamento multiplo non funzionerà per te. Il tuo browser non ha il supporto Flash, Silverlight o HTML5.
+
+  slide:
+    add: Aggiungi Slide
+    modal:
+      title: Aggiungi Slide
+      save: Aggiungi
+  video:
+    add: Aggiungi Video
+    modal:
+      title: Aggiungi Video
+      save: Aggiungi
+  audio:
+    add: Aggiungi Audio
+    modal:
+          title: Aggiungi Audio
+          save: Aggiungi
+
+  file:
+    add: Aggiungi File
+    modal:
+      title: Aggiungi File
+      save: Aggiungi
+
+  widget:
+    choose: Scegli
+    delete: Cancella

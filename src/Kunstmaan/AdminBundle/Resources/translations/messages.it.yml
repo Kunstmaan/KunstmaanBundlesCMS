@@ -17,7 +17,7 @@ settings:
   maintanance: Manutenzione
   scheduled: Lavori Pianificati
   version:
-      bundle: Bundle versions
+      bundle: Versioni dei Bundle
       composer_lock_not_found: Il file composer.lock non è stato trovato nella root del tuo progetto
       error_parsing_composer: Errore in composer.lock, non è un json valido
       error: Qualcosa è andato storto leggendo le informazioni sulla versione. Per favore riprova nuovamente.
@@ -47,7 +47,7 @@ form:
   name: Nome
   type: Tipo
   error: Errore
-  warning: Warning
+  warning: Avvertimento
   headsup: Avviso
   forgot:
     password: Password dimenticata.
@@ -55,9 +55,9 @@ form:
   properties: Proprietà 
   createdat: Creato il
   updatedat: Modificato il
-  actions: Azione
+  actions: Azioni
   addfilter: Aggiungi filtro
-  choosetypefilter: Filtri attivi
+  choosetypefilter: Filtro su
   versions: Versioni
   
 omnext:
