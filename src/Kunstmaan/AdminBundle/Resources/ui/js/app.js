@@ -5,6 +5,8 @@ kunstmaanbundles.app = (function($, window, undefined) {
     var init;
 
     init = function() {
+        cargobay.toggle.init();
+
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
     };

@@ -1,0 +1,28 @@
+/* ==========================================================================
+   App Filter
+   ========================================================================== */
+
+.app__filter {
+    margin-bottom: 2rem;
+
+    .toggle-item {
+        box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
+    }
+}
+
+.app__filter__content {
+    padding: 2em;
+
+    border: 1px solid $gray-lighter;
+    border-top: 0;
+
+
+}
+
+.app__filter__toggle {
+
+}
+
+.app__filter__toggle__icon {
+    color: $gray-light;
+}

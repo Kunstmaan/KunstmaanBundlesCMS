@@ -1,5 +1,27 @@
 {% if filter.filterdefinitions|length > 0 %}
-    <form action="{{ path(basepath, extraparams) }}">
+<div class="app__filter">
+    <div id="app__filter" class="toggle-item">
+        <div class="toggle-item__content app__filter__content">
+            Filters
+        </div>
+    </div>
+    <button type="button" class="js-toggle-btn btn btn-default btn--flat-top toggle-button app__filter__toggle" data-target="#app__filter">
+        Filter
+        <i class="fa fa-chevron-down toggle-btn__icon--show app__filter__toggle__icon"></i>
+        <i class="fa fa-chevron-up toggle-btn__icon--hide app__filter__toggle__icon"></i>
+    </button>
+</div>
+
+
+
+
+
+
+
+
+
+    {# OLD
+        <form action="{{ path(basepath, extraparams) }}">
         <div class="filter_lists">
             <label for="filter_on_off" class="status all">Show all</label>
             <input type="checkbox" id="filter_on_off" class="filter_on_off" {% if filter.currentfilters|length >0 %}checked{% endif %} />
@@ -75,6 +97,6 @@
     <div id="filterdummyoptions_{{columnname|replace({'.': '_'})}}" class="hidden">
         {% include value.type.template with {'filtertype': value.type, 'options': value.options, 'nameprefix': '', 'namesuffix': ''} %}
     </div>
-    {% endfor %}
+    {% endfor %} #}
 
 {% endif %}
