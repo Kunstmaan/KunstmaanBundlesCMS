@@ -1,4 +1,6 @@
-<select name="{{nameprefix}}value{{namesuffix}}">
-    <option value="true" {% if data.value is defined and data.value == "true" %} selected="selected" {% endif %}>true</option>
-    <option value="false" {% if data.value is defined and data.value == "false" %} selected="selected" {% endif %}>false</option>
-</select>
+<div class="form-group">
+    <select name="{{nameprefix}}value{{namesuffix}}" class="form-control">
+        <option value="true" {% if data.value is defined and data.value == "true" %} selected="selected" {% endif %}>true</option>
+        <option value="false" {% if data.value is defined and data.value == "false" %} selected="selected" {% endif %}>false</option>
+    </select>
+</div>
