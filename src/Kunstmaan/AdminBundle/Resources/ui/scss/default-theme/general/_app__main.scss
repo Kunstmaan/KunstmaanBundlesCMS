@@ -16,9 +16,9 @@
         border-left-color: $gray-lighter;
 
         @media (max-width: $screen-sm) {
-            -webkit-transform: translateX(-webkit-calc(100% - 3.5rem));
-                  -moz-transform: translateX(-moz-calc(100% - 3.5rem));
-                        transform: translateX(calc(100% - 3.5rem));
+            -webkit-transform: translateX(-webkit-calc(100% - 4.5rem));
+                  -moz-transform: translateX(-moz-calc(100% - 4.5rem));
+                        transform: translateX(calc(100% - 4.5rem));
         }
 
         @media (min-width: $screen-sm) and (max-width: $screen-md){
@@ -30,10 +30,6 @@
         @media (min-width: $screen-md) {
             width: 100%;
             margin-left: 0;
-
-            @include transition-property (width, margin);
-            @include transition-duration(.3s);
-            @include transition-timing-function(ease);
         }
     }
 

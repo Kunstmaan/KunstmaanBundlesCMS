@@ -33,6 +33,11 @@
     small {
         font-size: .4em;
         color: $gray;
+
+        @media (max-width: $screen-md) {
+            display: block;
+            line-height: 1.4;
+        }
     }
 }
 
