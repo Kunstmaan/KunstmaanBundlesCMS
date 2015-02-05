@@ -55,8 +55,10 @@
    ========================================================================== */
 .app__sidebar-toggle {
     position: absolute;
-    top: .5rem;
-    left: 1rem;
+    top: 1em;
+    left: 1em;
+
+    @include transition(color .3s ease);
 
     &:hover {
         color: $green;

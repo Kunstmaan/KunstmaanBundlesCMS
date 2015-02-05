@@ -45,7 +45,7 @@
 
 
                 <!-- App Content - with sidebar -->
-                <div id="app__content" class="col-md-9 col-md-offset-3 col--padded-large app__content">
+                <div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
 
                     <!-- App Sidebar Toggle -->
                     <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle">
@@ -62,7 +62,7 @@
 
 
                 <!-- App Content - full width -->
-                <div id="app__content" class="col-md-12 col--padded-large app__content">
+                <div id="app__content" class="col-md-12 col--padded app__content">
             {% endif %}
 
 
@@ -83,15 +83,16 @@
 
 
                     <!-- App Content - Header -->
-                    {% block contentheader %}
-                        <header role="banner" class="page-header">
+                    <!--Content-header-->
+                    {% block header %}
+                        <div class="app__content__header">
                             {% if adminmenu.current %}
-                            <h1>
-                                {{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}
-                            </h1>
+                                <h1>
+                                    {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+                                </h1>
                             {% endif %}
                             {% block extra_actions_header %}{% endblock %}
-                        </header>
+                        </div>
                     {% endblock %}
 
 

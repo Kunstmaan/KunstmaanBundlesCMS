@@ -7,7 +7,7 @@
     position: relative;
     background: $white;
 
-    border: 1px solid $gray-light;
+    border: 1px solid $gray-lighter;
     border-top-color: $white;
     border-right-color: $white;
     border-left-color: $white;
@@ -20,6 +20,23 @@
     }
 
     @media (min-width: $screen-md) {
-        border-left-color: $gray-light;
+        border-left-color: $gray-lighter;
     }
+}
+
+
+.app__content__header {
+    padding: 0 0 1em 0;
+
+    border-bottom: 1px solid $gray-lighter;
+
+    small {
+        font-size: .4em;
+        color: $gray;
+    }
+}
+
+
+.app__content__breadcrumb {
+    padding: 0 0 0 3em;
 }

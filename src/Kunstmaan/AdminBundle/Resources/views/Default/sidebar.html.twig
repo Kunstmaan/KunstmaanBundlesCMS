@@ -1,16 +1,3 @@
-<!-- Tree Search -->
-<div class="form-group app__sidebar__module app__sidebar__search">
-    <div class="input-group">
-        <span class="input-group-addon">
-            <i class="fa fa--search"></i>
-        </span>
-        <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
-    </div>
-
-    <hr>
-</div>
-
-
 <!-- Tree -->
 {% set currentMenuItem = adminmenu.current %}
 <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
@@ -35,7 +22,9 @@
     <ul>
         {% if lowestTopChild.appearInSidebar %}
             <li class="jstree-open {% if lowestTopChild.internalname == currentMenuItem.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}>
-                <a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}">{{ lowestTopChild.internalname | trans }}</a>
+                <a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}" class="{% if lowestTopChild.internalname == currentMenuItem.internalname %}jstree-anchor--active{% endif %}">
+                    {{ lowestTopChild.internalname | trans }}
+                </a>
                 <ul>
         {% endif %}
         {% for menuitem in navigationChildren %}
@@ -47,3 +36,15 @@
         {% endif %}
     </ul>
 </nav>
+
+<hr>
+
+<!-- Tree Search -->
+<div class="form-group app__sidebar__module app__sidebar__search">
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+        </span>
+        <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+    </div>
+</div>

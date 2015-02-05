@@ -1,6 +1,6 @@
 {% set breadcrumbitems = adminmenu.breadcrumb %}
 {% if breadcrumbitems | length > 0 %}
-    <ul class="breadcrumb">
+    <ul class="breadcrumb app__content__breadcrumb">
         {% for breadcrumbitem in breadcrumbitems %}
         {% if loop.last %}
             <li class="active">

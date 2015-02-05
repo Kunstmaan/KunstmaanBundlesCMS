@@ -6,14 +6,14 @@
     position: relative;
 
     width: 100%;
-    padding-top: 50px;
+    padding-top: $navbar-height;
     overflow: hidden;
 }
 
 .app__main--altered-state {
 
     .app__content {
-        border-left-color: $gray-light;
+        border-left-color: $gray-lighter;
 
         @media (max-width: $screen-sm) {
             -webkit-transform: translateX(-webkit-calc(100% - 3.5rem));
