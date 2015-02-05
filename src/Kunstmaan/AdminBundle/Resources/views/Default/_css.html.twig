@@ -15,8 +15,9 @@
     {% set titlebgcolor = "#2997CE" %}
     {% endif %}
 
-    .brand-color {
+    .navbar-brand, .navbar-brand:hover, .navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand:hover {
         color: {{ titlecolor }};
+        background: {{ titlebgcolor }};
     }
 </style>
 
